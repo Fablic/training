@@ -1,0 +1,9 @@
+@startuml
+
+entity Tasks {
+  id
+  --
+  name
+}
+
+@enduml
