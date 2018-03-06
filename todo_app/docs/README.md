@@ -58,6 +58,12 @@
 
 ## Spec
 
+### ローカル開発用DB
+
+```
+docker run -d -e MYSQL_ALLOW_EMPTY_PASSWORD="yes" -p "3306:3306" mysql:5.6
+```
+
 ### データモデル
 
 まずはTasksをCRUDしてみます。
