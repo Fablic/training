@@ -12,7 +12,4 @@ Rails.application.routes.draw do
     resources :users
     get 'users/:id/tasks' => 'users#tasks', as: :user_tasks
   end
-
-  get '*not_found' => 'errors#routing_error'
-  post '*not_found' => 'errors#routing_error'
 end
