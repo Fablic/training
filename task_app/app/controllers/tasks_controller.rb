@@ -17,7 +17,7 @@ class TasksController < ApplicationController
     if @task.save
       redirect_to root_url, flash: { success: create_flash_message('create', 'success') }
     else
-      render 'new'
+      render :new
     end
   end
 
@@ -28,16 +28,18 @@ class TasksController < ApplicationController
     if @task.update(task_params)
       redirect_to root_url, flash: { success: create_flash_message('update', 'success') }
     else
-      render 'edit'
+      render :edit
     end
   end
 
   def destroy
     if @task.destroy
-      redirect_to root_url, flash: { success: create_flash_message('destroy', 'success') }
+      flash[:success] = create_flash_message('destroy', 'success')
     else
-      redirect_to root_url, flash: { danger: create_flash_message('destroy', 'failed') }
+      flash[:danger] = create_flash_message('destroy', 'failed')
     end
+
+    redirect_to root_url
   end
 
   private

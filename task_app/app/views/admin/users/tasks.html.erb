@@ -1,11 +1,10 @@
-<h3><%= I18n.t('actions_with_model.index', model_name: Task.model_name.human) %></h3>
+<h3 class="mb-3"><%= I18n.t('words.own', obj1: "#{@user.email}", obj2: I18n.t('actions_with_model.index', model_name: Task.model_name.human)) %></h3>
 
-<%= form_with url: root_path, method: 'get', local: true, class: 'form-inline mb-3' do |form| %>
+<%= form_with url: tasks_admin_user_path(@user), method: 'get', local: true, class: 'form-inline mb-3' do |form| %>
   <%= form.text_field :name, placeholder: 'タスク名を入力', value: params[:name], class: 'form-control mr-2 col-5 col-sm-4 col-md-3 col-lg-2 col-xl-2' %>
   <%= form.select :status, Task.statuses.map { |key, value| [I18n.t("enums.task.status.#{key}"), key] }, selected: params[:status], include_blank: '指定しない' %>
   <%= form.submit I18n.t('words.search'), class: 'btn btn-primary btn-sm ml-2' %>
 <% end %>
-
 
 <div class="task-pagination">
   <%= paginate @tasks %>
@@ -19,10 +18,9 @@
       <th><%= Task.human_attribute_name(:name) %></th>
       <th><%= Task.human_attribute_name(:description) %></th>
       <th><%= Task.human_attribute_name(:status) %></th>
-      <th><%= Task.human_attribute_name(:priority) %><%= sort_link(:priority) %></th>
-      <th><%= Task.human_attribute_name(:due_date) %><%= sort_link(:due_date) %></th>
-      <th><%= Task.human_attribute_name(:created_at) %><%= sort_link(:created_at) %></th>
-      <th>アクション</th>
+      <th><%= Task.human_attribute_name(:priority) %><%= admin_sort_link(@user, :priority) %></th>
+      <th><%= Task.human_attribute_name(:due_date) %><%= admin_sort_link(@user, :due_date) %></th>
+      <th><%= Task.human_attribute_name(:created_at) %><%= admin_sort_link(@user, :created_at) %></th>
     </tr>
   </thead>
   <tbody>
@@ -35,12 +33,9 @@
         <td><%= I18n.t("enums.task.priority.#{task.priority}") %></td>
         <td><%= I18n.l(task.due_date, format: :short) %></td>
         <td><%= I18n.l(task.created_at, format: :long) %></td>
-        <td>
-          <%= link_to I18n.t('actions.edit'), edit_task_path(task) %>
-          <%= link_to I18n.t('actions.destroy'), task_path(task), method: :delete,
-              data: { confirm: I18n.t(:dialog, target: "#{Task.model_name.human}「#{task.name}」", action: I18n.t('actions.destroy')) } %>
-        </td>
       </tr>
     <% end %>
   </tbody>
 </table>
+
+<%= link_to I18n.t('actions_with_model.index', model_name: User.model_name.human), admin_root_path %>

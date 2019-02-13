@@ -1,0 +1,5 @@
+<h3><%= I18n.t('actions_with_model.edit', model_name: User.model_name.human) %></h3>
+<%= render partial: 'form', locals: { user: @user } %>
+<br>
+
+<%= link_to I18n.t('actions_with_model.index', model_name: User.model_name.human), admin_root_path %>

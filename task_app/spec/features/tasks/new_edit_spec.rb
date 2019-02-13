@@ -12,7 +12,7 @@ feature 'タスク登録・編集機能', type: :feature do
       if action == :create
         # ハンバーガーボタン→タスク管理→タスク登録の順でクリック(capybaraのscreen sizeはmd以下らしい。)
         page.find('.navbar-toggler').click
-        page.find('#navbarDropdownMenuLink').click
+        page.find('#navbarTaskMenuLink').click
         page.click_link('タスク登録')
 
       elsif action == :update

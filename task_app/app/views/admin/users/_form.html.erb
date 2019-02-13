@@ -1,0 +1,42 @@
+<% if user.errors.any? %>
+  <ul id="error_explanation" class="alert alert-danger">
+    <% user.errors.full_messages.each do |message| %>
+      <li class="ml-2"><%= message %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<%= form_with model: [:admin, user], local: true do |f| %>
+  <div class="form-group row">
+    <div class="col-6 col-sm-4 col-md-2 col-lg-2 col-xl-2">
+      <%= f.label :email %>
+    </div>
+    <div class="col-6 col-sm-6 col-md-5 col-lg-3 col-xl-2">
+      <%= f.text_field :email, class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-6 col-sm-4 col-md-2 col-lg-2 col-xl-2">
+      <%= f.label :password %>
+    </div>
+    <div class="col-6 col-sm-6 col-md-5 col-lg-3 col-xl-2">
+      <%= f.password_field :password, class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-6 col-sm-4 col-md-2 col-lg-2 col-xl-2">
+      <%= f.label :password_confirmation %>
+    </div>
+    <div class="col-6 col-sm-6 col-md-5 col-lg-3 col-xl-2">
+      <%= f.password_field :password_confirmation, class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <%= f.submit '送信', class: 'btn btn-primary btn-sm' %>
+    </div>
+  </div>
+<% end %>
