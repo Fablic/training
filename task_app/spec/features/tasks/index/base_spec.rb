@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-feature '一覧画面表示機能', type: :feature do
+feature '画面表示機能', type: :feature do
   let!(:user1) { FactoryBot.create(:user, email: 'user1@example.com') }
   let!(:user2) { FactoryBot.create(:user, email: 'user2@example.com') }
   let!(:user1_task) { FactoryBot.create(:task, name: 'user1のタスク', user: user1) }
@@ -20,7 +20,7 @@ feature '一覧画面表示機能', type: :feature do
   context 'user1でログインした状態でアクセスしたとき' do
     before { login(user1) }
 
-    scenario '一覧画面が表示され、user1のタスクが確認できる' do
+    scenario 'タスク一覧画面が表示され、user1のタスクが確認できる' do
       tr = page.all('tbody tr')
 
       expect(current_path).to eq root_path
@@ -32,7 +32,7 @@ feature '一覧画面表示機能', type: :feature do
   context 'user2でログインした状態でアクセスしたとき' do
     before { login(user2) }
 
-    scenario '一覧画面が表示されるが、user1のタスクは確認できない' do
+    scenario 'タスク一覧画面が表示されるが、user1のタスクは確認できない' do
       expect(current_path).to eq root_path
       expect(page.all('tbody tr').size).to eq 0
     end
@@ -49,7 +49,7 @@ feature 'タスク削除機能', type: :feature do
   end
 
   context '確認ダイアログでOKを押したとき' do
-    scenario 'タスクは削除され、一覧画面にメッセージが表示される' do
+    scenario 'タスクは削除され、タスク一覧画面にメッセージが表示される' do
       page.accept_confirm
       expect(page).to have_selector '.alert-success', text: 'タスク「掃除」を削除しました。'
       expect(page.all('tbody tr').size).to eq 0
@@ -58,7 +58,7 @@ feature 'タスク削除機能', type: :feature do
   end
 
   context '確認ダイアログでキャンセルを押したとき' do
-    scenario 'タスクは削除されず、そのまま一覧画面が表示される' do
+    scenario 'タスクは削除されず、そのままタスク一覧画面が表示される' do
       page.dismiss_confirm
       expect(page).to have_no_selector '.alert-success', text: 'タスク「掃除」を削除しました。'
       expect(page.all('tbody tr').size).to eq 1

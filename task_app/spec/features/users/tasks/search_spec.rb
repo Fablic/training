@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# 各ユーザのタスク一覧画面に関するspec
+
 require 'rails_helper'
 
 feature 'タスク検索機能', type: :feature do
@@ -14,7 +16,7 @@ feature 'タスク検索機能', type: :feature do
   }
 
   before do
-    login(user)
+    login(user, tasks_admin_user_path(user))
     fill_in 'name', with: task_name
     select status, from: 'status'
     click_on('検索')

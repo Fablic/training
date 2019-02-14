@@ -37,7 +37,7 @@ module Admin
       if @user == current_user
         flash[:danger] = I18n.t('flash.user_self_destroy')
       elsif @user.destroy
-        flash[:success] = create_flash_message('update', 'success')
+        flash[:success] = create_flash_message('destroy', 'success')
       else
         flash[:danger] = create_flash_message('destroy', 'failed')
       end
