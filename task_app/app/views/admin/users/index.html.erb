@@ -13,7 +13,6 @@
 <table class="table table-bordered table-hover">
   <thead>
     <tr>
-      <th><%= User.human_attribute_name(:id) %></th>
       <th><%= User.human_attribute_name(:email) %></th>
       <th><%= Task.model_name.human %>数</th>
       <th><%= User.human_attribute_name(:created_at) %></th>
@@ -24,7 +23,6 @@
   <tbody>
     <% @users.each do |user| %>
       <tr>
-        <td><%= user.id %></td>
         <td><%= user.email %></td>
         <td><%= user.tasks.count %></td>
         <td><%= I18n.l(user.created_at, format: :long) %></td>
