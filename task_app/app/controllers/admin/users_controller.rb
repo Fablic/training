@@ -52,10 +52,6 @@ module Admin
 
     private
 
-    def forbid_access_except_admin
-      raise Forbidden unless current_user.admin?
-    end
-
     def user_params
       params.require(:user).permit(:email, :password, :password_confirmation, :role)
     end

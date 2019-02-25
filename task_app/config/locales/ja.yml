@@ -4,6 +4,7 @@ ja:
     models:
       task: タスク
       user: ユーザ
+      label: ラベル
     attributes:
       task:
         id: ID
@@ -20,6 +21,11 @@ ja:
         password: パスワード
         password_confirmation: パスワード(確認)
         role: 権限
+        created_at: 登録日時
+        updated_at: 更新日時
+      label:
+        id: ID
+        name: ラベル名
         created_at: 登録日時
         updated_at: 更新日時
     errors:

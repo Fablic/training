@@ -24,6 +24,15 @@
           <%= link_to I18n.t('actions_with_model.new', model_name: User.model_name.human), new_admin_user_path, class: 'dropdown-item' %>
         </div>
       </li>
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarLabelMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <%= I18n.t('words.manage', model_name: Label.model_name.human) %>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarLabelMenuLink">
+          <%= link_to I18n.t('actions.index'), admin_labels_path, class: 'dropdown-item' %>
+        </div>
+      </li>
     <% end %>
   </ul>
 
