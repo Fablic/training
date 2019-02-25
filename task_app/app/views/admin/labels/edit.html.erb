@@ -1,0 +1,5 @@
+<h3><%= I18n.t('actions_with_model.edit', model_name: Label.model_name.human) %></h3>
+<%= render partial: 'form', locals: { label: @label } %>
+<br>
+
+<%= link_to I18n.t('words.back'), admin_labels_path %>

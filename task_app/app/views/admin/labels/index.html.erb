@@ -19,6 +19,7 @@
         <td><%= label.name %></td>
         <td><%= I18n.l(label.created_at, format: :long) %></td>
         <td>
+          <%= link_to I18n.t('actions.edit'), edit_admin_label_path(label) %>
           <%= link_to I18n.t('actions.destroy'), admin_label_path(label), method: :delete,
               data: { confirm: I18n.t(:dialog, target: "#{Label.model_name.human}「#{label.name}」", action: I18n.t('actions.destroy')) } %>
         </td>
