@@ -52,6 +52,17 @@
     </div>
   </div>
 
+  <div class="form-group row">
+    <div class="col-6 col-sm-4 col-md-2 col-lg-2 col-xl-2">
+      <%= f.label Label.model_name.human %>
+    </div>
+    <div class="col-6 col-sm-8 col-md-10 col-lg-10 col-xl-10">
+      <%= f.collection_check_boxes :label_ids, current_user.labels, :id, :name do |cb| %>
+        <% cb.label(class: "checkbox-inline input_checkbox mr-2") { cb.check_box(class: "checkbox") + cb.text } %>
+      <% end %>
+    </div>
+  </div>
+
   <div class="row">
     <div class="col-12">
       <%= f.submit I18n.t('words.submit'), class: 'btn btn-primary btn-sm' %>

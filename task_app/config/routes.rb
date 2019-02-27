@@ -7,10 +7,10 @@ Rails.application.routes.draw do
   post   '/login',  to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
 
-  resources :tasks, except: :show
+  resources :tasks,  except: :show
+  resources :labels, except: :show
 
   namespace :admin do
-    resources :labels, except: :show
     resources :users, except: :show do
       get :tasks, on: :member
     end

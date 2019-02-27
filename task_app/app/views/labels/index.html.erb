@@ -1,11 +1,11 @@
 <h3><%= I18n.t('actions_with_model.index', model_name: Label.model_name.human) %></h3>
 
-<div class="label-pagination">
+ <div class="label-pagination">
   <%= paginate @labels %>
   <%= page_entries_info @labels %>
 </div>
 
-<table class="table table-bordered table-hover">
+ <table class="table table-bordered table-hover">
   <thead>
     <tr>
       <th><%= Label.human_attribute_name(:name) %></th>
@@ -19,8 +19,8 @@
         <td><%= label.name %></td>
         <td><%= I18n.l(label.created_at, format: :long) %></td>
         <td>
-          <%= link_to I18n.t('actions.edit'), edit_admin_label_path(label) %>
-          <%= link_to I18n.t('actions.destroy'), admin_label_path(label), method: :delete,
+          <%= link_to I18n.t('actions.edit'), edit_label_path(label) %>
+          <%= link_to I18n.t('actions.destroy'), label_path(label), method: :delete,
               data: { confirm: I18n.t(:dialog, target: "#{Label.model_name.human}「#{label.name}」", action: I18n.t('actions.destroy')) } %>
         </td>
       </tr>

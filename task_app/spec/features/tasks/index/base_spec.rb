@@ -5,7 +5,8 @@ require 'rails_helper'
 feature '一覧画面表示機能', type: :feature do
   let!(:user1) { FactoryBot.create(:user, email: 'user1@example.com') }
   let!(:user2) { FactoryBot.create(:user, email: 'user2@example.com') }
-  let!(:user1_task) { FactoryBot.create(:task, name: 'user1のタスク', user: user1) }
+  let!(:label1) { FactoryBot.create(:label, name: 'ラベル1', user: user1) }
+  let!(:user1_task) { FactoryBot.create(:task, name: 'user1のタスク', labels: [label1], user: user1) }
 
   context 'ログインせず画面へアクセスしたとき' do
     before { visit root_path }
@@ -25,6 +26,7 @@ feature '一覧画面表示機能', type: :feature do
 
       expect(current_path).to eq root_path
       expect(tr.size).to eq 1
+      expect(tr[0].text).to have_content 'ラベル1'
       expect(tr[0].text).to have_content user1_task.name
     end
   end

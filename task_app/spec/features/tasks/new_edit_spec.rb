@@ -6,9 +6,11 @@ shared_examples_for '正常処理とバリデーションエラーの確認' do 
   before do
     fill_in 'タスク名', with: task_name
     fill_in '説明', with: task_description
-    fill_in '期限', with: '20190213'
     select '高', from: 'task_priority'
     select '着手中', from: 'task_status'
+    check "task_label_ids_#{label1.id}"
+    # 期限を入力するとカレンダーのフォームが開いたままになりチェックボックスがelement not foundになる為、最後に入力
+    fill_in '期限', with: '20190213'
     click_on('送信')
   end
 
@@ -22,6 +24,7 @@ shared_examples_for '正常処理とバリデーションエラーの確認' do 
       expect(page).to have_content '02/13'
       expect(page).to have_content '高'
       expect(page).to have_content '着手中'
+      expect(page).to have_content 'ラベル1'
       expect(page.all('tbody tr').size).to eq 1
       expect(Task.count).to eq 1
     end
@@ -60,6 +63,7 @@ end
 
 feature 'タスク登録機能', type: :feature do
   let!(:user) { FactoryBot.create(:user) }
+  let!(:label1) { FactoryBot.create(:label, name: 'ラベル1', user: user) }
 
   before do
     login(user, new_task_path)
@@ -83,6 +87,7 @@ end
 
 feature 'タスク編集機能', type: :feature do
   let!(:user) { FactoryBot.create(:user) }
+  let!(:label1) { FactoryBot.create(:label, name: 'ラベル1', user: user) }
   let!(:task) { FactoryBot.create(:task, user: user) }
 
   before do

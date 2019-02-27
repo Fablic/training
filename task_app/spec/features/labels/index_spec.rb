@@ -3,13 +3,13 @@
 require 'rails_helper'
 
 feature 'ラベル一覧画面', type: :feature do
-  let!(:user) { FactoryBot.create(:user, role: :admin) }
+  let!(:user) { FactoryBot.create(:user) }
 
   before { login(user) }
 
   feature '画面表示機能', type: :feature do
     context 'ログインせず画面へアクセスしたとき' do
-      before { logout(admin_labels_path) }
+      before { logout(labels_path) }
 
       scenario 'メッセージと共にログイン画面が表示される' do
         expect(current_path).to eq login_path
@@ -20,8 +20,8 @@ feature 'ラベル一覧画面', type: :feature do
 
     context 'ログイン状態でアクセスしたとき' do
       before do
-        3.times { |i| FactoryBot.create(:label, name: "ラベル#{i}") }
-        visit admin_labels_path
+        3.times { |i| FactoryBot.create(:label, name: "ラベル#{i}", user: user) }
+        visit labels_path
       end
 
       scenario 'ラベル一覧画面が表示され、3つのラベルを確認できる' do
@@ -31,10 +31,10 @@ feature 'ラベル一覧画面', type: :feature do
   end
 
   feature 'ラベル削除機能' do
-    let!(:label) { FactoryBot.create(:label) }
+    let!(:label) { FactoryBot.create(:label, user: user) }
 
     before do
-      visit admin_labels_path
+      visit labels_path
       click_on('削除')
     end
 
@@ -59,8 +59,8 @@ feature 'ラベル一覧画面', type: :feature do
 
   feature 'ページネーション機能' do
     before do
-      10.times { |i| FactoryBot.create(:label, name: "ラベル#{i}") }
-      visit admin_labels_path
+      10.times { |i| FactoryBot.create(:label, name: "ラベル#{i}", user: user) }
+      visit labels_path
     end
 
     context 'ラベル数が10のとき' do

@@ -29,7 +29,7 @@ shared_examples_for '正常処理とバリデーションエラーの確認' do
   end
 
   context '制限内の文字数を入力したとき' do
-    let(:label_name) { 'a' * 20 }
+    let(:label_name) { 'a' * 10 }
 
     scenario '正常に処理される' do
       expect(page).to have_no_selector '#error_explanation'
@@ -38,22 +38,31 @@ shared_examples_for '正常処理とバリデーションエラーの確認' do
   end
 
   context '制限外の文字数を入力したとき' do
-    let(:label_name) { 'a' * 21 }
+    let(:label_name) { 'a' * 11 }
 
     scenario '文字数に関するエラーメッセージが表示される' do
       expect(page).to have_no_selector '.alert-success'
-      expect(page).to have_selector '#error_explanation', text: '20文字以内'
+      expect(page).to have_selector '#error_explanation', text: '10文字以内'
+    end
+  end
+
+  context '登録済みのラベル名を入力したとき' do
+    let!(:duplicate_label) { FactoryBot.create(:label, name: '重複ラベル', user: user) }
+    let(:label_name) { duplicate_label.name }
+
+    scenario '登録済みである旨を伝えるエラーメッセージが表示される' do
+      expect(page).to have_selector '#error_explanation', text: 'ラベル名はすでに存在します'
     end
   end
 end
 
 feature 'ラベル登録・編集', type: :feature do
-  let!(:user) { FactoryBot.create(:user, role: :admin) }
+  let!(:user) { FactoryBot.create(:user) }
 
   before { login(user) }
 
   feature 'ラベル登録画面(機能)' do
-    before { visit new_admin_label_path }
+    before { visit new_label_path }
 
     context 'タスク一覧画面からボタンクリックで画面遷移したとき' do
       before do
@@ -64,7 +73,7 @@ feature 'ラベル登録・編集', type: :feature do
       end
 
       scenario 'ラベル登録画面に遷移する' do
-        expect(current_path).to eq new_admin_label_path
+        expect(current_path).to eq new_label_path
       end
     end
 
@@ -72,10 +81,10 @@ feature 'ラベル登録・編集', type: :feature do
   end
 
   feature 'ラベル編集機能' do
-    let!(:label) { FactoryBot.create(:label) }
+    let!(:label) { FactoryBot.create(:label, user: user) }
 
     before do
-      visit admin_labels_path
+      visit labels_path
       click_on('編集')
     end
 

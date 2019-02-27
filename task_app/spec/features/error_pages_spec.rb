@@ -82,17 +82,5 @@ feature 'エラー画面の表示機能(ログイン状態)', type: :feature do
     it_behaves_like 'Forbidden(403)によるエラー画面が表示される' do
       let(:visit_path) { edit_admin_user_path(task) }
     end
-
-    it_behaves_like 'Forbidden(403)によるエラー画面が表示される' do
-      let(:visit_path) { admin_labels_path }
-    end
-
-    it_behaves_like 'Forbidden(403)によるエラー画面が表示される' do
-      let(:visit_path) { new_admin_label_path }
-    end
-
-    it_behaves_like 'Forbidden(403)によるエラー画面が表示される' do
-      let(:visit_path) { edit_admin_label_path(label) }
-    end
   end
 end

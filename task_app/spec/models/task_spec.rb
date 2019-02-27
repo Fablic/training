@@ -166,12 +166,43 @@ describe Task, type: :model do
 
   describe '検索機能' do
     let!(:user) { FactoryBot.create(:user) }
+    let!(:label1) { FactoryBot.create(:label, name: 'ラベル1', user: user) }
+    let!(:label2) { FactoryBot.create(:label, name: 'ラベル2', user: user) }
     let!(:tasks) {
       [
         # userを指定せずにtaskをcreateした場合、createする度に同一のuserを作成する為、emailのunique制約にひっかかる
-        FactoryBot.create(:task, due_date: '20190203', priority: :middle, name: 'タスク1', created_at: Time.zone.now, status: :to_do,       user: user),
-        FactoryBot.create(:task, due_date: '20190209', priority: :high,   name: 'task2',  created_at: 1.day.ago,     status: :in_progress, user: user),
-        FactoryBot.create(:task, due_date: '20190206', priority: :low,    name: 'タスク3', created_at: 2.days.ago,    status: :in_progress, user: user),
+        FactoryBot.create(
+          :task,
+          labels: [label1],
+          due_date: '20190203',
+          priority: :middle,
+          name: 'タスク1',
+          created_at: Time.zone.now,
+          status: :to_do,
+          user: user,
+        ),
+
+        FactoryBot.create(
+          :task,
+          labels: [label1, label2],
+          due_date: '20190209',
+          priority: :high,
+          name: 'task2',
+          created_at: 1.day.ago,
+          status: :in_progress,
+          user: user,
+        ),
+
+        FactoryBot.create(
+          :task,
+          labels: [label2],
+          due_date: '20190206',
+          priority: :low,
+          name: 'タスク3',
+          created_at: 2.days.ago,
+          status: :in_progress,
+          user: user,
+        ),
       ]
     }
 
@@ -193,9 +224,9 @@ describe Task, type: :model do
       end
     end
 
-    context '名前・ステータスで検索したとき' do
+    context '名前・ステータス・ラベルで検索したとき' do
       it '1件のレコードを取得' do
-        expect(Task.search({ name: 'タスク', status: Task.statuses[:in_progress] }).count).to eq 1
+        expect(Task.search({ name: 'タスク', status: Task.statuses[:in_progress], label: label2.name }).count).to eq 1
       end
     end
 
