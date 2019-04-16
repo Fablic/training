@@ -13,3 +13,82 @@
  *= require_tree .
  *= require_self
  */
+
+  div#container {
+    width: 900px;
+    margin: 5px auto;
+    border: solid 1px #666;
+    background-color: #05f;
+  }
+  
+  div#header, div#footer {
+    background-color: #000;
+    color: #ccc;
+    margin: 5px;
+    padding: 5px;
+  }
+  
+  div#header a, div#footer a {
+    color: #ccc;
+  }
+  
+  div#contents {
+    background-color: #fff;
+    color: #000;
+    margin: 2px;
+    padding: 5px;
+  }
+  
+  table {
+    border-collapse: collapse;
+    margin: 5px auto;
+    width: 800px;
+  }
+  
+  table.list tr.odd {
+    background-color: #eee;
+  }
+  
+  table.list td, table.list th {
+    border: 1px solid #000;
+    padding: 5px;
+    text-align: center;
+  }
+  
+  table.list th {
+    text-align: center;
+    color: #fff;
+    background-color: #05f;
+  }
+
+  caption { text-align: left; }
+
+  th.detail {
+    border: 1px solid #000;
+    background-color: #fff;
+    text-align: left;
+    width: 40%;
+    padding: 5px;
+  }
+  
+  td.detail {
+    border: 1px solid #000;
+    background-color: #fff;
+    text-align: left;
+    width: 60%; 
+    padding: 5px;
+  }
+
+  div.actions { 
+    text-align: center;
+  }
+
+  div.back { 
+    text-align: right;
+  }
+
+  div.flash_message {
+    border: solid 1px #fff;
+    text-align: center;
+    width: 100%;
+  }

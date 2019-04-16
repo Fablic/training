@@ -1,0 +1,22 @@
+<div id='container'>
+<div id='contents'>
+<%= form_for @task do |f| %>
+<%= f.hidden_field :user_id, :value => '1' %>
+<table class='delete'>
+    <caption>◾️タスク詳細<caption>
+    <tr><th class='detail'>タスクタイトル</th><td class='detail'><%= simple_format(h(@task.task_title)) %></td></tr>
+    <tr><th class='detail'>タスク詳細</th><td class='detail'><%= simple_format(h(@task.task_detail)) %></td></tr>
+    <tr><th class='detail'>終了期限日</th><td class='detail'><%= @task.deadline_date.strftime('%Y/%m/%d') %></td></tr>
+    <tr><th class='detail'>優先順位</th><td class='detail'><%= @task.priority %></td></tr>
+    <tr><th class='detail'>タスクステータス</th><td class='detail'><%= @task.task_status_id %></td></tr>
+    <tr><th class='detail'>タスク種別</th><td class='detail'><%= @task.task_type_id %></td></tr>
+</table>
+
+<% end %>
+<br />
+<div class='back'>
+<%= button_to "戻 る", {controller: 'tasks', action: 'index'}, {method: :post} %>
+</div>
+<br />
+</div>
+</div>

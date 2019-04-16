@@ -1,0 +1,41 @@
+<div id='container'>
+<div id='contents'>
+<table class="list">
+<caption>◾️タスク一覧<caption>
+  <tr>
+    <th>No.</th>
+    <th>タスクタイトル</th>
+    <th>タスク詳細</th>
+    <th>終了期限</th>
+    <th>優先順位</th>
+    <th>ステータス</th>
+    <th>タスク種別</th>
+    <th>修正</th>
+    <th>削除</th>
+  </tr>
+  <% @tasks.each_with_index do |task, i| %>
+    <%= tag.tr :class => i.even? ? 'even' : 'odd' do %>
+      <%= tag.td i+1 %>
+      <%= tag.td tag.a simple_format(h(task.task_title)), href: "tasks/detail/#{task.id}" %>
+      <%= tag.td simple_format(h(task.task_detail)) %>      
+      <%= tag.td task.deadline_date.strftime('%Y/%m/%d') %>
+      <%= tag.td task.priority %>      
+      <%= tag.td task.task_status_id %>     
+      <%= tag.td task.task_type_id %>     
+      <%= tag.td tag.a '修正', href: "tasks/edit/#{task.id}" %>
+      <%= tag.td tag.a '削除', href: "tasks/delete/#{task.id}" %>
+    <% end %>
+  <% end %>
+</table>
+<br />
+<div class='actions'>
+<%= button_to '新規登録', action: 'new' %>
+</div>
+<br />
+<div class='flash_message'>
+<%= flash[:success] %>
+</div>
+<br />
+
+</div>
+</div>

@@ -1,0 +1,26 @@
+<div id='container'>
+<div id='contents'>
+<%= form_for @task do |f| %>
+<%= f.hidden_field :user_id, :value => '1' %>
+<table class='new'>
+    <caption>◾️タスク新規登録<caption>
+    <tr><th class='detail'>タスクタイトル</th><td class='detail'><%= text_field :task, :task_title, :size => '80' %></td></tr>
+    <tr><th class='detail'>タスク詳細</th><td class='detail'><%= text_area :task, :task_detail, :size => '80x10' %></td></tr>
+    <tr><th class='detail'>終了期限日</th><td class='detail'><%= date_field :task, :deadline_date %></td></tr>
+    <tr><th class='detail'>優先順位</th><td class='detail'><%= text_field :task, :priority, :size => '20' %></td></tr>
+    <tr><th class='detail'>タスクステータス</th><td class='detail'><%= f.select :task_status_id, Task.task_status_ids.keys.to_a, {} %></td></tr>
+    <tr><th class='detail'>タスク種別</th><td class='detail'><%= f.select :task_type_id, Task.task_type_ids.keys.to_a, {} %></td></tr>
+</table>
+<br />
+<div class='actions'>
+<%= f.submit '登 録' %>
+</div>
+
+<% end %>
+
+<div class='back'>
+<%= button_to "戻 る", {controller: 'tasks', action: 'index'}, {method: :post} %>
+</div>
+<br />
+</div>
+</div>
