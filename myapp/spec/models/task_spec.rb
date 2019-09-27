@@ -42,22 +42,4 @@ describe Task, type: :model do
       end
     end
   end
-
-  describe 'ステータスのバリデーション' do
-    before do
-      task = FactoryBot.attributes_for(:task)
-      @task = Task.new(task)
-    end
-    
-    context '範囲内のステータスの場合' do
-      it '0も登録できる' do
-        @task.status = Task.statuses[:waiting]
-        expect(@task).to be_valid
-      end
-      it '最大値も登録できる' do
-        @task.status = Task.statuses[:completed]
-        expect(@task).to be_valid
-      end
-    end
-  end
 end

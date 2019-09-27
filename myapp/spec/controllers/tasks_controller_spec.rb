@@ -3,31 +3,14 @@
 describe TasksController, type: :request do
   describe 'GET #index' do
     before do
-      create_list(:task, 2, status: Task.statuses[:completed])
+      create_list(:task, 2)
     end
 
-    context '全件表示の場合' do
-      it 'リクエストが成功すること、タイトルが表示されていること' do
-        get tasks_url
-        expect(response).to have_http_status :ok
-        expect(response.body).to include 'Task1'
-        expect(response.body).to include 'Task2'
-      end
-    end
-
-    context 'ステータスで絞り込む場合' do
-      it 'リクエストが成功すること' do
-        get tasks_url, params: { status: 2 }
-        expect(response).to have_http_status :ok
-      end
-    end
-
-    context '不正なステータスの場合' do
-      it '件数が0件になる' do
-        expect do
-          get tasks_url, params: { status: 999999999999 }
-        end.to change(Task, :count).by(0)
-      end
+    it 'リクエストが成功すること、タイトルが表示されていること' do
+      get tasks_url
+      expect(response).to have_http_status :ok
+      expect(response.body).to include 'Task1'
+      expect(response.body).to include 'Task2'
     end
   end
 

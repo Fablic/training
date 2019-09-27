@@ -1,11 +1,9 @@
 <%= form_for(@task) do |f| %>
   <div class="form-group">
-    <%= f.label :title, Task.human_attribute_name(:title) %>
+    <%= f.label :title, 'タイトル' %>
     <%= f.text_field :title, :class => "form-control" %>
-    <%= f.label :description, Task.human_attribute_name(:description) %>
+    <%= f.label :description, '説明' %>
     <%= f.text_field :description, :class => "form-control" %>
-    <%= f.label :status, Task.human_attribute_name(:status) %>
-    <%= f.select :status, options_for_select(Task.statuses.keys.map {|k| [I18n.t("enums.task.status.#{k}"), k]}, selected: @task.status), {}, {class: "custom-select"} %>
     <%= f.submit '登録', class: "btn btn-primary" %>
   </div>
 <% end %>

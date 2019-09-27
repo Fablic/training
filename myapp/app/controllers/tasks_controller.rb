@@ -5,12 +5,7 @@ class TasksController < ApplicationController
   before_action  :valid_id, only: %i[edit update destroy]
 
   def index
-    if params[:status].nil?
-      @tasks = Task.all
-    else
-      param_status = params[:status].to_i
-      @tasks = Task.where(status: param_status)
-    end
+    @tasks = Task.all
   end
 
   def new
@@ -69,7 +64,7 @@ class TasksController < ApplicationController
   end
 
   def valid_task
-    @param_task = params.require(:task).permit(:title, :description, :status)
+    @param_task = params.require(:task).permit(:title, :description)
     if @param_task[:title].blank?
       flash[:danger] = 'タイトルは必須入力です'
       redirect_back(fallback_location: root_path)
