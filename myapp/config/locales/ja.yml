@@ -10,9 +10,16 @@ ja:
     models:
       task: タスク
     attributes:
-        task:
-          id: ID
-          title: タイトル
-          description: 説明
-          created_at: 作成日
-          updated_at: 更新日
+      task:
+        id: ID
+        title: タイトル
+        description: 説明
+        status: ステータス
+        created_at: 作成日
+        updated_at: 更新日
+  enums:
+    task:
+      status:
+        waiting: 未着手
+        working: 着手
+        completed: 完了
