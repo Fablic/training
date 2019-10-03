@@ -1,0 +1,5 @@
+current directory: /Users/yukari.ogura/Dev/rakuma/training/myapp/vendor/bundle/ruby/2.6.0/gems/childprocess-2.0.0/ext
+/Users/yukari.ogura/.rbenv/versions/2.6.4/bin/ruby mkrf_conf.rb
+
+current directory: /Users/yukari.ogura/Dev/rakuma/training/myapp/vendor/bundle/ruby/2.6.0/gems/childprocess-2.0.0/ext
+/Users/yukari.ogura/.rbenv/versions/2.6.4/bin/ruby -rrubygems /Users/yukari.ogura/Dev/rakuma/training/myapp/vendor/bundle/ruby/2.6.0/gems/rake-12.3.3/exe/rake RUBYARCHDIR\=/Users/yukari.ogura/Dev/rakuma/training/myapp/vendor/bundle/ruby/2.6.0/extensions/x86_64-darwin-17/2.6.0-static/childprocess-2.0.0 RUBYLIBDIR\=/Users/yukari.ogura/Dev/rakuma/training/myapp/vendor/bundle/ruby/2.6.0/extensions/x86_64-darwin-17/2.6.0-static/childprocess-2.0.0

@@ -1,0 +1,39 @@
+current directory: /Users/yukari.ogura/Dev/rakuma/training/myapp/vendor/bundle/ruby/2.6.0/gems/msgpack-1.3.1/ext/msgpack
+/Users/yukari.ogura/.rbenv/versions/2.6.4/bin/ruby -I /Users/yukari.ogura/.rbenv/versions/2.6.4/lib/ruby/2.6.0 -r ./siteconf20191003-61365-19wmkwp.rb extconf.rb
+checking for ruby/st.h... yes
+checking for st.h... yes
+checking for rb_str_replace() in ruby.h... yes
+checking for rb_intern_str() in ruby.h... yes
+checking for rb_sym2str() in ruby.h... yes
+checking for rb_str_intern() in ruby.h... yes
+checking for rb_block_lambda() in ruby.h... yes
+checking for rb_hash_dup() in ruby.h... yes
+checking for rb_hash_clear() in ruby.h... yes
+creating Makefile
+
+current directory: /Users/yukari.ogura/Dev/rakuma/training/myapp/vendor/bundle/ruby/2.6.0/gems/msgpack-1.3.1/ext/msgpack
+make "DESTDIR=" clean
+
+current directory: /Users/yukari.ogura/Dev/rakuma/training/myapp/vendor/bundle/ruby/2.6.0/gems/msgpack-1.3.1/ext/msgpack
+make "DESTDIR="
+compiling buffer.c
+compiling buffer_class.c
+compiling extension_value_class.c
+compiling factory_class.c
+compiling packer.c
+compiling packer_class.c
+compiling packer_ext_registry.c
+compiling rbinit.c
+compiling rmem.c
+compiling unpacker.c
+compiling unpacker_class.c
+unpacker_class.c:219:14: warning: unused function 'Unpacker_peek_next_type' [-Wunused-function]
+static VALUE Unpacker_peek_next_type(VALUE self)
+             ^
+1 warning generated.
+compiling unpacker_ext_registry.c
+linking shared-object msgpack/msgpack.bundle
+
+current directory: /Users/yukari.ogura/Dev/rakuma/training/myapp/vendor/bundle/ruby/2.6.0/gems/msgpack-1.3.1/ext/msgpack
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 msgpack.bundle ./.gem.20191003-61365-1ndr4mg/msgpack

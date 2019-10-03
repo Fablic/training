@@ -1,0 +1,1 @@
+--use-system-libraries --with-xml2-include=/usr/local/opt/libxml2/include/libxml2

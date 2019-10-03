@@ -1,0 +1,32 @@
+sudo: false
+language: ruby
+cache: bundler
+before_install:
+  - gem update --system
+  - gem install bundler
+addons:
+  apt:
+    packages:
+      - libgmp-dev
+
+after_failure:
+  - "find . -name mkmf.log -exec cat {} \\;"
+
+after_success:
+  - "find . -name mkmf.log -exec cat {} \\;"
+
+env:
+  - USE_MINI_PORTILE=true
+  - USE_MINI_PORTILE=false
+rvm:
+  - 1.9.3
+  - 2.0.0
+  - 2.1
+  - 2.2
+  - 2.3
+  - 2.4
+  - 2.5
+  - ruby-head
+matrix:
+  allow_failures:
+    - env: USE_MINI_PORTILE=false
