@@ -3,8 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe 'Tasks', type: :system do
-  let(:task1) { FactoryBot.create(:task, title: 'タスク１', description: 'タスク１詳細', status: 0, due_date: Time.zone.local(2020, 1, 1, 0, 0)) }
-  let(:task2) { FactoryBot.create(:task, title: 'タスク２', description: 'タスク２詳細', status: 1, due_date: Time.zone.local(2021, 1, 1, 0, 0)) }
+  let(:task1) { create(:task, title: 'タスク１', description: 'タスク１詳細', status: :todo, due_date: Time.zone.local(2020, 1, 1, 0, 0)) }
+  let(:task2) { create(:task, title: 'タスク２', description: 'タスク２詳細', status: :doing, due_date: Time.zone.local(2021, 1, 1, 0, 0)) }
 
   describe 'when show tasks' do
     context 'sort' do
@@ -38,7 +38,7 @@ RSpec.describe 'Tasks', type: :system do
     end
 
     context 'paginate' do
-      let!(:task_list) { FactoryBot.create_list(:task, 60) }
+      let!(:task_list) { create_list(:task, 60) }
       it 'go next' do
         visit tasks_path
 

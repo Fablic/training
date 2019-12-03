@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Task, type: :model do
   let(:title) { 'title' }
-  let(:status) { 0 }
+  let(:status) { :todo }
   let(:description) { 'a' * 250 }
   let(:due_date) { Time.zone.local(2100, 12, 31, 0, 0) }
   subject { Task.new(title: title, description: description, status: status, due_date: due_date) }
@@ -20,7 +20,7 @@ RSpec.describe Task, type: :model do
     end
 
     context 'with a valid status' do
-      let(:status) { 2 }
+      let(:status) { :done }
       it { expect(subject).to be_valid }
     end
 
@@ -36,14 +36,6 @@ RSpec.describe Task, type: :model do
       it { expect(subject).not_to be_valid }
     end
 
-    context 'without a status' do
-      let(:status) { nil }
-      it { expect(subject).not_to be_valid }
-
-      let(:status) { 4 }
-      it { expect(subject).not_to be_valid }
-    end
-
     context 'with a title over max length' do
       let(:title) { 'a' * 251 }
       it { expect(subject).not_to be_valid }
@@ -56,8 +48,8 @@ RSpec.describe Task, type: :model do
   end
 
   describe 'when search' do
-    let!(:task1) { Task.create(title: 'タスク１', description: 'タスク１詳細', status: 0, due_date: Time.zone.local(2020, 1, 1, 0, 0)) }
-    let!(:task2) { Task.create(title: 'タスク２', description: 'タスク２詳細', status: 1, due_date: Time.zone.local(2021, 1, 1, 0, 0)) }
+    let!(:task1) { Task.create(title: 'タスク１', description: 'タスク１詳細', status: Task.statuses[:todo], due_date: Time.zone.local(2020, 1, 1, 0, 0)) }
+    let!(:task2) { Task.create(title: 'タスク２', description: 'タスク２詳細', status: Task.statuses[:doing], due_date: Time.zone.local(2021, 1, 1, 0, 0)) }
     let(:sort_column) { :due_date }
 
     context 'find' do
@@ -68,7 +60,7 @@ RSpec.describe Task, type: :model do
       end
 
       it 'with a status' do
-        tasks = Task.search({ title: nil, status: 1 }, sort_column)
+        tasks = Task.search({ title: nil, status: Task.statuses[:doing] }, sort_column)
         expect(tasks.size).to eq(1)
         expect(tasks).to include(task2)
       end
@@ -87,7 +79,7 @@ RSpec.describe Task, type: :model do
       end
 
       it 'with a status' do
-        tasks = Task.search({ title: nil, status: 2 }, sort_column)
+        tasks = Task.search({ title: nil, status: Task.statuses[:done] }, sort_column)
         expect(tasks.size).to eq(0)
       end
     end

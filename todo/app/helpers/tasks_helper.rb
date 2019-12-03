@@ -2,6 +2,6 @@
 
 module TasksHelper
   def status_text
-    { 0 => '未着手', 1 => '着手', 2 => '完了' }
+    { todo: '未着手', doing: '着手', done: '完了' }.with_indifferent_access
   end
 end

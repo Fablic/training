@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
 class Task < ApplicationRecord
+  enum status: [:todo, :doing, :done]
+
   validates :title, :status, presence: true
   validates :title, length: { maximum: 250 }
-  validates :status, inclusion: { in: 0..2 }
+  validates :status, inclusion: { in: statuses }
   validate :due_date_cannot_be_in_past
 
   scope :title_name_partial_match, -> (title) { where('title like ?', "%#{title}%") if title.present? }
