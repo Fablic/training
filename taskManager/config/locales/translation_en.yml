@@ -1,0 +1,13 @@
+en:
+  activerecord:
+    models:
+      task: Task  #g
+
+    attributes:
+      task:
+        description: Description  #g
+        due: Due  #g
+        label: Label  #g
+        priority: Priority  #g
+        status: Status  #g
+        summary: Summary  #g
