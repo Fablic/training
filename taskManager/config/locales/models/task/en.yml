@@ -1,0 +1,43 @@
+en:
+  activerecord:
+    models:
+      task: Task
+
+    attributes:
+      task:
+        description: Description
+        due: Due
+        label: Label
+        priority: Priority
+        status: Status
+        summary: Summary
+
+    flash:
+      task_create: Task created
+      task_edit: Task edited
+      task_delete: Task deleted
+
+  tasks:
+    index:
+      title: Task List
+    edit:
+      title: Editing Task
+    new:
+      title: New Task
+    show:
+      title: Task Detail
+
+  enum:
+    task:
+      priority:
+      highest: Highest
+      higher: Higher
+      middle: Middle
+      lower: Lower
+      lowest: Lowest
+    status:
+      open: Open
+      progress: Progress
+      review: Review
+      reopen: Reopen
+      done: Dane

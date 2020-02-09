@@ -1,0 +1,45 @@
+ja:
+  activerecord:
+    models:
+      task: タスク
+
+    attributes:
+      task:
+        description: 説明
+        due: 期限
+        label: ラベル
+        priority: 優先度
+        status: ステータス
+        summary: 概要
+
+    flash:
+      task_create: タスクを作成しました
+      task_edit: タスクを編集しました
+      task_delete: タスクを削除しました
+
+  tasks:
+    index:
+      title: タスク一覧
+    edit:
+      title: タスク編集
+    new:
+      title: タスク登録
+    show:
+      title: タスク詳細
+
+  enum:
+    task:
+      priority:
+      highest: 最高
+      higher: 高
+      middle: 中
+      lower: 低
+      lowest: 最低
+    status:
+      open: オープン
+      progress: 進行中
+      review: レビュー中
+      reopen: 再オープン
+      done: 完了
+
+
