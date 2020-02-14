@@ -6,7 +6,6 @@ let conditions = {};
 let pagination = new Pagination();
 
 window.addEventListener('DOMContentLoaded', function() {
-  //alert(I18n.t('views.message.change_complete'));
   prepare();
 
   document.getElementById("search-task").onclick = function() {
@@ -172,6 +171,11 @@ const createTaskListElements = () => {
 }
 
 const prepare = () => {
+  const el = document.getElementById('task-list-doby');
+  const sortable = Sortable.create(el, {
+    ghostClass: 'dragging',
+    animation: 150,
+  });
   $.ajax({
     url: '/board/api/master/all',
     type: 'get',

@@ -1,20 +1,21 @@
 <body>
+<%= stylesheet_link_tag 'board' %>
 <!-- Fixed navbar -->
 <header>
-<nav class="navbar navbar-default navbar-top">
-  <div class="container">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#" data-turbolinks="false">Guild</a>
+  <nav class="navbar navbar-default navbar-top">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#" data-turbolinks="false">Guild</a>
+      </div>
+      <div id="navbar" class="form-inline collapse navbar-collapse" style="padding-top:8px; padding-left:100px;">
+        <button type="button" class="btn btn-success" id='create-button' data-toggle="modal" onClick="javascript:openAddingeModalWindow();"><%= t('views.create') %></button>
+        <button class="btn btn-outline-success my-2 my-sm-0" type="button" style="float: right;" id="sign-out" onClick="clickActionSignOut();">Sign out</button>
+        <% if @view_params['is_admin'] %>
+        <a href="/admin" data-turbolinks="false"><img src="<%= image_path('icon_gear.png') %>" class="card-img-top" alt="..." style="float: right;"></a>
+        <% end %>
+      </div><!--/.nav-collapse -->
     </div>
-    <div id="navbar" class="form-inline collapse navbar-collapse" style="padding-top:8px; padding-left:100px;">
-      <button type="button" class="btn btn-success" id='create-button' data-toggle="modal" onClick="javascript:openAddingeModalWindow();"><%= t('views.create') %></button>
-      <button class="btn btn-outline-success my-2 my-sm-0" type="button" style="float: right;" id="sign-out" onClick="clickActionSignOut();">Sign out</button>
-      <% if @view_params['is_admin'] %>
-      <a href="/admin" data-turbolinks="false"><img src="<%= image_path('icon_gear.png') %>" class="card-img-top" alt="..." style="float: right;"></a>
-      <% end %>
-    </div><!--/.nav-collapse -->
-  </div>
-</nav>
+  </nav>
 </header>
 <div class="container">
   <div id="alert-complete" class="alert alert-success" role="alert" hidden></div>
@@ -63,7 +64,7 @@
   <ul id="pagination" class="pagination"></ul>
 </div>
 <%= render :partial => "common/modal_window" %>
-<script src="https://cdn.jsdelivr.net/jquery.loadingoverlay/latest/loadingoverlay.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 </body>
 <%= javascript_include_tag 'lib/pagination' %>
 <%= javascript_include_tag 'board' %>
