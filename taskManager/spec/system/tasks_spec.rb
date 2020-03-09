@@ -102,6 +102,89 @@ RSpec.describe 'Tasks', type: :system  do
       end
     end
 
+    describe 'search' do
+      context 'by summary with keyword contained in only one record' do
+        before do
+          visit tasks_path
+          fill_in Task.human_attribute_name(:summary), with: 'task1'
+          click_on I18n.t('action.search')
+        end
+
+        it 'should find task1' do
+          summary = page.all('.summary')
+          expect(summary.size).to eq (1)
+          expect(page).to have_content 'task1'
+          expect(page).to have_no_content 'task2'
+          expect(page).to have_no_content 'task3'
+        end
+      end
+
+      context 'by summary with keyword contained in all record' do
+        before do
+          visit tasks_path
+          fill_in Task.human_attribute_name(:summary), with: 'task'
+          click_on I18n.t('action.search')
+        end
+
+        it 'should find task1, task2, task3' do
+          summary = page.all('.summary')
+          expect(summary.size).to eq (3)
+          expect(page).to have_content 'task1'
+          expect(page).to have_content 'task2'
+          expect(page).to have_content 'task3'
+        end
+      end
+
+      context 'by summary with keyword not contained in any record' do
+        before do
+          visit tasks_path
+          fill_in Task.human_attribute_name(:summary), with: 'hoge'
+          click_on I18n.t('action.search')
+        end
+
+        it 'should not find anything' do
+          summary = page.all('.summary')
+          expect(summary.size).to eq (0)
+          expect(page).to have_no_content 'task1'
+          expect(page).to have_no_content 'task2'
+          expect(page).to have_no_content 'task3'
+        end
+      end
+
+      context 'by status with select valid value in only one record' do
+        before do
+          visit tasks_path
+          select I18n.t('tasks.index.status.done'), from: "search_status"
+          click_on I18n.t('action.search')
+        end
+
+        it 'should find task3' do
+          status = page.all('.status')
+          expect(status.size).to eq (1)
+          expect(status[0].text).to eq  I18n.t('tasks.index.status.done')
+          expect(page).to have_no_content 'task1'
+          expect(page).to have_no_content 'task2'
+          expect(page).to have_content 'task3'
+        end
+      end
+
+      context 'by status with select invalid value in any record' do
+        before do
+          visit tasks_path
+          select I18n.t('tasks.index.status.reopen'), from: "search_status"
+          click_on I18n.t('action.search')
+        end
+
+        it 'should find task3' do
+          status = page.all('.status')
+          expect(status.size).to eq (0)
+          expect(page).to have_no_content 'task1'
+          expect(page).to have_no_content 'task2'
+          expect(page).to have_no_content 'task3'
+        end
+      end
+    end
+
     it 'Tests of Click Draft Anchor Link' do
       visit root_path
       click_on I18n.t('action.create')

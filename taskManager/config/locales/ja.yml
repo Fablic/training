@@ -4,6 +4,7 @@ ja:
     update: '更新'
     remove: '削除'
     detail: '詳細'
+    search: '検索'
     back:   '戻る'
 
   flash:

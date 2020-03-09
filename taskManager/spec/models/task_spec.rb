@@ -90,4 +90,49 @@ RSpec.describe Task, type: :model do
       end
     end
   end
+
+  describe 'search' do
+    let!(:task1) {create(:task1, summary: 'hoge') }
+    let!(:task2) {create(:task2, summary: 'fuga') }
+    let!(:task3) {create(:task3, summary: 'piyo') }
+    let(:sort_column) { :due }
+    context 'when searching with summary' do
+      it 'is record found' do
+        tasks = Task.search({summary: 'fuga', status: nil})
+        expect(tasks.size).to eq (1)
+        expect(tasks).to include(task2)
+      end
+
+      it 'is record not found ' do
+        tasks = Task.search({summary: 'fuge', status: nil})
+        expect(tasks.size).to eq (0)
+      end
+    end
+
+    context 'when searching with status' do
+      it 'is record found' do
+        tasks = Task.search({summary: nil, status: 5})
+        expect(tasks.size).to eq (1)
+        expect(tasks).to include(task3)
+      end
+
+      it 'is record not found' do
+        tasks = Task.search({summary: nil, status: 4})
+        expect(tasks.size).to eq (0)
+      end
+    end
+
+    context 'when searching with summary and status' do
+      it 'is record found' do
+        tasks = Task.search({summary: 'hoge', status: 1})
+        expect(tasks.size).to eq (1)
+        expect(tasks).to include(task1)
+      end
+
+      it 'is record not found' do
+        tasks = Task.search({summary: 'hoge', status: 3})
+        expect(tasks.size).to eq (0)
+      end
+    end
+  end
 end

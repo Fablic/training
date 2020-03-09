@@ -1,4 +1,21 @@
 <h1><%= t('.title') %></h1>
+<div class="center jumbotron">
+  <%= form_with(scope: :search, url: tasks_path,  method: :get, local: true) do |form|%>
+    <div class="input-group" style="margin: 3px;">
+      <div style="width:250px; height:auto;margin-left:10px;float:left;">
+        <%= form.label(:summary, Task.human_attribute_name(:summary)) %>
+        <%= form.text_field :summary, value: @search_params[:summary] %>
+      </div>
+      <div style="width:250px; height:auto;margin-left:10px;float:left;">
+        <%= form.label(:status, Task.human_attribute_name(:status)) %>
+        <%= form.select :status, Task.statuses.map { |k,v| [t("tasks.edit.status.#{k}"),k] }, {include_blank: '', selected: @search_params[:status] } %>
+      </div>
+      <div style="width:250px; height:auto;margin-right:10px;float:right;">
+        <%= submit_tag t('action.search'), name: nil, class: 'btn btn-default' %>
+      </div>
+    </div>
+  <% end %>
+</div>
 
 <table class="table">
   <thead>
@@ -6,37 +23,37 @@
     <th><%= Task.human_attribute_name(:summary) %></th>
     <th>
       <%= Task.human_attribute_name(:priority) %>
-      <%= link_to ({position: 'priority', order: 'asc'}), id: 'priority_asc' do %>
+      <%= link_to ({position: 'priority', order: 'asc', search: @search_params}), id: 'priority_asc' do %>
         <span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true" style="transform:rotate(180deg)"></span>
       <% end %>
-      <%= link_to ({position: 'priority', order: 'desc'}), id: 'priority_desc' do %>
+      <%= link_to ({position: 'priority', order: 'desc', search: @search_params}), id: 'priority_desc' do %>
         <span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true"></span>
       <% end %>
     </th>
     <th>
       <%= Task.human_attribute_name(:status) %>
-      <%= link_to ({position: 'status', order: 'desc'}), id: 'status_desc' do %>
+      <%= link_to ({position: 'status', order: 'desc', search: @search_params}), id: 'status_desc' do %>
         <span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true" style="transform:rotate(180deg)"></span>
       <% end %>
-      <%= link_to ({position: 'status', order: 'asc'}), id: 'status_asc' do %>
+      <%= link_to ({position: 'status', order: 'asc', search: @search_params}), id: 'status_asc' do %>
         <span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true"></span>
       <% end %>
     </th>
     <th>
       <%= Task.human_attribute_name(:due) %>
-      <%= link_to ({position: 'due', order: 'desc'}), id: 'due_desc' do %>
+      <%= link_to ({position: 'due', order: 'desc', search: @search_params}), id: 'due_desc' do %>
         <span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true" style="transform:rotate(180deg)"></span>
       <% end %>
-      <%= link_to ({position: 'due', order: 'asc'}), id: 'due_asc' do %>
+      <%= link_to ({position: 'due', order: 'asc', search: @search_params}), id: 'due_asc' do %>
         <span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true"></span>
       <% end %>
     </th>
     <th>
       <%= Task.human_attribute_name(:created_at) %>
-      <%= link_to ({position: 'created_at', order: 'desc'}), id: 'created_desc' do %>
+      <%= link_to ({position: 'created_at', order: 'desc', search: @search_params}), id: 'created_desc' do %>
         <span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true" style="transform:rotate(180deg)"></span>
       <% end %>
-      <%= link_to ({position: 'created_at', order: 'asc'}), id: 'created_asc' do %>
+      <%= link_to ({position: 'created_at', order: 'asc', search: @search_params}), id: 'created_asc' do %>
         <span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true"></span>
       <% end %>
     </th>
@@ -46,7 +63,7 @@
   <tbody>
 <% @tasks.each do |task| %>
   <tr>
-    <td class="sumamry"><%= task.summary %></td>
+    <td class="summary"><%= task.summary %></td>
     <td class="priority"><%= t(".priority.#{task.priority}") %></td>
     <td class="status"><%= t(".status.#{task.status}") %></td>
     <td class="due"><%= l(task.due, format: :default) %></td>

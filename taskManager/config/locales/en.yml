@@ -4,6 +4,7 @@ en:
     update: Update
     remove: Remove
     detail: Detail
+    search: Search
     back:   Back
 
   flash:
