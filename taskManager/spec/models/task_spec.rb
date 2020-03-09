@@ -6,7 +6,8 @@ RSpec.describe Task, type: :model do
   let(:description) { 'this is 1st valid task' }
   let(:status)      { 1 }
   let(:priority)    { 1 }
-  subject { Task.new(summary: summary, description: description, status: status, priority: priority )  }
+  let(:due)         { Time.zone.now }
+  subject { Task.new(summary: summary, description: description, status: status, priority: priority, due: due )  }
 
   describe '#create' do
     describe 'validate summary' do
@@ -70,6 +71,22 @@ RSpec.describe Task, type: :model do
       context 'when null' do
         let(:priority) { nil }
         it { is_expected.to be_invalid }
+      end
+    end
+
+    describe 'validate due' do
+      context 'when valid value' do
+        let(:due) { Time.zone.local(2100, 12, 31, 0, 0) }
+        it { is_expected.to be_valid }
+      end
+
+      context 'when past time' do
+        let(:due) { Time.zone.yesterday }
+        it { is_expected.to be_invalid }
+      end
+
+      context 'when null' do
+         it { is_expected.to be_valid }
       end
     end
   end

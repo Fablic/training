@@ -20,3 +20,19 @@ en:
       danger:   'Filed to remove this task...please retry agein'
       confirm:  'Are you sure, you want to remove this task?'
     selector: 'Plase select %{item}'
+
+  validate:
+    errors:
+      messages:
+        past_time: 'Can not input past date'
+
+  date:
+    formats:
+      default: "%Y/%m/%d"
+      long: "%Y/%m/%d(%a)"
+      short: "%m/%d"
+  time:
+    formats:
+      default: "%Y/%m/%d %H:%M:%S"
+      long: "%Y/%m/%d(%a) %H:%M:%S %z"
+      short: "%y/%m/%d %H:%M"

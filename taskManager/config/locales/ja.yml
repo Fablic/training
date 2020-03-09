@@ -20,3 +20,19 @@ ja:
       danger:   'タスクの削除に失敗しました。もう一度お試しください。'
       confirm:  'タスクを削除します、宜しいですか？'
     selector: '%{item}を選択してください'
+
+  validate:
+    errors:
+      messages:
+        past_time: 'は過去の日付は指定できません'
+
+  date:
+    formats:
+      default: "%Y/%m/%d"
+      long: "%Y年%m月%d日(%a)"
+      short: "%m-%d"
+  time:
+    formats:
+      default: "%Y/%m/%d %H:%M:%S"
+      long: "%Y年%m月%d日(%a) %H時%M分%S秒"
+      short: "%y-%m-%d %H:%M"

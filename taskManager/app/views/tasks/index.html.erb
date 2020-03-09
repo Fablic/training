@@ -4,23 +4,53 @@
   <thead>
   <tr>
     <th><%= Task.human_attribute_name(:summary) %></th>
-    <th><%= Task.human_attribute_name(:description) %></th>
-    <th><%= Task.human_attribute_name(:priority) %></th>
-    <th><%= Task.human_attribute_name(:status) %></th>
-    <th><%= Task.human_attribute_name(:due) %></th>
-    <th><%= Task.human_attribute_name(:created_at) %></th>
+    <th>
+      <%= Task.human_attribute_name(:priority) %>
+      <%= link_to ({position: 'priority', order: 'asc'}), id: 'priority_asc' do %>
+        <span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true" style="transform:rotate(180deg)"></span>
+      <% end %>
+      <%= link_to ({position: 'priority', order: 'desc'}), id: 'priority_desc' do %>
+        <span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true"></span>
+      <% end %>
+    </th>
+    <th>
+      <%= Task.human_attribute_name(:status) %>
+      <%= link_to ({position: 'status', order: 'desc'}), id: 'status_desc' do %>
+        <span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true" style="transform:rotate(180deg)"></span>
+      <% end %>
+      <%= link_to ({position: 'status', order: 'asc'}), id: 'status_asc' do %>
+        <span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true"></span>
+      <% end %>
+    </th>
+    <th>
+      <%= Task.human_attribute_name(:due) %>
+      <%= link_to ({position: 'due', order: 'desc'}), id: 'due_desc' do %>
+        <span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true" style="transform:rotate(180deg)"></span>
+      <% end %>
+      <%= link_to ({position: 'due', order: 'asc'}), id: 'due_asc' do %>
+        <span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true"></span>
+      <% end %>
+    </th>
+    <th>
+      <%= Task.human_attribute_name(:created_at) %>
+      <%= link_to ({position: 'created_at', order: 'desc'}), id: 'created_desc' do %>
+        <span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true" style="transform:rotate(180deg)"></span>
+      <% end %>
+      <%= link_to ({position: 'created_at', order: 'asc'}), id: 'created_asc' do %>
+        <span class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true"></span>
+      <% end %>
+    </th>
     <th></th>
   </tr>
   </thead>
   <tbody>
 <% @tasks.each do |task| %>
   <tr>
-    <td><%= task.summary %></td>
-    <td><%= task.description %></td>
-    <td><%= t(".priority.#{task.priority}") %></td>
-    <td><%= t(".status.#{task.status}") %></td>
-    <td><%= task.due %></td>
-    <td><%= task.created_at %></td>
+    <td class="sumamry"><%= task.summary %></td>
+    <td class="priority"><%= t(".priority.#{task.priority}") %></td>
+    <td class="status"><%= t(".status.#{task.status}") %></td>
+    <td class="due"><%= l(task.due, format: :default) %></td>
+    <td class="created_at"><%= l(task.created_at, format: :default) %></td>
     <td>
       <%= link_to t('action.detail'), task_path(task.id), class:"btn btn-primary" %>
       <%= link_to t('action.update'), edit_task_path(task), class:"btn btn-primary" %>

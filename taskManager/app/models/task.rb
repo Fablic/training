@@ -19,4 +19,10 @@ class Task < ApplicationRecord
   validates :status,
     presence: true,
     inclusion: { in: self.statuses.keys }
+
+  validate :due_must_be_feature
+
+  def due_must_be_feature
+    errors.add(:due, I18n.t('validate.errors.messages.past_time')) if due.present? && due < Time.zone.today
+  end
 end
