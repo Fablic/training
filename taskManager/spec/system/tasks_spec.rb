@@ -185,6 +185,22 @@ RSpec.describe 'Tasks', type: :system  do
       end
     end
 
+    describe 'pagenation' do
+      context 'when there are several pages' do
+        let!(:task) { create_list(:task1, 30) }
+        it 'should transrate next page' do
+          visit tasks_path
+          expect(page).to have_link 2, href: tasks_path(page: 2)
+          expect(page).to have_link 3, href: tasks_path(page: 3)
+        end
+
+        it 'should transrate previous page' do
+          visit tasks_path(page: 2)
+          expect(page).to have_link 1, href: tasks_path
+        end
+      end
+    end
+
     it 'Tests of Click Draft Anchor Link' do
       visit root_path
       click_on I18n.t('action.create')
