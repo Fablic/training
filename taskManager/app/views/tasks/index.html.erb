@@ -23,6 +23,7 @@
   <tr>
     <th><%= Task.human_attribute_name(:id) %></th>
     <th><%= Task.human_attribute_name(:summary) %></th>
+    <th><%= Task.human_attribute_name(:user_name) %></th>
     <th>
       <%= Task.human_attribute_name(:priority) %>
       <%= link_to ({position: 'priority', order: 'asc', search: @search_params}), id: 'priority_asc' do %>
@@ -67,6 +68,7 @@
   <tr>
     <td class="id"><%= task.id %></td>
     <td class="summary"><%= task.summary %></td>
+    <td class="user_name"><%= task.user_id ? task.user.view_name : nil %>
     <td class="priority"><%= t(".priority.#{task.priority}") %></td>
     <td class="status"><%= t(".status.#{task.status}") %></td>
     <td class="due"><%= l(task.due, format: :default) %></td>

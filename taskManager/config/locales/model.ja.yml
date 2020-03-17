@@ -16,14 +16,26 @@ ja:
   activerecord:
     models:
       task: タスク
+      user: ユーザー
 
     attributes:
       task:
         summary: 概要
         description: 説明
+        user_name: ユーザ名
         priority: 優先度
         status: ステータス
         due: 期限
+        created_at: 作成日
+        updated_at: 更新日
+      user:
+        email: メールアドレス
+        first_name: 名前（名）
+        last_name: 名前（姓）
+        password: パスワード
+        password_confirmation: パスワード確認
+        role: 権限
+        invalid_flg: 無効フラグ
         created_at: 作成日
         updated_at: 更新日
 

@@ -16,14 +16,26 @@ en:
   activerecord:
     models:
       task: Task
+      user: User
 
     attributes:
       task:
         summary: Summary
         description: Description
+        user_name: UserName
         priority: Priority
         status: Stats
         due: Due Date
+        created_at: Create Date
+        updated_at: Update Date
+      user:
+        email: Email
+        first_name: First Name
+        last_name: Famiry Name
+        password: Password
+        password_confirmation: Password Confirm
+        role: Role
+        invalid_flg: Invalid
         created_at: Create Date
         updated_at: Update Date
 

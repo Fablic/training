@@ -6,7 +6,8 @@ class TasksController < ApplicationController
 
   def index
     @search_params = task_search_params
-    @tasks = Task.page(params[:page])
+    @tasks = Task.preload(:user)
+      .page(params[:page])
       .per(ROWS_PER_PAGE)
       .search(@search_params)
       .order(format('%s %s', sort_position, sort_order))
@@ -62,7 +63,8 @@ class TasksController < ApplicationController
       :description,
       :priority,
       :status,
-      :due
+      :due,
+      :user_id
     )
   end
 

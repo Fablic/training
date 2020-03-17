@@ -8,3 +8,14 @@ en:
       title: 'ID:%{task_id} - Task Detail'
     edit:
       title: 'ID:%{task_id} - Task Edition'
+
+  user:
+    index:
+      title: 'User List'
+    new:
+      title: 'New User'
+    show:
+      title: 'ID:%{user_id} - User Detail'
+    edit:
+      title: 'ID:%{user_id} - User Edition'
+

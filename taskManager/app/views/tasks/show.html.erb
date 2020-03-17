@@ -11,6 +11,10 @@
       <td><%= @task.description %></td>
     </tr>
     <tr>
+      <td><%= Task.human_attribute_name(:user_name) %></td>
+      <td><%= @task.user.view_name %></td>
+    </tr>
+    <tr>
       <td><%= Task.human_attribute_name(:priority) %></td>
       <td><%= t(".priority.#{@task.priority}") %></td>
     </tr>

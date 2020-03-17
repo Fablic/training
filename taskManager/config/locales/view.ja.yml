@@ -9,3 +9,12 @@ ja:
     edit:
       title: 'ID:%{task_id}のタスク編集'
 
+  users:
+    index:
+      title: 'ユーザ一覧'
+    new:
+      title: 'ユーザ登録'
+    show:
+      title: 'ID:%{user_id}のユーザ詳細'
+    edit:
+      title: 'ID:%{user_id}のユーザ編集'
