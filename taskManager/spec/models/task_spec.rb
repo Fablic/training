@@ -7,7 +7,8 @@ RSpec.describe Task, type: :model do
   let(:status)      { 1 }
   let(:priority)    { 1 }
   let(:due)         { Time.zone.now }
-  subject { Task.new(summary: summary, description: description, status: status, priority: priority, due: due )  }
+  let(:user)        { create(:user) }
+  subject { Task.new(summary: summary, description: description, status: status, priority: priority, due: due, user: user )  }
 
   describe '#create' do
     describe 'validate summary' do

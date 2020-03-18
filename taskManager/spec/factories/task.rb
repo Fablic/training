@@ -6,6 +6,7 @@ FactoryBot.define do
     priority { 1 }
     status { 1 }
     due { Date.today.end_of_month }
+    association :user, factory: :user
   end
   factory :task2, class:Task do
     summary { 'task2' }
@@ -13,6 +14,7 @@ FactoryBot.define do
     priority { 3 }
     status { 3 }
     due { Date.today.end_of_month }
+    association :user, factory: :user
   end
 
   factory :task3, class: Task do
@@ -21,5 +23,6 @@ FactoryBot.define do
     priority { 5 }
     status { 5 }
     due { Date.today.end_of_month }
+    association :user, factory: :user
   end
 end

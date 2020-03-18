@@ -6,6 +6,7 @@ ja:
     detail: '詳細'
     search: '検索'
     back:   '戻る'
+    logout: 'ログアウト'
 
   flash:
     create:
@@ -26,6 +27,13 @@ ja:
     errors:
       messages:
         past_time: 'は過去の日付は指定できません'
+
+  sessions:
+    new:
+      sign_in: 'ログイン'
+    create:
+      retry: 'メールアドレスかパスワードが正しくありません'
+      logged_in: 'ログインしました'
 
   date:
     formats:

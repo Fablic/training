@@ -21,12 +21,6 @@
   </div>
 </div>
 <div class="form-group row">
-  <%= form.label :user_name, class: 'col-sm-2 col-form-label' %>
-  <div class="col-sm-5">
-    <%= form.collection_select :user_id, User.all, :id, :view_name, :include_blank => '未選択', class: 'form-control' %>
-  </div>
-</div>
-<div class="form-group row">
   <%= form.label :priority, class: 'col-sm-2 col-form-label' %>
   <div class="col-sm-5">
     <%# Todo: model.*.ymlに記述されているpriorityのHashMapをStep12以降で調整 %>

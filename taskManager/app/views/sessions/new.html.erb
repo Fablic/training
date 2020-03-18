@@ -1,0 +1,13 @@
+<h1>Login</h1>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_with scope: :session, url: sessions_path do |form| %>
+      <%= form.label :email %>
+      <%= form.text_field :email, size: 32, class: 'form-control' %>
+      <%= form.label :password %>
+      <%= form.password_field :password, size: 32, class: 'form-control' %>
+      <%= form.submit t('.sign_in'), class: 'btn btn-primary' %>
+    <% end %>
+  </div>
+</div>
