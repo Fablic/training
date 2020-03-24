@@ -1,0 +1,9 @@
+<h1>ユーザ編集</h1>
+<%= form_with(model: @admin_user, local: true) do |form| %>
+  <%= render 'form', { form: form } %>
+  <div>
+    <%= form.submit t('action.update'), class: "btn btn-primary" %>
+    <%= link_to t('action.remove'), admin_user_path(@admin_user), class:"btn btn-primary", method: :delete, data: { confirm: t('flash.remove.confirm') } %>
+    <%= link_to t('action.back'), admin_users_path, class: "btn btn-primary" %>
+  </div>
+<% end %>

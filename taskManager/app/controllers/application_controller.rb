@@ -4,12 +4,15 @@ class ApplicationController < ActionController::Base
   before_action :check_authenticate
 
   def check_authenticate
-    redirect_to(sign_in_path) if current_user.nil?
+    if current_user.nil?
+      session.clear
+      redirect_to(sign_in_path)
+    end
   end
 
   def current_user
     return if session[:user_id].nil?
-    @current_user ||= User.find(session[:user_id])
+    @current_user ||= User.find_by(id: session[:user_id])
   end
   helper_method :current_user
 end

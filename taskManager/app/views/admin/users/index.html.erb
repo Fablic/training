@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Admin Users</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Task count</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @admin_users.each do |admin_user| %>
+      <tr>
+        <td><%= format('%s %s', admin_user.last_name, admin_user.first_name) %></td>
+        <td><%= admin_user.tasks.size %></td>
+        <td><%= link_to t('action.detail'), admin_user, class: "btn btn-primary" %></td>
+        <td><%= link_to t('action.update'), edit_admin_user_path(admin_user), class: "btn btn-primary" %></td>
+        <td><%= link_to t('action.remove'), admin_user, method: :delete, class: "btn btn-primary", data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to t('action.create'), new_admin_user_path, class: "btn btn-primary" %>
