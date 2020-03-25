@@ -1,3 +1,4 @@
+UserLoginManager.delete_all
 UserProject.delete_all
 TaskLabel.delete_all
 Label.delete_all

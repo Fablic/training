@@ -19,15 +19,14 @@ class ApplicationController < ActionController::Base
   end
 
   def sign_in(user)
-    remember_token = User.new_remember_token
+    remember_token = UserLoginManager.create!(user_id: user.id, request: request)
     cookies.permanent[:user_remember_token] = remember_token
-    user.update!(remember_token: User.encrypt(remember_token))
     @current_user = user
   end
 
   def current_user
-    remember_token = User.encrypt(cookies[:user_remember_token])
-    @current_user ||= User.find_by(remember_token: remember_token)
+    return @current_user = nil if cookies[:user_remember_token].blank?
+    @current_user ||= UserLoginManager.auth(remember_token: cookies[:user_remember_token], request: request)
   end
 
   def routing_error
@@ -46,6 +45,8 @@ class ApplicationController < ActionController::Base
   private
 
   def maintenance?
+    return false unless  File.exist? 'config/maintenance.yml'
+
     data = open('config/maintenance.yml', 'r') { |f| YAML.safe_load(f) }
     data['maintenance_mode']
   end

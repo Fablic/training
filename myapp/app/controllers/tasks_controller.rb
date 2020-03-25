@@ -15,8 +15,7 @@ class TasksController < ApplicationController
   end
 
   def update # rubocop:disable Metrics/AbcSize
-    @find_task.update(request_params)
-    if @find_task.save
+    if @find_task.update(request_params)
       redirect_to project_url(id: @find_task.group.project.id), alert: I18n.t('flash.success_updated', model_name: 'task')
     else
       flash[:alert] = I18n.t('flash.failed_update', model_name: 'task')

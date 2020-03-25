@@ -4,8 +4,7 @@ class LabelsController < ApplicationController
   before_action :find_label, only: [:update]
 
   def update # rubocop:disable Metrics/AbcSize
-    @find_label.update(request_params)
-    if @find_label.save
+    if  @find_label.update(request_params)
       redirect_to project_url(id: @find_label.project.id), alert: I18n.t('flash.success_updated', model_name: 'label')
     else
       flash[:alert] = I18n.t('flash.failed_update', model_name: 'label')

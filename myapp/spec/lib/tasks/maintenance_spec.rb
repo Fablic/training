@@ -11,22 +11,21 @@ describe 'maintenance' do
     Rake::Task.define_task(:environment)
   end
 
+  subject {
+    open('config/maintenance.yml', 'r') { |f| YAML.load(f) }['maintenance_mode']
+  }
 
   describe 'maintenance:start' do
-    it 'returns hoge' do
-      expect(@rake['maintenance:start'].invoke).to be_truthy
-
-      data = open('config/maintenance.yml', 'r') { |f| YAML.load(f) }
-      expect(data["maintenance_mode"]).to eq true
+    it 'maintenance value of config/maintenance.yml is changed to true' do
+      @rake['maintenance:start'].invoke
+      is_expected.to be_truthy
     end
   end
 
   describe 'maintenance:end' do
-    it 'returns hoge' do
-      expect(@rake['maintenance:end'].invoke).to be_truthy
-
-      data = open('config/maintenance.yml', 'r') { |f| YAML.load(f) }
-      expect(data["maintenance_mode"]).to eq false
+    it 'maintenance value of config/maintenance.yml is changed to false' do
+      @rake['maintenance:end'].invoke
+      is_expected.to be_falsey
     end
   end
 end

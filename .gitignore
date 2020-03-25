@@ -29,6 +29,7 @@ myapp/docs/img/.DS_Store
 /myapp/.idea/*
 
 /myapp/yarn.lock
+/myapp/config/maintenance.yml
 
 /myapp/*.swp
 *.swp

@@ -25,8 +25,7 @@ class ProjectsController < ApplicationController
   end
 
   def update
-    @find_project.update(request_params)
-    if @find_project.save
+    if  @find_project.update(request_params)
       render status: 200, json: {}
     else
       render status: 400, json: {}
