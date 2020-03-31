@@ -12,6 +12,10 @@ priority: &priority
   lower: Lower
   lowest: Lowest
 
+role: &role
+  general: General
+  admin: Admin
+
 en:
   activerecord:
     models:
@@ -38,6 +42,8 @@ en:
         invalid_flg: Invalid
         created_at: Create Date
         updated_at: Update Date
+        name: User Name
+        task_count: Task Count
 
   tasks:
     index:
@@ -52,3 +58,6 @@ en:
     show:
       status: *status
       priority: *priority
+
+  users:
+    role: *role

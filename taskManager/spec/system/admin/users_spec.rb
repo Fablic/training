@@ -49,7 +49,7 @@ RSpec.describe "Users", type: :system do
   end
 
   context 'when user deletes the other user on user detail page' do
-    let!(:user1) { create(:user) }
+    let!(:user1) { create(:user, role: User.roles[:admin]) }
     it do
       visit admin_user_path(user1.id)
       click_on I18n.t('action.remove')

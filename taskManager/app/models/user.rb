@@ -22,6 +22,21 @@ class User < ApplicationRecord
   validates :role,
     presence: true
 
+  before_destroy do
+    unless check_exist_two_admin?
+      errors.add(:base, I18n.t('validate.errors.messages.require_at_one_admin'))
+      throw(:abort)
+    end
+  end
+
+  validate proc {
+    !check_exist_two_admin? && errors.add(:base, I18n.t('validate.errors.messages.require_at_one_admin'))
+  }, on: :update, if: -> { self.role_was == 'admin' && self.general? }
+
+  def check_exist_two_admin?
+    User.where(role: :admin).count >= 2
+  end
+
   def view_name
     last_name + ' ' + first_name
   end

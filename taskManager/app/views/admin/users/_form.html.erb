@@ -19,6 +19,11 @@
 </div>
 
 <div class="field">
+  <%= form.label :role %>
+  <%= form.select :role, Admin::User.roles.map { |k,v| [t("users.role.#{k}"),k] } %>
+</div>
+
+<div class="field">
   <%= form.label :email %>
   <%= form.text_field :email %>
 </div>

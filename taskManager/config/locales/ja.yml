@@ -27,6 +27,7 @@ ja:
     errors:
       messages:
         past_time: 'は過去の日付は指定できません'
+        require_at_one_admin: '管理者権限のユーザは少なくとも1名必要です'
 
   sessions:
     new:

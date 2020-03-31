@@ -8,10 +8,12 @@
 <h2>User Info</h2>
 <table class="table table-bordered">
   <tr>
-    <th>Email</th>
+    <th><%= User.human_attribute_name(:email) %></th>
+    <th><%= User.human_attribute_name(:role) %></th>
   </tr>
   <tr>
     <td><%= @admin_user.email %></td>
+    <td><%= t("users.role.#{@admin_user.role}") %></td>
   </tr>
 </table>
 

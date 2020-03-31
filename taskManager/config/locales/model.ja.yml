@@ -12,6 +12,10 @@ priority: &priority
   lower: 低
   lowest: 最低
 
+role: &role
+  general: 一般
+  admin: 管理者
+
 ja:
   activerecord:
     models:
@@ -38,6 +42,8 @@ ja:
         invalid_flg: 無効フラグ
         created_at: 作成日
         updated_at: 更新日
+        name: ユーザ名
+        task_count: タスク件数
 
   tasks:
     index:
@@ -52,3 +58,7 @@ ja:
     show:
       status: *status
       priority: *priority
+
+  users:
+    role: *role
+    

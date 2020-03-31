@@ -71,4 +71,52 @@ RSpec.describe User, type: :model do
     }
   end
 
+  describe 'check destory validation' do
+    context 'when there are two admin user' do
+      let!(:user1) { create(:user, role: :admin) }
+      let!(:user2) { create(:user, role: :admin) }
+
+      it 'can delete admin user' do
+        user1.destroy!
+        expect(User.count).to eq(1)
+      end
+    end
+
+    context 'when there is only one admin user' do
+      let!(:user1) { create(:user, role: :admin) }
+      let!(:user2) { create(:user, role: :general) }
+
+      it 'can not delete admin user' do
+        expect {
+          user1.destroy!
+        }.to raise_error(ActiveRecord::RecordNotDestroyed)
+      end
+    end
+  end
+
+  describe 'check update validation' do
+    context 'when there are two admin user' do
+      let!(:user1) { create(:user, role: :admin) }
+      let!(:user2) { create(:user, role: :admin) }
+
+      it 'admin user can turn into general user' do
+        user1.role = :general
+        user1.save
+        expect(User.where(role: :admin).count).to eq(1)
+      end
+    end
+
+    context 'when there is only one admin user' do
+      let!(:user1) { create(:user, role: :admin) }
+      let!(:user2) { create(:user, role: :general) }
+
+      it 'admin user can not turn into general user' do
+        user1.role = :general
+        expect{
+          user1.save!
+        }.to raise_error(ActiveRecord::RecordInvalid)
+        expect(User.where(role: :admin).count).to eq(1)
+      end
+    end
+  end
 end

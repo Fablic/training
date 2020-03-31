@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  skip_before_action :check_authenticate, only: %i[new create]
+  skip_before_action :check_authenticate
 
   def new
     @user = User.new
