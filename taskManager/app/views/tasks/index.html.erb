@@ -1,7 +1,7 @@
 <h1><%= t('.title') %></h1>
 <div class="center jumbotron">
   <%= form_with(scope: :search, url: tasks_path,  method: :get, local: true) do |form|%>
-    <div class="input-group" style="margin: 3px;">
+    <div class="input-group" style="margin: 10px;">
       <div style="width:250px; height:auto;margin-left:10px;float:left;">
         <%= form.label(:summary, Task.human_attribute_name(:summary)) %>
         <%= form.text_field :summary, value: @search_params[:summary] %>
@@ -11,8 +11,15 @@
         <%= form.select :status, Task.statuses.map { |k,v| [t("tasks.edit.status.#{k}"),k] }, {include_blank: '', selected: @search_params[:status] } %>
       </div>
       <div style="width:250px; height:auto;margin-right:10px;float:right;">
-        <%= submit_tag t('action.search'), name: nil, class: 'btn btn-default' %>
+        <%= submit_tag t('action.search.task'), name: nil, class: 'btn btn-default' %>
       </div>
+    </div>
+
+    <div class="input-group" style="margin: 10px;">
+      <%= text_field_tag 'search[label]', @search_params[:label], class: 'form-control', placeholder: t('placeholder.search', item: 'ラベル') %>
+      <span class="input-group-btn">
+        <%= submit_tag t('action.search.label'), name: nil, class: 'btn btn-default' %>
+      </span>
     </div>
   <% end %>
 </div>

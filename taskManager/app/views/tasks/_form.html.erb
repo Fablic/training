@@ -40,3 +40,9 @@
     <%= form.date_field :due %>
   </div>
 </div>
+<div class="form-group row">
+  <%= form.label 'ラベル', class: 'col-sm-3 col-form-label' %>
+  <div class="col-sm-9">
+    <%= text_field_tag 'label', render_labels(@labels), size: 124, class: 'form-control' %>
+  </div>
+</div>

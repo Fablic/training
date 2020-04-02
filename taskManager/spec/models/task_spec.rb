@@ -99,39 +99,39 @@ RSpec.describe Task, type: :model do
     let(:sort_column) { :due }
     context 'when searching with summary' do
       it 'is record found' do
-        tasks = Task.search({summary: 'fuga', status: nil})
+        tasks = Task.search({summary: 'fuga', status: nil, label: '' })
         expect(tasks.size).to eq (1)
         expect(tasks).to include(task2)
       end
 
       it 'is record not found ' do
-        tasks = Task.search({summary: 'fuge', status: nil})
+        tasks = Task.search({summary: 'fuge', status: nil, label: ''})
         expect(tasks.size).to eq (0)
       end
     end
 
     context 'when searching with status' do
       it 'is record found' do
-        tasks = Task.search({summary: nil, status: 5})
+        tasks = Task.search({summary: nil, status: 5, label: ''})
         expect(tasks.size).to eq (1)
         expect(tasks).to include(task3)
       end
 
       it 'is record not found' do
-        tasks = Task.search({summary: nil, status: 4})
+        tasks = Task.search({summary: nil, status: 4, label: ''})
         expect(tasks.size).to eq (0)
       end
     end
 
     context 'when searching with summary and status' do
       it 'is record found' do
-        tasks = Task.search({summary: 'hoge', status: 1})
+        tasks = Task.search({summary: 'hoge', status: 1, label: ''})
         expect(tasks.size).to eq (1)
         expect(tasks).to include(task1)
       end
 
       it 'is record not found' do
-        tasks = Task.search({summary: 'hoge', status: 3})
+        tasks = Task.search({summary: 'hoge', status: 3, label: ''})
         expect(tasks.size).to eq (0)
       end
     end

@@ -27,6 +27,14 @@
       <td><%= l(@task.due, format: :default)%></td>
     </tr>
   </table>
+  <table class="table">
+    <thead><tr><th><%= 'ラベル' %></th></tr></thead>
+    <tbody><tr><td>
+      <% @labels.each do |label| %>
+        <%= label.name %>
+      <% end %>
+    </td><tr></tbody>
+  </table>
 </div>
 
 <div>

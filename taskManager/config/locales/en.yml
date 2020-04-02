@@ -4,9 +4,14 @@ en:
     update: Update
     remove: Remove
     detail: Detail
-    search: Search
+    search:
+      task: 'Task Search'
+      label: 'Lable Search'
     back:   Back
     logout: Logout
+
+  placeholder:
+    search: 'Search with %{item}'
 
   flash:
     create:

@@ -44,6 +44,8 @@ en:
         updated_at: Update Date
         name: User Name
         task_count: Task Count
+      label:
+        name: Label
 
   tasks:
     index:

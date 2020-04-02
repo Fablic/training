@@ -44,6 +44,8 @@ ja:
         updated_at: 更新日
         name: ユーザ名
         task_count: タスク件数
+      label:
+        name: ラベル
 
   tasks:
     index:

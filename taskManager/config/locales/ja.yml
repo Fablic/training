@@ -4,9 +4,14 @@ ja:
     update: '更新'
     remove: '削除'
     detail: '詳細'
-    search: '検索'
+    search:
+      task: 'タスク検索'
+      label: 'ラベル検索'
     back:   '戻る'
     logout: 'ログアウト'
+
+  placeholder:
+    search: '%{item}で検索'
 
   flash:
     create:

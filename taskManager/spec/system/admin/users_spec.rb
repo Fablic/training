@@ -16,7 +16,6 @@ RSpec.describe "Users", type: :system do
 
     it do
       visit admin_users_path
-
       expect(page).to have_content format('%s %s', user.last_name, user.first_name)
       expect(page).to have_content 10
       expect(page).to have_link I18n.t('action.detail'), href: admin_user_path(user.id)
