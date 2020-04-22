@@ -15,7 +15,10 @@
     <% end %>
     <div class="container">
       <%= sign_out %>
-      <%= link_to t('admins'), admin_users_path %>
+      <%  if current_user.present? %>
+        <%= link_to 'タスク一覧', tasks_path %>
+        <%= link_to t('admins'), admin_users_path %>
+      <% end %>
       <%= yield %>
     </div>
   </body>
