@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  description: MyString
+  deadline: 2020-04-24 16:20:14
+  user_id: 
+  status_id: 
+
+two:
+  name: MyString
+  description: MyString
+  deadline: 2020-04-24 16:20:14
+  user_id: 
+  status_id: 
