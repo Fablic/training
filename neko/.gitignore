@@ -7,9 +7,6 @@
 # Ignore bundler config.
 /.bundle
 
-# Ignore the gem download directory & config.
-vendor/bundle
-
 # Ignore all logfiles and tempfiles.
 /log/*
 /tmp/*
@@ -33,6 +30,6 @@ vendor/bundle
 yarn-debug.log*
 .yarn-integrity
 
-# Ignore docker config & mysql data.
+# Ignore docker config & mysql data
 .env
 /db/mysql/data/
