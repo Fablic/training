@@ -7,6 +7,12 @@ module TasksHelper
     STATUS_STR[str]
   end
 
+  def status_select
+    STATUS_STR.map.with_index { |status, index|
+      [status, index]
+    }.to_h
+  end
+
   def sort_directions
     {
       desc: 'desc',

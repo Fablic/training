@@ -8,7 +8,7 @@ describe TasksController, type: :controller do
   before do
     @task = FactoryBot.create(:task)
 
-    @task1 = create(:task, name: 'task1', created_at: Time.zone.tomorrow)
+    @task1 = create(:task, name: 'task1', created_at: Time.zone.tomorrow, status: 1)
     @task2 = create(:task, name: 'task2', created_at: Time.zone.yesterday)
   end
 
@@ -83,5 +83,23 @@ describe TasksController, type: :controller do
     task2_index = res_str.index('task2')
 
     expect(task1_index).to be < task2_index
+  end
+
+  it 'Search filter by status' do
+    get :index, params: { search_form: { sort_direction: 'asc', status: 1 } }
+    expect(response.status).to eq 200
+    res_str = response.body
+    expect(res_str).to include('task1')
+    expect(res_str).not_to include('task2')
+    expect(res_str).not_to include('タスク名')
+  end
+
+  it 'Search filter by empty status' do
+    get :index, params: { search_form: { sort_direction: 'asc', status: '' } }
+    expect(response.status).to eq 200
+    res_str = response.body
+    expect(res_str).to include('task1')
+    expect(res_str).to include('task2')
+    expect(res_str).to include('タスク名')
   end
 end

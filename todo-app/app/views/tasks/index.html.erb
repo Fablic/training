@@ -9,7 +9,12 @@
       <%= form_with model: @search_form, local: true, method: :get, url: tasks_url, class: "form-inline" do |f| %>
         <div class="form-group">
           <%= f.label :sort_direction, "ソート" %>
-          <%= f.select :sort_direction, sort_directions, {selected: @search_form.sort_direction} %>
+          <%= f.select :sort_direction, sort_directions, {selected: @search_form.sort_direction}, class: "form-control" %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :status, "ステータス" %>
+          <%= f.select :status, status_select, {selected: @search_form.status, include_blank: true }, class: "form-control" %>
         </div>
 
         <div class="btn-area">

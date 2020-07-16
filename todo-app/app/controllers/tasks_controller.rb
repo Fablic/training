@@ -8,7 +8,7 @@ class TasksController < ApplicationController
       @search_form = SearchForm.new
       @search_form.sort_direction = 'desc'
     end
-    @tasks = Task.all.order(updated_at: @search_form.sort_direction).page(params[:page]).per(10)
+    @tasks = Task.search_with_condition(@search_form, params[:page])
   end
 
   def show
@@ -58,11 +58,11 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:name, :due_date)
+    params.require(:task).permit(:name, :due_date, :status)
   end
 
   def search_form_params
-    params.require(:search_form).permit(:sort_direction)
+    params.require(:search_form).permit(:sort_direction, :status)
   end
 
   def as_success_message(name, action_key)

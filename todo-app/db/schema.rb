@@ -12,12 +12,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_07_073830) do
+ActiveRecord::Schema.define(version: 2020_07_16_021410) do
   create_table 'tasks', force: :cascade do |t|
     t.string 'name'
     t.integer 'status', default: 0
     t.date 'due_date'
     t.datetime 'created_at', precision: 6, null: false
     t.datetime 'updated_at', precision: 6, null: false
+    t.index ['status'], name: 'index_tasks_on_status'
   end
 end
