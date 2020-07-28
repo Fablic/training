@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   else
     rescue_from StandardError, with: :rescue500
     rescue_from ActionController::RoutingError, with: :rescue404
-    rescue_from RecordNotFound, with: :rescue404
+    rescue_from ActiveRecord::RecordNotFound, with: :rescue404
 
     def routing_error
       raise ActionController::RoutingError, params[:path]

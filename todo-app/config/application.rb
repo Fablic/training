@@ -23,6 +23,7 @@ module TodoApp
     I18n.enforce_available_locales = true
     I18n.default_locale = :ja
 
+    config._use_original_error_screen_ = false
 
   end
 end
