@@ -12,4 +12,13 @@ class AppUser < ApplicationRecord
       self.hashed_password = nil
     end
   end
+
+  def check_login(raw_password)
+    return false if suspended || (!end_date.nil? && end_date < Time.zone.current)
+    BCrypt::Password.new(hashed_password) == raw_password
+  end
+
+  def admin?
+    false # TODO: Implement later.
+  end
 end

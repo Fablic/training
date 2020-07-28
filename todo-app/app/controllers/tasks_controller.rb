@@ -2,13 +2,15 @@
 
 class TasksController < ApplicationController
   def index
+    return redirect_to login_path unless current_user
+
     if params[:search_form]
       @search_form = SearchForm.new(search_form_params)
     else
       @search_form = SearchForm.new
       @search_form.sort_direction = 'desc'
     end
-    @tasks = Task.search_with_condition(@search_form, params[:page])
+    @tasks = Task.search_with_condition(@search_form, params[:page], current_user)
   end
 
   def show
@@ -33,6 +35,7 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
+    @task.app_user = current_user
     if @task.save
       flash.notice = as_success_message(@task.name, 'action-create')
 
@@ -66,10 +69,10 @@ class TasksController < ApplicationController
   end
 
   def as_success_message(name, action_key)
-    t('msg-success', name: name, action: t(action_key))
+    I18n.t('msg-success', name: name, action: t(action_key))
   end
 
   def error_message
-    t('msg-error')
+    I18n.t('msg-error')
   end
 end

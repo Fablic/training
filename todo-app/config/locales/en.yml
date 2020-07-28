@@ -36,3 +36,6 @@ en:
   action-update: updated
   action-create: created
   action-delete: deleted
+  login-error: log in failed check user and pass.
+  logged-in: logged in success
+  logged-out: logged out

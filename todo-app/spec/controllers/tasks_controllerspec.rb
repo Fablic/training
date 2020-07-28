@@ -6,10 +6,13 @@ describe TasksController, type: :controller do
   render_views
 
   before do
-    @task = FactoryBot.create(:task)
+    @app_user = FactoryBot.create(:app_user)
+    @task = FactoryBot.create(:task, app_user: @app_user)
 
-    @task1 = create(:task, name: 'task1', created_at: Time.zone.tomorrow, status: 1)
-    @task2 = create(:task, name: 'task2', created_at: Time.zone.yesterday)
+    @task1 = create(:task, name: 'task1', created_at: Time.zone.tomorrow, status: 1, app_user: @app_user)
+    @task2 = create(:task, name: 'task2', created_at: Time.zone.yesterday, app_user: @app_user)
+
+    session[:current_user_id] = @app_user.id
   end
 
   it 'render the :index template' do

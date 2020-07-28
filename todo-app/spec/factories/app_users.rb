@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :app_user do
-    name { 'app user1' }
+    name { 'user1' }
     password { 'pass' }
     start_date { Time.zone.now }
     suspended { false }

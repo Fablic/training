@@ -5,3 +5,6 @@ ja:
   action-update: 更新
   action-create: 作成
   action-delete: 削除
+  login-error: ログインできません、ユーザ/パスを確認してください。
+  logged-in: ログインしました
+  logged-out: ログアウトしました

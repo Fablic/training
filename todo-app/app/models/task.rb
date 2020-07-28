@@ -5,19 +5,16 @@ class Task < ApplicationRecord
   validates :due_date, presence: true
   validates :status, inclusion: { in: (0..2).to_a }
 
-  belongs_to :app_user, dependent: :destroy
+  belongs_to :app_user
 
-  # rubocop:disable Metrics/AbcSize
-  def self.search_with_condition(search, page)
-    if search.status.blank?
-      Task.all.order(updated_at: search.sort_direction)
-          .includes(:app_user)
-          .page(page).per(10)
-    else
-      Task.where(status: search.status).order(updated_at: search.sort_direction)
-          .includes(:app_user)
-          .page(page).per(10)
-    end
+  def self.search_with_condition(search, page, current_user)
+    condition = {}
+    condition[:app_user] = current_user unless current_user&.admin?
+    condition[:status] = search.status if search.status.present?
+
+    Task.where(condition).order(updated_at: search.sort_direction)
+        .order(updated_at: search.sort_direction)
+        .includes(:app_user)
+        .page(page).per(10)
   end
-  # rubocop:enable Metrics/AbcSize
 end
