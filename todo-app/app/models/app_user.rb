@@ -5,6 +5,8 @@ class AppUser < ApplicationRecord
   validates :hashed_password, presence: true, allow_blank: false
   validates :start_date, presence: true
 
+  has_many :tasks, dependent: :destroy
+
   def password=(raw_password)
     if raw_password.is_a?(String)
       self.hashed_password = BCrypt::Password.create(raw_password)
@@ -16,9 +18,5 @@ class AppUser < ApplicationRecord
   def check_login(raw_password)
     return false if suspended || (!end_date.nil? && end_date < Time.zone.current)
     BCrypt::Password.new(hashed_password) == raw_password
-  end
-
-  def admin?
-    false # TODO: Implement later.
   end
 end

@@ -1,16 +1,14 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
-  if Rails.configuration._use_original_error_screen_
-    def routing_error(exception = nil)
-      raise exception if exception
-    end
-  else
+  unless Rails.configuration._use_original_error_screen_
     rescue_from StandardError, with: :rescue500
     rescue_from ActionController::RoutingError, with: :rescue404
     rescue_from ActiveRecord::RecordNotFound, with: :rescue404
+    rescue_from IllegalAccessError, with: :rescue403
 
-    def routing_error
+    def routing_error(exception = nil)
+      raise exception if exception
       raise ActionController::RoutingError, params[:path]
     end
 
@@ -24,6 +22,11 @@ class ApplicationController < ActionController::Base
     def rescue404(exception = nil)
       logger.info "Rendering 404 with exception: #{exception.message}" if exception
       render 'errors/not_found', status: 404
+    end
+
+    def rescue403(exception = nil)
+      logger.info "Rendering 403 with exception: #{exception.message}" if exception
+      render 'errors/forbidden', status: 403
     end
   end
 

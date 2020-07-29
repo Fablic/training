@@ -2,7 +2,7 @@
 // They will automatically be included in application.scss.
 // You can use Sass (SCSS) here: https://sass-lang.com/
 
-//@import 'bootstrap/dist/css/bootstrap';
+@import 'bootstrap/dist/css/bootstrap';
 
 table#task{
   thead {
@@ -11,4 +11,13 @@ table#task{
     }
   }
 
+}
+
+.required:after {
+  content: " *";
+  color: #ff0000;
+}
+
+.btn-form {
+  display: inline !important;
 }

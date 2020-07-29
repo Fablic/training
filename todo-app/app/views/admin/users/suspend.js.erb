@@ -1,0 +1,8 @@
+$('#user-suspended-<%= @app_user.id %>').text('<%= @app_user.suspended? ? 'Yes' : 'No' %>')
+$('#user-action-<%= @app_user.id %>').find('input[type="submit"]').eq(0).val('<%= @app_user.suspended? ? '利用を開始する' : '利用を停止する' %>')
+<% if @app_user.suspended? %>
+$('#user-action-<%= @app_user.id %>').find('input[type="submit"]').eq(0).addClass('btn-primary').removeClass('btn-warning')
+<% else %>
+$('#user-action-<%= @app_user.id %>').find('input[type="submit"]').eq(0).addClass('btn-warning').removeClass('btn-primary')
+<% end %>
+alert('<%= @app_user.name %>を<%= @app_user.suspended? ? "利用停止" : "利用開始" %>しました。'　)

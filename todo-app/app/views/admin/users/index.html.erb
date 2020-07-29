@@ -1,0 +1,66 @@
+<%= @title = "ユーザー管理機能" %>
+
+<h1><% @title %></h1>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <p> <%= link_to "ユーザを作成する", new_admin_user_path , class: "btn btn-primary" %></p>
+    </div>
+  </div>
+
+<%= paginate @app_users %>
+<table class="table table-striped table-hover" id="task">
+  <thead>
+  <tr>
+    <th  scope="col">No.</th>
+    <th  scope="col">名前</th>
+    <th scope="col">停止中?</th>
+    <th scope="col">作ったタスク</th>
+    <th scope="col">更新日</th>
+    <th scope="col" colspan="2">操作</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @app_users.each do |u| %>
+    <tr>
+      <td><%= u.id %></td>
+      <td><%= u.name %></td>
+      <td><span id="user-suspended-<%= u.id%>"><%= u.suspended? ? "Yes" : "No" %></span></td>
+      <td class="text-right">
+        <% if u.tasks.size > 0 %>
+          <a href="##" class="task_link" id="task_link-<%= u.id %>" data-toggle="modal" data-target="#task_list-<%=u.id %>"><%= u.tasks.size %></a>
+          <%= render 'user_task', user: u %>
+        <% else %>
+          <%= u.tasks.size %>
+        <% end %>
+      </td>
+      <td><%= u.updated_at.strftime("%Y/%m/%d %H:%M:%S") %></td>
+      <td id="user-action-<%= u.id%>">
+        <% unless u.admin? %>
+          <% suspended_hash  = u.suspended? ? { msg: "利用を開始する", cls: 'btn-primary' } : { msg: "利用を停止する", cls: 'btn-warning'} %>
+          <%= button_to suspended_hash[:msg], admin_user_suspend_path(u.id), remote: true,
+                        class: 'form-control btn btn-inline ajax-button ' + suspended_hash[:cls],
+                        form_class: 'form-inline btn-form'%>
+          <%= button_to "削除する", admin_user_path(u.id), method: :delete, remote: true,
+                        class: 'form-control btn btn-danger btn-inline ajax-button ',
+                        form_class: 'form-inline btn-form',
+                        data: { confirm: '削除しますが、よろしいですか？', "disable-with": "処理中です..." } %>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+<%= paginate @app_users %>
+
+</div>
+
+<script>
+  $(function () {
+      $('.btn-form').on('ajax:error', function (event) {
+          alert('エラーが起こりました。ステータス : ' + event.detail[1] + " [" + event.detail[2].status + "]")
+      })
+  })
+
+</script>

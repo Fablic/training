@@ -8,3 +8,5 @@ ja:
   login-error: ログインできません、ユーザ/パスを確認してください。
   logged-in: ログインしました
   logged-out: ログアウトしました
+  user-success: ユーザー、%{name}を%{action}しました。
+  err-pass-not-match: ２つのパスワードが一致しません。

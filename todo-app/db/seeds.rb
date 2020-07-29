@@ -12,6 +12,8 @@ UNAMES = %w[taro hanako test].freeze
 
 users = []
 
+users << AppUser.create(name: 'admin', password: 'pass', start_date: Time.zone.yesterday, suspended: false, admin: true)
+
 UNAMES.each do |uname|
   users << AppUser.create(name: uname, password: 'pass', start_date: Time.zone.yesterday, suspended: false)
 end

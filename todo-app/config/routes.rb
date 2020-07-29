@@ -7,10 +7,11 @@ Rails.application.routes.draw do
   post 'session' => 'session#create', as: :session
   delete 'session' => 'session#destroy', as: :logout
 
-
-  get '*not_found' => 'application#routing_error'
-  post '*not_found' => 'application#routing_error'
-  patch '*not_found' => 'application#routing_error'
-  delete '*not_found' => 'application#routing_error'
+  namespace :admin do
+    root 'top#index'
+    resources :users do
+      post :suspend
+    end
+  end
 
 end

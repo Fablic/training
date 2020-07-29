@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Task < ApplicationRecord
-  validates :name, presence: true, length: { maximum: 100 }, allow_blank: false
+  validates :name, presence: true, length: { maximum: 100 }
   validates :due_date, presence: true
   validates :status, inclusion: { in: (0..2).to_a }
 

@@ -1,0 +1,16 @@
+<%= @title = "管理者機能" %>
+
+<h1><% @title %></h1>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <ul class="list-group">
+        <li class="list-group-item"> <%= link_to "ユーザー管理", admin_users_path %> </li>
+      </ul>
+      <ul class="list-group mt-3">
+        <li class="list-group-item bg-secondary"> <%= link_to "Topへ戻る", root_path, class: 'text-white font-weight-bold' %> </li>
+      </ul>
+    </div>
+  </div>
+</div>

@@ -39,3 +39,5 @@ en:
   login-error: log in failed check user and pass.
   logged-in: logged in success
   logged-out: logged out
+  user-success: User %{name} is %{action}.
+  err-pass-not-match: two password doesn't match.
