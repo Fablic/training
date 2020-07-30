@@ -1,0 +1,37 @@
+<script>
+$(function(){
+    $('.btn-info').on('click', function(){
+        console.log(this)
+        const id = $(this).attr('id').split("_")[1]
+        $('#label-input-div_' + id).toggle()
+        $('#label-input-div_' + id).find('input').first().focus()
+    })
+
+    $('.label-form').on('submit', function(event){
+        if(!$(this).find('input.add-label').eq(0).val()){
+            event.preventDefault();
+            event.stopPropagation();
+            return false;
+        }
+        return true;
+    })
+
+    $('.label-badge').on('mouseover', function(){
+        const id = $(this).attr('id').split('_')[1]
+        $('#tsk-label-del_' + id).show()
+    })
+    $('.label-badge').on('mouseout', function(){
+        const id = $(this).attr('id').split('_')[1]
+        $('#tsk-label-del_' + id).hide()
+    })
+
+    $('.tsk-label-del-link').on('click', function(){
+        console.log('delete label !')
+        const taskId = $(this).attr('id').split('_')[1]
+        const labelId = $(this).attr('id').split('_')[2]
+        console.log('delete ids ', taskId, labelId)
+        $('#label-del_' + taskId).val(labelId)
+        $('#form-label-del_' + taskId).find('button.btn-invisible').first().click()
+    })
+})
+</script>

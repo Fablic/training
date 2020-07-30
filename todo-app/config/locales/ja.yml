@@ -10,3 +10,7 @@ ja:
   logged-out: ログアウトしました
   user-success: ユーザー、%{name}を%{action}しました。
   err-pass-not-match: ２つのパスワードが一致しません。
+  msg-label:
+    already-exist: ラベルがすでに存在します。
+    save-error: 保存に失敗しました。
+    delete-error: 削除に失敗しました。

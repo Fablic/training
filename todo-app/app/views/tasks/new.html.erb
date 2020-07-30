@@ -9,6 +9,11 @@
       <%= form_with model: @task, local: true do |f| %>
         <%= render "form", f:f %>
 
+        <div class="form-group">
+          <%= f.label :input_task_label, "タスクラベル（カンマ区切り）" %>
+          <%= f.text_field :input_task_label, class: "form-control"  %>
+        </div>
+
         <div class="btn-area">
           <%= f.submit "作成する", class: "btn btn-success" %>
           <%= link_to "一覧へ戻る", tasks_path , class: "btn btn-secondary"%>

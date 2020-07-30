@@ -5,7 +5,7 @@
 <div class="container">
 
   <div class="row mb-3">
-    <div class="col-md-6">
+    <div class="col-md-12">
       <%= form_with model: @search_form, local: true, method: :get, url: tasks_url, class: "form-inline" do |f| %>
         <div class="form-group">
           <%= f.label :sort_direction, "ソート" %>
@@ -15,6 +15,11 @@
         <div class="form-group">
           <%= f.label :status, "ステータス" %>
           <%= f.select :status, status_select, {selected: @search_form.status, include_blank: true }, class: "form-control" %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :task_label, "タスクラベル" %>
+          <%= f.text_field :task_label, class: "form-control" %>
         </div>
 
         <div class="btn-area">
@@ -33,8 +38,6 @@
   </div>
 
 
-
-
 <%= paginate @tasks %>
 <table class="table table-striped table-hover" id="task">
   <thead>
@@ -47,6 +50,7 @@
     <% end %>
     <th scope="col">更新日</th>
     <th scope="col">期限</th>
+    <th scope="col">ラベル</th>
     <th scope="col">操作</th>
   </tr>
   </thead>
@@ -61,6 +65,7 @@
       <% end %>
       <td><%= t.updated_at.strftime("%Y/%m/%d %H:%M:%S") %></td>
       <td><%= t.due_date&.strftime("%Y/%m/%d") %></td>
+      <td><%= render "task_labels", task: t, action: 'show' %></td>
       <td>
         <%= link_to "編集", edit_task_path(t), class: "badge badge-success" %>
         <%= link_to "削除",  task_path(t), method: :delete, data: {confirm: "本当に削除しますか？"} , class: "badge badge-secondary"%>
@@ -72,3 +77,8 @@
 <%= paginate @tasks %>
 
 </div>
+
+
+
+
+<%= render "edit_label_handler" %>

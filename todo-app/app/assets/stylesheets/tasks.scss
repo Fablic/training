@@ -21,3 +21,31 @@ table#task{
 .btn-form {
   display: inline !important;
 }
+
+.label-input{
+  z-index: 100;
+  position: relative;
+  top: 0;
+  right: 0;
+}
+
+.label-input-inner{
+  position: absolute;
+  z-index: 101;
+  background-color: lightgray;
+
+}
+
+.label-badge-del{
+  background-color: #222;
+  a {
+    margin: 2px;
+    color: #fff;
+  }
+}
+
+.btn-invisible {
+  background: transparent;
+  border: none !important;
+  font-size:0;
+}

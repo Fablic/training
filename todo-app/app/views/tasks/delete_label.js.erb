@@ -1,0 +1,7 @@
+<% if @error_message %>
+alert('<%= @error_message %>')
+<% else %>
+
+$('#tsk-label_<%=@task_label.id %>').remove()
+
+<% end %>

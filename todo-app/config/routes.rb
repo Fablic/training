@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
-  resources :tasks
+  resources :tasks do
+    post :add_label
+    post :delete_label # verb delete doesn't seem  to support for ajax request
+  end
 
   root 'tasks#index'
 

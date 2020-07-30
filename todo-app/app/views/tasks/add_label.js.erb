@@ -1,0 +1,35 @@
+<% if @error_message %>
+  alert('<%= @error_message %>')
+<% else %>
+var new_label = '<span class="badge badge-pill badge-info label-badge" id="tsk-label_<%=@task_label.id %>"><%= @task_label.name %>' +
+    '        <span class="label-badge-del" id="tsk-label-del_<%=@task_label.id %>" style="display: none">' +
+    '          <span class="tsk-label-del-link" id="tsk-label-del-link_<%= @task_label.task_id %>_<%=@task_label.id %>">&times;</span>' +
+    '        </span>' +
+    '      </span>'
+$('#label-area_<%= @task_label.task_id %>').append(new_label)
+
+var id = "#tsk-label_<%=@task_label.id %>";
+
+$(id).on('mouseover', function(){
+    const id = $(this).attr('id').split('_')[1]
+    $('#tsk-label-del_' + id).show()
+})
+$(id).on('mouseout', function(){
+    const id = $(this).attr('id').split('_')[1]
+    $('#tsk-label-del_' + id).hide()
+})
+
+var input_div_id = "#label-input-div_<%= @task_label.task_id %>"
+$(input_div_id).find('input').first().val("")
+$(input_div_id).hide()
+
+
+$('#tsk-label-del-link_<%= @task_label.task_id %>_<%=@task_label.id %>').on('click', function(){
+    const taskId = $(this).attr('id').split('_')[1]
+    const labelId = $(this).attr('id').split('_')[2]
+    console.log('delete ids ', taskId, labelId)
+    $('#label-del_' + taskId).val(labelId)
+    $('#form-label-del_' + taskId).find('button.btn-invisible').first().click()
+})
+
+<% end %>

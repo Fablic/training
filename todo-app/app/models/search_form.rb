@@ -2,5 +2,5 @@
 
 class SearchForm
   include ActiveModel::Model
-  attr_accessor :sort_direction, :status
+  attr_accessor :sort_direction, :status, :task_label
 end

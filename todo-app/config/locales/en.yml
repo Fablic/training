@@ -41,3 +41,7 @@ en:
   logged-out: logged out
   user-success: User %{name} is %{action}.
   err-pass-not-match: two password doesn't match.
+  msg-label:
+    already-exist: Label already exists.
+    save-error: Faild on save label.
+    delete-error: Failed on delete label.
