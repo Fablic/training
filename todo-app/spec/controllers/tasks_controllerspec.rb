@@ -3,8 +3,13 @@
 require 'rails_helper'
 
 describe TasksController, type: :controller do
+  render_views
+
   before do
     @task = FactoryBot.create(:task)
+
+    @task1 = create(:task, name: 'task1', created_at: Time.zone.tomorrow)
+    @task2 = create(:task, name: 'task2', created_at: Time.zone.yesterday)
   end
 
   it 'render the :index template' do
@@ -63,5 +68,29 @@ describe TasksController, type: :controller do
     delete :destroy, params: { id: @task[:id] }
     expect(response.status).to eq 302
     expect(Task.count).to eq 0
+  end
+
+  it 'Sort by created_at desc' do
+    get :index, params: { search_form: { sort_direction: 'desc' } }
+    expect(response.status).to eq 200
+
+    res_str = response.body
+
+    task1_index = res_str.index('task1')
+    task2_index = res_str.index('task2')
+
+    expect(task1_index).to be < task2_index
+  end
+
+  it 'Sort by created_at asc' do
+    get :index, params: { search_form: { sort_direction: 'asc' } }
+    expect(response.status).to eq 200
+
+    res_str = response.body
+
+    task1_index = res_str.index('task1')
+    task2_index = res_str.index('task2')
+
+    expect(task1_index).to be > task2_index
   end
 end

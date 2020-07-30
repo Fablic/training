@@ -6,4 +6,11 @@ module TasksHelper
   def to_status_str(str)
     STATUS_STR[str]
   end
+
+  def sort_directions
+    {
+      desc: 'desc',
+      asc: 'asc',
+    }
+  end
 end

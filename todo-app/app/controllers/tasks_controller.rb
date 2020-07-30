@@ -2,7 +2,13 @@
 
 class TasksController < ApplicationController
   def index
-    @tasks = Task.all.page(params[:page]).per(10)
+    if params[:search_form]
+      @search_form = SearchForm.new(search_form_params)
+    else
+      @search_form = SearchForm.new
+      @search_form.sort_direction = 'desc'
+    end
+    @tasks = Task.all.order(created_at: @search_form.sort_direction).page(params[:page]).per(10)
   end
 
   def show
@@ -53,6 +59,10 @@ class TasksController < ApplicationController
 
   def task_params
     params.require(:task).permit(:name, :due_date)
+  end
+
+  def search_form_params
+    params.require(:search_form).permit(:sort_direction)
   end
 
   def as_success_message(name, action_key)

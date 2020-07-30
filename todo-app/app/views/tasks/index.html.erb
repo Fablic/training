@@ -4,10 +4,30 @@
 
 <div class="container">
 
-<div>
-  <p>        <%= link_to "タスクを作成する", new_task_path , class: "btn btn-primary" %></p>
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <%= form_with model: @search_form, local: true, method: :get, url: tasks_url, class: "form-inline" do |f| %>
+        <div class="form-group">
+          <%= f.label :sort_direction, "ソート" %>
+          <%= f.select :sort_direction, sort_directions, {selected: @search_form.sort_direction} %>
+        </div>
 
-</div>
+        <div class="btn-area">
+          <%= f.submit "検索する" , class: "btn btn-success mb-2 ml-2" %>
+        </div>
+      <% end %>
+    </div>
+
+
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <p> <%= link_to "タスクを作成する", new_task_path , class: "btn btn-primary" %></p>
+    </div>
+  </div>
+
+
 
 
 <%= paginate @tasks %>
@@ -17,6 +37,7 @@
     <th  scope="col">No.</th>
     <th  scope="col">タスク</th>
     <th scope="col">ステータス</th>
+    <th scope="col">更新日</th>
     <th scope="col">期限</th>
     <th scope="col">操作</th>
   </tr>
@@ -27,12 +48,11 @@
       <td><%= t.id %></td>
       <td><%= t.name %></td>
       <td><%= to_status_str(t.status) %></td>
+      <td><%= t.updated_at.strftime("%Y/%m/%d %H:%M:%S") %></td>
       <td><%= t.due_date&.strftime("%Y/%m/%d") %></td>
       <td>
         <%= link_to "編集", edit_task_path(t), class: "badge badge-success" %>
-
         <%= link_to "削除",  task_path(t), method: :delete, data: {confirm: "本当に削除しますか？"} , class: "badge badge-secondary"%>
-
       </td>
     </tr>
   <% end %>
