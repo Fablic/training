@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_28_002425) do
+ActiveRecord::Schema.define(version: 2020_07_30_063549) do
   create_table 'app_users', force: :cascade do |t|
     t.string 'name', limit: 100, null: false
     t.string 'hashed_password', null: false
@@ -25,11 +25,20 @@ ActiveRecord::Schema.define(version: 2020_07_28_002425) do
     t.index ['name'], name: 'idx_app_user_unique_name', unique: true
   end
 
+  create_table 'maintenances', force: :cascade do |t|
+    t.string 'reason'
+    t.datetime 'start_datetime'
+    t.datetime 'end_datetime'
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
+    t.index %w[start_datetime end_datetime], name: 'index_maintenances_on_start_datetime_and_end_datetime'
+  end
+
   create_table 'task_labels', force: :cascade do |t|
     t.string 'name', null: false
     t.datetime 'created_at', precision: 6, null: false
     t.datetime 'updated_at', precision: 6, null: false
-    t.bigint 'task_id'
+    t.integer 'task_id'
     t.index ['task_id'], name: 'index_task_labels_on_task_id'
   end
 
@@ -39,7 +48,7 @@ ActiveRecord::Schema.define(version: 2020_07_28_002425) do
     t.date 'due_date'
     t.datetime 'created_at', precision: 6, null: false
     t.datetime 'updated_at', precision: 6, null: false
-    t.bigint 'app_user_id', null: false
+    t.integer 'app_user_id'
     t.index ['app_user_id'], name: 'index_tasks_on_app_user_id'
     t.index ['status'], name: 'index_tasks_on_status'
   end

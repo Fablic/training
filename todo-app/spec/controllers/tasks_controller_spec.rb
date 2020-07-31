@@ -171,4 +171,15 @@ describe TasksController, type: :controller do
     expect(res_str).not_to include('task2')
     expect(res_str).to include('タスク名')
   end
+
+  it 'Receive 503 during maintenance period' do
+    get :index
+    expect(response.status).to eq 200
+
+    # Create maintenance record
+    FactoryBot.create(:maintenance)
+
+    get :index
+    expect(response.status).to eq 503
+  end
 end
