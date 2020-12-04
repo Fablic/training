@@ -1,1 +1,27 @@
 <h1>新規登録</h1>
+<%= form_for @tasks, url: tasks_path do |f| %>
+<p>
+    <%= f.label :id %><br>
+    <%= f.text_field :id %>
+    <% if @tasks.errors.any? %>
+        <%= @tasks.errors.messages[:name][0] %>
+    <% end %>
+</p>
+<p>
+    <%= f.label :title %><br>
+    <%= f.text_field :title %>
+    <% if @tasks.errors.any? %>
+        <%= @tasks.errors.messages[:name][0] %>
+    <% end %>
+</p>
+<p>
+ <br>
+     <%= f.label :detail %><br>
+    <%= f.text_area :id %>
+</p>
+
+<p>
+    <%= f.submit %>
+</p>
+
+<% end %>

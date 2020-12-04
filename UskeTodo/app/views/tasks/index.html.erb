@@ -1,1 +1,12 @@
 <h1>一覧画面</h1>
+<% @tasks.each do |u| %>
+<p>
+    <%= u.id %>
+    <%= u.title %>
+    <%= u.detail %>
+    <%= link_to " 詳細 ", tasks_path(u.id) %>
+</p>
+<% end %>
+<p>
+    <%= link_to "新規登録", new_task_path %>
+</p>
