@@ -25,4 +25,6 @@ Rails.application.routes.draw do
   post '/login' => 'sessions#create'
 
   delete '/logout' => 'sessions#destroy'
+
+  get '/maintenance' => 'maintenances#index', :as => :maintenance_index
 end

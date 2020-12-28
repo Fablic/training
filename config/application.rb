@@ -28,5 +28,7 @@ module Taskmanager
 
     # i18nの複数ロケールファイルが読み込まれるようpathを通す
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}').to_s]
+
+    config.autoload_paths += Dir["#{config.root}/lib"]
   end
 end
