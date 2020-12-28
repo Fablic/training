@@ -39,6 +39,14 @@
               <%= f.date_field :end_date, class: "col-sm-12 form-control" %>
             </td>
           </tr>
+          <tr>
+            <th scope="col" class="bg-secondary text-light align-middle">
+              <%= f.label :tag_list, class: "col-form-label" %>
+            </th>
+            <td>
+              <%= f.text_field :tag_list, value: @task.tag_list.join(','), data: {:role => "tagsinput"}, class: "col-sm form-control" %>
+            </td>
+          </tr>
         </tbody>
       </table>
       <div class="row mt-5">
@@ -46,7 +54,7 @@
           <%= link_to("#{I18n.t('tasks.taskupdate.cancel_button')}", tasks_taskdetail_path(@task.id), class: "btn btn-outline-secondary") %>
         </div>
         <div class="col-sm-6 text-right">
-          <%= f.hidden_field :hid, :value => @task.id %>
+          <%= f.hidden_field :id, :value => @task.id %>
           <%= f.submit class: "btn btn-warning" %>
         </div>
       </div>
@@ -54,3 +62,4 @@
     </div>
   </div>
 </div>
+<%= javascript_pack_tag 'task/tagsinput' %>

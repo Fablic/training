@@ -16,7 +16,7 @@ class TasksController < ApplicationController
       @tasks = Task.where(user_id: user_id).page(params[:page]).per(Task::PER_PAGE_NO)
     else
       # 入力に応じて検索機能を設定
-      @search = Task.ransack(params.require(:q).permit(:sorts, :status_eq, :title_cont))
+      @search = Task.ransack(params.require(:q).permit(:sorts, :status_eq, :title_cont, :tags_name_eq))
 
       # 検索機能を利用した検索結果を取得
       @tasks = @search.result.where(user_id: user_id).page(params[:page]).per(Task::PER_PAGE_NO)
@@ -39,7 +39,7 @@ class TasksController < ApplicationController
     # 登録成功
     if @task.save
       flash[:success] = I18n.t('msg.success_registration')
-      redirect_to action: 'index'
+      redirect_to action: :index
     # 失敗
     else
       flash.now[:warning] = I18n.t('msg.failed_registration')
@@ -67,25 +67,15 @@ class TasksController < ApplicationController
 
   # タスク更新処理
   def taskupdateprocess
-    # Getパラメータの取得
-    param_id = params[:task][:hid]
-    param_status = params[:task][:status].to_i
-    param_title = params[:task][:title]
-    param_detail = params[:task][:detail]
-    param_end_date = params[:task][:end_date]
-
-    # タスクテーブルを検索
-    update_task = Task.find(param_id)
-    update_task.status = param_status
-    update_task.title = param_title
-    update_task.detail = param_detail
-    update_task.end_date = param_end_date
+    data = params.require(:task).permit(:id, :status, :title, :detail, :end_date, :tag_list)
+    data[:status] = params[:task][:status].to_i
+    update_task = Task.find(params[:task][:id])
+    result = update_task.update(data)
 
     # 更新成功
-    if update_task.save
-
+    if result
       flash[:success] = I18n.t('msg.success_update')
-      redirect_to action: root_path
+      redirect_to action: :index
     # 失敗
     else
       flash.now[:warning] = I18n.t('msg.failed_update')
@@ -103,7 +93,7 @@ class TasksController < ApplicationController
     # 削除成功
     if del_task
       flash[:success] = I18n.t('msg.success_delete')
-      redirect_to action: root_path
+      redirect_to action: :index
     # 失敗
     else
       flash.now[:warning] = I18n.t('msg.failed_delete')
@@ -122,7 +112,7 @@ class TasksController < ApplicationController
   private
 
   def user_params
-    data = params.require(:task).permit(:status, :title, :detail, :end_date)
+    data = params.require(:task).permit(:status, :title, :detail, :end_date, :tag_list)
     # statusはenumのテキスト型なので、整数型に変換する
     data[:status] = params[:task][:status].to_i
     user_id = @current_user.id

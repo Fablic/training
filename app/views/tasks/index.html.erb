@@ -5,27 +5,27 @@
   <div class="mt-5">
     <div class="mt-3">
       <%= search_form_for(@search, url: root_path)  do |f| %>
-      <div class="form-group row col-sm-8">
-        <%= f.label :sorts, I18n.t('tasks.index.sort_order'), class: "col-form-label" %>
-        <div class="col-sm-10">
-          <%= f.select :sorts, options_for_select(Task::SORT_ORDER_LIST.map{|c|[c[:name], c[:sort]]}, selected:params[:q][:sorts]), {}, {onchange: 'this.form.submit()', class: 'form-control col-sm-3'} %>
+      <div class="form-row col-sm-12">
+        <div class="col-sm-2 form-row">
+          <%= f.label :sorts, I18n.t('tasks.index.sort_order'), class: "col-form-label" %>
+          <%= f.select :sorts, options_for_select(Task::SORT_ORDER_LIST.map{|c|[c[:name], c[:sort]]}, selected:params[:q][:sorts]), {}, {onchange: 'this.form.submit()', class: 'form-control'} %>
         </div>
       </div>
-      <div class="row mt-5">
-        <div class="form-group row col-sm-3">
+      <div class="form-row col-sm-12 mt-5">
+        <div class="col-sm-2 form-row">
           <%= f.label :status_eq, I18n.t('tasks.index.status'), class: "col-form-label" %>
-          <div class="col-sm-7">
-            <%= f.select :status_eq, Task.statuses.map {|k, v| [I18n.t("enums.task.status.#{k}"), v]}, {include_blank: true}, {class: "form-control"} %>
-          </div>
+          <%= f.select :status_eq, Task.statuses.map {|k, v| [I18n.t("enums.task.status.#{k}"), v]}, {include_blank: true}, {class: "form-control"} %>
         </div>
-        <div class="form-group row col-sm-4 pr-0">
+        <div class="col-sm-4 form-row">
           <%= f.label :title_cont, I18n.t('tasks.index.search_task_name'), class: "col-form-label" %>
-          <div class="col-sm-8 pr-1">
-            <%= f.search_field :title_cont, value: params[:q][:title_cont], class: "form-control" %>
-          </div>
+          <%= f.search_field :title_cont, value: params[:q][:title_cont], class: "form-control" %>
         </div>
-        <div class="form-group row">
-          <%= f.submit %>
+        <div class="col-sm-3 form-row">
+          <%= f.label :tags_name_eq, "#{I18n.t('tasks.index.tags_name')}", class: "col-form-label" %>
+          <%= f.search_field :tags_name_eq, value: params[:q][:tags_name_eq], class: "form-control" %>
+        </div>
+        <div class="d-flex align-items-end">
+          <%= f.submit class: "btn btn-outline-secondary h-50"%>
         </div>
       </div>
       <% end %>
@@ -51,7 +51,7 @@
       </table>
       <%= paginate @tasks %>
     </div>
-    <div class="row">
+    <div class="row mb-5">
       <div class="col-sm-6 text-left">
         <%= link_to "#{I18n.t('tasks.index.logout')}", logout_path, method: :delete, class: "btn btn-outline-dark" %>
       </div>
@@ -59,6 +59,5 @@
         <%= link_to "#{I18n.t('tasks.index.submit_button')}", tasks_newtask_path, class: "btn btn-secondary" %>
       </div>
     </div>
-
   </div>
 </div>

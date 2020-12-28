@@ -8,6 +8,8 @@ class Task < ApplicationRecord
                      { name: I18n.t('tasks.index.sort_end_date'), sort: 'end_date DESC' }]
   SORT_ORDER_LIST.freeze
 
+  acts_as_taggable_on :tags
+
   PER_PAGE_NO = 10
   PER_PAGE_NO.freeze
 

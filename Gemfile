@@ -72,3 +72,5 @@ gem 'enum_help'
 gem 'kaminari'
 
 gem 'bcrypt'
+
+gem 'acts-as-taggable-on'

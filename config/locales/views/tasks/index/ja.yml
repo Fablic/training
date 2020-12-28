@@ -9,10 +9,11 @@ ja:
       sort_order: "並び順"
       sort_create_at: "作成日"
       sort_end_date: "終了期限"
-      search_task_name: "タスク名検索"
+      search_task_name: "タスクタイトル"
       search: "検索"
       done: "完了"
       logout: "ログアウト"
+      tags_name: "ラベル"
   enums:
     task:
       status:
