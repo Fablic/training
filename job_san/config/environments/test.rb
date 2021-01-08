@@ -67,3 +67,7 @@ Rails.application.configure do
     Bullet.raise = true
   end
 end
+
+require 'simplecov'
+SimpleCov.start 'rails'
+puts "required simplecov"

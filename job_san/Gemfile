@@ -59,6 +59,8 @@ group :test do
   gem 'selenium-webdriver'
   # @legacy: ローカルで確認したいときに役に立つので、残しておきます。
   # gem 'webdrivers'
+  # for check test coverage. refs: https://github.com/simplecov-ruby/simplecov
+  gem 'simplecov', require: false
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
