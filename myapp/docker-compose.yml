@@ -15,7 +15,24 @@ services:
     build: .
     command: bash -c "bundle exec rails db:create && bundle exec rails db:migrate && rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
     volumes:
-      - .:/myapp
+      - ./app:/myapp/app
+      - ./bin:/myapp/bin
+      - ./config:/myapp/config
+      - ./db:/myapp/db
+      - ./lib:/myapp/lib
+      - ./log:/myapp/log
+      - ./public:/myapp/public
+      - ./storage:/myapp/storage
+      - ./test:/myapp/test
+      - ./tmp:/myapp/tmp
+      - ./Gemfile:/myapp/Gemfile
+      - ./Gemfile.lock:/myapp/Gemfile.lock
+      - ./Rakefile:/myapp/Rakefile
+      - ./babel.config.js:/myapp/babel.config.js
+      - ./config.ru:/myapp/config.ru
+      - ./package.json:/myapp/package.json
+      - ./postcss.config.js:/myapp/postcss.config.js
+      - ./yarn.lock:/myapp/yarn.lock
       - bundle-install:/usr/local/bundle:delegated
     ports:
       - "3001:3000"
