@@ -1,0 +1,16 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+base:
+  id: 1
+  name: ''
+  description: ''
+  priority: normal
+  status: waiting
+
+with_due_date:
+  id: 2
+  name: ''
+  description: ''
+  due_date: <%= 2.days.since %>
+  priority: normal
+  status: waiting
