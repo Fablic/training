@@ -22,5 +22,8 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
+          # NOTE: Currently, each action cannot honor `defaults.run.working-directory`.
+          #       See https://github.com/ruby/setup-ruby/issues/54 for more details.
+          working-directory: myapp
       - run: bundle exec rails db:create db:migrate
       - run: bundle exec rails test
