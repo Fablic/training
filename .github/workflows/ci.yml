@@ -14,7 +14,6 @@ jobs:
           MYSQL_ROOT_PASSWORD: password
         ports:
           - 3306:3306
-        options: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     defaults:
       run:
         working-directory: myapp
