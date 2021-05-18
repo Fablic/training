@@ -1,0 +1,27 @@
+<div class="edit-task">
+  <h1><%= page_title %></h1>
+
+  <%= form_for @task, url: action_url, class: "edit-task__form" do |f| %>
+    <div class="edit-task__form-field">
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+    </div>
+    <div class="edit-task__form-field">
+      <%= f.label :description %>
+      <%= f.text_area :description, rows: 5 %>
+    </div>
+    <div class="edit-task__form-field">
+      <%= f.label :due_date %>
+      <%= f.date_field :due_date %>
+    </div>
+    <div class="edit-task__form-field">
+      <%= f.label :priority %>
+      <%= f.collection_select :priority, Task.priorities.keys, :to_s, method(:translate_priority) %>
+    </div>
+    <div class="edit-task__form-field">
+      <%= f.label :status %>
+      <%= f.collection_select :status, Task.statuses.keys, :to_s, method(:translate_status) %>
+    </div>
+    <%= f.submit t('common.submit'), class: 'edit-task__button' %>
+  <% end %>
+</div>

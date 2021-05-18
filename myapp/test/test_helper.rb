@@ -10,4 +10,9 @@ class ActiveSupport::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
+
+  setup do
+    # NOTE: Always assume the rendered views are translated in English.
+    I18n.locale = :en
+  end
 end

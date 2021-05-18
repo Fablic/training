@@ -1,0 +1,146 @@
+// Place all the styles related to the tasks controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+
+@import './variables';
+@import './mixins';
+
+// TODO: Is it more common? Is it be declared in `./mixins.scss`?
+@mixin tasks_container {
+  max-width: $page-max-width;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tasks {
+  @include tasks_container;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: 3rem;
+  }
+
+  &__flash {
+    margin-left: auto;
+    padding: $space-m $space-l;
+    border-radius: 4px;
+
+    &--info {
+      border: 2px solid $color-blue-200;
+    }
+
+    &--error {
+      border: 2px solid $color-red-800;
+    }
+  }
+
+  &__table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 2px solid $color-gray-400;
+    margin-top: $space-l;
+  }
+
+  &__thead {
+    background-color: $color-gray-400;
+    color: $color-black;
+  }
+
+  &__tbody {
+    background-color: $color-white;
+    color: $color-gray-900;
+  }
+
+  &__row {
+    border: 1px solid $color-gray-400;
+
+    &:hover {
+      background-color: $color-gray-100;
+    }
+
+    &--header {
+      &:hover {
+        background-color: $color-gray-400;
+      }
+    }
+  }
+
+  &__cell {
+    font-family: sans-serif;
+    padding: $space-m;
+    text-align: left;
+
+    &--right {
+      text-align: right;
+    }
+  }
+
+  &__new {
+    @include button-positive;
+  }
+
+  &__edit {
+    @include button;
+    color: $color-blue-400;
+    background-color: $color-white;
+    text-decoration: none;
+
+    &:visited,
+    &:focus,
+    &:active {
+      color: $color-blue-400;
+    }
+
+    &:hover {
+      background-color: $color-gray-200;
+    }
+  }
+
+  &__delete {
+    @include button;
+    color: $color-red-800;
+    background-color: $color-white;
+    text-decoration: none;
+
+    &:visited,
+    &:focus,
+    &:active {
+      color: $color-red-800;
+    }
+
+    &:hover {
+      background-color: $color-gray-200;
+    }
+  }
+}
+
+.edit-task {
+  @include tasks_container;
+
+  &__form {
+    width: 100%;
+  }
+
+  &__form-field {
+    width: 100%;
+    min-width: 480px; // TODO: Make it a variable
+    display: flex;
+    flex-direction: column;
+    font-family: sans-serif;
+
+    & + & {
+      margin-top: $space-l;
+    }
+  }
+
+  &__button {
+    @include button-positive;
+
+    margin-top: $space-l;
+  }
+}

@@ -1,0 +1,31 @@
+@import './variables';
+
+@mixin button {
+  display: inline-block;
+  font-family: sans-serif;
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  user-select: none;
+  border-radius: 4px;
+  padding: $space-s $space-m;
+}
+
+@mixin button-positive {
+  @include button;
+
+  color: $color-white;
+  background-color: $color-green-800;
+  text-decoration: none;
+
+  &:visited,
+  &:focus,
+  &:active {
+    color: $color-white;
+  }
+
+  &:hover {
+    background-color: $color-green-900;
+  }
+}

@@ -1,0 +1,41 @@
+ja:
+  activerecord:
+    attributes:
+      task:
+        name: 名前
+        description: 説明
+        due_date: 期限
+        priority: 優先度
+        status: ステータス
+    enum:
+      task:
+        priority:
+          low: 低
+          normal: 中
+          high: 高
+        status:
+          waiting: 未着手
+          doing: 着手
+          done: 完了
+  common:
+    new: 新規作成
+    edit: 編集
+    submit: 送信
+    delete: 削除
+  pages:
+    tasks:
+      page_title: タスク一覧
+      tooltip:
+        new: タスクを新しく作成します
+        edit: タスクを編集します
+        delete: タスクを削除します
+      flash:
+        added: タスクを作成しました。
+        edited: タスクを編集しました。
+        deleted: タスクを削除しました。
+        fail: 操作に失敗しました。すみません
+      confirm_deletion: 本当にタスクを削除してよろしいですか？
+    new_task:
+      page_title: タスクの追加
+    edit_task:
+      page_title: タスクの編集
