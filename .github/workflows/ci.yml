@@ -30,4 +30,5 @@ jobs:
           working-directory: myapp
       - run: yarn install
       - run: bundle exec rails db:create db:migrate
+      - run: bundle exec rails webpacker:compile
       - run: bundle exec rails test
