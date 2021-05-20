@@ -5,13 +5,41 @@ on: [pull_request]
 jobs:
   myapp-test:
     runs-on: ubuntu-latest
+    env:
+      MYSQL_HOST: 127.0.0.1
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ROOT_PASSWORD: password
+        ports:
+          - 3306:3306
+      selenium:
+        image: selenium/standalone-chrome:90.0
+        ports:
+          - 4444:4444
+        volumes:
+          - /dev/shm:/dev/shm
     defaults:
       run:
         working-directory: myapp
     steps:
       - uses: actions/checkout@v2
-      - run: docker-compose up -d --build
-      - run: docker-compose ps
-      - run: docker-compose logs
-      - run: sleep 5 # XXX: Wait for the ready of MySQL
-      - run: docker-compose exec -T api bundle exec rspec
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '12'
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+          # NOTE: Currently, each action cannot honor `defaults.run.working-directory`.
+          #       See https://github.com/ruby/setup-ruby/issues/54 for more details.
+          working-directory: myapp
+      - run: yarn install
+      - run: bundle exec rails db:create db:migrate
+      - run: bundle exec rails assets:precompile
+      - run: bundle exec rails webpacker:compile
+      - run: bundle exec rails rspec
+        env:
+          CAPYBARA_HOST_NAME: localhost
+          CAPYBARA_SELENIUM_URL: http://localhost:4444/wd/hub
+          CAPYBARA_SERVER_PORT: '3031'
