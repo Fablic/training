@@ -5,30 +5,11 @@ on: [pull_request]
 jobs:
   myapp-test:
     runs-on: ubuntu-latest
-    env:
-      MYSQL_HOST: 127.0.0.1
-    services:
-      mysql:
-        image: mysql:5.7
-        env:
-          MYSQL_ROOT_PASSWORD: password
-        ports:
-          - 3306:3306
     defaults:
       run:
         working-directory: myapp
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '12'
-      - uses: ruby/setup-ruby@v1
-        with:
-          bundler-cache: true
-          # NOTE: Currently, each action cannot honor `defaults.run.working-directory`.
-          #       See https://github.com/ruby/setup-ruby/issues/54 for more details.
-          working-directory: myapp
-      - run: yarn install
-      - run: bundle exec rails db:create db:migrate
-      - run: bundle exec rails webpacker:compile
-      - run: bundle exec rails test
+      - run: docker-compose up -d --build
+      - run: docker-compose exec api bundle exec rails webpacker:compile
+      - run: docker-compose exec api bundle exec rspec

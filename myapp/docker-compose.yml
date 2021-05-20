@@ -23,7 +23,7 @@ services:
       - ./log:/myapp/log
       - ./public:/myapp/public
       - ./storage:/myapp/storage
-      - ./test:/myapp/test
+      - ./spec:/myapp/spec
       - ./tmp:/myapp/tmp
       - ./Gemfile:/myapp/Gemfile
       - ./Gemfile.lock:/myapp/Gemfile.lock
@@ -35,8 +35,17 @@ services:
       - ./yarn.lock:/myapp/yarn.lock
     ports:
       - "3001:3000"
-    links:
+    environment:
+      CAPYBARA_SELENIUM_URL: 'http://chrome:4444/wd/hub'
+      CAPYBARA_SERVER_PORT: '3031'
+      CAPYBARA_HOST_NAME: 'api'
+    depends_on:
       - db
+      - chrome
+
+  chrome:
+    image: selenium/standalone-chrome:90.0
+    shm_size: '2gb'
 
 volumes:
   db-data:

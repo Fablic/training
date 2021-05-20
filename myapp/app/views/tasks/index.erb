@@ -25,7 +25,7 @@
     </thead>
     <tbody class="tasks__tbody">
     <% @tasks.each do |task| %>
-      <tr class="tasks__row">
+      <tr class="tasks__row" data-spec="Task#<%= task.id %>">
         <td class="tasks__cell"><%= task.id %></td>
         <td class="tasks__cell"><%= task.name %></td>
         <td class="tasks__cell"><%= task.description %></td>
