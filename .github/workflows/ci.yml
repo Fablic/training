@@ -13,4 +13,5 @@ jobs:
       - run: docker-compose up -d --build
       - run: docker-compose ps
       - run: docker-compose logs
+      - run: sleep 5 # XXX: Wait for the ready of MySQL
       - run: docker-compose exec -T api bundle exec rspec
