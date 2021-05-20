@@ -47,11 +47,15 @@ RSpec.configure do |config|
     if example.metadata[:type] == :system
       config.include CapybaraHelper
 
-      Capybara.server_host = '0.0.0.0'
-      Capybara.server_port = ENV.fetch('CAPYBARA_SERVER_PORT')
-      Capybara.app_host = "http://#{ENV.fetch('CAPYBARA_HOST_NAME')}:#{Capybara.server_port}"
+      if ENV.key?('CAPYBARA_SERVER_PORT') && ENV.key?('CAPYBARA_HOST_NAME') && ENV.key?('CAPYBARA_SELENIUM_URL')
+        Capybara.server_host = '0.0.0.0'
+        Capybara.server_port = ENV.fetch('CAPYBARA_SERVER_PORT')
+        Capybara.app_host = "http://#{ENV.fetch('CAPYBARA_HOST_NAME')}:#{Capybara.server_port}"
 
-      driven_by :selenium, using: :chrome, options: { browser: :remote, url: ENV.fetch('CAPYBARA_SELENIUM_URL'), desired_capabilities: :chrome }
+        driven_by :selenium, using: :chrome, options: { browser: :remote, url: ENV.fetch('CAPYBARA_SELENIUM_URL'), desired_capabilities: :chrome }
+      else
+        driven_by :selenium, using: :headless_chrome
+      end
     end
   end
 end

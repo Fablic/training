@@ -39,7 +39,3 @@ jobs:
       - run: bundle exec rails assets:precompile
       - run: bundle exec rails webpacker:compile
       - run: bundle exec rspec
-        env:
-          CAPYBARA_HOST_NAME: localhost
-          CAPYBARA_SELENIUM_URL: http://localhost:4444/wd/hub
-          CAPYBARA_SERVER_PORT: '3031'
