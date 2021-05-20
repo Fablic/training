@@ -23,3 +23,5 @@ ENV BUNDLE_PATH=/usr/local/bundle
 RUN yarn install && bundle install
 
 COPY . /myapp/
+RUN bundle exec rails assets:precompile
+RUN bundle exec rails webpacker:compile
