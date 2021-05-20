@@ -39,6 +39,7 @@ RSpec.describe TasksController, type: :system do
 
     fill_in 'Name', with: 'New Task: Foo'
     fill_in 'Description', with: 'This is a new task named Foo. Do what you want.'
+    # HACK: Imitate the input: 1. type YEAR 2. type Tab key 3. type MONTH 4. type Tab key 5. type DAY
     fill_in 'Due date', with: 3.days.since.strftime("%Y\t%m\t%d")
     select 'Low', from: 'Priority'
     select 'Waiting', from: 'Status'
