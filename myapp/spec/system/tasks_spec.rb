@@ -39,8 +39,8 @@ RSpec.describe TasksController, type: :system do
 
     fill_in 'Name', with: 'New Task: Foo'
     fill_in 'Description', with: 'This is a new task named Foo. Do what you want.'
-    # HACK: Imitate the input: 1. type YEAR 2. type Tab key 3. type MONTH 4. type Tab key 5. type DAY
-    fill_in 'Due date', with: 3.days.since.strftime("%Y\t%m\t%d")
+    # HACK: Imitate the input. This varies based on browser configuration. It might be flaky.
+    fill_in 'Due date', with: 3.days.since.strftime("%m%d%Y")
     select 'Low', from: 'Priority'
     select 'Waiting', from: 'Status'
     click_button 'Submit'
@@ -52,6 +52,7 @@ RSpec.describe TasksController, type: :system do
     within_spec("Task##{task.id}") do
       expect(page).to have_text 'New Task: Foo'
       expect(page).to have_text 'This is a new task named Foo. Do what you want.'
+      expect(page).to have_text '3 days'
       expect(page).to have_text 'Low'
       expect(page).to have_text 'Waiting'
       expect(page).to have_link 'Edit', href: "/en/tasks/#{task.id}/edit"
