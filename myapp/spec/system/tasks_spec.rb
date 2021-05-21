@@ -45,6 +45,15 @@ RSpec.describe TasksController, type: :system do
       expect(page).to have_spec("Task##{task2.id}")
       expect(page).to have_spec("Task##{task3.id}")
 
+      # Filter with malicious value
+
+      fill_in :name, with: '%' # If this value was not sanitized, all tasks will be shown.
+      click_button 'Search'
+
+      expect(page).not_to have_spec("Task##{task1.id}")
+      expect(page).not_to have_spec("Task##{task2.id}")
+      expect(page).not_to have_spec("Task##{task3.id}")
+
       # Filter with "cool"
 
       fill_in :name, with: 'cool'
