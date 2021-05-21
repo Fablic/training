@@ -4,11 +4,11 @@
   <%= form_for @task, url: action_url, class: "edit-task__form" do |f| %>
     <div class="edit-task__form-field">
       <%= f.label :name %>
-      <%= f.text_field :name %>
+      <%= f.text_field :name %> <!-- TODO: Set `required: false` after merging step 11 -->
     </div>
     <div class="edit-task__form-field">
       <%= f.label :description %>
-      <%= f.text_area :description, rows: 5 %>
+      <%= f.text_area :description, rows: 5 %> <!-- TODO: Set `required: false` after merging step 11 -->
     </div>
     <div class="edit-task__form-field">
       <%= f.label :due_date %>

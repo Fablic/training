@@ -1,5 +1,13 @@
 ja:
   activerecord:
+    errors:
+      models:
+        task:
+          attributes:
+            name:
+              blank: 名前は必須です
+            description:
+              blank: 説明は必須です
     attributes:
       task:
         name: 名前
@@ -33,7 +41,6 @@ ja:
         added: タスクを作成しました。
         edited: タスクを編集しました。
         deleted: タスクを削除しました。
-        fail: 操作に失敗しました。すみません
       confirm_deletion: 本当にタスクを削除してよろしいですか？
     new_task:
       page_title: タスクの追加

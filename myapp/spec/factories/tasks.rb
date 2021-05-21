@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :task do
-    name { '' }
-    description { '' }
+    name { 'task' }
+    description { 'This is a special task' }
     priority { 'normal' }
     status { 'waiting' }
   end

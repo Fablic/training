@@ -1,8 +1,6 @@
 class Task < ApplicationRecord
-  # NOTE: Allow blank values `""` for :name and :description to let a user set empty task.
-  #       I imagine like Google Keep, which allows us to create empty note.
-  validates :name, exclusion: { in: [nil] }
-  validates :description, exclusion: { in: [nil] }
+  validates :name, presence: true
+  validates :description, presence: true
 
   # NOTE: Set sporadic numbers in case new values are included in the future.
   enum priority: { low: 5, normal: 10, high: 20 }

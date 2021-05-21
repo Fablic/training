@@ -7,7 +7,7 @@
     <% if flash[:info] || flash[:error] %>
       <% modifier = 'tasks__flash--info' if flash[:info] %>
       <% modifier = 'tasks__flash--error' if flash[:error] %>
-      <div class="tasks__flash  <%= modifier %>"><%= flash[:info] || flash[:error] %></div>
+      <div class="tasks__flash  <%= modifier %>"><pre><%= flash[:info] || flash[:error] %></pre></div>
     <% end %>
   </div>
 

@@ -1,5 +1,13 @@
 en:
   activerecord:
+    errors:
+      models:
+        task:
+          attributes:
+            name:
+              blank: Name must be filled in
+            description:
+              blank: Description must be filled in
     attributes:
       task:
         name: Name
@@ -33,7 +41,6 @@ en:
         added: Succeeded to add the task!
         edited: Succeeded to edit the task!
         deleted: Succeeded to delete the task!
-        fail: Sorry, failed to proced the operation.
       confirm_deletion: Are you sure you want to delete the task?
     new_task:
       page_title: Add a new task

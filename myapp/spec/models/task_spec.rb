@@ -7,11 +7,23 @@ RSpec.describe Task, type: :model do
       expect(task).not_to be_valid
       expect(task.errors.messages).to include(:name)
     end
+
+    it 'with blank string is not valid' do
+      task = build(:task, name: '')
+      expect(task).not_to be_valid
+      expect(task.errors.messages).to include(:name)
+    end
   end
 
   describe '#description' do
     it 'with nil is not valid' do
       task = build(:task, description: nil)
+      expect(task).not_to be_valid
+      expect(task.errors.messages).to include(:description)
+    end
+
+    it 'with blank string is not valid' do
+      task = build(:task, description: '')
       expect(task).not_to be_valid
       expect(task.errors.messages).to include(:description)
     end
