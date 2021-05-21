@@ -31,6 +31,50 @@ RSpec.describe TasksController, type: :system do
       end
     end
 
+    it 'lets a user filter tasks' do
+      task1 = create(:task, name: 'Super cool task1', description: 'Do TASK1!', due_date: 3.days.since, priority: :high, status: :doing)
+      task2 = create(:task, name: 'Super cool task2', description: 'Do TASK2 if you have time.', priority: :low, status: :done)
+      task3 = create(:task, name: 'OK this is task3', description: 'Do TASK3 if you have time.', priority: :low, status: :done)
+
+      visit '/'
+
+      expect(page).to have_text 'The list of tasks'
+      expect(page).to have_link 'New', href: '/en/tasks/new'
+
+      expect(page).to have_spec("Task##{task1.id}")
+      expect(page).to have_spec("Task##{task2.id}")
+      expect(page).to have_spec("Task##{task3.id}")
+
+      # Filter with "cool"
+
+      fill_in :name, with: 'cool'
+      click_button 'Search'
+
+      expect(page).to have_spec("Task##{task1.id}")
+      expect(page).to have_spec("Task##{task2.id}")
+      expect(page).not_to have_spec("Task##{task3.id}")
+
+      # Filter with "done"
+
+      fill_in :name, with: ''
+      select 'Done', from: 'status'
+      click_button 'Search'
+
+      expect(page).not_to have_spec("Task##{task1.id}")
+      expect(page).to have_spec("Task##{task2.id}")
+      expect(page).to have_spec("Task##{task3.id}")
+
+      # Filter with "cool" and "done"
+
+      fill_in :name, with: 'cool'
+      select 'Done', from: 'status'
+      click_button 'Search'
+
+      expect(page).not_to have_spec("Task##{task1.id}")
+      expect(page).to have_spec("Task##{task2.id}")
+      expect(page).not_to have_spec("Task##{task3.id}")
+    end
+
     it 'lets a user delete a task' do
       task = create(:task, name: 'to be deleted', description: 'DELETE!', priority: :normal, status: :waiting)
 

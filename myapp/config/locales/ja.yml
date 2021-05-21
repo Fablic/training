@@ -33,6 +33,9 @@ ja:
   pages:
     tasks:
       page_title: タスク一覧
+      search:
+        title: タスク検索
+        button: 検索
       tooltip:
         new: タスクを新しく作成します
         edit: タスクを編集します

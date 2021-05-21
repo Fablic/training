@@ -19,14 +19,17 @@
   @include tasks_container;
 
   &__header {
-    display: flex;
-    align-items: center;
     width: 100%;
-    min-height: 3rem;
+
+    &__actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-top: $space-l;
+    }
   }
 
   &__flash {
-    margin-left: auto;
     padding: $space-m $space-l;
     border-radius: 4px;
 
@@ -36,6 +39,38 @@
 
     &--error {
       border: 2px solid $color-red-800;
+    }
+  }
+
+  &__search {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__search-group {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__search-button {
+    @include button;
+    color: $color-gray-900;
+    background-color: $color-white;
+    align-self: flex-start;
+
+    margin-top: $space-l;
+
+    &:visited,
+    &:focus,
+    &:active {
+      color: $color-gray-900;
+    }
+
+    &:hover {
+      background-color: $color-gray-200;
     }
   }
 
@@ -88,7 +123,6 @@
     @include button;
     color: $color-blue-400;
     background-color: $color-white;
-    text-decoration: none;
 
     &:visited,
     &:focus,
@@ -105,7 +139,6 @@
     @include button;
     color: $color-red-800;
     background-color: $color-white;
-    text-decoration: none;
 
     &:visited,
     &:focus,

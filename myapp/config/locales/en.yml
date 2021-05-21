@@ -33,6 +33,9 @@ en:
   pages:
     tasks:
       page_title: The list of tasks
+      search:
+        title: Search tasks
+        button: Search
       tooltip:
         new: Add a new task
         edit: Edit the task
