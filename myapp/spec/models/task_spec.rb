@@ -1,15 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe Task, type: :model do
+  let(:task) { build(:task) }
+
   describe '#name' do
     it 'with nil is not valid' do
-      task = build(:task, name: nil)
+      task.name = nil
       expect(task).not_to be_valid
       expect(task.errors.messages).to include(:name)
     end
 
     it 'with blank string is not valid' do
-      task = build(:task, name: '')
+      task.name = ''
       expect(task).not_to be_valid
       expect(task.errors.messages).to include(:name)
     end
@@ -17,28 +19,32 @@ RSpec.describe Task, type: :model do
 
   describe '#description' do
     it 'with nil is not valid' do
-      task = build(:task, description: nil)
+      task.description = nil
       expect(task).not_to be_valid
       expect(task.errors.messages).to include(:description)
     end
 
     it 'with blank string is not valid' do
-      task = build(:task, description: '')
+      task.description = ''
       expect(task).not_to be_valid
       expect(task.errors.messages).to include(:description)
     end
   end
 
   describe '#due_date' do
+    it 'can be nil' do
+      task.due_date = nil
+      expect(task).to be_valid
+    end
+
     it 'can be nil as well as Time' do
-      expect(build(:task, due_date: nil)).to be_valid
-      expect(build(:task, due_date: Time.current)).to be_valid
+      task.due_date = Time.current
+      expect(task).to be_valid
     end
   end
 
   describe '#priority' do
     it 'can have defined value as enum' do
-      task = build(:task)
       expect(task.high!).to be true
       expect(task.normal!).to be true
       expect(task.low!).to be true
@@ -47,7 +53,6 @@ RSpec.describe Task, type: :model do
 
   describe '#status' do
     it 'can have defined value as enum' do
-      task = build(:task)
       expect(task.waiting!).to be true
       expect(task.doing!).to be true
       expect(task.done!).to be true
