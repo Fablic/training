@@ -84,6 +84,40 @@ RSpec.describe TasksController, type: :system do
       expect(page).not_to have_spec("Task##{task3.id}")
     end
 
+    it 'navigates a user to the next page' do
+      tasks = create_list(:task, 11, priority: :normal, status: :waiting).sort_by!(&:id)
+
+      visit '/'
+
+      expect(page).to have_spec("Task##{tasks[0].id}")
+      expect(page).to have_spec("Task##{tasks[1].id}")
+      expect(page).to have_spec("Task##{tasks[2].id}")
+      expect(page).to have_spec("Task##{tasks[3].id}")
+      expect(page).to have_spec("Task##{tasks[4].id}")
+      expect(page).to have_spec("Task##{tasks[5].id}")
+      expect(page).to have_spec("Task##{tasks[6].id}")
+      expect(page).to have_spec("Task##{tasks[7].id}")
+      expect(page).to have_spec("Task##{tasks[8].id}")
+      expect(page).to have_spec("Task##{tasks[9].id}")
+      expect(page).not_to have_spec("Task##{tasks[10].id}")
+
+      within_spec('tasks-pagination') do
+        click_link 'Next ›'
+      end
+
+      expect(page).not_to have_spec("Task##{tasks[0].id}")
+      expect(page).not_to have_spec("Task##{tasks[1].id}")
+      expect(page).not_to have_spec("Task##{tasks[2].id}")
+      expect(page).not_to have_spec("Task##{tasks[3].id}")
+      expect(page).not_to have_spec("Task##{tasks[4].id}")
+      expect(page).not_to have_spec("Task##{tasks[5].id}")
+      expect(page).not_to have_spec("Task##{tasks[6].id}")
+      expect(page).not_to have_spec("Task##{tasks[7].id}")
+      expect(page).not_to have_spec("Task##{tasks[8].id}")
+      expect(page).not_to have_spec("Task##{tasks[9].id}")
+      expect(page).to have_spec("Task##{tasks[10].id}")
+    end
+
     it 'lets a user delete a task' do
       task = create(:task, name: 'to be deleted', description: 'DELETE!', priority: :normal, status: :waiting)
 

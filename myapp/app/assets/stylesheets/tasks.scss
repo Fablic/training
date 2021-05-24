@@ -150,6 +150,10 @@
       background-color: $color-gray-200;
     }
   }
+
+  & .pagination {
+    margin-top: $space-l;
+  }
 }
 
 .edit-task {

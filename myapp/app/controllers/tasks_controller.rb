@@ -1,10 +1,11 @@
 class TasksController < ApplicationController
+  PER_PAGE = 10
+
   def index
     @params = params.permit(:name, :status).select { |_k, v| v.presence }
-    query = Task.all
-    query = query.where('name LIKE ?', "%#{ApplicationRecord.sanitize_sql_like(@params[:name])}%") if @params[:name]
-    query = query.where(status: @params[:status]) if @params[:status]
-    @tasks = query.order(:id)
+    @tasks = Task.order(:id).page(params[:page]).per(PER_PAGE)
+    @tasks = @tasks.where('name LIKE ?', "%#{ApplicationRecord.sanitize_sql_like(@params[:name])}%") if @params[:name]
+    @tasks = @tasks.where(status: @params[:status]) if @params[:status]
   end
 
   def new
