@@ -85,7 +85,7 @@ RSpec.describe TasksController, type: :system do
     end
 
     it 'navigates a user to the next page' do
-      tasks = create_list(:task, 11, priority: :normal, status: :waiting).sort_by!(&:id)
+      tasks = create_list(:task, 11).sort_by!(&:id)
 
       visit '/'
 
@@ -116,6 +116,75 @@ RSpec.describe TasksController, type: :system do
       expect(page).not_to have_spec("Task##{tasks[8].id}")
       expect(page).not_to have_spec("Task##{tasks[9].id}")
       expect(page).to have_spec("Task##{tasks[10].id}")
+    end
+
+    it 'navigates a user to the next page with filtered query' do
+      tasks_abc = create_list(:task, 11, name: 'abc').sort_by!(&:id)
+      tasks_xyz = create_list(:task, 11, name: 'xyz').sort_by!(&:id)
+
+      visit '/'
+
+      fill_in :name, with: 'abc'
+      click_button 'Search'
+
+      expect(page).to have_spec("Task##{tasks_abc[0].id}")
+      expect(page).to have_spec("Task##{tasks_abc[1].id}")
+      expect(page).to have_spec("Task##{tasks_abc[2].id}")
+      expect(page).to have_spec("Task##{tasks_abc[3].id}")
+      expect(page).to have_spec("Task##{tasks_abc[4].id}")
+      expect(page).to have_spec("Task##{tasks_abc[5].id}")
+      expect(page).to have_spec("Task##{tasks_abc[6].id}")
+      expect(page).to have_spec("Task##{tasks_abc[7].id}")
+      expect(page).to have_spec("Task##{tasks_abc[8].id}")
+      expect(page).to have_spec("Task##{tasks_abc[9].id}")
+      expect(page).not_to have_spec("Task##{tasks_abc[10].id}")
+
+      within_spec('tasks-pagination') do
+        click_link 'Next ›'
+      end
+
+      expect(page).not_to have_spec("Task##{tasks_abc[0].id}")
+      expect(page).not_to have_spec("Task##{tasks_abc[1].id}")
+      expect(page).not_to have_spec("Task##{tasks_abc[2].id}")
+      expect(page).not_to have_spec("Task##{tasks_abc[3].id}")
+      expect(page).not_to have_spec("Task##{tasks_abc[4].id}")
+      expect(page).not_to have_spec("Task##{tasks_abc[5].id}")
+      expect(page).not_to have_spec("Task##{tasks_abc[6].id}")
+      expect(page).not_to have_spec("Task##{tasks_abc[7].id}")
+      expect(page).not_to have_spec("Task##{tasks_abc[8].id}")
+      expect(page).not_to have_spec("Task##{tasks_abc[9].id}")
+      expect(page).to have_spec("Task##{tasks_abc[10].id}")
+
+      fill_in :name, with: 'xyz'
+      click_button 'Search'
+
+      expect(page).to have_spec("Task##{tasks_xyz[0].id}")
+      expect(page).to have_spec("Task##{tasks_xyz[1].id}")
+      expect(page).to have_spec("Task##{tasks_xyz[2].id}")
+      expect(page).to have_spec("Task##{tasks_xyz[3].id}")
+      expect(page).to have_spec("Task##{tasks_xyz[4].id}")
+      expect(page).to have_spec("Task##{tasks_xyz[5].id}")
+      expect(page).to have_spec("Task##{tasks_xyz[6].id}")
+      expect(page).to have_spec("Task##{tasks_xyz[7].id}")
+      expect(page).to have_spec("Task##{tasks_xyz[8].id}")
+      expect(page).to have_spec("Task##{tasks_xyz[9].id}")
+      expect(page).not_to have_spec("Task##{tasks_xyz[10].id}")
+
+      within_spec('tasks-pagination') do
+        click_link 'Next ›'
+      end
+
+      expect(page).not_to have_spec("Task##{tasks_xyz[0].id}")
+      expect(page).not_to have_spec("Task##{tasks_xyz[1].id}")
+      expect(page).not_to have_spec("Task##{tasks_xyz[2].id}")
+      expect(page).not_to have_spec("Task##{tasks_xyz[3].id}")
+      expect(page).not_to have_spec("Task##{tasks_xyz[4].id}")
+      expect(page).not_to have_spec("Task##{tasks_xyz[5].id}")
+      expect(page).not_to have_spec("Task##{tasks_xyz[6].id}")
+      expect(page).not_to have_spec("Task##{tasks_xyz[7].id}")
+      expect(page).not_to have_spec("Task##{tasks_xyz[8].id}")
+      expect(page).not_to have_spec("Task##{tasks_xyz[9].id}")
+      expect(page).to have_spec("Task##{tasks_xyz[10].id}")
     end
 
     it 'lets a user delete a task' do
