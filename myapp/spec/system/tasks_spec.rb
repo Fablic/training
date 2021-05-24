@@ -1,10 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe TasksController, type: :system do
+  let(:user) { User.find_by!(name: 'tester') } # TODO: Replace it after implementing login/logout
+
   describe 'Tasks page' do
     it 'lets a user show tasks' do
-      task1 = create(:task, name: 'task1', description: 'Do TASK1!', due_date: 3.days.since, priority: :high, status: :doing)
-      task2 = create(:task, name: 'task2', description: 'Do TASK2 if you have time.', priority: :low, status: :waiting)
+      task1 = create(:task, user: user, name: 'task1', description: 'Do TASK1!', due_date: 3.days.since, priority: :high, status: :doing)
+      task2 = create(:task, user: user, name: 'task2', description: 'Do TASK2 if you have time.', priority: :low, status: :waiting)
 
       visit '/'
 
@@ -32,9 +34,9 @@ RSpec.describe TasksController, type: :system do
     end
 
     it 'lets a user filter tasks' do
-      task1 = create(:task, name: 'Super cool task1', description: 'Do TASK1!', due_date: 3.days.since, priority: :high, status: :doing)
-      task2 = create(:task, name: 'Super cool task2', description: 'Do TASK2 if you have time.', priority: :low, status: :done)
-      task3 = create(:task, name: 'OK this is task3', description: 'Do TASK3 if you have time.', priority: :low, status: :done)
+      task1 = create(:task, user: user, name: 'Super cool task1', description: 'Do TASK1!', due_date: 3.days.since, priority: :high, status: :doing)
+      task2 = create(:task, user: user, name: 'Super cool task2', description: 'Do TASK2 if you have time.', priority: :low, status: :done)
+      task3 = create(:task, user: user, name: 'OK this is task3', description: 'Do TASK3 if you have time.', priority: :low, status: :done)
 
       visit '/'
 
@@ -85,7 +87,7 @@ RSpec.describe TasksController, type: :system do
     end
 
     it 'navigates a user to the next page' do
-      tasks = create_list(:task, 11).sort_by!(&:id)
+      tasks = create_list(:task, 11, user: user).sort_by!(&:id)
 
       visit '/'
 
@@ -105,8 +107,8 @@ RSpec.describe TasksController, type: :system do
     end
 
     it 'navigates a user to the next page with filtered query' do
-      tasks_abc = create_list(:task, 11, name: 'abc').sort_by!(&:id)
-      tasks_xyz = create_list(:task, 11, name: 'xyz').sort_by!(&:id)
+      tasks_abc = create_list(:task, 11, user: user, name: 'abc').sort_by!(&:id)
+      tasks_xyz = create_list(:task, 11, user: user, name: 'xyz').sort_by!(&:id)
 
       visit '/'
 
@@ -148,7 +150,7 @@ RSpec.describe TasksController, type: :system do
     end
 
     it 'lets a user delete a task' do
-      task = create(:task, name: 'to be deleted', description: 'DELETE!', priority: :normal, status: :waiting)
+      task = create(:task, user: user, name: 'to be deleted', description: 'DELETE!', priority: :normal, status: :waiting)
 
       visit '/'
 
@@ -213,7 +215,7 @@ RSpec.describe TasksController, type: :system do
 
   describe 'Task edit page' do
     it 'lets a user edit a task' do
-      task = create(:task, name: 'to be edited', description: 'EDIT!', priority: :normal, status: :waiting)
+      task = create(:task, user: user, name: 'to be edited', description: 'EDIT!', priority: :normal, status: :waiting)
 
       visit '/'
 
@@ -236,7 +238,7 @@ RSpec.describe TasksController, type: :system do
     end
 
     it 'denies a request of update with empty name' do
-      task = create(:task, name: 'to be edited', description: 'EDIT!', priority: :normal, status: :waiting)
+      task = create(:task, user: user, name: 'to be edited', description: 'EDIT!', priority: :normal, status: :waiting)
 
       visit '/'
 
@@ -256,7 +258,7 @@ RSpec.describe TasksController, type: :system do
     end
 
     it 'denies a request of update with empty description' do
-      task = create(:task, name: 'to be edited', description: 'EDIT!', priority: :normal, status: :waiting)
+      task = create(:task, user: user, name: 'to be edited', description: 'EDIT!', priority: :normal, status: :waiting)
 
       visit '/'
 
