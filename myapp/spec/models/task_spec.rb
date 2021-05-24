@@ -3,6 +3,24 @@ require 'rails_helper'
 RSpec.describe Task, type: :model do
   let(:task) { build(:task) }
 
+  describe '.namw_with' do
+    subject(:name_with) { ->(name) { described_class.name_with(name) } }
+
+    let(:task1) { create(:task, name: 'abc') }
+    let(:task2) { create(:task, name: 'def') }
+    let(:task3) { create(:task, name: 'xbf') }
+
+    it do
+      expect(subject.call('a')).to contain_exactly(task1)
+      expect(subject.call('b')).to contain_exactly(task1, task3)
+      expect(subject.call('c')).to contain_exactly(task1)
+      expect(subject.call('d')).to contain_exactly(task2)
+      expect(subject.call('e')).to contain_exactly(task2)
+      expect(subject.call('f')).to contain_exactly(task2, task3)
+      expect(subject.call('x')).to contain_exactly(task3)
+    end
+  end
+
   describe '#name' do
     it 'with nil is not valid' do
       task.name = nil
