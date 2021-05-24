@@ -8,6 +8,13 @@ ja:
               blank: 名前は必須です
             description:
               blank: 説明は必須です
+        user:
+          attributes:
+            name:
+              blank: 名前は必須です
+              taken: すでに同じ名前が登録されています
+            password:
+              blank: パスワードは必須です
     attributes:
       task:
         name: 名前

@@ -41,6 +41,10 @@ RSpec.configure do |config|
   # Filter lines from Rails gems in backtraces.
   config.filter_rails_from_backtrace!
 
+  config.before(:suite) do
+    Rails.application.load_seed
+  end
+
   config.before(:each) do |example|
     I18n.locale = :en
 
