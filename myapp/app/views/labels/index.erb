@@ -1,0 +1,27 @@
+<div class="labels">
+  <h1><%= t('pages.labels.page_title') %></h1>
+
+  <div class="labels__header">
+    <% if flash[:info] || flash[:error] %>
+      <% modifier = 'labels__flash--info' if flash[:info] %>
+      <% modifier = 'labels__flash--error' if flash[:error] %>
+      <div class="labels__flash  <%= modifier %>">
+        <pre><%= flash[:info] || flash[:error] %></pre>
+      </div>
+    <% end %>
+
+    <div class="labels__header__actions">
+      <%= link_to(t('common.logout'), logout_path, method: :delete, class: 'labels__header__logout') %>
+    </div>
+
+    <div class="labels__header__actions">
+      <%= link_to(t('common.new'), new_label_path(I18n.locale), class: 'labels__new', title: t('pages.labels.tooltip.new')) %>
+    </div>
+  </div>
+
+  <div class="labels__body">
+    <% @labels.each do |label| %>
+      <%= custom_label(label) %>
+    <% end %>
+  </div>
+</div>

@@ -30,6 +30,38 @@
   }
 }
 
+@mixin button-positive-blue {
+  @include button;
+  color: $color-blue-400;
+  background-color: $color-white;
+
+  &:visited,
+  &:focus,
+  &:active {
+    color: $color-blue-400;
+  }
+
+  &:hover {
+    background-color: $color-gray-200;
+  }
+}
+
+@mixin button-danger {
+  @include button;
+  color: $color-red-800;
+  background-color: $color-white;
+
+  &:visited,
+  &:focus,
+  &:active {
+    color: $color-red-800;
+  }
+
+  &:hover {
+    background-color: $color-gray-200;
+  }
+}
+
 @mixin button-default {
   @include button;
 
@@ -55,6 +87,34 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  &__header {
+    width: 100%;
+
+    &__logout {
+      @include button-default;
+    }
+
+    &__actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-top: $space-l;
+    }
+  }
+
+  &__flash {
+    padding: $space-m $space-l;
+    border-radius: 4px;
+
+    &--info {
+      border: 2px solid $color-blue-200;
+    }
+
+    &--error {
+      border: 2px solid $color-red-800;
+    }
+  }
 }
 
 @mixin form {

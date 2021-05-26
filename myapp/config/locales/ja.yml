@@ -78,3 +78,17 @@ ja:
       page_title: タスクの追加
     edit_task:
       page_title: タスクの編集
+    labels:
+      page_title: ラベル一覧
+      tooltip:
+        new: ラベルを新しく作成します
+        delete: ラベルを削除します
+      flash:
+        added: ラベルを作成しました。
+        edited: ラベルを編集しました。
+        deleted: ラベルを削除しました。
+      confirm_deletion: 本当にラベルを削除してよろしいですか？
+    new_label:
+      page_title: ラベルの追加
+    edit_label:
+      page_title: ラベルの編集

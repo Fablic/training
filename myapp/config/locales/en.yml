@@ -78,3 +78,17 @@ en:
       page_title: Add a new task
     edit_task:
       page_title: Edit the task
+    labels:
+      page_title: The list of labels
+      tooltip:
+        new: Add a new label
+        delete: Delete the label
+      flash:
+        added: Succeeded to add the label!
+        edited: Succeeded to edit the label!
+        deleted: Succeeded to delete the label!
+      confirm_deletion: Are you sure you want to delete the label?
+    new_label:
+      page_title: Add a new label
+    edit_label:
+      page_title: Edit the label
