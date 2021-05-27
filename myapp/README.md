@@ -7,7 +7,7 @@ You can check this program with this command:
 ```console
 $ docker-compose --file docker-compose.prod.yml --project-name myapp-prod build
 $ docker-compose --file docker-compose.prod.yml --project-name myapp-prod up -d db
-$ docker-compose --file docker-compose.prod.yml --project-name myapp-prod run --rm api bundle exec rails db:setup
+$ docker-compose --file docker-compose.prod.yml --project-name myapp-prod run --rm -e DISABLE_DATABASE_ENVIRONMENT_CHECK=1 api bundle exec rails db:create db:migrate
 $ docker-compose --file docker-compose.prod.yml --project-name myapp-prod up -d
 ```
 
