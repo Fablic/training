@@ -1,5 +1,8 @@
 class ApplicationController < ActionController::Base
+  include SessionHandling
+
   around_action :switch_locale
+  before_action :require_login
 
   private
 

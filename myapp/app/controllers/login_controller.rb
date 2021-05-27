@@ -1,5 +1,5 @@
 class LoginController < ApplicationController
-  include SessionHandling
+  skip_before_action :require_login
 
   def index
     @user = User.new

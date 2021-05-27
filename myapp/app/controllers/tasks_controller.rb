@@ -1,8 +1,4 @@
 class TasksController < ApplicationController
-  include SessionHandling
-
-  before_action :require_login
-
   PER_PAGE = 10
 
   def index
