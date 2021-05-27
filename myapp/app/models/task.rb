@@ -10,5 +10,5 @@ class Task < ApplicationRecord
   enum priority: { low: 5, normal: 10, high: 20 }
   enum status: { waiting: 5, doing: 10, done: 20 }
 
-  scope :name_with, ->(name) { where('name LIKE ?', "%#{ApplicationRecord.sanitize_sql_like(name)}%") }
+  scope :name_with, ->(name) { where('`tasks`.`name` LIKE ?', "%#{ApplicationRecord.sanitize_sql_like(name)}%") }
 end

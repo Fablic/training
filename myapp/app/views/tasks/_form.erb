@@ -11,6 +11,10 @@
       <%= f.text_area :description, rows: 5 %> <!-- TODO: Set `required: false` after merging step 11 -->
     </div>
     <div class="edit-task__form__field">
+      <%= f.label :labels %>
+      <%= f.collection_select :labels, @labels, :id, :name, { selected: @task.labels.map(&:id), include_hidden: false }, { multiple: true } %>
+    </div>
+    <div class="edit-task__form__field">
       <%= f.label :due_date %>
       <%= f.date_field :due_date %>
     </div>

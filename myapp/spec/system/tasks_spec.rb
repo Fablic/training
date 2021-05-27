@@ -2,6 +2,14 @@ require 'rails_helper'
 
 RSpec.describe TasksController, type: :system do
   let(:user) { create(:user) }
+  let(:labels) do
+    {
+      security: create(:label, name: 'security', user: user),
+      bug: create(:label, name: 'bug', user: user),
+      enhancement: create(:label, name: 'enhancement', user: user),
+      special: create(:label, name: 'special', user: user),
+    }
+  end
 
   before do
     login_as user
@@ -9,8 +17,15 @@ RSpec.describe TasksController, type: :system do
 
   describe 'Tasks page' do
     it 'lets a user show tasks' do
-      task1 = create(:task, user: user, name: 'task1', description: 'Do TASK1!', due_date: 3.days.since, priority: :high, status: :doing)
-      task2 = create(:task, user: user, name: 'task2', description: 'Do TASK2 if you have time.', priority: :low, status: :waiting)
+      task1 = create(:task, user: user, name: 'task1', description: 'Do TASK1!', due_date: 3.days.since, priority: :high, status: :doing).tap do |task|
+        create(:task_label_attachment, task: task, label: labels[:security])
+        create(:task_label_attachment, task: task, label: labels[:bug])
+        create(:task_label_attachment, task: task, label: labels[:special])
+      end
+      task2 = create(:task, user: user, name: 'task2', description: 'Do TASK2 if you have time.', priority: :low, status: :waiting).tap do |task|
+        create(:task_label_attachment, task: task, label: labels[:bug])
+        create(:task_label_attachment, task: task, label: labels[:enhancement])
+      end
 
       visit '/'
 
@@ -20,6 +35,9 @@ RSpec.describe TasksController, type: :system do
       within_spec("Task##{task1.id}") do
         expect(page).to have_text 'task1'
         expect(page).to have_text 'Do TASK1!'
+        expect(page).to have_link 'bug', href: '/en?label=bug'
+        expect(page).to have_link 'security', href: '/en?label=security'
+        expect(page).to have_link 'special', href: '/en?label=special'
         expect(page).to have_text '3 days'
         expect(page).to have_text 'High'
         expect(page).to have_text 'Doing'
@@ -30,6 +48,8 @@ RSpec.describe TasksController, type: :system do
       within_spec("Task##{task2.id}") do
         expect(page).to have_text 'task2'
         expect(page).to have_text 'Do TASK2 if you have time.'
+        expect(page).to have_link 'bug', href: '/en?label=bug'
+        expect(page).to have_link 'enhancement', href: '/en?label=enhancement'
         expect(page).to have_text 'Low'
         expect(page).to have_text 'Waiting'
         expect(page).to have_link 'Edit', href: "/en/tasks/#{task2.id}/edit"
@@ -90,6 +110,57 @@ RSpec.describe TasksController, type: :system do
       expect(page).not_to have_spec("Task##{task3.id}")
     end
 
+    it 'lets a user filter tasks with labels' do
+      task1 = create(:task, user: user, name: 'Super cool task1').tap do |task|
+        create(:task_label_attachment, task: task, label: labels[:security])
+        create(:task_label_attachment, task: task, label: labels[:special])
+      end
+      task2 = create(:task, user: user, name: 'Necessary task2').tap do |task|
+        create(:task_label_attachment, task: task, label: labels[:bug])
+        create(:task_label_attachment, task: task, label: labels[:special])
+      end
+
+      visit '/'
+
+      expect(page).to have_spec("Task##{task1.id}")
+      expect(page).to have_spec("Task##{task2.id}")
+
+      # Filter by clicking a label
+
+      within_spec("Task##{task1.id}") do
+        click_link 'security'
+      end
+      expect(page).to have_spec("Task##{task1.id}")
+      expect(page).not_to have_spec("Task##{task2.id}")
+
+      page.go_back
+
+      within_spec("Task##{task2.id}") do
+        click_link 'bug'
+      end
+      expect(page).not_to have_spec("Task##{task1.id}")
+      expect(page).to have_spec("Task##{task2.id}")
+
+      page.go_back
+
+      within_spec("Task##{task1.id}") do
+        click_link 'special'
+      end
+      expect(page).to have_spec("Task##{task1.id}")
+      expect(page).to have_spec("Task##{task2.id}")
+
+      page.go_back
+
+      # Filter with label and name
+
+      fill_in :name, with: 'Necessary'
+      select 'special', from: 'label'
+      click_button 'Search'
+
+      expect(page).not_to have_spec("Task##{task1.id}")
+      expect(page).to have_spec("Task##{task2.id}")
+    end
+
     it 'navigates a user to the next page' do
       tasks = create_list(:task, 11, user: user).sort_by!(&:id)
 
@@ -119,7 +190,6 @@ RSpec.describe TasksController, type: :system do
       fill_in :name, with: 'abc'
       click_button 'Search'
 
-
       tasks_abc[0...10].each do |task|
         expect(page).to have_spec("Task##{task.id}")
       end
@@ -128,7 +198,6 @@ RSpec.describe TasksController, type: :system do
       within_spec('tasks-pagination') do
         click_link 'Next ›'
       end
-
 
       tasks_abc[0...10].each do |task|
         expect(page).not_to have_spec("Task##{task.id}")
@@ -231,6 +300,36 @@ RSpec.describe TasksController, type: :system do
       end
     end
 
+    it 'lets a user create a new task with labels' do
+      labels # Ensure the existence of labels owned by the user
+
+      visit '/'
+
+      click_link 'New'
+
+      fill_in 'Name', with: 'New with labels'
+      fill_in 'Description', with: 'New Task!'
+      select 'security', from: 'Labels'
+      select 'special', from: 'Labels'
+      select 'bug', from: 'Labels'
+      unselect 'security', from: 'Labels'
+      click_button 'Submit'
+
+      expect(page).to have_current_path('/en')
+      expect(page).to have_text 'Succeeded to add the task!'
+
+      task = Task.find_by!(name: 'New with labels')
+      within_spec("Task##{task.id}") do
+        expect(page).to have_text 'New with labels'
+        expect(page).to have_text 'New Task!'
+        expect(page).to have_link 'bug', href: '/en?label=bug'
+        expect(page).to have_link 'special', href: '/en?label=special'
+        expect(page).not_to have_link 'security'
+        expect(page).to have_link 'Edit', href: "/en/tasks/#{task.id}/edit"
+        expect(page).to have_link 'Delete', href: "/en/tasks/#{task.id}"
+      end
+    end
+
     it 'denies a request of creation with empty name and description' do
       visit '/'
 
@@ -276,6 +375,45 @@ RSpec.describe TasksController, type: :system do
 
       within_spec("Task##{task.id}") do
         expect(page).to have_text 'Updated description'
+      end
+    end
+
+    it 'lets a user edit a task to add a label' do
+      task = create(:task, user: user, name: 'to be edited', description: 'EDIT!', priority: :normal, status: :waiting).tap do |task|
+        create(:task_label_attachment, task: task, label: labels[:special])
+      end
+
+      visit '/'
+
+      within_spec("Task##{task.id}") do
+        click_link 'Edit'
+      end
+
+      select 'bug', from: 'Labels'
+      click_button 'Submit'
+
+      within_spec("Task##{task.id}") do
+        expect(page).to have_link 'special', href: '/en?label=special'
+        expect(page).to have_link 'bug', href: '/en?label=bug'
+      end
+    end
+
+    it 'lets a user edit a task to remove a label' do
+      task = create(:task, user: user, name: 'to be edited', description: 'EDIT!', priority: :normal, status: :waiting).tap do |task|
+        create(:task_label_attachment, task: task, label: labels[:special])
+      end
+
+      visit '/'
+
+      within_spec("Task##{task.id}") do
+        click_link 'Edit'
+      end
+
+      unselect 'security', from: 'Labels'
+      click_button 'Submit'
+
+      within_spec("Task##{task.id}") do
+        expect(page).not_to have_link 'security'
       end
     end
 
