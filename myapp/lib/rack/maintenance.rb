@@ -2,6 +2,18 @@ class Rack::Maintenance
   MAINTENANCE_STATUS_CODE = 503
   MAINTENANCE_YAML = Rails.root.join('tmp', 'maintenance.yml')
 
+  def self.start(retry_after)
+    Rack::Maintenance::MAINTENANCE_YAML.write(
+      YAML.dump(
+        'retry_after' => retry_after,
+      ),
+    )
+  end
+
+  def self.finish
+    FileUtils.rm_f(Rack::Maintenance::MAINTENANCE_YAML)
+  end
+
   def initialize(app)
     @app = app
     @content = Rails.root.join('public', 'maintenance.html').read

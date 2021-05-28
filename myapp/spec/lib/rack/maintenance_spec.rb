@@ -10,15 +10,11 @@ RSpec.describe Rack::Maintenance do
   end
 
   def start_maintenance(retry_after)
-    described_class::MAINTENANCE_YAML.write(
-      YAML.dump(
-        'retry_after' => retry_after,
-      ),
-    )
+    Rack::Maintenance.start(retry_after)
   end
 
   after do
-    FileUtils.rm_f(Rails.root.join('tmp', 'maintenance.yml'))
+    Rack::Maintenance.finish
   end
 
   it 'calls the next middleware/app' do
