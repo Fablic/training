@@ -34,4 +34,7 @@ Before implementing, I surmised these models might be required.
 +------+         +------+        +-------+
 | User |-------->| Task |<------>| Label |
 +------|         +------+        +-------+
+   |                                 A
+   |                                 |
+   +---------------------------------+
 ```

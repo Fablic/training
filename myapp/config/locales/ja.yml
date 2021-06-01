@@ -15,6 +15,20 @@ ja:
               taken: すでに同じ名前が登録されています
             password:
               blank: パスワードは必須です
+        label:
+          attributes:
+            name:
+              blank: 名前は必須です
+              taken: すでに同じ名前が登録されています
+            color:
+              blank: カラーを指定してください
+              hexadecimal_notation: カラーは#ef00b3のように16進表記のみサポートしています
+        task_label_attachment:
+          attributes:
+            base:
+              invalid_ownership: 関連するタスクとラベルは共通のユーザーを持つ必要があります
+            label_id:
+              taken: 指定したタスクとラベルはすでに関連付けられています
     attributes:
       task:
         name: 名前
