@@ -1,0 +1,40 @@
+// Place all the styles related to the labels controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+
+@import './variables';
+@import './mixins';
+
+.labels {
+  @include container;
+
+  &__new {
+    @include button-positive;
+  }
+
+  &__body {
+    display: grid;
+    gap: $space-m;
+    width: 100%;
+    grid-template-columns: repeat(6, 1fr);
+    margin-top: $space-l;
+  }
+}
+
+.edit-label {
+  @include container;
+
+  &__form {
+    @include form;
+  }
+
+  &__actions {
+    display: flex;
+    width: $page-min-width;
+    justify-content: flex-end;
+  }
+
+  &__delete {
+    @include button-danger;
+  }
+}
