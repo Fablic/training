@@ -1,24 +1,40 @@
-# README
+# myapp
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## How to run?
 
-Things you may want to cover:
+You can check this program with this command:
 
-* Ruby version
+```console
+$ docker-compose --file docker-compose.prod.yml --project-name myapp-prod build
+$ docker-compose --file docker-compose.prod.yml --project-name myapp-prod up -d db
+$ docker-compose --file docker-compose.prod.yml --project-name myapp-prod run --rm -e DISABLE_DATABASE_ENVIRONMENT_CHECK=1 api bundle exec rails db:create db:migrate
+$ docker-compose --file docker-compose.prod.yml --project-name myapp-prod up -d
+```
 
-* System dependencies
+After successfuly running, you can check on http://localhost:3002/
 
-* Configuration
+## Models
 
-* Database creation
+Before implementing, I surmised these models might be required.
 
-* Database initialization
+* `User`
+    - is responsible for detecting who are you
+    - is used for authentication and authorization
+    - possible attributes: `id`, `name`, `password`, `role`
+* `Task`
+    - is responsible for storing **Task**
+    - belongs to `User`
+    - possible attributes: `id`, `name`, `description`, `due_date`, `priority`, `status`
+* `Label`
+    - is responsible for storing **Label**
+    - associates with `Tasks` as Many to Many
+    - possible attributes: `id`, `name`, `color`
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```
++------+         +------+        +-------+
+| User |-------->| Task |<------>| Label |
++------|         +------+        +-------+
+   |                                 A
+   |                                 |
+   +---------------------------------+
+```

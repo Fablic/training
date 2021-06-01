@@ -1,0 +1,19 @@
+<div class="login">
+  <h1><%= t('pages.login.page_title') %></h1>
+
+  <% if flash[:error] %>
+    <div class="login__flash"><%= flash[:error] %></div>
+  <% end %>
+
+  <%= form_for @user, url: login_path, method: :post, class: "login__form" do |f| %>
+    <div class="login__form__field">
+      <%= f.label :name %>
+      <%= f.text_field :name, required: true %>
+    </div>
+    <div class="login__form__field">
+      <%= f.label :password %>
+      <%= f.password_field :password, required: true %>
+    </div>
+    <%= f.submit t('pages.login.submit_button'), class: 'login__form__button' %>
+  <% end %>
+</div>

@@ -1,0 +1,96 @@
+ja:
+  activerecord:
+    errors:
+      models:
+        task:
+          attributes:
+            name:
+              blank: 名前は必須です
+            description:
+              blank: 説明は必須です
+        user:
+          attributes:
+            name:
+              blank: 名前は必須です
+              taken: すでに同じ名前が登録されています
+            password:
+              blank: パスワードは必須です
+        label:
+          attributes:
+            name:
+              blank: 名前は必須です
+              taken: すでに同じ名前が登録されています
+            color:
+              blank: カラーを指定してください
+              hexadecimal_notation: カラーは#ef00b3のように16進表記のみサポートしています
+        task_label_attachment:
+          attributes:
+            base:
+              invalid_ownership: 関連するタスクとラベルは共通のユーザーを持つ必要があります
+            label_id:
+              taken: 指定したタスクとラベルはすでに関連付けられています
+    attributes:
+      task:
+        name: 名前
+        description: 説明
+        labels: ラベル
+        label: ラベル
+        due_date: 期限
+        priority: 優先度
+        status: ステータス
+    enum:
+      task:
+        priority:
+          low: 低
+          normal: 中
+          high: 高
+        status:
+          waiting: 未着手
+          doing: 着手
+          done: 完了
+  common:
+    new: 新規作成
+    edit: 編集
+    submit: 送信
+    delete: 削除
+    logout: ログアウト
+    flash:
+      login_required: ログインする必要があります
+  pages:
+    tasks:
+      page_title: タスク一覧
+      search:
+        title: タスク検索
+        button: 検索
+      tooltip:
+        new: タスクを新しく作成します
+        edit: タスクを編集します
+        delete: タスクを削除します
+      flash:
+        added: タスクを作成しました。
+        edited: タスクを編集しました。
+        deleted: タスクを削除しました。
+      confirm_deletion: 本当にタスクを削除してよろしいですか？
+    login:
+      page_title: ログイン
+      submit_button: ログイン
+      flash:
+        error: 名前かパスワードが正しくありません
+    new_task:
+      page_title: タスクの追加
+    edit_task:
+      page_title: タスクの編集
+    labels:
+      page_title: ラベル一覧
+      tooltip:
+        new: ラベルを新しく作成します
+        delete: ラベルを削除します
+      flash:
+        added: ラベルを作成しました。
+        edited: ラベルを編集しました。
+        deleted: ラベルを削除しました。
+      confirm_deletion: 本当にラベルを削除してよろしいですか？
+    new_label:
+      page_title: ラベルの追加
+    edit_label:
+      page_title: ラベルの編集

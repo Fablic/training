@@ -1,0 +1,8 @@
+.git*
+.bundle
+node_modules/
+/tmp/*
+!/tmp/pids/.gitkeep
+/vendor/*
+/spec/
+/log/*

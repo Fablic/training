@@ -1,33 +1,96 @@
-# Files in the config/locales directory are used for internationalization
-# and are automatically loaded by Rails. If you want to use locales other
-# than English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t 'hello'
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t('hello') %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# The following keys must be escaped otherwise they will not be retrieved by
-# the default I18n backend:
-#
-# true, false, on, off, yes, no
-#
-# Instead, surround them with single quotes.
-#
-# en:
-#   'true': 'foo'
-#
-# To learn more, please read the Rails Internationalization guide
-# available at https://guides.rubyonrails.org/i18n.html.
-
 en:
-  hello: "Hello world"
+  activerecord:
+    errors:
+      models:
+        task:
+          attributes:
+            name:
+              blank: Name must be filled in
+            description:
+              blank: Description must be filled in
+        user:
+          attributes:
+            name:
+              blank: Name must be filled in
+              taken: The same name has already been taken
+            password:
+              blank: Password can't be blank
+        label:
+          attributes:
+            name:
+              blank: Name must be filled in
+              taken: The same name has already been taken
+            color:
+              blank: Color is required
+              hexadecimal_notation: 'Only hexadecimal notation, such as #ef00b3, is supported'
+        task_label_attachment:
+          attributes:
+            base:
+              invalid_ownership: The associated task and label must have a common user
+            label_id:
+              taken: The specified task and label have already been associated
+    attributes:
+      task:
+        name: Name
+        description: Description
+        labels: Labels
+        label: Label
+        due_date: Due date
+        priority: Priority
+        status: Status
+    enum:
+      task:
+        priority:
+          low: Low
+          normal: Normal
+          high: High
+        status:
+          waiting: Waiting
+          doing: Doing
+          done: Done
+  common:
+    new: New
+    edit: Edit
+    submit: Submit
+    delete: Delete
+    logout: Logout
+    flash:
+      login_required: You must login beforehand
+  pages:
+    tasks:
+      page_title: The list of tasks
+      search:
+        title: Search tasks
+        button: Search
+      tooltip:
+        new: Add a new task
+        edit: Edit the task
+        delete: Delete the task
+      flash:
+        added: Succeeded to add the task!
+        edited: Succeeded to edit the task!
+        deleted: Succeeded to delete the task!
+      confirm_deletion: Are you sure you want to delete the task?
+    login:
+      page_title: Login
+      submit_button: Login
+      flash:
+        error: Incorrect name or password
+    new_task:
+      page_title: Add a new task
+    edit_task:
+      page_title: Edit the task
+    labels:
+      page_title: The list of labels
+      tooltip:
+        new: Add a new label
+        delete: Delete the label
+      flash:
+        added: Succeeded to add the label!
+        edited: Succeeded to edit the label!
+        deleted: Succeeded to delete the label!
+      confirm_deletion: Are you sure you want to delete the label?
+    new_label:
+      page_title: Add a new label
+    edit_label:
+      page_title: Edit the label

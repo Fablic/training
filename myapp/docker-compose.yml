@@ -13,17 +13,40 @@ services:
 
   api:
     build: .
-    command: bash -c "bundle exec rails db:create && bundle exec rails db:migrate && rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    command: bash -c "bundle exec rails db:create && bundle exec rails db:migrate && bundle exec rails db:seed && rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
     volumes:
-      - .:/myapp
-      - bundle-install:/usr/local/bundle:delegated
+      - ./app:/myapp/app
+      - ./bin:/myapp/bin
+      - ./config:/myapp/config
+      - ./db:/myapp/db
+      - ./lib:/myapp/lib
+      - ./log:/myapp/log
+      - ./public:/myapp/public
+      - ./storage:/myapp/storage
+      - ./spec:/myapp/spec
+      - ./tmp:/myapp/tmp
+      - ./Gemfile:/myapp/Gemfile
+      - ./Gemfile.lock:/myapp/Gemfile.lock
+      - ./Rakefile:/myapp/Rakefile
+      - ./babel.config.js:/myapp/babel.config.js
+      - ./config.ru:/myapp/config.ru
+      - ./package.json:/myapp/package.json
+      - ./postcss.config.js:/myapp/postcss.config.js
+      - ./yarn.lock:/myapp/yarn.lock
     ports:
       - "3001:3000"
-    links:
+    environment:
+      CAPYBARA_SELENIUM_URL: 'http://chrome:4444/wd/hub'
+      CAPYBARA_SERVER_PORT: '3031'
+      CAPYBARA_HOST_NAME: 'api'
+    depends_on:
       - db
+      - chrome
+
+  chrome:
+    image: selenium/standalone-chrome:90.0
+    shm_size: '2gb'
 
 volumes:
   db-data:
-    driver: local
-  bundle-install:
     driver: local

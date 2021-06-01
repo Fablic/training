@@ -1,0 +1,20 @@
+// Place all the styles related to the login controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+
+@import "./variables";
+@import "./mixins";
+
+.login {
+  @include container;
+
+  &__flash {
+    padding: $space-m $space-l;
+    border-radius: 4px;
+    border: 2px solid $color-red-800;
+  }
+
+  &__form {
+    @include form;
+  }
+}

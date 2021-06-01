@@ -1,0 +1,94 @@
+// Place all the styles related to the tasks controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+
+@import './variables';
+@import './mixins';
+
+.tasks {
+  @include container;
+
+  &__search {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__search-group {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__search-button {
+    @include button-default;
+    align-self: flex-start;
+    margin-top: $space-l;
+  }
+
+  &__table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 2px solid $color-gray-400;
+    margin-top: $space-l;
+  }
+
+  &__thead {
+    background-color: $color-gray-400;
+    color: $color-black;
+  }
+
+  &__tbody {
+    background-color: $color-white;
+    color: $color-gray-900;
+  }
+
+  &__row {
+    border: 1px solid $color-gray-400;
+
+    &:hover {
+      background-color: $color-gray-100;
+    }
+
+    &--header {
+      &:hover {
+        background-color: $color-gray-400;
+      }
+    }
+  }
+
+  &__cell {
+    font-family: sans-serif;
+    padding: $space-m;
+    text-align: left;
+
+    &--right {
+      text-align: right;
+    }
+  }
+
+  &__new {
+    @include button-positive;
+  }
+
+  &__edit {
+    @include button-positive-blue;
+  }
+
+  &__delete {
+    @include button-danger;
+  }
+
+  & .pagination {
+    margin-top: $space-l;
+  }
+}
+
+.edit-task {
+  @include container;
+
+  &__form {
+    @include form;
+  }
+}

@@ -1,0 +1,29 @@
+<div class="edit-label">
+  <h1><%= page_title %></h1>
+
+  <% if delete_action_url %>
+    <div class="edit-label__actions">
+      <%= link_to(
+            t('common.delete'),
+            delete_action_url,
+            method: :delete,
+            class: "edit-label__delete",
+            title: t('pages.labels.tooltip.delete'),
+            data: { confirm: t('pages.labels.confirm_deletion') },
+          )
+      %>
+    </div>
+  <% end %>
+
+  <%= form_for @label, url: action_url, class: "edit-label__form" do |f| %>
+    <div class="edit-label__form__field">
+      <%= f.label :name %>
+      <%= f.text_field :name, required: true %>
+    </div>
+    <div class="edit-label__form__field">
+      <%= f.label :color %>
+      <%= f.color_field :color, required: true %>
+    </div>
+    <%= f.submit t('common.submit'), class: 'edit-label__form__button' %>
+  <% end %>
+</div>

@@ -1,0 +1,140 @@
+@import './variables';
+
+@mixin button {
+  display: inline-block;
+  font-family: sans-serif;
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  user-select: none;
+  border-radius: 4px;
+  padding: $space-s $space-m;
+  text-decoration: none;
+}
+
+@mixin button-positive {
+  @include button;
+
+  color: $color-white;
+  background-color: $color-green-800;
+
+  &:visited,
+  &:focus,
+  &:active {
+    color: $color-white;
+  }
+
+  &:hover {
+    background-color: $color-green-900;
+  }
+}
+
+@mixin button-positive-blue {
+  @include button;
+  color: $color-blue-400;
+  background-color: $color-white;
+
+  &:visited,
+  &:focus,
+  &:active {
+    color: $color-blue-400;
+  }
+
+  &:hover {
+    background-color: $color-gray-200;
+  }
+}
+
+@mixin button-danger {
+  @include button;
+  color: $color-red-800;
+  background-color: $color-white;
+
+  &:visited,
+  &:focus,
+  &:active {
+    color: $color-red-800;
+  }
+
+  &:hover {
+    background-color: $color-gray-200;
+  }
+}
+
+@mixin button-default {
+  @include button;
+
+  color: $color-gray-900;
+  background-color: $color-white;
+  border: 1px solid $color-gray-900;
+
+  &:visited,
+  &:focus,
+  &:active {
+    color: $color-gray-900;
+  }
+
+  &:hover {
+    background-color: $color-gray-200;
+  }
+}
+
+@mixin container {
+  max-width: $page-max-width;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__header {
+    width: 100%;
+
+    &__logout {
+      @include button-default;
+    }
+
+    &__actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-top: $space-l;
+    }
+  }
+
+  &__flash {
+    padding: $space-m $space-l;
+    border-radius: 4px;
+
+    &--info {
+      border: 2px solid $color-blue-200;
+    }
+
+    &--error {
+      border: 2px solid $color-red-800;
+    }
+  }
+}
+
+@mixin form {
+  width: 100%;
+
+  &__field {
+    width: 100%;
+    min-width: $page-min-width;
+    display: flex;
+    flex-direction: column;
+    font-family: sans-serif;
+
+    & + & {
+      margin-top: $space-l;
+    }
+  }
+
+  &__button {
+    @include button-positive;
+
+    margin-top: $space-l;
+  }
+}

@@ -1,36 +1,27 @@
-FROM ruby:2.6
+FROM ruby:2.6.7
 
 ENV LANG C.UTF-8
 ENV NODE_VERSION 12
 
 RUN apt-get update -qq && \
-    apt-get install -y \
+    apt-get install -qq -y --no-install-recommends \
       build-essential \
-      libpq-dev \
-      nodejs \
       default-mysql-client \
-      jq \
       git \
       curl \
-      python3 \
-      less
+      python3
 
-# node install
-RUN curl -SL https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash - \
-    && apt-get install -y nodejs
+# Install Node and Yarn
+RUN curl -SL https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash - && \
+    apt-get install -y nodejs && \
+    npm install -g yarn
 
-# yarn install
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
-    echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
-    apt-get update && apt-get install -y yarn
+WORKDIR /myapp
 
-ENV APP_ROOT /myapp
-RUN mkdir /$APP_ROOT
-WORKDIR /$APP_ROOT
-
-COPY Gemfile /$APP_ROOT/Gemfile
-COPY Gemfile.lock /$APP_ROOT/Gemfile.lock
+COPY Gemfile* package.json yarn.lock /myapp/
 ENV BUNDLE_PATH=/usr/local/bundle
-RUN bundle install
+RUN yarn install && bundle install
 
-COPY . /$APP_ROOT
+COPY . /myapp/
+RUN bundle exec rails assets:precompile
+RUN bundle exec rails webpacker:compile

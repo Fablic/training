@@ -1,0 +1,86 @@
+<div class="tasks">
+  <h1><%= t('pages.tasks.page_title') %></h1>
+
+  <div class="tasks__header">
+    <% if flash[:info] || flash[:error] %>
+      <% modifier = 'tasks__flash--info' if flash[:info] %>
+      <% modifier = 'tasks__flash--error' if flash[:error] %>
+      <div class="tasks__flash  <%= modifier %>">
+        <pre><%= flash[:info] || flash[:error] %></pre>
+      </div>
+    <% end %>
+
+    <div class="tasks__header__actions">
+      <%= link_to(t('common.logout'), logout_path, method: :delete, class: 'tasks__header__logout') %>
+    </div>
+
+    <%= form_with url: root_path, method: :get, local: true, class: "tasks__search" do |f| %>
+      <h2><%= t('pages.tasks.search.title') %></h2>
+      <div class="tasks__search-group">
+        <%= f.label t('activerecord.attributes.task.name') %>
+        <%= f.search_field :name, value: @params[:name] %>
+      </div>
+      <div class="tasks__search-group">
+        <%= f.label t('activerecord.attributes.task.status') %>
+        <%= f.collection_select :status, Task.statuses.keys, :to_s, method(:translate_status), include_blank: true, selected: @params[:status] %>
+      </div>
+      <div class="tasks__search-group">
+        <% selected = @labels.find { |l| l.name == @params[:label] } %>
+        <%= f.label t('activerecord.attributes.task.label') %>
+        <%= f.collection_select :label, @labels, :name, :name, include_blank: true, selected: selected&.name %>
+      </div>
+      <%= f.submit t('pages.tasks.search.button'), class: "tasks__search-button" %>
+    <% end %>
+
+    <div class="tasks__header__actions">
+      <%= link_to(t('common.new'), new_task_path(I18n.locale), class: 'tasks__new', title: t('pages.tasks.tooltip.new')) %>
+    </div>
+  </div>
+
+  <table class="tasks__table">
+    <thead class="tasks__thead">
+    <tr class="tasks__row tasks__row--header">
+      <th class="tasks__cell"><%= t('activerecord.attributes.task.id') %></th>
+      <th class="tasks__cell"><%= t('activerecord.attributes.task.name') %></th>
+      <th class="tasks__cell"><%= t('activerecord.attributes.task.description') %></th>
+      <th class="tasks__cell"><%= t('activerecord.attributes.task.labels') %></th>
+      <th class="tasks__cell"><%= t('activerecord.attributes.task.due_date') %></th>
+      <th class="tasks__cell"><%= t('activerecord.attributes.task.priority') %></th>
+      <th class="tasks__cell"><%= t('activerecord.attributes.task.status') %></th>
+      <th class="tasks__cell"></th>
+    </tr>
+    </thead>
+    <tbody class="tasks__tbody">
+    <% @tasks.each do |task| %>
+      <tr class="tasks__row" data-spec="Task#<%= task.id %>">
+        <td class="tasks__cell"><%= task.id %></td>
+        <td class="tasks__cell"><%= task.name %></td>
+        <td class="tasks__cell"><%= task.description %></td>
+        <td class="tasks__cell">
+          <% task.labels.each do |label| %>
+            <%= custom_label(label, link: root_path(I18n.locale, **@params.merge(label: label.name))) %>
+          <% end %>
+        </td>
+        <td class="tasks__cell"><%= task.due_date ? distance_of_time_in_words(task.due_date - Time.current) : '' %></td>
+        <td class="tasks__cell"><%= translate_priority(task.priority) %></td>
+        <td class="tasks__cell"><%= translate_status(task.status) %></td>
+        <td class="tasks__cell tasks__cell--right">
+          <%= link_to(t('common.edit'), edit_task_path(I18n.locale, task), class: "tasks__edit", title: t('pages.tasks.tooltip.edit')) %>
+          <%= link_to(
+                t('common.delete'),
+                task_path(I18n.locale, task),
+                method: :delete,
+                class: "tasks__delete",
+                title: t('pages.tasks.tooltip.delete'),
+                data: { confirm: t('pages.tasks.confirm_deletion') },
+              )
+          %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+  <div data-spec="tasks-pagination">
+    <%= paginate @tasks %>
+  </div>
+</div>
