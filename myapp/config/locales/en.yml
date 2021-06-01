@@ -33,6 +33,8 @@ en:
       task:
         name: Name
         description: Description
+        labels: Labels
+        label: Label
         due_date: Due date
         priority: Priority
         status: Status

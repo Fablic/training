@@ -33,6 +33,8 @@ ja:
       task:
         name: 名前
         description: 説明
+        labels: ラベル
+        label: ラベル
         due_date: 期限
         priority: 優先度
         status: ステータス

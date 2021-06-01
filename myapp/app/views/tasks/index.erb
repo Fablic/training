@@ -24,6 +24,11 @@
         <%= f.label t('activerecord.attributes.task.status') %>
         <%= f.collection_select :status, Task.statuses.keys, :to_s, method(:translate_status), include_blank: true, selected: @params[:status] %>
       </div>
+      <div class="tasks__search-group">
+        <% selected = @labels.find { |l| l.name == @params[:label] } %>
+        <%= f.label t('activerecord.attributes.task.label') %>
+        <%= f.collection_select :label, @labels, :name, :name, include_blank: true, selected: selected&.name %>
+      </div>
       <%= f.submit t('pages.tasks.search.button'), class: "tasks__search-button" %>
     <% end %>
 
@@ -38,6 +43,7 @@
       <th class="tasks__cell"><%= t('activerecord.attributes.task.id') %></th>
       <th class="tasks__cell"><%= t('activerecord.attributes.task.name') %></th>
       <th class="tasks__cell"><%= t('activerecord.attributes.task.description') %></th>
+      <th class="tasks__cell"><%= t('activerecord.attributes.task.labels') %></th>
       <th class="tasks__cell"><%= t('activerecord.attributes.task.due_date') %></th>
       <th class="tasks__cell"><%= t('activerecord.attributes.task.priority') %></th>
       <th class="tasks__cell"><%= t('activerecord.attributes.task.status') %></th>
@@ -50,6 +56,11 @@
         <td class="tasks__cell"><%= task.id %></td>
         <td class="tasks__cell"><%= task.name %></td>
         <td class="tasks__cell"><%= task.description %></td>
+        <td class="tasks__cell">
+          <% task.labels.each do |label| %>
+            <%= custom_label(label, link: root_path(I18n.locale, **@params.merge(label: label.name))) %>
+          <% end %>
+        </td>
         <td class="tasks__cell"><%= task.due_date ? distance_of_time_in_words(task.due_date - Time.current) : '' %></td>
         <td class="tasks__cell"><%= translate_priority(task.priority) %></td>
         <td class="tasks__cell"><%= translate_status(task.status) %></td>
