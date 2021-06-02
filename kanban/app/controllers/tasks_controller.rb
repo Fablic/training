@@ -10,7 +10,7 @@ class TasksController < ApplicationController
     if @task.save
       redirect_to tasks_path, notice: 'タスクの登録に成功しました'
     else
-      flash.now[:alert] = 'タスクの登録に失敗しました'
+      render :edit
     end
   end
 
@@ -28,13 +28,13 @@ class TasksController < ApplicationController
     if @task.update(params.require(:task).permit(:name, :description))
       redirect_to tasks_path, notice: 'タスクの更新に成功しました'
     else
-      flash.now[:alert] = 'タスクの更新に失敗しました'
+      render :edit
     end
   end
 
   def destroy
     @task = Task.find(params[:id])
-    if @task.delete
+    if @task.delete
       redirect_to tasks_path, notice: 'タスクの削除に成功しました'
     else
       flash.now[:alert] = 'タスクの削除に失敗しました'

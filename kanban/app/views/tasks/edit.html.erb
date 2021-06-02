@@ -6,15 +6,26 @@
 
 <section>
     <%= form_with(model: @task) do |form| %>
+    <% if @task.errors.any? %>
+    <div>
+        <h2><%= pluralize(@task.errors.count, "error") %> 登録失敗！！ </h2>
+        <ul>
+            <% @task.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+            <% end %>
+        </ul>
+    </div>
+    <% end %>
+
     <div class="field">
-        <p>
+        <div>
             <%= form.label :name %>
             <%= form.text_field :name %>
-        </p>
-        <p>
+        </div>
+        <div>
             <%= form.label :description %>
             <%= form.text_field :description %>
-        </p>
+        </div>
     </div>
 
     <div class="actions">
