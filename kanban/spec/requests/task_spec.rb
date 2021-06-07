@@ -29,9 +29,7 @@ RSpec.describe TasksController, type: :request do
       expect(response.body).to include '詳しい説明2'
     end
   end
-end
 
-RSpec.describe TasksController, type: :request do
   describe 'GET new' do
     it 'リクエストが成功すること' do
       get new_task_url
@@ -43,9 +41,7 @@ RSpec.describe TasksController, type: :request do
       expect(response.body).to include 'Task Registration Page'
     end
   end
-end
 
-RSpec.describe TasksController, type: :request do
   describe 'GET edit' do
     let(:task) { FactoryBot.create :task }
 
@@ -69,9 +65,7 @@ RSpec.describe TasksController, type: :request do
       expect(response.body).to include '詳しい説明'
     end
   end
-end
 
-RSpec.describe TasksController, type: :request do
   describe 'GET show' do
     let(:task) { FactoryBot.create :task }
 
@@ -95,9 +89,7 @@ RSpec.describe TasksController, type: :request do
       expect(response.body).to include '詳しい説明'
     end
   end
-end
 
-RSpec.describe TasksController, type: :request do
   describe 'POST create' do
     context '登録が成功する場合' do
       it 'リクエストが成功すること' do
@@ -121,9 +113,7 @@ RSpec.describe TasksController, type: :request do
     # context '登録が成功しない場合' do
     # end
   end
-end
 
-RSpec.describe TasksController, type: :request do
   describe 'PUT update' do
     let(:task) { FactoryBot.create :task }
 
@@ -155,9 +145,7 @@ RSpec.describe TasksController, type: :request do
     # context '登録が成功しない場合' do
     # end
   end
-end
 
-RSpec.describe TasksController, type: :request do
   describe 'DELETE destroy' do
     let!(:task) { FactoryBot.create :task }
 
