@@ -1,0 +1,225 @@
+require:
+  - rubocop-rails
+
+# 自動生成されるものやテストデータはチェック対象から除外する
+AllCops:
+  Exclude:
+    - "vendor/**/*" # rubocop config/default.yml
+    - "db/schema.rb"
+    - "db/migrate/*"
+    - "db/fixtures/**/*"
+    - "test/factories/**/*"
+    - "spec/factories/**/*"
+    - "spec/test_app/db/*"
+
+  DisplayCopNames: true
+  NewCops: enable # 新しい規約も随時取り入れる
+
+Rails:
+  Enabled: true
+
+# rails >= 5 の設定のため
+Rails/HttpPositionalArguments:
+  Enabled: false
+
+Rails/InverseOf:
+  Enabled: false
+
+Rails/UnknownEnv:
+  Environments:
+    - production
+    - staging
+    - development
+    - local
+    - test
+
+Gemspec/OrderedDependencies:
+  Enabled: false
+
+##################### Style ##################################
+
+# 日本語のコメントを許可する
+Style/AsciiComments:
+  Enabled: false
+
+# 複数行の場合は末尾にカンマを入れる
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: comma
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: comma
+Style/TrailingCommaInArguments:
+  EnforcedStyleForMultiline: comma
+
+# class先頭のコメントを省略する
+Style/Documentation:
+  Enabled: false
+
+# selfは省略しない
+Style/RedundantSelf:
+  Enabled: false
+
+# 以下の2つのあわせ技で、こういうのを許可
+#   xs.select {
+#     f x
+#   }.map { |x|
+#     f x
+#     f x
+#   }.compact
+# Rubocopの意図としては、おそらく
+# * ブロックのあとにメソッドをチェインされると読みにくい(主観)
+# * ブロックの終わりを`}`ではなく`end`にすることで、defとかifとかと終了を揃える
+# だと思うけど、むしろ一旦変数に入れて改めてメソッド適用する方がかえって読みにくいと思うし(主観)、
+# 返り値を使う場合はブロックの終わりをendにせず}にしないとメソッド結合順序の関係などでやばいので
+# Style/BlockDelimitersとStyle/MultilineBlockChainはよくないと判断。
+#
+# 「返り値を目的とするブロック引数」には{}を、「副作用を目的とするブロック引数」にはdo/endを
+# 使うようにすると、可読性的にもメソッドの結合順序的にも実用上便利。
+# これが正しく運用されてるかどうかはgrammerではなくsemanticの話なので、レビュワーの人間が
+# 見ることになり、それは直感的な気がする (再び主観)
+Style/BlockDelimiters:
+  Enabled: false
+Style/MultilineBlockChain:
+  Enabled: false
+Style/EmptyMethod:
+  Enabled: false
+
+# 候補が多いときはcondみたいに使いたい
+Style/EmptyCaseCondition:
+  Enabled: false
+
+Style/DoubleNegation:
+  Enabled: false
+
+Style/ParallelAssignment:
+  Enabled: false
+
+Style/MethodCallWithoutArgsParentheses:
+  Enabled: false
+
+Style/DefWithParentheses:
+  Enabled: false
+
+# classが入れ子になった場合、テストの順番によってはエラーになりうる
+Style/ClassAndModuleChildren:
+  Exclude:
+    - "test/**/*.rb"
+    - "spec/**/*.rb"
+
+# 3桁ごとに_を入れるとSQLの表示方法と乖離するためfixtureは対象外
+Style/NumericLiterals:
+  Exclude:
+    - "db/fixtures/*.rb"
+
+##################### Layout ##################################
+# 引数前のスペースは複数許可
+Layout/SpaceBeforeFirstArg:
+  Enabled: false
+Layout/SpaceInLambdaLiteral:
+  Enabled: false
+Layout/HeredocIndentation:
+  Enabled: false
+
+# 引数の書き方の多様性を許可
+# foo(a,
+#  b
+# )
+# foo(
+#  a,
+#  b)
+# foo(
+#  a,
+#  b
+# )
+# foo(a,
+#  b)
+Layout/MultilineMethodCallBraceLayout:
+  Enabled: false
+# メソッド指定の多様性を許可
+# while a
+# .b
+#   something
+# end
+# while a
+#      .b
+#   something
+# end
+# Thing.a
+#    .b
+#    .c
+# while a
+#   .b
+#   something
+# end
+Layout/MultilineMethodCallIndentation:
+  Enabled: false
+
+# aaa(bbb(
+#   ccc
+# ))
+# 的なのができないのは不便すぎるのでdisable
+Layout/FirstParameterIndentation:
+  Enabled: false
+
+# 以下の両方を許容
+#   aaa.
+#     bb().
+#     cc()
+#   aaa
+#     .bb()
+#     .cc()
+# 前者は途中にコメントをはさむことができて実用上圧倒的に便利.
+# 後者はデフォルトでrubocopがおすすめしてるやつ
+Layout/DotPosition:
+  Enabled: false
+
+# fixtureファイルの1行 -> DBの1レコードとして記述している
+# 複数行にまたがると直感的でなくなるため無効化
+Layout/ClosingParenthesisIndentation:
+  Exclude:
+    - "db/fixtures/*.rb"
+Layout/ParameterAlignment:
+  Exclude:
+    - "db/fixtures/*.rb"
+
+# * 警告 120文字
+# * 禁止 160文字
+# のイメージ
+Layout/LineLength:
+  Max: 160
+  Exclude:
+    - "db/migrate/*.rb"
+    - "db/fixtures/*.rb" # カラムが多い、もしくは文章が含まれるfixtureは一行が長くなってしまうため無効化
+
+##################### Lint ##################################
+
+# 引数前のスペースを許容する
+Lint/ParenthesesAsGroupedExpression:
+  Enabled: false
+
+##################### Metrics ##################################
+
+# 20 行超えるのは migration ファイル以外滅多に無い
+Metrics/MethodLength:
+  Max: 20
+  Exclude:
+    - "db/migrate/*.rb"
+
+# キーワード引数は引数の数に含めない
+Metrics/ParameterLists:
+  CountKeywordArgs: false
+
+Metrics/BlockLength:
+  Max: 100
+  Exclude:
+    - "spec/**/*.rb"
+    - "test/**/*.rb"
+    - "app/admin/*.rb"
+    - "config/**/*.rb"
+
+Metrics/AbcSize:
+  Exclude:
+    - "test/**/*.rb"
+
+Metrics/ClassLength:
+  Exclude:
+    - "test/**/*.rb"
