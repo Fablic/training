@@ -10,11 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_02_065644) do
+ActiveRecord::Schema.define(version: 2021_06_11_055148) do
 
   create_table "tasks", charset: "utf8", force: :cascade do |t|
-    t.string "name", null: false
-    t.text "description"
+    t.string "name", limit: 15, null: false, comment: "タスク名を15文字に制限"
+    t.string "description", limit: 50, comment: "タスク詳細を50文字に制限"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
