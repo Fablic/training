@@ -109,9 +109,23 @@ RSpec.describe TasksController, type: :request do
       end
     end
 
-    # Todo in STEP9
-    # context '登録が成功しない場合' do
-    # end
+    context '登録が成功しない場合' do
+      it 'リクエストが成功すること' do
+        post tasks_url, params: { task: FactoryBot.attributes_for(:task, :invalid) }
+        expect(response.status).to eq(200)
+      end
+
+      it 'タスクが登録されないこと' do
+        expect do
+          post tasks_url, params: { task: FactoryBot.attributes_for(:task, :invalid) }
+        end.to_not change(Task, :count)
+      end
+
+      it 'エラーが表示されること' do
+        post tasks_url, params: { task: FactoryBot.attributes_for(:task, :invalid) }
+        expect(response.body).to include 'タスク名を入力してください'
+      end
+    end
   end
 
   describe 'PUT update' do
@@ -141,9 +155,23 @@ RSpec.describe TasksController, type: :request do
       end
     end
 
-    # Todo in STEP9
-    # context '登録が成功しない場合' do
-    # end
+    context '登録が成功しない場合' do
+      it 'リクエストが成功すること' do
+        put task_url task, params: { task: FactoryBot.attributes_for(:task, :invalid) }
+        expect(response.status).to eq(200)
+      end
+
+      it 'タスク名が変更されないこと' do
+        expect do
+          put task_url task, params: { task: FactoryBot.attributes_for(:task, :invalid) }
+        end.to_not change(Task.find(task.id), :name)
+      end
+
+      it 'エラーが表示されること' do
+        put task_url task, params: { task: FactoryBot.attributes_for(:task, :invalid) }
+        expect(response.body).to include 'タスク名を入力してください'
+      end
+    end
   end
 
   describe 'DELETE destroy' do
