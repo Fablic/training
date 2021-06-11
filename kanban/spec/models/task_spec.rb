@@ -18,37 +18,37 @@ RSpec.describe Task, type: :model do
     expect(task.errors.errors[0].full_message).to include('タスク名を入力してください')
   end
 
-  it 'タスク名が30文字場合、有効となること' do
+  it 'タスク名が15文字の場合、有効となること' do
     task = Task.new(
-      name: '１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０',
+      name: '１２３４５６７８９０１２３４５',
       description: '詳細な説明',
     )
     expect(task).to be_valid
   end
 
-  it 'タスク名が31文字場合、無効となること' do
+  it 'タスク名が16文字の場合、無効となること' do
     task = Task.new(
-      name: '１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１',
+      name: '１２３４５６７８９０１２３４５６',
       description: '詳細な説明',
     )
     task.valid?
-    expect(task.errors.errors[0].full_message).to include('タスク名は30文字以内で入力してください')
+    expect(task.errors.errors[0].full_message).to include('タスク名は15文字以内で入力してください')
   end
 
-  it 'タスク詳細が100文字場合、有効となること' do
+  it 'タスク詳細が50文字の場合、有効となること' do
     task = Task.new(
       name: 'タスク名',
-      description: '１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０',
+      description: '１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０',
     )
     expect(task).to be_valid
   end
 
-  it 'タスク詳細が101文字場合、無効となること' do
+  it 'タスク詳細が51文字の場合、無効となること' do
     task = Task.new(
       name: 'タスク名',
-      description: '１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１',
+      description: '１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１２３４５６７８９０１',
     )
     task.valid?
-    expect(task.errors.errors[0].full_message).to include('タスク詳細は100文字以内で入力してください')
+    expect(task.errors.errors[0].full_message).to include('タスク詳細は50文字以内で入力してください')
   end
 end
