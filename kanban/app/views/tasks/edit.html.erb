@@ -1,39 +1,35 @@
 <% if @task.id %>
-<h1>Task Edit Page</h1>
+  <h1>Task Edit Page</h1>
 <% else %>
-<h1>Task Registration Page</h1>
+  <h1>Task Registration Page</h1>
 <% end %>
-
 <section>
-    <%= form_with(model: @task) do |form| %>
+  <%= form_with(model: @task) do |form| %>
     <% if @task.errors.any? %>
-    <div>
+      <div>
         <h2><%= pluralize(@task.errors.count, "error") %> 登録失敗！！ </h2>
         <ul>
-            <% @task.errors.full_messages.each do |message| %>
+          <% @task.errors.full_messages.each do |message| %>
             <li><%= message %></li>
-            <% end %>
+          <% end %>
         </ul>
-    </div>
+      </div>
     <% end %>
-
     <div class="field">
-        <div>
-            <%= form.label :name %>
-            <%= form.text_field :name %>
-        </div>
-        <div>
-            <%= form.label :description %>
-            <%= form.text_field :description %>
-        </div>
+      <div>
+        <%= form.label :name %>
+        <%= form.text_field :name %>
+      </div>
+      <div>
+        <%= form.label :description %>
+        <%= form.text_field :description %>
+      </div>
     </div>
-
     <div class="actions">
-        <%= form.submit %>
+      <%= form.submit %>
     </div>
-    <% end %>
+  <% end %>
 </section>
-
 <section>
-    <div><%= link_to '一覧に戻る', tasks_path %></div>
+  <div><%= link_to '一覧に戻る', tasks_path %></div>
 </section>

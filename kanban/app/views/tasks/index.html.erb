@@ -1,29 +1,26 @@
 <% flash.each do |name, msg| %>
-<div><%=msg%></div>
+  <div><%=msg%></div>
 <% end %>
-
 <h1>Task List Page</h1>
-
 <section>
-    <div><%= link_to '新規作成', new_task_path %></div>
+  <div><%= link_to '新規作成', new_task_path %></div>
 </section>
-
 <section>
-    <table>
-        <tr>
-            <th colspan="2"></th>
-            <th>名前</th>
-            <th>詳細</th>
-            <th></th>
-        </tr>
-        <% @all_tasks.each do |task| %>
-        <tr>
-            <td><%= link_to '詳細', task %></td>
-            <td><%= link_to '編集', edit_task_path(task) %></td>
-            <td><%= task.name %></td>
-            <td><%= task.description %></td>
-            <td><%= link_to '削除', task, method: :delete %></td>
-        </tr>
-        <% end %>
-    </table>
+  <table>
+    <tr>
+      <th colspan="2"></th>
+      <th>名前</th>
+      <th>詳細</th>
+      <th></th>
+    </tr>
+    <% @all_tasks.each do |task| %>
+      <tr>
+        <td><%= link_to '詳細', task %></td>
+        <td><%= link_to '編集', edit_task_path(task) %></td>
+        <td><%= task.name %></td>
+        <td><%= task.description %></td>
+        <td><%= link_to '削除', task, method: :delete %></td>
+      </tr>
+    <% end %>
+  </table>
 </section>
