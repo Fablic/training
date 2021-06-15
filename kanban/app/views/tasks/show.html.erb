@@ -1,10 +1,10 @@
 <h1>Task Detail Page</h1>
 <section>
-  <p>名前：<%=@task.name%></p>
-  <p>詳細：<%=@task.description%></p>
-  <p>詳細：<%=I18n.t("activerecord.attributes.status.#{@task.status}")%></p>
+  <p><%= "#{I18n.t('activerecord.attributes.task.name')}：#{@task.name}" %></p>
+  <p><%= "#{I18n.t('activerecord.attributes.task.description')}：#{@task.description}" %></p>
+  <p><%= "#{I18n.t('activerecord.attributes.task.status')}：#{I18n.t('activerecord.attributes.status.' + @task.status)}" %></p>
 </section>
 <section>
-  <div><%= link_to '編集', edit_task_path(@task) %></div>
-  <div><%= link_to '一覧に戻る', tasks_path %></div>
+  <div><%= link_to I18n.t('view.edit'), edit_task_path(@task) %></div>
+  <div><%= link_to I18n.t('view.back-to-index'), tasks_path %></div>
 </section>

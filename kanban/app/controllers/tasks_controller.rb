@@ -2,7 +2,11 @@ class TasksController < ApplicationController
   before_action :set_task, only: %i[edit show]
 
   def index
-    @all_tasks = Task.all
+    @tasks = Task.all
+    @status = params[:status]
+    @name = params[:name]
+    @tasks = @tasks.where(status: @status) if @status.present?
+    @tasks = @tasks.where(name: @name) if @name.present?
   end
 
   def create

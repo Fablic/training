@@ -3,25 +3,34 @@
 <% end %>
 <h1>Task List Page</h1>
 <section>
-  <div><%= link_to '新規作成', new_task_path %></div>
+  <div><%= link_to I18n.t('view.new'), new_task_path %></div>
+</section>
+<section>
+  <%= form_with( url: tasks_path,:method => 'get') do |form| %>
+    <%= form.label I18n.t('activerecord.attributes.task.name') %>
+    <%= form.search_field :name, value:@name %>
+    <%= form.label I18n.t('activerecord.attributes.task.status') %>
+    <%= form.select :status, options_for_select(Task.statuses.keys.map { |k| [I18n.t("activerecord.attributes.status.#{k}"),k]}, @status),include_blank: true %>
+    <%= form.submit '検索', name: nil%>
+  <% end %>
 </section>
 <section>
   <table>
     <tr>
       <th colspan="2"></th>
-      <th>名前</th>
-      <th>詳細</th>
-      <th>ステータス</th>
+      <th><%= I18n.t('activerecord.attributes.task.name') %></th>
+      <th><%= I18n.t('activerecord.attributes.task.description') %></th>
+      <th><%= I18n.t('activerecord.attributes.task.status') %></th>
       <th></th>
     </tr>
-    <% @all_tasks.each do |task| %>
+    <% @tasks.each do |task| %>
       <tr>
-        <td><%= link_to '詳細', task %></td>
-        <td><%= link_to '編集', edit_task_path(task) %></td>
+        <td><%= link_to I18n.t('view.show'), task %></td>
+        <td><%= link_to I18n.t('view.edit'), edit_task_path(task) %></td>
         <td><%= task.name %></td>
         <td><%= task.description %></td>
         <td><%= I18n.t("activerecord.attributes.status.#{task.status}") %></td>
-        <td><%= link_to '削除', task, method: :delete %></td>
+        <td><%= link_to I18n.t('view.delete'), task, method: :delete %></td>
       </tr>
     <% end %>
   </table>

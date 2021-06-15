@@ -11,3 +11,9 @@ ja:
         todo: 未着手
         doing: 着手中
         done: 完了
+  view:
+    new: 新規作成
+    edit: 編集
+    show: 詳細
+    delete: 削除
+    back-to-index: 一覧に戻る
