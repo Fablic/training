@@ -24,6 +24,10 @@
         <%= form.label :description %>
         <%= form.text_field :description %>
       </div>
+      <div>
+        <%= form.label :status %>
+        <%= form.select :status, Task.statuses.keys.map { |k| [I18n.t("activerecord.attributes.status.#{k}"),k]} %>
+      </div>
     </div>
     <div class="actions">
       <%= form.submit %>

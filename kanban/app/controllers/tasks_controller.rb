@@ -6,7 +6,7 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.new(params.require(:task).permit(:name, :description))
+    @task = Task.new(params.require(:task).permit(:name, :description, :status))
     if @task.save
       redirect_to tasks_path, notice: 'タスクの登録に成功しました'
     else
@@ -25,7 +25,7 @@ class TasksController < ApplicationController
 
   def update
     @task = Task.find(params[:id])
-    if @task.update(params.require(:task).permit(:name, :description))
+    if @task.update(params.require(:task).permit(:name, :description, :status))
       redirect_to tasks_path, notice: 'タスクの更新に成功しました'
     else
       render :edit

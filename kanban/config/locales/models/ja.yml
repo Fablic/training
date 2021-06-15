@@ -6,3 +6,8 @@ ja:
       task:
         name: タスク名
         description: タスク詳細
+        status: ステータス
+      status:
+        todo: 未着手
+        doing: 着手中
+        done: 完了

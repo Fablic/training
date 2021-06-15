@@ -2,6 +2,7 @@
 <section>
   <p>名前：<%=@task.name%></p>
   <p>詳細：<%=@task.description%></p>
+  <p>詳細：<%=I18n.t("activerecord.attributes.status.#{@task.status}")%></p>
 </section>
 <section>
   <div><%= link_to '編集', edit_task_path(@task) %></div>

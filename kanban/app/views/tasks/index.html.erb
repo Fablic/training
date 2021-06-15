@@ -11,6 +11,7 @@
       <th colspan="2"></th>
       <th>名前</th>
       <th>詳細</th>
+      <th>ステータス</th>
       <th></th>
     </tr>
     <% @all_tasks.each do |task| %>
@@ -19,6 +20,7 @@
         <td><%= link_to '編集', edit_task_path(task) %></td>
         <td><%= task.name %></td>
         <td><%= task.description %></td>
+        <td><%= I18n.t("activerecord.attributes.status.#{task.status}") %></td>
         <td><%= link_to '削除', task, method: :delete %></td>
       </tr>
     <% end %>
