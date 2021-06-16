@@ -4,7 +4,7 @@ RSpec.describe TasksController, type: :request do
   describe 'GET index' do
     before do
       create(:task)
-      create(:task, name: 'タスク名2', description: '詳しい説明2')
+      create(:task, name: 'タスク名2', description: '詳しい説明2', status: 'done')
     end
 
     it 'リクエストが成功すること' do
@@ -27,6 +27,12 @@ RSpec.describe TasksController, type: :request do
       get tasks_url
       expect(response.body).to include '詳しい説明'
       expect(response.body).to include '詳しい説明2'
+    end
+
+    it 'ステータスが2件表示されていること' do
+      get tasks_url
+      expect(response.body).to include '未着手'
+      expect(response.body).to include '完了'
     end
   end
 
@@ -64,6 +70,11 @@ RSpec.describe TasksController, type: :request do
       get edit_task_url task
       expect(response.body).to include '詳しい説明'
     end
+
+    it 'ステータスが表示されていること' do
+      get edit_task_url task
+      expect(response.body).to include '未着手'
+    end
   end
 
   describe 'GET show' do
@@ -87,6 +98,11 @@ RSpec.describe TasksController, type: :request do
     it 'タスク詳細が表示されていること' do
       get task_url task
       expect(response.body).to include '詳しい説明'
+    end
+
+    it 'ステータスが表示されていること' do
+      get task_url task
+      expect(response.body).to include '未着手'
     end
   end
 
