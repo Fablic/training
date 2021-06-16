@@ -1,397 +1,394 @@
-# training
+# Rails Training
 
-## このカリキュラムについて
+## About this curriculum
 
-この文書は、Fablicで必須とされるRuby on Railsとその周辺技術の基礎を習得するための新入社員教育用カリキュラムです。
-新入社員の能力によらず、必ず一通りのステップを実施していただきます。
-研修期間は特に定めておりません。
-すべてのステップを完了した時点で研修修了となります。
+This document is for those who needs fundamental trainings like Ruby on Rails and related technologies.
+Regardless of your skills, you must take every lecture we offer.
+Our training program period is unspecified.
+Once you have finished a series of steps, the training programs will be completed.
 
-本カリキュラムでは、以下の登場人物を想定しています。
+The roles for this curriculum should be below.
 
-- 新入社員（メンティー） : 本カリキュラムの受講者です。
-- メンター : 新入社員の教育・指導・助言を行います。また、新入社員と相談して仕様を一緒に決めたりする役割も担います。
-  - レビューに関しては、メンター１人への負荷軽減・チームメンバーがメンティーのレベルを理解するよい機会になることから、チーム内で分担して行うことを推奨します。
+- NewComer(Mentee): Attendee of this program
+- Mentor: Trainer
+  - As for reviews for programs they make, we recommend team to share it in order to reduce workloads of their mentor.
 
-指導について、メンターがどの程度関与するかどうかはメンターの裁量に一任します。また、研修期間については、新入社員のスキルレベルや社内の案件状況を考慮して、メンターの方であらかじめ目安を設定する予定です。
+It is up to the mentor to decide how much the mentor is involved in teaching. In addition, regarding the training period, the mentor will set a guideline in advance, taking into consideration the skill level of new employees and the status of ongoing  projects.
 
-## ライセンス
+## License
 
-このカリキュラムは[クリエイティブ・コモンズ 表示 - 非営利 - 継承 4.0 国際 ライセンス](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ja)の下に提供されています。
+This curriculum is under [Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)
 
-[![クリエイティブ・コモンズ・ライセンス](https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png)](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ja)  
+[![creative commons license](https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png)](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)
 
-## 概要
+## Overview
 
-### システムの要件
+### System requirements
 
-本カリキュラムでは、課題としてタスク管理システムを開発していただきます。
-タスク管理システムでは、以下のことを行いたいと考えています。
+In this curriculum, you have to develop "task management system" as an assignment.
+the requirement should be like this.
 
-- 自分のタスクを簡単に登録したい
-- タスクに終了期限を設定できるようにしたい
-- タスクに優先順位をつけたい
-- ステータス（未着手・着手・完了）を管理したい
-- ステータスでタスクを絞り込みたい
-- タスク名・タスクの説明文でタスクを検索したい
-- タスクを一覧したい。一覧画面で（優先順位、終了期限などを元にして）ソートしたい
-- タスクにラベルなどをつけて分類したい
-- ユーザ登録し、自分が登録したタスクだけを見られるようにしたい
-- メンテナンスを実施できるようにしたい
+- Want to post your tasks easily
+- Want to set an expiration date for a task
+- Want to prioritize tasks
+- Want to manage the status (not started / started / completed)
+- Want to narrow down tasks by status
+- Want to search for a task by task name / task description
+- Want to list the tasks. I want to sort on the list screen (based on priority, expiration date, etc.)
+- Want to label tasks and classify them
+- Want to register as a user so that I can see only the tasks I registered
+- Want to be able to carry out maintenance
 
-また、上記の要件を満たすにあたって、次のような管理機能がほしいと考えています。
+We also want the following management functions to meet the above requirements.
 
-- ユーザの管理機能
+- User Admin Tool
 
-**※ ただし、メンターの判断で特定機能の実装をスキップしてもらう場合があります。**
-  **「★」のマークが付いているステップに関してはメンターの指示のもと、実装してください。**
+** *However, the mentor may ask you to skip the implementation of a specific function **
+  **Please implement the steps marked with "★" under the direction of the mentor.**
 
-**（メンターは、メンティーの開発経験・各ステップの実装の質を元にスキップするかの判断を行ってください）**
+**(Mentors should decide whether to skip based on the development experience of the mentee and the quality of implementation of each step)**
 
 
-### サポートブラウザ
+### Support browser
 
-- サポートブラウザはmacOS/Chrome各最新版を想定しています
+- Support browser is suppose to be the latest version of macOS / Chrome
 
-### アプリケーション（サーバ）の構成について
+### About Application server arrangement
 
-以下の言語・ミドルウェアを使って構築していただきたいです（いずれも最新の安定バージョン）。
+I would like you to build using the following languages and middleware (both are the latest stable versions).
 
 - Ruby
 - Ruby on Rails
 - MySQL
 
-※ 性能要求・セキュリティ要求は特に定めませんが、一般的な品質で作ってください。
-  あまりにサイトのレスポンスが悪い場合は改善をしていただきます
+**Performance requirements and security requirements are not specified, but please make with general quality. If the site you made is too slow, we would ask you to fix it.**
 
-## 本カリキュラムの最終目標
+## The ultimate goal of this curriculum
 
-本カリキュラムの終了時点で、以下の項目を習得することを想定しています。
+At the end of this curriculum, you'll be able to reach following levels.
 
-- Railsを利用した基本的なWebアプリケーションの実装ができるようになること
-- Railsアプリケーションで一般的な環境を使ってアプリケーションを公開できること
-- 公開されたRailsアプリケーションに対して、機能の追加やデータのメンテナンスができること
-- GitHubでPRをしてマージする一連の流れを習得すること。また、それに必要なGitのコマンドを習得すること
-  - 適切な粒度でコミットができること
-  - 適切にPRの説明文が書けること
-  - レビューに対する対応と修正が一通りできること
-- 不明な点を適切なタイミングでチームメンバーや関係者に（今回はメンターになります）口頭やチャットなどで質問ができること
+- Being able to implement basic web applications using Rails
+- Being able to publish your application in a Rails application using a common environment
+- Being able to add features and maintain data for developed Rails applications
+- Learn the flow of PR and merging on GitHub. Also, learn the Git commands required for it.
+  - Being able to commit with proper commit size
+  - Being able to write a proper PR description
+  - Being able to respond to reviews and fix errors
+- Being able to ask questions to team members and related parties (this time I will be a mentor) verbally or chat at the right time
 
-## 課題ステップ
+## Assignment steps
 
-### ステップ0: chrome-extensionをインストールしよう
+### Step 0: Let's install chrome-extension
 
-実はこのtrainingは株式会社万葉が作ったものが元となっていて、間違えて本家のリポジトリに向かってPRを作るという事件が何回か起きてしまいました。
-この悲劇を繰り返さないためにページが自動でリダイレクトされるchrome-extensionをインストールしましょう。
+Actually, this training was based on the one made by Manyo Co., Ltd., and there were several cases where past trainee mistakenly made a PR to the original repository. To avoid repeating this tragedy, install a chrome-extension that automatically redirects pages
 
-#### 1-1: chrome-extensionをcloneする
+#### 1-1: Clone chrome-extension
 
 `git clone git@github.com:Fablic/fablic-chrome-extension.git`
 
-#### 1-2: chrome-extensionをインストールする
+#### 1-2: Install chrome-extension
 
-chrome://extensions/ を開いて右上のDeveloper modeをオンにして、RKGithubSupportToolをドラッグ&ドロップでインストールしましょう。
+Open chrome: // extensions /, turn on Developer mode in the upper right, and install RKGithubSupportTool by dragging and dropping.
 
-#### 1-3: 株式会社万葉に感謝しつつトレーニングを始める
+#### 1-3: Start training while thanking Manyo Co., Ltd.
 
-[本家のリポジトリ](https://github.com/everyleaf/el-training)
+[Original repository](https://github.com/everyleaf/el-training)
 
-### ステップ1: Railsの開発環境を構築しよう
+### Step 1: Build a Rails development environment
 
-#### 1-1: Rubyのインストール
+#### 1-1: Ruby installation
 
-- [rbenv](https://github.com/rbenv/rbenv)を利用して最新バージョンのRubyをインストールしてください
+- Please use [rbenv](https://github.com/rbenv/rbenv) to install the latest version of Ruby
   - `gem install bundler`を実行して下記のようなエラーが出るときは、System Prefernces → network 
-     → Advanced → TCP/IPのipv6設定をlink-local onlyに変更すれば解消します
   　 `ERROR:  Could not find a valid gem 'bundler' (>= 0), here is why:Unable to download data from https://rubygems.org/ - timed out (https://api.rubygems.org/specs.4.8.gz)`
-- `ruby -v` コマンドでRubyのバージョンが表示されることを確認してください
+  - If you get the following error after executing `gem install bundler` , change the ipv6 setting of System Prefernces -> network -> Advanced -> TCP / IP to link-local only.
+  　 `ERROR:  Could not find a valid gem 'bundler' (>= 0), here is why:Unable to download data from https://rubygems.org/ - timed out (https://api.rubygems.org/specs.4.8.gz)`
+- Make sure the command `ruby -v` shows the Ruby version
 
-#### 1-2: Railsのインストール
+#### 1-2: Rails installation
 
-- GemコマンドでRailsをインストールしましょう
-- 最新バージョンのRailsをインストールしてください
-- `rails -v` コマンドでRailsのバージョンが表示されることを確認してください
+- Install Rails with Gem command
+- Please install the latest version of Rails
+- Make sure the command `rails -v` shows the Rails version
 
-#### 1-3: データベース（MySQL）のインストール
+#### 1-3: Database (MySQL) installation
 
-- 手元のOSでMySQLをインストールしましょう
-  - macOSの場合は `brew` などでインストールしてください
+- Install MySQL on your OS
+  -For macOS, use `brew` for installation
 
-### ステップ2: GitHubにリポジトリを作成しよう
+### Step 2: Create a repository on GitHub
 
-- 手元にGitをインストールしましょう
-  - macOSの場合は `brew` などでインストールしてください
-  - `gitconfig` でユーザ名、メールアドレスを登録しましょう
-- アプリ名を考えましょう
-- ブランチを作成しましょう
-  - masterブランチを元に自分のアカウント名と同じ名前で作成してください
+- Install git on your local env
+  - If your PC is macOS, use `brew` or something
+  - Submit your username and mailaddress by using `gitconfig`
+- Let's think about your app name
+- Let's create new branch
+  - Create new branch with same branch name as your account name based on master branch
     - `git checkout -b github_account_name origin/master`
-  - 作成したらpushしましょう
+  - Let's push your branch to remote
 
-### ステップ3: Railsプロジェクトを作成しよう
+### Step 3: Let's create a Rails project
 
-- `rails new` コマンドでアプリケーションに最低限必要なディレクトリやファイルを作成しましょう
-- `rails new` してできたプロジェクトのディレクトリ（アプリ名のディレクトリ）の直下に `docs` というディレクトリを作り、この文書ファイルをコミットしましょう
-  - このアプリの仕様を管理下に置き、いつでも見られるようにするためです
-- 作成したアプリをGitHub上に作成したブランチにpushしましょう
-- バージョンを明示するため、利用するRubyのバージョンを `Gemfile` に記載しましょう（Railsは既にバージョンが記載されていることを確認しましょう）
+- Create files and directories by using `rails new`
+- Create docs` directory on your current application and make this document on that directory
+  - This is to keep the specifications of this app under control so that they can be viewed at any time.
+- Push your app to the branch you created on GitHub
+- In order to specify the version, let's describe on Gemfile the version of Ruby to use in (Make sure that Rails already has the version)
 
-### ステップ4: 作りたいアプリケーションのイメージを考える
+### Step 4: Think about the image of the application you want to create
 
-- 設計を進める前に、どのようなアプリになるか完成イメージを（メンターと一緒に）考えてみましょう。ペーパープロトタイピングによる画面設計などがおすすめです
-- システムの要件を読んで、必要なデータ構造を考えてみましょう
-  - どのようなモデル（テーブル）が必要そうか
-  - テーブル内にどのような情報が必要そうか
-- データ構造を考えたら、それをモデル図に手書きで書いてみましょう
-  - 完成したら撮影して、リポジトリに入れましょう
-  - `README.md` にテーブルスキーマを記載しましょう（モデル名・カラム名・データ型）
+- Before proceeding with the design, let's think about the completed image (with the mentor) of what the app will look like. Screen design by paper prototyping is recommended
+- Read the system requirements and think about the data structure you need
+  - What kind of model (table) seems to be needed
+  - What kind of information is needed in the table
+- After considering the data structure, let's write it by hand on the model diagram.
+  -	Take a picture when you're done and put it in the repository
+  - Describe the table schema in `README.md` (model name, column name, data type)
+* At this moment, it is not necessary to create the correct model diagram. Let's make it as a brief concept at the moment (You'll be able to make some amendment it if you think it is wrong in the future steps)
 
-※ 現時点で正解のモデル図を作成する必要はまだありません。現時点での想定として作ってみましょう（今後のステップで間違いと思ったら改修していくイメージです）
+### Step 5: Let's set the database connection settings (peripheral settings)
 
-### ステップ5: データベースの接続設定（周辺設定）をしましょう
+- First, let's make a new topic branch with Git
+  - After that, you will work on the topic branch and commit
+- Install Bundler
+- Let's add `mysql2` in your `Gemfile` (MySQL database driver)
+- Configure `database.yml`
+- Create database with `rails db:create`
+- Check a database connection with `rails db`
+- Create PR (Pull Request) on GitHub and let them review your source program
+  - If you get some review comment on your PR, let's deal with it. You'll need 2 LGTM (Looks Good To Me) before you merge onto master
 
-- まずGitで新たにトピックブランチを切りましょう
-  - 以降、トピックブランチ上で作業をしてコミットをしていきます
-- Bundlerをインストールしましょう
-- `Gemfile` で `mysql2` （MySQLのデータベースドライバ）をインストールしましょう
-- `database.yml` の設定をしましょう
-- `rails db:create` コマンドでデータベースの作成をしましょう
-- `rails db` コマンドでデータベースへの接続確認をしましょう
-- GitHub上でPRを作成してレビューしてもらいましょう
-  - コメントがついたらその対応を行ってください。LGTM（Looks Good To Me）が2つついたらmasterブランチにマージしましょう
+### Step 6: Let's create a task model
 
-### ステップ6: タスクモデルを作成しましょう
+Create CRUD to manage the tasks. First of all, let's make it with a simple structure where only the name and details can be registered.
 
-タスクを管理するためのCRUDを作成します。
-まずは名前と詳細だけが登録できるシンプルな構成で作りましょう。
+- Create task model for CRUD with `rails generate`
+- Use migration and create tables
+  - It is important to ensure that the migration can be returned to the previous state! Let's get into the habit of checking by using `redo`
+- Make sure you can connect to the database via the model with the command `rails c`
+  - Try creating a record with ActiveRecord
+- Create a PR on GitHub for review
 
-- `rails generate` コマンドでタスクのCRUDに必要なモデルクラスを作成しましょう
-- マイグレーションを作成し、これを用いてテーブルを作成しましょう
-  - マイグレーションは1つ前の状態に戻せることを担保できていることが大切です！ `redo` を流して確認する癖をつけましょう
-- `rails c` コマンドでモデル経由でデータベースに接続できることを確認しましょう
-  - この時に試しにActiveRecordでレコードを作成してみる
-- GitHub上でPRを作成してレビューしてもらいましょう
+### Step 7: Let's do register / update / delete tasks
 
-### ステップ7: タスクを登録・更新・削除できるようにしよう
+- Let's create a task list feature, creation feature, detail feature, edit feature
+  - Create controller and view with command `rails generate`
+  - Let's add the required implementation to the controller and view
+  - Let's display a flash message on the screen after creating, updating, and deleting
+- Let's edit `routes.rb` to display the task list with `http://localhost:3000/`
+- Create a PR on GitHub for review
+  - In the future, if the PR is likely to grow, consider dividing the PR into two or more times.
 
-- タスクの一覧画面、作成画面、詳細画面、編集画面を作成しましょう
-  - `rails generate` コマンドでコントローラとビューを作成します
-  - コントローラとビューに必要な実装を追加しましょう
-  - 作成、更新、削除後はそれぞれflashメッセージを画面に表示させましょう
-- `routes.rb` を編集して、 `http://localhost:3000/` でタスクの一覧画面が表示されるようにしましょう
-- GitHub上でPRを作成してレビューしてもらいましょう
-  - 今後、PRが大きくなりそうだったらPRを2回以上に分けることを検討しましょう
+### Step 8: Write a test (system spec)
 
-### ステップ8: テスト(system spec)を書こう
-
-- specを書くための準備をしましょう
-  - `spec/spec_helper.rb` 、 `spec/rails_helper.rb` を用意しましょう
-- ~~feature spec~~ system specをタスク機能に対して書きましょう
+- Get ready to write a spec
+  - Let's get prepared  `spec/spec_helper.rb`, `spec/rails_helper.rb`
+- Let's write a system spec for the task function
   - Rails 5.1 以降、新たにsystem testの機能を追加しました
-    - [日本語](https://qiita.com/jnchito/items/c7e6e7abf83598a6516d), [英語](https://rossta.net/blog/why-rails-system-tests-matter.html)
-  - feature specですと `database_cleaner` という gemは必要でしたが、 system specに変更することで `database_cleaner` の導入が要らなくなった
-- Circle CIなどのCIツールを導入して、Slackに通知するようにしましょう
-  - Fablic/training内でPRのやり取りをする場合、CIツールの導入は任意(optional)です。CircleCIのAdmin権限が無いので、`.circleci/config.yml`を設定しても実行できないです。
-- 参考書籍：https://leanpub.com/everydayrailsrspec-jp
+  - After Rails 5.1, we have added a new system test function
+    - [日本語](https://qiita.com/jnchito/items/c7e6e7abf83598a6516d), [English](https://rossta.net/blog/why-rails-system-tests-matter.html)
+  - After changing system spec, you don't need `database_cleaner` for feature spec.
+- Introducing CI(Continuous Integration) like Circle CI, let's ping Slack
+  - Introducing CI is optional when PRing in Fablic/training. There's no execution permission because of no admin permission.
+- cf. https://leanpub.com/everydayrailsrspec/
 
-### ステップ9: アプリの各種設定を行いましょう
+### Step 9: Make various settings for the app
 
-- 日本語部分を共通化
-  - Railsのi18nの仕組みを利用して、日本語リソースの共通化をしましょう
-  - ※i18n化を行うと後のステップでメッセージを出したりするのが楽になるなどのメリットがあります
-- タイムゾーンの設定
-  - Railsのタイムゾーンを日本（東京）に設定しましょう
-- エラーページの設定
-  - Railsが用意しているデフォルトのエラーページを自分が作った画面にしてみましょう
-  - 状況に応じて、適切にエラーページを設定しましょう
-  - ステータスコードの404ページと500ページの2種類の設定は少なくとも必須とします
+- Commonalize Japanese part(message and labels etc...)
+  - Use Rails i18n for doing the task
+  - After configure these tasks, you'll get more benefit from messaging
+- Set the time zone
+  - Fix your time zone to Tokyo/Japan on Rails
+- Configure error page
+  - Replace your customized error page from default
+  - Set the error page appropriately according to the situation
+  - Two types of status code settings, page 404 and page 500, are required at least
 
-### ステップ10: タスク一覧を作成日時の順番で並び替えましょう ★ スキップ可能
+### Step 10: Sort the task list in order of creation date and time (Optional)
 
-- 現在IDの順で並んでいますが、これを作成日時の降順で並び替えてみましょう
-- 並び替えがうまく行っていることをsystem specで書いてみましょう
+- Currently, they are sorted in order of ID, but let's sort them in descending order of creation date and time.
+- Let's write in the system spec that the sorting is working well
 
-### ステップ11: バリデーションを設定してみよう
+### Step 11: Let's set the validation
 
-- バリデーションを設定しましょう
-  - どのカラムにどのバリデーションを追加したらよいか考えてみましょう
-  - 合わせてDBの制約も設定するマイグレーションを作成しましょう
-  - マイグレーションファイルだけを作成するため、 `rails generate` コマンドで作成します
-- 画面にバリデーションエラーのメッセージを表示するようにしましょう
-- バリデーションに対してモデルのテストを書いてみましょう
-- GitHub上でPRを作成してレビューしてもらいましょう
+- Let's set the validation
+  - Think about which validation to add to which column
+  - Let's create a migration that also sets DB constraints
+  - Create with a `rails generate` command to create only the migration file
+- Let's display a validation error message on the screen
+- Let's write a model test for validation
+- Create a PR on GitHub for review
 
-### ステップ12: 終了期限を追加しよう ★ スキップ可能
+### Step 12: Add due date of the task (Optional)
 
-- タスクに対して、終了期限を登録できるようにしてみましょう
-- 一覧画面で、終了期限でソートできるようにしましょう
-- specを拡充しましょう
-- PRしてレビューをしてもらったら、リリースしてみましょう
+- Make it possible to register a due date for the task
+- Implement a functionality to sort the task by due date on the list screen
+- write a test function for this functionality
+- After finishing PR, let's release it
 
-### ステップ13: ステータスを追加して、検索できるようにしよう
+### Step 13: Add status to make it searchable
 
-- ステータス（未着手・着手中・完了）を追加してみよう
-  - 【オプション要件】初学者ではない場合はstateを管理するGemを導入しても構いません
-- 一覧画面でタイトルとステータスで検索ができるようにしよう
-  - 【オプション要件】初学者ではない場合はransackなどの検索の実装を便利にするGemを導入しても構いません
-- 絞り込んだ際、ログを見て発行されるSQLの変化を確認してみましょう
-  - 以降のステップでも必要に応じて確認する癖をつけましょう
-- 検索インデックスを貼りましょう
-- 検索に対してmodel specを追加してみよう（system specも拡充しておきましょう）
+- Let's add status (not started / started / completed)
+  - [Optional requirements] If you are not a beginner, you may install a Gem that manages the state.
+- Let's make it possible to search by title and status on the list screen
+  - [Optional requirements] If you are not a beginner, you may install a gem that makes it convenient to implement search such as ransack.
+- When narrowing down on searching, let's check the changes in the issued SQL by looking into the log
+  - Get in the habit of checking up logs as needed in the following steps
+- Let's add on the search index on the table
+- Let's add a model spec to the search (let's expand the system spec as well)
 
-### ステップ14: ページネーションを追加しよう
+### Step 14: Let's add pagination
 
-- KaminariというGemを使って一覧画面にページネーションを追加してみましょう
+- Let's add pagination to the list view using a gem called Kaminari
 
-### ステップ15: デザインを当てよう ★ スキップ可能
+### Step 15: Apply your design(Optional)
 
-- Bootstrapを導入して、これまで作成したアプリにデザインを当てましょう
-  - 【オプション要件】自分でCSSを書いてデザインする
+- Introduce Bootstrap and apply your design to the apps you've created so far
+  - [Optional requirements] Write and design your own CSS
 
-### ステップ16: 複数人で利用できるようにしよう（ユーザの導入）
+### Step 16: Make it available to multiple people (introduction of user feature)
 
-- ユーザモデルを作成してみましょう
-- 最初のユーザをseedで作成してみましょう
-- ユーザとタスクが紐づくようにしましょう
-  - 関連に対してインデックスを貼りましょう
-  - N+1問題を回避するための仕組みを取り入れましょう
+- Let's create a user model
+- Let's create the first user with seed
+- Let's connect users and tasks
+  - Index for associations
+  - Incorporate a mechanism to avoid the N + 1 problem
 
-### ステップ17: ログイン/ログアウト機能を実装しよう
 
-- 追加のGemを使わず、自分で実装してみましょう
-  - DeviseなどのGemを使わないことで、HTTPのCookieやRailsにおけるSessionなどの仕組みについて理解を深めることが目的です
-  - また、一般的な認証についての理解を深めることも目的にしています（パスワードの取り扱いについてなど）
-- ログイン画面を実装しましょう
-- ログインしていない場合は、タスク管理のページに遷移できないようにしましょう
-- 自分が作成したタスクだけを表示するようにしましょう
-- ログアウト機能を実装しましょう
+### Step 17: Let's implement login / logout function
 
-### ステップ18: ユーザの管理画面を実装しよう ★ スキップ可能
+- Let's implement it ourselves without using additional gems
+  - By not using Gem such as Devise, the purpose is to deepen the understanding of the mechanism such as HTTP cookies and Session in Rails.
+  - It also aims to deepen your understanding of general authentication (such as password handling).
+- Let's implement a login screen
+- If you are not logged in, let's prevent you from transitioning to the task management page
+- Display the tasks only you created
+- Let's implement the logout function
 
-- 画面上に管理メニューを追加しましょう
-- 管理画面にはかならず `/admin` というURLを先頭につけるようにしましょう
-  - `routes.rb` に追加する前に、あらかじめURLやルーティング名（ `*_path` となる名前）を想定して設計してみましょう
-- ユーザ一覧・作成・更新・削除を実装しましょう
-- ユーザを削除したら、そのユーザが抱えているタスクを削除するようにしてみましょう
-- ユーザの一覧画面で、ユーザが持っているタスクの数を表示するようにしてみましょう
-- ユーザが作成したタスクの一覧が見られるようにしてみましょう
+### Step 18: Let's implement the user management screen(Optional)
 
-### ステップ19: ユーザにロールを追加しよう ★ スキップ可能
+- Let's add a management menu on the screen
+  - Make sure to put the URL `/admin` at the beginning of the admin tool .
+- Before adding the url to `routes.rb`, let's design by assuming the URL and routing name (name to be `*_path`) in advance
+- Let's implement user list / create / update / delete
+- After deleting a user, try deleting the tasks that the user has.
+- Let's display the number of tasks that the user has on the user list view
+- Let's see the list of user-created tasks
 
-- ユーザに管理ユーザと一般ユーザを区別するようにしてみましょう
-- 管理ユーザだけがユーザ管理画面にアクセスできるようにしてみましょう
-- ユーザ管理画面でロールを選択できるようにしましょう
-- 管理ユーザが1人もいなくならないように削除の制御をしましょう
-- ※ Gemの使用・不使用は自由です
+### Step 19: Add a role to the user(Optional)
 
-### ステップ20: タスクにラベルをつけられるようにしよう
+- Let's make users distinguish between administrative users and general users
+- Let's make only the admin user access the user admin tool
+- Let's make it possible to select a role on the user management tool
+- Let's control the deletion so that no administrative user is gone
+- * You can use Gem freely.
 
-- タスクに複数のラベルをつけられるようにしてみましょう
-- つけたラベルで検索できるようにしてみましょう
+### Step 20: Let's be able to put labels on tasks
 
-### ステップ21: メンテナンス機能を作ろう
+- Let's allow tasks to have multiple labels
+- Let's make it possible to search by the attached label
 
-- メンテナンスを開始／終了するバッチを作ってみましょう
-- メンテナンス中にアクセスしたユーザはメンテナンスページにリダイレクトさせましょう
-- 追加のGemを使わず、自分で実装してみましょう
+### Step 21: Let's create a maintenance function
 
-## あとがき
+- Let's create a batch to start / end maintenance
+- Redirect users who access during maintenance to the maintenance page
+- Let's implement it ourselves without using additional gems
 
-お疲れさまでした。
-あなたは教育カリキュラムを一通り完遂しました!!
+## Afterword
 
-せっかく1つのアプリケーションを作り上げたので、是非makitani night(社内LT会)でアプリケーションについて発表してみましょう。
-発表の良いきっかけにもなると思います。
+Thank you for your hard work. You have completed the educational curriculum !!
 
-このカリキュラムでは触れきれませんでしたが、今後は以下のトピックなどが必要になると思うので、学習を進めていくとよいと思います（案件を通じて学ぶことも多いと思います）。
+Now that we have created one application, let's announce it at mikitani night (in-house LT meeting). I think it will be a good opportunity to make a presentation.
 
-- Webアプリケーションの基本的な理解を深める
-  - HTTPとHTTPSに関する理解
-- Railsのもう少し進んだ使い方を習得する
-  - ロギング
-  - 明示的なトランザクション
-  - 非同期処理
-  - アセットパイプライン（どちらかというとリリース系のトピック）
-- JavaScriptやCSSなどのフロントエンドに関するより高度な理解
-- データベースに対する理解を深める
-  - SQL
-  - よりパフォーマンスを重視したクエリの構築
-  - インデックスの理解をより深める
-- サーバ環境に関するより多くの理解
-  - Linux OS
-  - Webサーバ（Nginx）の設定
-  - アプリケーションサーバ（Unicorn）の設定
-  - MySQLに関する設定への理解
-- リリースに関するツールの理解
-  - Capistrano
-  - Ansible
+I couldn't cover it in this curriculum, but I think that the following topics will be needed in the future, so I think it's a good idea to proceed with learning (I think that you will often learn through projects).
 
-## （番外編）オプション要件
+- Deepen your basic understanding of web applications
+   - Understanding HTTP and HTTPS
+- Learn a little more advanced use of Rails
+   - Logging
+   - Explicit transaction
+   - Asynchronous processing
+   - Asset pipeline
+- A more advanced understanding of frontends such as JavaScript and CSS
+- Deepen your understanding of the database
+   - SQL
+   - Build more performance-focused queries
+   - Deepen your understanding of the index
+- A better understanding of the server environment
+   - Linux OS
+   - Web server (Nginx) settings
+   - Application server (Unicorn) settings
+   - Understanding the settings for MySQL
+- Understanding tools for releases
+   - Capistrano
+   - Ansible
 
-必須要件とは別に、タスク管理システムに関するオプション要件を以下に示します。
-メンターと相談しつつ必要に応じて実施してみてください。
+## (Extra edition) Optional requirements
 
-### オプション要件1:  終了間近や期限の過ぎたタスクがあった場合、アラートを出したい
+Apart from the required requirements, the optional requirements for the task management system are listed below. Please consult with your mentor and carry out as necessary.
 
-- ログインした時点で、どこかに終了間近や期限の過ぎたタスクを表示してみましょう
-- 既読などが分かるようになるとよりよい
+### Optional Requirement 1: Want to be alerted if there is a task that is nearing completion or overdue
 
-### オプション要件2:  ユーザの間でタスクを共有できるようにしたい
+- When you log in, let's display tasks that are nearing completion or have expired somewhere.
+- It is better if you can display the read/unread tasks
 
-- 複数人で同じタスクを参照・編集できるようにしたい
-  - 例：メンターとメンティーでタスクを共有できること
-- 作成者を表示する
+### Option Requirement 2: Want to be able to share tasks among users
 
-### オプション要件3: グループを設定できるようにしたい
+- Want to allow multiple people to view and edit the same task
+  - Example: Being able to share tasks with mentors and mentees
+- Show task creator
 
-- オプション要件2の続き
-- グループを設定できるようにして、グループ内だけでタスクを参照できるようにしたい
+### Option Requirement 3: Want to be able to set groups
 
-### オプション要件4: タスクに添付ファイルをつけられるようにしたい
+- Continuation of option requirement 2
+- Want to be able to set a group so that tasks can be referenced only within the group
 
-- タスクに対して添付ファイルをつけられるようにしてみましょう
-- Herokuの場合はS3バケットにアップロードした添付ファイルを管理するようにします
-- 適切にGemを選別して利用してみましょう
 
-### オプション要件5: ユーザにプロフィール画像を設定できるようにしてみましょう
+### Option Requirement 4: Want to be able to attach attachments to tasks
 
-- ユーザがプロフィール画像を設定できるようにしましょう
-- アップロードした画像はアイコンとして使用するので、遅くならないようにサムネイル画像も作りたい
-- 適切にGemやライブラリを選別しましょう
+- Let's make it possible to attach attachments to tasks
+- For Heroku, manage attachments uploaded to your S3 bucket
+- Let's use Gem appropriately
 
-### オプション要件6: タスクカレンダーの機能がほしい
+### Optional Requirement 5: Let's allow users to set a profile picture
 
-- 終了期限を可視化するために、カレンダーに終了期限別にタスクを表示するようにしてみましょう
-- ライブラリの使用・不使用は自由です
+- Let users be able to set their profile picture
+- The uploaded image will be used as an icon, so you make a thumbnail image so that it will not be delayed.
+- Select gems and libraries appropriately
 
-### オプション要件7: タスクをドラッグ&ドロップで並べ替えられるようにしたい
+### Optional Requirement 6: Want task calendar functionality
 
-- タスク一覧でタスクをドラッグ&ドロップして並べ替えできるようにしてみましょう
+- Let's try to display tasks by expiration date in the calendar to visualize the expiration date
+- You are free to use or not use the library
 
-### オプション要件8: ラベルの使用頻度をグラフ化してみましょう
+### Option Requirement 7: Want to be able to sort tasks by drag and drop
 
-- 統計情報を可視化するために、グラフを導入してみましょう
-- グラフの種類は見やすいものを提案してみましょう
+- Let's drag and drop tasks in the task list so that they can be sorted
 
-### オプション要件9: 終了間近のタスクを作成ユーザ宛てにメール通知してみましょう
+### Optional Requirement 8: Let's depict a graph how often labels are used
 
-- 終了間近のタスクがある場合、バックグラウンドでメール通知してみましょう
-- メール送信はクラウドサービスを利用します
-  - HerokuならばSendGrid
-  - AWSならばAmazon SESなど
-- 1日1回のバッチで送信するようにしてみましょう
-  - HerokuならばHeroku Scheduler（アドオン）
-  - AWSだったらcronを設定してみる
+- Let's introduce a graph to visualize statistical information
+- Let's propose a graph type that is easy to see
 
-### オプション要件10: AWS にインスタンスを作って環境構築する
+### Optional Requirement 9: Create a task that is about to finish and email the user
 
-- AWSに環境構築をしてデプロイしてみましょう
-- ミドルウェアはNginx+Unicornを推奨構成とします
-- EC2のインスタンス等はサーバ要件を参照してください
+- If you have a task that is about to finish, let's notify you by email in the background
+- Use cloud service to send emails
+  - SendGrid for Heroku
+  - For AWS, Amazon SES etc.
+- Let's send emails in batch once a day
+  - Heroku is Heroku Scheduler (add-on)
+  - If it is AWS, try setting cron
 
-### オプション要件11: ラベルをつけるにあたりjavascriptを用いて非同期処理にて取得するようにしましょう
+### Option Requirement 10: Launch an instance on AWS and build an environment
 
-- ステップ20の続き
-- タスク登録時のラベル初期表示時は、非表示(ラベルデータ未取得)にしてみましょう
-- 変わりにラベル追加などのボタンを用意し、そのボタン押下にてラベルデータを取得し表示するようにしてみましょう
-- テストも書きましょう
+- Let's build the environment on AWS and deploy it
+- Nginx + Unicorn is recommended for middleware
+- Please refer to the server requirements for EC2 instances etc.
+
+### Option Requirement 11: Let's get labels by Ajax
+
+- Continuation of step 20
+- Let's make it hidden (label data not acquired) when the label is initially displayed when registering a task.
+- Instead, prepare a button for adding a label, etc., and try to acquire and display the label data by pressing that button.
+- Let's write a test code
