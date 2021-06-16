@@ -1,9 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Task, type: :model do
-  let(:task) { Task.new(name: name, description: description) }
+  let(:task) { Task.new(name: name, description: description, status: status) }
   let(:name) { 'タスク名' }
   let(:description) { '詳細な説明' }
+  let(:status) { 'todo' }
 
   context 'すべての項目が入力されている場合' do
     it ('有効であること') { expect(task).to be_valid }
@@ -45,6 +46,14 @@ RSpec.describe Task, type: :model do
     it '無効となること' do
       task.valid?
       expect(task.errors.errors[0].full_message).to include('タスク詳細は50文字以内で入力してください')
+    end
+  end
+
+  context 'ステータスが定義されていない値の場合' do
+    let(:status) { 'not-defined' }
+
+    it '無効となること' do
+      expect { task }.to raise_error(ArgumentError, "'not-defined' is not a valid status")
     end
   end
 end
