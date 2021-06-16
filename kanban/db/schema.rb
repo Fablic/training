@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_14_002900) do
+ActiveRecord::Schema.define(version: 2021_06_16_015959) do
 
   create_table "tasks", charset: "utf8", force: :cascade do |t|
     t.string "name", limit: 15, null: false, comment: "タスク名を15文字に制限"
@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 2021_06_14_002900) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "status"
+    t.index ["status"], name: "index_tasks_on_status"
   end
 
 end
