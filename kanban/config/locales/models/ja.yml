@@ -17,3 +17,12 @@ ja:
     show: 詳細
     delete: 削除
     back-to-index: 一覧に戻る
+  notice:
+    task:
+      insert: 
+        success: タスクの登録に成功しました
+      update:
+        success: タスクの更新に成功しました
+      delete:
+        success: タスクの削除に成功しました
+        fail: タスクの削除に失敗しました
