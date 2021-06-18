@@ -16,11 +16,11 @@
   <tbody>
     <% @tasks.each do |task| %>
       <tr>
-        <td><%= task.name %></td>
+        <td class="task-name"><%= task.name %></td>
         <td><%= task.desc %></td>
-        <td><%= task.status %></td>
+        <td><%= Task.statuses.key(task.status) %></td>
         <td><%= task.label %></td>
-        <td><%= task.priority %></td>
+        <td><%= Task.priorities.key(task.priority) %></td>
         <td><%= task.created_at.strftime("%Y/%m/%d %H:%M:%S") %></td>
         <td><%= link_to 'Show', task, class: 'btn btn-secondary' %></td>
         <td><%= link_to 'Edit', edit_task_path(task), class: 'btn btn-dark' %></td>

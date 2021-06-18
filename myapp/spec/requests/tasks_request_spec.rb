@@ -1,5 +1,6 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
-require 'pp'
 
 RSpec.describe TasksController, type: :request do
   it 'render the :index template' do

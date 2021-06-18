@@ -19,6 +19,9 @@ services:
       - bundle-install:/usr/local/bundle:delegated
     ports:
       - "3001:3000"
+
+    depends_on:
+      - chrome
     links:
       - db
     environment:
@@ -26,6 +29,11 @@ services:
       DB_NAME: myapp
       DB_PASSWORD: password
       DB_HOST: db
+
+  chrome:
+    image: selenium/standalone-chrome:latest
+    ports:
+      - 4444:4444
 
 volumes:
   db-data:
