@@ -5,8 +5,8 @@ class TasksController < ApplicationController
 
   # GET /tasks or /tasks.json
   def index
-    @tasks = Task.all
-    @tasks = Task.all.order(created_at: :desc)
+    @sort = sort_params
+    @tasks = Task.sort_tasks(@sort)
   end
 
   # GET /tasks/1 or /tasks/1.json
@@ -55,13 +55,30 @@ class TasksController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_task
-      @task = Task.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def task_params
-      params.require(:task).permit(:name, :desc, :status, :label, :priority)
+  # Use callbacks to share common setup or constraints between actions.
+  def set_task
+    @task = Task.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def task_params
+    params.require(:task).permit(:name, :desc, :status, :label, :priority, :due_date)
+  end
+
+  def sort_params
+    if check_sort_key && params[:sort_val].present?
+      { params[:sort_key]&.to_sym => set_sort_val }
+    else
+      { created_at: :asc, due_date: :asc }
     end
+  end
+
+  def check_sort_key
+    %i[due_date created_at].include?(params[:sort_key]&.to_sym)
+  end
+
+  def set_sort_val
+    params[:sort_val]&.to_sym.eql?(:desc) ? :desc : :asc
+  end
 end
