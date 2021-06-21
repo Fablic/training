@@ -4,4 +4,11 @@ class Task < ApplicationRecord
   validates :title, presence: true, length: { maximum: 255 }
   validates :description, length: { maximum: 5000 }
   enum task_status: { todo: 0, doing: 1, done: 2 }
+
+  def self.search(keyword, status)
+    result_tasks = ::Task.all
+    result_tasks = result_tasks.where('title like ?', keyword + '%') unless keyword.nil?
+    result_tasks = result_tasks.where({ task_status: status }) unless status.nil?
+    result_tasks
+  end
 end

@@ -5,6 +5,11 @@ class TasksController < ApplicationController
     @tasks = Task.all.order(create_sort_query)
   end
 
+  def search
+    keyword, status = create_search_query
+    @tasks = Task.search(keyword, status)
+  end
+
   def new
     @task = Task.new
   end
@@ -51,6 +56,13 @@ class TasksController < ApplicationController
 
   def task_params
     params.require(:task).permit(:title, :description, :end_at)
+  end
+
+  def create_search_query
+    keyword = params[:keyword].nil? ? nil : params[:keyword]
+    status = params[:status].nil? ? nil : params[:status]
+
+    [keyword, status]
   end
 
   def create_sort_query
