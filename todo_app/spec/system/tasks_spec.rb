@@ -68,7 +68,7 @@ RSpec.describe 'Tasks', type: :system do
         expect(page).to have_content 'hoge'
         expect(page).to have_content 'fuga'
       end
-      
+
       example 'タスクの終了期限を変更できる' do
         visit edit_task_path(task1)
         end_at_input = Time.current.change(sec: 0, usec: 0)
@@ -78,8 +78,6 @@ RSpec.describe 'Tasks', type: :system do
         click_button I18n.t(:'button.edit')
         expect(page).to have_content I18n.l(end_at_input)
       end
-    end
-
     end
 
     context 'title 256文字以上を入力する' do
