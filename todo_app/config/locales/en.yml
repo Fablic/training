@@ -14,3 +14,5 @@ en:
     registered_task: "Task registration is complete"
     edited_task: "Task edited is complete"
     deleted_task: "Task deleted is complete"
+    registered_is_failed: "Registered is failed"
+    edited_is_faild: "Edited is failed"

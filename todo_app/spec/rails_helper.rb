@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../config/environment', __dir__)
 # Prevent database truncation if the environment is production
-abort("The Rails environment is running in production mode!") if Rails.env.production?
+abort('The Rails environment is running in production mode!') if Rails.env.production?
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 
@@ -33,9 +35,7 @@ end
 RSpec.configure do |config|
   config.before(:each) do |example|
     # `describe 〜, type: :system do` のspecを対象にする
-    if example.metadata[:type] == :system
-      driven_by :selenium_chrome_headless, screen_size: [1600, 1600]
-    end
+    driven_by :selenium_chrome_headless, screen_size: [1600, 1600] if example.metadata[:type] == :system
   end
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"

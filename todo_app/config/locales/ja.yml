@@ -14,3 +14,5 @@ ja:
     registered_task: "タスクの登録が完了しました"
     edited_task: "タスクの編集が完了しました"
     deleted_task: "タスクの削除が完了しました"
+    registered_is_faild: "登録に失敗しました"
+    edited_is_faild: "更新に失敗しました"
