@@ -28,8 +28,8 @@ RSpec.describe Task, type: :model do
   end
 
    describe '#scope sort_tasks' do
-   let!(:task1) { create(:task, due_date: Faker::Time.backward) }
-   let!(:task2) { create(:task, due_date: Faker::Time.forward) }
+   let!(:old_task) { create(:task, due_date: Faker::Time.backward) }
+   let!(:new_task) { create(:task, due_date: Faker::Time.forward) }
  
      context 'sort desc' do
        it {expect(Task.sort_tasks({due_date: :desc}).first).to eq(task2) }
