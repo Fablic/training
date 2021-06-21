@@ -1,0 +1,48 @@
+name: RSpec System Spec Testing
+on: push
+
+jobs:
+  rspec:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.0.1
+
+      - name: Install dependent libralies
+        run: sudo apt-get install libmysqlclient-dev
+
+      - name: Setup bundler
+        run: gem install bundler
+
+      - name: bundle install
+        run: |
+          bundle install --jobs 4 --retry 3
+
+      - name: Setup Database
+        run: |
+          cp config/database.yml.ci config/database.yml
+          sudo /etc/init.d/mysql start
+          bundle exec rake db:create
+          bundle exec rake db:migrate
+        working-directory: myapp
+        env:
+          RAILS_ENV: test
+
+      - name: install webpacker
+        run: |
+          rm -rf bin/webpack*
+          bundle exec rails webpacker:install
+          bundle exec rails webpacker:compile
+        working-directory: myapp
+        env:
+          RAILS_ENV: test
+
+      - name: Run RSpec
+        run: bundle exec rspec -f d
+        working-directory: myapp
+        env:
+          RAILS_ENV: test
