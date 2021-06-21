@@ -5,14 +5,13 @@ require 'rails_helper'
 RSpec.describe Task, type: :model do
   describe 'validation' do
     subject { build(:task, params) }
-    let(:params) { { title: title, description: description } }
+    let(:params) { { title: title, description: description, task_status: task_status } }
     let(:random_str) { Faker::Alphanumeric.alpha(number: 10) }
-    let(:random_str256) { Faker::Alphanumeric.alpha(number: 256) }
-    let(:random_str5001) { Faker::Alphanumeric.alpha(number: 5001) }
 
     context 'valid' do
       let(:title) { random_str }
       let(:description) { random_str }
+      let(:task_status) { :todo }
 
       it { is_expected.to be_valid }
     end
@@ -20,6 +19,7 @@ RSpec.describe Task, type: :model do
     context 'valid description' do
       let(:title) { random_str }
       let(:description) { nil }
+      let(:task_status) { :todo }
 
       it { is_expected.to be_valid }
     end
@@ -27,20 +27,23 @@ RSpec.describe Task, type: :model do
     context 'invalid title' do
       let(:title) { nil }
       let(:description) { random_str }
+      let(:task_status) { :todo }
 
       it { is_expected.to_not be_valid }
     end
 
     context 'invalid title max value' do
-      let(:title) { random_str256 }
+      let(:title) { Faker::Alphanumeric.alpha(number: 256) }
       let(:description) { random_str }
+      let(:task_status) { :todo }
 
       it { is_expected.to_not be_valid }
     end
 
     context 'invalid description max value' do
       let(:title) { random_str }
-      let(:description) { random_str5001 }
+      let(:description) { Faker::Alphanumeric.alpha(number: 5001) }
+      let(:task_status) { :todo }
 
       it { is_expected.to_not be_valid }
     end
