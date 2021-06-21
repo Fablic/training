@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Tasks', type: :sytem do
-  let!(:old_task) { create(:task, created_at: Faker::Time.backward, due_date: Faker::Time.backward) }
+  let!(:old_task) { create(:task, title: 'old task', created_at: Faker::Time.backward, due_date: Faker::Time.backward) }
   let(:title) { Faker::Alphanumeric.alphanumeric(number: 10) }
   let(:desc) { Faker::Alphanumeric.alphanumeric(number: 10) }
   let(:due_date) { Faker::Time.forward }
@@ -10,7 +10,7 @@ RSpec.describe 'Tasks', type: :sytem do
   let(:ja_due_date) { Task.human_attribute_name(:due_date) }
 
   describe '#index' do
-    let!(:new_task) { create(:task, created_at: Faker::Time.forward, due_date: Faker::Time.forward) }
+    let!(:new_task) { create(:task, title: 'new task', created_at: Faker::Time.forward, due_date: Faker::Time.forward) }
 
     it 'vist tasks/index' do
       visit root_path
