@@ -14,13 +14,16 @@ jobs:
 
       - name: Install dependent libralies
         run: sudo apt-get install libmysqlclient-dev
+        working-directory: myapp
 
       - name: Setup bundler
         run: gem install bundler
+        working-directory: myapp
 
       - name: bundle install
         run: |
           bundle install --jobs 4 --retry 3
+        working-directory: myapp
 
       - name: Setup Database
         run: |
