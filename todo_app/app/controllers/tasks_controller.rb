@@ -2,12 +2,9 @@
 
 class TasksController < ApplicationController
   def index
-    @tasks = Task.all.order(create_sort_query)
-  end
-
-  def search
+    sort_query = create_sort_query
     keyword, status = create_search_query
-    @tasks = Task.search(keyword, status)
+    @tasks = Task.search(keyword, status, sort_query)
   end
 
   def new
