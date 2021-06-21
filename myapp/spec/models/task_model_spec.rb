@@ -13,6 +13,7 @@ RSpec.describe Task, type: :model do
     let(:random_label) { Faker::Alphanumeric.alpha(number: 10) }
     let(:random_status) { Faker::Number.between(from: 0, to: 2) }
     let(:random_priority) { Faker::Number.between(from: 0, to: 2) }
+    let(:random_due_date) { Faker::Time.between(from: DateTime.now, to: DateTime.now + 1) }
 
     context 'valid all fields' do
       let(:name) { random_name }
@@ -20,6 +21,7 @@ RSpec.describe Task, type: :model do
       let(:status) { random_status }
       let(:label) { random_label }
       let(:priority) { random_priority }
+      let(:due_date) { random_due_date }
 
       it { is_expected.to be_valid }
     end
@@ -30,6 +32,7 @@ RSpec.describe Task, type: :model do
       let(:status) { random_status }
       let(:label) { random_label }
       let(:priority) { random_priority }
+      let(:due_date) { random_due_date }
 
       it { is_expected.to_not be_valid }
     end
@@ -40,6 +43,7 @@ RSpec.describe Task, type: :model do
       let(:status) { random_status }
       let(:label) { random_label }
       let(:priority) { random_priority }
+      let(:due_date) { random_due_date }
 
       it { is_expected.to_not be_valid }
     end
@@ -50,6 +54,7 @@ RSpec.describe Task, type: :model do
       let(:status) { nil }
       let(:label) { random_label }
       let(:priority) { random_priority }
+      let(:due_date) { random_due_date }
 
       it { is_expected.to_not be_valid }
     end
@@ -60,6 +65,7 @@ RSpec.describe Task, type: :model do
       let(:status) { random_status }
       let(:label) { nil }
       let(:priority) { random_priority }
+      let(:due_date) { random_due_date }
 
       it { is_expected.to_not be_valid }
     end
@@ -70,6 +76,7 @@ RSpec.describe Task, type: :model do
       let(:status) { random_status }
       let(:label) { random_label }
       let(:priority) { nil }
+      let(:due_date) { random_due_date }
 
       it { is_expected.to_not be_valid }
     end

@@ -12,6 +12,7 @@ RSpec.describe 'Tasks (System)', type: :system do
     select('Done', from: 'task[status]')
     fill_in 'task[label]', with: 'task1 desc'
     select('Low', from: 'task[priority]')
+    fill_in('task[due_date]', with: DateTime.now + 1)
     click_button 'Create Task'
     expect(page).to have_text('Task was successfully created.')
 
@@ -21,6 +22,7 @@ RSpec.describe 'Tasks (System)', type: :system do
     select('Done', from: 'task[status]')
     fill_in 'task[label]', with: 'task1 desc'
     select('Low', from: 'task[priority]')
+    fill_in('task[due_date]', with: DateTime.now + 1)
     click_button 'Create Task'
     expect(page).to have_text('Task was successfully created.')
     visit tasks_url

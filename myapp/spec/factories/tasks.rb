@@ -5,6 +5,7 @@ FactoryBot.define do
     status { 'status' }
     label { 'label' }
     priority { 'priority' }
+    due_date { 'due_date' }
 
     trait :invalid do
       name { '' }
