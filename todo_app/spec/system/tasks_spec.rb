@@ -47,21 +47,36 @@ RSpec.describe 'Tasks', type: :sytem do
     let!(:title) { Faker::Alphanumeric.alphanumeric(number: 10) }
     let!(:desc) { Faker::Alphanumeric.alphanumeric(number: 10) }
 
-    it 'create task' do
-      visit new_task_path
+    context 'create task' do
+      it 'success' do
+        visit new_task_path
 
-      fill_in ja_title, with: title
-      fill_in ja_desc, with: desc
+        fill_in ja_title, with: title
+        fill_in ja_desc, with: desc
 
-      expect do
-        click_button I18n.t('common.action.create')
-      end.to change(Task, :count).by(1)
+        expect do
+          click_button I18n.t('common.action.create')
+        end.to change(Task, :count).by(1)
 
-      expect(current_path).to eq root_path
+        expect(current_path).to eq root_path
 
-      expect(page).to have_content(I18n.t('tasks.flash.success.create'))
-      expect(page).to have_content(title)
-      expect(page).to have_content(desc)
+        expect(page).to have_content(I18n.t('tasks.flash.success.create'))
+        expect(page).to have_content(title)
+        expect(page).to have_content(desc)
+      end
+      it 'error' do
+        visit new_task_path
+
+        expect do
+          click_button I18n.t('common.action.create')
+        end.to change(Task, :count).by(0)
+
+        expect(current_path).to eq tasks_path
+
+        expect(page).to have_content(I18n.t('tasks.flash.error.create'))
+        expect(page).to_not have_content(title)
+        expect(page).to_not have_content(desc)
+      end
     end
   end
 
@@ -69,26 +84,49 @@ RSpec.describe 'Tasks', type: :sytem do
     let!(:title) { Faker::Alphanumeric.alphanumeric(number: 10) }
     let!(:desc) { Faker::Alphanumeric.alphanumeric(number: 10) }
 
-    it 'update task' do
-      visit edit_task_path(task)
+    context 'update task' do
+      it 'success' do
+        visit edit_task_path(task)
 
-      expect(current_path).to eq edit_task_path(task)
+        expect(current_path).to eq edit_task_path(task)
 
-      expect(page).to have_field ja_title, with: task.title
-      expect(page).to have_field ja_desc, with: task.description
+        expect(page).to have_field ja_title, with: task.title
+        expect(page).to have_field ja_desc, with: task.description
 
-      fill_in ja_title, with: title
-      fill_in ja_desc, with: desc
+        fill_in ja_title, with: title
+        fill_in ja_desc, with: desc
 
-      expect do
-        click_button I18n.t('common.action.update')
-      end.to change(Task, :count).by(0)
+        expect do
+          click_button I18n.t('common.action.update')
+        end.to change(Task, :count).by(0)
   
-      expect(current_path).to eq task_path(task)
+        expect(current_path).to eq task_path(task)
 
-      expect(page).to have_content(I18n.t('tasks.flash.success.update'))
-      expect(page).to have_content(title)
-      expect(page).to have_content(desc)
+        expect(page).to have_content(I18n.t('tasks.flash.success.update'))
+        expect(page).to have_content(title)
+        expect(page).to have_content(desc)
+      end
+      it 'errror' do
+        visit edit_task_path(task)
+
+        expect(current_path).to eq edit_task_path(task)
+
+        expect(page).to have_field ja_title, with: task.title
+        expect(page).to have_field ja_desc, with: task.description
+
+        fill_in ja_title, with: nil
+        fill_in ja_desc, with: nil
+
+        expect do
+          click_button I18n.t('common.action.update')
+        end.to change(Task, :count).by(0)
+  
+        expect(current_path).to eq task_path(task)
+
+        expect(page).to have_content(I18n.t('tasks.flash.error.update'))
+        expect(page).to_not have_content(title)
+        expect(page).to_not have_content(desc)
+      end
     end
   end
 
