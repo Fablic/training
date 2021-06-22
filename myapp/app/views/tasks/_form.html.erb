@@ -33,7 +33,7 @@
 
   <div class="field mb-3">
     <%#= form.label :priority %>
-    <%= form.select :priority, Task.priorities, {selected: @task.status || "", disabled: "", prompt: 'Please select priority'}, class: "form-control", placeholder: "Priority"%>
+    <%= form.select :priority, Task.priorities, {selected: @task.priority || "", disabled: "", prompt: 'Please select priority'}, class: "form-control", placeholder: "Priority"%>
   </div>
 
   <div class="actions">
