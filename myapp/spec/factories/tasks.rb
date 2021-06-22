@@ -1,11 +1,11 @@
 FactoryBot.define do
-  factory :task do
+  factory :task, class: Task do
     name { 'Task Name' }
     desc { 'Description' }
-    status { 'status' }
+    status { 0 }
     label { 'label' }
-    priority { 'priority' }
-    due_date { 'due_date' }
+    priority { 1 }
+    due_date { Faker::Time.forward(days: 1,  period: :evening) }
 
     trait :invalid do
       name { '' }
