@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 2021_06_22_061014) do
     t.index ["created_at"], name: "index_tasks_on_created_at"
     t.index ["end_at"], name: "index_tasks_on_end_at"
     t.index ["task_status"], name: "index_tasks_on_task_status"
+    t.index ["title", "task_status"], name: "index_tasks_on_title_and_task_status"
     t.index ["title"], name: "index_tasks_on_title"
   end
 

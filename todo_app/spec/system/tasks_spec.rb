@@ -13,7 +13,7 @@ RSpec.describe 'Tasks', type: :system do
 
         expect(page).to have_content 'タイトル1'
         expect(page).to have_content '説明'
-        expect(page).to have_content I18n.l(task1.end_at)
+        expect(page).to have_content I18n.l(task1.end_at, format: '%m/%d/%Y %H:%M:%S')
       end
 
       example 'タスク一覧が表示されている (/tasks)' do
@@ -21,7 +21,7 @@ RSpec.describe 'Tasks', type: :system do
 
         expect(page).to have_content 'タイトル1'
         expect(page).to have_content '説明'
-        expect(page).to have_content I18n.l(task1.end_at)
+        expect(page).to have_content I18n.l(task1.end_at, format: '%m/%d/%Y %H:%M:%S')
       end
 
       example 'タスク一覧の順序が作成日降順' do
@@ -84,7 +84,7 @@ RSpec.describe 'Tasks', type: :system do
         visit task_path(task1)
         expect(page).to have_content 'タイトル1'
         expect(page).to have_content '説明'
-        expect(page).to have_content I18n.l(task1.end_at)
+        expect(page).to have_content I18n.l(task1.end_at, format: '%m/%d/%Y %H:%M:%S')
       end
     end
   end
@@ -95,7 +95,7 @@ RSpec.describe 'Tasks', type: :system do
         visit edit_task_path(task1)
         fill_in 'task_title', with: 'hoge'
         fill_in 'task_description', with: 'fuga'
-        click_button I18n.t(:'button.edit')
+        click_button 'Edit'
         expect(page).to have_content 'hoge'
         expect(page).to have_content 'fuga'
       end
@@ -106,8 +106,8 @@ RSpec.describe 'Tasks', type: :system do
 
         fill_in 'task_title', with: 'hoge'
         fill_in 'task_end_at', with: end_at_input
-        click_button I18n.t(:'button.edit')
-        expect(page).to have_content I18n.l(end_at_input)
+        click_button 'Edit'
+        expect(page).to have_content I18n.l(end_at_input, format: '%m/%d/%Y %H:%M:%S')
       end
     end
 
@@ -115,7 +115,7 @@ RSpec.describe 'Tasks', type: :system do
       example '登録に失敗しましたが表示されること' do
         visit edit_task_path(task1)
         fill_in 'task_title', with: Faker::Alphanumeric.alpha(number: 256)
-        click_button I18n.t(:'button.edit')
+        click_button 'Edit'
         expect(page).to have_content 'Edited is failed'
       end
     end
@@ -124,7 +124,7 @@ RSpec.describe 'Tasks', type: :system do
       example '登録に失敗しましたが表示されること' do
         visit edit_task_path(task1)
         fill_in 'task_description', with: Faker::Alphanumeric.alpha(number: 5001)
-        click_button I18n.t(:'button.edit')
+        click_button 'Edit'
         expect(page).to have_content 'Edited is failed'
       end
     end
@@ -134,7 +134,7 @@ RSpec.describe 'Tasks', type: :system do
         visit edit_task_path(task1)
         fill_in 'task_title', with: ''
         fill_in 'task_description', with: ''
-        click_button I18n.t(:'button.edit')
+        click_button 'Edit'
         expect(page).to have_content 'Edited is failed'
       end
     end

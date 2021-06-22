@@ -23,3 +23,4 @@ ja:
     deleted_task: "タスクの削除が完了しました"
     registered_is_faild: "登録に失敗しました"
     edited_is_faild: "更新に失敗しました"
+    deleted_is_faild: "削除に失敗しました"

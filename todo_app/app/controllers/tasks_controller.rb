@@ -47,10 +47,13 @@ class TasksController < ApplicationController
 
   def destroy
     @task = Task.find_by(id: params[:id])
-    @task.delete
-
-    flash[:success] = I18n.t(:'message.deleted_task')
-    redirect_to root_path
+    if @task.destroy
+      flash[:success] = I18n.t(:'message.deleted_task')
+      redirect_to root_path
+    else
+      flash[:error] = I18n.t(:'message.edited_is_faild')
+      render :index
+    end
   end
 
   private
