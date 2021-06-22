@@ -4,5 +4,6 @@
   <p><%= I18n.t(:'task.description') %>: <%= @task.description %></p>
   <p><%= I18n.t(:'task.created_at') %>: <%= I18n.l(@task.created_at) %></p>
   <p><%= I18n.t(:'task.end_at') %>: <%= @task.end_at ? I18n.l(@task.end_at) : nil %></p>
+  <p><%= I18n.t(:'task.status') %>: <%= @task.task_status %></p>
   <%= link_to I18n.t(:'link.edit'), edit_task_path(@task) %>
 </div>

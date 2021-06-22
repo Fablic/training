@@ -5,5 +5,7 @@
   <p><%= f.text_area :description %></p>
   <p><%= f.label I18n.t(:'task.end_at') %></p>
   <p><%= f.datetime_field :end_at %></p>
-  <p><%= f.submit (@task.new_record? ? I18n.t(:'button.create') : I18n.t(:'button.edit')) %></p>
+  <p><%= f.label I18n.t(:'task.status') %></p>
+  <p><%= f.select :task_status, Task.task_statuses %></p>
+  <p><%= f.submit @task.new_record? ? I18n.t(:'button.create') : I18n.t(:'button.edit') %></p>
 <% end %>

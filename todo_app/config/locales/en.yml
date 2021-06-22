@@ -5,11 +5,13 @@ en:
   button:
     edit: "Edit"
     create: "Create"
+    search: "Search"
   task:
     title: "Task Name"
     description: "Description"
     end_at: "End Date"
     created_at: "Created"
+    status: "status"
   link:
     edit: "Edit"
     delete: "Delete"

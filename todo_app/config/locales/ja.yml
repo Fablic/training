@@ -5,9 +5,13 @@ ja:
   button:
     edit: "編集"
     create: "新規作成"
+    search: "検索"
   task:
     title: "タスク名"
     description: "説明"
+    end_at: "期限"
+    created_at: "作成日"
+    status: "ステータス"
   link:
     edit: "編集する"
     delete: "削除する"

@@ -9,7 +9,6 @@ class Task < ApplicationRecord
     result_tasks = ::Task.all
     result_tasks = result_tasks.where('title like ?', keyword + '%') unless keyword.nil?
     result_tasks = result_tasks.where({ task_status: status }) unless status.nil?
-    result_tasks = result_tasks.order(sort_query)
-    result_tasks
+    result_tasks.order(sort_query)
   end
 end
