@@ -1,13 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe 'Tasks', type: :sytem do
-  let!(:old_task) { create(:task, created_at: Faker::Time.backward, due_date: Faker::Time.backward) }
+  let!(:old_task) { create(:task, created_at: Faker::Time.backward, due_date: Faker::Time.backward, status: :completed) }
   let(:title) { Faker::Alphanumeric.alphanumeric(number: 10) }
   let(:desc) { Faker::Alphanumeric.alphanumeric(number: 10) }
+  let(:completed_status) { Task.human_attribute_name("status.completed") }
   let(:due_date) { Faker::Time.forward }
   let(:ja_title) { Task.human_attribute_name(:title) }
   let(:ja_desc) { Task.human_attribute_name(:description) }
   let(:ja_due_date) { Task.human_attribute_name(:due_date) }
+  let(:ja_status) { Task.human_attribute_name(:status) }
 
   describe '#index' do
     let!(:new_task) { create(:task, created_at: Faker::Time.forward, due_date: Faker::Time.forward) }
@@ -29,6 +31,41 @@ RSpec.describe 'Tasks', type: :sytem do
       end
     end
 
+    context 'keyword search' do
+      it 'success and find old task' do
+        visit root_path
+
+        fill_in 'title', with: old_task.title
+        click_button I18n.t('common.action.search')
+
+        expect(page).to have_content(old_task.title)
+        expect(page).to_not have_content(new_task.title)
+      end
+    end
+
+    context 'nil search' do
+      it 'success and find new and old tasks' do
+        visit root_path
+
+        click_button I18n.t('common.action.search')
+
+        expect(page).to have_content(old_task.title)
+        expect(page).to have_content(new_task.title)
+      end
+    end
+
+    context 'status search' do
+      it 'success and find new and old tasks' do
+        visit root_path
+
+        check completed_status
+        click_button I18n.t('common.action.search')
+
+        expect(page).to have_content(old_task.title)
+        expect(page).to_not have_content(new_task.title)
+      end
+    end
+
     context 'click created_at link' do
       it 'order created_at DESC' do
         visit root_path
@@ -38,7 +75,7 @@ RSpec.describe 'Tasks', type: :sytem do
       end
     end
 
-    context 'send invalid paramter' do
+    context 'send invalid parameter' do
       it 'order created_at ASC' do
         visit root_path(order: 'hoge')
 
@@ -99,6 +136,7 @@ RSpec.describe 'Tasks', type: :sytem do
       fill_in ja_title, with: title
       fill_in ja_desc, with: desc
       fill_in ja_due_date, with: I18n.l(due_date)
+      choose completed_status
 
       expect do
         click_button I18n.t('common.action.update')
@@ -110,6 +148,7 @@ RSpec.describe 'Tasks', type: :sytem do
       expect(page).to have_content(title)
       expect(page).to have_content(desc)
       expect(page).to have_content(I18n.l(due_date))
+      expect(page).to have_content(completed_status)
     end
   end
 
