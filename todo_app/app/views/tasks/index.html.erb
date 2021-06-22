@@ -11,7 +11,7 @@
       </th>
     </tr>
     <% @tasks.each do |task| %>
-    　　<tr>
+      <tr>
         <td><%= link_to task.id, task_path(task) %></td>
         <td><%= task.title %></td>
         <td><%= task.description %></td>
@@ -21,6 +21,7 @@
       </tr>
     <% end %>
   </table>
+  <%= paginate @tasks %>
 <% else %>
   <%= I18n.t(:'message.task_not_registered') %>
 <% end %>
