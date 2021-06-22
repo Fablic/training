@@ -1,0 +1,2 @@
+class TaskLink < ApplicationRecord
+end
