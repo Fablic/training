@@ -1,0 +1,2 @@
+class MasterTaskStatus < ApplicationRecord
+end
