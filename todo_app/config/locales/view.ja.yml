@@ -1,20 +1,21 @@
 ja:
   common:
     action:
-      create: '新規作成'
-      update: '更新'
-      destroy: '削除'
+      create: 新規作成
+      update: 更新
+      destroy: 削除
+      search: 検索
     error:
       not_found: お探しのページが見つかりません
       internal_server_error: 申し訳ございません、システムエラーが発生しております
   tasks:
     common:
-      not_found: 'タスクが見つかりません'
+      not_found: タスクが見つかりません
     flash:
       success:
-        create: '登録成功'
-        update: '更新成功'
-        destroy: '削除成功'
+        create: 登録成功
+        update: 更新成功
+        destroy: 削除成功
   date:
     formats:
       default: "%Y/%m/%d"

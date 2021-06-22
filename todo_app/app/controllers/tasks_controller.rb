@@ -5,7 +5,7 @@ class TasksController < ApplicationController
 
   def index
     @sort = request_sort_params
-    @tasks = Task.search(@search[:title],  @search[:status_ids]).sort_tasks(@sort)
+    @tasks = Task.search(@search[:title], @search[:status_ids]).sort_tasks(@sort)
   end
 
   def new
@@ -45,7 +45,7 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:title, :description, :due_date)
+    params.require(:task).permit(:title, :description, :due_date, :status)
   end
 
   def find_task

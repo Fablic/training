@@ -3,7 +3,7 @@
   <%= f.collection_check_boxes(:status_ids, Task.statuses, :first, :first, checked: @search[:status_ids]) do |s| %>
     <%= s.label { s.check_box + Task.human_attribute_name("status.#{s.text}")} %>
   <% end %>
-  <%= f.submit '検索' %>
+  <%= f.submit I18n.t('common.action.search') %>
 <% end %>
 <%= link_to I18n.t('common.action.create'), new_task_path %>
 
@@ -13,6 +13,7 @@
       <th><%= Task.human_attribute_name(:id) %></th>
       <th><%= Task.human_attribute_name(:title) %></th>
       <th><%= Task.human_attribute_name(:description) %></th>
+      <th><%= Task.human_attribute_name(:status) %></th>
       <th><%= link_to Task.human_attribute_name(:created_at), root_path(search_parmas: @search, sort_key: 'created_at', sort_val: display_sort_val(@sort[:created_at])) %></th>
       <th><%= link_to Task.human_attribute_name(:due_date), root_path(search_parmas: @search, sort_key: 'due_date', sort_val: display_sort_val(@sort[:due_date])) %></th>
       <th></th>
@@ -22,6 +23,7 @@
         <td><%= link_to task.id, task_path(task) %></td>
         <td><%= task.title %></td>
         <td><%= task.description %></td>
+        <td><%=  Task.human_attribute_name("status.#{task.status}") %>
         <td><%= I18n.l(task.created_at) %>
         <td>
           <% if task.due_date.present? %>

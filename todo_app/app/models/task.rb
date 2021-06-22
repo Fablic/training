@@ -12,7 +12,7 @@ class Task < ApplicationRecord
     end
   end
   scope :search, -> (title, statuses) do
-    status_ids = statuses&.reject(&:blank?)
+    status_ids = statuses.blank? ? nil : statuses&.reject(&:blank?)
     return all if title.blank? && status_ids.blank?
 
     where_titles = title.blank? ? all : where("title LIKE ?", title)

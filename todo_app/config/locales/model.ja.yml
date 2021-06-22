@@ -8,6 +8,7 @@ ja:
           title: タイトル
           description: 説明
           due_date: 終了期限
+          status: ステータス
         task/status:
           waiting: 未着手
           work_in_progress: 対応中
