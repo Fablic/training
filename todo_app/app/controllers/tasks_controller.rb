@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
 
-  before_action :find_task, only: [:edit, :update, :show, :destroy]
+  before_action :find_task, only: %i(edit update show destroy)
 
   def index
     @request_order = params[:order]&.to_sym.eql?(:desc) ? :desc : :asc
@@ -17,6 +17,7 @@ class TasksController < ApplicationController
       flash[:success] = I18n.t('tasks.flash.success.create')
       redirect_to root_path
     else
+      flash[:error] = I18n.t('tasks.flash.error.create')
       render :new
     end
   end
@@ -27,6 +28,7 @@ class TasksController < ApplicationController
       flash[:success] = I18n.t('tasks.flash.success.update')
       redirect_to task_path(@task)
     else
+      flash[:error] = I18n.t('tasks.flash.error.update')
       render :edit
     end
   end
