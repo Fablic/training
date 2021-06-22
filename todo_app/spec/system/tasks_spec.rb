@@ -35,23 +35,47 @@ RSpec.describe 'Tasks', type: :system do
     it 'タスク一覧の終了期限を昇順に変更できる' do
       visit root_path(end_at: 'asc')
 
-      expect(all('tbody tr')[1].text).to match task2.title
-      expect(all('tbody tr')[2].text).to match task1.title
+      expect(all('tbody tr')[1].text).to match 'タイトル2'
+      expect(all('tbody tr')[2].text).to match 'タイトル1'
     end
 
     it 'タスク一覧の終了期限を降順に変更できる' do
       visit root_path(end_at: 'desc')
 
-      expect(all('tbody tr')[1].text).to match task1.title
-      expect(all('tbody tr')[2].text).to match task2.title
+      expect(all('tbody tr')[1].text).to match 'タイトル1'
+      expect(all('tbody tr')[2].text).to match 'タイトル2'
     end
   end
+
   describe 'タスク検索' do
+    let!(:doing_task) { create(:task, title: 'Railsを勉強する', task_status: :doing) }
+    let!(:done_task) { create(:task, title: '英語を勉強する', task_status: :done) }
+
     context '正常時' do
-      visit search_path
+      it 'keyword検索ができる' do
+        visit search_path(keyword: 'タイトル1')
+
+        expect(all('tbody tr')[1].text).to match 'タイトル1'
+      end
+
+      it 'status検索ができる(doing)' do
+        visit search_path(task_status: :doing)
+
+        expect(all('tbody tr')[1].text).to match 'Railsを勉強する'
+      end
+
+      it 'status検索ができる(done)' do
+        visit search_path(task_status: :done)
+
+        expect(all('tbody tr')[1].text).to match '英語を勉強する'
+      end
+
+      it 'keyword, status検索ができる' do
+        visit search_path(keyword: '英語を勉強する', task_status: :done)
+
+        expect(all('tbody tr')[1].text).to match '英語を勉強する'
+      end
     end
-
-
   end
 
   describe 'タスク詳細' do

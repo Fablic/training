@@ -8,44 +8,90 @@ RSpec.describe Task, type: :model do
     let(:params) { { title: title, description: description, task_status: task_status } }
     let(:random_str) { Faker::Alphanumeric.alpha(number: 10) }
 
-    context 'valid' do
-      let(:title) { random_str }
-      let(:description) { random_str }
-      let(:task_status) { :todo }
+    describe 'valid' do
+      context 'valid all property' do
+        let(:title) { random_str }
+        let(:description) { random_str }
+        let(:task_status) { :todo }
 
-      it { is_expected.to be_valid }
+        it { is_expected.to be_valid }
+      end
+
+      context 'valid description' do
+        let(:title) { random_str }
+        let(:description) { nil }
+        let(:task_status) { :todo }
+
+        it { is_expected.to be_valid }
+      end
     end
 
-    context 'valid description' do
-      let(:title) { random_str }
-      let(:description) { nil }
-      let(:task_status) { :todo }
+    describe 'invalid' do
+      context 'invalid title' do
+        let(:title) { nil }
+        let(:description) { random_str }
+        let(:task_status) { :todo }
 
-      it { is_expected.to be_valid }
+        it { is_expected.to_not be_valid }
+      end
+
+      context 'invalid title max value' do
+        let(:title) { Faker::Alphanumeric.alpha(number: 256) }
+        let(:description) { random_str }
+        let(:task_status) { :todo }
+
+        it { is_expected.to_not be_valid }
+      end
+
+      context 'invalid description max value' do
+        let(:title) { random_str }
+        let(:description) { Faker::Alphanumeric.alpha(number: 5001) }
+        let(:task_status) { :todo }
+
+        it { is_expected.to_not be_valid }
+      end
     end
 
-    context 'invalid title' do
-      let(:title) { nil }
-      let(:description) { random_str }
-      let(:task_status) { :todo }
+    describe 'search' do
+      let!(:todo_task) { create(:task, title: 'Javaを勉強する', task_status: :todo) }
+      let!(:doing_task) { create(:past_task, title: '英語を1時間勉強する', task_status: :doing) }
+      let!(:done_task) { create(:task, title: '英語を勉強する', task_status: :done) }
 
-      it { is_expected.to_not be_valid }
-    end
+      context 'search keyword' do
+        result = Task.search('Java', nil, nil)
 
-    context 'invalid title max value' do
-      let(:title) { Faker::Alphanumeric.alpha(number: 256) }
-      let(:description) { random_str }
-      let(:task_status) { :todo }
+        it { expect(result.length).to match 1 }
+        it { expect(result[0].title).to match 'Javaを勉強する' }
+      end
 
-      it { is_expected.to_not be_valid }
-    end
+      context 'search status' do
+        result = Task.search(nil, :todo, nil)
 
-    context 'invalid description max value' do
-      let(:title) { random_str }
-      let(:description) { Faker::Alphanumeric.alpha(number: 5001) }
-      let(:task_status) { :todo }
+        it { expect(result.length).to match 1 }
+        it { expect(result[0].title).to match 'Javaを勉強する' }
+      end
 
-      it { is_expected.to_not be_valid }
+      context 'search keyword & status' do
+        result = Task.search('英語', :doing, nil)
+
+        it { expect(result.length).to match 1 }
+        it { expect(result[0].title).to match '英語を1時間勉強する' }
+      end
+
+      context 'search keyword & status & sort' do
+        result = Task.search('英語', nil, { end_at: 'asc' })
+
+        it { expect(result.length).to match 2 }
+        it { expect(result[0].title).to match '英語を1時間勉強する' }
+        it { expect(result[1].title).to match '英語を勉強する' }
+      end
+
+      context 'search none' do
+        result = Task.search(nil, nil, nil)
+
+        it { expect(result.length).to match 3 }
+        it { expect(result[0].title).to match 'Javaを勉強する' }
+      end
     end
   end
 end
