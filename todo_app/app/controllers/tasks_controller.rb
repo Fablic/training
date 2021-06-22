@@ -61,7 +61,7 @@ class TasksController < ApplicationController
 
   def create_search_query
     keyword = params[:keyword].nil? ? nil : params[:keyword]
-    status = params[:status].nil? ? :todo : params[:status]
+    status = params[:task_status].nil? ? nil : params[:task_status]
 
     [keyword, status]
   end

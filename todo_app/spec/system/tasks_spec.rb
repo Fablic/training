@@ -46,6 +46,13 @@ RSpec.describe 'Tasks', type: :system do
       expect(all('tbody tr')[2].text).to match task2.title
     end
   end
+  describe 'タスク検索' do
+    context '正常時' do
+      visit search_path
+    end
+
+
+  end
 
   describe 'タスク詳細' do
     context '正常時' do
