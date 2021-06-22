@@ -1,0 +1,23 @@
+<h1>Login Page</h1>
+<section>
+  <% flash.each do |name, msg| %>
+    <div><%=msg%></div>
+  <% end %>
+</section>
+<section>
+  <%= form_with(model: @user) do |form| %>
+    <div class="field">
+      <div>
+        <%= form.label :email %>
+        <%= form.text_field :email %>
+      </div>
+      <div>
+        <%= form.label :password %>
+        <%= form.text_field :password %>
+      </div>
+    </div>
+    <div class="actions">
+      <%= form.submit I18n.t('view.log-in')%>
+    </div>
+  <% end %>
+</section>

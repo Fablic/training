@@ -17,6 +17,8 @@ ja:
     show: 詳細
     delete: 削除
     back-to-index: 一覧に戻る
+    log-in: ログイン
+    log-out: ログアウト
   notice:
     task:
       insert: 
@@ -26,3 +28,6 @@ ja:
       delete:
         success: タスクの削除に成功しました
         fail: タスクの削除に失敗しました
+    session:
+      authorize:
+        fail: EmailかPWのどちらか、もしくは両方が正しくありません
