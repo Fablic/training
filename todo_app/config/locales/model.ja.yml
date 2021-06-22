@@ -11,7 +11,7 @@ ja:
           status: ステータス
         task/status:
           waiting: 未着手
-          work_in_progress: 対応中
+          work_in_progress: 着手中
           completed: 完了
   attributes:
       created_at: 作成日
