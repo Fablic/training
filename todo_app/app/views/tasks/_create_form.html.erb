@@ -6,6 +6,6 @@
   <p><%= f.label I18n.t(:'task.end_at') %></p>
   <p><%= f.datetime_field :end_at %></p>
   <p><%= f.label I18n.t(:'task.status') %></p>
-  <p><%= f.select :task_status, Task.task_statuses.keys %></p>
+  <p><%= f.select :task_status, Task.task_statuses.keys, {}, { class: 'form-select' } %></p>
   <p><%= f.submit @task.new_record? ? I18n.t(:'button.create') : I18n.t(:'button.edit') %></p>
 <% end %>
