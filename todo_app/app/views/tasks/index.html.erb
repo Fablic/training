@@ -1,3 +1,10 @@
+<%= form_with(url: root_path, method: :get) do |f| %>
+  <%= f.text_field :title, value: @search[:title] %>
+  <%= f.collection_check_boxes(:status_ids, Task.statuses, :first, :first, checked: @search[:status_ids]) do |s| %>
+    <%= s.label { s.check_box + Task.human_attribute_name("status.#{s.text}")} %>
+  <% end %>
+  <%= f.submit '検索' %>
+<% end %>
 <%= link_to I18n.t('common.action.create'), new_task_path %>
 
 <% if @tasks.present? %>
@@ -6,8 +13,8 @@
       <th><%= Task.human_attribute_name(:id) %></th>
       <th><%= Task.human_attribute_name(:title) %></th>
       <th><%= Task.human_attribute_name(:description) %></th>
-      <th><%= link_to Task.human_attribute_name(:created_at), root_path(sort_key: 'created_at', sort_val: display_sort_val(@sort[:created_at])) %></th>
-      <th><%= link_to Task.human_attribute_name(:due_date), root_path(sort_key: 'due_date', sort_val: display_sort_val(@sort[:due_date])) %></th>
+      <th><%= link_to Task.human_attribute_name(:created_at), root_path(search_parmas: @search, sort_key: 'created_at', sort_val: display_sort_val(@sort[:created_at])) %></th>
+      <th><%= link_to Task.human_attribute_name(:due_date), root_path(search_parmas: @search, sort_key: 'due_date', sort_val: display_sort_val(@sort[:due_date])) %></th>
       <th></th>
     </tr>
     <% @tasks.each do |task| %>

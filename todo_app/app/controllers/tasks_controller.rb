@@ -1,10 +1,11 @@
 class TasksController < ApplicationController
 
   before_action :find_task, only: [:edit, :update, :show, :destroy]
+  before_action :set_search_params, only: :index
 
   def index
     @sort = request_sort_params
-    @tasks = Task.sort_tasks(@sort)
+    @tasks = Task.search(@search[:title],  @search[:status_ids]).sort_tasks(@sort)
   end
 
   def new
@@ -65,5 +66,14 @@ class TasksController < ApplicationController
 
   def set_sort_val
     params[:sort_val]&.to_sym.eql?(:desc) ? :desc : :asc
+  end
+
+  def set_search_params
+    title = params[:search_parmas].blank? ? params[:title] : params[:search_parmas][:title]
+    status_ids = params[:search_parmas].blank? ? params[:status_ids] : params[:search_parmas][:status_ids]
+    @search = {
+      title: title,
+      status_ids: status_ids
+    }
   end
 end
