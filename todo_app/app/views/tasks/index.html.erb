@@ -5,6 +5,7 @@
       <th>ID</th>
       <th><%= I18n.t(:'task.title') %></th>
       <th><%= I18n.t(:'task.description') %></th>
+      <th><%= I18n.t(:'task.status') %></th>
       <th>
         <%= I18n.t(:'task.end_at') %> <%= link_to '👆', root_path(end_at: 'desc') %> <%= link_to '👇', root_path(end_at: 'asc') %>
       </th>
@@ -14,6 +15,7 @@
         <td><%= link_to task.id, task_path(task) %></td>
         <td><%= task.title %></td>
         <td><%= task.description %></td>
+        <td><%= task.task_status %></td>
         <td><%= task.end_at ? I18n.l(task.end_at) : nil %></td>
         <td><%= link_to I18n.t(:'link.delete'), task_path(task), method: :delete %></td>
       </tr>
