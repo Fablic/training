@@ -35,7 +35,7 @@ jobs:
         env:
           RAILS_ENV: test
 
-      - name: install webpacker
+      - name: prepare webpacker
         run: |
           bundle exec rails webpacker:yarn_install
           bundle exec rails assets:clobber
