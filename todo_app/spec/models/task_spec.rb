@@ -54,7 +54,7 @@ RSpec.describe Task, type: :model do
     end
     context 'title is nil' do
       it 'find record' do
-        expect(Task.title_search(nil).to eq(3)
+        expect(Task.title_search(nil).count).to eq(3)
       end
     end
   end
