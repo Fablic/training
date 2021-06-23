@@ -5,13 +5,11 @@
   <p><%= f.text_area :description %></p>
   <p><%= f.label :due_date %></p>
   <p><%= f.datetime_field :due_date %></p>
-  <% if @task.persisted? %>
-    <p><%= f.label :status %></p>
-    <p>
-      <%= f.collection_radio_buttons(:status, Task.statuses, :first, :first, checked: @task.status) do |s| %>
-        <%= s.label { s.radio_button + Task.human_attribute_name("status.#{s.text}")} %>
-      <% end %>
-    </p>
-  <% end %>
+  <p><%= f.label :status %></p>
+  <p>
+    <%= f.collection_radio_buttons(:status, Task.statuses, :first, :first, checked: @task.status) do |s| %>
+      <%= s.label { s.radio_button + Task.human_attribute_name("status.#{s.text}")} %>
+    <% end %>
+  </p>
   <p><%= f.submit (@task.new_record? ? I18n.t('common.action.create') : I18n.t('common.action.update')) %></p>
 <% end %>
