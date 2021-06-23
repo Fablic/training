@@ -5,7 +5,7 @@ class TasksController < ApplicationController
 
   def index
     @sort = request_sort_params
-    @tasks = Task.title_search(@search[:title]).status_search(@search[:status_ids]).sort_tasks(@sort)
+    @tasks = Task.page(params[:page]).title_search(@search[:title]).status_search(@search[:status_ids]).sort_tasks(@sort)
   end
 
   def new
