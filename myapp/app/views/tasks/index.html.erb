@@ -17,6 +17,7 @@
 <table class="table table-striped table-hover">
   <thead class="table-dark">
   <tr>
+    <th>#</th>
     <th>Name</th>
     <th>Desc</th>
     <th>Status</th>
@@ -32,8 +33,9 @@
   </thead>
 
   <tbody>
-  <% @tasks.each do |task| %>
+  <% @tasks.each_with_index do |task, idx| %>
     <tr>
+      <td><%= idx + 1 %></td>
       <td class="task-name"><%= task.name %></td>
       <td><%= task.desc %></td>
       <td><%= Task.statuses.key(task.status) %></td>

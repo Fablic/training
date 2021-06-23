@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-require 'pp'
 
 class TasksController < ApplicationController
   before_action :set_task, only: %i[show edit update destroy]
@@ -8,7 +7,7 @@ class TasksController < ApplicationController
   def index
     @q = Task.ransack(params[:q])
     @tasks = @q.result
-    @tasks = @tasks.order("created_at desc")
+    @tasks = @tasks.order('created_at desc')
   end
 
   # GET /tasks/1 or /tasks/1.json
