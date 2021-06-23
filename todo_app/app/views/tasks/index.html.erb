@@ -26,9 +26,7 @@
         <td><%=  Task.human_attribute_name("status.#{task.status}") %>
         <td><%= I18n.l(task.created_at) %>
         <td>
-          <% if task.due_date.present? %>
-            <%= I18n.l(task.due_date) %>
-          <% end %>
+          <%= I18n.l(task.due_date, default: '') %>
         </td>
         <td><%= link_to I18n.t('common.action.destroy'), task_path(task), method: :delete %></td>
       </tr>

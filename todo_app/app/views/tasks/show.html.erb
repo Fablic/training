@@ -13,6 +13,6 @@
     <td><%= @task.title %></td>
     <td><%= @task.description %></td>
     <td><%= Task.human_attribute_name("status.#{@task.status}") %></td>
-    <td><%= I18n.l(@task.due_date) %></td>
+    <td><%= I18n.l(@task.due_date, default: '') %></td>
   </tr>
 </table>
