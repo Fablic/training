@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'pp'
 
 class TasksController < ApplicationController
   before_action :set_task, only: %i[show edit update destroy]
@@ -6,7 +7,17 @@ class TasksController < ApplicationController
   # GET /tasks or /tasks.json
   def index
     @sort = sort_params
+    @name, @status = search_params
+    pp @name, @status
+    @tasks = Task.search(@name, @status)
     @tasks = Task.sort_tasks(@sort)
+  end
+
+  def search
+    @sort = sort_params
+    @name, @status = search_params
+    @tasks = Task.search(@name, @status).sort_tasks(@sort)
+    render "index"
   end
 
   # GET /tasks/1 or /tasks/1.json
@@ -70,7 +81,8 @@ class TasksController < ApplicationController
     if check_sort_key && params[:sort_val].present?
       { params[:sort_key]&.to_sym => set_sort_val }
     else
-      { created_at: :asc, due_date: :asc }
+      # by default sorting with created_at in desc order
+      { created_at: :desc, due_date: :asc }
     end
   end
 
@@ -81,4 +93,11 @@ class TasksController < ApplicationController
   def set_sort_val
     params[:sort_val]&.to_sym.eql?(:desc) ? :desc : :asc
   end
+
+  def search_params
+    name = params[:name].nil? ? nil : params[:name]
+    status = params[:status].nil? ? nil : params[:status]
+    [name, status]
+  end
+
 end

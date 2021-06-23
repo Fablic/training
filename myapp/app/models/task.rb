@@ -11,11 +11,17 @@ class Task < ApplicationRecord
   validates :priority, presence: true
   validates :due_date, presence: true
 
-  scope :sort_tasks, ->(request_sort) do
+  def self.sort_tasks (request_sort)
     if request_sort&.has_key?(:created_at) || request_sort&.has_key?(:due_date)
       order(request_sort)
     else
       order(:created_at)
     end
+  end
+
+  def self.search(name, status)
+    result_tasks = ::Task.all
+    result_tasks = result_tasks.where({ name: name }) unless name.nil?
+    result_tasks.where({ status: status }) unless status.nil?
   end
 end

@@ -19,20 +19,6 @@ RSpec.describe 'Tasks (System)', type: :system do
     expect(page).to have_text('Task was successfully created.')
   end
 
-  it 'Sort using created_at asc' do
-    expected_order = %w[task1 task2]
-    visit tasks_url
-    visit root_path(sort_key: 'created_at', sort_val: 'asc')
-    expect(page.all('.task-name').map(&:text)).to eq expected_order
-  end
-
-  it 'Sort using created_at desc' do
-    expected_order = %w[task2 task1]
-    visit tasks_url
-    visit root_path(sort_key: 'created_at', sort_val: 'desc')
-    expect(page.all('.task-name').map(&:text)).to eq expected_order
-  end
-
   it 'Sort using due_date asc' do
     expected_order = %w[task1 task2]
     visit tasks_url
