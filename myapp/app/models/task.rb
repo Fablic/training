@@ -18,10 +18,4 @@ class Task < ApplicationRecord
       order(:created_at)
     end
   end
-
-  def self.search(name, status)
-    result_tasks = ::Task.all
-    result_tasks = result_tasks.where({ name: name }) unless name.nil?
-    result_tasks.where({ status: status }) unless status.nil?
-  end
 end
