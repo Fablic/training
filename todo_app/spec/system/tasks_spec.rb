@@ -27,53 +27,87 @@ RSpec.describe 'Tasks', type: :system do
       example 'タスク一覧の順序が作成日降順' do
         visit tasks_path
 
-        expect(all('tbody tr')[1].text).to match 'タイトル1'
-        expect(all('tbody tr')[2].text).to match 'タイトル2'
+        expect(all(:xpath, '/html/body/div[2]/div[2]/div[1]/div/a')[0].text).to match 'タイトル1'
+        expect(all(:xpath, '/html/body/div[2]/div[2]/div[2]/div/a')[0].text).to match 'タイトル2'
       end
     end
 
     it 'タスク一覧の終了期限を昇順に変更できる' do
       visit root_path(end_at: 'asc')
 
-      expect(all('tbody tr')[1].text).to match 'タイトル2'
-      expect(all('tbody tr')[2].text).to match 'タイトル1'
+      expect(all(:xpath, '/html/body/div[2]/div[2]/div[1]/div/a')[0].text).to match 'タイトル2'
+      expect(all(:xpath, '/html/body/div[2]/div[2]/div[2]/div/a')[0].text).to match 'タイトル1'
     end
 
     it 'タスク一覧の終了期限を降順に変更できる' do
       visit root_path(end_at: 'desc')
 
-      expect(all('tbody tr')[1].text).to match 'タイトル1'
-      expect(all('tbody tr')[2].text).to match 'タイトル2'
+      expect(all(:xpath, '/html/body/div[2]/div[2]/div[1]/div/a')[0].text).to match 'タイトル1'
+      expect(all(:xpath, '/html/body/div[2]/div[2]/div[2]/div/a')[0].text).to match 'タイトル2'
     end
   end
 
   describe 'タスク検索' do
-    let!(:doing_task) { create(:task, title: 'Railsを勉強する', task_status: :doing) }
-    let!(:done_task) { create(:task, title: '英語を勉強する', task_status: :done) }
-
     context '正常時' do
-      it 'keyword検索ができる' do
-        visit search_path(keyword: 'タイトル1')
+      let!(:doing_task) { create(:task, title: 'Railsを勉強する', task_status: :doing) }
+      let!(:done_task) { create(:task, title: '英語を勉強する', task_status: :done) }
 
-        expect(all('tbody tr')[1].text).to match 'タイトル1'
+      it 'keyword検索ができる' do
+        visit root_path(keyword: 'タイトル1')
+
+        expect(all(:xpath, '/html/body/div[2]/div[2]/div[1]/div/a')[0].text).to match 'タイトル1'
       end
 
       it 'status検索ができる(doing)' do
-        visit search_path(task_status: :doing)
+        visit root_path(task_status: :doing)
 
-        expect(all('tbody tr')[1].text).to match 'Railsを勉強する'
+        expect(all(:xpath, '/html/body/div[2]/div[2]/div[1]/div/a')[0].text).to match 'Railsを勉強する'
       end
 
       it 'status検索ができる(done)' do
-        visit search_path(task_status: :done)
+        visit root_path(task_status: :done)
 
-        expect(all('tbody tr')[1].text).to match '英語を勉強する'
+        expect(all(:xpath, '/html/body/div[2]/div[2]/div[1]/div/a')[0].text).to match '英語を勉強する'
       end
 
       it 'keyword, status検索ができる' do
-        visit search_path(keyword: '英語を勉強する', task_status: :done)
+        visit root_path(keyword: '英語を勉強する', task_status: :done)
 
-        expect(all('tbody tr')[1].text).to match '英語を勉強する'
+        expect(all(:xpath, '/html/body/div[2]/div[2]/div[1]/div/a')[0].text).to match '英語を勉強する'
+      end
+    end
+
+    context '連続して検索条件を変更する' do
+      let!(:doing_task) { create(:task, title: 'タスクの1番目', task_status: :todo) }
+      let!(:doing_past_task) { create(:task, title: 'タスクの2番目', task_status: :todo, end_at: Time.current.yesterday.change(sec: 0, usec: 0)) }
+
+      it 'keyword, statusで検索' do
+        visit root_path(keyword: 'タイトル1')
+
+        choose('todo')
+        click_button 'Search'
+
+        expect(all(:xpath, '/html/body/div[2]/div[2]/div').length).to match 1
+      end
+
+      it 'keyword, status, end_at: ascで検索' do
+        visit root_path(keyword: 'タスク')
+
+        choose('todo')
+        click_button 'Search'
+        click_link('👇')
+
+        expect(all(:xpath, '/html/body/div[2]/div[2]/div').length).to match 2
+      end
+
+      it 'keyword, status, end_at: descで検索' do
+        visit root_path(keyword: 'タスク')
+
+        choose('todo')
+        click_button 'Search'
+        click_link('👆')
+
+        expect(all(:xpath, '/html/body/div[2]/div[2]/div').length).to match 2
       end
     end
   end
@@ -115,7 +149,7 @@ RSpec.describe 'Tasks', type: :system do
       example '登録に失敗しましたが表示されること' do
         visit edit_task_path(task1)
         fill_in 'task_title', with: Faker::Alphanumeric.alpha(number: 256)
-        click_button I18n.t(:'button.edit')
+        click_button 'Edit'
         expect(page).to have_content 'Edited is failed'
       end
     end
@@ -124,7 +158,7 @@ RSpec.describe 'Tasks', type: :system do
       example '登録に失敗しましたが表示されること' do
         visit edit_task_path(task1)
         fill_in 'task_description', with: Faker::Alphanumeric.alpha(number: 5001)
-        click_button I18n.t(:'button.edit')
+        click_button 'Edit'
         expect(page).to have_content 'Edited is failed'
       end
     end
@@ -134,7 +168,7 @@ RSpec.describe 'Tasks', type: :system do
         visit edit_task_path(task1)
         fill_in 'task_title', with: ''
         fill_in 'task_description', with: ''
-        click_button I18n.t(:'button.edit')
+        click_button 'Edit'
         expect(page).to have_content 'Edited is failed'
       end
     end
@@ -144,9 +178,11 @@ RSpec.describe 'Tasks', type: :system do
     context '正常時' do
       example 'タスクを削除できる' do
         visit tasks_path
-        all('tbody tr td')[5].click_link 'Delete'
+
+        first(:link, 'Delete').click
         expect(page).to_not have_content 'タイトル1'
         expect(page).to have_content 'タイトル2'
+        expect(page).to have_content 'Task deleted is complete'
       end
     end
   end
