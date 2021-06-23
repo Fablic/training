@@ -38,7 +38,8 @@ jobs:
       - name: install webpacker
         run: |
           rm -rf bin/webpack*
-          bundle exec rails webpacker:install
+          bundle exec rails webpacker:yarn_install
+          bundle exec rails assets:clobber
           bundle exec rails webpacker:compile
         working-directory: todo_app
         env:
