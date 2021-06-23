@@ -5,8 +5,9 @@ class Task < ApplicationRecord
   enum priorities: { Low: 0, Medium: 1, High: 2 }
 
   validates :name, presence: true, length: { maximum: 30 }, allow_blank: false
-  validates :desc, presence: true, length: { maximum: 100 }
-  validates :priority, inclusion: { in: Task.priorities.values }
+  validates :desc, presence: true, length: { maximum: 100 }, allow_blank: false
+  validates :status, presence: true
+  validates :label, presence: true
+  validates :priority, presence: true
   # validates :due_date, presence: true
-  validates :status, inclusion: { in: Task.statuses.values }
 end
