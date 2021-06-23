@@ -1,9 +1,9 @@
 class TasksController < ApplicationController
 
   before_action :find_task, only: [:edit, :update, :show, :destroy]
-  before_action :set_search_params, only: :index
 
   def index
+    set_search_params
     @sort = request_sort_params
     @tasks = Task.title_search(@search[:title]).status_search(@search[:status_ids]).sort_tasks(@sort)
   end
