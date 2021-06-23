@@ -11,11 +11,13 @@ class Task < ApplicationRecord
       order(:created_at)
     end
   end
-  scope :search, -> (title, statuses) do
+  scope :title_search, -> (title) do
+    title.blank? ? all : where("title LIKE ?", title)
+  end
+  scope :status_search, -> (statuses) do
     status_ids = statuses.blank? ? nil : statuses&.reject(&:blank?)
-    return all if title.blank? && status_ids.blank?
+    return all if status_ids.blank?
 
-    where_titles = title.blank? ? all : where("title LIKE ?", title)
-    where_titles.where(status: (status_ids.blank? ? Task.statuses.values : statuses))
+    where(status: statuses)
   end
 end
