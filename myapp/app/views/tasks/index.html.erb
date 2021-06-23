@@ -7,7 +7,7 @@
         <%= f.search_field :name_cont, class: "form-control", placeholder: "Task Name" %>
       </div>
       <div class="field col-md-6 mb-3">
-        <%= f.select :status_eq, content_tag(:option, 'Select status', value: nil) + options_for_select(Task.statuses.map { |k, v| [k, v] }, @q.status_eq), {}, { class: 'form-control' } %>
+        <%= f.select :status_eq, content_tag(:option, 'Select status', value: "") + options_for_select(Task.statuses.map { |k, v| [k, v] }, @q.status_eq), {}, { class: 'form-control' } %>
       </div>
     </div>
     <%= f.submit "Search", class: 'btn btn-secondary float-end' %>
@@ -22,11 +22,10 @@
     <th>Status</th>
     <th>Label</th>
     <th>Priority</th>
-    <th>Created at
-      <%#= link_to '↑↓', root_path(sort_key: 'created_at', sort_val: display_sort_val(@sort[:created_at])) %>
-    </th>
-    <th>Due date
-      <%#= link_to '↑↓', root_path(sort_key: 'due_date', sort_val: display_sort_val(@sort[:due_date])) %>
+    <th>Created at</th>
+    <th><%= sort_link(@q, :due_date) do %>
+        Due date
+      <% end %>
     </th>
     <th colspan="3"></th>
   </tr>

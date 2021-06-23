@@ -6,18 +6,9 @@ class TasksController < ApplicationController
 
   # GET /tasks or /tasks.json
   def index
-    @sort = sort_params
-    @name, @status = search_params
-    pp @name, @status
-    @tasks = Task.search(@name, @status)
-    @tasks = Task.sort_tasks(@sort)
-  end
-
-  def search
-    @sort = sort_params
-    @name, @status = search_params
-    @tasks = Task.search(@name, @status).sort_tasks(@sort)
-    render "index"
+    @q = Task.ransack(params[:q])
+    @tasks = @q.result
+    @tasks = @tasks.order("created_at desc")
   end
 
   # GET /tasks/1 or /tasks/1.json
@@ -76,28 +67,4 @@ class TasksController < ApplicationController
   def task_params
     params.require(:task).permit(:name, :desc, :status, :label, :priority, :due_date)
   end
-
-  def sort_params
-    if check_sort_key && params[:sort_val].present?
-      { params[:sort_key]&.to_sym => set_sort_val }
-    else
-      # by default sorting with created_at in desc order
-      { created_at: :desc, due_date: :asc }
-    end
-  end
-
-  def check_sort_key
-    %i[due_date created_at].include?(params[:sort_key]&.to_sym)
-  end
-
-  def set_sort_val
-    params[:sort_val]&.to_sym.eql?(:desc) ? :desc : :asc
-  end
-
-  def search_params
-    name = params[:name].nil? ? nil : params[:name]
-    status = params[:status].nil? ? nil : params[:status]
-    [name, status]
-  end
-
 end

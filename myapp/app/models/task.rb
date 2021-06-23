@@ -10,12 +10,4 @@ class Task < ApplicationRecord
   validates :label, presence: true
   validates :priority, presence: true
   validates :due_date, presence: true
-
-  def self.sort_tasks (request_sort)
-    if request_sort&.has_key?(:created_at) || request_sort&.has_key?(:due_date)
-      order(request_sort)
-    else
-      order(:created_at)
-    end
-  end
 end
