@@ -11,9 +11,19 @@
   </head>
 
   <body>
-    <% flash.each do |message_type, message| %>
-      <%= message %>
-    <% end %>
-    <%= yield %>
+    <!-- TODO: Header -->
+    <div class="d-flex flex-row justify-content-between align-items-center shadow-sm px-5 py-3">
+      <h1>ToDo App</h1>
+      <div class="d-flex gap-2">
+        <%= link_to I18n.t(:'button.create'), new_task_path %>
+        <div>Login</div>
+      </div>
+    </div>
+    <div class="container mt-2">
+      <% flash.each do |message_type, message| %>
+        <%= message %>
+      <% end %>
+      <%= yield %>
+    </div>
   </body>
 </html>

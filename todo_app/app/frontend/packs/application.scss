@@ -1,9 +1,7 @@
 // inside app/frontend/packs/application.scss
 
-// Just a quick ugly style to see if our CSS works
-h1 {
-  text-decoration: underline;
-}
+$body-bg: rgba(249, 249, 249, 0.7);
+$link-decoration: none;
 
 // Import Bootstrap v5
 @import "~bootstrap/scss/bootstrap";

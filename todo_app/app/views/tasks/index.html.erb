@@ -1,28 +1,39 @@
-<%= link_to I18n.t(:'button.create'), new_task_path %>
+<div class="shadow-sm m-1 p-2 w-100 rounded bg-white mx-auto">
+  <div class="d-flex gap-2">
+    <p class="fw-bold">Sort by:</p>
+    <%= I18n.t(:'task.end_at') %>
+    <%= link_to '👆', root_path(end_at: 'desc', keyword: @keyword, task_status: @status) %>
+    <%= link_to '👇', root_path(end_at: 'asc', keyword: @keyword, task_status: @status) %>
+  </div>
+  <div class="d-flex gap-2">
+    <p class="fw-bold">Search by:</p>
+    <%= render 'search_form' %>
+  </div>
+</div>
+
 <% if @tasks.present? %>
-  <table>
-    <tr>
-      <th>ID</th>
-      <th><%= I18n.t(:'task.title') %></th>
-      <th><%= I18n.t(:'task.description') %></th>
-      <th><%= I18n.t(:'task.status') %></th>
-      <th>
-        <%= I18n.t(:'task.end_at') %> <%= link_to '👆', root_path(end_at: 'desc') %> <%= link_to '👇', root_path(end_at: 'asc') %>
-      </th>
-    </tr>
+  <div class="d-flex flex-wrap">
     <% @tasks.each do |task| %>
-      <tr>
-        <td><%= link_to task.id, task_path(task) %></td>
-        <td><%= task.title %></td>
-        <td><%= task.description %></td>
-        <td><%= task.task_status %></td>
-        <td><%= task.end_at ? I18n.l(task.end_at) : nil %></td>
-        <td><%= link_to I18n.t(:'link.delete'), task_path(task), method: :delete %></td>
-      </tr>
+      <div class="w-25">
+        <div class="card p-1 m-1">
+          <%= link_to task.title, task_path(task) %>
+          <%= task.description %>
+          <%= task.task_status %>
+          <%= task.end_at ? I18n.l(task.end_at) : nil %>
+
+          <div class="d-flex justify-content-between">
+            <%= link_to I18n.t(:'link.edit'), edit_task_path(task) %>
+            <%= link_to I18n.t(:'link.delete'), task_path(task), method: :delete %>
+          </div>
+        </div>
+      </div>
     <% end %>
-  </table>
-  <%= paginate @tasks %>
+  </div>
+  <div class="text-center mt-4">
+    <%= paginate @tasks, theme: 'bootstrap-5',
+                 pagination_class: "pagination-sm flex-wrap justify-content-center",
+                 nav_class: "d-inline-block" %>
+  </div>
 <% else %>
   <%= I18n.t(:'message.task_not_registered') %>
 <% end %>
-<%= render 'search_form' %>
