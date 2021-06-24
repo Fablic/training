@@ -104,12 +104,15 @@ RSpec.describe 'Tasks', type: :sytem do
   end
 
   describe '#new' do
+    let(:work_in_progress_status) { Task.human_attribute_name("status.work_in_progress") }
+
     it 'create task' do
       visit new_task_path
 
       fill_in ja_title, with: title
       fill_in ja_desc, with: desc
       fill_in ja_due_date, with: I18n.l(due_date)
+      choose work_in_progress_status
 
       expect do
         click_button I18n.t('common.action.create')
@@ -121,6 +124,7 @@ RSpec.describe 'Tasks', type: :sytem do
       expect(page).to have_content(title)
       expect(page).to have_content(desc)
       expect(page).to have_content(I18n.l(due_date))
+      expect(page).to have_content(work_in_progress_status)
     end
   end
 
