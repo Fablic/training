@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe 'Tasks', type: :sytem do
-  let!(:old_task) { create(:task, created_at: Faker::Time.backward, due_date: Faker::Time.backward, status: :completed) }
   let(:title) { Faker::Alphanumeric.alphanumeric(number: 10) }
   let(:desc) { Faker::Alphanumeric.alphanumeric(number: 10) }
   let(:completed_status) { Task.human_attribute_name("status.completed") }
@@ -12,6 +11,7 @@ RSpec.describe 'Tasks', type: :sytem do
   let(:ja_status) { Task.human_attribute_name(:status) }
 
   describe '#index' do
+    let!(:old_task) { create(:task, created_at: Faker::Time.backward, due_date: Faker::Time.backward, status: :completed) }
     let!(:new_task) { create(:task, created_at: Faker::Time.forward, due_date: Faker::Time.forward) }
 
     it 'vist tasks/index' do
@@ -35,7 +35,7 @@ RSpec.describe 'Tasks', type: :sytem do
       it 'success and find old task' do
         visit root_path
 
-        fill_in 'title', with: old_task.title
+        fill_in 'search_params_title', with: old_task.title
         click_button I18n.t('common.action.search')
 
         expect(page).to have_content(old_task.title)
@@ -125,13 +125,14 @@ RSpec.describe 'Tasks', type: :sytem do
   end
 
   describe '#edit' do
+    let(:task) { create(:task, created_at: Faker::Time.backward, due_date: Faker::Time.backward, status: :completed) }
     it 'update task' do
-      visit edit_task_path(old_task)
+      visit edit_task_path(task)
 
-      expect(current_path).to eq edit_task_path(old_task)
+      expect(current_path).to eq edit_task_path(task)
 
-      expect(page).to have_field ja_title, with: old_task.title
-      expect(page).to have_field ja_desc, with: old_task.description
+      expect(page).to have_field ja_title, with: task.title
+      expect(page).to have_field ja_desc, with: task.description
 
       fill_in ja_title, with: title
       fill_in ja_desc, with: desc
@@ -142,7 +143,7 @@ RSpec.describe 'Tasks', type: :sytem do
         click_button I18n.t('common.action.update')
       end.to change(Task, :count).by(0)
   
-      expect(current_path).to eq task_path(old_task)
+      expect(current_path).to eq task_path(task)
 
       expect(page).to have_content(I18n.t('tasks.flash.success.update'))
       expect(page).to have_content(title)
@@ -153,22 +154,24 @@ RSpec.describe 'Tasks', type: :sytem do
   end
 
   describe '#show' do
+    let(:task) { create(:task, created_at: Faker::Time.backward, due_date: Faker::Time.backward, status: :completed) }
     it 'visit show' do
-      visit task_path(old_task)
+      visit task_path(task)
 
-      expect(current_path).to eq task_path(old_task)
+      expect(current_path).to eq task_path(task)
 
-      expect(page).to have_content(old_task.title)
-      expect(page).to have_content(old_task.description)
-      expect(page).to have_content(I18n.l(old_task.due_date))
+      expect(page).to have_content(task.title)
+      expect(page).to have_content(task.description)
+      expect(page).to have_content(I18n.l(task.due_date))
     end
   end
 
   describe '#destroy' do
+    let(:task) { create(:task, created_at: Faker::Time.backward, due_date: Faker::Time.backward, status: :completed) }
     it 'delete record' do
-      visit task_path(old_task)
+      visit task_path(task)
 
-      expect(current_path).to eq task_path(old_task)
+      expect(current_path).to eq task_path(task)
 
       expect do
         click_link I18n.t('common.action.destroy')
@@ -177,9 +180,9 @@ RSpec.describe 'Tasks', type: :sytem do
       expect(current_path).to eq root_path
 
       expect(page).to have_content(I18n.t('tasks.flash.success.destroy'))
-      expect(page).to_not have_content(old_task.title)
-      expect(page).to_not have_content(old_task.description)
-      expect(page).to_not have_content(I18n.l(old_task.due_date))
+      expect(page).to_not have_content(task.title)
+      expect(page).to_not have_content(task.description)
+      expect(page).to_not have_content(I18n.l(task.due_date))
     end
   end
 end

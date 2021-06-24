@@ -1,13 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Task, type: :model do
-  let!(:old_task) { create(:task, due_date: Faker::Time.backward, status: :work_in_progress) }
-  let!(:new_task) { create(:task, due_date: Faker::Time.forward) }
-  let!(:completed_task) { create(:task, due_date: new_task.due_date.yesterday, status: :completed) }
-  let(:waiting) { [Task.statuses[:waiting]] }
-  let(:work_in_progress) { [Task.statuses[:work_in_progress]] }
-  let(:completed) { [Task.statuses[:completed]] }
-
 
   describe '#valid?' do
     subject { build(:task, params) }
@@ -35,55 +28,75 @@ RSpec.describe Task, type: :model do
     end
   end
 
-  describe '#scope sort_tasks' do 
-  context 'sort desc' do
-      it {expect(Task.sort_tasks({due_date: :desc}).first).to eq(new_task) }
+  describe '#scope sort_tasks' do
+    subject { Task.sort_tasks(sort) }
+    before {
+      create(:task, title: 'old', due_date: Faker::Time.backward)
+      create(:task, title: 'new', due_date: Faker::Time.forward)
+    }
+    context 'sort desc' do
+      let(:sort) { { due_date: :desc } }
+      it {expect(Task.sort_tasks(sort).first.title).to eq('new') }
     end
     context 'sort asc' do
-     it { expect(Task.sort_tasks({created_at: :asc}).first).to eq(old_task) }
+      let(:sort) { { created_at: :asc } }
+      it { expect(Task.sort_tasks({created_at: :asc}).first.title).to eq('old') }
     end
   end
 
   describe '#scope title_search' do
-    context 'title exists' do
-      subject { Task.title_search(new_task.title) }
+    subject { Task.title_search(search_title) }
+    before {
+      create(:task, title: 'hoge', due_date: Faker::Time.forward)
+      create(:task, title: 'fuga', due_date: Faker::Time.backward)
+    }
+    context 'when search registered title' do
+      let(:search_title) { 'hoge' }
       it 'find record' do
         expect(subject.count).to eq(1)
-        expect(Task.title_search(new_task.title).first).to eq(new_task)
+        expect(subject.first.title).to eq('hoge')
       end
     end
     context 'title is nil' do
-      it 'find record' do
-        expect(Task.title_search(nil).count).to eq(3)
+      let(:search_title) { nil }
+      it 'retunrs all records' do
+        expect(subject.count).to eq(2)
       end
     end
   end
 
   describe '#scope status_search' do
-    context 'waiting' do
-      subject { Task.status_search(waiting) }
-      it 'find new_task task' do
+    subject { Task.status_search(search_status) }
+    before {
+      create(:task, title: 'waiting', due_date: Faker::Time.backward, status: :waiting)
+      create(:task, title: 'work_in_progress', due_date: Faker::Time.backward, status: :work_in_progress)
+      create(:task, title: 'completed', due_date: Faker::Time.backward, status: :completed)
+    }
+    context 'when search waiting status' do
+      let(:search_status) { [Task.statuses[:waiting]] }
+      it 'find waiting task' do
         expect(subject.count).to eq(1)
-        expect(subject.first).to eq(new_task)
+        expect(subject.first.title).to eq('waiting')
       end
     end
-    context 'work_in_progress' do
-      subject { Task.status_search(work_in_progress) }
-      it 'find old task' do
+    context 'when search work_in_progress status' do
+      let(:search_status) { [Task.statuses[:work_in_progress]] }
+      it 'find work_in_progress task' do
         expect(subject.count).to eq(1)
-        expect(subject.first).to eq(old_task)
+        expect(subject.first.title).to eq('work_in_progress')
       end
     end
-    context 'completed' do
-      subject { Task.status_search(completed) }
-      it 'find completed_task task' do
+    context 'when search completed status' do
+      let(:search_status) { [Task.statuses[:completed]] }
+      it 'find completed task' do
         expect(subject.count).to eq(1)
-        expect(subject.first).to eq(completed_task)
+        expect(subject.first.title).to eq('completed')
       end
     end
-    context 'status is nil' do
-      it 'find record' do
-        expect(Task.status_search(nil).count) .to eq(3)
+    context 'when status is nil' do
+      let(:search_status) { nil }
+      it 'return all records' do
+        expect(subject.count) .to eq(3)
       end
     end
   end
