@@ -27,23 +27,23 @@ RSpec.describe 'Tasks', type: :system do
       example 'タスク一覧の順序が作成日降順' do
         visit tasks_path
 
-        expect(all(:xpath, '/html/body/div[2]/div[2]/div[1]/div/a')[0].text).to match 'タイトル1'
-        expect(all(:xpath, '/html/body/div[2]/div[2]/div[2]/div/a')[0].text).to match 'タイトル2'
+        expect(all("[data-testid='task-title']")[0].text).to match 'タイトル1'
+        expect(all("[data-testid='task-title']")[1].text).to match 'タイトル2'
       end
     end
 
     it 'タスク一覧の終了期限を昇順に変更できる' do
       visit root_path(end_at: 'asc')
 
-      expect(all(:xpath, '/html/body/div[2]/div[2]/div[1]/div/a')[0].text).to match 'タイトル2'
-      expect(all(:xpath, '/html/body/div[2]/div[2]/div[2]/div/a')[0].text).to match 'タイトル1'
+      expect(all("[data-testid='task-title']")[0].text).to match 'タイトル2'
+      expect(all("[data-testid='task-title']")[1].text).to match 'タイトル1'
     end
 
     it 'タスク一覧の終了期限を降順に変更できる' do
       visit root_path(end_at: 'desc')
 
-      expect(all(:xpath, '/html/body/div[2]/div[2]/div[1]/div/a')[0].text).to match 'タイトル1'
-      expect(all(:xpath, '/html/body/div[2]/div[2]/div[2]/div/a')[0].text).to match 'タイトル2'
+      expect(all("[data-testid='task-title']")[0].text).to match 'タイトル1'
+      expect(all("[data-testid='task-title']")[1].text).to match 'タイトル2'
     end
   end
 
@@ -55,31 +55,31 @@ RSpec.describe 'Tasks', type: :system do
       it 'keyword検索ができる' do
         visit root_path(keyword: 'タイトル1')
 
-        expect(all(:xpath, '/html/body/div[2]/div[2]/div[1]/div/a')[0].text).to match 'タイトル1'
+        expect(all("[data-testid='task-title']")[0].text).to match 'タイトル1'
       end
 
       it 'status検索ができる(doing)' do
         visit root_path(status: :doing)
 
-        expect(all(:xpath, '/html/body/div[2]/div[2]/div[1]/div/a')[0].text).to match 'Railsを勉強する'
+        expect(all("[data-testid='task-title']")[0].text).to match 'Railsを勉強する'
       end
 
       it 'status検索ができる(done)' do
         visit root_path(status: :done)
 
-        expect(all(:xpath, '/html/body/div[2]/div[2]/div[1]/div/a')[0].text).to match '英語を勉強する'
+        expect(all("[data-testid='task-title']")[0].text).to match '英語を勉強する'
       end
 
       it 'keyword, status検索ができる' do
         visit root_path(keyword: '英語を勉強する', status: :done)
 
-        expect(all(:xpath, '/html/body/div[2]/div[2]/div[1]/div/a')[0].text).to match '英語を勉強する'
+        expect(all("[data-testid='task-title']")[0].text).to match '英語を勉強する'
       end
     end
 
     context '連続して検索条件を変更する' do
-      let!(:doing_task) { create(:task, title: 'タスクの1番目', task_status: :todo) }
-      let!(:doing_past_task) { create(:task, title: 'タスクの2番目', task_status: :todo, end_at: Time.current.yesterday.change(sec: 0, usec: 0)) }
+      let!(:todo_task) { create(:task, title: 'タスクの1番目', task_status: :todo) }
+      let!(:todo_past_task) { create(:task, title: 'タスクの2番目', task_status: :todo, end_at: Time.current.yesterday.change(sec: 0, usec: 0)) }
 
       it 'keyword, statusで検索' do
         visit root_path(keyword: 'タイトル1')
@@ -87,27 +87,7 @@ RSpec.describe 'Tasks', type: :system do
         choose('todo')
         click_button 'Search'
 
-        expect(all(:xpath, '/html/body/div[2]/div[2]/div').length).to match 1
-      end
-
-      it 'keyword, status, end_at: ascで検索' do
-        visit root_path(keyword: 'タスク')
-
-        choose('todo')
-        click_button 'Search'
-        click_link('👇')
-
-        expect(all(:xpath, '/html/body/div[2]/div[2]/div').length).to match 2
-      end
-
-      it 'keyword, status, end_at: descで検索' do
-        visit root_path(keyword: 'タスク')
-
-        choose('todo')
-        click_button 'Search'
-        click_link('👆')
-
-        expect(all(:xpath, '/html/body/div[2]/div[2]/div').length).to match 2
+        expect(all("[data-testid='task-card']").length).to match 1
       end
     end
   end
@@ -170,6 +150,21 @@ RSpec.describe 'Tasks', type: :system do
         fill_in 'task_description', with: ''
         click_button 'Edit'
         expect(page).to have_content 'Edited is failed'
+      end
+    end
+  end
+
+  describe 'タスク新規作成' do
+    context '正常時' do
+      example 'タスクを作成できる' do
+        visit new_task_path
+
+        fill_in 'task_title', with: 'タスクの新規作成'
+        fill_in 'task_description', with: 'タスクの説明'
+        click_button 'Create'
+
+        expect(page).to have_content 'タスクの新規作成'
+        expect(page).to have_content 'タスクの説明'
       end
     end
   end
