@@ -4,8 +4,7 @@ class TasksController < ApplicationController
 
   def index
     set_search_params
-    @sort = request_sort_params
-    @tasks = Task.title_search(@search[:title]).status_search(@search[:status_ids]).sort_tasks(@sort)
+    @tasks = Task.title_search(@search[:title]).status_search(@search[:status_ids]).sort_tasks(request_sort_params)
   end
 
   def new
@@ -70,8 +69,8 @@ class TasksController < ApplicationController
 
   def set_search_params
     @search = {
-      title: params[:title],
-      status_ids: params[:status_ids]
-    }
+      title: params.dig(:search_params, :title),
+      status_ids: params.dig(:search_params, :status_ids), 
+    }.merge(request_sort_params)
   end
 end
