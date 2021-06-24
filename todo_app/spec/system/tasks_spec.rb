@@ -53,25 +53,25 @@ RSpec.describe 'Tasks', type: :system do
 
     context '正常時' do
       it 'keyword検索ができる' do
-        visit search_path(keyword: 'タイトル1')
+        visit root_path(keyword: 'タイトル1')
 
         expect(all('tbody tr')[1].text).to match 'タイトル1'
       end
 
       it 'status検索ができる(doing)' do
-        visit search_path(task_status: :doing)
+        visit root_path(status: :doing)
 
         expect(all('tbody tr')[1].text).to match 'Railsを勉強する'
       end
 
       it 'status検索ができる(done)' do
-        visit search_path(task_status: :done)
+        visit root_path(status: :done)
 
         expect(all('tbody tr')[1].text).to match '英語を勉強する'
       end
 
       it 'keyword, status検索ができる' do
-        visit search_path(keyword: '英語を勉強する', task_status: :done)
+        visit root_path(keyword: '英語を勉強する', status: :done)
 
         expect(all('tbody tr')[1].text).to match '英語を勉強する'
       end

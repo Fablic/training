@@ -2,12 +2,9 @@
 
 class TasksController < ApplicationController
   def index
-    @tasks = Task.search(nil, nil, create_sort_query).page(params[:page])
-  end
-
-  def search
+    @keyword = params[:keyword]
+    @status = params[:status]
     @tasks = Task.search(@keyword, @status, create_sort_query).page(params[:page])
-    render "index"
   end
 
   def new

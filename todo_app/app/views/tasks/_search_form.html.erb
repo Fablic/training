@@ -1,4 +1,4 @@
-<%= form_with(model: @task, url: search_path, method: :get) do |f| %>
+<%= form_with(model: @task, url: root_path, method: :get) do |f| %>
   <%= f.text_field :keyword, value: @keyword, placeholder: 'keyword' %>
   <%= f.collection_radio_buttons :task_status, Task.task_statuses, :first, :first, checked: @status %>
   <%= f.submit I18n.t(:'button.search') %>
