@@ -1,7 +1,7 @@
 <%= form_with(model: @task, url: root_path, method: :get, class: 'd-flex') do |f| %>
   <%= f.text_field :keyword, value: @keyword, placeholder: 'keyword', class: 'form-control form-control-sm' %>
   <div class="d-flex m-2 gap-2 align-items-center">
-    <%= f.collection_radio_buttons :task_status, Task.task_statuses, :first, :first, checked: default_select_status %>
+    <%= f.collection_radio_buttons :task_status, Task.task_statuses, :first, :first, checked: @status %>
   </div>
   <%= f.submit I18n.t(:'button.search') %>
 <% end %>

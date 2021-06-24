@@ -59,19 +59,19 @@ RSpec.describe 'Tasks', type: :system do
       end
 
       it 'status検索ができる(doing)' do
-        visit root_path(task_status: :doing)
+        visit root_path(status: :doing)
 
         expect(all(:xpath, '/html/body/div[2]/div[2]/div[1]/div/a')[0].text).to match 'Railsを勉強する'
       end
 
       it 'status検索ができる(done)' do
-        visit root_path(task_status: :done)
+        visit root_path(status: :done)
 
         expect(all(:xpath, '/html/body/div[2]/div[2]/div[1]/div/a')[0].text).to match '英語を勉強する'
       end
 
       it 'keyword, status検索ができる' do
-        visit root_path(keyword: '英語を勉強する', task_status: :done)
+        visit root_path(keyword: '英語を勉強する', status: :done)
 
         expect(all(:xpath, '/html/body/div[2]/div[2]/div[1]/div/a')[0].text).to match '英語を勉強する'
       end
