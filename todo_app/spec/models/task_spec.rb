@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Task, type: :model do
@@ -40,7 +42,7 @@ RSpec.describe Task, type: :model do
     end
     context 'sort asc' do
       let(:sort) { { created_at: :asc } }
-      it { expect(Task.sort_tasks({created_at: :asc}).first.title).to eq('old') }
+      it { expect(Task.sort_tasks(sort).first.title).to eq('old') }
     end
   end
 

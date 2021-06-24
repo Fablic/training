@@ -1,6 +1,7 @@
-class TasksController < ApplicationController
+# frozen_string_literal: true
 
-  before_action :find_task, only: %i(edit update show destroy)
+class TasksController < ApplicationController
+  before_action :find_task, only: %i[edit update show destroy]
 
   def index
     @sort_params = request_sort_params
@@ -21,10 +22,14 @@ class TasksController < ApplicationController
       flash.now[:error] = I18n.t('tasks.flash.error.create')
       render :new
     end
-  rescue => e
+  rescue StandardError => e
     Rails.logger.error(e)
     Rails.logger.error(e.backtrace.join("\n"))
   end
+
+  def show; end
+
+  def edit; end
 
   def update
     if @task.update(task_params)
@@ -63,7 +68,7 @@ class TasksController < ApplicationController
   end
 
   def check_sort_key
-    %i(due_date created_at).include?(params[:sort_key]&.to_sym)
+    %i[due_date created_at].include?(params[:sort_key]&.to_sym)
   end
 
   def set_sort_val

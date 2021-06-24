@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'Tasks', type: :sytem do
@@ -63,7 +65,7 @@ RSpec.describe 'Tasks', type: :sytem do
       it 'order created_at DESC' do
         visit root_path
         click_link Task.human_attribute_name(:created_at)
-  
+
         expect(page.body.index(old_task.title)).to be > page.body.index(new_task.title)
       end
     end
@@ -82,7 +84,7 @@ RSpec.describe 'Tasks', type: :sytem do
         visit root_path
         click_link Task.human_attribute_name(:due_date)
         click_link Task.human_attribute_name(:due_date)
-      
+
         expect(page.body.index(I18n.l(old_task.due_date))).to be < page.body.index(I18n.l(new_task.due_date))
       end
     end
