@@ -6,8 +6,7 @@ class TasksController < ApplicationController
   end
 
   def search
-    @keyword, @status = create_search_query
-    @tasks = Task.search(@keyword, @status, create_sort_query)
+    @tasks = Task.search(params[:keyword], params[:task_status], create_sort_query)
     render "index"
   end
 
@@ -21,7 +20,7 @@ class TasksController < ApplicationController
       flash[:success] = I18n.t(:'message.registered_task')
       redirect_to root_path
     else
-      flash[:error] = I18n.t(:'message.registered_is_failed')
+      flash.now[:error] = I18n.t(:'message.registered_is_failed')
       render :new
     end
   end
@@ -40,30 +39,26 @@ class TasksController < ApplicationController
       flash[:success] = I18n.t(:'message.edited_task')
       redirect_to root_path
     else
-      flash[:error] = I18n.t(:'message.edited_is_faild')
+      flash.now[:error] = I18n.t(:'message.edited_is_faild')
       render :edit
     end
   end
 
   def destroy
     @task = Task.find_by(id: params[:id])
-    @task.delete
-
-    flash[:success] = I18n.t(:'message.deleted_task')
-    redirect_to root_path
+    if @task.destroy
+      flash[:success] = I18n.t(:'message.deleted_task')
+      redirect_to root_path
+    else
+      flash.now[:error] = I18n.t(:'message.deleted_is_faild')
+      render root_path
+    end
   end
 
   private
 
   def task_params
     params.require(:task).permit(:title, :description, :end_at, :task_status)
-  end
-
-  def create_search_query
-    keyword = params[:keyword].nil? ? nil : params[:keyword]
-    status = params[:task_status].nil? ? nil : params[:task_status]
-
-    [keyword, status]
   end
 
   def create_sort_query

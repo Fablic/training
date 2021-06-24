@@ -5,10 +5,10 @@ class Task < ApplicationRecord
   validates :description, length: { maximum: 5000 }
   enum task_status: [:todo, :doing, :done]
 
+  scope :where_status, ->(status) { where(tasks: { status: status }) if status.present? }
+  scope :where_keyword, ->(keyword) { where('title like ?', keyword + '%') if keyword.present? }
+
   def self.search(keyword, status, sort_query)
-    result_tasks = ::Task.all
-    result_tasks = result_tasks.where('title like ?', keyword + '%') unless keyword.nil?
-    result_tasks = result_tasks.where({ task_status: status }) unless status.nil?
-    result_tasks.order(sort_query)
+    where_keyword(keyword).where_status(status).order(sort_query)
   end
 end
