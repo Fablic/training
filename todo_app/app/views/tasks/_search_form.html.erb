@@ -1,0 +1,20 @@
+<% if request.path.eql?(root_path) %>
+  <%= form_with(url: root_path, method: :get, class: "row g-3 align-items-center") do |f| %>
+    <div class="col-auto">
+      <%= f.text_field :title, value: @search[:title], class: "form-control", placeholder: Task.human_attribute_name(:title) %>
+    </div>
+    <div class="col-auto">
+      <%= f.collection_check_boxes(:status_ids, Task.statuses, :first, :first, checked: @search[:status_ids] , class: "form-check-input") do |s| %>
+        <%= s.label(class: "form-check-label") do %>
+          <%= Task.human_attribute_name("status.#{s.text}") %>
+        <% end %>
+        <%= s.check_box(class:"form-check-input") do %>
+          <%= s.check_box %>
+  　　　  <% end %>
+      <% end %>
+    </div>
+    <div class="col-auto">
+      <%= f.submit I18n.t('common.action.search'), class: "btn btn-primary" %>
+    </div>
+  <% end %>
+<% end %>   
