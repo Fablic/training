@@ -1,5 +1,4 @@
 <h1>Tasks</h1>
-
 <div class="row">
   <div class="dialog bg-light p-5 rounded-lg mb-3">
     <%= search_form_for @q do |f| %>
@@ -15,7 +14,7 @@
     <% end %>
   </div>
 </div>
-<%= link_to '<i class="bi bi-plus-lg"></i>'.html_safe, new_task_path, class: "btn btn-secondary mb-3 float-end" %>
+<%= link_to '<i class="bi bi-plus-lg"></i>'.html_safe, new_task_path, class: "btn btn-secondary mb-3 float-end newtask"%>
 <table class="table table-hover">
   <thead class="table-light">
   <tr>
@@ -36,8 +35,8 @@
   <% @tasks.each_with_index do |task, idx| %>
     <tr>
       <td><%= idx + 1 %></td>
-      <td class="task-name">
-        <h6><%= task.name %></h6>
+      <td>
+        <h6 class="task-name"><%= task.name %></h6>
         <span class="text-secondary"><%= task.desc.first(10) %></span>
       </td>
       <td><%= Task.statuses.key(task.status) %></td>
