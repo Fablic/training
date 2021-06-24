@@ -3,8 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe 'Tasks (System)', type: :system do
-  let!(:task1) { create(:task, name: 'task1', status: 2, priority: 0, label:'aaa', due_date: Faker::Time.forward(days: 1, period: :evening) ) }
-  let!(:task2) { create(:task, name: 'task2', status: 2, priority: 0, label:'aaa', due_date: Faker::Time.forward(days: 2, period: :evening) ) }
+  let!(:task1) { create(:task, name: 'task1', status: 2, priority: 0, label: 'aaa', due_date: Time.now + 1.day) }
+  let!(:task2) { create(:task, name: 'task2', status: 2, priority: 0, label: 'aaa', due_date: Time.now + 2.day) }
 
   it 'Add new task' do
     visit tasks_url
@@ -14,11 +14,10 @@ RSpec.describe 'Tasks (System)', type: :system do
     select('Done', from: 'task[status]')
     fill_in 'task[label]', with: 'task3 desc'
     select('Low', from: 'task[priority]')
-    fill_in('task[due_date]', with: Faker::Time.forward(days: 3, period: :evening) )
+    fill_in('task[due_date]', with: Time.now + 3.day)
     click_button 'Create Task'
     expect(page).to have_text('Task was successfully created.')
   end
-
 
   it 'Sort using due_date asc' do
     expected_order = %w[task1 task2]
