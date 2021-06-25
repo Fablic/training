@@ -39,7 +39,6 @@
     <th colspan="3"></th>
   </tr>
   </thead>
-  <br>
   <tbody>
   <% @tasks.each_with_index do |task, idx| %>
     <tr class="align-middle">
@@ -53,8 +52,8 @@
       <td><%= task.label %></td>
       <td><%= task.due_date.strftime("%B %d, %Y") %></td>
       <td><%= task.user_id %></td>
-      <!--      <td><%#= link_to 'Show', task, class: 'btn btn-secondary' %></td>-->
-<!--      <td><%#= link_to 'Edit', edit_task_path(task), class: 'btn btn-dark' %></td>-->
+      <!--<td><%#= link_to 'Show', task, class: 'btn btn-secondary' %></td>-->
+      <!--<td><%#= link_to 'Edit', edit_task_path(task), class: 'btn btn-dark' %></td>-->
       <td><%= link_to '<i class="bi bi-trash"></i>'.html_safe, task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
     </tr>
   <% end %>
