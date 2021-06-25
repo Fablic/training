@@ -1,0 +1,33 @@
+<h1>タスク新規作成</h1>
+<%= form_for(@task) do |f| %>
+    <% if @task.errors.any? %>
+        <div id="error_explanation">
+            <h2><%= pluralize(@task.errors.count, "error") %> prohibited this task from being saved:</h2>
+
+            <ul>
+                <% @task.errors.each do |error| %>
+                <li><%= error.full_message %></li>
+                <% end %>
+            </ul>
+        </div>
+    <% end %>
+
+    <%= f.label :タスク名 %>
+    <%= f.text_field :task_name %>
+
+    <%= f.label :優先度 %>
+    <%= f.collection_select :priority_id, MasterTaskPriority.all, :id, :priority, :include_blank => "選択してください" %>
+
+    <%= f.label :ラベル %>
+    <%= f.text_field :label %>
+
+    <%= f.label :期限 %>
+    <%= f.text_field :limit_date %>
+
+    <%= f.label :説明詳細 %>
+    <%= f.text_field :detail %>
+
+    <%= f.submit "新規作成" %>
+<% end %>
+
+<%= link_to '戻る', '/' %>

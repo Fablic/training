@@ -1,0 +1,25 @@
+<h1>タスク編集</h1>
+<%= form_for(@task) do |f| %>
+    <%= f.label :タスク名 %>
+    <%= f.text_field :task_name %>
+
+    <%= f.label :優先度 %>
+    <%= f.collection_select :priority_id, MasterTaskPriority.all, :id, :priority, :prompt => @task.priority.priority %>
+
+    <%= f.label :ステータス %>
+    <%= f.collection_select :status_id, MasterTaskStatus.all, :id, :status, :prompt => @task.status.status %>
+
+    <%= f.label :ラベル %>
+    <%= f.text_field :label %>
+
+    <%= f.label :期限 %>
+    <%= f.text_field :limit_date %>
+
+    <%= f.label :説明詳細 %>
+    <%= f.text_field :detail %>
+
+    <%= f.submit "更新" %>
+<% end %>
+
+<%= link_to '詳細', @task %> |
+<%= link_to '戻る', '/' %>
