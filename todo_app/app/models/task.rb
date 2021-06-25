@@ -15,9 +15,6 @@ class Task < ApplicationRecord
     title.blank? ? all : where("title LIKE ?", title)
   end
   scope :status_search, -> (statuses) do
-    status_ids = statuses.blank? ? nil : statuses&.reject(&:blank?)
-    return all if status_ids.blank?
-
-    where(status: statuses)
+    statuses.presence&.reject(&:blank?).present? ? where(status: statuses) : all
   end
 end
