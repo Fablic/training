@@ -14,8 +14,8 @@
       <th><%= Task.human_attribute_name(:title) %></th>
       <th><%= Task.human_attribute_name(:description) %></th>
       <th><%= Task.human_attribute_name(:status) %></th>
-      <th><%= link_to Task.human_attribute_name(:created_at), root_path(search_params: @search, sort_key: 'created_at', sort_val: display_sort_val(@search[:created_at])) %></th>
-      <th><%= link_to Task.human_attribute_name(:due_date), root_path(search_params: @search, sort_key: 'due_date', sort_val: display_sort_val(@search[:due_date])) %></th>
+      <th><%= link_to Task.human_attribute_name(:created_at), root_path(search_params: @search, sort_key: 'created_at', sort_val: display_sort_val(@sort_params[:created_at])) %></th>
+      <th><%= link_to Task.human_attribute_name(:due_date), root_path(search_params: @search, sort_key: 'due_date', sort_val: display_sort_val(@sort_params[:due_date])) %></th>
       <th></th>
     </tr>
     <% @tasks.each do |task| %>
