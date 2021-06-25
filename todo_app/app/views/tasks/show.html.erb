@@ -5,10 +5,14 @@
     <th><%= Task.human_attribute_name(:id) %></th>
     <th><%= Task.human_attribute_name(:title) %></th>
     <th><%= Task.human_attribute_name(:description) %></th>
+    <td><%= Task.human_attribute_name(:status) %></td>
+    <th><%= Task.human_attribute_name(:due_date) %></th>
   </tr>
   <tr>
     <td><%= @task.id %></td>
     <td><%= @task.title %></td>
     <td><%= @task.description %></td>
+    <td><%= Task.human_attribute_name("status.#{@task.status}") %></td>
+    <td><%= I18n.l(@task.due_date, default: '') %></td>
   </tr>
 </table>
