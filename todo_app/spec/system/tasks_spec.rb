@@ -115,9 +115,9 @@ RSpec.describe 'Tasks', type: :sytem do
       fill_in ja_due_date, with: I18n.l(due_date)
       choose work_in_progress_status
 
-      expect do
-        click_button I18n.t('common.action.create')
-      end.to change(Task, :count).by(1)
+        expect do
+          click_button I18n.t('common.action.create')
+        end.to change(Task, :count).by(1)
 
       expect(current_path).to eq root_path
 
@@ -126,6 +126,19 @@ RSpec.describe 'Tasks', type: :sytem do
       expect(page).to have_content(desc)
       expect(page).to have_content(I18n.l(due_date))
       expect(page).to have_content(work_in_progress_status)
+    end
+    it 'error' do
+      visit new_task_path
+
+      expect do
+        click_button I18n.t('common.action.create')
+      end.to change(Task, :count).by(0)
+
+      expect(current_path).to eq tasks_path
+
+      expect(page).to have_content(I18n.t('tasks.flash.error.create'))
+      expect(page).to_not have_content(title)
+      expect(page).to_not have_content(desc)
     end
   end
 
@@ -156,12 +169,32 @@ RSpec.describe 'Tasks', type: :sytem do
       end.to change(Task, :count).by(0)
   
       expect(current_path).to eq task_path(task)
-
       expect(page).to have_content(I18n.t('tasks.flash.success.update'))
       expect(page).to have_content(title)
       expect(page).to have_content(desc)
       expect(page).to have_content(I18n.l(due_date))
       expect(page).to have_content(completed_status)
+    end
+    it 'errror' do
+      visit edit_task_path(task)
+
+      expect(current_path).to eq edit_task_path(task)
+
+      expect(page).to have_field ja_title, with: task.title
+      expect(page).to have_field ja_desc, with: task.description
+
+      fill_in ja_title, with: nil
+      fill_in ja_desc, with: nil
+
+      expect do
+        click_button I18n.t('common.action.update')
+      end.to change(Task, :count).by(0)
+  
+      expect(current_path).to eq task_path(task)
+
+      expect(page).to have_content(I18n.t('tasks.flash.error.update'))
+      expect(page).to_not have_content(title)
+      expect(page).to_not have_content(desc)
     end
   end
 

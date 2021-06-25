@@ -13,9 +13,12 @@ ja:
       not_found: タスクが見つかりません
     flash:
       success:
-        create: 登録成功
-        update: 更新成功
-        destroy: 削除成功
+        create: '登録成功'
+        update: '更新成功'
+        destroy: '削除成功'
+      error:
+        create: '登録失敗'
+        update: '更新失敗'
   date:
     formats:
       default: "%Y/%m/%d"
