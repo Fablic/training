@@ -26,7 +26,7 @@
 <table class="table table-hover bg-white">
   <thead>
   <tr>
-    <th class="text-secondary">#</th>
+    <th class="text-secondary text-center">#</th>
     <th class="text-secondary">Task Name</th>
     <th class="text-secondary">Status</th>
     <th class="text-secondary">Priority</th>
@@ -42,7 +42,7 @@
   <tbody>
   <% @tasks.each_with_index do |task, idx| %>
     <tr class="align-middle">
-      <td><%= idx + 1 %></td>
+      <td class="text-center"><%= idx + 1 %></td>
       <td>
         <h6 class="task-name"><%= task.name %></h6>
         <span class="text-secondary"><%= task.desc.first(10) %></span>
