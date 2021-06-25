@@ -8,7 +8,7 @@ RSpec.describe 'Tasks', type: :system do
 
   describe 'タスク一覧' do
     context '正常時' do
-      example 'タスク一覧が表示されている (/)' do
+      it 'タスク一覧が表示されている (/)' do
         visit root_path
 
         expect(page).to have_content 'タイトル1'
@@ -16,7 +16,7 @@ RSpec.describe 'Tasks', type: :system do
         expect(page).to have_content I18n.l(task1.end_at)
       end
 
-      example 'タスク一覧が表示されている (/tasks)' do
+      it 'タスク一覧が表示されている (/tasks)' do
         visit tasks_path
 
         expect(page).to have_content 'タイトル1'
@@ -24,7 +24,7 @@ RSpec.describe 'Tasks', type: :system do
         expect(page).to have_content I18n.l(task1.end_at)
       end
 
-      example 'タスク一覧の順序が作成日降順' do
+      it 'タスク一覧の順序が作成日降順' do
         visit tasks_path
 
         expect(all("[data-testid='task-title']")[0].text).to match 'タイトル1'
@@ -94,7 +94,7 @@ RSpec.describe 'Tasks', type: :system do
 
   describe 'タスク詳細' do
     context '正常時' do
-      example 'タスク詳細が表示される' do
+      it 'タスク詳細が表示される' do
         visit task_path(task1)
         expect(page).to have_content 'タイトル1'
         expect(page).to have_content '説明'
@@ -105,7 +105,7 @@ RSpec.describe 'Tasks', type: :system do
 
   describe 'タスク編集' do
     context '正常時' do
-      example 'タスクを変更できる' do
+      it 'タスクを変更できる' do
         visit edit_task_path(task1)
         fill_in 'task_title', with: 'hoge'
         fill_in 'task_description', with: 'fuga'
@@ -114,7 +114,7 @@ RSpec.describe 'Tasks', type: :system do
         expect(page).to have_content 'fuga'
       end
 
-      example 'タスクの終了期限を変更できる' do
+      it 'タスクの終了期限を変更できる' do
         visit edit_task_path(task1)
         end_at_input = Time.current.change(sec: 0, usec: 0)
 
@@ -126,7 +126,7 @@ RSpec.describe 'Tasks', type: :system do
     end
 
     context 'title 256文字以上を入力する' do
-      example '登録に失敗しましたが表示されること' do
+      it '登録に失敗しましたが表示されること' do
         visit edit_task_path(task1)
         fill_in 'task_title', with: Faker::Alphanumeric.alpha(number: 256)
         click_button 'Edit'
@@ -135,7 +135,7 @@ RSpec.describe 'Tasks', type: :system do
     end
 
     context 'description 5001文字以上を入力する' do
-      example '登録に失敗しましたが表示されること' do
+      it '登録に失敗しましたが表示されること' do
         visit edit_task_path(task1)
         fill_in 'task_description', with: Faker::Alphanumeric.alpha(number: 5001)
         click_button 'Edit'
@@ -144,7 +144,7 @@ RSpec.describe 'Tasks', type: :system do
     end
 
     context '未入力の状態' do
-      example '登録に失敗しましたが表示されること' do
+      it '登録に失敗しましたが表示されること' do
         visit edit_task_path(task1)
         fill_in 'task_title', with: ''
         fill_in 'task_description', with: ''
@@ -156,7 +156,7 @@ RSpec.describe 'Tasks', type: :system do
 
   describe 'タスク新規作成' do
     context '正常時' do
-      example 'タスクを作成できる' do
+      it 'タスクを作成できる' do
         visit new_task_path
 
         fill_in 'task_title', with: 'タスクの新規作成'
@@ -171,7 +171,7 @@ RSpec.describe 'Tasks', type: :system do
 
   describe 'タスク削除' do
     context '正常時' do
-      example 'タスクを削除できる' do
+      it 'タスクを削除できる' do
         visit tasks_path
 
         first(:link, 'Delete').click
