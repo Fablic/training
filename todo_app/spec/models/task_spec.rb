@@ -59,7 +59,7 @@ RSpec.describe Task, type: :model do
     end
     context 'title is nil' do
       let(:search_title) { nil }
-      it 'retunrs all records' do
+      it 'return all records' do
         expect(subject.count).to eq(2)
       end
     end
