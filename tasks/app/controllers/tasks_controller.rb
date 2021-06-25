@@ -2,7 +2,7 @@ class TasksController < ApplicationController
   before_action :set_task, only: %i[ show edit update destroy ]
 
   def index
-    @tasks = Task.where(deleted_at: nil)
+    @tasks = Task.getAll
   end
 
   def show
@@ -16,8 +16,8 @@ class TasksController < ApplicationController
   end
 
   def create
-    task_params = params[:task].permit(:task_name, :priority_id, :label, :limit_date, :detail)
-    task_params["status_id"] = 1 # 「未着手」固定
+    task_params = params.require(:task).permit(:task_name, :priority_id, :label, :limit_date, :detail)
+    task_params["status_id"] = MasterTaskStatus::NOT_STARTED
     @task = Task.new(task_params)
     respond_to do |format|
       if @task.save
@@ -31,7 +31,7 @@ class TasksController < ApplicationController
   end
 
   def update
-    task_params = params[:task].permit(:task_name, :status_id, :priority_id, :label, :limit_date, :detail)
+    task_params = params.require(:task).permit(:task_name, :status_id, :priority_id, :label, :limit_date, :detail)
     respond_to do |format|
       if @task.update(task_params)
         format.html { redirect_to @task, notice: "タスクを更新しました。" }
@@ -45,7 +45,7 @@ class TasksController < ApplicationController
 
   # 論理削除
   def destroy
-    now = DateTime.now
+    now = Time.current
     @task.update(deleted_at: now)
     respond_to do |format|
       format.html { redirect_to tasks_url, notice: "タスクを削除しました。" }
@@ -57,9 +57,5 @@ class TasksController < ApplicationController
     # 共通処理
     def set_task
       @task = Task.find(params[:id])
-    end
-
-    def task_params
-      params.fetch(:task, {})
     end
 end
