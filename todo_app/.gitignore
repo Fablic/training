@@ -39,4 +39,3 @@
 yarn-debug.log*
 .yarn-integrity
 /vendor/bundle/*
-/.idea/*

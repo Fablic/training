@@ -3,9 +3,8 @@ class TasksController < ApplicationController
   before_action :find_task, only: [:edit, :update, :show, :destroy]
 
   def index
-    @sort_params = request_sort_params
-    @search = search_params
-    @tasks = Task.title_search(@search[:title]).status_search(@search[:status_ids]).sort_tasks(@sort_params)
+    @sort = request_sort_params
+    @tasks = Task.sort_tasks(@sort)
   end
 
   def new
@@ -45,7 +44,7 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:title, :description, :due_date, :status)
+    params.require(:task).permit(:title, :description, :due_date)
   end
 
   def find_task
@@ -66,9 +65,5 @@ class TasksController < ApplicationController
 
   def set_sort_val
     params[:sort_val]&.to_sym.eql?(:desc) ? :desc : :asc
-  end
-
-  def search_params
-    params.fetch(:search_params, {}).permit(:title, status_ids: [])
   end
 end

@@ -10,18 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_21_075749) do
+ActiveRecord::Schema.define(version: 2021_06_16_024154) do
 
   create_table "tasks", charset: "utf8mb4", force: :cascade do |t|
     t.string "title", null: false
     t.text "description", null: false
     t.datetime "due_date"
-    t.integer "status", default: 1, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["created_at"], name: "index_tasks_on_created_at"
-    t.index ["due_date"], name: "index_tasks_on_due_date"
-    t.index ["status"], name: "index_tasks_on_status"
   end
 
 end
