@@ -1,4 +1,6 @@
 class Task < ApplicationRecord
+  enum status: { waiting: 1, work_in_progress: 2, completed: 3 }
+
   validates :title, presence: true
   validates :description, presence: true
 
@@ -8,5 +10,11 @@ class Task < ApplicationRecord
     else
       order(:created_at)
     end
+  end
+  scope :title_search, -> (title) do
+    title.blank? ? all : where("title LIKE ?", title)
+  end
+  scope :status_search, -> (statuses) do
+    statuses.presence&.reject(&:blank?).present? ? where(status: statuses) : all
   end
 end

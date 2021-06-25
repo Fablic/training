@@ -1,13 +1,18 @@
 ja:
   activerecord:
     models:
-      task: タスクタスク
+      task: タスク
     attributes:
         task:
-          id: 'ID'
-          title: 'タイトル'
-          description: '説明'
-          due_date: '終了期限'
+          id: ID
+          title: タイトル
+          description: 説明
+          due_date: 終了期限
+          status: ステータス
+        task/status:
+          waiting: 未着手
+          work_in_progress: 着手中
+          completed: 完了
   attributes:
       created_at: 作成日
       updated_at: 更新
