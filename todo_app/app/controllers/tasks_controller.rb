@@ -1,10 +1,11 @@
 class TasksController < ApplicationController
 
-  before_action :find_task, only: [:edit, :update, :show, :destroy]
+  before_action :find_task, only: %i(edit update show destroy)
 
   def index
-    @request_order = params[:order]&.to_sym.eql?(:desc) ? :desc : :asc
-    @tasks = Task.order(created_at: @request_order)
+    @sort_params = request_sort_params
+    @search = search_params
+    @tasks = Task.page(params[:page]).title_search(@search[:title]).status_search(@search[:status_ids]).sort_tasks(@sort_params)
   end
 
   def new
@@ -17,8 +18,12 @@ class TasksController < ApplicationController
       flash[:success] = I18n.t('tasks.flash.success.create')
       redirect_to root_path
     else
+      flash.now[:error] = I18n.t('tasks.flash.error.create')
       render :new
     end
+  rescue => e
+    Rails.logger.error(e)
+    Rails.logger.error(e.backtrace.join("\n"))
   end
 
   def update
@@ -27,6 +32,7 @@ class TasksController < ApplicationController
       flash[:success] = I18n.t('tasks.flash.success.update')
       redirect_to task_path(@task)
     else
+      flash.now[:error] = I18n.t('tasks.flash.error.update')
       render :edit
     end
   end
@@ -41,10 +47,30 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:title, :description)
+    params.require(:task).permit(:title, :description, :due_date, :status)
   end
 
   def find_task
     @task = Task.find_by(id: params[:id])
+  end
+
+  def request_sort_params
+    if check_sort_key && params[:sort_val].present?
+      { params[:sort_key]&.to_sym => set_sort_val }
+    else
+      { created_at: :asc, due_date: :asc }
+    end
+  end
+
+  def check_sort_key
+    %i(due_date created_at).include?(params[:sort_key]&.to_sym)
+  end
+
+  def set_sort_val
+    params[:sort_val]&.to_sym.eql?(:desc) ? :desc : :asc
+  end
+
+  def search_params
+    params.fetch(:search_params, {}).permit(:title, status_ids: [])
   end
 end
