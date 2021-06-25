@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe Task, type: :model do
-
   describe '#valid?' do
     subject { build(:task, params) }
     let(:params) { { title: title, description: description } }
@@ -38,7 +37,7 @@ RSpec.describe Task, type: :model do
     }
     context 'sort desc' do
       let(:sort) { { due_date: :desc } }
-      it {expect(Task.sort_tasks(sort).first.title).to eq('new') }
+      it { expect(Task.sort_tasks(sort).first.title).to eq('new') }
     end
     context 'sort asc' do
       let(:sort) { { created_at: :asc } }
@@ -98,7 +97,7 @@ RSpec.describe Task, type: :model do
     context 'when status is nil' do
       let(:search_status) { nil }
       it 'return all records' do
-        expect(subject.count) .to eq(3)
+        expect(subject.count).to eq(3)
       end
     end
   end

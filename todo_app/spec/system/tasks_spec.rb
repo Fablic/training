@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe 'Tasks', type: :sytem do
-
   describe '#index' do
     let!(:old_task) { create(:task, created_at: Faker::Time.backward, due_date: Faker::Time.backward, status: :completed) }
     let!(:new_task) { create(:task, created_at: Faker::Time.forward, due_date: Faker::Time.forward) }
@@ -49,7 +48,7 @@ RSpec.describe 'Tasks', type: :sytem do
     end
 
     context 'status search' do
-      let(:completed_status) { Task.human_attribute_name("status.completed") }
+      let(:completed_status) { Task.human_attribute_name('status.completed') }
       it 'success and find new and old tasks' do
         visit root_path
 
@@ -101,7 +100,7 @@ RSpec.describe 'Tasks', type: :sytem do
   end
 
   describe '#new' do
-    let(:work_in_progress_status) { Task.human_attribute_name("status.work_in_progress") }
+    let(:work_in_progress_status) { Task.human_attribute_name('status.work_in_progress') }
     let(:title) { Faker::Alphanumeric.alphanumeric(number: 10) }
     let(:ja_title) { Task.human_attribute_name(:title) }
     let(:desc) { Faker::Alphanumeric.alphanumeric(number: 10) }
@@ -117,9 +116,9 @@ RSpec.describe 'Tasks', type: :sytem do
       fill_in ja_due_date, with: I18n.l(due_date)
       choose work_in_progress_status
 
-        expect do
-          click_button I18n.t('common.action.create')
-        end.to change(Task, :count).by(1)
+      expect do
+        click_button I18n.t('common.action.create')
+      end.to change(Task, :count).by(1)
 
       expect(current_path).to eq root_path
 
@@ -146,7 +145,7 @@ RSpec.describe 'Tasks', type: :sytem do
 
   describe '#edit' do
     let(:task) { create(:task, created_at: Faker::Time.backward, due_date: Faker::Time.backward, status: :completed) }
-    let(:completed_status) { Task.human_attribute_name("status.completed") }
+    let(:completed_status) { Task.human_attribute_name('status.completed') }
     let(:title) { Faker::Alphanumeric.alphanumeric(number: 10) }
     let(:ja_title) { Task.human_attribute_name(:title) }
     let(:desc) { Faker::Alphanumeric.alphanumeric(number: 10) }
@@ -170,7 +169,7 @@ RSpec.describe 'Tasks', type: :sytem do
       expect do
         click_button I18n.t('common.action.update')
       end.to change(Task, :count).by(0)
-  
+
       expect(current_path).to eq task_path(task)
       expect(page).to have_content(I18n.t('tasks.flash.success.update'))
       expect(page).to have_content(title)
@@ -192,7 +191,7 @@ RSpec.describe 'Tasks', type: :sytem do
       expect do
         click_button I18n.t('common.action.update')
       end.to change(Task, :count).by(0)
-  
+
       expect(current_path).to eq task_path(task)
 
       expect(page).to have_content(I18n.t('tasks.flash.error.update'))

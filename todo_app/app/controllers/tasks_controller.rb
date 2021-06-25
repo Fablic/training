@@ -16,8 +16,7 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(task_params)
     if @task.save
-      flash[:success] = I18n.t('tasks.flash.success.create')
-      redirect_to root_path
+      redirect_to root_path, flash: { success: I18n.t('tasks.flash.success.create') }
     else
       flash.now[:error] = I18n.t('tasks.flash.error.create')
       render :new

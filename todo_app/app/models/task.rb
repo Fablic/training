@@ -17,6 +17,6 @@ class Task < ApplicationRecord
     title.blank? ? all : where('title LIKE ?', title)
   }
   scope :status_search, lambda { |statuses|
-  statuses.presence&.reject(&:blank?).present? ? where(status: statuses) : all
+    statuses.presence&.reject(&:blank?).present? ? where(status: statuses) : all
   }
 end
