@@ -17,9 +17,10 @@ RSpec.describe 'Application', type: :system do
     end
 
     it '500 Error' do
+      allow_any_instance_of(TasksController).to receive(:index).and_throw(StandardError)
       visit root_path
 
-      allow_any_instance_of(ApplicationController).to receive(:render_500).and_raise StandardError
+      expect(page).to have_content '誠に申し訳ありません。ページに何らかのエラーが起きました。'
     end
   end
 end
