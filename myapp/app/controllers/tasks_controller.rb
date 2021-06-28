@@ -6,10 +6,14 @@ class TasksController < ApplicationController
 
   # GET /tasks or /tasks.json
   def index
-    @q = Task.ransack(params[:q])
-    @tasks = @q.result
-    @tasks = @tasks.where(user_id: @user.id)
-    @tasks = @tasks.order('created_at desc').page(params[:page]).per(5)
+    if !user_logged_in?
+      redirect_to login_path, notice: 'Please login to check your tasks'
+    else
+      @q = Task.ransack(params[:q])
+      @tasks = @q.result
+      @tasks = @tasks.where(user_id: @user.id)
+      @tasks = @tasks.order('created_at desc').page(params[:page]).per(5)
+    end
   end
 
   # GET /tasks/1 or /tasks/1.json
