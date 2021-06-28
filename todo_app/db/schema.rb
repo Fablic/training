@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_22_061014) do
+ActiveRecord::Schema.define(version: 2021_06_28_023914) do
 
   create_table "tasks", charset: "utf8mb4", force: :cascade do |t|
     t.string "title", null: false
@@ -23,6 +23,17 @@ ActiveRecord::Schema.define(version: 2021_06_22_061014) do
     t.index ["end_at"], name: "index_tasks_on_end_at"
     t.index ["task_status"], name: "index_tasks_on_task_status"
     t.index ["title"], name: "index_tasks_on_title"
+  end
+
+  create_table "users", id: { type: :string, limit: 36, comment: "プライマリキー" }, charset: "utf8mb4", force: :cascade do |t|
+    t.string "username", limit: 20, null: false
+    t.string "icon"
+    t.integer "role", default: 0
+    t.string "email", null: false
+    t.string "password_hash", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["username"], name: "index_users_on_username", unique: true
   end
 
 end

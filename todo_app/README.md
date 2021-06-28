@@ -1,5 +1,47 @@
 # README
 
+## Setup
+
+
+1. Set up Ruby
+
+```
+rbenv install 3.0.1
+rbenv global 3.0.1
+```
+
+2. Database Setup
+
+```
+cd docker
+docker-compose up -d
+```
+
+MySQL8のバージョンで失敗する場合
+
+- https://mebee.info/2020/07/25/post-15160/
+
+
+3. Bundle install
+
+```
+bundle install
+```
+
+4. Setup webpacker
+
+```
+bundle exec rails webpacker:yarn_install
+bundle exec rails assets:clobber
+bundle exec rails webpacker:compile
+```
+
+5. Rails server
+
+```
+bundle exec rails server
+```
+
 ## ペーパープロトタイピング
 
 ### 画面設計

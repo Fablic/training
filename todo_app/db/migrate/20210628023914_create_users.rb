@@ -1,0 +1,16 @@
+class CreateUsers < ActiveRecord::Migration[6.1]
+  def change
+    create_table :users, id: false do |t|
+      t.string :id, limit: 36, null: false, primary_key: true, comment: 'プライマリキー'
+      t.string :username, limit: 20, null: false, index: { unique: true }
+      t.string :icon
+      t.integer :role, default: 0
+
+      # TODO ユーザ機能完成後に秘匿情報用Tableを分ける
+      t.string :email, limit: 255, null: false
+      t.string :password_hash, limit: 255, null: false
+
+      t.timestamps
+    end
+  end
+end
