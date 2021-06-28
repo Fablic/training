@@ -1,0 +1,36 @@
+<p id="notice"><%= notice %></p>
+
+<h1>タスク一覧</h1>
+<%= link_to '新規作成', new_task_path %>
+<br>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>ステータス</th>
+      <th>優先度</th>
+      <th>ラベル</th>
+      <th>タスク名</th>
+      <th>期限</th>
+      <th>詳細説明</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @tasks.each do |task| %>
+      <tr>
+        <td class = "task-list-item index-id"><%= task.id %></td>
+        <td class = "task-list-item index-status"><%= task.status.status %></td>
+        <td class = "task-list-item index-priority"><%= task.priority.priority %></td>
+        <td class = "task-list-item index-label"><%= task.label %></td>
+        <td class = "task-list-item index-task-name"><%= task.task_name %></td>
+        <td class = "task-list-item index-limit font-12"><%= task.limit_date %></td>
+        <td class = "task-list-item index-detail font-left"><%= task.detail %></td>
+        <td><%= link_to '詳細', task %></td>
+        <td><%= link_to '編集', edit_task_path(task) %></td>
+        <td><%= link_to '削除', task, method: :delete, data: { confirm: '削除しますか?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

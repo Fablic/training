@@ -1,0 +1,20 @@
+<h1>タスク詳細</h1>
+<p id="notice"><%= notice %></p>
+<p>ID</p>
+<div class = "task-list-item index-id"><%= @task.id %></div>
+<p>ステータス</p>
+<div class = "task-list-item index-status"><%= @task.status.status %></div>
+<p>優先度</p>
+<div class = "task-list-item index-priority"><%= @task.priority.priority %></div>
+<p>ラベル</p>
+<div class = "task-list-item index-label"><%= @task.label %></div>
+<p>タスク名</p>
+<div class = "task-list-item index-task-name"><%= @task.task_name %></div>
+<p>期限</p>
+<div class = "task-list-item index-limit font-12"><%= @task.limit_date %></div>
+<p>詳細説明</p>
+<div class = "task-list-item index-detail font-left"><%= @task.detail %></div>
+</br>
+<%= link_to '編集', edit_task_path(@task) %> |
+<%= link_to '削除', @task, method: :delete, data: { confirm: '削除しますか?' } %> |
+<%= link_to '戻る', '/' %>
