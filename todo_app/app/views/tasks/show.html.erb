@@ -1,9 +1,26 @@
-<div>
-  <p>ID: <%= @task.id %></p>
-  <p><%= I18n.t(:'task.title') %>: <%= @task.title %></p>
-  <p><%= I18n.t(:'task.description') %>: <%= @task.description %></p>
-  <p><%= I18n.t(:'task.created_at') %>: <%= I18n.l(@task.created_at) %></p>
-  <p><%= I18n.t(:'task.end_at') %>: <%= @task.end_at ? I18n.l(@task.end_at) : nil %></p>
-  <p><%= I18n.t(:'task.status') %>: <%= @task.task_status %></p>
-  <%= link_to I18n.t(:'link.edit'), edit_task_path(@task) %>
+<div class="card w-50 m-2 p-2 gap-1">
+  <div class="d-flex">
+    <div class="w-25"><%= I18n.t(:'task.title') %>:</div>
+    <div class="w-50"><%= @task.title %></div>
+  </div>
+  <div class="d-flex">
+    <div class="w-25"><%= I18n.t(:'task.description') %>:</div>
+    <div class="w-50"><%= @task.description %></div>
+  </div>
+  <div class="d-flex">
+    <div class="w-25"><%= I18n.t(:'task.end_at') %>:</div>
+    <div class="w-50"><%= @task.end_at ? I18n.l(@task.end_at) : nil %></div>
+  </div>
+  <div class="d-flex">
+    <div class="w-25"><%= I18n.t(:'task.created_at') %>:</div>
+    <div class="w-50"><%= @task.created_at ? I18n.l(@task.created_at) : nil %></div>
+  </div>
+  <div class="d-flex">
+    <div class="w-25"><%= I18n.t(:'task.status') %>:</div>
+    <div class="w-50"><%= @task.task_status %></div>
+  </div>
+  <div class="d-flex justify-content-between">
+    <%= link_to I18n.t(:'link.edit'), edit_task_path(@task) %>
+    <%= link_to I18n.t(:'link.delete'), task_path(@task), method: :delete %>
+  </div>
 </div>
