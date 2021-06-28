@@ -1,0 +1,17 @@
+inherit_gem:
+  fablicop:
+    - "config/.base_rubocop.yml"
+    # uncomment if use rails cops
+    # - "config/rails.yml"
+    # uncomment if use rspec cops
+    # - "config/rspec.yml"
+Metrics/PerceivedComplexity:
+  Max: 9
+
+Metrics/CyclomaticComplexity:
+  Max: 9
+
+Layout/LineLength:
+  Max: 198
+Metrics/AbcSize:
+  Max: 18

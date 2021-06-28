@@ -1,23 +1,24 @@
-class ApplicationController < ActionController::Base
+# frozen_string_literal: true
 
+class ApplicationController < ActionController::Base
   unless Rails.env.development?
-    rescue_from StandardError, with: :render_500
-    rescue_from ActiveRecord::RecordNotFound, with: :render_404
-    rescue_from ActionController::RoutingError, with: :render_404
+    rescue_from StandardError, with: :render_internal_server_error
+    rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
+    rescue_from ActionController::RoutingError, with: :render_not_found
   end
 
   def routing_error
-    raise ActionController::RoutingError.new(params[:path])
+    raise ActionController::RoutingError, params[:path]
   end
 
-  def render_404(e = nil)
-    logger.info "Rendering 404 with exception: #{e.message}" if e
+  def render_not_found(error = nil)
+    logger.info "Rendering 500 with exception: #{error.message}" if error
 
     render template: 'errors/not_found', status: :not_found
   end
-      
-  def render_500(e = nil)
-    logger.info "Rendering 500 with exception: #{e.message}" if e 
+
+  def render_internal_server_error(error = nil)
+    logger.info "Rendering 500 with exception: #{error.message}" if error
 
     render template: 'errors/internal_server_error', status: :internal_server_error
   end

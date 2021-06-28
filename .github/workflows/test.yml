@@ -47,3 +47,17 @@ jobs:
       working-directory: todo_app
       env:
         RAILS_ENV: test
+  rubocop:
+    name: Rubocop
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.0.1
+      - name: Install Fablicop
+        run: gem install fablicop
+        working-directory: todo_app
+      - name: Run Rubocop
+        run: rubocop
+        working-directory: todo_app
