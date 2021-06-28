@@ -5,7 +5,8 @@ require 'rails_helper'
 RSpec.describe Task, type: :model do
   describe 'validation' do
     subject { build(:task, params) }
-    let(:params) { { title: title, description: description, task_status: task_status } }
+    let(:user) { create(:admin_user) }
+    let(:params) { { title: title, description: description, task_status: task_status, user_id: user.id } }
     let(:random_str) { Faker::Alphanumeric.alpha(number: 10) }
 
     describe 'valid' do
@@ -53,9 +54,9 @@ RSpec.describe Task, type: :model do
     end
 
     describe 'search' do
-      let!(:todo_task) { create(:task, title: 'Javaを勉強する', task_status: :todo) }
-      let!(:doing_task) { create(:past_task, title: '英語を1時間勉強する', task_status: :doing) }
-      let!(:done_task) { create(:task, title: '英語を勉強する', task_status: :done) }
+      let!(:todo_task) { create(:task, title: 'Javaを勉強する', task_status: :todo, user_id: user.id) }
+      let!(:doing_task) { create(:past_task, title: '英語を1時間勉強する', task_status: :doing, user_id: user.id) }
+      let!(:done_task) { create(:task, title: '英語を勉強する', task_status: :done, user_id: user.id) }
 
       context 'search keyword' do
         result = Task.search('Java', nil, nil)
