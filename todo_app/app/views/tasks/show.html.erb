@@ -19,8 +19,8 @@
     <th style="width: 10%"><%= Task.human_attribute_name(:status) %></th>
     <td><%= Task.human_attribute_name("status.#{@task.status}") %></td>
   </tr>
-  <tr style="width: 10%">
-  td><%= I18n.l(@task.due_date, default: '') %></td>
-    <td><%= I18n.l(@task.due_date) %></td>
+  <tr>
+    <th style="width: 10%"><%= Task.human_attribute_name(:due_date) %></th>
+    <td><%= I18n.l(@task.due_date, default: '') %></td>
   </tr>
 </table>
