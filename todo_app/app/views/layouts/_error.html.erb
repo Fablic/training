@@ -1,5 +1,5 @@
 <% if model.errors.any? %>
-  <div class="container alert alert-danger mt-3 mx-auto">
+  <div class="alert alert-danger mt-3 mx-auto">
     <ul>
       <% model.errors.full_messages.each do |msg| %>
           <li><%= msg %></li>
