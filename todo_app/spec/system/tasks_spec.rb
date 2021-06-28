@@ -119,8 +119,10 @@ RSpec.describe 'Tasks', type: :system do
         end_at_input = Time.current.change(sec: 0, usec: 0)
 
         fill_in 'task_title', with: 'hoge'
-        fill_in 'task_end_at', with: end_at_input
-        click_button I18n.t(:'button.edit')
+        fill_in 'flatpickr-datetime', with: end_at_input
+        find('#task_title').click
+
+        click_button 'Edit'
         expect(page).to have_content I18n.l(end_at_input)
       end
     end
