@@ -12,7 +12,7 @@ RSpec.describe 'error_page', type: :sytem do
   describe 'internal_server_error' do
     it 'display internal server error page' do
       allow_any_instance_of(TasksController).to receive(:index).and_throw(StandardError)
-      visit root_path
+      visit tasks_path
 
       expect(page).to have_content(I18n.t('common.error.internal_server_error'))
     end

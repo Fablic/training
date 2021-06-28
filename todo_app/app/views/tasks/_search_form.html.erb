@@ -1,5 +1,5 @@
 <% if request.path.eql?(root_path) %>
-  <%= form_with(url: root_path, method: :get, class: "row g-3 align-items-center") do |f| %>
+  <%= form_with(scope: :search_params, url: root_path, method: :get, class: "row g-3 align-items-center") do |f| %>
     <div class="col-auto">
       <%= f.text_field :title, value: @search[:title], class: "form-control", placeholder: Task.human_attribute_name(:title) %>
     </div>
