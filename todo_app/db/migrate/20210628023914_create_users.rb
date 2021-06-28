@@ -5,10 +5,8 @@ class CreateUsers < ActiveRecord::Migration[6.1]
       t.string :username, limit: 20, null: false, index: { unique: true }
       t.string :icon
       t.integer :role, default: 0
-
-      # TODO ユーザ機能完成後に秘匿情報用Tableを分ける
       t.string :email, limit: 255, null: false
-      t.string :password_hash, limit: 255, null: false
+      t.string :password_digest, limit: 255, null: false
 
       t.timestamps
     end
