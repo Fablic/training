@@ -16,6 +16,7 @@
     <% @tasks.each do |task| %>
       <div class="w-25" data-testid="task-card">
         <div class="card p-2 m-1 shadow-sm gap-2">
+          <div class="d-flex"><%= task.user_id ? task.user.username : nil %></div>
           <div class="d-flex justify-content-between">
             <%= link_to task.title, task_path(task), 'data-testid': 'task-title' %>
             <div class="text-uppercase fw-bold"><%= task.task_status %></div>
