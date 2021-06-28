@@ -2,18 +2,31 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Application', type: :system do
+RSpec.describe 'ApplicationController', type: :system do
   describe 'エラーハンドリング' do
-    it 'Routing Error' do
-      visit '/hoge'
+    context '存在しないパスにアクセスするとき' do
+      it '404ページが表示されること' do
+        visit '/hoge'
 
-      expect(page).to have_content 'ご指定のページが見つかりませんでした。'
+        expect(page).to have_content 'ご指定のページが見つかりませんでした。'
+      end
     end
 
-    it 'Record Not Found Error' do
-      visit task_path(0)
+    context 'レコードが存在しないパスにアクセスするとき' do
+      it '404ページが表示されること' do
+        visit task_path(0)
 
-      expect(page).to have_content '誠に申し訳ありません。ページに何らかのエラーが起きました。'
+        expect(page).to have_content 'ご指定のページが見つかりませんでした。'
+      end
+    end
+
+    context 'システムエラーが発生したとき' do
+      it '500ページが表示されること' do
+        allow_any_instance_of(TasksController).to receive(:index).and_throw(StandardError)
+        visit root_path
+
+        expect(page).to have_content '誠に申し訳ありません。ページに何らかのエラーが起きました。'
+      end
     end
   end
 end
