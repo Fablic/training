@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 2021_06_28_023914) do
     t.string "icon"
     t.integer "role", default: 0
     t.string "email", null: false
-    t.string "password_hash", null: false
+    t.string "password_digest", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["username"], name: "index_users_on_username", unique: true
