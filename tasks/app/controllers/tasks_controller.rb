@@ -2,7 +2,7 @@ class TasksController < ApplicationController
   before_action :set_task, only: %i[ show edit update destroy ]
 
   def index
-    @tasks = Task.getAll
+    @tasks = Task.without_deleted
   end
 
   def show
@@ -16,8 +16,7 @@ class TasksController < ApplicationController
   end
 
   def create
-    task_params = params.require(:task).permit(:task_name, :priority_id, :label, :limit_date, :detail)
-    task_params["status_id"] = MasterTaskStatus::NOT_STARTED
+    task_params.merge(status_id:MasterTaskStatus::NOT_STARTED)
     @task = Task.new(task_params)
     respond_to do |format|
       if @task.save
@@ -31,7 +30,6 @@ class TasksController < ApplicationController
   end
 
   def update
-    task_params = params.require(:task).permit(:task_name, :status_id, :priority_id, :label, :limit_date, :detail)
     respond_to do |format|
       if @task.update(task_params)
         format.html { redirect_to @task, notice: "タスクを更新しました。" }
@@ -57,5 +55,9 @@ class TasksController < ApplicationController
     # 共通処理
     def set_task
       @task = Task.find(params[:id])
+    end
+
+    def task_params
+      params.require(:task).permit(:task_name, :status_id, :priority_id, :label, :limit_date, :detail)
     end
 end
