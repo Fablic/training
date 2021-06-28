@@ -145,6 +145,7 @@ RSpec.describe 'Tasks', type: :sytem do
   describe '#edit' do
     let(:task) { create(:task, created_at: Faker::Time.backward, due_date: Faker::Time.backward, status: :completed) }
     let(:completed_status) { Task.human_attribute_name("status.completed") }
+    let(:title) { Faker::Alphanumeric.alphanumeric(number: 10) }
     let(:ja_title) { Task.human_attribute_name(:title) }
     let(:desc) { Faker::Alphanumeric.alphanumeric(number: 10) }
     let(:ja_desc) { Task.human_attribute_name(:description) }

@@ -1,38 +1,35 @@
-<%= form_with(scope: :search_params, url: root_path, method: :get) do |f| %>
-  <%= f.text_field :title, value: @search[:title] %>
-  <%= f.collection_check_boxes(:status_ids, Task.statuses, :first, :first, checked: @search[:status_ids]) do |s| %>
-    <%= s.label { s.check_box + Task.human_attribute_name("status.#{s.text}")} %>
-  <% end %>
-  <%= f.submit I18n.t('common.action.search') %>
-<% end %>
-<%= link_to I18n.t('common.action.create'), new_task_path %>
-
 <% if @tasks.present? %>
-  <table>
+<table class="table table-striped table-bordered">
+  <thead>
     <tr>
       <th><%= Task.human_attribute_name(:id) %></th>
       <th><%= Task.human_attribute_name(:title) %></th>
       <th><%= Task.human_attribute_name(:description) %></th>
       <th><%= Task.human_attribute_name(:status) %></th>
-      <th><%= link_to Task.human_attribute_name(:created_at), root_path(search_params: @search, sort_key: 'created_at', sort_val: display_sort_val(@sort_params[:created_at])) %></th>
-      <th><%= link_to Task.human_attribute_name(:due_date), root_path(search_params: @search, sort_key: 'due_date', sort_val: display_sort_val(@sort_params[:due_date])) %></th>
+      <th><%= link_to Task.human_attribute_name(:created_at), root_path(search_parmas: @search, sort_key: 'created_at', sort_val: display_sort_val(@sort_params[:created_at])) %></th>
+      <th><%= link_to Task.human_attribute_name(:due_date), root_path(search_parmas: @search, sort_key: 'due_date', sort_val: display_sort_val(@sort_params[:due_date])) %></th>
       <th></th>
     </tr>
+  </thead>
+  <tbody>
     <% @tasks.each do |task| %>
       <tr>
         <td><%= link_to task.id, task_path(task) %></td>
         <td><%= task.title %></td>
-        <td><%= task.description %></td>
+        <td><%= task.description.truncate(20) %></td>
         <td><%=  Task.human_attribute_name("status.#{task.status}") %>
         <td><%= I18n.l(task.created_at) %>
         <td>
           <%= I18n.l(task.due_date, default: '') %>
         </td>
-        <td><%= link_to I18n.t('common.action.destroy'), task_path(task), method: :delete %></td>
+        <td><%= link_to I18n.t('common.action.destroy'), task_path(task), method: :delete, class: 'btn btn-danger' %></td>
       </tr>
     <% end %>
-  </table>
+  </tbody>
+</table>
 <% else %>
   <p><%= I18n.t('tasks.common.not_found') %></p>
 <% end %>
-<%= paginate @tasks %>
+<div class="d-flex justify-content-center">
+  <%= paginate @tasks %>
+</div>

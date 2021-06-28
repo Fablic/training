@@ -1,18 +1,26 @@
-<%= link_to '編集', edit_task_path(@task) %>
-<%= link_to I18n.t('common.action.destroy'), task_path(@task), method: :delete %>
-<table>
+<div class="mb-2">
+<%= link_to '編集', edit_task_path(@task), class: "btn btn-secondary" %>
+<%= link_to I18n.t('common.action.destroy'), task_path(@task), method: :delete, class: "btn btn-danger" %>
+</div>
+<table class="table table-striped table-bordered">
   <tr>
-    <th><%= Task.human_attribute_name(:id) %></th>
-    <th><%= Task.human_attribute_name(:title) %></th>
-    <th><%= Task.human_attribute_name(:description) %></th>
-    <td><%= Task.human_attribute_name(:status) %></td>
-    <th><%= Task.human_attribute_name(:due_date) %></th>
+    <th style="width: 10%"><%= Task.human_attribute_name(:id) %></th>
+    <td><%= @task.id %></td>
   </tr>
   <tr>
-    <td><%= @task.id %></td>
+    <th style="width: 10%"><%= Task.human_attribute_name(:title) %></th>
     <td><%= @task.title %></td>
-    <td><%= @task.description %></td>
+  </tr>
+  <tr>
+    <th style="width: 10%"><%= Task.human_attribute_name(:description) %></th>
+    <td><%= simple_format(@task.description) %></td>
+  </tr>
+  <tr>
+    <th style="width: 10%"><%= Task.human_attribute_name(:status) %></th>
     <td><%= Task.human_attribute_name("status.#{@task.status}") %></td>
+  </tr>
+  <tr>
+    <th style="width: 10%"><%= Task.human_attribute_name(:due_date) %></th>
     <td><%= I18n.l(@task.due_date, default: '') %></td>
   </tr>
 </table>

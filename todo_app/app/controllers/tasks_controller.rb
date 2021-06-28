@@ -18,7 +18,7 @@ class TasksController < ApplicationController
       flash[:success] = I18n.t('tasks.flash.success.create')
       redirect_to root_path
     else
-      flash.now[:error] = I18n.t('tasks.flash.error.create')
+      flash.now[:danger] = I18n.t('tasks.flash.error.create')
       render :new
     end
   rescue => e
@@ -32,7 +32,7 @@ class TasksController < ApplicationController
       flash[:success] = I18n.t('tasks.flash.success.update')
       redirect_to task_path(@task)
     else
-      flash.now[:error] = I18n.t('tasks.flash.error.update')
+      flash.now[:danger] = I18n.t('tasks.flash.error.update')
       render :edit
     end
   end

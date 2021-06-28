@@ -8,10 +8,36 @@
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-  <body>   
-    <p><%= flash[:success] %></p>
-    <p><%= flash[:error] %></p>
-    <%= yield %>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light p-4 mb-3">
+      <div class="container-fluid">
+        <%= link_to 'TodoApp', root_path, class: 'navbar-brand' %>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0 mt-3 mt-lg-0">
+            <li class="nav-item">
+              <%= render 'tasks/search_form' %>
+            </li>
+          </ul>
+          <% unless request.path.eql?(new_task_path) %>
+            <%= link_to I18n.t('common.action.create') , new_task_path,  class: 'nav-link btn btn-outline-secondary btn-sm', 'aria-current' => 'page' %>
+          <% end %>
+        </div>
+      </div>
+    </nav>
+    <div class="container-fluid mb-3">
+      <% flash.each do |message_type, message| %>
+        <div class="alert mt-3 alert-<%= message_type %>">
+          <%= message %>
+        </div>
+      <% end %>
+      <div class="container">
+        <%= yield %>
+      </div>
+    </div>
   </body>
 </html>

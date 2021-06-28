@@ -1,15 +1,26 @@
 <%= form_with(model: @task) do |f| %>
-  <p><%= f.label :title %></p>
-  <p><%= f.text_field :title %></p>
-  <p><%= f.label :description %></p>
-  <p><%= f.text_area :description %></p>
-  <p><%= f.label :due_date %></p>
-  <p><%= f.datetime_field :due_date %></p>
-  <p><%= f.label :status %></p>
-  <p>
-    <%= f.collection_radio_buttons(:status, Task.statuses, :first, :first, checked: @task.status) do |s| %>
-      <%= s.label { s.radio_button + Task.human_attribute_name("status.#{s.text}")} %>
+  <div class="mb-3">
+    <%= f.label :title, class: 'form-label' %>
+    <%= f.text_field :title, class: 'form-control' %>
+  </div>
+  <div class="mb-3">
+    <%= f.label :description, class: 'form-label' %>
+    <%= f.text_area :description, class: 'form-control' %>
+  </div>
+  <div class="mb-3">
+    <%= f.label :due_date, class: 'form-label' %>
+    <%= f.datetime_field :due_date, class: 'form-control' %>
+  </div>
+  <div class="mb-3">
+    <%= f.label :status , class: 'form-label w-100' %>
+    <%= f.collection_radio_buttons(:status_ids, Task.statuses, :first, :first, checked: @task.status) do |s| %>
+      <%= s.label(class: 'form-check-label') do %>
+        <%= Task.human_attribute_name("status.#{s.text}") %>
+      <% end %>
+      <%= s.radio_button(class: 'form-check-input') do %>
+        <%= s.check_box %>
+　　　  <% end %>
     <% end %>
-  </p>
-  <p><%= f.submit (@task.new_record? ? I18n.t('common.action.create') : I18n.t('common.action.update')) %></p>
+  </div>
+  <p><%= f.submit (@task.new_record? ? I18n.t('common.action.create') : I18n.t('common.action.update')), class: 'btn btn-primary' %></p>
 <% end %>
