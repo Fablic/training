@@ -4,7 +4,8 @@
   <%= button_to "logout", '/logout', method: :delete %>
 
 <% else %>
-  <h1>Welcome,  Stranger. Please sign in if you have an account or sign up</h1>
+  <h1>Welcome,  Stranger. </h1>
+  <p> Please sign in if you have an account or sign up</p>
   <%= button_to "Login", '/login', method: :get %>
   <%= button_to "Sign Up", '/signup', method: :get %>
 <% end %>
