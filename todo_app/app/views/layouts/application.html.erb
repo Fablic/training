@@ -23,9 +23,10 @@
               <%= render 'tasks/search_form' %>
             </li>
           </ul>
-          <% unless request.path.eql?(new_task_path) %>
-            <%= link_to I18n.t('common.action.create') , new_task_path,  class: 'nav-link btn btn-outline-secondary btn-sm', 'aria-current' => 'page' %>
-          <% end %>
+            <% unless request.path.eql?(new_task_path) || !user_signed_in? %>
+              <%= link_to I18n.t('common.action.create') , new_task_path,  class: 'nav-link btn btn-outline-secondary btn-sm', 'aria-current' => 'page' %>
+            <% end %>
+            <%= render 'sessions/link' %>
         </div>
       </div>
     </nav>

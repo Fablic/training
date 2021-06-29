@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  include SessionsHelper
+  before_action :authencate_user
+
   unless Rails.env.development?
     rescue_from StandardError, with: :render_internal_server_error
     rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
@@ -21,5 +24,9 @@ class ApplicationController < ActionController::Base
     logger.info "Rendering 500 with exception: #{error.message}" if error
 
     render template: 'errors/internal_server_error', status: :internal_server_error
+  end
+
+  def authencate_user
+    redirect_to login_path unless user_signed_in?
   end
 end
