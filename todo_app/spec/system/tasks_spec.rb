@@ -2,10 +2,16 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Tasks', type: :sytem do
-  describe '#index' do
-    let!(:old_task) { create(:task, created_at: Faker::Time.backward, due_date: Faker::Time.backward, status: :completed) }
-    let!(:new_task) { create(:task, created_at: Faker::Time.forward, due_date: Faker::Time.forward) }
+RSpec.describe Task, type: :sytem do
+  describe '#index', :require_login do
+    let(:not_logged_in_user) { create(:user) }
+    let!(:old_task) { create(:task, user: user, created_at: Faker::Time.backward, due_date: Faker::Time.backward, status: :completed) }
+    let!(:new_task) { create(:task, user: user, created_at: Faker::Time.forward, due_date: Faker::Time.forward) }
+    let!(:not_logged_in_user_task) { create(:task, user: not_logged_in_user, created_at: Faker::Time.forward, due_date: Faker::Time.forward) }
+    after {
+      expect(page).to_not have_content(not_logged_in_user_task.title)
+      expect(page).to_not have_content(not_logged_in_user_task.description)
+    }
 
     it 'vist tasks/index' do
       visit root_path
@@ -99,7 +105,7 @@ RSpec.describe 'Tasks', type: :sytem do
     end
   end
 
-  describe '#new' do
+  describe '#new', :require_login do
     let(:work_in_progress_status) { Task.human_attribute_name('status.work_in_progress') }
     let(:title) { Faker::Alphanumeric.alphanumeric(number: 10) }
     let(:ja_title) { Task.human_attribute_name(:title) }
@@ -143,8 +149,8 @@ RSpec.describe 'Tasks', type: :sytem do
     end
   end
 
-  describe '#edit' do
-    let(:task) { create(:task, created_at: Faker::Time.backward, due_date: Faker::Time.backward, status: :completed) }
+  describe '#edit', :require_login do
+    let(:task) { create(:task, user: user, created_at: Faker::Time.backward, due_date: Faker::Time.backward, status: :completed) }
     let(:completed_status) { Task.human_attribute_name('status.completed') }
     let(:title) { Faker::Alphanumeric.alphanumeric(number: 10) }
     let(:ja_title) { Task.human_attribute_name(:title) }
@@ -200,8 +206,8 @@ RSpec.describe 'Tasks', type: :sytem do
     end
   end
 
-  describe '#show' do
-    let(:task) { create(:task, created_at: Faker::Time.backward, due_date: Faker::Time.backward, status: :completed) }
+  describe '#show', :require_login do
+    let(:task) { create(:task, user: user, created_at: Faker::Time.backward, due_date: Faker::Time.backward, status: :completed) }
     it 'visit show' do
       visit task_path(task)
 
@@ -213,8 +219,8 @@ RSpec.describe 'Tasks', type: :sytem do
     end
   end
 
-  describe '#destroy' do
-    let(:task) { create(:task, created_at: Faker::Time.backward, due_date: Faker::Time.backward, status: :completed) }
+  describe '#destroy', :require_login do
+    let(:task) { create(:task, user: user, created_at: Faker::Time.backward, due_date: Faker::Time.backward, status: :completed) }
     it 'delete record' do
       visit task_path(task)
 
