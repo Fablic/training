@@ -6,15 +6,15 @@ class TasksController < ApplicationController
   def index
     @sort_params = request_sort_params
     @search = search_params
-    @tasks = Task.page(params[:page]).title_search(@search[:title]).status_search(@search[:status_ids]).sort_tasks(@sort_params)
+    @tasks = current_user.tasks.page(params[:page]).title_search(@search[:title]).status_search(@search[:status_ids]).sort_tasks(@sort_params)
   end
 
   def new
-    @task = Task.new
+    @task = current_user.tasks.new
   end
 
   def create
-    @task = Task.new(task_params)
+    @task = current_user.tasks.new(task_params)
     if @task.save
       redirect_to root_path, flash: { success: I18n.t('tasks.flash.success.create') }
     else
@@ -55,7 +55,7 @@ class TasksController < ApplicationController
   end
 
   def find_task
-    @task = Task.find_by(id: params[:id])
+    @task = current_user.tasks.find_by(id: params[:id])
   end
 
   def request_sort_params
