@@ -13,6 +13,11 @@ ja:
           waiting: 未着手
           work_in_progress: 着手中
           completed: 完了
+        user:
+          id: ID
+          email: メールアドレス
+          password: パスワード
+          password_confirmation: 確認用パスワード
   attributes:
       created_at: 作成日
       updated_at: 更新

@@ -5,6 +5,9 @@ ja:
       update: 更新
       destroy: 削除
       search: 検索
+      registration: 新規登録
+      login: ログイン
+      logout: ログアウト
     error:
       not_found: お探しのページが見つかりません
       internal_server_error: 申し訳ございません、システムエラーが発生しております
@@ -19,6 +22,19 @@ ja:
       error:
         create: '登録失敗'
         update: '更新失敗'
+  users:
+    flash:
+      success:
+        create: '登録完了しました'
+      error:
+        create: '登録に失敗しました'
+  sessions:
+    flash:
+      success:
+        create: 'ログインしました'
+        destroy: 'ログアウトしました'
+      error:
+        create: 'ログインに失敗しました'
   date:
     formats:
       default: "%Y/%m/%d"
