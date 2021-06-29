@@ -16,8 +16,8 @@ class TasksController < ApplicationController
   end
 
   def create
-    task_params.merge(status_id:MasterTaskStatus::NOT_STARTED)
-    @task = Task.new(task_params)
+    create_params = task_params.merge(status_id: MasterTaskStatus::NOT_STARTED)
+    @task = Task.new(create_params)
     respond_to do |format|
       if @task.save
         format.html { redirect_to @task, notice: "タスクを作成しました。" }
