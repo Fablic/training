@@ -12,6 +12,7 @@ ja:
     end_at: "期限"
     created_at: "作成日"
     status: "ステータス"
+    user: "担当者"
   link:
     edit: "編集する"
     delete: "削除する"

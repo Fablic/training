@@ -12,6 +12,7 @@ en:
     end_at: "End Date"
     created_at: "Created"
     status: "status"
+    user: "Assign User"
   link:
     edit: "Edit"
     delete: "Delete"
