@@ -15,7 +15,12 @@
       <h1><%= link_to 'TODO App', root_path %></h1>
       <div class="d-flex gap-2">
         <%= link_to I18n.t(:'button.create'), new_task_path %>
-        <%= link_to 'login', '/login' %>
+        <% if logged_in? %>
+          <%= current_user.username %>
+          <%= link_to 'logout', logout_path %>
+      <% else %>
+          <%= link_to 'login', login_path %>
+        <% end %>
       </div>
     </div>
     <div class="container mt-4">

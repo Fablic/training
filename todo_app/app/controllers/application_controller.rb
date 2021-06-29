@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  include SessionsHelper
   unless Rails.env.development?
     rescue_from StandardError, with: :render_500
     rescue_from ActionController::RoutingError, with: :render_404
