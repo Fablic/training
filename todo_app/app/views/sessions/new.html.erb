@@ -1,8 +1,8 @@
 <div class="container">
   <%= form_with(scope: :session, url: login_path) do |f| %>
-    <%= f.label :email, class: 'form-label' %>
+    <%= f.label :"#{User.human_attribute_name(:email)}", class: 'form-label' %>
     <%= f.email_field :email, class: 'form-control mb-3' %>
-    <%= f.label :password, class: 'form-label' %>
+    <%= f.label :"#{User.human_attribute_name(:password)}", class: 'form-label' %>
     <%= f.password_field :password , class: 'form-control mb-3' %>
     <% if request.path.eql?(sign_up_path) %>
       <%= f.label :password_confirmation, class: 'form-label' %>
