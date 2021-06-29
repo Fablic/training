@@ -13,11 +13,13 @@
   </div>
   <div class="d-flex">
     <div class="w-25"><%= f.label I18n.t(:'task.status') %>:</div>
-    <div class="w-50"><%= f.select :task_status, Task.task_statuses.keys, {}, { class: 'form-select' } %></div>
+    <div class="w-50"><%= f.select :task_status, Task.task_statuses.keys, {}, { class: 'form-select text-uppercase' } %></div>
   </div>
   <div class="d-flex">
     <div class="w-25"><%= f.label I18n.t(:'select_box.user') %>:</div>
-    <div class="w-50"><%= f.collection_select :user_id, @users, :id, :username, {}, { class: 'form-select' } %></div>
+    <div class="w-50"><%= f.collection_select :user_id, @users, :id, :username,
+                                              { selected: @task.user_id.present? ? @task.user_id : @current_user.id },
+                                              { class: 'form-select' } %></div>
   </div>
   <div class="mx-auto">
     <%= f.submit @task.new_record? ? I18n.t(:'button.create') : I18n.t(:'button.edit'), class: 'btn btn-primary' %>

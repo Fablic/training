@@ -1,11 +1,12 @@
 class SessionsController < ApplicationController
+  skip_before_action :authenticate_user
+
   def new
   end
 
   def create
-    session = params[:session]
-    user = User.find_by(email: session[:email].downcase)
-    if user&.authenticate(session[:password])
+    user = User.find_by(email: user_login_params[:email].downcase)
+    if user&.authenticate(user_login_params[:password])
       log_in user
       redirect_to root_path
     else
@@ -17,5 +18,11 @@ class SessionsController < ApplicationController
   def destroy
     log_out
     redirect_to login_path
+  end
+
+  private
+
+  def user_login_params
+    params.require(:session).permit(:email, :password)
   end
 end

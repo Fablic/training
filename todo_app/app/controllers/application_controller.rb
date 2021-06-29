@@ -2,6 +2,8 @@
 
 class ApplicationController < ActionController::Base
   include SessionsHelper
+  before_action :authenticate_user
+
   unless Rails.env.development?
     rescue_from StandardError, with: :render_500
     rescue_from ActionController::RoutingError, with: :render_404
@@ -18,5 +20,9 @@ class ApplicationController < ActionController::Base
     logger.info "Rendering 500 with exception: #{e.message}" if e
 
     render file: Rails.root.join('public/500.html'), status: 500
+  end
+
+  def authenticate_user
+    redirect_to login_path unless logged_in?
   end
 end
