@@ -36,10 +36,22 @@ bundle exec rails assets:clobber
 bundle exec rails webpacker:compile
 ```
 
-5. Rails server
+5. Rails setup
 
 ```
+bundle exec rails db:migrate
+bundle exec rails db:seed
 bundle exec rails server
+```
+
+6. Create test data
+
+```
+bundle exec rails c
+
+> (1..10).each{|n| Task.create(title: Faker::Alphanumeric.alpha(number: 10), task_status: :todo, user_id: User.find_by({ username: 'admin' }).id) }
+> (1..10).each{|n| Task.create(title: Faker::Alphanumeric.alpha(number: 10), task_status: :doing, user_id: User.find_by({ username: 'admin' }).id) }
+> (1..10).each{|n| Task.create(title: Faker::Alphanumeric.alpha(number: 10), task_status: :done, user_id: User.find_by({ username: 'admin' }).id) }
 ```
 
 ## ペーパープロトタイピング
@@ -60,34 +72,13 @@ bundle exec rails server
 |  id  |  integer  | auto_increment | プライマリーキー |
 |  name  |  varchar(255)  | not null  | タスク名, 検索対象 |
 |  description  |  text  | null | タスク説明 |
-|  task_status_id  |  integer  | not null | ステータスリレーションカラム |
-|  task_level_id  |  integer  | null | 優先度リレーションカラム |
-|  task_label_id  |  integer | null  | ラベルリレーションカラム |
-|  user_id  |  integer | null  | ユーザリレーションカラム |
+|  task_status  |  enum(todo, doing, done)  | todo | タスクステータス |
+|  task_level  |  enum(high, middle, low)  | middle | 優先度 |
+|  task_label_id  |  integer | null  | ラベルリレーションカラム, FK |
+|  user_id  |  uuid | not null  | ユーザリレーションカラム, FK |
 |  end_at  |  datetime  | null  | 終了期限 |
 |  created_at  |  datetime | default now() | 作成日時 |
 |  updated_at  |  datetime | default updated now() | 更新日時 |
-|  deleted_at  |  datetime  | null  | 削除日時 |
-
-### task_statuses ステータス
-
-|  Column  |  Type  | Default  |  Description  |
-| ---- | ---- | ---- | ---- |
-|  id  |  integer  | not null | プライマリーキー |
-|  name  |  varchar(10)  | not null | ステータス名 |
-|  priority  |  integer  | not null | 表示順 |
-
-> 未着手・着手・完了の固定の値が入る予定
-
-### task_levels 優先度
-
-|  Column  |  Type  | Default  |  Description  |
-| ---- | ---- | ---- | ---- |
-|  id  |  integer  | not null | プライマリーキー |
-|  name  |  varchar(10)  | not null | 優先度名 |
-|  priority  |  integer  | not null | 表示順 |
-
-> High・Middle・Lowの固定の値が入る予定
 
 ### task_labels タスクラベル（多対多リレーション）
 
@@ -97,6 +88,7 @@ bundle exec rails server
 |  task_id  |  integer  | not null | タスクリレーションカラム |
 |  label_id  |  integer  | not null | ラベルリレーションカラム |
 |  created_at  |  datetime | default now() | 作成日時 |
+|  updated_at  |  datetime | default updated now() | 更新日時 |
 
 > unique制約 taskId, labelId
 
@@ -108,6 +100,7 @@ bundle exec rails server
 |  name  |  varchar(50)  | not null | ラベル名 |
 |  color  |  enum(red, yellow, green,...)  | null | カラー |
 |  created_at  |  datetime | default now() | 作成日時 |
+|  updated_at  |  datetime | default updated now() | 更新日時 |
 
 > unique制約 name
 
@@ -115,20 +108,13 @@ bundle exec rails server
 
 |  Column  |  Type  | Default  |  Description  |
 | ---- | ---- | ---- | ---- |
-|  id  |  integer  | auto_increment | プライマリーキー |
+|  id  |  uuid  | auto_increment | プライマリーキー |
 |  username  |  varchar(20)  | not null | ユーザ名 |
 |  icon  |  varchar(255)  | null | アイコン画像URL |
 |  role  |  enum(normal, maintainer)  | default normal | 権限 |
+|  email  |  varchar(255)  | not null | メールアドレス |
+|  password_digest  |  varchar(255)  | not null | パスワード |
 |  created_at  |  datetime | default now() | 作成日時 |
 |  updated_at  |  datetime | default updated now() | 更新日時 |
-|  deleted_at  |  datetime  | null  | 削除日時 |
 
 > unique制約 username
-
-### user_secrets ユーザ秘匿情報
-
-|  Column  |  Type  | Default  |  Description  |
-| ---- | ---- | ---- | ---- |
-|  user_id  |  integer  | not null | ユーザリレーションカラム, プライマリーキー |
-|  email  |  varchar(255)  | not null | メールアドレス |
-|  password_hash  |  varchar(255)  | not null | パスワード |
