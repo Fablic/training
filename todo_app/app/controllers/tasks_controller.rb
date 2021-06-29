@@ -2,6 +2,7 @@
 
 class TasksController < ApplicationController
   before_action :find_item, only: [:show, :edit, :update, :destroy]
+  before_action :get_users, only: [:new, :edit]
 
   def index
     @keyword = params[:keyword]
@@ -58,8 +59,12 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
   end
 
+  def get_users
+    @users = User.all
+  end
+
   def task_params
-    params.require(:task).permit(:title, :description, :end_at, :task_status)
+    params.require(:task).permit(:title, :description, :end_at, :task_status, :user_id)
   end
 
   def create_sort_query

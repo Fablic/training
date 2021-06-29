@@ -160,11 +160,12 @@ RSpec.describe 'Tasks', type: :system do
 
   describe 'タスク新規作成' do
     context '正常時' do
-      xit 'タスクを作成できる' do
+      it 'タスクを作成できる' do
         visit new_task_path
 
         fill_in 'task_title', with: 'タスクの新規作成'
         fill_in 'task_description', with: 'タスクの説明'
+        select 'admin', from: 'task_user_id'
         click_button 'Create'
 
         expect(page).to have_content 'タスクの新規作成'
