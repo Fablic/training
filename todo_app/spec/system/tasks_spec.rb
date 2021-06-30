@@ -7,7 +7,7 @@ RSpec.describe 'Tasks', type: :system do
   let!(:task1) { create(:task, title: 'タイトル1', end_at: Time.current.change(sec: 0, usec: 0), user_id: user.id) }
   let!(:task2) { create(:past_task, title: 'タイトル2', end_at: Time.current.yesterday.change(sec: 0, usec: 0), user_id: user.id) }
 
-  describe 'タスク一覧' do
+  describe 'タスク一覧', :require_login do
     context '正常時' do
       it 'タスク一覧が表示されている (/)' do
         visit root_path
@@ -48,7 +48,7 @@ RSpec.describe 'Tasks', type: :system do
     end
   end
 
-  describe 'タスク検索' do
+  describe 'タスク検索', :require_login do
     context '正常時' do
       let!(:doing_task) { create(:task, title: 'Railsを勉強する', task_status: :doing, user_id: user.id) }
       let!(:done_task) { create(:task, title: '英語を勉強する', task_status: :done, user_id: user.id) }
@@ -93,7 +93,7 @@ RSpec.describe 'Tasks', type: :system do
     end
   end
 
-  describe 'タスク詳細' do
+  describe 'タスク詳細', :require_login do
     context '正常時' do
       it 'タスク詳細が表示される' do
         visit task_path(task1)
@@ -104,7 +104,7 @@ RSpec.describe 'Tasks', type: :system do
     end
   end
 
-  describe 'タスク編集' do
+  describe 'タスク編集', :require_login do
     context '正常時' do
       it 'タスクを変更できる' do
         visit edit_task_path(task1)
@@ -157,7 +157,7 @@ RSpec.describe 'Tasks', type: :system do
     end
   end
 
-  describe 'タスク新規作成' do
+  describe 'タスク新規作成', :require_login do
     context '正常時' do
       it 'タスクを作成できる' do
         visit new_task_path
@@ -173,7 +173,7 @@ RSpec.describe 'Tasks', type: :system do
     end
   end
 
-  describe 'タスク削除' do
+  describe 'タスク削除', :require_login do
     context '正常時' do
       it 'タスクを削除できる' do
         visit tasks_path

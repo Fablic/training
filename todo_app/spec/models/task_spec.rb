@@ -82,28 +82,28 @@ RSpec.describe Task, type: :model do
       let!(:done_task) { create(:task, title: '英語を勉強する', task_status: :done, user_id: user.id) }
 
       context 'search keyword' do
-        result = Task.search('Java', nil, nil)
+        result = Task.search('Java', nil, nil, nil)
 
         it { expect(result.length).to match 1 }
         it { expect(result[0].title).to match 'Javaを勉強する' }
       end
 
       context 'search status' do
-        result = Task.search(nil, :todo, nil)
+        result = Task.search(nil, :todo, nil, nil)
 
         it { expect(result.length).to match 1 }
         it { expect(result[0].title).to match 'Javaを勉強する' }
       end
 
       context 'search keyword & status' do
-        result = Task.search('英語', :doing, nil)
+        result = Task.search('英語', :doing, nil, nil)
 
         it { expect(result.length).to match 1 }
         it { expect(result[0].title).to match '英語を1時間勉強する' }
       end
 
       context 'search keyword & status & sort' do
-        result = Task.search('英語', nil, { end_at: 'asc' })
+        result = Task.search('英語', nil, nil, { end_at: 'asc' })
 
         it { expect(result.length).to match 2 }
         it { expect(result[0].title).to match '英語を1時間勉強する' }
@@ -111,7 +111,7 @@ RSpec.describe Task, type: :model do
       end
 
       context 'search none' do
-        result = Task.search(nil, nil, nil)
+        result = Task.search(nil, nil, nil, nil)
 
         it { expect(result.length).to match 3 }
         it { expect(result[0].title).to match 'Javaを勉強する' }

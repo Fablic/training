@@ -25,7 +25,15 @@
     </div>
     <div class="container mt-4">
       <% flash.each do |message_type, message| %>
-        <%= message %>
+        <% if message_type == 'success' %>
+          <div class="alert alert-success"><%= message %></div>
+        <% end %>
+        <% if message_type == 'warning' %>
+          <div class="alert alert-warning"><%= message %></div>
+        <% end %>
+        <% if message_type == 'error' %>
+          <div class="alert alert-danger"><%= message %></div>
+        <% end %>
       <% end %>
       <%= yield %>
     </div>

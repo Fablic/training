@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'ApplicationController', type: :system do
-  describe 'エラーハンドリング' do
+  describe 'エラーハンドリング', :require_login do
     context '存在しないパスにアクセスするとき' do
       it '404ページが表示されること' do
         visit '/hoge'
