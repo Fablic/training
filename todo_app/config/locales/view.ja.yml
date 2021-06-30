@@ -13,6 +13,7 @@ ja:
       not_found: お探しのページが見つかりません
       internal_server_error: 申し訳ございません、システムエラーが発生しております
   tasks:
+    other: "%{count}件"
     common:
       create: 新規タスク作成
       to_root: TodoAppトップ画面へ
@@ -32,7 +33,7 @@ ja:
       success:
         create: '登録完了しました'
         update: '更新しました'
-        destroy: 'しました'
+        destroy: '削除しました'
       error:
         create: '登録に失敗しました'
         update: '更新に失敗しました'

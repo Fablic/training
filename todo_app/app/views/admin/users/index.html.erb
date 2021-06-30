@@ -7,6 +7,7 @@
       <tr>
         <th><%= User.human_attribute_name(:id) %></th>
         <th><%= User.human_attribute_name(:email) %></th>
+        <th><%= User.human_attribute_name(:tasks_count) %></th>
         <th></th>
         <th></th>
       </tr>
@@ -16,6 +17,7 @@
         <tr>
           <td><%= admin_user.id %></td>
           <td><%= admin_user.email %></td>
+          <td><%=  I18n.t(:tasks, count: admin_user.tasks.to_a.count) %></td>
           <td><%= link_to I18n.t('common.action.edit'), edit_admin_user_path(admin_user), class: 'btn btn-secondary' %></<td>
           <td><%= link_to I18n.t('common.action.destroy'), admin_user_path(admin_user), method: :delete, class: 'btn btn-danger' %></<td>
         </tr>

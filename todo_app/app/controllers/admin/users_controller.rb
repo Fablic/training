@@ -7,7 +7,7 @@ module Admin
     before_action :find_admin_user, only: %i[edit update destroy]
 
     def index
-      @admin_users = User.all.page(params[:page])
+      @admin_users = User.includes(:tasks).page(params[:page])
     end
 
     def new
@@ -36,7 +36,7 @@ module Admin
     end
 
     def destroy
-      @admin_user.delete
+      @admin_user.destroy
       redirect_to admin_users_path, flash: { success: I18n.t('users.flash.success.destroy') }
     end
 
