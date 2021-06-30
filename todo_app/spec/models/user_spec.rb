@@ -80,7 +80,7 @@ RSpec.describe User, type: :model do
       end
 
       context 'invalid email length' do
-        let(:username) { Faker::Alphanumeric.alpha(number: 248) + '@a.com' }
+        let(:username) { "#{Faker::Alphanumeric.alpha(number: 248)}@a.com" }
         let(:email) { 'admin-user@example.com' }
         let(:role) { :admin }
         let(:icon) { nil }
