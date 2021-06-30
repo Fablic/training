@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  namespace :admin do
+    root to: 'users#index'
+    resources :users
+  end
+
   root to: 'tasks#index'
   resources :tasks
 
