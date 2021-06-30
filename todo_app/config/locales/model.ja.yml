@@ -1,7 +1,8 @@
 ja:
   activerecord:
     models:
-      task: タスク
+      task: タスク 
+      user: ユーザー
     attributes:
         task:
           id: ID

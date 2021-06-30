@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>TodoApp</title>
+    <title>TodoApp管理画面</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -11,22 +11,22 @@
     <%= stylesheet_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light p-4 mb-3">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-4 mb-3">
       <div class="container-fluid">
-        <%= link_to 'TodoApp', root_path, class: 'navbar-brand' %>
+        <%= link_to 'TodoApp管理画面', admin_root_path, class: 'navbar-brand' %>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <% if user_signed_in? %>
           <ul class="navbar-nav me-auto mb-2 mb-lg-0 mt-3 mt-lg-0">
             <li class="nav-item">
-              <%= render 'tasks/search_form' %>
+            <%= link_to User.model_name.human, admin_root_path, class: 'nav-link active mt-3 mt-lg-0 ms-3', 'aria-current': 'page' %>
             </li>
           </ul>
-            <% unless request.path.eql?(new_task_path) || !user_signed_in? %>
-              <%= link_to I18n.t('tasks.common.create') , new_task_path,  class: 'nav-link btn btn-outline-secondary btn-sm', 'aria-current' => 'page' %>
-            <% end %>
-            <%= render 'sessions/link' %>
+          <%= link_to I18n.t('tasks.common.to_root'), root_path, class: 'nav-link btn btn-outline-success text-light btn-sm ms-0 ms-lg-3 mt-3 mt-lg-0', 'aria-current': 'page' %>
+          <%= link_to I18n.t('common.action.logout'), logout_path, class: 'btn btn-outline-light btn-sm ms-0 ms-lg-3 mt-3 mt-lg-0', 'aria-current': 'page', method: :delete %>
+        <% end %>
         </div>
       </div>
     </nav>

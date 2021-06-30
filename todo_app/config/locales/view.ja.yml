@@ -5,6 +5,7 @@ ja:
       update: 更新
       destroy: 削除
       search: 検索
+      edit: 編集
       registration: 新規登録
       login: ログイン
       logout: ログアウト
@@ -13,6 +14,8 @@ ja:
       internal_server_error: 申し訳ございません、システムエラーが発生しております
   tasks:
     common:
+      create: 新規タスク作成
+      to_root: TodoAppトップ画面へ
       not_found: タスクが見つかりません
     flash:
       success:
@@ -23,11 +26,16 @@ ja:
         create: '登録失敗'
         update: '更新失敗'
   users:
+    common:
+      not_found: ユーザーが見つかりません
     flash:
       success:
         create: '登録完了しました'
+        update: '更新しました'
+        destroy: 'しました'
       error:
         create: '登録に失敗しました'
+        update: '更新に失敗しました'
   sessions:
     flash:
       success:

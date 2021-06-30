@@ -1,0 +1,30 @@
+<div class="mb-2">
+<%= link_to I18n.t('common.action.create'), new_admin_user_path, class: "btn btn-primary" %>
+</div>
+<% if @admin_users.present? %>
+  <table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th><%= User.human_attribute_name(:id) %></th>
+        <th><%= User.human_attribute_name(:email) %></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @admin_users.each do |admin_user| %>
+        <tr>
+          <td><%= admin_user.id %></td>
+          <td><%= admin_user.email %></td>
+          <td><%= link_to I18n.t('common.action.edit'), edit_admin_user_path(admin_user), class: 'btn btn-secondary' %></<td>
+          <td><%= link_to I18n.t('common.action.destroy'), admin_user_path(admin_user), method: :delete, class: 'btn btn-danger' %></<td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <div class="d-flex justify-content-center">
+    <%= paginate @admin_users %>
+  </div>
+<% else %>
+  <p><%= I18n.t('users.common.not_found') %></p>
+<% end %>

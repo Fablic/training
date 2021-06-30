@@ -1,0 +1,10 @@
+<%= render 'layouts/error', model: @admin_user %>
+<%= form_with(model: @admin_user, url: url) do |f| %>
+  <%= f.label :email, class: 'form-label' %>
+  <%= f.email_field :email, class: 'form-control mb-3' %>
+  <%= f.label :password, class: 'form-label' %>
+  <%= f.password_field :password , class: 'form-control mb-3' %>
+  <%= f.label :password_confirmation, class: 'form-label' %>
+  <%= f.password_field :password_confirmation , class: 'form-control mb-3' %>
+  <%= f.submit (request.path.eql?(new_admin_user_path) ? I18n.t('common.action.create') : I18n.t('common.action.update')) %>
+<% end %>
