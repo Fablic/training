@@ -7,7 +7,7 @@ class TasksController < ApplicationController
   def index
     @keyword = params[:keyword]
     @status = params[:status]
-    @tasks = Task.preload(:user)
+    @tasks = Task.eager_load(:user)
                  .search(@keyword, @status, create_sort_query)
                  .page(params[:page])
   end
