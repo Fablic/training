@@ -7,8 +7,14 @@ class TasksController < ApplicationController
   def index
     @keyword = params[:keyword]
     @status = params[:status]
+    @user_id = params[:user_id] if params[:user_id].present?
+    @user_id = if params[:user_id].present?
+                 params[:user_id]
+               elsif @current_user.present?
+                 @current_user.id
+               end
     @tasks = Task.preload(:user)
-                 .search(@keyword, @status, create_sort_query)
+                 .search(@keyword, @status, @user_id, create_sort_query)
                  .page(params[:page])
   end
 
