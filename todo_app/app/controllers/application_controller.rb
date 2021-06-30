@@ -5,21 +5,21 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user
 
   unless Rails.env.development?
-    rescue_from StandardError, with: :render_500
-    rescue_from ActionController::RoutingError, with: :render_404
-    rescue_from ActiveRecord::RecordNotFound, with: :render_404
+    rescue_from StandardError, with: :render500
+    rescue_from ActionController::RoutingError, with: :render404
+    rescue_from ActiveRecord::RecordNotFound, with: :render404
   end
 
-  def render_404(e = nil)
-    logger.info "Rendering 404 with exception: #{e.message}" if e
+  def render404(err = nil)
+    logger.info "Rendering 404 with exception: #{err.message}" if err
 
-    render file: Rails.root.join('public/404.html'), status: 404
+    render file: Rails.root.join('public/404.html'), status: :not_found
   end
 
-  def render_500(e = nil)
-    logger.info "Rendering 500 with exception: #{e.message}" if e
+  def render500(err = nil)
+    logger.info "Rendering 500 with exception: #{err.message}" if err
 
-    render file: Rails.root.join('public/500.html'), status: 500
+    render file: Rails.root.join('public/500.html'), status: :internal_server_error
   end
 
   def authenticate_user

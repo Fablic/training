@@ -80,8 +80,7 @@ RSpec.describe 'Tasks', type: :system do
 
     context '連続して検索条件を変更する' do
       let!(:todo_task) { create(:task, title: 'タスクの1番目', task_status: :todo, user_id: user.id) }
-      let!(:todo_past_task) { create(:task, title: 'タスクの2番目', task_status: :todo,
-                                     end_at: Time.current.yesterday.change(sec: 0, usec: 0), user_id: user.id) }
+      let!(:todo_past_task) { create(:task, title: 'タスクの2番目', task_status: :todo, end_at: Time.current.yesterday.change(sec: 0, usec: 0), user_id: user.id) }
 
       it 'keyword, statusで検索' do
         visit root_path(keyword: 'タイトル1')
