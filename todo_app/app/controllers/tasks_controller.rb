@@ -2,7 +2,7 @@
 
 class TasksController < ApplicationController
   before_action :find_item, only: %i[show edit update destroy]
-  before_action :all_users, only: %i[new edit]
+  before_action :all_users, :selected_user_id, only: %i[new edit]
 
   def index
     @keyword = params[:keyword]
@@ -66,6 +66,14 @@ class TasksController < ApplicationController
 
   def all_users
     @users = User.all
+  end
+
+  def selected_user_id
+    @selected_user_id = if @task.present? && @task.user_id.present?
+                          @task.user_id
+                        elsif @current_user.present?
+                          @current_user.id
+                        end
   end
 
   def task_params
