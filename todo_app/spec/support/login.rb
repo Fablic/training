@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.shared_context 'set_user' do
-  let(:user) { create(:normal_user) }
+  let(:user) { create(:admin_user) }
   before do
     login_as(user)
   end
