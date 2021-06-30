@@ -8,13 +8,13 @@ class ApplicationController < ActionController::Base
   end
 
   def render404(err = nil)
-    logger.info "Rendering 404 with exception: #{e.message}" if err
+    logger.info "Rendering 404 with exception: #{err.message}" if err
 
     render file: Rails.root.join('public/404.html'), status: :not_found
   end
 
   def render500(err = nil)
-    logger.info "Rendering 500 with exception: #{e.message}" if err
+    logger.info "Rendering 500 with exception: #{err.message}" if err
 
     render file: Rails.root.join('public/500.html'), status: :internal_server_error
   end
