@@ -1,34 +1,53 @@
 <h1>Tasks</h1>
 
+<div class="dialog bg-light p-5 rounded-lg mb-3">
+  <%= search_form_for @q do |f| %>
+    <div class="row">
+      <div class="field col-md-6 mb-3">
+        <%= f.search_field :name_cont, class: "form-control", placeholder: "Task Name" %>
+      </div>
+      <div class="field col-md-6 mb-3">
+        <%= f.select :status_eq, content_tag(:option, 'Select status', value: "") + options_for_select(Task.statuses.map { |k, v| [k, v] }, @q.status_eq), {}, { class: 'form-control' } %>
+      </div>
+    </div>
+    <%= f.submit "Search", class: 'btn btn-secondary float-end' %>
+  <% end %>
+</div>
+
 <table class="table table-striped table-hover">
   <thead class="table-dark">
-    <tr>
-      <th>Name</th>
-      <th>Desc</th>
-      <th>Status</th>
-      <th>Label</th>
-      <th>Priority</th>
-      <th><%= link_to 'Created at', root_path(sort_key: 'created_at', sort_val: sort_val_helper(@sort[:created_at])) %></th>
-      <th><%= link_to 'Due date', root_path(sort_key: 'due_date', sort_val: sort_val_helper(@sort[:due_date])) %></th>
-      <th colspan="3"></th>
-    </tr>
+  <tr>
+    <th>#</th>
+    <th>Name</th>
+    <th>Desc</th>
+    <th>Status</th>
+    <th>Label</th>
+    <th>Priority</th>
+    <th>Created at</th>
+    <th><%= sort_link(@q, :due_date) do %>
+        Due date
+      <% end %>
+    </th>
+    <th colspan="3"></th>
+  </tr>
   </thead>
 
   <tbody>
-    <% @tasks.each do |task| %>
-      <tr>
-        <td class="task-name"><%= task.name %></td>
-        <td><%= task.desc %></td>
-        <td><%= Task.statuses.key(task.status) %></td>
-        <td><%= task.label %></td>
-        <td><%= Task.priorities.key(task.priority) %></td>
-        <td><%= task.created_at.strftime("%Y/%m/%d %H:%M") %></td>
-        <td><%= task.due_date.strftime("%Y/%m/%d %H:%M") %></td>
-        <td><%= link_to 'Show', task, class: 'btn btn-secondary' %></td>
-        <td><%= link_to 'Edit', edit_task_path(task), class: 'btn btn-dark' %></td>
-        <td><%= link_to 'Delete', task, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %></td>
-      </tr>
-    <% end %>
+  <% @tasks.each_with_index do |task, idx| %>
+    <tr>
+      <td><%= idx + 1 %></td>
+      <td class="task-name"><%= task.name %></td>
+      <td><%= task.desc %></td>
+      <td><%= Task.statuses.key(task.status) %></td>
+      <td><%= task.label %></td>
+      <td><%= Task.priorities.key(task.priority) %></td>
+      <td><%= task.created_at.strftime("%Y/%m/%d %H:%M:%S") %></td>
+      <td><%= task.due_date.strftime("%Y/%m/%d %H:%M:%S") %></td>
+      <td><%= link_to 'Show', task, class: 'btn btn-secondary' %></td>
+      <td><%= link_to 'Edit', edit_task_path(task), class: 'btn btn-dark' %></td>
+      <td><%= link_to 'Delete', task, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %></td>
+    </tr>
+  <% end %>
   </tbody>
 </table>
 
