@@ -5,7 +5,8 @@ class User < ApplicationRecord
   include IdGenerator
   validates :username,
     presence: true,
-    length: { maximum: 20 }
+    length: { maximum: 20 },
+    uniqueness: { case_sensitive: false }
 
   validates :email,
     presence: true,

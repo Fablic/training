@@ -60,6 +60,15 @@ RSpec.describe User, type: :model do
         it { is_expected.to_not be_valid }
       end
 
+      context 'invalid username is duplicate' do
+        let!(:exist_user) { create(:admin_user) }
+
+        it 'cannot save record' do
+          @duplicate_user = build(:normal_user, username: 'admin')
+          expect(@duplicate_user.save).to eq(false)
+        end
+      end
+
       context 'invalid email nil' do
         let(:username) { 'admin-user' }
         let(:email) { nil }
@@ -78,6 +87,15 @@ RSpec.describe User, type: :model do
         let(:password_digest) { 'xxxxyyyy1234' }
 
         it { is_expected.to_not be_valid }
+      end
+
+      context 'invalid email is duplicate' do
+        let!(:exist_user) { create(:admin_user) }
+
+        it 'cannot save record' do
+          @duplicate_user = build(:normal_user, email: 'admin@a.com')
+          expect(@duplicate_user.save).to eq(false)
+        end
       end
 
       context 'invalid email regex error' do
