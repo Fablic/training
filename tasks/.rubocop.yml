@@ -1,0 +1,59 @@
+HashSyntax:
+  EnforcedStyle: ruby19
+
+require:
+  - rubocop-rails
+
+# 対象外
+AllCops:
+  Exclude:
+    - "vendor/**/*"
+    - "bin/**"
+    - "db/schema.rb"
+    - "node_modules/**/*"
+    - "tmp/**/*"
+    - "lib/**/*"
+    - "test/**/*"
+    - "Gemfile"
+    - "Rakefile"
+  DisplayCopNames: true
+  TargetRubyVersion: 2.5.7
+
+##################### Style ##################################
+
+# trueかfalseを設定しないと警告が出る
+Style/HashEachMethods:
+  Enabled: true
+
+Style/HashTransformKeys:
+  Enabled: true
+
+Style/HashTransformValues:
+  Enabled: true
+
+# 日本語のコメントを許可する
+Style/AsciiComments:
+  Enabled: false
+
+#文字列をfreezeするか
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+##################### Metrics ##################################
+
+# 1行の文字数
+Metrics/LineLength:
+  Max: 160
+  Exclude:
+    - "db/migrate/*.rb"
+
+# ブロックの行数
+Metrics/BlockLength:
+  Enabled: false
+
+##################### Naming ##################################
+
+# 「FactoryBot」をスネークケースにする警告を除外するため
+Naming/FileName:
+  Exclude:
+    - "spec/factories/*.rb"
