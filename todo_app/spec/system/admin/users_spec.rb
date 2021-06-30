@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe 'Admin::Users', type: :system do
-
   describe '#index', :require_login do
     it 'visit /admin' do
       visit admin_root_path
