@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Sessions', type: :sytem do
+RSpec.describe 'Sessions', type: :system do
   describe '#new' do
     before {
       create(:user)

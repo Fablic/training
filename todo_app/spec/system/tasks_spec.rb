@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Task, type: :sytem do
+RSpec.describe Task, type: :system do
   describe '#index', :require_login do
     let(:not_logged_in_user) { create(:user) }
     let!(:old_task) { create(:task, user: user, created_at: Faker::Time.backward, due_date: Faker::Time.backward, status: :completed) }

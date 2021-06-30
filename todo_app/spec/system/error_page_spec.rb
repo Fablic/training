@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'error_page', type: :sytem do
+RSpec.describe 'error_page', type: :system do
   describe 'page not found', :require_login do
     it 'display not found page' do
       visit '404test/task'
