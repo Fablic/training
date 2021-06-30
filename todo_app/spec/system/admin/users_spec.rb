@@ -92,4 +92,17 @@ RSpec.describe 'Admin::Users', type: :system do
       expect(page).to_not have_content(delete_user.email)
     end
   end
+
+  describe '#tasks', :require_login do
+    let!(:new_user) { create(:user) }
+    let!(:current_user_task) { create(:task, user: user) }
+    let!(:new_user_task) { create(:task, user: new_user) }
+    it 'find current user tasks' do
+      visit tasks_admin_user_path(user)
+
+      expect(current_path).to eq tasks_admin_user_path(user)
+      expect(page).to have_content(current_user_task.title)
+      expect(page).to_not have_content(new_user_task.title)
+    end
+  end
 end

@@ -1,5 +1,5 @@
-<%= render 'layouts/error', model: @admin_user %>
-<%= form_with(model: @admin_user, url: url) do |f| %>
+<%= render 'layouts/error', model: @user %>
+<%= form_with(model: @user, url: url) do |f| %>
   <%= f.label :email, class: 'form-label' %>
   <%= f.email_field :email, class: 'form-control mb-3' %>
   <%= f.label :password, class: 'form-label' %>

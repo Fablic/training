@@ -3,7 +3,9 @@
 Rails.application.routes.draw do
   namespace :admin do
     root to: 'users#index'
-    resources :users
+    resources :users do
+      get 'tasks', on: :member
+    end
   end
 
   root to: 'tasks#index'

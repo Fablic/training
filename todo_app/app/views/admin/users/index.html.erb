@@ -1,7 +1,7 @@
 <div class="mb-2">
 <%= link_to I18n.t('common.action.create'), new_admin_user_path, class: "btn btn-primary" %>
 </div>
-<% if @admin_users.present? %>
+<% if @users.present? %>
   <table class="table table-striped table-bordered">
     <thead>
       <tr>
@@ -13,11 +13,11 @@
       </tr>
     </thead>
     <tbody>
-      <% @admin_users.each do |admin_user| %>
+      <% @users.each do |admin_user| %>
         <tr>
           <td><%= admin_user.id %></td>
           <td><%= admin_user.email %></td>
-          <td><%=  I18n.t(:tasks, count: admin_user.tasks.to_a.count) %></td>
+          <td><%=  link_to I18n.t(:tasks, count: admin_user.tasks.to_a.count), tasks_admin_user_path(admin_user) %></td>
           <td><%= link_to I18n.t('common.action.edit'), edit_admin_user_path(admin_user), class: 'btn btn-secondary' %></<td>
           <td><%= link_to I18n.t('common.action.destroy'), admin_user_path(admin_user), method: :delete, class: 'btn btn-danger' %></<td>
         </tr>
@@ -25,7 +25,7 @@
     </tbody>
   </table>
   <div class="d-flex justify-content-center">
-    <%= paginate @admin_users %>
+    <%= paginate @users %>
   </div>
 <% else %>
   <p><%= I18n.t('users.common.not_found') %></p>

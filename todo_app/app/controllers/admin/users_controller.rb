@@ -4,20 +4,20 @@ module Admin
   class UsersController < ApplicationController
     layout 'admin'
 
-    before_action :find_admin_user, only: %i[edit update destroy]
+    before_action :find_admin_user, only: %i[edit update destroy tasks]
 
     def index
-      @admin_users = User.includes(:tasks).page(params[:page])
+      @users = User.includes(:tasks).page(params[:page])
     end
 
     def new
-      @admin_user = User.new
+      @user = User.new
     end
 
     def edit; end
 
     def update
-      if @admin_user.update(admin_user_params)
+      if @user.update(admin_user_params)
         redirect_to admin_users_path, flash: { success: I18n.t('users.flash.success.update') }
       else
         flash.now[:danger] = I18n.t('users.flash.error.update')
@@ -26,8 +26,8 @@ module Admin
     end
 
     def create
-      @admin_user = User.new(admin_user_params)
-      if @admin_user.save
+      @user = User.new(admin_user_params)
+      if @user.save
         redirect_to admin_users_path, flash: { success: I18n.t('users.flash.success.create') }
       else
         flash.now[:danger] = I18n.t('users.flash.error.create')
@@ -36,8 +36,12 @@ module Admin
     end
 
     def destroy
-      @admin_user.destroy
+      @user.destroy
       redirect_to admin_users_path, flash: { success: I18n.t('users.flash.success.destroy') }
+    end
+
+    def tasks
+      @tasks = @user.tasks.page(params[:page])
     end
 
     private
@@ -47,7 +51,7 @@ module Admin
     end
 
     def find_admin_user
-      @admin_user = User.find_by(id: params[:id])
+      @user = User.find_by(id: params[:id])
     end
   end
 end
