@@ -59,7 +59,7 @@ RSpec.describe Task, type: :model do
 
       context 'invalid user_id is nil' do
         let(:title) { random_str }
-        let(:description) { Faker::Alphanumeric.alpha(number: 5001) }
+        let(:description) { Faker::Alphanumeric.alpha(number: 10) }
         let(:task_status) { :todo }
         let(:user_id) { nil }
 
@@ -68,7 +68,7 @@ RSpec.describe Task, type: :model do
 
       context 'invalid user_id is not found' do
         let(:title) { random_str }
-        let(:description) { Faker::Alphanumeric.alpha(number: 5001) }
+        let(:description) { Faker::Alphanumeric.alpha(number: 10) }
         let(:task_status) { :todo }
         let(:user_id) { 'hoge-hoge-uuid' }
 
