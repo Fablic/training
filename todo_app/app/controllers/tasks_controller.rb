@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class TasksController < ApplicationController
-  before_action :find_item, only: [:show, :edit, :update, :destroy]
-  before_action :get_users, only: [:new, :edit]
+  before_action :find_item, only: %i[show edit update destroy]
+  before_action :all_users, only: %i[new edit]
 
   def index
     @keyword = params[:keyword]
@@ -59,7 +59,7 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
   end
 
-  def get_users
+  def all_users
     @users = User.all
   end
 
