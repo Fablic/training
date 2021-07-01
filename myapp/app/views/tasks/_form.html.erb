@@ -35,6 +35,10 @@
     <%= form.datetime_local_field :due_date, class: "form-control", placeholder: "Priority"%>
   </div>
 
+<!-- TODO: add user list to add assignee-->
+<!--  <div class="field mb-3">-->
+    <%#= form.select :assignee, User,{selected: @task.priority || "", disabled: "", prompt: 'Please select priority'}, class: "form-control", placeholder: "Priority"%>
+<!--  </div>-->
 
   <div class="actions">
     <%= form.submit class: 'btn btn-secondary' %>
