@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_22_061014) do
+ActiveRecord::Schema.define(version: 2021_06_28_050541) do
 
   create_table "tasks", charset: "utf8mb4", force: :cascade do |t|
     t.string "title", null: false
@@ -19,10 +19,25 @@ ActiveRecord::Schema.define(version: 2021_06_22_061014) do
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "end_at"
     t.integer "task_status", default: 0
+    t.string "user_id"
     t.index ["created_at"], name: "index_tasks_on_created_at"
     t.index ["end_at"], name: "index_tasks_on_end_at"
     t.index ["task_status"], name: "index_tasks_on_task_status"
     t.index ["title"], name: "index_tasks_on_title"
+    t.index ["user_id"], name: "index_tasks_on_user_id"
   end
 
+  create_table "users", id: { type: :string, limit: 36, comment: "プライマリキー" }, charset: "utf8mb4", force: :cascade do |t|
+    t.string "username", limit: 20, null: false
+    t.string "icon"
+    t.integer "role", default: 0
+    t.string "email", null: false
+    t.string "password_digest", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["username"], name: "index_users_on_username", unique: true
+  end
+
+  add_foreign_key "tasks", "users"
 end

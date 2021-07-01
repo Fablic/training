@@ -5,7 +5,8 @@ require 'rails_helper'
 RSpec.describe Task, type: :model do
   describe 'validation' do
     subject { build(:task, params) }
-    let(:params) { { title: title, description: description, task_status: task_status } }
+    let(:user) { create(:admin_user) }
+    let(:params) { { title: title, description: description, task_status: task_status, user_id: user_id } }
     let(:random_str) { Faker::Alphanumeric.alpha(number: 10) }
 
     describe 'valid' do
@@ -13,6 +14,7 @@ RSpec.describe Task, type: :model do
         let(:title) { random_str }
         let(:description) { random_str }
         let(:task_status) { :todo }
+        let(:user_id) { user.id }
 
         it { is_expected.to be_valid }
       end
@@ -21,6 +23,7 @@ RSpec.describe Task, type: :model do
         let(:title) { random_str }
         let(:description) { nil }
         let(:task_status) { :todo }
+        let(:user_id) { user.id }
 
         it { is_expected.to be_valid }
       end
@@ -31,6 +34,7 @@ RSpec.describe Task, type: :model do
         let(:title) { nil }
         let(:description) { random_str }
         let(:task_status) { :todo }
+        let(:user_id) { user.id }
 
         it { is_expected.to_not be_valid }
       end
@@ -39,6 +43,7 @@ RSpec.describe Task, type: :model do
         let(:title) { Faker::Alphanumeric.alpha(number: 256) }
         let(:description) { random_str }
         let(:task_status) { :todo }
+        let(:user_id) { user.id }
 
         it { is_expected.to_not be_valid }
       end
@@ -47,15 +52,34 @@ RSpec.describe Task, type: :model do
         let(:title) { random_str }
         let(:description) { Faker::Alphanumeric.alpha(number: 5001) }
         let(:task_status) { :todo }
+        let(:user_id) { user.id }
+
+        it { is_expected.to_not be_valid }
+      end
+
+      context 'invalid user_id is nil' do
+        let(:title) { random_str }
+        let(:description) { Faker::Alphanumeric.alpha(number: 10) }
+        let(:task_status) { :todo }
+        let(:user_id) { nil }
+
+        it { is_expected.to_not be_valid }
+      end
+
+      context 'invalid user_id is not found' do
+        let(:title) { random_str }
+        let(:description) { Faker::Alphanumeric.alpha(number: 10) }
+        let(:task_status) { :todo }
+        let(:user_id) { 'hoge-hoge-uuid' }
 
         it { is_expected.to_not be_valid }
       end
     end
 
     describe 'search' do
-      let!(:todo_task) { create(:task, title: 'Javaを勉強する', task_status: :todo) }
-      let!(:doing_task) { create(:past_task, title: '英語を1時間勉強する', task_status: :doing) }
-      let!(:done_task) { create(:task, title: '英語を勉強する', task_status: :done) }
+      let!(:todo_task) { create(:task, title: 'Javaを勉強する', task_status: :todo, user_id: user.id) }
+      let!(:doing_task) { create(:past_task, title: '英語を1時間勉強する', task_status: :doing, user_id: user.id) }
+      let!(:done_task) { create(:task, title: '英語を勉強する', task_status: :done, user_id: user.id) }
 
       context 'search keyword' do
         result = Task.search('Java', nil, nil)

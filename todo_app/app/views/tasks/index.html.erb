@@ -20,6 +20,10 @@
             <%= link_to task.title, task_path(task), 'data-testid': 'task-title' %>
             <div class="text-uppercase fw-bold"><%= task.task_status %></div>
           </div>
+          <div class="d-flex">
+            <div class="fw-bold"><%= I18n.t(:'task.user') %>: </div>
+            <%= task.user.username %>
+          </div>
           <div class="d-flex gap-1">
             <div class="fw-bold"><%= I18n.t(:'task.description') %>:</div>
             <%= task.description %>

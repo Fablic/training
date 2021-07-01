@@ -3,8 +3,9 @@
 require 'rails_helper'
 
 RSpec.describe 'Tasks', type: :system do
-  let!(:task1) { create(:task, title: 'タイトル1', end_at: Time.current.change(sec: 0, usec: 0)) }
-  let!(:task2) { create(:past_task, title: 'タイトル2', end_at: Time.current.yesterday.change(sec: 0, usec: 0)) }
+  let!(:user) { create(:admin_user) }
+  let!(:task1) { create(:task, title: 'タイトル1', end_at: Time.current.change(sec: 0, usec: 0), user_id: user.id) }
+  let!(:task2) { create(:past_task, title: 'タイトル2', end_at: Time.current.yesterday.change(sec: 0, usec: 0), user_id: user.id) }
 
   describe 'タスク一覧' do
     context '正常時' do
@@ -49,8 +50,8 @@ RSpec.describe 'Tasks', type: :system do
 
   describe 'タスク検索' do
     context '正常時' do
-      let!(:doing_task) { create(:task, title: 'Railsを勉強する', task_status: :doing) }
-      let!(:done_task) { create(:task, title: '英語を勉強する', task_status: :done) }
+      let!(:doing_task) { create(:task, title: 'Railsを勉強する', task_status: :doing, user_id: user.id) }
+      let!(:done_task) { create(:task, title: '英語を勉強する', task_status: :done, user_id: user.id) }
 
       it 'keyword検索ができる' do
         visit root_path(keyword: 'タイトル1')
@@ -78,8 +79,8 @@ RSpec.describe 'Tasks', type: :system do
     end
 
     context '連続して検索条件を変更する' do
-      let!(:todo_task) { create(:task, title: 'タスクの1番目', task_status: :todo) }
-      let!(:todo_past_task) { create(:task, title: 'タスクの2番目', task_status: :todo, end_at: Time.current.yesterday.change(sec: 0, usec: 0)) }
+      let!(:todo_task) { create(:task, title: 'タスクの1番目', task_status: :todo, user_id: user.id) }
+      let!(:todo_past_task) { create(:task, title: 'タスクの2番目', task_status: :todo, end_at: Time.current.yesterday.change(sec: 0, usec: 0), user_id: user.id) }
 
       it 'keyword, statusで検索' do
         visit root_path(keyword: 'タイトル1')
@@ -163,6 +164,7 @@ RSpec.describe 'Tasks', type: :system do
 
         fill_in 'task_title', with: 'タスクの新規作成'
         fill_in 'task_description', with: 'タスクの説明'
+        select 'admin', from: 'task_user_id'
         click_button 'Create'
 
         expect(page).to have_content 'タスクの新規作成'

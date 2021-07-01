@@ -12,9 +12,12 @@ en:
     end_at: "End Date"
     created_at: "Created"
     status: "status"
+    user: "Assign User"
   link:
     edit: "Edit"
     delete: "Delete"
+  select_box:
+    user: "Select User"
   message:
     task_not_registered: "Task is not registered"
     lets_register_task: "Let's register the task"

@@ -1,12 +1,15 @@
 # frozen_string_literal: true
 
 class TasksController < ApplicationController
-  before_action :find_item, only: [:show, :edit, :update, :destroy]
+  before_action :find_item, only: %i[show edit update destroy]
+  before_action :all_users, only: %i[new edit]
 
   def index
     @keyword = params[:keyword]
     @status = params[:status]
-    @tasks = Task.search(@keyword, @status, create_sort_query).page(params[:page])
+    @tasks = Task.eager_load(:user)
+                 .search(@keyword, @status, create_sort_query)
+                 .page(params[:page])
   end
 
   def new
@@ -56,8 +59,12 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
   end
 
+  def all_users
+    @users = User.all
+  end
+
   def task_params
-    params.require(:task).permit(:title, :description, :end_at, :task_status)
+    params.require(:task).permit(:title, :description, :end_at, :task_status, :user_id)
   end
 
   def create_sort_query

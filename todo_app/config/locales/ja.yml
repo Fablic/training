@@ -12,9 +12,12 @@ ja:
     end_at: "期限"
     created_at: "作成日"
     status: "ステータス"
+    user: "担当者"
   link:
     edit: "編集する"
     delete: "削除する"
+  select_box:
+    user: "ユーザを選択"
   message:
     task_not_registered: "タスクがまだ登録されていません"
     lets_register_task: "タスクの登録をしましょう"
