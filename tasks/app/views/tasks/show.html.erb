@@ -1,18 +1,18 @@
 <h1>タスク詳細</h1>
 <p id="notice"><%= notice %></p>
-<p>ID</p>
+<p><%= Task.human_attribute_name(:id) %></p>
 <div class = "task-list-item index-id"><%= @task.id %></div>
-<p>ステータス</p>
+<p><%= Task.human_attribute_name(:status) %></p>
 <div class = "task-list-item index-status"><%= @task.status.status %></div>
-<p>優先度</p>
+<p><%= Task.human_attribute_name(:priority) %></p>
 <div class = "task-list-item index-priority"><%= @task.priority.priority %></div>
-<p>ラベル</p>
+<p><%= Task.human_attribute_name(:label) %></p>
 <div class = "task-list-item index-label"><%= @task.label %></div>
-<p>タスク名</p>
+<p><%= Task.human_attribute_name(:task_name) %></p>
 <div class = "task-list-item index-task-name"><%= @task.task_name %></div>
-<p>期限</p>
+<p><%= Task.human_attribute_name(:limit_date) %></p>
 <div class = "task-list-item index-limit font-12"><%= @task.limit_date %></div>
-<p>詳細説明</p>
+<p><%= Task.human_attribute_name(:detail) %></p>
 <div class = "task-list-item index-detail font-left"><%= @task.detail %></div>
 </br>
 <%= link_to '編集', edit_task_path(@task) %> |

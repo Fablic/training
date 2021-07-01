@@ -3,3 +3,13 @@ ja:
     submit:
       create: '新規作成'
       update: '更新'
+  activerecord:
+    attributes:
+      task:
+        id: ID
+        task_name: タスク名
+        status: ステータス
+        priority: 優先度
+        label: ラベル
+        limit_date: 期限
+        detail: 詳細説明

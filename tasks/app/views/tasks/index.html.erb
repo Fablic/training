@@ -7,13 +7,13 @@
 <table>
   <thead>
     <tr>
-      <th>ID</th>
-      <th>ステータス</th>
-      <th>優先度</th>
-      <th>ラベル</th>
-      <th>タスク名</th>
-      <th>期限</th>
-      <th>詳細説明</th>
+      <th><%= Task.human_attribute_name(:id) %></th>
+      <th><%= Task.human_attribute_name(:status) %></th>
+      <th><%= Task.human_attribute_name(:priority) %></th>
+      <th><%= Task.human_attribute_name(:label) %></th>
+      <th><%= Task.human_attribute_name(:task_name) %></th>
+      <th><%= Task.human_attribute_name(:limit_date) %></th>
+      <th><%= Task.human_attribute_name(:detail) %></th>
     </tr>
   </thead>
 
