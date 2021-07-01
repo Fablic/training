@@ -4,7 +4,6 @@ require 'rails_helper'
 
 RSpec.describe 'Users', type: :system do
   describe '新規登録ページ' do
-    let!(:user) { create(:normal_user) }
     describe '正常時' do
       it '新規登録ができること' do
         visit signup_path
@@ -19,6 +18,7 @@ RSpec.describe 'Users', type: :system do
     end
 
     describe '異常時' do
+      let!(:user) { create(:normal_user) }
       it '新規登録ができないこと パスワード設定ミス' do
         visit signup_path
         fill_in 'user_username', with: 'admin'

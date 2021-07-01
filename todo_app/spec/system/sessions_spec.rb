@@ -45,7 +45,7 @@ RSpec.describe 'Sessions', type: :system do
         fill_in 'session_password', with: 'AAAA1234'
         click_button 'Log in'
         expect(page).to have_content 'admin'
-        click_button 'logout'
+        click_link 'logout'
 
         expect(page).to have_content 'Log in'
       end

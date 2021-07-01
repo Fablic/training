@@ -93,7 +93,7 @@ RSpec.describe User, type: :model do
         let!(:exist_user) { create(:admin_user) }
 
         it 'cannot save record' do
-          @duplicate_user = build(:normal_user, email: 'admin@a.com')
+          @duplicate_user = build(:normal_user, email: 'admin@example.com')
           expect(@duplicate_user.save).to eq(false)
         end
       end
