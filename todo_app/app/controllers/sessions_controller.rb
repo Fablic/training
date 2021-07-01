@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
       log_in user
       redirect_to root_path
     else
-      flash.now[:error] = "Invalid email/password combination"
+      flash.now[:error] = I18n.t(:'message.login_is_failed')
       render :new
     end
   end

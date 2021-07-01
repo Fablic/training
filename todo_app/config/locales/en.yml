@@ -13,9 +13,16 @@ en:
     created_at: "Created"
     status: "status"
     user: "Assign User"
+  user:
+    username: "Username"
+    email: "Email"
+    icon: "Profile Icon Url"
+    password: "Password"
+    password_confirmation: "Confirmation"
   link:
     edit: "Edit"
     delete: "Delete"
+    new_user: "Sign up now!"
   select_box:
     user: "Select User"
   message:
@@ -27,3 +34,4 @@ en:
     registered_is_failed: "Registered is failed"
     edited_is_faild: "Edited is failed"
     deleted_is_faild: "Deleted is failed"
+    login_is_failed: "Login is failed. Invalid email/password combination"

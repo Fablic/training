@@ -13,9 +13,16 @@ ja:
     created_at: "作成日"
     status: "ステータス"
     user: "担当者"
+  user:
+    username: "ユーザ名"
+    email: "メールアドレス"
+    icon: "アイコン画像URL"
+    password: "パスワード"
+    password_confirmation: "パスワード確認"
   link:
     edit: "編集する"
     delete: "削除する"
+    new_user: "新規登録はこちら"
   select_box:
     user: "ユーザを選択"
   message:
@@ -27,3 +34,4 @@ ja:
     registered_is_faild: "登録に失敗しました"
     edited_is_faild: "更新に失敗しました"
     deleted_is_faild: "削除に失敗しました"
+    login_is_failed: "ログインに失敗しました。メールアドレスとパスワードをご確認ください"
