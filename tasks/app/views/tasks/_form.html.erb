@@ -16,13 +16,13 @@
 
   <%= f.label :優先度 %>
   <% case controller.action_name
-  when "new" %>
-    <%= f.collection_select :priority_id, MasterTaskPriority.all, :id, :priority, :include_blank => "選択してください" %>
-  <% when "edit" %>
+  when 'new' %>
+    <%= f.collection_select :priority_id, MasterTaskPriority.all, :id, :priority, :include_blank => '選択してください' %>
+  <% when 'edit' %>
     <%= f.collection_select :priority_id, MasterTaskPriority.all, :id, :priority, :prompt => @task.priority.priority %>
   <% end %>
 
-  <% if controller.action_name == "edit" %>
+  <% if controller.action_name == 'edit' %>
     <%= f.label :ステータス %>
     <%= f.collection_select :status_id, MasterTaskStatus.all, :id, :status, :prompt => @task.status.status %>
   <% end %>
@@ -36,10 +36,5 @@
   <%= f.label :説明詳細 %>
   <%= f.text_field :detail %>
 
-  <% case controller.action_name
-  when "new" %>
-    <%= f.submit "新規作成" %>  
-  <% when "edit" %>
-    <%= f.submit "更新" %>  
-  <% end %>
+  <%= f.submit class: 'btn btn-primary' %>
 <% end %>
