@@ -39,6 +39,9 @@ Style/AsciiComments:
 Style/FrozenStringLiteralComment:
   Enabled: false
 
+Style/Documentation:
+  Enabled: false
+
 ##################### Metrics ##################################
 
 # 1行の文字数
@@ -57,3 +60,8 @@ Metrics/BlockLength:
 Naming/FileName:
   Exclude:
     - "spec/factories/*.rb"
+
+# 数字の前に「_」を許可する
+Naming/VariableNumber:
+  Exclude:
+    - "app/controllers/application_controller.rb"
