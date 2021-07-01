@@ -20,6 +20,6 @@
     <div class="w-50"><%= f.text_field :password_confirmation, type: 'password', class: 'form-control' %></div>
   </div>
   <div class="mx-auto">
-    <%= f.submit @user.new_record? ? I18n.t(:'button.create') : I18n.t(:'button.edit'), class: 'btn btn-primary' %>
+    <%= f.submit I18n.t(:'button.create'), class: 'btn btn-primary' %>
   </div>
 <% end %>

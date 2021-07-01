@@ -7,11 +7,7 @@ class TasksController < ApplicationController
   def index
     @keyword = params[:keyword]
     @status = params[:status]
-    @user_id = if params[:user_id].present?
-                 params[:user_id]
-               elsif @current_user.present?
-                 @current_user.id
-               end
+    @user_id = set_user_id
     @tasks = Task.eager_load(:user)
                  .search(@keyword, @status, @user_id, create_sort_query)
                  .page(params[:page])
@@ -66,6 +62,14 @@ class TasksController < ApplicationController
 
   def all_users
     @users = User.all
+  end
+
+  def set_user_id
+    if params[:user_id].present?
+      params[:user_id]
+    elsif @current_user.present?
+      @current_user.id
+    end
   end
 
   def selected_user_id
