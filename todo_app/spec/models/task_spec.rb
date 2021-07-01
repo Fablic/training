@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Task', type: :model do
+RSpec.describe Task, type: :model do
   describe 'validation' do
     subject { build(:task, params) }
     let!(:user) { create(:admin_user) }
