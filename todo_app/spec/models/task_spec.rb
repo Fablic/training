@@ -91,7 +91,7 @@ RSpec.describe 'Task', type: :model do
         let(:sort_query) { nil }
 
         it { expect(result.length).to eq 1 }
-        it { expect(result[0].title).to eq 'Javaを勉強する' }
+        it { expect(result[0].title).to match 'Javaを勉強する' }
       end
 
       context 'search status' do
@@ -100,7 +100,7 @@ RSpec.describe 'Task', type: :model do
         let(:user_id) { nil }
         let(:sort_query) { nil }
 
-        it { expect(result.length).to match 1 }
+        it { expect(result.length).to eq 1 }
         it { expect(result[0].title).to match 'Javaを勉強する' }
       end
 
@@ -110,7 +110,7 @@ RSpec.describe 'Task', type: :model do
         let(:user_id) { normal_user.id }
         let(:sort_query) { nil }
 
-        it { expect(result.length).to match 2 }
+        it { expect(result.length).to eq 2 }
         it { expect(result[0].title).to match 'Javaを勉強する' }
         it { expect(result[1].title).to match '英語を1時間勉強する' }
       end
@@ -121,7 +121,7 @@ RSpec.describe 'Task', type: :model do
         let(:user_id) { nil }
         let(:sort_query) { nil }
 
-        it { expect(result.length).to match 1 }
+        it { expect(result.length).to eq 1 }
         it { expect(result[0].title).to match '英語を1時間勉強する' }
       end
 
@@ -132,7 +132,7 @@ RSpec.describe 'Task', type: :model do
         let(:sort_query) { { end_at: 'asc' } }
 
         it { expect(result.length).to eq 1 }
-        it { expect(result[0].title).to eq '英語を1時間勉強する' }
+        it { expect(result[0].title).to match '英語を1時間勉強する' }
       end
 
       context 'search keyword & status & user_id & sort' do
@@ -141,8 +141,8 @@ RSpec.describe 'Task', type: :model do
         let(:user_id) { user.id }
         let(:sort_query) { { end_at: 'asc' } }
 
-        it { expect(result.length).to match 1 }
-        it { expect(result[0].title).to eq '英語を勉強する' }
+        it { expect(result.length).to eq 1 }
+        it { expect(result[0].title).to match '英語を勉強する' }
       end
 
       context 'search none' do
@@ -151,7 +151,7 @@ RSpec.describe 'Task', type: :model do
         let(:user_id) { nil }
         let(:sort_query) { nil }
 
-        it { expect(result.length).to match 3 }
+        it { expect(result.length).to eq 3 }
         it { expect(result[0].title).to match 'Javaを勉強する' }
       end
     end
