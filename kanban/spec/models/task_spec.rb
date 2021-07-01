@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Task, type: :model do
-  let(:task) { Task.new(name: name, description: description, status: status) }
+  let(:user) { FactoryBot.create :user }
+  let(:task) { Task.new(name: name, description: description, status: status, user_id: user.id) }
   let(:name) { 'タスク名' }
   let(:description) { '詳細な説明' }
   let(:status) { 'todo' }

@@ -1,8 +1,10 @@
 class TasksController < ApplicationController
+  before_action :authenticate_user
+  before_action :set_user, only: %i[create index new]
   before_action :set_task, only: %i[edit show]
 
   def index
-    @tasks = Task.all
+    @tasks = Task.where(user_id: @user.id)
     @status = params[:status]
     @name = params[:name]
     @tasks = @tasks.where(status: @status) if @status.present?
@@ -10,7 +12,7 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.new(params.require(:task).permit(:name, :description, :status))
+    @task = @user.tasks.new(params.require(:task).permit(:name, :description, :status))
     if @task.save
       redirect_to tasks_path, notice: I18n.t('notice.task.insert.success')
     else
@@ -19,7 +21,7 @@ class TasksController < ApplicationController
   end
 
   def new
-    @task = Task.new
+    @task = @user.tasks.new
     render :edit
   end
 
@@ -46,6 +48,10 @@ class TasksController < ApplicationController
   end
 
   private
+
+  def set_user
+    @user = current_user
+  end
 
   def set_task
     @task = Task.find(params[:id])

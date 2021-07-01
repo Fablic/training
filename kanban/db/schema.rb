@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_16_015959) do
+ActiveRecord::Schema.define(version: 2021_06_21_005106) do
 
   create_table "tasks", charset: "utf8", force: :cascade do |t|
     t.string "name", limit: 15, null: false, comment: "タスク名を15文字に制限"
@@ -18,7 +18,19 @@ ActiveRecord::Schema.define(version: 2021_06_16_015959) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "status"
+    t.bigint "user_id", null: false
     t.index ["status"], name: "index_tasks_on_status"
+    t.index ["user_id"], name: "index_tasks_on_user_id"
   end
 
+  create_table "users", charset: "utf8", force: :cascade do |t|
+    t.string "name", limit: 50, comment: "ユーザ名を50文字に制限"
+    t.string "email"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "password_digest"
+    t.index ["email"], name: "index_users_on_email", unique: true
+  end
+
+  add_foreign_key "tasks", "users"
 end
