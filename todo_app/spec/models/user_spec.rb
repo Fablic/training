@@ -62,10 +62,10 @@ RSpec.describe User, type: :model do
 
       context 'invalid username is duplicate' do
         let!(:exist_user) { create(:admin_user) }
+        let!(:duplicate_user) { build(:normal_user, username: 'admin') }
 
         it 'cannot save record' do
-          @duplicate_user = build(:normal_user, username: 'admin')
-          expect(@duplicate_user.save).to eq(false)
+          expect(duplicate_user.save).to eq(false)
         end
       end
 
@@ -91,10 +91,10 @@ RSpec.describe User, type: :model do
 
       context 'invalid email is duplicate' do
         let!(:exist_user) { create(:admin_user) }
+        let!(:duplicate_user) { build(:normal_user, email: 'admin@example.com') }
 
         it 'cannot save record' do
-          @duplicate_user = build(:normal_user, email: 'admin@example.com')
-          expect(@duplicate_user.save).to eq(false)
+          expect(duplicate_user.save).to eq(false)
         end
       end
 
