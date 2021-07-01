@@ -10,4 +10,9 @@ FactoryBot.define do
       )
     end
   end
+  factory :task_list_item, class: Task do
+    task_name { 'テストタスク名' }
+    status { create(:notStarted) }
+    priority { create(:low) }
+  end
 end

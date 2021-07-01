@@ -40,11 +40,25 @@ RSpec.describe Task, type: :model do
       xit 'エラーになる' do
         task = Task.new(
           task_name: 'テストタスク',
-          status: lowTaskPriority,
+          status: notStartedTaskStatus,
           priority: nil
         )
         task.valid?
         expect(task.errors[:priority]).to include('must exist')
+      end
+    end
+  end
+  describe 'scope' do
+    context 'created_at_desc' do
+      let(:task_list) do
+        [
+          create(:task_list_item),
+          create(:task_list_item, created_at: Time.current + 1.day),
+          create(:task_list_item, created_at: Time.current + 2.days)
+        ]
+      end
+      it '作成日時の降順で取得できる' do
+        expect(Task.created_at_desc).to match [task_list[2], task_list[1], task_list[0]]
       end
     end
   end

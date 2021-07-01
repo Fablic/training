@@ -7,11 +7,23 @@ RSpec.describe TasksController, type: :controller do
 
   describe '#index' do
     context 'レスポンスが正常の時' do
+      let(:task_list) do
+        [
+          create(:task_list_item),
+          create(:task_list_item, created_at: Time.current + 1.day),
+          create(:task_list_item, created_at: Time.current + 2.days),
+          create(:task_list_item, deleted_at: Time.current)
+        ]
+      end
       it 'HTTPステータスコードが200、テンプレートが表示されること' do
         get :index
         expect(response).to be_successful
         expect(response).to have_http_status :success
         expect(response).to render_template :index
+      end
+      it '作成日時の降順かつ、論理削除されていないタスクのみの一覧が取得されること' do
+        get :index
+        expect(Task.without_deleted.created_at_desc).to match [task_list[2], task_list[1], task_list[0], task]
       end
     end
   end
