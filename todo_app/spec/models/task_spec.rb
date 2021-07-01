@@ -2,10 +2,11 @@
 
 require 'rails_helper'
 
-RSpec.describe Task, type: :model do
+RSpec.describe 'Task', type: :model do
   describe 'validation' do
     subject { build(:task, params) }
-    let(:user) { create(:admin_user) }
+    let!(:user) { create(:admin_user) }
+    let!(:normal_user) { create(:normal_user) }
     let(:params) { { title: title, description: description, task_status: task_status, user_id: user_id } }
     let(:random_str) { Faker::Alphanumeric.alpha(number: 10) }
 
@@ -77,8 +78,8 @@ RSpec.describe Task, type: :model do
     end
 
     describe 'search' do
-      let!(:todo_task) { create(:task, title: 'Javaを勉強する', task_status: :todo, user_id: user.id) }
-      let!(:doing_task) { create(:past_task, title: '英語を1時間勉強する', task_status: :doing, user_id: user.id) }
+      let!(:todo_task) { create(:task, title: 'Javaを勉強する', task_status: :todo, user_id: normal_user.id) }
+      let!(:doing_task) { create(:past_task, title: '英語を1時間勉強する', task_status: :doing, user_id: normal_user.id) }
       let!(:done_task) { create(:task, title: '英語を勉強する', task_status: :done, user_id: user.id) }
 
       context 'search keyword' do
@@ -93,6 +94,14 @@ RSpec.describe Task, type: :model do
 
         it { expect(result.length).to match 1 }
         it { expect(result[0].title).to match 'Javaを勉強する' }
+      end
+
+      context 'search user_id' do
+        result = Task.search(nil, nil, normal_user.id, nil)
+
+        it { expect(result.length).to match 2 }
+        it { expect(result[0].title).to match 'Javaを勉強する' }
+        it { expect(result[1].title).to match '英語を1時間勉強する' }
       end
 
       context 'search keyword & status' do
