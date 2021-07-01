@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  skip_before_action :authenticate_user, only: [:new, :create]
+  skip_before_action :authenticate_user, only: %i[new create]
 
   def new
     @user = User.new
@@ -11,13 +11,12 @@ class UsersController < ApplicationController
     @user = User.new(users_param)
     if @user.save
       log_in @user
-      flash[:success] = I18n.t(:'message.registered_task')
+      flash[:success] = I18n.t(:'message.registered_user')
       redirect_to root_path
     else
       flash.now[:error] = I18n.t(:'message.registered_is_failed')
       render :new
     end
-
   end
 
   private

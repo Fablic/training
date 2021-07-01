@@ -29,6 +29,7 @@ en:
     task_not_registered: "Task is not registered"
     lets_register_task: "Let's register the task"
     registered_task: "Task registration is complete"
+    registered_user: "User registration is complete"
     edited_task: "Task edited is complete"
     deleted_task: "Task deleted is complete"
     registered_is_failed: "Registered is failed"
