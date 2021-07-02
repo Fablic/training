@@ -3,3 +3,26 @@ ja:
     submit:
       create: '新規作成'
       update: '更新'
+    select:
+      prompt: 選択してください
+  activerecord:
+    attributes:
+      task:
+        id: ID
+        task_name: タスク名
+        status: ステータス
+        priority: 優先度
+        label: ラベル
+        limit_date: 期限
+        detail: 詳細説明
+  time:
+    formats:
+      default: "%Y/%m/%d %H:%M"
+  link:
+    show: 詳細
+    new: 新規作成
+    edit: 編集
+    delete: 削除
+    back: 戻る
+  confirm:
+      delete: 削除しますか？
