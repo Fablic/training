@@ -17,7 +17,7 @@ ja:
         detail: 詳細説明
   time:
     formats:
-      default: "%Y/%m/%d %H:%M:%S"
+      default: "%Y/%m/%d %H:%M"
   link:
     show: 詳細
     new: 新規作成

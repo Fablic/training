@@ -11,10 +11,14 @@
 <p><%= Task.human_attribute_name(:task_name) %></p>
 <div class = "task-list-item index-task-name"><%= @task.task_name %></div>
 <p><%= Task.human_attribute_name(:limit_date) %></p>
-<div class = "task-list-item index-limit font-12"><%= @task.limit_date %></div>
+<div class = "task-list-item index-limit font-12">
+  <% if @task.limit_date != nil %>
+    <%= l @task.limit_date %>
+  <% end %>
+</div>
 <p><%= Task.human_attribute_name(:detail) %></p>
 <div class = "task-list-item index-detail font-left"><%= @task.detail %></div>
 </br>
-<%= link_to t('link.show'), edit_task_path(@task) %> |
+<%= link_to t('link.edit'), edit_task_path(@task) %> |
 <%= link_to t('link.delete'), @task, method: :delete, data: { confirm: t('confirm.delete') } %> |
 <%= link_to t('link.back'), '/' %>
