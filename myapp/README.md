@@ -3,7 +3,7 @@
 ### Requirements:
 * Docker
 
-###To run app:
+### To run app:
 1. Install docker
 2. go to `cd myapp`
 3. execute `docker-compose up --build`
@@ -27,4 +27,9 @@
 * to run rspec (or any other rails related commands)
    1. inside docker container execute `rspec`
    2. directly `docker exec -it myapp_api_1 bundle exec rspec`
+    
+
+### Other errors
+* there might some errors caused by yarn.lock, 
+  i already added it to .gitignore but to be sure please check if it exists before docker-compose and it does please remove it
     
