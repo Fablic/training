@@ -11,35 +11,30 @@
     </div>
   <% end %>
 
-  <%= f.label :タスク名 %>
+  <%= f.label :task_name %>
   <%= f.text_field :task_name %>
 
-  <%= f.label :優先度 %>
+  <%= f.label :priority %>
   <% case controller.action_name
-  when "new" %>
-    <%= f.collection_select :priority_id, MasterTaskPriority.all, :id, :priority, :include_blank => "選択してください" %>
-  <% when "edit" %>
+  when 'new' %>
+    <%= f.collection_select :priority_id, MasterTaskPriority.all, :id, :priority, :prompt => true %>
+  <% when 'edit' %>
     <%= f.collection_select :priority_id, MasterTaskPriority.all, :id, :priority, :prompt => @task.priority.priority %>
   <% end %>
 
-  <% if controller.action_name == "edit" %>
-    <%= f.label :ステータス %>
+  <% if controller.action_name == 'edit' %>
+    <%= f.label :status %>
     <%= f.collection_select :status_id, MasterTaskStatus.all, :id, :status, :prompt => @task.status.status %>
   <% end %>
 
-  <%= f.label :ラベル %>
+  <%= f.label :label %>
   <%= f.text_field :label %>
 
-  <%= f.label :期限 %>
+  <%= f.label :limit_date %>
   <%= f.datetime_field :limit_date %>
 
-  <%= f.label :説明詳細 %>
+  <%= f.label :detail %>
   <%= f.text_field :detail %>
 
-  <% case controller.action_name
-  when "new" %>
-    <%= f.submit "新規作成" %>  
-  <% when "edit" %>
-    <%= f.submit "更新" %>  
-  <% end %>
+  <%= f.submit class: 'btn btn-primary' %>
 <% end %>
