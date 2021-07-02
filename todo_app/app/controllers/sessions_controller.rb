@@ -21,7 +21,6 @@ class SessionsController < ApplicationController
 
   def destroy
     log_out
-    @current_user = nil
     redirect_to login_path, flash: { success: I18n.t('sessions.flash.success.destroy') }
   end
 
