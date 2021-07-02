@@ -10,7 +10,7 @@ RSpec.describe 'Tasks (System)', type: :system do
   context 'CRUDing task' do
     it 'Add new task' do
       visit tasks_url
-      click_on 'New Task'
+      page.find('.newtask').click
       fill_in 'task[name]', with: 'task4'
       fill_in 'task[desc]', with: 'task4 desc'
       select('Done', from: 'task[status]')
