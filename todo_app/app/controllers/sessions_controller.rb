@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class SessionsController < ApplicationController
-  skip_before_action :authencate_user, only: %i[new create]
+  skip_before_action :authenticate_user, only: %i[new create]
 
   def new
     redirect_to root_path if user_signed_in?
@@ -21,7 +21,6 @@ class SessionsController < ApplicationController
 
   def destroy
     log_out
-    @current_user = nil
     redirect_to login_path, flash: { success: I18n.t('sessions.flash.success.destroy') }
   end
 

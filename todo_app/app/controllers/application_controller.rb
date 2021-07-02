@@ -2,7 +2,7 @@
 
 class ApplicationController < ActionController::Base
   include SessionsHelper
-  before_action :authencate_user
+  before_action :authenticate_user
 
   unless Rails.env.development?
     rescue_from StandardError, with: :render_internal_server_error
@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
     render template: 'errors/internal_server_error', status: :internal_server_error
   end
 
-  def authencate_user
+  def authenticate_user
     redirect_to login_path unless user_signed_in?
   end
 end
