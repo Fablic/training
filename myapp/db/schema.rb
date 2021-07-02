@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_25_120923) do
-
+ActiveRecord::Schema.define(version: 2021_06_30_052833) do
   create_table "tasks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name"
     t.text "desc"
@@ -22,6 +21,8 @@ ActiveRecord::Schema.define(version: 2021_06_25_120923) do
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "due_date"
     t.integer "user_id"
+    t.integer "assignee"
+    t.index ["status"], name: "index_tasks_on_status"
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
