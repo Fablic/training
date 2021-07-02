@@ -15,6 +15,6 @@
 <p><%= Task.human_attribute_name(:detail) %></p>
 <div class = "task-list-item index-detail font-left"><%= @task.detail %></div>
 </br>
-<%= link_to '編集', edit_task_path(@task) %> |
-<%= link_to '削除', @task, method: :delete, data: { confirm: '削除しますか?' } %> |
-<%= link_to '戻る', '/' %>
+<%= link_to t('link.show'), edit_task_path(@task) %> |
+<%= link_to t('link.delete'), @task, method: :delete, data: { confirm: t('confirm.delete') } %> |
+<%= link_to t('link.back'), '/' %>

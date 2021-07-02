@@ -17,7 +17,7 @@
   <%= f.label :priority %>
   <% case controller.action_name
   when 'new' %>
-    <%= f.collection_select :priority_id, MasterTaskPriority.all, :id, :priority, :include_blank => '選択してください' %>
+    <%= f.collection_select :priority_id, MasterTaskPriority.all, :id, :priority, :prompt => true %>
   <% when 'edit' %>
     <%= f.collection_select :priority_id, MasterTaskPriority.all, :id, :priority, :prompt => @task.priority.priority %>
   <% end %>
