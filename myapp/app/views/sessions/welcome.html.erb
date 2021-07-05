@@ -1,11 +1,17 @@
 <% if user_logged_in? %>
   <h1>Welcome,  <%= current_user.name %></h1>
-  <%= button_to "Tasks", '/tasks', method: :get %>
-  <%= button_to "logout", '/logout', method: :delete %>
+  <% if admin_logged_in? %>
+    <%= link_to 'Users', admin_users_list_path, class: "btn btn-secondary" %>
+  <% end %>
 
 <% else %>
-  <h1>Welcome,  Stranger. </h1>
-  <p> Please sign in if you have an account or sign up</p>
-  <%= button_to "Login", '/login', method: :get %>
-  <%= button_to "Sign Up", '/signup', method: :get %>
+  <div class="row p-2">
+    <div class="dialog bg-white p-5 mb-3 text-center">
+      <h1>Hello, Stranger. </h1>
+      <p> New here? Then let's create an account and start using.</p>
+      <p>Already have an account then Please sign in </p>
+      <%= link_to 'Create an account', signup_path, class: "btn btn-secondary" %>
+      <%= link_to 'Login', login_path, class: "btn btn-secondary" %>
+    </div>
+  </div>
 <% end %>

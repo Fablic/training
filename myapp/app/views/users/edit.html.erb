@@ -1,0 +1,18 @@
+<h1>Editing User</h1>
+
+<%= form_with(model: @user, local: true) do |f| %>
+  <div class="field mb-3">
+    <%= f.text_field :name, class: "form-control", placeholder: "Full Name" %>
+  </div>
+
+  <div class="field mb-3">
+    <%= f.text_field :email, class: "form-control", placeholder: "E-mail" %>
+  </div>
+
+<!--  <div class="field mb-3">-->
+    <%#= f.select :role, User.roles, { selected: @user.role || "", disabled: "", prompt: 'Please select a role' }, class: "form-control" %>
+<!--  </div>-->
+
+  <%= f.submit 'Create User', class: "btn btn-dark" %>
+
+<% end %>

@@ -3,13 +3,18 @@
 <h1>Sign Up</h1>
 
 <%= form_with(model: @user, local: true) do |f| %>
-  <%= f.label :email %><br>
-  <%= f.text_field :email %><br>
-  <%= f.label :password %><br>
-  <%= f.password_field :password %><br>
-  <%= f.label :role %><br>
-  <%= f.text_field :role %><br>
-  <%= f.label :name %><br>
-  <%= f.text_field :name %><br>
-  <%= f.submit %>
+  <div class="field mb-3">
+    <%= f.label :email %><br>
+    <%= f.text_field :email %><br>
+  </div>
+  <div class="field mb-3">
+    <%= f.label :password %><br>
+    <%= f.password_field :password %><br>
+  </div>
+  <div class="field mb-3">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %><br>
+  </div>
+  <%= f.submit 'Sign Up', class: "btn btn-dark" %>
+
 <% end %>

@@ -3,6 +3,7 @@
 class Task < ApplicationRecord
   enum statuses: { Open: 0, 'In Progress': 1, Done: 2 }
   enum priorities: { Low: 0, Medium: 1, High: 2 }
+  enum labels: [:Feature, :Bug]
 
   belongs_to :user
 

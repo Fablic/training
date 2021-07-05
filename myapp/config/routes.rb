@@ -7,10 +7,14 @@ Rails.application.routes.draw do
 
   # users
   get '/signup', to: 'users#new'
+
   resources :users
+
+  get 'admin/users/add', to: 'users#add'
+  get 'admin/users/list', to: 'users#index'
 
   # Session
   get 'login', to: 'sessions#new'
   post 'login', to: 'sessions#create'
-  delete 'logout',  to: 'sessions#destroy'
+  delete 'logout', to: 'sessions#destroy'
 end
