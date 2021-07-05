@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class SessionsController < ApplicationController
+  before_action :authenticate_logged_in_user, only: %i[new]
   skip_before_action :authenticate_user
 
   def new
@@ -21,6 +22,10 @@ class SessionsController < ApplicationController
     log_out
     @current_user = nil
     redirect_to login_path
+  end
+
+  def authenticate_logged_in_user
+    redirect_to root_path if logged_in?
   end
 
   private
