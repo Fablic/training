@@ -15,4 +15,10 @@ FactoryBot.define do
     status { create(:notStarted) }
     priority { create(:low) }
   end
+  factory :exist_limit_date_task, class: Task do
+    task_name { 'テストタスク名' }
+    status { create(:notStarted) }
+    priority { create(:low) }
+    limit_date { Time.current + 1.minute }
+  end
 end
