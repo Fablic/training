@@ -7,8 +7,8 @@ RSpec.describe 'Users', type: :system do
     describe '正常時' do
       it '新規登録ができること' do
         visit signup_path
-        fill_in 'user_username', with: 'admin'
-        fill_in 'user_email', with: 'admin@example.com'
+        fill_in 'user_username', with: 'admin-1'
+        fill_in 'user_email', with: 'admin-1@example.com'
         fill_in 'user_password', with: 'AAAA1234'
         fill_in 'user_password_confirmation', with: 'AAAA1234'
         click_button 'Create'
