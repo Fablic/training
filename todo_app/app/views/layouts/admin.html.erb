@@ -31,11 +31,6 @@
       </div>
     </nav>
     <div class="container-fluid mb-3">
-      <% flash.each do |message_type, message| %>
-        <div class="alert mt-3 alert-<%= message_type %>">
-          <%= message %>
-        </div>
-      <% end %>
       <div class="container">
         <%= yield %>
       </div>
