@@ -38,6 +38,10 @@ RSpec.configure do |config|
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
   config.include Rails.application.routes.url_helpers
   config.include FactoryBot::Syntax::Methods
+  config.before(:each, type: :system) do
+    driven_by :rack_test
+  end
+  Capybara.default_driver = :rack_test
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
