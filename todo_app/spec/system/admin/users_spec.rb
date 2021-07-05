@@ -3,19 +3,37 @@
 require 'rails_helper'
 
 RSpec.describe 'Admin::Users', type: :system do
-  describe '#index', :require_login do
-    it 'visit /admin' do
-      visit admin_root_path
+  include_context 'set_user'
+  let(:admin_user) { create(:user, role: :admin) }
 
-      expect(current_path).to eq admin_root_path
-      expect(page).to have_content(User.all.first.email)
+  describe '#index' do
+    context 'login_as admin_user' do
+      it 'sucess visit admin page' do
+        login_as admin_user
+        visit admin_root_path
+
+        expect(current_path).to eq admin_root_path
+        expect(page).to have_content(User.all.first.email)
+      end
+    end
+
+    context 'login_as general user' do
+      it 'display unauthorized page' do
+        login_as user
+        visit admin_root_path
+
+        expect(page).to have_content(I18n.t('common.error.unauthorized'))
+      end
     end
   end
 
-  describe '#new', :require_login do
+  describe '#new' do
     let(:email) { Faker::Internet.email }
     let(:password) { Faker::Alphanumeric.alpha(number: 10) }
-    before { visit new_admin_user_path }
+    before {
+      login_as admin_user
+      visit new_admin_user_path
+    }
 
     it 'success create user and redirect to admin_root_path' do
       fill_in :user_email, with: email
@@ -44,11 +62,14 @@ RSpec.describe 'Admin::Users', type: :system do
     end
   end
 
-  describe '#edit', :require_login do
+  describe '#edit' do
     let(:old_user_info) { User.first }
     let(:new_email) { Faker::Internet.email }
     let(:new_password) { Faker::Alphanumeric.alpha(number: 10) }
-    before { visit edit_admin_user_path(old_user_info) }
+    before {
+      login_as admin_user
+      visit edit_admin_user_path(old_user_info)
+    }
 
     it 'success create user and redirect to admin_root_path' do
       fill_in :user_email, with: new_email
@@ -75,10 +96,14 @@ RSpec.describe 'Admin::Users', type: :system do
     end
   end
 
-  describe '#destroy', :require_login do
-    let!(:delete_user) { create(:user) }
+  describe '#destroy' do
+    let!(:delete_user) { create(:user, role: :admin) }
     let!(:delete_user_task) { create(:task, user: delete_user) }
-    before { visit admin_root_path }
+    before {
+      login_as admin_user
+      visit admin_root_path
+    }
+
     context 'when click delete button' do
       it 'sucess destroy and redirect to admin_root_path' do
         expect do
@@ -100,11 +125,12 @@ RSpec.describe 'Admin::Users', type: :system do
     end
   end
 
-  describe '#tasks', :require_login do
+  describe '#tasks' do
     let!(:new_user) { create(:user) }
     let!(:current_user_task) { create(:task, user: user) }
     let!(:new_user_task) { create(:task, user: new_user) }
     it 'find current user tasks' do
+      login_as admin_user
       visit tasks_admin_user_path(user)
 
       expect(current_path).to eq tasks_admin_user_path(user)
