@@ -15,6 +15,12 @@ ja:
         label: ラベル
         limit_date: 期限
         detail: 詳細説明
+    errors:
+      models:
+        task:
+          attributes:
+            limit_date:
+              cannot_be_before_datetime: 現在時刻より前の日時は設定できません
   time:
     formats:
       default: "%Y/%m/%d %H:%M"
