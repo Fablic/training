@@ -11,8 +11,7 @@ class UsersController < ApplicationController
     @user = User.new(users_param)
     if @user.save
       log_in @user
-      flash[:success] = I18n.t(:'message.registered_user')
-      redirect_to root_path
+      redirect_to root_path, { flash: { success: I18n.t(:'message.registered_user') } }
     else
       flash.now[:error] = I18n.t(:'message.registered_is_failed')
       render :new

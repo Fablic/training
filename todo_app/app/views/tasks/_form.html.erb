@@ -1,3 +1,4 @@
+<%= render 'layouts/error', model: @task %>
 <%= form_with(model: @task, class: 'card w-50 m-2 p-2 gap-3') do |f| %>
   <div class="d-flex">
     <div class="w-25"><%= f.label I18n.t(:'task.title') %>:</div>

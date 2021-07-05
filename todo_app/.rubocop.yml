@@ -5,3 +5,6 @@ inherit_gem:
     # - "config/rails.yml"
     # uncomment if use rspec cops
     # - "config/rspec.yml"
+
+Metrics/AbcSize:
+  Max: 20

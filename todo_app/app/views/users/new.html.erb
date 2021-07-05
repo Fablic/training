@@ -1,3 +1,4 @@
+<%= render 'layouts/error', model: @user %>
 <%= form_with(model: @user, url: signup_path, class: 'card w-50 m-2 p-2 gap-3') do |f| %>
   <div class="d-flex">
     <div class="w-25"><%= f.label I18n.t(:'user.username') %>:</div>
