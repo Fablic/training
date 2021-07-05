@@ -2,7 +2,7 @@
 
 class TasksController < ApplicationController
   before_action :find_item, only: %i[show edit update destroy]
-  before_action :all_users, :selected_user_id, only: %i[index new edit]
+  before_action :all_users, :selected_user_id, only: %i[index new create edit]
 
   def index
     @keyword = params[:keyword]

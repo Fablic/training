@@ -29,4 +29,22 @@ RSpec.describe 'ApplicationController', type: :system do
       end
     end
   end
+
+  describe 'URLハンドリング' do
+    describe 'ログイン時', :require_login do
+      it '/loginアクセス時にrootに遷移する' do
+        visit login_path
+
+        expect(current_url).to match root_path
+      end
+    end
+
+    describe '未ログイン時' do
+      it 'rootアクセス時に/loginに遷移する' do
+        visit root_path
+
+        expect(current_url).to match login_path
+      end
+    end
+  end
 end
