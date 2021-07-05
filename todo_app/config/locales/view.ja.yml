@@ -12,6 +12,7 @@ ja:
     error:
       not_found: お探しのページが見つかりません
       internal_server_error: 申し訳ございません、システムエラーが発生しております
+      unauthorized: アクセス権限がございません
   tasks:
     other: "%{count}件"
     common:

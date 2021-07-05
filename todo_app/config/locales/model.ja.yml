@@ -20,6 +20,15 @@ ja:
           password: パスワード
           password_confirmation: 確認用パスワード
           tasks_count: タスク数
+          role: ロール
+        user/role:
+          general: 一般
+          admin: 管理者
+    errors:
+      models:
+        user:
+          attributes:
+            should_be_at_least_one_admin: 管理者は最低1人必要です
   attributes:
       created_at: 作成日
       updated_at: 更新
