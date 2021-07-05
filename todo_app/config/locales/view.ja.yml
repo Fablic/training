@@ -37,6 +37,7 @@ ja:
       error:
         create: '登録に失敗しました'
         update: '更新に失敗しました'
+        destroy: '削除に失敗しました'
   sessions:
     flash:
       success:

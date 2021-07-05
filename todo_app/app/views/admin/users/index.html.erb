@@ -14,13 +14,17 @@
       </tr>
     </thead>
     <tbody>
-      <% @users.each do |admin_user| %>
+      <% @users.each do |user| %>
         <tr>
-          <td><%= admin_user.id %></td>
-          <td><%= admin_user.email %></td>
-          <td><%=  link_to I18n.t(:tasks, count: admin_user.tasks.to_a.count), tasks_admin_user_path(admin_user) %></td>
-          <td><%= link_to I18n.t('common.action.edit'), edit_admin_user_path(admin_user), class: 'btn btn-secondary' %></<td>
-          <td><%= link_to I18n.t('common.action.destroy'), admin_user_path(admin_user), method: :delete, class: 'btn btn-danger' %></<td>
+          <td><%= user.id %></td>
+          <td><%= user.email %></td>
+          <td><%=  link_to I18n.t(:tasks, count: user.tasks.to_a.count), tasks_admin_user_path(user) %></td>
+          <td><%= link_to I18n.t('common.action.edit'), edit_admin_user_path(user), class: 'btn btn-secondary' %></<td>
+          <td>
+            <% unless user.eql?(current_user) %>
+              <%= link_to I18n.t('common.action.destroy'), admin_user_path(user), method: :delete, class: 'btn btn-danger' %>
+            <% end %>
+          </<td>
         </tr>
       <% end %>
     </tbody>

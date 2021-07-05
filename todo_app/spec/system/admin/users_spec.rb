@@ -78,18 +78,25 @@ RSpec.describe 'Admin::Users', type: :system do
   describe '#destroy', :require_login do
     let!(:delete_user) { create(:user) }
     let!(:delete_user_task) { create(:task, user: delete_user) }
-    it 'sucess destroy and redirect to admin_root_path' do
-      visit admin_root_path
+    before { visit admin_root_path }
+    context 'when click delete button' do
+      it 'sucess destroy and redirect to admin_root_path' do
+        expect do
+          find("a[href='#{admin_user_path(delete_user)}']").click
+        end.to change(User, :count).by(-1)
+        .and change(Task, :count).by(-1)
 
-      expect do
-        find("a[href='#{admin_user_path(delete_user)}']").click
-      end.to change(User, :count).by(-1)
-      .and change(Task, :count).by(-1)
+        expect(current_path).to eq admin_users_path
+        expect(page).to have_content(I18n.t('users.flash.success.destroy'))
+        expect(page).to_not have_content(delete_user.id)
+        expect(page).to_not have_content(delete_user.email)
+      end
+    end
 
-      expect(current_path).to eq admin_users_path
-      expect(page).to have_content(I18n.t('users.flash.success.destroy'))
-      expect(page).to_not have_content(delete_user.id)
-      expect(page).to_not have_content(delete_user.email)
+    context 'when want to destory current user' do
+      it 'delete button is not displayed' do
+        expect(page).to_not have_link("a[href='#{admin_user_path(delete_user)}']")
+      end
     end
   end
 

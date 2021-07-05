@@ -5,6 +5,7 @@ module Admin
     layout 'admin'
 
     before_action :find_admin_user, only: %i[edit update destroy tasks]
+    before_action :ensure_destroy_user, only: %i[destroy]
 
     def index
       @users = User.includes(:tasks).page(params[:page])
@@ -52,6 +53,11 @@ module Admin
 
     def find_admin_user
       @user = User.find_by(id: params[:id])
+    end
+
+    def ensure_destroy_user
+      flash.now[:danger] = I18n.t('users.flash.error.destroy')
+      render :index and return if current_user.eql?(@user)
     end
   end
 end
