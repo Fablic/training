@@ -17,5 +17,5 @@
   <%= f.password_field :password , class: 'form-control mb-3' %>
   <%= f.label :password_confirmation, class: 'form-label' %>
   <%= f.password_field :password_confirmation , class: 'form-control mb-3' %>
-  <%= f.submit (request.path.eql?(new_admin_user_path) ? I18n.t('common.action.create') : I18n.t('common.action.update')) %>
+  <%= f.submit (request.path.eql?(new_admin_user_path) ? I18n.t('common.action.create') : I18n.t('common.action.update')), class: 'btn btn-primary' %>
 <% end %>
