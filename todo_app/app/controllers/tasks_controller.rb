@@ -2,12 +2,13 @@
 
 class TasksController < ApplicationController
   before_action :find_item, only: %i[show edit update destroy]
-  before_action :all_users, :selected_user_id, only: %i[new edit]
+  before_action :all_users, :selected_user_id, only: %i[index new edit]
 
   def index
     @keyword = params[:keyword]
     @status = params[:status]
-    @user_id = set_user_id
+    @user_id = params[:user_id] || @current_user&.id
+    @end_at_sort = params[:end_at]
     @tasks = Task.eager_load(:user)
                  .search(@keyword, @status, @user_id, create_sort_query)
                  .page(params[:page])
@@ -64,20 +65,8 @@ class TasksController < ApplicationController
     @users = User.all
   end
 
-  def set_user_id
-    if params[:user_id].present?
-      params[:user_id]
-    elsif @current_user.present?
-      @current_user.id
-    end
-  end
-
   def selected_user_id
-    @selected_user_id = if @task.present? && @task.user_id.present?
-                          @task.user_id
-                        elsif @current_user.present?
-                          @current_user.id
-                        end
+    @selected_user_id = @task&.user_id || @current_user&.id
   end
 
   def task_params

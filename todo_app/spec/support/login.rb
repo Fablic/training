@@ -2,9 +2,7 @@
 
 RSpec.shared_context 'set_user' do
   let(:user) { create(:admin_user) }
-  before do
-    login_as(user)
-  end
+  before { login_as(user) }
 
   context 'when current_user is nil' do
     before do

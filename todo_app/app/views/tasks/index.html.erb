@@ -2,8 +2,20 @@
   <div class="d-flex gap-2">
     <p class="fw-bold">Sort by:</p>
     <%= I18n.t(:'task.end_at') %>
-    <%= link_to '👆', root_path(end_at: 'desc', keyword: @keyword, task_status: @status) %>
-    <%= link_to '👇', root_path(end_at: 'asc', keyword: @keyword, task_status: @status) %>
+    <%= link_to '↑',
+                root_path(end_at: 'desc', keyword: @keyword, status: @status, user_id: @user_id),
+                class: 'desc' == @end_at_sort ? 'link-secondary' : '' %>
+    <%= link_to '↓',
+                root_path(end_at: 'asc', keyword: @keyword, status: @status, user_id: @user_id),
+                class: 'asc' == @end_at_sort ? 'link-secondary' : '' %>
+  </div>
+  <div class="d-flex gap-2">
+    <p class="fw-bold">Assign by:</p>
+    <% @users.each do |user| %>
+      <%= link_to user.username,
+                  root_path(user_id: user.id, end_at: @end_at_sort, keyword: @keyword, status: @status),
+                  class: user.id == @user_id ? 'link-secondary' : '' %>
+    <% end %>
   </div>
   <div class="d-flex gap-2">
     <p class="fw-bold">Search by:</p>
