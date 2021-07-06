@@ -9,7 +9,7 @@ class TasksController < ApplicationController
     @tasks = current_user.tasks
              .includes([:labels])
              .page(params[:page])
-             .title_search(@search[:title])
+             .keyword_search(@search[:keyword])
              .status_search(@search[:status_ids])
              .sort_tasks(@sort_params)
   end
@@ -80,6 +80,6 @@ class TasksController < ApplicationController
   end
 
   def search_params
-    params.fetch(:search_params, {}).permit(:title, status_ids: [])
+    params.fetch(:search_params, {}).permit(:keyword, status_ids: [])
   end
 end

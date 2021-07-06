@@ -17,8 +17,8 @@ class Task < ApplicationRecord
       order(:created_at)
     end
   }
-  scope :title_search, lambda { |title|
-    title.blank? ? all : where('title LIKE ?', title)
+  scope :keyword_search, lambda { |keyword|
+    keyword.blank? ? all : eager_load(:labels).where('title LIKE ? OR labels.name LIKE ?', keyword, keyword)
   }
   scope :status_search, lambda { |statuses|
     statuses.presence&.reject(&:blank?).present? ? where(status: statuses) : all

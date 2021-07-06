@@ -19,6 +19,7 @@ ja:
       create: 新規タスク作成
       to_root: TodoAppトップ画面へ
       not_found: タスクが見つかりません
+      keyword: タイトル/ラベル
     flash:
       success:
         create: '登録成功'
