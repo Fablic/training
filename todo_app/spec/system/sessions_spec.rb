@@ -13,6 +13,7 @@ RSpec.describe 'Sessions', type: :system do
         fill_in 'session_email', with: 'admin@example.com'
         fill_in 'session_password', with: 'AAAA1234'
         click_button 'Log in'
+
         expect(page).to have_content 'admin'
         expect(page).to have_content 'logout'
       end
