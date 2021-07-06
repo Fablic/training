@@ -39,6 +39,19 @@ ja:
         create: '登録に失敗しました'
         update: '更新に失敗しました'
         destroy: '削除に失敗しました'
+  labels:
+    common:
+      create: '新規ラベル作成'
+      not_found: ラベルが見つかりません
+    flash:
+      success:
+        create: '登録完了しました'
+        update: '更新しました'
+        destroy: '削除しました'
+      error:
+        create: '登録に失敗しました'
+        update: '更新に失敗しました'
+        destroy: '削除に失敗しました'
   sessions:
     flash:
       success:
