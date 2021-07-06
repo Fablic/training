@@ -47,7 +47,7 @@ module Admin
     end
 
     def tasks
-      @tasks = @user.tasks.page(params[:page])
+      @tasks = @user.tasks.includes(:labels).page(params[:page])
     end
 
     private
