@@ -1,14 +1,9 @@
 require 'pp'
 
 class UsersController < ApplicationController
-
-  before_action :logged_in_user, only: [:show]
-  before_action :logged_in_as_admin, only: [:add, :index]
-  # the new method will be used to present the form to create users
-
-  def index
-    @users = User.order('created_at desc').page(params[:page]).per(5)
-  end
+  before_action :set_user, only: %i[show edit update destroy]
+  before_action :logged_in_user, only: [:profile, :edit_profile]
+  before_action :logged_in_as_admin, only: [:add, :index, :show]
 
   # the new method will be used to present the form to create users
   def new
@@ -30,8 +25,8 @@ class UsersController < ApplicationController
     end
   end
 
-  def show_profile
-
+  def profile
+    @user = User.find(current_user.id)
   end
 
   def edit_profile
@@ -39,6 +34,11 @@ class UsersController < ApplicationController
   end
 
   # admin functions
+
+  def index
+    @users = User.order('created_at desc').page(params[:page]).per(5)
+  end
+
   def show
     @user = User.find(params[:id])
   end
@@ -54,7 +54,7 @@ class UsersController < ApplicationController
 
   def update
     if @user.update(user_params)
-      redirect_to admin_users_path, flash: { success: 'Updated' }
+      redirect_to profile_path, flash: { success: 'Updated' }
     else
       flash.now[:danger] = 'Failed'
       render :edit
@@ -70,5 +70,9 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:email, :password, :name, :role)
+  end
+
+  def set_user
+    @user = User.find(params[:id])
   end
 end

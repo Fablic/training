@@ -1,0 +1,30 @@
+<div class="row">
+  <div class="dialog bg-white p-5 col-6 offset-3 mb-3">
+    <%= search_form_for @q do |f| %>
+      <div class="row">
+        <div class="field mb-3">
+          <%= f.search_field :name_cont, class: "form-control", placeholder: "Task Name" %>
+        </div>
+        <div class="field mb-3">
+          <%= f.select :status_eq, content_tag(:option, 'Select status', value: "") + options_for_select(Task.statuses.map { |k, v| [k, v] }, @q.status_eq), {}, { class: 'form-control' } %>
+        </div>
+        <% if admin_logged_in? %>
+          <div class="field mb-3">
+            <%= f.select :assignee_eq, content_tag(:option, 'Select an assignee', value: "") + options_for_select(User.pluck(:name, :id), @q.assignee_eq), {}, { class: 'form-control' } %>
+          </div>
+        <% end %>
+
+        <% if admin_logged_in? %>
+          <div class="field mb-3">
+            <%= f.select :user_id_eq, content_tag(:option, 'Select created by', value: "") + options_for_select(User.pluck(:name, :id), @q.user_id_eq), {}, { class: 'form-control' } %>
+          </div>
+        <% end %>
+      </div>
+      <div class="row">
+        <div>
+          <%= f.submit "Filter", class: 'btn btn-secondary col-md-2 float-end' %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

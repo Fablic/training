@@ -1,15 +1,20 @@
 <% if user_logged_in? %>
-  <h1>Welcome,  <%= current_user.name %></h1>
-  <% if admin_logged_in? %>
-    <%= link_to 'Users', admin_users_list_path, class: "btn btn-secondary" %>
-  <% end %>
-
+  <div class="row p-2">
+    <div class="dialog bg-white p-5 mb-3 text-center col-6 offset-3">
+      <h2>Hello,  <%= current_user.name %></h2>
+      <%= link_to 'All Tasks', tasks_path, class: "btn btn-outline-secondary mb-3 col-6" %><br>
+      <% if admin_logged_in? %>
+        <%= link_to 'User list', admin_users_list_path, class: "btn btn-outline-secondary mb-3 col-6" %> <br>
+        <%= link_to 'Add New User', admin_users_add_path, class: "btn btn-outline-secondary col-6" %>
+      <% end %>
+    </div>
+  </div>
 <% else %>
   <div class="row p-2">
-    <div class="dialog bg-white p-5 mb-3 text-center">
-      <h1>Hello, Stranger. </h1>
+    <div class="dialog bg-white p-5 mb-3 text-center col-6 offset-3">
+      <h2>Hello, Stranger. </h2>
       <p> New here? Then let's create an account and start using.</p>
-      <p>Already have an account then Please sign in </p>
+      <p> If you already have an account then please sign in to check your tasks</p>
       <%= link_to 'Create an account', signup_path, class: "btn btn-secondary" %>
       <%= link_to 'Login', login_path, class: "btn btn-secondary" %>
     </div>

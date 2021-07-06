@@ -1,15 +1,19 @@
 # frozen_string_literal: true
 require 'pp'
+
 class TasksController < ApplicationController
   before_action :set_task, only: %i[show edit update destroy]
   before_action :set_user, only: %i[create index new]
   before_action :logged_in_user
 
   # GET /tasks or /tasks.json
+  # All tasks
   def index
-    @q = current_user.task.ransack(params[:q])
+    @q = Task.ransack(params[:q])
     @tasks = @q.result
-    @tasks = @tasks.where(user_id: @user.id)
+    unless admin_logged_in?
+      @tasks = @tasks.where(assignee: current_user.id)
+    end
     @tasks = @tasks.order('created_at desc').page(params[:page]).per(5)
   end
 

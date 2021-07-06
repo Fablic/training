@@ -5,6 +5,7 @@
       <th class="text-secondary text-center">#</th>
       <th class="text-secondary">Name</th>
       <th class="text-secondary">Role</th>
+      <th class="text-secondary">No of tasks</th>
       <th colspan="3"></th>
     </tr>
     </thead>
@@ -14,6 +15,7 @@
         <td class="text-center"><%= idx + 1 %></td>
         <td><%= user.name %></td>
         <td><%= User.roles.key(user.role) %></td>
+        <td><%= no_of_tasks(user.id) %></td>
         <td><%= link_to 'Show', user, class: 'btn btn-secondary' %></td>
         <td><%= link_to 'Edit', edit_user_path(user), class: 'btn btn-dark' %></td>
         <td><%= link_to '<i class="bi bi-trash"></i>'.html_safe, user, method: :delete, data: { confirm: 'Are you sure?' } %></td>

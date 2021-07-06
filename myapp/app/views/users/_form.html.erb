@@ -1,20 +1,28 @@
-<%= form_with(model: @user, local: true) do |f| %>
-  <div class="field mb-3">
-    <%= f.text_field :name, class: "form-control", placeholder: "Full Name" %>
-  </div>
+<%= form_with(model: user, local: true) do |f| %>
+      <div class="field mb-3">
+        <%= f.text_field :name, class: "form-control", placeholder: "Full Name" %>
+      </div>
 
-  <div class="field mb-3">
-    <%= f.text_field :email, class: "form-control", placeholder: "E-mail" %>
-  </div>
+      <div class="field mb-3">
+        <%= f.text_field :email, class: "form-control", placeholder: "E-mail" %>
+      </div>
+      <% if type != 'edit' %>
+        <div class="field mb-3">
+          <%= f.password_field :password, class: "form-control", placeholder: "Password" %>
+        </div>
+      <% end %>
 
-  <div class="field mb-3">
-    <%= f.password_field :password, class: "form-control", placeholder: "Password" %>
-  </div>
+      <% if type != 'signup' %>
+        <div class="field mb-3">
+          <%= f.select :role, User.roles, { selected: user.role || "", disabled: "", prompt: 'Please select a role' }, class: "form-control" %>
+        </div>
+      <% end %>
 
-  <div class="field mb-3">
-    <%= f.select :role, User.roles, { selected: @user.role || "", disabled: "", prompt: 'Please select a role' }, class: "form-control" %>
-  </div>
-
-  <%= f.submit 'Create User', class: "btn btn-dark" %>
-
+      <% if type == 'edit' %>
+        <%= f.submit 'Update', class: "btn btn-dark" %>
+      <% elsif type == 'signup' %>
+        <%= f.submit 'Sign Up', class: "btn btn-dark" %>
+      <% else %>
+        <%= f.submit 'Create User', class: "btn btn-dark" %>
+      <% end %>
 <% end %>

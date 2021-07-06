@@ -10,6 +10,8 @@ Rails.application.routes.draw do
 
   resources :users
 
+  get 'profile', to: 'users#profile'
+  get 'profile/edit', to: 'users#edit_profile'
   get 'admin/users/add', to: 'users#add'
   get 'admin/users/list', to: 'users#index'
 

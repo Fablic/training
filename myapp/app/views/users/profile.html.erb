@@ -1,0 +1,45 @@
+<div class="row p-2">
+  <div class="col-md-6 offset-3">
+    <h2>Profile</h2>
+
+    <div class="dialog bg-white p-5 mb-3">
+      <div class="row mb-3">
+        <div class="col-md-3">
+          Name
+        </div>
+        <div class="col-md-6">
+          <%= current_user.name %>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-3">
+          E-mail
+        </div>
+        <div class="col-md-6">
+          <%= current_user.email %>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-3">
+          Role
+        </div>
+        <div class="col-md-6">
+          <%= User.roles.key(current_user.role) %>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-3">
+          # of Tasks
+        </div>
+        <div class="col-md-6">
+          <%= no_of_tasks(current_user.id) %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

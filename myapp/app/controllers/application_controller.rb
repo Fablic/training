@@ -3,6 +3,7 @@
 class ApplicationController < ActionController::Base
   include SessionsHelper
   include UsersHelper
+  include TasksHelper
   # rescue_from StandardError, with: :render500
   rescue_from ActionController::RoutingError, with: :render404
   rescue_from ActiveRecord::RecordNotFound, with: :render404
