@@ -8,8 +8,12 @@ class Task < ApplicationRecord
 
   scope :where_status, ->(status) { where(tasks: { task_status: status }) if status.present? }
   scope :where_keyword, ->(keyword) { where('title like ?', "#{keyword}%") if keyword.present? }
+  scope :where_user_id, ->(user_id) { where(tasks: { user_id: user_id }) if user_id.present? }
 
-  def self.search(keyword, status, sort_query)
-    where_keyword(keyword).where_status(status).order(sort_query)
+  def self.search(keyword, status, user_id, sort_query)
+    where_keyword(keyword)
+      .where_user_id(user_id)
+      .where_status(status)
+      .order(sort_query)
   end
 end

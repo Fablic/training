@@ -1,9 +1,11 @@
 name: RSpec System Spec Testing
-on: push
+on: workflow_dispatch
 
 jobs:
   rspec:
     runs-on: ubuntu-latest
+    env:
+      RAILS_ENV: test
     steps:
       - uses: actions/checkout@v2
 
@@ -16,14 +18,12 @@ jobs:
         run: sudo apt-get install libmysqlclient-dev
         working-directory: todo_app
 
-      - name: Setup bundler
-        run: gem install bundler
-        working-directory: todo_app
-
       - name: bundle install
         run: |
           bundle install --jobs 4 --retry 3
         working-directory: todo_app
+        env:
+          RAILS_ENV: test
 
       - name: Setup Database
         run: |

@@ -13,17 +13,26 @@ ja:
     created_at: "作成日"
     status: "ステータス"
     user: "担当者"
+  user:
+    username: "ユーザ名"
+    email: "メールアドレス"
+    icon: "アイコン画像URL"
+    password: "パスワード"
+    password_confirmation: "パスワード確認"
   link:
     edit: "編集する"
     delete: "削除する"
+    new_user: "新規登録はこちら"
   select_box:
     user: "ユーザを選択"
   message:
     task_not_registered: "タスクがまだ登録されていません"
     lets_register_task: "タスクの登録をしましょう"
     registered_task: "タスクの登録が完了しました"
+    registered_user: "ユーザの登録が完了しました"
     edited_task: "タスクの編集が完了しました"
     deleted_task: "タスクの削除が完了しました"
-    registered_is_faild: "登録に失敗しました"
+    registered_is_failed: "登録に失敗しました"
     edited_is_faild: "更新に失敗しました"
     deleted_is_faild: "削除に失敗しました"
+    login_is_failed: "ログインに失敗しました。メールアドレスとパスワードをご確認ください"

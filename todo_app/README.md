@@ -1,5 +1,6 @@
 # README
 
+
 ## Setup
 
 
@@ -42,6 +43,18 @@ bundle exec rails webpacker:compile
 bundle exec rails db:migrate
 bundle exec rails db:seed
 bundle exec rails server
+```
+
+5.1 Login App
+
+```
+### Admin
+email: admin@example.com
+password: AAAA1234
+
+### Normal
+email: normal@example.com
+password: AAAA1234
 ```
 
 6. Create test data

@@ -3,5 +3,7 @@
   <div class="d-flex m-2 gap-2 align-items-center">
     <%= f.collection_radio_buttons :status, Task.task_statuses, :first, :first, checked: @status %>
   </div>
+  <%= hidden_field_tag :user_id, @user_id %>
+  <%= hidden_field_tag :end_at, @end_at_sort %>
   <%= f.submit I18n.t(:'button.search'), class: 'btn btn-outline-primary' %>
 <% end %>

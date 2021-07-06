@@ -5,7 +5,8 @@ require 'rails_helper'
 RSpec.describe Task, type: :model do
   describe 'validation' do
     subject { build(:task, params) }
-    let(:user) { create(:admin_user) }
+    let!(:user) { create(:admin_user) }
+    let!(:normal_user) { create(:normal_user) }
     let(:params) { { title: title, description: description, task_status: task_status, user_id: user_id } }
     let(:random_str) { Faker::Alphanumeric.alpha(number: 10) }
 
@@ -77,43 +78,80 @@ RSpec.describe Task, type: :model do
     end
 
     describe 'search' do
-      let!(:todo_task) { create(:task, title: 'Javaを勉強する', task_status: :todo, user_id: user.id) }
-      let!(:doing_task) { create(:past_task, title: '英語を1時間勉強する', task_status: :doing, user_id: user.id) }
+      let!(:todo_task) { create(:task, title: 'Javaを勉強する', task_status: :todo, user_id: normal_user.id) }
+      let!(:doing_task) { create(:past_task, title: '英語を1時間勉強する', task_status: :doing, user_id: normal_user.id) }
       let!(:done_task) { create(:task, title: '英語を勉強する', task_status: :done, user_id: user.id) }
 
-      context 'search keyword' do
-        result = Task.search('Java', nil, nil)
+      subject(:result) { Task.search(keyword, status, user_id, sort_query) }
 
-        it { expect(result.length).to match 1 }
+      context 'search keyword' do
+        let(:keyword) { 'Java' }
+        let(:status) { nil }
+        let(:user_id) { nil }
+        let(:sort_query) { nil }
+
+        it { expect(result.length).to eq 1 }
         it { expect(result[0].title).to match 'Javaを勉強する' }
       end
 
       context 'search status' do
-        result = Task.search(nil, :todo, nil)
+        let(:keyword) { nil }
+        let(:status) { :todo }
+        let(:user_id) { nil }
+        let(:sort_query) { nil }
 
-        it { expect(result.length).to match 1 }
+        it { expect(result.length).to eq 1 }
         it { expect(result[0].title).to match 'Javaを勉強する' }
       end
 
-      context 'search keyword & status' do
-        result = Task.search('英語', :doing, nil)
+      context 'search user_id' do
+        let(:keyword) { nil }
+        let(:status) { nil }
+        let(:user_id) { normal_user.id }
+        let(:sort_query) { nil }
 
-        it { expect(result.length).to match 1 }
+        it { expect(result.length).to eq 2 }
+        it { expect(result[0].title).to match 'Javaを勉強する' }
+        it { expect(result[1].title).to match '英語を1時間勉強する' }
+      end
+
+      context 'search keyword & status' do
+        let(:keyword) { '英語' }
+        let(:status) { :doing }
+        let(:user_id) { nil }
+        let(:sort_query) { nil }
+
+        it { expect(result.length).to eq 1 }
         it { expect(result[0].title).to match '英語を1時間勉強する' }
       end
 
       context 'search keyword & status & sort' do
-        result = Task.search('英語', nil, { end_at: 'asc' })
+        let(:keyword) { '英語' }
+        let(:status) { :doing }
+        let(:user_id) { nil }
+        let(:sort_query) { { end_at: 'asc' } }
 
-        it { expect(result.length).to match 2 }
+        it { expect(result.length).to eq 1 }
         it { expect(result[0].title).to match '英語を1時間勉強する' }
-        it { expect(result[1].title).to match '英語を勉強する' }
+      end
+
+      context 'search keyword & status & user_id & sort' do
+        let(:keyword) { '英語' }
+        let(:status) { :done }
+        let(:user_id) { user.id }
+        let(:sort_query) { { end_at: 'asc' } }
+
+        it { expect(result.length).to eq 1 }
+        it { expect(result[0].title).to match '英語を勉強する' }
       end
 
       context 'search none' do
-        result = Task.search(nil, nil, nil)
+        let(:keyword) { nil }
+        let(:status) { nil }
+        let(:user_id) { nil }
+        let(:sort_query) { nil }
 
-        it { expect(result.length).to match 3 }
+        it { expect(result.length).to eq 3 }
         it { expect(result[0].title).to match 'Javaを勉強する' }
       end
     end
