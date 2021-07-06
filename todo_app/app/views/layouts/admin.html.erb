@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>TodoApp管理画面</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <%= stylesheet_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+</head>
+<body>
+  <div class="d-flex flex-row justify-content-between align-items-center shadow-sm px-5 py-3 bg-dark">
+    <h1><%= link_to 'TODO App Admin', admin_root_path %></h1>
+
+    <div class="d-flex gap-2">
+      <%= link_to User.model_name.human, admin_users_path %>
+      <% if logged_in? %>
+        <%= link_to 'logout', logout_path %>
+      <% else %>
+        <%= link_to 'login', login_path %>
+      <% end %>
+    </div>
+  </div>
+  <div class="container mt-4">
+    <%= yield %>
+  </div>
+</body>
+</html>

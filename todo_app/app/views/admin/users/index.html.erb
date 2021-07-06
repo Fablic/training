@@ -1,0 +1,5 @@
+<% if @users.present? %>
+  <%= @users.each { |u| u.username } %>
+<% else %>
+  <div>not users</div>
+<% end %>
