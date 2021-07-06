@@ -7,7 +7,7 @@ class TasksController < ApplicationController
     @sort_params = request_sort_params
     @search = search_params
     @tasks = current_user.tasks
-             .includes([:labels])
+             .eager_load(labels: :task_labels)
              .page(params[:page])
              .keyword_search(@search[:keyword])
              .status_search(@search[:status_ids])

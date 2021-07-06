@@ -24,7 +24,7 @@
           <td><%= task.description.truncate(20) %></td>
           <td><%= Task.human_attribute_name("status.#{task.status}") %>
           <td>
-            <% task.labels.each do |label| %>
+            <% task.labels.joins(:task_labels).each do |label| %>
               <span class="badge bg-success"><%= label.name %></span>
             <% end %>
           </td>
