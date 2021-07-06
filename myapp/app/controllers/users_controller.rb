@@ -43,7 +43,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
-  # add new users
+  # add new users by admin
   def add
     @user = User.new
   end
@@ -54,7 +54,7 @@ class UsersController < ApplicationController
 
   def update
     if @user.update(user_params)
-      redirect_to profile_path, flash: { success: 'Updated' }
+      redirect_to admin_logged_in? ? admin_users_list_path : profile_path, flash: { success: 'Updated' }
     else
       flash.now[:danger] = 'Failed'
       render :edit

@@ -2,7 +2,7 @@
   <div class="row p-2">
     <div class="dialog bg-white p-5 mb-3 text-center col-6 offset-3">
       <h2>Hello,  <%= current_user.name %></h2>
-      <%= link_to 'All Tasks', tasks_path, class: "btn btn-outline-secondary mb-3 col-6" %><br>
+      <%= link_to 'Tasks', tasks_path, class: "btn btn-outline-secondary mb-3 col-6" %><br>
       <% if admin_logged_in? %>
         <%= link_to 'User list', admin_users_list_path, class: "btn btn-outline-secondary mb-3 col-6" %> <br>
         <%= link_to 'Add New User', admin_users_add_path, class: "btn btn-outline-secondary col-6" %>

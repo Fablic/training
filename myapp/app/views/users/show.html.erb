@@ -1,10 +1,45 @@
-<div class="row">
-  <div class="offset-4 col-md-4">
-    <h3 class='text-center'>
-      <%= @user.name %>
-    </h3>
-    <h3 class='text-center'>
-      <%= @user.email %>
-    </h3>
+<div class="row p-2">
+  <div class="col-md-6 offset-3">
+    <h2>Profile of <%= @user.name %></h2>
+
+    <div class="dialog bg-white p-5 mb-3">
+      <div class="row mb-3">
+        <div class="col-md-3">
+          Name
+        </div>
+        <div class="col-md-6">
+          <%= @user.name %>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-3">
+          E-mail
+        </div>
+        <div class="col-md-6">
+          <%= @user.email %>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-3">
+          Role
+        </div>
+        <div class="col-md-6">
+          <%= User.roles.key(@user.role) %>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-3">
+          # of Tasks
+        </div>
+        <div class="col-md-6">
+          <%= no_of_tasks(@user.id) %>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
+
+
+
