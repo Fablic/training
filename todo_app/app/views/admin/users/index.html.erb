@@ -2,13 +2,12 @@
   <table class="table">
     <thead>
     <tr>
-      <!-- TODO I18n-->
-      <th scope="col">username</th>
-      <th scope="col">email</th>
-      <th scope="col">role</th>
-      <th scope="col">created_at</th>
-      <th scope="col">updated_at</th>
-      <th scope="col">has tasks</th>
+      <th scope="col"><%= I18n.t(:'user.username') %></th>
+      <th scope="col"><%= I18n.t(:'user.email') %></th>
+      <th scope="col"><%= I18n.t(:'user.role') %></th>
+      <th scope="col"><%= I18n.t(:'common.created_at') %></th>
+      <th scope="col"><%= I18n.t(:'common.updated_at') %></th>
+      <th scope="col"><%= I18n.t(:'user.has_task') %></th>
       <th scope="col"><%= I18n.t(:'link.edit') %></th>
       <th scope="col"><%= I18n.t(:'link.delete') %></th>
     </tr>
@@ -39,5 +38,5 @@
                  nav_class: "d-inline-block" %>
   </div>
 <% else %>
-  <div>not users</div>
+  <%= I18n.t(:'message.user_not_registered') %>
 <% end %>

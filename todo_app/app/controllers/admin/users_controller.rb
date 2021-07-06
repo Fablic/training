@@ -39,10 +39,10 @@ module Admin
 
     def destroy
       if @user.destroy
-        flash[:success] = 'Deleted user'
+        flash[:success] = I18n.t(:'message.deleted_user')
         redirect_to admin_users_path
       else
-        flash.now[:error] = I18n.t(:'message.deleted_is_faild')
+        flash.now[:error] = I18n.t(:'message.deleted_is_failed')
         render admin_users_path
       end
     end
