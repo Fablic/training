@@ -12,14 +12,27 @@ RSpec.describe 'Admin Users', type: :system do
 
       it 'ユーザが表示されている' do
         expect(page).to have_content 'admin'
-        expect(page).to have_content 'admin2'
         expect(page).to have_content 'admin@example.com'
+        expect(page).to have_content 'admin2'
         expect(page).to have_content 'admin2@example.com'
       end
 
       it 'ユーザの保持するタスク数が正しい' do
         expect(all("[data-testid='user-has-task']")[0].text).to match '0'
         expect(all("[data-testid='user-has-task']")[1].text).to match '1'
+      end
+    end
+
+    context '削除ボタンを押したとき' do
+      before { visit admin_users_path }
+
+      it 'ユーザの削除ができる' do
+        click_link 'Delete', match: :first
+
+        expect(page).to have_content 'admin'
+        expect(page).to have_content 'admin@example.com'
+        expect(page).to_not have_content 'admin2'
+        expect(page).to_not have_content 'admin2@example.com'
       end
     end
   end
