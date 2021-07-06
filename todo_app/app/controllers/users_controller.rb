@@ -10,7 +10,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(users_param)
     if @user.save
-      # log_in @user
+      log_in @user
       redirect_to root_path, { flash: { success: I18n.t(:'message.registered_user') } }
     else
       flash.now[:error] = I18n.t(:'message.registered_is_failed')
