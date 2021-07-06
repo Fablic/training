@@ -1,5 +1,43 @@
 <% if @users.present? %>
-  <%= @users.each { |u| u.username } %>
+  <table class="table">
+    <thead>
+    <tr>
+      <!-- TODO I18n-->
+      <th scope="col">username</th>
+      <th scope="col">email</th>
+      <th scope="col">role</th>
+      <th scope="col">created_at</th>
+      <th scope="col">updated_at</th>
+      <th scope="col">has tasks</th>
+      <th scope="col"><%= I18n.t(:'link.edit') %></th>
+      <th scope="col"><%= I18n.t(:'link.delete') %></th>
+    </tr>
+    </thead>
+    <tbody>
+      <% @users.each do |u| %>
+        <tr>
+          <td><%= u.username %></td>
+          <td><%= u.email %></td>
+          <td><%= u.role %></td>
+          <td><%= I18n.l(u.created_at) %></td>
+          <td><%= I18n.l(u.updated_at) %></td>
+          <td><%= u.tasks.length %></td>
+          <td><%= link_to I18n.t(:'link.edit'), admin_user_path(u) %></td>
+          <td>
+            <% if u.id === @current_user&.id %>
+              <div class="text-dark"><%= I18n.t(:'link.delete') %></div>
+            <% else %>
+              <%= link_to I18n.t(:'link.delete'), admin_user_path(u), method: :delete %></td>
+            <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <div class="text-center mt-4">
+    <%= paginate @users, theme: 'bootstrap-5',
+                 pagination_class: "pagination-sm flex-wrap justify-content-center",
+                 nav_class: "d-inline-block" %>
+  </div>
 <% else %>
   <div>not users</div>
 <% end %>

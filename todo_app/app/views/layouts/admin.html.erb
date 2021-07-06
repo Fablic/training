@@ -16,6 +16,9 @@
     <div class="d-flex gap-2">
       <%= link_to User.model_name.human, admin_users_path %>
       <% if logged_in? %>
+        <div class="text-white">
+          <%= current_user.username %>
+        </div>
         <%= link_to 'logout', logout_path %>
       <% else %>
         <%= link_to 'login', login_path %>
