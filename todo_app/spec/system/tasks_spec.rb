@@ -5,7 +5,8 @@ require 'rails_helper'
 RSpec.describe Task, type: :system do
   describe '#index', :require_login do
     let(:not_logged_in_user) { create(:user) }
-    let!(:old_task) { create(:task, user: user, created_at: Faker::Time.backward, due_date: Faker::Time.backward, status: :completed) }
+    let(:label) { create(:label) }
+    let!(:old_task) { create(:task, user: user, created_at: Faker::Time.backward, due_date: Faker::Time.backward, status: :completed, label_ids: [label.id]) }
     let!(:new_task) { create(:task, user: user, created_at: Faker::Time.forward, due_date: Faker::Time.forward) }
     let!(:not_logged_in_user_task) { create(:task, user: not_logged_in_user, created_at: Faker::Time.forward, due_date: Faker::Time.forward) }
     after {
@@ -34,7 +35,7 @@ RSpec.describe Task, type: :system do
       it 'success and find old task' do
         visit root_path
 
-        fill_in 'search_params_title', with: old_task.title
+        fill_in 'search_params_keyword', with: old_task.title
         click_button I18n.t('common.action.search')
 
         expect(page).to have_content(old_task.title)
@@ -50,6 +51,7 @@ RSpec.describe Task, type: :system do
 
         expect(page).to have_content(old_task.title)
         expect(page).to have_content(new_task.title)
+        expect(page).to have_content(label.name)
       end
     end
 
@@ -62,6 +64,7 @@ RSpec.describe Task, type: :system do
         click_button I18n.t('common.action.search')
 
         expect(page).to have_content(old_task.title)
+        expect(page).to have_content(label.name)
         expect(page).to_not have_content(new_task.title)
       end
     end
@@ -106,6 +109,7 @@ RSpec.describe Task, type: :system do
   end
 
   describe '#new', :require_login do
+    let!(:label) { create(:label) }
     let(:work_in_progress_status) { Task.human_attribute_name('status.work_in_progress') }
     let(:title) { Faker::Alphanumeric.alphanumeric(number: 10) }
     let(:ja_title) { Task.human_attribute_name(:title) }
@@ -121,10 +125,12 @@ RSpec.describe Task, type: :system do
       fill_in ja_desc, with: desc
       fill_in ja_due_date, with: I18n.l(due_date)
       choose work_in_progress_status
+      check label.name
 
       expect do
         click_button I18n.t('common.action.create')
       end.to change(Task, :count).by(1)
+      .and change(TaskLabel, :count).by(+1)
 
       expect(current_path).to eq root_path
 
@@ -133,6 +139,7 @@ RSpec.describe Task, type: :system do
       expect(page).to have_content(desc)
       expect(page).to have_content(I18n.l(due_date))
       expect(page).to have_content(work_in_progress_status)
+      expect(page).to have_content(label.name)
     end
     it 'error' do
       visit new_task_path
@@ -140,6 +147,7 @@ RSpec.describe Task, type: :system do
       expect do
         click_button I18n.t('common.action.create')
       end.to change(Task, :count).by(0)
+      .and change(TaskLabel, :count).by(0)
 
       expect(current_path).to eq tasks_path
 
@@ -150,6 +158,7 @@ RSpec.describe Task, type: :system do
   end
 
   describe '#edit', :require_login do
+    let!(:label) { create(:label) }
     let(:task) { create(:task, user: user, created_at: Faker::Time.backward, due_date: Faker::Time.backward, status: :completed) }
     let(:completed_status) { Task.human_attribute_name('status.completed') }
     let(:title) { Faker::Alphanumeric.alphanumeric(number: 10) }
@@ -171,10 +180,12 @@ RSpec.describe Task, type: :system do
       fill_in ja_desc, with: desc
       fill_in ja_due_date, with: I18n.l(due_date)
       choose completed_status
+      check label.name
 
       expect do
         click_button I18n.t('common.action.update')
       end.to change(Task, :count).by(0)
+      .and change(TaskLabel, :count).by(+1)
 
       expect(current_path).to eq task_path(task)
       expect(page).to have_content(I18n.t('tasks.flash.success.update'))
@@ -182,6 +193,7 @@ RSpec.describe Task, type: :system do
       expect(page).to have_content(desc)
       expect(page).to have_content(I18n.l(due_date))
       expect(page).to have_content(completed_status)
+      expect(page).to have_content(label.name)
     end
     it 'errror' do
       visit edit_task_path(task)
@@ -207,7 +219,8 @@ RSpec.describe Task, type: :system do
   end
 
   describe '#show', :require_login do
-    let(:task) { create(:task, user: user, created_at: Faker::Time.backward, due_date: Faker::Time.backward, status: :completed) }
+    let!(:label) { create(:label) }
+    let(:task) { create(:task, user: user, created_at: Faker::Time.backward, due_date: Faker::Time.backward, status: :completed, label_ids: [label.id]) }
     it 'visit show' do
       visit task_path(task)
 
@@ -216,11 +229,13 @@ RSpec.describe Task, type: :system do
       expect(page).to have_content(task.title)
       expect(page).to have_content(task.description)
       expect(page).to have_content(I18n.l(task.due_date))
+      expect(page).to have_content(label.name)
     end
   end
 
   describe '#destroy', :require_login do
-    let(:task) { create(:task, user: user, created_at: Faker::Time.backward, due_date: Faker::Time.backward, status: :completed) }
+    let!(:label) { create(:label) }
+    let(:task) { create(:task, user: user, created_at: Faker::Time.backward, due_date: Faker::Time.backward, status: :completed, label_ids: [label.id]) }
     it 'delete record' do
       visit task_path(task)
 
@@ -229,6 +244,7 @@ RSpec.describe Task, type: :system do
       expect do
         click_link I18n.t('common.action.destroy')
       end.to change(Task, :count).by(-1)
+      .and change(TaskLabel, :count).by(-1)
 
       expect(current_path).to eq root_path
 
