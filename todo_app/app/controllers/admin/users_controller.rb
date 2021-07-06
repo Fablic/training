@@ -6,7 +6,8 @@ module Admin
     before_action :find_user, only: %i[show edit update destroy]
 
     def index
-      @users = User.includes(:tasks).page(params[:page])
+      @users = User.includes(:tasks).order({ created_at: :desc })
+                   .page(params[:page])
     end
 
     def new
@@ -54,7 +55,7 @@ module Admin
     end
 
     def find_user
-      @user = User.joins(:tasks).find(params[:id])
+      @user = User.left_joins(:tasks).find(params[:id])
     end
   end
 end

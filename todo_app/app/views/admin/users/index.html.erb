@@ -20,7 +20,7 @@
           <td><%= u.role %></td>
           <td><%= I18n.l(u.created_at) %></td>
           <td><%= I18n.l(u.updated_at) %></td>
-          <td><%= u.tasks.length %></td>
+          <td data-testid="user-has-task"><%= u.tasks.length %></td>
           <td><%= link_to I18n.t(:'link.edit'), edit_admin_user_path(u) %></td>
           <td>
             <% if u.id === @current_user&.id %>
