@@ -11,33 +11,42 @@
     </div>
   <% end %>
 
-  <div class="field mb-3">
+  <div class="form-floating mb-3">
     <%= form.text_field :name, class: "form-control", placeholder: "Task Name" %>
+    <label>Tasks Name</label>
   </div>
 
-  <div class="field mb-3">
+  <div class="form-floating mb-3">
     <%= form.text_area :desc, class: "form-control", placeholder: "Description" %>
+    <label>Description</label>
   </div>
 
-  <div class="field mb-3">
+  <div class="form-floating mb-3">
     <%= form.select :status, Task.statuses, { selected: @task.status || "", disabled: "", prompt: 'Please select status' }, class: "form-control" %>
+    <label>Status</label>
+
   </div>
 
-  <div class="field mb-3">
-    <%= form.text_field :label, class: "form-control", placeholder: "Label (add multiple with comma, i.e: feature, bug)" %>
+  <div class="mb-3">
+    <%= form.collection_check_boxes(:label, Task.labels, :first, :first, include_hidden: false) do |l| %>
+      <%= l.label { l.check_box + l.text } %>
+    <% end %>
   </div>
 
 
-  <div class="field mb-3">
+  <div class="form-floating mb-3">
     <%= form.select :priority, Task.priorities, { selected: @task.priority || "", disabled: "", prompt: 'Please select priority' }, class: "form-control", placeholder: "Priority" %>
+    <label>Priority</label>
   </div>
 
-  <div class="field mb-3">
-    <%= form.datetime_local_field :due_date, class: "form-control", placeholder: "Priority" %>
+  <div class="form-floating mb-3">
+    <%= form.datetime_local_field :due_date, class: "form-control", placeholder: "Due Date" %>
+    <label>Due Date</label>
   </div>
 
-  <div class="field mb-3">
+  <div class="form-floating mb-3">
     <%= form.select :assignee, User.pluck(:name, :id), { selected: @task.assignee || "", disabled: "", prompt: 'Please Select an Assignee' }, class: "form-control" %>
+    <label>Assignee</label>
   </div>
 
   <div class="actions">
