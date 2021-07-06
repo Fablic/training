@@ -1,1 +1,41 @@
-<%= @user %>
+<h2 class="my-4"><%= User.model_name %></h2>
+<div class="card w-50 m-2 p-2 gap-4">
+  <div class="d-flex">
+    <div class="w-25"><%= I18n.t(:'user.username') %>:</div>
+    <div class="w-50"><%= @user.username %></div>
+  </div>
+  <div class="d-flex">
+    <div class="w-25"><%= I18n.t(:'user.email') %>:</div>
+    <div class="w-50"><%= @user.email %></div>
+  </div>
+  <div class="d-flex">
+    <div class="w-25"><%= 'role' %>:</div>
+    <div class="w-50"><%= @user.role %></div>
+  </div>
+  <div class="d-flex">
+    <div class="w-25"><%= 'created_at' %>:</div>
+    <div class="w-50"><%= I18n.l(@user&.created_at) %></div>
+  </div>
+  <div class="d-flex">
+    <div class="w-25"><%= 'updated_at' %>:</div>
+    <div class="w-50"><%= I18n.l(@user&.updated_at) %></div>
+  </div>
+  <div class="d-flex justify-content-between">
+    <%= link_to I18n.t(:'link.edit'), edit_admin_user_path(@user) %>
+    <%= link_to I18n.t(:'link.delete'), admin_user_path(@user), method: :delete %>
+  </div>
+</div>
+
+<h2 class="my-4"><%= Task.model_name %></h2>
+
+<% if @user.tasks.present? %>
+  <div class="d-flex flex-wrap">
+    <% @user.tasks.each do |task| %>
+      <div class="w-25">
+        <%= render 'tasks/card', task: task %>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <%= I18n.t(:'message.task_not_registered') %>
+<% end %>
