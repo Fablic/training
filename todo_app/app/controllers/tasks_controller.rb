@@ -6,7 +6,12 @@ class TasksController < ApplicationController
   def index
     @sort_params = request_sort_params
     @search = search_params
-    @tasks = current_user.tasks.page(params[:page]).title_search(@search[:title]).status_search(@search[:status_ids]).sort_tasks(@sort_params)
+    @tasks = current_user.tasks
+             .includes([:labels])
+             .page(params[:page])
+             .title_search(@search[:title])
+             .status_search(@search[:status_ids])
+             .sort_tasks(@sort_params)
   end
 
   def new
@@ -42,7 +47,7 @@ class TasksController < ApplicationController
   end
 
   def destroy
-    @task.delete
+    @task.destroy
 
     flash[:success] = I18n.t('tasks.flash.success.destroy')
     redirect_to root_path
@@ -51,7 +56,7 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:title, :description, :due_date, :status)
+    params.require(:task).permit(:title, :description, :due_date, :status, label_ids: [])
   end
 
   def find_task

@@ -1,4 +1,7 @@
 <%= render 'layouts/flash', add_class: 'alert mt-3' %>
+<div class="mb-2">
+<%= link_to I18n.t('tasks.common.create'), new_task_path, class: "btn btn-primary" %>
+</div>
 <% if @tasks.present? %>
   <table class="table table-striped table-bordered">
     <thead>
@@ -7,6 +10,7 @@
         <th><%= Task.human_attribute_name(:title) %></th>
         <th><%= Task.human_attribute_name(:description) %></th>
         <th><%= Task.human_attribute_name(:status) %></th>
+        <th><%= Task.human_attribute_name(:label) %></th>
         <th><%= link_to Task.human_attribute_name(:created_at), root_path(search_parmas: @search, sort_key: 'created_at', sort_val: display_sort_val(@sort_params[:created_at])) %></th>
         <th><%= link_to Task.human_attribute_name(:due_date), root_path(search_parmas: @search, sort_key: 'due_date', sort_val: display_sort_val(@sort_params[:due_date])) %></th>
         <th></th>
@@ -18,7 +22,12 @@
           <td><%= link_to task.id, task_path(task) %></td>
           <td><%= task.title %></td>
           <td><%= task.description.truncate(20) %></td>
-          <td><%=  Task.human_attribute_name("status.#{task.status}") %>
+          <td><%= Task.human_attribute_name("status.#{task.status}") %>
+          <td>
+            <% task.labels.each do |label| %>
+              <span class="badge bg-success"><%= label.name %></span>
+            <% end %>
+          </td>
           <td><%= I18n.l(task.created_at) %>
           <td>
             <%= I18n.l(task.due_date, default: '') %>

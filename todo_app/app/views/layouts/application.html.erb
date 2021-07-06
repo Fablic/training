@@ -23,9 +23,10 @@
               <%= render 'tasks/search_form' %>
             </li>
           </ul>
-            <% unless request.path.eql?(new_task_path) || !user_signed_in? %>
-              <%= link_to I18n.t('tasks.common.create') , new_task_path,  class: 'nav-link btn btn-outline-secondary btn-sm', 'aria-current' => 'page' %>
-            <% end %>
+          <% if user_signed_in? %>
+            <%= link_to Task.model_name.human, root_path, class: 'nav-link btn btn-outline-secondary btn-sm', 'aria-current' => 'page' %>
+            <%= link_to Label.model_name.human, labels_path, class: 'nav-link btn btn-outline-secondary btn-sm ms-0 ms-lg-3 mt-3 mt-lg-0', 'aria-current' => 'page' %>
+          <% end %>
             <%= render 'sessions/link' %>
         </div>
       </div>
