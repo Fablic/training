@@ -14,7 +14,7 @@
         </p>
         <p>
           <strong>Label:</strong>
-          <% @task.label.each do |l| %>
+          <% render_labels(@task.label).each do |l| %>
             <span class="labels <%= l.downcase %>"> <%= l %></span>
           <% end %>
         </p>

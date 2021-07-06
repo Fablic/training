@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-require 'pp'
 
 class TasksController < ApplicationController
   before_action :set_task, only: %i[show edit update destroy]
@@ -70,7 +69,7 @@ class TasksController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def task_params
-    params.require(:task).permit(:name, :desc, :status, :label, :priority, :due_date, :assignee)
+    params.require(:task).permit(:name, :desc, :status, :label, :priority, :due_date, :assignee, :label => [])
   end
 
   def set_user
