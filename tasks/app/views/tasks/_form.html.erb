@@ -22,7 +22,7 @@
     <%= f.collection_select :priority_id, MasterTaskPriority.all, :id, :priority, :prompt => @task.priority.priority %>
   <% end %>
 
-  <% if controller.action_name == 'edit' || controller.action_name == 'update' %>
+  <% if controller.action_name.in?(%w[edit update]) %>
     <%= f.label :status %>
     <%= f.collection_select :status_id, MasterTaskStatus.all, :id, :status, :prompt => @task.status.status %>
   <% end %>

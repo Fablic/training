@@ -152,25 +152,23 @@ RSpec.describe Task, type: :model do
   end
 
   describe 'すでに設定されている期限が現在時刻より前の日時のバリデーション' do
-    before do
-      @task = travel(-1.day) { create(:exist_limit_date_task) }
-    end
+    let(:task) { travel(-1.day) { create(:exist_limit_date_task) } }
     context '期限が変更されていない場合' do
       it '有効である' do
-        expect(@task).to be_valid
+        expect(task).to be_valid
       end
     end
     context '現在時刻より前の日時に期限が変更される場合' do
       it 'エラーになる' do
-        @task.limit_date = Time.current - 1.minute
-        expect(@task).to be_invalid
-        expect(@task.errors[:limit_date]).to include('現在時刻より前の日時は設定できません')
+        task.limit_date = Time.current - 1.minute
+        expect(task).to be_invalid
+        expect(task.errors[:limit_date]).to include('現在時刻より前の日時は設定できません')
       end
     end
     context '現在時刻より後の日時に期限が変更される場合' do
       it '有効である' do
-        @task.limit_date = Time.current + 1.minute
-        expect(@task).to be_valid
+        task.limit_date = Time.current + 1.minute
+        expect(task).to be_valid
       end
     end
   end
