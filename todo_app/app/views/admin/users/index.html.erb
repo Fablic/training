@@ -1,4 +1,6 @@
-<% if @users.present? %>
+<% if @users.blank? %>
+  <%= I18n.t(:'message.user_not_registered') %>
+<% else %>
   <table class="table">
     <thead>
     <tr>
@@ -13,23 +15,23 @@
     </tr>
     </thead>
     <tbody>
-      <% @users.each do |u| %>
-        <tr>
-          <td><%= link_to u.username, admin_user_path(u) %></td>
-          <td><%= u.email %></td>
-          <td><%= u.role %></td>
-          <td><%= I18n.l(u.created_at) %></td>
-          <td><%= I18n.l(u.updated_at) %></td>
-          <td data-testid="user-has-task"><%= u.tasks.length %></td>
-          <td><%= link_to I18n.t(:'link.edit'), edit_admin_user_path(u) %></td>
-          <td>
-            <% if u.id === @current_user&.id %>
-              <div class="text-dark"><%= I18n.t(:'link.delete') %></div>
-            <% else %>
-              <%= link_to I18n.t(:'link.delete'), admin_user_path(u), method: :delete %></td>
-            <% end %>
-        </tr>
-      <% end %>
+    <% @users.each do |u| %>
+      <tr>
+        <td><%= link_to u.username, admin_user_path(u) %></td>
+        <td><%= u.email %></td>
+        <td><%= u.role %></td>
+        <td><%= I18n.l(u.created_at) %></td>
+        <td><%= I18n.l(u.updated_at) %></td>
+        <td data-testid="user-has-task"><%= u.tasks.length %></td>
+        <td><%= link_to I18n.t(:'link.edit'), edit_admin_user_path(u) %></td>
+        <td>
+          <% if u.id == @current_user&.id %>
+            <div class="text-dark"><%= I18n.t(:'link.delete') %></div>
+          <% else %>
+            <%= link_to I18n.t(:'link.delete'), admin_user_path(u), method: :delete %></td>
+          <% end %>
+          </tr>
+    <% end %>
     </tbody>
   </table>
   <div class="text-center mt-4">
@@ -37,6 +39,4 @@
                  pagination_class: "pagination-sm flex-wrap justify-content-center",
                  nav_class: "d-inline-block" %>
   </div>
-<% else %>
-  <%= I18n.t(:'message.user_not_registered') %>
 <% end %>

@@ -1,33 +1,24 @@
-<%= render 'layouts/error', model: @user %>
-<%= form_with(model: @user,
-              url: @user.new_record? ? admin_users_path : admin_user_path,
-              method: @user.new_record? ? :post : :patch,
-              class: 'card w-50 m-2 p-2 gap-3') do |f| %>
-  <div class="d-flex">
-    <div class="w-25"><%= f.label I18n.t(:'user.username') %>:</div>
-    <div class="w-50"><%= f.text_field :username, class: 'form-control' %></div>
-  </div>
-  <div class="d-flex">
-    <div class="w-25"><%= f.label I18n.t(:'user.email') %>:</div>
-    <div class="w-75"><%= f.text_field :email, class: 'form-control' %></div>
-  </div>
-  <div class="d-flex">
-    <div class="w-25"><%= f.label I18n.t(:'user.icon') %>:</div>
-    <div class="w-50"><%= f.text_field :icon, class: 'form-control' %></div>
-  </div>
-  <div class="d-flex">
-    <div class="w-25"><%= f.label I18n.t(:'user.password') %>:</div>
-    <div class="w-50"><%= f.text_field :password, type: 'password', class: 'form-control' %></div>
-  </div>
-  <div class="d-flex">
-    <div class="w-25"><%= f.label I18n.t(:'user.password_confirmation') %>:</div>
-    <div class="w-50"><%= f.text_field :password_confirmation, type: 'password', class: 'form-control' %></div>
-  </div>
-  <div class="d-flex">
-    <div class="w-25"><%= f.label I18n.t(:'user.role') %>:</div>
-    <div class="w-50"><%= f.select :role, User.roles.keys, {}, { class: 'form-select' } %></div>
-  </div>
-  <div class="mx-auto">
-    <%= f.submit @user.new_record? ? I18n.t(:'button.create') : I18n.t(:'button.edit'), class: 'btn btn-primary' %>
-  </div>
-<% end %>
+<div class="d-flex">
+  <div class="w-25"><%= f.label I18n.t(:'user.username') %>:</div>
+  <div class="w-50"><%= f.text_field :username, class: 'form-control' %></div>
+</div>
+<div class="d-flex">
+  <div class="w-25"><%= f.label I18n.t(:'user.email') %>:</div>
+  <div class="w-75"><%= f.text_field :email, class: 'form-control' %></div>
+</div>
+<div class="d-flex">
+  <div class="w-25"><%= f.label I18n.t(:'user.icon') %>:</div>
+  <div class="w-50"><%= f.text_field :icon, class: 'form-control' %></div>
+</div>
+<div class="d-flex">
+  <div class="w-25"><%= f.label I18n.t(:'user.password') %>:</div>
+  <div class="w-50"><%= f.text_field :password, type: 'password', class: 'form-control' %></div>
+</div>
+<div class="d-flex">
+  <div class="w-25"><%= f.label I18n.t(:'user.password_confirmation') %>:</div>
+  <div class="w-50"><%= f.text_field :password_confirmation, type: 'password', class: 'form-control' %></div>
+</div>
+<div class="d-flex">
+  <div class="w-25"><%= f.label I18n.t(:'user.role') %>:</div>
+  <div class="w-50"><%= f.select :role, User.roles.keys, {}, { class: 'form-select' } %></div>
+</div>

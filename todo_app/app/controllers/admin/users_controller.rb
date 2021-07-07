@@ -14,7 +14,9 @@ module Admin
       @user = User.new
     end
 
-    def show; end
+    def show
+      @user_tasks = Task.search(nil, nil, params[:id], nil)
+    end
 
     def edit; end
 
@@ -55,7 +57,7 @@ module Admin
     end
 
     def find_user
-      @user = User.left_joins(:tasks).find(params[:id])
+      @user = User.find(params[:id])
     end
   end
 end
