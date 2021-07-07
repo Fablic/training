@@ -12,11 +12,12 @@
         </div>
       <% end %>
 
-      <% if type != 'signup' %>
+      <% if type == 'signup' %>
+      <div>keeping this for testing purpose</div>
+      <% end %>
         <div class="field mb-3">
           <%= f.select :role, User.roles, { selected: user.role || "", disabled: "", prompt: 'Please select a role' }, class: "form-control" %>
         </div>
-      <% end %>
 
       <% if type == 'edit' %>
         <%= f.submit 'Update', class: "btn btn-dark" %>

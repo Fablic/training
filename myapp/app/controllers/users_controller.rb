@@ -1,5 +1,3 @@
-require 'pp'
-
 class UsersController < ApplicationController
   before_action :set_user, only: %i[show edit update destroy]
   before_action :logged_in_user, only: [:profile, :edit_profile]
@@ -19,7 +17,7 @@ class UsersController < ApplicationController
     @user = User.create(user_params)
     if @user.save
       log_in @user
-      redirect_to @user
+      redirect_to profile_path
     else
       redirect_to signup_path
     end
