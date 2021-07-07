@@ -1,14 +1,14 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[show edit update destroy]
-  before_action :logged_in_user, only: [:profile, :edit_profile]
-  before_action :logged_in_as_admin, only: [:add, :index, :show]
+  before_action :logged_in_user, only: %i[profile edit_profile]
+  before_action :logged_in_as_admin, only: %i[add index show]
 
   # the new method will be used to present the form to create users
   def new
-    if !user_logged_in?
-      @user = User.new
-    else
+    if user_logged_in?
       redirect_to root_path
+    else
+      @user = User.new
     end
   end
 
@@ -28,7 +28,6 @@ class UsersController < ApplicationController
   end
 
   def edit_profile
-
   end
 
   # admin functions

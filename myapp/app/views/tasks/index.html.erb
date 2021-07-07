@@ -1,9 +1,3 @@
-<!--
-#42526e open
-#0052cc in progress
-#00875a done
--->
-
 <h1>Tasks</h1>
 <%= render "filter" %>
 <%= link_to '<i class="bi bi-plus-lg"></i>'.html_safe, new_task_path, class: "btn btn-secondary mb-3 float-end newtask" %>
@@ -26,7 +20,7 @@
   </thead>
   <tbody>
   <% @tasks.each_with_index do |task, idx| %>
-    <tr class="align-middle">
+    <tr class="align-middle status_<%= Task.statuses.key(task.status).downcase.parameterize.underscore %>">
       <td class="text-center"><%= idx + 1 %></td>
       <td>
         <h6 class="task-name"><%= task.name %></h6>

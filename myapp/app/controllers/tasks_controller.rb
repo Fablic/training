@@ -10,9 +10,7 @@ class TasksController < ApplicationController
   def index
     @q = Task.ransack(params[:q])
     @tasks = @q.result
-    unless admin_logged_in?
-      @tasks = @tasks.where(assignee: current_user.id)
-    end
+    @tasks = @tasks.where(assignee: current_user.id) unless admin_logged_in?
     @tasks = @tasks.order('created_at desc').page(params[:page]).per(5)
   end
 
@@ -69,7 +67,7 @@ class TasksController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def task_params
-    params.require(:task).permit(:name, :desc, :status, :label, :priority, :due_date, :assignee, :label => [])
+    params.require(:task).permit(:name, :desc, :status, :label, :priority, :due_date, :assignee, label: [])
   end
 
   def set_user

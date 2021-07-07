@@ -17,21 +17,23 @@
 
 span.labels {
     padding: 4px;
-    color: white;
     font-size: 14px;
-    background: #6c757d;
+    border-radius: 5px;
 }
 
 span.labels.bug {
-    background: red;
+    color: red;
+    background: rgba(255, 0, 0, 0.2);
 }
 
 span.labels.feature {
-    background: green;
+    color: green;
+    background: rgba(0, 255, 34, 0.2);
 }
 
 span.labels.modification {
-    background: dodgerblue;
+    color: dodgerblue;
+    background: rgba(21, 152, 239, 0.2);
 }
 
 input[type="checkbox"] {
@@ -46,4 +48,16 @@ input[type="checkbox"] {
 .navbar, table {
     box-shadow: 0 0 0 1px rgba(10, 11, 12, .1);
 
+}
+
+.status_open {
+    border-left: 5px solid #42526e
+}
+
+.status_in_progress {
+    border-left: 5px solid #0052cc
+}
+
+.status_done {
+    border-left: 5px solid #00875a
 }

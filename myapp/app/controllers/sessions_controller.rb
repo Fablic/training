@@ -2,7 +2,7 @@ class SessionsController < ApplicationController
   before_action :logged_in_user, only: [:destroy]
 
   def new
-    redirect_to root_path , notice: "You are already logged in." if user_logged_in?
+    redirect_to root_path, notice: 'You are already logged in.' if user_logged_in?
   end
 
   # post method for login

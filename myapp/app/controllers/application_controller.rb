@@ -21,17 +21,17 @@ class ApplicationController < ActionController::Base
   private
 
   def logged_in_user
-    unless user_logged_in? and current_user
-      flash[:danger] = "Please log in."
-      message = "Please log in."
+    unless user_logged_in? && current_user
+      flash[:danger] = 'Please log in.'
+      message = 'Please log in.'
       redirect_to login_path, notice: message
     end
   end
 
   def logged_in_as_admin
     unless admin_logged_in?
-      flash[:danger] = "Please log in."
-      message = "Please log in as admin"
+      flash[:danger] = 'Please log in.'
+      message = 'Please log in as admin'
       redirect_to root_path, notice: message
     end
   end
