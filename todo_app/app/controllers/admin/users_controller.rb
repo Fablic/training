@@ -2,7 +2,7 @@
 
 module Admin
   class UsersController < ApplicationController
-    include AdminHelper
+    include AdminConcern
     layout 'admin'
     before_action :find_user, only: %i[show edit update destroy]
     before_action :authenticate_admin_user
@@ -41,7 +41,7 @@ module Admin
     end
 
     def destroy
-      return if @user&.id == current_user&.id
+      return if @user == current_user
 
       if @user.destroy
         flash[:success] = I18n.t(:'message.deleted_user')
