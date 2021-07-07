@@ -1,26 +1,26 @@
 <div class="row p-2">
   <div class="col-md-6 offset-3">
     <div class="dialog bg-white p-5 mb-3">
-        <h1 class="display-4"> <%= @task.name %></h1>
-        <p class="lead"> <%= @task.desc %></p>
-        <hr class="my-4">
-        <p>
-          <strong>Status:</strong>
-          <%= Task.statuses.key(@task.status) %>
-        </p>
-        <p>
-          <strong>Priority:</strong>
-          <%= Task.priorities.key(@task.priority) %>
-        </p>
-        <p>
-          <strong>Label:</strong>
-          <% render_labels(@task.label).each do |l| %>
-            <span class="labels <%= l.downcase %>"> <%= l %></span>
-          <% end %>
-        </p>
-        <%= link_to 'Edit', edit_task_path(@task), class: "btn btn-secondary" %>
-        <%= link_to 'Back', tasks_path, class: "btn btn-dark" %>
-      </div>
+      <h1 class="display-4"> <%= @task.name %></h1>
+      <p class="lead"> <%= @task.desc %></p>
+      <hr class="my-4">
+      <p>
+        <strong>Status:</strong>
+        <%= Task.statuses.key(@task.status) %>
+      </p>
+      <p>
+        <strong>Priority:</strong>
+        <%= Task.priorities.key(@task.priority) %>
+      </p>
+      <p>
+        <strong>Label:</strong>
+        <% render_labels(@task.label).each do |l| %>
+          <span class="labels <%= l.downcase %>"> <%= l %></span>
+        <% end %>
+      </p>
+      <%= link_to 'Edit', edit_task_path(@task), class: "btn btn-secondary" %>
+      <%= link_to 'Back', tasks_path, class: "btn btn-dark" %>
     </div>
   </div>
+</div>
 </div>
