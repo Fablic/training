@@ -11,28 +11,30 @@
     <%= stylesheet_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light p-4 mb-3">
-      <div class="container-fluid">
-        <%= link_to 'TodoApp', root_path, class: 'navbar-brand' %>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0 mt-3 mt-lg-0">
-            <% unless maintenance? %>
-              <li class="nav-item">
-                <%= render 'tasks/search_form' %>
-              </li>
+    <% unless all_maintenance? %>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light p-4 mb-3">
+        <div class="container-fluid">
+          <%= link_to 'TodoApp', root_path, class: 'navbar-brand' %>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 mt-3 mt-lg-0">
+              <% unless maintenance? %>
+                <li class="nav-item">
+                  <%= render 'tasks/search_form' %>
+                </li>
+              <% end %>
+            </ul>
+            <% if user_signed_in? %>
+              <%= link_to Task.model_name.human, root_path, class: 'nav-link btn btn-outline-secondary btn-sm', 'aria-current' => 'page' %>
+              <%= link_to Label.model_name.human, labels_path, class: 'nav-link btn btn-outline-secondary btn-sm ms-0 ms-lg-3 mt-3 mt-lg-0', 'aria-current' => 'page' %>
             <% end %>
-          </ul>
-          <% if user_signed_in? %>
-            <%= link_to Task.model_name.human, root_path, class: 'nav-link btn btn-outline-secondary btn-sm', 'aria-current' => 'page' %>
-            <%= link_to Label.model_name.human, labels_path, class: 'nav-link btn btn-outline-secondary btn-sm ms-0 ms-lg-3 mt-3 mt-lg-0', 'aria-current' => 'page' %>
-          <% end %>
-            <%= render 'sessions/link' %>
+              <%= render 'sessions/link' %>
+          </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+    <% end %>
     <div class="container-fluid mb-3">
       <div class="container">
         <%= yield %>
