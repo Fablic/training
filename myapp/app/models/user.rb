@@ -3,6 +3,7 @@ class User < ApplicationRecord
 
   has_many :task
   before_save { self.email = email.downcase }
+  enum roles: { Normal: 0, Admin: 1 }
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 

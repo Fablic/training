@@ -1,15 +1,10 @@
-<h1>Users#new</h1>
-<p>Find me in app/views/users/new.html.erb</p>
-<h1>Sign Up</h1>
+<div class="row p-2">
+  <div class="col-md-6 offset-3">
+    <h2>Sign Up</h2>
+    <div class="dialog bg-white p-5 mb-3">
+      <%= render 'form', user: @user, type: 'signup' %>
 
-<%= form_with(model: @user, local: true) do |f| %>
-  <%= f.label :email %><br>
-  <%= f.text_field :email %><br>
-  <%= f.label :password %><br>
-  <%= f.password_field :password %><br>
-  <%= f.label :role %><br>
-  <%= f.text_field :role %><br>
-  <%= f.label :name %><br>
-  <%= f.text_field :name %><br>
-  <%= f.submit %>
-<% end %>
+      <p>Already member? <%= link_to "Sing in now!", login_path %></p>
+    </div>
+  </div>
+</div>

@@ -5,24 +5,8 @@
 -->
 
 <h1>Tasks</h1>
-<div class="row p-2">
-  <div class="dialog bg-white p-5 mb-3">
-    <%= search_form_for @q do |f| %>
-      <div class="row">
-        <div class="field col-md-5 mb-3">
-          <%= f.search_field :name_cont, class: "form-control", placeholder: "Task Name" %>
-        </div>
-        <div class="field col-md-5 mb-3">
-          <%= f.select :status_eq, content_tag(:option, 'Select status', value: "") + options_for_select(Task.statuses.map { |k, v| [k, v] }, @q.status_eq), {}, { class: 'form-control' } %>
-        </div>
-        <div class="col-md-2">
-          <%= f.submit "Filter", class: 'btn btn-secondary' %>
-        </div>
-      </div>
-    <% end %>
-  </div>
-</div>
-<%= link_to '<i class="bi bi-plus-lg"></i>'.html_safe, new_task_path, class: "btn btn-secondary mb-3 float-end newtask"%>
+<%= render "filter" %>
+<%= link_to '<i class="bi bi-plus-lg"></i>'.html_safe, new_task_path, class: "btn btn-secondary mb-3 float-end newtask" %>
 <table class="table table-hover bg-white">
   <thead>
   <tr>
@@ -30,12 +14,13 @@
     <th class="text-secondary">Task Name</th>
     <th class="text-secondary">Status</th>
     <th class="text-secondary">Priority</th>
-    <th class="text-secondary">Task Tags</th>
+    <th class="text-secondary">Labels</th>
     <th class="text-secondary"><%= sort_link(@q, :due_date) do %>
         Due Date
       <% end %>
     </th>
     <th class="text-secondary">Assignee</th>
+    <th class="text-secondary">Created By</th>
     <th colspan="3"></th>
   </tr>
   </thead>
@@ -49,9 +34,14 @@
       </td>
       <td><%= Task.statuses.key(task.status) %></td>
       <td><%= Task.priorities.key(task.priority) %></td>
-      <td><%= task.label %></td>
+      <td>
+        <% render_labels(task.label).each do |l| %>
+          <span class="labels <%= l.downcase %>"> <%= l %></span>
+        <% end %>
+      </td>
       <td><%= task.due_date.strftime("%B %d, %Y") %></td>
-      <td><%= task.assignee %></td>
+      <td><%= get_user_name(task.assignee) %></td>
+      <td><%= get_user_name(task.user_id) %></td>
       <td><%= link_to 'Show', task, class: 'btn btn-secondary' %></td>
       <td><%= link_to 'Edit', edit_task_path(task), class: 'btn btn-dark' %></td>
       <td><%= link_to '<i class="bi bi-trash"></i>'.html_safe, task, method: :delete, data: { confirm: 'Are you sure?' } %></td>

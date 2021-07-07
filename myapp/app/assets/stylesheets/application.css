@@ -13,3 +13,37 @@
  *= require_tree .
  *= require_self
  */
+
+
+span.labels {
+    padding: 4px;
+    color: white;
+    font-size: 14px;
+    background: #6c757d;
+}
+
+span.labels.bug {
+    background: red;
+}
+
+span.labels.feature {
+    background: green;
+}
+
+span.labels.modification {
+    background: dodgerblue;
+}
+
+input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+.dialog, table {
+    box-shadow: 0 0 0 1px rgba(10, 11, 12, .1);
+    border-radius: 5px;
+}
+
+.navbar, table {
+    box-shadow: 0 0 0 1px rgba(10, 11, 12, .1);
+
+}

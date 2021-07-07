@@ -1,6 +1,6 @@
 <div class="row p-2">
   <div class="col-md-6 offset-3">
-    <h2>Profile of <%= @user.name %></h2>
+    <h2>My Profile</h2>
 
     <div class="dialog bg-white p-5 mb-3">
       <div class="row mb-3">
@@ -8,7 +8,7 @@
           Name
         </div>
         <div class="col-md-6">
-          <%= @user.name %>
+          <%= current_user.name %>
         </div>
       </div>
       <div class="row mb-3">
@@ -16,7 +16,7 @@
           E-mail
         </div>
         <div class="col-md-6">
-          <%= @user.email %>
+          <%= current_user.email %>
         </div>
       </div>
 
@@ -25,7 +25,7 @@
           Role
         </div>
         <div class="col-md-6">
-          <%= User.roles.key(@user.role) %>
+          <%= User.roles.key(current_user.role) %>
         </div>
       </div>
 
@@ -34,7 +34,7 @@
           # of Tasks
         </div>
         <div class="col-md-6">
-          <%= no_of_tasks(@user.id) %>
+          <%= no_of_tasks(current_user.id) %>
         </div>
       </div>
     </div>
