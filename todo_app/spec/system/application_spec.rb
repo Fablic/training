@@ -47,7 +47,7 @@ RSpec.describe 'ApplicationController', type: :system do
       end
     end
 
-    context '通常ユーザで/adminアクセス時', :require_login do
+    context '通常ユーザ /admin アクセス時', :require_login do
       it 'rootに遷移する' do
         visit admin_root_path
 
@@ -55,11 +55,27 @@ RSpec.describe 'ApplicationController', type: :system do
       end
     end
 
-    context 'adminユーザで/adminアクセス時', :require_admin_login do
+    context '通常ユーザ /admin/users アクセス時', :require_login do
+      it 'rootに遷移する' do
+        visit admin_users_path
+
+        expect(current_url).to match root_path
+      end
+    end
+
+    context 'adminユーザ /admin アクセス時', :require_admin_login do
       it '/adminに遷移ができる' do
         visit admin_root_path
 
         expect(current_url).to match admin_root_path
+      end
+    end
+
+    context 'adminユーザ /admin/users アクセス時', :require_admin_login do
+      it '/adminに遷移ができる' do
+        visit admin_users_path
+
+        expect(current_url).to match admin_users_path
       end
     end
   end
