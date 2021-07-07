@@ -49,7 +49,6 @@ class LabelsController < ApplicationController
   end
 
   def find_label
-    @label = Label.find_by(id: params[:id])
-    raise ActiveRecord::RecordNotFound if @label.blank?
+    @label = Label.find(params[:id])
   end
 end
