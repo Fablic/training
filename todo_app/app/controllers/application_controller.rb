@@ -17,13 +17,13 @@ class ApplicationController < ActionController::Base
   def render_not_found(error = nil)
     logger.info "Rendering 500 with exception: #{error.message}" if error
 
-    render template: 'errors/not_found', status: :not_found
+    render template: 'errors/not_found', layout: 'application', status: :not_found
   end
 
   def render_internal_server_error(error = nil)
     logger.info "Rendering 500 with exception: #{error.message}" if error
 
-    render template: 'errors/internal_server_error', status: :internal_server_error
+    render template: 'errors/internal_server_error', layout: 'application', status: :internal_server_error
   end
 
   def authenticate_user

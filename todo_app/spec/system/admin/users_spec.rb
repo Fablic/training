@@ -22,7 +22,7 @@ RSpec.describe 'Admin::Users', type: :system do
         login_as user
         visit admin_root_path
 
-        expect(page).to have_content(I18n.t('common.error.unauthorized'))
+        expect(page).to have_content(I18n.t('common.error.not_found'))
       end
     end
   end
