@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_28_050541) do
+ActiveRecord::Schema.define(version: 2021_07_07_052755) do
+
+  create_table "labels", charset: "utf8mb4", force: :cascade do |t|
+    t.string "name", limit: 50, null: false
+    t.integer "color", default: 0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_labels_on_name", unique: true
+  end
 
   create_table "tasks", charset: "utf8mb4", force: :cascade do |t|
     t.string "title", null: false
