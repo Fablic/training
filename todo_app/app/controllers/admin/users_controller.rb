@@ -4,7 +4,7 @@ module Admin
   class UsersController < ApplicationController
     layout 'admin'
 
-    before_action :authencate_admin_user
+    before_action :authenticate_admin_user
     before_action :find_admin_user, only: %i[edit update destroy tasks]
     before_action :ensure_destroy_user, only: %i[destroy]
 
@@ -65,8 +65,8 @@ module Admin
       render :index and return if current_user.eql?(@user)
     end
 
-    def authencate_admin_user
-      render template: 'errors/unauthorized', layout: 'application', status: :unauthorized unless current_user.admin?
+    def authenticate_admin_user
+      raise ActiveRecord::RecordNotFound unless current_user.admin?
     end
   end
 end

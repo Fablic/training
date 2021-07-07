@@ -22,7 +22,7 @@ RSpec.describe 'Admin::Users', type: :system do
         login_as user
         visit admin_root_path
 
-        expect(page).to have_content(I18n.t('common.error.unauthorized'))
+        expect(page).to have_content(I18n.t('common.error.not_found'))
       end
     end
   end
@@ -121,6 +121,30 @@ RSpec.describe 'Admin::Users', type: :system do
     context 'when want to destory current user' do
       it 'delete button is not displayed' do
         expect(page).to_not have_link("a[href='#{admin_user_path(delete_user)}']")
+      end
+    end
+
+    context 'have 1 admin_user and 2 general_user' do
+      before {
+        create(:user)
+      }
+      it 'sucess destroy 2 general_user' do
+        general_users = User.general
+
+        expect(general_users.count).to eq(2)
+
+        general_users.each do |general_user|
+          expect do
+            find("a[href='#{admin_user_path(general_user)}']").click
+          end.to change(User, :count).by(-1)
+
+          expect(current_path).to eq admin_users_path
+          expect(page).to have_content(I18n.t('users.flash.success.destroy'))
+          expect(page).to_not have_content(general_user.id)
+          expect(page).to_not have_content(general_user.email)
+        end
+
+        expect(general_users.count).to eq(0)
       end
     end
   end

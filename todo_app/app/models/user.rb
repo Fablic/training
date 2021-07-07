@@ -7,12 +7,12 @@ class User < ApplicationRecord
 
   has_many :tasks, dependent: :destroy
   validates :email, presence: true, uniqueness: true
-  before_destroy :ensure_admin_user_count
+  before_destroy :ensure_role_and_admin_user_count
 
   private
 
-  def ensure_admin_user_count
-    return unless User.admin.count <= 1
+  def ensure_role_and_admin_user_count
+    return if User.admin.count > 1 || self.general?
 
     errors.add(:role, :should_be_at_least_one_admin)
     throw :abort
