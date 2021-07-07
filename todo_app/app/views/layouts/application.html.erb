@@ -19,9 +19,11 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0 mt-3 mt-lg-0">
-            <li class="nav-item">
-              <%= render 'tasks/search_form' %>
-            </li>
+            <% unless maintenance? %>
+              <li class="nav-item">
+                <%= render 'tasks/search_form' %>
+              </li>
+            <% end %>
           </ul>
           <% if user_signed_in? %>
             <%= link_to Task.model_name.human, root_path, class: 'nav-link btn btn-outline-secondary btn-sm', 'aria-current' => 'page' %>
