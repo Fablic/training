@@ -7,9 +7,15 @@ RSpec.describe 'Tasks (System)', type: :system do
   before do
     login(user1)
   end
-  let!(:task1) { create(:task, name: 'task1', status: 1, priority: 0, label: 'aaa', due_date: Faker::Time.forward(days: 1, period: :evening), user_id: user1.id) }
-  let!(:task2) { create(:task, name: 'task2', status: 1, priority: 0, label: 'aaa', due_date: Faker::Time.forward(days: 2, period: :evening), user_id: user1.id) }
-  let!(:task3) { create(:task, name: 'task3', status: 2, priority: 0, label: 'aaa', due_date: Faker::Time.forward(days: 3, period: :evening), user_id: user1.id) }
+  let!(:task1) {
+    create(:task, name: 'task1', status: 1, priority: 0, label: 'aaa', due_date: Faker::Time.forward(days: 1, period: :evening), user_id: user1.id)
+  }
+  let!(:task2) {
+    create(:task, name: 'task2', status: 1, priority: 0, label: 'aaa', due_date: Faker::Time.forward(days: 2, period: :evening), user_id: user1.id)
+  }
+  let!(:task3) {
+    create(:task, name: 'task3', status: 2, priority: 0, label: 'aaa', due_date: Faker::Time.forward(days: 3, period: :evening), user_id: user1.id)
+  }
   context 'CRUDing task' do
     it 'Add new task' do
       visit tasks_path
@@ -17,7 +23,7 @@ RSpec.describe 'Tasks (System)', type: :system do
       fill_in 'task[name]', with: 'task4'
       fill_in 'task[desc]', with: 'task4 desc'
       select('Done', from: 'task[status]')
-      find(:css, "#task_label_modification").set(true)
+      find(:css, '#task_label_modification').set(true)
       select('Low', from: 'task[priority]')
       fill_in('task[due_date]', with: Faker::Time.forward(days: 3, period: :evening))
       click_button 'Create Task'

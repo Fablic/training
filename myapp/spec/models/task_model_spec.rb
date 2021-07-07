@@ -15,10 +15,12 @@ RSpec.describe Task, type: :model do
     let(:random_priority) { Faker::Number.between(from: 0, to: 2) }
     let(:random_due_date) { Faker::Time.forward(days: 1, period: :evening) }
 
-    let(:params) { { name: random_name, desc: random_desc, status: random_status, label: random_label, priority: random_priority, due_date: random_due_date, user_id: user.id } }
+    let(:params) {
+      { name: random_name, desc: random_desc, status: random_status, label: random_label, priority: random_priority, due_date: random_due_date,
+        user_id: user.id }
+    }
 
-
-    #TODO: add login validation
+    # TODO: add login validation
     # context 'valid all fields' do
     #   it { is_expected.to be_valid }
     # end

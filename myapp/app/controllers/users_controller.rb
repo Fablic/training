@@ -16,12 +16,16 @@ class UsersController < ApplicationController
 
   # sign up
   def create
-    @user = User.create(user_params)
-    if @user.save
-      log_in @user
-      redirect_to profile_path
+    if User.find_by(email: user_params[:email]).present?
+      redirect_to signup_path, notice: 'User Already Registered!'
     else
-      redirect_to signup_path
+      @user = User.create(user_params)
+      if @user.save
+        log_in @user
+        redirect_to profile_path
+      else
+        redirect_to signup_path
+      end
     end
   end
 
