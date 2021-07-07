@@ -35,11 +35,11 @@ input[type="checkbox"] {
 }
 
 .dialog {
-    box-shadow: 0 0 0 1px rgb(10 11 12/10%);
+    box-shadow: 0 0 0 1px rgba(10, 11, 12, .1);
     border-radius: 5px;
 }
 
 .navbar, table{
-    box-shadow: 0 0 0 1px rgb(10 11 12/10%);
+    box-shadow: 0 0 0 1px rgba(10, 11, 12, .1);
 
 }

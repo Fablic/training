@@ -14,9 +14,10 @@
         </p>
         <p>
           <strong>Label:</strong>
-          <% @task.label.each do |l| %>
-            <span class="labels <%= l.downcase %>"> <%= l %></span>
-          <% end %>
+          <% @task.label %>
+          <%# @task.label.each do |l| %>
+<!--            <span class="labels <%#= l.downcase %>"> <%#= l %></span>-->
+          <%# end %>
         </p>
         <%= link_to 'Edit', edit_task_path(@task), class: "btn btn-secondary" %>
         <%= link_to 'Back', tasks_path, class: "btn btn-dark" %>
