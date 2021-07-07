@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Admin Users', type: :system do
-  describe '一覧画面', :require_login do
+  describe '一覧画面', :require_admin_login do
     let!(:user2) { create(:admin_user, username: 'admin2', email: 'admin2@example.com') }
     let!(:task) { create(:task, user_id: user.id) }
 
@@ -37,7 +37,7 @@ RSpec.describe 'Admin Users', type: :system do
     end
   end
 
-  describe '詳細画面', :require_login do
+  describe '詳細画面', :require_admin_login do
     let!(:user2) { create(:admin_user, username: 'admin2', email: 'admin2@example.com') }
     let!(:task) { create(:task, user_id: user2.id) }
 
@@ -56,7 +56,7 @@ RSpec.describe 'Admin Users', type: :system do
     end
   end
 
-  describe '編集画面', :require_login do
+  describe '編集画面', :require_admin_login do
     let!(:user2) { create(:admin_user, username: 'admin2', email: 'admin2@example.com') }
     let!(:task) { create(:task, user_id: user2.id) }
 
@@ -115,7 +115,7 @@ RSpec.describe 'Admin Users', type: :system do
     end
   end
 
-  describe '新規作成画面', :require_login do
+  describe '新規作成画面', :require_admin_login do
     context '正常時' do
       it 'ユーザ登録ができる' do
         visit new_admin_user_path
