@@ -28,7 +28,8 @@ ja:
       models:
         user:
           attributes:
-            should_be_at_least_one_admin: 管理者は最低1人必要です
+            role:
+              should_be_at_least_one_admin: 管理者は最低1人必要です
   attributes:
       created_at: 作成日
       updated_at: 更新
