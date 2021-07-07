@@ -29,6 +29,7 @@ ja:
         label:
           id: ID
           name: 名前
+          task_labels: タスク
     errors:
       models:
         user:
