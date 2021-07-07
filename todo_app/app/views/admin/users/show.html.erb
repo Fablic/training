@@ -27,9 +27,9 @@
 </div>
 
 <h2 class="my-4"><%= Task.model_name %></h2>
-<% if @user_tasks.present? %>
+<% if @user.tasks.present? %>
   <div class="d-flex flex-wrap">
-    <% @user_tasks.each do |task| %>
+    <% @user.tasks.each do |task| %>
       <div class="w-25">
         <%= render 'tasks/card', task: task %>
       </div>

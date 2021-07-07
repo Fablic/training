@@ -14,9 +14,7 @@ module Admin
       @user = User.new
     end
 
-    def show
-      @user_tasks = Task.search(nil, nil, params[:id], nil)
-    end
+    def show; end
 
     def edit; end
 
