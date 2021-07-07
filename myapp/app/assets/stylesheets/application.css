@@ -30,16 +30,20 @@ span.labels.feature {
     background: green;
 }
 
+span.labels.modification {
+    background: dodgerblue;
+}
+
 input[type="checkbox"] {
     margin-right: 5px;
 }
 
-.dialog {
+.dialog, table {
     box-shadow: 0 0 0 1px rgba(10, 11, 12, .1);
     border-radius: 5px;
 }
 
-.navbar, table{
+.navbar, table {
     box-shadow: 0 0 0 1px rgba(10, 11, 12, .1);
 
 }

@@ -14,7 +14,7 @@
     <th class="text-secondary">Task Name</th>
     <th class="text-secondary">Status</th>
     <th class="text-secondary">Priority</th>
-    <th class="text-secondary">Task Tags</th>
+    <th class="text-secondary">Labels</th>
     <th class="text-secondary"><%= sort_link(@q, :due_date) do %>
         Due Date
       <% end %>
@@ -34,7 +34,11 @@
       </td>
       <td><%= Task.statuses.key(task.status) %></td>
       <td><%= Task.priorities.key(task.priority) %></td>
-      <td><%= task.label %></td>
+      <td>
+        <% render_labels(task.label).each do |l| %>
+          <span class="labels <%= l.downcase %>"> <%= l %></span>
+        <% end %>
+      </td>
       <td><%= task.due_date.strftime("%B %d, %Y") %></td>
       <td><%= get_user_name(task.assignee) %></td>
       <td><%= get_user_name(task.user_id) %></td>

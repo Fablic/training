@@ -17,7 +17,7 @@ RSpec.describe 'Tasks (System)', type: :system do
       fill_in 'task[name]', with: 'task4'
       fill_in 'task[desc]', with: 'task4 desc'
       select('Done', from: 'task[status]')
-      fill_in 'task[label]', with: '[bug]'
+      find(:css, "#task_label_modification").set(true)
       select('Low', from: 'task[priority]')
       fill_in('task[due_date]', with: Faker::Time.forward(days: 3, period: :evening))
       click_button 'Create Task'

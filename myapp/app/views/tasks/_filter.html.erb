@@ -19,6 +19,12 @@
             <%= f.select :user_id_eq, content_tag(:option, 'Select created by', value: "") + options_for_select(User.pluck(:name, :id), @q.user_id_eq), {}, { class: 'form-control' } %>
           </div>
         <% end %>
+
+        <div class="mb-3">
+          <%= f.collection_check_boxes(:label_cont_any, Task.labels, :first, :first, include_hidden: false) do |l| %>
+            <%= l.label { l.check_box + l.text } %>
+          <% end %>
+        </div>
       </div>
       <div class="row">
         <div>
