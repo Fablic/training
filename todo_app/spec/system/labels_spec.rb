@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe Label, type: :system do
-
   describe '#index', :require_login do
     before {
       create(:label)

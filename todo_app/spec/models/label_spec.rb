@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe Label, type: :model do
-
   describe '#valid?' do
     subject { build(:label, params) }
     let(:params) { { name: name } }
