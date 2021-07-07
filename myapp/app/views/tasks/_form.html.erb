@@ -28,7 +28,7 @@
   </div>
 
   <div class="mb-3">
-    <label>Labels</label>
+    <label>Labels</label> <br>
     <%= form.collection_check_boxes(:label, Task.labels, :first, :first, include_hidden: false) do |l| %>
       <%= l.label { l.check_box + l.text } %>
     <% end %>
