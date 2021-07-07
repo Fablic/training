@@ -3,14 +3,17 @@
 require 'rails_helper'
 
 RSpec.describe 'Tasks (System)', type: :system do
-  let!(:task1) { create(:task, name: 'task1', status: 1, priority: 0, label: 'aaa', due_date: Faker::Time.forward(days: 1, period: :evening)) }
-  let!(:task2) { create(:task, name: 'task2', status: 1, priority: 0, label: 'aaa', due_date: Faker::Time.forward(days: 2, period: :evening)) }
-  let!(:task3) { create(:task, name: 'task3', status: 2, priority: 0, label: 'aaa', due_date: Faker::Time.forward(days: 3, period: :evening)) }
-
+  let!(:user1) { create(:user, email: 'admin@tm.com', role: 1, password_digest: '$2a$12$NPcgfEO8vN91/zbwM5KwP.9NsKMVtEorU/Lk9tOw4SBxfMQ2tsjOO', name: 'admin') }
+  before do
+    login(user1)
+  end
+  let!(:task1) { create(:task, name: 'task1', status: 1, priority: 0, label: 'aaa', due_date: Faker::Time.forward(days: 1, period: :evening), user_id: user1.id) }
+  let!(:task2) { create(:task, name: 'task2', status: 1, priority: 0, label: 'aaa', due_date: Faker::Time.forward(days: 2, period: :evening), user_id: user1.id) }
+  let!(:task3) { create(:task, name: 'task3', status: 2, priority: 0, label: 'aaa', due_date: Faker::Time.forward(days: 3, period: :evening), user_id: user1.id) }
   context 'CRUDing task' do
     it 'Add new task' do
-      visit tasks_url
-      page.find('.newtask').click
+      visit tasks_path
+      click_on(class: 'newtask')
       fill_in 'task[name]', with: 'task4'
       fill_in 'task[desc]', with: 'task4 desc'
       select('Done', from: 'task[status]')
@@ -19,14 +22,6 @@ RSpec.describe 'Tasks (System)', type: :system do
       fill_in('task[due_date]', with: Faker::Time.forward(days: 3, period: :evening))
       click_button 'Create Task'
       expect(page).to have_text('Task was successfully created.')
-    end
-  end
-
-  context 'Sorting tasks' do
-    it 'using created_at desc' do
-      expected_order = %w[task3 task2 task1]
-      visit tasks_url
-      expect(page.all('.task-name').map(&:text)).to eq expected_order
     end
   end
 

@@ -2,11 +2,14 @@
 
 class TasksController < ApplicationController
   before_action :set_task, only: %i[show edit update destroy]
+  before_action :set_user, only: %i[create index new]
+  before_action :logged_in_user
 
   # GET /tasks or /tasks.json
   def index
-    @q = Task.ransack(params[:q])
+    @q = current_user.task.ransack(params[:q])
     @tasks = @q.result
+    @tasks = @tasks.where(user_id: @user.id)
     @tasks = @tasks.order('created_at desc').page(params[:page]).per(5)
   end
 
@@ -16,7 +19,7 @@ class TasksController < ApplicationController
 
   # GET /tasks/new
   def new
-    @task = Task.new
+    @task = current_user.task.new
   end
 
   # GET /tasks/1/edit
@@ -25,8 +28,7 @@ class TasksController < ApplicationController
 
   # POST /tasks or /tasks.json
   def create
-    @task = Task.new(task_params)
-
+    @task = current_user.task.new(task_params)
     respond_to do |format|
       if @task.save
         format.html { redirect_to @task, notice: 'Task was successfully created.' }
@@ -65,5 +67,9 @@ class TasksController < ApplicationController
   # Only allow a list of trusted parameters through.
   def task_params
     params.require(:task).permit(:name, :desc, :status, :label, :priority, :due_date)
+  end
+
+  def set_user
+    @user = current_user
   end
 end
