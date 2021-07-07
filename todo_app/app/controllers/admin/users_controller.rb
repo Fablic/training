@@ -2,8 +2,10 @@
 
 module Admin
   class UsersController < ApplicationController
+    include AdminHelper
     layout 'admin'
     before_action :find_user, only: %i[show edit update destroy]
+    before_action :authenticate_admin_user
 
     def index
       @users = User.includes(:tasks).order({ created_at: :desc })
@@ -39,6 +41,8 @@ module Admin
     end
 
     def destroy
+      return if @user&.id == current_user&.id
+
       if @user.destroy
         flash[:success] = I18n.t(:'message.deleted_user')
         redirect_to admin_users_path
