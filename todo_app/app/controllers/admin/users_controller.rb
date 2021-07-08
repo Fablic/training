@@ -4,6 +4,7 @@ module Admin
   class UsersController < ApplicationController
     layout 'admin'
 
+    before_action :authenticate_admin_user
     before_action :find_admin_user, only: %i[edit update destroy tasks]
     before_action :ensure_destroy_user, only: %i[destroy]
 
@@ -37,18 +38,22 @@ module Admin
     end
 
     def destroy
-      @user.destroy
-      redirect_to admin_users_path, flash: { success: I18n.t('users.flash.success.destroy') }
+      if @user.destroy
+        redirect_to admin_users_path, flash: { success: I18n.t('users.flash.success.destroy') }
+      else
+        flash.now[:danger] = I18n.t('users.flash.error.destroy')
+        render :index
+      end
     end
 
     def tasks
-      @tasks = @user.tasks.page(params[:page])
+      @tasks = @user.tasks.includes(:labels).page(params[:page])
     end
 
     private
 
     def admin_user_params
-      params.require(:user).permit(:email, :password, :password_confirmation)
+      params.require(:user).permit(:email, :role, :password, :password_confirmation)
     end
 
     def find_admin_user
@@ -58,6 +63,10 @@ module Admin
     def ensure_destroy_user
       flash.now[:danger] = I18n.t('users.flash.error.destroy')
       render :index and return if current_user.eql?(@user)
+    end
+
+    def authenticate_admin_user
+      raise ActiveRecord::RecordNotFound unless current_user.admin?
     end
   end
 end

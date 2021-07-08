@@ -2,9 +2,20 @@
 <%= form_with(model: @user, url: url) do |f| %>
   <%= f.label :email, class: 'form-label' %>
   <%= f.email_field :email, class: 'form-control mb-3' %>
+  <div class="mb-3">
+    <%= f.label :role , class: 'form-label w-100' %>
+    <%= f.collection_radio_buttons(:role, User.roles, :first, :first, checked: @user.role) do |s| %>
+      <%= s.label(class: 'form-check-label') do %>
+        <%= User.human_attribute_name("role.#{s.text}") %>
+      <% end %>
+      <%= s.radio_button(class: 'form-check-input') do %>
+        <%= s.check_box %>
+      <% end %>
+    <% end %>
+  </div>
   <%= f.label :password, class: 'form-label' %>
   <%= f.password_field :password , class: 'form-control mb-3' %>
   <%= f.label :password_confirmation, class: 'form-label' %>
   <%= f.password_field :password_confirmation , class: 'form-control mb-3' %>
-  <%= f.submit (request.path.eql?(new_admin_user_path) ? I18n.t('common.action.create') : I18n.t('common.action.update')) %>
+  <%= f.submit (request.path.eql?(new_admin_user_path) ? I18n.t('common.action.create') : I18n.t('common.action.update')), class: 'btn btn-primary' %>
 <% end %>

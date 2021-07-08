@@ -1,6 +1,0 @@
-<% if request.path.include?(admin_users_path) %>
-  <%= link_to '新規ユーザー作成', new_admin_user_path, class: 'nav-link btn btn-outline-secondary btn-sm mt-3 mt-lg-0 ms-3', 'aria-current': 'page' %>
-  <%= link_to '管理画面TOPへ', admin_users_path, class: 'nav-link btn btn-outline-secondary btn-sm mt-3 mt-lg-0 ms-3', 'aria-current': 'page' %>
-<% else %>
-  <%= link_to '管理画面へ', admin_users_path, class: 'nav-link btn btn-outline-secondary btn-sm mt-3 mt-lg-0 ms-3', 'aria-current': 'page' %>
-<% end %>

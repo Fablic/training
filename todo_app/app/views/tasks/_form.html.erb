@@ -23,5 +23,16 @@
 　　　  <% end %>
     <% end %>
   </div>
+  <div class="mb-3">
+    <%= f.label :label , class: 'form-label w-100' %>
+    <%= f.collection_check_boxes(:label_ids, Label.all, :id, :name, class: 'form-check') do |s| %>
+      <%= s.label(class: 'form-check-label') do %>
+        <%= s.text %>
+      <% end %>
+      <%= s.check_box(class: 'form-check-input') do %>
+        <%= s.check_box %>
+      <% end %>
+    <% end %>
+  </div>
   <p><%= f.submit (@task.new_record? ? I18n.t('common.action.create') : I18n.t('common.action.update')), class: 'btn btn-primary' %></p>
 <% end %>
