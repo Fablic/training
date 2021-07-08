@@ -1,7 +1,8 @@
 <h1><%= Label.model_name %> list</h1>
 <% if @labels.blank? %>
-  <p>Lets register your a label</p>
+  <%= link_to 'Lets register your a label', new_label_path %>
 <% else %>
+  <%= link_to 'New Label', new_label_path %>
   <div class="d-flex flex-wrap">
     <% @labels.each do |l| %>
       <div class="fs-3 m-2">

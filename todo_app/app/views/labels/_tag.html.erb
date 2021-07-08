@@ -1,1 +1,7 @@
-<%= link_to l.name, edit_label_path(l), class: 'rounded-pill badge bg-' + l.color %>
+<div class="rounded-pill badge bg-<%= l.color %>">
+  <%= link_to l.name, edit_label_path(l), class: 'text-body' %>
+</div>
+
+
+
+

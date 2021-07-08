@@ -24,6 +24,7 @@
 </div>
 
 <% if @tasks.present? %>
+  <%= link_to 'New Task', new_task_path %>
   <div class="d-flex flex-wrap">
     <% @tasks.each do |task| %>
       <div class="w-25">
@@ -37,5 +38,5 @@
                  nav_class: "d-inline-block" %>
   </div>
 <% else %>
-  <%= I18n.t(:'message.task_not_registered') %>
+  <%= link_to I18n.t(:'message.task_not_registered'), new_task_path %>
 <% end %>
