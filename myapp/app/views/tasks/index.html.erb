@@ -36,8 +36,8 @@
       <td><%= task.due_date.strftime("%B %d, %Y") %></td>
       <td><%= get_user_name(task.assignee) %></td>
       <td><%= get_user_name(task.user_id) %></td>
-      <td><%= link_to 'Show', task, class: 'btn btn-secondary' %></td>
-      <td><%= link_to 'Edit', edit_task_path(task), class: 'btn btn-dark' %></td>
+      <td><%= link_to 'Show', task, class: 'btn btn-outline-secondary' %></td>
+      <td><%= link_to 'Edit', edit_task_path(task), class: 'btn btn-outline-dark' %></td>
       <td><%= link_to '<i class="bi bi-trash"></i>'.html_safe, task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
     </tr>
   <% end %>

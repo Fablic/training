@@ -16,8 +16,8 @@
         <td><%= user.name %></td>
         <td><%= User.roles.key(user.role) %></td>
         <td><%= no_of_tasks(user.id) %></td>
-        <td><%= link_to 'Show', user, class: 'btn btn-secondary' %></td>
-        <td><%= link_to 'Edit', edit_user_path(user), class: 'btn btn-dark' %></td>
+        <td><%= link_to 'Show', user, class: 'btn btn-outline-secondary' %></td>
+        <td><%= link_to 'Edit', edit_user_path(user), class: 'btn btn-outline-dark' %></td>
         <td><%= link_to '<i class="bi bi-trash"></i>'.html_safe, user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
