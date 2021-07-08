@@ -19,6 +19,7 @@ ja:
       create: 新規タスク作成
       to_root: TodoAppトップ画面へ
       not_found: タスクが見つかりません
+      keyword: タイトル/ラベル
     flash:
       success:
         create: '登録成功'
@@ -30,6 +31,19 @@ ja:
   users:
     common:
       not_found: ユーザーが見つかりません
+    flash:
+      success:
+        create: '登録完了しました'
+        update: '更新しました'
+        destroy: '削除しました'
+      error:
+        create: '登録に失敗しました'
+        update: '更新に失敗しました'
+        destroy: '削除に失敗しました'
+  labels:
+    common:
+      create: '新規ラベル作成'
+      not_found: ラベルが見つかりません
     flash:
       success:
         create: '登録完了しました'

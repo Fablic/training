@@ -6,6 +6,7 @@
         <th><%= Task.human_attribute_name(:title) %></th>
         <th><%= Task.human_attribute_name(:description) %></th>
         <th><%= Task.human_attribute_name(:status) %></th>
+        <th><%= Task.human_attribute_name(:label) %></th>
         <th><%= Task.human_attribute_name(:created_at) %></th>
         <th><%= Task.human_attribute_name(:due_date)%></th>
       </tr>
@@ -17,6 +18,11 @@
           <td><%= task.title %></td>
           <td><%= task.description.truncate(20) %></td>
           <td><%=  Task.human_attribute_name("status.#{task.status}") %>
+          <td>
+            <% task.labels.each do |label| %>
+              <span class="badge bg-success"><%= label.name %></span>
+            <% end %>
+          </td>
           <td><%= I18n.l(task.created_at) %>
           <td><%= I18n.l(task.due_date, default: '') %></td>
         </tr>
