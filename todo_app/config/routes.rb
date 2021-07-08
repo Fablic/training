@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  get 'labels/new'
   namespace :admin do
     root to: 'users#new'
     resources :users do
@@ -15,6 +16,7 @@ Rails.application.routes.draw do
   post 'signup' => 'users#create'
   root 'tasks#index'
   resources :tasks
+  resources :labels
 
   get '*path', controller: 'application', action: :render404
 end

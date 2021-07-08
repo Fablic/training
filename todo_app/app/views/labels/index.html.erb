@@ -1,0 +1,18 @@
+<h1><%= Label.model_name %> list</h1>
+<% if @labels.blank? %>
+  <p>Lets register your a label</p>
+<% else %>
+  <div class="d-flex flex-wrap">
+    <% @labels.each do |l| %>
+      <div class="fs-3 m-2">
+        <%= render 'labels/tag', l: l %>
+      </div>
+    <% end %>
+  </div>
+  <div class="text-center mt-4">
+    <%= paginate @labels, theme: 'bootstrap-5',
+                 pagination_class: "pagination-sm flex-wrap justify-content-center",
+                 nav_class: "d-inline-block" %>
+  </div>
+<% end %>
+
