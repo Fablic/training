@@ -75,4 +75,7 @@ RSpec.configure do |config|
       end
     end
   end
+  config.before(:suite) do
+    Rails.application.load_tasks
+  end
 end
