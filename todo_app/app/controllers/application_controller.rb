@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
-  include SessionsHelper
+  include SessionHelper
+  include SessionConcern
   before_action :authenticate_user
 
   unless Rails.env.development?
