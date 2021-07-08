@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe 'error_page', type: :sytem do
-  describe 'page not found' do
+RSpec.describe 'error_page', type: :system do
+  describe 'page not found', :require_login do
     it 'display not found page' do
       visit '404test/task'
 
@@ -11,7 +11,7 @@ RSpec.describe 'error_page', type: :sytem do
     end
   end
 
-  describe 'internal_server_error' do
+  describe 'internal_server_error', :require_login do
     it 'display internal server error page' do
       allow_any_instance_of(TasksController).to receive(:index).and_throw(StandardError)
       visit tasks_path

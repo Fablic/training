@@ -1,7 +1,7 @@
 <% if request.path.eql?(root_path) %>
   <%= form_with(scope: :search_params, url: root_path, method: :get, class: "row g-3 align-items-center") do |f| %>
     <div class="col-auto">
-      <%= f.text_field :title, value: @search[:title], class: "form-control", placeholder: Task.human_attribute_name(:title) %>
+      <%= f.text_field :keyword, value: @search[:keyword], class: "form-control", placeholder: I18n.t('tasks.common.keyword') %>
     </div>
     <div class="col-auto">
       <%= f.collection_check_boxes(:status_ids, Task.statuses, :first, :first, checked: @search[:status_ids] , class: "form-check-input") do |s| %>

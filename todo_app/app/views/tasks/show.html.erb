@@ -1,5 +1,6 @@
+<%= render 'layouts/flash', add_class: 'alert mt-3' %>
 <div class="mb-2">
-<%= link_to '編集', edit_task_path(@task), class: "btn btn-secondary" %>
+<%= link_to I18n.t('common.action.edit'), edit_task_path(@task), class: "btn btn-secondary" %>
 <%= link_to I18n.t('common.action.destroy'), task_path(@task), method: :delete, class: "btn btn-danger" %>
 </div>
 <table class="table table-striped table-bordered">
@@ -18,6 +19,14 @@
   <tr>
     <th style="width: 10%"><%= Task.human_attribute_name(:status) %></th>
     <td><%= Task.human_attribute_name("status.#{@task.status}") %></td>
+  </tr>
+  <tr>
+    <th style="width: 10%"><%= Task.human_attribute_name(:label) %></th>
+    <td>
+      <% @task.labels.each do |label| %>
+        <span class="badge bg-success"><%= label.name %></span>
+      <% end %>
+    </td>  
   </tr>
   <tr>
     <th style="width: 10%"><%= Task.human_attribute_name(:due_date) %></th>

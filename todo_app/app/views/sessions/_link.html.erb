@@ -1,0 +1,12 @@
+<% unless user_signed_in? %>
+  <% if request.path.eql?(login_path) %>
+    <%= link_to I18n.t('common.action.registration'), sign_up_path, class: 'nav-link btn btn-outline-secondary btn-sm mt-3 mt-lg-0 ms-3', 'aria-current': 'page' %>
+  <% else %>
+    <%= link_to I18n.t('common.action.login'), login_path, class: 'nav-link btn btn-outline-secondary btn-sm mt-3 mt-lg-0 ms-3', 'aria-current': 'page' %>
+  <% end %>
+<% else %>
+  <% if current_user.admin? %>
+  　<%= link_to '管理画面へ', admin_users_path, class: 'nav-link btn btn-outline-secondary btn-sm  mt-3 mt-lg-0', 'aria-current': 'page' %>
+  <% end %>
+  <%= link_to I18n.t('common.action.logout'), logout_path, class: 'nav-link btn btn-outline-info btn-sm ms-0 ms-lg-3 mt-3 mt-lg-0', 'aria-current': 'page', method: :delete %>
+<% end %>

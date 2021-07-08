@@ -14,4 +14,6 @@ Metrics/CyclomaticComplexity:
 Layout/LineLength:
   Max: 198
 Metrics/AbcSize:
-  Max: 18
+  Max: 20
+Rails/HelperInstanceVariable:
+  Enabled: false

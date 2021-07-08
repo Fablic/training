@@ -1,7 +1,9 @@
 ja:
   activerecord:
     models:
-      task: タスク
+      task: タスク 
+      user: ユーザー
+      label: ラベル
     attributes:
         task:
           id: ID
@@ -9,10 +11,31 @@ ja:
           description: 説明
           due_date: 終了期限
           status: ステータス
+          label: ラベル
         task/status:
           waiting: 未着手
           work_in_progress: 着手中
           completed: 完了
+        user:
+          id: ID
+          email: メールアドレス
+          password: パスワード
+          password_confirmation: 確認用パスワード
+          tasks_count: タスク数
+          role: ロール
+        user/role:
+          general: 一般
+          admin: 管理者
+        label:
+          id: ID
+          name: 名前
+          task_labels: タスク
+    errors:
+      models:
+        user:
+          attributes:
+            role:
+              should_be_at_least_one_admin: 管理者は最低1人必要です
   attributes:
       created_at: 作成日
       updated_at: 更新

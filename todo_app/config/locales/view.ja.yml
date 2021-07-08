@@ -5,12 +5,21 @@ ja:
       update: 更新
       destroy: 削除
       search: 検索
+      edit: 編集
+      registration: 新規登録
+      login: ログイン
+      logout: ログアウト
     error:
       not_found: お探しのページが見つかりません
       internal_server_error: 申し訳ございません、システムエラーが発生しております
+      unauthorized: アクセス権限がございません
   tasks:
+    other: "%{count}件"
     common:
+      create: 新規タスク作成
+      to_root: TodoAppトップ画面へ
       not_found: タスクが見つかりません
+      keyword: タイトル/ラベル
     flash:
       success:
         create: '登録成功'
@@ -19,6 +28,38 @@ ja:
       error:
         create: '登録失敗'
         update: '更新失敗'
+  users:
+    common:
+      not_found: ユーザーが見つかりません
+    flash:
+      success:
+        create: '登録完了しました'
+        update: '更新しました'
+        destroy: '削除しました'
+      error:
+        create: '登録に失敗しました'
+        update: '更新に失敗しました'
+        destroy: '削除に失敗しました'
+  labels:
+    common:
+      create: '新規ラベル作成'
+      not_found: ラベルが見つかりません
+    flash:
+      success:
+        create: '登録完了しました'
+        update: '更新しました'
+        destroy: '削除しました'
+      error:
+        create: '登録に失敗しました'
+        update: '更新に失敗しました'
+        destroy: '削除に失敗しました'
+  sessions:
+    flash:
+      success:
+        create: 'ログインしました'
+        destroy: 'ログアウトしました'
+      error:
+        create: 'ログインに失敗しました'
   date:
     formats:
       default: "%Y/%m/%d"
