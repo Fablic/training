@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe User, type: :sytem do
+RSpec.describe User, type: :system do
   describe '#new' do
     before { visit sign_up_path }
 

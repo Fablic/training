@@ -14,13 +14,24 @@
   </div>
   <div class="mb-3">
     <%= f.label :status , class: 'form-label w-100' %>
-    <%= f.collection_radio_buttons(:status_ids, Task.statuses, :first, :first, checked: @task.status) do |s| %>
+    <%= f.collection_radio_buttons(:status, Task.statuses, :first, :first, checked: @task.status) do |s| %>
       <%= s.label(class: 'form-check-label') do %>
         <%= Task.human_attribute_name("status.#{s.text}") %>
       <% end %>
       <%= s.radio_button(class: 'form-check-input') do %>
         <%= s.check_box %>
 　　　  <% end %>
+    <% end %>
+  </div>
+  <div class="mb-3">
+    <%= f.label :label , class: 'form-label w-100' %>
+    <%= f.collection_check_boxes(:label_ids, Label.all, :id, :name, class: 'form-check') do |s| %>
+      <%= s.label(class: 'form-check-label') do %>
+        <%= s.text %>
+      <% end %>
+      <%= s.check_box(class: 'form-check-input') do %>
+        <%= s.check_box %>
+      <% end %>
     <% end %>
   </div>
   <p><%= f.submit (@task.new_record? ? I18n.t('common.action.create') : I18n.t('common.action.update')), class: 'btn btn-primary' %></p>

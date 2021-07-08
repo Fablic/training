@@ -1,4 +1,5 @@
 <div class="container">
+  <%= render 'layouts/flash', add_class: 'alert mt-3' %>
   <%= form_with(scope: :session, url: login_path) do |f| %>
     <%= f.label :"#{User.human_attribute_name(:email)}", class: 'form-label' %>
     <%= f.email_field :email, class: 'form-control mb-3' %>
@@ -8,6 +9,6 @@
       <%= f.label :password_confirmation, class: 'form-label' %>
       <%= f.password_field :password_confirmation , class: 'form-control mb-3' %>
     <% end %>
-    <%= f.submit I18n.t('common.action.login') %>
+    <%= f.submit I18n.t('common.action.login'), class: 'btn btn-primary' %>
   <% end %>
 </div>

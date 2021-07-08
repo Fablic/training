@@ -45,21 +45,29 @@ RSpec.describe Task, type: :model do
     end
   end
 
-  describe '#scope title_search' do
-    subject { Task.title_search(search_title) }
+  describe '#scope keyword_search' do
+    subject { Task.keyword_search(search_keyword) }
+    let(:label) { create(:label) }
     before {
-      create(:task, title: 'hoge', due_date: Faker::Time.forward)
+      create(:task, title: 'hoge', due_date: Faker::Time.forward, label_ids: [label.id])
       create(:task, title: 'fuga', due_date: Faker::Time.backward)
     }
     context 'when search registered title' do
-      let(:search_title) { 'hoge' }
+      let(:search_keyword) { 'hoge' }
       it 'find record' do
         expect(subject.count).to eq(1)
         expect(subject.first.title).to eq('hoge')
       end
     end
-    context 'title is nil' do
-      let(:search_title) { nil }
+    context 'when search registered label' do
+      let(:search_keyword) { label.name }
+      it 'find record' do
+        expect(subject.count).to eq(1)
+        expect(subject.first.title).to eq('hoge')
+      end
+    end
+    context 'keyword is nil' do
+      let(:search_keyword) { nil }
       it 'return all records' do
         expect(subject.count).to eq(2)
       end
