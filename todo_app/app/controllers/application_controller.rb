@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate_user
-    redirect_to login_path unless logged_in?
+    redirect_to login_path, { flash: { warning: I18n.t(:'message.required_logged_in') } } unless logged_in?
   end
 
   private
