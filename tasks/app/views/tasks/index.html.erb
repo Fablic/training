@@ -12,7 +12,7 @@
       <th><%= Task.human_attribute_name(:priority) %></th>
       <th><%= Task.human_attribute_name(:label) %></th>
       <th><%= Task.human_attribute_name(:task_name) %></th>
-      <th><%= Task.human_attribute_name(:limit_date) %></th>
+      <th><%= sort_order 'limit_date', Task.human_attribute_name(:limit_date) %></th>
       <th><%= Task.human_attribute_name(:detail) %></th>
     </tr>
   </thead>

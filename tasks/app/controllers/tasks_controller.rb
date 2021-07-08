@@ -1,8 +1,9 @@
 class TasksController < ApplicationController
   before_action :set_task, only: %i[show edit update destroy]
+  helper_method :sort_column, :sort_direction
 
   def index
-    @tasks = Task.without_deleted.created_at_desc
+    @tasks = Task.without_deleted.order("#{sort_column} #{sort_direction}")
   end
 
   def show; end
@@ -58,5 +59,13 @@ class TasksController < ApplicationController
 
   def task_params
     params.require(:task).permit(:task_name, :status_id, :priority_id, :label, :limit_date, :detail)
+  end
+
+  def sort_direction
+    params[:direction].in?(%w[asc desc]) ? params[:direction] : 'desc'
+  end
+
+  def sort_column
+    params[:sort].in?(Task.column_names) ? params[:sort] : 'created_at'
   end
 end

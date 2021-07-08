@@ -1,6 +1,3 @@
-HashSyntax:
-  EnforcedStyle: ruby19
-
 require:
   - rubocop-rails
 
@@ -42,13 +39,16 @@ Style/FrozenStringLiteralComment:
 Style/Documentation:
   Enabled: false
 
-##################### Metrics ##################################
+##################### Layout ##################################
 
 # 1行の文字数
-Metrics/LineLength:
+Layout/LineLength:
   Max: 160
   Exclude:
     - "db/migrate/*.rb"
+
+##################### Metrics ##################################
+
 
 # ブロックの行数
 Metrics/BlockLength:
