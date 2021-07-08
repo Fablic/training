@@ -8,7 +8,7 @@ module Admin
     before_action :authenticate_admin_user
 
     def index
-      @users = User.eager_load(:tasks).order({ created_at: :desc })
+      @users = User.preload(:tasks).order({ created_at: :desc })
                    .page(params[:page])
     end
 
