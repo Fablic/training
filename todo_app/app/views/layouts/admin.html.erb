@@ -14,8 +14,8 @@
     <h1><%= link_to 'TODO App Admin', admin_users_path %></h1>
 
     <div class="d-flex gap-2">
-      <%= link_to User.model_name.plural, admin_users_path %>
-      <%= link_to Task.model_name.plural, root_path %>
+      <%= link_to User.model_name.plural.camelize, admin_users_path %>
+      <%= link_to Task.model_name.plural.camelize, root_path %>
       <% if logged_in? %>
         <div class="text-white">
           <%= current_user.username %>
