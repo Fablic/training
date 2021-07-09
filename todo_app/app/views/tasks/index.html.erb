@@ -24,7 +24,6 @@
 </div>
 
 <% if @tasks.present? %>
-  <%= link_to 'New Task', new_task_path %>
   <div class="d-flex flex-wrap">
     <% @tasks.each do |task| %>
       <div class="w-25">

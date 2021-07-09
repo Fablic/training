@@ -39,6 +39,8 @@ en:
     edited_task: "Task edited is complete"
     deleted_task: "Task deleted is complete"
     deleted_user: "User deleted is complete"
+    required_logged_in: "required logged in"
+    required_admin_role: "required admin role"
     registered_is_failed: "Registered is failed"
     edited_is_faild: "Edited is failed"
     deleted_is_failed: "Deleted is failed"

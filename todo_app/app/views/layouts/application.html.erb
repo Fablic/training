@@ -14,13 +14,19 @@
     <div class="d-flex flex-row justify-content-between align-items-center shadow-sm px-5 py-3">
       <h1><%= link_to 'TODO App', root_path %></h1>
       <div class="d-flex gap-2">
-        <%= link_to Label.model_name, labels_path %>
-        <%= link_to Task.model_name, root_path %>
+        <%= link_to "Admin Page", admin_users_path, class: 'btn btn-outline-secondary' if current_user&.admin? %>
+        <%= link_to Label.model_name.plural.camelize, labels_path, class: 'btn btn-outline-primary' %>
+        <%= link_to Task.model_name.plural.camelize, root_path, class: 'btn btn-outline-primary' %>
+        <div class="my-auto fs-6">
+          <%= link_to 'new Task', new_task_path %>
+        </div>
         <% if logged_in? %>
-          <%= current_user.username %>
-          <%= link_to 'logout', logout_path %>
+          <div class="my-auto">
+            <%= current_user.username %>
+          </div>
+          <%= link_to 'logout', logout_path, class: 'btn btn-outline-primary' %>
         <% else %>
-          <%= link_to 'login', login_path %>
+          <%= link_to 'login', login_path, class: 'btn btn-outline-primary' %>
         <% end %>
       </div>
     </div>
