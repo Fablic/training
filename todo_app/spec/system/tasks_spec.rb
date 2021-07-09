@@ -164,7 +164,7 @@ RSpec.describe 'Tasks', type: :system do
 
         fill_in 'task_title', with: 'タスクの新規作成'
         fill_in 'task_description', with: 'タスクの説明'
-        select 'admin', from: 'task_user_id'
+        select 'normal', from: 'task_user_id'
         click_button 'Create'
 
         expect(page).to have_content 'タスクの新規作成'

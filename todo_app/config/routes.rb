@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  get 'labels/new'
   namespace :admin do
     root to: 'users#new'
     resources :users do

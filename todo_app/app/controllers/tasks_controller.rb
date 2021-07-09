@@ -29,11 +29,9 @@ class TasksController < ApplicationController
     end
   end
 
-  def show
-  end
+  def show; end
 
-  def edit
-  end
+  def edit; end
 
   def update
     if @task.update(task_params)
@@ -46,12 +44,12 @@ class TasksController < ApplicationController
   end
 
   def destroy
-    if @task.destroy
+    if @task.user_id == current_user.id && @task.destroy
       flash[:success] = I18n.t(:'message.deleted_task')
       redirect_to root_path
     else
-      flash.now[:error] = I18n.t(:'message.deleted_is_failed')
-      render root_path
+      flash[:error] = I18n.t(:'message.deleted_is_failed')
+      redirect_back(fallback_location: root_path)
     end
   end
 

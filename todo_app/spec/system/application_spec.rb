@@ -31,7 +31,7 @@ RSpec.describe 'ApplicationController', type: :system do
   end
 
   describe 'URLハンドリング' do
-    describe 'ログイン時', :require_login do
+    context 'ログイン時', :require_login do
       it '/loginアクセス時にrootに遷移する' do
         visit login_path
 
@@ -39,11 +39,43 @@ RSpec.describe 'ApplicationController', type: :system do
       end
     end
 
-    describe '未ログイン時' do
+    context '未ログイン時' do
       it 'rootアクセス時に/loginに遷移する' do
         visit root_path
 
         expect(current_url).to match login_path
+      end
+    end
+
+    context '通常ユーザ /admin アクセス時', :require_login do
+      it 'rootに遷移する' do
+        visit admin_root_path
+
+        expect(current_url).to match root_path
+      end
+    end
+
+    context '通常ユーザ /admin/users アクセス時', :require_login do
+      it 'rootに遷移する' do
+        visit admin_users_path
+
+        expect(current_url).to match root_path
+      end
+    end
+
+    context 'adminユーザ /admin アクセス時', :require_admin_login do
+      it '/adminに遷移ができる' do
+        visit admin_root_path
+
+        expect(current_url).to match admin_root_path
+      end
+    end
+
+    context 'adminユーザ /admin/users アクセス時', :require_admin_login do
+      it '/adminに遷移ができる' do
+        visit admin_users_path
+
+        expect(current_url).to match admin_users_path
       end
     end
   end
