@@ -9,8 +9,8 @@ class TasksController < ApplicationController
     @status = params[:status]
     @user_id = params[:user_id] || @current_user&.id
     @end_at_sort = params[:end_at]
-    @tasks = Task.preload(:user)
-                 .preload(labels: :task_labels)
+    @tasks = Task.eager_load(:user)
+                 .eager_load(labels: :task_labels)
                  .search(@keyword, @status, @user_id, create_sort_query)
                  .page(params[:page])
   end
