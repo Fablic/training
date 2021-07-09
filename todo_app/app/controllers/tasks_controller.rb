@@ -22,8 +22,7 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(task_params)
     if @task.save
-      flash[:success] = I18n.t(:'message.registered_task')
-      redirect_to root_path
+      redirect_to root_path, { flash: { success: I18n.t(:'message.registered_task') } }
     else
       flash.now[:error] = I18n.t(:'message.registered_is_failed')
       render :new
@@ -36,8 +35,7 @@ class TasksController < ApplicationController
 
   def update
     if @task.update(task_params)
-      flash[:success] = I18n.t(:'message.edited_task')
-      redirect_to root_path
+      redirect_to root_path, { flash: { success: I18n.t(:'message.edited_task') } }
     else
       flash.now[:error] = I18n.t(:'message.edited_is_faild')
       render :edit
@@ -46,8 +44,7 @@ class TasksController < ApplicationController
 
   def destroy
     if @task.user_id == current_user.id && @task.destroy
-      flash[:success] = I18n.t(:'message.deleted_task')
-      redirect_to root_path
+      redirect_to root_path, { flash: { success: I18n.t(:'message.deleted_task') } }
     else
       flash[:error] = I18n.t(:'message.deleted_is_failed')
       redirect_back(fallback_location: root_path)
