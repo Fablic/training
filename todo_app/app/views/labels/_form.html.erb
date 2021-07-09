@@ -13,9 +13,9 @@
       <%= f.submit I18n.t(:'button.create'), class: 'btn btn-primary' %>
     </div>
   <% else %>
-    <div class="mx-auto">
+    <div class="d-flex justify-content-center">
       <%= f.submit I18n.t(:'button.edit'), class: 'btn btn-primary' %>
-      <%= link_to I18n.t(:'link.delete'), label_path(@label), method: :delete %>
+      <%= link_to I18n.t(:'link.delete'), label_path(@label), method: :delete, class: 'my-auto ms-4' %>
     </div>
   <% end %>
 <% end %>
