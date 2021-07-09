@@ -15,7 +15,7 @@ class LabelsController < ApplicationController
   def create
     @label = Label.new(label_param)
     if @label.save
-      redirect_to labels_path, { flash: { success: I18n.t(:'message.registered_user') } }
+      redirect_to labels_path, { flash: { success: I18n.t(:'message.registered_label') } }
     else
       flash.now[:error] = I18n.t(:'message.registered_is_failed')
       render :new
@@ -26,7 +26,7 @@ class LabelsController < ApplicationController
 
   def update
     if @label.update(label_param)
-      redirect_to labels_path, { flash: { success: 'label success' } }
+      redirect_to labels_path, { flash: { success: I18n.t(:'message.edited_label') } }
     else
       flash.now[:error] = I18n.t(:'message.edited_is_faild')
       render :edit
@@ -35,7 +35,7 @@ class LabelsController < ApplicationController
 
   def destroy
     if @label.destroy
-      redirect_to labels_path, { flash: { success: 'label success' } }
+      redirect_to labels_path, { flash: { success: I18n.t(:'message.deleted_label') } }
     else
       flash[:error] = I18n.t(:'message.deleted_is_failed')
       redirect_back(fallback_location: root_path)
