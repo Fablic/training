@@ -16,7 +16,7 @@
     <%= task.end_at ? I18n.l(task.end_at) : 'None' %>
   </div>
   <div class="d-flex flex-wrap">
-    <% task.labels.each do |l| %>
+    <% task.labels.all.each do |l| %>
       <div class="fs-6 me-1">
         <%= render 'labels/tag', l: l %>
       </div>
