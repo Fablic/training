@@ -50,7 +50,7 @@ class TasksController < ApplicationController
       flash[:success] = I18n.t(:'message.deleted_task')
       redirect_to root_path
     else
-      flash.now[:error] = I18n.t(:'message.deleted_is_faild')
+      flash.now[:error] = I18n.t(:'message.deleted_is_failed')
       render root_path
     end
   end

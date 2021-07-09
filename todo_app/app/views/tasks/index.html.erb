@@ -26,29 +26,8 @@
 <% if @tasks.present? %>
   <div class="d-flex flex-wrap">
     <% @tasks.each do |task| %>
-      <div class="w-25" data-testid="task-card">
-        <div class="card p-2 m-1 shadow-sm gap-2">
-          <div class="d-flex justify-content-between">
-            <%= link_to task.title, task_path(task), 'data-testid': 'task-title' %>
-            <div class="text-uppercase fw-bold"><%= task.task_status %></div>
-          </div>
-          <div class="d-flex">
-            <div class="fw-bold"><%= I18n.t(:'task.user') %>: </div>
-            <%= task.user.username %>
-          </div>
-          <div class="d-flex gap-1">
-            <div class="fw-bold"><%= I18n.t(:'task.description') %>:</div>
-            <%= task.description %>
-          </div>
-          <div class="d-flex gap-1">
-            <div class="fw-bold"><%= I18n.t(:'task.end_at') %>:</div>
-            <%= task.end_at ? I18n.l(task.end_at) : 'None' %>
-          </div>
-          <div class="d-flex justify-content-between">
-            <%= link_to I18n.t(:'link.edit'), edit_task_path(task) %>
-            <%= link_to I18n.t(:'link.delete'), task_path(task), method: :delete %>
-          </div>
-        </div>
+      <div class="w-25">
+        <%= render 'tasks/card', task: task %>
       </div>
     <% end %>
   </div>

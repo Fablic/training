@@ -1,0 +1,7 @@
+<%= render 'layouts/error', model: @user %>
+<%= form_with(model: @user, url: admin_user_path, method: :patch, class: 'card w-50 m-2 p-2 gap-3') do |f| %>
+  <%= render 'admin/users/form', f: f %>
+  <div class="mx-auto">
+    <%= f.submit I18n.t(:'button.edit'), class: 'btn btn-primary' %>
+  </div>
+<% end %>
