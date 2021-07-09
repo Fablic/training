@@ -5,8 +5,8 @@ class Task < ApplicationRecord
   validates :description, length: { maximum: 5000 }
   enum task_status: { todo: 0, doing: 1, done: 2 }
   belongs_to :user
-  has_many :labels, through: :task_labels
   has_many :task_labels, dependent: :destroy
+  has_many :labels, through: :task_labels
 
   scope :where_status, ->(status) { where(tasks: { task_status: status }) if status.present? }
   scope :where_keyword, ->(keyword) { where('title like ?', "#{keyword}%") if keyword.present? }
