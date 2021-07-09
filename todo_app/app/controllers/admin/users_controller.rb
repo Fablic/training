@@ -59,7 +59,7 @@ module Admin
     end
 
     def find_user
-      @user = User.left_joins(:tasks).find(params[:id])
+      @user = User.find(params[:id])
     end
   end
 end
