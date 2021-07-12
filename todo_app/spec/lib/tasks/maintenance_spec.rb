@@ -3,7 +3,7 @@
 require 'rails_helper'
 require 'rake'
 
-RSpec.describe 'maintenance' do
+RSpec.describe 'Maintenance' do
   let(:file) { Rails.root.join(Constants::MAINTENANCE_DIR) }
 
   before(:all) do
@@ -20,8 +20,8 @@ RSpec.describe 'maintenance' do
   describe 'start' do
     let(:task_name) { 'maintenance:start' }
 
-    context 'test start' do
-      it 'create file' do
+    context 'メンテナンスモードスタート時' do
+      it '503のメンテナンスページが表示される' do
         @rake[task_name].invoke
         visit login_path
 
@@ -34,8 +34,8 @@ RSpec.describe 'maintenance' do
   describe 'finish' do
     let(:task_name) { 'maintenance:end' }
 
-    context 'delete' do
-      it 'delete file' do
+    context 'メンテナンスモード終了時' do
+      it 'トップページが正常に表示される' do
         @rake[task_name].invoke
         visit login_path
 
