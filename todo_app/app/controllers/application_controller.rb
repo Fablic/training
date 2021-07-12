@@ -29,7 +29,7 @@ class ApplicationController < ActionController::Base
   end
 
   def maintenance_mode?
-    File.exist?(Constants::MAINTENANCE)
+    File.exist?(Constants::MAINTENANCE_DIR)
   end
 
   def authenticate_user

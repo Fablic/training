@@ -4,14 +4,14 @@
 ## Setup
 
 
-1. Set up Ruby
+### 1. Set up Ruby
 
 ```
 rbenv install 3.0.1
 rbenv global 3.0.1
 ```
 
-2. Database Setup
+### 2. Database Setup
 
 ```
 cd docker
@@ -22,14 +22,13 @@ MySQL8のバージョンで失敗する場合
 
 - https://mebee.info/2020/07/25/post-15160/
 
-
-3. Bundle install
+### 3. Bundle install
 
 ```
 bundle install
 ```
 
-4. Setup webpacker
+### 4. Setup webpacker
 
 ```
 bundle exec rails webpacker:yarn_install
@@ -37,7 +36,7 @@ bundle exec rails assets:clobber
 bundle exec rails webpacker:compile
 ```
 
-5. Rails setup
+### 5. Rails setup
 
 ```
 bundle exec rails db:migrate
@@ -45,7 +44,7 @@ bundle exec rails db:seed
 bundle exec rails server
 ```
 
-5.1 Login App
+### 5.1 Login App
 
 ```
 ### Admin
@@ -57,7 +56,7 @@ email: normal@example.com
 password: AAAA1234
 ```
 
-6. Create test data
+### 6. Create test data
 
 ```
 bundle exec rails c
@@ -66,6 +65,21 @@ bundle exec rails c
 > (1..10).each{|n| Task.create(title: Faker::Alphanumeric.alpha(number: 10), task_status: :doing, user_id: User.find_by({ username: 'admin' }).id) }
 > (1..10).each{|n| Task.create(title: Faker::Alphanumeric.alpha(number: 10), task_status: :done, user_id: User.find_by({ username: 'admin' }).id) }
 ```
+
+### Other Maintenance Mode
+
+#### Start
+
+```
+bundle exec rake maintenance:start
+```
+
+#### End
+
+```
+bundle exec rake maintenance:end
+```
+
 
 ## ペーパープロトタイピング
 

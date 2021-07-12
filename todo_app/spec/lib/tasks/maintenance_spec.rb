@@ -4,7 +4,7 @@ require 'rails_helper'
 require 'rake'
 
 RSpec.describe 'maintenance' do
-  let(:file) { Rails.root.join(Constants::MAINTENANCE) }
+  let(:file) { Rails.root.join(Constants::MAINTENANCE_DIR) }
 
   before(:all) do
     @rake = Rake::Application.new

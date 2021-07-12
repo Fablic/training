@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
 module Constants
-  MAINTENANCE = 'tmp/maintenance'
+  MAINTENANCE_DIR = 'tmp/maintenance'
 end
