@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_22_031106) do
+ActiveRecord::Schema.define(version: 2021_07_12_005853) do
 
   create_table "master_task_priorities", id: { type: :integer, limit: 1 }, charset: "utf8", force: :cascade do |t|
     t.string "priority", limit: 64, null: false
@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(version: 2021_06_22_031106) do
     t.datetime "deleted_at", precision: 6
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["status_id", "limit_date", "created_at"], name: "index_tasks_on_status_id_and_limit_date_and_created_at"
   end
 
   create_table "users", id: :integer, charset: "utf8", force: :cascade do |t|
