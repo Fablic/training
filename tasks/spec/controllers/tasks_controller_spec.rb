@@ -7,7 +7,7 @@ RSpec.describe TasksController, type: :controller do
 
   describe '#index' do
     context 'レスポンスが正常の時' do
-      let(:task_list) do
+      let!(:task_list) do
         [
           create(:task_list_item),
           create(:task_list_item, created_at: Time.current + 1.day, limit_date: Time.current + 5.days),
@@ -23,11 +23,11 @@ RSpec.describe TasksController, type: :controller do
       end
       it '作成日時の降順かつ、論理削除されていないタスクのみの一覧が取得されること' do
         get :index
-        expect(Task.without_deleted.order('created_at desc')).to match [task_list[2], task_list[1], task_list[0], task]
+        expect(Task.search(nil, nil, 'created_at desc')).to match [task_list[2], task_list[1], task_list[0], task]
       end
       it '期限の降順かつ、論理削除されていないタスクのみの一覧が取得されること（期限が同じならIDの昇順）' do
         get :index
-        expect(Task.without_deleted.order('limit_date desc')).to match [task_list[1], task_list[2], task, task_list[0]]
+        expect(Task.search(nil, nil, 'limit_date desc')).to match [task_list[1], task_list[2], task, task_list[0]]
       end
     end
   end
