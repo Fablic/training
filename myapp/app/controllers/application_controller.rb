@@ -4,7 +4,10 @@ class ApplicationController < ActionController::Base
   include SessionsHelper
   include UsersHelper
   include TasksHelper
-  # rescue_from StandardError, with: :render500
+  before_action :maintenance_mode_on!
+  before_action :logged_in_user
+
+  rescue_from StandardError, with: :render500
   rescue_from ActionController::RoutingError, with: :render404
   rescue_from ActiveRecord::RecordNotFound, with: :render404
 
@@ -34,5 +37,12 @@ class ApplicationController < ActionController::Base
     flash[:danger] = 'Please log in as admin.'
     message = 'Please log in as admin'
     redirect_to root_path, notice: message
+  end
+
+  def maintenance_mode_on!
+    maintenance_flg = Maintenance.find(1)
+    if maintenance_flg.status == 1
+      redirect_to maintenance_index_path
+    end
   end
 end
