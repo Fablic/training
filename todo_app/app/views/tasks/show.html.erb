@@ -23,6 +23,14 @@
     <div class="w-25"><%= I18n.t(:'task.user') %>: </div>
     <div class="w-50"><%= @task.user.username %></div>
   </div>
+  <div class="d-flex flex-wrap">
+    <div class="w-25"><%= Label.model_name.plural.camelize %>: </div>
+    <% @task.labels.each do |l| %>
+      <div class="fs-5 me-1">
+        <%= render 'labels/tag', l: l %>
+      </div>
+    <% end %>
+  </div>
   <div class="d-flex justify-content-between">
     <%= link_to I18n.t(:'link.edit'), edit_task_path(@task) %>
     <%= link_to I18n.t(:'link.delete'), task_path(@task), method: :delete %>

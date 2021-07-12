@@ -4,7 +4,9 @@ require 'rails_helper'
 
 RSpec.describe 'Tasks', type: :system do
   let!(:user) { create(:admin_user) }
-  let!(:task1) { create(:task, title: 'タイトル1', end_at: Time.current.change(sec: 0, usec: 0), user_id: user.id) }
+  let!(:label) { create(:label) }
+  let!(:label2) { create(:label, name: 'ラベル2') }
+  let!(:task1) { create(:task, title: 'タイトル1', end_at: Time.current.change(sec: 0, usec: 0), user_id: user.id, label_ids: [label.id]) }
   let!(:task2) { create(:past_task, title: 'タイトル2', end_at: Time.current.yesterday.change(sec: 0, usec: 0), user_id: user.id) }
 
   describe 'タスク一覧', :require_login do
@@ -14,6 +16,7 @@ RSpec.describe 'Tasks', type: :system do
 
         expect(page).to have_content 'タイトル1'
         expect(page).to have_content '説明'
+        expect(page).to have_content 'ラベル'
         expect(page).to have_content I18n.l(task1.end_at)
       end
 
@@ -22,6 +25,7 @@ RSpec.describe 'Tasks', type: :system do
 
         expect(page).to have_content 'タイトル1'
         expect(page).to have_content '説明'
+        expect(page).to have_content 'ラベル'
         expect(page).to have_content I18n.l(task1.end_at)
       end
 
@@ -50,13 +54,21 @@ RSpec.describe 'Tasks', type: :system do
 
   describe 'タスク検索', :require_login do
     context '正常時' do
-      let!(:doing_task) { create(:task, title: 'Railsを勉強する', task_status: :doing, user_id: user.id) }
+      let!(:rails_label) { create(:label, name: 'Rails') }
+      let!(:private_label) { create(:label, name: 'Private') }
+      let!(:doing_task) { create(:task, title: 'Railsを勉強する', task_status: :doing, user_id: user.id, label_ids: [rails_label.id, private_label.id]) }
       let!(:done_task) { create(:task, title: '英語を勉強する', task_status: :done, user_id: user.id) }
 
-      it 'keyword検索ができる' do
-        visit root_path(keyword: 'タイトル1')
+      it 'keyword検索タイトルでの検索ができる' do
+        visit root_path(keyword: 'Rails')
 
-        expect(all("[data-testid='task-title']")[0].text).to match 'タイトル1'
+        expect(all("[data-testid='task-title']")[0].text).to match 'Railsを勉強する'
+      end
+
+      it 'keyword検索ラベルでの検索ができる' do
+        visit root_path(keyword: 'Private')
+
+        expect(all("[data-testid='task-title']")[0].text).to match 'Railsを勉強する'
       end
 
       it 'status検索ができる(doing)' do
@@ -99,6 +111,7 @@ RSpec.describe 'Tasks', type: :system do
         visit task_path(task1)
         expect(page).to have_content 'タイトル1'
         expect(page).to have_content '説明'
+        expect(page).to have_content 'ラベル'
         expect(page).to have_content I18n.l(task1.end_at)
       end
     end
@@ -125,6 +138,24 @@ RSpec.describe 'Tasks', type: :system do
 
         click_button 'Edit'
         expect(page).to have_content I18n.l(end_at_input)
+      end
+
+      it 'タスクのラベルを変更できる' do
+        visit edit_task_path(task1)
+        check "task_label_ids_#{label2.id}"
+
+        click_button 'Edit'
+        expect(page).to have_content 'ラベル'
+        expect(page).to have_content 'ラベル2'
+      end
+
+      it 'タスクのラベルを解除できる' do
+        visit edit_task_path(task1)
+        uncheck "task_label_ids_#{label.id}"
+
+        click_button 'Edit'
+        expect(page).to_not have_content 'ラベル'
+        expect(page).to_not have_content 'ラベル2'
       end
     end
 

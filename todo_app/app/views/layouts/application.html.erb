@@ -15,7 +15,11 @@
       <h1><%= link_to 'TODO App', root_path %></h1>
       <div class="d-flex gap-2">
         <%= link_to "Admin Page", admin_users_path, class: 'btn btn-outline-secondary' if current_user&.admin? %>
-        <%= link_to I18n.t(:'button.create'), new_task_path, class: 'btn btn-outline-primary' %>
+        <%= link_to Label.model_name.plural.camelize, labels_path, class: 'btn btn-outline-primary' %>
+        <%= link_to Task.model_name.plural.camelize, root_path, class: 'btn btn-outline-primary' %>
+        <div class="my-auto fs-6">
+          <%= link_to 'new Task', new_task_path %>
+        </div>
         <% if logged_in? %>
           <div class="my-auto">
             <%= current_user.username %>

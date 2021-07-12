@@ -37,5 +37,5 @@
                  nav_class: "d-inline-block" %>
   </div>
 <% else %>
-  <%= I18n.t(:'message.task_not_registered') %>
+  <%= link_to I18n.t(:'message.task_not_registered'), new_task_path %>
 <% end %>

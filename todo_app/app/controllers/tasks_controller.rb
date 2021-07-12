@@ -10,6 +10,7 @@ class TasksController < ApplicationController
     @user_id = params[:user_id] || @current_user&.id
     @end_at_sort = params[:end_at]
     @tasks = Task.eager_load(:user)
+                 .eager_load(labels: :task_labels)
                  .search(@keyword, @status, @user_id, create_sort_query)
                  .page(params[:page])
   end
@@ -21,8 +22,7 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(task_params)
     if @task.save
-      flash[:success] = I18n.t(:'message.registered_task')
-      redirect_to root_path
+      redirect_to root_path, { flash: { success: I18n.t(:'message.registered_task') } }
     else
       flash.now[:error] = I18n.t(:'message.registered_is_failed')
       render :new
@@ -35,8 +35,7 @@ class TasksController < ApplicationController
 
   def update
     if @task.update(task_params)
-      flash[:success] = I18n.t(:'message.edited_task')
-      redirect_to root_path
+      redirect_to root_path, { flash: { success: I18n.t(:'message.edited_task') } }
     else
       flash.now[:error] = I18n.t(:'message.edited_is_faild')
       render :edit
@@ -45,8 +44,7 @@ class TasksController < ApplicationController
 
   def destroy
     if @task.user_id == current_user.id && @task.destroy
-      flash[:success] = I18n.t(:'message.deleted_task')
-      redirect_to root_path
+      redirect_to root_path, { flash: { success: I18n.t(:'message.deleted_task') } }
     else
       flash[:error] = I18n.t(:'message.deleted_is_failed')
       redirect_back(fallback_location: root_path)
@@ -68,7 +66,7 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:title, :description, :end_at, :task_status, :user_id)
+    params.require(:task).permit(:title, :description, :end_at, :task_status, :user_id, label_ids: [])
   end
 
   def create_sort_query

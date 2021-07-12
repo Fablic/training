@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   post 'signup' => 'users#create'
   root 'tasks#index'
   resources :tasks
+  resources :labels
 
   get '*path', controller: 'application', action: :render404
 end
