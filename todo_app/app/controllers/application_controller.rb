@@ -3,7 +3,8 @@
 class ApplicationController < ActionController::Base
   include SessionConcern
   before_action :authenticate_user
-  helper_method :current_user, :logged_in?
+  before_action :render503, if: :maintenance_mode?
+  helper_method :current_user, :logged_in?, :maintenance_mode?
 
   unless Rails.env.development?
     rescue_from StandardError, with: :render500
@@ -21,6 +22,14 @@ class ApplicationController < ActionController::Base
     logger.info "Rendering 500 with exception: #{err.message}" if err
 
     render file: Rails.root.join('public/500.html'), status: :internal_server_error
+  end
+
+  def render503
+    render file: Rails.root.join('public/503.html'), status: :service_unavailable
+  end
+
+  def maintenance_mode?
+    File.exist?(Constants::MAINTENANCE)
   end
 
   def authenticate_user

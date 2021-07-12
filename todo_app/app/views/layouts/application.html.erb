@@ -10,7 +10,10 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
+  <% if maintenance_mode? %>
+    <body><%= yield %></body>
+  <% else %>
+    <body>
     <div class="d-flex flex-row justify-content-between align-items-center shadow-sm px-5 py-3">
       <h1><%= link_to 'TODO App', root_path %></h1>
       <div class="d-flex gap-2">
@@ -43,5 +46,6 @@
       <% end %>
       <%= yield %>
     </div>
-  </body>
+    </body>
+  <% end %>
 </html>
