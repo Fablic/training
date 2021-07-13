@@ -1,0 +1,36 @@
+<% if flash.notice %>
+  <div class="alert alert-success">
+    <%= flash.notice %>
+  </div>
+<% elsif flash.alert %>
+  <div class="alert alert-danger">
+    <%= flash.alert %>
+  </div>
+<% end %>
+
+<div class="m-3 text-right">
+  <%= link_to "New", new_task_path, class: "btn btn-outline-dark" %>
+</div>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>name</th>
+      <th>description</th>
+      <th>updated at</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tasks.each do |task| %>
+      <tr>
+        <td><%= task.name %></td>
+        <td><%= task.description %></td>
+        <td><%= l task.updated_at %></td>
+        <td><%= link_to "Detail", task_path(task), class: "btn btn-primary" %></td>
+        <td><%= link_to "Delete", task, class: "btn btn-danger", method: :delete, data: { confirm: "Are you sure?" } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

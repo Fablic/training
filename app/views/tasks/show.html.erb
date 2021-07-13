@@ -1,0 +1,12 @@
+<div class="m-3 text-right">
+  <td><%= link_to "Edit", edit_task_path(@task), class: "btn btn-primary" %></td>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    <b><%= @task.name %></b>
+  </div>
+  <div class="card-body">
+    <p class="card-text"><%= simple_format(@task.description) %></p>
+  </div>
+</div>
