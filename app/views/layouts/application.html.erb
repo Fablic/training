@@ -11,7 +11,14 @@
   </head>
 
   <body>
-    <header class="navbar navbar-light bg-light">TaskApp</header>
-    <%= yield %>
+    <header class="navbar navbar-expand-sm navbar-light bg-light">
+      <div class="container">
+        <%= link_to "TaskApp", root_path, class: "navbar-brand" %>
+      </div>
+    </header>
+    
+    <div class="container">
+      <%= yield %>
+    </div>
   </body>
 </html>
