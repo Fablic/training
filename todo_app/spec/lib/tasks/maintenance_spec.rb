@@ -3,7 +3,7 @@
 require 'rails_helper'
 require 'rake'
 
-RSpec.describe 'Maintenance Batch' do
+RSpec.describe 'Maintenance task' do
   let(:file) { Rails.root.join(Constants::MAINTENANCE_DIR) }
 
   before(:all) do
@@ -13,22 +13,26 @@ RSpec.describe 'Maintenance Batch' do
     Rake::Task.define_task(:environment)
   end
 
-  before(:each) do
-    @rake[task_name].invoke
-  end
+  before(:each) { @rake[task_name].reenable }
 
   describe 'start' do
     let(:task_name) { 'maintenance:start' }
 
-    context 'メンテナンスモードスタート時' do
-      it 'メンテナンスファイルが存在すること' do
-        expect(File).to exist file
+    context 'ファイルが存在する場合' do
+      it '「メンテナンスモードは既に開始済みです」が表示されること' do
+        expect do
+          FileUtils.touch(Constants::MAINTENANCE_DIR)
+          @rake[task_name].invoke
+        end.to output("メンテナンスモードは既に開始済みです\n").to_stdout
       end
+    end
 
-      it '503のメンテナンスページが表示される' do
-        visit login_path
-
-        expect(page).to have_content '誠に申し訳ありません。ただいまメンテナンス中です。'
+    context 'ファイルが存在しない場合' do
+      it '「メンテナンスモードを開始します」と表示される' do
+        expect do
+          FileUtils.rm(Constants::MAINTENANCE_DIR)
+          @rake[task_name].invoke
+        end.to output("メンテナンスモードを開始します\n").to_stdout
       end
     end
   end
@@ -36,15 +40,20 @@ RSpec.describe 'Maintenance Batch' do
   describe 'end' do
     let(:task_name) { 'maintenance:end' }
 
-    context 'メンテナンスモード終了時' do
-      it 'メンテナンスファイルが存在しないこと' do
-        expect(File).not_to exist file
+    context 'ファイルが存在する場合' do
+      it '「メンテナンスモードを終了します」が表示されること' do
+        expect do
+          FileUtils.touch(Constants::MAINTENANCE_DIR)
+          @rake[task_name].invoke
+        end.to output("メンテナンスモードを終了します\n").to_stdout
       end
+    end
 
-      it 'トップページが正常に表示される' do
-        visit login_path
-
-        expect(page).to have_content 'TODO App'
+    context 'ファイルが存在しない場合' do
+      it '「メンテナンスモードは既に終了済みです」が表示されること' do
+        expect do
+          @rake[task_name].invoke
+        end.to output("メンテナンスモードは既に終了済みです\n").to_stdout
       end
     end
   end
