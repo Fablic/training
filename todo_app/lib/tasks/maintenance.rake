@@ -5,7 +5,7 @@ namespace :maintenance do
   task start: :environment do
     if File.exist?(Constants::MAINTENANCE_DIR)
       puts 'すでにメンテナンスモードです'
-    elsif system("touch #{Constants::MAINTENANCE_DIR}")
+    elsif FileUtils.touch(Constants::MAINTENANCE_DIR)
       puts 'メンテナンスモードを開始します'
     else
       puts 'メンテナンスモード終了に失敗しました'
@@ -14,7 +14,7 @@ namespace :maintenance do
 
   desc 'end maintenance'
   task end: :environment do
-    if system("rm #{Constants::MAINTENANCE_DIR}")
+    if File.delete(Constants::MAINTENANCE_DIR)
       puts 'メンテナンスモードを終了します'
     else
       puts 'メンテナンスモード終了に失敗しました'
