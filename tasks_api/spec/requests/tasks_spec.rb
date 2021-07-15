@@ -126,7 +126,7 @@ RSpec.describe 'Tasks', type: :request do
     it 'shouldnt delete nonexistent Task' do
       delete '/tasks/0.json'
 
-      expect(response.status).to eq 422
+      expect(response.status).to eq 404
     end
   end
 end

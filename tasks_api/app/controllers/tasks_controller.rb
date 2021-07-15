@@ -7,8 +7,6 @@ class TasksController < ApplicationController
 
   def show
     @task = Task.find(params[:id])
-  rescue ActiveRecord::RecordNotFound => e
-    render json: e, status: :not_found
   end
 
   def create
@@ -44,8 +42,6 @@ class TasksController < ApplicationController
     else
       head :unprocessable_entity
     end
-  rescue ActiveRecord::RecordNotFound
-    head :unprocessable_entity
   end
 
   private
