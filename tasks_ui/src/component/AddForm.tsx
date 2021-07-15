@@ -9,6 +9,11 @@ import { useForm, Controller } from 'react-hook-form'
 import { create, tasksSlice } from '../state/tasksSlice'
 import { useDispatch, useSelector } from 'react-redux'
 
+import { initI18n } from './translation'
+import { useTranslation } from 'react-i18next'
+
+initI18n()
+
 const useStyles = makeStyles({
   container: {
     margin: '10px',
@@ -27,6 +32,8 @@ const AddForm: React.FC = (props) => {
 
   const classes = useStyles()
 
+  const { t } = useTranslation()
+
   const onAddClick = () => {
     const name = nameRef.current.value
     dispatch(create({ name }))
@@ -44,7 +51,7 @@ const AddForm: React.FC = (props) => {
             {...field}
             aria-label="add-name-input"
             className={classes.input}
-            label="Name"
+            label={t('task_name')}
             inputRef={nameRef}
           />
         )}
