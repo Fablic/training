@@ -51,5 +51,7 @@ module TasksApi
                  methods: %i[get post options head delete put]
       end
     end
+
+    config.i18n.available_locales = %w(en ja)
   end
 end

@@ -13,7 +13,7 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
-    flash.now['notice'] = 'New task has created'
+    flash.now['notice'] = I18n.t('notice.created')
 
     if @task.save
       render :show, status: :created
@@ -26,7 +26,7 @@ class TasksController < ApplicationController
 
   def update
     @task = Task.find(params[:id])
-    flash.now['notice'] = 'The task has updated'
+    flash.now['notice'] = I18n.t('notice.updated')
 
     if @task.update(task_params)
       render :show
@@ -37,7 +37,7 @@ class TasksController < ApplicationController
 
   def destroy
     @task = Task.find(params[:id])
-    flash.now['notice'] = 'The task has deleted'
+    flash.now['notice'] = I18n.t('notice.deleted')
 
     if @task.destroy
       render

@@ -52,7 +52,7 @@ RSpec.describe 'Tasks', type: :request do
       ret = JSON.parse(response.body)
       expect(response.status).to eq 201
       expect(ret['task']['name']).to eq @task[:name]
-      expect(ret['notice']).to eq 'New task has created'
+      expect(ret['notice']).to eq 'New task has created.'
     end
 
     it "shouldn't create new Task without name" do
@@ -88,7 +88,7 @@ RSpec.describe 'Tasks', type: :request do
       ret = JSON.parse(response.body)
       expect(response.status).to eq 200
       expect(ret['task']['name']).to eq new_name
-      expect(ret['notice']).to eq 'The task has updated'
+      expect(ret['notice']).to eq 'The task has updated.'
 
       @task.reload
       expect(@task.name).to eq new_name
@@ -120,7 +120,7 @@ RSpec.describe 'Tasks', type: :request do
       expect(response.status).to eq 200
       expect(Task.where(id: @task.id).count).to eq 0
       ret = JSON.parse(response.body)
-      expect(ret['notice']).to eq 'The task has deleted'
+      expect(ret['notice']).to eq 'The task has deleted.'
     end
 
     it 'shouldnt delete nonexistent Task' do
