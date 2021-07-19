@@ -31,7 +31,7 @@ module TasksApi
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
     #
-    # config.time_zone = "Central Time (US & Canada)"
+    config.time_zone = 'Tokyo'
     # config.eager_load_paths << Rails.root.join("extras")
 
     # Only loads a smaller set of middleware suitable for API only apps.
@@ -51,5 +51,7 @@ module TasksApi
                  methods: %i[get post options head delete put]
       end
     end
+
+    config.i18n.available_locales = %w[en ja]
   end
 end

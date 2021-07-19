@@ -82,6 +82,7 @@ GEM
     ffi (1.15.3)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
+    http_accept_language (2.1.1)
     i18n (1.8.10)
       concurrent-ruby (~> 1.0)
     jbuilder (2.11.2)
@@ -213,6 +214,7 @@ DEPENDENCIES
   byebug
   fablicop
   factory_bot_rails
+  http_accept_language
   jbuilder (~> 2.7)
   listen (~> 3.3)
   mysql2 (~> 0.5)

@@ -7,13 +7,11 @@ class TasksController < ApplicationController
 
   def show
     @task = Task.find(params[:id])
-  rescue ActiveRecord::RecordNotFound => e
-    render json: e, status: :not_found
   end
 
   def create
     @task = Task.new(task_params)
-    flash.now['notice'] = 'New task has created'
+    flash.now['notice'] = I18n.t('notice.created')
 
     if @task.save
       render :show, status: :created
@@ -26,7 +24,7 @@ class TasksController < ApplicationController
 
   def update
     @task = Task.find(params[:id])
-    flash.now['notice'] = 'The task has updated'
+    flash.now['notice'] = I18n.t('notice.updated')
 
     if @task.update(task_params)
       render :show
@@ -37,15 +35,13 @@ class TasksController < ApplicationController
 
   def destroy
     @task = Task.find(params[:id])
-    flash.now['notice'] = 'The task has deleted'
+    flash.now['notice'] = I18n.t('notice.deleted')
 
     if @task.destroy
       render
     else
       head :unprocessable_entity
     end
-  rescue ActiveRecord::RecordNotFound
-    head :unprocessable_entity
   end
 
   private

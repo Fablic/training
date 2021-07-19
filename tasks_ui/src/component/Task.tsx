@@ -11,6 +11,11 @@ import TextField from '@material-ui/core/TextField'
 import { update, destroy, tasksSlice } from '../state/tasksSlice'
 import { useDispatch, useSelector } from 'react-redux'
 
+import { initI18n } from './translation'
+import { useTranslation } from 'react-i18next'
+
+initI18n()
+
 const useStyles = makeStyles({
   input: {
     width: '100%',
@@ -25,6 +30,8 @@ const Task: React.FC = (props) => {
   const descriptionRef = useRef()
 
   const dispatch = useDispatch()
+
+  const { t } = useTranslation()
 
   const onDestroyClick = () => {
     dispatch(destroy({ id: task.id }))
@@ -68,7 +75,7 @@ const Task: React.FC = (props) => {
             <div>
               <TextField
                 aria-label="name-edit"
-                label="Name"
+                label={t('task_name')}
                 className={classes.input}
                 defaultValue={task.name}
                 inputRef={nameRef}
@@ -77,7 +84,7 @@ const Task: React.FC = (props) => {
             <div>
               <TextField
                 aria-label="description-edit"
-                label="Description"
+                label={t('task_description')}
                 className={classes.input}
                 defaultValue={task.description}
                 inputRef={descriptionRef}
