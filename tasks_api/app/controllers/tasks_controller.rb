@@ -1,14 +1,14 @@
+# frozen_string_literal: true
+
 class TasksController < ApplicationController
   def index
     @tasks = Task.all
   end
 
   def show
-    begin
-      @task = Task.find(params[:id])
-    rescue ActiveRecord::RecordNotFound => e
-      render json: e, status: :not_found
-    end
+    @task = Task.find(params[:id])
+  rescue ActiveRecord::RecordNotFound => e
+    render json: e, status: :not_found
   end
 
   def create
@@ -20,7 +20,7 @@ class TasksController < ApplicationController
     else
       render json: @task.errors, status: :unprocessable_entity
     end
-  rescue => e
+  rescue StandardError => e
     render json: e, status: :unprocessable_entity
   end
 
@@ -44,13 +44,13 @@ class TasksController < ApplicationController
     else
       head :unprocessable_entity
     end
-
   rescue ActiveRecord::RecordNotFound
     head :unprocessable_entity
   end
 
   private
+
   def task_params
-    params.fetch(:task, {}).permit([:name, :description])
+    params.fetch(:task, {}).permit(%i[name description])
   end
 end

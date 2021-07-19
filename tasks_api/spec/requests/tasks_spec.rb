@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe "Tasks", type: :request do
-  describe "GET /tasks" do
+RSpec.describe 'Tasks', type: :request do
+  describe 'GET /tasks' do
     before do
       expected = FactoryBot.create_list(:task, 10)
     end
@@ -12,7 +14,7 @@ RSpec.describe "Tasks", type: :request do
       ret = JSON.parse(response.body)
       expect(response.status).to eq 200
       expect(ret.count).to eq Task.count
-      expect(ret.map { |t| t['name'] }).to eq Task.all.map { |t| t.name }
+      expect(ret.map { |t| t['name'] }).to eq Task.all.map(&:name)
     end
   end
 
@@ -43,9 +45,9 @@ RSpec.describe "Tasks", type: :request do
 
     it 'should create new Task' do
       post '/tasks.json',
-        params: {
-          task: @task
-        }
+           params: {
+             task: @task,
+           }
 
       ret = JSON.parse(response.body)
       expect(response.status).to eq 201
@@ -55,18 +57,18 @@ RSpec.describe "Tasks", type: :request do
 
     it "shouldn't create new Task without name" do
       post '/tasks.json',
-        params: {
-          task: @task.update({name: nil})
-        }
+           params: {
+             task: @task.update({ name: nil }),
+           }
 
       expect(response.status).to eq 422
     end
 
     it "shouldn't create new Task with blank name" do
       post '/tasks.json',
-        params: {
-          task: @task.update({name: ''})
-        }
+           params: {
+             task: @task.update({ name: '' }),
+           }
 
       expect(response.status).to eq 422
     end
@@ -81,7 +83,7 @@ RSpec.describe "Tasks", type: :request do
       new_name = 'new name'
 
       put "/tasks/#{@task.id}.json",
-        params: { task: @task.attributes.update({name: new_name})}
+          params: { task: @task.attributes.update({ name: new_name }) }
 
       ret = JSON.parse(response.body)
       expect(response.status).to eq 200
@@ -96,7 +98,7 @@ RSpec.describe "Tasks", type: :request do
       new_name = 'new name'
 
       put "/tasks/#{@task.id}.json",
-        params: { task: @task.attributes.update({name: nil})}
+          params: { task: @task.attributes.update({ name: nil }) }
 
       ret = JSON.parse(response.body)
       expect(response.status).to eq 422
@@ -106,7 +108,7 @@ RSpec.describe "Tasks", type: :request do
       new_name = 'new name'
 
       put "/tasks/#{@task.id}.json",
-        params: { task: @task.attributes.update({name: ''})}
+          params: { task: @task.attributes.update({ name: '' }) }
 
       ret = JSON.parse(response.body)
       expect(response.status).to eq 422
@@ -128,7 +130,7 @@ RSpec.describe "Tasks", type: :request do
     end
 
     it 'shouldnt delete nonexistent Task' do
-      delete "/tasks/0.json"
+      delete '/tasks/0.json'
 
       expect(response.status).to eq 422
     end
