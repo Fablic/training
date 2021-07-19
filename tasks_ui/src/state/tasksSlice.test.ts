@@ -172,6 +172,26 @@ describe('tasks slice', () => {
         )
         expect(actual.pending).toBe(false)
       })
+
+      it('should be rejected with non-201', async () => {
+        const action = create({ name: '' })
+        fetchMock.post(endpoint, {
+          status: 422,
+          body: JSON.stringify({ notice }),
+        })
+
+        const subject = await action(jest.fn(), jest.fn(), undefined)
+
+        expect(subject.type).toEqual('task/create/rejected')
+        expect(subject.payload).toEqual({ notice })
+      })
+
+      it('should set notice when rejected', () => {
+        const action = create.rejected()
+        action.payload = { name: [notice] }
+        const actual = reducer({ ...initialState, pending: true }, action)
+        expect(actual.notice).toEqual(notice)
+      })
     })
 
     describe('update', () => {

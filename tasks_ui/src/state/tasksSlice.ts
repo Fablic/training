@@ -16,23 +16,28 @@ export const index = createAsyncThunk('task/index', async (params, _) => {
   if (ret.ok) return ret.json()
 })
 
-export const create = createAsyncThunk('task/create', async (params, _) => {
-  const payload = {
-    name: params.name,
-  }
-  const ret = await fetch('http://localhost:3000/tasks.json', {
-    method: 'POST',
-    mode: 'cors',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(payload),
-  })
+export const create = createAsyncThunk(
+  'task/create',
+  async (params, thunkApi) => {
+    const payload = {
+      name: params.name,
+    }
+    const ret = await fetch('http://localhost:3000/tasks.json', {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    })
 
-  if (ret.ok) {
-    return ret.json()
+    if (ret.ok) {
+      return ret.json()
+    } else {
+      return thunkApi.rejectWithValue(await ret.json())
+    }
   }
-})
+)
 
 export const update = createAsyncThunk('task/update', async (params, _) => {
   const ret = await fetch(`http://localhost:3000/tasks/${params.id}.json`, {
@@ -81,7 +86,7 @@ export const tasksSlice = createSlice({
   },
 
   extraReducers: (builder) => {
-    ;[index, create, update, destroy].forEach((t) => {
+    ;[index, update, destroy].forEach((t) => {
       builder.addCase(t.pending, (s) => {
         s.pending = true
       })
@@ -98,12 +103,24 @@ export const tasksSlice = createSlice({
       }))
     })
 
+    builder.addCase(create.pending, (s) => {
+      s.pending = true
+    })
     builder.addCase(create.fulfilled, (state, action) => {
       const { task, notice } = action.payload
       state.pending = false
 
       state.tasks = [{ ...task, edit: false }, ...state.tasks]
       state.notice = notice
+    })
+    builder.addCase(create.rejected, (s, a) => {
+      s.pending = false
+
+      if (a.payload) {
+        s.notice = Object.entries(a.payload)
+          .map((e) => e[1].join('\n'))
+          .join('\n')
+      }
     })
 
     builder.addCase(update.fulfilled, (state, action) => {
