@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe 'Tasks', type: :request do
   describe 'GET /tasks' do
     before do
-      expected = FactoryBot.create_list(:task, 10)
+      FactoryBot.create_list(:task, 10)
     end
 
     it 'should return all Tasks' do
@@ -95,22 +95,16 @@ RSpec.describe 'Tasks', type: :request do
     end
 
     it "shouldn't update the Task without name" do
-      new_name = 'new name'
-
       put "/tasks/#{@task.id}.json",
           params: { task: @task.attributes.update({ name: nil }) }
 
-      ret = JSON.parse(response.body)
       expect(response.status).to eq 422
     end
 
     it "shouldn't update the Task with blank name" do
-      new_name = 'new name'
-
       put "/tasks/#{@task.id}.json",
           params: { task: @task.attributes.update({ name: '' }) }
 
-      ret = JSON.parse(response.body)
       expect(response.status).to eq 422
     end
   end
