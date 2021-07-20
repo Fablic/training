@@ -247,4 +247,14 @@ RSpec.describe Task, type: :model do
       end
     end
   end
+
+  describe 'ユーザとタスクの紐付け' do
+    context 'ユーザを作成し、その後タスクを作成した場合' do
+      let(:user) { create(:user_after_create_task) }
+      let!(:other_user) { create(:user_after_create_task, email: 'other@test.jp') }
+      it 'そのユーザに紐づくタスクのみを取得できること' do
+        expect(user.task).to match Task.includes_user(user.id)
+      end
+    end
+  end
 end
