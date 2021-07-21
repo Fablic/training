@@ -4,6 +4,8 @@ class TasksController < ApplicationController
 
   def index
     @tasks = Task.without_deleted
+                 .includes_status
+                 .includes_priority
                  .search_task_name(params[:keyword])
                  .search_status(params[:statuses])
                  .sort_task("#{sort_column} #{sort_direction}")
@@ -71,6 +73,6 @@ class TasksController < ApplicationController
   end
 
   def sort_column
-    params[:sort].in?(Task.column_names) ? params[:sort] : 'created_at'
+    params[:sort].in?(Task.column_names) ? params[:sort] : 'tasks.created_at'
   end
 end

@@ -57,6 +57,9 @@ Metrics/BlockLength:
 Metrics/MethodLength:
   Max: 20
 
+Metrics/AbcSize:
+  Max: 20
+
 ##################### Naming ##################################
 
 # 「FactoryBot」をスネークケースにする警告を除外するため
