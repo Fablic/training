@@ -6,7 +6,7 @@ RSpec.describe User, type: :model do
       let(:user) { create(:user_after_create_task) }
       let!(:other_user) { create(:user_after_create_task, email: 'other@test.jp') }
       it 'そのタスクに紐づくユーザを取得できること' do
-        expect([user]).to match User.includes(:task).where(task: { id: user.task.ids })
+        expect([user]).to match User.includes(:tasks).where(tasks: { id: user.tasks.ids })
       end
     end
   end

@@ -1,4 +1,4 @@
 class User < ApplicationRecord
-  has_many :task_link, dependent: :destroy
-  has_many :task, through: :task_link
+  has_many :task_links, dependent: :destroy
+  has_many :tasks, through: :task_links
 end

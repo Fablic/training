@@ -253,7 +253,7 @@ RSpec.describe Task, type: :model do
       let(:user) { create(:user_after_create_task) }
       let!(:other_user) { create(:user_after_create_task, email: 'other@test.jp') }
       it 'そのユーザに紐づくタスクのみを取得できること' do
-        expect(user.task).to match Task.includes_user(user.id)
+        expect(user.tasks).to match Task.includes_user(user.id)
       end
     end
   end
