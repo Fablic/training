@@ -39,7 +39,7 @@ export const create = createAsyncThunk(
   }
 )
 
-export const update = createAsyncThunk('task/update', async (params, _) => {
+export const update = createAsyncThunk('task/update', async (params, thunkApi) => {
   const ret = await fetch(`http://localhost:3000/tasks/${params.id}.json`, {
     method: 'PUT',
     mode: 'cors',
@@ -49,7 +49,11 @@ export const update = createAsyncThunk('task/update', async (params, _) => {
     body: JSON.stringify(params),
   })
 
-  if (ret.ok) return ret.json()
+  if (ret.ok) {
+    return ret.json()
+  } else {
+    return thunkApi.rejectWithValue(await ret.json())
+  }
 })
 
 export const destroy = createAsyncThunk('task/destroy', async (params, _) => {
@@ -86,12 +90,18 @@ export const tasksSlice = createSlice({
   },
 
   extraReducers: (builder) => {
-    ;[index, update, destroy].forEach((t) => {
+    ;[index, create, update, destroy].forEach((t) => {
       builder.addCase(t.pending, (s) => {
         s.pending = true
       })
-      builder.addCase(t.rejected, (s) => {
+      builder.addCase(t.rejected, (s,a)=>{
         s.pending = false
+
+        if (a.payload) {
+          s.notice = Object.entries(a.payload)
+            .map((e) => e[1].join('\n'))
+            .join('\n')
+        }
       })
     })
 
@@ -103,24 +113,12 @@ export const tasksSlice = createSlice({
       }))
     })
 
-    builder.addCase(create.pending, (s) => {
-      s.pending = true
-    })
     builder.addCase(create.fulfilled, (state, action) => {
       const { task, notice } = action.payload
       state.pending = false
 
       state.tasks = [{ ...task, edit: false }, ...state.tasks]
       state.notice = notice
-    })
-    builder.addCase(create.rejected, (s, a) => {
-      s.pending = false
-
-      if (a.payload) {
-        s.notice = Object.entries(a.payload)
-          .map((e) => e[1].join('\n'))
-          .join('\n')
-      }
     })
 
     builder.addCase(update.fulfilled, (state, action) => {
