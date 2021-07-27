@@ -47,6 +47,6 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.fetch(:task, {}).permit(%i[name description])
+    params.fetch(:task, {}).permit(%i[name description due_date])
   end
 end
