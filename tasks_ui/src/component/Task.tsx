@@ -7,6 +7,10 @@ import IconButton from '@material-ui/core/IconButton'
 import Icon from '@material-ui/core/Icon'
 import Typography from '@material-ui/core/Typography'
 import TextField from '@material-ui/core/TextField'
+import DateFnsUtils from '@date-io/date-fns'
+import format from 'date-fns/format'
+import { ja, enUS } from 'date-fns/locale'
+import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers'
 
 import { update, destroy, tasksSlice } from '../state/tasksSlice'
 import { useDispatch, useSelector } from 'react-redux'
@@ -14,7 +18,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { initI18n } from './translation'
 import { useTranslation } from 'react-i18next'
 
-initI18n()
+const i18n = initI18n()
 
 const useStyles = makeStyles({
   input: {
@@ -22,9 +26,21 @@ const useStyles = makeStyles({
   },
 })
 
+export class JaDateFnsUtils extends DateFnsUtils {
+  getCalendarHeaderText(date: Date) {
+    return format(date, 'yyyy MMM', { locale: this.locale })
+  }
+
+  getDatePickerHeaderText(date: Date) {
+    return format(date, 'MMMd日', { locale: this.locale })
+  }
+}
+
 const Task: React.FC = (props) => {
   const { task } = props
   const classes = useStyles()
+
+  const [dueDate, setDueDate] = useState(task.dueDate)
 
   const nameRef = useRef()
   const descriptionRef = useRef()
@@ -43,8 +59,16 @@ const Task: React.FC = (props) => {
         ...task,
         name: nameRef.current.value,
         description: descriptionRef.current.value,
+        due_date: dueDate,
       })
     )
+  }
+
+  let locale = enUS
+  let utils = DateFnsUtils
+  if (i18n.language == 'ja') {
+    locale = ja
+    utils = JaDateFnsUtils
   }
 
   return (
@@ -90,6 +114,25 @@ const Task: React.FC = (props) => {
                 inputRef={descriptionRef}
                 multiline
               />
+            </div>
+            <div>
+              <MuiPickersUtilsProvider utils={utils} locale={locale}>
+                <DatePicker
+                  margin="normal"
+                  aria-label="dueDate"
+                  label={t('due_date')}
+                  okLabel={t('ok')}
+                  cancelLabel={t('cancel')}
+                  format="yyyy/MM/dd"
+                  value={dueDate}
+                  onChange={setDueDate}
+                />
+              </MuiPickersUtilsProvider>
+              {dueDate && (
+                <IconButton onClick={() => setDueDate(null)}>
+                  <Icon>clear</Icon>
+                </IconButton>
+              )}
             </div>
             <IconButton
               aria-label="fix-button"

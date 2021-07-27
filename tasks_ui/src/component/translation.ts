@@ -12,15 +12,23 @@ export const initI18n = () => {
           translation: {
             task_name: 'Name',
             task_description: 'Description',
+            due_date: 'Due date',
+            ok: 'OK',
+            cancel: 'Cancel',
           },
         },
         ja: {
           translation: {
             task_name: 'タイトル',
             task_description: '説明',
+            due_date: '期限',
+            ok: '確定',
+            cancel: 'キャンセル',
           },
         },
       },
       fallbackLng: 'en',
     })
+
+  return i18n
 }
