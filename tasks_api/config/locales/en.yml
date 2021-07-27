@@ -30,6 +30,11 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
+  errors:
+    attributes:
+      name:
+        blank: "Name can't be blank."
+        too_long: "Name should be shorter than 255 characters."
   notice:
     created: "New task has created."
     updated: "The task has updated."

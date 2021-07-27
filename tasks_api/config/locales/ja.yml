@@ -1,4 +1,9 @@
 ja:
+  errors:
+    attributes:
+      name:
+        blank: "タイトルを入力してください。"
+        too_long: "タイトルは255文字以内で入力してください。"
   notice:
     created: "新しいタスクが追加されました。"
     updated: "タスクが更新されました。"

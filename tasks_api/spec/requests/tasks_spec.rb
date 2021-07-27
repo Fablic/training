@@ -9,12 +9,13 @@ RSpec.describe 'Tasks', type: :request do
     end
 
     it 'should return all Tasks' do
+      expected = Task.all.order('created_at desc').map(&:name)
       get '/tasks.json'
 
       ret = JSON.parse(response.body)
       expect(response.status).to eq 200
       expect(ret.count).to eq Task.count
-      expect(ret.map { |t| t['name'] }).to eq Task.all.map(&:name)
+      expect(ret.map { |t| t['name'] }).to eq expected
     end
   end
 

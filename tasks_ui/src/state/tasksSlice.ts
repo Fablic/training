@@ -16,25 +16,30 @@ export const index = createAsyncThunk('task/index', async (params, _) => {
   if (ret.ok) return ret.json()
 })
 
-export const create = createAsyncThunk('task/create', async (params, _) => {
-  const payload = {
-    name: params.name,
-  }
-  const ret = await fetch('http://localhost:3000/tasks.json', {
-    method: 'POST',
-    mode: 'cors',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(payload),
-  })
+export const create = createAsyncThunk(
+  'task/create',
+  async (params, thunkApi) => {
+    const payload = {
+      name: params.name,
+    }
+    const ret = await fetch('http://localhost:3000/tasks.json', {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    })
 
-  if (ret.ok) {
-    return ret.json()
+    if (ret.ok) {
+      return ret.json()
+    } else {
+      return thunkApi.rejectWithValue(await ret.json())
+    }
   }
-})
+)
 
-export const update = createAsyncThunk('task/update', async (params, _) => {
+export const update = createAsyncThunk('task/update', async (params, thunkApi) => {
   const ret = await fetch(`http://localhost:3000/tasks/${params.id}.json`, {
     method: 'PUT',
     mode: 'cors',
@@ -44,7 +49,11 @@ export const update = createAsyncThunk('task/update', async (params, _) => {
     body: JSON.stringify(params),
   })
 
-  if (ret.ok) return ret.json()
+  if (ret.ok) {
+    return ret.json()
+  } else {
+    return thunkApi.rejectWithValue(await ret.json())
+  }
 })
 
 export const destroy = createAsyncThunk('task/destroy', async (params, _) => {
@@ -85,8 +94,14 @@ export const tasksSlice = createSlice({
       builder.addCase(t.pending, (s) => {
         s.pending = true
       })
-      builder.addCase(t.rejected, (s) => {
+      builder.addCase(t.rejected, (s,a)=>{
         s.pending = false
+
+        if (a.payload) {
+          s.notice = Object.entries(a.payload)
+            .map((e) => e[1].join('\n'))
+            .join('\n')
+        }
       })
     })
 
