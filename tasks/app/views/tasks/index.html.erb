@@ -4,6 +4,10 @@
       <%= link_to t('link.new'), new_task_path, class: 'btn new-btn' %>
     </div>
     <h1 class="title">タスク一覧</h1>
+    <div class="login-user"><%= current_user.user_name %></div>
+    <div>
+      <%= link_to "ログアウト", logout_path, method: :delete, class: 'btn btn-secondary text-white' %>
+    </div>
   </div>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="navbar-collapse d-flex align-items-center">
