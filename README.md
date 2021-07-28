@@ -3,6 +3,24 @@
 ## カリキュラム
 `super-compact-version`
 
+## アプリ起動方法
+- Dockerインストール（既にインストール済みであればスキップしてください）
+```
+$ brew install --cask docker
+```
+
+- Rails, DBのコンテナ起動
+```
+$ docker-compose up -d
+```
+
+- DB作成
+```
+$ docker-compose run web rails db:create
+```
+
+- http://localhost:3000/ にアクセス
+
 ## ER図
 ![](./erd.png)
 
