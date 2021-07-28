@@ -3,13 +3,15 @@ FactoryBot.define do
   factory :user, class: User do
     user_name { 'テストユーザ' }
     email { 'test@test.jp' }
-    password { 'password' }
+    password { 'password1' }
+    password_confirmation { 'password1' }
     role { 0 }
   end
   factory :user_after_create_task, class: User do
     user_name { 'テストユーザ' }
     email { 'test@test.jp' }
-    password { 'password' }
+    password { 'password1' }
+    password_confirmation { 'password1' }
     role { 0 }
 
     after(:create) do |user|
