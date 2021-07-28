@@ -2,7 +2,16 @@ require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
   describe '#new' do
-    context 'レスポンスが正常の時' do
+    context 'ログイン状態の場合' do
+      let(:user) { create(:user) }
+      before { log_in(user) }
+      it '一覧ページにリダイレクトされること' do
+        get :new
+        expect(response).to have_http_status :redirect
+        expect(response).to redirect_to root_path
+      end
+    end
+    context 'ログアウト状態の場合' do
       it 'HTTPステータスコードが200、テンプレートが表示されること' do
         get :new
         expect(response).to be_successful
