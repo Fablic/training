@@ -18,7 +18,7 @@ class User < ApplicationRecord
     tasks << task
   end
 
-  def task?(task)
+  def own_task?(task)
     tasks.include?(task)
   end
 end

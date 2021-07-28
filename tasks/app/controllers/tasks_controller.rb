@@ -2,7 +2,7 @@ class TasksController < ApplicationController
   before_action :logged_in_user
   before_action :current_user
   before_action :set_task, only: %i[show edit update destroy]
-  before_action :check_user_task, only: %i[show edit update destroy]
+  before_action :redirect_top_when_differ_user_task, only: %i[show edit update destroy]
   helper_method :sort_column, :sort_direction
 
   def index
@@ -69,8 +69,8 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
   end
 
-  def check_user_task
-    redirect_to root_path unless current_user.task?(@task)
+  def redirect_top_when_differ_user_task
+    redirect_to root_path unless current_user.own_task?(@task)
   end
 
   def task_params

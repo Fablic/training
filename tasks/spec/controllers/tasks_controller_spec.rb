@@ -6,6 +6,13 @@ RSpec.describe TasksController, type: :controller do
   let(:task) { create(:task_list_item) }
   let(:user) { create(:user) }
 
+  shared_context 'login_and_create_task_link' do
+    before do
+      create(:task_link, task: task, user: user)
+      log_in(user)
+    end
+  end
+
   describe '#index' do
     context 'ログイン状態の場合' do
       before { log_in(user) }
@@ -109,10 +116,7 @@ RSpec.describe TasksController, type: :controller do
 
   describe '#show' do
     context 'ログイン状態の場合' do
-      before do
-        create(:task_link, task: task, user: user)
-        log_in(user)
-      end
+      include_context 'login_and_create_task_link'
       it 'HTTPステータスコードが200、テンプレートが表示されること' do
         get :show, params: { id: task.id }
         expect(response).to be_successful
@@ -129,10 +133,7 @@ RSpec.describe TasksController, type: :controller do
     end
     context '別ユーザのタスクの詳細を表示させようとした場合' do
       let!(:other_user) { create(:user_after_create_task, email: 'other@user.jp') }
-      before do
-        create(:task_link, task: task, user: user)
-        log_in(user)
-      end
+      include_context 'login_and_create_task_link'
       it '別ユーザのタスクが表示されず、一覧ページにリダイレクトすること' do
         get :show, params: { id: other_user.tasks.ids }
         expect(response).to have_http_status :redirect
@@ -162,10 +163,7 @@ RSpec.describe TasksController, type: :controller do
 
   describe '#edit' do
     context 'ログイン状態の場合' do
-      before do
-        create(:task_link, task: task, user: user)
-        log_in(user)
-      end
+      include_context 'login_and_create_task_link'
       it 'HTTPステータスコードが200、テンプレートが表示されること' do
         get :edit, params: { id: task.id }
         expect(response).to be_successful
@@ -182,10 +180,7 @@ RSpec.describe TasksController, type: :controller do
     end
     context '別ユーザのタスクの編集画面を表示させようとした場合' do
       let!(:other_user) { create(:user_after_create_task, email: 'other@user.jp') }
-      before do
-        create(:task_link, task: task, user: user)
-        log_in(user)
-      end
+      include_context 'login_and_create_task_link'
       it '別ユーザのタスクの編集画面が表示されず、一覧ページにリダイレクトすること' do
         get :edit, params: { id: other_user.tasks.ids }
         expect(response).to have_http_status :redirect
@@ -220,12 +215,9 @@ RSpec.describe TasksController, type: :controller do
   end
 
   describe '#update' do
+    include_context 'login_and_create_task_link'
     context '正常な値' do
       let(:normalTaskParams) { { task_name: '変更後テストタスク名', status_id: notStartedTaskStatus, priority_id: lowTaskPriority } }
-      before do
-        create(:task_link, task: task, user: user)
-        log_in(user)
-      end
       it '正常にタスクを更新できること' do
         patch :update, params: { id: task.id, task: normalTaskParams }
         expect(task.reload.task_name).to eq '変更後テストタスク名'
@@ -238,10 +230,6 @@ RSpec.describe TasksController, type: :controller do
     end
     context '不正な値' do
       let(:unjustTaskParams) { { task_name: '変更後テストタスク名', status_id: 4, priority_id: lowTaskPriority } }
-      before do
-        create(:task_link, task: task, user: user)
-        log_in(user)
-      end
       it 'タスクを更新できないこと' do
         task_params = unjustTaskParams
         patch :update, params: { id: task.id, task: task_params }
@@ -256,10 +244,6 @@ RSpec.describe TasksController, type: :controller do
     context '別ユーザのタスクを編集しようとした場合' do
       let(:normalTaskParams) { { task_name: '変更後テストタスク名', status_id: notStartedTaskStatus, priority_id: lowTaskPriority } }
       let!(:other_user) { create(:user_after_create_task, email: 'other@user.jp') }
-      before do
-        create(:task_link, task: task, user: user)
-        log_in(user)
-      end
       it '別ユーザのタスクの編集されず、一覧ページにリダイレクトすること' do
         patch :update, params: { id: other_user.tasks[0].id, task: normalTaskParams }
         expect(other_user.tasks[0].task_name).to_not eq '変更後テストタスク名'
@@ -269,11 +253,8 @@ RSpec.describe TasksController, type: :controller do
   end
 
   describe '#destroy' do
+    include_context 'login_and_create_task_link'
     context '自分のユーザのタスクを削除しようとした場合' do
-      before do
-        create(:task_link, task: task, user: user)
-        log_in(user)
-      end
       it '正常にタスクを論理削除できること' do
         patch :destroy, params: { id: task.id }
         expect(task.reload.deleted_at).to_not eq nil
@@ -285,10 +266,6 @@ RSpec.describe TasksController, type: :controller do
     end
     context '別ユーザのタスクを削除しようとした場合' do
       let!(:other_user) { create(:user_after_create_task, email: 'other@user.jp') }
-      before do
-        create(:task_link, task: task, user: user)
-        log_in(user)
-      end
       it '別ユーザのタスクの削除されず、一覧ページにリダイレクトすること' do
         patch :destroy, params: { id: other_user.tasks[0].id }
         expect(other_user.tasks[0].reload.deleted_at).to eq nil
