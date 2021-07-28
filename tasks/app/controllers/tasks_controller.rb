@@ -1,11 +1,15 @@
 class TasksController < ApplicationController
+  before_action :logged_in_user
+  before_action :current_user
   before_action :set_task, only: %i[show edit update destroy]
+  before_action :check_user_task, only: %i[show edit update destroy]
   helper_method :sort_column, :sort_direction
 
   def index
     @tasks = Task.without_deleted
                  .includes_status
                  .includes_priority
+                 .includes_user(current_user.id)
                  .search_task_name(params[:keyword])
                  .search_status(params[:statuses])
                  .sort_task("#{sort_column} #{sort_direction}")
@@ -26,6 +30,7 @@ class TasksController < ApplicationController
     @task = Task.new(create_params)
     respond_to do |format|
       if @task.save
+        current_user.add_task(@task)
         format.html { redirect_to @task, notice: 'タスクを作成しました。' }
         format.json { render :show, status: :created, location: @task }
       else
@@ -62,6 +67,10 @@ class TasksController < ApplicationController
   # 共通処理
   def set_task
     @task = Task.find(params[:id])
+  end
+
+  def check_user_task
+    redirect_to root_path unless current_user.task?(@task)
   end
 
   def task_params
