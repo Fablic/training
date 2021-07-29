@@ -18,6 +18,22 @@ RSpec.describe 'Tasks', type: :request do
       expect(ret.map { |t| t['name'] }).to eq expected.map(&:name)
       expect(ret.map { |t| t['dueDate'] }).to eq(expected.map(&:due_date).map { |d| I18n.l(d) })
     end
+
+    it 'should return tasks order by due date' do
+      expected = Task.all.order(due_date: :asc)
+      get '/tasks.json?order=due_date'
+
+      ret = JSON.parse(response.body)
+      expect(ret.map { |t| t['name'] }).to eq expected.map(&:name)
+    end
+
+    it 'should return tasks order by due date desc' do
+      expected = Task.all.order(due_date: :desc)
+      get '/tasks.json?order=due_date_desc'
+
+      ret = JSON.parse(response.body)
+      expect(ret.map { |t| t['name'] }).to eq expected.map(&:name)
+    end
   end
 
   describe 'GET /task/ID.json' do
