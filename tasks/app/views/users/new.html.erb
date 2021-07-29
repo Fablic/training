@@ -1,0 +1,46 @@
+<header class="sticky-top">
+  <div class="header">
+    <h1 class="title">ユーザ新規作成</h1>
+  </div>
+</header>
+
+<%= form_with(url: users_create_path, model: @user, class: 'col-md-6 offset-md-3 mt-5') do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this task from being saved:</h2>
+
+      <ul>
+        <% @user.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :user_name, class: 'control-label text-primary' %>
+    <%= f.text_field :user_name, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :email, class: 'control-label text-primary' %>
+    <%= f.text_field :email, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :password, class: 'control-label text-primary' %>
+    <%= f.password_field :password, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :password_confirmation, class: 'control-label text-primary' %>
+    <%= f.password_field :password_confirmation, class: 'form-control' %>
+  </div>
+
+  <div class="form-group row justify-content-center">
+    <div>
+      <%= link_to t('link.back'), '/', class: 'btn btn-outline-secondary btn-width' %>
+      <%= f.submit class: 'btn btn-primary btn-width' %>
+    </div>
+  </div>
+<% end %>

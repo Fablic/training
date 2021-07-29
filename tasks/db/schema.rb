@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_19_012517) do
+ActiveRecord::Schema.define(version: 2021_07_20_075904) do
 
   create_table "master_task_priorities", id: { type: :integer, limit: 1 }, charset: "utf8", force: :cascade do |t|
     t.string "priority", limit: 64, null: false
@@ -50,7 +50,7 @@ ActiveRecord::Schema.define(version: 2021_07_19_012517) do
   create_table "users", id: :integer, charset: "utf8", force: :cascade do |t|
     t.string "user_name", limit: 64, null: false
     t.string "email", limit: 128, null: false
-    t.string "password", limit: 128, null: false
+    t.string "password_digest", limit: 128, null: false
     t.boolean "role", null: false
     t.datetime "deleted_at", precision: 6
     t.datetime "created_at", precision: 6, null: false

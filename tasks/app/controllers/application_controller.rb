@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  include SessionsHelper
   rescue_from Exception,                      with: :render_500
   rescue_from ActiveRecord::RecordNotFound,   with: :render_404
   rescue_from ActionController::RoutingError, with: :render_404
@@ -27,5 +28,9 @@ class ApplicationController < ActionController::Base
     else
       render file: Rails.root.join('public/500.html'), status: :internal_server_error, layout: false, content_type: 'text/html'
     end
+  end
+
+  def logged_in_user
+    redirect_to login_url unless logged_in?
   end
 end

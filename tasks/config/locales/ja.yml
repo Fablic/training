@@ -15,6 +15,11 @@ ja:
         label: ラベル
         limit_date: 期限
         detail: 詳細説明
+      user:
+        user_name: ユーザ名
+        email: メールアドレス
+        password: パスワード
+        password_confirmation: パスワード（確認）
     errors:
       models:
         task:
@@ -30,6 +35,8 @@ ja:
     edit: 編集
     delete: 削除
     back: 戻る
+    log_in: ログイン
+    log_out: ログアウト
   confirm:
       delete: 削除しますか？
   views:
@@ -39,3 +46,5 @@ ja:
       previous: "&lsaquo; 前"
       next: "次 &rsaquo;"
       truncate: "..."
+  notice:
+    invalid_email_or_password_combination: メールアドレスかパスワードが違います。       
