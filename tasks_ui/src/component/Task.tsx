@@ -92,6 +92,16 @@ const Task: React.FC = (props) => {
             >
               {task.description}
             </Typography>
+            {task.dueDate && (
+              <Typography
+                variant="body2"
+                component="div"
+                aria-label="duedate-display"
+                onClick={() => dispatch(tasksSlice.actions.edit(task.id))}
+              >
+                {task.dueDate}
+              </Typography>
+            )}
           </>
         )}
         {task.edit && (
