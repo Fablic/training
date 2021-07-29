@@ -1,4 +1,17 @@
 ja:
+  activerecord:
+    models:
+      task: タスク
+    attributes:
+      task:
+        name: 名前
+        description: 説明
+    errors:
+      models:
+        task:
+          attributes:
+            name:
+              blank: タスク名は必須です。
   time:
     formats:
       default: "%Y/%m/%d %H:%M:%S"
