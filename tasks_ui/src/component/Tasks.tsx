@@ -1,4 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react'
+import Icon from '@material-ui/core/Icon'
+import Chip from '@material-ui/core/Chip'
 import { makeStyles } from '@material-ui/core/styles'
 
 import { index, tasksSlice } from '../state/tasksSlice'
@@ -22,16 +24,48 @@ const Tasks: React.FC = (props) => {
 
   const classes = useStyles()
 
-  useEffect(() => dispatch(index()), [])
+  const [order, setOrder] = useState()
+
+  useEffect(() => {
+    dispatch(index({ order }))
+  }, [order])
 
   return (
-    <ol className={classes.ol}>
-      {tasks.map((t) => (
-        <li key={t.id} className={classes.li}>
-          <Task task={t} />
-        </li>
-      ))}
-    </ol>
+    <>
+      <div>
+        <Chip
+          icon={<Icon>post_add</Icon>}
+          aria-label="sort-created"
+          label="作成日時"
+          clickable
+          color={order == null ? 'primary' : 'default'}
+          onClick={() => setOrder(null)}
+        />
+        <Chip
+          icon={<Icon>event</Icon>}
+          aria-label="sort-due-date"
+          label="期限(昇順)"
+          clickable
+          color={order == 'due_date' ? 'primary' : 'default'}
+          onClick={() => setOrder('due_date')}
+        />
+        <Chip
+          icon={<Icon>event</Icon>}
+          aria-label="sort-due-date-desc"
+          label="期限(降順)"
+          clickable
+          color={order == 'due_date_desc' ? 'primary' : 'default'}
+          onClick={() => setOrder('due_date_desc')}
+        />
+      </div>
+      <ol className={classes.ol}>
+        {tasks.map((t) => (
+          <li key={t.id} className={classes.li}>
+            <Task task={t} />
+          </li>
+        ))}
+      </ol>
+    </>
   )
 }
 export default Tasks

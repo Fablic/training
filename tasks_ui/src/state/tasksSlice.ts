@@ -7,7 +7,12 @@ const initialState: State = {
 }
 
 export const index = createAsyncThunk('task/index', async (params, _) => {
-  const ret = await fetch('http://localhost:3000/tasks.json', {
+  let endpoint = 'http://localhost:3000/tasks.json'
+  if (params && params.order) {
+    endpoint += `?order=${params.order}`
+  }
+
+  const ret = await fetch(endpoint, {
     method: 'GET',
     mode: 'cors',
     headers: { 'Content-Type': 'application/json' },
@@ -39,22 +44,25 @@ export const create = createAsyncThunk(
   }
 )
 
-export const update = createAsyncThunk('task/update', async (params, thunkApi) => {
-  const ret = await fetch(`http://localhost:3000/tasks/${params.id}.json`, {
-    method: 'PUT',
-    mode: 'cors',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(params),
-  })
+export const update = createAsyncThunk(
+  'task/update',
+  async (params, thunkApi) => {
+    const ret = await fetch(`http://localhost:3000/tasks/${params.id}.json`, {
+      method: 'PUT',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(params),
+    })
 
-  if (ret.ok) {
-    return ret.json()
-  } else {
-    return thunkApi.rejectWithValue(await ret.json())
+    if (ret.ok) {
+      return ret.json()
+    } else {
+      return thunkApi.rejectWithValue(await ret.json())
+    }
   }
-})
+)
 
 export const destroy = createAsyncThunk('task/destroy', async (params, _) => {
   const ret = await fetch(`http://localhost:3000/tasks/${params.id}.json`, {
@@ -94,7 +102,7 @@ export const tasksSlice = createSlice({
       builder.addCase(t.pending, (s) => {
         s.pending = true
       })
-      builder.addCase(t.rejected, (s,a)=>{
+      builder.addCase(t.rejected, (s, a) => {
         s.pending = false
 
         if (a.payload) {

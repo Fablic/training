@@ -64,8 +64,34 @@ describe('tasks slice', () => {
 
         const subject = await action(jest.fn(), jest.fn(), undefined)
 
-        expect(subject.payload).toEqual([item1, item2])
         expect(fetchMock).toHaveFetched(endpoint)
+        expect(subject.payload).toEqual([item1, item2])
+      })
+
+      it('should GET /tasks.json?order=due_date', async () => {
+        const target = endpoint + '?order=due_date'
+        const action = index({ order: 'due_date' })
+        fetchMock.get(target, {
+          status: 200,
+          body: JSON.stringify([item1, item2]),
+        })
+
+        const subject = await action(jest.fn(), jest.fn(), undefined)
+
+        expect(fetchMock).toHaveFetched(target)
+      })
+
+      it('should GET /tasks.json?order=due_date_desc', async () => {
+        const target = endpoint + '?order=due_date_desc'
+        const action = index({ order: 'due_date_desc' })
+        fetchMock.get(target, {
+          status: 200,
+          body: JSON.stringify([item1, item2]),
+        })
+
+        const subject = await action(jest.fn(), jest.fn(), undefined)
+
+        expect(fetchMock).toHaveFetched(target)
       })
 
       it('should set pending=true when initiated', () => {
@@ -254,7 +280,7 @@ describe('tasks slice', () => {
       })
 
       it('should be rejected with non-201', async () => {
-        const action = update({ id: 1,name: '' })
+        const action = update({ id: 1, name: '' })
         fetchMock.put('http://localhost:3000/tasks/1.json', {
           status: 422,
           body: JSON.stringify({ notice }),

@@ -57,6 +57,8 @@ describe('Tasks', () => {
       renderIt()
     })
 
+    afterEach(() => jest.clearAllMocks())
+
     it('should list task items', () => {
       const names = screen.getAllByLabelText('name-display')
       expect(names.map((n) => n.innerHTML)).toEqual(tasks.map((t) => t.name))
@@ -64,6 +66,22 @@ describe('Tasks', () => {
 
     it('should dispatch index at initial render', () => {
       expect(indexThunk).toHaveBeenCalled()
+    })
+
+    describe('sort order', () => {
+      beforeEach(() => jest.clearAllMocks())
+
+      it('should sort by due date', () => {
+        const chip = screen.getByLabelText('sort-due-date')
+        userEvent.click(chip)
+        expect(chip.className).toMatch(/MuiChip-clickableColorPrimary/)
+      })
+
+      it('should sort by due date desc', () => {
+        const chip = screen.getByLabelText('sort-due-date-desc')
+        userEvent.click(chip)
+        expect(chip.className).toMatch(/MuiChip-clickableColorPrimary/)
+      })
     })
   })
 })
