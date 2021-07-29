@@ -9,6 +9,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import Task from './Task'
 
 const useStyles = makeStyles({
+  chips: {
+    margin: '10px',
+    display: 'flex',
+    justifyContent: 'center',
+  },
+  chip: {
+    margin: '5px',
+  },
   ol: {
     padding: 0,
   },
@@ -32,12 +40,13 @@ const Tasks: React.FC = (props) => {
 
   return (
     <>
-      <div>
+      <div className={classes.chips}>
         <Chip
           icon={<Icon>post_add</Icon>}
           aria-label="sort-created"
           label="作成日時"
           clickable
+          className={classes.chip}
           color={order == null ? 'primary' : 'default'}
           onClick={() => setOrder(null)}
         />
@@ -46,6 +55,7 @@ const Tasks: React.FC = (props) => {
           aria-label="sort-due-date"
           label="期限(昇順)"
           clickable
+          className={classes.chip}
           color={order == 'due_date' ? 'primary' : 'default'}
           onClick={() => setOrder('due_date')}
         />
@@ -54,6 +64,7 @@ const Tasks: React.FC = (props) => {
           aria-label="sort-due-date-desc"
           label="期限(降順)"
           clickable
+          className={classes.chip}
           color={order == 'due_date_desc' ? 'primary' : 'default'}
           onClick={() => setOrder('due_date_desc')}
         />

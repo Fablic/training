@@ -24,6 +24,9 @@ const useStyles = makeStyles({
   input: {
     width: '100%',
   },
+  clearButton: {
+    margin: '20px 0 0 0',
+  },
 })
 
 export class JaDateFnsUtils extends DateFnsUtils {
@@ -139,7 +142,10 @@ const Task: React.FC = (props) => {
                 />
               </MuiPickersUtilsProvider>
               {dueDate && (
-                <IconButton onClick={() => setDueDate(null)}>
+                <IconButton
+                  onClick={() => setDueDate(null)}
+                  className={classes.clearButton}
+                >
                   <Icon>clear</Icon>
                 </IconButton>
               )}
