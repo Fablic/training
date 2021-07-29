@@ -1,0 +1,39 @@
+<header class="sticky-top">
+  <div class="header">
+    <div>
+      <%= link_to t('link.index'), root_path, class: 'btn btn-secondary text-white' %>
+    </div>
+    <h1 class="title">ユーザ一覧</h1>
+    <div class="login-user"><%= current_user.user_name %></div>
+    <div>
+      <%= link_to "ログアウト", logout_path, method: :delete, class: 'btn btn-secondary text-white' %>
+    </div>
+  </div>
+</header>
+
+<p id="notice"><%= notice %></p>
+
+<section class="list-wrap">
+  <table class="table">
+    <thead>
+      <tr>
+        <th class="text-primary"><%= User.human_attribute_name(:id) %></th>
+        <th class="text-primary"><%= User.human_attribute_name(:user_name) %></th>
+        <th class="text-primary"><%= t('item_name.task_count') %></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @users.each do |user| %>
+        <tr class="list-item-wrap">
+          <td class="list-item"><%= user.id %></td>
+          <td class="list-item"><%= user.user_name %></td>
+          <td class="list-item"><%= user.tasks_count %></td>
+          <td><%= link_to t('link.show'), admin_user_path(user), class: 'btn default-btn' %></td>
+          <td><%= link_to t('link.edit'), edit_admin_user_path(user), class: 'btn default-btn' %></td>
+          <td><%= link_to t('link.delete'), admin_user_path(user), method: :delete, data: { confirm: t('confirm.delete') }, class: 'btn default-btn' %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</section>

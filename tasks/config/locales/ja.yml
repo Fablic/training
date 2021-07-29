@@ -16,10 +16,12 @@ ja:
         limit_date: 期限
         detail: 詳細説明
       user:
+        id: ID
         user_name: ユーザ名
         email: メールアドレス
         password: パスワード
         password_confirmation: パスワード（確認）
+        created_at: 作成日時
     errors:
       models:
         task:
@@ -37,6 +39,8 @@ ja:
     back: 戻る
     log_in: ログイン
     log_out: ログアウト
+    index: タスク一覧
+    admin: 管理画面
   confirm:
       delete: 削除しますか？
   views:
@@ -47,4 +51,6 @@ ja:
       next: "次 &rsaquo;"
       truncate: "..."
   notice:
-    invalid_email_or_password_combination: メールアドレスかパスワードが違います。       
+    invalid_email_or_password_combination: メールアドレスかパスワードが違います。   
+  item_name:
+    task_count: タスク数

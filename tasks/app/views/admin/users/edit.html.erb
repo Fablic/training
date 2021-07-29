@@ -1,0 +1,11 @@
+<header class="sticky-top">
+  <div class="header">
+    <h1 class="title">ユーザ情報編集</h1>
+    <div class="login-user"><%= current_user.user_name %></div>
+    <div>
+      <%= link_to "ログアウト", logout_path, method: :delete, class: 'btn btn-secondary text-white' %>
+    </div>
+  </div>
+</header>
+
+<%= render partial: "form", locals: { user: @user } %>

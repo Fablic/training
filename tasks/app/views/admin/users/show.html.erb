@@ -1,0 +1,78 @@
+<header class="sticky-top">
+  <div class="header">
+    <h1 class="title">ユーザ詳細</h1>
+    <div class="login-user"><%= current_user.user_name %></div>
+    <div>
+      <%= link_to "ログアウト", logout_path, method: :delete, class: 'btn btn-secondary text-white' %>
+    </div>
+  </div>
+</header>
+
+<p id="notice"><%= notice %></p>
+
+<section class="col-md-6 offset-md-3 mt-5">
+  <div class="form-group">
+    <div class="h7 text-primary"><%= User.human_attribute_name(:id) %></div>
+    <div class="h8 border-bottom"><%= @user.id %></div>
+  </div>
+  <div class="form-group">
+    <div class="h7 text-primary"><%= User.human_attribute_name(:task_name) %></div>
+    <div class="h8 border-bottom"><%= @user.user_name %></div>
+  </div>
+  <div class="form-group">
+    <div class="h7 text-primary"><%= User.human_attribute_name(:email) %></div>
+    <div class="h8 border-bottom"><%= @user.email %></div>
+  </div>
+  <div class="form-group">
+    <div class="h7 text-primary"><%= t('item_name.task_count') %></div>
+    <div class="h8 border-bottom"><%= @user.tasks.without_deleted.count %></div>
+  </div>
+  <div class="form-group">
+    <div class="h7 text-primary"><%= User.human_attribute_name(:created_at) %></div>
+    <div class="h8 border-bottom"><%= l @user.created_at %></div>
+  </div>
+
+  <div class="row justify-content-center">
+    <div>
+      <%= link_to t('link.back'), admin_users_path, class: 'btn btn-outline-secondary btn-width' %>
+      <%= link_to t('link.edit'), edit_admin_user_path(@user), class: 'btn default-btn btn-width' %>
+      <%= link_to t('link.delete'), admin_user_path(@user), method: :delete, data: { confirm: t('confirm.delete') }, class: 'btn default-btn btn-width' %>
+    </div>
+  </div>
+</section>
+
+<%= paginate @tasks, theme: 'twitter-bootstrap-4' %>
+
+<section class="list-wrap">  
+  <table class="table">
+    <thead>
+      <tr>
+        <th class="text-primary"><%= Task.human_attribute_name(:id) %></th>
+        <th class="text-primary"><%= Task.human_attribute_name(:status) %></th>
+        <th class="text-primary"><%= Task.human_attribute_name(:priority) %></th>
+        <th class="text-primary"><%= Task.human_attribute_name(:label) %></th>
+        <th class="text-primary"><%= Task.human_attribute_name(:task_name) %></th>
+        <th class="text-primary"><%= Task.human_attribute_name(:limit_date) %></th>
+        <th class="text-primary"><%= Task.human_attribute_name(:detail) %></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @tasks.each do |task| %>
+        <tr class="list-item-wrap">
+          <td class="list-item"><%= task.id %></td>
+          <td class="list-item"><%= task.status.status %></td>
+          <td class="list-item"><%= task.priority.priority %></td>
+          <td class="list-item"><%= task.label %></td>
+          <td class="list-item"><%= task.task_name %></td>
+          <td class="list-item">
+            <% if task.limit_date != nil %>
+              <%= l task.limit_date %>
+            <% end %>
+          </td>
+          <td class="list-item"><%= task.detail %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</section>

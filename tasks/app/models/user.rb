@@ -14,6 +14,9 @@ class User < ApplicationRecord
   has_many :task_links, dependent: :destroy
   has_many :tasks, through: :task_links
 
+  scope :without_deleted, -> { where(deleted_at: nil) }
+  scope :tasks_count, -> { left_joins(:tasks).group(:id).select('users.*, COUNT(`tasks`.`id`) AS tasks_count').where('tasks.deleted_at is null') }
+
   def add_task(task)
     tasks << task
   end

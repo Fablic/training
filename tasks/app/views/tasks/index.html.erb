@@ -3,6 +3,9 @@
     <div>
       <%= link_to t('link.new'), new_task_path, class: 'btn new-btn' %>
     </div>
+    <div>
+      <%= link_to t('link.admin'), admin_users_path, class: 'btn btn-secondary text-white ml-2' %>
+    </div>
     <h1 class="title">タスク一覧</h1>
     <div class="login-user"><%= current_user.user_name %></div>
     <div>

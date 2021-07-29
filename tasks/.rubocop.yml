@@ -39,6 +39,9 @@ Style/FrozenStringLiteralComment:
 Style/Documentation:
   Enabled: false
 
+Style/ClassAndModuleChildren:
+  EnforcedStyle: compact
+
 ##################### Layout ##################################
 
 # 1行の文字数
