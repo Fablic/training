@@ -19,7 +19,7 @@ class TasksController < ApplicationController
       flash.notice = 'Task successfully created'
       redirect_to root_path
     else
-      flash.alert = 'Failed to create'
+      flash.now.alert = 'Failed to create'
       render 'new'
     end
   end
@@ -31,7 +31,7 @@ class TasksController < ApplicationController
       flash.notice = 'Task successfully updated'
       redirect_to root_path
     else
-      flash.alert = 'Failed to update'
+      flash.now.alert = 'Failed to update'
       render 'edit'
     end
   end
