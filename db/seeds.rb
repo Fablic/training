@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 10.times do |n|
   Task.create!(
     name: "#{n + 1}つ目のタスク",
