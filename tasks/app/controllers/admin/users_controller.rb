@@ -31,9 +31,16 @@ class Admin::UsersController < ApplicationController
       redirect_to admin_users_path, notice: 'ログイン中のユーザは削除できません。'
     else
       now = Time.current
-      @user.update(deleted_at: now)
-      @user.tasks.without_deleted.update(deleted_at: now)
-      redirect_to admin_users_path, notice: 'ユーザを削除しました。'
+      begin
+        ActiveRecord::Base.transaction do
+          @user.update(deleted_at: now)
+          @user.tasks.without_deleted.update(deleted_at: now)
+          raise StandardError if @user.deleted_at.nil? || @user.tasks.without_deleted.present?
+        end
+        redirect_to admin_users_path, notice: 'ユーザを削除しました。'
+      rescue StandardError
+        redirect_to admin_users_path, notice: 'ユーザの削除を失敗しました。'
+      end
     end
   end
 
