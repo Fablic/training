@@ -9,13 +9,30 @@ RSpec.describe 'Tasks', type: :request do
     end
 
     it 'should return all Tasks' do
-      expected = Task.all.order('created_at desc').map(&:name)
+      expected = Task.all.order('created_at desc')
       get '/tasks.json'
 
       ret = JSON.parse(response.body)
       expect(response.status).to eq 200
       expect(ret.count).to eq Task.count
-      expect(ret.map { |t| t['name'] }).to eq expected
+      expect(ret.map { |t| t['name'] }).to eq expected.map(&:name)
+      expect(ret.map { |t| t['dueDate'] }).to eq(expected.map(&:due_date).map { |d| I18n.l(d) })
+    end
+
+    it 'should return tasks order by due date' do
+      expected = Task.all.order(due_date: :asc)
+      get '/tasks.json?order=due_date'
+
+      ret = JSON.parse(response.body)
+      expect(ret.map { |t| t['name'] }).to eq expected.map(&:name)
+    end
+
+    it 'should return tasks order by due date desc' do
+      expected = Task.all.order(due_date: :desc)
+      get '/tasks.json?order=due_date_desc'
+
+      ret = JSON.parse(response.body)
+      expect(ret.map { |t| t['name'] }).to eq expected.map(&:name)
     end
   end
 
@@ -107,6 +124,23 @@ RSpec.describe 'Tasks', type: :request do
           params: { task: @task.attributes.update({ name: '' }) }
 
       expect(response.status).to eq 422
+    end
+
+    it 'should update the task with due date' do
+      expected = '2021-07-21'
+      put "/tasks/#{@task.id}.json",
+          params: { task: @task.attributes.update({ due_date: expected }) }
+
+      @task.reload
+      expect(@task.due_date).to eq Date.parse(expected)
+    end
+
+    it 'should ignore invalid due dates' do
+      put "/tasks/#{@task.id}.json",
+          params: { task: @task.attributes.update({ due_date: 'hogehoge' }) }
+
+      @task.reload
+      expect(@task.due_date).to eq nil
     end
   end
 

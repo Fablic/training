@@ -40,6 +40,13 @@ describe('Task', () => {
       expect(description.innerHTML).toEqual(mockTask.description)
     })
 
+    it('should show due date when its set', () => {
+      const expected = '2021-07-30'
+      renderIt({ ...mockTask, dueDate: expected })
+
+      screen.getByText(expected)
+    })
+
     it('should show textfield for name when edit mode', () => {
       renderIt({ ...mockTask, edit: true })
 

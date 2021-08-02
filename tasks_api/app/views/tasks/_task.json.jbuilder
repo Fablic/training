@@ -3,3 +3,4 @@
 json.id task.id
 json.name task.name
 json.description task.description
+json.dueDate task.due_date

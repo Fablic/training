@@ -2,7 +2,17 @@
 
 class TasksController < ApplicationController
   def index
-    @tasks = Task.all.order('created_at desc')
+    order =
+      case params[:order]
+      when 'due_date'
+        { due_date: :asc }
+      when 'due_date_desc'
+        { due_date: :desc }
+      else
+        { created_at: :desc }
+      end
+
+    @tasks = Task.all.order(order)
   end
 
   def show
@@ -47,6 +57,6 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.fetch(:task, {}).permit(%i[name description])
+    params.fetch(:task, {}).permit(%i[name description due_date])
   end
 end
