@@ -9,10 +9,14 @@ class User < ApplicationRecord
   validates :user_name, presence: true, length: { maximum: 50 }
   validates :email, presence: true, length: { maximum: 255 }, format: { with: VALID_EMAIL_REGEX }, uniqueness: { case_sensitive: false }
   validates :password, length: { minimum: 8 }, format: { with: VALID_PASSWORD_REGEX }, allow_nil: true
+  validates :deleted_at_before_type_cast, presence: true, format: { with: Constants::VALID_DATETIME_REGEX }, allow_nil: true, on: :update
   has_secure_password
 
   has_many :task_links, dependent: :destroy
   has_many :tasks, through: :task_links
+
+  scope :without_deleted, -> { where(deleted_at: nil) }
+  scope :tasks_count, -> { left_joins(:tasks).group(:id).select('users.*, COUNT(`tasks`.`id`) AS tasks_count').where('tasks.deleted_at is null') }
 
   def add_task(task)
     tasks << task

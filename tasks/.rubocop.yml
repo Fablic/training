@@ -39,6 +39,9 @@ Style/FrozenStringLiteralComment:
 Style/Documentation:
   Enabled: false
 
+Style/ClassAndModuleChildren:
+  EnforcedStyle: compact
+
 ##################### Layout ##################################
 
 # 1行の文字数
@@ -58,7 +61,7 @@ Metrics/MethodLength:
   Max: 20
 
 Metrics/AbcSize:
-  Max: 20
+  Max: 30
 
 ##################### Naming ##################################
 

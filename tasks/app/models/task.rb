@@ -5,6 +5,7 @@ class Task < ApplicationRecord
   validates :label, length: { maximum: 20 }
   validates :detail, length: { maximum: 250 }
   validate :before_datetime, if: :will_save_change_to_limit_date?
+  validates :deleted_at_before_type_cast, presence: true, format: { with: Constants::VALID_DATETIME_REGEX }, allow_nil: true, on: :update
 
   belongs_to :priority, class_name: 'MasterTaskPriority'
   belongs_to :status, class_name: 'MasterTaskStatus'

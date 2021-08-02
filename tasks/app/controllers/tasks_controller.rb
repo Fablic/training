@@ -28,37 +28,29 @@ class TasksController < ApplicationController
   def create
     create_params = task_params.merge(status_id: MasterTaskStatus::NOT_STARTED)
     @task = Task.new(create_params)
-    respond_to do |format|
-      if @task.save
-        current_user.add_task(@task)
-        format.html { redirect_to @task, notice: 'タスクを作成しました。' }
-        format.json { render :show, status: :created, location: @task }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @task.errors, status: :unprocessable_entity }
-      end
+    if @task.save
+      current_user.add_task(@task)
+      redirect_to @task, notice: 'タスクを作成しました。'
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
   def update
-    respond_to do |format|
-      if @task.update(task_params)
-        format.html { redirect_to @task, notice: 'タスクを更新しました。' }
-        format.json { render :show, status: :ok, location: @task }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @task.errors, status: :unprocessable_entity }
-      end
+    if @task.update(task_params)
+      redirect_to @task, notice: 'タスクを更新しました。'
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
   # 論理削除
   def destroy
-    now = Time.current
-    @task.update(deleted_at: now)
-    respond_to do |format|
-      format.html { redirect_to tasks_url, notice: 'タスクを削除しました。' }
-      format.json { head :no_content }
+    now = Time.current.strftime('%Y-%m-%d %H:%M:%S')
+    if @task.update(deleted_at: now)
+      redirect_to tasks_url, notice: 'タスクを削除しました。'
+    else
+      redirect_to tasks_url, notice: 'タスクの削除に失敗しました。'
     end
   end
 
