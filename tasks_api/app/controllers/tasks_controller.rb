@@ -13,6 +13,13 @@ class TasksController < ApplicationController
       end
 
     @tasks = Task.all.order(order)
+
+    if params[:q]
+      keywords = Shellwords.shellwords(params[:q])
+      @tasks = @tasks.where('match(name) against (? in boolean mode)', keywords.map { |k| "+#{k}" }.join(' '))
+    end
+
+    @tasks
   end
 
   def show

@@ -34,6 +34,29 @@ RSpec.describe 'Tasks', type: :request do
       ret = JSON.parse(response.body)
       expect(ret.map { |t| t['name'] }).to eq expected.map(&:name)
     end
+
+    describe 'full text search', cleaner: :truncation do
+      let (:targets) { Task.all.order('rand()').limit(3) }
+      before do
+        targets.map { |t| t.update(name: "#{t.name} keyword") }
+      end
+
+      it 'should return tasks which have search keywords' do
+        expected = targets.sort { |a, b| b.created_at <=> a.created_at }.map(&:name)
+        get '/tasks.json?q=keyword'
+
+        ret = JSON.parse(response.body)
+        expect(ret.map { |t| t['name'] }).to eq expected
+      end
+
+      it 'should return filtered tasks order by due date desc' do
+        expected = targets.sort { |a, b| b.due_date <=> a.due_date }.map(&:name)
+        get '/tasks.json?q=keyword&order=due_date_desc'
+
+        ret = JSON.parse(response.body)
+        expect(ret.map { |t| t['name'] }).to eq expected
+      end
+    end
   end
 
   describe 'GET /task/ID.json' do
