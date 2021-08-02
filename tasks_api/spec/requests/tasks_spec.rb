@@ -57,6 +57,21 @@ RSpec.describe 'Tasks', type: :request do
         expect(ret.map { |t| t['name'] }).to eq expected
       end
     end
+
+    describe 'state search' do
+      %i[in_progress close].each do |s|
+        let (:targets) { Task.all.order('rand()').limit(3) }
+
+        it "should return tasks with status=#{s}" do
+          targets.map { |t| t.update(status: s) }
+          expected = targets.sort { |a, b| b.created_at <=> a.created_at }.map(&:name)
+          get "/tasks.json?status=#{s}"
+
+          ret = JSON.parse(response.body)
+          expect(ret.map { |t| t['name'] }).to eq expected
+        end
+      end
+    end
   end
 
   describe 'GET /task/ID.json' do

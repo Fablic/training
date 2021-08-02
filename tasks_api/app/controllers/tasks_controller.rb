@@ -12,14 +12,7 @@ class TasksController < ApplicationController
         { created_at: :desc }
       end
 
-    @tasks = Task.all.order(order)
-
-    if params[:q]
-      keywords = Shellwords.shellwords(params[:q])
-      @tasks = @tasks.where('match(name) against (? in boolean mode)', keywords.map { |k| "+#{k}" }.join(' '))
-    end
-
-    @tasks
+    @tasks = apply_queries(Task.all.order(order), params)
   end
 
   def show
@@ -65,5 +58,16 @@ class TasksController < ApplicationController
 
   def task_params
     params.fetch(:task, {}).permit(%i[name description due_date])
+  end
+
+  def apply_queries(tasks, params)
+    if params[:q]
+      keywords = Shellwords.shellwords(params[:q])
+      tasks = tasks.where('match(name) against (? in boolean mode)', keywords.map { |k| "+#{k}" }.join(' '))
+    end
+
+    tasks = tasks.where(status: params[:status]) if params[:status]
+
+    tasks
   end
 end
