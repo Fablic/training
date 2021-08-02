@@ -17,6 +17,7 @@ RSpec.describe 'Tasks', type: :request do
       expect(ret.count).to eq Task.count
       expect(ret.map { |t| t['name'] }).to eq expected.map(&:name)
       expect(ret.map { |t| t['dueDate'] }).to eq(expected.map(&:due_date).map { |d| I18n.l(d) })
+      expect(ret.map { |t| t['status'] }).to eq(expected.map(&:status))
     end
 
     it 'should return tasks order by due date' do
