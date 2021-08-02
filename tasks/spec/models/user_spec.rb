@@ -77,8 +77,8 @@ RSpec.describe User, type: :model do
       end
     end
     context 'メールアドレスが重複していた場合' do
-      let!(:other_user) { create(:user, email: email) }
-      let(:email) { 'user@test.jp' }
+      let!(:other_user) { create(:user) }
+      let(:email) { other_user.email }
       it 'エラーになる' do
         expect(user).to be_invalid
         expect(user.errors[:email]).to include('はすでに存在します')
@@ -152,6 +152,56 @@ RSpec.describe User, type: :model do
       it 'エラーになる' do
         expect(not_match_password_user).to be_invalid
         expect(not_match_password_user.errors[:password_confirmation]).to include('とパスワードの入力が一致しません')
+      end
+    end
+  end
+
+  describe '削除日時のバリデーション（update処理時のみ）' do
+    let(:user) { create(:user) }
+    context 'NULLの場合' do
+      let(:deleted_at) { nil }
+      it '有効である' do
+        expect(user.update!(deleted_at: deleted_at)).to eq true
+      end
+    end
+    context '正常な値の場合' do
+      let(:deleted_at) { Time.current.strftime('%Y-%m-%d %H:%M:%S') }
+      it '有効である' do
+        expect(user.update!(deleted_at: deleted_at)).to eq true
+      end
+    end
+    context '不正な値の場合' do
+      let(:deleted_at) { 'aaa' }
+      it 'エラーになる' do
+        expect { user.update!(deleted_at: deleted_at) }.to raise_error(ActiveRecord::RecordInvalid)
+      end
+    end
+  end
+
+  describe 'scope' do
+    context '論理削除されたユーザが存在する場合' do
+      let!(:user_list) { create_list(:user, 5).push(deleted_user) }
+      let(:deleted_user) { create(:user, deleted_at: Time.current.strftime('%Y-%m-%d %H:%M:%S')) }
+      let(:user_list_deleted_at_null) { user_list.select { |user| user.deleted_at.nil? } }
+      it '論理削除されていないユーザを全て取得すること' do
+        expect(User.without_deleted).to match_array user_list_deleted_at_null
+      end
+    end
+    context 'ユーザ情報を取得する場合' do
+      let(:user) { create(:user) }
+      let(:count_tasks) { 5 }
+      let!(:task_list) { create_list(:task_list_item, count_tasks) }
+      let!(:task_link) do
+        [
+          create(:task_link, task_id: task_list[0].id, user_id: user.id),
+          create(:task_link, task_id: task_list[1].id, user_id: user.id),
+          create(:task_link, task_id: task_list[2].id, user_id: user.id),
+          create(:task_link, task_id: task_list[3].id, user_id: user.id),
+          create(:task_link, task_id: task_list[4].id, user_id: user.id)
+        ]
+      end
+      it 'そのユーザのタスク数を取得すること' do
+        expect(User.tasks_count[0].tasks_count).to match count_tasks
       end
     end
   end
