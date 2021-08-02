@@ -30,15 +30,15 @@ class Admin::UsersController < ApplicationController
     if current_user.id == @user.id
       redirect_to admin_users_path, notice: 'ログイン中のユーザは削除できません。'
     else
-      now = Time.current
+      now = Time.current.strftime('%Y-%m-%d %H:%M:%S')
       begin
         ActiveRecord::Base.transaction do
-          @user.update(deleted_at: now)
-          @user.tasks.without_deleted.update(deleted_at: now)
-          raise StandardError if @user.deleted_at.nil? || @user.tasks.without_deleted.present?
+          @user.update!(deleted_at: now)
+          @user.tasks.without_deleted.each { |user_task| user_task.update!(deleted_at: now) }
         end
         redirect_to admin_users_path, notice: 'ユーザを削除しました。'
-      rescue StandardError
+      rescue StandardError => e
+        Rails.logger.error e
         redirect_to admin_users_path, notice: 'ユーザの削除を失敗しました。'
       end
     end
