@@ -178,19 +178,22 @@ RSpec.describe Task, type: :model do
     context 'NULLの場合' do
       let(:deleted_at) { nil }
       it '有効である' do
-        expect(task.update!(deleted_at: deleted_at)).to eq true
+        task.deleted_at = deleted_at
+        expect(task).to be_valid
       end
     end
     context '正常な値の場合' do
       let(:deleted_at) { Time.current.strftime('%Y-%m-%d %H:%M:%S') }
       it '有効である' do
-        expect(task.update!(deleted_at: deleted_at)).to eq true
+        task.deleted_at = deleted_at
+        expect(task).to be_valid
       end
     end
     context '不正な値の場合' do
       let(:deleted_at) { 'aaa' }
       it 'エラーになる' do
-        expect { task.update!(deleted_at: deleted_at) }.to raise_error(ActiveRecord::RecordInvalid)
+        task.deleted_at = deleted_at
+        expect(task).to be_invalid
       end
     end
   end

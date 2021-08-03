@@ -101,27 +101,27 @@ RSpec.describe Admin::UsersController, type: :controller do
   describe '#update' do
     before { log_in(user) }
     context '正常な値' do
-      let(:normalUserParams) { { user_name: '変更後ユーザ名', email: 'update@user.com' } }
+      let(:normal_user_params) { { user_name: '変更後ユーザ名', email: 'update@user.com' } }
       it '正常にタスクを更新できること' do
-        patch :update, params: { id: user.id, user: normalUserParams }
+        patch :update, params: { id: user.id, user: normal_user_params }
         expect(user.reload.user_name).to eq '変更後ユーザ名'
-        expect(user.reload.email).to eq 'update@user.com'
+        expect(user.email).to eq 'update@user.com'
       end
       it '更新後、詳細ページにリダイレクトされること' do
-        patch :update, params: { id: user.id, user: normalUserParams }
+        patch :update, params: { id: user.id, user: normal_user_params }
         expect(response).to redirect_to admin_user_path(id: user.id)
       end
     end
     context '不正な値' do
       let!(:before_update_user) { user }
-      let(:unjustUserParams) { { user_name: '変更後ユーザ名', email: nil } }
+      let(:unjust_user_params) { { user_name: '変更後ユーザ名', email: nil } }
       it 'ユーザを更新できないこと' do
-        patch :update, params: { id: user.id, task: unjustUserParams }
+        patch :update, params: { id: user.id, task: unjust_user_params }
         expect(user.reload.user_name).to eq before_update_user.user_name
-        expect(user.reload.email).to eq before_update_user.email
+        expect(user.email).to eq before_update_user.email
       end
       it '更新ページが表示されること' do
-        patch :update, params: { id: user.id, user: unjustUserParams }
+        patch :update, params: { id: user.id, user: unjust_user_params }
         expect(response).to render_template :edit
       end
     end
@@ -133,11 +133,11 @@ RSpec.describe Admin::UsersController, type: :controller do
       let!(:other_user) { create(:user_after_create_task) }
       it '正常にユーザが論理削除できること' do
         patch :destroy, params: { id: other_user.id }
-        expect(other_user.reload.deleted_at).to_not eq nil
+        expect(other_user.reload.deleted_at).to be_present
       end
       it '正常にそのユーザのタスクが論理削除できること' do
         patch :destroy, params: { id: other_user.id }
-        expect(other_user.tasks[0].reload.deleted_at).to_not eq nil
+        expect(other_user.tasks[0].reload.deleted_at).to be_present
       end
       it '削除後、一覧ページにリダイレクトされること' do
         patch :destroy, params: { id: user.id }
