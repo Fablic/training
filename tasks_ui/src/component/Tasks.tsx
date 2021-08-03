@@ -7,6 +7,11 @@ import { index, tasksSlice } from '../state/tasksSlice'
 import { useDispatch, useSelector } from 'react-redux'
 
 import Task from './Task'
+import StatusChips from './StatusChips'
+import { initI18n } from './translation'
+import { useTranslation } from 'react-i18next'
+
+const i18n = initI18n()
 
 const useStyles = makeStyles({
   chips: {
@@ -33,10 +38,21 @@ const Tasks: React.FC = (props) => {
   const classes = useStyles()
 
   const [order, setOrder] = useState()
+  const [status, setStatus] = useState()
+
+  const { t } = useTranslation()
 
   useEffect(() => {
-    dispatch(index({ order }))
-  }, [order])
+    dispatch(index({ order, status }))
+  }, [order, status])
+
+  const changeStatus = (newStatus) => {
+    if (status == newStatus) {
+      setStatus(null)
+    } else {
+      setStatus(newStatus)
+    }
+  }
 
   return (
     <>
@@ -44,7 +60,7 @@ const Tasks: React.FC = (props) => {
         <Chip
           icon={<Icon>post_add</Icon>}
           aria-label="sort-created"
-          label="作成日時"
+          label={t('order.createdAt')}
           clickable
           className={classes.chip}
           color={order == null ? 'primary' : 'default'}
@@ -53,7 +69,7 @@ const Tasks: React.FC = (props) => {
         <Chip
           icon={<Icon>event</Icon>}
           aria-label="sort-due-date"
-          label="期限(昇順)"
+          label={t('order.dueDate')}
           clickable
           className={classes.chip}
           color={order == 'due_date' ? 'primary' : 'default'}
@@ -62,13 +78,22 @@ const Tasks: React.FC = (props) => {
         <Chip
           icon={<Icon>event</Icon>}
           aria-label="sort-due-date-desc"
-          label="期限(降順)"
+          label={t('order.dueDateDesc')}
           clickable
           className={classes.chip}
           color={order == 'due_date_desc' ? 'primary' : 'default'}
           onClick={() => setOrder('due_date_desc')}
         />
       </div>
+
+      <div className={classes.chips}>
+        <StatusChips
+          className={classes.chip}
+          onChange={changeStatus}
+          status={status}
+        />
+      </div>
+
       <ol className={classes.ol}>
         {tasks.map((t) => (
           <li key={t.id} className={classes.li}>

@@ -18,6 +18,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { initI18n } from './translation'
 import { useTranslation } from 'react-i18next'
 
+import StatusChips from './StatusChips'
+
 const i18n = initI18n()
 
 const useStyles = makeStyles({
@@ -26,6 +28,12 @@ const useStyles = makeStyles({
   },
   clearButton: {
     margin: '20px 0 0 0',
+  },
+  cardActions: {
+    justifyContent: 'space-between',
+  },
+  statusChip: {
+    margin: '5px',
   },
 })
 
@@ -44,6 +52,7 @@ const Task: React.FC = (props) => {
   const classes = useStyles()
 
   const [dueDate, setDueDate] = useState(task.dueDate)
+  const [status, setStatus] = useState(task.status)
 
   const nameRef = useRef()
   const descriptionRef = useRef()
@@ -63,6 +72,16 @@ const Task: React.FC = (props) => {
         name: nameRef.current.value,
         description: descriptionRef.current.value,
         due_date: dueDate,
+      })
+    )
+  }
+
+  const updateStatus = (s) => {
+    setStatus(s)
+    dispatch(
+      update({
+        ...task,
+        status: s,
       })
     )
   }
@@ -163,7 +182,14 @@ const Task: React.FC = (props) => {
         )}
       </CardContent>
 
-      <CardActions>
+      <CardActions className={classes.cardActions}>
+        <div>
+          <StatusChips
+            status={task.status}
+            onChange={updateStatus}
+            className={classes.statusChip}
+          />
+        </div>
         <IconButton onClick={onDestroyClick} aria-label="destroy-button">
           <Icon>delete</Icon>
         </IconButton>

@@ -94,6 +94,32 @@ describe('tasks slice', () => {
         expect(fetchMock).toHaveFetched(target)
       })
 
+      it('should GET /tasks.json?q=keyword', async () => {
+        const target = endpoint + '?q=keyword'
+        const action = index({ query: 'keyword' })
+        fetchMock.get(target, {
+          status: 200,
+          body: JSON.stringify([item1, item2]),
+        })
+
+        const subject = await action(jest.fn(), jest.fn(), undefined)
+
+        expect(fetchMock).toHaveFetched(target)
+      })
+
+      it('should GET /tasks.json?status=in_progress', async () => {
+        const target = endpoint + '?status=in_progress'
+        const action = index({ status: 'in_progress' })
+        fetchMock.get(target, {
+          status: 200,
+          body: JSON.stringify([item1, item2]),
+        })
+
+        const subject = await action(jest.fn(), jest.fn(), undefined)
+
+        expect(fetchMock).toHaveFetched(target)
+      })
+
       it('should set pending=true when initiated', () => {
         const actual = reducer(initialState, index.pending())
         expect(actual.pending).toBe(true)

@@ -8,8 +8,22 @@ const initialState: State = {
 
 export const index = createAsyncThunk('task/index', async (params, _) => {
   let endpoint = 'http://localhost:3000/tasks.json'
-  if (params && params.order) {
-    endpoint += `?order=${params.order}`
+  const qs = []
+  if (params) {
+    if (params.order) {
+      qs.push(`order=${params.order}`)
+    }
+
+    if (params.query) {
+      qs.push(`q=${params.query}`)
+    }
+
+    if (params.status) {
+      qs.push(`status=${params.status}`)
+    }
+  }
+  if (qs.length > 0) {
+    endpoint += `?${qs.join('&')}`
   }
 
   const ret = await fetch(endpoint, {
