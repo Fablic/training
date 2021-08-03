@@ -1,6 +1,11 @@
 import React, { useEffect, useState, useRef } from 'react'
 import Icon from '@material-ui/core/Icon'
 import Chip from '@material-ui/core/Chip'
+import Input from '@material-ui/core/Input'
+import InputLabel from '@material-ui/core/InputLabel'
+import InputAdornment from '@material-ui/core/InputAdornment'
+import FormControl from '@material-ui/core/FormControl'
+import IconButton from '@material-ui/core/IconButton'
 import { makeStyles } from '@material-ui/core/styles'
 
 import { index, tasksSlice } from '../state/tasksSlice'
@@ -29,6 +34,10 @@ const useStyles = makeStyles({
     listStyleType: 'none',
     margin: '10px',
   },
+  search: {
+    display: 'flex',
+    justifyContent: 'center',
+  },
 })
 
 const Tasks: React.FC = (props) => {
@@ -39,12 +48,16 @@ const Tasks: React.FC = (props) => {
 
   const [order, setOrder] = useState()
   const [status, setStatus] = useState()
+  const [searchword, setSearchword] = useState('')
+  const [query, setQuery] = useState('')
+
+  const searchRef = useRef()
 
   const { t } = useTranslation()
 
   useEffect(() => {
-    dispatch(index({ order, status }))
-  }, [order, status])
+    dispatch(index({ order, status, query }))
+  }, [order, status, query])
 
   const changeStatus = (newStatus) => {
     if (status == newStatus) {
@@ -92,6 +105,46 @@ const Tasks: React.FC = (props) => {
           onChange={changeStatus}
           status={status}
         />
+      </div>
+
+      <div className={classes.search}>
+        <FormControl>
+          <InputLabel htmlFor="searchword">{t('search')}</InputLabel>
+          <Input
+            aria-label="search input"
+            id="searchword"
+            type="text"
+            value={searchword}
+            inputRef={searchRef}
+            onChange={() => setSearchword(searchRef.current.value)}
+            endAdornment={
+              <>
+                {searchword.length > 0 && (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="clear searchword"
+                      onClick={() => {
+                        setSearchword('')
+                        setQuery('')
+                      }}
+                      edge="end"
+                    >
+                      <Icon>backspace</Icon>
+                    </IconButton>
+                  </InputAdornment>
+                )}
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={() => setQuery(searchRef.current.value)}
+                    aria-label="search button"
+                  >
+                    <Icon>search</Icon>
+                  </IconButton>
+                </InputAdornment>
+              </>
+            }
+          />
+        </FormControl>
       </div>
 
       <ol className={classes.ol}>

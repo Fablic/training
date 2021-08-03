@@ -25,6 +25,7 @@ export const initI18n = () => {
               inProgress: 'In progress',
               close: 'Close',
             },
+            search: 'Search keyword',
           },
         },
         ja: {
@@ -44,6 +45,7 @@ export const initI18n = () => {
               inProgress: '着手中',
               close: '完了',
             },
+            search: '検索語',
           },
         },
       },
