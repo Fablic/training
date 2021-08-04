@@ -36,6 +36,17 @@ RSpec.describe SessionsController, type: :controller do
         expect(flash[:danger]).to match('メールアドレスかパスワードが違います。')
       end
     end
+    context 'ユーザが削除されていた場合' do
+      before do
+        now = Time.current.strftime('%Y-%m-%d %H:%M:%S')
+        user.update(deleted_at: now)
+      end
+      it 'ログインページが表示され、flashメッセージが表示されること' do
+        post :create, params: { session: { email: user.email, password: user.password } }
+        expect(response).to render_template :new
+        expect(flash[:danger]).to match('メールアドレスかパスワードが違います。')
+      end
+    end
   end
 
   describe '#destroy' do

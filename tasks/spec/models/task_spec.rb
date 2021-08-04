@@ -173,6 +173,31 @@ RSpec.describe Task, type: :model do
     end
   end
 
+  describe '削除日時のバリデーション（update処理時のみ）' do
+    let(:task) { create(:task) }
+    context 'NULLの場合' do
+      let(:deleted_at) { nil }
+      it '有効である' do
+        task.deleted_at = deleted_at
+        expect(task).to be_valid
+      end
+    end
+    context '正常な値の場合' do
+      let(:deleted_at) { Time.current.strftime('%Y-%m-%d %H:%M:%S') }
+      it '有効である' do
+        task.deleted_at = deleted_at
+        expect(task).to be_valid
+      end
+    end
+    context '不正な値の場合' do
+      let(:deleted_at) { 'aaa' }
+      it 'エラーになる' do
+        task.deleted_at = deleted_at
+        expect(task).to be_invalid
+      end
+    end
+  end
+
   describe 'scope' do
     let!(:task_list) do
       [
@@ -181,7 +206,7 @@ RSpec.describe Task, type: :model do
         create(:task_list_item, task_name: 'タスク1', status: create(:finished), created_at: Time.current + 2.days, limit_date: Time.current + 3.days),
         create(:task_list_item, task_name: 'テスト2', status: create(:notStarted), created_at: Time.current + 3.days, limit_date: Time.current + 6.days),
         create(:task_list_item, task_name: 'タスク2', status: create(:started), created_at: Time.current + 4.days, limit_date: Time.current + 4.days),
-        create(:task_list_item, task_name: 'テストタスク1', deleted_at: Time.current, limit_date: Time.current + 2.days)
+        create(:task_list_item, task_name: 'テストタスク1', deleted_at: Time.current.strftime('%Y-%m-%d %H:%M:%S'), limit_date: Time.current + 2.days)
       ]
     end
     context '論理削除されたタスクが存在する場合' do
