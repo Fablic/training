@@ -24,7 +24,7 @@
             <%= f.label status.status, { for: 'statuses_' + status.id.to_s } %>
           </div>
         <% end %>
-        <%= f.text_field :keyword, value: params[:keyword], class: 'form-control mr-sm-2', placeholder: 'タスク名で検索' %>
+        <%= f.text_field :keyword, value: params[:keyword], class: 'form-control mr-sm-2 small', placeholder: 'タスク名/ラベルで検索' %>
         <%= f.hidden_field :sort, value: params[:sort] %>
         <%= f.hidden_field :direction, value: params[:direction] %>
         <%= f.submit '検索', class: 'btn btn-outline-success my-2 my-sm-0' %>   
@@ -58,7 +58,11 @@
           <td class="list-item"><%= task.id %></td>
           <td class="list-item"><%= task.status.status %></td>
           <td class="list-item"><%= task.priority.priority %></td>
-          <td class="list-item"><%= task.label %></td>
+          <td class="list-item">
+            <% task.labels.each do |label| %>
+              <%= label.label_name %>
+            <% end %>
+          </td>
           <td class="list-item"><%= task.task_name %></td>
           <td class="list-item">
             <% if task.limit_date != nil %>

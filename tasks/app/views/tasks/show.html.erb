@@ -29,7 +29,11 @@
   </div>
   <div class="form-group">
     <div class="h6 text-primary"><%= Task.human_attribute_name(:label) %></div>
-    <div class="h5 border-bottom"><%= @task.label %></div>
+    <div class="h5 border-bottom">
+      <% @task.labels.each do |label| %>
+        <%= label.label_name %>
+      <% end %>
+    </div>
   </div>
   <div class="form-group">
     <div class="h6 text-primary"><%= Task.human_attribute_name(:limit_date) %></div>
