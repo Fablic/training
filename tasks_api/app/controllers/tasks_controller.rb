@@ -13,6 +13,8 @@ class TasksController < ApplicationController
       end
 
     @tasks = apply_queries(Task.all.order(order), params)
+
+    @tasks = @tasks.page(params[:page])
   end
 
   def show

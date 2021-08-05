@@ -5,35 +5,55 @@ require 'rails_helper'
 RSpec.describe 'Tasks', type: :request do
   describe 'GET /tasks' do
     before do
-      FactoryBot.create_list(:task, 10)
+      FactoryBot.create_list(:task, 101)
     end
 
-    it 'should return all Tasks' do
-      expected = Task.all.order('created_at desc')
+    it 'should return 1st 25 Tasks' do
+      expected = Task.all.order('created_at desc').limit(25)
       get '/tasks.json'
 
       ret = JSON.parse(response.body)
       expect(response.status).to eq 200
-      expect(ret.count).to eq Task.count
-      expect(ret.map { |t| t['name'] }).to eq expected.map(&:name)
-      expect(ret.map { |t| t['dueDate'] }).to eq(expected.map(&:due_date).map { |d| I18n.l(d) })
-      expect(ret.map { |t| t['status'] }).to eq(expected.map(&:status))
+
+      tasks = ret['tasks']
+      expect(tasks.count).to eq expected.count
+      expect(tasks.map { |t| t['name'] }).to eq expected.map(&:name)
+      expect(tasks.map { |t| t['dueDate'] }).to eq(expected.map(&:due_date).map { |d| I18n.l(d) })
+      expect(tasks.map { |t| t['status'] }).to eq(expected.map(&:status))
+
+      meta = ret['meta']
+      expect(meta['totalPages']).to eq 5
+      expect(meta['currentPage']).to eq 1
+    end
+
+    it 'should return 3rd page' do
+      expected = Task.all.order('created_at desc').limit(25).offset(25 * 2)
+      get '/tasks.json?page=3'
+
+      ret = JSON.parse(response.body)
+      tasks = ret['tasks']
+      expect(response.status).to eq 200
+      expect(tasks.count).to eq expected.count
+      expect(tasks.map { |t| t['name'] }).to eq expected.map(&:name)
+
+      meta = ret['meta']
+      expect(meta['currentPage']).to eq 3
     end
 
     it 'should return tasks order by due date' do
-      expected = Task.all.order(due_date: :asc)
+      expected = Task.all.order(due_date: :asc).limit(25)
       get '/tasks.json?order=due_date'
 
       ret = JSON.parse(response.body)
-      expect(ret.map { |t| t['name'] }).to eq expected.map(&:name)
+      expect(ret['tasks'].map { |t| t['name'] }).to eq expected.map(&:name)
     end
 
     it 'should return tasks order by due date desc' do
-      expected = Task.all.order(due_date: :desc)
+      expected = Task.all.order(due_date: :desc).limit(25)
       get '/tasks.json?order=due_date_desc'
 
       ret = JSON.parse(response.body)
-      expect(ret.map { |t| t['name'] }).to eq expected.map(&:name)
+      expect(ret['tasks'].map { |t| t['name'] }).to eq expected.map(&:name)
     end
 
     describe 'full text search', cleaner: :truncation do
@@ -47,7 +67,7 @@ RSpec.describe 'Tasks', type: :request do
         get '/tasks.json?q=keyword'
 
         ret = JSON.parse(response.body)
-        expect(ret.map { |t| t['name'] }).to eq expected
+        expect(ret['tasks'].map { |t| t['name'] }).to eq expected
       end
 
       it 'should return filtered tasks order by due date desc' do
@@ -55,7 +75,7 @@ RSpec.describe 'Tasks', type: :request do
         get '/tasks.json?q=keyword&order=due_date_desc'
 
         ret = JSON.parse(response.body)
-        expect(ret.map { |t| t['name'] }).to eq expected
+        expect(ret['tasks'].map { |t| t['name'] }).to eq expected
       end
     end
 
@@ -69,7 +89,7 @@ RSpec.describe 'Tasks', type: :request do
           get "/tasks.json?status=#{s}"
 
           ret = JSON.parse(response.body)
-          expect(ret.map { |t| t['name'] }).to eq expected
+          expect(ret['tasks'].map { |t| t['name'] }).to eq expected
         end
       end
     end
