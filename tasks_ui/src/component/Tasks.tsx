@@ -1,12 +1,22 @@
 import React, { useEffect, useState, useRef } from 'react'
 import Icon from '@material-ui/core/Icon'
 import Chip from '@material-ui/core/Chip'
+import Input from '@material-ui/core/Input'
+import InputLabel from '@material-ui/core/InputLabel'
+import InputAdornment from '@material-ui/core/InputAdornment'
+import FormControl from '@material-ui/core/FormControl'
+import IconButton from '@material-ui/core/IconButton'
 import { makeStyles } from '@material-ui/core/styles'
 
 import { index, tasksSlice } from '../state/tasksSlice'
 import { useDispatch, useSelector } from 'react-redux'
 
 import Task from './Task'
+import StatusChips from './StatusChips'
+import { initI18n } from './translation'
+import { useTranslation } from 'react-i18next'
+
+const i18n = initI18n()
 
 const useStyles = makeStyles({
   chips: {
@@ -24,6 +34,10 @@ const useStyles = makeStyles({
     listStyleType: 'none',
     margin: '10px',
   },
+  search: {
+    display: 'flex',
+    justifyContent: 'center',
+  },
 })
 
 const Tasks: React.FC = (props) => {
@@ -33,10 +47,25 @@ const Tasks: React.FC = (props) => {
   const classes = useStyles()
 
   const [order, setOrder] = useState()
+  const [status, setStatus] = useState()
+  const [searchword, setSearchword] = useState('')
+  const [query, setQuery] = useState('')
+
+  const searchRef = useRef()
+
+  const { t } = useTranslation()
 
   useEffect(() => {
-    dispatch(index({ order }))
-  }, [order])
+    dispatch(index({ order, status, query }))
+  }, [order, status, query])
+
+  const changeStatus = (newStatus) => {
+    if (status == newStatus) {
+      setStatus(null)
+    } else {
+      setStatus(newStatus)
+    }
+  }
 
   return (
     <>
@@ -44,7 +73,7 @@ const Tasks: React.FC = (props) => {
         <Chip
           icon={<Icon>post_add</Icon>}
           aria-label="sort-created"
-          label="作成日時"
+          label={t('order.createdAt')}
           clickable
           className={classes.chip}
           color={order == null ? 'primary' : 'default'}
@@ -53,7 +82,7 @@ const Tasks: React.FC = (props) => {
         <Chip
           icon={<Icon>event</Icon>}
           aria-label="sort-due-date"
-          label="期限(昇順)"
+          label={t('order.dueDate')}
           clickable
           className={classes.chip}
           color={order == 'due_date' ? 'primary' : 'default'}
@@ -62,13 +91,62 @@ const Tasks: React.FC = (props) => {
         <Chip
           icon={<Icon>event</Icon>}
           aria-label="sort-due-date-desc"
-          label="期限(降順)"
+          label={t('order.dueDateDesc')}
           clickable
           className={classes.chip}
           color={order == 'due_date_desc' ? 'primary' : 'default'}
           onClick={() => setOrder('due_date_desc')}
         />
       </div>
+
+      <div className={classes.chips}>
+        <StatusChips
+          className={classes.chip}
+          onChange={changeStatus}
+          status={status}
+        />
+      </div>
+
+      <div className={classes.search}>
+        <FormControl>
+          <InputLabel htmlFor="searchword">{t('search')}</InputLabel>
+          <Input
+            aria-label="search input"
+            id="searchword"
+            type="text"
+            value={searchword}
+            inputRef={searchRef}
+            onChange={() => setSearchword(searchRef.current.value)}
+            endAdornment={
+              <>
+                {searchword.length > 0 && (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="clear searchword"
+                      onClick={() => {
+                        setSearchword('')
+                        setQuery('')
+                      }}
+                      edge="end"
+                    >
+                      <Icon>backspace</Icon>
+                    </IconButton>
+                  </InputAdornment>
+                )}
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={() => setQuery(searchRef.current.value)}
+                    aria-label="search button"
+                  >
+                    <Icon>search</Icon>
+                  </IconButton>
+                </InputAdornment>
+              </>
+            }
+          />
+        </FormControl>
+      </div>
+
       <ol className={classes.ol}>
         {tasks.map((t) => (
           <li key={t.id} className={classes.li}>

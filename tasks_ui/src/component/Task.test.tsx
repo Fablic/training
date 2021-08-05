@@ -96,6 +96,8 @@ describe('Task', () => {
       const updateThunk = jest.spyOn(TasksSlice, 'update')
       const showAction = jest.spyOn(tasksSlice.actions, 'show')
 
+      afterEach(() => jest.clearAllMocks())
+
       it('should update the task when name has fixed', () => {
         renderIt({ ...mockTask, edit: true })
         const field = screen.getByLabelText('name-edit').querySelector('input')
@@ -128,6 +130,18 @@ describe('Task', () => {
           edit: true,
         })
         expect(showAction).toHaveBeenCalledWith(task.id)
+      })
+
+      it('should update the task status by chip', () => {
+        renderIt(mockTask)
+        const chip = screen.getByLabelText('status-in-progress')
+        userEvent.click(chip)
+
+        expect(updateThunk).toHaveBeenCalledWith({
+          ...task,
+          status: 'in_progress',
+          edit: false,
+        })
       })
     })
 

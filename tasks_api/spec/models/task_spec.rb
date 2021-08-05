@@ -22,5 +22,17 @@ RSpec.describe Task, type: :model do
       expect(task.valid?).to be false
       expect(task.errors[:name].first).to include(I18n.t('errors.attributes.name.too_long'))
     end
+
+    it 'should allow several values only for status' do
+      valid = %w[open in_progress close]
+      task = Task.new(name: 'tmp')
+
+      valid.each do |v|
+        task.status = v
+        expect(task.valid?).to be true
+      end
+
+      expect { task.status = :hoge }.to raise_error(ArgumentError)
+    end
   end
 end

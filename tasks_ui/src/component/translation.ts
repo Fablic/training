@@ -15,6 +15,17 @@ export const initI18n = () => {
             due_date: 'Due date',
             ok: 'OK',
             cancel: 'Cancel',
+            order: {
+              createdAt: 'Created at',
+              dueDate: 'Due date (asc)',
+              dueDateDesc: 'Due date (desc)',
+            },
+            status: {
+              open: 'Open',
+              inProgress: 'In progress',
+              close: 'Close',
+            },
+            search: 'Search keyword',
           },
         },
         ja: {
@@ -24,6 +35,17 @@ export const initI18n = () => {
             due_date: '期限',
             ok: '確定',
             cancel: 'キャンセル',
+            order: {
+              createdAt: '作成日時',
+              dueDate: '期限(昇順)',
+              dueDateDesc: '期限(降順)',
+            },
+            status: {
+              open: '未着手',
+              inProgress: '着手中',
+              close: '完了',
+            },
+            search: '検索語',
           },
         },
       },

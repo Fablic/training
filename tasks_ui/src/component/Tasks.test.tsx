@@ -83,5 +83,36 @@ describe('Tasks', () => {
         expect(chip.className).toMatch(/MuiChip-clickableColorPrimary/)
       })
     })
+
+    describe('search form', () => {
+      it('initially has search input and button', () => {
+        screen.getByLabelText('search button')
+        screen.getByLabelText('search input')
+        expect(screen.queryAllByLabelText('clear searchword').length).toEqual(0)
+      })
+
+      describe('clear button', () => {
+        let input
+
+        beforeEach(() => {
+          input = screen.getByLabelText('search input')
+          userEvent.type(input, 'searchword')
+        })
+
+        it('should be present', () => {
+          screen.getByLabelText('clear searchword')
+        })
+
+        it('should clear searchword', () => {
+          const btn = screen.getByLabelText('clear searchword')
+          userEvent.click(btn)
+
+          expect(input.querySelector('input').value).toEqual('')
+          expect(screen.queryAllByLabelText('clear searchword').length).toEqual(
+            0
+          )
+        })
+      })
+    })
   })
 })
