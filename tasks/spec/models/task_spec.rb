@@ -199,7 +199,7 @@ RSpec.describe Task, type: :model do
     context '検索欄に「タス」を入力した場合' do
       let(:task_list_search_task_name) { task_list.select { |task| task.task_name.include?('タス') } }
       it 'タスク名に「タス」を含むタスクを全て取得する' do
-        expect(Task.search_task_name('タス')).to match_array task_list_search_task_name
+        expect(Task.search_keyword('タス')).to match_array task_list_search_task_name
       end
     end
     context '検索欄に「あ」を入力した場合' do
@@ -210,7 +210,7 @@ RSpec.describe Task, type: :model do
         end
       end
       it 'ラベル名に「あ」を含むタスクを全て取得する' do
-        expect(Task.search_label('あ')).to match_array task_list_search_label
+        expect(Task.search_keyword('あ')).to match_array task_list_search_label
       end
     end
     context 'ステータスの絞り込みが「着手」を指定した場合' do

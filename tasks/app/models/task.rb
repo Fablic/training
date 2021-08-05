@@ -14,13 +14,12 @@ class Task < ApplicationRecord
   has_many :labels, through: :label_links
 
   scope :without_deleted, -> { where(deleted_at: nil) }
-  scope :search_task_name, ->(keyword) { keyword.present? ? where('task_name like ?', "%#{keyword}%") : return }
-  scope :search_label, ->(keyword) { keyword.present? ? joins(:labels).where('labels.label_name like ?', "%#{keyword}%") : return }
+  scope :search_keyword, ->(keyword)\
+    { keyword.present? ? joins(:labels).where('task_name like ? or labels.label_name like ?', "%#{keyword}%", "%#{keyword}%") : return }
   scope :search_status, ->(statuses) { statuses.present? ? where(status_id: [statuses]) : return }
   scope :sort_task, ->(sort_conditions) { order(sort_conditions) }
   scope :includes_status, -> { includes(:status) }
   scope :includes_priority, -> { includes(:priority) }
-  scope :includes_label, -> { includes(:labels) }
   scope :includes_user, ->(user_id) { includes(:users).where(users: { id: user_id }) }
 
   def before_datetime

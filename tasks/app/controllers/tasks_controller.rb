@@ -10,8 +10,7 @@ class TasksController < ApplicationController
                  .includes_status
                  .includes_priority
                  .includes_user(current_user.id)
-                 .search_label(params[:keyword])
-                 .or(Task.without_deleted.search_task_name(params[:keyword]))
+                 .search_keyword(params[:keyword])
                  .search_status(params[:statuses])
                  .sort_task("#{sort_column} #{sort_direction}")
                  .page(params[:page])
@@ -44,8 +43,8 @@ class TasksController < ApplicationController
   end
 
   def update
-    label_list = params[:task][:label].split(',')
     update_params = task_params
+    label_list = params[:task][:label].split(',')
     update_params.delete(:label)
 
     ActiveRecord::Base.transaction do
