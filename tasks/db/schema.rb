@@ -10,7 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_20_075904) do
+ActiveRecord::Schema.define(version: 2021_08_03_060703) do
+
+  create_table "label_links", id: :integer, charset: "utf8", force: :cascade do |t|
+    t.integer "label_id", null: false
+    t.integer "task_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["label_id"], name: "index_label_links_on_label_id"
+    t.index ["task_id"], name: "index_label_links_on_task_id"
+  end
+
+  create_table "labels", id: :integer, charset: "utf8", force: :cascade do |t|
+    t.string "label_name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "master_task_priorities", id: { type: :integer, limit: 1 }, charset: "utf8", force: :cascade do |t|
     t.string "priority", limit: 64, null: false
@@ -36,7 +51,6 @@ ActiveRecord::Schema.define(version: 2021_07_20_075904) do
     t.string "task_name", limit: 64, null: false
     t.integer "status_id", limit: 1, null: false
     t.integer "priority_id", limit: 1, null: false
-    t.string "label", limit: 64
     t.datetime "limit_date", precision: 6
     t.string "detail"
     t.datetime "deleted_at", precision: 6
@@ -58,4 +72,6 @@ ActiveRecord::Schema.define(version: 2021_07_20_075904) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "label_links", "labels"
+  add_foreign_key "label_links", "tasks"
 end

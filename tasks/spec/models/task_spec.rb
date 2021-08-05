@@ -63,35 +63,6 @@ RSpec.describe Task, type: :model do
     end
   end
 
-  describe 'ラベルのバリデーション' do
-    let(:task) { build(:task, label: label) }
-    context '空文字の場合' do
-      let(:label) { '' }
-      it '有効である' do
-        expect(task).to be_valid
-      end
-    end
-    context '文字数が上限未満の場合' do
-      let(:label) { 'a' * 19 }
-      it '有効である' do
-        expect(task).to be_valid
-      end
-    end
-    context '文字数が上限と同じ場合' do
-      let(:label) { 'a' * 20 }
-      it '有効である' do
-        expect(task).to be_valid
-      end
-    end
-    context '文字数が上限を超える場合' do
-      let(:label) { 'a' * 21 }
-      it 'エラーになる' do
-        expect(task).to be_invalid
-        expect(task.errors[:label]).to include('は20文字以内で入力してください')
-      end
-    end
-  end
-
   describe '詳細説明のバリデーション' do
     let(:task) { build(:task, detail: detail) }
     context '空文字の場合' do
@@ -209,6 +180,16 @@ RSpec.describe Task, type: :model do
         create(:task_list_item, task_name: 'テストタスク1', deleted_at: Time.current.strftime('%Y-%m-%d %H:%M:%S'), limit_date: Time.current + 2.days)
       ]
     end
+    let!(:label_list) do
+      [
+        create(:label_link, label: create(:label, label_name: 'ああ'), task: task_list[0]),
+        create(:label_link, label: create(:label, label_name: 'いい'), task: task_list[1]),
+        create(:label_link, label: create(:label, label_name: 'うう'), task: task_list[2]),
+        create(:label_link, label: create(:label, label_name: 'ええ'), task: task_list[3]),
+        create(:label_link, label: create(:label, label_name: 'あい'), task: task_list[4]),
+        create(:label_link, label: create(:label, label_name: 'うえ'), task: task_list[5])
+      ]
+    end
     context '論理削除されたタスクが存在する場合' do
       let(:task_list_deleted_at_null) { task_list.select { |task| task.deleted_at.nil? } }
       it '論理削除されていないタスクを全て取得する' do
@@ -218,7 +199,18 @@ RSpec.describe Task, type: :model do
     context '検索欄に「タス」を入力した場合' do
       let(:task_list_search_task_name) { task_list.select { |task| task.task_name.include?('タス') } }
       it 'タスク名に「タス」を含むタスクを全て取得する' do
-        expect(Task.search_task_name('タス')).to match_array task_list_search_task_name
+        expect(Task.search_keyword('タス')).to match_array task_list_search_task_name
+      end
+    end
+    context '検索欄に「あ」を入力した場合' do
+      let!(:task_list_search_label) do
+        task_list.select do |task|
+          @label = task.labels[0]
+          @label.label_name.include?('あ')
+        end
+      end
+      it 'ラベル名に「あ」を含むタスクを全て取得する' do
+        expect(Task.search_keyword('あ')).to match_array task_list_search_label
       end
     end
     context 'ステータスの絞り込みが「着手」を指定した場合' do

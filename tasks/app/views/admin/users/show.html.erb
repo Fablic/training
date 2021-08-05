@@ -63,7 +63,11 @@
           <td class="list-item"><%= task.id %></td>
           <td class="list-item"><%= task.status.status %></td>
           <td class="list-item"><%= task.priority.priority %></td>
-          <td class="list-item"><%= task.label %></td>
+          <td class="list-item">
+            <% task.labels.each do |label| %>
+              <%= label.label_name %>
+            <% end %>
+          </td>
           <td class="list-item"><%= task.task_name %></td>
           <td class="list-item">
             <% if task.limit_date != nil %>

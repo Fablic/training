@@ -10,7 +10,7 @@ class TasksController < ApplicationController
                  .includes_status
                  .includes_priority
                  .includes_user(current_user.id)
-                 .search_task_name(params[:keyword])
+                 .search_keyword(params[:keyword])
                  .search_status(params[:statuses])
                  .sort_task("#{sort_column} #{sort_direction}")
                  .page(params[:page])
@@ -27,21 +27,34 @@ class TasksController < ApplicationController
 
   def create
     create_params = task_params.merge(status_id: MasterTaskStatus::NOT_STARTED)
+    label_list = params[:task][:label].split(',')
+    create_params.delete(:label)
     @task = Task.new(create_params)
-    if @task.save
+
+    ActiveRecord::Base.transaction do
+      @task.save!
+      @task.labels_save(label_list)
       current_user.add_task(@task)
-      redirect_to @task, notice: 'タスクを作成しました。'
-    else
-      render :new, status: :unprocessable_entity
     end
+    redirect_to @task, notice: 'タスクを作成しました。'
+  rescue StandardError => e
+    Rails.logger.error e
+    render :new, status: :unprocessable_entity
   end
 
   def update
-    if @task.update(task_params)
-      redirect_to @task, notice: 'タスクを更新しました。'
-    else
-      render :edit, status: :unprocessable_entity
+    update_params = task_params
+    label_list = params[:task][:label].split(',')
+    update_params.delete(:label)
+
+    ActiveRecord::Base.transaction do
+      @task.update!(update_params)
+      @task.labels_save(label_list)
     end
+    redirect_to @task, notice: 'タスクを更新しました。'
+  rescue StandardError => e
+    Rails.logger.error e
+    render :edit, status: :unprocessable_entity
   end
 
   # 論理削除
@@ -66,7 +79,13 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:task_name, :status_id, :priority_id, :label, :limit_date, :detail)
+    params.require(:task)
+          .permit(:task_name,
+                  :status_id,
+                  :priority_id,
+                  :limit_date,
+                  :detail,
+                  :label)
   end
 
   def sort_direction

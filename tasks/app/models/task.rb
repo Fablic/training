@@ -2,7 +2,6 @@ class Task < ApplicationRecord
   paginates_per 10
 
   validates :task_name, presence: true, length: { maximum: 60 }
-  validates :label, length: { maximum: 20 }
   validates :detail, length: { maximum: 250 }
   validate :before_datetime, if: :will_save_change_to_limit_date?
   validates :deleted_at_before_type_cast, presence: true, format: { with: Constants::VALID_DATETIME_REGEX }, allow_nil: true, on: :update
@@ -11,9 +10,12 @@ class Task < ApplicationRecord
   belongs_to :status, class_name: 'MasterTaskStatus'
   has_many :task_links, dependent: :destroy
   has_many :users, through: :task_links
+  has_many :label_links, dependent: :destroy
+  has_many :labels, through: :label_links
 
   scope :without_deleted, -> { where(deleted_at: nil) }
-  scope :search_task_name, ->(keyword) { where(['task_name like ?', "%#{keyword}%"]) }
+  scope :search_keyword, ->(keyword)\
+    { keyword.present? ? joins(:labels).where('task_name like ? or labels.label_name like ?', "%#{keyword}%", "%#{keyword}%") : return }
   scope :search_status, ->(statuses) { statuses.present? ? where(status_id: [statuses]) : return }
   scope :sort_task, ->(sort_conditions) { order(sort_conditions) }
   scope :includes_status, -> { includes(:status) }
@@ -25,5 +27,19 @@ class Task < ApplicationRecord
 
     # 現在日時より前の日時に期限を変更している場合、エラーになる
     errors.add(:limit_date, :cannot_be_before_datetime)
+  end
+
+  def labels_save(label_list)
+    # ラベルが変更された時、そのタスクと以前のラベルのとの紐付けを削除
+    unless labels.nil?
+      label_links_records = LabelLink.where(task_id: id)
+      label_links_records.destroy_all
+    end
+
+    # 入力されたラベルがDBに存在するなら取得し、存在しないなら作成し、紐付けする
+    label_list.each do |label|
+      inspected_label = Label.where(label_name: label).first_or_create!
+      labels << inspected_label
+    end
   end
 end
