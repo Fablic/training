@@ -116,7 +116,7 @@ RSpec.describe Admin::UsersController, type: :controller do
       let!(:before_update_user) { user }
       let(:unjust_user_params) { { user_name: '変更後ユーザ名', email: nil } }
       it 'ユーザを更新できないこと' do
-        patch :update, params: { id: user.id, task: unjust_user_params }
+        patch :update, params: { id: user.id, user: unjust_user_params }
         expect(user.reload.user_name).to eq before_update_user.user_name
         expect(user.email).to eq before_update_user.email
       end

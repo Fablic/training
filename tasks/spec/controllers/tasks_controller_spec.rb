@@ -45,12 +45,22 @@ RSpec.describe TasksController, type: :controller do
     end
     let!(:task_link) do
       [
-        create(:task_link, task_id: task_list[0].id, user_id: user.id),
-        create(:task_link, task_id: task_list[1].id, user_id: user.id),
-        create(:task_link, task_id: task_list[2].id, user_id: user.id),
-        create(:task_link, task_id: task_list[3].id, user_id: user.id),
-        create(:task_link, task_id: task_list[4].id, user_id: user.id),
-        create(:task_link, task_id: task_list[5].id, user_id: user.id)
+        create(:task_link, task: task_list[0], user: user),
+        create(:task_link, task: task_list[1], user: user),
+        create(:task_link, task: task_list[2], user: user),
+        create(:task_link, task: task_list[3], user: user),
+        create(:task_link, task: task_list[4], user: user),
+        create(:task_link, task: task_list[5], user: user)
+      ]
+    end
+    let!(:label_list) do
+      [
+        create(:label_link, label: create(:label, label_name: 'ああ'), task: task_list[0]),
+        create(:label_link, label: create(:label, label_name: 'いい'), task: task_list[1]),
+        create(:label_link, label: create(:label, label_name: 'テスト'), task: task_list[2]),
+        create(:label_link, label: create(:label, label_name: 'ええ'), task: task_list[3]),
+        create(:label_link, label: create(:label, label_name: 'あい'), task: task_list[4]),
+        create(:label_link, label: create(:label, label_name: 'うえ'), task: task_list[5])
       ]
     end
     before { log_in(user) }
@@ -66,7 +76,10 @@ RSpec.describe TasksController, type: :controller do
     end
     context '検索欄に「テス」を入力、絞り込みを「未着手」「着手」を選択し、期限の昇順を指定した場合' do
       let(:task_list_search_and_sort) do
-        expect_task_list = task_list.select { |task| task.deleted_at.nil? && task.task_name.include?('テス') && (task.status_id == 1 || task.status_id == 2) }
+        expect_task_list = task_list.select do |task|
+          @label = task.labels[0]
+          task.deleted_at.nil? && (task.task_name.include?('テス') || @label.label_name.include?('テス')) && (task.status_id == 1 || task.status_id == 2)
+        end
         expect_task_list.sort do |a, b|
           if a.limit_date.nil?
             -1
@@ -217,10 +230,11 @@ RSpec.describe TasksController, type: :controller do
   describe '#update' do
     include_context 'login_and_create_task_link'
     context '正常な値' do
-      let(:normalTaskParams) { { task_name: '変更後テストタスク名', status_id: notStartedTaskStatus, priority_id: lowTaskPriority } }
+      let(:normalTaskParams) { { task_name: '変更後テストタスク名', status_id: notStartedTaskStatus, priority_id: lowTaskPriority, label: '変更後ラベル' } }
       it '正常にタスクを更新できること' do
         patch :update, params: { id: task.id, task: normalTaskParams }
         expect(task.reload.task_name).to eq '変更後テストタスク名'
+        expect(task.labels[0].label_name).to eq '変更後ラベル'
       end
       it '更新後、詳細ページにリダイレクトされること' do
         task_params = normalTaskParams
@@ -229,7 +243,7 @@ RSpec.describe TasksController, type: :controller do
       end
     end
     context '不正な値' do
-      let(:unjustTaskParams) { { task_name: '変更後テストタスク名', status_id: 4, priority_id: lowTaskPriority } }
+      let(:unjustTaskParams) { { task_name: '変更後テストタスク名', status_id: 4, priority_id: lowTaskPriority, label: nil } }
       it 'タスクを更新できないこと' do
         task_params = unjustTaskParams
         patch :update, params: { id: task.id, task: task_params }
