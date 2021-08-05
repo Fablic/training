@@ -39,7 +39,7 @@ class Task < ApplicationRecord
 
     # 入力されたラベルがDBに存在するなら取得し、存在しないなら作成し、紐付けする
     label_list.each do |label|
-      inspected_label = labels.where(label_name: label).first_or_create!
+      inspected_label = Label.where(label_name: label).first_or_create!
       labels << inspected_label
     end
   end
