@@ -2,6 +2,8 @@ import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 
 const initialState: State = {
   tasks: [],
+  totalPages: 0,
+  currentPage: 0,
   pending: false,
   notice: null,
 }
@@ -20,6 +22,10 @@ export const index = createAsyncThunk('task/index', async (params, _) => {
 
     if (params.status) {
       qs.push(`status=${params.status}`)
+    }
+
+    if (params.page) {
+      qs.push(`page=${params.page}`)
     }
   }
   if (qs.length > 0) {
@@ -129,10 +135,12 @@ export const tasksSlice = createSlice({
 
     builder.addCase(index.fulfilled, (state, action) => {
       state.pending = false
-      state.tasks = action.payload.map((i) => ({
+      state.tasks = action.payload.tasks.map((i) => ({
         ...i,
         edit: false,
       }))
+      state.totalPages = action.payload.meta.totalPages
+      state.currentPage = action.payload.meta.currentPage
     })
 
     builder.addCase(create.fulfilled, (state, action) => {

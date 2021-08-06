@@ -6,6 +6,8 @@ const actions = tasksSlice.actions
 
 const initialState = {
   tasks: [],
+  totalPages: 0,
+  currentPage: 0,
   pending: false,
   notice: null,
 }
@@ -54,18 +56,22 @@ describe('tasks slice', () => {
         name: 'task2',
       }
       const endpoint = 'http://localhost:3000/tasks.json'
+      const payload = {
+        tasks: [item1, item2],
+        meta: { totalPages: 10, currentPage: 1 },
+      }
 
       it('should GET /tasks.json', async () => {
         const action = index()
         fetchMock.get(endpoint, {
           status: 200,
-          body: JSON.stringify([item1, item2]),
+          body: JSON.stringify(payload),
         })
 
         const subject = await action(jest.fn(), jest.fn(), undefined)
 
         expect(fetchMock).toHaveFetched(endpoint)
-        expect(subject.payload).toEqual([item1, item2])
+        expect(subject.payload).toEqual(payload)
       })
 
       it('should GET /tasks.json?order=due_date', async () => {
@@ -73,7 +79,7 @@ describe('tasks slice', () => {
         const action = index({ order: 'due_date' })
         fetchMock.get(target, {
           status: 200,
-          body: JSON.stringify([item1, item2]),
+          body: JSON.stringify(payload),
         })
 
         const subject = await action(jest.fn(), jest.fn(), undefined)
@@ -86,7 +92,7 @@ describe('tasks slice', () => {
         const action = index({ order: 'due_date_desc' })
         fetchMock.get(target, {
           status: 200,
-          body: JSON.stringify([item1, item2]),
+          body: JSON.stringify(payload),
         })
 
         const subject = await action(jest.fn(), jest.fn(), undefined)
@@ -99,7 +105,7 @@ describe('tasks slice', () => {
         const action = index({ query: 'keyword' })
         fetchMock.get(target, {
           status: 200,
-          body: JSON.stringify([item1, item2]),
+          body: JSON.stringify(payload),
         })
 
         const subject = await action(jest.fn(), jest.fn(), undefined)
@@ -112,7 +118,20 @@ describe('tasks slice', () => {
         const action = index({ status: 'in_progress' })
         fetchMock.get(target, {
           status: 200,
-          body: JSON.stringify([item1, item2]),
+          body: JSON.stringify(payload),
+        })
+
+        const subject = await action(jest.fn(), jest.fn(), undefined)
+
+        expect(fetchMock).toHaveFetched(target)
+      })
+
+      it('should GET /tasks.json?page=2', async () => {
+        const target = endpoint + '?page=2'
+        const action = index({ page: 2 })
+        fetchMock.get(target, {
+          status: 200,
+          body: JSON.stringify(payload),
         })
 
         const subject = await action(jest.fn(), jest.fn(), undefined)
@@ -128,14 +147,17 @@ describe('tasks slice', () => {
       it('should set pending=false when API call has finished', () => {
         const actual = reducer(
           { ...initialState, pending: true },
-          index.fulfilled([])
+          index.fulfilled(payload)
         )
         expect(actual.pending).toBe(false)
       })
 
       it('should update the list', () => {
-        const apiRet = [item1, item2]
-        const expected = apiRet.map((i) => ({
+        const apiRet = {
+          tasks: [item1, item2],
+          meta: { totalPages: 10, currentPage: 1 },
+        }
+        const expected = apiRet.tasks.map((i) => ({
           ...i,
           edit: false,
         }))
@@ -151,11 +173,13 @@ describe('tasks slice', () => {
               },
             ],
           },
-          index.fulfilled(apiRet)
+          index.fulfilled(payload)
         )
 
         expect(actual.tasks.length).toEqual(expected.length)
         expect(actual.tasks).toEqual(expected)
+        expect(actual.totalPages).toEqual(apiRet.meta.totalPages)
+        expect(actual.currentPage).toEqual(apiRet.meta.currentPage)
       })
 
       it('should set pending=false when API call has failed', () => {
