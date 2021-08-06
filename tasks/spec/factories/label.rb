@@ -1,5 +1,4 @@
 FactoryBot.define do
-  ActiveRecord::Base.connection.execute('ALTER TABLE labels AUTO_INCREMENT = 1')
   factory :label, class: Label do
     label_name { 'テストラベル名' }
   end
