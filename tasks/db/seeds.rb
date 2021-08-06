@@ -8,3 +8,4 @@
 # coding: utf-8
 
 User.create(user_name: '初期ユーザ', email: 'hoge@fuga.jp', password_digest: 'password', role: 0)
+Mode.create(mode_name: 'maintenance', value: false)

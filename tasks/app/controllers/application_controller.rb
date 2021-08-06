@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  before_action :render_maintenance
   include SessionsHelper
   rescue_from Exception,                      with: :render_500
   rescue_from ActiveRecord::RecordNotFound,   with: :render_404
@@ -32,5 +33,10 @@ class ApplicationController < ActionController::Base
 
   def logged_in_user
     redirect_to login_url unless logged_in?
+  end
+
+  def render_maintenance
+    maintenance = Mode.find_by(mode_name: 'maintenance')
+    redirect_to '/maintenance.html' if maintenance.present? && maintenance.value.present?
   end
 end
