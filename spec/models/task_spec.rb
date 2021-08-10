@@ -21,7 +21,7 @@ RSpec.describe Task, type: :model do
     it 'is invalid without name' do
       task.name = nil
       task.valid?
-      expect(task.errors[:name]).to include("を入力してください")
+      expect(task.errors[:name]).to include('を入力してください')
     end
 
     it 'is invalid with too long name' do
