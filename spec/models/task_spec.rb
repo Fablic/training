@@ -10,5 +10,10 @@
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #
-class Task < ApplicationRecord
+require 'rails_helper'
+
+RSpec.describe Task, type: :model do
+  let(:task) { build(:task) }
+
+  it { expect(task).to have_attributes(name: 'do homework', description: 'Deadline is August 31.') }
 end
