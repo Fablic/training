@@ -4,14 +4,20 @@ ja:
       task: タスク
     attributes:
       task:
-        name: 名前
+        name: タスク名
         description: 説明
-    errors:
-      models:
-        task:
-          attributes:
-            name:
-              blank: タスク名は必須です。
+  tasks:
+    flash:
+      create:
+        success: 'タスクを作成しました'
+        danger: 'タスクの作成に失敗しました'
+      update:
+        success: 'タスクを更新しました'
+        danger: 'タスクの更新に失敗しました'
+      destroy:
+        success: 'タスクを削除しました'
+        danger: 'タスクの削除に失敗しました'
+
   time:
     formats:
       default: "%Y/%m/%d %H:%M:%S"

@@ -18,18 +18,16 @@ RSpec.describe Task, type: :model do
   it { expect(task).to have_attributes(name: 'do homework', description: 'Deadline is August 31.') }
 
   describe 'validation' do
-    let(:task) { build(:task) }
-
     it 'is invalid without name' do
       task.name = nil
       task.valid?
-      expect(task.errors[:name]).to include("can't be blank")
+      expect(task.errors[:name]).to include("を入力してください")
     end
 
     it 'is invalid with too long name' do
       task.name = 'a' * 256
       task.valid?
-      expect(task.errors[:name]).to include('is too long (maximum is 255 characters)')
+      expect(task.errors[:name]).to include('は255文字以内で入力してください')
     end
 
     it 'is valid with 255 characters name' do
