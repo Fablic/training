@@ -12,7 +12,7 @@
 #
 FactoryBot.define do
   factory :task do
-    name { "do homework" }
-    description { "Deadline is August 31." }
+    name { 'do homework' }
+    description { 'Deadline is August 31.' }
   end
 end
