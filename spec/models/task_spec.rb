@@ -66,7 +66,7 @@ RSpec.describe Task, type: :model do
       end
 
       it 'returns tasks which status equal search status' do
-        expect(Task.by_status(search_status).sample.status).to eq (search_status)
+        expect(Task.by_status(search_status).sample.status).to eq(search_status)
       end
     end
   end
