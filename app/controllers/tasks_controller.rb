@@ -16,10 +16,10 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(task_params)
     if @task.save
-      flash[:success] = t('tasks.flash.create.success')
+      flash[:success] = I18n.t('tasks.flash.create.success')
       redirect_to root_path
     else
-      flash.now[:danger] = t('tasks.flash.create.danger')
+      flash.now[:danger] = I18n.t('tasks.flash.create.danger')
       render 'new'
     end
   end
@@ -28,19 +28,19 @@ class TasksController < ApplicationController
 
   def update
     if @task.update(task_params)
-      flash[:success] = t('tasks.flash.update.success')
+      flash[:success] = I18n.t('tasks.flash.update.success')
       redirect_to root_path
     else
-      flash.now[:danger] = t('tasks.flash.update.danger')
+      flash.now[:danger] = I18n.t('tasks.flash.update.danger')
       render 'edit'
     end
   end
 
   def destroy
     if @task.destroy
-      flash[:success] = t('tasks.flash.destroy.success')
+      flash[:success] = I18n.t('tasks.flash.destroy.success')
     else
-      flash[:danger] = t('tasks.flash.destroy.danger')
+      flash[:danger] = I18n.t('tasks.flash.destroy.danger')
     end
     redirect_to root_path
   end
