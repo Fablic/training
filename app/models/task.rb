@@ -24,4 +24,7 @@ class Task < ApplicationRecord
     Doing: 1,
     Done: 2,
   }
+
+  scope :by_name, ->(params) { where('name LIKE ?', "%#{params}%") }
+  scope :by_status, ->(params) { where(status: params) }
 end
