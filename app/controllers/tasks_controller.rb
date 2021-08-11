@@ -5,6 +5,8 @@ class TasksController < ApplicationController
 
   def index
     @tasks = Task.order(updated_at: :desc)
+    @tasks = @tasks.where('name LIKE ?', "%#{params[:name]}%") if params[:name].present?
+    @tasks = @tasks.where(status: params[:status]) if params[:status].present?
   end
 
   def show; end
