@@ -17,6 +17,7 @@
     <tr>
       <th>name</th>
       <th>description</th>
+      <th>status</th>
       <th>updated at</th>
       <th></th>
       <th></th>
@@ -27,6 +28,7 @@
       <tr>
         <td><%= task.name %></td>
         <td><%= task.description %></td>
+        <td><%= task.status %></td>
         <td><%= I18n.l(task.updated_at) %></td>
         <td><%= link_to 'Detail', task_path(task), class: 'btn btn-primary' %></td>
         <td><%= link_to 'Delete', task, class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %></td>
