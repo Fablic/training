@@ -1,4 +1,23 @@
 ja:
+  activerecord:
+    models:
+      task: タスク
+    attributes:
+      task:
+        name: タスク名
+        description: 説明
+  tasks:
+    flash:
+      create:
+        success: タスクを作成しました
+        danger: タスクの作成に失敗しました
+      update:
+        success: タスクを更新しました
+        danger: タスクの更新に失敗しました
+      destroy:
+        success: タスクを削除しました
+        danger: タスクの削除に失敗しました
+
   time:
     formats:
-      default: "%Y/%m/%d %H:%M:%S"
+      default: '%Y/%m/%d %H:%M:%S'
