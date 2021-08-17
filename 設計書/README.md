@@ -38,7 +38,7 @@
 | created_at | DATETIME     | NOTNULL |          | 
 | updated_at | DATETIME     | NOTNULL |          | 
 
-- user
+- users
 
 | Name         | Type         | NULL    | Desc   | 
 | ------------ | ------------ | ------- | ------ | 
