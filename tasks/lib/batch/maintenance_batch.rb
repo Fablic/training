@@ -1,17 +1,17 @@
 class Batch::MaintenanceBatch
   def self.maintenance_start_batch
     if Mode.maintenance_start
-      puts 'メンテナンスモードを開始しました。'
+      puts 'Success maintenance mode start'
     else
-      puts 'メンテナンスモードの開始に失敗しました。'
+      puts 'Failure maintenance mode start'
     end
   end
 
   def self.maintenance_end_batch
     if Mode.maintenance_end
-      puts 'メンテナンスモードを終了しました。'
+      puts 'Success maintenance mode end'
     else
-      puts 'メンテナンスモードの終了に失敗しました。'
+      puts 'Failure maintenance mode end'
     end
   end
 end
