@@ -1,5 +1,7 @@
 class Admin::UsersController < ApplicationController
   before_action :logged_in_user
+  before_action :current_user
+  before_action :redirect_top_by_general_user
   before_action :set_user, only: %i[show edit update destroy]
 
   def index
@@ -18,6 +20,11 @@ class Admin::UsersController < ApplicationController
   def edit; end
 
   def update
+    if current_user.id == @user.id && user_params[:role] == 'false'
+      redirect_to admin_users_path, notice: 'ログイン中のユーザの管理者権限は変更できません。'
+      return
+    end
+
     if @user.update(user_params)
       redirect_to admin_user_path, notice: 'ユーザ情報を更新しました。'
     else
@@ -51,6 +58,10 @@ class Admin::UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:user_name, :email)
+    params.require(:user).permit(:user_name, :email, :role)
+  end
+
+  def redirect_top_by_general_user
+    redirect_to root_path unless current_user.role
   end
 end

@@ -21,6 +21,7 @@ ja:
         email: メールアドレス
         password: パスワード
         password_confirmation: パスワード（確認）
+        role: 管理者権限
         created_at: 作成日時
     errors:
       models:
@@ -54,3 +55,6 @@ ja:
     invalid_email_or_password_combination: メールアドレスかパスワードが違います。   
   item_name:
     task_count: タスク数
+  item_value:
+    'true': '有効'
+    'false': '無効'

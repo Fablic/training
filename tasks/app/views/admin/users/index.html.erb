@@ -20,6 +20,7 @@
         <th class="text-primary"><%= User.human_attribute_name(:id) %></th>
         <th class="text-primary"><%= User.human_attribute_name(:user_name) %></th>
         <th class="text-primary"><%= t('item_name.task_count') %></th>
+        <th class="text-primary"><%= User.human_attribute_name(:role) %></th>
       </tr>
     </thead>
 
@@ -29,6 +30,7 @@
           <td class="list-item"><%= user.id %></td>
           <td class="list-item"><%= user.user_name %></td>
           <td class="list-item"><%= user.tasks_count %></td>
+          <td class="list-item"><% if user.role %><%= t('item_value.true') %><% else %><%= t('item_value.false') %><% end %></td>
           <td><%= link_to t('link.show'), admin_user_path(user), class: 'btn default-btn' %></td>
           <td><%= link_to t('link.edit'), edit_admin_user_path(user), class: 'btn default-btn' %></td>
           <td><%= link_to t('link.delete'), admin_user_path(user), method: :delete, data: { confirm: t('confirm.delete') }, class: 'btn default-btn' %></td>
