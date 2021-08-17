@@ -28,7 +28,7 @@
 | created_at  | DATETIME     | NOTNULL |          | 
 | updated_at  | DATETIME     | NOTNULL |          | 
 
-- label_to_task
+- label_task
 
 | Name       | Type         | NULL    | Desc     | 
 | ---------- | ------------ | ------- | -------- | 
