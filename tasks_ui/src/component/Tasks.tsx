@@ -6,6 +6,7 @@ import InputLabel from '@material-ui/core/InputLabel'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import FormControl from '@material-ui/core/FormControl'
 import IconButton from '@material-ui/core/IconButton'
+import Pagination from '@material-ui/lab/Pagination'
 import { makeStyles } from '@material-ui/core/styles'
 
 import { index, tasksSlice } from '../state/tasksSlice'
@@ -38,10 +39,17 @@ const useStyles = makeStyles({
     display: 'flex',
     justifyContent: 'center',
   },
+  paginator: {
+    display: 'flex',
+    justifyContent: 'center',
+  },
 })
 
 const Tasks: React.FC = (props) => {
   const tasks = useSelector((s) => s.tasks.tasks)
+  const totalPages = useSelector((s) => s.tasks.totalPages)
+  const page = useSelector((s) => s.tasks.currentPage)
+
   const dispatch = useDispatch()
 
   const classes = useStyles()
@@ -55,8 +63,12 @@ const Tasks: React.FC = (props) => {
 
   const { t } = useTranslation()
 
+  const updateList = (params) => {
+    dispatch(index(params))
+  }
+
   useEffect(() => {
-    dispatch(index({ order, status, query }))
+    updateList({ order, status, query, page })
   }, [order, status, query])
 
   const changeStatus = (newStatus) => {
@@ -98,7 +110,6 @@ const Tasks: React.FC = (props) => {
           onClick={() => setOrder('due_date_desc')}
         />
       </div>
-
       <div className={classes.chips}>
         <StatusChips
           className={classes.chip}
@@ -106,7 +117,6 @@ const Tasks: React.FC = (props) => {
           status={status}
         />
       </div>
-
       <div className={classes.search}>
         <FormControl>
           <InputLabel htmlFor="searchword">{t('search')}</InputLabel>
@@ -154,6 +164,13 @@ const Tasks: React.FC = (props) => {
           </li>
         ))}
       </ol>
+
+      <Pagination
+        className={classes.paginator}
+        count={totalPages}
+        page={page}
+        onChange={(_, n) => updateList({ order, status, query, page: n })}
+      />
     </>
   )
 }

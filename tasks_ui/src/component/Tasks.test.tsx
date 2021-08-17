@@ -10,11 +10,15 @@ import { tasksSlice } from '../state/tasksSlice'
 import * as TasksSlice from '../state/tasksSlice'
 import * as ReactRedux from 'react-redux'
 
-const setMockState = (tasks) => {
+const setMockState = (params) => {
+  const { tasks, totalPages, currentPage } = params
+
   const mockState = {
     tasks: {
-      tasks: tasks,
+      tasks,
       pending: false,
+      totalPages,
+      currentPage,
     },
   }
 
@@ -43,17 +47,17 @@ const mockTask = {
 }
 
 describe('Tasks', () => {
+  const tasks = [...Array(3)].map((_, i) => ({
+    ...mockTask,
+    id: i,
+    name: `${mockTask.name} ${i}`,
+  }))
+
+  const indexThunk = jest.spyOn(TasksSlice, 'index')
+
   describe('render', () => {
-    const tasks = [...Array(3)].map((_, i) => ({
-      ...mockTask,
-      id: i,
-      name: `${mockTask.name} ${i}`,
-    }))
-
-    const indexThunk = jest.spyOn(TasksSlice, 'index')
-
     beforeEach(() => {
-      setMockState(tasks)
+      setMockState({ tasks })
       renderIt()
     })
 
@@ -112,6 +116,31 @@ describe('Tasks', () => {
             0
           )
         })
+      })
+    })
+  })
+
+  describe('paginator', () => {
+    beforeEach(() => {
+      setMockState({ tasks, totalPages: 5, currentPage: 1 })
+      renderIt()
+      jest.clearAllMocks()
+    })
+
+    it('should have paginator', () => {
+      screen.getByLabelText('page 1')
+      screen.getByLabelText('Go to page 5')
+    })
+
+    it('should dispatch index', () => {
+      const btn = screen.getByLabelText('Go to page 3')
+      userEvent.click(btn)
+
+      expect(indexThunk).toHaveBeenCalledWith({
+        order: undefined,
+        status: undefined,
+        query: '',
+        page: 3,
       })
     })
   })
