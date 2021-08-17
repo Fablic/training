@@ -43,6 +43,7 @@
 | Name         | Type         | NULL    | Desc   | 
 | ------------ | ------------ | ------- | ------ | 
 | id           | INTEGER      | NOTNULL | 主キー | 
+| name         | VARCHAR(255) | NOTNULL | 主キー | 
 | mail_address | INTEGER      | NOTNULL |        | 
 | password     | VARCHAR(255) | NOTNULL |        | 
 | created_at   | DATETIME     | NOTNULL |        | 
