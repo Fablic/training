@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_03_060703) do
+ActiveRecord::Schema.define(version: 2021_08_06_000804) do
 
   create_table "label_links", id: :integer, charset: "utf8", force: :cascade do |t|
     t.integer "label_id", null: false
@@ -35,6 +35,13 @@ ActiveRecord::Schema.define(version: 2021_08_03_060703) do
 
   create_table "master_task_statuses", id: { type: :integer, limit: 1 }, charset: "utf8", force: :cascade do |t|
     t.string "status", limit: 64, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "modes", id: :integer, charset: "utf8", force: :cascade do |t|
+    t.string "mode_name", null: false
+    t.boolean "value", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
