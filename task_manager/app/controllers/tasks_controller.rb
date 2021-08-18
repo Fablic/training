@@ -28,6 +28,15 @@ class TasksController < ApplicationController
     end
   
     def update
+        @task = Task.find(params[:id])
+
+        if @task.update(task_params)
+            flash[:success] = 'タスクが編集されました'
+            redirect_to @task
+        else
+            flash.now[:danger] = 'タスクが編集されませんでした'
+            render :new
+        end
     end
   
     def destroy
