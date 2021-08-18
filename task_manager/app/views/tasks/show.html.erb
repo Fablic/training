@@ -1,8 +1,14 @@
 <h1>id:<%= @task.id %>のタスク詳細</h1>
 
-<p><%= @task.name %></p>
+<p>タスク名:<%= @task.name %></p>
 
-<p><%= @task.priority %></p>
+<p>メモ:<%= @task.description %></p>
+
+<p>締め切り:<%= @task.due_at %></p>
+
+<p>優先度:<%= @task.priority %></p>
+
+<p>進捗状況:<%= @task.progress %></p>
 
 <%= link_to '一覧へ戻る',tasks_path %>
 

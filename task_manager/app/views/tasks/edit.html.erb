@@ -18,7 +18,7 @@
         <%= f.select :priority, [['低', 'low'], ['中', 'normal'], ['高', 'high']], {selected: @task.priority}, {class: 'mclist__select'} %>
     </div>
     <div>
-        <%= f.label :progress, '優先順位' %>
+        <%= f.label :progress, '進捗状況' %>
         <%= f.select :progress, [['Todo', 'Todo'], ['InProgress', 'InProgress'], ['Done', 'Done']], {selected: @task.progress}, {class: 'mclist__select'} %>
     </div>
     <%= f.submit '投稿' %>
