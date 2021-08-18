@@ -1,5 +1,3 @@
-Style/FrozenStringLiteralComment:
-  Enabled: false
 inherit_gem:
   fablicop:
     - "config/.base_rubocop.yml"
