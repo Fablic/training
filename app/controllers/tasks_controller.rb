@@ -5,6 +5,8 @@ class TasksController < ApplicationController
 
   def index
     @tasks = Task.order(updated_at: :desc)
+    @tasks = @tasks.by_name(params[:name]) if params[:name].present?
+    @tasks = @tasks.by_status(params[:status]) if params[:status].present?
   end
 
   def show; end
@@ -52,6 +54,6 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:name, :description)
+    params.require(:task).permit(:name, :description, :status)
   end
 end

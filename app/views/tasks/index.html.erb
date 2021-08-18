@@ -12,11 +12,24 @@
   <%= link_to 'New', new_task_path, class: 'btn btn-outline-dark' %>
 </div>
 
+<%= form_with url: root_path, class: 'mb-4', method: :get, local: true do |f| %>
+  <div class="form-group">
+    <%= f.label :name %>
+    <%= f.text_field :name, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :status %>
+    <%= f.select :status, Task.statuses.keys, {}, class: 'form-control' %>
+  </div>
+  <%= f.submit 'Search', class: 'btn btn-primary' %>
+<% end %>
+
 <table class="table table-hover">
   <thead>
     <tr>
       <th>name</th>
       <th>description</th>
+      <th>status</th>
       <th>updated at</th>
       <th></th>
       <th></th>
@@ -27,6 +40,7 @@
       <tr>
         <td><%= task.name %></td>
         <td><%= task.description %></td>
+        <td><%= task.status %></td>
         <td><%= I18n.l(task.updated_at) %></td>
         <td><%= link_to 'Detail', task_path(task), class: 'btn btn-primary' %></td>
         <td><%= link_to 'Delete', task, class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %></td>

@@ -18,6 +18,10 @@
     <%= f.label :description %>
     <%= f.text_area :description, class: 'form-control' %>
   </div>
+  <div class="form-group">
+    <%= f.label :status %>
+    <%= f.select :status, Task.statuses.keys, {}, class: 'form-control' %>
+  </div>
   
   <%= f.submit 'Submit', class: 'btn btn-primary' %>
 <% end %>
