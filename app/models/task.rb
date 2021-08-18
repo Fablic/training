@@ -13,7 +13,6 @@
 #
 # Indexes
 #
-#  index_tasks_on_name    (name)
 #  index_tasks_on_status  (status)
 #
 class Task < ApplicationRecord
