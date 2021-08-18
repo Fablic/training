@@ -28,6 +28,10 @@
     <div class="h8 border-bottom"><%= @user.tasks.without_deleted.count %></div>
   </div>
   <div class="form-group">
+    <div class="h7 text-primary"><%= User.human_attribute_name(:role) %></div>
+    <div class="h8 border-bottom"><% if @user.role %><%= t('item_value.true') %><% else %><%= t('item_value.false') %><% end %></div>
+  </div>
+  <div class="form-group">
     <div class="h7 text-primary"><%= User.human_attribute_name(:created_at) %></div>
     <div class="h8 border-bottom"><%= l @user.created_at %></div>
   </div>

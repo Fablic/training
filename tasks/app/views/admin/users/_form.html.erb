@@ -21,6 +21,15 @@
     <%= f.text_field :email, class: 'form-control' %>
   </div>
 
+  <div class="form-group">
+    <%= f.label :role, class: 'control-label text-primary' %>
+    <%= f.radio_button :role, :false %>
+    <%= f.label :role, t('item_value.false'), class: 'control-label' %>
+    <%= f.radio_button :role, :true %>
+    <%= f.label :role, t('item_value.true'), class: 'control-label' %>
+  </div>
+
+
   <div class="form-group row justify-content-center">
     <div>
       <%= link_to t('link.back'), admin_users_path, class: 'btn btn-outline-secondary btn-width' %>

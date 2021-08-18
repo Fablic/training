@@ -2,7 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Admin::UsersController, type: :controller do
   let(:task) { create(:task_list_item) }
-  let(:user) { create(:user) }
+  let(:user) { create(:user, role: true) }
+  let(:general_user) { create(:user, role: false) }
 
   shared_context 'login_and_create_task_link' do
     before do
@@ -12,13 +13,21 @@ RSpec.describe Admin::UsersController, type: :controller do
   end
 
   describe '#index' do
-    context 'ログイン状態の場合' do
+    context 'ログイン状態かつ、管理者権限を持つ場合' do
       before { log_in(user) }
       it 'HTTPステータスコードが200、テンプレートが表示されること' do
         get :index
         expect(response).to be_successful
         expect(response).to have_http_status :success
         expect(response).to render_template :index
+      end
+    end
+    context 'ログイン状態かつ、管理者権限を持たない場合' do
+      before { log_in(general_user) }
+      it 'タスク一覧ページにリダイレクトされること' do
+        get :index
+        expect(response).to have_http_status :redirect
+        expect(response).to redirect_to root_path
       end
     end
     context 'ログアウト状態の場合' do
@@ -31,13 +40,21 @@ RSpec.describe Admin::UsersController, type: :controller do
   end
 
   describe '#show' do
-    context 'ログイン状態の場合' do
+    context 'ログイン状態かつ、管理者権限を持つ場合' do
       include_context 'login_and_create_task_link'
       it 'HTTPステータスコードが200、テンプレートが表示されること' do
         get :show, params: { id: user.id }
         expect(response).to be_successful
         expect(response).to have_http_status :success
         expect(response).to render_template :show
+      end
+    end
+    context 'ログイン状態かつ、管理者権限を持たない場合' do
+      before { log_in(general_user) }
+      it 'タスク一覧ページにリダイレクトされること' do
+        get :show, params: { id: user.id }
+        expect(response).to have_http_status :redirect
+        expect(response).to redirect_to root_path
       end
     end
     context 'ログアウト状態の場合' do
@@ -80,13 +97,21 @@ RSpec.describe Admin::UsersController, type: :controller do
   end
 
   describe '#edit' do
-    context 'ログイン状態の場合' do
+    context 'ログイン状態かつ、管理者権限を持つ場合' do
       before { log_in(user) }
       it 'HTTPステータスコードが200、テンプレートが表示されること' do
         get :edit, params: { id: user.id }
         expect(response).to be_successful
         expect(response).to have_http_status :success
         expect(response).to render_template :edit
+      end
+    end
+    context 'ログイン状態かつ、管理者権限を持たない場合' do
+      before { log_in(general_user) }
+      it 'タスク一覧ページにリダイレクトされること' do
+        get :edit, params: { id: user.id }
+        expect(response).to have_http_status :redirect
+        expect(response).to redirect_to root_path
       end
     end
     context 'ログアウト状態の場合' do
@@ -101,7 +126,7 @@ RSpec.describe Admin::UsersController, type: :controller do
   describe '#update' do
     before { log_in(user) }
     context '正常な値' do
-      let(:normal_user_params) { { user_name: '変更後ユーザ名', email: 'update@user.com' } }
+      let(:normal_user_params) { { user_name: '変更後ユーザ名', email: 'update@user.com', role: true } }
       it '正常にタスクを更新できること' do
         patch :update, params: { id: user.id, user: normal_user_params }
         expect(user.reload.user_name).to eq '変更後ユーザ名'
@@ -112,9 +137,32 @@ RSpec.describe Admin::UsersController, type: :controller do
         expect(response).to redirect_to admin_user_path(id: user.id)
       end
     end
+    context 'ログイン中の自身のユーザの管理者権限を無効にしようとした場合' do
+      let(:own_user_params) { { user_name: user.user_name, email: user.email, role: false } }
+      it 'ユーザを更新できないこと' do
+        get :update, params: { id: user.id, user: own_user_params }
+        expect(user.reload.role).to eq true
+      end
+      it 'ユーザ一覧ページにリダイレクトされること' do
+        get :update, params: { id: user.id, user: own_user_params }
+        expect(response).to redirect_to admin_users_path
+      end
+    end
+    context 'ログイン中以外の管理者権限が有効なユーザの管理者権限を無効にしようとした場合' do
+      let(:other_user) { create(:user, role: true) }
+      let(:other_user_params) { { user_name: other_user.user_name, email: other_user.email, role: false } }
+      it 'ユーザを更新できること' do
+        get :update, params: { id: other_user.id, user: other_user_params }
+        expect(other_user.reload.role).to eq false
+      end
+      it '更新後、詳細ページにリダイレクトされること' do
+        get :update, params: { id: other_user.id, user: other_user_params }
+        expect(response).to redirect_to redirect_to admin_user_path(id: other_user.id)
+      end
+    end
     context '不正な値' do
       let!(:before_update_user) { user }
-      let(:unjust_user_params) { { user_name: '変更後ユーザ名', email: nil } }
+      let(:unjust_user_params) { { user_name: '変更後ユーザ名', email: nil, role: true } }
       it 'ユーザを更新できないこと' do
         patch :update, params: { id: user.id, user: unjust_user_params }
         expect(user.reload.user_name).to eq before_update_user.user_name
