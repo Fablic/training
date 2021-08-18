@@ -6,3 +6,5 @@
     description: "#{n + 1}日に\n何かをする",
   )
 end
+
+User.create!(name: 'first user', email: 'first@example.com', password: 'password')
