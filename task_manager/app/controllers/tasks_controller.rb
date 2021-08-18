@@ -38,9 +38,14 @@ class TasksController < ApplicationController
             render :new
         end
     end
-  
+
     def destroy
-    end  
+        @task = Task.find(params[:id])
+        @task.destroy
+      
+        flash[:success] = 'タスクが削除されました'
+        redirect_to tasks_path
+    end
 
     private
 
