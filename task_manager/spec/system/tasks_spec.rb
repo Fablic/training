@@ -27,11 +27,11 @@ RSpec.describe 'Tasks', type: :system do
   context '編集が行われているかの確認' do
     # Task編集画面を開く
     before { visit edit_task_path(task) }
-    
+
     it '既存のタスク内容が書いている' do
       expect(page).to have_field 'メモ', with: 'Memo'
     end
-    
+
     it 'タスクを編集できる' do
       # メモに"Memo"が入力されていることを検証する
       # メモを再入力
