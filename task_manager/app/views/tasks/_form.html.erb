@@ -1,22 +1,22 @@
 <%= form_for(@task) do |f| %>
     <div>
-        <%= f.label :name, 'タスク' %>
+        <%= f.label :name %>
         <%= f.text_field :name %>
     </div>
     <div>
-        <%= f.label :description, 'メモ' %>
+        <%= f.label :description %>
         <%= f.text_area :description %>
     </div>
     <div>
-        <%= f.label :due_at, '締め切り' %>
+        <%= f.label :due_at %>
         <%= f.text_field :due_at %>
     </div>
     <div>
-        <%= f.label :priority, '優先順位' %>
+        <%= f.label :priority %>
         <%= f.select :priority, Task.priorities_i18n.keys.map {|k| [I18n.t("enums.task.priority.#{k}"), k]} %>
     </div>
     <div>
-        <%= f.label :progress, '進捗状況' %>
+        <%= f.label :progress %>
         <%= f.select :progress, Task.progresses_i18n.keys.map {|k| [I18n.t("enums.task.progress.#{k}"), k]} %>
     </div>
     <%= f.submit '投稿' %>
