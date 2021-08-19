@@ -4,93 +4,107 @@ require 'rails_helper'
 
 RSpec.describe 'Tasks', type: :request do
   describe 'GET /tasks' do
-    before do
-      FactoryBot.create_list(:task, 101)
-    end
-
-    it 'should return 1st 25 Tasks' do
-      expected = Task.all.order('created_at desc').limit(25)
-      get '/tasks.json'
-
-      ret = JSON.parse(response.body)
-      expect(response.status).to eq 200
-
-      tasks = ret['tasks']
-      expect(tasks.count).to eq expected.count
-      expect(tasks.map { |t| t['name'] }).to eq expected.map(&:name)
-      expect(tasks.map { |t| t['dueDate'] }).to eq(expected.map(&:due_date).map { |d| I18n.l(d) })
-      expect(tasks.map { |t| t['status'] }).to eq(expected.map(&:status))
-
-      meta = ret['meta']
-      expect(meta['totalPages']).to eq 5
-      expect(meta['currentPage']).to eq 1
-    end
-
-    it 'should return 3rd page' do
-      expected = Task.all.order('created_at desc').limit(25).offset(25 * 2)
-      get '/tasks.json?page=3'
-
-      ret = JSON.parse(response.body)
-      tasks = ret['tasks']
-      expect(response.status).to eq 200
-      expect(tasks.count).to eq expected.count
-      expect(tasks.map { |t| t['name'] }).to eq expected.map(&:name)
-
-      meta = ret['meta']
-      expect(meta['currentPage']).to eq 3
-    end
-
-    it 'should return tasks order by due date' do
-      expected = Task.all.order(due_date: :asc).limit(25)
-      get '/tasks.json?order=due_date'
-
-      ret = JSON.parse(response.body)
-      expect(ret['tasks'].map { |t| t['name'] }).to eq expected.map(&:name)
-    end
-
-    it 'should return tasks order by due date desc' do
-      expected = Task.all.order(due_date: :desc).limit(25)
-      get '/tasks.json?order=due_date_desc'
-
-      ret = JSON.parse(response.body)
-      expect(ret['tasks'].map { |t| t['name'] }).to eq expected.map(&:name)
-    end
-
-    describe 'full text search', cleaner: :truncation do
-      let (:targets) { Task.all.order('rand()').limit(3) }
+    context 'with 101 tasks' do
       before do
-        targets.map { |t| t.update(name: "#{t.name} keyword") }
+        FactoryBot.create_list(:task, 101)
       end
 
-      it 'should return tasks which have search keywords' do
-        expected = targets.sort { |a, b| b.created_at <=> a.created_at }.map(&:name)
-        get '/tasks.json?q=keyword'
+      it 'should return 1st 25 Tasks' do
+        expected = Task.all.order('created_at desc').limit(25)
+        get '/tasks.json'
 
         ret = JSON.parse(response.body)
-        expect(ret['tasks'].map { |t| t['name'] }).to eq expected
+        expect(response.status).to eq 200
+
+        tasks = ret['tasks']
+        expect(tasks.count).to eq expected.count
+        expect(tasks.map { |t| t['name'] }).to eq expected.map(&:name)
+        expect(tasks.map { |t| t['dueDate'] }).to eq(expected.map(&:due_date).map { |d| I18n.l(d) })
+        expect(tasks.map { |t| t['status'] }).to eq(expected.map(&:status))
+
+        meta = ret['meta']
+        expect(meta['totalPages']).to eq 5
+        expect(meta['currentPage']).to eq 1
       end
 
-      it 'should return filtered tasks order by due date desc' do
-        expected = targets.sort { |a, b| b.due_date <=> a.due_date }.map(&:name)
-        get '/tasks.json?q=keyword&order=due_date_desc'
+      it 'should return 3rd page' do
+        expected = Task.all.order('created_at desc').limit(25).offset(25 * 2)
+        get '/tasks.json?page=3'
 
         ret = JSON.parse(response.body)
-        expect(ret['tasks'].map { |t| t['name'] }).to eq expected
-      end
-    end
+        tasks = ret['tasks']
+        expect(response.status).to eq 200
+        expect(tasks.count).to eq expected.count
+        expect(tasks.map { |t| t['name'] }).to eq expected.map(&:name)
 
-    describe 'state search' do
-      %i[in_progress close].each do |s|
+        meta = ret['meta']
+        expect(meta['currentPage']).to eq 3
+      end
+
+      it 'should return tasks order by due date' do
+        expected = Task.all.order(due_date: :asc).limit(25)
+        get '/tasks.json?order=due_date'
+
+        ret = JSON.parse(response.body)
+        expect(ret['tasks'].map { |t| t['name'] }).to eq expected.map(&:name)
+      end
+
+      it 'should return tasks order by due date desc' do
+        expected = Task.all.order(due_date: :desc).limit(25)
+        get '/tasks.json?order=due_date_desc'
+
+        ret = JSON.parse(response.body)
+        expect(ret['tasks'].map { |t| t['name'] }).to eq expected.map(&:name)
+      end
+
+      describe 'full text search', cleaner: :truncation do
         let (:targets) { Task.all.order('rand()').limit(3) }
+        before do
+          targets.map { |t| t.update(name: "#{t.name} keyword") }
+        end
 
-        it "should return tasks with status=#{s}" do
-          targets.map { |t| t.update(status: s) }
+        it 'should return tasks which have search keywords' do
           expected = targets.sort { |a, b| b.created_at <=> a.created_at }.map(&:name)
-          get "/tasks.json?status=#{s}"
+          get '/tasks.json?q=keyword'
 
           ret = JSON.parse(response.body)
           expect(ret['tasks'].map { |t| t['name'] }).to eq expected
         end
+
+        it 'should return filtered tasks order by due date desc' do
+          expected = targets.sort { |a, b| b.due_date <=> a.due_date }.map(&:name)
+          get '/tasks.json?q=keyword&order=due_date_desc'
+
+          ret = JSON.parse(response.body)
+          expect(ret['tasks'].map { |t| t['name'] }).to eq expected
+        end
+      end
+
+      describe 'state search' do
+        %i[in_progress close].each do |s|
+          let (:targets) { Task.all.order('rand()').limit(3) }
+
+          it "should return tasks with status=#{s}" do
+            targets.map { |t| t.update(status: s) }
+            expected = targets.sort { |a, b| b.created_at <=> a.created_at }.map(&:name)
+            get "/tasks.json?status=#{s}"
+
+            ret = JSON.parse(response.body)
+            expect(ret['tasks'].map { |t| t['name'] }).to eq expected
+          end
+        end
+      end
+    end
+
+    describe 'labels' do
+      it 'should return the task with labels' do
+        expected = FactoryBot.create(:task, :with_labels)
+        get '/tasks.json'
+
+        ret = JSON.parse(response.body)
+        actual = ret['tasks'].first
+
+        expect(actual['labels']).to eq expected.labels.map(&:value)
       end
     end
   end
@@ -200,6 +214,48 @@ RSpec.describe 'Tasks', type: :request do
 
       @task.reload
       expect(@task.due_date).to eq nil
+    end
+
+    describe 'labels' do
+      it 'should put new labels' do
+        expected = %w[newlabel1 newlabel2]
+        put "/tasks/#{@task.id}.json",
+            params: { task: @task.attributes.update({ labels: expected }) }
+
+        @task.reload
+        expect(@task.labels.map(&:value)).to eq expected
+      end
+
+      it 'should do nothing with existing labels' do
+        actual = FactoryBot.create(:task, :with_labels)
+        expected = actual.labels.map(&:value)
+        put "/tasks/#{actual.id}.json",
+            params: { task: actual.attributes.update({ labels: expected }) }
+
+        actual.reload
+        expect(actual.labels.map(&:value)).to eq expected
+      end
+
+      it 'should remove the label from the task' do
+        actual = FactoryBot.create(:task, :with_labels)
+        expected = actual.labels.map(&:value).tap(&:pop)
+
+        put "/tasks/#{actual.id}.json",
+            params: { task: actual.attributes.update({ labels: expected }) }
+
+        actual.reload
+        expect(actual.labels.map(&:value)).to eq expected
+      end
+
+      it 'should remove the label when it became usused' do
+        actual = FactoryBot.create(:task, :with_labels)
+        labels = actual.labels
+
+        put "/tasks/#{actual.id}.json",
+            params: { task: actual.attributes.update({ labels: [] }) }
+
+        labels.each { |label| expect { label.reload }.to raise_error(ActiveRecord::RecordNotFound) }
+      end
     end
   end
 
