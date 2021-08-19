@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'Tasks', type: :system do
@@ -55,7 +57,7 @@ RSpec.describe 'Tasks', type: :system do
     fill_in '締め切り', with: '2021-08-17 10:59:26'
     # 優先順位を入力
     select '中', from: '優先順位'
-    #進捗状況を入力
+    # 進捗状況を入力
     select 'InProgress', from: '進捗状況'
     # 更新実行
     click_button '投稿'
@@ -77,5 +79,4 @@ RSpec.describe 'Tasks', type: :system do
     # 画面を検証する
     expect(page).to have_content 'タスクが削除されました'
   end
-
 end
