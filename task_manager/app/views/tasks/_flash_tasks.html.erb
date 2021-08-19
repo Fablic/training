@@ -1,0 +1,3 @@
+<% flash.each do |task_type, task| %>
+  <div><%= task %></div>
+<% end %>
