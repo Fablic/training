@@ -3,9 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Tasks', type: :system do
-  before do
-    @task = FactoryBot.create(:task)
-  end
+  let!(:task) { FactoryBot.create(:task) }
 
   it '一覧ページの確認' do
     # Task編集画面を開く
@@ -17,7 +15,7 @@ RSpec.describe 'Tasks', type: :system do
 
   it '詳細ページの確認' do
     # Task編集画面を開く
-    visit task_path(@task)
+    visit task_path(task)
 
     # 画面を検証する
     expect(page).to have_content 'MyString'
@@ -28,7 +26,7 @@ RSpec.describe 'Tasks', type: :system do
 
   it '編集が行われているかの確認' do
     # Task編集画面を開く
-    visit edit_task_path(@task)
+    visit edit_task_path(task)
 
     # メモに"Memo"が入力されていることを検証する
     expect(page).to have_field 'メモ', with: 'Memo'
@@ -71,7 +69,7 @@ RSpec.describe 'Tasks', type: :system do
   end
 
   it '削除の確認' do
-    visit task_path(@task)
+    visit task_path(task)
     page.accept_confirm do
       click_on :delete_button
     end
