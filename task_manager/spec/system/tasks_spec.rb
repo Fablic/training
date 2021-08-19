@@ -5,6 +5,25 @@ RSpec.describe 'Tasks', type: :system do
     @task = Task.create!(name: 'MyString', description: 'Memo', due_at: '2021-08-17 10:59:26', priority: 1, progress: 1)
   end
 
+  it '一覧ページの確認' do
+    # Task編集画面を開く
+    visit tasks_path
+
+    # 画面を検証する
+    expect(page).to have_content 'MyString'
+  end
+
+  it '詳細ページの確認' do
+    # Task編集画面を開く
+    visit task_path(@task)
+
+    # 画面を検証する
+    expect(page).to have_content 'MyString'
+    expect(page).to have_content 'Memo'
+    expect(page).to have_content 'normal'
+    expect(page).to have_content 'InProgress'
+  end
+
   it '編集が行われているかの確認' do
     # Task編集画面を開く
     visit edit_task_path(@task)
@@ -18,7 +37,7 @@ RSpec.describe 'Tasks', type: :system do
     # 更新実行
     click_button '投稿'
 
-    # 正しく更新されていること（＝画面の表示が正しいこと）を検証する
+    # 画面を検証する
     expect(page).to have_content 'タスクが編集されました'
     expect(page).to have_content 'MyString'
     expect(page).to have_content 'MyText'
@@ -41,12 +60,12 @@ RSpec.describe 'Tasks', type: :system do
     # 更新実行
     click_button '投稿'
 
-    # 正しく更新されていること（＝画面の表示が正しいこと）を検証する
+    # 画面を検証する
     expect(page).to have_content 'タスクが投稿されました'
     expect(page).to have_content 'Task'
     expect(page).to have_content 'Memo'
     expect(page).to have_content 'normal'
-    expect(page).to have_content '進捗状況'
+    expect(page).to have_content 'InProgress'
   end
 
 end
