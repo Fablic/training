@@ -4,6 +4,7 @@ import Snackbar from '@material-ui/core/Snackbar'
 
 import Tasks from './Tasks'
 import AddForm from './AddForm'
+import Labels from './Labels'
 import { tasksSlice } from '../state/tasksSlice'
 
 const App: React.FC = (props) => {
@@ -13,6 +14,7 @@ const App: React.FC = (props) => {
   return (
     <>
       <AddForm />
+      <Labels />
       <Tasks />
       <Snackbar
         open={notice != null}
