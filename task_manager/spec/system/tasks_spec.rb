@@ -68,4 +68,14 @@ RSpec.describe 'Tasks', type: :system do
     expect(page).to have_content 'InProgress'
   end
 
+  it '削除の確認' do
+    visit task_path(@task)
+    page.accept_confirm do
+      click_on :delete_button
+    end
+
+    # 画面を検証する
+    expect(page).to have_content 'タスクが削除されました'
+  end
+
 end

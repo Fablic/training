@@ -14,4 +14,4 @@
 
 <%= link_to '編集ページへ', edit_task_path(@task) %>
 
-<%= link_to '削除する', @task, method: :delete, data:{ confirm: '本当によろしいですか？'} %>
+<%= link_to '削除する', @task, method: :delete, id: "delete_button", data:{ confirm: '本当によろしいですか？'} %>
