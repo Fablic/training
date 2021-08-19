@@ -13,11 +13,11 @@
     </div>
     <div>
         <%= f.label :priority, '優先順位' %>
-        <%= f.select :priority, [['低', 'low'], ['中', 'normal'], ['高', 'high']], {selected: @task.priority}, {class: 'mclist__select'} %>
+        <%= f.select :priority, Task.priorities_i18n.keys.map {|k| [I18n.t("enums.task.priority.#{k}"), k]} %>
     </div>
     <div>
         <%= f.label :progress, '進捗状況' %>
-        <%= f.select :progress, [['Todo', 'Todo'], ['InProgress', 'InProgress'], ['Done', 'Done']], {selected: @task.progress}, {class: 'mclist__select'} %>
+        <%= f.select :progress, Task.progresses_i18n.keys.map {|k| [I18n.t("enums.task.progress.#{k}"), k]} %>
     </div>
     <%= f.submit '投稿' %>
 <% end %>
