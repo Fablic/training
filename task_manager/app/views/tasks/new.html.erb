@@ -1,24 +1,5 @@
 <h1>タスクの作成</h1>
 
-<%= form_for(@task) do |f| %>
-    <div>
-        <%= f.label :name, 'タスク' %>
-        <%= f.text_field :name %>
-    </div>
-    <div>
-        <%= f.label :description, 'メモ' %>
-        <%= f.text_area :description %>
-    </div>
-    <div>
-        <%= f.label :due_at, '締め切り' %>
-        <%= f.text_field :due_at %>
-    </div>
-    <div>
-        <%= f.label :priority, '優先順位' %>
-        <%= f.select :priority, options_for_select([['低', 'low'], ['中', 'normal'], ['高', 'high']]), { include_blank: '選択してください'}, {class: 'mclist__select'} %>
-    </div>
-    <%= f.hidden_field :progress, value: 'Todo' %>
-    <%= f.submit '投稿' %>
-<% end %>
+<%= render 'form', task: @task %>
 
 <%= link_to '一覧に戻る', tasks_path %>
