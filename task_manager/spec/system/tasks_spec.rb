@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'Tasks', type: :system do
   before do
-    @task = Task.create!(name: 'MyString', description: 'Memo', due_at: '2021-08-17 10:59:26', priority: 1, progress: 1)
+    @task = FactoryBot.create(:task)
   end
 
   it '一覧ページの確認' do
