@@ -10,16 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_17_015926) do
-
-  create_table "tasks", charset: "utf8mb4", force: :cascade do |t|
-    t.string "name", null: false
-    t.text "description"
-    t.datetime "due_at", null: false
-    t.integer "priority", null: false
-    t.integer "progress", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+ActiveRecord::Schema.define(version: 20_210_817_015_926) do
+  create_table 'tasks', charset: 'utf8mb4', force: :cascade do |t|
+    t.string 'name', null: false
+    t.text 'description'
+    t.datetime 'due_at', null: false
+    t.integer 'priority', null: false
+    t.integer 'progress', null: false
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
   end
-
 end
