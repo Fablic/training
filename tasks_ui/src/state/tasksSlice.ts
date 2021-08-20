@@ -73,7 +73,7 @@ export const update = createAsyncThunk(
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(params),
+      body: JSON.stringify({ task: params }),
     })
 
     if (ret.ok) {

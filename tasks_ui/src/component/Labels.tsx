@@ -6,7 +6,33 @@ import { makeStyles } from '@material-ui/core/styles'
 import { index, labelsSlice } from '../state/labelsSlice'
 import { useDispatch, useSelector } from 'react-redux'
 
+export const LabelChips = (props) => {
+  const { labels, className } = props
+
+  return (
+    <>
+      {labels &&
+        labels.map((label) => (
+          <Chip
+            {...props}
+            aria-label="all labels chip"
+            className={className}
+            label={label}
+            key={label}
+            variant="outlined"
+          />
+        ))}
+    </>
+  )
+}
+
 const Labels = (props) => {
+  const dispatch = useDispatch()
+
+  const labels = useSelector((s) => s.labels?.labels)
+
+  useEffect(() => dispatch(index()), [])
+
   const classes = makeStyles({
     chips: {
       margin: '10px',
@@ -19,25 +45,9 @@ const Labels = (props) => {
     },
   })()
 
-  const dispatch = useDispatch()
-
-  const labels = useSelector((s) => s.labels?.labels)
-
-  useEffect(() => dispatch(index()), [])
-
   return (
     <div className={classes.chips}>
-      {labels &&
-        labels.map((label) => (
-          <Chip
-            aria-label="all labels chip"
-            clickable
-            className={classes.chip}
-            label={label}
-            key={label}
-            variant="outlined"
-          />
-        ))}
+      <LabelChips labels={labels} className={classes.chip} clickable />
     </div>
   )
 }

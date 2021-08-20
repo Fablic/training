@@ -20,6 +20,7 @@ const setMockState = (params) => {
       totalPages,
       currentPage,
     },
+    labels: [],
   }
 
   jest

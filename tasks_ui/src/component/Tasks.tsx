@@ -49,6 +49,7 @@ const Tasks: React.FC = (props) => {
   const tasks = useSelector((s) => s.tasks.tasks)
   const totalPages = useSelector((s) => s.tasks.totalPages)
   const page = useSelector((s) => s.tasks.currentPage)
+  const labels = useSelector((s) => s.labels.labels)
 
   const dispatch = useDispatch()
 
@@ -160,7 +161,7 @@ const Tasks: React.FC = (props) => {
       <ol className={classes.ol}>
         {tasks.map((t) => (
           <li key={t.id} className={classes.li}>
-            <Task task={t} />
+            <Task task={t} labels={labels} />
           </li>
         ))}
       </ol>

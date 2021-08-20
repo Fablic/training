@@ -291,7 +291,8 @@ describe('tasks slice', () => {
 
         expect(subject.payload).toEqual(payload)
         expect(fetchMock).toHaveFetched(
-          (u, o) => u == endpoint && o.body == JSON.stringify(updatedItem)
+          (u, o) =>
+            u == endpoint && o.body == JSON.stringify({ task: updatedItem })
         )
       })
 

@@ -28,6 +28,7 @@ const setMockState = (notice) => {
       tasks: [],
       notice,
     },
+    labels: [],
   }
 
   jest
