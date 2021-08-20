@@ -53,5 +53,15 @@ describe('labels', () => {
     it('should dispatch index at initial render', () => {
       expect(indexThunk).toHaveBeenCalled()
     })
+
+    describe('update button', () => {
+      it('should dispatch index when is clicked', () => {
+        const button = screen.getByLabelText('all labels update')
+        jest.clearAllMocks()
+        userEvent.click(button)
+
+        expect(indexThunk).toHaveBeenCalled()
+      })
+    })
   })
 })

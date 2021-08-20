@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react'
 import Icon from '@material-ui/core/Icon'
+import IconButton from '@material-ui/core/IconButton'
 import Chip from '@material-ui/core/Chip'
 import { makeStyles } from '@material-ui/core/styles'
 
@@ -48,6 +49,12 @@ const Labels = (props) => {
   return (
     <div className={classes.chips}>
       <LabelChips labels={labels} className={classes.chip} clickable />
+      <IconButton
+        aria-label="all labels update"
+        onClick={() => dispatch(index())}
+      >
+        <Icon>refresh</Icon>
+      </IconButton>
     </div>
   )
 }
