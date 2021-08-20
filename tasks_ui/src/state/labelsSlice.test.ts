@@ -6,11 +6,21 @@ const actions = labelsSlice.actions
 
 const initialState = {
   labels: [],
+  selected: '',
 }
 
 describe('labels slice', () => {
   it('should return the initial state', () => {
     expect(reducer(undefined, {})).toEqual(initialState)
+  })
+
+  describe('actions', () => {
+    it('should update selected', () => {
+      const expected = 'hogehoge'
+      const actual = reducer(initialState, actions.select(expected))
+
+      expect(actual.selected).toEqual(expected)
+    })
   })
 })
 

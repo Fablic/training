@@ -8,7 +8,7 @@ import { index, labelsSlice } from '../state/labelsSlice'
 import { useDispatch, useSelector } from 'react-redux'
 
 export const LabelChips = (props) => {
-  const { labels, className } = props
+  const { labels, className, selected, onClick } = props
 
   return (
     <>
@@ -21,6 +21,8 @@ export const LabelChips = (props) => {
             label={label}
             key={label}
             variant="outlined"
+            color={label == selected ? 'primary' : 'default'}
+            onClick={() => onClick(label)}
           />
         ))}
     </>
@@ -31,6 +33,7 @@ const Labels = (props) => {
   const dispatch = useDispatch()
 
   const labels = useSelector((s) => s.labels?.labels)
+  const selected = useSelector((s) => s.labels?.selected)
 
   useEffect(() => dispatch(index()), [])
 
@@ -48,7 +51,19 @@ const Labels = (props) => {
 
   return (
     <div className={classes.chips}>
-      <LabelChips labels={labels} className={classes.chip} clickable />
+      <LabelChips
+        labels={labels}
+        className={classes.chip}
+        clickable
+        selected={selected}
+        onClick={(label) => {
+          if (label == selected) {
+            dispatch(labelsSlice.actions.select(''))
+          } else {
+            dispatch(labelsSlice.actions.select(label))
+          }
+        }}
+      />
       <IconButton
         aria-label="all labels update"
         onClick={() => dispatch(index())}

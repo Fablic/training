@@ -11,10 +11,10 @@ import * as LabelsSlice from '../state/labelsSlice'
 import * as ReactRedux from 'react-redux'
 
 const setMockState = (params) => {
-  const { labels } = params
+  const { labels, selected } = params
 
   const mockState = {
-    labels: { labels },
+    labels: { labels, selected },
   }
 
   jest
@@ -37,10 +37,11 @@ const renderIt = () => {
 describe('labels', () => {
   const labels = ['label1', 'label2']
   const indexThunk = jest.spyOn(LabelsSlice, 'index')
+  const select = jest.spyOn(labelsSlice.actions, 'select')
 
   describe('render', () => {
     beforeEach(() => {
-      setMockState({ labels })
+      setMockState({ labels, selected: labels[0] })
       renderIt()
     })
 
@@ -61,6 +62,28 @@ describe('labels', () => {
         userEvent.click(button)
 
         expect(indexThunk).toHaveBeenCalled()
+      })
+    })
+
+    describe('select/unselect', () => {
+      it('should show the selected label as it is', () => {
+        const chips = screen.getAllByLabelText('all labels chip')
+        expect(chips[0].className).toMatch(/MuiChip-colorPrimary/)
+        expect(chips[1].className).not.toMatch(/MuiChip-colorPrimary/)
+      })
+
+      it('should dispatch select when is clicked', () => {
+        const target = labels[labels.length - 1]
+        const chip = screen.getByText(target)
+        userEvent.click(chip)
+        expect(select).toHaveBeenCalledWith(target)
+      })
+
+      it('should dispatch select with blank when selected is clicked', () => {
+        const target = labels[0]
+        const chip = screen.getByText(target)
+        userEvent.click(chip)
+        expect(select).toHaveBeenCalledWith('')
       })
     })
   })

@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 
 const initialState: State = {
   labels: [],
+  selected: '',
 }
 
 export const index = createAsyncThunk('label/index', async (params, _) => {
@@ -19,7 +20,9 @@ export const labelsSlice = createSlice({
   name: 'labels',
   initialState,
   reducers: {
-    //
+    select(state, action) {
+      state.selected = action.payload
+    },
   },
 
   extraReducers: (builder) => {
