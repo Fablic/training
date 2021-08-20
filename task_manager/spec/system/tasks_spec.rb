@@ -3,19 +3,27 @@
 require 'rails_helper'
 
 RSpec.describe 'Tasks', type: :system do
-  let!(:task) { FactoryBot.create(:task) }
+  let!(:new_task) { FactoryBot.create(:new_task) }
 
-  it '一覧ページの確認' do
-    # Task編集画面を開く
-    visit tasks_path
+  context '一覧ページの確認' do
+    # Task一覧画面を開く
+    let!(:old_task) { FactoryBot.create(:old_task) }
+    before { visit tasks_path }
 
-    # 画面を検証する
-    expect(page).to have_content 'MyString'
-  end
+    it '一覧表示されているかの確認' do
+
+      # 画面を検証する
+      expect(page).to have_content 'MyString'
+    end
+
+    it 'sort順序の確認' do
+      expect(page).to have_selector '#task-0', text: '2021-08-02'
+    end
+  end  
 
   it '詳細ページの確認' do
     # Task編集画面を開く
-    visit task_path(task)
+    visit task_path(new_task)
 
     # 画面を検証する
     expect(page).to have_content 'MyString'
@@ -26,7 +34,7 @@ RSpec.describe 'Tasks', type: :system do
 
   context '編集が行われているかの確認' do
     # Task編集画面を開く
-    before { visit edit_task_path(task) }
+    before { visit edit_task_path(new_task) }
 
     it '既存のタスク内容が書いている' do
       expect(page).to have_field 'メモ', with: 'Memo'
@@ -75,7 +83,7 @@ RSpec.describe 'Tasks', type: :system do
   end
 
   it '削除の確認' do
-    visit task_path(task)
+    visit task_path(new_task)
     page.accept_confirm do
       click_on :delete_button
     end
