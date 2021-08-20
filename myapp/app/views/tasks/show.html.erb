@@ -1,0 +1,22 @@
+<h1>タスク詳細</h1>
+
+<table>
+  <tr>
+    <th>件名</th>
+    <td><%= @task.title %></td>
+  </tr>
+  <tr>
+    <th>詳細</th>
+    <td><%= @task.content %></td>
+  </tr>
+  <tr>
+    <th>操作</th>
+    <td><%= @task.id %></td>
+  </tr>
+</table>
+
+<p><%= link_to '一覧に戻る', tasks_path %></p>
+
+<p><%= link_to '編集ページへ', edit_task_path(@task) %></p>
+
+<p><%= link_to '削除する', @task, method: :delete, data:{ confirm: '本当によろしいですか？'} %></p>

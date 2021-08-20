@@ -1,0 +1,17 @@
+<h1>タスクの作成</h1>
+
+<%= form_for(@task) do |f| %>
+<div>
+  <%= f.label :title, 'Title' %>
+  <%= f.text_field :title %>
+</div>
+<div>
+  <%= f.label :content, '詳細' %>
+  <%= f.text_area :content %>
+</div>
+<div>
+<%= f.submit '投稿' %>
+</div>
+<% end %>
+
+<p><%= link_to '一覧に戻る', tasks_path %></p>
