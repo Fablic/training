@@ -69,6 +69,7 @@ class TasksController < ApplicationController
     params.fetch(:task, {}).permit(:name, :description, :due_date, :status, labels: [])
   end
 
+  # rubocop:disable Metrics/AbcSize
   def apply_queries(tasks, params)
     if params[:q]
       keywords = Shellwords.shellwords(params[:q])
@@ -77,8 +78,14 @@ class TasksController < ApplicationController
 
     tasks = tasks.where(status: params[:status]) if params[:status]
 
+    if params[:label]
+      label = Label.where(value: params[:label]).first
+      tasks = tasks.joins(:task_labels).where('task_labels.label_id': label.id) if label
+    end
+
     tasks
   end
+  # rubocop:enable Metrics/AbcSize
 
   def labels
     (task_params[:labels] || []).reject(&:blank?).map do |v|

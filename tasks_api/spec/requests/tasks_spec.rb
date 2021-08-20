@@ -106,6 +106,18 @@ RSpec.describe 'Tasks', type: :request do
 
         expect(actual['labels']).to eq expected.labels.map(&:value)
       end
+
+      it 'should return tasks with specified label' do
+        label = FactoryBot.create(:label)
+        tasks = FactoryBot.create_list(:task, 10)
+        tasks.each { |t| t.labels << label }
+
+        get "/tasks.json?label=#{label.value}"
+        ret = JSON.parse(response.body)
+        actual = ret['tasks'].map { |t| t['name'] }
+
+        expect(actual.sort).to eq tasks.map(&:name).sort
+      end
     end
   end
 
