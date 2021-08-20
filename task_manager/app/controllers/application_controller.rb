@@ -3,7 +3,7 @@
 class ApplicationController < ActionController::Base
   # ハンドルしきれなかったエラーは500エラー扱い
   unless Rails.env.development?
-    rescue_from Exception,                        with: :render500
+    rescue_from StandardError, with: :rescue_500
     rescue_from ActiveRecord::RecordNotFound,     with: :render404
     rescue_from ActionController::RoutingError,   with: :render404
   end
