@@ -3,29 +3,36 @@
 require 'rails_helper'
 
 RSpec.describe 'Tasks', type: :system do
-  let!(:new_task) { FactoryBot.create(:new_task) }
+  let!(:task) { FactoryBot.create(:task) }
 
   context '一覧ページの確認' do
     # Task一覧画面を開く
-    let!(:old_task) { FactoryBot.create(:old_task) }
+    let!(:new_task) { FactoryBot.create(:new_task) }
     before { visit tasks_path }
 
     it '一覧表示されているかの確認' do
       # 画面を検証する
-      expect(page).to have_content 'MyString'
+      expect(page).to have_content 'a_task'
     end
 
-    it 'sort順序の確認' do
+    it '初期のsort順序の確認' do
       expect(page).to have_selector '#task-0', text: '2021-08-02'
+      expect(page).to have_selector '#task-1', text: '2019-09-02'
+    end
+
+    it '名前ボタンを押した際のsort確認' do
+      find('a', text: 'タスク名').click
+      expect(page).to have_selector '#task-0', text: 'a_task'
+      expect(page).to have_selector '#task-1', text: 'b_task'
     end
   end
 
   it '詳細ページの確認' do
     # Task編集画面を開く
-    visit task_path(new_task)
+    visit task_path(task)
 
     # 画面を検証する
-    expect(page).to have_content 'MyString'
+    expect(page).to have_content 'a_task'
     expect(page).to have_content 'Memo'
     expect(page).to have_content '中'
     expect(page).to have_content '進行中'
@@ -33,7 +40,7 @@ RSpec.describe 'Tasks', type: :system do
 
   context '編集が行われているかの確認' do
     # Task編集画面を開く
-    before { visit edit_task_path(new_task) }
+    before { visit edit_task_path(task) }
 
     it '既存のタスク内容が書いている' do
       expect(page).to have_field 'メモ', with: 'Memo'
@@ -49,7 +56,7 @@ RSpec.describe 'Tasks', type: :system do
 
       # 画面を検証する
       expect(page).to have_content 'タスクが編集されました'
-      expect(page).to have_content 'MyString'
+      expect(page).to have_content 'a_task'
       expect(page).to have_content 'MyText'
     end
   end
@@ -82,7 +89,7 @@ RSpec.describe 'Tasks', type: :system do
   end
 
   it '削除の確認' do
-    visit task_path(new_task)
+    visit task_path(task)
     page.accept_confirm do
       click_on :delete_button
     end
