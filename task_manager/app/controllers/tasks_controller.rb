@@ -2,10 +2,10 @@
 
 class TasksController < ApplicationController
   helper_method :sort_column, :sort_direction
-  
+
   before_action :set_task_by_id, only: %i[show edit update destroy]
   def index
-    @tasks = Task.all.order(sort_column + ' ' + sort_direction)
+    @tasks = Task.all.order("#{sort_column} #{sort_direction}")
   end
 
   def show
@@ -58,12 +58,10 @@ class TasksController < ApplicationController
   end
 
   def sort_direction
-    %w[asc desc].include?(params[:direction]) ?  params[:direction] : "desc"
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : 'desc'
   end
 
   def sort_column
-    Task.column_names.include?(params[:sort]) ? params[:sort] : "created_at"
+    Task.column_names.include?(params[:sort]) ? params[:sort] : 'created_at'
   end
-
-
 end

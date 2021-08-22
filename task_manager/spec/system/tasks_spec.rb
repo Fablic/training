@@ -11,7 +11,6 @@ RSpec.describe 'Tasks', type: :system do
     before { visit tasks_path }
 
     it '一覧表示されているかの確認' do
-
       # 画面を検証する
       expect(page).to have_content 'MyString'
     end
@@ -19,7 +18,7 @@ RSpec.describe 'Tasks', type: :system do
     it 'sort順序の確認' do
       expect(page).to have_selector '#task-0', text: '2021-08-02'
     end
-  end  
+  end
 
   it '詳細ページの確認' do
     # Task編集画面を開く
