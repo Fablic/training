@@ -4,7 +4,7 @@ class TasksController < ApplicationController
   before_action :set_task, only: %i[show edit update destroy]
 
   def index
-    @tasks = Task.order(updated_at: :desc)
+    @tasks = current_user.tasks.order(updated_at: :desc)
     @tasks = @tasks.by_name(params[:name]) if params[:name].present?
     @tasks = @tasks.by_status(params[:status]) if params[:status].present?
   end
@@ -12,11 +12,11 @@ class TasksController < ApplicationController
   def show; end
 
   def new
-    @task = Task.new
+    @task = current_user.tasks.new
   end
 
   def create
-    @task = Task.new(task_params)
+    @task = current_user.tasks.new(task_params)
     if @task.save
       flash[:success] = I18n.t('tasks.flash.create.success')
       redirect_to root_path
@@ -50,7 +50,7 @@ class TasksController < ApplicationController
   private
 
   def set_task
-    @task = Task.find(params[:id])
+    @task = current_user.tasks.find(params[:id])
   end
 
   def task_params
