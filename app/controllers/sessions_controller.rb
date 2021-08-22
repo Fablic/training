@@ -16,6 +16,12 @@ class SessionsController < ApplicationController
     end
   end
 
+  def destroy
+    reset_session
+    flash[:success] = I18n.t('sessions.flash.destroy.success')
+    redirect_to login_path
+  end
+
   private
 
   def session_params

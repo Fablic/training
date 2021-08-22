@@ -23,6 +23,8 @@ ja:
       create:
         success: ログインしました
         danger: ログインに失敗しました
+      destroy:
+        success: ログアウトしました
 
   time:
     formats:
