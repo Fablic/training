@@ -18,6 +18,11 @@ ja:
       destroy:
         success: タスクを削除しました
         danger: タスクの削除に失敗しました
+  sessions:
+    flash:
+      create:
+        success: ログインしました
+        danger: ログインに失敗しました
 
   time:
     formats:
