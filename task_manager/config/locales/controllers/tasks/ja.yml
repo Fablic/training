@@ -1,0 +1,11 @@
+ja:
+  tasks:
+    flash:
+      create:
+        success: "タスクが投稿されました"
+        danger: "タスクの投稿に失敗しました"
+      update:
+        success: "タスクが編集されました"
+        danger: "タスクの編集に失敗しました"
+      destroy:
+        success: "タスクが削除されました"

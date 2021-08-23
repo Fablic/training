@@ -11,7 +11,3 @@ ja:
           due_at: 締め切り
           priority: 優先順位
           progress: 進捗状況
-  # 全てのmodelで共通して使用するattributesを定義
-  attributes:
-    created_at: 作成日
-    updated_at: 更新日
