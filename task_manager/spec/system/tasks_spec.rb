@@ -25,6 +25,12 @@ RSpec.describe 'Tasks', type: :system do
       expect(page).to have_selector '#task-0', text: 'a_task'
       expect(page).to have_selector '#task-1', text: 'b_task'
     end
+
+    it '作成日ボタンを押した際のsort確認' do
+      find('a', text: '作成日').click
+      expect(page).to have_selector '#task-0', text: '2019-09-02'
+      expect(page).to have_selector '#task-1', text: '2021-08-02'
+    end
   end
 
   it '詳細ページの確認' do
