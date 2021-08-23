@@ -1,66 +1,171 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>We're sorry, but something went wrong (500)</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <style>
-  .rails-default-error-page {
-    background-color: #EFEFEF;
-    color: #2E2F30;
-    text-align: center;
-    font-family: arial, sans-serif;
-    margin: 0;
-  }
+  <head>
+    <style>
+      @import url('https://fonts.googleapis.com/css?family=Open+Sans|Nova+Mono');
+      :root {
+        --font-header: 'Nova Mono', monospace;
+        --font-text: 'Open Sans', sans-serif;
+        --color-theme: #F1EEDB;
+        --color-bg: #282B24;
 
-  .rails-default-error-page div.dialog {
-    width: 95%;
-    max-width: 33em;
-    margin: 4em auto 0;
-  }
+        --animation-sentence: 'You know you\'re supposed to leave, right?';
+        --animation-duration: 40s;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        width: 100%;
+        font-family: var(--font-text);
+        color: var(--color-theme);
+        background: var(--color-bg);
+        overflow: hidden;
+      }
+      .container {
+        text-align: center;
+        margin: 1rem 0.5rem 0;
+      }
+      .container h1 {
+        font-family: var(--font-header);
+        font-size: calc(4rem + 2vw);
+        text-transform: uppercase;
+      }
+      .container p {
+        text-transform: uppercase;
+        letter-spacing: 0.2rem;
+        font-size: 2rem;
+        margin: 1.5rem 0 3rem;
+      }
+      .ghost {
+        /* border: 1px solid tomato; */
+        position: absolute;
+        bottom: 5px;
+        left: calc(50% - 100px);
+        width: 200px;
+        height: 200px;
+        /* have the ghost move to the right and to the left of the screen, turning to its central position and repeating the animation twice */
+        animation: hoverGhost calc(var(--animation-duration)/2) ease-in-out 2;
 
-  .rails-default-error-page div.dialog > div {
-    border: 1px solid #CCC;
-    border-right-color: #999;
-    border-left-color: #999;
-    border-bottom-color: #BBB;
-    border-top: #B00100 solid 4px;
-    border-top-left-radius: 9px;
-    border-top-right-radius: 9px;
-    background-color: white;
-    padding: 7px 12% 0;
-    box-shadow: 0 3px 8px rgba(50, 50, 50, 0.17);
-  }
+      }
+      /* introduce text through a pseudo element, connected to the animated div */
+      .ghost:before {
+        content: var(--animation-sentence);
+        color: var(--color-theme);
+        border-radius: 50%;
+        position: absolute;
+        bottom: 100%;
+        text-align: center;
+        line-height: 2;
+        padding: 1rem;
+        visibility: hidden;
+        opacity: 0;
+        /* have each string of text introduced as the ghost returns from the right edge of the screen, and for the length of time it takes to cover the central portion (a fourth, which becomes an eight as the animation length is half the total duration) */
+        /* the delay for an hypothetical duration of 40s is 7.5s for the first, 27.5s for the second and finally 40s for the last
+        in fractions and with a bit of math it boils down to 3/16, 27/40 and 1
+        // ! remember to include a slight delay in the animation of the key and keyhole
+        */
+        animation:
+          showText calc(var(--animation-duration)/8) calc(var(--animation-duration)*3/16) ease-out forwards,
+          showNewText calc(var(--animation-duration)/8) calc(var(--animation-duration)*27/40) ease-out forwards,
+          showFinalText calc(var(--animation-duration)/8) var(--animation-duration) ease-out forwards;
 
-  .rails-default-error-page h1 {
-    font-size: 100%;
-    color: #730E15;
-    line-height: 1.5em;
-  }
+      }
 
-  .rails-default-error-page div.dialog > p {
-    margin: 0 0 1em;
-    padding: 1em;
-    background-color: #F7F7F7;
-    border: 1px solid #CCC;
-    border-right-color: #999;
-    border-left-color: #999;
-    border-bottom-color: #999;
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
-    border-top-color: #DADADA;
-    color: #666;
-    box-shadow: 0 3px 8px rgba(50, 50, 50, 0.17);
-  }
-  </style>
-</head>
+      /* define the keyframe animations
+      - hoverghost to have the ghost move right, left and then back to its default position
+      - showKey to introduce into view the key (and keyhole) svg
+      - showText, showNewText, showFinalText to show the different strings (the implementation is quite quirky and primed for optimization)
+      */
+      @keyframes hoverGhost {
+        25% {
+          transform: translateX(20vw);
+        }
+        75% {
+          transform: translateX(-20vw);
+        }
+      }
 
-<body class="rails-default-error-page">
-  <!-- This file lives in public/500.html -->
-  <div class="dialog">
-    <div>
-      <h1>We're sorry, but something went wrong.</h1>
+
+      /* alter the text changing the value of the custom property, weary of changing its value when the pseudo element is hidden and changing its value in the last keyframe (as the animation gives this value as per the "forwards" value of the fill-mode property)  */
+      @keyframes showText {
+        2% {
+          opacity: 1;
+          visibility: visible;
+        }
+        98% {
+
+          opacity: 1;
+          visibility: visible;
+        }
+        99% {
+          --animation-sentence: 'You know you\'re supposed to leave, right?';
+          opacity: 0;
+          visibility: hidden;
+        }
+        100% {
+          --animation-sentence: 'So much to do, so little time...';
+        }
+      }
+      @keyframes showNewText {
+        2% {
+          --animation-sentence: 'So much to do, so little time...';
+          opacity: 1;
+          visibility: visible;
+        }
+        98% {
+
+          opacity: 1;
+          visibility: visible;
+        }
+        99% {
+          --animation-sentence: 'So much to do, so little time...';
+          opacity: 0;
+          visibility: hidden;
+        }
+        100% {
+          --animation-sentence: 'Okay, you seem to care about this. Please Return';
+        }
+      }
+      @keyframes showFinalText {
+        2% {
+          opacity: 1;
+          visibility: visible;
+        }
+        98% {
+          opacity: 1;
+          visibility: visible;
+        }
+        100% {
+          opacity: 0;
+          visibility: hidden;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- include the svg assets later used in the project -->
+    <svg style="display: none;">
+      <symbol id="ghost" xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 26.458333 26.458334"><g transform="translate(0 -270.542)"><path d="M4.63 279.293c0-4.833 3.85-8.751 8.6-8.751 4.748 0 8.598 3.918 8.598 8.75H13.23zM4.725 279.293h16.914c.052 0 .19.043.19.096l-.095 14.329c0 .026-.011.05-.028.068a.093.093 0 0 1-.067.028c-.881 0-1.235-1.68-2.114-1.616-.995.072-1.12 2.082-2.114 2.154-.88.064-1.233-1.615-2.115-1.615-.881 0-1.233 1.615-2.114 1.615-.881 0-1.233-1.615-2.114-1.615-.882 0-1.236 1.679-2.115 1.615-.994-.072-1.12-2.082-2.114-2.154-.88-.063-1.41 1.077-2.114 1.616-.021.016-.05-.01-.067-.028a.097.097 0 0 1-.028-.068v-14.33c0-.052.042-.095.095-.095z" fill="#f1eedb" paint-order="stroke fill markers"/><path d="M15.453 281.27a1.987 1.94 0 0 1-.994 1.68 1.987 1.94 0 0 1-1.987 0 1.987 1.94 0 0 1-.994-1.68h1.988z" fill="#282b24" paint-order="stroke fill markers"/><g fill="#282b24" transform="matrix(1 0 0 1.0177 .283 -5.653)"><ellipse cx="10.205" cy="278.668" rx="1.231" ry="1.181" paint-order="stroke fill markers"/><ellipse ry="1.181" rx="1.231" cy="278.668" cx="16.159" paint-order="stroke fill markers"/><ellipse ry=".331" rx=".853" cy="280.936" cx="10.205" opacity=".5" paint-order="stroke fill markers"/><ellipse cx="16.159" cy="280.936" rx=".853" ry=".331" opacity=".5" paint-order="stroke fill markers"/></g><ellipse ry=".614" rx="8.082" cy="296.386" cx="13.229" opacity=".1" fill="#f1eedb" paint-order="stroke fill markers"/></g></symbol>
+
+    </svg>
+
+    <!-- include in a container a heading, paragraph and svg for the keyhole -->
+    <div class="container">
+      <h1>500</h1>
+      <p>Internal Server Error</p>
     </div>
-    <p>If you are the application owner check the logs for more information.</p>
-  </div>
-</body>
+
+    <!--
+      ! nest the svg in a vi, give the svg and vi the same class
+      the div and svg behave differently when translating the element through the transform property, giving a nice distance between the text (included with a pseudo element on the div) and the svg
+    -->
+    <div class="ghost">
+      <svg class="ghost">
+        <use href="#ghost"/>
+      </svg>
+    </div>
+  </body>
 </html>
