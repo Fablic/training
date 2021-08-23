@@ -1,0 +1,13 @@
+ja:
+  activerecord:
+    models:
+      task: タスク
+    # model毎に定義したいattributesを記述
+    attributes:
+        task:
+          id: ID
+          name: タスク名
+          description: メモ
+          due_at: 締め切り
+          priority: 優先順位
+          progress: 進捗状況

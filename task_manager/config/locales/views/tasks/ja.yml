@@ -1,0 +1,11 @@
+ja:
+  enums:
+    task:
+      priority:
+        low: "低"
+        normal: "中"
+        high: "高"
+      progress:
+        Todo: "未着手"
+        InProgress: "進行中"
+        Done: "済"

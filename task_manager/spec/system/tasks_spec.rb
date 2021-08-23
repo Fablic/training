@@ -20,8 +20,8 @@ RSpec.describe 'Tasks', type: :system do
     # 画面を検証する
     expect(page).to have_content 'MyString'
     expect(page).to have_content 'Memo'
-    expect(page).to have_content 'normal'
-    expect(page).to have_content 'InProgress'
+    expect(page).to have_content '中'
+    expect(page).to have_content '進行中'
   end
 
   context '編集が行われているかの確認' do
@@ -61,7 +61,7 @@ RSpec.describe 'Tasks', type: :system do
       # 優先順位を入力
       select '中', from: '優先順位'
       # 進捗状況を入力
-      select 'InProgress', from: '進捗状況'
+      select '進行中', from: '進捗状況'
       # 更新実行
       click_button '投稿'
 
@@ -69,8 +69,8 @@ RSpec.describe 'Tasks', type: :system do
       expect(page).to have_content 'タスクが投稿されました'
       expect(page).to have_content 'Task'
       expect(page).to have_content 'Memo'
-      expect(page).to have_content 'normal'
-      expect(page).to have_content 'InProgress'
+      expect(page).to have_content '中'
+      expect(page).to have_content '進行中'
     end
   end
 
