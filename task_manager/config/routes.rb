@@ -5,6 +5,4 @@ Rails.application.routes.draw do
   root to: 'tasks#index'
 
   resources :tasks
-
-  get '*path', controller: 'application', action: 'render404'
 end
