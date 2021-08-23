@@ -3,6 +3,14 @@
 require 'rails_helper'
 
 RSpec.describe 'Tasks', type: :request do
+  let(:user) { create(:user) }
+
+  before do
+    post login_path, params: {
+      session: { email: user.email, password: user.password }
+    }
+  end
+
   describe 'GET index' do
     it 'returns http success' do
       get tasks_path
@@ -11,7 +19,7 @@ RSpec.describe 'Tasks', type: :request do
   end
 
   describe 'GET show' do
-    let(:task) { create(:task) }
+    let(:task) { create(:task, user: user) }
 
     it 'returns http success' do
       get task_path(task)
@@ -27,7 +35,7 @@ RSpec.describe 'Tasks', type: :request do
   end
 
   describe 'GET edit' do
-    let(:task) { create(:task) }
+    let(:task) { create(:task, user: user) }
 
     it 'returns http success' do
       get edit_task_path(task)
@@ -49,7 +57,7 @@ RSpec.describe 'Tasks', type: :request do
   end
 
   describe 'PUT update' do
-    let(:task) { create(:task) }
+    let(:task) { create(:task, user: user) }
 
     it 'updates a task' do
       put task_path(task), params: { task: attributes_for(:task, name: 'updated task') }
@@ -63,7 +71,7 @@ RSpec.describe 'Tasks', type: :request do
   end
 
   describe 'DELETE destroy' do
-    let!(:task) { create(:task) }
+    let!(:task) { create(:task, user: user) }
 
     it 'deletes a task' do
       expect do
