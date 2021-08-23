@@ -88,14 +88,7 @@ class TasksController < ApplicationController
   # rubocop:enable Metrics/AbcSize
 
   def labels
-    (task_params[:labels] || []).reject(&:blank?).map do |v|
-      l = Label.where(value: v).first
-      unless l
-        l = Label.new(value: v)
-        l.save
-      end
-
-      l
-    end
+    (task_params[:labels] || []).reject(&:blank?).
+      map { |v| Label.find_or_create_by(value: v) }
   end
 end
