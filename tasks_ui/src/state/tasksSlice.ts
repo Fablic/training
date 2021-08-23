@@ -6,42 +6,50 @@ const initialState: State = {
   currentPage: 0,
   pending: false,
   notice: null,
+  maintenance: false,
 }
 
-export const index = createAsyncThunk('task/index', async (params, _) => {
-  let endpoint = 'http://localhost:3000/tasks.json'
-  const qs = []
-  if (params) {
-    if (params.order) {
-      qs.push(`order=${params.order}`)
+export const index = createAsyncThunk(
+  'task/index',
+  async (params, thunkApi) => {
+    let endpoint = 'http://localhost:3000/tasks.json'
+    const qs = []
+    if (params) {
+      if (params.order) {
+        qs.push(`order=${params.order}`)
+      }
+
+      if (params.query) {
+        qs.push(`q=${params.query}`)
+      }
+
+      if (params.status) {
+        qs.push(`status=${params.status}`)
+      }
+
+      if (params.page) {
+        qs.push(`page=${params.page}`)
+      }
+
+      if (params.label) qs.push(`label=${params.label}`)
+    }
+    if (qs.length > 0) {
+      endpoint += `?${qs.join('&')}`
     }
 
-    if (params.query) {
-      qs.push(`q=${params.query}`)
-    }
+    const ret = await fetch(endpoint, {
+      method: 'GET',
+      mode: 'cors',
+      headers: { 'Content-Type': 'application/json' },
+    })
 
-    if (params.status) {
-      qs.push(`status=${params.status}`)
+    if (ret.ok) {
+      return ret.json()
+    } else {
+      return thunkApi.rejectWithValue(await ret.json())
     }
-
-    if (params.page) {
-      qs.push(`page=${params.page}`)
-    }
-
-    if (params.label) qs.push(`label=${params.label}`)
   }
-  if (qs.length > 0) {
-    endpoint += `?${qs.join('&')}`
-  }
-
-  const ret = await fetch(endpoint, {
-    method: 'GET',
-    mode: 'cors',
-    headers: { 'Content-Type': 'application/json' },
-  })
-
-  if (ret.ok) return ret.json()
-})
+)
 
 export const create = createAsyncThunk(
   'task/create',
@@ -86,17 +94,24 @@ export const update = createAsyncThunk(
   }
 )
 
-export const destroy = createAsyncThunk('task/destroy', async (params, _) => {
-  const ret = await fetch(`http://localhost:3000/tasks/${params.id}.json`, {
-    method: 'DELETE',
-    mode: 'cors',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
+export const destroy = createAsyncThunk(
+  'task/destroy',
+  async (params, thunkApi) => {
+    const ret = await fetch(`http://localhost:3000/tasks/${params.id}.json`, {
+      method: 'DELETE',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
 
-  if (ret.ok) return { ...(await ret.json()), id: params.id }
-})
+    if (ret.ok) {
+      return { ...(await ret.json()), id: params.id }
+    } else {
+      return thunkApi.rejectWithValue(await ret.json())
+    }
+  }
+)
 
 const findTask = (state, id) => {
   return state.tasks.find((t) => id == t.id)
@@ -128,9 +143,13 @@ export const tasksSlice = createSlice({
         s.pending = false
 
         if (a.payload) {
-          s.notice = Object.entries(a.payload)
-            .map((e) => e[1].join('\n'))
-            .join('\n')
+          if (a.payload.type && a.payload.type == 'under_maintenance') {
+            s.maintenance = true
+          } else {
+            s.notice = Object.entries(a.payload)
+              .map((e) => e[1].join('\n'))
+              .join('\n')
+          }
         }
       })
     })
