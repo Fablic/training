@@ -1,5 +1,8 @@
 <h1><%= t '.title' %></h1>
-
+<%= form_with url: search_path, method: :get, local: true do |f| %>
+    <%= f.text_field :keyword, value: @keyword %>
+    <%= f.submit "検索" %>
+<% end %>
 <table class="table table-striped table-bordered table-hover">
   <thead>
     <tr>

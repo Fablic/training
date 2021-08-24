@@ -47,6 +47,13 @@ class TasksController < ApplicationController
     redirect_to tasks_path
   end
 
+  def search
+    puts :keyword
+    @tasks = Task.search(params[:keyword])
+    @keyword = params[:keyword]
+    render "index"
+  end
+
   private
 
   def set_task_by_id

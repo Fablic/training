@@ -34,4 +34,8 @@ class Task < ApplicationRecord
   def due_at_start_check
     errors.add(:due_at, :start_check) if due_at < Time.current
   end
+  
+  def self.search(keyword)
+    where(["name like?", "%#{keyword}%"])
+  end
 end
