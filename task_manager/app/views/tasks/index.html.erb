@@ -5,6 +5,7 @@
     <tr>
       <th scope="col"><%= sortable "name" , (t '.name')%></th>
       <th scope="col"><%= sortable "created_at" , (t '.created_at')%></th>
+      <th scope="col"><%= sortable "due_at" , (t '.due_at')%></th>
     </tr>
   </thead>
 
@@ -13,6 +14,7 @@
       <tr id= 'task-<%= index %>'>
         <td><%= task.name %></td>
         <td><%= task.created_at %></td>
+        <td><%= task.due_at %></td>
         <td><%= link_to '詳細', task %></td>
       </tr>
     <% end %>
