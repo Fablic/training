@@ -35,7 +35,7 @@ class Task < ApplicationRecord
     errors.add(:due_at, :start_check) if due_at < Time.current
   end
   
-  def self.search(keyword)
-    where(["name like?", "%#{keyword}%"])
+  def self.search(keyword_name, keyword_progress)
+    where(["name like? AND progress like?", "%#{keyword_name}%", "%#{keyword_progress}%"])
   end
 end

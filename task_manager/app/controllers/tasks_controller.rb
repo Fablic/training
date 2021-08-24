@@ -48,9 +48,7 @@ class TasksController < ApplicationController
   end
 
   def search
-    puts :keyword
-    @tasks = Task.search(params[:keyword])
-    @keyword = params[:keyword]
+    @tasks = Task.search(params[:keyword_name], Task.progresses[params[:keyword_progress]])
     render "index"
   end
 
