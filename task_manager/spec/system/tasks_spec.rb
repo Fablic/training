@@ -56,7 +56,6 @@ RSpec.describe 'Tasks', type: :system do
       expect(page).to have_selector '#task-0', text: '2021-08-17'
       expect(page).to have_selector '#task-1', text: '2021-06-17'
     end
-
   end
 
   it '詳細ページの確認' do
