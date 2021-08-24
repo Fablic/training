@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
 class TasksController < ApplicationController
+  helper_method :sort_column, :sort_direction
+
   before_action :set_task_by_id, only: %i[show edit update destroy]
   def index
-    @tasks = Task.all
+    @tasks = Task.all.order("#{sort_column} #{sort_direction}")
   end
 
   def show
@@ -17,10 +19,10 @@ class TasksController < ApplicationController
     @task = Task.new(task_params)
 
     if @task.save
-      flash[:success] = 'タスクが投稿されました'
+      flash[:success] = t 'tasks.flash.create.success'
       redirect_to @task
     else
-      flash[:danger] = 'タスクが投稿されません'
+      flash[:danger] = t 'tasks.flash.create.danger'
       render :new
     end
   end
@@ -30,10 +32,10 @@ class TasksController < ApplicationController
 
   def update
     if @task.update(task_params)
-      flash[:success] = 'タスクが編集されました'
+      flash[:success] = t 'tasks.flash.update.success'
       redirect_to @task
     else
-      flash.now[:danger] = 'タスクが編集されませんでした'
+      flash.now[:danger] = t 'tasks.flash.update.danger'
       render :new
     end
   end
@@ -41,7 +43,7 @@ class TasksController < ApplicationController
   def destroy
     @task.destroy
 
-    flash[:success] = 'タスクが削除されました'
+    flash[:success] = t 'tasks.flash.destroy.success'
     redirect_to tasks_path
   end
 
@@ -52,6 +54,14 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:name, :due_at, :priority, :progress)
+    params.require(:task).permit(:name, :description, :due_at, :priority, :progress)
+  end
+
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : 'desc'
+  end
+
+  def sort_column
+    Task.column_names.include?(params[:sort]) ? params[:sort] : 'created_at'
   end
 end
