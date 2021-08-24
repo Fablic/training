@@ -13,6 +13,7 @@ export const initI18n = () => {
             task_name: 'Name',
             task_description: 'Description',
             due_date: 'Due date',
+            labels: 'Labels',
             ok: 'OK',
             cancel: 'Cancel',
             order: {
@@ -33,6 +34,7 @@ export const initI18n = () => {
             task_name: 'タイトル',
             task_description: '説明',
             due_date: '期限',
+            labels: 'ラベル',
             ok: '確定',
             cancel: 'キャンセル',
             order: {

@@ -126,6 +126,19 @@ describe('tasks slice', () => {
         expect(fetchMock).toHaveFetched(target)
       })
 
+      it('should GET /tasks.json?label=label1', async () => {
+        const target = endpoint + '?label=label1'
+        const action = index({ label: 'label1' })
+        fetchMock.get(target, {
+          status: 200,
+          body: JSON.stringify(payload),
+        })
+
+        const subject = await action(jest.fn(), jest.fn(), undefined)
+
+        expect(fetchMock).toHaveFetched(target)
+      })
+
       it('should GET /tasks.json?page=2', async () => {
         const target = endpoint + '?page=2'
         const action = index({ page: 2 })
@@ -291,7 +304,8 @@ describe('tasks slice', () => {
 
         expect(subject.payload).toEqual(payload)
         expect(fetchMock).toHaveFetched(
-          (u, o) => u == endpoint && o.body == JSON.stringify(updatedItem)
+          (u, o) =>
+            u == endpoint && o.body == JSON.stringify({ task: updatedItem })
         )
       })
 

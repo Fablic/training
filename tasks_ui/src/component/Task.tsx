@@ -7,18 +7,23 @@ import IconButton from '@material-ui/core/IconButton'
 import Icon from '@material-ui/core/Icon'
 import Typography from '@material-ui/core/Typography'
 import TextField from '@material-ui/core/TextField'
+import Autocomplete from '@material-ui/lab/Autocomplete'
+import Chip from '@material-ui/core/Chip'
+
 import DateFnsUtils from '@date-io/date-fns'
 import format from 'date-fns/format'
 import { ja, enUS } from 'date-fns/locale'
 import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers'
 
 import { update, destroy, tasksSlice } from '../state/tasksSlice'
+import { index } from '../state/labelsSlice'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { initI18n } from './translation'
 import { useTranslation } from 'react-i18next'
 
 import StatusChips from './StatusChips'
+import { LabelChips } from './Labels'
 
 const i18n = initI18n()
 
@@ -32,7 +37,7 @@ const useStyles = makeStyles({
   cardActions: {
     justifyContent: 'space-between',
   },
-  statusChip: {
+  chip: {
     margin: '5px',
   },
 })
@@ -48,11 +53,12 @@ export class JaDateFnsUtils extends DateFnsUtils {
 }
 
 const Task: React.FC = (props) => {
-  const { task } = props
+  const { task, labels } = props
   const classes = useStyles()
 
   const [dueDate, setDueDate] = useState(task.dueDate)
   const [status, setStatus] = useState(task.status)
+  const [inputLabels, setInputLabels] = useState(task.labels || [])
 
   const nameRef = useRef()
   const descriptionRef = useRef()
@@ -72,6 +78,7 @@ const Task: React.FC = (props) => {
         name: nameRef.current.value,
         description: descriptionRef.current.value,
         due_date: dueDate,
+        labels: inputLabels,
       })
     )
   }
@@ -97,20 +104,14 @@ const Task: React.FC = (props) => {
     <Card className={classes.root}>
       <CardContent>
         {!task.edit && (
-          <>
-            <Typography
-              variant="h5"
-              component="h2"
-              aria-label="name-display"
-              onClick={() => dispatch(tasksSlice.actions.edit(task.id))}
-            >
+          <div onClick={() => dispatch(tasksSlice.actions.edit(task.id))}>
+            <Typography variant="h5" component="h2" aria-label="name-display">
               {task.name}
             </Typography>
             <Typography
               variant="body2"
               component="div"
               aria-label="description-display"
-              onClick={() => dispatch(tasksSlice.actions.edit(task.id))}
             >
               {task.description}
             </Typography>
@@ -119,12 +120,17 @@ const Task: React.FC = (props) => {
                 variant="body2"
                 component="div"
                 aria-label="duedate-display"
-                onClick={() => dispatch(tasksSlice.actions.edit(task.id))}
               >
                 {task.dueDate}
               </Typography>
             )}
-          </>
+
+            <LabelChips
+              labels={task.labels}
+              className={classes.chip}
+              size={'small'}
+            />
+          </div>
         )}
         {task.edit && (
           <>
@@ -168,6 +174,30 @@ const Task: React.FC = (props) => {
                   <Icon>clear</Icon>
                 </IconButton>
               )}
+
+              <Autocomplete
+                multiple
+                options={labels}
+                defaultValue={task.labels}
+                freeSolo
+                renderTags={(value: string[], getTagProps) =>
+                  value.map((option: string, index: number) => (
+                    <Chip
+                      variant="outlined"
+                      label={option}
+                      {...getTagProps({ index })}
+                    />
+                  ))
+                }
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label={t('labels')}
+                    placeholder={t('labels')}
+                  />
+                )}
+                onChange={(_, v) => setInputLabels(v)}
+              />
             </div>
             <IconButton
               aria-label="fix-button"
@@ -187,7 +217,7 @@ const Task: React.FC = (props) => {
           <StatusChips
             status={task.status}
             onChange={updateStatus}
-            className={classes.statusChip}
+            className={classes.chip}
           />
         </div>
         <IconButton onClick={onDestroyClick} aria-label="destroy-button">

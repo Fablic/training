@@ -27,6 +27,8 @@ export const index = createAsyncThunk('task/index', async (params, _) => {
     if (params.page) {
       qs.push(`page=${params.page}`)
     }
+
+    if (params.label) qs.push(`label=${params.label}`)
   }
   if (qs.length > 0) {
     endpoint += `?${qs.join('&')}`
@@ -73,7 +75,7 @@ export const update = createAsyncThunk(
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(params),
+      body: JSON.stringify({ task: params }),
     })
 
     if (ret.ok) {

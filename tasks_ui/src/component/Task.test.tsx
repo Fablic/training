@@ -27,6 +27,7 @@ const mockTask = {
   name: 'task name',
   description: 'task description',
   edit: false,
+  labels: [],
 }
 
 describe('Task', () => {
