@@ -29,5 +29,26 @@ RSpec.describe Task, type: :model do
             task = FactoryBot.build(:task, due_at:'2013-08-13 10:59:26')
             expect(task).not_to be_valid
         end
+
+        it "優先事項の値がenumのkeyと違う値の場合登録できない" do
+            task = Task.new(
+                name: "task",
+                due_at: "2021-08-17 10:59:26",
+                priority: 'aa',
+                progress: 1
+            )
+            expect(task).not_to be_valid
+        end
+
+        it "進捗状況の値がenumのkeyと違う値の場合登録できない" do
+            task = Task.new(
+                name: 'task',
+                due_at: '2021-08-17 10:59:26',
+                priority: 1,
+                progress: 'aaaa'
+            )
+            expect(task).not_to be_valid
+        end
+
     end
 end

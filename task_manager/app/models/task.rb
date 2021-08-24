@@ -17,6 +17,8 @@ class Task < ApplicationRecord
   validates :name, presence: true
   validates :name, length: { maximum: 30 }
   validate :due_at_is_valid_datetime
+  validates :priority, inclusion: { in: Task.priorities.keys }
+  validates :progress, inclusion: { in: Task.progresses.keys }
   
   with_options if: :due_at? do
     validate :due_at_start_check
