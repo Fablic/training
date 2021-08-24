@@ -48,7 +48,9 @@ class TasksController < ApplicationController
   end
 
   def search
-    @tasks = Task.search(params[:keyword_name], Task.progresses[params[:keyword_progress]])
+    @tasks = Task.order("#{sort_column} #{sort_direction}").search(params[:keyword_name], Task.progresses[params[:keyword_progress]])
+    @keyword_name = params[:keyword_name]
+    @keyword_progress = params[:keyword_progress]
     render "index"
   end
 
