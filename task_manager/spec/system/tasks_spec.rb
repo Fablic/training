@@ -3,7 +3,9 @@
 require 'rails_helper'
 
 RSpec.describe 'Tasks', type: :system do
+  before {travel_to Date.new(2015,1,1)}
   let!(:task) { FactoryBot.create(:task) }
+  
 
   context '一覧ページの確認' do
     # Task一覧画面を開く
