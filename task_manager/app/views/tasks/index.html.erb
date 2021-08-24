@@ -13,8 +13,8 @@
     <% @tasks.each_with_index do |task , index| %>
       <tr id= 'task-<%= index %>'>
         <td><%= task.name %></td>
-        <td><%= task.created_at %></td>
-        <td><%= task.due_at %></td>
+        <td><%= l(task.created_at, format: :default) %></td>
+        <td><%= l(task.due_at, format: :default) %></td>
         <td><%= link_to '詳細', task %></td>
       </tr>
     <% end %>
