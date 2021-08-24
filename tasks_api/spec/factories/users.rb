@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :user do
-    sequence(:uid){|n|"User#{n}"}
-    sequence(:salt){|n|n}
-    sequence(:password_hash){|n|n}
+    sequence(:uid) { |n| "User#{n}" }
+    salt { '' }
+    password_hash { '' }
   end
 end

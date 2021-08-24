@@ -9,6 +9,7 @@ class ApplicationController < ActionController::API
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
   before_action :maintenance
+  before_action :set_login_user
 
   private
 
@@ -26,6 +27,14 @@ class ApplicationController < ActionController::API
       false
     else
       true
+    end
+  end
+
+  def set_login_user
+    @login_user = begin
+      User.find(session[:login_user_id])
+    rescue StandardError
+      nil
     end
   end
 end
