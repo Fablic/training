@@ -17,21 +17,33 @@ RSpec.describe 'Tasks', type: :system do
       expect(page).to have_content 'a_task'
     end
 
-    it '初期のsort順序の確認' do
+    it '初期のsort順序が日付の降順になっていることの確認' do
       expect(page).to have_selector '#task-0', text: '2021-08-02'
       expect(page).to have_selector '#task-1', text: '2019-09-02'
     end
 
-    it '名前ボタンを押した際のsort確認' do
+    it 'タスク名のボタンを押した際のsort確認' do
+      # 初期でタスク名ボタンを押した際はタスク名の昇順になる。
       find('a', text: 'タスク名').click
       expect(page).to have_selector '#task-0', text: 'a_task'
       expect(page).to have_selector '#task-1', text: 'b_task'
+
+      # 二回目にタスク名ボタンを押した際はタスク名の降順になる。
+      find('a', text: 'タスク名').click
+      expect(page).to have_selector '#task-0', text: 'b_task'
+      expect(page).to have_selector '#task-1', text: 'a_task'
     end
 
     it '作成日ボタンを押した際のsort確認' do
+      # 初期で作成日ボタンを押した際は作成日の昇順になる。
       find('a', text: '作成日').click
       expect(page).to have_selector '#task-0', text: '2019-09-02'
       expect(page).to have_selector '#task-1', text: '2021-08-02'
+
+      # 二回目に作成日ボタンを押した際は作成日の降順になる。
+      find('a', text: '作成日').click
+      expect(page).to have_selector '#task-0', text: '2021-08-02'
+      expect(page).to have_selector '#task-1', text: '2019-09-02'
     end
   end
 
