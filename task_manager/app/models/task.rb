@@ -17,7 +17,10 @@ class Task < ApplicationRecord
   validates :name, presence: true
   validates :name, length: { maximum: 30 }
   validate :due_at_is_valid_datetime
-  validate :due_at_start_check
+  
+  with_options if: :due_at? do
+    validate :due_at_start_check
+  end
 
   def due_at_is_valid_datetime
     errors.add(:due_at, :invalid_datetime) if ((due_at.in_time_zone rescue ArgumentError) == ArgumentError)
