@@ -5,12 +5,44 @@ require 'rails_helper'
 RSpec.describe 'Tasks', type: :system do
   let!(:task) { FactoryBot.create(:task) }
 
-  it '一覧ページの確認' do
-    # Task編集画面を開く
-    visit tasks_path
+  context '一覧ページの確認' do
+    # Task一覧画面を開く
+    let!(:new_task) { FactoryBot.create(:new_task) }
+    before { visit tasks_path }
 
-    # 画面を検証する
-    expect(page).to have_content 'MyString'
+    it '一覧表示されているかの確認' do
+      # 画面を検証する
+      expect(page).to have_content 'a_task'
+    end
+
+    it '初期のsort順序が日付の降順になっていることの確認' do
+      expect(page).to have_selector '#task-0', text: '2021-08-02'
+      expect(page).to have_selector '#task-1', text: '2019-09-02'
+    end
+
+    it 'タスク名のボタンを押した際のsort確認' do
+      # 初期でタスク名ボタンを押した際はタスク名の昇順になる。
+      find('a', text: 'タスク名').click
+      expect(page).to have_selector '#task-0', text: 'a_task'
+      expect(page).to have_selector '#task-1', text: 'b_task'
+
+      # 二回目にタスク名ボタンを押した際はタスク名の降順になる。
+      find('a', text: 'タスク名').click
+      expect(page).to have_selector '#task-0', text: 'b_task'
+      expect(page).to have_selector '#task-1', text: 'a_task'
+    end
+
+    it '作成日ボタンを押した際のsort確認' do
+      # 初期で作成日ボタンを押した際は作成日の昇順になる。
+      find('a', text: '作成日').click
+      expect(page).to have_selector '#task-0', text: '2019-09-02'
+      expect(page).to have_selector '#task-1', text: '2021-08-02'
+
+      # 二回目に作成日ボタンを押した際は作成日の降順になる。
+      find('a', text: '作成日').click
+      expect(page).to have_selector '#task-0', text: '2021-08-02'
+      expect(page).to have_selector '#task-1', text: '2019-09-02'
+    end
   end
 
   it '詳細ページの確認' do
@@ -18,7 +50,7 @@ RSpec.describe 'Tasks', type: :system do
     visit task_path(task)
 
     # 画面を検証する
-    expect(page).to have_content 'MyString'
+    expect(page).to have_content 'a_task'
     expect(page).to have_content 'Memo'
     expect(page).to have_content '中'
     expect(page).to have_content '進行中'
@@ -42,7 +74,7 @@ RSpec.describe 'Tasks', type: :system do
 
       # 画面を検証する
       expect(page).to have_content 'タスクが編集されました'
-      expect(page).to have_content 'MyString'
+      expect(page).to have_content 'a_task'
       expect(page).to have_content 'MyText'
     end
   end
