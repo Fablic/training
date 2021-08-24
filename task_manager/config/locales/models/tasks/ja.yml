@@ -11,3 +11,14 @@ ja:
           due_at: 締め切り
           priority: 優先順位
           progress: 進捗状況
+    errors:
+      models:
+        task:
+          attributes:
+            name:
+              blank: "空になっています。入力してください。"
+            due_at:
+              blank: "空になっています。入力してください。"
+              invalid_datetime: "入力フォーマットが間違っています。正しいフォーマット(YYYY-MM-DD等)で入力してください" 
+              start_check: "締切は現在時刻より以前にしてください" 
+
