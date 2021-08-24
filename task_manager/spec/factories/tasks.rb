@@ -4,7 +4,7 @@ FactoryBot.define do
   factory :task, class: Task do
     name { 'a_task' }
     description { 'Memo' }
-    due_at { '2021-08-17 10:59:26' }
+    due_at { '2021-06-17 10:59:26' }
     created_at { '2019-09-02 10:59:26' }
     priority { 1 }
     progress { 1 }
