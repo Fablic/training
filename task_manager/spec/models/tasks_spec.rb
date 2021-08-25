@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Task, type: :model do
   let(:name) { 'task' }
-  let(:due_at) { Time.current + 10 }
+  let(:due_at) { Time.current + 10.days }
   let(:priority) { 1 }
   let(:progress) { 1 }
   subject { build(:task, name: name, due_at: due_at, priority: priority, progress: progress) }
@@ -32,7 +32,7 @@ RSpec.describe Task, type: :model do
     end
 
     context '現在時刻より以前の場合登録できない' do
-      let(:due_at) { Time.current - 10 }
+      let(:due_at) { Time.current - 10.days }
       it { is_expected.to_not be_valid }
     end
   end
@@ -41,7 +41,7 @@ RSpec.describe Task, type: :model do
     it '優先事項の値がenumのkeyと違う値の場合登録できない' do
       task = Task.new(
         name: 'task',
-        due_at: '2021-08-17 10:59:26',
+        due_at: Time.current + 10.days,
         priority: 'aa',
         progress: 1,
       )
@@ -53,7 +53,7 @@ RSpec.describe Task, type: :model do
     it '進捗状況の値がenumのkeyと違う値の場合登録できない' do
       task = Task.new(
         name: 'task',
-        due_at: '2021-08-17 10:59:26',
+        due_at: Time.current + 10.days,
         priority: 1,
         progress: 'aaaa',
       )
