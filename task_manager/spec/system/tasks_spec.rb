@@ -16,45 +16,97 @@ RSpec.describe 'Tasks', type: :system do
       expect(page).to have_content 'a_task'
     end
 
-    it '初期のsort順序が日付の降順になっていることの確認' do
-      expect(page).to have_selector '#task-0', text: '2021-08-02'
-      expect(page).to have_selector '#task-1', text: '2019-09-02'
+    context 'ソートの確認' do
+      it '初期のsort順序が日付の降順になっていることの確認' do
+        expect(page).to have_selector '#task-0', text: '2021-08-02'
+        expect(page).to have_selector '#task-1', text: '2019-09-02'
+      end
+
+      it 'タスク名のボタンを押した際のsort確認' do
+        # 初期でタスク名ボタンを押した際はタスク名の昇順になる。
+        find('a', text: 'タスク名').click
+        expect(page).to have_selector '#task-0', text: 'a_task'
+        expect(page).to have_selector '#task-1', text: 'b_task'
+
+        # 二回目にタスク名ボタンを押した際はタスク名の降順になる。
+        find('a', text: 'タスク名').click
+        expect(page).to have_selector '#task-0', text: 'b_task'
+        expect(page).to have_selector '#task-1', text: 'a_task'
+      end
+
+      it '作成日ボタンを押した際のsort確認' do
+        # 初期で作成日ボタンを押した際は作成日の昇順になる。
+        find('a', text: '作成日').click
+        expect(page).to have_selector '#task-0', text: '2019-09-02'
+        expect(page).to have_selector '#task-1', text: '2021-08-02'
+
+        # 二回目に作成日ボタンを押した際は作成日の降順になる。
+        find('a', text: '作成日').click
+        expect(page).to have_selector '#task-0', text: '2021-08-02'
+        expect(page).to have_selector '#task-1', text: '2019-09-02'
+      end
+
+      it '締め切りボタンを押した際のsort確認' do
+        # 初期で作成日ボタンを押した際は作成日の昇順になる。
+        find('a', text: '締め切り').click
+        expect(page).to have_selector '#task-0', text: (Time.current + 2.days).strftime("%F")
+        expect(page).to have_selector '#task-1', text: (Time.current + 10.days).strftime("%F")
+
+        # 二回目に作成日ボタンを押した際は作成日の降順になる。
+        find('a', text: '締め切り').click
+        expect(page).to have_selector '#task-0', text: (Time.current + 10.days).strftime("%F")
+        expect(page).to have_selector '#task-1', text: (Time.current + 2.days).strftime("%F")
+      end
     end
+    
+    context '検索の確認' do
+      it 'bで検索した際にb_taskが表示される' do
+        fill_in 'keyword_name', with: 'b'
+        click_button '検索'
+        expect(page).to have_selector '#task-0', text: 'b_task'
+        expect(page).to have_no_text 'a_task'
+      end
 
-    it 'タスク名のボタンを押した際のsort確認' do
-      # 初期でタスク名ボタンを押した際はタスク名の昇順になる。
-      find('a', text: 'タスク名').click
-      expect(page).to have_selector '#task-0', text: 'a_task'
-      expect(page).to have_selector '#task-1', text: 'b_task'
+      it '未着手で検索した際にb_taskが表示される' do
+        select '未着手', from: 'keyword_progress'
+        click_button '検索'
+        expect(page).to have_selector '#task-0', text: 'b_task'
+        expect(page).to have_no_text 'a_task'
+      end
 
-      # 二回目にタスク名ボタンを押した際はタスク名の降順になる。
-      find('a', text: 'タスク名').click
-      expect(page).to have_selector '#task-0', text: 'b_task'
-      expect(page).to have_selector '#task-1', text: 'a_task'
-    end
+      it '進行中で検索した際にb_taskが表示される' do
+        select '進行中', from: 'keyword_progress'
+        click_button '検索'
+        expect(page).to have_selector '#task-0', text: 'a_task'
+        expect(page).to have_no_text 'b_task'
+      end
 
-    it '作成日ボタンを押した際のsort確認' do
-      # 初期で作成日ボタンを押した際は作成日の昇順になる。
-      find('a', text: '作成日').click
-      expect(page).to have_selector '#task-0', text: '2019-09-02'
-      expect(page).to have_selector '#task-1', text: '2021-08-02'
+      it '済で検索した際にb_taskが表示される' do
+        select '済', from: 'keyword_progress'
+        click_button '検索'
+        expect(page).to have_no_text 'a_task'
+        expect(page).to have_no_text 'b_task'
+      end
 
-      # 二回目に作成日ボタンを押した際は作成日の降順になる。
-      find('a', text: '作成日').click
-      expect(page).to have_selector '#task-0', text: '2021-08-02'
-      expect(page).to have_selector '#task-1', text: '2019-09-02'
-    end
+      context '検索状態でのソート確認' do
 
-    it '締め切りボタンを押した際のsort確認' do
-      # 初期で作成日ボタンを押した際は作成日の昇順になる。
-      find('a', text: '締め切り').click
-      expect(page).to have_selector '#task-0', text: (Time.current + 2.days).strftime("%F")
-      expect(page).to have_selector '#task-1', text: (Time.current + 10.days).strftime("%F")
+        before{
+          fill_in 'keyword_name', with: 'task'
+          click_button '検索'
+        }
 
-      # 二回目に作成日ボタンを押した際は作成日の降順になる。
-      find('a', text: '締め切り').click
-      expect(page).to have_selector '#task-0', text: (Time.current + 10.days).strftime("%F")
-      expect(page).to have_selector '#task-1', text: (Time.current + 2.days).strftime("%F")
+        it 'taskで検索した状態でのソート確認' do
+          # 初期でタスク名ボタンを押した際はタスク名の昇順になる。
+          find('a', text: 'タスク名').click
+          expect(page).to have_selector '#task-0', text: 'a_task'
+          expect(page).to have_selector '#task-1', text: 'b_task'
+  
+          # 二回目にタスク名ボタンを押した際はタスク名の降順になる。
+          find('a', text: 'タスク名').click
+          expect(page).to have_selector '#task-0', text: 'b_task'
+          expect(page).to have_selector '#task-1', text: 'a_task'
+        end
+      end
     end
   end
 
