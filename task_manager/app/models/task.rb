@@ -15,20 +15,12 @@ class Task < ApplicationRecord
 
   validates :name, presence: true
   validates :name, length: { maximum: 30 }
-  validate :due_at_is_valid_datetime
+  validates :due_at, presence: true
   validates :priority, inclusion: { in: Task.priorities.keys }
   validates :progress, inclusion: { in: Task.progresses.keys }
 
-  with_options if: :due_at? do
+  with_options if: :due_at.presence do
     validate :due_at_start_check
-  end
-
-  def due_at_is_valid_datetime
-    errors.add(:due_at, :invalid_datetime) if begin
-      due_at.in_time_zone
-    rescue StandardError
-      ArgumentError
-    end == ArgumentError
   end
 
   def due_at_start_check
