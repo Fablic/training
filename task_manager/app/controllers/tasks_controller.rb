@@ -4,7 +4,9 @@ class TasksController < ApplicationController
 
   before_action :set_task_by_id, only: %i[show edit update destroy]
   def index
-    @tasks = Task.all.sort_column_direction(params[:sort], params[:direction])
+    @tasks = Task.sort_column_direction(params[:sort], params[:direction]).search(params[:keyword_name], Task.progresses[params[:keyword_progress]])
+    @keyword_name = params[:keyword_name]
+    @keyword_progress = params[:keyword_progress]
   end
 
   def show
@@ -44,13 +46,6 @@ class TasksController < ApplicationController
 
     flash[:success] = I18n.t 'tasks.flash.destroy.success'
     redirect_to tasks_path
-  end
-
-  def search
-    @tasks = Task.sort_column_direction(params[:sort], params[:direction]).search(params[:keyword_name], Task.progresses[params[:keyword_progress]])
-    @keyword_name = params[:keyword_name]
-    @keyword_progress = params[:keyword_progress]
-    render "index"
   end
 
   private
