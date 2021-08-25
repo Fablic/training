@@ -91,6 +91,6 @@ class TasksController < ApplicationController
 
   def labels
     (task_params[:labels] || []).reject(&:blank?).
-      map { |v| Label.find_or_create_by(value: v) }
+      map { |v| Label.find_or_create_by(value: v, user: @login_user) }
   end
 end

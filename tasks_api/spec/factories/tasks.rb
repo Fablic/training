@@ -7,7 +7,7 @@ FactoryBot.define do
 
     trait :with_labels do
       after(:build) do |task|
-        build_list(:label, 2).map { |l| task.labels << l }
+        build_list(:label, 2, user: task.user).map { |l| task.labels << l }
       end
     end
   end

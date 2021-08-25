@@ -2,6 +2,7 @@
 
 class Label < ApplicationRecord
   has_many :task_labels, dependent: false
+  belongs_to :user
   has_many :tasks, -> { distinct }, through: :task_labels
   validates :value, presence: true, length: { maximum: 255 }
 

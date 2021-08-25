@@ -28,6 +28,7 @@ CREATE TABLE `labels` (
   `value` varchar(255) NOT NULL,
   `created_at` datetime(6) NOT NULL,
   `updated_at` datetime(6) NOT NULL,
+  `user_id` int DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -110,6 +111,7 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20210817033643'),
 ('20210823012522'),
 ('20210823054447'),
-('20210824081357');
+('20210824081357'),
+('20210825062450');
 
 
