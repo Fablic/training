@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class SessionsController < ApplicationController
+  before_action :require_no_authentication, only: %i[new create]
   skip_before_action :login_required
 
   def new; end
@@ -28,5 +29,9 @@ class SessionsController < ApplicationController
 
   def session_params
     params.require(:session).permit(:email, :password)
+  end
+
+  def require_no_authentication
+    redirect_to root_path if current_user
   end
 end
