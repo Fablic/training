@@ -3,47 +3,57 @@
 require 'rails_helper'
 
 RSpec.describe Task, type: :model do
-  before do
-    travel_to Date.new(2015, 1, 1)
-  end
+  let(:name) { 'task' }
+  let(:due_at) { Time.current + 10.days }
+  let(:priority) { 1 }
+  let(:progress) { 1 }
+  subject { build(:task, name: name, due_at: due_at, priority: priority, progress: progress) }
 
   context '登録可能な形式' do
-    it 'すべて入力した際に登録できる' do
-      task = FactoryBot.build(:task)
-      expect(task).to be_valid
+    it { is_expected.to be_valid }
+  end
+
+  describe 'name' do
+    context 'nameが空の場合に登録できない' do
+      let(:name) { nil }
+      it { is_expected.to_not be_valid }
+    end
+
+    context 'nameが30文字を超えた場合' do
+      let(:name) { 'a' * 31 }
+      it { is_expected.to_not be_valid }
     end
   end
 
-  context '登録不可能な形式' do
-    it 'nameが空の場合に登録できない' do
-      task = FactoryBot.build(:task, name: nil)
-      expect(task).not_to be_valid
+  describe 'due_at' do
+    context 'in_time_zoneで変換できない形式の場合登録できない' do
+      let(:due_at) { '2021-08aa 10:59:26' }
+      it { is_expected.to_not be_valid }
     end
 
-    it 'in_time_zoneで変換できない形式の場合登録できない' do
-      task = FactoryBot.build(:task, due_at: '2021-08aa 10:59:26')
-      expect(task).not_to be_valid
+    context '現在時刻より以前の場合登録できない' do
+      let(:due_at) { Time.current - 10.days }
+      it { is_expected.to_not be_valid }
     end
+  end
 
-    it '現在時刻より以前の場合登録できない' do
-      task = FactoryBot.build(:task, due_at: '2013-08-13 10:59:26')
-      expect(task).not_to be_valid
-    end
-
+  describe 'priority' do
     it '優先事項の値がenumのkeyと違う値の場合登録できない' do
       task = Task.new(
         name: 'task',
-        due_at: '2021-08-17 10:59:26',
+        due_at: Time.current + 10.days,
         priority: 'aa',
         progress: 1,
       )
       expect(task).not_to be_valid
     end
+  end
 
+  describe 'progress' do
     it '進捗状況の値がenumのkeyと違う値の場合登録できない' do
       task = Task.new(
         name: 'task',
-        due_at: '2021-08-17 10:59:26',
+        due_at: Time.current + 10.days,
         priority: 1,
         progress: 'aaaa',
       )
