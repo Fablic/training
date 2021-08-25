@@ -1,5 +1,9 @@
 class AddTitleIndexToTask < ActiveRecord::Migration[6.1]
-  def change
-    add_index :tasks, :name, type: :fulltext
+  def up
+    execute 'create fulltext index index_tasks_on_name on tasks(name) with parser ngram'
+  end
+
+  def down
+    remove_index :tasks, :name
   end
 end
