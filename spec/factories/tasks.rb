@@ -23,6 +23,7 @@
 #
 FactoryBot.define do
   factory :task do
+    association :user, factory: :user
     name { 'do homework' }
     description { 'Deadline is August 31.' }
     status { 'Doing' }
