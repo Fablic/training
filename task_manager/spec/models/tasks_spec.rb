@@ -3,12 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe Task, type: :model do
-  before do
-    travel_to Date.new(2015, 1, 1)
-  end
-
   let(:name) { 'task' }
-  let(:due_at) { '2016-08-13 10:59:26' }
+  let(:due_at) { Time.current + 10 }
   let(:priority) { 1 }
   let(:progress) { 1 }
   subject { build(:task, name: name, due_at: due_at, priority: priority, progress: progress) }
@@ -36,7 +32,7 @@ RSpec.describe Task, type: :model do
     end
 
     context '現在時刻より以前の場合登録できない' do
-      let(:due_at) { '2013-08-13 10:59:26' }
+      let(:due_at) { Time.current - 10 }
       it { is_expected.to_not be_valid }
     end
   end
