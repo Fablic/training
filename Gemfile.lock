@@ -64,6 +64,7 @@ GEM
       activerecord (>= 3.2, < 7.0)
       rake (>= 10.4, < 14.0)
     ast (2.4.2)
+    bcrypt (3.1.16)
     bindex (0.8.1)
     bootsnap (1.7.6)
       msgpack (~> 1.0)
@@ -238,6 +239,7 @@ PLATFORMS
 
 DEPENDENCIES
   annotate
+  bcrypt (~> 3.1.7)
   bootsnap (>= 1.4.4)
   byebug
   fablicop
