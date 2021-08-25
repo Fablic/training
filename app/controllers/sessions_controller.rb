@@ -13,7 +13,7 @@ class SessionsController < ApplicationController
       flash[:success] = I18n.t('sessions.flash.create.success')
       redirect_to root_path
     else
-      flash.now[:danger] = I18n.t('sessions.flash.create.danger')
+      flash.now[:danger] = I18n.t('sessions.flash.create.failure')
       render :new
     end
   end
