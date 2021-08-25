@@ -53,5 +53,7 @@ module TasksApi
     end
 
     config.i18n.available_locales = %w[en ja]
+
+    config.active_record.schema_format = :sql
   end
 end
