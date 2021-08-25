@@ -37,4 +37,13 @@ class ApplicationController < ActionController::API
       nil
     end
   end
+
+  def sign_in_required
+    if @login_user.blank?
+      head :unauthorized
+      return false
+    end
+
+    true
+  end
 end

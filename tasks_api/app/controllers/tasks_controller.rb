@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class TasksController < ApplicationController
+  before_action :sign_in_required
+
   def index
     order =
       case params[:order]
@@ -12,7 +14,7 @@ class TasksController < ApplicationController
         { created_at: :desc }
       end
 
-    @tasks = apply_queries(Task.all.order(order), params)
+    @tasks = apply_queries(@login_user.tasks.order(order), params)
 
     @tasks = @tasks.page(params[:page])
   end
@@ -22,7 +24,7 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.new(task_params)
+    @task = @login_user.tasks.build(task_params)
     flash.now['notice'] = I18n.t('notice.created')
 
     if @task.save
@@ -36,7 +38,7 @@ class TasksController < ApplicationController
 
   # rubocop:disable Metrics/AbcSize
   def update
-    @task = Task.find(params[:id])
+    @task = @login_user.tasks.find(params[:id])
     flash.now['notice'] = I18n.t('notice.updated')
 
     Label.transaction do
@@ -53,7 +55,7 @@ class TasksController < ApplicationController
   # rubocop:enable Metrics/AbcSize
 
   def destroy
-    @task = Task.find(params[:id])
+    @task = @login_user.tasks.find(params[:id])
     flash.now['notice'] = I18n.t('notice.deleted')
 
     if @task.destroy
