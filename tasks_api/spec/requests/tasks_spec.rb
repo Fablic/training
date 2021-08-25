@@ -94,6 +94,17 @@ RSpec.describe 'Tasks', type: :request do
           end
         end
       end
+
+      describe 'maintenance' do
+        it 'should return 503 when therere maintenace object' do
+          FactoryBot.create(:maintenance)
+          get '/tasks.json'
+
+          expect(response.status).to eq 503
+          ret = JSON.parse(response.body)
+          expect(ret['type']).to eq 'under_maintenance'
+        end
+      end
     end
 
     describe 'labels' do

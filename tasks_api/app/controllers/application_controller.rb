@@ -8,6 +8,8 @@ class ApplicationController < ActionController::API
   rescue_from Exception, with: :internal_server_error
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
+  before_action :maintenance
+
   private
 
   def not_found
@@ -16,5 +18,14 @@ class ApplicationController < ActionController::API
 
   def internal_server_error
     render json: { status: 500 }, status: :internal_server_error
+  end
+
+  def maintenance
+    if Maintenance.count.positive?
+      render json: { status: 503, type: 'under_maintenance' }, status: :service_unavailable
+      false
+    else
+      true
+    end
   end
 end

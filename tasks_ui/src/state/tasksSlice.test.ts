@@ -10,6 +10,7 @@ const initialState = {
   currentPage: 0,
   pending: false,
   notice: null,
+  maintenance: false,
 }
 
 describe('tasks slice', () => {
@@ -202,6 +203,26 @@ describe('tasks slice', () => {
         )
         expect(actual.pending).toBe(false)
       })
+
+      describe('maintenance mode', () => {
+        it('should be rejected with type=maintenance when API returns so', async () => {
+          const action = index()
+          const payload = { type: 'under_maintenance' }
+          fetchMock.get(endpoint, {
+            status: 503,
+            body: JSON.stringify(payload),
+          })
+          const subject = await action(jest.fn(), jest.fn(), undefined)
+          expect(subject.payload).toEqual(payload)
+        })
+
+        it('should set maintenance=true when API call has rejected with 503 w/type=under_maintenance', () => {
+          const action = index.rejected()
+          action.payload = { type: 'under_maintenance' }
+          const actual = reducer(initialState, action)
+          expect(actual.maintenance).toBe(true)
+        })
+      })
     })
 
     describe('create', () => {
@@ -280,6 +301,26 @@ describe('tasks slice', () => {
         action.payload = { name: [notice] }
         const actual = reducer({ ...initialState, pending: true }, action)
         expect(actual.notice).toEqual(notice)
+      })
+
+      describe('maintenance mode', () => {
+        it('should be rejected with type=maintenance when API returns so', async () => {
+          const payload = { type: 'under_maintenance' }
+          const action = create({ name: '' })
+          fetchMock.post(endpoint, {
+            status: 503,
+            body: JSON.stringify(payload),
+          })
+          const subject = await action(jest.fn(), jest.fn(), undefined)
+          expect(subject.payload).toEqual(payload)
+        })
+
+        it('should set maintenance=true when API call has rejected with 503 w/type=under_maintenance', () => {
+          const action = create.rejected()
+          action.payload = { type: 'under_maintenance' }
+          const actual = reducer(initialState, action)
+          expect(actual.maintenance).toBe(true)
+        })
       })
     })
 
@@ -362,6 +403,26 @@ describe('tasks slice', () => {
         const actual = reducer({ ...initialState, pending: true }, action)
         expect(actual.notice).toEqual(notice)
       })
+
+      describe('maintenance mode', () => {
+        it('should be rejected with type=maintenance when API returns so', async () => {
+          const action = update(updatedItem)
+          const payload = { type: 'under_maintenance' }
+          fetchMock.put('http://localhost:3000/tasks/1.json', {
+            status: 503,
+            body: JSON.stringify(payload),
+          })
+          const subject = await action(jest.fn(), jest.fn(), undefined)
+          expect(subject.payload).toEqual(payload)
+        })
+
+        it('should set maintenance=true when API call has rejected with 503 w/type=under_maintenance', () => {
+          const action = update.rejected()
+          action.payload = { type: 'under_maintenance' }
+          const actual = reducer(initialState, action)
+          expect(actual.maintenance).toBe(true)
+        })
+      })
     })
 
     describe('destroy', () => {
@@ -416,6 +477,26 @@ describe('tasks slice', () => {
           destroy.rejected()
         )
         expect(actual.pending).toBe(false)
+      })
+
+      describe('maintenance mode', () => {
+        it('should be rejected with type=maintenance when API returns so', async () => {
+          const payload = { type: 'under_maintenance' }
+          const action = destroy({ id: item.id })
+          fetchMock.delete(endpoint, {
+            status: 503,
+            body: JSON.stringify(payload),
+          })
+          const subject = await action(jest.fn(), jest.fn(), undefined)
+          expect(subject.payload).toEqual(payload)
+        })
+
+        it('should set maintenance=true when API call has rejected with 503 w/type=under_maintenance', () => {
+          const action = destroy.rejected()
+          action.payload = { type: 'under_maintenance' }
+          const actual = reducer(initialState, action)
+          expect(actual.maintenance).toBe(true)
+        })
       })
     })
   })
