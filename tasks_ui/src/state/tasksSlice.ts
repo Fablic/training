@@ -7,6 +7,7 @@ const initialState: State = {
   pending: false,
   notice: null,
   maintenance: false,
+  authorized: false,
 }
 
 export const index = createAsyncThunk(
@@ -46,7 +47,13 @@ export const index = createAsyncThunk(
     if (ret.ok) {
       return ret.json()
     } else {
-      return thunkApi.rejectWithValue(await ret.json())
+      switch (ret.status) {
+        case 401:
+          return thunkApi.rejectWithValue({ type: 'unauthorized' })
+
+        default:
+          return thunkApi.rejectWithValue(await ret.json())
+      }
     }
   }
 )
@@ -143,8 +150,16 @@ export const tasksSlice = createSlice({
         s.pending = false
 
         if (a.payload) {
-          if (a.payload.type && a.payload.type == 'under_maintenance') {
-            s.maintenance = true
+          if (a.payload.type) {
+            switch (a.payload.type) {
+              case 'under_maintenance':
+                s.maintenance = true
+                break
+
+              case 'unauthorized':
+                s.authorized = false
+                break
+            }
           } else {
             s.notice = Object.entries(a.payload)
               .map((e) => e[1].join('\n'))
@@ -156,6 +171,7 @@ export const tasksSlice = createSlice({
 
     builder.addCase(index.fulfilled, (state, action) => {
       state.pending = false
+      state.authorized = true
       state.tasks = action.payload.tasks.map((i) => ({
         ...i,
         edit: false,
@@ -165,6 +181,7 @@ export const tasksSlice = createSlice({
     })
 
     builder.addCase(create.fulfilled, (state, action) => {
+      state.authorized = true
       const { task, notice } = action.payload
       state.pending = false
 
@@ -173,6 +190,7 @@ export const tasksSlice = createSlice({
     })
 
     builder.addCase(update.fulfilled, (state, action) => {
+      state.authorized = true
       const { task, notice } = action.payload
       state.pending = false
 
@@ -185,6 +203,7 @@ export const tasksSlice = createSlice({
     })
 
     builder.addCase(destroy.fulfilled, (state, action) => {
+      state.authorized = true
       const { id, notice } = action.payload
       state.pending = false
 

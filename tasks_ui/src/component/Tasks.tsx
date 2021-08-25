@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import Task from './Task'
 import StatusChips from './StatusChips'
+import Authorization from './Authorization'
 import { initI18n } from './translation'
 import { useTranslation } from 'react-i18next'
 
@@ -46,6 +47,7 @@ const useStyles = makeStyles({
 })
 
 const Tasks: React.FC = (props) => {
+  const authorized = useSelector((s) => s.tasks.authorized)
   const tasks = useSelector((s) => s.tasks.tasks)
   const totalPages = useSelector((s) => s.tasks.totalPages)
   const page = useSelector((s) => s.tasks.currentPage)
@@ -83,6 +85,7 @@ const Tasks: React.FC = (props) => {
 
   return (
     <>
+      {!authorized && <Authorization />}
       <div className={classes.chips}>
         <Chip
           icon={<Icon>post_add</Icon>}

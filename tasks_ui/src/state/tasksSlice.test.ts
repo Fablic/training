@@ -11,6 +11,7 @@ const initialState = {
   pending: false,
   notice: null,
   maintenance: false,
+  authorized: false,
 }
 
 describe('tasks slice', () => {
@@ -166,6 +167,11 @@ describe('tasks slice', () => {
         expect(actual.pending).toBe(false)
       })
 
+      it('should set authorized=true when 200', () => {
+        const actual = reducer(initialState, index.fulfilled(payload))
+        expect(actual.authorized).toBe(true)
+      })
+
       it('should update the list', () => {
         const apiRet = {
           tasks: [item1, item2],
@@ -221,6 +227,25 @@ describe('tasks slice', () => {
           action.payload = { type: 'under_maintenance' }
           const actual = reducer(initialState, action)
           expect(actual.maintenance).toBe(true)
+        })
+      })
+
+      describe('unauthorized', () => {
+        it('should be rejected with type=unauthorized when 401', async () => {
+          const action = index()
+          fetchMock.get(endpoint, {
+            status: 401,
+            body: '',
+          })
+          const subject = await action(jest.fn(), jest.fn(), undefined)
+          expect(subject.payload).toEqual({ type: 'unauthorized' })
+        })
+
+        it('should set authorized=false when 401', () => {
+          const action = index.rejected()
+          action.payload = { type: 'unauthorized' }
+          const actual = reducer(initialState, action)
+          expect(actual.authorized).toBe(false)
         })
       })
     })
