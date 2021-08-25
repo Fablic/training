@@ -14,3 +14,4 @@ ja:
       title: 'タスク一覧'
       name: 'タスク名'
       created_at: '作成日'
+      due_at: '締め切り'
