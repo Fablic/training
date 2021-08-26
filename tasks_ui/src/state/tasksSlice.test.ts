@@ -533,5 +533,12 @@ describe('tasks slice', () => {
 
       expect(actual.notice).toEqual(null)
     })
+
+    describe('authorized', () => {
+      const action = actions.setAuthorized(true)
+      const actual = reducer({ authorized: false }, action)
+
+      expect(actual.authorized).toEqual(true)
+    })
   })
 })

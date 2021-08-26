@@ -10,23 +10,27 @@ import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import { makeStyles } from '@material-ui/core/styles'
 
+import { tasksSlice } from '../state/tasksSlice'
+import { useDispatch, useSelector } from 'react-redux'
+
 import { initI18n } from './translation'
 import { useTranslation } from 'react-i18next'
 const i18n = initI18n()
 
 const Authorization = (props) => {
   const { t } = useTranslation()
+  const dispatch = useDispatch()
 
   const uidRef = useRef()
   const passwordRef = useRef()
 
-  const submit = () => {
+  const submit = async () => {
     const payload = {
       uid: uidRef.current.value,
       password: passwordRef.current.value,
     }
 
-    fetch('/api/users/login.json', {
+    const ret = await fetch('/api/users/login.json', {
       method: 'POST',
       mode: 'cors',
       crendentials: 'include',
@@ -35,6 +39,8 @@ const Authorization = (props) => {
       },
       body: JSON.stringify(payload),
     })
+
+    if (ret.ok) dispatch(tasksSlice.actions.setAuthorized(true))
   }
 
   return (

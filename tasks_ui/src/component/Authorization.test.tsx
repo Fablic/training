@@ -26,6 +26,7 @@ describe('Authorization', () => {
       status: 200,
       body: '',
     })
+    const setAuthorized = jest.spyOn(tasksSlice.actions, 'setAuthorized')
 
     const uid = screen.getByLabelText('user id input').querySelector('input')
     const password = screen
@@ -35,8 +36,9 @@ describe('Authorization', () => {
 
     userEvent.type(uid, 'USER ID')
     userEvent.type(password, 'PASSWORD')
-    userEvent.click(btn)
+    await userEvent.click(btn)
 
     expect(fetchMock).toHaveFetched()
+    waitFor(() => expect(setAuthorized).toHaveBeenCalledWith(true))
   })
 })

@@ -73,7 +73,7 @@ const Tasks: React.FC = (props) => {
 
   useEffect(() => {
     updateList({ order, status, query, page, label: selectedLabel })
-  }, [order, status, query, selectedLabel])
+  }, [order, status, query, selectedLabel, authorized])
 
   const changeStatus = (newStatus) => {
     if (status == newStatus) {

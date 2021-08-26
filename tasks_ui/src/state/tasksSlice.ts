@@ -140,6 +140,9 @@ export const tasksSlice = createSlice({
     setNotice(state, action) {
       state.notice = action.payload
     },
+    setAuthorized(state, action) {
+      state.authorized = action.payload
+    },
   },
 
   extraReducers: (builder) => {
