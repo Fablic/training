@@ -109,8 +109,11 @@ RSpec.describe 'Tasks', type: :system do
     end
 
     context 'peginationの確認' do
-      # 合計25個のtaskが作られる
-      let!(:new_task) { create_list(:task, 24) }
+      # 上記の宣言taskと合わせて合計25個のtaskが作られる
+      before{
+        create_list(:task, 23)
+        visit tasks_path
+      }
 
       it '初期ページの確認後、最後のページの移行し、要素の確認' do
         navs = page.all('nav')
