@@ -28,6 +28,7 @@ services:
       DB_NAME: myapp
       DB_PASSWORD: password
       DB_HOST: db
+      SELENIUM_REMOTE_URL: http://chrome:4444/wd/hub
 
   chrome:
     image: selenium/standalone-chrome:latest
