@@ -49,16 +49,16 @@ RSpec.describe 'Tasks', type: :system do
       it '締め切りボタンを押した際のsort確認' do
         # 初期で作成日ボタンを押した際は作成日の昇順になる。
         find('a', text: '締め切り').click
-        expect(page).to have_selector '#task-0', text: (Time.current + 2.days).strftime("%F")
-        expect(page).to have_selector '#task-1', text: (Time.current + 10.days).strftime("%F")
+        expect(page).to have_selector '#task-0', text: (Time.current + 2.days).strftime('%F')
+        expect(page).to have_selector '#task-1', text: (Time.current + 10.days).strftime('%F')
 
         # 二回目に作成日ボタンを押した際は作成日の降順になる。
         find('a', text: '締め切り').click
-        expect(page).to have_selector '#task-0', text: (Time.current + 10.days).strftime("%F")
-        expect(page).to have_selector '#task-1', text: (Time.current + 2.days).strftime("%F")
+        expect(page).to have_selector '#task-0', text: (Time.current + 10.days).strftime('%F')
+        expect(page).to have_selector '#task-1', text: (Time.current + 2.days).strftime('%F')
       end
     end
-    
+
     context '検索の確認' do
       it 'bで検索した際にb_taskが表示される' do
         fill_in 'keyword_name', with: 'b'
@@ -89,8 +89,7 @@ RSpec.describe 'Tasks', type: :system do
       end
 
       context '検索状態でのソート確認' do
-
-        before{
+        before {
           fill_in 'keyword_name', with: 'task'
           click_button '検索'
         }
@@ -100,7 +99,7 @@ RSpec.describe 'Tasks', type: :system do
           find('a', text: 'タスク名').click
           expect(page).to have_selector '#task-0', text: 'a_task'
           expect(page).to have_selector '#task-1', text: 'b_task'
-  
+
           # 二回目にタスク名ボタンを押した際はタスク名の降順になる。
           find('a', text: 'タスク名').click
           expect(page).to have_selector '#task-0', text: 'b_task'

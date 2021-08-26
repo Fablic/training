@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class TasksController < ApplicationController
-
   before_action :set_task_by_id, only: %i[show edit update destroy]
   def index
     @tasks = Task.sort_column_direction(params[:sort], params[:direction]).search(params[:keyword_name], Task.progresses[params[:keyword_progress]])
@@ -57,5 +56,4 @@ class TasksController < ApplicationController
   def task_params
     params.require(:task).permit(:name, :description, :due_at, :priority, :progress)
   end
-
 end

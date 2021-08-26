@@ -19,8 +19,8 @@ class Task < ApplicationRecord
   validates :priority, inclusion: { in: Task.priorities.keys }
   validates :progress, inclusion: { in: Task.progresses.keys }
 
-  scope :search, -> (keyword_name, keyword_progress) { where(["name like? AND progress like?", "%#{keyword_name}%", "%#{keyword_progress}%"])}
-  scope :sort_column_direction, -> (column, direction) { order("#{sort_column(column)} #{sort_direction(direction)}")}
+  scope :search, -> (keyword_name, keyword_progress) { where(['name like? AND progress like?', "%#{keyword_name}%", "%#{keyword_progress}%"]) }
+  scope :sort_column_direction, -> (column, direction) { order("#{sort_column(column)} #{sort_direction(direction)}") }
 
   with_options if: :due_at.presence do
     validate :due_at_start_check
@@ -37,5 +37,4 @@ class Task < ApplicationRecord
   def self.sort_column(column)
     Task.column_names.include?(column) ? column : 'created_at'
   end
-  
 end

@@ -3,9 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Task, type: :model do
-
   describe 'validation' do
-
     let(:name) { 'task' }
     let(:due_at) { Time.current + 10.days }
     let(:priority) { 1 }
@@ -66,46 +64,44 @@ RSpec.describe Task, type: :model do
   end
 
   describe 'scope' do
-    let!(:task_1) { create :task, name: 'task_1' , progress: 1 , created_at: '2019-09-02 10:59:26'}
-    let!(:task_2) { create :task, name: 'task_2' , progress: 1 , created_at: '2018-09-02 10:59:26'}
-    let!(:task_3) { create :task, name: 'task_11' , progress: 2 , created_at: '2020-09-02 10:59:26' }
-    
+    let!(:task1) { create :task, name: 'task_1', progress: 1, created_at: '2019-09-02 10:59:26' }
+    let!(:task2) { create :task, name: 'task_2', progress: 1, created_at: '2018-09-02 10:59:26' }
+    let!(:task3) { create :task, name: 'task_11', progress: 2, created_at: '2020-09-02 10:59:26' }
+
     describe 'search' do
       it '何も入れずに検索' do
-        expect(Task.search('', nil)).to include(task_1, task_2, task_3)
+        expect(Task.search('', nil)).to include(task1, task2, task3)
       end
 
       it 'nameを入れて検索' do
-        expect(Task.search('1', nil)).to include(task_1, task_3)
+        expect(Task.search('1', nil)).to include(task1, task3)
       end
 
       it 'progressを入れて検索' do
-        expect(Task.search('', 1)).to include(task_1, task_2)
+        expect(Task.search('', 1)).to include(task1, task2)
       end
 
       it 'nameとprogressのどちらの候補も入れて検索' do
-        expect(Task.search('1', 1)).to include(task_1)
+        expect(Task.search('1', 1)).to include(task1)
       end
     end
 
     describe 'sort' do
       it '何も入れずに検索し、created_atの降順になるか確認' do
-        expect(Task.sort_column_direction('', '')).to eq [task_3, task_1, task_2]
+        expect(Task.sort_column_direction('', '')).to eq [task3, task1, task2]
       end
 
       it 'ascを入れて検索し、created_atの昇順になるか確認' do
-        expect(Task.sort_column_direction('', 'asc')).to eq [task_2, task_1, task_3]
+        expect(Task.sort_column_direction('', 'asc')).to eq [task2, task1, task3]
       end
-      
+
       it 'nameを入れて検索し、nameの降順になるか確認' do
-        expect(Task.sort_column_direction('name', '')).to eq [task_2, task_3, task_1]
+        expect(Task.sort_column_direction('name', '')).to eq [task2, task3, task1]
       end
 
       it 'nameとascを入れて検索し、nameの昇順になるか確認' do
-        expect(Task.sort_column_direction('name', 'asc')).to eq [task_1, task_3, task_2]
+        expect(Task.sort_column_direction('name', 'asc')).to eq [task1, task3, task2]
       end
-
     end
-
   end
 end
