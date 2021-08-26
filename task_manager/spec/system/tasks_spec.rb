@@ -107,6 +107,50 @@ RSpec.describe 'Tasks', type: :system do
         end
       end
     end
+
+    context 'peginationの確認' do
+      # 合計25個のtaskが作られる
+      let!(:new_task) { create_list(:task, 24) }
+
+      it '初期ページの確認後、最後のページの移行し、要素の確認' do
+        navs = page.all('nav')
+        expect(navs[0]).to have_css(".next")
+        expect(navs[0]).to have_css(".last")
+        expect(navs[0]).to have_content '1'
+        expect(navs[0]).to have_content '3'
+        expect(navs[0]).to have_no_content '4'
+
+        expect(page).to have_selector '#task-9'
+        expect(page).to have_no_selector '#task-10'
+
+        # 最後のページの確認
+        find('a', text: '最後').click
+        expect(page).to have_selector '#task-4'
+        expect(page).to have_no_selector '#task-5'
+      end
+
+      it '次へボタンの確認' do
+        # 次へボタンの確認
+        find('a', text: '次').click
+        expect(page).to have_selector '#task-9'
+        expect(page).to have_no_selector '#task-10'
+      end
+
+      it '前へボタンの確認' do
+        find('a', text: '3').click
+        find('a', text: '前').click
+        expect(page).to have_selector '#task-9'
+        expect(page).to have_no_selector '#task-10'
+      end
+
+      it '最初へボタンの確認' do
+        find('a', text: '3').click
+        find('a', text: '最初').click
+        expect(page).to have_selector '#task-9'
+        expect(page).to have_no_selector '#task-10'
+      end
+      
+    end
   end
 
   it '詳細ページの確認' do
