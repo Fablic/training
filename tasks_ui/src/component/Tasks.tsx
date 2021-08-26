@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Task from './Task'
 import StatusChips from './StatusChips'
 import Authorization from './Authorization'
+import Logout from './Logout'
 import { initI18n } from './translation'
 import { useTranslation } from 'react-i18next'
 
@@ -177,6 +178,8 @@ const Tasks: React.FC = (props) => {
         page={page}
         onChange={(_, n) => updateList({ order, status, query, page: n })}
       />
+
+      {authorized && <Logout />}
     </>
   )
 }
