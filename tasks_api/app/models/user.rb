@@ -3,6 +3,8 @@
 class User < ApplicationRecord
   has_many :tasks, dependent: :destroy
   has_many :labels, dependent: :destroy
+  validates :uid, length: { minimum: 4, maximum: 255 }
+  validates :password, length: { minimum: 8 }
 
   attr_accessor :password
 

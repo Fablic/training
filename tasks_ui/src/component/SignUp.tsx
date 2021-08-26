@@ -25,6 +25,8 @@ const SignUp = (props) => {
   const uidRef = useRef()
   const passwordRef = useRef()
 
+  const [notice, setNotice] = useState(null)
+
   const submit = async () => {
     const payload = {
       user: {
@@ -43,7 +45,16 @@ const SignUp = (props) => {
       body: JSON.stringify(payload),
     })
 
-    if (ret.ok) setClose()
+    if (ret.ok) {
+      setClose()
+    } else {
+      const errors = await ret.json()
+      setNotice(
+        Object.keys(errors)
+          .map((k) => errors[k])
+          .flat()
+      )
+    }
   }
 
   const setClose = () => {
@@ -71,6 +82,14 @@ const SignUp = (props) => {
           fullWidth
           inputRef={passwordRef}
         />
+
+        {notice && (
+          <ul>
+            {notice.map((n) => (
+              <li key={n}>{n}</li>
+            ))}
+          </ul>
+        )}
       </DialogContent>
 
       <DialogActions>
