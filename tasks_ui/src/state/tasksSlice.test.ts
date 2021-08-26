@@ -57,7 +57,7 @@ describe('tasks slice', () => {
         id: 2,
         name: 'task2',
       }
-      const endpoint = 'http://localhost:3000/tasks.json'
+      const endpoint = '/api/tasks.json'
       const payload = {
         tasks: [item1, item2],
         meta: { totalPages: 10, currentPage: 1 },
@@ -255,7 +255,7 @@ describe('tasks slice', () => {
         id: 1,
         name: 'new task name',
       }
-      const endpoint = 'http://localhost:3000/tasks.json'
+      const endpoint = '/api/tasks.json'
       const notice = 'created notice'
 
       it('should POST /tasks.json', async () => {
@@ -355,7 +355,7 @@ describe('tasks slice', () => {
         name: 'existing task name',
       }
       const updatedItem = { ...item, description: 'new description' }
-      const endpoint = `http://localhost:3000/tasks/${item.id}.json`
+      const endpoint = `/api/tasks/${item.id}.json`
       const notice = 'updated notice'
 
       it('should PUT /tasks/1.json with new values as a payload', async () => {
@@ -411,7 +411,7 @@ describe('tasks slice', () => {
 
       it('should be rejected with non-201', async () => {
         const action = update({ id: 1, name: '' })
-        fetchMock.put('http://localhost:3000/tasks/1.json', {
+        fetchMock.put('/api/tasks/1.json', {
           status: 422,
           body: JSON.stringify({ notice }),
         })
@@ -433,7 +433,7 @@ describe('tasks slice', () => {
         it('should be rejected with type=maintenance when API returns so', async () => {
           const action = update(updatedItem)
           const payload = { type: 'under_maintenance' }
-          fetchMock.put('http://localhost:3000/tasks/1.json', {
+          fetchMock.put('/api/tasks/1.json', {
             status: 503,
             body: JSON.stringify(payload),
           })
@@ -455,7 +455,7 @@ describe('tasks slice', () => {
         id: 1,
         name: 'existing task name',
       }
-      const endpoint = `http://localhost:3000/tasks/${item.id}.json`
+      const endpoint = `/api/tasks/${item.id}.json`
       const notice = 'deleted notice'
 
       it('should DELETE /tasks/1.json', async () => {

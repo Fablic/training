@@ -13,7 +13,7 @@ const initialState: State = {
 export const index = createAsyncThunk(
   'task/index',
   async (params, thunkApi) => {
-    let endpoint = 'http://localhost:3000/tasks.json'
+    let endpoint = '/api/tasks.json'
     const qs = []
     if (params) {
       if (params.order) {
@@ -41,6 +41,7 @@ export const index = createAsyncThunk(
     const ret = await fetch(endpoint, {
       method: 'GET',
       mode: 'cors',
+      credentials: 'include',
       headers: { 'Content-Type': 'application/json' },
     })
 
@@ -64,7 +65,7 @@ export const create = createAsyncThunk(
     const payload = {
       name: params.name,
     }
-    const ret = await fetch('http://localhost:3000/tasks.json', {
+    const ret = await fetch('/api/tasks.json', {
       method: 'POST',
       mode: 'cors',
       headers: {
@@ -84,7 +85,7 @@ export const create = createAsyncThunk(
 export const update = createAsyncThunk(
   'task/update',
   async (params, thunkApi) => {
-    const ret = await fetch(`http://localhost:3000/tasks/${params.id}.json`, {
+    const ret = await fetch(`/api/tasks/${params.id}.json`, {
       method: 'PUT',
       mode: 'cors',
       headers: {
@@ -104,7 +105,7 @@ export const update = createAsyncThunk(
 export const destroy = createAsyncThunk(
   'task/destroy',
   async (params, thunkApi) => {
-    const ret = await fetch(`http://localhost:3000/tasks/${params.id}.json`, {
+    const ret = await fetch(`/api/tasks/${params.id}.json`, {
       method: 'DELETE',
       mode: 'cors',
       headers: {

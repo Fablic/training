@@ -6,7 +6,7 @@ const initialState: State = {
 }
 
 export const index = createAsyncThunk('label/index', async (params, _) => {
-  const endpoint = 'http://localhost:3000/labels.json'
+  const endpoint = '/api/labels.json'
   const ret = await fetch(endpoint, {
     method: 'GET',
     mode: 'cors',

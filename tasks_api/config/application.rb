@@ -43,15 +43,6 @@ module TasksApi
     config.middleware.use ActionDispatch::Flash
     config.middleware.use ActionDispatch::Session::CookieStore
 
-    config.middleware.insert_before 0, Rack::Cors do
-      allow do
-        origins (ENV['ALLOW_ORIGIN'] || '')
-        resource '*',
-                 headers: :any,
-                 methods: %i[get post options head delete put]
-      end
-    end
-
     config.i18n.available_locales = %w[en ja]
 
     config.active_record.schema_format = :sql

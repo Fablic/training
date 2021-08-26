@@ -26,7 +26,7 @@ describe('labels slice', () => {
 
 describe('thunks', () => {
   describe('index', () => {
-    const endpoint = 'http://localhost:3000/labels.json'
+    const endpoint = '/api/labels.json'
     const payload = ['label1', 'label2']
 
     it('should GET /labels.json', async () => {
