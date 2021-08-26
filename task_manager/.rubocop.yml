@@ -11,3 +11,6 @@ AllCops:
     - 'vendor/**/*'
     - 'bin/*'
     - 'db/**/*'
+
+Metrics/AbcSize:
+  Max: 25
