@@ -13,6 +13,8 @@ import { makeStyles } from '@material-ui/core/styles'
 import { tasksSlice } from '../state/tasksSlice'
 import { useDispatch, useSelector } from 'react-redux'
 
+import SignUp from './SignUp'
+
 import { initI18n } from './translation'
 import { useTranslation } from 'react-i18next'
 const i18n = initI18n()
@@ -23,6 +25,8 @@ const Authorization = (props) => {
 
   const uidRef = useRef()
   const passwordRef = useRef()
+
+  const [signUpOpen, setSignUpOpen] = useState(false)
 
   const submit = async () => {
     const payload = {
@@ -44,35 +48,46 @@ const Authorization = (props) => {
   }
 
   return (
-    <Dialog open={true} aria-label="authorization dialog">
-      <DialogTitle>{t('authorization.title')}</DialogTitle>
-      <DialogContent>
-        <TextField
-          aria-label="user id input"
-          autoFocus
-          margin="dense"
-          label={t('authorization.uid')}
-          type="email"
-          fullWidth
-          inputRef={uidRef}
-        />
-        <TextField
-          aria-label="password input"
-          margin="dense"
-          label={t('authorization.password')}
-          type="password"
-          fullWidth
-          inputRef={passwordRef}
-        />
-        <Button>{t('authorization.signUp')}</Button>
-      </DialogContent>
+    <>
+      <Dialog open={true} aria-label="authorization dialog">
+        <DialogTitle>{t('authorization.title')}</DialogTitle>
+        <DialogContent>
+          <Button onClick={() => setSignUpOpen(true)}>
+            {t('authorization.signUp')}
+          </Button>
 
-      <DialogActions>
-        <IconButton onClick={submit} color="primary" aria-label="login submit">
-          <Icon>login</Icon>
-        </IconButton>
-      </DialogActions>
-    </Dialog>
+          <TextField
+            aria-label="user id input"
+            autoFocus
+            margin="dense"
+            label={t('authorization.uid')}
+            type="email"
+            fullWidth
+            inputRef={uidRef}
+          />
+          <TextField
+            aria-label="password input"
+            margin="dense"
+            label={t('authorization.password')}
+            type="password"
+            fullWidth
+            inputRef={passwordRef}
+          />
+        </DialogContent>
+
+        <DialogActions>
+          <IconButton
+            onClick={submit}
+            color="primary"
+            aria-label="login submit"
+          >
+            <Icon>login</Icon>
+          </IconButton>
+        </DialogActions>
+      </Dialog>
+
+      <SignUp open={signUpOpen} setOpen={setSignUpOpen} />
+    </>
   )
 }
 export default Authorization
