@@ -115,7 +115,7 @@ RSpec.describe 'Tasks', type: :system do
         visit tasks_path
       }
 
-      it '初期ページの確認後、最後のページの移行し、要素の確認' do
+      it '初期ページの要素確認' do
         navs = page.all('nav')
         expect(navs[0]).to have_css('.next')
         expect(navs[0]).to have_css('.last')
@@ -125,11 +125,16 @@ RSpec.describe 'Tasks', type: :system do
 
         expect(page).to have_selector '#task-9'
         expect(page).to have_no_selector '#task-10'
+      end
 
+      it '最後のページの要素の確認' do
         # 最後のページの確認
         find('a', text: '最後').click
+
+        wait = Selenium::WebDriver::Wait.new(:timeout => 100) 
+        wait.until {expect(page).to have_no_selector '#task-5'}
+
         expect(page).to have_selector '#task-4'
-        expect(page).to have_no_selector '#task-5'
       end
 
       it '次へボタンの確認' do
