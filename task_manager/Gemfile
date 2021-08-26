@@ -27,6 +27,8 @@ gem 'fablicop', require: false
 
 gem 'enum_help'
 
+gem 'kaminari'
+
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
