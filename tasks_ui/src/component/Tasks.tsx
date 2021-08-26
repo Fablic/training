@@ -86,6 +86,7 @@ const Tasks: React.FC = (props) => {
   return (
     <>
       {!authorized && <Authorization />}
+
       <div className={classes.chips}>
         <Chip
           icon={<Icon>post_add</Icon>}

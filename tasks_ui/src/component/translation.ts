@@ -27,6 +27,12 @@ export const initI18n = () => {
               close: 'Close',
             },
             search: 'Search keyword',
+            authorization: {
+              title: 'Authorization',
+              uid: 'User ID',
+              password: 'Password',
+              signUp: 'Sign up',
+            },
           },
         },
         ja: {
@@ -48,6 +54,12 @@ export const initI18n = () => {
               close: '完了',
             },
             search: '検索語',
+            authorization: {
+              title: '認証',
+              uid: 'ユーザID',
+              password: 'パスワード',
+              signUp: '新規登録',
+            },
           },
         },
       },
