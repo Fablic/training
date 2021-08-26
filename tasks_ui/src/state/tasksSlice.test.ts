@@ -11,7 +11,7 @@ const initialState = {
   pending: false,
   notice: null,
   maintenance: false,
-  authorized: false,
+  authorized: true,
 }
 
 describe('tasks slice', () => {

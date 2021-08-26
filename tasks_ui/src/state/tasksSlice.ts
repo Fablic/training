@@ -7,7 +7,7 @@ const initialState: State = {
   pending: false,
   notice: null,
   maintenance: false,
-  authorized: false,
+  authorized: true,
 }
 
 export const index = createAsyncThunk(
