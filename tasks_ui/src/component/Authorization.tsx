@@ -27,6 +27,7 @@ const Authorization = (props) => {
   const passwordRef = useRef()
 
   const [signUpOpen, setSignUpOpen] = useState(false)
+  const [notice, setNotice] = useState(null)
 
   const submit = async () => {
     const payload = {
@@ -44,7 +45,11 @@ const Authorization = (props) => {
       body: JSON.stringify(payload),
     })
 
-    if (ret.ok) dispatch(tasksSlice.actions.setAuthorized(true))
+    if (ret.ok) {
+      dispatch(tasksSlice.actions.setAuthorized(true))
+    } else {
+      setNotice(t('authorization.cantLogin'))
+    }
   }
 
   return (
@@ -73,6 +78,8 @@ const Authorization = (props) => {
             fullWidth
             inputRef={passwordRef}
           />
+
+          {notice && <div>{notice}</div>}
         </DialogContent>
 
         <DialogActions>
