@@ -5,7 +5,7 @@
     <%= f.select :keyword_progress, options_for_select(Task.progresses_i18n.keys.map {|k| [I18n.t("enums.task.progress.#{k}"), k]}, selected: @keyword_progress) , { include_blank: '選択なし'} %>
     <%= f.submit "検索" %>
 <% end %>
-<table class="table table-striped table-bordered table-hover">
+<table class="table table-striped table-bordered table-hover" style="margin-top: 10px;">
   <thead>
     <tr>
       <th scope="col"><%= sortable "name" , (t '.name')%></th>
