@@ -64,43 +64,59 @@ RSpec.describe Task, type: :model do
   end
 
   describe 'scope' do
-    let!(:task1) { create :task, name: 'task_1', progress: 1, created_at: '2019-09-02 10:59:26' }
-    let!(:task2) { create :task, name: 'task_2', progress: 1, created_at: '2018-09-02 10:59:26' }
-    let!(:task3) { create :task, name: 'task_11', progress: 2, created_at: '2020-09-02 10:59:26' }
+    subject { tasks(task1, task2)}
 
-    describe 'search' do
-      it '何も入れずに検索' do
-        expect(Task.search('', nil)).to include(task1, task2, task3)
+    describe 'search_partial' do
+      context '何も入れずに検索' do
+        let(:task1) { create :task, name: 'task_1' }
+        let(:task2) { create :task, name: 'task_2' }
+        it { expect(Task.search_partial('')).to include(task1, task2) }
       end
 
-      it 'nameを入れて検索' do
-        expect(Task.search('1', nil)).to include(task1, task3)
+      context 'nameのパラメーターをいれて検索する' do
+        let(:task1) { create :task, name: 'task_1' }
+        let(:task2) { create :task, name: 'task_2' }
+        it { expect(Task.search_partial('1')).to include(task1) }
+      end
+    end
+
+    describe 'search_progress' do
+      context '何も入れずに検索' do
+        let(:task1) { create :task, progress: 1 }
+        let(:task2) { create :task, progress: 2 }
+        it { expect(Task.search_progress('')).to include(task1, task2) }
       end
 
-      it 'progressを入れて検索' do
-        expect(Task.search('', 1)).to include(task1, task2)
-      end
-
-      it 'nameとprogressのどちらの候補も入れて検索' do
-        expect(Task.search('1', 1)).to include(task1)
+      context 'Doneをいれて検索' do
+        let(:task1) { create :task, progress: 1 }
+        let(:task2) { create :task, progress: 2 }
+        it { expect(Task.search_progress('Done')).to include(task2) }
       end
     end
 
     describe 'sort' do
-      it '何も入れずに検索し、created_atの降順になるか確認' do
-        expect(Task.sort_column_direction('', '')).to eq [task3, task1, task2]
+      context '何も入れずに検索し、created_atの降順になるか確認' do
+        let(:task1) { create :task, created_at: '2019-09-02 10:59:26' }
+        let(:task2) { create :task, created_at: '2018-09-02 10:59:26' }
+        it { expect(Task.sort_column_direction('', '')).to eq [task1, task2] }
       end
 
-      it 'ascを入れて検索し、created_atの昇順になるか確認' do
-        expect(Task.sort_column_direction('', 'asc')).to eq [task2, task1, task3]
+      context 'ascを入れて検索し、created_atの昇順になるか確認' do
+        let(:task1) { create :task, created_at: '2019-09-02 10:59:26' }
+        let(:task2) { create :task, created_at: '2018-09-02 10:59:26' }
+        it { expect(Task.sort_column_direction('', 'asc')).to eq [task2, task1] }
       end
 
-      it 'nameを入れて検索し、nameの降順になるか確認' do
-        expect(Task.sort_column_direction('name', '')).to eq [task2, task3, task1]
+      context 'nameを入れて検索し、nameの降順になるか確認' do
+        let(:task1) { create :task, name: 'task_1' }
+        let(:task2) { create :task, name: 'task_2' }
+        it { expect(Task.sort_column_direction('name', '')).to eq [task2, task1] }
       end
 
-      it 'nameとascを入れて検索し、nameの昇順になるか確認' do
-        expect(Task.sort_column_direction('name', 'asc')).to eq [task1, task3, task2]
+      context 'nameとascを入れて検索し、nameの昇順になるか確認' do
+        let(:task1) { create :task, name: 'task_1' }
+        let(:task2) { create :task, name: 'task_2' }
+        it { expect(Task.sort_column_direction('name', 'asc')).to eq [task1, task2] }
       end
     end
   end
