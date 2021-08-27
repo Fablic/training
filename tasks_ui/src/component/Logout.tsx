@@ -4,6 +4,7 @@ import Icon from '@material-ui/core/Icon'
 import IconButton from '@material-ui/core/IconButton'
 
 import { tasksSlice } from '../state/tasksSlice'
+import { labelsSlice } from '../state/labelsSlice'
 import { useDispatch, useSelector } from 'react-redux'
 
 const Logout = (props) => {
@@ -18,7 +19,10 @@ const Logout = (props) => {
       body: '',
     })
 
-    if (ret.ok) dispatch(tasksSlice.actions.setAuthorized(false))
+    if (ret.ok) {
+      dispatch(tasksSlice.actions.setAuthorized(false))
+      dispatch(labelsSlice.actions.setAuthorized(false))
+    }
   }
 
   return (

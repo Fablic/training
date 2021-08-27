@@ -7,6 +7,7 @@ const actions = labelsSlice.actions
 const initialState = {
   labels: [],
   selected: '',
+  authorized: true,
 }
 
 describe('labels slice', () => {
@@ -21,10 +22,18 @@ describe('labels slice', () => {
 
       expect(actual.selected).toEqual(expected)
     })
+
+    it('should set authorized', () => {
+      const actual = reducer({ authorized: false }, actions.setAuthorized(true))
+
+      expect(actual.authorized).toEqual(true)
+    })
   })
 })
 
 describe('thunks', () => {
+  afterEach(() => fetchMock.restore())
+
   describe('index', () => {
     const endpoint = '/api/labels.json'
     const payload = ['label1', 'label2']
@@ -45,6 +54,30 @@ describe('thunks', () => {
     it('should update the list', () => {
       const actual = reducer(initialState, index.fulfilled(payload))
       expect(actual.labels).toEqual(payload)
+    })
+
+    it('should set authorized=true when 200', () => {
+      const actual = reducer(initialState, index.fulfilled(payload))
+      expect(actual.authorized).toBe(true)
+    })
+
+    describe('unauthorized', () => {
+      it('should be rejected with type=unauthorized when 401', async () => {
+        const action = index()
+        fetchMock.get(endpoint, {
+          status: 401,
+          body: '',
+        })
+        const subject = await action(jest.fn(), jest.fn(), undefined)
+        expect(subject.payload).toEqual({ type: 'unauthorized' })
+      })
+
+      it('should set authorized=false when 401', () => {
+        const action = index.rejected()
+        action.payload = { type: 'unauthorized' }
+        const actual = reducer(initialState, action)
+        expect(actual.authorized).toBe(false)
+      })
     })
   })
 })

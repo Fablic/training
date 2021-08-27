@@ -11,6 +11,7 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 import { makeStyles } from '@material-ui/core/styles'
 
 import { tasksSlice } from '../state/tasksSlice'
+import { labelsSlice } from '../state/labelsSlice'
 import { useDispatch, useSelector } from 'react-redux'
 
 import SignUp from './SignUp'
@@ -47,6 +48,7 @@ const Authorization = (props) => {
 
     if (ret.ok) {
       dispatch(tasksSlice.actions.setAuthorized(true))
+      dispatch(labelsSlice.actions.setAuthorized(true))
     } else {
       setNotice(t('authorization.cantLogin'))
     }

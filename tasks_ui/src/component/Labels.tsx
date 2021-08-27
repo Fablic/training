@@ -34,8 +34,9 @@ const Labels = (props) => {
 
   const labels = useSelector((s) => s.labels?.labels)
   const selected = useSelector((s) => s.labels?.selected)
+  const authorized = useSelector((s) => s.labels?.authorized)
 
-  useEffect(() => dispatch(index()), [])
+  useEffect(() => dispatch(index()), [authorized])
 
   const classes = makeStyles({
     chips: {
