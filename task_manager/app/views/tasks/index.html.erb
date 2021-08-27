@@ -1,6 +1,6 @@
 <h1><%= t '.title' %></h1>
 <%= form_with url: root_path, method: :get, local: true do |f| %>
-    <%= f.text_field :keyword_name, value: @keyword_name %>
+    <%= f.text_field :keyword_name, value: @keyword_name ,:placeholder => (t '.name') %>
     <%= f.select :keyword_progress, options_for_select(Task.progresses_i18n.keys.map {|k| [I18n.t("enums.task.progress.#{k}"), k]}, selected: @keyword_progress) , { include_blank: '選択なし'} %>
     <%= f.submit "検索" %>
 <% end %>
