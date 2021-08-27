@@ -19,8 +19,8 @@ class Task < ApplicationRecord
   validates :priority, inclusion: { in: Task.priorities.keys }
   validates :progress, inclusion: { in: Task.progresses.keys }
 
-  scope :search_name, -> (keyword_name) { where(['name like?', "%#{keyword_name}%"])}
-  scope :search_progress, -> (keyword_progress) { where(progress: Task.progresses[keyword_progress]) if keyword_progress.present?}
+  scope :search_name, -> (keyword_name) { where(['name like?', "%#{keyword_name}%"]) }
+  scope :search_progress, -> (keyword_progress) { where(progress: Task.progresses[keyword_progress]) if keyword_progress.present? }
 
   scope :sort_column_direction, -> (column, direction) { order(sort_column(column) => sort_direction(direction)) }
 

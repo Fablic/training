@@ -64,7 +64,7 @@ RSpec.describe Task, type: :model do
   end
 
   describe 'scope' do
-    subject { tasks(task1, task2)}
+    subject { tasks(task1, task2) }
 
     describe 'search_name' do
       context '何も入れずに検索' do
