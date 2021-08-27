@@ -128,55 +128,59 @@ RSpec.describe 'Tasks', type: :system do
       end
     end
 
-    context 'peginationの確認' do
+    context 'ページネーション' do
       # 上記の宣言taskと合わせて合計25個のtaskが作られる
       before {
         create_list(:task, 23)
         visit tasks_path
       }
 
-      it '初期ページの要素確認' do
-        navs = page.all('nav')
-        expect(navs[0]).to have_css('.next')
-        expect(navs[0]).to have_css('.last')
-        expect(navs[0]).to have_content '1'
-        expect(navs[0]).to have_content '3'
-        expect(navs[0]).to have_no_content '4'
+      describe '初期ページ' do
+        it 'ナビゲーションが正しく表示される' do
+          navs = page.all('nav')
+          expect(navs[0]).to have_css('.next')
+          expect(navs[0]).to have_css('.last')
+          expect(navs[0]).to have_content '1'
+          expect(navs[0]).to have_content '3'
+          expect(navs[0]).to have_no_content '4'
+        end
 
-        expect(page).to have_selector '#task-9'
-        expect(page).to have_no_selector '#task-10'
+        it '1ページ目のタスクが表示される' do
+          expect(page).to have_selector '#task-9'
+          expect(page).to have_no_selector '#task-10'
+        end
+
+        it '次へボタンを押してタスクが表示されるかの確認' do
+          # 次へボタンの確認
+          find('a', text: '次').click
+          expect(page).to have_selector '#task-9'
+          expect(page).to have_no_selector '#task-10'
+        end
+
+      end
+    
+      describe '最終ページ' do
+        before{ find('a', text: '最後').click }
+        it '最後のページのタスクとして、6つめのタスクが表示されず、5つめのタスクが表示される' do
+          wait = Selenium::WebDriver::Wait.new(timeout: 100)
+          wait.until { expect(page).to have_no_selector '#task-5' }
+
+          expect(page).to have_selector '#task-4'
+        end
+
+        it '前へボタンを押してタスクが表示されるかの確認' do
+          find('a', text: '前').click
+          expect(page).to have_selector '#task-9'
+          expect(page).to have_no_selector '#task-10'
+        end
+
+        it '最初へボタンを押してタスクが表示されるかの確認' do
+          find('a', text: '最初').click
+          expect(page).to have_selector '#task-9'
+          expect(page).to have_no_selector '#task-10'
+        end
       end
 
-      it '最後のページの要素の確認' do
-        # 最後のページの確認
-        find('a', text: '最後').click
-
-        wait = Selenium::WebDriver::Wait.new(timeout: 100)
-        wait.until { expect(page).to have_no_selector '#task-5' }
-
-        expect(page).to have_selector '#task-4'
-      end
-
-      it '次へボタンの確認' do
-        # 次へボタンの確認
-        find('a', text: '次').click
-        expect(page).to have_selector '#task-9'
-        expect(page).to have_no_selector '#task-10'
-      end
-
-      it '前へボタンの確認' do
-        find('a', text: '3').click
-        find('a', text: '前').click
-        expect(page).to have_selector '#task-9'
-        expect(page).to have_no_selector '#task-10'
-      end
-
-      it '最初へボタンの確認' do
-        find('a', text: '3').click
-        find('a', text: '最初').click
-        expect(page).to have_selector '#task-9'
-        expect(page).to have_no_selector '#task-10'
-      end
     end
   end
 
