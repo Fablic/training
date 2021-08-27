@@ -11,7 +11,7 @@ import * as TasksSlice from '../state/tasksSlice'
 import * as ReactRedux from 'react-redux'
 
 const setMockState = (params) => {
-  const { tasks, totalPages, currentPage } = params
+  const { tasks, totalPages, currentPage, authorized } = params
 
   const mockState = {
     tasks: {
@@ -19,6 +19,7 @@ const setMockState = (params) => {
       pending: false,
       totalPages,
       currentPage,
+      authorized,
     },
     labels: [],
   }
@@ -58,7 +59,7 @@ describe('Tasks', () => {
 
   describe('render', () => {
     beforeEach(() => {
-      setMockState({ tasks })
+      setMockState({ tasks, authorized: true })
       renderIt()
     })
 
@@ -123,7 +124,7 @@ describe('Tasks', () => {
 
   describe('paginator', () => {
     beforeEach(() => {
-      setMockState({ tasks, totalPages: 5, currentPage: 1 })
+      setMockState({ tasks, totalPages: 5, currentPage: 1, authorized: true })
       renderIt()
       jest.clearAllMocks()
     })
@@ -143,6 +144,19 @@ describe('Tasks', () => {
         query: '',
         page: 3,
       })
+    })
+  })
+
+  describe('authorization', () => {
+    beforeEach(() => {
+      setMockState({ tasks, authorized: false })
+      renderIt()
+    })
+
+    afterEach(() => jest.clearAllMocks())
+
+    it('should show authorization dialog', () => {
+      screen.getByLabelText('authorization dialog')
     })
   })
 })

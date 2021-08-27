@@ -14,12 +14,14 @@ ruby 3.0.1p64 or later
 - System dependencies
 
 ```
-nodejs and npm are required
+nginx, nodejs and npm are required
 ```
 
 - Configuration
 
 ```
+sudo cp task.conf /etc/nginx/conf.d/
+sudo service nginx reload
 cd tasks_api/
 bundle install
 cd ../tasks_ui/
@@ -59,7 +61,7 @@ npm run test
 ```
 cd tasks_api/
 bundle install && rails db:migrate
-ALLOW_ORIGIN=https://localhost:8080 rails s &
+rails s &
 cd ../tasks_ui/
 npm i
 npm run start

@@ -7,12 +7,13 @@ const initialState: State = {
   pending: false,
   notice: null,
   maintenance: false,
+  authorized: true,
 }
 
 export const index = createAsyncThunk(
   'task/index',
   async (params, thunkApi) => {
-    let endpoint = 'http://localhost:3000/tasks.json'
+    let endpoint = '/api/tasks.json'
     const qs = []
     if (params) {
       if (params.order) {
@@ -40,13 +41,20 @@ export const index = createAsyncThunk(
     const ret = await fetch(endpoint, {
       method: 'GET',
       mode: 'cors',
+      credentials: 'include',
       headers: { 'Content-Type': 'application/json' },
     })
 
     if (ret.ok) {
       return ret.json()
     } else {
-      return thunkApi.rejectWithValue(await ret.json())
+      switch (ret.status) {
+        case 401:
+          return thunkApi.rejectWithValue({ type: 'unauthorized' })
+
+        default:
+          return thunkApi.rejectWithValue(await ret.json())
+      }
     }
   }
 )
@@ -57,7 +65,7 @@ export const create = createAsyncThunk(
     const payload = {
       name: params.name,
     }
-    const ret = await fetch('http://localhost:3000/tasks.json', {
+    const ret = await fetch('/api/tasks.json', {
       method: 'POST',
       mode: 'cors',
       headers: {
@@ -77,7 +85,7 @@ export const create = createAsyncThunk(
 export const update = createAsyncThunk(
   'task/update',
   async (params, thunkApi) => {
-    const ret = await fetch(`http://localhost:3000/tasks/${params.id}.json`, {
+    const ret = await fetch(`/api/tasks/${params.id}.json`, {
       method: 'PUT',
       mode: 'cors',
       headers: {
@@ -97,7 +105,7 @@ export const update = createAsyncThunk(
 export const destroy = createAsyncThunk(
   'task/destroy',
   async (params, thunkApi) => {
-    const ret = await fetch(`http://localhost:3000/tasks/${params.id}.json`, {
+    const ret = await fetch(`/api/tasks/${params.id}.json`, {
       method: 'DELETE',
       mode: 'cors',
       headers: {
@@ -132,6 +140,9 @@ export const tasksSlice = createSlice({
     setNotice(state, action) {
       state.notice = action.payload
     },
+    setAuthorized(state, action) {
+      state.authorized = action.payload
+    },
   },
 
   extraReducers: (builder) => {
@@ -143,8 +154,16 @@ export const tasksSlice = createSlice({
         s.pending = false
 
         if (a.payload) {
-          if (a.payload.type && a.payload.type == 'under_maintenance') {
-            s.maintenance = true
+          if (a.payload.type) {
+            switch (a.payload.type) {
+              case 'under_maintenance':
+                s.maintenance = true
+                break
+
+              case 'unauthorized':
+                s.authorized = false
+                break
+            }
           } else {
             s.notice = Object.entries(a.payload)
               .map((e) => e[1].join('\n'))
@@ -156,6 +175,7 @@ export const tasksSlice = createSlice({
 
     builder.addCase(index.fulfilled, (state, action) => {
       state.pending = false
+      state.authorized = true
       state.tasks = action.payload.tasks.map((i) => ({
         ...i,
         edit: false,
@@ -165,6 +185,7 @@ export const tasksSlice = createSlice({
     })
 
     builder.addCase(create.fulfilled, (state, action) => {
+      state.authorized = true
       const { task, notice } = action.payload
       state.pending = false
 
@@ -173,6 +194,7 @@ export const tasksSlice = createSlice({
     })
 
     builder.addCase(update.fulfilled, (state, action) => {
+      state.authorized = true
       const { task, notice } = action.payload
       state.pending = false
 
@@ -185,6 +207,7 @@ export const tasksSlice = createSlice({
     })
 
     builder.addCase(destroy.fulfilled, (state, action) => {
+      state.authorized = true
       const { id, notice } = action.payload
       state.pending = false
 

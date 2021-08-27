@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_23_012522) do
+ActiveRecord::Schema.define(version: 2021_08_24_081357) do
 
   create_table "labels", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "value", null: false
@@ -38,7 +38,16 @@ ActiveRecord::Schema.define(version: 2021_08_23_012522) do
     t.datetime "updated_at", precision: 6, null: false
     t.date "due_date"
     t.integer "status", default: 0, null: false
+    t.integer "user_id"
     t.index ["name"], name: "index_tasks_on_name", type: :fulltext
+  end
+
+  create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "uid"
+    t.string "password_hash"
+    t.string "salt"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
 end

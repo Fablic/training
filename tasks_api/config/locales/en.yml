@@ -35,6 +35,11 @@ en:
       name:
         blank: "Name can't be blank."
         too_long: "Name should be shorter than 255 characters."
+      uid:
+        too_long: "User ID should be shorter than 255 characters."
+        too_short: "User ID should be longer than 4 characters"
+      password:
+        too_short: "Password should be longer than 8 characters"
   notice:
     created: "New task has created."
     updated: "The task has updated."

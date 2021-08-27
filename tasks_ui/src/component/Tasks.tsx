@@ -14,6 +14,8 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import Task from './Task'
 import StatusChips from './StatusChips'
+import Authorization from './Authorization'
+import Logout from './Logout'
 import { initI18n } from './translation'
 import { useTranslation } from 'react-i18next'
 
@@ -46,6 +48,7 @@ const useStyles = makeStyles({
 })
 
 const Tasks: React.FC = (props) => {
+  const authorized = useSelector((s) => s.tasks.authorized)
   const tasks = useSelector((s) => s.tasks.tasks)
   const totalPages = useSelector((s) => s.tasks.totalPages)
   const page = useSelector((s) => s.tasks.currentPage)
@@ -71,7 +74,7 @@ const Tasks: React.FC = (props) => {
 
   useEffect(() => {
     updateList({ order, status, query, page, label: selectedLabel })
-  }, [order, status, query, selectedLabel])
+  }, [order, status, query, selectedLabel, authorized])
 
   const changeStatus = (newStatus) => {
     if (status == newStatus) {
@@ -83,6 +86,8 @@ const Tasks: React.FC = (props) => {
 
   return (
     <>
+      {!authorized && <Authorization />}
+
       <div className={classes.chips}>
         <Chip
           icon={<Icon>post_add</Icon>}
@@ -173,6 +178,8 @@ const Tasks: React.FC = (props) => {
         page={page}
         onChange={(_, n) => updateList({ order, status, query, page: n })}
       />
+
+      {authorized && <Logout />}
     </>
   )
 }
