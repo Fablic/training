@@ -90,6 +90,9 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
+    devise-i18n (1.10.0)
+      devise (>= 4.8.0)
+    devise-i18n-views (0.3.7)
     diff-lcs (1.4.4)
     erubi (1.10.0)
     fablicop (1.1.0)
@@ -300,6 +303,8 @@ DEPENDENCIES
   bootsnap (>= 1.4.4)
   byebug
   devise
+  devise-i18n
+  devise-i18n-views
   fablicop
   factory_bot_rails
   jbuilder (~> 2.7)
