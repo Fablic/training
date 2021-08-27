@@ -22,7 +22,7 @@ class Task < ApplicationRecord
   scope :search_name, -> (keyword_name) { where(['name like?', "%#{keyword_name}%"])}
   scope :search_progress, -> (keyword_progress) { where(progress: Task.progresses[keyword_progress]) if keyword_progress.present?}
 
-  scope :sort_column_direction, -> (column, direction) { order("#{sort_column(column)} #{sort_direction(direction)}") }
+  scope :sort_column_direction, -> (column, direction) { order(sort_column(column) => sort_direction(direction)) }
 
   with_options if: :due_at.presence do
     validate :due_at_start_check
