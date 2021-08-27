@@ -66,17 +66,17 @@ RSpec.describe Task, type: :model do
   describe 'scope' do
     subject { tasks(task1, task2)}
 
-    describe 'search_partial' do
+    describe 'search_name' do
       context '何も入れずに検索' do
         let(:task1) { create :task, name: 'task_1' }
         let(:task2) { create :task, name: 'task_2' }
-        it { expect(Task.search_partial('')).to include(task1, task2) }
+        it { expect(Task.search_name('')).to include(task1, task2) }
       end
 
       context 'nameのパラメーターをいれて検索する' do
         let(:task1) { create :task, name: 'task_1' }
         let(:task2) { create :task, name: 'task_2' }
-        it { expect(Task.search_partial('1')).to include(task1) }
+        it { expect(Task.search_name('1')).to include(task1) }
       end
     end
 
