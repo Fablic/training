@@ -21,7 +21,6 @@ RSpec.describe 'Tasks', type: :system do
     describe 'ソート' do
       context '初期表示' do
         it 'sort順序が日付の降順になっていることの確認' do
-
           expect(page).to have_selector '#task-0', text: '2021-08-02'
           expect(page).to have_selector '#task-1', text: '2019-09-02'
         end
@@ -30,31 +29,31 @@ RSpec.describe 'Tasks', type: :system do
           find('a', text: 'タスク名').click
           expect(page).to have_selector '#task-0', text: 'a_task'
           expect(page).to have_selector '#task-1', text: 'b_task'
-  
+
           # 二回目にタスク名ボタンを押した際はタスク名の降順になる。
           find('a', text: 'タスク名').click
           expect(page).to have_selector '#task-0', text: 'b_task'
           expect(page).to have_selector '#task-1', text: 'a_task'
         end
-  
+
         it '作成日ボタンを押した際のsort確認' do
           # 初期で作成日ボタンを押した際は作成日の昇順になる。
           find('a', text: '作成日').click
           expect(page).to have_selector '#task-0', text: '2019-09-02'
           expect(page).to have_selector '#task-1', text: '2021-08-02'
-  
+
           # 二回目に作成日ボタンを押した際は作成日の降順になる。
           find('a', text: '作成日').click
           expect(page).to have_selector '#task-0', text: '2021-08-02'
           expect(page).to have_selector '#task-1', text: '2019-09-02'
         end
-  
+
         it '締め切りボタンを押した際のsort確認' do
           # 初期で作成日ボタンを押した際は作成日の昇順になる。
           find('a', text: '締め切り').click
           expect(page).to have_selector '#task-0', text: (Time.current + 2.days).strftime('%F')
           expect(page).to have_selector '#task-1', text: (Time.current + 10.days).strftime('%F')
-  
+
           # 二回目に作成日ボタンを押した際は作成日の降順になる。
           find('a', text: '締め切り').click
           expect(page).to have_selector '#task-0', text: (Time.current + 10.days).strftime('%F')
@@ -156,11 +155,10 @@ RSpec.describe 'Tasks', type: :system do
           expect(page).to have_selector '#task-9'
           expect(page).to have_no_selector '#task-10'
         end
-
       end
-    
+
       describe '最終ページ' do
-        before{ find('a', text: '最後').click }
+        before { find('a', text: '最後').click }
         it '最後のページのタスクとして、6つめのタスクが表示されず、5つめのタスクが表示される' do
           wait = Selenium::WebDriver::Wait.new(timeout: 100)
           wait.until { expect(page).to have_no_selector '#task-5' }
@@ -180,7 +178,6 @@ RSpec.describe 'Tasks', type: :system do
           expect(page).to have_no_selector '#task-10'
         end
       end
-
     end
   end
 
