@@ -33,10 +33,10 @@ class Task < ApplicationRecord
   end
 
   def self.sort_direction(direction)
-    %w[asc desc].include?(direction) ? direction : 'desc'
+    %i[asc desc].include?(:"#{direction}") ? :"#{direction}" : :desc
   end
 
   def self.sort_column(column)
-    Task.column_names.include?(column) ? column : 'created_at'
+    Task.column_names.include?(:column) ? :column : 'created_at'
   end
 end
