@@ -20,7 +20,7 @@ class Task < ApplicationRecord
   validates :progress, inclusion: { in: Task.progresses.keys }
 
   scope :search_partial, -> (keyword_name) { where(['name like?', "%#{keyword_name}%"])}
-  scope :search_progress, -> (keyword_progress) { where(['progress like?', "%#{Task.progresses[keyword_progress]}%"])}
+  scope :search_progress, -> (keyword_progress) { where(progress: Task.progresses[keyword_progress]) if keyword_progress.present?}
 
   scope :sort_column_direction, -> (column, direction) { order("#{sort_column(column)} #{sort_direction(direction)}") }
 
