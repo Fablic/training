@@ -1,6 +1,25 @@
 ActiveAdmin.register User do
   permit_params :name, :email, :password
 
+  controller do
+    def scoped_collection
+      end_of_association_chain.includes(:tasks)
+    end
+  end
+
+  index do
+    selectable_column
+    column :id
+    column :name
+    column :email
+    column 'Task-Counts' do |user|
+      user.tasks.size
+    end
+    column :created_at
+    column :updated_at
+    actions
+  end
+
   show do
     attributes_table do
       row :name
