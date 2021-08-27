@@ -2,7 +2,7 @@
 
 class TasksController < ApplicationController
   before_action :set_task_by_id, only: %i[show edit update destroy]
-  def index
+  def index # rubocop:disable Metrics/AbcSize
     @tasks = Task.sort_column_direction(params[:sort], params[:direction]).search(params[:keyword_name],
                                                                                   Task.progresses[params[:keyword_progress]]).page(params[:page]).per(10)
     @keyword_name = params[:keyword_name]

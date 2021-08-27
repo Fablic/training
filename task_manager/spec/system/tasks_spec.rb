@@ -110,7 +110,7 @@ RSpec.describe 'Tasks', type: :system do
 
     context 'peginationの確認' do
       # 上記の宣言taskと合わせて合計25個のtaskが作られる
-      before{
+      before {
         create_list(:task, 23)
         visit tasks_path
       }
@@ -131,8 +131,8 @@ RSpec.describe 'Tasks', type: :system do
         # 最後のページの確認
         find('a', text: '最後').click
 
-        wait = Selenium::WebDriver::Wait.new(:timeout => 100) 
-        wait.until {expect(page).to have_no_selector '#task-5'}
+        wait = Selenium::WebDriver::Wait.new(timeout: 100)
+        wait.until { expect(page).to have_no_selector '#task-5' }
 
         expect(page).to have_selector '#task-4'
       end
