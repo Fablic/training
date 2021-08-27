@@ -4,7 +4,7 @@ class TasksController < ApplicationController
   before_action :set_task_by_id, only: %i[show edit update destroy]
 
   def index
-    @tasks = Task.sort_column_direction(params[:sort], params[:direction]).search(params[:keyword_name], Task.progresses[params[:keyword_progress]])
+    @tasks = Task.sort_column_direction(params[:sort], params[:direction]).search_partial(params[:keyword_name]).search_progress(params[:keyword_progress])
     @keyword_name = params[:keyword_name]
     @keyword_progress = params[:keyword_progress]
   end
