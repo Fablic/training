@@ -7,9 +7,9 @@
 <table class="table table-striped table-bordered table-hover">
   <thead>
     <tr>
-      <th scope="col"><%= sortable "name" , (t '.name')%></th>
-      <th scope="col"><%= sortable "created_at" , (t '.created_at')%></th>
-      <th scope="col"><%= sortable "due_at" , (t '.due_at')%></th>
+      <th scope="col"><%= build_sort_link "name" , (t '.name')%></th>
+      <th scope="col"><%= build_sort_link "created_at" , (t '.created_at')%></th>
+      <th scope="col"><%= build_sort_link "due_at" , (t '.due_at')%></th>
     </tr>
   </thead>
 
