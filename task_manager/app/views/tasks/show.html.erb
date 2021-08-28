@@ -1,17 +1,17 @@
-<h1>id:<%= @task.id %>のタスク詳細</h1>
+<h1>タスク詳細</h1>
 
-<p>タスク名:<%= @task.name %></p>
+<div class="row">
+  <div class="col-8">
+    <%= render partial:'layouts/standard_card', locals: { title: "タスク名", text: @task.name } %>
+    <%= render partial:'layouts/standard_card', locals: { title: "メモ", text: @task.description } %>
+    <%= render partial:'layouts/standard_card', locals: { title: "締め切り", text: @task.due_at } %>
+    <%= render partial:'layouts/standard_card', locals: { title: "優先度", text: @task.priority_i18n } %>
+    <%= render partial:'layouts/standard_card', locals: { title: "進捗状況", text: @task.progress_i18n } %>
+    <%= link_to '一覧へ戻る',tasks_path , class: "btn btn-info btn-lg btn-blok"%>
+  </div>
+  <div class="col-4">
+    <%= link_to 'タスクを編集する', edit_task_path(@task) , class: "btn btn-primary btn-lg btn-block"%>
 
-<p>メモ:<%= @task.description %></p>
-
-<p>締め切り:<%= @task.due_at %></p>
-
-<p>優先度:<%= @task.priority_i18n %></p>
-
-<p>進捗状況:<%= @task.progress_i18n %></p>
-
-<%= link_to '一覧へ戻る',tasks_path %>
-
-<%= link_to '編集ページへ', edit_task_path(@task) %>
-
-<%= link_to '削除する', @task, method: :delete, id: "delete_button", data:{ confirm: '本当によろしいですか？'} %>
+    <%= link_to 'タスクを削除する', @task, class: "btn btn-danger btn-lg btn-block", method: :delete, data:{ confirm: '本当によろしいですか？'} %>
+  </div>
+</div>
