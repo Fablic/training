@@ -10,8 +10,27 @@
     <%= link_to '一覧へ戻る',tasks_path , class: "btn btn-info btn-lg btn-blok"%>
   </div>
   <div class="col-4">
-    <%= link_to 'タスクを編集する', edit_task_path(@task) , class: "btn btn-primary btn-lg btn-block"%>
+      <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#edit-task-modal">
+        タスクを編集する
+      </button>
 
     <%= link_to 'タスクを削除する', @task, class: "btn btn-danger btn-lg btn-block", method: :delete, data:{ confirm: '本当によろしいですか？'} %>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="edit-task-modal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">タスクの編集</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <%= render 'form', task: @task %>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
