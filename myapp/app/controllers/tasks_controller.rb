@@ -15,8 +15,7 @@ class TasksController < ApplicationController
     @task = Task.new(task_params)
 
     if @task.save
-      flash[:success] = I18n.t('flash.new_success')
-      redirect_to @task
+      redirect_to @task, flash: { success: I18n.t('flash.new_success') }
     else
       flash[:danger] = I18n.t('flash.new_danger')
       flash[:validation_error] = @task.errors.full_messages
@@ -32,8 +31,7 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
 
     if @task.update(task_params)
-      flash[:success] = I18n.t('flash.updated_success')
-      redirect_to @task
+      redirect_to @task, flash: { success: I18n.t('flash.updated_success') }
     else
       flash[:danger] = I18n.t('flash.updated_danger')
       flash[:validation_error] = @task.errors.full_messages
@@ -45,8 +43,7 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
     @task.destroy
 
-    flash[:success] = I18n.t('flash.destroy')
-    redirect_to tasks_path
+    redirect_to tasks_path, flash: { success: I18n.t('flash.destroy') }
   end
 end
 
