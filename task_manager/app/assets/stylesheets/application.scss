@@ -17,3 +17,17 @@
  .pagination {
     justify-content: flex-end;
   }
+
+  .panda{
+    animation: flowing 10s linear infinite;
+    transform: translateX(2000px);/*初期位置*/
+    position: absolute;
+    top: 19px;
+    
+  }
+  
+  @keyframes flowing {
+    100% {
+      transform: translateX(-200px);
+    }
+  }
