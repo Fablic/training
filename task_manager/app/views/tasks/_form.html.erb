@@ -11,8 +11,12 @@
         <%= f.text_area :description, class: "form-control"%>
     </div>
     <div class="form-group">
-        <%= f.label :due_at %>
-        <%= f.date_field :due_at, class: 'form-control'%>
+        <div class="row">
+            <div class="col-8">
+                <%= f.label :due_at %>
+                <%= f.date_field :due_at, class: 'form-control'%>
+            </div>
+        </div>
     </div>
     <div class="form-group">
         <div class="row">
