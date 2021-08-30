@@ -1,0 +1,13 @@
+ja:
+  activerecord:
+    attributes:
+      task:
+        title: 件名
+        content: 詳細
+
+  flash:
+    new_success: タスク投稿が成功しました
+    new_danger: タスク投稿が失敗しました
+    updated_success: タスク編集が成功しました
+    updated_danger: タスク編集が失敗しました
+    destroy: タスクが削除されました

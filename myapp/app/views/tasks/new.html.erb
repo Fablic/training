@@ -1,8 +1,9 @@
 <h1>タスクの作成</h1>
 
-<%= form_for(@task) do |f| %>
+<%= form_with model: @task, local: true do |f| %>
+<%= render 'layouts/error_messages' %>
 <div>
-  <%= f.label :title, 'Title' %>
+  <%= f.label :title, '件名' %>
   <%= f.text_field :title %>
 </div>
 <div>

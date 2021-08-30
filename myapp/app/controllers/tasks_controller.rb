@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   def index
-    @tasks = Task.all
+    @tasks = Task.order('created_at desc')
   end
 
   def show
@@ -15,11 +15,11 @@ class TasksController < ApplicationController
     @task = Task.new(task_params)
 
     if @task.save
-      flash[:success] = 'タスク投稿が成功しました'
-      redirect_to @task
+      redirect_to @task, flash: { success: I18n.t('flash.new_success') }
     else
-      flash[:danger] = 'タスク投稿が失敗しました'
-      render :new
+      flash[:danger] = I18n.t('flash.new_danger')
+      flash[:validation_error] = @task.errors.full_messages
+      redirect_to new_task_path
     end
   end
 
@@ -31,11 +31,11 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
 
     if @task.update(task_params)
-      flash[:success] = 'タスク編集が成功しました'
-      redirect_to @task
+      redirect_to @task, flash: { success: I18n.t('flash.updated_success') }
     else
-      flash.now[:danger] = 'タスク編集が失敗しました'
-      render :edit
+      flash[:danger] = I18n.t('flash.updated_danger')
+      flash[:validation_error] = @task.errors.full_messages
+      redirect_to edit_task_path(@task)
     end
   end
 
@@ -43,8 +43,7 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
     @task.destroy
 
-    flash[:success] = 'タスクが削除されました'
-    redirect_to tasks_path
+    redirect_to tasks_path, flash: { success: I18n.t('flash.destroy') }
   end
 end
 

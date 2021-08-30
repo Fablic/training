@@ -3,7 +3,7 @@
   <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">Title</th>
+      <th scope="col">件名</th>
     </tr>
   </thead>
   <tbody>
@@ -11,6 +11,7 @@
     <tr>
       <th scope="row"><%= task.id %></th>
       <td><%= link_to task.title, task %></td>
+      <td class="created"><%= link_to task.created_at, task %></td>
     </tr>
 <% end %>
   </tbody>
