@@ -199,7 +199,10 @@ RSpec.describe 'Tasks', type: :system do
 
   context '編集が行われているかの確認' do
     # Task編集画面を開く
-    before { visit edit_task_path(task) }
+    before { 
+      visit task_path(task)
+      click_button 'タスクを編集する'
+    }
 
     it '既存のタスク内容が書いている' do
       expect(page).to have_field 'メモ', with: 'Memo'
@@ -230,7 +233,7 @@ RSpec.describe 'Tasks', type: :system do
       # メモを入力
       fill_in 'メモ', with: 'Memo'
       # 締め切りを入力
-      fill_in '締め切り', with: '2021-08-17 10:59:26'
+      fill_in '締め切り', with: '002021/08/17'
       # 優先順位を入力
       select '中', from: '優先順位'
       # 進捗状況を入力
@@ -250,7 +253,7 @@ RSpec.describe 'Tasks', type: :system do
   it '削除の確認' do
     visit task_path(task)
     page.accept_confirm do
-      click_on :delete_button
+      find('a', text: 'タスクを削除する').click
     end
 
     # 画面を検証する
