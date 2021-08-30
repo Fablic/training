@@ -1,3 +1,6 @@
-<% flash.each do |task_type, task| %>
-<div style="color:blue"><%= task %></div>
+<% if flash[:success].present? %>
+  <div style="color:green"><%= flash[:success] %></div>
+<% end %>
+<% if flash[:danger].present? %>
+  <div style="color:red"><%= flash[:danger] %></div>
 <% end %>

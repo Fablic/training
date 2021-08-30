@@ -1,0 +1,10 @@
+<% if flash[:validation_error].present? %>
+  <div style="color:red">
+    <h3>エラー項目があります</h3>
+    <ul>
+      <% flash[:validation_error].each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
