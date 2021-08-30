@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
 class TasksController < ApplicationController
-  helper_method :sort_column, :sort_direction
-
   before_action :set_task_by_id, only: %i[show edit update destroy]
+
   def index
-    @tasks = Task.all.order("#{sort_column} #{sort_direction}")
+    @tasks = Task.sort_column_direction(params[:sort], params[:direction]).search_name(params[:keyword_name]).search_progress(params[:keyword_progress])
+    @keyword_name = params[:keyword_name]
+    @keyword_progress = params[:keyword_progress]
   end
 
   def show
@@ -55,13 +56,5 @@ class TasksController < ApplicationController
 
   def task_params
     params.require(:task).permit(:name, :description, :due_at, :priority, :progress)
-  end
-
-  def sort_direction
-    %w[asc desc].include?(params[:direction]) ? params[:direction] : 'desc'
-  end
-
-  def sort_column
-    Task.column_names.include?(params[:sort]) ? params[:sort] : 'created_at'
   end
 end
