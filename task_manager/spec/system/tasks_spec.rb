@@ -199,7 +199,7 @@ RSpec.describe 'Tasks', type: :system do
 
   context '編集が行われているかの確認' do
     # Task編集画面を開く
-    before { 
+    before {
       visit task_path(task)
       click_button 'タスクを編集する'
     }
