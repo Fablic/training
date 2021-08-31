@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
@@ -46,7 +48,7 @@ RSpec.describe User, type: :model do
       end
 
       context '重複したメールアドレスの場合' do
-        before{ create(:user, email: email) }
+        before { create(:user, email: email) }
         it { is_expected.to_not be_valid }
       end
     end

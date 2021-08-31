@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class UsersController < ApplicationController
   before_action :set_user_by_id, only: %i[show edit update destroy]
-  def index # rubocop:disable Metrics/AbcSize
+  def index
   end
 
   def show
@@ -17,7 +19,6 @@ class UsersController < ApplicationController
 
     flash[:success] = I18n.t 'users.flash.create.success'
     redirect_to @user
-
   end
 
   def edit
