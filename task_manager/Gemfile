@@ -11,6 +11,8 @@ gem 'rails', '~> 6.1.4'
 gem 'mysql2', '~> 0.5'
 # Use hash as the database for Active Record
 gem 'bcrypt',  '3.1.12'
+# Use faker for dummy data
+gem 'faker'
 # Use Puma as the app server
 gem 'puma', '~> 5.0'
 # Use SCSS for stylesheets
