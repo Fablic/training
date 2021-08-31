@@ -12,27 +12,26 @@
  *
  */
 
- @import "bootstrap";
+@import "bootstrap";
 
- .pagination {
-    justify-content: flex-end;
-  }
+.pagination {
+  justify-content: flex-end;
+}
 
-  .panda{
-    animation: flowing 10s linear infinite;
-    transform: translateX(2000px);/*初期位置*/
-    position: absolute;
-    top: 19px;
-    
-  }
-  
-  @keyframes flowing {
-    100% {
-      transform: translateX(-200px);
-    }
-  }
+.panda{
+  animation: flowing 10s linear infinite;
+  transform: translateX(2000px);/*初期位置*/
+  position: absolute;
+  top: 19px;
+}
 
-  .linkbox {
-    text-decoration: none;
-    color: #343a40;
+@keyframes flowing {
+  100% {
+    transform: translateX(-200px);
   }
+}
+
+.linkbox {
+  text-decoration: none;
+  color: #343a40;
+}
