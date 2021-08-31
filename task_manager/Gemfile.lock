@@ -65,6 +65,7 @@ GEM
     ast (2.4.2)
     autoprefixer-rails (10.3.1.0)
       execjs (~> 2)
+    bcrypt (3.1.12)
     bindex (0.8.1)
     bootsnap (1.7.7)
       msgpack (~> 1.0)
@@ -279,6 +280,7 @@ PLATFORMS
   x86_64-darwin-19
 
 DEPENDENCIES
+  bcrypt (= 3.1.12)
   bootsnap (>= 1.4.4)
   bootstrap (~> 4.3.1)
   byebug
