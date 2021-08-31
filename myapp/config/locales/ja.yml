@@ -11,3 +11,8 @@ ja:
     updated_success: タスク編集が成功しました
     updated_danger: タスク編集が失敗しました
     destroy: タスクが削除されました
+
+  time:
+    formats:
+      default: "%Y/%m/%d %H:%M:%S"
+      short: "%m/%d %H:%M"

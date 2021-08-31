@@ -10,8 +10,12 @@
     <td><%= @task.content %></td>
   </tr>
   <tr>
-    <th>操作</th>
-    <td><%= @task.id %></td>
+    <th>終了期限</th>
+    <td><%= I18n.l(@task.deadline, format: :short, default: '') %></td>
+  </tr>
+  <tr>
+    <th>作成日</th>
+    <td><%= I18n.l(@task.created_at, format: :short) %></td>
   </tr>
 </table>
 

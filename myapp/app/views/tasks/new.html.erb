@@ -11,6 +11,10 @@
   <%= f.text_area :content %>
 </div>
 <div>
+  <%= f.label :deadline, '終了期限' %>
+  <%= f.datetime_field :deadline %>
+</div>
+<div>
 <%= f.submit '投稿' %>
 </div>
 <% end %>
