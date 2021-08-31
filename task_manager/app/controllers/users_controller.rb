@@ -15,7 +15,7 @@ class UsersController < ApplicationController
 
     return unless @user.save
 
-    flash[:success] = I18n.t 'tasks.flash.create.success'
+    flash[:success] = I18n.t 'users.flash.create.success'
     redirect_to @user
 
   end
@@ -27,14 +27,14 @@ class UsersController < ApplicationController
     return unless @user.update(user_params)
 
     flash[:success] = I18n.t 'users.flash.update.success'
-    redirect_to @task
+    redirect_to @user
   end
 
   def destroy
-    @task.destroy
+    @user.destroy
 
     flash[:success] = I18n.t 'users.flash.destroy.success'
-    redirect_to tasks_path
+    redirect_to new_user_url
   end
 
   private
