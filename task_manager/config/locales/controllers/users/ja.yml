@@ -1,0 +1,9 @@
+ja:
+  users:
+    flash:
+      create:
+        success: "ユーザーの新規作成に成功しました。"
+      update:
+        success: "ユーザー情報を変更しました。"
+      destroy:
+        success: "ユーザーが削除されました。"
