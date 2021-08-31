@@ -18,7 +18,9 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.new(task_params)
+    @user = User.last
+
+    @task = @user.tasks.build(task_params)
 
     return unless @task.save
 
