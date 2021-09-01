@@ -2,6 +2,10 @@
 
 class TasksController < ApplicationController
   before_action :set_task_by_id, only: %i[show edit update destroy]
+  before_action -> {
+    permission_confirmation(@task.user_id)
+  }, only: %i[update destroy]
+
   def index # rubocop:disable Metrics/AbcSize
     puts session[:user_id]
     @tasks = Task.search_user_id(session[:user_id])
