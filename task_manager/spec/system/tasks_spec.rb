@@ -5,6 +5,7 @@ require 'rails_helper'
 RSpec.describe 'Tasks', type: :system do
   before { travel_to Date.new(2015, 1, 1) }
   let!(:task) { FactoryBot.create(:task) }
+  let(:rspec_session) { { user_id: task.user_id } }
 
   describe '一覧ページ' do
     # Task一覧画面を開く
@@ -130,7 +131,7 @@ RSpec.describe 'Tasks', type: :system do
     describe 'ページネーション' do
       # 上記の宣言taskと合わせて合計25個のtaskが作られる
       before {
-        create_list(:task, 23)
+        create_list(:new_task, 23)
         visit tasks_path
       }
 
