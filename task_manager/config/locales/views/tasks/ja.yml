@@ -15,3 +15,4 @@ ja:
       name: 'タスク名'
       created_at: '作成日'
       due_at: '締め切り'
+      progress: '進捗状況'

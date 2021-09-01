@@ -1,24 +1,37 @@
-<%= form_for(@task) do |f| %>
-    <%= render 'layouts/error_messages', model: f.object %>
-    <div>
+<%= form_for(@task, remote: true, class: "form-horizontal") do |f| %>
+    <div id='errors'></div>
+
+    <div class="form-group">
         <%= f.label :name %>
-        <%= f.text_field :name %>
+        <%= f.text_field :name, class: "form-control"%>
     </div>
-    <div>
+    <div class="form-group">
         <%= f.label :description %>
-        <%= f.text_area :description %>
+        <%= f.text_area :description, class: "form-control"%>
     </div>
-    <div>
-        <%= f.label :due_at %>
-        <%= f.text_field :due_at %>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-8">
+                <%= f.label :due_at %>
+                <%= f.date_field :due_at, class: 'form-control'%>
+            </div>
+        </div>
     </div>
-    <div>
-        <%= f.label :priority %>
-        <%= f.select :priority, Task.priorities_i18n.keys.map {|k| [I18n.t("enums.task.priority.#{k}"), k]} %>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-4">
+                <%= f.label :priority %>
+                <%= f.select :priority, Task.priorities_i18n.keys.map {|k| [I18n.t("enums.task.priority.#{k}"), k]} , {}, {class: 'form-control'}%>
+            </div>
+        </div>    
     </div>
-    <div>
-        <%= f.label :progress %>
-        <%= f.select :progress, Task.progresses_i18n.keys.map {|k| [I18n.t("enums.task.progress.#{k}"), k]} %>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-4">
+                <%= f.label :progress %>
+                <%= f.select :progress, Task.progresses_i18n.keys.map {|k| [I18n.t("enums.task.progress.#{k}"), k]} , {}, {class: 'form-control'}%>
+            </div>
+        </div>
     </div>
-    <%= f.submit '投稿' %>
+    <%= f.submit '投稿', class: "btn btn-primary"%>
 <% end %>

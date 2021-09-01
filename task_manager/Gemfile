@@ -29,6 +29,10 @@ gem 'enum_help'
 
 gem 'kaminari'
 
+# Use bootstrap for View
+gem 'bootstrap', '~> 4.3.1'
+gem 'jquery-rails'
+
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 

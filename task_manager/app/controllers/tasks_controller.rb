@@ -20,26 +20,20 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(task_params)
 
-    if @task.save
-      flash[:success] = I18n.t 'tasks.flash.create.success'
-      redirect_to @task
-    else
-      flash[:danger] = I18n.t 'tasks.flash.create.danger'
-      render :new
-    end
+    return unless @task.save
+
+    flash[:success] = I18n.t 'tasks.flash.create.success'
+    redirect_to @task
   end
 
   def edit
   end
 
   def update
-    if @task.update(task_params)
-      flash[:success] = I18n.t 'tasks.flash.update.success'
-      redirect_to @task
-    else
-      flash.now[:danger] = I18n.t 'tasks.flash.update.danger'
-      render :new
-    end
+    return unless @task.update(task_params)
+
+    flash[:success] = I18n.t 'tasks.flash.update.success'
+    redirect_to @task
   end
 
   def destroy
