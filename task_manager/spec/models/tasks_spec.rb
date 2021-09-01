@@ -96,6 +96,22 @@ RSpec.describe Task, type: :model do
       end
     end
 
+    describe 'search_user_id' do
+      subject { Task.search_user_id(user_id) }
+      let(:task1) { create :task, progress: 1 }
+      let(:task2) { create :task, progress: 2 }
+
+      context '何も入れずに検索' do
+        let(:user_id) { nil }
+        it { is_expected.to eq([]) }
+      end
+
+      context 'progressにパラメータ(Done)をいれて検索' do
+        let(:user_id) { task1.user_id }
+        it { is_expected.to include(task1) }
+      end
+    end
+
     describe 'sort' do
       subject { Task.sort_column_direction(column, direction) }
       let(:task1) { create :task, name: 'task_1', created_at: '2019-09-02 10:59:26' }
