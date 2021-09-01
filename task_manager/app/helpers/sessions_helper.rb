@@ -18,7 +18,7 @@ module SessionsHelper
 
   def permission_confirmation(id)
     if !(id == current_user.id)
-      flash[:danger] = '権限がありません。'
+      flash[:danger] = I18n.t 'sessions.flash.permission.denied'
       redirect_back(fallback_location: root_path)
     end
   end
