@@ -20,7 +20,8 @@ class UsersController < ApplicationController
     return unless @user.save
 
     flash[:success] = I18n.t 'users.flash.create.success'
-    redirect_to @user
+    log_in @user
+    redirect_to root_path
   end
 
   def edit
