@@ -4,6 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'Users', type: :system do
   let!(:user) { FactoryBot.create(:user) }
+  let(:rspec_session) { { user_id: user.id } }
 
   it '詳細ページの確認' do
     visit user_path(user)
@@ -42,8 +43,6 @@ RSpec.describe 'Users', type: :system do
       click_button '投稿'
 
       expect(page).to have_content 'ユーザーの新規作成をしました。'
-      expect(page).to have_content 'Kuma'
-      expect(page).to have_content 'kuma@rakuten.com'
     end
   end
 
