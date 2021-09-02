@@ -17,7 +17,7 @@ class UsersController < ApplicationController
 
     return unless @user.save
 
-    flash[:success] = I18n.t 'users.flash.create.success'
+    flash[:success] = I18n.t('controllers.flash.success', model: User.model_name.human, action: I18n.t('controllers.action.create'))
     redirect_to @user
   end
 
@@ -27,14 +27,14 @@ class UsersController < ApplicationController
   def update
     return unless @user.update(user_params)
 
-    flash[:success] = I18n.t 'users.flash.update.success'
+    flash[:success] = I18n.t('controllers.flash.success', model: User.model_name.human, action: I18n.t('controllers.action.update'))
     redirect_to @user
   end
 
   def destroy
     @user.destroy
 
-    flash[:success] = I18n.t 'users.flash.destroy.success'
+    flash[:success] = I18n.t('controllers.flash.success', model: User.model_name.human, action: I18n.t('controllers.action.destroy'))
     redirect_to new_user_url
   end
 
