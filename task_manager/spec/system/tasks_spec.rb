@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe 'Tasks', type: :system do
-  before { travel_to Date.new(2015, 1, 1) }
   let!(:task) { FactoryBot.create(:task) }
   let(:rspec_session) { { user_id: task.user_id } }
 
@@ -234,7 +233,7 @@ RSpec.describe 'Tasks', type: :system do
       # メモを入力
       fill_in 'メモ', with: 'Memo'
       # 締め切りを入力
-      fill_in '締め切り', with: '002021/08/17'
+      fill_in '締め切り', with: Time.current + 2.days
       # 優先順位を入力
       select '中', from: '優先順位'
       # 進捗状況を入力
