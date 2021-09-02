@@ -217,7 +217,7 @@ RSpec.describe 'Tasks', type: :system do
       click_button '投稿'
 
       # 画面を検証する
-      expect(page).to have_content I18n.t('controllers.flash.success', model: Task.model_name.human, action: I18n.t('controllers.action.update'))
+      expect(page).to have_content 'タスクの更新をしました。'
       expect(page).to have_content 'a_task'
       expect(page).to have_content 'MyText'
     end
@@ -242,7 +242,7 @@ RSpec.describe 'Tasks', type: :system do
       click_button '投稿'
 
       # 画面を検証する
-      expect(page).to have_content I18n.t('controllers.flash.success', model: Task.model_name.human, action: I18n.t('controllers.action.create'))
+      expect(page).to have_content 'タスクの新規作成をしました。'
       expect(page).to have_content 'Task'
       expect(page).to have_content 'Memo'
       expect(page).to have_content '中'
@@ -257,6 +257,6 @@ RSpec.describe 'Tasks', type: :system do
     end
 
     # 画面を検証する
-    expect(page).to have_content I18n.t('controllers.flash.success', model: Task.model_name.human, action: I18n.t('controllers.action.destroy'))
+    expect(page).to have_content 'タスクの削除をしました。'
   end
 end
