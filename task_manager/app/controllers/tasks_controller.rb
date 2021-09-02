@@ -59,9 +59,9 @@ class TasksController < ApplicationController
   end
 
   def permission_confirmation
-    if !permission?(@task.user_id)
-      flash[:danger] = I18n.t 'sessions.flash.permission.denied'
-      redirect_back(fallback_location: root_path)
-    end
+    return if permission?(@task.user_id)
+
+    flash[:danger] = I18n.t 'sessions.flash.permission.denied'
+    redirect_back(fallback_location: root_path)
   end
 end

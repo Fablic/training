@@ -3,7 +3,7 @@
 class UsersController < ApplicationController
   before_action :set_user_by_id, only: %i[show edit update destroy]
   before_action :permission_confirm, only: %i[update destroy]
-  skip_before_action :authenticate_user, only: [:new, :create]
+  skip_before_action :authenticate_user, only: %i[new create]
 
   def show
   end
@@ -20,7 +20,6 @@ class UsersController < ApplicationController
     flash[:success] = I18n.t('controllers.flash.success', model: User.model_name.human, action: I18n.t('controllers.action.create'))
     log_in @user
     redirect_to root_path
-
   end
 
   def edit
@@ -51,9 +50,9 @@ class UsersController < ApplicationController
   end
 
   def permission_confirm
-    if !permission?(@user.id)
-      flash[:danger] = I18n.t 'sessions.flash.permission.denied'
-      redirect_back(fallback_location: root_path)
-    end
+    return if permission?(@user.id)
+
+    flash[:danger] = I18n.t 'sessions.flash.permission.denied'
+    redirect_back(fallback_location: root_path)
   end
 end

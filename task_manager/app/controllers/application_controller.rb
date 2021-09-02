@@ -5,9 +5,9 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user
 
   def authenticate_user
-    if !logged_in?
-      flash[:danger] = I18n.t 'application.flash.authentification_user.danger'
-      redirect_to("/login")
-    end
+    return if logged_in?
+
+    flash[:danger] = I18n.t 'application.flash.authentification_user.danger'
+    redirect_to('/login')
   end
 end

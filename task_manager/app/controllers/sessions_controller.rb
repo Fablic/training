@@ -1,12 +1,14 @@
+# frozen_string_literal: true
+
 class SessionsController < ApplicationController
-  skip_before_action :authenticate_user, only: [:new, :create]
+  skip_before_action :authenticate_user, only: %i[new create]
 
   def new
   end
-  
-  def create
+
+  def create # rubocop:disable Metrics/AbcSize
     user = User.find_by(email: params[:session][:email])
-    if user && user.authenticate(params[:session][:password])
+    if user&.authenticate(params[:session][:password])
       log_in user
       flash[:success] = I18n.t 'sessions.flash.create.success'
       redirect_to user
