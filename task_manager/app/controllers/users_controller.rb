@@ -5,9 +5,6 @@ class UsersController < ApplicationController
   before_action :permission_confirm, only: %i[update destroy]
   skip_before_action :authenticate_user, only: [:new, :create]
 
-  def index
-  end
-
   def show
   end
 
