@@ -2,9 +2,7 @@
 
 class TasksController < ApplicationController
   before_action :set_task_by_id, only: %i[show edit update destroy]
-  before_action -> {
-    permission_confirmation(@task.user_id)
-  }, only: %i[update destroy]
+  before_action :permission_confirmation, only: %i[update destroy]
 
   def index # rubocop:disable Metrics/AbcSize
     puts session[:user_id]
@@ -59,5 +57,12 @@ class TasksController < ApplicationController
 
   def task_params
     params.require(:task).permit(:name, :description, :due_at, :priority, :progress)
+  end
+
+  def permission_confirmation
+    if !permission?(@task.user_id)
+      flash[:danger] = I18n.t 'sessions.flash.permission.denied'
+      redirect_back(fallback_location: root_path)
+    end
   end
 end
