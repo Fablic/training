@@ -10,6 +10,7 @@
         ユーザーを編集する
       </button>
 
+    <%= link_to 'タスク一覧', admin_user_tasks_path(@user), class: "btn btn-primary btn-lg btn-block" %>
     <%= link_to 'ユーザーを削除する', @user, class: "btn btn-danger btn-lg btn-block", method: :delete, data:{ confirm: '本当によろしいですか？'} %>
   </div>
 
