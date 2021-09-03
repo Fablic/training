@@ -186,19 +186,17 @@ RSpec.describe 'Tasks', type: :system do
     end
   end
 
-  it '詳細ページの確認' do
-    # Task編集画面を開く
-    visit task_path(task)
-
-    # 画面を検証する
-    expect(page).to have_content 'a_task'
-    expect(page).to have_content 'Memo'
-    expect(page).to have_content '中'
-    expect(page).to have_content '進行中'
+  describe '詳細ページ' do
+    before { visit task_path(task) }
+    it '既存のタスク情報が書かれている' do
+      expect(page).to have_content 'a_task'
+      expect(page).to have_content 'Memo'
+      expect(page).to have_content '中'
+      expect(page).to have_content '進行中'
+    end
   end
 
-  context '編集が行われているかの確認' do
-    # Task編集画面を開く
+  describe '編集ページ' do
     before {
       visit task_path(task)
       click_button 'タスクを編集する'
@@ -208,55 +206,108 @@ RSpec.describe 'Tasks', type: :system do
       expect(page).to have_field 'メモ', with: 'Memo'
     end
 
-    it 'タスクを編集できる' do
-      # メモに"Memo"が入力されていることを検証する
-      # メモを再入力
-      fill_in 'メモ', with: 'MyText'
+    describe '編集' do
+      let(:name) { 'Task' }
+      let(:memo) { 'Memo' }
+      let(:due_at) { Time.current + 2.days }
+      let(:priority) { '中' }
+      let(:progress) { '進行中' }
+      before {
+        fill_in 'タスク', with: name
+        fill_in 'メモ', with: memo
+        fill_in '締め切り', with: due_at
+        select priority, from: '優先順位'
+        select progress, from: '進捗状況'
+        click_button '投稿'
+      }
 
-      # 更新実行
-      click_button '投稿'
+      context '登録可能な形式' do
+        it '成功する' do
+          expect(page).to have_content 'タスクの更新をしました。'
+          expect(page).to have_content 'Task'
+          expect(page).to have_content 'Memo'
+        end
 
-      # 画面を検証する
-      expect(page).to have_content 'タスクの更新をしました。'
-      expect(page).to have_content 'a_task'
-      expect(page).to have_content 'MyText'
+        it '編集したタスクのページを開く' do
+          expect(current_path).to eq task_path(task)
+        end
+      end
+
+      context 'タスク名を入力しない' do
+        let(:name) { '' }
+        it 'タスク名のvalidationエラーが発生する' do
+          expect(page).to have_content 'タスク名 空になっています。入力してください。'
+        end
+      end
+
+      context '締め切りを入力しない' do
+        let(:due_at) { '' }
+        it '締め切りのvalidationエラーが発生する' do
+          expect(page).to have_content '締め切り 空もしくは、入力フォーマットが間違っています。正しいフォーマット(YYYY-MM-DD等)で入力してください'
+        end
+      end
     end
   end
 
-  context '新規作成できるかの確認' do
-    # Task新規作成画面を開く
-    before { visit new_task_path }
-
-    it '全ての項目を入力して成功する' do
-      # タスクを入力
-      fill_in 'タスク', with: 'Task'
-      # メモを入力
-      fill_in 'メモ', with: 'Memo'
-      # 締め切りを入力
-      fill_in '締め切り', with: Time.current + 2.days
-      # 優先順位を入力
-      select '中', from: '優先順位'
-      # 進捗状況を入力
-      select '進行中', from: '進捗状況'
-      # 更新実行
+  describe 'タスクの新規作成' do
+    let(:name) { 'Task' }
+    let(:memo) { 'Memo' }
+    let(:due_at) { Time.current + 2.days }
+    let(:priority) { '中' }
+    let(:progress) { '進行中' }
+    before {
+      create(:user)
+      visit new_task_path
+      fill_in 'タスク', with: name
+      fill_in 'メモ', with: memo
+      fill_in '締め切り', with: due_at
+      select priority, from: '優先順位'
+      select progress, from: '進捗状況'
       click_button '投稿'
+    }
 
-      # 画面を検証する
-      expect(page).to have_content 'タスクの新規作成をしました。'
-      expect(page).to have_content 'Task'
-      expect(page).to have_content 'Memo'
-      expect(page).to have_content '中'
-      expect(page).to have_content '進行中'
+    context '登録可能な形式' do
+      it '成功する' do
+        expect(page).to have_content 'タスクの新規作成をしました。'
+        expect(page).to have_content 'Task'
+        expect(page).to have_content 'Memo'
+      end
+
+      it '作成したタスクのページを開く' do
+        wait = Selenium::WebDriver::Wait.new(timeout: 100)
+        wait.until { expect(page).to have_content 'タスクの新規作成をしました。' }
+        expect(current_path).to eq task_path(task.id + 1)
+      end
+    end
+
+    context 'タスク名を入力しない' do
+      let(:name) { '' }
+      it 'タスク名のvalidationエラーが発生する' do
+        expect(page).to have_content 'タスク名 空になっています。入力してください。'
+      end
+    end
+
+    context '締め切りを入力しない' do
+      let(:due_at) { '' }
+      it '締め切りのvalidationエラーが発生する' do
+        expect(page).to have_content '締め切り 空もしくは、入力フォーマットが間違っています。正しいフォーマット(YYYY-MM-DD等)で入力してください'
+      end
     end
   end
 
-  it '削除の確認' do
-    visit task_path(task)
-    page.accept_confirm do
-      find('a', text: 'タスクを削除する').click
-    end
+  describe 'タスクの削除' do
+    before { visit task_path(task) }
+    context '削除ボタンを押す' do
+      before {
+        page.accept_confirm do
+          find('a', text: 'タスクを削除する').click
+        end
+      }
+      it { expect(page).to have_content 'タスクの削除をしました。' }
 
-    # 画面を検証する
-    expect(page).to have_content 'タスクの削除をしました。'
+      it 'タスクの一覧ページを開く' do
+        expect(current_path).to eq tasks_path
+      end
+    end
   end
 end
