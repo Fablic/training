@@ -8,7 +8,7 @@ Things you may want to cover:
 * Ruby version
 2.5.7
 
-## table schema
+## table list
 
 ### users
 | column name    | type     | length | default | null     | key               | comment                 |
