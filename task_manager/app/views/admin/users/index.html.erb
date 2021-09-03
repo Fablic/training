@@ -1,15 +1,10 @@
 <h1>ユーザー一覧</h1>
 <div class="row">
   <div class="col-6">
-    <%
-=begin%>
- <%= form_with url: root_path, method: :get, local: true do |f| %>
-        <%= f.text_field :keyword_name, value: @keyword_name ,:placeholder => (t '.name') %>
-        <%= f.select :keyword_progress, options_for_select(Task.progresses_i18n.keys.map {|k| [I18n.t("enums.task.progress.#{k}"), k]}, selected: @keyword_progress) , { include_blank: '選択なし'} %>
+    <%= form_with url: admin_users_path, method: :get, local: true do |f| %>
+        <%= f.text_field :keyword, value: @keyword ,:placeholder => ('name or email') %>
         <%= f.submit "検索" %>
-    <% end %> 
-<%
-=end%>
+    <% end %>
   </div>
   <div class="col-6">
     <%= paginate @users %>
