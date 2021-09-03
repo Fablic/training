@@ -53,4 +53,39 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  describe 'scope' do
+    describe 'search_name' do
+      subject { User.search_name(name) }
+      let(:user1) { create :user, name: 'user_1' }
+      let(:user2) { create :user, name: 'user_2' }
+
+      context '何も入れずに検索' do
+        let(:name) { '' }
+        it { is_expected.to include(user1, user2) }
+      end
+
+      context 'nameにパラメーター(user_1)をいれて検索する' do
+        let(:name) { 'user_1' }
+        it { is_expected.to include(user1) }
+      end
+    end
+
+    describe 'search_email' do
+      subject { User.search_email(email) }
+      let(:user1) { create :user, email: 'sample1@sample.com' }
+      let(:user2) { create :user, email: 'sample2@sample.com' }
+
+      context '何も入れずに検索' do
+        let(:email) { nil }
+        it { is_expected.to include(user1, user2) }
+      end
+
+      context 'emailにパラメータ(sample1@sample.com)をいれて検索' do
+        let(:email) { 'sample1@sample.com' }
+        it { is_expected.to include(user1) }
+      end
+    end
+
+  end
 end
