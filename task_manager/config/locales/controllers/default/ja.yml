@@ -1,0 +1,9 @@
+ja:
+  controllers:
+    action:
+      create: "新規作成"
+      update: "更新"
+      destroy: "削除"
+    flash:
+      success: "%{model}の%{action}をしました。"
+      danger: "%{model}の%{action}に失敗しました。"

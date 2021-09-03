@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Task < ApplicationRecord
+  belongs_to :user
+
   enum priority: {
     low: 0, # 優先度低
     normal: 1, # 優先度中

@@ -18,11 +18,13 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.new(task_params)
+    @user = User.last
+
+    @task = @user.tasks.build(task_params)
 
     return unless @task.save
 
-    flash[:success] = I18n.t 'tasks.flash.create.success'
+    flash[:success] = I18n.t('controllers.flash.success', model: Task.model_name.human, action: I18n.t('controllers.action.create'))
     redirect_to @task
   end
 
@@ -32,14 +34,14 @@ class TasksController < ApplicationController
   def update
     return unless @task.update(task_params)
 
-    flash[:success] = I18n.t 'tasks.flash.update.success'
+    flash[:success] = I18n.t('controllers.flash.success', model: Task.model_name.human, action: I18n.t('controllers.action.update'))
     redirect_to @task
   end
 
   def destroy
     @task.destroy
 
-    flash[:success] = I18n.t 'tasks.flash.destroy.success'
+    flash[:success] = I18n.t('controllers.flash.success', model: Task.model_name.human, action: I18n.t('controllers.action.destroy'))
     redirect_to tasks_path
   end
 

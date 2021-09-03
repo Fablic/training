@@ -8,6 +8,7 @@ FactoryBot.define do
     created_at { '2019-09-02 10:59:26' }
     priority { 1 }
     progress { 1 }
+    association :user, factory: :user
   end
 
   factory :new_task, class: Task do
@@ -17,5 +18,6 @@ FactoryBot.define do
     created_at { '2021-08-02 10:59:26' }
     priority { 1 }
     progress { 0 }
+    association :user, factory: :user
   end
 end
