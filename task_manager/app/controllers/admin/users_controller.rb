@@ -3,6 +3,7 @@
 class Admin::UsersController < ApplicationController
   before_action :set_user_by_id, only: %i[show edit update destroy]
   def index
+    @users = User.page(params[:page]).per(5)
   end
 
   def show
