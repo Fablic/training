@@ -227,6 +227,10 @@ RSpec.describe 'Tasks', type: :system do
           expect(page).to have_content 'Task'
           expect(page).to have_content 'Memo'
         end
+
+        it '編集したタスクのページを開く' do
+          expect(current_path).to eq task_path(task)
+        end
       end
 
       context 'タスク名を入力しない' do
@@ -268,6 +272,12 @@ RSpec.describe 'Tasks', type: :system do
         expect(page).to have_content 'Task'
         expect(page).to have_content 'Memo'
       end
+
+      it '作成したタスクのページを開く' do
+        wait = Selenium::WebDriver::Wait.new(timeout: 100)
+        wait.until { expect(page).to have_content 'タスクの新規作成をしました。' }
+        expect(current_path).to eq task_path(task.id + 1)
+      end
     end
 
     context 'タスク名を入力しない' do
@@ -294,6 +304,10 @@ RSpec.describe 'Tasks', type: :system do
         end
       }
       it { expect(page).to have_content 'タスクの削除をしました。' }
+
+      it 'タスクの一覧ページを開く' do
+        expect(current_path).to eq tasks_path
+      end
     end
   end
 end

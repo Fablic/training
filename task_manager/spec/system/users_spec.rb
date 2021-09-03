@@ -42,6 +42,10 @@ RSpec.describe 'Users', type: :system do
           expect(page).to have_content 'pi'
           expect(page).to have_content 'pi@raspberry.com'
         end
+
+        it '編集したユーザーのページを開く' do
+          expect(current_path).to eq user_path(user)
+        end
       end
 
       context 'メールアドレスを入力しない' do
@@ -81,6 +85,12 @@ RSpec.describe 'Users', type: :system do
         expect(page).to have_content 'pi'
         expect(page).to have_content 'pi@raspberry.com'
       end
+
+      it '作成したユーザーのページを開く' do
+        wait = Selenium::WebDriver::Wait.new(timeout: 100)
+        wait.until { expect(page).to have_content 'ユーザーの新規作成をしました。' }
+        expect(current_path).to eq user_path(user.id + 1)
+      end
     end
 
     context 'メールアドレスを入力しない' do
@@ -115,6 +125,10 @@ RSpec.describe 'Users', type: :system do
         end
       }
       it { expect(page).to have_content 'ユーザーの削除をしました。' }
+
+      it 'ユーザーの作成ページを開く' do
+        expect(current_path).to eq new_user_path
+      end
     end
   end
 end
