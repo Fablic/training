@@ -3,6 +3,14 @@
 <%= form_with model: @task, local: true do |f| %>
 <%= render 'layouts/error_messages' %>
 <div>
+  <%= f.label :status, 'ステータス' %>
+  <%= f.select :status, options_for_select(
+    Task.statuses.map { |k, _v| [I18n.t("activerecord.attributes.task.statuses.#{k}"), k] },
+    selected: @task.status
+  ) %>
+</div>
+
+<div>
   <%= f.label :title, '件名' %>
   <%= f.text_field :title %>
 </div>

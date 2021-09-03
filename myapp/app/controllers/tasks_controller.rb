@@ -1,11 +1,8 @@
 class TasksController < ApplicationController
   def index
-    # @tasks = Task.order(params[:order])
-    @tasks = if params[:order].blank?
-               Task.order('created_at desc')
-             else
-               Task.order(params[:order])
-             end
+    params[:q] = { sorts: 'created_at desc' } if params[:q].blank?
+    @q = Task.ransack(params[:q])
+    @tasks = @q.result.page(params[:page])
   end
 
   def show
@@ -50,8 +47,8 @@ class TasksController < ApplicationController
 
     redirect_to tasks_path, flash: { success: I18n.t('flash.destroy') }
   end
-end
 
-def task_params
-  params.require(:task).permit(:title, :content, :deadline)
+  def task_params
+    params.require(:task).permit(:title, :content, :deadline, :status)
+  end
 end

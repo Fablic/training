@@ -22,6 +22,21 @@ RSpec.describe 'index', js: true, type: :system do
       select '終了期限遅い'
       expect(page.all('.deadline').first.text).to be > page.all('.deadline').last.text
     end
+    it '件名で検索できる' do
+      fill_in 'q_title_cont', with: 'test_title1'
+      click_button '検索'
+      is_expected.to have_content('test_title1')
+      is_expected.not_to have_content('test_title2')
+    end
+    it 'ステータス「未着手」で検索できる' do
+      choose "q_status_eq_#{Task.statuses[:not_started]}"
+      click_button '検索'
+      within('.task_list') do
+        is_expected.to have_content('未着手')
+        is_expected.to have_no_content('進行中')
+        is_expected.to have_no_content('完了')
+      end
+    end
     it '詳細へ遷移する' do
       click_link task_list[0].title
       is_expected.to have_current_path task_path(task_list[0].id)
@@ -78,6 +93,7 @@ RSpec.describe 'index', js: true, type: :system do
         is_expected.to have_content('タスクの作成')
         fill_in '件名', with: 'new 件名'
         fill_in '詳細', with: 'new 詳細'
+        fill_in '終了期限', with: Time.current
         click_button '投稿'
         is_expected.to have_content 'タスク投稿が成功しました'
         is_expected.to have_current_path task_path(task_list.last.id + 1)
@@ -119,6 +135,7 @@ RSpec.describe 'index', js: true, type: :system do
       it 'タスクが編集できる' do
         fill_in '件名', with: params[:title]
         fill_in '詳細', with: params[:content]
+        fill_in '終了期限', with: Time.current
         click_button '保存'
         is_expected.to have_current_path task_path(task_list[0].id)
         is_expected.to have_content 'タスク編集が成功しました'
