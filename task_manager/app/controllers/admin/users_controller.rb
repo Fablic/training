@@ -3,7 +3,9 @@
 class Admin::UsersController < ApplicationController
   before_action :set_user_by_id, only: %i[show edit update destroy]
   def index
-    @users = User.search_name(params[:keyword]).or(User.search_email(params[:keyword])).page(params[:page]).per(5)
+    @users = User.all.includes(:tasks)
+    .search_name(params[:keyword]).or(User.search_email(params[:keyword]))
+    .page(params[:page]).per(5)
   end
 
   def show

@@ -15,6 +15,7 @@
     <tr>
       <th scope="col"><%= I18n.t 'activerecord.attributes.user.name'%></th>
       <th scope="col"><%= I18n.t 'activerecord.attributes.user.email'%></th>
+      <th scope="col"><%= I18n.t 'activerecord.attributes.task.count'%></th>
     </tr>
   </thead>
 
@@ -23,6 +24,7 @@
       <tr id= 'user-<%= index %>'>
         <td><%= user.name %></td>
         <td><%= user.email %></td>
+        <td><%= user.tasks.count %></td>
         <td><%= link_to '詳細', [:admin, user ] %></td>
       </tr>
     <% end %>
