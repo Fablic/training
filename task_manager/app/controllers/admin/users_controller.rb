@@ -25,7 +25,7 @@ class Admin::UsersController < ApplicationController
     @user.destroy
 
     flash[:success] = I18n.t('controllers.flash.success', model: User.model_name.human, action: I18n.t('controllers.action.destroy'))
-    redirect_to new_user_url
+    redirect_to admin_users_path
   end
 
   private
