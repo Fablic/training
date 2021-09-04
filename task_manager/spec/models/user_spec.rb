@@ -86,6 +86,5 @@ RSpec.describe User, type: :model do
         it { is_expected.to include(user1) }
       end
     end
-
   end
 end
