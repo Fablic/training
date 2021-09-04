@@ -24,7 +24,7 @@
       <tr id= 'user-<%= index %>'>
         <td><%= user.name %></td>
         <td><%= user.email %></td>
-        <td><%= user.tasks.count %></td>
+        <td><%= user.tasks.size %></td>
         <td><%= link_to '詳細', [:admin, user ] %></td>
       </tr>
     <% end %>
