@@ -9,7 +9,8 @@
 User.create!(name: "root",
   email: "root@railstutorial.org",
   password: "password",
-  password_confirmation: "password")
+  password_confirmation: "password",
+  is_admin: true)
 
 5.times do
   task = Task.create!(
