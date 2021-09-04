@@ -9,13 +9,19 @@ RSpec.describe 'Admin/Users', type: :system do
   describe '一覧ページ' do
     # Task一覧画面を開く
     let!(:new_user) { FactoryBot.create(:user, name: 'Hanako', email: 'test@email.com') }
-    before { visit admin_users_path }
+    before { 
+      create_list(:new_task, 25, user_id: new_user.id)
+      visit admin_users_path
+     }
 
     context '初期表示' do
       it '一覧表示されているかの確認' do
         # 画面を検証する
         expect(page).to have_content 'Taro'
         expect(page).to have_content 'Hanako'
+
+        #タスク数の表示
+        expect(page).to have_content '25'
       end
     end
 
@@ -25,7 +31,7 @@ RSpec.describe 'Admin/Users', type: :system do
           fill_in 'keyword', with: 'Taro'
           click_button '検索'
         }
-        it 'b_taskが表示される' do
+        it 'Taroが表示される' do
           expect(page).to have_selector '#user-0', text: 'Taro'
           expect(page).to have_no_text 'Hanako'
         end
