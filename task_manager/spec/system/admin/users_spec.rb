@@ -66,13 +66,9 @@ RSpec.describe 'Admin/Users', type: :system do
     describe '編集' do
       let(:name) { 'pi' }
       let(:email) { 'pi@raspberry.com' }
-      let(:password) { 'raspberry' }
-      let(:password_confirmation) { 'raspberry' }
       before {
         fill_in 'ユーザー名', with: name
         fill_in 'メールアドレス', with: email
-        fill_in 'パスワード', with: password
-        fill_in 'パスワードの再確認', with: password_confirmation
         click_button '投稿'
       }
 
@@ -93,13 +89,6 @@ RSpec.describe 'Admin/Users', type: :system do
         it 'メールアドレスのvalidationエラーが発生する' do
           expect(page).to have_content 'メールアドレス 空になっています。入力してください。'
           expect(page).to have_content 'メールアドレス メールアドレスの形式が間違っています。'
-        end
-      end
-
-      context 'パスワードとパスワードの再確認の不一致' do
-        let(:password_confirmation) { 'a' }
-        it 'パスワードの再確認のvalidationエラーが発生する' do
-          expect(page).to have_content 'パスワードの再確認 パスワードもしくは再入力されたパスワードが間違っています。'
         end
       end
     end
