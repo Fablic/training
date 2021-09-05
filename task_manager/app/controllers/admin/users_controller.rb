@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Admin
-  class UsersController < ApplicationController
+  class UsersController < AdminController
     before_action :set_user_by_id, only: %i[show edit update destroy]
     def index
       @users = User.includes(:tasks)

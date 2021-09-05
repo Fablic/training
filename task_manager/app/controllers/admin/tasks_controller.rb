@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Admin
-  class TasksController < ApplicationController
+  class TasksController < AdminController
     def index # rubocop:disable Metrics/AbcSize
       @tasks = Task.search_user_id(params[:user_id])
         .sort_column_direction(params[:sort], params[:direction])
