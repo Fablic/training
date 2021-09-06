@@ -1,0 +1,8 @@
+ja:
+  sessions:
+    flash:
+      create:
+        success: "ログインしました。"
+        danger: "emailもしくはパスワードが間違っています。"
+      destroy:
+        success: "ログアウトしました。"

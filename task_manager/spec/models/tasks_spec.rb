@@ -67,7 +67,7 @@ RSpec.describe Task, type: :model do
     describe 'search_name' do
       subject { Task.search_name(name) }
       let(:task1) { create :task, name: 'task_1' }
-      let(:task2) { create :task, name: 'task_2' }
+      let(:task2) { create :task, name: 'task_2', user_id: task1.user_id }
 
       context '何も入れずに検索' do
         let(:name) { '' }
@@ -83,7 +83,7 @@ RSpec.describe Task, type: :model do
     describe 'search_progress' do
       subject { Task.search_progress(progress) }
       let(:task1) { create :task, progress: 1 }
-      let(:task2) { create :task, progress: 2 }
+      let(:task2) { create :task, progress: 2, user_id: task1.user_id }
 
       context '何も入れずに検索' do
         let(:progress) { nil }
@@ -96,10 +96,26 @@ RSpec.describe Task, type: :model do
       end
     end
 
+    describe 'search_user_id' do
+      subject { Task.search_user_id(user_id) }
+      let(:task1) { create :task, progress: 1 }
+      let(:task2) { create :task, progress: 2 }
+
+      context '何も入れずに検索' do
+        let(:user_id) { nil }
+        it { is_expected.to eq([]) }
+      end
+
+      context 'progressにパラメータ(Done)をいれて検索' do
+        let(:user_id) { task1.user_id }
+        it { is_expected.to include(task1) }
+      end
+    end
+
     describe 'sort' do
       subject { Task.sort_column_direction(column, direction) }
       let(:task1) { create :task, name: 'task_1', created_at: '2019-09-02 10:59:26' }
-      let(:task2) { create :task, name: 'task_2', created_at: '2018-09-02 10:59:26' }
+      let(:task2) { create :task, name: 'task_2', created_at: '2018-09-02 10:59:26', user_id: task1.user_id }
 
       context '何も入れずに検索し、created_atの降順になるか確認' do
         let(:column) { '' }

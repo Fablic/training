@@ -4,6 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'Users', type: :system do
   let!(:user) { FactoryBot.create(:user) }
+  let(:rspec_session) { { user_id: user.id } }
 
   describe '詳細ページ' do
     before { visit user_path(user) }
@@ -82,14 +83,12 @@ RSpec.describe 'Users', type: :system do
     context '登録可能な形式' do
       it '成功する' do
         expect(page).to have_content 'ユーザーの新規作成をしました。'
-        expect(page).to have_content 'pi'
-        expect(page).to have_content 'pi@raspberry.com'
       end
 
       it '作成したユーザーのページを開く' do
         wait = Selenium::WebDriver::Wait.new(timeout: 100)
         wait.until { expect(page).to have_content 'ユーザーの新規作成をしました。' }
-        expect(current_path).to eq user_path(user.id + 1)
+        expect(current_path).to eq root_path
       end
     end
 

@@ -2,8 +2,11 @@
 
 class TasksController < ApplicationController
   before_action :set_task_by_id, only: %i[show edit update destroy]
+  before_action :confirm_permission, only: %i[update destroy]
+
   def index # rubocop:disable Metrics/AbcSize
-    @tasks = Task.sort_column_direction(params[:sort], params[:direction])
+    @tasks = Task.search_user_id(session[:user_id])
+      .sort_column_direction(params[:sort], params[:direction])
       .search_name(params[:keyword_name]).search_progress(params[:keyword_progress])
       .page(params[:page]).per(10)
     @keyword_name = params[:keyword_name]
@@ -18,7 +21,7 @@ class TasksController < ApplicationController
   end
 
   def create
-    @user = User.last
+    @user = current_user
 
     @task = @user.tasks.build(task_params)
 
@@ -53,5 +56,12 @@ class TasksController < ApplicationController
 
   def task_params
     params.require(:task).permit(:name, :description, :due_at, :priority, :progress)
+  end
+
+  def confirm_permission
+    return if permitted?(@task.user_id)
+
+    flash[:danger] = I18n.t 'sessions.flash.permission.denied'
+    redirect_back(fallback_location: root_path)
   end
 end

@@ -3,12 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe 'Tasks', type: :system do
-  before { travel_to Date.new(2015, 1, 1) }
   let!(:task) { FactoryBot.create(:task) }
+  let(:rspec_session) { { user_id: task.user_id } }
 
   describe '一覧ページ' do
     # Task一覧画面を開く
-    let!(:new_task) { FactoryBot.create(:new_task) }
+    let!(:new_task) { FactoryBot.create(:new_task, user_id: task.user_id) }
     before { visit tasks_path }
 
     context '初期表示' do
@@ -130,7 +130,7 @@ RSpec.describe 'Tasks', type: :system do
     describe 'ページネーション' do
       # 上記の宣言taskと合わせて合計25個のtaskが作られる
       before {
-        create_list(:task, 23)
+        create_list(:new_task, 23, user_id: task.user_id)
         visit tasks_path
       }
 
@@ -209,7 +209,7 @@ RSpec.describe 'Tasks', type: :system do
     describe '編集' do
       let(:name) { 'Task' }
       let(:memo) { 'Memo' }
-      let(:due_at) { '002021/08/17' }
+      let(:due_at) { Time.current + 2.days }
       let(:priority) { '中' }
       let(:progress) { '進行中' }
       before {
@@ -252,7 +252,7 @@ RSpec.describe 'Tasks', type: :system do
   describe 'タスクの新規作成' do
     let(:name) { 'Task' }
     let(:memo) { 'Memo' }
-    let(:due_at) { '002021/08/17' }
+    let(:due_at) { Time.current + 2.days }
     let(:priority) { '中' }
     let(:progress) { '進行中' }
     before {
