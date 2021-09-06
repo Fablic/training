@@ -9,6 +9,11 @@ ja:
           email: メールアドレス
           password: パスワード
           password_confirmation: パスワードの再確認
+          is_admin: ユーザー権限
+    values:
+      is_admin:
+        true: 管理ユーザー
+        false: 一般ユーザー
     errors:
       models:
         user:

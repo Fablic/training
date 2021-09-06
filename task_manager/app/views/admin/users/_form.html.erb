@@ -17,5 +17,14 @@
       </div>
     </div>       
   </div>
+  <div class="form-group">
+      <div>
+        <%= f.label :is_admin %>
+      </div>
+        <%= f.radio_button :is_admin, true %>
+        <%= f.label :is_admin, I18n.t("activerecord.values.is_admin.true"), value: true %>
+        <%= f.radio_button :is_admin, false %>
+        <%= f.label :is_admin, I18n.t("activerecord.values.is_admin.false"), value: false %>
+    </div>       
   <%= f.submit '投稿', class: "btn btn-primary"%>
 <% end %>

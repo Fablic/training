@@ -4,6 +4,7 @@
   <div class="col-8">
     <%= render partial:'layouts/standard_card', locals: { title: "ユーザー名", text: @user.name } %>
     <%= render partial:'layouts/standard_card', locals: { title: "メールアドレス", text: @user.email } %>
+    <%= render partial:'layouts/standard_card', locals: { title: "ユーザー権限", text: I18n.t("activerecord.values.is_admin." + @user.is_admin.to_s) } %>
   </div>
   <div class="col-4">
       <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#edit-task-modal">
