@@ -7,7 +7,7 @@ module SessionsHelper
 
   def log_out
     session.delete(:user_id)
-    @current_user = nil
+    @current_user = nil # rubocop:disable Rails/HelperInstanceVariable
   end
 
   def current_user
@@ -18,7 +18,7 @@ module SessionsHelper
     !current_user.nil?
   end
 
-  def permission?(id)
-    id == current_user.id
+  def permitted?(user_id)
+    user_id == current_user.id
   end
 end
