@@ -1,11 +1,16 @@
 # frozen_string_literal: true
 
 class TasksController < ApplicationController
-  helper_method :sort_column, :sort_direction
-
   before_action :set_task_by_id, only: %i[show edit update destroy]
-  def index
-    @tasks = Task.all.order("#{sort_column} #{sort_direction}")
+  before_action :confirm_permission, only: %i[update destroy]
+
+  def index # rubocop:disable Metrics/AbcSize
+    @tasks = Task.search_user_id(session[:user_id])
+      .sort_column_direction(params[:sort], params[:direction])
+      .search_name(params[:keyword_name]).search_progress(params[:keyword_progress])
+      .page(params[:page]).per(10)
+    @keyword_name = params[:keyword_name]
+    @keyword_progress = params[:keyword_progress]
   end
 
   def show
@@ -16,34 +21,30 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.new(task_params)
+    @user = current_user
 
-    if @task.save
-      flash[:success] = I18n.t 'tasks.flash.create.success'
-      redirect_to @task
-    else
-      flash[:danger] = I18n.t 'tasks.flash.create.danger'
-      render :new
-    end
+    @task = @user.tasks.build(task_params)
+
+    return unless @task.save
+
+    flash[:success] = I18n.t('controllers.flash.success', model: Task.model_name.human, action: I18n.t('controllers.action.create'))
+    redirect_to @task
   end
 
   def edit
   end
 
   def update
-    if @task.update(task_params)
-      flash[:success] = I18n.t 'tasks.flash.update.success'
-      redirect_to @task
-    else
-      flash.now[:danger] = I18n.t 'tasks.flash.update.danger'
-      render :new
-    end
+    return unless @task.update(task_params)
+
+    flash[:success] = I18n.t('controllers.flash.success', model: Task.model_name.human, action: I18n.t('controllers.action.update'))
+    redirect_to @task
   end
 
   def destroy
     @task.destroy
 
-    flash[:success] = I18n.t 'tasks.flash.destroy.success'
+    flash[:success] = I18n.t('controllers.flash.success', model: Task.model_name.human, action: I18n.t('controllers.action.destroy'))
     redirect_to tasks_path
   end
 
@@ -57,11 +58,10 @@ class TasksController < ApplicationController
     params.require(:task).permit(:name, :description, :due_at, :priority, :progress)
   end
 
-  def sort_direction
-    %w[asc desc].include?(params[:direction]) ? params[:direction] : 'desc'
-  end
+  def confirm_permission
+    return if permitted?(@task.user_id)
 
-  def sort_column
-    Task.column_names.include?(params[:sort]) ? params[:sort] : 'created_at'
+    flash[:danger] = I18n.t 'sessions.flash.permission.denied'
+    redirect_back(fallback_location: root_path)
   end
 end

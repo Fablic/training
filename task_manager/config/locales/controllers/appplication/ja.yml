@@ -1,0 +1,5 @@
+ja:
+  application:
+    flash:
+      authentification_user:
+        danger: "ログインしてください。"

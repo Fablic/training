@@ -1,0 +1,5 @@
+ja:
+  sessions:
+    flash:
+      permission:
+        denied: "権限がありません。"

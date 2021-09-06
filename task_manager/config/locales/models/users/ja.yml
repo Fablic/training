@@ -1,0 +1,25 @@
+ja:
+  activerecord:
+    models:
+      user: ユーザー
+    attributes:
+        user:
+          id: ID
+          name: ユーザー名
+          email: メールアドレス
+          password: パスワード
+          password_confirmation: パスワードの再確認
+    errors:
+      models:
+        user:
+          attributes:
+            name:
+              blank: "空になっています。入力してください。"
+            email:
+              blank: "空になっています。入力してください。"
+              invalid: "メールアドレスの形式が間違っています。"
+              taken: "すでに登録されたメールアドレスです。"
+            password:
+              blank: "空になっています。入力してください。"
+            password_confirmation:
+              confirmation: "パスワードもしくは再入力されたパスワードが間違っています。"

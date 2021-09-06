@@ -11,8 +11,10 @@
   </head>
 
   <body>
-    <%= render 'flash_tasks' %>
-  
-    <%= yield %>
+    <%= render 'layouts/header' %>
+    <div class="container-fluid">
+      <%= render 'layouts/flash' %>
+      <%= yield %>
+    </div>
   </body>
 </html>

@@ -9,6 +9,10 @@ ruby '2.7.4'
 gem 'rails', '~> 6.1.4'
 # Use mysql as the database for Active Record
 gem 'mysql2', '~> 0.5'
+# Use hash as the database for Active Record
+gem 'bcrypt', '3.1.12'
+# Use faker for dummy data
+gem 'faker'
 # Use Puma as the app server
 gem 'puma', '~> 5.0'
 # Use SCSS for stylesheets
@@ -26,6 +30,12 @@ gem 'jbuilder', '~> 2.7'
 gem 'fablicop', require: false
 
 gem 'enum_help'
+
+gem 'kaminari'
+
+# Use bootstrap for View
+gem 'bootstrap', '~> 4.3.1'
+gem 'jquery-rails'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'

@@ -10,3 +10,4 @@ AllCops:
   Exclude:
     - 'vendor/**/*'
     - 'bin/*'
+    - 'db/**/*'
