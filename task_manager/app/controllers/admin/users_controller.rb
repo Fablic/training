@@ -3,6 +3,7 @@
 module Admin
   class UsersController < AdminController
     before_action :set_user_by_id, only: %i[show edit update destroy]
+    before_action :confirm_update, only: %i[update]
     def index
       @users = User.includes(:tasks)
       .search_name(params[:keyword]).or(User.search_email(params[:keyword]))
@@ -38,5 +39,22 @@ module Admin
     def user_params
       params.require(:user).permit(:name, :email, :is_admin)
     end
+
+    def confirm_update
+      return unless will_lose_administrators?
+
+      flash[:danger] = I18n.t('admin.flash.confirm_update_admin.danger')
+      redirect_to [:admin, @user]
+    end
+
+    def will_lose_administrators?
+      if @user.is_admin && user_params["is_admin"] == "false"
+        if User.where(is_admin: true).size <= 1
+          return true
+        end
+      end
+      return false
+    end
+
   end
 end
