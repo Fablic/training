@@ -18,7 +18,7 @@ module SessionsHelper
     !current_user.nil?
   end
 
-  def permission?(id)
-    id == current_user.id
+  def permitted?(user_id)
+    user_id == current_user.id
   end
 end

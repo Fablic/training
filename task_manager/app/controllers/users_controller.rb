@@ -2,7 +2,7 @@
 
 class UsersController < ApplicationController
   before_action :set_user_by_id, only: %i[show edit update destroy]
-  before_action :permission_confirm, only: %i[update destroy]
+  before_action :confirm_permission, only: %i[update destroy]
   skip_before_action :authenticate_user, only: %i[new create]
 
   def show
@@ -49,8 +49,8 @@ class UsersController < ApplicationController
     params.require(:user).permit(:name, :email, :password, :password_confirmation)
   end
 
-  def permission_confirm
-    return if permission?(@user.id)
+  def confirm_permission
+    return if permitted?(@user.id)
 
     flash[:danger] = I18n.t 'sessions.flash.permission.denied'
     redirect_back(fallback_location: root_path)

@@ -53,11 +53,11 @@ RSpec.describe SessionsHelper, type: :helper do
       end
     end
 
-    describe 'permission?' do
+    describe 'permitted?' do
       let(:user) { create(:user) }
       let!(:rspec_session) { { user_id: user.id } }
       let!(:access_place_id) { user.id }
-      subject { permission?(access_place_id) }
+      subject { permitted?(access_place_id) }
 
       context 'セッションのユーザーidと編集や削除削除項目のidが一致する' do
         it { is_expected.to eq true }
