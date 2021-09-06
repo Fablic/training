@@ -5,35 +5,36 @@ require 'rails_helper'
 RSpec.describe SessionsHelper, type: :helper do
   describe 'method' do
     describe 'log_in' do
-      let(:user) { build(:user) }
-      subject { log_in(user) }
+      let!(:user) { create(:user) }
 
       context 'user情報を入れる' do
-        it { expect(session[:user_id] == user.id) }
+        before { log_in(user) }
+        it { expect(current_user.id).to eq user.id }
       end
     end
 
     describe 'log_out' do
-      let!(:rspec_session) { { user_id: 1 } }
-      subject { log_out }
+      let!(:user) { create(:user) }
+      let!(:rspec_session) { { user_id: user.id } }
+      before { log_out }
 
       context '正常な動作' do
-        it { expect(session[:user_id].nil?) }
+        it { expect(current_user).to eq nil }
       end
     end
 
     describe 'current_user' do
-      let(:user) { build(:user) }
+      let(:user) { create(:user) }
       let!(:rspec_session) { { user_id: user.id } }
       subject { current_user }
 
       context 'ログイン時' do
-        it { expect(current_user == user) }
+        it { expect(is_expected.to(eq user)) }
       end
 
       context '非ログイン時' do
         before { session.delete(:user_id) }
-        it { expect(current_user.nil?) }
+        it { is_expected.to eq nil }
       end
     end
 
