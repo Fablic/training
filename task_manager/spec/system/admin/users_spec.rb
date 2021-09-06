@@ -108,10 +108,10 @@ RSpec.describe 'Admin/Users', type: :system do
           end
         end
 
-        context '管理者が二人異常の場合' do
+        context '管理者が二人以上の場合' do
           before{ create(:admin_user) }
-          it '自分が管理者でなくなるので、root_pathに遷移' do
-            expect(current_path).to eq root_path
+          it '自分が管理者でなくなる。' do
+            expect(page).to have_content '管理者ではありません'
           end
         end
       end

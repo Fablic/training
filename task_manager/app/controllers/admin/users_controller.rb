@@ -49,9 +49,7 @@ module Admin
 
     def will_lose_administrators?
       if @user.is_admin && user_params["is_admin"] == "false"
-        if User.where(is_admin: true).size <= 1
-          return true
-        end
+        return User.is_only_one_admin?
       end
       return false
     end
