@@ -1,9 +1,20 @@
 <h1>タスク一覧</h1>
+<div>
+<%= form_tag root_path, method: :get do %>
+  <p>終了期限並び替え</p>
+  <%= select_tag :order, options_for_select(
+    '終了期限早い': 'deadline asc',
+    '終了期限遅い': 'deadline desc'
+  ), include_blank: true, onchange: 'this.form.submit();' %>
+<% end %>
+</div>
 <table class="table">
   <thead>
     <tr>
       <th scope="col">#</th>
       <th scope="col">件名</th>
+      <th scope="col">終了期限</th>
+      <th scope="col">作成日</th>
     </tr>
   </thead>
   <tbody>
@@ -11,7 +22,8 @@
     <tr>
       <th scope="row"><%= task.id %></th>
       <td><%= link_to task.title, task %></td>
-      <td class="created"><%= link_to task.created_at, task %></td>
+      <td class="deadline"><%= I18n.l(task.deadline, format: :short, default: '') %></td>
+      <td class="created"><%= I18n.l(task.created_at, format: :short) %></td>
     </tr>
 <% end %>
   </tbody>

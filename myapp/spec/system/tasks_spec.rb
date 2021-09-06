@@ -14,6 +14,14 @@ RSpec.describe 'index', js: true, type: :system do
     it '一覧が作成日の降順で表示されている' do
       expect(page.all('.created').first.text).to be > page.all('.created').last.text
     end
+    it '終了日時の早い順に並び替えられる' do
+      select '終了期限早い'
+      expect(page.all('.deadline').first.text).to be < page.all('.deadline').last.text
+    end
+    it '終了日時の遅い順に並び替えられる' do
+      select '終了期限遅い'
+      expect(page.all('.deadline').first.text).to be > page.all('.deadline').last.text
+    end
     it '詳細へ遷移する' do
       click_link task_list[0].title
       is_expected.to have_current_path task_path(task_list[0].id)
