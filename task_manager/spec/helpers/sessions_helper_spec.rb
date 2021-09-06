@@ -29,7 +29,7 @@ RSpec.describe SessionsHelper, type: :helper do
       subject { current_user }
 
       context 'ログイン時' do
-        it { expect(is_expected.to(eq user)) }
+        it { is_expected.to eq user }
       end
 
       context '非ログイン時' do
