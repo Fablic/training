@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Admin/Users', type: :system do
-  let!(:user) { FactoryBot.create(:user) }
+  let!(:user) { FactoryBot.create(:admin_user) }
   let(:rspec_session) { { user_id: user.id } }
 
   describe '一覧ページ' do
@@ -17,7 +17,7 @@ RSpec.describe 'Admin/Users', type: :system do
     context '初期表示' do
       it '一覧表示されているかの確認' do
         # 画面を検証する
-        expect(page).to have_content 'Taro'
+        expect(page).to have_content 'admin'
         expect(page).to have_content 'Hanako'
 
         # タスク数の表示
@@ -28,11 +28,11 @@ RSpec.describe 'Admin/Users', type: :system do
     describe '検索' do
       context '名前で検索' do
         before {
-          fill_in 'keyword', with: 'Taro'
+          fill_in 'keyword', with: 'admin'
           click_button '検索'
         }
-        it 'Taroが表示される' do
-          expect(page).to have_selector '#user-0', text: 'Taro'
+        it 'adminが表示される' do
+          expect(page).to have_selector '#user-0', text: 'admin'
           expect(page).to have_no_text 'Hanako'
         end
       end
@@ -44,7 +44,7 @@ RSpec.describe 'Admin/Users', type: :system do
         }
         it 'test@email.comが表示される' do
           expect(page).to have_selector '#user-0', text: 'test@email.com'
-          expect(page).to have_no_text 'Taro'
+          expect(page).to have_no_text 'admin'
         end
       end
     end
@@ -53,7 +53,7 @@ RSpec.describe 'Admin/Users', type: :system do
   describe '詳細ページ' do
     before { visit admin_user_path(user) }
     it '既存のユーザー情報が書かれている' do
-      expect(page).to have_content 'Taro'
+      expect(page).to have_content 'admin'
       expect(page).to have_content user.email
     end
   end
@@ -65,7 +65,7 @@ RSpec.describe 'Admin/Users', type: :system do
     }
 
     it '既存のユーザー情報が書いている' do
-      expect(page).to have_field 'ユーザー名', with: 'Taro'
+      expect(page).to have_field 'ユーザー名', with: 'admin'
     end
 
     describe '編集' do
