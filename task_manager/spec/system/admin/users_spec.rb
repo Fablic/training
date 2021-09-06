@@ -71,9 +71,11 @@ RSpec.describe 'Admin/Users', type: :system do
     describe '編集' do
       let(:name) { 'pi' }
       let(:email) { 'pi@raspberry.com' }
+      let (:is_admin) { '管理ユーザー' }
       before {
         fill_in 'ユーザー名', with: name
         fill_in 'メールアドレス', with: email
+        choose is_admin
         click_button '投稿'
       }
 
@@ -96,6 +98,24 @@ RSpec.describe 'Admin/Users', type: :system do
           expect(page).to have_content 'メールアドレス メールアドレスの形式が間違っています。'
         end
       end
+
+      context '一般ユーザーに変更する' do
+        let(:is_admin) { '一般ユーザー' }
+
+        context '管理者が一人の場合' do
+          it '管理者がいなくなるため、処理が中断しましたのflashを表示する' do
+            expect(page).to have_content '管理者がいなくなるため、操作を中断しました'
+          end
+        end
+
+        context '管理者が二人異常の場合' do
+          before{ create(:admin_user) }
+          it '自分が管理者でなくなるので、root_pathに遷移' do
+            expect(current_path).to eq root_path
+          end
+        end
+      end
+
     end
   end
 
