@@ -58,7 +58,7 @@ RSpec.describe 'Sessions', type: :system do
       end
 
       context '管理ページへの遷移' do
-        before { visit admin_users_path } 
+        before { visit admin_users_path }
         it 'タスク一覧ページへ強制的に遷移する' do
           expect(current_path).to eq root_path
         end
@@ -66,7 +66,7 @@ RSpec.describe 'Sessions', type: :system do
 
       context '他のユーザーのページへの遷移' do
         let!(:new_user) { FactoryBot.create(:user) }
-        before { visit visit user_path(new_user) } 
+        before { visit visit user_path(new_user) }
         it 'タスク一覧ページへ強制的に遷移する' do
           expect(current_path).to eq root_path
         end
@@ -74,12 +74,11 @@ RSpec.describe 'Sessions', type: :system do
 
       context '他のユーザーのタスクへの遷移' do
         let!(:task) { FactoryBot.create(:task) }
-        before { visit visit task_path(task) } 
+        before { visit visit task_path(task) }
         it 'タスク一覧ページへ強制的に遷移する' do
           expect(current_path).to eq root_path
         end
       end
-
     end
 
     context '管理ユーザーでログイン時' do
@@ -87,7 +86,7 @@ RSpec.describe 'Sessions', type: :system do
       let(:rspec_session) { { user_id: admin_user.id } }
 
       context '管理ページへの遷移' do
-        before { visit admin_users_path } 
+        before { visit admin_users_path }
         it 'ユーザー一覧ページへ遷移する' do
           expect(current_path).to eq admin_users_path
         end

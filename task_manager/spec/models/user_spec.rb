@@ -88,12 +88,12 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe "function" do
-    subject { User.is_only_one_admin? }
+  describe 'function' do
+    subject { User.only_one_admin? }
 
     context 'adminユーザーが一人の時' do
       before { create(:admin_user) }
-      it { is_expected.to be_truthy}
+      it { is_expected.to be_truthy }
     end
 
     context 'adminユーザーが一人の時' do

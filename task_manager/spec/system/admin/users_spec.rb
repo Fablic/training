@@ -109,13 +109,12 @@ RSpec.describe 'Admin/Users', type: :system do
         end
 
         context '管理者が二人以上の場合' do
-          before{ create(:admin_user) }
+          before { create(:admin_user) }
           it '自分が管理者でなくなる。' do
             expect(page).to have_content '管理者ではありません'
           end
         end
       end
-
     end
   end
 

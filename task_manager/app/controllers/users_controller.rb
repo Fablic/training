@@ -65,10 +65,8 @@ class UsersController < ApplicationController
   end
 
   def will_lose_administrators?
-    if @user.is_admin
-      return User.is_only_one_admin?
-    end
-    return false
-  end
+    return User.only_one_admin? if @user.is_admin
 
+    false
+  end
 end

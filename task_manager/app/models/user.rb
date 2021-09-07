@@ -11,7 +11,7 @@ class User < ApplicationRecord
   scope :search_name, -> (keyword_name) { where(['name like?', "%#{keyword_name}%"]) }
   scope :search_email, -> (keyword_email) { where(['email like?', "%#{keyword_email}%"]) }
 
-  def self.is_only_one_admin?
+  def self.only_one_admin?
     User.where(is_admin: true).size <= 1
   end
 end

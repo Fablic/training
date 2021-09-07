@@ -3,7 +3,7 @@
 module Admin
   class AdminController < ApplicationController
     before_action :authentification_admin
-    
+
     def authentification_admin
       return if current_user.is_admin?
 

@@ -126,6 +126,8 @@ RSpec.describe 'Users', type: :system do
       it { expect(page).to have_content 'ユーザーの削除をしました。' }
 
       it 'ユーザーの作成ページを開く' do
+        wait = Selenium::WebDriver::Wait.new(timeout: 100)
+        wait.until { expect(page).to have_content 'ユーザーの削除をしました。' }
         expect(current_path).to eq new_user_path
       end
     end
