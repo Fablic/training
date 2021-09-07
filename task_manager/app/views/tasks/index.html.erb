@@ -24,7 +24,16 @@
   <tbody>
     <% @tasks.each_with_index do |task , index| %>
       <tr id= 'task-<%= index %>'>
-        <td><%= task.name %></td>
+        <td style="padding-top: 5px;padding-bottom: 5px;">
+          <div>
+            <% task.labels.pluck(:name).each do |label_name|%>
+              <span class="badge badge-pill badge-primary"><%= label_name %></span>
+            <% end %>
+          </div>
+          <div style="margin-top: 4px;margin-left: 4px;">
+            <%= task.name %>
+          </div>
+        </td>
         <td><%= I18n.l(task.created_at, format: :default) %></td>
         <td><%= I18n.l(task.due_at, format: :default) %></td>
         <td><%= task.progress_i18n%></td>
