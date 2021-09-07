@@ -2,6 +2,10 @@
 
 <table>
   <tr>
+    <th>ステータス</th>
+    <td><%= I18n.t("activerecord.attributes.task.statuses.#{@task.status}") %></td>
+  </tr>
+  <tr>
     <th>件名</th>
     <td><%= @task.title %></td>
   </tr>

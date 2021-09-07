@@ -4,6 +4,11 @@ ja:
       task:
         title: 件名
         content: 詳細
+        status: ステータス
+        statuses:
+          not_started: 未着手
+          in_progress: 進行中
+          completed: 完了
 
   flash:
     new_success: タスク投稿が成功しました
