@@ -2,9 +2,9 @@
 <div class="row">
   <div class="col-6">
     <%= form_with url: root_path, method: :get, local: true do |f| %>
-        <%= f.text_field :keyword_name, value: @keyword_name ,:placeholder => (t '.name') %>
-        <%= f.select :keyword_progress, options_for_select(Task.progresses_i18n.keys.map {|k| [I18n.t("enums.task.progress.#{k}"), k]}, selected: @keyword_progress) , { include_blank: '進捗状況'} %>
-        <%= f.select("label_id", Label.pluck(:name, :id), { include_blank: 'ラベル名' }) %>
+        <%= f.text_field :keyword_name, value: @keyword["name"] ,:placeholder => (t '.name') %>
+        <%= f.select :keyword_progress, options_for_select(Task.progresses_i18n.keys.map {|k| [I18n.t("enums.task.progress.#{k}"), k]}, selected: @keyword["progress"]) , { include_blank: '進捗状況'} %>
+        <%= f.select :label_id, options_for_select(Label.pluck(:name, :id), selected: @keyword["label_id"]), { include_blank: 'ラベル名' } %>
         <%= f.submit "検索" %>
     <% end %>
   </div>

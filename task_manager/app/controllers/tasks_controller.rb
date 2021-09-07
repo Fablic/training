@@ -10,8 +10,8 @@ class TasksController < ApplicationController
       .search_name(params[:keyword_name]).search_progress(params[:keyword_progress])
       .search_label_id(params[:label_id])
       .page(params[:page]).per(10)
-    @keyword_name = params[:keyword_name]
-    @keyword_progress = params[:keyword_progress]
+
+    @keyword = { "name" => params[:keyword_name], "progress" => params[:keyword_progress], "label_id" => params[:label_id] }
   end
 
   def show
