@@ -1,42 +1,65 @@
-<h1>タスク一覧</h1>
-<h2>終了期限並び替え</h2>
-<div>
+<% provide(:title, 'リスト') %>
+
+<div class="d-flex justify-content-end">
+  <%= link_to '新規作成', new_task_path, class: 'btn btn-primary' %>
+</div>
+
+
 <%= search_form_for @q, url: root_path do |f| %>
+<h5>絞込み</h5>
+<div class="row mb-3">
+  <%= f.label :title, class: "col-sm-1 col-form-label" %>
+  <div class="col-sm-5">
+    <%= f.search_field :title_cont, class: "form-control" %>
+  </div>
+</div>
+<fieldset class="row mb-3">
+  <%= f.label :status, class: "col-form-label col-sm-1" %>
+  <div class="col-sm-5">
+    <div class="form-check">
+      <%= f.radio_button :status_eq, '', class: "form-check-input" %>
+      <label class="form-check-label">
+        指定なし
+      </label>
+    </div>
+    <div class="form-check">
+      <%= f.radio_button :status_eq, Task.statuses[:not_started], class: "form-check-input" %>
+      <label class="form-check-label">
+        <%= I18n.t('activerecord.attributes.task.statuses.not_started') %>
+      </label>
+    </div>
+    <div class="form-check">
+      <%= f.radio_button :status_eq, Task.statuses[:in_progress], class: "form-check-input" %>
+      <label class="form-check-label">
+        <%= I18n.t('activerecord.attributes.task.statuses.in_progress') %>
+      </label>
+    </div>
+    <div class="form-check">
+      <%= f.radio_button :status_eq, Task.statuses[:completed], class: "form-check-input" %>
+      <label class="form-check-label">
+        <%= I18n.t('activerecord.attributes.task.statuses.completed') %>
+      </label>
+    </div>
+  </div>
+</fieldset>
+<%= f.submit "検索", class: 'btn btn-secondary' %>
+<div class="d-flex justify-content-end">
+  <h5>終了期限並び替え</h5>
   <%= f.select(:sorts, {
     '': 'created_at desc',
     '終了期限早い': 'deadline asc',
     '終了期限遅い': 'deadline desc'
     }, { selected: params[:q][:sorts] }, { onchange: 'this.form.submit()'}) %>
-
 </div>
-<h2>検索</h2>
-<div>
-  <%= f.label :title %>
-  <%= f.search_field :title_cont %>
-</div>
-<div>
-  <%= f.label :status %>
-　<%= f.radio_button :status_eq, '' %>指定なし
-
-  <%= f.radio_button :status_eq, Task.statuses[:not_started] %>
-  <%= I18n.t('activerecord.attributes.task.statuses.not_started') %>
-  <%= f.radio_button :status_eq, Task.statuses[:in_progress] %>
-  <%= I18n.t('activerecord.attributes.task.statuses.in_progress') %>
-  <%= f.radio_button :status_eq, Task.statuses[:completed] %>
-  <%= I18n.t('activerecord.attributes.task.statuses.completed') %>
-
-</div>
-<%= f.submit "検索" %>
 <% end %>
 
-<h2>タスク</h2>
-<table class="task_list">
+<table class="table table-striped task_list">
   <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">ステータス</th>
       <th scope="col">件名</th>
       <th scope="col">終了期限</th>
+      <th scope="col">ステータス</th>
       <th scope="col">作成日</th>
     </tr>
   </thead>
@@ -44,9 +67,9 @@
 <% @tasks.each do |task| %>
     <tr>
       <th scope="row"><%= task.id %></th>
-      <td><%= I18n.t("activerecord.attributes.task.statuses.#{task.status}") %></td>
       <td><%= link_to task.title, task %></td>
       <td class="deadline"><%= I18n.l(task.deadline, format: :short, default: '') %></td>
+      <td><%= I18n.t("activerecord.attributes.task.statuses.#{task.status}") %></td>
       <td class="created"><%= I18n.l(task.created_at, format: :short) %></td>
     </tr>
 <% end %>
@@ -54,4 +77,4 @@
 </table>
 <%= paginate @tasks %>
 
-<p><%= link_to '新規作成', new_task_path %></p>
+

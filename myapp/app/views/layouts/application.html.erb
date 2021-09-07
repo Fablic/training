@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Myapp</title>
+    <title><%= page_title(yield(:title)) %></title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -10,7 +10,10 @@
   </head>
 
   <body>
-    <%= render 'layouts/flash_tasks' %>
-    <%= yield %>
+    <%= render 'shared/author' %>
+    <div class="container-fluid">
+      <%= render 'layouts/flash_tasks' %>
+      <%= yield %>
+    </div>
   </body>
 </html>

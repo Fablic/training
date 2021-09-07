@@ -62,3 +62,6 @@ gem 'rails-i18n'
 gem 'ransack'
 
 gem 'kaminari'
+
+gem 'bootstrap'
+gem 'jquery-rails'

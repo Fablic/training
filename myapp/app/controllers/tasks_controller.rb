@@ -45,7 +45,7 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
     @task.destroy
 
-    redirect_to tasks_path, flash: { success: I18n.t('flash.destroy') }
+    redirect_to root_path, flash: { success: I18n.t('flash.destroy') }
   end
 
   def task_params
