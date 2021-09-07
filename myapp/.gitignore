@@ -1,0 +1,27 @@
+.DS_Store
+
+# Ignore all logfiles and tempfiles.
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep
+
+## Environment normalization:
+/.bundle
+/vendor/bundle
+
+# Ignore node_modules
+node_modules/
+
+# Ignore Byebug command history file.
+.byebug_history
+
+# Ignore yarn files
+/yarn-error.log
+yarn-debug.log*
+.yarn-integrity
+
+# Ignore uploaded files in development
+/storage/*
+!/storage/.keep
+/public/uploads
