@@ -38,5 +38,6 @@
 | name         | VARCHAR(255) | NOTNULL | 主キー | 
 | email | INTEGER      | NOTNULL |        | 
 | password     | VARCHAR(255) | NOTNULL |        | 
+| is_admin     | Boolean      | NOTNULL | Default(false)       | 
 | created_at   | DATETIME     | NOTNULL |        | 
 | updated_at   | DATETIME     | NOTNULL |        | 
