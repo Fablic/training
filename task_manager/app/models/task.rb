@@ -2,6 +2,8 @@
 
 class Task < ApplicationRecord
   belongs_to :user
+  has_many :task_labels
+  has_many :labels, through: :task_labels
 
   enum priority: {
     low: 0, # 優先度低
