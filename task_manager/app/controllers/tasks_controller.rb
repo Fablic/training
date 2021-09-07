@@ -51,7 +51,7 @@ class TasksController < ApplicationController
   private
 
   def set_task_by_id
-    @task = Task.find(params[:id])
+    @task = Task.includes(:labels).find(params[:id])
   end
 
   def task_params
