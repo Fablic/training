@@ -4,10 +4,11 @@ class TasksController < ApplicationController
   before_action :set_task_by_id, only: %i[show edit update destroy]
   before_action :confirm_permission, only: %i[show edit update destroy]
 
-  def index # rubocop:disable Metrics/AbcSize
+  def index # rubocop:disable Metrics/AbcSizeå
     @tasks = Task.includes(:labels).search_user_id(session[:user_id])
       .sort_column_direction(params[:sort], params[:direction])
       .search_name(params[:keyword_name]).search_progress(params[:keyword_progress])
+      .search_label_id(params[:label_id])
       .page(params[:page]).per(10)
     @keyword_name = params[:keyword_name]
     @keyword_progress = params[:keyword_progress]
