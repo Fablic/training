@@ -7,6 +7,7 @@
     <%= render partial:'layouts/standard_card', locals: { title: "締め切り", text: I18n.l(@task.due_at, format: :default) } %>
     <%= render partial:'layouts/standard_card', locals: { title: "優先度", text: @task.priority_i18n } %>
     <%= render partial:'layouts/standard_card', locals: { title: "進捗状況", text: @task.progress_i18n } %>
+    <%= render partial:'layouts/labels', locals: { labels: @task.reload.labels.pluck(:name) } %>
     <%= link_to '一覧へ戻る',tasks_path , class: "btn btn-info btn-lg btn-blok"%>
   </div>
   <div class="col-4">

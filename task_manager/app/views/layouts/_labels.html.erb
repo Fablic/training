@@ -1,0 +1,10 @@
+<% if labels.any? %>
+  <div class="card mb-2">
+    <h5 class="card-header">ラベル</h5>
+    <div class="card-body">
+      <% labels.each do |label_name|%>
+        <span class="badge badge-pill badge-primary"><%= label_name %></span>
+      <% end %>
+    </div>
+  </div>
+<% end %>
