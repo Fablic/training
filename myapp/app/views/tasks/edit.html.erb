@@ -1,30 +1,42 @@
-<h1>タスクの編集</h1>
+<% provide(:title, '編集') %>
+
+<div class="d-flex justify-content-end ">
+  <div class='btn-toolbar' role="toolbar">
+    <%= link_to '詳細に戻る', task_path(@task.id), class: 'btn btn-outline-primary mx-1' %>
+    <%= link_to '一覧に戻る', root_path, class: 'btn btn-outline-primary mx-1' %>
+  </div>
+</div>
 
 <%= form_with model: @task, local: true do |f| %>
 <%= render 'layouts/error_messages' %>
-<div>
-  <%= f.label :status, 'ステータス' %>
+<div class="row mb-3">
+  <%= f.label :status, 'ステータス', class: "col-sm-1 col-form-label" %>
+  <div class="col-sm-5">
   <%= f.select :status, options_for_select(
     Task.statuses.map { |k, _v| [I18n.t("activerecord.attributes.task.statuses.#{k}"), k] },
     selected: @task.status
-  ) %>
+  ), class: "form-control" %>
+  </div>
 </div>
-
-<div>
-  <%= f.label :title, '件名' %>
-  <%= f.text_field :title %>
+<div class="row mb-3">
+  <%= f.label :title, '件名', class: "col-sm-1 col-form-label" %>
+  <div class="col-sm-5">
+    <%= f.text_field :title, class: "form-control" %>
+  </div>
+</div>
+<div class="row mb-3">
+  <%= f.label :content, '詳細', class: "col-sm-1 col-form-label" %>
+  <div class="col-sm-5">
+    <%= f.text_area :content, class: "form-control" %>
+  </div>
+</div>
+<div class="row mb-3">
+  <%= f.label :deadline, '終了期限', class: "col-sm-1 col-form-label" %>
+  <div class="col-sm-3">
+    <%= f.datetime_field :deadline, class: "form-control" %>
+  </div>
 </div>
 <div>
-  <%= f.label :content, '詳細' %>
-  <%= f.text_area :content %>
-</div>
-<div>
-  <%= f.label :deadline, '終了期限' %>
-  <%= f.datetime_field :deadline %>
-</div>
-<div>
-<%= f.submit '保存' %>
+<%= f.submit '保存', class: 'btn btn-secondary' %>
 </div>
 <% end %>
-
-<p><%= link_to '一覧に戻る', tasks_path %></p>

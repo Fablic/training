@@ -1,0 +1,11 @@
+@import "bootstrap";
+@import "./tasks.scss";
+
+.pagination {
+  justify-content: center;
+}
+
+.beta {
+  color: $gray-600;
+  background-color: $green-100;
+}

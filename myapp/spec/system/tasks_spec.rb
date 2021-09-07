@@ -8,8 +8,8 @@ RSpec.describe 'index', js: true, type: :system do
     subject { page }
 
     it '一覧が表示されている' do
-      is_expected.to have_content('タスク一覧')
-      is_expected.to have_content(task_list[0].title)
+      is_expected.to have_content('タスクリスト')
+      is_expected.to have_content(task_list.last.title)
     end
     it '一覧が作成日の降順で表示されている' do
       expect(page.all('.created').first.text).to be > page.all('.created').last.text
@@ -38,8 +38,8 @@ RSpec.describe 'index', js: true, type: :system do
       end
     end
     it '詳細へ遷移する' do
-      click_link task_list[0].title
-      is_expected.to have_current_path task_path(task_list[0].id)
+      click_link task_list.last.title
+      is_expected.to have_current_path task_path(task_list.last.id)
     end
     it '新規作成へ遷移する' do
       click_link '新規作成'
@@ -48,21 +48,21 @@ RSpec.describe 'index', js: true, type: :system do
   end
 
   describe '詳細ページ' do
-    before { visit task_path(task_list[0].id) }
+    before { visit task_path(task_list.last.id) }
     subject { page }
 
     it '詳細が表示されている' do
       is_expected.to have_content('タスク詳細')
-      is_expected.to have_content(task_list[0].title)
-      is_expected.to have_content(task_list[0].content)
+      is_expected.to have_content(task_list.last.title)
+      is_expected.to have_content(task_list.last.content)
     end
     it '一覧へ遷移する' do
       click_link '一覧に戻る'
-      is_expected.to have_current_path tasks_path
+      is_expected.to have_current_path root_path
     end
     it '編集へ遷移する' do
-      click_link '編集ページへ'
-      is_expected.to have_current_path edit_task_path(task_list[0].id)
+      click_link '編集する'
+      is_expected.to have_current_path edit_task_path(task_list.last.id)
     end
     context '削除実行する' do
       it '削除される' do
@@ -70,7 +70,7 @@ RSpec.describe 'index', js: true, type: :system do
           click_link '削除する'
         end
         is_expected.to have_content 'タスクが削除されました'
-        is_expected.to have_current_path tasks_path
+        is_expected.to have_current_path root_path
         is_expected.not_to have_content(task_list[0].title)
       end
     end
@@ -79,7 +79,7 @@ RSpec.describe 'index', js: true, type: :system do
         page.dismiss_confirm('本当によろしいですか？') do
           click_link '削除する'
         end
-        is_expected.to have_current_path task_path(task_list[0].id)
+        is_expected.to have_current_path task_path(task_list.last.id)
       end
     end
   end
@@ -90,7 +90,7 @@ RSpec.describe 'index', js: true, type: :system do
 
     context '入力エラーなし' do
       it 'タスクが作成できる' do
-        is_expected.to have_content('タスクの作成')
+        is_expected.to have_content('タスク作成')
         fill_in '件名', with: 'new 件名'
         fill_in '詳細', with: 'new 詳細'
         fill_in '終了期限', with: Time.current
@@ -122,25 +122,25 @@ RSpec.describe 'index', js: true, type: :system do
   end
 
   describe '編集ページ' do
-    before { visit edit_task_path(task_list[0].id) }
+    before { visit edit_task_path(task_list.last.id) }
     subject { page }
     let(:params) { { title: 'edit 件名', content: 'edit 詳細' } }
 
     it 'タスクが表示される' do
-      is_expected.to have_content('タスクの編集')
-      is_expected.to have_field '件名', with: task_list[0].title
-      is_expected.to have_field '詳細', with: task_list[0].content
+      is_expected.to have_content('タスク編集')
+      is_expected.to have_field '件名', with: task_list.last.title
+      is_expected.to have_field '詳細', with: task_list.last.content
     end
     context '入力エラーなし' do
       it 'タスクが編集できる' do
         fill_in '件名', with: params[:title]
         fill_in '詳細', with: params[:content]
-        fill_in '終了期限', with: Time.current
+        # fill_in '終了期限', with: Time.current
         click_button '保存'
-        is_expected.to have_current_path task_path(task_list[0].id)
         is_expected.to have_content 'タスク編集が成功しました'
         is_expected.to have_content(params[:title])
         is_expected.to have_content(params[:content])
+        is_expected.to have_current_path task_path(task_list.last.id)
       end
     end
     context '件名が未入力' do
@@ -150,7 +150,7 @@ RSpec.describe 'index', js: true, type: :system do
         click_button '保存'
         is_expected.to have_content 'タスク編集が失敗しました'
         is_expected.to have_content '件名を入力してください'
-        is_expected.to have_current_path edit_task_path(task_list[0].id)
+        is_expected.to have_current_path edit_task_path(task_list.last.id)
       end
     end
     context '詳細が未入力' do
@@ -160,7 +160,7 @@ RSpec.describe 'index', js: true, type: :system do
         click_button '保存'
         is_expected.to have_content 'タスク編集が失敗しました'
         is_expected.to have_content '詳細を入力してください'
-        is_expected.to have_current_path edit_task_path(task_list[0].id)
+        is_expected.to have_current_path edit_task_path(task_list.last.id)
       end
     end
   end
