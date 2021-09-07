@@ -82,4 +82,9 @@ RSpec.configure do |config|
     # sessionメソッドを上書き
     allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(session)
   end
+
+  # ブラウザ非表示
+  config.before(:each) do |ex|
+    driven_by :selenium, using: :headless_chrome, screen_size: [1400, 1400] if ex.metadata[:type] == :system
+  end
 end

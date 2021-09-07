@@ -2,7 +2,7 @@
 
 class UsersController < ApplicationController
   before_action :set_user_by_id, only: %i[show edit update destroy]
-  before_action :confirm_permission, only: %i[update destroy]
+  before_action :confirm_permission, only: %i[show edit update destroy]
   before_action :confirm_destroy, only: %i[destroy]
   skip_before_action :authenticate_user, only: %i[new create]
 
