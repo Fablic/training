@@ -11,6 +11,7 @@ ja:
           due_at: 締め切り
           priority: 優先順位
           progress: 進捗状況
+          count: タスク数
     errors:
       models:
         task:

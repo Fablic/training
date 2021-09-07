@@ -1,0 +1,33 @@
+<h1>ユーザー情報</h1>
+
+<div class="row">
+  <div class="col-8">
+    <%= render partial:'layouts/standard_card', locals: { title: "ユーザー名", text: @user.name } %>
+    <%= render partial:'layouts/standard_card', locals: { title: "メールアドレス", text: @user.email } %>
+  </div>
+  <div class="col-4">
+      <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#edit-task-modal">
+        ユーザーを編集する
+      </button>
+
+    <%= link_to 'タスク一覧', admin_user_tasks_path(@user), class: "btn btn-primary btn-lg btn-block" %>
+    <%= link_to 'ユーザーを削除する', [:admin, @user], class: "btn btn-danger btn-lg btn-block", method: :delete, data:{ confirm: '本当によろしいですか？'} %>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="edit-task-modal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">ユーザーの編集</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <%= render 'form', user: @user %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,32 @@
+<h1>ユーザー一覧</h1>
+<div class="row">
+  <div class="col-6">
+    <%= form_with url: admin_users_path, method: :get, local: true do |f| %>
+        <%= f.text_field :keyword, value: @keyword ,:placeholder => ('name or email') %>
+        <%= f.submit "検索" %>
+    <% end %>
+  </div>
+  <div class="col-6">
+    <%= paginate @users %>
+  </div>
+</div>
+<table class="table table-striped table-bordered table-hover" style="margin-top: 10px;">
+  <thead>
+    <tr>
+      <th scope="col"><%= I18n.t 'activerecord.attributes.user.name'%></th>
+      <th scope="col"><%= I18n.t 'activerecord.attributes.user.email'%></th>
+      <th scope="col"><%= I18n.t 'activerecord.attributes.task.count'%></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @users.each_with_index do |user , index| %>
+      <tr id= 'user-<%= index %>'>
+        <td><%= user.name %></td>
+        <td><%= user.email %></td>
+        <td><%= user.tasks.size %></td>
+        <td><%= link_to '詳細', [:admin, user ] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
