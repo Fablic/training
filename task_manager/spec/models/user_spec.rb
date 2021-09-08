@@ -96,7 +96,7 @@ RSpec.describe User, type: :model do
       it { is_expected.to be_truthy }
     end
 
-    context 'adminユーザーが一人の時' do
+    context 'adminユーザーが三人の時' do
       before { create_list(:admin_user, 3) }
       it { is_expected.to be_falsey }
     end
