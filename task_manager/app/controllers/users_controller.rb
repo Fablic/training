@@ -58,15 +58,9 @@ class UsersController < ApplicationController
   end
 
   def confirm_destroy
-    return unless will_lose_administrators?
+    return unless User.will_lose_administrators?(@user)
 
     flash[:danger] = I18n.t('admin.flash.confirm_update_admin.danger')
     redirect_to @user
-  end
-
-  def will_lose_administrators?
-    return User.only_one_admin? if @user.is_admin
-
-    false
   end
 end
