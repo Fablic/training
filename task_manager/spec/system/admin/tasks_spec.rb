@@ -3,13 +3,13 @@
 require 'rails_helper'
 
 RSpec.describe 'Admin/Tasks', type: :system do
-  let!(:task) { FactoryBot.create(:task) }
-  let!(:admin_user) { FactoryBot.create(:admin_user) }
+  let!(:task) { create(:task) }
+  let!(:admin_user) { create(:admin_user) }
   let(:rspec_session) { { user_id: admin_user.id } }
 
   describe '一覧ページ' do
     # Task一覧画面を開く
-    let!(:new_task) { FactoryBot.create(:new_task, user_id: task.user_id) }
+    let!(:new_task) { create(:new_task, user_id: task.user_id) }
     before { visit admin_user_tasks_path(task.user) }
 
     context '初期表示' do

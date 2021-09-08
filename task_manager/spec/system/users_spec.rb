@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Users', type: :system do
-  let!(:user) { FactoryBot.create(:user) }
+  let!(:user) { create(:user) }
   let(:rspec_session) { { user_id: user.id } }
 
   describe '詳細ページ' do

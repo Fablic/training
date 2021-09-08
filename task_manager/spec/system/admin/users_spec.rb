@@ -3,12 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe 'Admin/Users', type: :system do
-  let!(:user) { FactoryBot.create(:admin_user) }
+  let!(:user) { create(:admin_user) }
   let(:rspec_session) { { user_id: user.id } }
 
   describe '一覧ページ' do
     # Task一覧画面を開く
-    let!(:new_user) { FactoryBot.create(:user, name: 'Hanako', email: 'test@email.com') }
+    let!(:new_user) { create(:user, name: 'Hanako', email: 'test@email.com') }
     before {
       create_list(:new_task, 25, user_id: new_user.id)
       visit admin_users_path
@@ -119,7 +119,7 @@ RSpec.describe 'Admin/Users', type: :system do
   end
 
   describe 'ユーザーの削除' do
-    let!(:new_user) { FactoryBot.create(:user) }
+    let!(:new_user) { create(:user) }
     before { visit admin_user_path(new_user) }
     context '削除ボタンを押す' do
       before {

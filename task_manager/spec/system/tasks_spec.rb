@@ -3,12 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe 'Tasks', type: :system do
-  let!(:task) { FactoryBot.create(:task) }
+  let!(:task) { create(:task) }
   let(:rspec_session) { { user_id: task.user_id } }
 
   describe '一覧ページ' do
     # Task一覧画面を開く
-    let!(:new_task) { FactoryBot.create(:new_task, user_id: task.user_id) }
+    let!(:new_task) { create(:new_task, user_id: task.user_id) }
     before { visit tasks_path }
 
     context '初期表示' do
