@@ -111,7 +111,9 @@ RSpec.describe 'Admin/Users', type: :system do
         context '管理者が二人以上の場合' do
           before { create(:admin_user) }
           it '自分が管理者でなくなる。' do
-            expect(page).to have_content '管理者ではありません'
+            wait = Selenium::WebDriver::Wait.new(timeout: 100)
+            wait.until { expect(page).to have_content 'ユーザーの更新をしました。' }
+            expect(current_path).to eq root_path
           end
         end
       end

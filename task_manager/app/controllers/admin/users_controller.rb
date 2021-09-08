@@ -16,16 +16,20 @@ module Admin
     def edit
     end
 
-    def update
+    def update # rubocop:disable Metrics/AbcSize
       return unless @user.update(user_params)
 
       flash[:success] = I18n.t('controllers.flash.success', model: User.model_name.human, action: I18n.t('controllers.action.update'))
-      redirect_to [:admin, @user]
+
+      if user_params['is_admin'] == 'false' && @user.id == current_user.id
+        redirect_to root_path
+      else
+        redirect_to [:admin, @user]
+      end
     end
 
     def destroy
       @user.destroy
-
       flash[:success] = I18n.t('controllers.flash.success', model: User.model_name.human, action: I18n.t('controllers.action.destroy'))
       redirect_to admin_users_path
     end

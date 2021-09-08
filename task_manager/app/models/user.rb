@@ -14,7 +14,7 @@ class User < ApplicationRecord
   def self.will_lose_administrators?(user)
     return User.only_one_admin? if user.is_admin
 
-    return false
+    false
   end
 
   def self.only_one_admin?

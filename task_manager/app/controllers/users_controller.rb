@@ -53,8 +53,7 @@ class UsersController < ApplicationController
   def confirm_permission
     return if permitted?(@user.id)
 
-    flash[:danger] = I18n.t 'sessions.flash.permission.denied'
-    redirect_back(fallback_location: root_path)
+    render404
   end
 
   def confirm_destroy

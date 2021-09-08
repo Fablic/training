@@ -61,7 +61,6 @@ class TasksController < ApplicationController
   def confirm_permission
     return if permitted?(@task.user_id)
 
-    flash[:danger] = I18n.t 'sessions.flash.permission.denied'
-    redirect_back(fallback_location: root_path)
+    render404
   end
 end
