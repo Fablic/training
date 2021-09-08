@@ -1,12 +1,30 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
 * Ruby version
 2.5.7
+
+## SET UP ENV
+
+### 1.install ruby
+
+```
+rbenv install -v 3.0.2
+rbenv global 3.0.2
+```
+
+### 2.install mysql
+```
+brew install mysql@8.0.26
+```
+
+### 3.create mysql user
+```
+mysql -uroot
+
+create user 'ryo_ikebe'@'localhost' identified by 'ikeberyo';
+grant all privileges on * . * to 'ryo_ikebe'@'localhost';
+``` 
+
 
 ## table list
 
@@ -14,35 +32,36 @@ Things you may want to cover:
 | column name    | type     | length | default | null     | key               | comment                 |
 | :---           | :---     | ---:   | ---:    | ---:     | :---              | :---                    |
 | id             | int      | 10     |       - | not null | primary; auto inc |                         |
-| user_name      | vchr     | 20     |       - | not null | unique            |                         |
-| user_password  | chr      | 128    |       - | not null |                   |                         |
-| user_privilege | int      | 1      |       0 | not null |                   | 0 = user, 1 = admin     |
+| name           | vchr     | 20     |       - | not null | unique            |                         |
+| password       | chr      | 128    |       - | not null |                   |                         |
+| privilege      | int      | 1      |       0 | not null |                   | 0 = user, 1 = admin     |
 | deleted        | int      | 1      |       0 | not null |                   | 0 = active, 1 = deleted |
-| created        | datetime |      - |       - | not null |                   |                         |
-| modified       | datetime |      - |    null | null     |                   |                         |
+| created_at     | datetime |      - |       - | not null |                   |                         |
+| updated_at     | datetime |      - |    null | null     |                   |                         |
 
 ### labels
 | column name   | type     | length | default | null     | key               | comment                 |
 | :---          | :---     | ---:   | ---:    | ---:     | :---              | :---                    |
 | id            | int      | 10     |       - | not null | primary; auto inc |                         |
-| label_name    | vchr     | 20     |       - | not null | unique            |                         |
-| label_color   | chr      | 6      |       - |     null |                   |                         |
+| name          | vchr     | 20     |       - | not null | unique            |                         |
+| color         | chr      | 6      |       - |     null |                   |                         |
 | deleted       | int      | 1      |       0 | not null |                   | 0 = active, 1 = deleted |
-| created       | datetime |      - |       - | not null |                   |                         |
-| modified      | datetime |      - |    null | null     |                   |                         |
+| created_at    | datetime |      - |       - | not null |                   |                         |
+| updated_at    | datetime |      - |    null | null     |                   |                         |
 
 ### tasks
 | column name      | type     | length | default | null     | key               | comment                          |
 | :---             | :---     | ---:   | ---:    | ---:     | :---              | :---                             |
 | id               | int      | 10     |       - | not null | primary; auto inc |                                  |
 | user_id          | int      | 10     |       - | not null |                   |                                  |
-| task_name        | vchr     | 50     |       - | not null |                   |                                  |
-| task_description | text     | 2000   |       - |     null |                   |                                  |
+| name             | vchr     | 50     |       - | not null |                   |                                  |
+| description      | text     | 2000   |       - |     null |                   |                                  |
 | status           | int      | 1      |       0 | not null |                   | 0 = ready, 1 = wip, 2 = complete |
-| due_date         | datetime |      - |       - | not null |                   |                                  |
+| start_at         | datetime |      - |       - | not null |                   |                                  |
+| due_date_at      | datetime |      - |       - | not null |                   |                                  |
 | deleted          | int      | 1      |       0 | not null |                   | 0 = active, 1 = deleted          |
-| created          | datetime |      - |       - | not null |                   |                                  |
-| modified         | datetime |      - |    null | null     |                   |                                  |
+| created_at       | datetime |      - |       - | not null |                   |                                  |
+| updated_at       | datetime |      - |    null | null     |                   |                                  |
 
 ### task_labels
 | column name   | type     | length | default | null     | key               | comment                 |
