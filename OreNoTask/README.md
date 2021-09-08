@@ -3,6 +3,29 @@
 * Ruby version
 2.5.7
 
+## SET UP ENV
+
+### 1.install ruby
+
+```
+rbenv install -v 3.0.2
+rbenv global 3.0.2
+```
+
+### 2.install mysql
+```
+brew install mysql@8.0.26
+```
+
+### 3.create mysql user
+```
+mysql -uroot
+
+create user 'ryo_ikebe'@'localhost' identified by 'ikeberyo';
+grant all privileges on * . * to 'ryo_ikebe'@'localhost';
+``` 
+
+
 ## table list
 
 ### users
