@@ -89,16 +89,32 @@ RSpec.describe User, type: :model do
   end
 
   describe 'function' do
-    subject { User.only_one_admin? }
+    describe 'will_lose_administrators?' do
+      subject { User.will_lose_administrators?(user) }
 
-    context 'adminユーザーが一人の時' do
-      before { create(:admin_user) }
-      it { is_expected.to be_truthy }
+      context 'adminユーザーを編集する時' do
+        let(:user) { create(:admin_user) }
+        it { is_expected.to be_truthy }
+      end
+  
+      context '一般ユーザーを編集する時' do
+        let(:user) { create(:user) }
+        it { is_expected.to be_falsey }
+      end
     end
 
-    context 'adminユーザーが一人の時' do
-      before { create_list(:admin_user, 3) }
-      it { is_expected.to be_falsey }
+    describe 'only_one_admin?' do
+      subject { User.only_one_admin? }
+
+      context 'adminユーザーが一人の時' do
+        before { create(:admin_user) }
+        it { is_expected.to be_truthy }
+      end
+  
+      context 'adminユーザーが三人の時' do
+        before { create_list(:admin_user, 3) }
+        it { is_expected.to be_falsey }
+      end
     end
   end
 end

@@ -17,7 +17,7 @@ RSpec.describe 'Sessions', type: :system do
   end
 
   describe 'login' do
-    let!(:user) { FactoryBot.create(:user) }
+    let!(:user) { create(:user) }
     let(:email) { user.email }
     let(:password) { user.password }
 
@@ -49,7 +49,7 @@ RSpec.describe 'Sessions', type: :system do
 
   describe 'ページ遷移' do
     context '一般ユーザーでログイン時' do
-      let!(:user) { FactoryBot.create(:user) }
+      let!(:user) { create(:user) }
       let(:rspec_session) { { user_id: user.id } }
 
       context 'タスクの一覧ページへの遷移' do
@@ -59,30 +59,30 @@ RSpec.describe 'Sessions', type: :system do
 
       context '管理ページへの遷移' do
         before { visit admin_users_path }
-        it 'タスク一覧ページへ強制的に遷移する' do
-          expect(current_path).to eq root_path
+        it '404ページが表示される' do
+          expect(page).to have_content '404'
         end
       end
 
       context '他のユーザーのページへの遷移' do
-        let!(:new_user) { FactoryBot.create(:user) }
-        before { visit visit user_path(new_user) }
-        it 'タスク一覧ページへ強制的に遷移する' do
-          expect(current_path).to eq root_path
+        let!(:new_user) { create(:user) }
+        before { visit user_path(new_user) }
+        it '404ページが表示される' do
+          expect(page).to have_content '404'
         end
       end
 
-      context '他のユーザーのタスクへの遷移' do
-        let!(:task) { FactoryBot.create(:task) }
-        before { visit visit task_path(task) }
-        it 'タスク一覧ページへ強制的に遷移する' do
-          expect(current_path).to eq root_path
+      context '他のユーザーのタスクに遷移する' do
+        let!(:task) { create(:task) }
+        before { visit task_path(task) }
+        it '404ページが表示される' do
+          expect(page).to have_content '404'
         end
       end
     end
 
     context '管理ユーザーでログイン時' do
-      let!(:admin_user) { FactoryBot.create(:admin_user) }
+      let!(:admin_user) { create(:admin_user) }
       let(:rspec_session) { { user_id: admin_user.id } }
 
       context '管理ページへの遷移' do
@@ -95,7 +95,7 @@ RSpec.describe 'Sessions', type: :system do
   end
 
   describe 'Log out' do
-    let!(:user) { FactoryBot.create(:user) }
+    let!(:user) { create(:user) }
     let(:rspec_session) { { user_id: user.id } }
     before { visit root_path }
 

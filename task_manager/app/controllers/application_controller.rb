@@ -10,4 +10,8 @@ class ApplicationController < ActionController::Base
     flash[:danger] = I18n.t 'application.flash.authentification_user.danger'
     redirect_to('/login')
   end
+
+  def render404
+    render file: Rails.root.join('public/404.html'), status: :not_found, layout: false, content_type: 'text/html'
+  end
 end

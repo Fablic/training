@@ -53,20 +53,13 @@ class UsersController < ApplicationController
   def confirm_permission
     return if permitted?(@user.id)
 
-    flash[:danger] = I18n.t 'sessions.flash.permission.denied'
-    redirect_back(fallback_location: root_path)
+    render404
   end
 
   def confirm_destroy
-    return unless will_lose_administrators?
+    return unless User.will_lose_administrators?(@user)
 
     flash[:danger] = I18n.t('admin.flash.confirm_update_admin.danger')
     redirect_to @user
-  end
-
-  def will_lose_administrators?
-    return User.only_one_admin? if @user.is_admin
-
-    false
   end
 end

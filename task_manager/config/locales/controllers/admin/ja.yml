@@ -1,7 +1,5 @@
 ja:
   admin:
     flash:
-      authentification_admin:
-        danger: "管理者ではありません。"
       confirm_update_admin:
         danger: "管理者がいなくなるため、操作を中断しました"
