@@ -12,9 +12,7 @@ class User < ApplicationRecord
   scope :search_email, -> (keyword_email) { where(['email like?', "%#{keyword_email}%"]) }
 
   def will_lose_administrators?
-    return User.only_one_admin? if is_admin
-
-    false
+    is_admin && User.only_one_admin?
   end
 
   def self.only_one_admin?
