@@ -11,7 +11,7 @@
 | Name        | Type         | NULL     | Unique                           | Desc                           | 
 | ----------- | ------------ | -------- | ------------------------------ | ------------------------------ |
 | id          | INTEGER      | NOT NULL | unique                    | Primary key|
-| user_id          | INTEGER      | NOT NULL |                     | Primary key|
+| user_id          | INTEGER      | NOT NULL |                     ||
 | name        | VARCHAR(255) | NOT NULL |                                | |
 | description | TEXT         |          |                                | |
 | priority    | INTEGER      | NOTNULL  |                                | |
