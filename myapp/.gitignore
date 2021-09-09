@@ -10,9 +10,6 @@
 /.bundle
 /vendor/bundle
 
-# Ignore node_modules
-node_modules/
-
 # Ignore Byebug command history file.
 .byebug_history
 
@@ -25,3 +22,8 @@ yarn-debug.log*
 /storage/*
 !/storage/.keep
 /public/uploads
+/public/packs
+/public/packs-test
+
+# Ignore node_modules
+/node_modules
