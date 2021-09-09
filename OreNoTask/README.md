@@ -25,6 +25,11 @@ create user 'ryo_ikebe'@'localhost' identified by 'ikeberyo';
 grant all privileges on * . * to 'ryo_ikebe'@'localhost';
 ``` 
 
+### 4.DB migration
+```
+rails db:migrate
+```
+
 
 ## table list
 
