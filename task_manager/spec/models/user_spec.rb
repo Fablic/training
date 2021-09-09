@@ -96,7 +96,7 @@ RSpec.describe User, type: :model do
       context 'adminユーザーを編集する時' do
         it { is_expected.to be_truthy }
       end
-  
+
       context '一般ユーザーを編集する時' do
         let(:user) { create(:user) }
         it { is_expected.to be_falsey }
@@ -110,7 +110,7 @@ RSpec.describe User, type: :model do
         before { create(:admin_user) }
         it { is_expected.to be_truthy }
       end
-  
+
       context 'adminユーザーが三人の時' do
         before { create_list(:admin_user, 3) }
         it { is_expected.to be_falsey }
