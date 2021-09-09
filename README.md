@@ -25,7 +25,7 @@
 | Name        | Type         | NULL    | Unique     | Desc     | 
 | ----------- | ------------ | ------- | -------- | -------- |
 | id          | INTEGER      | NOTNULL | unique   |Primary key   |
-| name        | VARCHAR(255) | NOTNULL |          |          | 
+| name        | VARCHAR(255) | NOTNULL | unique   |          | 
 | created_at  | DATETIME     | NOTNULL |          |         |
 | updated_at  | DATETIME     | NOTNULL |          |        | 
 
@@ -45,7 +45,7 @@
 | ------------ | ------------ | ------- | ------ | ------ | 
 | id           | INTEGER      | NOTNULL | unique  | Primary key  | 
 | name         | VARCHAR(255) | NOTNULL |        |       | 
-| mail         | VARCHAR(255) | NOTNULL |  unique|        | 
+| email        | VARCHAR(255) | NOTNULL |  unique|        | 
 | password     | VARCHAR(255) | NOTNULL |        |        | 
 | created_at   | DATETIME     | NOTNULL |        |       | 
 | updated_at   | DATETIME     | NOTNULL |        |       | 
