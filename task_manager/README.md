@@ -15,6 +15,15 @@
 ## How to run the test suite
 - bundle exec rspec
 
+## How to appear an error page
+In the default developer mode, ActiveRecord:recordnotfound etc. will not appear with 404 error etc.
+If you want to show errors such as 404 or 500, set the following code to false.
+
+config/environment/development.rb
+```
+config.consider_all_requests_local = true
+```
+
 ## Database schema
 - tasks
 
@@ -38,5 +47,6 @@
 | name         | VARCHAR(255) | NOTNULL | 主キー | 
 | email | INTEGER      | NOTNULL |        | 
 | password     | VARCHAR(255) | NOTNULL |        | 
+| is_admin     | Boolean      | NOTNULL | Default(false)       | 
 | created_at   | DATETIME     | NOTNULL |        | 
 | updated_at   | DATETIME     | NOTNULL |        | 

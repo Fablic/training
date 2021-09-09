@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Users', type: :system do
-  let!(:user) { FactoryBot.create(:user) }
+  let!(:user) { create(:user) }
   let(:rspec_session) { { user_id: user.id } }
 
   describe '詳細ページ' do
@@ -126,6 +126,8 @@ RSpec.describe 'Users', type: :system do
       it { expect(page).to have_content 'ユーザーの削除をしました。' }
 
       it 'ユーザーの作成ページを開く' do
+        wait = Selenium::WebDriver::Wait.new(timeout: 100)
+        wait.until { expect(page).to have_content 'ユーザーの削除をしました。' }
         expect(current_path).to eq new_user_path
       end
     end

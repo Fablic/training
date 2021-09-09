@@ -3,12 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe 'Admin/Users', type: :system do
-  let!(:user) { FactoryBot.create(:user) }
+  let!(:user) { create(:admin_user) }
   let(:rspec_session) { { user_id: user.id } }
 
   describe '一覧ページ' do
     # Task一覧画面を開く
-    let!(:new_user) { FactoryBot.create(:user, name: 'Hanako', email: 'test@email.com') }
+    let!(:new_user) { create(:user, name: 'Hanako', email: 'test@email.com') }
     before {
       create_list(:new_task, 25, user_id: new_user.id)
       visit admin_users_path
@@ -17,7 +17,7 @@ RSpec.describe 'Admin/Users', type: :system do
     context '初期表示' do
       it '一覧表示されているかの確認' do
         # 画面を検証する
-        expect(page).to have_content 'Taro'
+        expect(page).to have_content 'admin'
         expect(page).to have_content 'Hanako'
 
         # タスク数の表示
@@ -28,11 +28,11 @@ RSpec.describe 'Admin/Users', type: :system do
     describe '検索' do
       context '名前で検索' do
         before {
-          fill_in 'keyword', with: 'Taro'
+          fill_in 'keyword', with: 'admin'
           click_button '検索'
         }
-        it 'Taroが表示される' do
-          expect(page).to have_selector '#user-0', text: 'Taro'
+        it 'adminが表示される' do
+          expect(page).to have_selector '#user-0', text: 'admin'
           expect(page).to have_no_text 'Hanako'
         end
       end
@@ -44,7 +44,7 @@ RSpec.describe 'Admin/Users', type: :system do
         }
         it 'test@email.comが表示される' do
           expect(page).to have_selector '#user-0', text: 'test@email.com'
-          expect(page).to have_no_text 'Taro'
+          expect(page).to have_no_text 'admin'
         end
       end
     end
@@ -53,7 +53,7 @@ RSpec.describe 'Admin/Users', type: :system do
   describe '詳細ページ' do
     before { visit admin_user_path(user) }
     it '既存のユーザー情報が書かれている' do
-      expect(page).to have_content 'Taro'
+      expect(page).to have_content 'admin'
       expect(page).to have_content user.email
     end
   end
@@ -65,15 +65,17 @@ RSpec.describe 'Admin/Users', type: :system do
     }
 
     it '既存のユーザー情報が書いている' do
-      expect(page).to have_field 'ユーザー名', with: 'Taro'
+      expect(page).to have_field 'ユーザー名', with: 'admin'
     end
 
     describe '編集' do
       let(:name) { 'pi' }
       let(:email) { 'pi@raspberry.com' }
+      let (:is_admin) { '管理ユーザー' }
       before {
         fill_in 'ユーザー名', with: name
         fill_in 'メールアドレス', with: email
+        choose is_admin
         click_button '投稿'
       }
 
@@ -96,11 +98,30 @@ RSpec.describe 'Admin/Users', type: :system do
           expect(page).to have_content 'メールアドレス メールアドレスの形式が間違っています。'
         end
       end
+
+      context '一般ユーザーに変更する' do
+        let(:is_admin) { '一般ユーザー' }
+
+        context '管理者が一人の場合' do
+          it '管理者がいなくなるため、処理が中断しましたのflashを表示する' do
+            expect(page).to have_content '管理者がいなくなるため、操作を中断しました'
+          end
+        end
+
+        context '管理者が二人以上の場合' do
+          before { create(:admin_user) }
+          it '自分が管理者でなくなる。' do
+            wait = Selenium::WebDriver::Wait.new(timeout: 100)
+            wait.until { expect(page).to have_content 'ユーザーの更新をしました。' }
+            expect(current_path).to eq root_path
+          end
+        end
+      end
     end
   end
 
   describe 'ユーザーの削除' do
-    let!(:new_user) { FactoryBot.create(:user) }
+    let!(:new_user) { create(:user) }
     before { visit admin_user_path(new_user) }
     context '削除ボタンを押す' do
       before {

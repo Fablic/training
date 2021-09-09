@@ -3,12 +3,13 @@
 require 'rails_helper'
 
 RSpec.describe 'Admin/Tasks', type: :system do
-  let!(:task) { FactoryBot.create(:task) }
-  let(:rspec_session) { { user_id: task.user_id } }
+  let!(:task) { create(:task) }
+  let!(:admin_user) { create(:admin_user) }
+  let(:rspec_session) { { user_id: admin_user.id } }
 
   describe '一覧ページ' do
     # Task一覧画面を開く
-    let!(:new_task) { FactoryBot.create(:new_task, user_id: task.user_id) }
+    let!(:new_task) { create(:new_task, user_id: task.user_id) }
     before { visit admin_user_tasks_path(task.user) }
 
     context '初期表示' do
@@ -131,7 +132,7 @@ RSpec.describe 'Admin/Tasks', type: :system do
       # 上記の宣言taskと合わせて合計25個のtaskが作られる
       before {
         create_list(:new_task, 23, user_id: task.user_id)
-        visit tasks_path
+        visit admin_user_tasks_path(task.user)
       }
 
       context '初期ページ' do

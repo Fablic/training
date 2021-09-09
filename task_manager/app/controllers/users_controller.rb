@@ -3,6 +3,7 @@
 class UsersController < ApplicationController
   before_action :set_user_by_id, only: %i[show edit update destroy]
   before_action :confirm_permission, only: %i[show edit update destroy]
+  before_action :confirm_destroy, only: %i[destroy]
   skip_before_action :authenticate_user, only: %i[new create]
 
   def show
@@ -52,7 +53,13 @@ class UsersController < ApplicationController
   def confirm_permission
     return if permitted?(@user.id)
 
-    flash[:danger] = I18n.t 'sessions.flash.permission.denied'
-    redirect_back(fallback_location: root_path)
+    render_404
+  end
+
+  def confirm_destroy
+    return unless @user.will_lose_administrators?
+
+    flash[:danger] = I18n.t('admin.flash.confirm_update_admin.danger')
+    redirect_to @user
   end
 end

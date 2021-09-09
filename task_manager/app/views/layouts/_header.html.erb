@@ -13,6 +13,11 @@
             <%= link_to "Profile", current_user, class: "dropdown-item" %>
             <div class="dropdown-divider"></div>
             <%= link_to "Log out", logout_path, class: "dropdown-item", method: "delete" %>
+            <% if current_user.is_admin? %>
+                <div class="dropdown-divider"></div>
+                <h6 class="dropdown-header">Admin</h6>
+                <%= link_to "Admin Page", admin_users_path, class: "dropdown-item" %>
+            <% end %>
         </div>
         </div>
     <% else %>

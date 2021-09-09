@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 module Admin
-  class UsersController < ApplicationController
+  class UsersController < AdminController
     before_action :set_user_by_id, only: %i[show edit update destroy]
+    before_action :confirm_update, only: %i[update], if: proc { user_params['is_admin'] == 'false' }
     def index
       @users = User.includes(:tasks)
       .search_name(params[:keyword]).or(User.search_email(params[:keyword]))
@@ -15,16 +16,20 @@ module Admin
     def edit
     end
 
-    def update
+    def update # rubocop:disable Metrics/AbcSize
       return unless @user.update(user_params)
 
       flash[:success] = I18n.t('controllers.flash.success', model: User.model_name.human, action: I18n.t('controllers.action.update'))
-      redirect_to [:admin, @user]
+
+      if user_params['is_admin'] == 'false' && @user.id == current_user.id
+        redirect_to root_path
+      else
+        redirect_to [:admin, @user]
+      end
     end
 
     def destroy
       @user.destroy
-
       flash[:success] = I18n.t('controllers.flash.success', model: User.model_name.human, action: I18n.t('controllers.action.destroy'))
       redirect_to admin_users_path
     end
@@ -36,7 +41,14 @@ module Admin
     end
 
     def user_params
-      params.require(:user).permit(:name, :email)
+      params.require(:user).permit(:name, :email, :is_admin)
+    end
+
+    def confirm_update
+      return unless @user.will_lose_administrators?
+
+      flash[:danger] = I18n.t('admin.flash.confirm_update_admin.danger')
+      redirect_to [:admin, @user]
     end
   end
 end
