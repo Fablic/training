@@ -12,6 +12,10 @@
 ## Database initialization
 - bin/rails db:seed
 
+## default User
+- user_email: root@railstutorial.org
+- password: password
+
 ## How to run the test suite
 - bundle exec rspec
 
@@ -31,6 +35,7 @@ config.consider_all_requests_local = true
 | ----------- | ------------ | -------- | ------------------------------ | 
 | id          | INTEGER      | NOT NULL | 主キー                         | 
 | user_id     | INTEGER      | NOTNULL  | 外部キー,userがない場合、id=0  | 
+| label_id | INTEGER      | NOTNULL  | 外部キー,特になにもない場合は0 | 
 | name        | VARCHAR(255) | NOTNULL  |                                | 
 | description | VARCHAR(255) |          |                                | 
 | due_at      | DATETIME     | NOTNULL  |                                | 
@@ -50,3 +55,24 @@ config.consider_all_requests_local = true
 | is_admin     | Boolean      | NOTNULL | Default(false)       | 
 | created_at   | DATETIME     | NOTNULL |        | 
 | updated_at   | DATETIME     | NOTNULL |        | 
+
+
+- labels
+
+| Name        | Type         | NULL    | Desc     | 
+| ----------- | ------------ | ------- | -------- | 
+| id          | INTEGER      | NOTNULL | 主キー   | 
+| task_id     | INTEGER      | NOTNULL | 外部キー | 
+| description | VARCHAR(255) | NOTNULL |          | 
+| created_at  | DATETIME     | NOTNULL |          | 
+| updated_at  | DATETIME     | NOTNULL |          | 
+
+- label_task
+
+| Name       | Type         | NULL    | Desc     | 
+| ---------- | ------------ | ------- | -------- | 
+| id         | INTEGER      | NOTNULL | 主キー   | 
+| task_id    | INTEGER      | NOTNULL | 外部キー | 
+| label_id   | VARCHAR(255) | NOTNULL | 外部キー | 
+| created_at | DATETIME     | NOTNULL |          | 
+| updated_at | DATETIME     | NOTNULL |          | 
