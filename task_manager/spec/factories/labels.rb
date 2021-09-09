@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :label do
-    name { "ruby" }
+    name { 'ruby' }
   end
 end

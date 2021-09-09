@@ -21,8 +21,8 @@ FactoryBot.define do
 
     trait :with_labels do
       after(:create) do |new_task|
-        new_task.labels << create(:label, name: "ruby")
-        new_task.labels << create(:label, name: "rails")
+        new_task.labels << create(:label, name: 'ruby')
+        new_task.labels << create(:label, name: 'rails')
       end
     end
   end

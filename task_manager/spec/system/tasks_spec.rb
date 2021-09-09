@@ -209,8 +209,8 @@ RSpec.describe 'Tasks', type: :system do
 
   describe '編集ページ' do
     before {
-      create(:label, name: "ruby")
-      create(:label, name: "rails")
+      create(:label, name: 'ruby')
+      create(:label, name: 'rails')
       visit task_path(task)
       click_button 'タスクを編集する'
     }
@@ -272,8 +272,8 @@ RSpec.describe 'Tasks', type: :system do
     let(:progress) { '進行中' }
     before {
       create(:user)
-      create(:label, name: "ruby")
-      create(:label, name: "rails")
+      create(:label, name: 'ruby')
+      create(:label, name: 'rails')
       visit new_task_path
       fill_in 'タスク', with: name
       fill_in 'メモ', with: memo
