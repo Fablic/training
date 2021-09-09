@@ -7,7 +7,7 @@ module Admin
     def authentification_admin
       return if current_user.is_admin?
 
-      render404
+      render_404
     end
   end
 end
