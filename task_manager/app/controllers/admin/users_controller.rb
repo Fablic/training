@@ -45,7 +45,7 @@ module Admin
     end
 
     def confirm_update
-      return unless User.will_lose_administrators?(@user)
+      return unless @user.will_lose_administrators?
 
       flash[:danger] = I18n.t('admin.flash.confirm_update_admin.danger')
       redirect_to [:admin, @user]

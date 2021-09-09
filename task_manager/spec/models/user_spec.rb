@@ -90,10 +90,10 @@ RSpec.describe User, type: :model do
 
   describe 'function' do
     describe 'will_lose_administrators?' do
-      subject { User.will_lose_administrators?(user) }
+      let(:user) { create(:admin_user) }
+      subject { user.will_lose_administrators? }
 
       context 'adminユーザーを編集する時' do
-        let(:user) { create(:admin_user) }
         it { is_expected.to be_truthy }
       end
   
