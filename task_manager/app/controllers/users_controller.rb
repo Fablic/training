@@ -53,7 +53,7 @@ class UsersController < ApplicationController
   def confirm_permission
     return if permitted?(@user.id)
 
-    render404
+    render_404
   end
 
   def confirm_destroy

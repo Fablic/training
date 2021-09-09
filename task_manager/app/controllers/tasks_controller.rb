@@ -61,6 +61,6 @@ class TasksController < ApplicationController
   def confirm_permission
     return if permitted?(@task.user_id)
 
-    render404
+    render_404
   end
 end

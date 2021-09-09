@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
     redirect_to('/login')
   end
 
-  def render404
+  def render_404 # rubocop:disable Naming/VariableNumber
     render file: Rails.root.join('public/404.html'), status: :not_found, layout: false, content_type: 'text/html'
   end
 end
