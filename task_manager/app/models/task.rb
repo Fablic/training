@@ -27,7 +27,7 @@ class Task < ApplicationRecord
   scope :search_progress, -> (keyword_progress) { where(progress: Task.progresses[keyword_progress]) if keyword_progress.present? }
   scope :search_user_id, -> (user_id) { where(user_id: user_id) }
   scope :sort_column_direction, -> (column, direction) { order(sort_column(column) => sort_direction(direction)) }
-  scope :search_label_id, -> (keyword_label_id) { where(labels: { id: keyword_label_id }) if keyword_label_id.present? }
+  scope :search_label_id, -> (keyword_label_id) { joins(:labels).where(labels: { id: keyword_label_id }) if keyword_label_id.present? }
 
   with_options if: :due_at.presence do
     validate :due_at_start_check
