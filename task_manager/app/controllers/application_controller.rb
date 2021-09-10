@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
 
   def render_503 # rubocop:disable Naming/VariableNumber
     file = File.open('./config/maintanance.txt', 'r')
-    @error = { 'code' => '503', 'reason' => file.read }
+    @error = { reason: file.read }
     render template: 'errors/error_503', status: :service_unavailable, layout: 'application', content_type: 'text/html'
   end
 end
