@@ -1,0 +1,21 @@
+<% provide(:title, 'ログイン') %>
+
+<%= form_with scope: :session, url:login_path, local: true do |f| %>
+<%= render 'layouts/error_messages' %>
+  <div class="row mb-3">
+    <%= f.label :name, class: "col-sm-2 col-form-label" %>
+    <div class="col-sm-5">
+      <%= f.text_field :name, class: "form-control" %>
+    </div>
+  </div>
+  <div class="row mb-3">
+    <%= f.label :password, class: "col-sm-2 col-form-label" %>
+    <div class="col-sm-5">
+      <%= f.password_field :password, class: "form-control" %>
+    </div>
+  </div>
+
+  <div>
+  <%= f.submit 'ログイン', class: 'btn btn-secondary' %>
+  </div>
+<% end %>

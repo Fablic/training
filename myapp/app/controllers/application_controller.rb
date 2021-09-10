@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  include SessionsHelper
+
   unless Rails.env.production?
     rescue_from Exception, with: :_render_server_error
     rescue_from ActiveRecord::RecordNotFound, with: :_render_not_found
@@ -29,5 +31,11 @@ class ApplicationController < ActionController::Base
     else
       render 'errors/500.html', status: :internal_server_error, layout: 'error'
     end
+  end
+
+  def _logged_in_user
+    return if logged_in?
+
+    redirect_to login_url
   end
 end
