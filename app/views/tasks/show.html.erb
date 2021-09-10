@@ -1,0 +1,13 @@
+<% if notice %>
+  <p id="notice" class="alert alert-info"><%= notice %></p>
+<% end %>
+
+<h1>Task Detail</h1>
+
+<div class="row mt-4">
+  <h6><%= @task.name %></h6>
+  <h6><%= @task.description %></h6>
+  <h6><%= @task.priority %></h6>
+
+</div>
+<%= link_to 'Edit', edit_task_path(@task) %> | <%= link_to 'Back', tasks_path %>
