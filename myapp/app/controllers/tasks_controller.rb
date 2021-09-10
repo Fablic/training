@@ -16,7 +16,7 @@ class TasksController < ApplicationController
   end
 
   def show
-    @task = Task.find(params[:id])
+    @task = Task.find(params[:id]) //いらない
   end
 
 end
