@@ -22,6 +22,8 @@ gem 'jbuilder', '~> 2.7'
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 gem 'mysql2', '~> 0.5'
+# bundled gem since Ruby 3.0.0
+gem 'rexml'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
