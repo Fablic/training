@@ -10,12 +10,12 @@ RSpec.describe AdminHelper, type: :helper do
       subject { admin_screen? }
 
       context 'admin以外のページにリクエストを送る' do
-        let!(:fullpath) { '/users/2' }
+        let(:fullpath) { '/users/2' }
         it { is_expected.to be_falsey }
       end
 
       context 'adminページにリクエストを送る' do
-        let!(:fullpath) { '/admin/users/2' }
+        let(:fullpath) { '/admin/users/2' }
         it { is_expected.to be_truthy }
       end
     end
