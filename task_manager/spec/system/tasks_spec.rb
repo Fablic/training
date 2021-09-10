@@ -8,7 +8,7 @@ RSpec.describe 'Tasks', type: :system do
 
   describe '一覧ページ' do
     # Task一覧画面を開く
-    let!(:new_task) { create(:new_task, user_id: task.user_id) }
+    let!(:new_task) { create(:new_task, :with_labels, user_id: task.user_id) }
     before { visit tasks_path }
 
     context '初期表示' do
@@ -107,6 +107,17 @@ RSpec.describe 'Tasks', type: :system do
         end
       end
 
+      context 'labelで検索' do
+        before {
+          select 'ruby', from: 'label_id'
+          click_button '検索'
+        }
+        it 'b_taskが表示される' do
+          expect(page).to have_text 'b_task'
+          expect(page).to have_no_text 'a_task'
+        end
+      end
+
       context '検索状態' do
         before {
           fill_in 'keyword_name', with: 'task'
@@ -198,6 +209,8 @@ RSpec.describe 'Tasks', type: :system do
 
   describe '編集ページ' do
     before {
+      create(:label, name: 'ruby')
+      create(:label, name: 'rails')
       visit task_path(task)
       click_button 'タスクを編集する'
     }
@@ -218,6 +231,7 @@ RSpec.describe 'Tasks', type: :system do
         fill_in '締め切り', with: due_at
         select priority, from: '優先順位'
         select progress, from: '進捗状況'
+        check 'ruby'
         click_button '投稿'
       }
 
@@ -226,6 +240,7 @@ RSpec.describe 'Tasks', type: :system do
           expect(page).to have_content 'タスクの更新をしました。'
           expect(page).to have_content 'Task'
           expect(page).to have_content 'Memo'
+          expect(page).to have_content 'ruby'
         end
 
         it '編集したタスクのページを開く' do
@@ -257,12 +272,15 @@ RSpec.describe 'Tasks', type: :system do
     let(:progress) { '進行中' }
     before {
       create(:user)
+      create(:label, name: 'ruby')
+      create(:label, name: 'rails')
       visit new_task_path
       fill_in 'タスク', with: name
       fill_in 'メモ', with: memo
       fill_in '締め切り', with: due_at
       select priority, from: '優先順位'
       select progress, from: '進捗状況'
+      check 'ruby'
       click_button '投稿'
     }
 
@@ -271,6 +289,7 @@ RSpec.describe 'Tasks', type: :system do
         expect(page).to have_content 'タスクの新規作成をしました。'
         expect(page).to have_content 'Task'
         expect(page).to have_content 'Memo'
+        expect(page).to have_content 'ruby'
       end
 
       it '作成したタスクのページを開く' do

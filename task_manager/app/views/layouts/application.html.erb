@@ -11,7 +11,11 @@
   </head>
 
   <body>
-    <%= render 'layouts/header' %>
+    <% if admin_screen? %>
+      <%= render 'layouts/admin_header' %>
+    <% else %>
+      <%= render 'layouts/header' %>
+    <% end %>
     <div class="container-fluid">
       <%= render 'layouts/flash' %>
       <%= yield %>

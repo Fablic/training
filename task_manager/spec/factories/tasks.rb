@@ -18,5 +18,12 @@ FactoryBot.define do
     created_at { '2021-08-02 10:59:26' }
     priority { 1 }
     progress { 0 }
+
+    trait :with_labels do
+      after(:create) do |new_task|
+        new_task.labels << create(:label, name: 'ruby')
+        new_task.labels << create(:label, name: 'rails')
+      end
+    end
   end
 end

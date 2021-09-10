@@ -112,6 +112,30 @@ RSpec.describe Task, type: :model do
       end
     end
 
+    describe 'search_label_id' do
+      subject { Task.includes(:labels).search_label_id(label_id) }
+      let(:task1) {
+        create(:task) do |task|
+          task.labels.create(attributes_for(:label))
+        end
+      }
+      let(:task2) {
+        create(:task) do |task|
+          task.labels.create(attributes_for(:label))
+        end
+      }
+
+      context '何も入れずに検索' do
+        let(:label_id) { nil }
+        it { is_expected.to include(task1, task2) }
+      end
+
+      context 'タスク1にいれたlabelのidをいれて検索' do
+        let(:label_id) { task1.labels[0].id }
+        it { is_expected.to include(task1) }
+      end
+    end
+
     describe 'sort' do
       subject { Task.sort_column_direction(column, direction) }
       let(:task1) { create :task, name: 'task_1', created_at: '2019-09-02 10:59:26' }

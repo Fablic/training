@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  include AdminHelper
   include SessionsHelper
   before_action :authenticate_user
 

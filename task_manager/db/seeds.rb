@@ -12,6 +12,12 @@ User.create!(name: "root",
   password_confirmation: "password",
   is_admin: true)
 
+Label.create!(name: "Qitta")
+Label.create!(name: "Jira")
+label1 = Label.create!(name: "ruby")
+label2 = Label.create!(name: "rails")
+
+
 5.times do
   task = Task.create!(
     name: Faker::Hobby.activity,
@@ -22,3 +28,11 @@ User.create!(name: "root",
     user_id: User.last.id,
   )
 end
+
+task1 = Task.find(1)
+task2 = Task.find(2)
+
+task1.labels << label1
+task2.labels << label1
+task2.labels << label2
+
