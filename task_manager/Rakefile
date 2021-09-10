@@ -4,5 +4,17 @@
 # for example lib/tasks/capistrano.rake, and they will automatically be available to Rake.
 
 require_relative 'config/application'
+require 'fileutils'
 
 Rails.application.load_tasks
+
+desc 'メンテナンスモードにする'
+task :maintainancemode_on do
+  file = File.open( './config/maintanance.txt', 'w')
+  file.puts( ENV['reason'] )
+end
+
+desc 'メンテナンスモードを終了する'
+task :maintainancemode_off do
+  File.delete( './config/maintanance.txt' )
+end
