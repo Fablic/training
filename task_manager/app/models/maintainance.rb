@@ -1,7 +1,7 @@
 class Maintainance
   def self.on(reason = nil)
     file = File.open( './config/maintanance.txt', 'w')
-    file.puts( ENV['reason'] )
+    file.puts( reason )
     file.close
   end
 
