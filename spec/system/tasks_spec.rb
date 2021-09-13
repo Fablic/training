@@ -74,7 +74,7 @@ RSpec.describe Task, type: :system do
         expect(page.driver.browser.switch_to.alert.text).to eq "Are you sure?"
         page.driver.browser.switch_to.alert.accept
       }.to change{ Task.count }.by(0)
-      expect(page.reload.to have_content 'Task was successfully deleted.')
+      expect(page).to have_content 'Task was successfully deleted.'
     end
   end
 end
