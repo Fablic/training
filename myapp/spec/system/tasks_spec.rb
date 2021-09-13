@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe 'index', js: true, type: :system do
-  let!(:test_user) { FactoryBot.create(:user) }
-  let!(:task_list) { FactoryBot.create_list(:task, 10) }
+  let!(:test_user) { create(:user) }
+  let!(:task_list) { create_list(:task, 10) }
   before do
     visit login_path
     fill_in 'Name', with: test_user.name

@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe 'ログイン', js: true, type: :system do
-  let!(:test_user) { FactoryBot.create(:user) }
-  let!(:task_list) { FactoryBot.create_list(:task, 10) }
+  let!(:test_user) { create(:user) }
+  let!(:task_list) { create_list(:task, 10) }
 
   describe 'ログイン前' do
     before { visit login_path }
@@ -68,8 +68,8 @@ RSpec.describe 'ログイン', js: true, type: :system do
   end
 
   describe '異なるユーザの操作' do
-    let!(:test_other_user) { FactoryBot.create(:user, name: 'test_other_name') }
-    let!(:task_other) { FactoryBot.create(:task, user_id: test_other_user.id, title: 'test_other_title') }
+    let!(:test_other_user) { create(:user, name: 'test_other_name') }
+    let!(:task_other) { create(:task, user_id: test_other_user.id, title: 'test_other_title') }
 
     before do
       visit login_path

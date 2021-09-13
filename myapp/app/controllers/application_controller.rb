@@ -33,7 +33,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def _logged_in_user
+  def _login_check
     return if logged_in?
 
     redirect_to login_url

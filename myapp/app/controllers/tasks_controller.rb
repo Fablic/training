@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-  before_action :_logged_in_user
+  before_action :_login_check
 
   def index
     params[:q] = { sorts: 'created_at desc' } if params[:q].blank?
