@@ -16,6 +16,7 @@ ja:
     updated_success: タスク編集が成功しました
     updated_danger: タスク編集が失敗しました
     destroy: タスクが削除されました
+    invalid_password: Name,Passwordが一致しません
 
   time:
     formats:

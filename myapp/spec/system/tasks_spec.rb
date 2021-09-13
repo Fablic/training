@@ -1,14 +1,21 @@
 require 'rails_helper'
 
 RSpec.describe 'index', js: true, type: :system do
-  let!(:task_list) { FactoryBot.create_list(:task, 10) }
+  let!(:test_user) { create(:user) }
+  let!(:task_list) { create_list(:task, 10) }
+  before do
+    visit login_path
+    fill_in 'Name', with: test_user.name
+    fill_in 'Password', with: test_user.password
+    click_button 'ログイン'
+  end
 
   describe 'Top(タスク一覧)ページ' do
     before { visit root_path }
     subject { page }
 
     it '一覧が表示されている' do
-      is_expected.to have_content('タスクリスト')
+      is_expected.to have_title('リスト | タスク管理')
       is_expected.to have_content(task_list.last.title)
     end
     it '一覧が作成日の降順で表示されている' do
@@ -23,10 +30,10 @@ RSpec.describe 'index', js: true, type: :system do
       expect(page.all('.deadline').first.text).to be > page.all('.deadline').last.text
     end
     it '件名で検索できる' do
-      fill_in 'q_title_cont', with: 'test_title1'
+      fill_in 'q_title_cont', with: 'test_title9'
       click_button '検索'
-      is_expected.to have_content('test_title1')
-      is_expected.not_to have_content('test_title2')
+      is_expected.to have_content('test_title9')
+      is_expected.not_to have_content('test_title8')
     end
     it 'ステータス「未着手」で検索できる' do
       choose "q_status_eq_#{Task.statuses[:not_started]}"
@@ -52,7 +59,7 @@ RSpec.describe 'index', js: true, type: :system do
     subject { page }
 
     it '詳細が表示されている' do
-      is_expected.to have_content('タスク詳細')
+      is_expected.to have_title('詳細 | タスク管理')
       is_expected.to have_content(task_list.last.title)
       is_expected.to have_content(task_list.last.content)
     end
@@ -71,7 +78,7 @@ RSpec.describe 'index', js: true, type: :system do
         end
         is_expected.to have_content 'タスクが削除されました'
         is_expected.to have_current_path root_path
-        is_expected.not_to have_content(task_list[0].title)
+        is_expected.not_to have_content(task_list.last.title)
       end
     end
     context '削除実行しない' do
@@ -90,7 +97,7 @@ RSpec.describe 'index', js: true, type: :system do
 
     context '入力エラーなし' do
       it 'タスクが作成できる' do
-        is_expected.to have_content('タスク作成')
+        is_expected.to have_title('新規 | タスク管理')
         fill_in '件名', with: 'new 件名'
         fill_in '詳細', with: 'new 詳細'
         fill_in '終了期限', with: Time.current
@@ -127,7 +134,7 @@ RSpec.describe 'index', js: true, type: :system do
     let(:params) { { title: 'edit 件名', content: 'edit 詳細' } }
 
     it 'タスクが表示される' do
-      is_expected.to have_content('タスク編集')
+      is_expected.to have_title('編集 | タスク管理')
       is_expected.to have_field '件名', with: task_list.last.title
       is_expected.to have_field '詳細', with: task_list.last.content
     end

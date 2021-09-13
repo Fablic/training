@@ -32,3 +32,6 @@ Style/FrozenStringLiteralComment:
 Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
+
+Metrics/AbcSize:
+  Max: 30 
