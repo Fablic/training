@@ -1,0 +1,23 @@
+<<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="content-language" content="ja">
+</head>
+
+<body>
+	<form action="/task/createTask">
+		<table>
+			<tr>
+				<th>タスク名</th><td><input type="text" name="name"></td>
+			</tr>
+			<tr>
+				<th>期間</th><td><input type="text" name="start_at"> 〜 <input type="text" name="due_date_at"></td>
+			</tr>
+			<tr>
+				<th></th><td><textarea name="description"></textarea></td>
+			</tr>
+		</table>
+		<p><input type="submit" value="送信"></p>
+	</form>
+</body>
+</html>

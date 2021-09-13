@@ -1,0 +1,22 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="content-language" content="ja">
+</head>
+
+<body>
+	<p><a href="/task/edit">create task</a></p>
+
+	<ul>
+		<% @tasks.each do |task| %><li>
+			<h2><a href="/task/detail?id=<%= task.id %>"><%= task.name %></a></h2>
+			<p><%= task.start_at %> 〜 <%= task.due_date_at %></p>
+		</li>
+		<% end %>
+	</ul>
+
+
+
+
+</body>
+</html>
