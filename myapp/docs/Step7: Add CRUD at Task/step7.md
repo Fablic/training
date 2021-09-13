@@ -41,6 +41,38 @@ get 'tasks/detail'
       create      app/assets/stylesheets/tasks.scss
 ```
 
+#### index(一覧)画面の作成
+
+#### 詳細画面の作成
+
+#### delete functionの作成
+
+■ 一覧画面で削除ボタンを追加  
+ボタンの機能 → taskに対してHTTP methodのdeleteを呼び出す  
+→ `link_to 'Delete', task, method: :delete`  
+デフォルトがgetなので明示的にdeleteを指定する(DELETE /task/:idのため)  
+
+■ Action destroyの作成  
+`DELETE /tasks/:id(.:format) tasks#destroy`とあるように、DELETE methodでtaskを呼び出すと、taskのidを保持した状態でcontrollerのdestroy actionがcallされる  
+そのため、destroy actionを作成してtask instanceのdestroy functionでDBから削除
+```rb
+    def destroy
+      @task = Task.find(params[:id])
+      @task.destroy
+```
+消えた...!!
+
+#### 新規タスク作成formの作成
+
+new.html.erbの編集
+
+form_with(model: Task)と指定しているので  
+SubmitでPOSTされるものはTask contollerのcreate functionをcallする  
+`tasks POST /tasks(.:format) tasks#create`
+
+#### create actionの作成
+
+
 
 
 
@@ -177,3 +209,29 @@ resourcesを設定するとrailsで基本となる7つのアクションへの�
 onlyを指定することで必要なルーティングのみに絞ることができる 
 `routes :{controller name}, only: [:index, :show]`
 
+### formの作成
+
+[参考](https://qiita.com/tsunemiso/items/edbc58becf55875c4fdb)
+[参考2](https://railsdoc.com/form)
+
+#### form.submit
+formの入力内容をPOST
+
+#### form.label
+ラベルタグの作成
+
+#### form.text_field
+テキストフィールドの作成
+
+
+#### post parameterの取得
+
+params.fetch(:task, {}).permit(:title, :description)
+
+#### redirect, redirect_toの違い
+redirect    値を渡さずにページをrenderするだけ
+redirect_to 値を渡す必要のあるページにリダイレクトする場合
+
+#### flashとflash.nowの違い
+redirect    → flash.now
+redirect_to → flash
