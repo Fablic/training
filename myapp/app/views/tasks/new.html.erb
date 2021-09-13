@@ -1,14 +1,14 @@
-<h1>Tasks#edit</h1>
+<h1>Tasks#new</h1>
 <div>
   <%= form_with(model: Task) do |form| %>
     <div>
       <%= form.label :title, 'たいとる' %>
-      <%= form.text_field :title, value: @task.title %>
+      <%= form.text_field :title %>
     </div>
 
     <div>
       <%= form.label :description, 'ですくりぷしょん' %>
-      <%= form.text_field :description, value: @task.description %>
+      <%= form.text_field :description %>
     </div>
 
     <div class="actions">
@@ -17,5 +17,4 @@
   <% end %>
 </div>
 
-<%= link_to 'Show', @task %> |
 <%= link_to 'Back', tasks_path %>

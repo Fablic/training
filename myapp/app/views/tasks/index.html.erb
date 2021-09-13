@@ -1,5 +1,13 @@
 <h1>Tasks#list</h1>
 
+<% if notice %>
+  <p id="notice" class="alert alert-info"><%= notice %></p>
+<% end %>
+
+<% if alert %>
+  <p id="alert" class="alert alert-info"><%= alert %></p>
+<% end %>
+
 <table>
     <tr>
         <th>あいでー</th>
@@ -12,7 +20,7 @@
         <td><%= task.id %></td>
         <td><%= link_to task.title, task%></td>
         <td><%= link_to 'Edit', edit_task_path(id: task.id)%></td>
-        <td><%= link_to 'Delete', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Delete', task, method: :delete, data: { confirm: 'Are you sure about it?' } %></td>
     </tr>
 <% end %>
 </table>
