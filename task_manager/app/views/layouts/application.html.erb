@@ -11,7 +11,8 @@
   </head>
 
   <body>
-    <% if admin_screen? %>
+    <% if @error.present? %>
+    <% elsif admin_screen? %>
       <%= render 'layouts/admin_header' %>
     <% else %>
       <%= render 'layouts/header' %>
