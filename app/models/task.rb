@@ -15,4 +15,8 @@ class Task < ApplicationRecord
   validates :name, presence: true
   validates :name, length: { maximum: 255 }
   validates :priority, inclusion: { in: priorities.keys }
+  validates :status, inclusion: { in: statuses.keys }
+
+  scope :search_by_name, ->(keyword) { where('name LIKE ?', "%#{keyword}%") }
+  scope :search_by_status, ->(status) { where(status: status)}
 end
