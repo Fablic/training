@@ -1,0 +1,22 @@
+	<%= form_with url: task_path(@task), model: @task do |form| %>
+		<table>
+			<tr>
+				<th><%= form.label :タスク名 %></th><td><%= form.text_field :name %></td>
+			</tr>
+			<tr>
+				<th>期間</th><td><%= form.text_field :start_at_date, class: 'form-control date-picker' %><%= form.select :start_at_hour, (0..23).to_a.map { |v| "%02d" % v }, {}, class: 'form-control' %> :
+    <%= form.select :start_at_minute, (0..59).to_a.map { |v| "%02d" % v }, {}, class: 'form-control' %> 〜 <%= form.text_field :due_date_at_date, class: 'form-control date-picker' %><%= form.select :due_date_at_hour, (0..23).to_a.map { |v| "%02d" % v }, {}, class: 'form-control' %> :
+    <%= form.select :due_date_at_minute, (0..59).to_a.map { |v| "%02d" % v }, {}, class: 'form-control' %></td>
+			</tr>
+			<tr>
+				<th><%= form.label :内容 %></th><td><%= form.text_area :description %></td>
+			</tr>
+		</table>
+		<p><%= form.submit '更新', class: 'btn btn-primary' %></p>
+	<% end %>
+	<p><a href='/tasks'>back to list</a></p>
+<script>
+	$( function() {
+  		$( ".date-picker" ).datepicker({dateFormat: 'yy/mm/dd',});
+ 	} );
+</script>

@@ -1,0 +1,6 @@
+	<h2><%= @task.name %></h2>
+	<p><%= @task.start_at %> 〜 <%= @task.due_date_at %></p>
+	<p><%= h(@task.description).gsub(/\n|\r|\r\n/, "<br>").html_safe %></p>
+
+
+	<p><a href='/tasks'>back to list</a></p>
