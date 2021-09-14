@@ -17,15 +17,14 @@ class TasksController < ApplicationController
 
   # POST /tasks(.:format)
   def create
-    task_params = params.fetch(:task, {}).permit(:title, :description)
-    @task = Task.new(task_params)
+    @task = Task.new(posted_params)
 
     if @task.save
       flash[:success] = 'Successfully created'
-      redirect_to root_path, status: :created
+      redirect_to root_path
     else
       flash.now[:danger] = 'falid to create'
-      render :new, status: :internal_server_error
+      render :new
     end
   end
 
@@ -33,11 +32,10 @@ class TasksController < ApplicationController
   # PUT   /tasks/:id(.:format) tasks#update
   def update
     @task = Task.find(params[:id])
-    task_params = params.fetch(:task, {}).permit(:title, :description)
 
-    if @task.update(task_params)
+    if @task.update(posted_params)
       flash[:success] = 'Successfully updated'
-      redirect_to root_path, status: :ok
+      redirect_to root_path
     else
       flash[:danger] = 'falid to update'
       redirect_to edit_task_path(@task)
@@ -52,7 +50,17 @@ class TasksController < ApplicationController
   # DELETE /tasks/:id(.:format)
   def destroy
     @task = Task.find(params[:id])
-    @task.destroy
+    if @task.destroy
+      flash[:success] = 'Successfully deleted'
+      redirect_to root_path
+    else
+      flash[:danger] = 'falid to delete'
+      redirect root_path(@task)
+    end
+  end
+  
+  def posted_params
+    params.fetch(:task, {}).permit(:title, :description)
   end
 
 end

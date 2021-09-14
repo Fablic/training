@@ -1,6 +1,6 @@
 <h1>Tasks#edit</h1>
 <div>
-  <%= form_with(model: Task) do |form| %>
+  <%= form_with model: @task  do |form| %>
     <div>
       <%= form.label :title, 'たいとる' %>
       <%= form.text_field :title, value: @task.title %>
