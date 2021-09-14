@@ -214,18 +214,13 @@ onlyを指定することで必要なルーティングのみに絞ることが�
 [参考](https://qiita.com/tsunemiso/items/edbc58becf55875c4fdb)
 [参考2](https://railsdoc.com/form)
 
-#### form.submit
-formの入力内容をPOST
-
-#### form.label
-ラベルタグの作成
-
-#### form.text_field
-テキストフィールドの作成
-
+| medhod | 内容 |
+| --- | --- |
+| form.submit | formの入力内容をPOST |
+| form.label | ラベルタグの作成 |
+| form.text_field | テキストフィールドの作成 |
 
 #### post parameterの取得
-
 params.fetch(:task, {}).permit(:title, :description)
 
 #### redirect, redirect_toの違い
@@ -235,3 +230,23 @@ redirect_to 値を渡す必要のあるページにリダイレクトする場�
 #### flashとflash.nowの違い
 redirect    → flash.now
 redirect_to → flash
+
+### パーシャル
+[参考](https://railsguides.jp/layouts_and_rendering.html)
+パーシャル => 部分テンプレート！！
+renderで呼び出す際にアンダースコアは不要
+
+### submit時のpostとpatchの指定方法
+[参考](https://pikawaka.com/rails/form_with)
+以下のように値を渡すことでrails側でPOSTなのかPATCHなのか判断
+```rb
+ <%= form_with model: @task  do |form| %>
+```
+
+#### POSTの場合
+`@task = Task.new()`で作成したインスタンスをerbに渡すことで
+@taskが保持しているmenba変数をみて、idなど紐づく値がないためPOSTと判断
+
+#### PATCHの場合
+`@task = Task.find(params[:id])`で作成したインスタンスをerbに渡すことで
+@taskが保持しているmenba変数をみて、idに紐づくTaskモデルの値があるためPATCHと判断
