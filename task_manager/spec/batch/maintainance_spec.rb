@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 require 'rake'
 
@@ -16,7 +18,7 @@ describe 'rake task csv' do
   describe 'maintainance:on' do
     let(:task) { 'maintainance:on' }
     after { File.delete('./config/maintanance.txt') }
-    context "引数なし" do
+    context '引数なし' do
       it {
         @rake[task].invoke
         file = File.open('./config/maintanance.txt', 'r')
@@ -24,7 +26,7 @@ describe 'rake task csv' do
       }
     end
 
-    context "引数あり" do
+    context '引数あり' do
       before { allow(ENV).to receive(:[]).with('reason').and_return('サーバー障害のため') }
       it {
         @rake[task].invoke
