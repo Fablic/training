@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_15_034227) do
+ActiveRecord::Schema.define(version: 2021_09_15_054908) do
 
   create_table "tasks", charset: "utf8mb4", force: :cascade do |t|
     t.string "name", null: false
@@ -21,6 +21,14 @@ ActiveRecord::Schema.define(version: 2021_09_15_034227) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["status"], name: "index_tasks_on_status"
+  end
+
+  create_table "users", charset: "utf8mb4", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "email", null: false
+    t.string "password", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
 end
