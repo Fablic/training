@@ -18,16 +18,26 @@ RSpec.describe Task, type: :system do
     end
 
     describe 'create task' do
-      before do
-        fill_in 'task_name', with: 'task 2'
-        fill_in 'task_description', with: 'task 2 description'
-        select 'medium', from: 'task_priority'
+      context 'valid form' do
+        before do
+          fill_in 'task_name', with: 'task 2'
+          fill_in 'task_description', with: 'task 2 description'
+          select 'medium', from: 'task_priority'
+        end
+        it 'should success' do
+          click_button 'Create Task'
+          expect(current_path).to eq root_path
+          expect(page).to have_content 'Task was successfully created.'
+          expect(page).to have_content 'task 2'
+        end
       end
-      it "success" do
-        click_button 'Create Task'
-        expect(current_path).to eq root_path
-        expect(page).to have_content 'Task was successfully created.'
-        expect(page).to have_content 'task 2'
+
+      context 'invalid form' do
+        it 'should fail' do
+          expect do
+            post tasks_path, params: { task: { name: nil, description: 'task description' } }
+          end.to raise_error ActiveRecord::NotNullViolation
+        end
       end
     end
   end
@@ -40,18 +50,28 @@ RSpec.describe Task, type: :system do
     end
 
     describe 'update task' do
-      before do
-        fill_in 'task_name', with: 'task 1 updated'
-        fill_in 'task_description', with: 'task 1 description updated'
-        select 'high', from: 'task_priority'
+      context 'valid form' do
+        before do
+          fill_in 'task_name', with: 'task 1 updated'
+          fill_in 'task_description', with: 'task 1 description updated'
+          select 'high', from: 'task_priority'
+        end
+        it 'success' do
+          click_button 'Update Task'
+          expect(current_path).to eq root_path
+          expect(page).to have_content 'Task was successfully updated.'
+          expect(task.reload.name).to eq 'task 1 updated'
+          expect(task.reload.description).to eq 'task 1 description updated'
+          expect(task.reload.priority).to eq 'high'
+        end
       end
-      it "success" do
-        click_button 'Update Task'
-        expect(current_path).to eq root_path
-        expect(page).to have_content 'Task was successfully updated.'
-        expect(task.reload.name).to eq 'task 1 updated'
-        expect(task.reload.description).to eq 'task 1 description updated'
-        expect(task.reload.priority).to eq 'high'
+
+      context 'invalid form' do
+        it 'fail' do
+          expect do
+            put task_path(task), params: { task: { name: 'a' * 257 } }
+          end.to raise_error ActiveRecord::ValueTooLong
+        end
       end
     end
   end
@@ -71,7 +91,7 @@ RSpec.describe Task, type: :system do
     it 'success' do
       click_link 'Destroy', match: :first
       expect {
-        expect(page.driver.browser.switch_to.alert.text).to eq "Are you sure?"
+        expect(page.driver.browser.switch_to.alert.text).to eq 'Are you sure?'
         page.driver.browser.switch_to.alert.accept
       }.to change{ Task.count }.by(0)
       expect(page).to have_content 'Task was successfully deleted.'
