@@ -14,7 +14,7 @@
 		</table>
 		<p><%= form.submit %></p>
 	<% end %>
-	<p><a href='/tasks'>back to list</a></p>
+	<p><%= link_to '一覧に戻る', tasks_path, class: 'btn btn-success mr-2' %></p>
 <script>
 	$( function() {
   		$( ".date-picker" ).datepicker({dateFormat: 'yy/mm/dd',});

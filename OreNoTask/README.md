@@ -33,6 +33,11 @@ grant all privileges on * . * to 'ryo_ikebe'@'localhost';
 rails db:migrate
 ```
 
+### 5.rubocop
+```
+gem install rubocop
+```
+
 
 ## table list
 

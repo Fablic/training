@@ -1,5 +1,5 @@
 
-	<p><a href="/tasks/new">create task</a></p>
+	<p><%= link_to 'タスク新規作成', new_task_path, class: 'btn btn-success mr-2' %></p>
 
 	<ul>
 		<% @tasks.each do |task| %><li>
