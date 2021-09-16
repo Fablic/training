@@ -30,9 +30,24 @@ RSpec.describe Task, type: :model do
         it { is_expected.to_not be_valid }
       end
 
-      context 'greater than 255 characters' do
+      context 'greater than 255 half-width characters' do
         let(:name) { 'a' * 256 }
         it { is_expected.to_not be_valid }
+      end
+
+      context 'greater than 255 full-width characters' do
+        let(:name) { 'あ' * 256 }
+        it { is_expected.to_not be_valid }
+      end
+
+      context '255 half-width characters' do
+        let(:name) { 'a' * 255 }
+        it { is_expected.to be_valid }
+      end
+
+      context '255 full-width characters' do
+        let(:name) { 'あ' * 255 }
+        it { is_expected.to be_valid }
       end
     end
   end
