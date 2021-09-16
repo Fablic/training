@@ -1,37 +1,53 @@
+# frozen_string_literal: true
 class TasksController < ApplicationController
   def index
     @tasks = Task.where(deleted: 0)
   end
 
   def new
+    @task = Task.new
   end
 
   def edit
-    id = params[:id]
-    @task = Task.find_by(id: id, deleted:0)
+    @task = Task.find_by(id: params[:id], deleted: 0)
   end
 
   def update
-     @task = Task.find(params[:id])
-     @task.update(name: params[:task][:name], description: params[:task][:description], start_at_date: params[:task][:start_at_date], start_at_hour: params[:task][:start_at_hour], start_at_minute: params[:task][:start_at_minute], due_date_at_date: params[:task][:due_date_at_date], due_date_at_hour: params[:task][:due_date_at_hour], due_date_at_minute: params[:task][:due_date_at_minute])
-    redirect_to tasks_path, notice: 'タスクが更新されました'
+    @task = Task.find(params[:id])
+    if @task.update(task_params)
+      redirect_to tasks_path, notice: 'タスクが更新されました'
+    else
+      render edit, notice: 'タスクの更新に失敗しました'
+    end
   end
 
   def show
     id = params[:id]
-    @task = Task.find_by(id: id, deleted:0)
+    @task = Task.find_by(id: id, deleted: 0)
   end
 
   def create
-    @task = Task.new(name: params[:name], description: params[:description], start_at: params[:start_at_date] << ' ' << params[:start_at_hour] << ':' << params[:start_at_minute], due_date_at: params[:due_date_at_date] << ' ' << params[:due_date_at_hour] << ':' << params[:due_date_at_minute])
-    @task.save
-    redirect_to tasks_path, notice: 'タスクが作成されました'
+    @task = Task.new(task_params)
+    if @task.save
+      redirect_to tasks_path, notice: 'タスクが作成されました'
+    else
+      render new, notice: 'タスクの作成に失敗しました'
+    end
   end
 
   def destroy
     @task = Task.find(params[:id])
-    @task.update(deleted: 1)
-    redirect_to tasks_path, notice: 'タスクが削除されました'
+    if @task.update(deleted: 1)
+      redirect_to tasks_path, notice: 'タスクが削除されました'
+    else
+      redirect_to tasks_path, notice: 'タスクの削除に失敗しました'
+    end
+  end
+
+  private
+
+  def task_params
+    params.require(:task).permit(:name, :description, :start_at, :due_date_at)
   end
 
 end
