@@ -38,10 +38,12 @@ class TasksController < ApplicationController
   def destroy
     @task = Task.find(params[:id])
     if @task.update(deleted: 1)
-      redirect_to tasks_path, notice: 'タスクが削除されました'
+      flash[:notice] = 'タスクが削除されました'
     else
-      redirect_to tasks_path, notice: 'タスクの削除に失敗しました'
+      flash[:notice] = 'タスクの削除に失敗しました'
     end
+
+    redirect_to tasks_path
   end
 
   private
