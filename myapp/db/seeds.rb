@@ -1,6 +1,11 @@
 User.create!(
   [
     {
+      name: 'useradmin',
+      password: 'passwordadmin',
+      role: :admin,
+    },
+    {
       name: 'user1',
       password: 'password1',
     },

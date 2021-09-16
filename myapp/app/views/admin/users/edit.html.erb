@@ -1,0 +1,35 @@
+<% provide(:title, 'ユーザ管理：更新') %>
+
+<div class="d-flex justify-content-end">
+  <%= link_to 'ユーザ一覧に戻る', admin_users_path, class: 'btn btn-outline-primary' %>
+</div>
+
+<%= form_with model: [:admin, @user], local: true do |f| %>
+<%= render 'layouts/error_messages' %>
+<div class="row mb-3">
+  <%= f.label :name, class: "col-sm-2 col-form-label" %>
+  <div class="col-sm-5">
+    <%= f.text_field :name, class: "form-control" %>
+  </div>
+</div>
+<div class="row mb-3">
+  <%= f.label :password, class: "col-sm-2 col-form-label" %>
+  <div class="col-sm-5">
+    <%= f.password_field :password, :placeholder => "未入力の場合は更新されません" , class: "form-control" %>
+  </div>
+</div>
+<div class="row mb-3">
+  <%= f.label :role, class: "col-sm-2 col-form-label" %>
+  <div class="col-sm-2 d-flex align-items-center">
+    <%= f.radio_button :role, :admin %>
+    <%= f.label I18n.t('activerecord.attributes.user.roles.admin') %>
+  </div>
+  <div class="col-sm-2 d-flex align-items-center">
+    <%= f.radio_button :role, :nomal %>
+  <%= f.label I18n.t('activerecord.attributes.user.roles.nomal') %>
+  </div>
+</div>
+<div>
+<%= f.submit '更新', class: 'btn btn-secondary' %>
+</div>
+<% end %>

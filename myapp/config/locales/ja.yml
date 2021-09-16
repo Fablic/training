@@ -9,6 +9,13 @@ ja:
           not_started: 未着手
           in_progress: 進行中
           completed: 完了
+      user:
+        name: ユーザ名
+        password: パスワード
+        role: ユーザ種別
+        roles:
+          nomal: 一般
+          admin: 管理者
 
   flash:
     new_success: タスク投稿が成功しました
@@ -17,6 +24,13 @@ ja:
     updated_danger: タスク編集が失敗しました
     destroy: タスクが削除されました
     invalid_password: Name,Passwordが一致しません
+    new_user_success: ユーザ登録が成功しました
+    new_user_danger: ユーザ登録が失敗しました
+    updated_user_success: ユーザ更新が成功しました
+    updated_user_danger: ユーザ更新が失敗しました
+    user_destroy_success: ユーザが削除が成功しました
+    user_destroy_danger: ユーザが削除が失敗しました
+    cannot_update_admin: 管理者は%{num}人以上必要です
 
   time:
     formats:
