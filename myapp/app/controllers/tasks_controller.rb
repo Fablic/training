@@ -17,7 +17,7 @@ class TasksController < ApplicationController
 
   # POST /tasks(.:format)
   def create
-    @task = Task.new(posted_params)
+    @task = Task.new(task_params)
 
     if @task.save
       flash[:success] = 'Successfully created'
@@ -33,7 +33,7 @@ class TasksController < ApplicationController
   def update
     @task = Task.find(params[:id])
 
-    if @task.update(posted_params)
+    if @task.update(task_params)
       flash[:success] = 'Successfully updated'
       redirect_to root_path
     else
@@ -58,8 +58,8 @@ class TasksController < ApplicationController
       redirect root_path(@task)
     end
   end
-  
-  def posted_params
+
+  def task_params
     params.fetch(:task, {}).permit(:title, :description)
   end
 
