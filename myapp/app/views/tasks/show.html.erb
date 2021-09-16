@@ -1,0 +1,17 @@
+<h1>Tasks#detail</h1>
+
+<table>
+  <tr>
+    <th>たいとる</th>
+    <td><%= @task.title %></td>
+  </tr>
+  <tr>
+    <th>ですくりぷしょん</th>
+    <td><%= @task.description %></td>
+  </tr>
+  <tr>
+</table>
+
+<p><%= link_to 'back to task list', root_path %></p>
+
+<p><%= link_to 'edit', edit_task_path(@task) %></p>

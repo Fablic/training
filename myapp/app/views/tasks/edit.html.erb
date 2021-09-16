@@ -1,0 +1,21 @@
+<h1>Tasks#edit</h1>
+<div>
+  <%= form_with model: @task  do |form| %>
+    <div>
+      <%= form.label :title, 'たいとる' %>
+      <%= form.text_field :title, value: @task.title %>
+    </div>
+
+    <div>
+      <%= form.label :description, 'ですくりぷしょん' %>
+      <%= form.text_field :description, value: @task.description %>
+    </div>
+
+    <div class="actions">
+      <%= form.submit :submit %>
+    </div>
+  <% end %>
+</div>
+
+<%= link_to 'Show', @task %> |
+<%= link_to 'Back', tasks_path %>

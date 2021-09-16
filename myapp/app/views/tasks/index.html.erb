@@ -1,0 +1,19 @@
+<h1>Tasks#list</h1>
+
+<table>
+    <tr>
+        <th>あいでー</th>
+        <th>たいとる</th>
+        <th>ですくりぷしょん</th>
+    </tr>
+
+<% @tasks.each do |task| %>
+    <tr>
+        <td><%= task.id %></td>
+        <td><%= link_to task.title, task%></td>
+        <td><%= link_to 'Edit', edit_task_path(id: task.id)%></td>
+        <td><%= link_to 'Delete', task, method: :delete, data: { confirm: 'Are you sure about it?' } %></td>
+    </tr>
+<% end %>
+</table>
+<p><%= link_to 'create', new_task_path %></p>
