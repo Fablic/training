@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class TasksController < ApplicationController
   def index
     @tasks = Task.where(deleted: 0)
@@ -6,10 +7,12 @@ class TasksController < ApplicationController
 
   def new
     @task = Task.new
+    @submit_label = '作成'
   end
 
   def edit
     @task = Task.find_by(id: params[:id], deleted: 0)
+    @submit_label = '更新'
   end
 
   def update
@@ -37,11 +40,11 @@ class TasksController < ApplicationController
 
   def destroy
     @task = Task.find(params[:id])
-    if @task.update(deleted: 1)
-      flash[:notice] = 'タスクが削除されました'
-    else
-      flash[:notice] = 'タスクの削除に失敗しました'
-    end
+    flash[:notice] = if @task.update(deleted: 1)
+                       'タスクが削除されました'
+                     else
+                       'タスクの削除に失敗しました'
+                     end
 
     redirect_to tasks_path
   end
@@ -51,5 +54,4 @@ class TasksController < ApplicationController
   def task_params
     params.require(:task).permit(:name, :description, :start_at, :due_date_at)
   end
-
 end
