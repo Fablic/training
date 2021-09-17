@@ -99,7 +99,7 @@ RSpec.describe Task, type: :system do
   end
 
   describe 'search task' do
-    let!(:other_task) { create(:other_task) }
+    let!(:task_2) { create(:task_2) }
     before { visit root_path }
 
     context 'search by name' do
@@ -107,15 +107,15 @@ RSpec.describe Task, type: :system do
       it 'should display only task 1' do
         click_button 'Search'
         expect(page).to have_content 'task 1'
-        expect(page).to have_no_content 'other task'
+        expect(page).to have_no_content 'task 2'
       end
     end
 
     context 'search by status' do
       before { select 'done', from: 'status' }
-      it 'should display only other task' do
+      it 'should display only task 2' do
         click_button 'Search'
-        expect(page).to have_content 'other task'
+        expect(page).to have_content 'task 2'
         expect(page).to have_no_content 'task 1'
       end
     end
