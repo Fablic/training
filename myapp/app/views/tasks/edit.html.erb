@@ -8,7 +8,7 @@
 <%= form_with model: @task, local: true do |f| %>
 <%= render 'layouts/error_messages' %>
 <div class="row mb-3">
-  <%= f.label :status, 'ステータス', class: "col-sm-1 col-form-label" %>
+  <%= f.label :status, class: "col-sm-1 col-form-label" %>
   <div class="col-sm-5">
   <%= f.select :status, options_for_select(
     Task.statuses.map { |k, _v| [I18n.t("activerecord.attributes.task.statuses.#{k}"), k] },
@@ -17,19 +17,19 @@
   </div>
 </div>
 <div class="row mb-3">
-  <%= f.label :title, '件名', class: "col-sm-1 col-form-label" %>
+  <%= f.label :title, class: "col-sm-1 col-form-label" %>
   <div class="col-sm-5">
     <%= f.text_field :title, class: "form-control" %>
   </div>
 </div>
 <div class="row mb-3">
-  <%= f.label :content, '詳細', class: "col-sm-1 col-form-label" %>
+  <%= f.label :content, class: "col-sm-1 col-form-label" %>
   <div class="col-sm-5">
     <%= f.text_area :content, class: "form-control" %>
   </div>
 </div>
 <div class="row mb-3">
-  <%= f.label :deadline, '終了期限', class: "col-sm-1 col-form-label" %>
+  <%= f.label :deadline, class: "col-sm-1 col-form-label" %>
   <div class="col-sm-3">
     <%= f.datetime_field :deadline, class: "form-control" %>
   </div>
