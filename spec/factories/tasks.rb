@@ -1,5 +1,6 @@
 FactoryBot.define do
   factory :task, class: Task do
+    association :user, factory: :user
     name { 'task 1' }
     description { 'task 1 description' }
     priority { 0 } #low

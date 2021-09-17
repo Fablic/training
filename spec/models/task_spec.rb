@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Task, type: :model do
+  let(:user) { create(:user) }
+
   describe 'init factories task' do
     let(:task) { create(:task) }
 
@@ -11,14 +13,17 @@ RSpec.describe Task, type: :model do
     it 'expected enum value' do
       expect(task.priority).to eq("low")
     end
+
+    it 'expected user' do
+      expect(task.user.name).to eq('test')
+    end
   end
 
   describe 'validation' do
     let(:name) { 'task' }
     let(:description) { 'task description' }
     let(:priority) { 'low' }
-
-    subject { build(:task, name: name, description: description, priority: priority)}
+    subject { build(:task, name: name, user: user, description: description, priority: priority)}
 
     context 'valid' do
       it { is_expected.to be_valid }
