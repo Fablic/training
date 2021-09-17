@@ -17,27 +17,27 @@ RSpec.describe Task, type: :system do
       expect(page).to have_content 'New Task'
     end
 
-    describe 'create task' do
-      context 'valid form' do
-        before do
-          fill_in 'task_name', with: 'task 2'
-          fill_in 'task_description', with: 'task 2 description'
-          select 'medium', from: 'task_priority'
-        end
-        it 'should success' do
-          click_button 'Create Task'
-          expect(current_path).to eq root_path
-          expect(page).to have_content 'Task was successfully created.'
-          expect(page).to have_content 'task 2'
-        end
+    context 'valid form' do
+      before do
+        fill_in 'task_name', with: 'task 2'
+        fill_in 'task_description', with: 'task 2 description'
+        select 'medium', from: 'task_priority'
       end
+      it "success" do
+        click_button 'Create Task'
+        expect(current_path).to eq root_path
+        expect(page).to have_content 'Task was successfully created.'
+        expect(page).to have_content 'task 2'
+      end
+    end
 
-      context 'invalid form' do
-        it 'should fail' do
-          expect do
-            post tasks_path, params: { task: { name: nil, description: 'task description' } }
-          end.to raise_error ActiveRecord::NotNullViolation
-        end
+    context 'invalid form' do
+      before do
+        fill_in 'task_name', with: nil
+      end
+      it "validate fail" do
+        click_button 'Create Task'
+        expect(page).to have_content "Name can't be blank"
       end
     end
   end
@@ -49,29 +49,29 @@ RSpec.describe Task, type: :system do
       expect(page).to have_content 'Editing Task'
     end
 
-    describe 'update task' do
-      context 'valid form' do
-        before do
-          fill_in 'task_name', with: 'task 1 updated'
-          fill_in 'task_description', with: 'task 1 description updated'
-          select 'high', from: 'task_priority'
-        end
-        it 'success' do
-          click_button 'Update Task'
-          expect(current_path).to eq root_path
-          expect(page).to have_content 'Task was successfully updated.'
-          expect(task.reload.name).to eq 'task 1 updated'
-          expect(task.reload.description).to eq 'task 1 description updated'
-          expect(task.reload.priority).to eq 'high'
-        end
+    context 'valid form' do
+      before do
+        fill_in 'task_name', with: 'task 1 updated'
+        fill_in 'task_description', with: 'task 1 description updated'
+        select 'high', from: 'task_priority'
       end
+      it "success" do
+        click_button 'Update Task'
+        expect(current_path).to eq root_path
+        expect(page).to have_content 'Task was successfully updated.'
+        expect(task.reload.name).to eq 'task 1 updated'
+        expect(task.reload.description).to eq 'task 1 description updated'
+        expect(task.reload.priority).to eq 'high'
+      end
+    end
 
-      context 'invalid form' do
-        it 'fail' do
-          expect do
-            put task_path(task), params: { task: { name: 'a' * 257 } }
-          end.to raise_error ActiveRecord::ValueTooLong
-        end
+    context 'invalid form' do
+      before do
+        fill_in 'task_name', with: 'a' * 256
+      end
+      it "validate fail" do
+        click_button 'Update Task'
+        expect(page).to have_content 'Name is too long'
       end
     end
   end

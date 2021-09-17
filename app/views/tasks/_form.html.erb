@@ -1,8 +1,7 @@
 <div class="row">
   <%= form_with(model: task) do |f| %>
     <% if task.errors.any? %>
-      <div id="error_explanation">
-        <h2><%= pluralize(task.errors.count, "error") %> prohibited this task from being saved:</h2>
+      <div id="error_explanation" class="alert alert-danger">
         <ul>
           <% task.errors.each do |error| %>
             <li><%= error.full_message %></li>
