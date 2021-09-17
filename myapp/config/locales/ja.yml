@@ -1,4 +1,19 @@
 ja:
+  title:
+    base: 'タスク管理'
+    sessions:
+      new: 'ログイン'
+    tasks:
+      index: 'リスト'
+      show: '詳細'
+      new: '新規'
+      edit: '編集'
+    users:
+      index: 'ユーザ管理：一覧'
+      show: 'ユーザ管理：タスク一覧'
+      new: 'ユーザ管理：新規'
+      edit: 'ユーザ管理：更新'
+
   activerecord:
     attributes:
       task:
