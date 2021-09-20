@@ -1,7 +1,8 @@
-<% provide(:title, 'リスト') %>
-
-<div class="d-flex justify-content-end">
-  <%= link_to '新規作成', new_task_path, class: 'btn btn-primary' %>
+<div class="d-flex justify-content-end ">
+  <div class='btn-toolbar' role="toolbar">
+    <%= link_to '新規作成', new_task_path, class: 'btn btn-primary' %>
+    <%= link_to 'ユーザ管理', admin_users_path, class: 'btn btn-outline-primary mx-1' if current_user.admin? %>
+  </div>
 </div>
 
 <%= search_form_for @q, url: root_path do |f| %>

@@ -1,0 +1,27 @@
+<div class="d-flex justify-content-end">
+  <%= link_to 'ユーザ一覧に戻る', admin_users_path, class: 'btn btn-outline-primary' %>
+</div>
+
+<h3 class="mb-1">ユーザ名<%= ' : ' + @user.name %></h3>
+<table class="table table-striped task_list">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">件名</th>
+      <th scope="col">終了期限</th>
+      <th scope="col">ステータス</th>
+      <th scope="col">作成日</th>
+    </tr>
+  </thead>
+  <tbody>
+<% @tasks.each do |task| %>
+    <tr>
+      <th scope="row"><%= task.id %></th>
+      <td><%= task.title %></td>
+      <td class="deadline"><%= I18n.l(task.deadline, format: :short, default: '') %></td>
+      <td><%= I18n.t("activerecord.attributes.task.statuses.#{task.status}") %></td>
+      <td class="created"><%= I18n.l(task.created_at, format: :short) %></td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
