@@ -1,0 +1,13 @@
+<p><%= link_to 'タスク新規作成', new_task_path, class: 'btn btn-success mr-2' %></p>
+
+<ul>
+  <% @tasks.each do |task| %><li>
+    <h2>
+      <%= link_to task.name, task_path(task), class: 'btn btn-success mr-2' %>
+      <%= link_to '編集', edit_task_path(task), class: 'btn btn-primary mr-2'%>
+      <%= button_to "削除", task_path(task), method: :delete, data: {confirm: "削除しますか？"} %>
+    </h2>
+    <p><%= task.start_at %> 〜 <%= task.due_date_at %></p>
+  </li>
+  <% end %>
+</ul>

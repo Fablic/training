@@ -10,6 +10,9 @@
 ```
 rbenv install -v 3.0.2
 rbenv global 3.0.2
+
+brew install yarn
+rails webpacker:install
 ```
 
 ### 2.install mysql
@@ -28,6 +31,11 @@ grant all privileges on * . * to 'ryo_ikebe'@'localhost';
 ### 4.DB migration
 ```
 rails db:migrate
+```
+
+### 5.rubocop
+```
+gem install rubocop
 ```
 
 

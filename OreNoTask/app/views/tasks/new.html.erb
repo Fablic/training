@@ -1,0 +1,4 @@
+<%= form_with url: tasks_path, model: @task do |form| %>
+  <%= render partial: 'form', locals: { form: form, submit_label: @submit_label } %>
+<% end %>
+<p><%= link_to '一覧に戻る', tasks_path, class: 'btn btn-success mr-2' %></p>

@@ -1,0 +1,19 @@
+<table>
+  <tr>
+    <th><%= form.label :name, 'タスク名' %></th>
+    <td><%= form.text_field :name %></td>
+  </tr>
+  <tr>
+    <th>期間</th>
+    <td>
+      <%= form.datetime_field :start_at, class: 'form-control' %>
+       〜 
+      <%= form.datetime_field :due_date_at, class: 'form-control' %>
+    </td>
+  </tr>
+  <tr>
+    <th><%= form.label :description, '内容' %></th>
+    <td><%= form.text_area :description %></td>
+  </tr>
+</table>
+<p><%= form.submit @submit_label, class: 'btn btn-primary' %></p>

@@ -1,0 +1,5 @@
+<h2><%= @task.name %></h2>
+<p><%= @task.start_at %> 〜 <%= @task.due_date_at %></p>
+<p><%= simple_format @task.description %></p>
+
+<p><%= link_to '一覧に戻る', tasks_path, class: 'btn btn-success mr-2' %></p>

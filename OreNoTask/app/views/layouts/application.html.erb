@@ -3,14 +3,18 @@
   <head>
     <title>OreNoTask</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= stylesheet_link_tag('/css/normalize.css') %>
+    <%= stylesheet_link_tag('/css/styles.css') %>
+    <%= stylesheet_link_tag('/js/jquery-ui-1.12.1.custom/jquery-ui.css') %>
+    <%= javascript_include_tag('/js/jquery3_6_0.js') %>
+    <%= javascript_include_tag('/js/jquery-ui-1.12.1.custom/jquery-ui.js') %>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
+    <%= notice %>
     <%= yield %>
   </body>
 </html>
