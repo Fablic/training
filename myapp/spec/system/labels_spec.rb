@@ -106,4 +106,56 @@ RSpec.describe 'index', js: true, type: :system do
       end
     end
   end
+
+  describe 'タスク作成' do
+    before { visit new_task_path }
+    subject { page }
+
+    it 'ラベル選択で詳細と一覧に表示される' do
+      is_expected.to have_field label.name
+      check label.name
+      fill_in '件名', with: 'new 件名'
+      fill_in '詳細', with: 'new 詳細'
+      fill_in '終了期限', with: Time.current
+      click_button '投稿'
+      is_expected.to have_current_path task_path(task.id + 1)
+      is_expected.to have_content label.name
+      visit root_path
+      is_expected.to have_content label.name
+    end
+  end
+
+  describe 'タスク編集' do
+    before { visit edit_task_path(task.id) }
+    subject { page }
+
+    it 'ラベル選択で詳細と一覧に表示される' do
+      is_expected.to have_field label.name
+      check label.name
+      click_button '保存'
+      is_expected.to have_current_path task_path(task.id)
+      is_expected.to have_content label.name
+      visit root_path
+      is_expected.to have_content label.name
+    end
+  end
+
+  describe '一覧画面でのラベル検索' do
+    let!(:labelling) { create(:labelling, task_id: task.id, label_id: label.id) }
+    let!(:label_other) { create(:label, user_id: test_user.id, name: 'test_other_label') }
+    let!(:task_other) { create(:task) }
+    let!(:labelling_other) { create(:labelling, task_id: task_other.id, label_id: label_other.id) }
+
+    before { visit root_path }
+    subject { page }
+
+    it '選択したラベルで検索できる' do
+      check "q_labels_id_eq_any_#{label.id}"
+      click_button '検索'
+      within('.task_list') do
+        is_expected.to have_content label.name
+        is_expected.to have_no_content label_other.name
+      end
+    end
+  end
 end
