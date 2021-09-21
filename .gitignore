@@ -4,4 +4,6 @@
 # DS_Storeファイルもいらない
 .DS_Store
 # logファイルも除外する
-.log
+*.log
+# ignoreファイルもいらない
+.gitignore
