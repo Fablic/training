@@ -43,7 +43,7 @@ RSpec.describe 'index', js: true, type: :system do
         page.accept_confirm('本当によろしいですか？') do
           click_link '削除', match: :first
         end
-        is_expected.to have_content 'ユーザが削除が成功しました'
+        is_expected.to have_content 'ユーザ削除が成功しました'
         is_expected.to have_current_path admin_users_path
         is_expected.not_to have_content(test_user.name)
       end
