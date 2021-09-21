@@ -106,8 +106,31 @@ Capybara.register_driver :remote_chrome do |app|
 ```
 
 ### system specをタスク機能に対して書きましょう
+以下を作成して簡単に動かしてみる  
+■`spec/model/task_spec.rb`  
+```rb
 
+```
+■`spec/factory/task.rb`  
+```rb
+FactoryBot.define do
+    factory :test1, class: task do
+        title 'spec_title'
+        description 'spec_description'
+    end
+    # factory :task do
+    #   sequence(:title) { |i| "test_title#{i}" }
+    #   description { 'test_description' }
+    # end
+end
+```
 
+`bundle exec rspec`で実行
+エラー発生  
+```sh
+NameError:
+  undefined local variable or method `task' for #<FactoryBot::Syntax::Default::DSL:0x000055f2ba7c8500>
+```
 
 ## What I learn
 
@@ -136,3 +159,35 @@ Capybaraで使う場合や中に内包されているものを利用する
 TBC
 #### テストファイルの記述ルール
 TBC
+
+### factorybot
+データ(モデルインスタンス)生成のためのライブラリ、Rails標準のfixturesの代替として利用されることが多い
+
+#### factory
+
+テストデータの作成で利用  
+- ダミーデータの作成の定義
+
+#### データの作成
+Ref: https://qiita.com/kodai_0122/items/e755a128f1dade3f53c6
+factoryで定義したtask作成方法を利用して、実データを作成する
+
+sequenceについて(REF: https://qiita.com/9-michi-9/items/fa009d725dfeba56b22a)
+```
+# この様に変更していた
+sequence(:title, "title_1")
+#        ↑第一引数  ↑ 第二引数
+
+      ↓  ↓
+
+# 上の書き方をブロックで記述
+sequence(:title) { |n| "title_#{n}" }
+```
+
+上記で定義したfactoryを用いて、テスト時にデータ作成
+`spec/system/tasks_spec.rb`
+```rb
+RSpec.describe 'Tasks', type: :system do
+# create_listを利用することでまとめてtask instanceを作成することができる
+  let!(:task_list) { create_list(:task, 10) }
+```
