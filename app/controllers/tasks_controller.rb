@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-  before_action :logged_in_user
+  before_action :logged_in_user, except: %i[new create]
   before_action :set_task, only: %i[ show edit update destroy ]
 
   # GET /tasks

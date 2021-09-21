@@ -8,6 +8,7 @@ FactoryBot.define do
   end
 
   factory :task_2, class: Task do
+    association :user, factory: :user
     name { 'task 2' }
     description { 'task 2 description' }
     priority { 0 } #low

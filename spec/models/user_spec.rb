@@ -9,7 +9,6 @@ RSpec.describe User, type: :model do
         to have_attributes(
              name: 'test',
              email: 'test@example.com',
-             password: 'password'
            )
     end
   end

@@ -43,6 +43,12 @@
       </div>
     </div>
   </nav>
+    <% if notice %>
+      <p id="notice" class="alert alert-info"><%= notice %></p>
+    <% end %>
+    <% if flash[:danger] %>
+      <p id="danger" class="alert alert-danger"><%= flash[:danger] %></p>
+    <% end %>
     <div class="container">
       <%= yield %>
     </div>
