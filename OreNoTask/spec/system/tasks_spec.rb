@@ -8,11 +8,9 @@ describe 'タスク管理機能', type: :system do
   end
 
   context 'タスク一覧を表示する' do
-    before do
-      visit tasks_path
-    end
-
     it '一覧画面の表示を確認する' do
+      visit tasks_path
+
       # 既存のタスクが表示されている
       expect(page).to have_content '最初のタスク'
       expect(page).to have_content '2021-09-01 10:00:00 +0900 〜 2021-09-02 11:00:00 +0900'
@@ -22,11 +20,9 @@ describe 'タスク管理機能', type: :system do
   end
 
   context 'タスク詳細を表示する' do
-    before do
-      visit tasks_path
-    end
-
     it '詳細画面に遷移し、内容を確認する' do
+      visit tasks_path
+
       click_link '最初のタスク'
       expect(page).to have_content '最初のタスク'
       expect(page).to have_content '説明文'
