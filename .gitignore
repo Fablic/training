@@ -1,9 +1,8 @@
 # cacheがたくさんあるのはいらない
-/myapp/tmp/cache
-/myapp/tmp/cache/bootsnap/load-path-cache
+myapp/tmp/cache/
 # DS_Storeファイルもいらない
 .DS_Store
 # logファイルも除外する
 *.log
-# ignoreファイルもいらない
-.gitignore
+# ignoreファイルもいらない? →一応残しておこう
+#.gitignore
