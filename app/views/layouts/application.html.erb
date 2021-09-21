@@ -11,6 +11,38 @@
   </head>
 
   <body>
+  <nav class="navbar navbar-expand-xxl navbar-dark bg-dark" aria-label="Seventh navbar example">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Task Management</a>
+      <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExampleXxl" aria-controls="navbarsExampleXxl" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="navbar-collapse collapse" id="navbarsExampleXxl" style="">
+        <ul class="navbar-nav me-auto mb-2 mb-xl-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/">Home</a>
+          </li>
+        </ul>
+        <% if logged_in? %>
+          <li class="d-flex dropdown">
+            <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <%= current_user.name %>
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <li>
+                <%= link_to 'Log out', logout_path, method: :delete, class: %w[dropdown-item] %>
+              </li>
+            </ul>
+          </li>
+        <% else %>
+          <li class="d-flex">
+            <a class="nav-link text-white" href="#">Login</a>
+          </li>
+        <% end %>
+      </div>
+    </div>
+  </nav>
     <div class="container">
       <%= yield %>
     </div>
