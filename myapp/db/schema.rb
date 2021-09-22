@@ -14,34 +14,47 @@ ActiveRecord::Schema.define(version: 2021_09_17_075922) do
 
   create_table "labels", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.text "name"
-    t.integer "user_id"
+    t.bigint "user_id"
+    t.integer "regist_user"
+    t.integer "update_user"
+    t.boolean "del_flag", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_labels_on_user_id"
   end
 
   create_table "tasks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name"
+    t.text "description"
+    t.bigint "user_id"
+    t.integer "status", limit: 1
+    t.datetime "period_date"
+    t.integer "priority"
+    t.integer "label_id_1"
+    t.integer "label_id_2"
+    t.integer "label_id_3"
+    t.integer "label_id_4"
+    t.integer "label_id_5"
+    t.integer "regist_user"
+    t.integer "update_user"
+    t.boolean "del_flag", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "tests", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_tasks_on_user_id"
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name"
     t.string "mail_address"
-    t.integer "role_id"
+    t.integer "role_id", limit: 1
     t.datetime "last_login_date"
-    t.datetime "regist_date"
     t.integer "regist_user"
-    t.datetime "update_date"
     t.integer "update_user"
-    t.boolean "del_flag"
+    t.boolean "del_flag", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "labels", "users"
+  add_foreign_key "tasks", "users"
 end

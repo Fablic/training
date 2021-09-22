@@ -5,12 +5,9 @@ class CreateUsers < ActiveRecord::Migration[6.0]
       t.string :mail_address
       t.integer :role_id,limit:1
       t.datetime :last_login_date
-      t.datetime :regist_date
       t.integer :regist_user
-      t.datetime :update_date
       t.integer :update_user
-      t.boolean :del_flag
-
+      t.boolean :del_flag, null:false, default:false
       t.timestamps
     end
   end

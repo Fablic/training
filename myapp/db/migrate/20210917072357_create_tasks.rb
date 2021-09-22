@@ -12,11 +12,9 @@ class CreateTasks < ActiveRecord::Migration[6.0]
       t.integer :label_id_3
       t.integer :label_id_4
       t.integer :label_id_5
-      t.datetime : regist_date , default : ->{ 'NOW()'}
       t.integer :regist_user
-      t.datetime :update_date ,
       t.integer :update_user
-      t.boolean :del_flag, null:false, default:fase
+      t.boolean :del_flag, null:false, default:false
       t.timestamps
     end
   end
