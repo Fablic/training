@@ -107,7 +107,14 @@ RSpec.describe Task, type: :system do
     end
 
     describe 'search task' do
-      let!(:task_2) { create(:task_2) }
+      let!(:task_2) {
+        create(:task,
+               name: 'task 2',
+               description: 'task 2 description',
+               status: 'done',
+               user: task.user
+        ) }
+
       before { visit root_path }
       context 'search by name' do
         before { fill_in 'name', with: 'task 1' }
