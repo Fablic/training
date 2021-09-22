@@ -4,7 +4,7 @@ class TasksController < ApplicationController
 
   # GET /tasks
   def index
-    @tasks = Task.all
+    @tasks = current_user.tasks
     @tasks = @tasks.search_by_name(params[:name]) if params[:name].presence
     @tasks = @tasks.search_by_status(params[:status]) if params[:status].presence
   end

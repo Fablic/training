@@ -1,10 +1,6 @@
-<% provide(:title, "Log in") %>
-
-
 <div class="row mt-2">
   <div class="col-md-6 offset-md-3">
     <h1 class="mb-4">Log in</h1>
-
     <%= form_for(:session, url: login_path) do |f| %>
 
       <%= f.label :email %>
@@ -15,7 +11,5 @@
 
       <%= f.submit 'Log in', class: %w[btn btn-primary mt-2 w-100] %>
     <% end %>
-
-<!--    <p>New user? <%#= link_to "Sign up now!", signup_path %></p>-->
   </div>
 </div>
