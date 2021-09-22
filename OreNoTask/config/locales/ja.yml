@@ -1,0 +1,18 @@
+ja:
+  time:
+    formats:
+      default: ! "%Y/%m/%d %H:%M:%S"
+      long: ! '%Y年%m月%d日(%a) %H:%M'
+  dictionary:
+    messages:
+      confirm_delete: '削除しますか？'
+      created_task: 'タスクが作成されました'
+      created_task_failed: 'タスクの作成に失敗しました'
+      edited_task: 'タスクが更新されました'
+      edited_task_failed: 'タスクの更新に失敗しました'
+      deleted_task: 'タスクが削除されました'
+      deleted_task_failed: 'タスクの削除に失敗しました'
+    words:
+      to_list: '一覧に戻る'
+      save_to_create: '作成'
+      save_to_update: '更新'

@@ -7,20 +7,20 @@ class TasksController < ApplicationController
 
   def new
     @task = Task.new
-    @submit_label = '作成'
+    @submit_label = I18n.t('dictionary.words.save_to_create')
   end
 
   def edit
     @task = Task.find_by(id: params[:id], deleted: 0)
-    @submit_label = '更新'
+    @submit_label = I18n.t('dictionary.words.save_to_update')
   end
 
   def update
     @task = Task.find(params[:id])
     if @task.update(task_params)
-      redirect_to tasks_path, notice: 'タスクが更新されました'
+      redirect_to tasks_path, notice: I18n.t('dictionary.messages.edited_task')
     else
-      render edit, notice: 'タスクの更新に失敗しました'
+      render edit, notice: I18n.t('dictionary.messages.edited_task_failed')
     end
   end
 
@@ -32,18 +32,18 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(task_params)
     if @task.save
-      redirect_to tasks_path, notice: 'タスクが作成されました'
+      redirect_to tasks_path, notice: I18n.t('dictionary.messages.created_task')
     else
-      render new, notice: 'タスクの作成に失敗しました'
+      render new, notice: I18n.t('dictionary.messages.created_task_failed')
     end
   end
 
   def destroy
     @task = Task.find(params[:id])
     flash[:notice] = if @task.update(deleted: 1)
-                       'タスクが削除されました'
+                       I18n.t('dictionary.messages.deleted_task')
                      else
-                       'タスクの削除に失敗しました'
+                       I18n.t('dictionary.messages.deleted_task_failed')
                      end
 
     redirect_to tasks_path
