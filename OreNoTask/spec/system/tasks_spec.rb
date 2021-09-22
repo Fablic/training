@@ -3,8 +3,8 @@
 require 'rails_helper'
 describe 'タスク管理機能', type: :system do
   before do
-    FactoryBot.create(:task, name: '最初のタスク', description: '説明文', start_at: '2021/09/01 10:00', due_date_at: '2021/09/02 11:00')
-    FactoryBot.create(:task, name: '２番目のタスク', description: '説明文２', start_at: '2021/09/02 10:00', due_date_at: '2021/09/03 11:00')
+    create(:task, name: '最初のタスク', description: '説明文', start_at: '2021/09/01 10:00', due_date_at: '2021/09/02 11:00')
+    create(:task, name: '２番目のタスク', description: '説明文２', start_at: '2021/09/02 10:00', due_date_at: '2021/09/03 11:00')
   end
 
   context 'タスク一覧を表示する' do
