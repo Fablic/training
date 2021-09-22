@@ -4,6 +4,8 @@ class TasksController < ApplicationController
   # GET /tasks
   def index
     @tasks = Task.all
+    @tasks = @tasks.search_by_name(params[:name]) if params[:name].presence
+    @tasks = @tasks.search_by_status(params[:status]) if params[:status].presence
   end
 
   # GET /tasks/1
@@ -54,6 +56,6 @@ class TasksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def task_params
-      params.fetch(:task, {}).permit(:name, :description, :priority)
+      params.fetch(:task, {}).permit(:name, :description, :priority, :status)
     end
 end

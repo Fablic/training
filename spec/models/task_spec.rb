@@ -51,4 +51,39 @@ RSpec.describe Task, type: :model do
       end
     end
   end
+
+  describe 'search scope' do
+    let!(:todo_task) { create(:task) } # name: task 1, description: task 1 description, status: todo
+    let!(:done_task) { create(:task_2) } # name: task 2, description: task 2 description, status: done
+
+    describe 'search by name' do
+      subject { Task.search_by_name(keyword) }
+
+      context 'blank keyword' do
+        let(:keyword) { '' }
+        it { is_expected.to include(todo_task, done_task) }
+      end
+
+      context 'search by (task 1) keyword' do
+        let(:keyword) { 'task 1' }
+        it { is_expected.to include(todo_task) }
+        it { is_expected.to_not include(done_task) }
+      end
+    end
+
+    context 'search by status' do
+      subject { Task.search_by_status(status) }
+
+      context 'search by all status' do
+        let(:status) { %w[todo in_progress done] }
+        it { is_expected.to include(todo_task, done_task) }
+      end
+
+      context 'search done task' do
+        let(:status) { 'done' }
+        it { is_expected.to include(done_task) }
+        it { is_expected.to_not include(todo_task) }
+      end
+    end
+  end
 end
