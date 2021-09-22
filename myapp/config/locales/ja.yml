@@ -13,6 +13,8 @@ ja:
       show: 'ユーザ管理：タスク一覧'
       new: 'ユーザ管理：新規'
       edit: 'ユーザ管理：更新'
+    labels:
+      index: 'ラベル管理'
 
   activerecord:
     attributes:
@@ -32,6 +34,8 @@ ja:
         roles:
           nomal: 一般
           admin: 管理者
+      label:
+        name: ラベル
 
   flash:
     new_success: タスク投稿が成功しました
@@ -44,9 +48,14 @@ ja:
     new_user_danger: ユーザ登録が失敗しました
     updated_user_success: ユーザ更新が成功しました
     updated_user_danger: ユーザ更新が失敗しました
-    user_destroy_success: ユーザが削除が成功しました
-    user_destroy_danger: ユーザが削除が失敗しました
+    user_destroy_success: ユーザ削除が成功しました
+    user_destroy_danger: ユーザ削除が失敗しました
     cannot_update_admin: 管理者は%{num}人以上必要です
+    new_label_success: ラベル登録が成功しました
+    new_label_danger: ラベル登録が失敗しました
+    updated_label_success: ラベル更新が成功しました
+    updated_label_danger: ラベル更新が失敗しました
+    label_destroy: ラベルが削除されました
 
   time:
     formats:

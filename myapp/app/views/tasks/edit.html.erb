@@ -34,6 +34,13 @@
     <%= f.datetime_field :deadline, class: "form-control" %>
   </div>
 </div>
+ <div class="row mb-3">
+  <%= f.label 'ラベル', class: "col-sm-1 col-form-label" %>
+  <div class="col-sm-3">
+    <%= f.collection_check_boxes(:label_ids, current_user.labels, :id, :name) %>
+  </div>
+</div>
+
 <div>
 <%= f.submit '保存', class: 'btn btn-secondary' %>
 </div>

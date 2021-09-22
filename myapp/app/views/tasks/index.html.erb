@@ -1,6 +1,7 @@
 <div class="d-flex justify-content-end ">
   <div class='btn-toolbar' role="toolbar">
-    <%= link_to '新規作成', new_task_path, class: 'btn btn-primary' %>
+    <%= link_to '新規作成', new_task_path, class: 'btn btn-primary mx-1' %>
+    <%= link_to 'ラベル管理', labels_path, class: 'btn btn-light border mx-1' %>
     <%= link_to 'ユーザ管理', admin_users_path, class: 'btn btn-outline-primary mx-1' if current_user.admin? %>
   </div>
 </div>
@@ -42,6 +43,16 @@
     </div>
   </div>
 </fieldset>
+<div class="row mb-3">
+  <%= f.label 'ラベル', class: "col-sm-1 col-form-label" %>
+  <div class="col-sm-5">
+    <% current_user.labels.each do |label| %>
+      <%= f.check_box :labels_id_eq_any, { multiple: true, checked: label[:checked], disabled: label[:disabled], include_hidden: false }, label[:id] %>
+      <label><%= label.name %></label>
+    <% end %>
+  </div>
+</div>
+
 <%= f.submit "検索", class: 'btn btn-secondary' %>
 <div class="d-flex justify-content-end">
   <h5>終了期限並び替え</h5>
@@ -67,7 +78,12 @@
 <% @tasks.each do |task| %>
     <tr>
       <th scope="row"><%= task.id %></th>
-      <td><%= link_to task.title, task %></td>
+      <td>
+        <%= link_to task.title, task %>
+          <% task.labels.each do |label| %>
+            <span class="badge bg-light text-dark border"><%= label.name %></span>
+          <% end %>
+      </td>
       <td class="deadline"><%= I18n.l(task.deadline, format: :short, default: '') %></td>
       <td><%= I18n.t("activerecord.attributes.task.statuses.#{task.status}") %></td>
       <td class="created"><%= I18n.l(task.created_at, format: :short) %></td>

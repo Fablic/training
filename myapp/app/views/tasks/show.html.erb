@@ -11,10 +11,14 @@
       <span class="badge rounded-pill bg-info text-dark p-1">
       <%= I18n.t("activerecord.attributes.task.statuses.#{@task.status}") %>
       </span>
+    <% @task.labels.each do |label| %>
+    <span class="badge bg-light text-dark border"><%= label.name %></span>
+    <% end %>
     </h5>
     <p class="card-text"><%= @task.content %></p>
     <p>終了期限:<%= I18n.l(@task.deadline, format: :short, default: '') %></p>
     <p>作成日:<%= I18n.l(@task.created_at, format: :short) %></p>
+
     <%= link_to '編集する', edit_task_path(@task), class: 'btn btn-primary mx-1' %>
     <%= link_to '削除する', @task, method: :delete, data:{ confirm: '本当によろしいですか？'}, class: 'btn btn-dark mx-1' %>
   </div>

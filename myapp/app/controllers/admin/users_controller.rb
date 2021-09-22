@@ -2,6 +2,7 @@ class Admin::UsersController < ApplicationController
   ADMIN_USER_MIN = 1
 
   before_action { _login_check || _check_role_admin }
+  before_action :_set_user, only: %i[show edit update destroy]
 
   def index
     @users = User.preload(:tasks)
@@ -9,7 +10,6 @@ class Admin::UsersController < ApplicationController
 
   def show
     @tasks = Task.where(user_id: params[:id])
-    @user = User.find params[:id]
   end
 
   def new
@@ -28,13 +28,9 @@ class Admin::UsersController < ApplicationController
     end
   end
 
-  def edit
-    @user = User.find(params[:id])
-  end
+  def edit; end
 
   def update
-    @user = User.find(params[:id])
-
     if _can_change_role? && @user.update(user_params)
       redirect_to admin_users_path, flash: { success: I18n.t('flash.updated_user_success') }
     else
@@ -45,8 +41,6 @@ class Admin::UsersController < ApplicationController
   end
 
   def destroy
-    @user = User.find(params[:id])
-
     if current_user == @user
       flash[:danger] = I18n.t('flash.user_destroy_danger')
       flash[:info] = I18n.t('flash.cannot_update_admin', num: ADMIN_USER_MIN)
@@ -75,5 +69,9 @@ class Admin::UsersController < ApplicationController
 
     flash[:info] = I18n.t('flash.cannot_update_admin', num: ADMIN_USER_MIN)
     false
+  end
+
+  def _set_user
+    @user = User.find(params[:id])
   end
 end
