@@ -38,6 +38,11 @@ rails db:migrate
 gem install rubocop
 ```
 
+### 6.rspec
+```
+rails g rspec:install
+```
+
 
 ## table list
 
