@@ -1,5 +1,6 @@
 class TasksController < ApplicationController
   before_action :_login_check
+  before_action :_set_task, only: %i[show edit update destroy]
 
   def index
     params[:q] = { sorts: 'created_at desc' } if params[:q].blank?
@@ -8,7 +9,7 @@ class TasksController < ApplicationController
   end
 
   def show
-    @task = current_user.tasks.find(params[:id])
+    # before_actionのみ
   end
 
   def new
@@ -28,12 +29,10 @@ class TasksController < ApplicationController
   end
 
   def edit
-    @task = current_user.tasks.find(params[:id])
+    # before_actionのみ
   end
 
   def update
-    @task = current_user.tasks.find(params[:id])
-
     if @task.update(task_params)
       redirect_to @task, flash: { success: I18n.t('flash.updated_success') }
     else
@@ -44,7 +43,6 @@ class TasksController < ApplicationController
   end
 
   def destroy
-    @task = current_user.tasks.find(params[:id])
     @task.destroy
 
     redirect_to root_path, flash: { success: I18n.t('flash.destroy') }
@@ -52,5 +50,11 @@ class TasksController < ApplicationController
 
   def task_params
     params.require(:task).permit(:title, :content, :deadline, :status, label_ids: [])
+  end
+
+  private
+
+  def _set_task
+    @task = current_user.tasks.find(params[:id])
   end
 end
