@@ -8,9 +8,7 @@ class TasksController < ApplicationController
     @tasks = @q.result.page(params[:page])
   end
 
-  def show
-    # before_actionのみ
-  end
+  def show; end
 
   def new
     @task = Task.new
@@ -28,9 +26,7 @@ class TasksController < ApplicationController
     end
   end
 
-  def edit
-    # before_actionのみ
-  end
+  def edit; end
 
   def update
     if @task.update(task_params)

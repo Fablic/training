@@ -28,9 +28,7 @@ class Admin::UsersController < ApplicationController
     end
   end
 
-  def edit
-    # before_actionのみ
-  end
+  def edit; end
 
   def update
     if _can_change_role? && @user.update(user_params)
