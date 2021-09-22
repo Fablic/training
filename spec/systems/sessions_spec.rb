@@ -8,7 +8,7 @@ RSpec.describe "Sessions", type: :system do
     end
   end
 
-  describe 'not login' do
+  describe 'login' do
     let(:user) { create(:user) }
     context 'valid email password' do
       before do
