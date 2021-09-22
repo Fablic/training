@@ -1,5 +1,6 @@
 class LabelsController < ApplicationController
   before_action :_login_check
+  before_action :_set_label, only: %i[update destroy]
 
   def index
     @labels = current_user.labels
@@ -18,8 +19,6 @@ class LabelsController < ApplicationController
   end
 
   def update
-    @label = current_user.labels.find(params[:id])
-
     if @label.update(label_params)
       redirect_to labels_path, flash: { success: I18n.t('flash.updated_label_success') }
     else
@@ -30,7 +29,6 @@ class LabelsController < ApplicationController
   end
 
   def destroy
-    @label = current_user.labels.find(params[:id])
     @label.destroy
 
     redirect_to labels_path, flash: { success: I18n.t('flash.label_destroy') }
@@ -38,5 +36,11 @@ class LabelsController < ApplicationController
 
   def label_params
     params.require(:label).permit(:name)
+  end
+
+  private
+
+  def _set_label
+    @label = current_user.labels.find(params[:id])
   end
 end
