@@ -4,7 +4,6 @@ RSpec.describe Task, type: :system do
   let!(:task) { create(:task) }
   let!(:user) { create(:user) }
 
-
   describe 'login' do
     before do
       visit login_path
@@ -23,7 +22,6 @@ RSpec.describe Task, type: :system do
 
     describe 'create task' do
       before { visit new_task_path }
-
       it 'visit new task page' do
         expect(page).to have_content 'New Task'
       end
@@ -55,7 +53,6 @@ RSpec.describe Task, type: :system do
 
     describe 'update task' do
       before { visit edit_task_path(task) }
-
       it 'visit new task page' do
         expect(page).to have_content 'Editing Task'
       end
@@ -112,7 +109,6 @@ RSpec.describe Task, type: :system do
     describe 'search task' do
       let!(:task_2) { create(:task_2) }
       before { visit root_path }
-
       context 'search by name' do
         before { fill_in 'name', with: 'task 1' }
         it 'should display only task 1' do
