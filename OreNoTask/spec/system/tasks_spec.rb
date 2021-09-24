@@ -11,11 +11,11 @@ describe 'タスク管理機能', type: :system do
     it '一覧画面の表示を確認する' do
       visit tasks_path
 
-      # 既存のタスクが表示されている
-      expect(page).to have_content '最初のタスク'
-      expect(page).to have_content '2021年09月01日(水) 10:00 〜 2021年09月02日(木) 11:00'
-      expect(page).to have_content '２番目のタスク'
-      expect(page).to have_content '2021年09月02日(木) 10:00 〜 2021年09月03日(金) 11:00'
+      # 既存のタスクが順番通り表示されている
+      expect(find('li:nth-child(1)')).to have_content '２番目のタスク'
+      expect(find('li:nth-child(1)')).to have_content '2021年09月02日(木) 10:00 〜 2021年09月03日(金) 11:00'
+      expect(find('li:nth-child(2)')).to have_content '最初のタスク'
+      expect(find('li:nth-child(2)')).to have_content '2021年09月01日(水) 10:00 〜 2021年09月02日(木) 11:00'
     end
   end
 
@@ -41,14 +41,14 @@ describe 'タスク管理機能', type: :system do
       click_button 'commit'
 
       # 作成されたタスクが表示されている
-      expect(page).to have_content '作ったタスク'
-      expect(page).to have_content '2021年10月01日(金) 01:02 〜 2021年10月02日(土) 03:04'
+      expect(find('li:nth-child(1)')).to have_content '作ったタスク'
+      expect(find('li:nth-child(1)')).to have_content '2021年10月01日(金) 01:02 〜 2021年10月02日(土) 03:04'
 
       # 既存のデータに影響がない
-      expect(page).to have_content '最初のタスク'
-      expect(page).to have_content '2021年09月01日(水) 10:00 〜 2021年09月02日(木) 11:00'
-      expect(page).to have_content '２番目のタスク'
-      expect(page).to have_content '2021年09月02日(木) 10:00 〜 2021年09月03日(金) 11:00'
+      expect(find('li:nth-child(2)')).to have_content '２番目のタスク'
+      expect(find('li:nth-child(2)')).to have_content '2021年09月02日(木) 10:00 〜 2021年09月03日(金) 11:00'
+      expect(find('li:nth-child(3)')).to have_content '最初のタスク'
+      expect(find('li:nth-child(3)')).to have_content '2021年09月01日(水) 10:00 〜 2021年09月02日(木) 11:00'
 
       # 詳細画面で作成したタスクの内容を確認
       click_link '作ったタスク'
@@ -61,7 +61,7 @@ describe 'タスク管理機能', type: :system do
   context 'タスクの編集' do
     it 'タスクを編集する' do
       visit tasks_path
-      click_link '編集', match: :first
+      find('li:nth-child(2)').click_link('編集')
       fill_in 'タスク名', with: '最初のタスクを編集'
       fill_in '内容', with: 'タスクの内容を編集'
       fill_in 'task[start_at]', with: '002021-10-11-11:12'
@@ -87,7 +87,7 @@ describe 'タスク管理機能', type: :system do
   context 'タスクの削除' do
     it 'タスクを削除する' do
       visit tasks_path
-      click_button '削除', match: :first
+      find('li:nth-child(2)').click_button('削除')
 
       # 作成されたタスクが表示されてない
       expect(page).not_to have_content '最初のタスク'
