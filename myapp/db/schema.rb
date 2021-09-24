@@ -27,17 +27,6 @@ ActiveRecord::Schema.define(version: 2021_09_17_075922) do
     t.string "name"
     t.text "description"
     t.bigint "user_id"
-    t.integer "status", limit: 1
-    t.datetime "period_date"
-    t.integer "priority"
-    t.integer "label_id_1"
-    t.integer "label_id_2"
-    t.integer "label_id_3"
-    t.integer "label_id_4"
-    t.integer "label_id_5"
-    t.integer "regist_user"
-    t.integer "update_user"
-    t.boolean "del_flag", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_tasks_on_user_id"
