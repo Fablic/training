@@ -13,9 +13,9 @@ describe 'タスク管理機能', type: :system do
 
       # 既存のタスクが表示されている
       expect(page).to have_content '最初のタスク'
-      expect(page).to have_content '2021-09-01 10:00:00 +0900 〜 2021-09-02 11:00:00 +0900'
+      expect(page).to have_content '2021年09月01日(水) 10:00 〜 2021年09月02日(木) 11:00'
       expect(page).to have_content '２番目のタスク'
-      expect(page).to have_content '2021-09-02 10:00:00 +0900 〜 2021-09-03 11:00:00 +0900'
+      expect(page).to have_content '2021年09月02日(木) 10:00 〜 2021年09月03日(金) 11:00'
     end
   end
 
@@ -26,7 +26,7 @@ describe 'タスク管理機能', type: :system do
       click_link '最初のタスク'
       expect(page).to have_content '最初のタスク'
       expect(page).to have_content '説明文'
-      expect(page).to have_content '2021-09-01 10:00:00 +0900 〜 2021-09-02 11:00:00 +0900'
+      expect(page).to have_content '2021年09月01日(水) 10:00 〜 2021年09月02日(木) 11:00'
     end
   end
 
@@ -42,19 +42,19 @@ describe 'タスク管理機能', type: :system do
 
       # 作成されたタスクが表示されている
       expect(page).to have_content '作ったタスク'
-      expect(page).to have_content '2021-10-01 01:02:00 +0900 〜 2021-10-02 03:04:00 +0900'
+      expect(page).to have_content '2021年10月01日(金) 01:02 〜 2021年10月02日(土) 03:04'
 
       # 既存のデータに影響がない
       expect(page).to have_content '最初のタスク'
-      expect(page).to have_content '2021-09-01 10:00:00 +0900 〜 2021-09-02 11:00:00 +0900'
+      expect(page).to have_content '2021年09月01日(水) 10:00 〜 2021年09月02日(木) 11:00'
       expect(page).to have_content '２番目のタスク'
-      expect(page).to have_content '2021-09-02 10:00:00 +0900 〜 2021-09-03 11:00:00 +0900'
+      expect(page).to have_content '2021年09月02日(木) 10:00 〜 2021年09月03日(金) 11:00'
 
       # 詳細画面で作成したタスクの内容を確認
       click_link '作ったタスク'
       expect(page).to have_content '作ったタスク'
       expect(page).to have_content 'タスクの内容'
-      expect(page).to have_content '2021-10-01 01:02:00 +0900 〜 2021-10-02 03:04:00 +0900'
+      expect(page).to have_content '2021年10月01日(金) 01:02 〜 2021年10月02日(土) 03:04'
     end
   end
 
@@ -70,17 +70,17 @@ describe 'タスク管理機能', type: :system do
       click_button 'commit'
       # 編集されたタスクが表示されている
       expect(page).to have_content '最初のタスクを編集'
-      expect(page).to have_content '2021-10-11 11:12:00 +0900 〜 2021-10-12 13:14:00 +0900'
+      expect(page).to have_content '2021年10月11日(月) 11:12 〜 2021年10月12日(火) 13:14'
 
       # 既存のデータに影響がない
       expect(page).to have_content '２番目のタスク'
-      expect(page).to have_content '2021-09-02 10:00:00 +0900 〜 2021-09-03 11:00:00 +0900'
+      expect(page).to have_content '2021年09月02日(木) 10:00 〜 2021年09月03日(金) 11:00'
 
       # 詳細画面で編集したタスクの内容を確認
       click_link '最初のタスクを編集'
       expect(page).to have_content '最初のタスクを編集'
       expect(page).to have_content 'タスクの内容を編集'
-      expect(page).to have_content '2021-10-11 11:12:00 +0900 〜 2021-10-12 13:14:00 +0900'
+      expect(page).to have_content '2021年10月11日(月) 11:12 〜 2021年10月12日(火) 13:14'
     end
   end
 
@@ -91,11 +91,11 @@ describe 'タスク管理機能', type: :system do
 
       # 作成されたタスクが表示されてない
       expect(page).not_to have_content '最初のタスク'
-      expect(page).not_to have_content '2021-09-01 10:00:00 +0900 〜 2021-09-02 11:00:00 +0900'
+      expect(page).not_to have_content '2021年09月01日(水) 10:00 〜 2021年09月02日(木) 11:00'
 
       # 既存のデータに影響がない
       expect(page).to have_content '２番目のタスク'
-      expect(page).to have_content '2021-09-02 10:00:00 +0900 〜 2021-09-03 11:00:00 +0900'
+      expect(page).to have_content '2021年09月02日(木) 10:00 〜 2021年09月03日(金) 11:00'
     end
   end
 end
