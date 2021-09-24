@@ -25,6 +25,8 @@ gem 'mysql2', '~> 0.5'
 # bundled gem since Ruby 3.0.0
 gem 'rexml'
 gem 'bcrypt'
+gem 'activeadmin'
+gem 'devise'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
