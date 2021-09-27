@@ -27,3 +27,4 @@ Style/Documentation:
 # 日本語のコメントを許可
 AsciiComments:
   Enabled: false
+  
