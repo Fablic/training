@@ -11,7 +11,7 @@ RSpec.describe Task, type: :model do
     end
 
     it 'expected enum value' do
-      expect(task.priority).to eq("low")
+      expect(task.priority).to eq('low')
     end
 
     it 'expected user' do

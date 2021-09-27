@@ -32,7 +32,7 @@ RSpec.describe Task, type: :system do
           fill_in 'task_description', with: 'task 2 description'
           select 'medium', from: 'task_priority'
         end
-        it "success" do
+        it 'success' do
           click_button 'Create Task'
           expect(current_path).to eq root_path
           expect(page).to have_content 'Task was successfully created.'
@@ -44,7 +44,7 @@ RSpec.describe Task, type: :system do
         before do
           fill_in 'task_name', with: nil
         end
-        it "validate fail" do
+        it 'validate fail' do
           click_button 'Create Task'
           expect(page).to have_content "Name can't be blank"
         end
@@ -63,7 +63,7 @@ RSpec.describe Task, type: :system do
           fill_in 'task_description', with: 'task 1 description updated'
           select 'high', from: 'task_priority'
         end
-        it "success" do
+        it 'success' do
           click_button 'Update Task'
           expect(current_path).to eq root_path
           expect(page).to have_content 'Task was successfully updated.'
@@ -77,7 +77,7 @@ RSpec.describe Task, type: :system do
         before do
           fill_in 'task_name', with: 'a' * 256
         end
-        it "validate fail" do
+        it 'validate fail' do
           click_button 'Update Task'
           expect(page).to have_content 'Name is too long'
         end

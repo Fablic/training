@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Sessions", type: :system do
+RSpec.describe 'Sessions', type: :system do
   describe 'not login' do
     it 'should redirect to login page' do
       visit root_path
