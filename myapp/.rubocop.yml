@@ -1,0 +1,25 @@
+Bundler/OrderedGems:
+  Exclude:
+
+AllCops:
+  NewCops: enable
+  #Railsで自動生成のものはチェック対象から外す
+  Exclude:
+    - 'Gemfile'
+    - "vendor/**/*"
+    - "db/schema*.rb"
+    - "node_modules/**/*"
+    - "app/channels/**/*"
+    - "config/**/*"
+    - "config.ru"
+    - "bin/**/*"
+    - "public/**/*"
+    - "tmp/**/*"
+    - "log/**/*"
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+# ドキュメントのないclass, moduleを許可する
+Style/Documentation:
+  Enabled: false
