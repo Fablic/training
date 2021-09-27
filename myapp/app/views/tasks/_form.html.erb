@@ -1,48 +1,48 @@
 <!-- task登録・編集用form -->
 <style>
-    .input_form_table td{
-        min-width:100px;
-    }
-    .error{
-        color:red;
-    }
-    .field_with_errors input,
-    .field_with_errors textarea{
-        border-color:red;
-    }
+  .input_form_table td{
+    min-width:100px;
+  }
+  .error{
+    color:red;
+  }
+  .field_with_errors input,
+  .field_with_errors textarea{
+    border-color:red;
+  }
 
 </style>
 <%= form_for @task do |f| %>
-    <% if @task.errors.any? %>
-        <p class="error">入力エラーがあります</p>
-        <div class="error_detail_area">
-            <ul>
-            <% @task.errors.full_messages.each do |message| %>
-            <li><%= message %></li>
-            <% end %>
-      </ul>
-        </div>
-    <% end %>
-    <table class="input_form_table">
-        <tbody>
-            <tr>
-                <td>
-                    <%= f.label :name,"タスク名" %>
-                </td>
-                <td><%= f.text_field :name %>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <%= f.label :description,"詳細" %>
-                </td>
-                <td><%= f.text_area :description %></td>
-            </tr>
-        </tbody>
-    </table>
-    <% if local_assigns[:edit_flag].present? %>
-        <%= f.submit "更新" %>
-    <% else %>
-        <%= f.submit "登録" %>
-    <% end %>   
+  <% if @task.errors.any? %>
+    <p class="error">入力エラーがあります</p>
+    <div class="error_detail_area">
+      <ul>
+      <% @task.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+      <% end %>
+    </ul>
+    </div>
+  <% end %>
+  <table class="input_form_table">
+    <tbody>
+      <tr>
+        <td>
+          <%= f.label :name,"タスク名" %>
+        </td>
+        <td><%= f.text_field :name %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <%= f.label :description,"詳細" %>
+        </td>
+        <td><%= f.text_area :description %></td>
+      </tr>
+    </tbody>
+  </table>
+  <% if local_assigns[:edit_flag].present? %>
+    <%= f.submit "更新" %>
+  <% else %>
+    <%= f.submit "登録" %>
+  <% end %>   
 <% end %>
