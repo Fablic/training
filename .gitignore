@@ -1,9 +1,7 @@
-# cacheがたくさんあるのはいらない
-myapp/tmp/cache/
-tmp/cache/bootstanp/
+# temp以下は不要
+myapp/tmp/
 # DS_Storeファイルもいらない
 .DS_Store
 # logファイルも除外する
 *.log
-# ignoreファイルもいらない? →一応残しておこう
-#.gitignore
+myapp/log/
