@@ -5,3 +5,5 @@ myapp/tmp/
 # logファイルも除外する
 *.log
 myapp/log/
+# oldフォルダも除外
+old/
