@@ -17,6 +17,7 @@ RUN apt-get update -qq && \
 
 # node install
 RUN curl -SL https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash - \
+    && apt-get -y remove nodejs-doc \
     && apt-get install -y nodejs
 
 # yarn install

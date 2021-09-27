@@ -20,7 +20,7 @@ require 'rspec/rails'
 # directory. Alternatively, in the individual `*_spec.rb` files, manually
 # require only the support files necessary.
 #
-# Dir[Rails.root.join('spec', 'support', '**', '*.rb')].sort.each { |f| require f }
+Dir[Rails.root.join('spec', 'support', '**', '*.rb')].sort.each { |f| require f }
 
 # Checks for pending migrations and applies them before tests are run.
 # If you are not using ActiveRecord, you can remove these lines.
@@ -62,18 +62,8 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
 
+  # adding FactoryBot
   config.include FactoryBot::Syntax::Methods
-
-  # settings to use Selenium container in local
-  Capybara.register_driver :remote_chrome do |app|
-    hub_url = 'https://chrome:4444/wd/hub' # docker-compose.ymlでchromeのportを4444で設定しているため
-    chrome_capabilities = ::Selenium::WebDriver::Remote::Capabilities.chrome(
-      'goog:chromeOptions' => {
-        'args' => %w[no-sandbox headless disable-gpu window-size=1680,1050],
-      },
-    )
-    Capybara::Selenium::Driver.new(app, browser: :remote, url: hub_url, desired_capabilities: chrome_capabilities)
-  end
 
   config.before(:each, type: :system) do
     driven_by :rack_test
@@ -81,8 +71,19 @@ RSpec.configure do |config|
 
   config.before(:each, type: :system, js: true) do
     driven_by :remote_chrome
-    Capybara.server_host = IPSocket.getaddress(Socket.gethostname)
-    Capybara.server_port = 3000
+    Capybara.server_host = Socket.ip_address_list.detect { |addr| addr.ipv4_private? }.ip_address
+    Capybara.server_port = 3001
     Capybara.app_host = "https://#{Capybara.server_host}:#{Capybara.server_port}"
   end
+end
+
+# settings to use Selenium container in local
+Capybara.register_driver :remote_chrome do |app|
+  hub_url = 'https://chrome:4444/wd/hub'
+  chrome_capabilities = ::Selenium::WebDriver::Remote::Capabilities.chrome(
+    'goog:chromeOptions' => {
+      'args' => %w[no-sandbox headless disable-gpu window-size=1680,1050],
+    },
+  )
+  Capybara::Selenium::Driver.new(app, browser: :remote, url: hub_url, desired_capabilities: chrome_capabilities)
 end

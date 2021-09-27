@@ -2,9 +2,8 @@
 
 <table>
     <tr>
-        <th>あいでー</th>
-        <th>たいとる</th>
-        <th>ですくりぷしょん</th>
+        <th>id</th>
+        <th>title</th>
     </tr>
 
 <% @tasks.each do |task| %>
@@ -12,8 +11,8 @@
         <td><%= task.id %></td>
         <td><%= link_to task.title, task%></td>
         <td><%= link_to 'Edit', edit_task_path(id: task.id)%></td>
-        <td><%= link_to 'Delete', task, method: :delete, data: { confirm: 'Are you sure about it?' } %></td>
+        <td><%= link_to 'Delete', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
     </tr>
 <% end %>
 </table>
-<p><%= link_to 'create', new_task_path %></p>
+<p><%= link_to 'Create', new_task_path, class: "task-new" %></p>
