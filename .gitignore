@@ -7,3 +7,5 @@ myapp/tmp/
 myapp/log/
 # oldフォルダも除外
 old/
+# node_modulesも除外
+myapp/node_modules/
