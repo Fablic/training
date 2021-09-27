@@ -5,6 +5,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: root
+    #container名を指定する
+    container_name: hsmt-dev-db
 #      MYSQL_DATABASE: dev
     ports:
       - "3316:3306"
@@ -18,6 +20,8 @@ services:
     volumes:
       - .:/myapp
       - bundle-install:/usr/local/bundle:delegated
+    #container名を指定する
+    container_name: hsmt-dev-api
     ports:
       - "3001:3000"
     links:
@@ -35,6 +39,9 @@ services:
     image: selenium/standalone-chrome:latest
     ports:
       - 4444:4444
+    #container名を指定する
+    container_name: hsmt-dev-chrome
+
 
 volumes:
   db-data:
