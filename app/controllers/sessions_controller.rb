@@ -1,4 +1,6 @@
 class SessionsController < ApplicationController
+  skip_before_action :logged_in_user, only: %i[new create]
+
   def new; end
 
   def create
@@ -7,7 +9,7 @@ class SessionsController < ApplicationController
       log_in user
       redirect_to root_path, notice: 'Login successful'
     else
-      flash[:danger] = 'Invalid email/password combination'
+      flash.now[:danger] = 'Invalid email/password combination'
       render :new
     end
   end
