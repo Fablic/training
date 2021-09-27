@@ -30,6 +30,16 @@
       <%= f.select :status, Task.statuses.keys , {}, { class: %w[form-select] } %>
     </div>
 
+    <div class="mb-4">
+      <%= f.label :label, 'Label', class: %w[label] %>
+      <div>
+        <%= f.collection_check_boxes(:label_ids, Label.all, :id, :name, class: %w[form-check]) do |l| %>
+          <%= l.label class: %w[form-check-label] %>
+          <%= l.check_box class: %[form-check-input] %>
+        <% end %>
+      </div>
+    </div>
+
     <div class="actions mb-4">
       <%= f.submit nil, class: %w[btn btn-primary] %>
     </div>
