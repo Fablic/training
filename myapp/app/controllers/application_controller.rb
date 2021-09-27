@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  before_action :_check_maintenannce
   include SessionsHelper
 
   unless Rails.env.production?
@@ -37,5 +38,11 @@ class ApplicationController < ActionController::Base
     return if logged_in?
 
     redirect_to login_url
+  end
+
+  def _check_maintenannce
+    return unless File.exist?(Rails.public_path.join('maintenance.html'))
+
+    redirect_to '/maintenance.html'
   end
 end
