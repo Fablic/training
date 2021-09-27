@@ -1,0 +1,13 @@
+ja:
+  time:
+    formats:
+      default: "%Y/%m/%d %H:%M:%S"
+      yymmdd: "%y/%m/%d"
+      time: "%H:%M"
+      day: "%m/%d"
+
+  activerecord:
+    attributes:
+      task:
+        name: タスク名
+        description: 詳細
