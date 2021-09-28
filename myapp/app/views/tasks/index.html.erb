@@ -1,0 +1,54 @@
+<style>
+  .list_table td,
+  .list_table th{
+    border:1px solid gray;
+    padding:10px;
+  }
+  .list_table th{
+    background-color:black;
+    color:white;
+    min-width:100px;
+  }
+  .notice_area{
+    background:yellow;
+  }
+
+</style>
+<h1>タスク一覧</h1>
+<!--flash -->
+<% if flash[:notice] %>
+  <p class="notice_area"><%= flash[:notice] %><p>
+<% end %>
+
+<!--menu -->
+<div id = "area_menu">
+  <%= link_to "追加", new_task_path %>
+</div>
+
+<!--list -->
+<div id="area_list">
+  <table class="list_table">
+    <thead>
+      <tr>
+      <th>タスク名</th>
+      <th>詳細</th>
+      <th>作成</th>
+      <th>更新</th>
+      <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @tasks.each do |task| %>
+      <tr>
+        <td><%= link_to task.name, edit_task_path(task.id) %></td>
+        <td> <%= task.description %></td>
+        <td> <%= l task.created_at %></td>
+        <td> <%= l task.updated_at %></td>
+        <td> 
+        <%= link_to "削除", task_path(task.id), method: :delete, data: {confirm: "削除しますか？"} %>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
