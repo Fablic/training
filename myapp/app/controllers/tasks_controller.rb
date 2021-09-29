@@ -1,5 +1,4 @@
 class TasksController < ApplicationController
-
   # GET /tasks(.:format)
   def index
     @tasks = Task.all
@@ -10,7 +9,7 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
   end
 
-  # GET /tasks/new(.:format) 
+  # GET /tasks/new(.:format)
   def new
     @task = Task.new
   end
@@ -42,7 +41,7 @@ class TasksController < ApplicationController
     end
   end
 
-  # GET /tasks/:id(.:format)  
+  # GET /tasks/:id(.:format)
   def show
     @task = Task.find(params[:id])
   end
@@ -60,8 +59,8 @@ class TasksController < ApplicationController
   end
 
   private
+
   def task_params
     params.fetch(:task, {}).permit(:title, :description)
   end
-
 end

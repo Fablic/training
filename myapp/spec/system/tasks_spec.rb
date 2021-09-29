@@ -41,6 +41,7 @@ RSpec.describe 'Tasks', type: :system do
       expect(page).to have_content 'Successfully created'
       expect(page).to have_content 'Tasks#list'
     end
+
     it 'back to index' do
       click_on class: 'button-back'
       expect(page).to have_content 'Tasks#list'
@@ -49,12 +50,14 @@ RSpec.describe 'Tasks', type: :system do
 
   describe 'Edit Page' do
     before { visit edit_task_path(task_list.first.id) }
+
     let(:params) { { title: 'title for edit', description: 'description for edit' } }
-    
+
     it 'list task detail' do
       expect(page).to have_field 'title', with: task_list.first.title
       expect(page).to have_field 'description', with: task_list.first.description
     end
+
     it 'edit and resister task' do
       fill_in 'task[title]',       with: params[:title]
       fill_in 'task[description]', with: params[:description]
@@ -71,6 +74,7 @@ RSpec.describe 'Tasks', type: :system do
       expect(page).to have_content task_list.first.title
       expect(page).to have_content task_list.first.description
     end
+
     it 'back to list page' do
       click_on 'back to task list'
       expect(page).to have_content 'Tasks#list'
