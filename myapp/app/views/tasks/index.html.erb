@@ -45,7 +45,7 @@
         <td> <%= l task.created_at %></td>
         <td> <%= l task.updated_at %></td>
         <td> 
-        <%= link_to "削除", task_path(task.id), method: :delete, data: {confirm: "削除しますか？"} %>
+        <%= link_to "削除", task_path(task.id), method: :delete, data: {confirm: "削除しますか？"}, id: "del_#{task.id}", class: "del_button" %>
         </td>
       </tr>
       <% end %>

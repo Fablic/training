@@ -9,3 +9,5 @@ myapp/log/
 old/
 # node_modulesも除外
 myapp/node_modules/
+# swpファイルも除外
+*.swp
