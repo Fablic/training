@@ -3,8 +3,18 @@
 require 'rails_helper'
 describe 'タスク管理機能', type: :system do
   before do
-    create(:task, name: '最初のタスク', description: '説明文', start_at: '2021/09/01 10:00', due_date_at: '2021/09/02 11:00')
-    create(:task, name: '２番目のタスク', description: '説明文２', start_at: '2021/09/02 10:00', due_date_at: '2021/09/03 11:00')
+    @task_a = create(:task, name: '最初のタスク', description: '説明文', start_at: '2021/09/01 10:00', due_date_at: '2021/09/02 11:00')
+    @task_b = create(:task, name: '２番目のタスク', description: '説明文２', start_at: '2021/09/02 10:00', due_date_at: '2021/09/03 11:00')
+  end
+
+  describe '呼び出しレコードの順番をチェックする' do
+    before do
+      @task_c = create(:task, name: '追加したタスク', description: '追加した説明文', start_at: '2021/08/01 10:00', due_date_at: '2021/08/03 11:00')
+      @task_d = create(:task, name: '最後のタスク', description: '最後の説明文', start_at: '2021/07/02 10:00', due_date_at: '2021/07/03 11:00')
+    end
+    it 'ランダムな情報を入力したレコードで順番を確認' do
+      Task.order('created_at desc').all.should == [@task_d, @task_c, @task_b, @task_a]
+    end
   end
 
   context 'タスク一覧を表示する' do
