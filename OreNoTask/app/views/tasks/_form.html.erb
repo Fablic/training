@@ -1,10 +1,10 @@
 <table>
   <tr>
-    <th><%= form.label :name, 'タスク名' %></th>
+    <th><%= form.label :name, Task.human_attribute_name(:name) %></th>
     <td><%= form.text_field :name %></td>
   </tr>
   <tr>
-    <th>期間</th>
+    <th><%= Task.human_attribute_name(:period) %></th>
     <td>
       <%= form.datetime_field :start_at, class: 'form-control' %>
        〜 
@@ -12,7 +12,7 @@
     </td>
   </tr>
   <tr>
-    <th><%= form.label :description, '内容' %></th>
+    <th><%= form.label :description, Task.human_attribute_name(:description) %></th>
     <td><%= form.text_area :description %></td>
   </tr>
 </table>
