@@ -17,10 +17,11 @@ class TasksController < ApplicationController
 
   def update
     @task = Task.find(params[:id])
+
     if @task.update(task_params)
       redirect_to tasks_path, notice: I18n.t('dictionary.messages.edited_task')
     else
-      render edit, notice: I18n.t('dictionary.messages.edited_task_failed')
+      render :edit
     end
   end
 
@@ -31,10 +32,11 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
+
     if @task.save
       redirect_to tasks_path, notice: I18n.t('dictionary.messages.created_task')
     else
-      render new, notice: I18n.t('dictionary.messages.created_task_failed')
+      render :new
     end
   end
 
