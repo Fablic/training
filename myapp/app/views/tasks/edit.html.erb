@@ -2,12 +2,12 @@
 <div>
   <%= form_with model: @task  do |form| %>
     <div>
-      <%= form.label :title, 'たいとる' %>
+      <%= form.label :title, 'title' %>
       <%= form.text_field :title, value: @task.title %>
     </div>
 
     <div>
-      <%= form.label :description, 'ですくりぷしょん' %>
+      <%= form.label :description, 'description' %>
       <%= form.text_field :description, value: @task.description %>
     </div>
 
