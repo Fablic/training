@@ -2,7 +2,7 @@
 
 class TasksController < ApplicationController
   def index
-    @tasks = Task.where(deleted: 0)
+    @tasks = Task.where(deleted: 0).order(created_at: :desc)
   end
 
   def new
