@@ -52,7 +52,7 @@ class TasksController < ApplicationController
   # private methods
 
   private
-  
+
   def find_by_id
     Task.find(params[:id])
   end
