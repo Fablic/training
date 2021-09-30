@@ -1,0 +1,15 @@
+<div class="row mt-2">
+  <div class="col-md-6 offset-md-3">
+    <h1 class="mb-4">Log in</h1>
+    <%= form_for(:session, url: login_path) do |f| %>
+
+      <%= f.label :email %>
+      <%= f.email_field :email, class: %w[form-control] %>
+
+      <%= f.label :password %>
+      <%= f.password_field :password, class: %w[form-control] %>
+
+      <%= f.submit 'Log in', class: %w[btn btn-primary mt-2 w-100] %>
+    <% end %>
+  </div>
+</div>

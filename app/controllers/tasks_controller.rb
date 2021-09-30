@@ -1,9 +1,9 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: %i[ show edit update destroy ]
+  before_action :set_task, only: %i[show edit update destroy]
 
   # GET /tasks
   def index
-    @tasks = Task.all
+    @tasks = current_user.tasks
     @tasks = @tasks.search_by_name(params[:name]) if params[:name].presence
     @tasks = @tasks.search_by_status(params[:status]) if params[:status].presence
   end
@@ -21,7 +21,7 @@ class TasksController < ApplicationController
 
   # POST /tasks
   def create
-    @task = Task.new(task_params)
+    @task = Task.new(task_params.merge(user_id: current_user.id))
 
     if @task.save
       redirect_to root_path, notice: "Task was successfully created."

@@ -2,121 +2,136 @@ require 'rails_helper'
 
 RSpec.describe Task, type: :system do
   let!(:task) { create(:task) }
-  describe 'index task' do
-    it 'visit index page' do
-      visit root_path
-      expect(page).to have_content 'Task Index'
-      expect(page).to have_content 'task 1'
-    end
-  end
+  let!(:user) { create(:user) }
 
-  describe 'create task' do
-    before { visit new_task_path }
-
-    it 'visit new task page' do
-      expect(page).to have_content 'New Task'
+  describe 'login' do
+    before do
+      visit login_path
+      fill_in 'session_email', with: user.email
+      fill_in 'session_password', with: user.password
+      click_button 'Log in'
     end
 
-    context 'valid form' do
-      before do
-        fill_in 'task_name', with: 'task 2'
-        fill_in 'task_description', with: 'task 2 description'
-        select 'medium', from: 'task_priority'
-      end
-      it "success" do
-        click_button 'Create Task'
-        expect(current_path).to eq root_path
-        expect(page).to have_content 'Task was successfully created.'
-        expect(page).to have_content 'task 2'
-      end
-    end
-
-    context 'invalid form' do
-      before do
-        fill_in 'task_name', with: nil
-      end
-      it "validate fail" do
-        click_button 'Create Task'
-        expect(page).to have_content "Name can't be blank"
-      end
-    end
-  end
-
-  describe 'update task' do
-    before { visit edit_task_path(task) }
-
-    it 'visit new task page' do
-      expect(page).to have_content 'Editing Task'
-    end
-
-    context 'valid form' do
-      before do
-        fill_in 'task_name', with: 'task 1 updated'
-        fill_in 'task_description', with: 'task 1 description updated'
-        select 'high', from: 'task_priority'
-      end
-      it "success" do
-        click_button 'Update Task'
-        expect(current_path).to eq root_path
-        expect(page).to have_content 'Task was successfully updated.'
-        expect(task.reload.name).to eq 'task 1 updated'
-        expect(task.reload.description).to eq 'task 1 description updated'
-        expect(task.reload.priority).to eq 'high'
-      end
-    end
-
-    context 'invalid form' do
-      before do
-        fill_in 'task_name', with: 'a' * 256
-      end
-      it "validate fail" do
-        click_button 'Update Task'
-        expect(page).to have_content 'Name is too long'
-      end
-    end
-  end
-
-  describe 'show task' do
-    it 'visit show task page' do
-      visit task_path(task)
-      expect(page).to have_content 'Task Detail'
-      expect(page).to have_content 'task 1'
-      expect(page).to have_content 'task 1 description'
-      expect(page).to have_content 'low'
-    end
-  end
-
-  describe 'destroy task' do
-    before { visit root_path }
-    it 'success' do
-      click_link 'Destroy', match: :first
-      expect {
-        expect(page.driver.browser.switch_to.alert.text).to eq 'Are you sure?'
-        page.driver.browser.switch_to.alert.accept
-      }.to change{ Task.count }.by(0)
-      expect(page).to have_content 'Task was successfully deleted.'
-    end
-  end
-
-  describe 'search task' do
-    let!(:task_2) { create(:task_2) }
-    before { visit root_path }
-
-    context 'search by name' do
-      before { fill_in 'name', with: 'task 1' }
-      it 'should display only task 1' do
-        click_button 'Search'
+    describe 'index task' do
+      it 'visit index page' do
+        visit root_path
+        expect(page).to have_content 'Task Index'
         expect(page).to have_content 'task 1'
-        expect(page).to have_no_content 'task 2'
       end
     end
 
-    context 'search by status' do
-      before { select 'done', from: 'status' }
-      it 'should display only task 2' do
-        click_button 'Search'
-        expect(page).to have_content 'task 2'
-        expect(page).to have_no_content 'task 1'
+    describe 'create task' do
+      before { visit new_task_path }
+      it 'visit new task page' do
+        expect(page).to have_content 'New Task'
+      end
+
+      context 'valid form' do
+        before do
+          fill_in 'task_name', with: 'task 2'
+          fill_in 'task_description', with: 'task 2 description'
+          select 'medium', from: 'task_priority'
+        end
+        it 'success' do
+          click_button 'Create Task'
+          expect(current_path).to eq root_path
+          expect(page).to have_content 'Task was successfully created.'
+          expect(page).to have_content 'task 2'
+        end
+      end
+
+      context 'invalid form' do
+        before do
+          fill_in 'task_name', with: nil
+        end
+        it 'validate fail' do
+          click_button 'Create Task'
+          expect(page).to have_content "Name can't be blank"
+        end
+      end
+    end
+
+    describe 'update task' do
+      before { visit edit_task_path(task) }
+      it 'visit new task page' do
+        expect(page).to have_content 'Editing Task'
+      end
+
+      context 'valid form' do
+        before do
+          fill_in 'task_name', with: 'task 1 updated'
+          fill_in 'task_description', with: 'task 1 description updated'
+          select 'high', from: 'task_priority'
+        end
+        it 'success' do
+          click_button 'Update Task'
+          expect(current_path).to eq root_path
+          expect(page).to have_content 'Task was successfully updated.'
+          expect(task.reload.name).to eq 'task 1 updated'
+          expect(task.reload.description).to eq 'task 1 description updated'
+          expect(task.reload.priority).to eq 'high'
+        end
+      end
+
+      context 'invalid form' do
+        before do
+          fill_in 'task_name', with: 'a' * 256
+        end
+        it 'validate fail' do
+          click_button 'Update Task'
+          expect(page).to have_content 'Name is too long'
+        end
+      end
+    end
+
+    describe 'show task' do
+      it 'visit show task page' do
+        visit task_path(task)
+        expect(page).to have_content 'Task Detail'
+        expect(page).to have_content 'task 1'
+        expect(page).to have_content 'task 1 description'
+        expect(page).to have_content 'low'
+      end
+    end
+
+    describe 'destroy task' do
+      before { visit root_path }
+      it 'success' do
+        click_link 'Destroy', match: :first
+        expect {
+          expect(page.driver.browser.switch_to.alert.text).to eq 'Are you sure?'
+          page.driver.browser.switch_to.alert.accept
+        }.to change{ Task.count }.by(0)
+        expect(page).to have_content 'Task was successfully deleted.'
+      end
+    end
+
+    describe 'search task' do
+      let!(:task_2) {
+        create(:task,
+               name: 'task 2',
+               description: 'task 2 description',
+               status: 'done',
+               user: task.user
+        ) }
+
+      before { visit root_path }
+      context 'search by name' do
+        before { fill_in 'name', with: 'task 1' }
+        it 'should display only task 1' do
+          click_button 'Search'
+          expect(page).to have_content 'task 1'
+          expect(page).to have_no_content 'task 2'
+        end
+      end
+
+      context 'search by status' do
+        before { select 'done', from: 'status' }
+        it 'should display only task 2' do
+          click_button 'Search'
+          expect(page).to have_content 'task 2'
+          expect(page).to have_no_content 'task 1'
+        end
       end
     end
   end
