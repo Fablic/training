@@ -20,7 +20,7 @@ module Myapp
     config.i18n.default_locale = :ja
 
     # 複数のロケールファイルを読み込めるようにする。
-    config.i18n.load_path += Dir[Rails.root.join('config','locales','**','*.{rb,yml}').to_s]
+    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}').to_s]
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers

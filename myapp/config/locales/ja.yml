@@ -6,8 +6,8 @@ ja:
       time: "%H:%M"
       day: "%m/%d"
 
-  activerecord:
-    attributes:
-      task:
-        name: タスク名
-        description: 詳細
+  dicrionary:
+    messages:
+      msg_input_err: '入力エラーがあります'
+
+

@@ -15,7 +15,7 @@ class TasksController < ApplicationController
 
     if @task.save
       # 一覧へ
-      redirect_to tasks_path, notice: 'タスクを登録しました。'
+      redirect_to tasks_path, notice: t("messages.create.notice")
     else
       # 登録画面へ
       render action: :new
@@ -33,7 +33,7 @@ class TasksController < ApplicationController
 
     if @task.update(set_params_to_task)
       # 一覧へ
-      redirect_to tasks_path, notice: 'タスクを更新しました。'
+      redirect_to tasks_path, notice: t("messages.update.notice")
     else
       # 編集画面へ
       render action: :edit
@@ -46,7 +46,7 @@ class TasksController < ApplicationController
     @task.destroy
 
     # 一覧へ
-    redirect_to tasks_path, notice: 'タスクを削除しました。'
+    redirect_to tasks_path, notice: t("messages.destroy.notice")
   end
 
   # private methods
