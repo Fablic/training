@@ -1,4 +1,4 @@
-<h1><%= t '.title' %></h1>
+<h1><%= I18n.t('tasks.new.title') %></h1>
 <%= form_with url: tasks_path, model: @task do |form| %>
   <%= render partial: 'form', locals: { form: form, submit_label: @submit_label } %>
 <% end %>
