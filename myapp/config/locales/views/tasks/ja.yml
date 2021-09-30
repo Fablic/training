@@ -1,0 +1,8 @@
+ja:
+  tasks:
+    index:
+      title: 'タスク一覧'
+    new:
+      title: 'タスク新規作成'
+    edit:
+      title: 'タスク編集'
