@@ -11,3 +11,5 @@ old/
 myapp/node_modules/
 # swpファイルも除外
 *.swp
+# .idea下はrubymineの設定なので除外
+myapp/.idea/

@@ -1,4 +1,4 @@
-<h1>新規作成</h1>
+<h1><%= t ".title" %></h1>
 <!--form -->
 <%= render :partial => "form" %>
-<%= link_to "一覧", tasks_path %>
+<%= link_to t('tasks.link_index') , tasks_path %>

@@ -1,0 +1,26 @@
+ja:
+  activerecord:
+    models:
+      task: タスク
+
+    # モデルごとに設定する
+    attributes:
+      task:
+        id: ID
+        name: タスク名
+        description: 詳細
+  # 全てのmodelで共通
+  attributes:
+    created_at: 作成日
+    updated_at: 更新日
+
+  messages:
+    create:
+      notice: タスクを登録しました。
+      alert: タスク登録できません。
+    update:
+      notice: タスクを更新しました。
+      alert: タスクが更新できません。
+    destroy:
+      notice: タスクを削除しました。
+      alert: タスク削除できません。

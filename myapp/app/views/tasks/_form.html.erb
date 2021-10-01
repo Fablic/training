@@ -14,7 +14,7 @@
 </style>
 <%= form_for @task do |f| %>
   <% if @task.errors.any? %>
-    <p class="error">入力エラーがあります</p>
+    <p class="error"><%= t 'dicrionary.messages.msg_input_err' %></p>
     <div class="error_detail_area">
       <ul>
       <% @task.errors.full_messages.each do |message| %>
@@ -27,22 +27,22 @@
     <tbody>
       <tr>
         <td>
-          <%= f.label :name,"タスク名" %>
+          <%= f.label :name %>
         </td>
         <td><%= f.text_field :name %>
         </td>
       </tr>
       <tr>
         <td>
-          <%= f.label :description,"詳細" %>
+          <%= f.label :description%>
         </td>
         <td><%= f.text_area :description %></td>
       </tr>
     </tbody>
   </table>
   <% if local_assigns[:edit_flag].present? %>
-    <%= f.submit "更新" %>
+    <%= f.submit t('tasks.edit.btn_regist') %>
   <% else %>
-    <%= f.submit "登録" %>
+    <%= f.submit t('tasks.new.btn_regist') %>
   <% end %>
 <% end %>

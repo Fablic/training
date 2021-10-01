@@ -1,5 +1,5 @@
-<h1>詳細・編集</h1>
+<h1><%= t ".title" %></h1>
 <!--form -->
 <%= render :partial => "form" , :locals => {:edit_flag => true} %>
-<%= link_to "一覧", tasks_path %>
+<%= link_to t('tasks.link_index') , tasks_path %>
 
