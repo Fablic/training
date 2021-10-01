@@ -1,6 +1,10 @@
 <h1><%= I18n.t('tasks.index.title') %></h1>
 <p><%= link_to I18n.t('tasks.index.create'), new_task_path, class: 'btn btn-success mr-2' %></p>
-
+<p><%= Task.human_attribute_name(:due_date_at) + I18n.t('dictionary.words.sort') %>
+  <%= link_to I18n.t('dictionary.words.asc'), { sort: 'due_date_at', direction: 'asc' } %> 
+  <%= link_to I18n.t('dictionary.words.desc'), { sort: 'due_date_at', direction: 'desc' } %> 
+  <%= link_to I18n.t('dictionary.words.clear'), tasks_path %>
+</p>
 <ul>
   <% @tasks.each do |task| %><li>
     <h2>

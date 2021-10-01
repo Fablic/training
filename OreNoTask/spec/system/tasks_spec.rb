@@ -2,10 +2,12 @@
 
 require 'rails_helper'
 describe 'タスク管理機能', type: :system do
-  let!(:task_a) {create(:task, name: '最初のタスク', description: '説明文', start_at: '2021/09/01 10:00', due_date_at: '2021/09/02 11:00', created_at: '2021/07/01 09:00:04')}
-  let!(:task_b) {create(:task, name: '２番目のタスク', description: '説明文２', start_at: '2021/08/02 10:00', due_date_at: '2021/08/03 11:00', created_at: '2021/07/01 09:00:03')}
-  let!(:task_c) {create(:task, name: '追加したタスク', description: '追加した説明文', start_at: '2021/10/01 10:00', due_date_at: '2021/10/03 11:00', created_at: '2021/07/01 09:00:02')}
-  let!(:task_d) {create(:task, name: '最後のタスク', description: '最後の説明文', start_at: '2021/12/02 10:00', due_date_at: '2021/12/03 11:00', created_at: '2021/07/01 09:00:01')}
+  before do
+    create(:task, name: '最初のタスク', description: '説明文', start_at: '2021/09/01 10:00', due_date_at: '2021/09/02 11:00', created_at: '2021/07/01 09:00:04')
+    create(:task, name: '２番目のタスク', description: '説明文２', start_at: '2021/08/02 10:00', due_date_at: '2021/08/03 11:00', created_at: '2021/07/01 09:00:03')
+    create(:task, name: '追加したタスク', description: '追加した説明文', start_at: '2021/10/01 10:00', due_date_at: '2021/10/03 11:00', created_at: '2021/07/01 09:00:02')
+    create(:task, name: '最後のタスク', description: '最後の説明文', start_at: '2021/12/02 10:00', due_date_at: '2021/12/03 11:00', created_at: '2021/07/01 09:00:01')
+  end
 
   context 'タスク一覧を表示する' do
     it '一覧画面の表示を確認する' do
@@ -20,6 +22,28 @@ describe 'タスク管理機能', type: :system do
       expect(find('li:nth-child(3)')).to have_content '2021年10月01日(金) 10:00 〜 2021年10月03日(日) 11:00'
       expect(find('li:nth-child(4)')).to have_content '最後のタスク'
       expect(find('li:nth-child(4)')).to have_content '2021年12月02日(木) 10:00 〜 2021年12月03日(金) 11:00'
+    end
+
+    it '並び替えの確認' do
+      visit tasks_path
+
+      click_link '降順'
+      expect(find('li:nth-child(1)')).to have_content '最後のタスク'
+      expect(find('li:nth-child(2)')).to have_content '追加したタスク'
+      expect(find('li:nth-child(3)')).to have_content '最初のタスク'
+      expect(find('li:nth-child(4)')).to have_content '２番目のタスク'
+
+      click_link '昇順'
+      expect(find('li:nth-child(1)')).to have_content '２番目のタスク'
+      expect(find('li:nth-child(2)')).to have_content '最初のタスク'
+      expect(find('li:nth-child(3)')).to have_content '追加したタスク'
+      expect(find('li:nth-child(4)')).to have_content '最後のタスク'
+
+      click_link 'クリア'
+      expect(find('li:nth-child(1)')).to have_content '最初のタスク'
+      expect(find('li:nth-child(2)')).to have_content '２番目のタスク'
+      expect(find('li:nth-child(3)')).to have_content '追加したタスク'
+      expect(find('li:nth-child(4)')).to have_content '最後のタスク'
     end
   end
 
