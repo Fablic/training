@@ -2,17 +2,17 @@
 
 <table>
     <tr>
-        <th>id</th>
-        <th>title</th>
+        <th><%= t('tasks.id') %></th>
+        <th><%= t('tasks.title') %></th>
     </tr>
 
 <% @tasks.each do |task| %>
     <tr>
         <td><%= task.id %></td>
         <td><%= link_to task.title, task%></td>
-        <td><%= link_to 'Edit', edit_task_path(id: task.id)%></td>
-        <td><%= link_to 'Delete', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to t('tasks.edit'), edit_task_path(id: task.id)%></td>
+        <td><%= link_to t('tasks.delete'), task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
     </tr>
 <% end %>
 </table>
-<p><%= link_to 'Create', new_task_path, class: "task-new" %></p>
+<p><%= link_to t('tasks.create'), new_task_path, class: "task-new" %></p>
