@@ -1,5 +1,5 @@
 <h1><%= I18n.t('tasks.show.title') %></h1>
-<h2><%= @task.name %></h2>
+<h2><%= @task.name %> <%= renderStatus @task.status %></h2>
 <p><%= l @task.start_at, format: :long %> 〜 <%= l @task.due_date_at, format: :long %></p>
 <p><%= simple_format @task.description %></p>
 
