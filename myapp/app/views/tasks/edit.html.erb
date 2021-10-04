@@ -2,20 +2,20 @@
 <div>
   <%= form_with model: @task  do |form| %>
     <div>
-      <%= form.label :title, 'title' %>
+      <%= form.label :title, t('tasks.title') %>
       <%= form.text_field :title, value: @task.title %>
     </div>
 
     <div>
-      <%= form.label :description, 'description' %>
-      <%= form.text_field :description, value: @task.description %>
+      <%= form.label :description, t('tasks.description') %>
+      <%= form.text_field :description, value: @task.descripdddtion %>
     </div>
 
     <div class="actions">
-      <%= form.submit :submit %>
+      <%= form.submit t('tasks.submit') %>
     </div>
   <% end %>
 </div>
 
-<%= link_to 'Show', @task %> |
-<%= link_to 'Back', tasks_path %>
+<%= link_to t('tasks.show'), @task %> |
+<%= link_to t('tasks.back'), tasks_path %>

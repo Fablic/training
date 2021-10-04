@@ -2,16 +2,16 @@
 
 <table>
   <tr>
-    <th>たいとる</th>
+    <th><%= t('tasks.title') %></th>
     <td><%= @task.title %></td>
   </tr>
   <tr>
-    <th>ですくりぷしょん</th>
+    <th><% t('tasks.description') %></th>
     <td><%= @task.description %></td>
   </tr>
   <tr>
 </table>
 
-<p><%= link_to 'back to task list', root_path %></p>
+<p><%= link_to t('tasks.back'), root_path %></p>
 
-<p><%= link_to 'edit', edit_task_path(@task) %></p>
+<p><%= link_to t('tasks.edit'), edit_task_path(@task) %></p>

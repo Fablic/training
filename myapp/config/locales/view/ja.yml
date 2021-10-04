@@ -1,0 +1,11 @@
+ja:
+  tasks:
+    id:          'ID'
+    title:       '件名'
+    description: '詳細'
+    edit:        '編集'
+    delete:      '削除'
+    create:      '作成'
+    submit:      '送信'
+    back:        '戻る'
+    show:        '詳細表示'

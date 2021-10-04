@@ -2,19 +2,19 @@
 <div>
   <%= form_with(model: Task) do |form| %>
     <div>
-      <%= form.label :title, 'たいとる' %>
+      <%= form.label :title, t('tasks.title') %>
       <%= form.text_field :title %>
     </div>
 
     <div>
-      <%= form.label :description, 'ですくりぷしょん' %>
+      <%= form.label :description, t('tasks.description') %>
       <%= form.text_field :description %>
     </div>
 
     <div class="actions">
-      <%= form.submit :submit %>
+      <%= form.submit t('tasks.submit') %>
     </div>
   <% end %>
 </div>
 
-<%= link_to 'Back', tasks_path, class: 'button-back' %>
+<%= link_to t('tasks.back'), tasks_path, class: 'button-back' %>
