@@ -1,5 +1,6 @@
 .DS_Store
 .vscode/*
+.devcontainer/*
 # Ignore all logfiles and tempfiles.
 /log/*
 /tmp/*
