@@ -116,7 +116,7 @@ RSpec.feature Task, type: :feature, js: true do
       end
     end
     context 'description未記入の場合' do
-      scenario 'タスク登録失敗する' do
+      scenario 'タスクの新規作成が成功' do
         # 入力
         fill_in label_name_task, with: '電気の手続き'
         fill_in label_name_detail, with: nil
@@ -124,7 +124,29 @@ RSpec.feature Task, type: :feature, js: true do
         # ボタンをクリック
         click_button button_name_regist
         # 完了メッセージが出ていることを確認
-        expect(page).to have_content '詳細を入力してください'
+        expect(page).to have_content 'タスクを登録しました'
+      end
+    end
+    context '入力閾値チェック' do
+      context 'タスク名256オーバー' do
+        scenario 'タスク登録失敗する' do
+          # 入力
+          fill_in label_name_task, with: SecureRandom.alphanumeric(257)
+          fill_in label_name_detail, with: 'test'
+          click_button button_name_regist
+          # エラーメッセージが出ていることを確認
+          expect(page).to have_content 'タスク名は256文字以内で入力してください'
+        end
+      end
+      context '詳細1024オーバー' do
+        scenario 'タスク登録失敗する' do
+          # 入力
+          fill_in label_name_task, with: 'test'
+          fill_in label_name_detail, with: SecureRandom.alphanumeric(1025)
+          click_button button_name_regist
+          # エラーメッセージが出ていることを確認
+          expect(page).to have_content '詳細は1024文字以内で入力してください'
+        end
       end
     end
   end
