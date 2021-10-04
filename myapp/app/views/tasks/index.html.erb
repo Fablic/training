@@ -7,7 +7,6 @@
   .list_table th{
     background-color:black;
     color:white;
-    min-width:100px;
   }
   .notice_area{
     background:yellow;
@@ -30,18 +29,26 @@
   <table class="list_table">
     <thead>
       <tr>
-      <th><%= t '.label_name' %></th>
-      <th><%= t '.label_description' %></th>
-      <th><%= t '.label_created_at' %></th>
-      <th><%= t '.label_updated_at' %></th>
+        <th><%= t '.label_id' %></th>
+        <th><%= t '.label_name' %></th>
+        <th><%= t '.label_description' %></th>
+        <th><%= task_list_sort t('.label_period_date'),'period_date' %></th>
+        <th><%= task_list_sort t('.label_created_at'),'created_at' %></th>
+        <th><%= t '.label_updated_at' %></th>
       <th></th>
       </tr>
     </thead>
     <tbody>
       <% @tasks.each do |task| %>
       <tr>
-        <td><%= link_to task.name, edit_task_path(task.id) %></td>
+        <td> <%= task.id %></td>
+        <td> <%= link_to task.name, edit_task_path(task.id) %></td>
         <td> <%= task.description %></td>
+        <td>
+          <% if task.period_date.present? %>
+            <%= l task.period_date,format: :yymmdd %>
+          <% end %>
+        </td>
         <td> <%= l task.created_at %></td>
         <td> <%= l task.updated_at %></td>
         <td> 

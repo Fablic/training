@@ -4,8 +4,77 @@ RSpec.feature Task, type: :feature, js: true do
   # 画面ラベル名
   let(:label_name_task) { 'タスク名' }
   let(:label_name_detail) { '詳細' }
+  let(:label_name_period_date) { '終了期限' }
   let(:button_name_regist) { '登録' }
   let(:button_name_edit) { '更新' }
+  let(:task_list_dom) { all('.list_table tbody tr') }
+
+  # index
+  feature '一覧画面' do
+    # データ作成
+    test_loop_num = 3
+    background do
+      # n時間ずらしの生成日でタスク生成
+      (0..test_loop_num).each do |num|
+        Task.create(id: num,
+                    name: "task#{num}",
+                    description: "descriptions#{num}",
+                    created_at: Time.current + (num + 1).hours)
+      end
+    end
+    # テスト
+    context '初期表示' do
+      scenario '作成日降順に並ぶ' do
+        visit tasks_path
+        (0..test_loop_num).each do |num|
+          reverse_num = test_loop_num - num
+          expect(task_list_dom[num]).to have_content "task#{reverse_num}"
+        end
+      end
+    end
+    context '作成日昇順' do
+      scenario 'ソートされる' do
+        visit tasks_path(sort: 'created_at', type: 'asc')
+        (0..test_loop_num).each do |num|
+          expect(task_list_dom[num]).to have_content "task#{num}"
+        end
+      end
+    end
+  end
+
+  #index-sort
+  feature '一覧画面：期限でソート' do
+    # データ作成
+    test_loop_num = 3
+    background do
+      now = Time.current
+      (0..test_loop_num).each do |num|
+        Task.create(id: num,
+                    name: "task_period_sort_#{num}",
+                    description: "descriptions#{num}",
+                    created_at: now,
+                    period_date: Time.current + (num + 1).hours)
+      end
+    end
+    # テスト
+    context '終了期限昇順' do
+      scenario 'ソートされる' do
+        visit tasks_path(sort: 'period_date', type: 'desc')
+        (0..test_loop_num).each do |num|
+          reverse_num = test_loop_num - num
+          expect(task_list_dom[num]).to have_content "task_period_sort_#{reverse_num}"
+        end
+      end
+    end
+    context '終了期限昇順' do
+      scenario 'ソートされる' do
+        visit tasks_path(sort: 'period_date', type: 'asc')
+        (0..test_loop_num).each do |num|
+          expect(task_list_dom[num]).to have_content "task_period_sort_#{num}"
+        end
+      end
+    end
+  end
 
   # task-C
   feature '新規登録画面' do
@@ -17,10 +86,13 @@ RSpec.feature Task, type: :feature, js: true do
       scenario 'タスクの新規作成が成功' do
         input_name = 'ガス閉栓手続き'
         input_description = '京葉ガスに連絡・日付確定'
+        input_period_date = Time.current + 10.days
 
         # フィールドに入力
         fill_in label_name_task, with: input_name
         fill_in label_name_detail, with: input_description
+        fill_in label_name_period_date, with: input_period_date
+
         # submitをクリックする
         click_button button_name_regist
         # index_pathへ遷移することを期待する
@@ -36,6 +108,7 @@ RSpec.feature Task, type: :feature, js: true do
         # 入力
         fill_in label_name_task, with: nil
         fill_in label_name_detail, with: '引っ越し業者の選定'
+        fill_in label_name_period_date, with: nil
         # ボタンをクリック
         click_button button_name_regist
         # エラーメッセージが出ていることを確認
@@ -47,6 +120,7 @@ RSpec.feature Task, type: :feature, js: true do
         # 入力
         fill_in label_name_task, with: '電気の手続き'
         fill_in label_name_detail, with: nil
+        fill_in label_name_period_date, with: nil
         # ボタンをクリック
         click_button button_name_regist
         # 完了メッセージが出ていることを確認
@@ -78,6 +152,7 @@ RSpec.feature Task, type: :feature, js: true do
       visit tasks_path
       page.first('.del_button').click
       expect do
+        # OKボタンを押す
         page.accept_confirm '削除しますか？'
         expect(page).to have_content 'タスクを削除しました。'
       end.to change { Task.count }.by(-1)
