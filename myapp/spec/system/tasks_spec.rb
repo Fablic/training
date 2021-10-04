@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Tasks', type: :system do
-  let!(:task_list) { create_list(:task, 10) }
+  let!(:task_list) { create_list(:task, 4) }
 
   describe 'Index Page' do
     before { visit root_path }
@@ -12,21 +12,24 @@ RSpec.describe 'Tasks', type: :system do
     end
 
     it 'move to create page' do
-      click_on class: 'task-new'
+      click_on '作成'
       expect(page).to have_content 'Tasks#new'
     end
 
+    it 'sort by created_at desc' do
+      expect(find('tr:nth-child(2)')).to have_content task_list[0].title
+      expect(find('tr:nth-child(3)')).to have_content task_list[1].title
+      expect(find('tr:nth-child(4)')).to have_content task_list[2].title
+      expect(find('tr:nth-child(5)')).to have_content task_list[3].title
+    end
+
     it 'move to edit page' do
-      all('table tr')[1].click_on 'Edit'
+      all('table tr')[1].click_on '編集'
       expect(page).to have_content 'Tasks#edit'
     end
 
-    # コンテンツが削除されたことを確認(js:trueにできないためskip)
-    # it ' delete' do
-    # end
-
     it 'move to detail page' do
-      all('table tr')[1].click_on task_list.first.title
+      find('tr:nth-child(2)').click_on task_list[0].title
       expect(page).to have_content 'Tasks#detail'
     end
   end
@@ -37,7 +40,7 @@ RSpec.describe 'Tasks', type: :system do
     it 'create task' do
       fill_in 'task[title]',       with: task_list.last.title
       fill_in 'task[description]', with: task_list.last.description
-      click_button 'submit'
+      click_button '送信'
       expect(page).to have_content 'Successfully created'
       expect(page).to have_content 'Tasks#list'
     end
@@ -54,14 +57,14 @@ RSpec.describe 'Tasks', type: :system do
     let(:params) { { title: 'title for edit', description: 'description for edit' } }
 
     it 'list task detail' do
-      expect(page).to have_field 'title', with: task_list.first.title
-      expect(page).to have_field 'description', with: task_list.first.description
+      expect(page).to have_field '件名', with: task_list.first.title
+      expect(page).to have_field '詳細', with: task_list.first.description
     end
 
     it 'edit and resister task' do
       fill_in 'task[title]',       with: params[:title]
       fill_in 'task[description]', with: params[:description]
-      click_button 'submit'
+      click_button '送信'
       expect(page).to have_content 'Successfully updated'
       expect(page).to have_content 'Tasks#list'
     end
@@ -76,7 +79,7 @@ RSpec.describe 'Tasks', type: :system do
     end
 
     it 'back to list page' do
-      click_on 'back to task list'
+      click_on '戻る'
       expect(page).to have_content 'Tasks#list'
     end
   end
