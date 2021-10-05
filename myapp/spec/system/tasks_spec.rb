@@ -16,11 +16,11 @@ RSpec.describe 'Tasks', type: :system do
       expect(page).to have_content 'Tasks#new'
     end
 
-    it 'sort by created_at desc' do
-      expect(find('tr:nth-child(2)')).to have_content task_list[0].title
-      expect(find('tr:nth-child(3)')).to have_content task_list[1].title
-      expect(find('tr:nth-child(4)')).to have_content task_list[2].title
-      expect(find('tr:nth-child(5)')).to have_content task_list[3].title
+    it 'sort by created_at order by desc' do
+      expect(find('tr:nth-child(2)')).to have_content I18n.l task_list.last.created_at
+      expect(find('tr:nth-child(3)')).to have_content I18n.l task_list[2].created_at
+      expect(find('tr:nth-child(4)')).to have_content I18n.l task_list[1].created_at
+      expect(find('tr:nth-child(5)')).to have_content I18n.l task_list.first.created_at
     end
 
     it 'move to edit page' do
@@ -29,7 +29,7 @@ RSpec.describe 'Tasks', type: :system do
     end
 
     it 'move to detail page' do
-      find('tr:nth-child(2)').click_on task_list[0].title
+      find('tr:nth-child(2)').click_on task_list.last.title
       expect(page).to have_content 'Tasks#detail'
     end
   end
