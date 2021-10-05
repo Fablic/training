@@ -51,6 +51,13 @@ class TasksController < ApplicationController
     redirect_to tasks_path
   end
 
+  def search
+    @tasks = Task.search(params[:keyword], params[:status])
+    @keyword = params[:keyword]
+    @status = params[:status]
+    render :index
+  end
+
   private
 
   def task_params
