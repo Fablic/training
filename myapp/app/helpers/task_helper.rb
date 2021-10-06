@@ -1,7 +1,11 @@
 module TaskHelper
   # list sort
-  def task_list_sort(name, column_name)
-    type = column_name == sort_column && sort_type == 'asc' ? 'desc' : 'asc'
-    link_to name, { sort: column_name, type: type }, id: "order_#{column_name}"
+  def list_sort_link(name, column_name)
+    order = if column_name == sort_target_column
+              sort_order == 'asc' ? 'desc' : 'asc'
+            else
+              'asc'
+            end
+    link_to name, { sort: column_name, order: order }, id: "order_#{column_name}"
   end
 end

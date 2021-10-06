@@ -28,7 +28,7 @@
 |task_id|INT AUTO_INCREMENT|PK,index,NOTNULL|
 |name|VARCHAR(256)||
 |description|VARCHAR(1024)||
-|period_date|DATETIME||
+|due_date|DATETIME||
 |user_id|INT|タスクの担当者 userとrelation持たせた後にNOTNULLにする|
 |created_at|DATETIME||
 |updated_at|DATETIME||

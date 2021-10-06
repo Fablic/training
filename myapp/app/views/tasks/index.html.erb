@@ -32,8 +32,8 @@
         <th><%= t '.label_id' %></th>
         <th><%= t '.label_name' %></th>
         <th><%= t '.label_description' %></th>
-        <th><%= task_list_sort t('.label_period_date'),'period_date' %></th>
-        <th><%= task_list_sort t('.label_created_at'),'created_at' %></th>
+        <th><%= list_sort_link t('.label_due_date'),'due_date' %></th>
+        <th><%= list_sort_link t('.label_created_at'),'created_at' %></th>
         <th><%= t '.label_updated_at' %></th>
       <th></th>
       </tr>
@@ -45,8 +45,8 @@
         <td> <%= link_to task.name, edit_task_path(task.id) %></td>
         <td> <%= task.description %></td>
         <td>
-          <% if task.period_date.present? %>
-            <%= l task.period_date,format: :yymmdd %>
+          <% if task.due_date.present? %>
+            <%= l task.due_date,format: :yymmdd %>
           <% end %>
         </td>
         <td> <%= l task.created_at %></td>

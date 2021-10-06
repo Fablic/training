@@ -1,10 +1,10 @@
 class TasksController < ApplicationController
   # helperでも使用可能
-  helper_method :sort_column, :sort_type
+  helper_method :sort_target_column, :sort_order
 
   # 一覧
   def index
-    @tasks = Task.all.order("#{sort_column} #{sort_type}")
+    @tasks = Task.all.order("#{sort_target_column} #{sort_order}")
   end
 
   # 新規作成画面
@@ -14,7 +14,7 @@ class TasksController < ApplicationController
 
   # 新規作成実行
   def create
-    @task = Task.new(set_params_to_task)
+    @task = Task.new(permitted_params)
 
     if @task.save
       # 一覧へ
@@ -27,14 +27,14 @@ class TasksController < ApplicationController
 
   # 編集画面表示
   def edit
-    @task = find_by_id
+    @task = target_task
   end
 
   # 更新
   def update
-    @task = find_by_id
+    @task = target_task
 
-    if @task.update(set_params_to_task)
+    if @task.update(permitted_params)
       # 一覧へ
       redirect_to tasks_path, notice: t('messages.update.notice')
     else
@@ -45,7 +45,7 @@ class TasksController < ApplicationController
 
   # 削除
   def destroy
-    @task = find_by_id
+    @task = target_task
     @task.destroy
 
     # 一覧へ
@@ -57,22 +57,22 @@ class TasksController < ApplicationController
   private
 
   # idでtask取得
-  def find_by_id
+  def target_task
     Task.find(params[:id])
   end
 
-  # フォーム内容をオブジェクトにセット
-  def set_params_to_task
-    params.require(:task).permit(:name, :description, :period_date)
+  # ストロングパラメータをとる
+  def permitted_params
+    params.require(:task).permit(:name, :description, :due_date)
   end
 
   # sortの方式をとる
-  def sort_type
-    %w[asc desc].include?(params[:type]) ? params[:type] : 'desc'
+  def sort_order
+    %w[asc desc].include?(params[:order]) ? params[:order] : 'desc'
   end
 
   # sort対象のカラム
-  def sort_column
+  def sort_target_column
     Task.column_names.include?(params[:sort]) ? params[:sort] : 'created_at'
   end
 end
