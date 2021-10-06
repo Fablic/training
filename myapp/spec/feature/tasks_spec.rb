@@ -4,77 +4,76 @@ RSpec.feature Task, type: :feature, js: true do
   # 画面ラベル名
   let(:label_name_task) { 'タスク名' }
   let(:label_name_detail) { '詳細' }
-  let(:label_name_period_date) { '終了期限' }
+  let(:label_name_due_date) { '終了期限' }
   let(:button_name_regist) { '登録' }
   let(:button_name_edit) { '更新' }
   let(:task_list_dom) { all('.list_table tbody tr') }
+  test_loop_num = 3
+  used_sequence_count = 0 # test使った後のシーケンス数カウント
 
   # index
   feature '一覧画面' do
-    # データ作成
-    test_loop_num = 3
-    background do
-      # n時間ずらしの生成日でタスク生成
-      (0..test_loop_num).each do |num|
-        Task.create(id: num,
-                    name: "task#{num}",
-                    description: "descriptions#{num}",
-                    created_at: Time.current + (num + 1).hours)
-      end
+    # 各テスト後処理
+    after do
+      used_sequence_count += test_loop_num
     end
-    # テスト
-    context '初期表示' do
-      scenario '作成日降順に並ぶ' do
-        visit tasks_path
-        (0..test_loop_num).each do |num|
-          reverse_num = test_loop_num - num
-          expect(task_list_dom[num]).to have_content "task#{reverse_num}"
+    # 一覧画面のテスト
+    feature 'sort確認' do
+      background do
+        # n時間ずらしの生成日でタスク生成
+        FactoryBot.create_list(:task_seq_created_at, test_loop_num)
+      end
+      context '作成日昇順（初期表示）' do
+        scenario 'ソートされる' do
+          visit tasks_path
+          save_and_open_page
+          test_loop_num.times do |num|
+            expect(task_list_dom[num]).to have_content "task#{num}"
+          end
+        end
+      end
+      context '作成日降順' do
+        scenario 'ソートされる' do
+          visit tasks_path(sort: 'created_at', order: 'desc')
+          save_and_open_page
+          test_loop_num.times do |num|
+            reverse_num = test_loop_num + used_sequence_count - num - 1
+            expect(task_list_dom[num]).to have_content "task#{reverse_num}"
+          end
         end
       end
     end
-    context '作成日昇順' do
-      scenario 'ソートされる' do
-        visit tasks_path(sort: 'created_at', type: 'asc')
-        (0..test_loop_num).each do |num|
-          expect(task_list_dom[num]).to have_content "task#{num}"
+
+    # index-sort
+    feature '期限でソート' do
+      background do
+        # データ作成　期限日ずらしで生成
+        FactoryBot.create_list(:task_seq_due_date, test_loop_num)
+      end
+
+      # テスト
+      context '終了期限昇順' do
+        scenario 'ソートされる' do
+          visit tasks_path(sort: 'due_date', order: 'asc')
+          save_and_open_page
+          test_loop_num.times do |num|
+            expect(task_list_dom[num]).to have_content "task#{num + used_sequence_count }"
+          end
+        end
+      end
+      context '終了期限昇順' do
+        scenario 'ソートされる' do
+          visit tasks_path(sort: 'due_date', order: 'desc')
+          save_and_open_page
+          test_loop_num.times do |num|
+            reverse_num = test_loop_num - num + used_sequence_count - 1
+            expect(task_list_dom[num]).to have_content "task#{reverse_num}"
+          end
         end
       end
     end
   end
 
-  #index-sort
-  feature '一覧画面：期限でソート' do
-    # データ作成
-    test_loop_num = 3
-    background do
-      now = Time.current
-      (0..test_loop_num).each do |num|
-        Task.create(id: num,
-                    name: "task_period_sort_#{num}",
-                    description: "descriptions#{num}",
-                    created_at: now,
-                    period_date: Time.current + (num + 1).hours)
-      end
-    end
-    # テスト
-    context '終了期限昇順' do
-      scenario 'ソートされる' do
-        visit tasks_path(sort: 'period_date', type: 'desc')
-        (0..test_loop_num).each do |num|
-          reverse_num = test_loop_num - num
-          expect(task_list_dom[num]).to have_content "task_period_sort_#{reverse_num}"
-        end
-      end
-    end
-    context '終了期限昇順' do
-      scenario 'ソートされる' do
-        visit tasks_path(sort: 'period_date', type: 'asc')
-        (0..test_loop_num).each do |num|
-          expect(task_list_dom[num]).to have_content "task_period_sort_#{num}"
-        end
-      end
-    end
-  end
 
   # task-C
   feature '新規登録画面' do
@@ -86,12 +85,12 @@ RSpec.feature Task, type: :feature, js: true do
       scenario 'タスクの新規作成が成功' do
         input_name = 'ガス閉栓手続き'
         input_description = '京葉ガスに連絡・日付確定'
-        input_period_date = Time.current + 10.days
+        input_due_date = Time.current + 10.days
 
         # フィールドに入力
         fill_in label_name_task, with: input_name
         fill_in label_name_detail, with: input_description
-        fill_in label_name_period_date, with: input_period_date
+        fill_in label_name_due_date, with: input_due_date
 
         # submitをクリックする
         click_button button_name_regist
@@ -108,7 +107,7 @@ RSpec.feature Task, type: :feature, js: true do
         # 入力
         fill_in label_name_task, with: nil
         fill_in label_name_detail, with: '引っ越し業者の選定'
-        fill_in label_name_period_date, with: nil
+        fill_in label_name_due_date, with: nil
         # ボタンをクリック
         click_button button_name_regist
         # エラーメッセージが出ていることを確認
@@ -120,7 +119,7 @@ RSpec.feature Task, type: :feature, js: true do
         # 入力
         fill_in label_name_task, with: '電気の手続き'
         fill_in label_name_detail, with: nil
-        fill_in label_name_period_date, with: nil
+        fill_in label_name_due_date, with: nil
         # ボタンをクリック
         click_button button_name_regist
         # 完了メッセージが出ていることを確認

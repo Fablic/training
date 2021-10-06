@@ -45,8 +45,7 @@ class TasksController < ApplicationController
 
   # 削除
   def destroy
-    @task = target_task
-    @task.destroy
+    target_task.destroy
 
     # 一覧へ
     redirect_to tasks_path, notice: t('messages.destroy.notice')
@@ -68,7 +67,7 @@ class TasksController < ApplicationController
 
   # sortの方式をとる
   def sort_order
-    %w[asc desc].include?(params[:order]) ? params[:order] : 'desc'
+    %w[asc desc].include?(params[:order]) ? params[:order] : 'asc'
   end
 
   # sort対象のカラム
