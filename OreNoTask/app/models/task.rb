@@ -3,6 +3,7 @@
 class Task < ApplicationRecord
   validates :name, { presence: true, length: { maximum: 50 } }
   validates :description, length: { maximum: 2000 }
+  validates :status, inclusion: { in: [0, 1, 2]  }
   validates :start_at, presence: true, date: true
   validates :due_date_at, presence: true, date: true
   validate :start_end_check?

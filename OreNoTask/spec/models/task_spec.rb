@@ -3,9 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe 'Taskモデルのテスト', type: :model do
-  let(:task) { Task.new(name: name, description: description, start_at: start_at, due_date_at: due_date_at) }
+  let(:task) { Task.new(name: name, description: description, status: status, start_at: start_at, due_date_at: due_date_at) }
   let(:name) { '最初のタスク' }
   let(:description) { '説明文' }
+  let(:status) { 0 }
   let(:start_at) { '2021/09/01 10:00' }
   let(:due_date_at) { '2021/09/02 11:00' }
 
@@ -57,6 +58,30 @@ RSpec.describe 'Taskモデルのテスト', type: :model do
 
       context '2000文字以上' do
         let(:description) { 'a' * 2001 }
+
+        it { is_expected.not_to be_valid }
+      end
+    end
+
+    describe 'statusカラム' do
+      subject { task }
+
+      context '許容される値' do
+        let(:status) { 0 }
+
+        it { is_expected.to be_valid }
+
+        let(:status) { 1 }
+
+        it { is_expected.to be_valid }
+
+        let(:status) { 2 }
+
+        it { is_expected.to be_valid }
+      end
+
+      context '許容されない値' do
+        let(:status) { 3 }
 
         it { is_expected.not_to be_valid }
       end

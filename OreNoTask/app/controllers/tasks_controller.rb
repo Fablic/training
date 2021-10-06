@@ -52,7 +52,7 @@ class TasksController < ApplicationController
   end
 
   def search
-    @tasks = Task.search(params[:keyword], params[:status])
+    @tasks = Task.search(params[:keyword], params[:status]).order("#{sort_column} #{sort_direction}")
     @keyword = params[:keyword]
     @status = params[:status]
     render :index
