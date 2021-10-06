@@ -5,8 +5,14 @@
     <td><%= form.text_field :name %></td>
   </tr>
   <tr>
-    <th>ステータス</th>
-    <td><%= form.select :status, [["未着手", "0"], ["作業中", "1"], ["完了", "2"]], include_blank: "選択して下さい" %></td>
+    <th><%= Task.human_attribute_name(:status) %></th>
+    <td><%= form.select :status, [
+        [I18n.t('dictionary.words.status_not_started'), "0"], 
+        [I18n.t('dictionary.words.status_wip'), "1"], 
+        [I18n.t('dictionary.words.status_completed'), "2"]
+      ], 
+      include_blank: I18n.t('dictionary.words.select_indicate')
+    %></td>
   <tr>
     <th><%= Task.human_attribute_name(:period) %></th>
     <td>

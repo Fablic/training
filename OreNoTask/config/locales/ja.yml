@@ -24,3 +24,5 @@ ja:
       status_wip: '作業中'
       status_completed: '完了'
       search_keyword: 'タスク名・内容'
+      search_button: '検索'
+      select_indicate: '選択して下さい'
