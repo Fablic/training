@@ -23,3 +23,4 @@ ja:
       status_not_started: '未着手'
       status_wip: '作業中'
       status_completed: '完了'
+      search_keyword: 'タスク名・内容'

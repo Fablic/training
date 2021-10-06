@@ -3,10 +3,10 @@
 require 'rails_helper'
 describe 'タスク管理機能', type: :system do
   before do
-    create(:task, name: '最初のタスク', description: '説明文', start_at: '2021/09/01 10:00', due_date_at: '2021/09/02 11:00', created_at: '2021/07/01 09:00:04')
-    create(:task, name: '２番目のタスク', description: '説明文２', start_at: '2021/08/02 10:00', due_date_at: '2021/08/03 11:00', created_at: '2021/07/01 09:00:03')
-    create(:task, name: '追加したタスク', description: '追加した説明文', start_at: '2021/10/01 10:00', due_date_at: '2021/10/03 11:00', created_at: '2021/07/01 09:00:02')
-    create(:task, name: '最後のタスク', description: '最後の説明文', start_at: '2021/12/02 10:00', due_date_at: '2021/12/03 11:00', created_at: '2021/07/01 09:00:01')
+    create(:task, name: '最初のタスク', description: '説明文', status: 0, start_at: '2021/09/01 10:00', due_date_at: '2021/09/02 11:00', created_at: '2021/07/01 09:00:04')
+    create(:task, name: '２番目のタスク', description: '説明文２', status: 2, start_at: '2021/08/02 10:00', due_date_at: '2021/08/03 11:00', created_at: '2021/07/01 09:00:03')
+    create(:task, name: '追加したタスク', description: '追加した説明文', status: 1, start_at: '2021/10/01 10:00', due_date_at: '2021/10/03 11:00', created_at: '2021/07/01 09:00:02')
+    create(:task, name: '最後のタスク', description: '最後の説明文', status: 0, start_at: '2021/12/02 10:00', due_date_at: '2021/12/03 11:00', created_at: '2021/07/01 09:00:01')
   end
 
   describe 'タスク一覧' do
@@ -51,6 +51,126 @@ describe 'タスク管理機能', type: :system do
           expect(find('li:nth-child(2)')).to have_content '２番目のタスク'
           expect(find('li:nth-child(3)')).to have_content '追加したタスク'
           expect(find('li:nth-child(4)')).to have_content '最後のタスク'
+        end
+      end
+    end
+
+    describe '検索機能' do
+      context 'ステータス指定なしでタスク名を検索する' do
+        it '検索対象の名前のタスクのみ表示される' do
+          fill_in 'タスク名・内容', with: '追加したタスク'
+          click_button 'commit'
+
+          expect(page).to have_content '追加したタスク'
+          expect(page).not_to have_content '最初のタスク'
+          expect(page).not_to have_content '２番目のタスク'
+          expect(page).not_to have_content '最後のタスク'
+        end
+      end
+
+      context 'ステータス指定なしでタスク内容を検索する' do
+        it '検索対象の内容のタスクのみ表示される' do
+          fill_in 'タスク名・内容', with: '説明文２'
+          click_button 'commit'
+
+          expect(page).to have_content '２番目のタスク'
+          expect(page).not_to have_content '最初のタスク'
+          expect(page).not_to have_content '追加したタスク'
+          expect(page).not_to have_content '最後のタスク'
+        end
+      end
+
+      context '正しい組み合わせでステータス指定ありでタスク名を検索する' do
+        it '検索対象の名前のタスクのみ表示される' do
+          fill_in 'タスク名・内容', with: '２番目のタスク'
+          select '完了', from: 'status'
+          click_button 'commit'
+
+          expect(page).to have_content '２番目のタスク'
+          expect(page).not_to have_content '最初のタスク'
+          expect(page).not_to have_content '追加したタスク'
+          expect(page).not_to have_content '最後のタスク'
+        end
+      end
+
+      context '間違った組み合わせでステータス指定ありでタスク名を検索する' do
+        it '何も表示されない' do
+          fill_in 'タスク名・内容', with: '２番目のタスク'
+          select '作業中', from: 'status'
+          click_button 'commit'
+
+          expect(page).not_to have_content '２番目のタスク'
+          expect(page).not_to have_content '最初のタスク'
+          expect(page).not_to have_content '追加したタスク'
+          expect(page).not_to have_content '最後のタスク'
+        end
+      end
+
+      context '正しい組み合わせでステータス指定ありでタスク内容を検索する' do
+        it '検索対象の名前のタスクのみ表示される' do
+          fill_in 'タスク名・内容', with: '追加した説明文'
+          select '作業中', from: 'status'
+          click_button 'commit'
+
+          expect(page).to have_content '追加したタスク'
+          expect(page).not_to have_content '最初のタスク'
+          expect(page).not_to have_content '２番目のタスク'
+          expect(page).not_to have_content '最後のタスク'
+        end
+      end
+
+      context '間違った組み合わせでステータス指定ありでタスク内容を検索する' do
+        it '何も表示されない' do
+          fill_in 'タスク名・内容', with: '追加した説明文'
+          select '完了', from: 'status'
+          click_button 'commit'
+
+          expect(page).not_to have_content '２番目のタスク'
+          expect(page).not_to have_content '最初のタスク'
+          expect(page).not_to have_content '追加したタスク'
+          expect(page).not_to have_content '最後のタスク'
+        end
+      end
+
+      context '文字列入力せずステータスのみで検索する' do
+        it '未着手のみが表示される' do
+          select '未着手', from: 'status'
+          click_button 'commit'
+
+          expect(page).not_to have_content '追加したタスク'
+          expect(page).to have_content '最初のタスク'
+          expect(page).not_to have_content '２番目のタスク'
+          expect(page).to have_content '最後のタスク'
+        end
+
+        it '作業中のみが表示される' do
+          select '作業中', from: 'status'
+          click_button 'commit'
+
+          expect(page).to have_content '追加したタスク'
+          expect(page).not_to have_content '最初のタスク'
+          expect(page).not_to have_content '２番目のタスク'
+          expect(page).not_to have_content '最後のタスク'
+        end
+
+        it '完了のみが表示される' do
+          select '完了', from: 'status'
+          click_button 'commit'
+
+          expect(page).not_to have_content '追加したタスク'
+          expect(page).not_to have_content '最初のタスク'
+          expect(page).to have_content '２番目のタスク'
+          expect(page).not_to have_content '最後のタスク'
+        end
+
+        it '全て表示される' do
+          select '全て', from: 'status'
+          click_button 'commit'
+
+          expect(page).to have_content '追加したタスク'
+          expect(page).to have_content '最初のタスク'
+          expect(page).to have_content '２番目のタスク'
+          expect(page).to have_content '最後のタスク'
         end
       end
     end

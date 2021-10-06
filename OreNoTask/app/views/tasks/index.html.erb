@@ -8,7 +8,7 @@
 </p>
 <div class="search-form">
   <%= form_with url: search_path, method: :get, local: true do |f| %>
-    <p>タスク名・内容<%= f.text_field :keyword, value: @keyword %>ステータス<%= f.select :status, [["未着手", "0"], ["作業中", "1"], ["完了", "2"]], include_blank: "全て", selected: @status %><%= f.submit "検索" %></p>
+    <p><%= f.label :keyword, I18n.t('dictionary.words.search_keyword') %><%= f.text_field :keyword, value: @keyword %><%= Task.human_attribute_name(:status) %><%= f.select :status, [["未着手", "0"], ["作業中", "1"], ["完了", "2"]], include_blank: "全て", selected: @status %><%= f.submit "検索" %></p>
   <% end %>
 </div>
 <ul>
