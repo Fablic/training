@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  create_by: 
+  name: MyString
+  description: MyText
+  started_at: 2021-10-06 05:52:24
+  finished_at: 2021-10-06 05:52:24
+
+two:
+  create_by: 
+  name: MyString
+  description: MyText
+  started_at: 2021-10-06 05:52:24
+  finished_at: 2021-10-06 05:52:24
