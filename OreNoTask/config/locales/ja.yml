@@ -16,3 +16,7 @@ ja:
       to_list: '一覧に戻る'
       save_to_create: '作成'
       save_to_update: '更新'
+      asc: '昇順'
+      desc: '降順'
+      clear: 'クリア'
+      sort: 'でソート'

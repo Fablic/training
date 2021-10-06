@@ -2,7 +2,7 @@
 
 class TasksController < ApplicationController
   def index
-    @tasks = Task.where(deleted: 0).order(created_at: :desc)
+    @tasks = Task.where(deleted: 0).order("#{sort_column} #{sort_direction}")
   end
 
   def new
@@ -55,5 +55,13 @@ class TasksController < ApplicationController
 
   def task_params
     params.require(:task).permit(:name, :description, :start_at, :due_date_at)
+  end
+
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : 'desc'
+  end
+
+  def sort_column
+    Task.column_names.include?(params[:sort]) ? params[:sort] : 'created_at'
   end
 end
