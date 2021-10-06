@@ -2,7 +2,7 @@
 
 class TasksController < ApplicationController
   def index
-    @tasks = Task.where(deleted: 0).order("#{sort_column} #{sort_direction}")
+    @tasks = Task.where(deleted: 0).order("#{sort_column} #{sort_direction}").page(params[:page]).per(2)
   end
 
   def new
