@@ -1,7 +1,6 @@
 class ChangeDatatypeDescriptionAndTitleOfTasks < ActiveRecord::Migration[6.0]
   def change
-    create_table :tasks do |t|
-      t.string :title, null: false, limit: 50
-      t.text :description, null: true, limit: 255
+    change_column :tasks, :title, :string, null: false, limit: 50
+    change_column :tasks, :description, :text, null: true
   end
 end
