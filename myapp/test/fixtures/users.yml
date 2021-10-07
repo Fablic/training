@@ -1,15 +1,18 @@
+<% require 'bcrypt' %>
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
-  username: MyString
-  pw: MyString
+  id: 1
+  name: mvincent
+  username: mvincent.yap@rakuten.com
+  pw: <%= BCrypt::Password.create('test1234') %>
   first_run: false
-  admin: false
+  admin: true
 
 two:
-  name: MyString
-  username: MyString
-  pw: MyString
+  id: 2
+  name: mvincent2
+  username: mvincent.yap@gmail.com
+  pw: <%= BCrypt::Password.create('test1234') %>
   first_run: false
   admin: false
