@@ -1,12 +1,12 @@
 class TasksController < ApplicationController
   # GET /tasks(.:format)
   def index
-    @tasks = Task.all
+    @tasks = Task.where(deleted: 0).order(created_at: :desc)
   end
 
   # GET /tasks/:id/edit(.:format)
   def edit
-    @task = Task.find(params[:id])
+    @task = Task.find_by(params[:id], deleted: 0)
   end
 
   # GET /tasks/new(.:format)
@@ -49,7 +49,7 @@ class TasksController < ApplicationController
   # DELETE /tasks/:id(.:format)
   def destroy
     @task = Task.find(params[:id])
-    if @task.destroy
+    if @task.update(deleted: 1)
       flash[:success] = 'Successfully deleted'
       redirect_to root_path
     else
