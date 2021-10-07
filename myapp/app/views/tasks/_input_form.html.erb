@@ -1,0 +1,31 @@
+<p>formの外</p>
+
+<% if @task.errors.any? %>
+  <div id="error_explanation">
+    <p>error条件の中</p>
+    <ul>
+      <% @task.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+<%= form_with model: @task do |form| %>
+  <div>
+    <p>error条件の外, formの中</p>
+    <%= form.label :title, t('tasks.title') %>
+    <%= form.text_field :title %>
+  </div>
+  <div>
+    <%= form.label :description, t('tasks.description') %>
+    <%= form.text_field :description %>
+  </div>
+  <div class="actions">
+    <%= form.submit t('tasks.submit') %>
+  </div>
+
+  <% if local_assigns[:action_edit] %>
+    <%= link_to t('tasks.show'), @task %>
+  <% end %>
+  <%= link_to t('tasks.back'), tasks_path, class: 'button-back' %>
+<% end %>
