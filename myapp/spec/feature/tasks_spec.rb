@@ -14,7 +14,7 @@ RSpec.feature Task, type: :feature, js: true do
   # index
   feature '一覧画面' do
     background do
-      FactoryBot.reload
+      FactoryBot.rewind_sequences
     end
 
     # 一覧画面のテスト
@@ -26,7 +26,6 @@ RSpec.feature Task, type: :feature, js: true do
       context '作成日昇順（初期表示）' do
         scenario 'ソートされる' do
           visit tasks_path
-          save_and_open_page
           test_loop_num.times do |num|
             expect(task_list_dom[num]).to have_content "task#{num}"
           end
