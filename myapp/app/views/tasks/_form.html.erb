@@ -38,6 +38,10 @@
         </td>
         <td><%= f.text_area :description %></td>
       </tr>
+      <tr>
+        <td> <%= f.label :due_date %></td>
+        <td> <%= f.date_field :due_date %></td>
+      </tr>
     </tbody>
   </table>
   <% if local_assigns[:edit_flag].present? %>

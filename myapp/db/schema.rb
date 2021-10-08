@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_17_075922) do
+ActiveRecord::Schema.define(version: 2021_10_04_080859) do
 
   create_table "labels", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.text "name"
     t.bigint "user_id"
-    t.integer "regist_user"
-    t.integer "update_user"
+    t.integer "regist_user_id"
+    t.integer "update_user_id"
     t.boolean "del_flag", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -24,9 +24,11 @@ ActiveRecord::Schema.define(version: 2021_09_17_075922) do
   end
 
   create_table "tasks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
-    t.string "name"
-    t.text "description"
+    t.string "name", limit: 256, comment: "タスク名"
+    t.string "description", limit: 1024, comment: "コメント"
     t.bigint "user_id"
+    t.integer "status", comment: "状態"
+    t.datetime "due_date", comment: "終了期限"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_tasks_on_user_id"
@@ -37,8 +39,8 @@ ActiveRecord::Schema.define(version: 2021_09_17_075922) do
     t.string "mail_address"
     t.integer "role_id", limit: 1
     t.datetime "last_login_date"
-    t.integer "regist_user"
-    t.integer "update_user"
+    t.integer "regist_user_id"
+    t.integer "update_user_id"
     t.boolean "del_flag", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

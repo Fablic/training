@@ -9,6 +9,8 @@ ja:
         id: ID
         name: タスク名
         description: 詳細
+        user_id: 担当者
+        due_date: 終了期限
   # 全てのmodelで共通
   attributes:
     created_at: 作成日
