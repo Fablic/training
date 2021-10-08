@@ -9,14 +9,14 @@ RSpec.feature Task, type: :feature, js: true do
   let(:button_name_edit) { '更新' }
   let(:task_list_dom) { all('.list_table tbody tr') }
   test_loop_num = 3
-  used_sequence_count = 0 # test使った後のシーケンス数カウント
+  # used_sequence_count = 0 # test使った後のシーケンス数カウント
 
   # index
   feature '一覧画面' do
-    # 各テスト後処理
-    after do
-      used_sequence_count += test_loop_num
+    background do
+      FactoryBot.reload
     end
+
     # 一覧画面のテスト
     feature 'sort確認' do
       background do
@@ -35,9 +35,8 @@ RSpec.feature Task, type: :feature, js: true do
       context '作成日降順' do
         scenario 'ソートされる' do
           visit tasks_path(sort: 'created_at', order: 'desc')
-          save_and_open_page
           test_loop_num.times do |num|
-            reverse_num = test_loop_num + used_sequence_count - num - 1
+            reverse_num = test_loop_num - num -1
             expect(task_list_dom[num]).to have_content "task#{reverse_num}"
           end
         end
@@ -55,25 +54,22 @@ RSpec.feature Task, type: :feature, js: true do
       context '終了期限昇順' do
         scenario 'ソートされる' do
           visit tasks_path(sort: 'due_date', order: 'asc')
-          save_and_open_page
           test_loop_num.times do |num|
-            expect(task_list_dom[num]).to have_content "task#{num + used_sequence_count }"
+            expect(task_list_dom[num]).to have_content "task#{num }"
           end
         end
       end
       context '終了期限昇順' do
         scenario 'ソートされる' do
           visit tasks_path(sort: 'due_date', order: 'desc')
-          save_and_open_page
           test_loop_num.times do |num|
-            reverse_num = test_loop_num - num + used_sequence_count - 1
+            reverse_num = test_loop_num - num -1
             expect(task_list_dom[num]).to have_content "task#{reverse_num}"
           end
         end
       end
     end
   end
-
 
   # task-C
   feature '新規登録画面' do
