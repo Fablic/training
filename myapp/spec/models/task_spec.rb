@@ -10,15 +10,20 @@ RSpec.describe 'Task Model(Post)', type: :model do
       it 'created succesfully' do
         expect(task).to be_valid
       end
+
+      let(:title) { 't' * 49 }
+      it 'title string over 50, created faild' do
+        expect(task).to be_valid
+      end
     end
 
     context 'when invalid input' do
-      let(:title) { 'title' * 100 }
+      let(:title) { 'title' '' }
       it 'title is empty, created faild' do
         expect(task).not_to be_valid
       end
 
-      let(:title) { 'title' * 100 }
+      let(:title) { 't' * 50 }
       it 'title string over 50, created faild' do
         expect(task).not_to be_valid
       end
