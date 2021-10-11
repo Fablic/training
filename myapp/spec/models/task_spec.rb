@@ -12,7 +12,7 @@ RSpec.describe 'Task Model(Post)', type: :model do
       end
 
       let(:title) { 't' * 49 }
-      it 'title string over 50, created faild' do
+      it 'title string less than 50, created success' do
         expect(task).to be_valid
       end
     end
