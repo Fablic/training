@@ -1,3 +1,0 @@
-  [1m[35m (0.6ms)[0m  [1m[35mCREATE DATABASE `test` DEFAULT CHARACTER SET `utf8`[0m
-  [1m[35m (8.6ms)[0m  [1m[35mCREATE DATABASE `mydb` DEFAULT CHARACTER SET `utf8`[0m
-  [1m[35m (0.9ms)[0m  [1m[35mCREATE DATABASE `mydb` DEFAULT CHARACTER SET `utf8`[0m
