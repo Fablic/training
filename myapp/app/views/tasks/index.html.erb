@@ -1,6 +1,8 @@
 <h1>Tasks#list</h1>
 
-
+<%= sort_link(@q, :due_date) do %>
+  <%= t('tasks.sort_due_date') %>
+<% end %>
 
 <table>
   <tr>

@@ -1,7 +1,10 @@
 class TasksController < ApplicationController
+  before_action :set_query, only: [:index]
+
   # GET /tasks(.:format)
   def index
-    @tasks = Task.where(deleted: 0).order(created_at: :desc)
+    @tasks = @q.result
+    @tasks = @tasks.where(deleted: 0).order('created_at desc')
   end
 
   # GET /tasks/:id/edit(.:format)
@@ -60,5 +63,9 @@ class TasksController < ApplicationController
 
   def task_params
     params.fetch(:task, {}).permit(:title, :description)
+  end
+
+  def set_query
+    @q = Task.ransack(params[:q])
   end
 end
