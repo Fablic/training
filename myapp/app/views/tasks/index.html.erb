@@ -1,20 +1,23 @@
 <h1>Tasks#list</h1>
 
+
+
 <table>
-    <tr>
-        <th><%= t('tasks.id') %></th>
-        <th><%= t('tasks.title') %></th>
-        <th><%= t('tasks.created_at') %></th>
-    </tr>
+  <tr>
+    <th><%= t('tasks.id') %></th>
+    <th><%= t('tasks.title') %></th>
+    <th><%= t('tasks.created_at') %></th>
+  </tr>
 
 <% @tasks.each do |task| %>
-    <tr>
-        <td><%= task.id %></td>
-        <td><%= link_to task.title, task%></td>
-        <td><%= l task.created_at%></td>
-        <td><%= link_to t('tasks.edit'), edit_task_path(id: task.id)%></td>
-        <td><%= link_to t('tasks.delete'), task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-    </tr>
+  <tr>
+    <td><%= task.id %></td>
+    <td><%= link_to task.title, task%></td>
+    <td><%= l task.created_at%></td>
+    <td><%= link_to t('tasks.edit'), edit_task_path(id: task.id)%></td>
+    <td><%= link_to t('tasks.delete'), task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
 <% end %>
 </table>
+
 <p><%= link_to t('tasks.create'), new_task_path, class: "task-new" %></p>
