@@ -1,0 +1,555 @@
+have_func: checking for rb_absint_size()... -------------------- yes
+
+"clang -fdeclspec -o conftest -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/x86_64-darwin20 -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby/backward -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0 -I. -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include  -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdivision-by-zero -Wimplicit-function-declaration -Wimplicit-int -Wmisleading-indentation -Wpointer-arith -Wshorten-64-to-32 -Wwrite-strings -Wmissing-noreturn -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wunused-variable -Wextra-tokens  -fno-common -pipe conftest.c  -L. -L/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/lib -L/usr/local/opt/openssl@1.1/lib     -lruby.3.0   "
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: int main(int argc, char **argv)
+4: {
+5:   return !!argv[argc];
+6: }
+/* end */
+
+"clang -fdeclspec -o conftest -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/x86_64-darwin20 -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby/backward -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0 -I. -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include  -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdivision-by-zero -Wimplicit-function-declaration -Wimplicit-int -Wmisleading-indentation -Wpointer-arith -Wshorten-64-to-32 -Wwrite-strings -Wmissing-noreturn -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wunused-variable -Wextra-tokens  -fno-common -pipe conftest.c  -L. -L/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/lib -L/usr/local/opt/openssl@1.1/lib     -lruby.3.0   "
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: /*top*/
+ 4: extern int t(void);
+ 5: int main(int argc, char **argv)
+ 6: {
+ 7:   if (argc > 1000000) {
+ 8:     int (* volatile tp)(void)=(int (*)(void))&t;
+ 9:     printf("%d", (*tp)());
+10:   }
+11: 
+12:   return !!argv[argc];
+13: }
+14: int t(void) { void ((*volatile p)()); p = (void ((*)()))rb_absint_size; return !p; }
+/* end */
+
+--------------------
+
+have_func: checking for rb_absint_singlebit_p()... -------------------- yes
+
+"clang -fdeclspec -o conftest -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/x86_64-darwin20 -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby/backward -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0 -I. -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include  -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdivision-by-zero -Wimplicit-function-declaration -Wimplicit-int -Wmisleading-indentation -Wpointer-arith -Wshorten-64-to-32 -Wwrite-strings -Wmissing-noreturn -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wunused-variable -Wextra-tokens  -fno-common -pipe conftest.c  -L. -L/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/lib -L/usr/local/opt/openssl@1.1/lib     -lruby.3.0   "
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: /*top*/
+ 4: extern int t(void);
+ 5: int main(int argc, char **argv)
+ 6: {
+ 7:   if (argc > 1000000) {
+ 8:     int (* volatile tp)(void)=(int (*)(void))&t;
+ 9:     printf("%d", (*tp)());
+10:   }
+11: 
+12:   return !!argv[argc];
+13: }
+14: int t(void) { void ((*volatile p)()); p = (void ((*)()))rb_absint_singlebit_p; return !p; }
+/* end */
+
+--------------------
+
+have_func: checking for rb_wait_for_single_fd()... -------------------- yes
+
+"clang -fdeclspec -o conftest -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/x86_64-darwin20 -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby/backward -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0 -I. -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include  -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdivision-by-zero -Wimplicit-function-declaration -Wimplicit-int -Wmisleading-indentation -Wpointer-arith -Wshorten-64-to-32 -Wwrite-strings -Wmissing-noreturn -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wunused-variable -Wextra-tokens  -fno-common -pipe conftest.c  -L. -L/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/lib -L/usr/local/opt/openssl@1.1/lib     -lruby.3.0   "
+conftest.c:14:57: error: use of undeclared identifier 'rb_wait_for_single_fd'
+int t(void) { void ((*volatile p)()); p = (void ((*)()))rb_wait_for_single_fd; return !p; }
+                                                        ^
+1 error generated.
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: /*top*/
+ 4: extern int t(void);
+ 5: int main(int argc, char **argv)
+ 6: {
+ 7:   if (argc > 1000000) {
+ 8:     int (* volatile tp)(void)=(int (*)(void))&t;
+ 9:     printf("%d", (*tp)());
+10:   }
+11: 
+12:   return !!argv[argc];
+13: }
+14: int t(void) { void ((*volatile p)()); p = (void ((*)()))rb_wait_for_single_fd; return !p; }
+/* end */
+
+"clang -fdeclspec -o conftest -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/x86_64-darwin20 -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby/backward -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0 -I. -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include  -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdivision-by-zero -Wimplicit-function-declaration -Wimplicit-int -Wmisleading-indentation -Wpointer-arith -Wshorten-64-to-32 -Wwrite-strings -Wmissing-noreturn -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wunused-variable -Wextra-tokens  -fno-common -pipe conftest.c  -L. -L/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/lib -L/usr/local/opt/openssl@1.1/lib     -lruby.3.0   "
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: /*top*/
+ 4: extern int t(void);
+ 5: int main(int argc, char **argv)
+ 6: {
+ 7:   if (argc > 1000000) {
+ 8:     int (* volatile tp)(void)=(int (*)(void))&t;
+ 9:     printf("%d", (*tp)());
+10:   }
+11: 
+12:   return !!argv[argc];
+13: }
+14: extern void rb_wait_for_single_fd();
+15: int t(void) { rb_wait_for_single_fd(); return 0; }
+/* end */
+
+--------------------
+
+have_header: checking for mysql.h... -------------------- yes
+
+"clang -E -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/x86_64-darwin20 -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby/backward -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0 -I. -I/usr/local/opt/mysql@5.6/include/mysql -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include  -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdivision-by-zero -Wimplicit-function-declaration -Wimplicit-int -Wmisleading-indentation -Wpointer-arith -Wshorten-64-to-32 -Wwrite-strings -Wmissing-noreturn -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wunused-variable -Wextra-tokens  -fno-common -pipe  conftest.c -o conftest.i"
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: #include <mysql.h>
+/* end */
+
+--------------------
+
+have_header: checking for errmsg.h... -------------------- yes
+
+"clang -E -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/x86_64-darwin20 -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby/backward -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0 -I. -I/usr/local/opt/mysql@5.6/include/mysql -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include  -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdivision-by-zero -Wimplicit-function-declaration -Wimplicit-int -Wmisleading-indentation -Wpointer-arith -Wshorten-64-to-32 -Wwrite-strings -Wmissing-noreturn -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wunused-variable -Wextra-tokens  -fno-common -pipe  conftest.c -o conftest.i"
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: #include <errmsg.h>
+/* end */
+
+--------------------
+
+have_const: checking for SSL_MODE_DISABLED in mysql.h... -------------------- no
+
+"clang -fdeclspec -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/x86_64-darwin20 -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby/backward -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0 -I. -I/usr/local/opt/mysql@5.6/include/mysql -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include  -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdivision-by-zero -Wimplicit-function-declaration -Wimplicit-int -Wmisleading-indentation -Wpointer-arith -Wshorten-64-to-32 -Wwrite-strings -Wmissing-noreturn -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wunused-variable -Wextra-tokens  -fno-common -pipe   -c conftest.c"
+conftest.c:7:34: error: use of undeclared identifier 'SSL_MODE_DISABLED'
+conftest_type conftestval = (int)SSL_MODE_DISABLED;
+                                 ^
+1 error generated.
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: #include <mysql.h>
+4: 
+5: /*top*/
+6: typedef int conftest_type;
+7: conftest_type conftestval = (int)SSL_MODE_DISABLED;
+/* end */
+
+--------------------
+
+have_const: checking for MYSQL_OPT_SSL_ENFORCE in mysql.h... -------------------- no
+
+"clang -fdeclspec -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/x86_64-darwin20 -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby/backward -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0 -I. -I/usr/local/opt/mysql@5.6/include/mysql -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include  -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdivision-by-zero -Wimplicit-function-declaration -Wimplicit-int -Wmisleading-indentation -Wpointer-arith -Wshorten-64-to-32 -Wwrite-strings -Wmissing-noreturn -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wunused-variable -Wextra-tokens  -fno-common -pipe   -c conftest.c"
+conftest.c:7:34: error: use of undeclared identifier 'MYSQL_OPT_SSL_ENFORCE'
+conftest_type conftestval = (int)MYSQL_OPT_SSL_ENFORCE;
+                                 ^
+1 error generated.
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: #include <mysql.h>
+4: 
+5: /*top*/
+6: typedef int conftest_type;
+7: conftest_type conftestval = (int)MYSQL_OPT_SSL_ENFORCE;
+/* end */
+
+--------------------
+
+have_struct_member: checking for MYSQL.net.vio in mysql.h... -------------------- yes
+
+"clang -fdeclspec -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/x86_64-darwin20 -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby/backward -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0 -I. -I/usr/local/opt/mysql@5.6/include/mysql -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include  -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdivision-by-zero -Wimplicit-function-declaration -Wimplicit-int -Wmisleading-indentation -Wpointer-arith -Wshorten-64-to-32 -Wwrite-strings -Wmissing-noreturn -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wunused-variable -Wextra-tokens  -fno-common -pipe -DNO_SSL_MODE_SUPPORT   -c conftest.c"
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: #include <mysql.h>
+ 4: 
+ 5: /*top*/
+ 6: int s = (char *)&((MYSQL*)0)->net.vio - (char *)0;
+ 7: int main(int argc, char **argv)
+ 8: {
+ 9:   return !!argv[argc];
+10: }
+/* end */
+
+--------------------
+
+have_struct_member: checking for MYSQL.net.pvio in mysql.h... -------------------- no
+
+"clang -fdeclspec -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/x86_64-darwin20 -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby/backward -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0 -I. -I/usr/local/opt/mysql@5.6/include/mysql -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include  -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdivision-by-zero -Wimplicit-function-declaration -Wimplicit-int -Wmisleading-indentation -Wpointer-arith -Wshorten-64-to-32 -Wwrite-strings -Wmissing-noreturn -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wunused-variable -Wextra-tokens  -fno-common -pipe -DNO_SSL_MODE_SUPPORT   -c conftest.c"
+conftest.c:6:35: error: no member named 'pvio' in 'struct st_net'; did you mean 'vio'?
+int s = (char *)&((MYSQL*)0)->net.pvio - (char *)0;
+                                  ^~~~
+                                  vio
+/usr/local/opt/mysql@5.6/include/mysql/mysql_com.h:331:8: note: 'vio' declared here
+  Vio *vio;
+       ^
+1 error generated.
+checked program was:
+/* begin */
+ 1: #include "ruby.h"
+ 2: 
+ 3: #include <mysql.h>
+ 4: 
+ 5: /*top*/
+ 6: int s = (char *)&((MYSQL*)0)->net.pvio - (char *)0;
+ 7: int main(int argc, char **argv)
+ 8: {
+ 9:   return !!argv[argc];
+10: }
+/* end */
+
+--------------------
+
+have_const: checking for MYSQL_ENABLE_CLEARTEXT_PLUGIN in mysql.h... -------------------- yes
+
+"clang -fdeclspec -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/x86_64-darwin20 -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby/backward -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0 -I. -I/usr/local/opt/mysql@5.6/include/mysql -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include  -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdivision-by-zero -Wimplicit-function-declaration -Wimplicit-int -Wmisleading-indentation -Wpointer-arith -Wshorten-64-to-32 -Wwrite-strings -Wmissing-noreturn -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wunused-variable -Wextra-tokens  -fno-common -pipe -DNO_SSL_MODE_SUPPORT   -c conftest.c"
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: #include <mysql.h>
+4: 
+5: /*top*/
+6: typedef int conftest_type;
+7: conftest_type conftestval = (int)MYSQL_ENABLE_CLEARTEXT_PLUGIN;
+/* end */
+
+--------------------
+
+have_const: checking for SERVER_QUERY_NO_GOOD_INDEX_USED in mysql.h... -------------------- yes
+
+"clang -fdeclspec -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/x86_64-darwin20 -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby/backward -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0 -I. -I/usr/local/opt/mysql@5.6/include/mysql -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include  -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdivision-by-zero -Wimplicit-function-declaration -Wimplicit-int -Wmisleading-indentation -Wpointer-arith -Wshorten-64-to-32 -Wwrite-strings -Wmissing-noreturn -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wunused-variable -Wextra-tokens  -fno-common -pipe -DNO_SSL_MODE_SUPPORT   -c conftest.c"
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: #include <mysql.h>
+4: 
+5: /*top*/
+6: typedef int conftest_type;
+7: conftest_type conftestval = (int)SERVER_QUERY_NO_GOOD_INDEX_USED;
+/* end */
+
+--------------------
+
+have_const: checking for SERVER_QUERY_NO_INDEX_USED in mysql.h... -------------------- yes
+
+"clang -fdeclspec -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/x86_64-darwin20 -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby/backward -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0 -I. -I/usr/local/opt/mysql@5.6/include/mysql -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include  -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdivision-by-zero -Wimplicit-function-declaration -Wimplicit-int -Wmisleading-indentation -Wpointer-arith -Wshorten-64-to-32 -Wwrite-strings -Wmissing-noreturn -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wunused-variable -Wextra-tokens  -fno-common -pipe -DNO_SSL_MODE_SUPPORT   -c conftest.c"
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: #include <mysql.h>
+4: 
+5: /*top*/
+6: typedef int conftest_type;
+7: conftest_type conftestval = (int)SERVER_QUERY_NO_INDEX_USED;
+/* end */
+
+--------------------
+
+have_const: checking for SERVER_QUERY_WAS_SLOW in mysql.h... -------------------- yes
+
+"clang -fdeclspec -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/x86_64-darwin20 -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby/backward -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0 -I. -I/usr/local/opt/mysql@5.6/include/mysql -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include  -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdivision-by-zero -Wimplicit-function-declaration -Wimplicit-int -Wmisleading-indentation -Wpointer-arith -Wshorten-64-to-32 -Wwrite-strings -Wmissing-noreturn -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wunused-variable -Wextra-tokens  -fno-common -pipe -DNO_SSL_MODE_SUPPORT   -c conftest.c"
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: #include <mysql.h>
+4: 
+5: /*top*/
+6: typedef int conftest_type;
+7: conftest_type conftestval = (int)SERVER_QUERY_WAS_SLOW;
+/* end */
+
+--------------------
+
+have_const: checking for MYSQL_OPTION_MULTI_STATEMENTS_ON in mysql.h... -------------------- yes
+
+"clang -fdeclspec -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/x86_64-darwin20 -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby/backward -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0 -I. -I/usr/local/opt/mysql@5.6/include/mysql -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include  -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdivision-by-zero -Wimplicit-function-declaration -Wimplicit-int -Wmisleading-indentation -Wpointer-arith -Wshorten-64-to-32 -Wwrite-strings -Wmissing-noreturn -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wunused-variable -Wextra-tokens  -fno-common -pipe -DNO_SSL_MODE_SUPPORT   -c conftest.c"
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: #include <mysql.h>
+4: 
+5: /*top*/
+6: typedef int conftest_type;
+7: conftest_type conftestval = (int)MYSQL_OPTION_MULTI_STATEMENTS_ON;
+/* end */
+
+--------------------
+
+have_const: checking for MYSQL_OPTION_MULTI_STATEMENTS_OFF in mysql.h... -------------------- yes
+
+"clang -fdeclspec -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/x86_64-darwin20 -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby/backward -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0 -I. -I/usr/local/opt/mysql@5.6/include/mysql -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include  -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdivision-by-zero -Wimplicit-function-declaration -Wimplicit-int -Wmisleading-indentation -Wpointer-arith -Wshorten-64-to-32 -Wwrite-strings -Wmissing-noreturn -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wunused-variable -Wextra-tokens  -fno-common -pipe -DNO_SSL_MODE_SUPPORT   -c conftest.c"
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: #include <mysql.h>
+4: 
+5: /*top*/
+6: typedef int conftest_type;
+7: conftest_type conftestval = (int)MYSQL_OPTION_MULTI_STATEMENTS_OFF;
+/* end */
+
+--------------------
+
+have_type: checking for my_bool in mysql.h... -------------------- yes
+
+"clang -fdeclspec -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/x86_64-darwin20 -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby/backward -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0 -I. -I/usr/local/opt/mysql@5.6/include/mysql -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include  -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdivision-by-zero -Wimplicit-function-declaration -Wimplicit-int -Wmisleading-indentation -Wpointer-arith -Wshorten-64-to-32 -Wwrite-strings -Wmissing-noreturn -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wunused-variable -Wextra-tokens  -fno-common -pipe -DNO_SSL_MODE_SUPPORT   -c conftest.c"
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: #include <mysql.h>
+4: 
+5: /*top*/
+6: typedef my_bool conftest_type;
+7: int conftestval[sizeof(conftest_type)?1:-1];
+/* end */
+
+--------------------
+
+"clang -fdeclspec -o conftest -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/x86_64-darwin20 -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby/backward -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0 -I. -I/usr/local/opt/mysql@5.6/include/mysql -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include  -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdivision-by-zero -Wimplicit-function-declaration -Wimplicit-int -Wmisleading-indentation -Wpointer-arith -Wshorten-64-to-32 -Wwrite-strings -Wmissing-noreturn -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wunused-variable -Wextra-tokens  -fno-common -pipe -DNO_SSL_MODE_SUPPORT conftest.c  -L. -L/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/lib -L/usr/local/opt/openssl@1.1/lib    -L/usr/local/opt/mysql@5.6/lib  -lmysqlclient  -lssl -lcrypto  -lruby.3.0 -Werror -Weverything  "
+error: include location '/usr/local/include' is unsafe for cross-compilation [-Werror,-Wpoison-system-directories]
+In file included from conftest.c:1:
+In file included from /Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby.h:38:
+In file included from /Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby/ruby.h:15:
+In file included from /Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby/internal/config.h:23:
+/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/x86_64-darwin20/ruby/config.h:14:9: error: macro name is a reserved identifier [-Werror,-Wreserved-id-macro]
+#define __EXTENSIONS__ 1
+        ^
+/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/x86_64-darwin20/ruby/config.h:15:9: error: macro name is a reserved identifier [-Werror,-Wreserved-id-macro]
+#define _ALL_SOURCE 1
+        ^
+/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/x86_64-darwin20/ruby/config.h:16:9: error: macro name is a reserved identifier [-Werror,-Wreserved-id-macro]
+#define _GNU_SOURCE 1
+        ^
+/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/x86_64-darwin20/ruby/config.h:17:9: error: macro name is a reserved identifier [-Werror,-Wreserved-id-macro]
+#define _POSIX_PTHREAD_SEMANTICS 1
+        ^
+/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/x86_64-darwin20/ruby/config.h:18:9: error: macro name is a reserved identifier [-Werror,-Wreserved-id-macro]
+#define _TANDEM_SOURCE 1
+        ^
+/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/x86_64-darwin20/ruby/config.h:341:9: error: macro name is a reserved identifier [-Werror,-Wreserved-id-macro]
+#define __STDC_WANT_LIB_EXT1__ 1
+        ^
+/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/x86_64-darwin20/ruby/config.h:377:9: error: macro name is a reserved identifier [-Werror,-Wreserved-id-macro]
+#define _REENTRANT 1
+        ^
+/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/x86_64-darwin20/ruby/config.h:378:9: error: macro name is a reserved identifier [-Werror,-Wreserved-id-macro]
+#define _THREAD_SAFE 1
+        ^
+In file included from conftest.c:1:
+In file included from /Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby.h:38:
+In file included from /Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby/ruby.h:23:
+In file included from /Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby/defines.h:73:
+In file included from /Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby/backward/2/attributes.h:34:
+/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby/internal/attr/const.h:40:6: error: 'RUBY_DEBUG' is not defined, evaluates to 0 [-Werror,-Wundef]
+#if !RUBY_DEBUG
+     ^
+In file included from conftest.c:1:
+In file included from /Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby.h:38:
+In file included from /Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby/ruby.h:23:
+In file included from /Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby/defines.h:78:
+/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby/backward/2/stdarg.h:34:8: error: macro name is a reserved identifier [-Werror,-Wreserved-id-macro]
+#undef __
+       ^
+/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby/backward/2/stdarg.h:36:10: error: macro name is a reserved identifier [-Werror,-Wreserved-id-macro]
+# define __(args) args
+         ^
+In file included from conftest.c:1:
+In file included from /Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby.h:38:
+In file included from /Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby/ruby.h:24:
+In file included from /Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby/internal/anyargs.h:76:
+/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby/internal/intern/class.h:48:46: error: this function declaration is not a prototype [-Werror,-Wstrict-prototypes]
+void rb_define_method_id(VALUE, ID, VALUE (*)(ANYARGS), int);
+                                             ^
+                                                     void
+/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby/internal/intern/class.h:50:62: error: this function declaration is not a prototype [-Werror,-Wstrict-prototypes]
+void rb_define_protected_method(VALUE, const char*, VALUE (*)(ANYARGS), int);
+                                                             ^
+                                                                     void
+/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby/internal/intern/class.h:51:60: error: this function declaration is not a prototype [-Werror,-Wstrict-prototypes]
+void rb_define_private_method(VALUE, const char*, VALUE (*)(ANYARGS), int);
+                                                           ^
+                                                                   void
+/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby/internal/intern/class.h:52:61: error: this function declaration is not a prototype [-Werror,-Wstrict-prototypes]
+void rb_define_singleton_method(VALUE, const char*, VALUE(*)(ANYARGS), int);
+                                                            ^
+                                                                    void
+In file included from conftest.c:1:
+In file included from /Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby.h:38:
+In file included from /Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby/ruby.h:24:
+In file included from /Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby/internal/anyargs.h:78:
+/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby/internal/method.h:29:49: error: this function declaration is not a prototype [-Werror,-Wstrict-prototypes]
+void rb_define_method(VALUE,const char*,VALUE(*)(ANYARGS),int);
+                                                ^
+                                                        void
+/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby/internal/method.h:30:58: error: this function declaration is not a prototype [-Werror,-Wstrict-prototypes]
+void rb_define_module_function(VALUE,const char*,VALUE(*)(ANYARGS),int);
+                                                         ^
+                                                                 void
+/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby/internal/method.h:31:52: error: this function declaration is not a prototype [-Werror,-Wstrict-prototypes]
+void rb_define_global_function(const char*,VALUE(*)(ANYARGS),int);
+                                                   ^
+                                                           void
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+20 errors generated.
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: int main() {return 0;}
+/* end */
+
+"clang -fdeclspec -o conftest -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/x86_64-darwin20 -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby/backward -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0 -I. -I/usr/local/opt/mysql@5.6/include/mysql -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include  -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdivision-by-zero -Wimplicit-function-declaration -Wimplicit-int -Wmisleading-indentation -Wpointer-arith -Wshorten-64-to-32 -Wwrite-strings -Wmissing-noreturn -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wunused-variable -Wextra-tokens  -fno-common -pipe -DNO_SSL_MODE_SUPPORT conftest.c  -L. -L/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/lib -L/usr/local/opt/openssl@1.1/lib    -L/usr/local/opt/mysql@5.6/lib  -lmysqlclient  -lssl -lcrypto  -lruby.3.0 -Werror -Wno-bad-function-cast  "
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: int main() {return 0;}
+/* end */
+
+"clang -fdeclspec -o conftest -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/x86_64-darwin20 -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby/backward -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0 -I. -I/usr/local/opt/mysql@5.6/include/mysql -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include  -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdivision-by-zero -Wimplicit-function-declaration -Wimplicit-int -Wmisleading-indentation -Wpointer-arith -Wshorten-64-to-32 -Wwrite-strings -Wmissing-noreturn -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wunused-variable -Wextra-tokens  -fno-common -pipe -DNO_SSL_MODE_SUPPORT conftest.c  -L. -L/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/lib -L/usr/local/opt/openssl@1.1/lib    -L/usr/local/opt/mysql@5.6/lib  -lmysqlclient  -lssl -lcrypto  -lruby.3.0 -Werror -Wno-conditional-uninitialized  "
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: int main() {return 0;}
+/* end */
+
+"clang -fdeclspec -o conftest -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/x86_64-darwin20 -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby/backward -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0 -I. -I/usr/local/opt/mysql@5.6/include/mysql -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include  -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdivision-by-zero -Wimplicit-function-declaration -Wimplicit-int -Wmisleading-indentation -Wpointer-arith -Wshorten-64-to-32 -Wwrite-strings -Wmissing-noreturn -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wunused-variable -Wextra-tokens  -fno-common -pipe -DNO_SSL_MODE_SUPPORT conftest.c  -L. -L/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/lib -L/usr/local/opt/openssl@1.1/lib    -L/usr/local/opt/mysql@5.6/lib  -lmysqlclient  -lssl -lcrypto  -lruby.3.0 -Werror -Wno-covered-switch-default  "
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: int main() {return 0;}
+/* end */
+
+"clang -fdeclspec -o conftest -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/x86_64-darwin20 -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby/backward -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0 -I. -I/usr/local/opt/mysql@5.6/include/mysql -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include  -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdivision-by-zero -Wimplicit-function-declaration -Wimplicit-int -Wmisleading-indentation -Wpointer-arith -Wshorten-64-to-32 -Wwrite-strings -Wmissing-noreturn -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wunused-variable -Wextra-tokens  -fno-common -pipe -DNO_SSL_MODE_SUPPORT conftest.c  -L. -L/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/lib -L/usr/local/opt/openssl@1.1/lib    -L/usr/local/opt/mysql@5.6/lib  -lmysqlclient  -lssl -lcrypto  -lruby.3.0 -Werror -Wno-declaration-after-statement  "
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: int main() {return 0;}
+/* end */
+
+"clang -fdeclspec -o conftest -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/x86_64-darwin20 -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby/backward -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0 -I. -I/usr/local/opt/mysql@5.6/include/mysql -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include  -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdivision-by-zero -Wimplicit-function-declaration -Wimplicit-int -Wmisleading-indentation -Wpointer-arith -Wshorten-64-to-32 -Wwrite-strings -Wmissing-noreturn -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wunused-variable -Wextra-tokens  -fno-common -pipe -DNO_SSL_MODE_SUPPORT conftest.c  -L. -L/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/lib -L/usr/local/opt/openssl@1.1/lib    -L/usr/local/opt/mysql@5.6/lib  -lmysqlclient  -lssl -lcrypto  -lruby.3.0 -Werror -Wno-disabled-macro-expansion  "
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: int main() {return 0;}
+/* end */
+
+"clang -fdeclspec -o conftest -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/x86_64-darwin20 -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby/backward -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0 -I. -I/usr/local/opt/mysql@5.6/include/mysql -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include  -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdivision-by-zero -Wimplicit-function-declaration -Wimplicit-int -Wmisleading-indentation -Wpointer-arith -Wshorten-64-to-32 -Wwrite-strings -Wmissing-noreturn -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wunused-variable -Wextra-tokens  -fno-common -pipe -DNO_SSL_MODE_SUPPORT conftest.c  -L. -L/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/lib -L/usr/local/opt/openssl@1.1/lib    -L/usr/local/opt/mysql@5.6/lib  -lmysqlclient  -lssl -lcrypto  -lruby.3.0 -Werror -Wno-documentation-unknown-command  "
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: int main() {return 0;}
+/* end */
+
+"clang -fdeclspec -o conftest -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/x86_64-darwin20 -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby/backward -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0 -I. -I/usr/local/opt/mysql@5.6/include/mysql -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include  -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdivision-by-zero -Wimplicit-function-declaration -Wimplicit-int -Wmisleading-indentation -Wpointer-arith -Wshorten-64-to-32 -Wwrite-strings -Wmissing-noreturn -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wunused-variable -Wextra-tokens  -fno-common -pipe -DNO_SSL_MODE_SUPPORT conftest.c  -L. -L/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/lib -L/usr/local/opt/openssl@1.1/lib    -L/usr/local/opt/mysql@5.6/lib  -lmysqlclient  -lssl -lcrypto  -lruby.3.0 -Werror -Wno-missing-field-initializers  "
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: int main() {return 0;}
+/* end */
+
+"clang -fdeclspec -o conftest -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/x86_64-darwin20 -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby/backward -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0 -I. -I/usr/local/opt/mysql@5.6/include/mysql -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include  -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdivision-by-zero -Wimplicit-function-declaration -Wimplicit-int -Wmisleading-indentation -Wpointer-arith -Wshorten-64-to-32 -Wwrite-strings -Wmissing-noreturn -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wunused-variable -Wextra-tokens  -fno-common -pipe -DNO_SSL_MODE_SUPPORT conftest.c  -L. -L/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/lib -L/usr/local/opt/openssl@1.1/lib    -L/usr/local/opt/mysql@5.6/lib  -lmysqlclient  -lssl -lcrypto  -lruby.3.0 -Werror -Wno-missing-variable-declarations  "
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: int main() {return 0;}
+/* end */
+
+"clang -fdeclspec -o conftest -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/x86_64-darwin20 -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby/backward -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0 -I. -I/usr/local/opt/mysql@5.6/include/mysql -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include  -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdivision-by-zero -Wimplicit-function-declaration -Wimplicit-int -Wmisleading-indentation -Wpointer-arith -Wshorten-64-to-32 -Wwrite-strings -Wmissing-noreturn -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wunused-variable -Wextra-tokens  -fno-common -pipe -DNO_SSL_MODE_SUPPORT conftest.c  -L. -L/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/lib -L/usr/local/opt/openssl@1.1/lib    -L/usr/local/opt/mysql@5.6/lib  -lmysqlclient  -lssl -lcrypto  -lruby.3.0 -Werror -Wno-padded  "
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: int main() {return 0;}
+/* end */
+
+"clang -fdeclspec -o conftest -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/x86_64-darwin20 -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby/backward -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0 -I. -I/usr/local/opt/mysql@5.6/include/mysql -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include  -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdivision-by-zero -Wimplicit-function-declaration -Wimplicit-int -Wmisleading-indentation -Wpointer-arith -Wshorten-64-to-32 -Wwrite-strings -Wmissing-noreturn -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wunused-variable -Wextra-tokens  -fno-common -pipe -DNO_SSL_MODE_SUPPORT conftest.c  -L. -L/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/lib -L/usr/local/opt/openssl@1.1/lib    -L/usr/local/opt/mysql@5.6/lib  -lmysqlclient  -lssl -lcrypto  -lruby.3.0 -Werror -Wno-reserved-id-macro  "
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: int main() {return 0;}
+/* end */
+
+"clang -fdeclspec -o conftest -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/x86_64-darwin20 -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby/backward -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0 -I. -I/usr/local/opt/mysql@5.6/include/mysql -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include  -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdivision-by-zero -Wimplicit-function-declaration -Wimplicit-int -Wmisleading-indentation -Wpointer-arith -Wshorten-64-to-32 -Wwrite-strings -Wmissing-noreturn -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wunused-variable -Wextra-tokens  -fno-common -pipe -DNO_SSL_MODE_SUPPORT conftest.c  -L. -L/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/lib -L/usr/local/opt/openssl@1.1/lib    -L/usr/local/opt/mysql@5.6/lib  -lmysqlclient  -lssl -lcrypto  -lruby.3.0 -Werror -Wno-sign-conversion  "
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: int main() {return 0;}
+/* end */
+
+"clang -fdeclspec -o conftest -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/x86_64-darwin20 -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby/backward -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0 -I. -I/usr/local/opt/mysql@5.6/include/mysql -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include  -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdivision-by-zero -Wimplicit-function-declaration -Wimplicit-int -Wmisleading-indentation -Wpointer-arith -Wshorten-64-to-32 -Wwrite-strings -Wmissing-noreturn -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wunused-variable -Wextra-tokens  -fno-common -pipe -DNO_SSL_MODE_SUPPORT conftest.c  -L. -L/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/lib -L/usr/local/opt/openssl@1.1/lib    -L/usr/local/opt/mysql@5.6/lib  -lmysqlclient  -lssl -lcrypto  -lruby.3.0 -Werror -Wno-static-in-inline  "
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: int main() {return 0;}
+/* end */
+
+"clang -fdeclspec -o conftest -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/x86_64-darwin20 -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby/backward -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0 -I. -I/usr/local/opt/mysql@5.6/include/mysql -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include  -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdivision-by-zero -Wimplicit-function-declaration -Wimplicit-int -Wmisleading-indentation -Wpointer-arith -Wshorten-64-to-32 -Wwrite-strings -Wmissing-noreturn -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wunused-variable -Wextra-tokens  -fno-common -pipe -DNO_SSL_MODE_SUPPORT conftest.c  -L. -L/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/lib -L/usr/local/opt/openssl@1.1/lib    -L/usr/local/opt/mysql@5.6/lib  -lmysqlclient  -lssl -lcrypto  -lruby.3.0 -Werror -Wno-switch-enum  "
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: int main() {return 0;}
+/* end */
+
+"clang -fdeclspec -o conftest -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/x86_64-darwin20 -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby/backward -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0 -I. -I/usr/local/opt/mysql@5.6/include/mysql -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include  -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdivision-by-zero -Wimplicit-function-declaration -Wimplicit-int -Wmisleading-indentation -Wpointer-arith -Wshorten-64-to-32 -Wwrite-strings -Wmissing-noreturn -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wunused-variable -Wextra-tokens  -fno-common -pipe -DNO_SSL_MODE_SUPPORT conftest.c  -L. -L/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/lib -L/usr/local/opt/openssl@1.1/lib    -L/usr/local/opt/mysql@5.6/lib  -lmysqlclient  -lssl -lcrypto  -lruby.3.0 -Werror -Wno-undef  "
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: int main() {return 0;}
+/* end */
+
+"clang -fdeclspec -o conftest -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/x86_64-darwin20 -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby/backward -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0 -I. -I/usr/local/opt/mysql@5.6/include/mysql -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include  -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdivision-by-zero -Wimplicit-function-declaration -Wimplicit-int -Wmisleading-indentation -Wpointer-arith -Wshorten-64-to-32 -Wwrite-strings -Wmissing-noreturn -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wunused-variable -Wextra-tokens  -fno-common -pipe -DNO_SSL_MODE_SUPPORT conftest.c  -L. -L/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/lib -L/usr/local/opt/openssl@1.1/lib    -L/usr/local/opt/mysql@5.6/lib  -lmysqlclient  -lssl -lcrypto  -lruby.3.0 -Werror -Wno-unreachable-code  "
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: int main() {return 0;}
+/* end */
+
+"clang -fdeclspec -o conftest -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/x86_64-darwin20 -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby/backward -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0 -I. -I/usr/local/opt/mysql@5.6/include/mysql -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include  -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdivision-by-zero -Wimplicit-function-declaration -Wimplicit-int -Wmisleading-indentation -Wpointer-arith -Wshorten-64-to-32 -Wwrite-strings -Wmissing-noreturn -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wunused-variable -Wextra-tokens  -fno-common -pipe -DNO_SSL_MODE_SUPPORT conftest.c  -L. -L/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/lib -L/usr/local/opt/openssl@1.1/lib    -L/usr/local/opt/mysql@5.6/lib  -lmysqlclient  -lssl -lcrypto  -lruby.3.0 -Werror -Wno-used-but-marked-unused  "
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: int main() {return 0;}
+/* end */
+
+"clang -fdeclspec -o conftest -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/x86_64-darwin20 -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0/ruby/backward -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include/ruby-3.0.0 -I. -I/usr/local/opt/mysql@5.6/include/mysql -I/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/include  -D_XOPEN_SOURCE -D_DARWIN_C_SOURCE -D_DARWIN_UNLIMITED_SELECT -D_REENTRANT   -O3 -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdivision-by-zero -Wimplicit-function-declaration -Wimplicit-int -Wmisleading-indentation -Wpointer-arith -Wshorten-64-to-32 -Wwrite-strings -Wmissing-noreturn -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wunused-variable -Wextra-tokens  -fno-common -pipe -DNO_SSL_MODE_SUPPORT -Wno-bad-function-cast -Wno-conditional-uninitialized -Wno-covered-switch-default -Wno-declaration-after-statement -Wno-disabled-macro-expansion -Wno-documentation-unknown-command -Wno-missing-field-initializers -Wno-missing-variable-declarations -Wno-padded -Wno-reserved-id-macro -Wno-sign-conversion -Wno-static-in-inline -Wno-switch-enum -Wno-undef -Wno-unreachable-code -Wno-used-but-marked-unused conftest.c  -L. -L/Users/ts-ken.a.ichinose/.rbenv/versions/3.0.2/lib -L/usr/local/opt/openssl@1.1/lib    -L/usr/local/opt/mysql@5.6/lib  -lmysqlclient  -lssl -lcrypto  -lruby.3.0  -Wl,-rpath,/usr/local/opt/mysql@5.6/lib  "
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: int main() {return 0;}
+/* end */
+
