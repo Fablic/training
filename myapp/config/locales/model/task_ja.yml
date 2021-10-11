@@ -4,6 +4,7 @@ ja:
       task: タスク
     attributes:
       task:
-        title: 件名
+        title:       件名
         description: 詳細
-        create_at: 作成日
+        create_at:   作成日
+        due_date:    期日

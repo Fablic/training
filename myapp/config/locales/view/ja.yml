@@ -10,3 +10,4 @@ ja:
     back:        '戻る'
     show:        '詳細表示'
     created_at:  '作成日時'
+    due_date:    '期日'
