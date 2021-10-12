@@ -3,11 +3,11 @@
 module TaskHelper
   def renderStatus(status)
     case status
-      when 0 then
+      when 'not_started' then
         I18n.t('dictionary.words.status_not_started')
-      when 1 then
+      when 'wip' then
         I18n.t('dictionary.words.status_wip')
-      when 2 then
+      when 'completed' then
         I18n.t('dictionary.words.status_completed')
       else
       	'undefined'

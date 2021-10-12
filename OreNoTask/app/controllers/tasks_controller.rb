@@ -2,7 +2,7 @@
 
 class TasksController < ApplicationController
   def index
-    @tasks = Task.where(deleted: 0).order("#{sort_column} #{sort_direction}")
+    @tasks = Task.active.order("#{sort_column} #{sort_direction}")
   end
 
   def new
@@ -11,7 +11,7 @@ class TasksController < ApplicationController
   end
 
   def edit
-    @task = Task.find_by(id: params[:id], deleted: 0)
+    @task = Task.active.find_by(id: params[:id])
     @submit_label = I18n.t('dictionary.words.save_to_update')
   end
 
@@ -27,7 +27,7 @@ class TasksController < ApplicationController
 
   def show
     id = params[:id]
-    @task = Task.find_by(id: id, deleted: 0)
+    @task = Task.active.find_by(id: id)
   end
 
   def create

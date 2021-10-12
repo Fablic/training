@@ -6,7 +6,7 @@ RSpec.describe 'Taskモデルのテスト', type: :model do
   let(:task) { Task.new(name: name, description: description, status: status, start_at: start_at, due_date_at: due_date_at) }
   let(:name) { '最初のタスク' }
   let(:description) { '説明文' }
-  let(:status) { 0 }
+  let(:status) { 'not_started' }
   let(:start_at) { '2021/09/01 10:00' }
   let(:due_date_at) { '2021/09/02 11:00' }
 
@@ -67,23 +67,23 @@ RSpec.describe 'Taskモデルのテスト', type: :model do
       subject { task }
 
       context '許容される値' do
-        let(:status) { 0 }
+        let(:status) { 'not_started' }
 
         it { is_expected.to be_valid }
 
-        let(:status) { 1 }
+        let(:status) { 'wip' }
 
         it { is_expected.to be_valid }
 
-        let(:status) { 2 }
+        let(:status) { 'completed' }
 
         it { is_expected.to be_valid }
       end
 
       context '許容されない値' do
-        let(:status) { 3 }
+        let(:status) { 'pending' }
 
-        it { is_expected.not_to be_valid }
+        it { expect{is_expected}.to raise_error(ArgumentError, "'pending' is not a valid status") }
       end
     end
 

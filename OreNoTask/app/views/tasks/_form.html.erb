@@ -7,9 +7,9 @@
   <tr>
     <th><%= Task.human_attribute_name(:status) %></th>
     <td><%= form.select :status, [
-        [I18n.t('dictionary.words.status_not_started'), "0"], 
-        [I18n.t('dictionary.words.status_wip'), "1"], 
-        [I18n.t('dictionary.words.status_completed'), "2"]
+        [I18n.t('dictionary.words.status_not_started'), "not_started"], 
+        [I18n.t('dictionary.words.status_wip'), "wip"], 
+        [I18n.t('dictionary.words.status_completed'), "completed"]
       ], 
       include_blank: I18n.t('dictionary.words.select_indicate')
     %></td>
