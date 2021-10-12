@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Task < ApplicationRecord
   validates :created_by, { presence: true }
   validates :name, { presence: true, length: { maximum: 75 } }
