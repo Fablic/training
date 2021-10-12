@@ -72,13 +72,13 @@ class TasksController < ApplicationController
     # params.require(:search_form).permit(:name, :status)
   end
 
-  # sortの方式をとる
-  def sort_order
-    %w[asc desc].include?(params[:order]) ? params[:order] : 'asc'
-  end
-
-  # sort対象のカラム
-  def sort_target_column
-    Task.column_names.include?(params[:sort]) ? params[:sort] : 'created_at'
-  end
+  # # sortの方式をとる
+  # def sort_order
+  #   %w[asc desc].include?(params[:order]) ? params[:order] : 'asc'
+  # end
+  #
+  # # sort対象のカラム
+  # def sort_target_column
+  #   Task.column_names.include?(params[:sort]) ? params[:sort] : 'created_at'
+  # end
 end
