@@ -1,15 +1,15 @@
 class TasksController < ApplicationController
-  before_action :set_query, only: [:index]
+  before_action :set_task, only: %i[show edit update destroy]
 
   # GET /tasks(.:format)
   def index
+    @q     = Task.ransack(params[:q])
     @tasks = @q.result
-    @tasks = @tasks.where(deleted: 0).order('created_at desc')
+    @tasks = @tasks.order('created_at desc')
   end
 
   # GET /tasks/:id/edit(.:format)
   def edit
-    @task = Task.find_by(id: params[:id], deleted: 0)
   end
 
   # GET /tasks/new(.:format)
@@ -32,7 +32,6 @@ class TasksController < ApplicationController
   # PATCH /tasks/:id(.:format) tasks#update
   # PUT   /tasks/:id(.:format) tasks#update
   def update
-    @task = Task.find(params[:id])
 
     if @task.update(task_params)
       flash[:success] = 'Successfully updated'
@@ -44,12 +43,10 @@ class TasksController < ApplicationController
 
   # GET /tasks/:id(.:format)
   def show
-    @task = Task.find(params[:id])
   end
 
   # DELETE /tasks/:id(.:format)
   def destroy
-    @task = Task.find(params[:id])
     if @task.update(deleted: 1)
       flash[:success] = 'Successfully deleted'
       redirect_to root_path
@@ -61,11 +58,11 @@ class TasksController < ApplicationController
 
   private
 
-  def task_params
-    params.fetch(:task, {}).permit(:title, :description)
+  def set_task
+    @task = Task.find_by(id: params[:id], deleted: 0)
   end
 
-  def set_query
-    @q = Task.ransack(params[:q])
+  def task_params
+    params.fetch(:task, {}).permit(:title, :description, :due_date)
   end
 end
