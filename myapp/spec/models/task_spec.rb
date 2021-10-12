@@ -6,30 +6,42 @@ RSpec.describe 'Task Model(Post)', type: :model do
   let!(:task) { Task.new(title: title, description: description) }
 
   describe 'Task' do
-    context 'when valid input' do
-      it 'created succesfully' do
-        expect(task).to be_valid
-      end
+    context 'title less than or equal to 50 words' do
+      let(:title) { 't' * 50 }
 
-      let(:title) { 't' * 49 }
-      it 'title string less than 50, created success' do
+      it 'create succesfully' do
         expect(task).to be_valid
       end
     end
 
-    context 'when invalid input' do
-      let(:title) { 'title' '' }
-      it 'title is empty, created faild' do
+    context 'description less than or equal to 256 words' do
+      let(:descripton) { 'd' * 255 }
+
+      it 'create success' do
+        expect(task).to be_valid
+      end
+    end
+
+    context 'title empty' do
+      let(:title) { '' }
+
+      it 'create faild' do
         expect(task).not_to be_valid
       end
+    end
 
-      let(:title) { 't' * 50 }
-      it 'title string over 50, created faild' do
+    context 'title over 50 words' do
+      let(:title) { 't' * 51 }
+
+      it 'create faild' do
         expect(task).not_to be_valid
       end
+    end
 
-      let(:description) { 'description' * 1000 }
-      it 'description string over 255, created faild' do
+    context 'description over 255 words' do
+      let(:description)  { 'd' * 256 }
+
+      it 'create faild' do
         expect(task).not_to be_valid
       end
     end
