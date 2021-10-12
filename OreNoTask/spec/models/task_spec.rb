@@ -83,7 +83,7 @@ RSpec.describe 'Taskモデルのテスト', type: :model do
       context '許容されない値' do
         let(:status) { 'pending' }
 
-        it { expect{is_expected}.to raise_error(ArgumentError, "'pending' is not a valid status") }
+        it { is_expected.not_to be_valid }
       end
     end
 

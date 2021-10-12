@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
 class Task < ApplicationRecord
+  extend Enumerize
 
-  enum status: { not_started: 0, wip: 1, completed: 2 }
+  enumerize :status, in: { not_started: 0, wip: 1, completed: 2 }, default: :not_started, scope: true
+
   scope :search_status, -> (status) { where(status: status) if status.present? }
   scope :search_keyword, -> (keyword) { where(["(name like? OR description like?)", "%#{keyword}%", "%#{keyword}%"]) }
   scope :active, -> { where(deleted: 0) }

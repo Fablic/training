@@ -8,7 +8,7 @@
 </p>
 <div class="search-form">
   <%= form_with url: search_path, method: :get, local: true do |f| %>
-    <p><%= f.label :keyword, I18n.t('dictionary.words.search_keyword') %><%= f.text_field :keyword, value: @keyword %><%= Task.human_attribute_name(:status) %><%= f.select :status, [[I18n.t('dictionary.words.status_not_started'), "0"], [I18n.t('dictionary.words.status_wip'), "1"], [I18n.t('dictionary.words.status_completed'), "2"]], include_blank: "全て", selected: @status %><%= f.submit I18n.t('dictionary.words.search_button') %></p>
+    <p><%= f.label :keyword, I18n.t('dictionary.words.search_keyword') %><%= f.text_field :keyword, value: @keyword %><%= Task.human_attribute_name(:status) %><%= f.select :status, Task.status.options, include_blank: I18n.t('dictionary.words.all'), selected: @status %><%= f.submit I18n.t('dictionary.words.search_button') %></p>
   <% end %>
 </div>
 <ul>
