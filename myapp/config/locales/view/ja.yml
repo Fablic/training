@@ -11,7 +11,4 @@ ja:
     show:          '詳細表示'
     created_at:    '作成日時'
     due_date:      '期日'
-    sort:          '並び替え'
     sort_due_date: '期日で並び替え'
-    due_date_asc:  '期日の昇順'
-    due_date_desc: '期日の降順'
