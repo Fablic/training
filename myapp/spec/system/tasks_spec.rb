@@ -5,17 +5,18 @@ RSpec.describe 'Tasks', type: :system do
 
   describe 'Index Page' do
     before { visit root_path }
+
     context 'normal action confirmation' do
       it 'display list view, success' do
         expect(page).to have_title 'Taskun'
         expect(page).to have_content(task_list.last.title)
       end
-  
+
       it 'move to create page, success' do
         click_on '作成'
         expect(page).to have_content 'Tasks#new'
       end
-  
+
       it 'sort by created_at order by desc, success' do
         expect(find('tr:nth-child(2)')).to have_content I18n.l task_list.last.created_at
         expect(find('tr:nth-child(3)')).to have_content I18n.l task_list[2].created_at
@@ -44,7 +45,7 @@ RSpec.describe 'Tasks', type: :system do
         all('table tr')[1].click_on '編集'
         expect(page).to have_content 'Tasks#edit'
       end
-  
+
       it 'move to detail page, success' do
         find('tr:nth-child(2)').click_on task_list.last.title
         expect(page).to have_content 'Tasks#detail'
@@ -56,6 +57,7 @@ RSpec.describe 'Tasks', type: :system do
     before { visit new_task_path }
 
     context 'normal action confirmation' do
+      # https://github.com/faker-ruby/faker#usage
       it 'create task, success' do
         fill_in 'task[title]',       with: 'new task'
         fill_in 'task[description]', with: 'new description'
@@ -64,7 +66,7 @@ RSpec.describe 'Tasks', type: :system do
         expect(page).to have_content 'Successfully created'
         expect(page).to have_content 'Tasks#list'
       end
-  
+
       it 'back to index page, success' do
         click_on '戻る'
         expect(page).to have_content 'Tasks#list'
@@ -74,6 +76,7 @@ RSpec.describe 'Tasks', type: :system do
 
   describe 'Edit Page' do
     before { visit edit_task_path(task_list.first.id) }
+
     context 'normal action confirmation' do
       let(:params) { { title: 'title for edit', description: 'description for edit' } }
 
@@ -94,12 +97,13 @@ RSpec.describe 'Tasks', type: :system do
 
   describe 'Detail Page' do
     before { visit task_path(task_list.first.id) }
+
     context 'normal action confirmation' do
       it 'list task details' do
         expect(page).to have_content task_list.first.title
         expect(page).to have_content task_list.first.description
       end
-  
+
       it 'back to list page' do
         click_on '戻る'
         expect(page).to have_content 'Tasks#list'

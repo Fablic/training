@@ -32,7 +32,6 @@ class TasksController < ApplicationController
   # PATCH /tasks/:id(.:format) tasks#update
   # PUT   /tasks/:id(.:format) tasks#update
   def update
-
     if @task.update(task_params)
       flash[:success] = 'Successfully updated'
       redirect_to root_path
