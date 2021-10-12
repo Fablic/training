@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'debug'
+
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase

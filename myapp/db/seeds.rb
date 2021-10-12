@@ -5,3 +5,10 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+User.create( id: 1,
+    name: 'mvincent',
+    username: 'mvincent.yap@rakuten.com',
+    pw:  BCrypt::Password.create('test1234') ,
+    first_run: false,
+    admin: true)
