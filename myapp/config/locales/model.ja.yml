@@ -2,6 +2,7 @@ ja:
   activerecord:
     models:
       task: タスク
+      search_form: タスク検索
 
     # モデルごとに設定する
     attributes:
@@ -10,7 +11,13 @@ ja:
         name: タスク名
         description: 詳細
         user_id: 担当者
-        period_date: 終了期限
+        due_date: 終了期限
+        status: 状態
+      task/status:
+        status_new: 未着手
+        status_progoress: 着手中
+        status_complete: 完了
+
   # 全てのmodelで共通
   attributes:
     created_at: 作成日
@@ -26,3 +33,19 @@ ja:
     destroy:
       notice: タスクを削除しました。
       alert: タスク削除できません。
+  # enum
+  enums:
+    task:
+      status:
+        new: 未着手
+        progress: 着手中
+        complete: 完了
+
+  # activerecordではなく、activemodelとして定義する
+  activemodel:
+    models:
+      search_form: タスク検索
+    attributes:
+      search_form:
+        name: タスク名
+        status: 状態

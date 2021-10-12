@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_01_061731) do
+ActiveRecord::Schema.define(version: 2021_10_04_080859) do
 
   create_table "labels", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.text "name"
@@ -27,7 +27,8 @@ ActiveRecord::Schema.define(version: 2021_10_01_061731) do
     t.string "name", limit: 256, comment: "タスク名"
     t.string "description", limit: 1024, comment: "コメント"
     t.bigint "user_id"
-    t.datetime "period_date", comment: "終了期限"
+    t.integer "status", comment: "状態"
+    t.datetime "due_date", comment: "終了期限"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_tasks_on_user_id"
