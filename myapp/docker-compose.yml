@@ -23,7 +23,6 @@ services:
       - ./log:/myapp/log
       - ./public:/myapp/public
       - ./storage:/myapp/storage
-      - ./test:/myapp/test
       - ./tmp:/myapp/tmp
       - ./Gemfile:/myapp/Gemfile
       - ./Gemfile.lock:/myapp/Gemfile.lock
@@ -34,6 +33,7 @@ services:
       - ./postcss.config.js:/myapp/postcss.config.js
       - ./yarn.lock:/myapp/yarn.lock
       - ./.rubocop.yml:/myapp/.rubocop.yml
+      - ./spec:/myapp/spec
     ports:
       - "3001:3000"
     links:

@@ -26,6 +26,6 @@ class Task < ApplicationRecord
   private
 
   def day_after_today
-    errors.add(:due_date, 'は、今日を含む未来の日付を入力して下さい') if !due_date.nil? && (due_date <= Time.zone.today)
+    errors.add(:due_date, 'は、今日を含む未来の日付を入力して下さい') if !due_date.nil? && (due_date < Time.zone.today)
   end
 end

@@ -37,3 +37,6 @@
 /config/master.key
 
 node_modules/
+
+/spec/tmp
+/spec/examples.txt

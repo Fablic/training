@@ -34,6 +34,7 @@ class TasksController < ApplicationController
       flash[:info] = 'Edit Success!'
       redirect_to @task
     else
+      flash.now[:danger] = 'error'
       render 'edit'
     end
   end
@@ -41,7 +42,7 @@ class TasksController < ApplicationController
   def destroy
     @task = Task.find(params[:id])
     @task.destroy
-    flash[:success] = 'Deleted Success'
+    flash[:success] = 'Delete Success'
     redirect_to root_path
   end
 
