@@ -24,6 +24,7 @@ class TasksController < ApplicationController
   # POST /tasks or /tasks.json
   def create
     @task = Task.new(task_params)
+
     respond_to do |format|
       if @task.save
         format.html { redirect_to @task, notice: 'Task was successfully created.' }
@@ -66,6 +67,8 @@ class TasksController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def task_params
-    params.require(:task).permit(:name, :created_by, :created_at, :finished_at, :description)
+    params.require(:task)
+      .permit(:name, :created_by, :created_at, :finished_at, :description, :status)
+      .with_defaults(created_by: 1)
   end
 end

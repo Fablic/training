@@ -67,6 +67,8 @@ class LabelsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def label_params
-    params.fetch(:label, {})
+    params.require(:label)
+      .permit(:name, :color)
+      .with_defaults(created_by: 1)
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_07_075119) do
+ActiveRecord::Schema.define(version: 2021_10_12_233502) do
 
   create_table "cats", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name"
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 2021_10_07_075119) do
     t.string "name", limit: 256, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "color"
     t.index ["created_by"], name: "fkeyLabelOwner"
   end
 
@@ -48,6 +49,7 @@ ActiveRecord::Schema.define(version: 2021_10_07_075119) do
   create_table "tasks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.bigint "created_by", null: false
     t.string "name", limit: 256, null: false
+    t.integer "status"
     t.text "description"
     t.timestamp "started_at"
     t.timestamp "finished_at"
