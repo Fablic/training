@@ -1,21 +1,2 @@
 <h1>Tasks#edit</h1>
-<div>
-  <%= form_with model: @task  do |form| %>
-    <div>
-      <%= form.label :title, t('tasks.title') %>
-      <%= form.text_field :title, value: @task.title %>
-    </div>
-
-    <div>
-      <%= form.label :description, t('tasks.description') %>
-      <%= form.text_field :description, value: @task.description %>
-    </div>
-
-    <div class="actions">
-      <%= form.submit t('tasks.submit') %>
-    </div>
-  <% end %>
-</div>
-
-<%= link_to t('tasks.show'), @task %> |
-<%= link_to t('tasks.back'), tasks_path %>
+<%= render partial: 'input_form', locals: { action_edit: true } %>

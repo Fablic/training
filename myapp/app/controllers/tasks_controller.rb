@@ -6,7 +6,7 @@ class TasksController < ApplicationController
 
   # GET /tasks/:id/edit(.:format)
   def edit
-    @task = Task.find_by(params[:id], deleted: 0)
+    @task = Task.find_by(id: params[:id], deleted: 0)
   end
 
   # GET /tasks/new(.:format)
@@ -22,7 +22,6 @@ class TasksController < ApplicationController
       flash[:success] = 'Successfully created'
       redirect_to root_path
     else
-      flash.now[:danger] = 'falid to create'
       render :new
     end
   end
@@ -36,8 +35,7 @@ class TasksController < ApplicationController
       flash[:success] = 'Successfully updated'
       redirect_to root_path
     else
-      flash[:danger] = 'falid to update'
-      redirect_to edit_task_path(@task)
+      render :edit
     end
   end
 
