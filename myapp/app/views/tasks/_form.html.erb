@@ -13,7 +13,7 @@
 
   <div class="field">
     <%= form.label :status %>
-    <%= form.text_field :status %>
+    <%= form.select :status, Task.statuses %>
   </div>
 
   <div class="field">
