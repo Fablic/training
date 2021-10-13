@@ -3,9 +3,9 @@ class TasksController < ApplicationController
 
   # GET /tasks(.:format)
   def index
-    @q     = Task.ransack(params[:q])
-    @tasks = @q.result
-    @tasks = @tasks.order('created_at desc')
+    @search = Task.ransack(params[:q])
+    @search.sorts = 'created_at desc' if @search.sorts.empty?
+    @tasks = @search.result
   end
 
   # GET /tasks/:id/edit(.:format)
