@@ -9,6 +9,7 @@ RUN apt-get update -qq && \
       default-mysql-client \
       git \
       curl \
+      imagemagick \
       python3
 
 # Install Node and Yarn

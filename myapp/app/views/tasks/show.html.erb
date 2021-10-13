@@ -1,0 +1,25 @@
+<h3><%= @task.title %></h3>
+<table border="1">
+  <thead>
+    <tr>
+      <th scope="col">Detail</th>
+      <th scope="col">Priority</th>
+      <th scope="col">Status</th>
+      <th scope="col">Duedate</th>
+      <th scope="col">File</th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+  <tr >
+    <td><%= @task.detail %></td>
+    <td><%= Task::prioritys.invert[@task.priority] %></td>
+    <td><%= Task::statuses.invert[@task.status] %></td>
+    <td><%= l @task.due_date %></td>
+    <td><%= image_tag @task.display_image if @task.image.attached? %></td>
+    <td><%= link_to "[EDIT]",   edit_task_path(@task) %></td>
+    <td><%= link_to '[DELETE]', @task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+  </tbody>
+</table>    

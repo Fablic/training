@@ -1,0 +1,10 @@
+<%= form_with(model: task,  local: true) do |f| %>
+  <tr >
+    <td><%= task.id %></td>
+    <td><%= link_to task.title, task %></td>
+    <td><%=  task.priority %></td>
+    <td><%=  task.status %></td>
+    <td><%= l task.due_date %></td>
+    <td><%= l task.created_at %></td>
+  </tr>
+<% end %>

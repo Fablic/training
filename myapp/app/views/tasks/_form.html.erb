@@ -1,0 +1,31 @@
+<div>
+  <div >
+    <%= form_with(model: @task, local: true) do |f| %>
+
+        <%= f.label :title %>
+        <%= f.text_field :title, class: 'form-control' %>
+        <br />
+  
+        <%= f.label :detail %>
+        <%= f.text_field :detail, class: 'form-control' %>
+        <br />
+  
+        <%= f.label :priority %>
+        <%= f.select :priority, Task::prioritys, { selected: @task.priority }, class: 'form-control' %>
+        <br />
+
+        <%= f.label :status %>
+        <%= f.select :status, Task::statuses, { selected: @task.status }, class: 'form-control' %>
+        <br />
+  
+        <%= f.label :due_date %>
+        <%= f.text_field :due_date, class: 'form-control' %>
+        <br />
+      
+        <%= f.file_field :image, accept: "image/jpeg,image/gif,image/png", class: 'form-control'  %>
+        <br />
+        
+      <%= f.submit button_value, class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>

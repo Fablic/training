@@ -33,6 +33,7 @@ services:
       - ./package.json:/myapp/package.json
       - ./postcss.config.js:/myapp/postcss.config.js
       - ./yarn.lock:/myapp/yarn.lock
+      - ./.rubocop.yml:/myapp/.rubocop.yml
     ports:
       - "3001:3000"
     links:

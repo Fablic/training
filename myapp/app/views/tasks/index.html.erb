@@ -1,0 +1,20 @@
+<% if @tasks.any? %>
+  <h3> Tasks (<%= @tasks.count %>)</h3>
+  <%= will_paginate @tasks,:previous_label => ' &lt', :next_label => '&gt' %>
+    <table border='1'>
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Title</th>
+          <th scope="col">Priority</th>
+          <th scope="col">Status</th>
+          <th scope="col">DueDate</th>
+          <th scope="col">CreateDate</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= render partial: "task", collection: @tasks  %>
+      </tbody>
+    </table>    
+  <%= will_paginate @tasks,:previous_label => ' &lt', :next_label => '&gt' %>
+<% end %>
