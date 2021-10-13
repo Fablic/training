@@ -6,16 +6,16 @@
     <td><%= @task.title %></td>
   </tr>
   <tr>
-    <th><% t('tasks.description') %></th>
+    <th><%= t('tasks.description') %></th>
     <td><%= @task.description %></td>
   </tr>
   <tr>
-    <th><% t('tasks.created_at') %></th>
-    <td><%= @task.created_at %></td>
+    <th><%= t('tasks.created_at') %></th>
+    <td><%= l @task.created_at %></td>
   </tr>
   <tr>
-    <th><% t('tasks.due_date') %></th>
-    <td><%= @task.due_date %></td>
+    <th><%= t('tasks.due_date') %></th>
+    <td><%= l @task.due_date %></td>
   </tr>
   <tr>
 </table>

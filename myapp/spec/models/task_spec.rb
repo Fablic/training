@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'Task Model(Post)', type: :model do
@@ -7,7 +9,7 @@ RSpec.describe 'Task Model(Post)', type: :model do
   let!(:task) { Task.new(title: title, description: description, due_date: due_date) }
 
   describe 'Task' do
-    context 'title less than or equal to 50 words' do
+    context 'when title less than or equal to 50 words' do
       let(:title) { 't' * 50 }
 
       it 'create succesfully' do
@@ -15,7 +17,7 @@ RSpec.describe 'Task Model(Post)', type: :model do
       end
     end
 
-    context 'description less than or equal to 256 words' do
+    context 'when description less than or equal to 256 words' do
       let(:descripton) { 'd' * 255 }
 
       it 'create success' do
@@ -23,7 +25,7 @@ RSpec.describe 'Task Model(Post)', type: :model do
       end
     end
 
-    context 'title empty' do
+    context 'when title empty' do
       let(:title) { '' }
 
       it 'create faild' do
@@ -31,7 +33,7 @@ RSpec.describe 'Task Model(Post)', type: :model do
       end
     end
 
-    context 'title over 50 words' do
+    context 'when title over 50 words' do
       let(:title) { 't' * 51 }
 
       it 'create faild' do
@@ -39,15 +41,15 @@ RSpec.describe 'Task Model(Post)', type: :model do
       end
     end
 
-    context 'description over 255 words' do
-      let(:description)  { 'd' * 256 }
+    context 'when description over 255 words' do
+      let(:description) { 'd' * 256 }
 
       it 'create faild' do
         expect(task).not_to be_valid
       end
     end
 
-    context 'due_date empty' do
+    context 'when due_date empty' do
       let(:due_date) { '' }
 
       it 'create faild' do

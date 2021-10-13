@@ -8,6 +8,7 @@ ja:
   errors:
     format: "%{attribute}%{message}"
     messages:
+      record_invalid: "バリデーションに失敗しました: %{errors}"
       blank: を入力してください
       empty: を入力してください
       invalid: は不正な値です
