@@ -20,7 +20,13 @@ ja:
       desc: '降順'
       clear: 'クリア'
       sort: 'でソート'
-      status_not_started: '未着手'
-      status_wip: '作業中'
-      status_completed: '完了'
+      all: '全て'
       search_keyword: 'タスク名・内容'
+      search_button: '検索'
+      select_indicate: '選択して下さい'
+  enumerize:
+    task:
+      status:
+        not_started: '未着手'
+        wip: '作業中'
+        completed: '完了'

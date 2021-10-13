@@ -4,7 +4,7 @@ ja:
       title: 'タスク一覧'
       create: 'タスク新規作成'
       edit: '編集'
-      delete: '削除'
+      delete: '×'
     show:
       title: 'タスクの詳細'
     new:
