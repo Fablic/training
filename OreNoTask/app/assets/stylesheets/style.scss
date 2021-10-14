@@ -1,0 +1,121 @@
+body {
+  font-family: 'Kiwi Maru'
+}
+
+a {
+  text-decoration: none;
+}
+
+header {
+  padding: 20px;
+  background-color: #FFFFFF;
+  z-index: 10;
+}
+
+h1 {
+  font-size: 20px;
+}
+
+#main-container {
+  width: 100%;
+  padding-top: 100px;
+}
+
+#create-task {
+  margin-bottom: 1em;
+}
+
+#search-form {
+  padding: 1em;
+  margin-bottom: 1em;
+}
+
+#search-form p {
+  line-height: 120%;
+  padding: 0px;
+  margin: 0px;
+}
+
+h2.task-name span {
+  width: 5em;
+  line-height: 100%;
+  font-size: small;
+  text-align: center;
+  padding: 0.5em 0;
+  margin: 0px 10px;
+}
+
+#back-to-list {
+  margin-bottom: 1em;
+}
+
+#edit-form {
+  padding: 1em;
+}
+
+#edit-form table {
+  width: 100%;
+}
+
+#edit-form th {
+  vertical-align: center;
+  padding-bottom: 1em;
+  font-size: 1.5em;
+}
+
+#edit-form td {
+  padding-left: 1em;
+  padding-bottom: 1em;
+}
+
+#edit-form textarea {
+ width: 50%;
+ height: 20em;
+}
+
+@media screen and (max-width: 959px) {
+  #edit-form textarea {
+    width: 100%;
+    height: 20em;
+  }
+}
+
+#show-area {
+  padding: 1em;
+}
+
+#show-area h2 {
+  width: 100%;
+  border-bottom: 1px dotted;
+  border-color: #DDDDDD;
+  padding-bottom: 0.5em;
+}
+
+.pagination {
+  width: 100%;
+  padding: 1em;
+}
+
+.pagination span {
+  padding: 0.3em 0.5em;
+  margin: 0 0.1em;
+}
+
+.pagination span.page {
+  border: 1px solid;
+  border-color: #DDDDDD;
+}
+
+#sort-form {
+  margin-bottom: 0.5em;
+}
+
+#sort-form a {
+  border-right: 1px solid;
+  border-color: #BBBBBB;
+  padding-right: 0.5em;
+}
+
+#sort-form a:last-child {
+  border: none;
+}

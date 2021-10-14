@@ -1,6 +1,14 @@
-<h1><%= I18n.t('tasks.show.title') %></h1>
-<h2><%= @task.name %> <%= @task.status.text %></h2>
-<p><%= l @task.start_at, format: :long %> 〜 <%= l @task.due_date_at, format: :long %></p>
-<p><%= simple_format @task.description %></p>
+<header class='border-bottom rounded-bottom position-fixed w-100'>
+  <h1><%= I18n.t('tasks.show.title') %></h1>
+</header>
 
-<p><%= link_to I18n.t('dictionary.words.to_list'), tasks_path, class: 'btn btn-success mr-2' %></p>
+<div class='container' id='main-container'>
+  <div id='back-to-list'><%= link_to I18n.t('dictionary.words.to_list'), tasks_path, class: 'btn btn-success mr-2' %></div>
+
+  <div id='show-area' class='border rounded'>
+    <h2 class='task-name d-inline-block'><span class='border rounded d-inline-block'><%= @task.status.text %></span><%= @task.name %></h2>
+    <p><%= l @task.start_at, format: :long %> 〜 <%= l @task.due_date_at, format: :long %></p>
+    <%= simple_format @task.description %>
+  </div>
+
+</div>
