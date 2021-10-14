@@ -37,7 +37,7 @@ http://localhost:3000/
 
 - `Gemfile` で [RuboCop](https://github.com/rubocop/rubocop)（Rubyの静的コード解析ツール） か [fablicop](https://github.com/Fablic/fablicop)をインストールしましょう。設定やコマンド実行方法は各READMEから確認しましょう。
 # check
-rubicon
+rubocop
 # 修正
 rubocop --auto-correct
 rubocop -A
