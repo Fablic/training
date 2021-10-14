@@ -11,15 +11,15 @@
         <br />
   
         <%= f.label :priority %>
-        <%= f.select :priority, Task::prioritys, { selected: @task.priority }, class: 'form-control' %>
+        <%= f.collection_select :priority, Task.prioritys.values, :to_i, method(:translate_priority), selected:@task.priority %>
         <br />
 
         <%= f.label :status %>
-        <%= f.select :status, Task::statuses, { selected: @task.status }, class: 'form-control' %>
+        <%= f.collection_select :status, Task.statuses.values, :to_i, method(:translate_status), selected:@task.status %>
         <br />
   
         <%= f.label :due_date %>
-        <%= f.text_field :due_date, class: 'form-control' %>
+        <%= f.text_field :due_date, class: 'form-control'%>
         <br />
       
         <%= f.file_field :image, accept: "image/jpeg,image/gif,image/png", class: 'form-control'  %>

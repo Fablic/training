@@ -3,10 +3,10 @@
   <thead>
     <tr>
       <th scope="col">Detail</th>
-      <th scope="col">Priority</th>
-      <th scope="col">Status</th>
-      <th scope="col">Duedate</th>
-      <th scope="col">File</th>
+      <th scope="col"><%= t('activerecord.attributes.task.priority') %></th>
+      <th scope="col"><%= t('activerecord.attributes.task.status') %></th>
+      <th scope="col"><%= t('activerecord.attributes.task.due_date') %></th>
+      <th scope="col"><%= t('activerecord.attributes.task.image') %></th>
       <th scope="col"></th>
       <th scope="col"></th>
     </tr>
@@ -18,8 +18,8 @@
     <td><%= Task::statuses.invert[@task.status] %></td>
     <td><%= l @task.due_date %></td>
     <td><%= image_tag @task.display_image if @task.image.attached? %></td>
-    <td><%= link_to "[EDIT]",   edit_task_path(@task) %></td>
-    <td><%= link_to '[DELETE]', @task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to t('common.edit'),   edit_task_path(@task) %></td>
+    <td><%= link_to t('common.delete'), @task, method: :delete, data: { confirm: t('pages.tasks.confirm_deletion') } %></td>
   </tr>
   </tbody>
 </table>    

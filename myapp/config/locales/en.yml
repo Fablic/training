@@ -30,4 +30,49 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  time:
+    formats:
+      default: "%Y/%m/%d %H:%M:%S"
+  activerecord:
+    attributes:
+      task:
+        title: title
+        detail: detail
+        priority: priority
+        status: status
+        due_date: due_date
+        create_date: create_date
+        image: image
+    enum:
+      task:
+        priority:
+          low: low
+          normal: normal
+          high: high
+        status:
+          waiting: waiting
+          doing: doing
+          done: done
+    errors:
+      models:
+        task:
+          attributes:
+            title:
+              blank: title is empty.
+            due_date:
+              blank: due_date is empty.
+              error: Incorrect due date.
+
+  common:
+    new: Create New
+    edit: Edit
+    submit: Submit
+    delete: Delete
+  pages:
+    tasks:
+      flash:
+        added: Created the task
+        edited: Edited the task.
+        deleted: Deleted the task.
+        fail: Failed to register the task.
+      confirm_deletion: Are you sure you want to delete the task?

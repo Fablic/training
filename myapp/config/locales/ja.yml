@@ -33,3 +33,45 @@ ja:
   time:
     formats:
       default: "%Y/%m/%d %H:%M:%S"
+  activerecord:
+    attributes:
+      task:
+        title: 件名
+        detail: 詳細
+        priority: 優先順位
+        status: 状態
+        due_date: 期限
+        create_date: 作成日時
+        image: 画像
+    enum:
+      task:
+        priority:
+          low: 低
+          normal: 中
+          high: 高
+        status:
+          waiting: 未着手
+          doing: 着手
+          done: 完了
+    errors:
+      models:
+        task:
+          attributes:
+            title:
+              blank: 名前は必須です
+            due_date:
+              blank: 期限は必須です
+              error: 期限が誤っています
+  common:
+    new: 新規作成
+    edit: 編集
+    submit: 送信
+    delete: 削除
+  pages:
+    tasks:
+      flash:
+        added: タスクを作成しました。
+        edited: タスクを編集しました。
+        deleted: タスクを削除しました。
+        fail: タスクの登録に失敗しました。
+      confirm_deletion: 本当にタスクを削除してよろしいですか？

@@ -19,10 +19,9 @@ class TasksController < ApplicationController
     @task = Task.new(task_params)
     @task.image.attach(params[:task][:image])
     if @task.save
-      flash[:info] = 'Regist Success!'
-      redirect_to root_path
+      redirect_to root_path, flash: { info: I18n.t('pages.tasks.flash.added') }
     else
-      flash.now[:danger] = 'error'
+      flash.now[:danger] = I18n.t('pages.tasks.flash.fail')
       render 'new'
     end
   end
@@ -31,10 +30,9 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
     @task.image.attach(task_params[:image]) if task_params.key?(:image)
     if @task.update(task_params)
-      flash[:info] = 'Edit Success!'
-      redirect_to @task
+      redirect_to @task, flash: { info: I18n.t('pages.tasks.flash.edited') }
     else
-      flash.now[:danger] = 'error'
+      flash.now[:danger] = I18n.t('pages.tasks.flash.fail')
       render 'edit'
     end
   end
@@ -42,8 +40,7 @@ class TasksController < ApplicationController
   def destroy
     @task = Task.find(params[:id])
     @task.destroy
-    flash[:success] = 'Delete Success'
-    redirect_to root_path
+    redirect_to root_path, flash: { info: I18n.t('pages.tasks.flash.deleted') }
   end
 
   private
