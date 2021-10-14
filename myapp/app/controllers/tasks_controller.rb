@@ -3,6 +3,7 @@ class TasksController < ApplicationController
 
   # 一覧
   def index
+    # test
     @search_form = params.key?(:search_form) ? SearchForm.new(permitted_search_params) : SearchForm.new
     @tasks = @search_form.exec_search(params[:page])
   end
@@ -15,7 +16,7 @@ class TasksController < ApplicationController
   # 新規作成実行
   def create
     @task = Task.new(permitted_params)
-
+    @task.user_id = 1 # 次ステップでログインユーザーIDが入ります。
     if @task.save
       # 一覧へ
       redirect_to tasks_path, notice: t('messages.create.notice')
@@ -68,7 +69,6 @@ class TasksController < ApplicationController
   # ストロングパラメータをとる(検索)
   def permitted_search_params
     params.require(:search_form).permit(:name, :status, :sort, :order)
-    # params.require(:search_form).permit(:name, :status)
   end
 
   # menuをセットする

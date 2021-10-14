@@ -1,5 +1,6 @@
 FactoryBot.define do
   factory :task do
+    user
     sequence(:name) { |n| "task#{n - 1}" }
     description { 'description' }
     status { 'new' }
@@ -14,4 +15,14 @@ FactoryBot.define do
       sequence(:created_at) { Time.local(2021, 1, 1, 0, 0, 0) }
     end
   end
+
+  factory :user do
+    sequence(:name) { |n| "名前#{n}" }
+    sequence(:mail_address) { |n| "test-#{n}@sample.mail.com" }
+
+    factory :user_1 do
+      id{ 1 }
+    end
+  end
+
 end

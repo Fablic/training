@@ -7,7 +7,7 @@ Rails.application.configure do
   config.cache_classes = false
 
   # Do not eager load code on boot.
-  config.eager_load = false
+  config.eager_load = true
 
   # Show full error reports.
   config.consider_all_requests_local = false
@@ -62,4 +62,14 @@ Rails.application.configure do
 
   ## logファイルを分ける
   config.logger = Logger.new('log/development.log','daily')
+
+  # Bulletの設定
+  config.after_initialize do
+    Bullet.enable = true # Bulletを有効化する
+    Bullet.alert = true # JavaScriptのポップアップアラートを表示する
+    Bullet.bullet_logger = true # log/bullet.logに出力
+    Bullet.console = true # ブラウザのconsole.logに出力
+    Bullet.rails_logger = true # Railsのログに結果を出力
+    Bullet.add_footer = true # ページの左下に結果を表示
+  end
 end

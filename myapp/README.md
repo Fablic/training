@@ -1,5 +1,5 @@
 # テーブル構成
-2021.10.04.更新
+2021.10.13.更新
 
 ## users テーブル
 |Column|Type|Options|
@@ -9,15 +9,15 @@
 |mail_address|VARCHAR(128)||
 |role_id|TINYINT|DEFAULT 0|
 |latest_login_date|DATETIME||
-|regist_user_id|integer|NOTNULL|
 |created_at|DATETIME||
 |updated_at|DATETIME||
-|update_user_id|integer||
 |del_flag|boolean|default false|
 
+
  ### relation:
-- regist_user_id -> users.user_id
-- update_user_id -> users.user_id
+10.14 regist_userとupdate_userは今のとこ使わなさそうなので消した
+- ~~regist_user_id -> users.user_id~~
+- ~~update_user_id -> users.user_id~~
 
 
 ## tasksテーブル

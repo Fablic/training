@@ -14,7 +14,7 @@ class SearchForm
   # taskの検索実行
   def exec_search(page)
     if valid?
-      tasks = Task.all.order("#{sort_value} #{order_value}")
+      tasks = Task.eager_load(:user).order("tasks.#{sort_value} #{order_value}")
       tasks.where!('name LIKE ?', "%#{name}%") if name.present?
       tasks.where!(status: status) if status.present?
       tasks.page(page)

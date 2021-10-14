@@ -9,6 +9,11 @@ RSpec.feature Task, type: :feature, js: true do
   let(:button_name_edit) { '更新' }
   let(:task_list_dom) { all('.task-list-table tbody tr') }
   test_loop_num = 3
+  before(:all) do
+    # p 'どうかな？'
+    #FactoryBot.create(:User)
+    # load Rails.root.join('db/seeds.rb')
+  end
 
   # index
   feature '一覧画面' do
@@ -73,6 +78,7 @@ RSpec.feature Task, type: :feature, js: true do
   feature '新規登録画面' do
     background do
       # タスク新規登録画面へ遷移
+      FactoryBot.create(:user_1)
       visit new_task_path
     end
     context 'フォームの入力値が正常の場合' do
@@ -83,7 +89,6 @@ RSpec.feature Task, type: :feature, js: true do
         # フィールドに入力
         fill_in label_name_task, with: input_name
         fill_in label_name_detail, with: input_description
-
         # submitをクリックする
         click_button button_name_regist
         # index_pathへ遷移することを期待する
