@@ -17,7 +17,7 @@ class SearchForm
       tasks = Task.all.order("#{sort_value} #{order_value}")
       tasks.where!('name LIKE ?', "%#{name}%") if name.present?
       tasks.where!(status: status) if status.present?
-      tasks.page(page).per(5)
+      tasks.page(page)
     else
       false
     end

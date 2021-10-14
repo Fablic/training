@@ -4,6 +4,10 @@ $(document).ready(function(){
         let targetName = $(this).attr("name");
         execSort(targetName);
     });
+
+    $('.calendar').flatpickr({
+        'locale': 'ja',
+    });
 });
 
 //functions

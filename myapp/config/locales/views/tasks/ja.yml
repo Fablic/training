@@ -1,9 +1,11 @@
 ja:
   tasks:
     link_index: '一覧'
+    menu:
+      btn_add: '追加'
+      btn_list: '一覧'
     index:
       title: 'タスク一覧'
-      btn_add: '追加'
       btn_del: '削除'
       btn_search: '検索'
       label_id: 'ID'
@@ -20,3 +22,4 @@ ja:
     edit:
       title: 'タスク編集'
       btn_regist: '更新'
+

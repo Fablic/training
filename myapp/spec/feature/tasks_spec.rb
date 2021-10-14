@@ -4,11 +4,10 @@ RSpec.feature Task, type: :feature, js: true do
   # 画面ラベル名
   let(:label_name_task) { 'タスク名' }
   let(:label_name_detail) { '詳細' }
-  let(:label_name_due_date) { '終了期限' }
   let(:label_name_status) { '状態' }
   let(:button_name_regist) { '登録' }
   let(:button_name_edit) { '更新' }
-  let(:task_list_dom) { all('.list_table tbody tr') }
+  let(:task_list_dom) { all('.task-list-table tbody tr') }
   test_loop_num = 3
 
   # index
@@ -80,12 +79,10 @@ RSpec.feature Task, type: :feature, js: true do
       scenario 'タスクの新規作成が成功' do
         input_name = 'ガス閉栓手続き'
         input_description = '京葉ガスに連絡・日付確定'
-        input_due_date = Time.current + 10.days
 
         # フィールドに入力
         fill_in label_name_task, with: input_name
         fill_in label_name_detail, with: input_description
-        fill_in label_name_due_date, with: input_due_date
 
         # submitをクリックする
         click_button button_name_regist
@@ -97,24 +94,25 @@ RSpec.feature Task, type: :feature, js: true do
         expect(page).to have_content input_name
       end
     end
-    context 'Name未記入の場合' do
-      scenario 'タスク登録失敗する' do
-        # 入力
-        fill_in label_name_task, with: nil
-        fill_in label_name_detail, with: '引っ越し業者の選定'
-        fill_in label_name_due_date, with: nil
-        # ボタンをクリック
-        click_button button_name_regist
-        # エラーメッセージが出ていることを確認
-        expect(page).to have_content 'タスク名を入力してください'
-      end
-    end
+    # inputにrequiredをつけたのでこのテストはいらない（通らない）
+    # context 'Name未記入の場合' do
+    #   scenario 'タスク登録失敗する' do
+    #     # 入力
+    #     fill_in label_name_task, with: nil
+    #     fill_in label_name_detail, with: '引っ越し業者の選定'
+    #     # ボタンをクリック
+    #     save_and_open_page
+    #     click_button button_name_regist
+    #     save_and_open_page
+    #     # エラーメッセージが出ていることを確認
+    #     expect(page).to have_content 'タスク名を入力してください'
+    #   end
+    # end
     context 'description未記入の場合' do
       scenario 'タスクの新規作成が成功' do
         # 入力
         fill_in label_name_task, with: '電気の手続き'
         fill_in label_name_detail, with: nil
-        fill_in label_name_due_date, with: nil
         # ボタンをクリック
         click_button button_name_regist
         # 完了メッセージが出ていることを確認

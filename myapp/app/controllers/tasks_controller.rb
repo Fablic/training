@@ -1,4 +1,5 @@
 class TasksController < ApplicationController
+  before_action :set_menu
 
   # 一覧
   def index
@@ -70,4 +71,11 @@ class TasksController < ApplicationController
     # params.require(:search_form).permit(:name, :status)
   end
 
+  # menuをセットする
+  def set_menu
+    @menus = [
+      Menu.new(t('.menu.btn_list'), tasks_path),
+      Menu.new(t('.menu.btn_add'), new_task_path)
+    ]
+  end
 end
