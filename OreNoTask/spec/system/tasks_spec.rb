@@ -3,10 +3,10 @@
 require 'rails_helper'
 describe 'タスク管理機能', type: :system do
   before(:all) do
-    create(:task, name: '最初のタスク', description: '説明文', status: 0, start_at: '2021/09/01 10:00', due_date_at: '2021/09/02 11:00', created_at: '2021/07/01 09:00:04')
-    create(:task, name: '２番目のタスク', description: '説明文２', status: 2, start_at: '2021/08/02 10:00', due_date_at: '2021/08/03 11:00', created_at: '2021/07/01 09:00:03')
-    create(:task, name: '追加したタスク', description: '追加した説明文', status: 1, start_at: '2021/10/01 10:00', due_date_at: '2021/10/03 11:00', created_at: '2021/07/01 09:00:02')
-    create(:task, name: '最後のタスク', description: '最後の説明文', status: 0, start_at: '2021/12/02 10:00', due_date_at: '2021/12/03 11:00', created_at: '2021/07/01 09:00:01')
+    create(:task, name: '最初のタスク', description: '説明文', status: 'not_started', start_at: '2021/09/01 10:00', due_date_at: '2021/09/02 11:00', created_at: '2021/07/01 09:00:04')
+    create(:task, name: '２番目のタスク', description: '説明文２', status: 'completed', start_at: '2021/08/02 10:00', due_date_at: '2021/08/03 11:00', created_at: '2021/07/01 09:00:03')
+    create(:task, name: '追加したタスク', description: '追加した説明文', status: 'wip', start_at: '2021/10/01 10:00', due_date_at: '2021/10/03 11:00', created_at: '2021/07/01 09:00:02')
+    create(:task, name: '最後のタスク', description: '最後の説明文', status: 'not_started', start_at: '2021/12/02 10:00', due_date_at: '2021/12/03 11:00', created_at: '2021/07/01 09:00:01')
   end
 
   describe 'タスク一覧' do
@@ -177,16 +177,16 @@ describe 'タスク管理機能', type: :system do
 
     describe 'ページング機能' do
       before(:all) do
-        create(:task, name: 'タスク1', description: '説明文', status: 0, start_at: '2020/12/01 10:00', due_date_at: '2020/12/02 11:00', created_at: '2020/12/01 09:00:04')
-        create(:task, name: 'タスク2', description: '説明文', status: 0, start_at: '2020/11/01 10:00', due_date_at: '2020/11/02 11:00', created_at: '2020/11/01 09:00:04')
-        create(:task, name: 'タスク3', description: '説明文', status: 0, start_at: '2020/10/01 10:00', due_date_at: '2020/10/02 11:00', created_at: '2020/10/01 09:00:04')
-        create(:task, name: 'タスク4', description: '説明文', status: 0, start_at: '2020/09/01 10:00', due_date_at: '2020/09/02 11:00', created_at: '2020/09/01 09:00:04')
-        create(:task, name: 'タスク5', description: '説明文', status: 0, start_at: '2020/08/01 10:00', due_date_at: '2020/08/02 11:00', created_at: '2020/08/01 09:00:04')
-        create(:task, name: 'タスク6', description: '説明文', status: 0, start_at: '2020/07/01 10:00', due_date_at: '2020/07/02 11:00', created_at: '2020/07/01 09:00:04')
-        create(:task, name: 'タスク7', description: '説明文', status: 0, start_at: '2020/06/01 10:00', due_date_at: '2020/06/02 11:00', created_at: '2020/06/01 09:00:04')
-        create(:task, name: 'タスク8', description: '説明文', status: 0, start_at: '2020/05/01 10:00', due_date_at: '2020/05/02 11:00', created_at: '2020/05/01 09:00:04')
-        create(:task, name: 'タスク9', description: '説明文', status: 0, start_at: '2020/04/01 10:00', due_date_at: '2020/04/02 11:00', created_at: '2020/04/01 09:00:04')
-        create(:task, name: 'タスク10', description: '説明文', status: 0, start_at: '2020/03/01 10:00', due_date_at: '2020/03/02 11:00', created_at: '2020/03/01 09:00:04')
+        create(:task, name: 'タスク1', description: '説明文', status: 'not_started', start_at: '2020/12/01 10:00', due_date_at: '2020/12/02 11:00', created_at: '2020/12/01 09:00:04')
+        create(:task, name: 'タスク2', description: '説明文', status: 'not_started', start_at: '2020/11/01 10:00', due_date_at: '2020/11/02 11:00', created_at: '2020/11/01 09:00:04')
+        create(:task, name: 'タスク3', description: '説明文', status: 'not_started', start_at: '2020/10/01 10:00', due_date_at: '2020/10/02 11:00', created_at: '2020/10/01 09:00:04')
+        create(:task, name: 'タスク4', description: '説明文', status: 'not_started', start_at: '2020/09/01 10:00', due_date_at: '2020/09/02 11:00', created_at: '2020/09/01 09:00:04')
+        create(:task, name: 'タスク5', description: '説明文', status: 'not_started', start_at: '2020/08/01 10:00', due_date_at: '2020/08/02 11:00', created_at: '2020/08/01 09:00:04')
+        create(:task, name: 'タスク6', description: '説明文', status: 'not_started', start_at: '2020/07/01 10:00', due_date_at: '2020/07/02 11:00', created_at: '2020/07/01 09:00:04')
+        create(:task, name: 'タスク7', description: '説明文', status: 'not_started', start_at: '2020/06/01 10:00', due_date_at: '2020/06/02 11:00', created_at: '2020/06/01 09:00:04')
+        create(:task, name: 'タスク8', description: '説明文', status: 'not_started', start_at: '2020/05/01 10:00', due_date_at: '2020/05/02 11:00', created_at: '2020/05/01 09:00:04')
+        create(:task, name: 'タスク9', description: '説明文', status: 'not_started', start_at: '2020/04/01 10:00', due_date_at: '2020/04/02 11:00', created_at: '2020/04/01 09:00:04')
+        create(:task, name: 'タスク10', description: '説明文', status: 'not_started', start_at: '2020/03/01 10:00', due_date_at: '2020/03/02 11:00', created_at: '2020/03/01 09:00:04')
       end
 
       context 'ページングが動作しているか' do

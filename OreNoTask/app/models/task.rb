@@ -1,8 +1,17 @@
 # frozen_string_literal: true
 
 class Task < ApplicationRecord
+  extend Enumerize
+
+  enumerize :status, in: { not_started: 0, wip: 1, completed: 2 }, default: :not_started, scope: true
+
+  scope :search_status, -> (status) { where(status: status) if status.present? }
+  scope :search_keyword, -> (keyword) { where(["(name like? OR description like?)", "%#{keyword}%", "%#{keyword}%"]) }
+  scope :active, -> { where(deleted: 0) }
+
   validates :name, { presence: true, length: { maximum: 50 } }
   validates :description, length: { maximum: 2000 }
+  validates :status, inclusion: { in: ['not_started', 'wip', 'completed']  }
   validates :start_at, presence: true, date: true
   validates :due_date_at, presence: true, date: true
   validate :start_end_check?
@@ -15,10 +24,6 @@ class Task < ApplicationRecord
   end
 
   def self.search(keyword, status)
-    if status.empty?
-      return where(["(name like? OR description like?) AND deleted =?", "%#{keyword}%", "%#{keyword}%", 0])
-    else
-      return where(["(name like? OR description like?) AND status =? AND deleted =?", "%#{keyword}%", "%#{keyword}%", "#{status}", 0])
-    end
+    return active.search_status(status).search_keyword(keyword)
   end
 end
