@@ -58,7 +58,7 @@ describe 'タスク管理機能', type: :system do
     describe '検索機能' do
       context 'ステータス指定なしでタスク名を検索する' do
         it '検索対象の名前のタスクのみ表示される' do
-          fill_in 'タスク名・内容', with: '追加したタスク'
+          fill_in 'keyword', with: '追加したタスク'
           click_button 'commit'
 
           expect(page).to have_content '追加したタスク'
@@ -70,7 +70,7 @@ describe 'タスク管理機能', type: :system do
 
       context 'ステータス指定なしでタスク内容を検索する' do
         it '検索対象の内容のタスクのみ表示される' do
-          fill_in 'タスク名・内容', with: '説明文２'
+          fill_in 'keyword', with: '説明文２'
           click_button 'commit'
 
           expect(page).to have_content '２番目のタスク'
@@ -82,7 +82,7 @@ describe 'タスク管理機能', type: :system do
 
       context '正しい組み合わせでステータス指定ありでタスク名を検索する' do
         it '検索対象の名前のタスクのみ表示される' do
-          fill_in 'タスク名・内容', with: '２番目のタスク'
+          fill_in 'keyword', with: '２番目のタスク'
           select '完了', from: 'status'
           click_button 'commit'
 
@@ -95,7 +95,7 @@ describe 'タスク管理機能', type: :system do
 
       context '間違った組み合わせでステータス指定ありでタスク名を検索する' do
         it '何も表示されない' do
-          fill_in 'タスク名・内容', with: '２番目のタスク'
+          fill_in 'keyword', with: '２番目のタスク'
           select '作業中', from: 'status'
           click_button 'commit'
 
@@ -108,7 +108,7 @@ describe 'タスク管理機能', type: :system do
 
       context '正しい組み合わせでステータス指定ありでタスク内容を検索する' do
         it '検索対象の名前のタスクのみ表示される' do
-          fill_in 'タスク名・内容', with: '追加した説明文'
+          fill_in 'keyword', with: '追加した説明文'
           select '作業中', from: 'status'
           click_button 'commit'
 
@@ -121,7 +121,7 @@ describe 'タスク管理機能', type: :system do
 
       context '間違った組み合わせでステータス指定ありでタスク内容を検索する' do
         it '何も表示されない' do
-          fill_in 'タスク名・内容', with: '追加した説明文'
+          fill_in 'keyword', with: '追加した説明文'
           select '完了', from: 'status'
           click_button 'commit'
 
@@ -177,16 +177,16 @@ describe 'タスク管理機能', type: :system do
 
     describe 'ページング機能' do
       before(:all) do
-        create(:task, name: 'タスク1', description: '説明文', status: 0, start_at: '2020/12/01 10:00', due_date_at: '2020/12/02 11:00', created_at: '2020/12/01 09:00:04')
-        create(:task, name: 'タスク2', description: '説明文', status: 0, start_at: '2020/11/01 10:00', due_date_at: '2020/11/02 11:00', created_at: '2020/11/01 09:00:04')
-        create(:task, name: 'タスク3', description: '説明文', status: 0, start_at: '2020/10/01 10:00', due_date_at: '2020/10/02 11:00', created_at: '2020/10/01 09:00:04')
-        create(:task, name: 'タスク4', description: '説明文', status: 0, start_at: '2020/09/01 10:00', due_date_at: '2020/09/02 11:00', created_at: '2020/09/01 09:00:04')
-        create(:task, name: 'タスク5', description: '説明文', status: 0, start_at: '2020/08/01 10:00', due_date_at: '2020/08/02 11:00', created_at: '2020/08/01 09:00:04')
-        create(:task, name: 'タスク6', description: '説明文', status: 0, start_at: '2020/07/01 10:00', due_date_at: '2020/07/02 11:00', created_at: '2020/07/01 09:00:04')
-        create(:task, name: 'タスク7', description: '説明文', status: 0, start_at: '2020/06/01 10:00', due_date_at: '2020/06/02 11:00', created_at: '2020/06/01 09:00:04')
-        create(:task, name: 'タスク8', description: '説明文', status: 0, start_at: '2020/05/01 10:00', due_date_at: '2020/05/02 11:00', created_at: '2020/05/01 09:00:04')
-        create(:task, name: 'タスク9', description: '説明文', status: 0, start_at: '2020/04/01 10:00', due_date_at: '2020/04/02 11:00', created_at: '2020/04/01 09:00:04')
-        create(:task, name: 'タスク10', description: '説明文', status: 0, start_at: '2020/03/01 10:00', due_date_at: '2020/03/02 11:00', created_at: '2020/03/01 09:00:04')
+        create(:task, name: 'タスク1', description: '説明文', status: 'not_started', start_at: '2020/12/01 10:00', due_date_at: '2020/12/02 11:00', created_at: '2020/12/01 09:00:04')
+        create(:task, name: 'タスク2', description: '説明文', status: 'not_started', start_at: '2020/11/01 10:00', due_date_at: '2020/11/02 11:00', created_at: '2020/11/01 09:00:04')
+        create(:task, name: 'タスク3', description: '説明文', status: 'not_started', start_at: '2020/10/01 10:00', due_date_at: '2020/10/02 11:00', created_at: '2020/10/01 09:00:04')
+        create(:task, name: 'タスク4', description: '説明文', status: 'not_started', start_at: '2020/09/01 10:00', due_date_at: '2020/09/02 11:00', created_at: '2020/09/01 09:00:04')
+        create(:task, name: 'タスク5', description: '説明文', status: 'not_started', start_at: '2020/08/01 10:00', due_date_at: '2020/08/02 11:00', created_at: '2020/08/01 09:00:04')
+        create(:task, name: 'タスク6', description: '説明文', status: 'not_started', start_at: '2020/07/01 10:00', due_date_at: '2020/07/02 11:00', created_at: '2020/07/01 09:00:04')
+        create(:task, name: 'タスク7', description: '説明文', status: 'not_started', start_at: '2020/06/01 10:00', due_date_at: '2020/06/02 11:00', created_at: '2020/06/01 09:00:04')
+        create(:task, name: 'タスク8', description: '説明文', status: 'not_started', start_at: '2020/05/01 10:00', due_date_at: '2020/05/02 11:00', created_at: '2020/05/01 09:00:04')
+        create(:task, name: 'タスク9', description: '説明文', status: 'not_started', start_at: '2020/04/01 10:00', due_date_at: '2020/04/02 11:00', created_at: '2020/04/01 09:00:04')
+        create(:task, name: 'タスク10', description: '説明文', status: 'not_started', start_at: '2020/03/01 10:00', due_date_at: '2020/03/02 11:00', created_at: '2020/03/01 09:00:04')
       end
 
       context 'ページングが動作しているか' do
@@ -281,7 +281,8 @@ describe 'タスク管理機能', type: :system do
     context 'タスクを削除する' do
       it '期待通りにタスクが削除され、既存データに影響がない' do
         visit tasks_path
-        find('li:nth-child(1)').click_button('削除')
+        find('li:nth-child(1)').click_button('×')
+        page.driver.browser.switch_to.alert.accept
 
         # 作成されたタスクが表示されてない
         expect(page).not_to have_content '最初のタスク'
