@@ -2,9 +2,12 @@
 
 # task management
 class TasksController < ApplicationController
-  def show
-#    @tasks = Task.all()
+  def index
     @tasks = Task.search(params[:search])
+  end
+
+  def show
+    @task = Task.find(params[:id])
   end
 
   def new
@@ -13,33 +16,43 @@ class TasksController < ApplicationController
 
   def edit
     @task = Task.find(params[:id])
-
-  end
-
-  def update
-    @task = Task.find(params[:id])
-  end
-
-  def destroy
-#    @task = find_task_by_id
-
-    @task.destroy
-    redierct_to dask_path
   end
 
   def create
     @task = Task.new(post_params)
-    if (@task.save)
-      flash[:notice] = 'Task registration is complete.'
-      redirect_to '/tasks/'
-    else
-      render action:new
-    end
+    flash[:notice] = if @task.save
+                       'The task registration is complete.'
+                     else
+                       'The task update is error.'
+                     end
+    redirect_to root_path
+  end
+
+  def update
+    @task = Task.find(params[:id])
+    flash[:notice] = if @task.update(post_params)
+                       'The task update is complete.'
+                     else
+                       'The task update is error.'
+                     end
+    redirect_to root_path
+  end
+
+  def destroy
+    @task = Task.find(params[:id])
+    flash[:notice] = if @task.destroy
+                       'The task delete is complete.'
+                     else
+                       'The task delete is error.'
+                     end
+    redirect_to root_path
   end
 
   private
-  def post_params
-    params.require(:task).permit(:task_name, :description, :status, :priority, :label, :start_date, :end_date)
-  end
 
+  def post_params
+    params.require(:task).permit(
+      :task_name, :description, :status,
+      :priority, :label, :start_date, :end_date)
+  end
 end

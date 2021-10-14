@@ -1,6 +1,8 @@
-<h1>タスク登録</h1>
+<h1>Registe task</h1>
 
-<%= render "form" %>
+<%= form_for @task do |t| %>
+   <%= render "form", t: t %>
+   <%= t.submit %> 
+<% end %>
 
-<%= link_to "一覧画面へ", root_path %> 
-
+<%= link_to "go to Task's list", root_path %>
