@@ -2,7 +2,10 @@ FactoryBot.define do
   factory :task do
     sequence(:name) { |n| "task#{n - 1}" }
     description { 'description' }
+<<<<<<< HEAD
     status { 'new' }
+=======
+>>>>>>> origin/u-Hashimoto
 
     # created_atに対して時間をズラして作成
     factory :task_seq_created_at do

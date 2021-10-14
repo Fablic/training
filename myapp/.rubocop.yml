@@ -27,7 +27,7 @@ Style/Documentation:
 # 日本語のコメントを許可
 AsciiComments:
   Enabled: false
-
+  
 # specのブロックが長いのは許容する
 Metrics/BlockLength:
   Exclude:

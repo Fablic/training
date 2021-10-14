@@ -2,7 +2,7 @@ ja:
   activerecord:
     models:
       task: タスク
-      search_form: タスク検索
+      _form: タスク検索
 
     # モデルごとに設定する
     attributes:
