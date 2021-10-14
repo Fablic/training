@@ -10,15 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_210_907_082_552) do
-  create_table 'tasks', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
-    t.string 'name', limit: 50, null: false
-    t.text 'description'
-    t.integer 'status', limit: 1, default: 0, null: false
-    t.datetime 'start_at', null: false
-    t.datetime 'due_date_at', null: false
-    t.integer 'deleted', limit: 1, default: 0, null: false
-    t.datetime 'created_at', precision: 6, null: false
-    t.datetime 'updated_at', precision: 6, null: false
+ActiveRecord::Schema.define(version: 2021_10_05_070912) do
+
+  create_table "tasks", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name", limit: 50, null: false
+    t.text "description"
+    t.integer "status", limit: 1, default: 0, null: false
+    t.datetime "start_at", null: false
+    t.datetime "due_date_at", null: false
+    t.integer "deleted", limit: 1, default: 0, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["created_at", "deleted"], name: "index_tasks_on_created_at_and_deleted"
+    t.index ["deleted"], name: "index_tasks_on_deleted"
+    t.index ["due_date_at", "deleted"], name: "index_tasks_on_due_date_at_and_deleted"
+    t.index ["status", "deleted"], name: "index_tasks_on_status_and_deleted"
   end
+
 end

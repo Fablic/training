@@ -7,6 +7,7 @@ ja:
         id: ID
         name: タスク名
         description: 内容
+        status: ステータス
         start_at: 開始日
         due_date_at: 終了日
         period: 期間
