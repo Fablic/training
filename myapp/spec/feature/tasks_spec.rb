@@ -5,11 +5,11 @@ RSpec.feature Task, type: :feature, js: true do
   let(:label_name_task) { 'タスク名' }
   let(:label_name_detail) { '詳細' }
   let(:label_name_due_date) { '終了期限' }
+  let(:label_name_status) { '状態' }
   let(:button_name_regist) { '登録' }
   let(:button_name_edit) { '更新' }
   let(:task_list_dom) { all('.list_table tbody tr') }
   test_loop_num = 3
-  # used_sequence_count = 0 # test使った後のシーケンス数カウント
 
   # index
   feature '一覧画面' do
@@ -33,9 +33,9 @@ RSpec.feature Task, type: :feature, js: true do
       end
       context '作成日降順' do
         scenario 'ソートされる' do
-          visit tasks_path(sort: 'created_at', order: 'desc')
+          visit tasks_path(search_form: { sort: 'created_at', order: 'desc' })
           test_loop_num.times do |num|
-            reverse_num = test_loop_num - num -1
+            reverse_num = test_loop_num - num - 1
             expect(task_list_dom[num]).to have_content "task#{reverse_num}"
           end
         end
@@ -52,17 +52,17 @@ RSpec.feature Task, type: :feature, js: true do
       # テスト
       context '終了期限昇順' do
         scenario 'ソートされる' do
-          visit tasks_path(sort: 'due_date', order: 'asc')
+          visit tasks_path(search_form: { sort: 'due_date', order: 'asc' })
           test_loop_num.times do |num|
-            expect(task_list_dom[num]).to have_content "task#{num }"
+            expect(task_list_dom[num]).to have_content "task#{num}"
           end
         end
       end
-      context '終了期限昇順' do
+      context '終了期限降順' do
         scenario 'ソートされる' do
-          visit tasks_path(sort: 'due_date', order: 'desc')
+          visit tasks_path(search_form: { sort: 'due_date', order: 'desc' })
           test_loop_num.times do |num|
-            reverse_num = test_loop_num - num -1
+            reverse_num = test_loop_num - num - 1
             expect(task_list_dom[num]).to have_content "task#{reverse_num}"
           end
         end
@@ -150,9 +150,11 @@ RSpec.feature Task, type: :feature, js: true do
     scenario '成功する' do
       task1 = FactoryBot.create(:task)
       input_new_task_name = 'タスク名更新'
+      input_new_task_status = '完了'
       visit edit_task_path(id: task1.id)
 
       fill_in label_name_task, with: input_new_task_name
+      select input_new_task_status, from: label_name_status
       click_button button_name_edit
       expect(page).to have_content 'タスクを更新しました'
       expect(page).to have_content input_new_task_name

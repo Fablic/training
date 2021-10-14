@@ -1,5 +1,5 @@
 # テーブル構成
-2021.10.01.更新
+2021.10.04.更新
 
 ## users テーブル
 |Column|Type|Options|
@@ -21,7 +21,7 @@
 
 
 ## tasksテーブル
-2021.10.01.更新
+2021.10.04.更新 status
 
 |Column|Type|Options|
 |------|----|-------|
@@ -30,13 +30,13 @@
 |description|VARCHAR(1024)||
 |due_date|DATETIME||
 |user_id|INT|タスクの担当者 userとrelation持たせた後にNOTNULLにする|
+|status|enum('new','progress','complete')|NOTNULL,default 'new'|
 |created_at|DATETIME||
 |updated_at|DATETIME||
 
 ### 以下は追加検討中（現時点では未実装のカラム）
 |Column|Type|Options|
 |------|----|-------|
-|status|TINYINT|NOTNULL,default 0|
 |priority|INT|default 0|
 |label_id_1|INT||
 |label_id_2|INT||

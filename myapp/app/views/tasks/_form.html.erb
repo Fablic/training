@@ -34,6 +34,14 @@
       </tr>
       <tr>
         <td>
+          <%= f.label :status %>
+        </td>
+        <td>
+          <%= f.select :status, Task.statuses_i18n.invert %>
+        </td>
+      </tr>
+      <tr>
+        <td>
           <%= f.label :description%>
         </td>
         <td><%= f.text_area :description %></td>

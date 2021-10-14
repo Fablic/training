@@ -13,3 +13,6 @@ myapp/node_modules/
 *.swp
 # .idea下はrubymineの設定なので除外
 myapp/.idea/
+# docker-buildのたびに生成されるので除外
+myapp/public/packs/
+myapp/public/packs-test/

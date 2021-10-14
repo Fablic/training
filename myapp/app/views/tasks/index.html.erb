@@ -1,18 +1,6 @@
-<style>
-  .list_table td,
-  .list_table th{
-    border:1px solid gray;
-    padding:10px;
-  }
-  .list_table th{
-    background-color:black;
-    color:white;
-  }
-  .notice_area{
-    background:yellow;
-  }
+<%= stylesheet_link_tag 'tasks' %>
+<%= javascript_pack_tag 'task/task_index' %>
 
-</style>
 <h1><%= t ".title" %></h1>
 <!--flash -->
 <% if flash[:notice] %>
@@ -21,9 +9,25 @@
 
 <!--menu -->
 <div id = "area_menu">
-  <%= link_to t('.btn_add'), new_task_path %>
+  <%= link_to t('.btn_add'), new_task_path ,class:"atag_btn"%>
 </div>
-
+<!-- search -->
+<div id = "search_area">
+  <%= form_with url:tasks_path ,model:@search_form ,method: :get,local:true , id:'search_form' do |f|%>
+  <div>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+  <div>
+    <%= f.label :status %>
+    <%= f.select :status, Task.statuses_i18n.invert, include_blank:true %>
+  </div>
+  <%= f.hidden_field :sort %>
+  <%= f.hidden_field :order %>
+  <%= f.submit t('.btn_search'),class:"atag_btn" %>
+  <% end %>
+</div>
+<%= paginate(@tasks) %>
 <!--list -->
 <div id="area_list">
   <table class="list_table">
@@ -31,11 +35,12 @@
       <tr>
         <th><%= t '.label_id' %></th>
         <th><%= t '.label_name' %></th>
+        <th class="sort_link_th" name="status"><%= t('.label_status') %></th>
         <th><%= t '.label_description' %></th>
-        <th><%= list_sort_link t('.label_due_date'),'due_date' %></th>
-        <th><%= list_sort_link t('.label_created_at'),'created_at' %></th>
+        <th class="sort_link_th" name="due_date"><%= t('.label_due_date') %></th>
+        <th class="sort_link_th" name="created_at"><%= t('.label_created_at') %></th>
         <th><%= t '.label_updated_at' %></th>
-      <th></th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -43,16 +48,17 @@
       <tr>
         <td> <%= task.id %></td>
         <td> <%= link_to task.name, edit_task_path(task.id) %></td>
+        <td> <%= task.status_i18n %></td>
         <td> <%= task.description %></td>
         <td>
           <% if task.due_date.present? %>
-            <%= l task.due_date,format: :yymmdd %>
+          <%= l task.due_date,format: :yymmdd %>
           <% end %>
         </td>
         <td> <%= l task.created_at %></td>
         <td> <%= l task.updated_at %></td>
-        <td> 
-        <%= link_to t(".btn_del"), task_path(task.id), method: :delete, data: {confirm: t('.msg_del_confirm')}, id: "del_#{task.id}", class: "del_button" %>
+        <td>
+        <%= link_to t(".btn_del"), task_path(task.id), method: :delete, data: {confirm: t('.msg_del_confirm')}, id: "del_#{task.id}", class: "atag_btn del_button" %>
         </td>
       </tr>
       <% end %>

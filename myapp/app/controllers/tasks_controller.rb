@@ -1,10 +1,9 @@
 class TasksController < ApplicationController
-  # helperでも使用可能
-  helper_method :sort_target_column, :sort_order
 
   # 一覧
   def index
-    @tasks = Task.all.order("#{sort_target_column} #{sort_order}")
+    @search_form = params.key?(:search_form) ? SearchForm.new(permitted_search_params) : SearchForm.new
+    @tasks = @search_form.exec_search(params[:page])
   end
 
   # 新規作成画面
@@ -62,16 +61,13 @@ class TasksController < ApplicationController
 
   # ストロングパラメータをとる
   def permitted_params
-    params.require(:task).permit(:name, :description, :due_date)
+    params.require(:task).permit(:name, :description, :due_date, :status)
   end
 
-  # sortの方式をとる
-  def sort_order
-    %w[asc desc].include?(params[:order]) ? params[:order] : 'asc'
+  # ストロングパラメータをとる(検索)
+  def permitted_search_params
+    params.require(:search_form).permit(:name, :status, :sort, :order)
+    # params.require(:search_form).permit(:name, :status)
   end
 
-  # sort対象のカラム
-  def sort_target_column
-    Task.column_names.include?(params[:sort]) ? params[:sort] : 'created_at'
-  end
 end

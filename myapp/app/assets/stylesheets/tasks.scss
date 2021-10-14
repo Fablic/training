@@ -1,0 +1,35 @@
+/*-- 仮style(後で移動) -*/
+.list_table{
+  td, th{
+    border:1px solid gray;
+    padding:10px;
+  }
+  th{
+    background-color:black;
+    color:white;
+  }
+}
+
+.notice_area{
+  background:yellow;
+}
+.atag_btn{
+  line-height: 30px;
+  cursor: pointer;
+  background: gray;
+  display: inline-block;
+  padding: 0px 10px;
+  text-decoration: none;
+  border-radius: 20px;
+  color: white;
+}
+#search_area{
+  padding: 10px;
+  border: 1px solid gray;
+  margin: 10px 0;
+  width: fit-content;
+}
+.sort_link_th{
+  text-decoration: underline;
+  cursor: pointer;
+}

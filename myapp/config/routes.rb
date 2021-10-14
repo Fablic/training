@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   #root
   root "tasks#index"
-  #task-path
+  #task.rb-path
   resources :tasks,:only => [:index, :edit, :new, :create, :update,:destroy]
 
   # error page

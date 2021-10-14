@@ -5,10 +5,12 @@ ja:
       title: 'タスク一覧'
       btn_add: '追加'
       btn_del: '削除'
+      btn_search: '検索'
       label_id: 'ID'
       label_name: 'タスク名'
       label_description: '詳細'
       label_due_date: '終了期限'
+      label_status: '状態'
       label_created_at: '作成'
       label_updated_at: '更新'
       msg_del_confirm: '削除しますか？'
@@ -18,4 +20,3 @@ ja:
     edit:
       title: 'タスク編集'
       btn_regist: '更新'
-
