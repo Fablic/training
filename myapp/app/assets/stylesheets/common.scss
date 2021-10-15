@@ -1,0 +1,102 @@
+$color-selected:#B2EBF2;
+$color-selected-font:#00838F;
+$color-success:#00BCD4;
+$color-warning:#FF8F00;
+$color-error:#D32F2F;
+
+html{
+  background: lightgray;
+}
+
+body{
+  margin: 15px auto 30px;
+  background: white;
+  padding: 30px 20px;
+  max-width:1200px;
+  box-shadow: 0px 8px 16px -2px rgba(10,10,10,0.1), 0px 0px 0px 5px rgba(4,96,24,0);
+}
+
+.notice_area{
+  background:$color-selected;
+  line-height: 30px;
+  padding: 0 10px;
+  border-left: 10px solid #00838F;
+}
+
+/**
+ errors
+ */
+.field_with_errors{
+  display: unset;
+  input,textarea,select {
+    border-color: $color-error!important;
+  }
+}
+.error_message_area{
+  li,i{
+    color:$color-error
+  }
+}
+
+/**
+ pure-css custom
+ */
+.button-success,
+.button-error,
+.button-warning {
+  color: white;
+  border-radius: 4px;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+.pure-button-active{
+  background: $color-selected;
+}
+
+.button-success {
+  background: $color-success;
+}
+.button-error {
+  background: $color-error;
+}
+.button-warning {
+  background: $color-warning;
+}
+.button-xs {
+  font-size: 70%;
+}
+.button-small {
+  font-size: 85%;
+}
+.button-large {
+  font-size: 110%;
+}
+.button-xl {
+  font-size: 125%;
+}
+
+/**
+ menus
+ */
+.pure-menu-link{
+  &:hover{
+    background: $color-selected;
+  }
+}
+.pure-menu-selected{
+  .pure-menu-link{
+    color:$color-selected-font;
+  }
+}
+.menu-app-name{
+  font-weight: bold;
+  border-left: 5px solid $color-selected-font;
+  border-right: 5px solid $color-selected-font;
+  padding: 0 10px;
+  line-height: 30px;
+}
+.head-menu{
+  background: #E0F7FA;
+}
+
+.float-right{ float:right }
+.float-left{ float:left }
