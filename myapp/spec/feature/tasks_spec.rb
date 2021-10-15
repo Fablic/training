@@ -9,11 +9,6 @@ RSpec.feature Task, type: :feature, js: true do
   let(:button_name_edit) { '更新' }
   let(:task_list_dom) { all('.task-list-table tbody tr') }
   test_loop_num = 3
-  before(:all) do
-    # p 'どうかな？'
-    #FactoryBot.create(:User)
-    # load Rails.root.join('db/seeds.rb')
-  end
 
   # index
   feature '一覧画面' do
@@ -77,8 +72,8 @@ RSpec.feature Task, type: :feature, js: true do
   # task-C
   feature '新規登録画面' do
     background do
-      # タスク新規登録画面へ遷移
       FactoryBot.create(:user_1)
+      # タスク新規登録画面へ遷移
       visit new_task_path
     end
     context 'フォームの入力値が正常の場合' do
@@ -99,20 +94,7 @@ RSpec.feature Task, type: :feature, js: true do
         expect(page).to have_content input_name
       end
     end
-    # inputにrequiredをつけたのでこのテストはいらない（通らない）
-    # context 'Name未記入の場合' do
-    #   scenario 'タスク登録失敗する' do
-    #     # 入力
-    #     fill_in label_name_task, with: nil
-    #     fill_in label_name_detail, with: '引っ越し業者の選定'
-    #     # ボタンをクリック
-    #     save_and_open_page
-    #     click_button button_name_regist
-    #     save_and_open_page
-    #     # エラーメッセージが出ていることを確認
-    #     expect(page).to have_content 'タスク名を入力してください'
-    #   end
-    # end
+
     context 'description未記入の場合' do
       scenario 'タスクの新規作成が成功' do
         # 入力

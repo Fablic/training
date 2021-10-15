@@ -3,7 +3,6 @@ class TasksController < ApplicationController
 
   # 一覧
   def index
-    # test
     @search_form = params.key?(:search_form) ? SearchForm.new(permitted_search_params) : SearchForm.new
     @tasks = @search_form.exec_search(params[:page])
   end
