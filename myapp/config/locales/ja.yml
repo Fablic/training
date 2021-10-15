@@ -67,6 +67,8 @@ ja:
     edit: 編集
     submit: 送信
     delete: 削除
+  form:
+    error: 入力に誤りがあります(%{smtg}件)
   pages:
     tasks:
       flash:

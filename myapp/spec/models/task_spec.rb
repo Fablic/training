@@ -8,6 +8,12 @@ RSpec.describe Task, type: :model do
       expect(task.errors.messages).to include(:title)
     end
 
+    it 'with empty is not valid' do
+      task = build(:task, title: '')
+      expect(task).not_to be_valid
+      expect(task.errors.messages).to include(:title)
+    end
+
     it 'Exceeds the specified number of characters' do
       task = build(:task, title: 'a' * 21)
       expect(task).not_to be_valid
@@ -25,6 +31,13 @@ RSpec.describe Task, type: :model do
     it 'with nil is valid' do
       task = build(:task, detail: nil)
       expect(task).to be_valid
+      expect(task.errors.messages).not_to include(:detail)
+    end
+
+    it 'with empty is valid' do
+      task = build(:task, detail: '')
+      expect(task).to be_valid
+      expect(task.errors.messages).not_to include(:detail)
     end
 
     it 'Exceeds the specified number of characters' do
@@ -41,10 +54,26 @@ RSpec.describe Task, type: :model do
       expect(task.errors.messages).to include(:due_date)
     end
 
-    it 'Check the date' do
-      expect(build(:task, due_date: Time.zone.now)).to be_valid
-      expect(build(:task, due_date: Time.zone.tomorrow)).to be_valid
-      expect(build(:task, due_date: Time.zone.yesterday)).not_to be_valid
+    it 'with empty is valid' do
+      task = build(:task, due_date: '')
+      expect(task).not_to be_valid
+      expect(task.errors.messages).to include(:due_date)
+    end
+
+    it 'Check the date now' do
+      task = build(:task, due_date: Time.zone.now)
+      expect(task).to be_valid
+      expect(task.errors.messages).not_to include(:due_date)
+    end
+    it 'Check the date tomorrow' do
+      task = build(:task, due_date: Time.zone.tomorrow)
+      expect(task).to be_valid
+      expect(task.errors.messages).not_to include(:due_date)
+    end
+    it 'Check the date yesterday' do
+      task = build(:task, due_date: Time.zone.yesterday)
+      expect(task).not_to be_valid
+      expect(task.errors.messages).to include(:due_date)
     end
   end
 

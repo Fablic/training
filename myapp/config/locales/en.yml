@@ -68,6 +68,8 @@ en:
     edit: Edit
     submit: Submit
     delete: Delete
+  form:
+    error: The form contains %{smtg} error
   pages:
     tasks:
       flash:

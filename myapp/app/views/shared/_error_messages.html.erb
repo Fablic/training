@@ -1,0 +1,12 @@
+<% if object.errors.any? %>
+  <div>
+    <div>
+      <%= I18n.t("form.error",smtg: object.errors.count)%>
+    </div>
+    <ul>
+    <% object.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>

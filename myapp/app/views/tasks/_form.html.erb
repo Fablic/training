@@ -1,7 +1,7 @@
 <div>
   <div >
     <%= form_with(model: @task, local: true) do |f| %>
-
+        <%= render 'shared/error_messages', object: f.object %>
         <%= f.label :title %>
         <%= f.text_field :title, class: 'form-control' %>
         <br />

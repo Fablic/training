@@ -21,7 +21,6 @@ class TasksController < ApplicationController
     if @task.save
       redirect_to root_path, flash: { info: I18n.t('pages.tasks.flash.added') }
     else
-      flash.now[:danger] = I18n.t('pages.tasks.flash.fail')
       render 'new'
     end
   end
@@ -32,7 +31,6 @@ class TasksController < ApplicationController
     if @task.update(task_params)
       redirect_to @task, flash: { info: I18n.t('pages.tasks.flash.edited') }
     else
-      flash.now[:danger] = I18n.t('pages.tasks.flash.fail')
       render 'edit'
     end
   end

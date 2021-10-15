@@ -68,7 +68,6 @@ RSpec.describe TasksController, type: :system do
     it 'Can not create tasks' do
       title = 'new Title'
       detail = 'new Detail'
-      flush = I18n.t('pages.tasks.flash.fail')
 
       fill_in I18n.t('activerecord.attributes.task.title'), with: title
       fill_in I18n.t('activerecord.attributes.task.detail'), with: detail
@@ -78,7 +77,8 @@ RSpec.describe TasksController, type: :system do
       click_button I18n.t('common.submit')
 
       expect(page).to have_current_path(tasks_path)
-      expect(page).to have_content(flush)
+      expect(page).to have_content(I18n.t('form.error', smtg: 1))
+      expect(page).to have_content(I18n.t('activerecord.errors.models.task.attributes.due_date.error'))
     end
   end
 
@@ -104,7 +104,6 @@ RSpec.describe TasksController, type: :system do
     it 'Can not edit tasks' do
       title = 'edit Title'
       detail = 'edit Detail'
-      flush = I18n.t('pages.tasks.flash.fail')
 
       fill_in I18n.t('activerecord.attributes.task.title'), with: title
       fill_in I18n.t('activerecord.attributes.task.detail'), with: detail
@@ -112,7 +111,8 @@ RSpec.describe TasksController, type: :system do
       click_button I18n.t('common.submit')
 
       expect(page).to have_current_path(task_path(tasks.last))
-      expect(page).to have_content(flush)
+      expect(page).to have_content(I18n.t('form.error', smtg: 1))
+      expect(page).to have_content(I18n.t('activerecord.errors.models.task.attributes.due_date.error'))
     end
   end
 
