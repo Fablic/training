@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   def index
-    @tasks = Task.paginate(page: params[:page])
+    @tasks = Task.paginate(page: params[:page]).order('created_at desc')
   end
 
   def new
