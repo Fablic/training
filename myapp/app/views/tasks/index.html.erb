@@ -4,12 +4,12 @@
     <table border='1'>
       <thead>
         <tr>
-          <th scope="col">#</th>
-          <th scope="col"><%= t('activerecord.attributes.task.title') %></th>
-          <th scope="col"><%= t('activerecord.attributes.task.priority') %></th>
-          <th scope="col"><%= t('activerecord.attributes.task.status') %></th>
-          <th scope="col"><%= t('activerecord.attributes.task.due_date') %></th>
-          <th scope="col"><%= t('activerecord.attributes.task.create_date') %></th>
+          <th scope="col"><%= sort_order "id","No" %></th>
+          <th scope="col"><%= sort_order "title",t('activerecord.attributes.task.title') %></th>
+          <th scope="col"><%= sort_order "priority",t('activerecord.attributes.task.priority') %></th>
+          <th scope="col"><%= sort_order "status",t('activerecord.attributes.task.status') %></th>
+          <th scope="col"><%= sort_order "due_date",t('activerecord.attributes.task.due_date') %></th>
+          <th scope="col"><%= sort_order "created_at",t('activerecord.attributes.task.create_date') %></th>
         </tr>
       </thead>
       <tbody>

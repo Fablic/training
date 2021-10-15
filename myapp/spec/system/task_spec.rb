@@ -17,17 +17,27 @@ RSpec.describe TasksController, type: :system do
   end
 
   describe 'Check the index page' do
-    before { visit root_path }
     it 'deital' do
+      visit root_path
       expect(page).to have_content("Tasks (#{task_count})")
       expect(page).to have_content(tasks.last.title)
     end
 
-    it 'Check the sort order' do
-      created_ats = page.all('.created_at')
-      expect(created_ats.count).to be > 0
-      created_ats.each.with_index(1) do |row, index|
+    it 'Check the sort order created_at' do
+      visit root_path(direction: 'desc', sort: 'created_at')
+      columns = page.all('.sort_created_at')
+      expect(columns.count).to be > 0
+      columns.each.with_index(1) do |row, index|
         expect(row.text).to eq I18n.l(tasks[task_count - index].created_at)
+      end
+    end
+
+    it 'Check the sort order due_date' do
+      visit root_path(direction: 'asc', sort: 'due_date')
+      columns = page.all('.sort_due_date')
+      expect(columns.count).to be > 0
+      columns.each.with_index(1) do |row, index|
+        expect(row.text).to eq I18n.l(tasks[task_count - index].due_date)
       end
     end
   end

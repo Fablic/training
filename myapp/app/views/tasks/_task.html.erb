@@ -1,10 +1,10 @@
 <%= form_with(model: task,  local: true) do |f| %>
   <tr >
-    <td><%= task.id %></td>
-    <td><%= link_to task.title, task %></td>
-    <td><%= translate_priority task.priority %></td>
-    <td><%= translate_status task.status %></td>
-    <td><%= l task.due_date %></td>
-    <td class='created_at'><%= l task.created_at %></td>
+    <td class='sort_id'><%= task.id %></td>
+    <td class='sort_title'><%= link_to task.title, task %></td>
+    <td class='sort_priority'><%= translate_priority task.priority %></td>
+    <td class='sort_status'><%= translate_status task.status %></td>
+    <td class='sort_due_date'><%= l task.due_date %></td>
+    <td class='sort_created_at'><%= l task.created_at %></td>
   </tr>
 <% end %>
