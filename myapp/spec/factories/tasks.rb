@@ -20,9 +20,8 @@ FactoryBot.define do
     sequence(:name) { |n| "名前#{n}" }
     sequence(:mail_address) { |n| "test-#{n}@sample.mail.com" }
 
-    factory :user_1 do
-      id{ 1 }
+    factory :user1 do
+      id { 1 }
     end
   end
-
 end

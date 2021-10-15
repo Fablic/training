@@ -71,8 +71,8 @@ RSpec.feature Task, type: :feature, js: true do
 
   # task-C
   feature '新規登録画面' do
+    let!(:user1) { FactoryBot.create(:user1) }
     background do
-      FactoryBot.create(:user_1)
       # タスク新規登録画面へ遷移
       visit new_task_path
     end
