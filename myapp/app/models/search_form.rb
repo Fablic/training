@@ -19,7 +19,7 @@ class SearchForm
       tasks.where!(status: status) if status.present?
       tasks.page(page)
     else
-      false
+      []
     end
   end
 
