@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 describe 'タスク管理機能', type: :system do
-  before do
+  before(:all) do
     create(:task, name: '最初のタスク', description: '説明文', status: 'not_started', start_at: '2021/09/01 10:00', due_date_at: '2021/09/02 11:00', created_at: '2021/07/01 09:00:04')
     create(:task, name: '２番目のタスク', description: '説明文２', status: 'completed', start_at: '2021/08/02 10:00', due_date_at: '2021/08/03 11:00', created_at: '2021/07/01 09:00:03')
     create(:task, name: '追加したタスク', description: '追加した説明文', status: 'wip', start_at: '2021/10/01 10:00', due_date_at: '2021/10/03 11:00', created_at: '2021/07/01 09:00:02')
@@ -171,6 +171,19 @@ describe 'タスク管理機能', type: :system do
           expect(page).to have_content '最初のタスク'
           expect(page).to have_content '２番目のタスク'
           expect(page).to have_content '最後のタスク'
+        end
+      end
+    end
+
+    describe 'ページング機能' do
+      before(:all) do
+        create_list(:task, 10)
+      end
+
+      context 'ページングが動作しているか' do
+        it '２ページ目のタスクが表示されている' do
+          click_link '2'
+          expect(find('li:nth-child(1)')).to have_content 'test_task_4'
         end
       end
     end
