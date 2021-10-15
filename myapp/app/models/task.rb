@@ -7,6 +7,10 @@ class Task < ApplicationRecord
   validates :finished_at, { presence: true }
   # validates :status, { presence: true, numericality: { only_integer: true } }
 
+  belongs_to :user, foreign_key: 'created_by'
+  has_many :task_labels, dependent: :destroy
+  has_many :labels, through: :task_labels
+
   enum status: {
     pending: 0,
     started: 1,
