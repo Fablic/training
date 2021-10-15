@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -10,28 +12,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20211011163343) do
-
-  create_table "tasks", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string   "task_name",   limit: 20
-    t.string   "description", limit: 100
-    t.string   "status",      limit: 10
-    t.integer  "priority"
-    t.string   "label",       limit: 20
-    t.datetime "start_date"
-    t.datetime "end_date"
-    t.boolean  "deleted",                 default: false
-    t.integer  "login_id"
-    t.datetime "create_dt",               default: -> { "CURRENT_TIMESTAMP" }
-    t.datetime "update_dt"
+ActiveRecord::Schema.define(version: 20_211_014_005_850) do
+  create_table 'tasks', force: :cascade, options: 'ENGINE=InnoDB DEFAULT CHARSET=utf8' do |t|
+    t.string   'task_name',   limit: 20
+    t.string   'description', limit: 100
+    t.string   'status',      limit: 10
+    t.integer  'priority'
+    t.string   'label', limit: 20
+    t.datetime 'start_date'
+    t.datetime 'end_date'
+    t.boolean  'deleted', default: false
+    t.integer  'login_id'
+    t.datetime 'created_at'
+    t.datetime 'updated_at'
   end
 
-  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string   "login_id",  limit: 10
-    t.string   "password",  limit: 12
-    t.string   "name",      limit: 20
-    t.datetime "create_dt",            default: -> { "CURRENT_TIMESTAMP" }
-    t.datetime "update_dt"
+  create_table 'users', force: :cascade, options: 'ENGINE=InnoDB DEFAULT CHARSET=utf8' do |t|
+    t.string   'login_id',   limit: 10
+    t.string   'password',   limit: 12
+    t.string   'name',       limit: 20
+    t.datetime 'created_at'
+    t.datetime 'updated_at'
   end
-
 end

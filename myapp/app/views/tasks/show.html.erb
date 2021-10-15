@@ -1,0 +1,7 @@
+<h1>Show task</h1>
+
+<%= form_for @task do |t| %>
+   <%= render "form", t: t %>
+<% end %>
+
+<%= link_to "go to Task's list", root_path %>
