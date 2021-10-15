@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_05_070912) do
+ActiveRecord::Schema.define(version: 2021_10_14_232752) do
 
   create_table "tasks", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", limit: 50, null: false
@@ -21,10 +21,22 @@ ActiveRecord::Schema.define(version: 2021_10_05_070912) do
     t.integer "deleted", limit: 1, default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["created_at", "deleted"], name: "index_tasks_on_created_at_and_deleted"
-    t.index ["deleted"], name: "index_tasks_on_deleted"
-    t.index ["due_date_at", "deleted"], name: "index_tasks_on_due_date_at_and_deleted"
-    t.index ["status", "deleted"], name: "index_tasks_on_status_and_deleted"
+    t.bigint "user_id"
+    t.index ["user_id", "created_at", "deleted"], name: "index_tasks_on_user_id_and_created_at_and_deleted"
+    t.index ["user_id", "deleted"], name: "index_tasks_on_user_id_and_deleted"
+    t.index ["user_id", "due_date_at", "deleted"], name: "index_tasks_on_user_id_and_due_date_at_and_deleted"
+    t.index ["user_id", "status", "deleted"], name: "index_tasks_on_user_id_and_status_and_deleted"
+    t.index ["user_id"], name: "index_tasks_on_user_id"
   end
 
+  create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name", limit: 20, null: false
+    t.integer "privilege", limit: 1, default: 0, null: false
+    t.integer "deleted", limit: 1, default: 0, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "password_digest", null: false
+  end
+
+  add_foreign_key "tasks", "users"
 end

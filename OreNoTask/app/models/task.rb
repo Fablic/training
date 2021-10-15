@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Task < ApplicationRecord
+  has_one :users
   extend Enumerize
 
   enumerize :status, in: { not_started: 0, wip: 1, completed: 2 }, default: :not_started, scope: true
@@ -11,7 +12,6 @@ class Task < ApplicationRecord
 
   validates :name, { presence: true, length: { maximum: 50 } }
   validates :description, length: { maximum: 2000 }
-  validates :status, inclusion: { in: ['not_started', 'wip', 'completed']  }
   validates :start_at, presence: true, date: true
   validates :due_date_at, presence: true, date: true
   validate :start_end_check?
