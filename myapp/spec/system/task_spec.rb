@@ -19,7 +19,7 @@ RSpec.describe TasksController, type: :system do
   describe 'Check the index page' do
     it 'deital' do
       visit root_path
-      expect(page).to have_content("Tasks (#{task_count})")
+      expect(page).to have_content('Tasks')
       expect(page).to have_content(tasks.last.title)
     end
 
@@ -39,6 +39,69 @@ RSpec.describe TasksController, type: :system do
       columns.each.with_index(1) do |row, index|
         expect(row.text).to eq I18n.l(tasks[task_count - index].due_date)
       end
+    end
+
+    it 'Check the Search status waiting' do
+      visit root_path(direction: 'desc', sort: 'due_date')
+
+      select I18n.t('activerecord.enum.task.status.waiting'), from: 'status'
+      click_button I18n.t('pages.tasks.search.title')
+
+      columns = page.all('.sort_due_date')
+      expect(columns.count).to be > 0
+      columns.each.with_index(1) do |row, index|
+        expect(row.text).to eq I18n.l(tasks[task_count - index].due_date)
+      end
+
+      columns = page.all('.sort_status')
+      columns.each.with_index(1) do |row, _index|
+        expect(row.text).to eq I18n.t('activerecord.enum.task.status.waiting')
+      end
+    end
+
+    it 'Check the Search status done' do
+      visit root_path(direction: 'desc', sort: 'due_date')
+
+      select I18n.t('activerecord.enum.task.status.done'), from: 'status'
+      click_button I18n.t('pages.tasks.search.title')
+
+      columns = page.all('.sort_due_date')
+      expect(columns.count).to eq 0
+    end
+
+    it 'Check the Search title "2"' do
+      visit root_path(direction: 'desc', sort: 'due_date')
+
+      fill_in 'title', with: '2'
+      click_button I18n.t('pages.tasks.search.title')
+
+      columns = page.all('.sort_due_date')
+      expect(columns.count).to be > 0
+      columns.each.with_index(1) do |row, index|
+        expect(row.text).to eq I18n.l(tasks[task_count - index].due_date)
+      end
+
+      expect(columns.count).to eq tasks.find_all { |task| task.title.include?('2') }.count
+    end
+
+    it 'Check the Search title "ZZZZ"' do
+      visit root_path
+
+      fill_in 'title', with: 'ZZZZ'
+      click_button I18n.t('pages.tasks.search.title')
+
+      columns = page.all('.sort_due_date')
+      expect(columns.count).to eq 0
+    end
+
+    it 'Check the Search title empty' do
+      visit root_path
+
+      fill_in 'title', with: ''
+      click_button I18n.t('pages.tasks.search.title')
+
+      columns = page.all('.sort_title')
+      expect(columns.count).to eq task_count
     end
   end
 

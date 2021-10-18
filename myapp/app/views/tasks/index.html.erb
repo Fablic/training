@@ -1,5 +1,20 @@
+<h3> Tasks </h3>
+
+<%= form_with url: root_path, method: :get, local: true do |f| %>
+  <h2><%= t('pages.tasks.search.title') %></h2>
+  <div>
+    <%= f.label t('activerecord.attributes.task.title') %>
+    <%= f.search_field :title, value: @search_params[:title] %>
+  </div>
+  <div>
+    <%= f.label t('activerecord.attributes.task.status') %>
+    <%= f.collection_select :status, Task.statuses.values, :to_s, method(:translate_status), include_blank: true, selected: @search_params[:status] %>
+  </div>
+  <%= f.submit t('pages.tasks.search.title') %>
+<% end %>
+
+<%= @tasks.count %> <%=t('pages.tasks.search.hit_count')%>
 <% if @tasks.any? %>
-  <h3> Tasks (<%= @tasks.count %>)</h3>
   <%= will_paginate @tasks,:previous_label => ' &lt', :next_label => '&gt' %>
     <table border='1'>
       <thead>

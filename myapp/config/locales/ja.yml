@@ -77,3 +77,6 @@ ja:
         deleted: タスクを削除しました。
         fail: タスクの登録に失敗しました。
       confirm_deletion: 本当にタスクを削除してよろしいですか？
+      search:
+        title: 検索
+        hit_count: 件

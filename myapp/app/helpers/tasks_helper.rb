@@ -13,6 +13,6 @@ module TasksHelper
 
   def sort_order(column, title, hash_param = {})
     direction = column == sort_column && sort_direction == 'asc' ? 'desc' : 'asc'
-    link_to title, { sort: column, direction: direction }.merge(hash_param)
+    link_to title, { sort: column, direction: direction }.merge(search_params).merge(hash_param)
   end
 end

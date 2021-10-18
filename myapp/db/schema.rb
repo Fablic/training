@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_12_112332) do
+ActiveRecord::Schema.define(version: 2021_10_18_025536) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name", null: false
@@ -41,6 +41,8 @@ ActiveRecord::Schema.define(version: 2021_10_12_112332) do
     t.integer "priority", limit: 1
     t.integer "status", limit: 1
     t.datetime "due_date"
+    t.index ["status"], name: "index_tasks_on_status"
+    t.index ["title", "status"], name: "index_tasks_on_title_and_status"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

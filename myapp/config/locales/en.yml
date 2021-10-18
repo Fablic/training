@@ -78,3 +78,6 @@ en:
         deleted: Deleted the task.
         fail: Failed to register the task.
       confirm_deletion: Are you sure you want to delete the task?
+      search:
+        title: Search
+        hit_count: hits

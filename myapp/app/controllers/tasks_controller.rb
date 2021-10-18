@@ -1,8 +1,15 @@
 class TasksController < ApplicationController
-  helper_method :sort_column, :sort_direction
+  helper_method :sort_column, :sort_direction, :search_params
 
   def index
-    @tasks = Task.paginate(page: params[:page]).order("#{sort_column} #{sort_direction}")
+    @search_params = search_params
+    query = Task.all
+    if @search_params[:title].present?
+      query = query.where('title LIKE ?',
+                          "%#{ApplicationRecord.sanitize_sql_like(@search_params[:title])}%")
+    end
+    query = query.where(status: @search_params[:status]) if @search_params[:status].present?
+    @tasks = query.paginate(page: params[:page]).order("#{sort_column} #{sort_direction}")
   end
 
   def new
@@ -47,6 +54,10 @@ class TasksController < ApplicationController
 
   def task_params
     params.require(:task).permit(:title, :detail, :priority, :status, :due_date, :image)
+  end
+
+  def search_params
+    params.permit(:title, :status)
   end
 
   def sort_direction
