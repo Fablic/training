@@ -2,8 +2,10 @@
 
 one:
   created_by: 1
-  name: MyString
+  name: private
+  color: #03fcd7
 
 two:
   created_by: 1
-  name: MyString
+  name: public
+  color: #dffc03

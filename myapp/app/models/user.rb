@@ -10,5 +10,4 @@ class User < ApplicationRecord
   alias_attribute :password_digest, :pw
   validates :name, { presence: true, length: { maximum: 100 } }
   validates :username, { presence: true, length: { maximum: 100 } }
-  validates :admin, { presence: true }
 end
