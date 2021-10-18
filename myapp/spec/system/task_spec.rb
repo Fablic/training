@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe TasksController, type: :system do
-  let!(:task_count) { 20 }
+  let(:task_count) { 20 }
   let!(:tasks) { FactoryBot.create_list(:task, task_count) }
 
   describe 'Check the screen transitions' do
