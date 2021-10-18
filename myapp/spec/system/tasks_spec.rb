@@ -135,11 +135,11 @@ RSpec.describe 'tasks', type: :system do
       end
 
       it 'list task contents created_at, success' do
-        expect(page).to have_content taskcreated_at
+        expect(page).to have_content task.created_at.strftime('%Y/%m/%d %H:%M:%S')
       end
 
       it 'list task contents due_date, success' do
-        expect(page).to have_content task.due_date
+        expect(page).to have_content task.due_date.strftime('%Y/%m/%d %H:%M:%S')
       end
     end
 
