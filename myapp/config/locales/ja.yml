@@ -58,9 +58,9 @@ ja:
         task:
           attributes:
             title:
-              blank: 名前は必須です
+              blank: は入力必須です
             due_date:
-              blank: 期限は必須です
+              blank: は入力必須です
               error: 期限が誤っています
   common:
     new: 新規作成
