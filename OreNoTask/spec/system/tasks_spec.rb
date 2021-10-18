@@ -177,22 +177,13 @@ describe 'タスク管理機能', type: :system do
 
     describe 'ページング機能' do
       before(:all) do
-        create(:task, name: 'タスク1', description: '説明文', status: 'not_started', start_at: '2020/12/01 10:00', due_date_at: '2020/12/02 11:00', created_at: '2020/12/01 09:00:04')
-        create(:task, name: 'タスク2', description: '説明文', status: 'not_started', start_at: '2020/11/01 10:00', due_date_at: '2020/11/02 11:00', created_at: '2020/11/01 09:00:04')
-        create(:task, name: 'タスク3', description: '説明文', status: 'not_started', start_at: '2020/10/01 10:00', due_date_at: '2020/10/02 11:00', created_at: '2020/10/01 09:00:04')
-        create(:task, name: 'タスク4', description: '説明文', status: 'not_started', start_at: '2020/09/01 10:00', due_date_at: '2020/09/02 11:00', created_at: '2020/09/01 09:00:04')
-        create(:task, name: 'タスク5', description: '説明文', status: 'not_started', start_at: '2020/08/01 10:00', due_date_at: '2020/08/02 11:00', created_at: '2020/08/01 09:00:04')
-        create(:task, name: 'タスク6', description: '説明文', status: 'not_started', start_at: '2020/07/01 10:00', due_date_at: '2020/07/02 11:00', created_at: '2020/07/01 09:00:04')
-        create(:task, name: 'タスク7', description: '説明文', status: 'not_started', start_at: '2020/06/01 10:00', due_date_at: '2020/06/02 11:00', created_at: '2020/06/01 09:00:04')
-        create(:task, name: 'タスク8', description: '説明文', status: 'not_started', start_at: '2020/05/01 10:00', due_date_at: '2020/05/02 11:00', created_at: '2020/05/01 09:00:04')
-        create(:task, name: 'タスク9', description: '説明文', status: 'not_started', start_at: '2020/04/01 10:00', due_date_at: '2020/04/02 11:00', created_at: '2020/04/01 09:00:04')
-        create(:task, name: 'タスク10', description: '説明文', status: 'not_started', start_at: '2020/03/01 10:00', due_date_at: '2020/03/02 11:00', created_at: '2020/03/01 09:00:04')
+        create_list(:task, 10)
       end
 
       context 'ページングが動作しているか' do
         it '２ページ目のタスクが表示されている' do
           click_link '2'
-          expect(find('li:nth-child(1)')).to have_content 'タスク7'
+          expect(find('li:nth-child(1)')).to have_content 'test_task_4'
         end
       end
     end
