@@ -1,12 +1,8 @@
 //document
-$(document).ready(function(){
+$(window).ready(function(){
     $(".sort_link_th").click(function (){
         let targetName = $(this).attr("name");
         execSort(targetName);
-    });
-
-    $('.calendar').flatpickr({
-        'locale': 'ja',
     });
 });
 
