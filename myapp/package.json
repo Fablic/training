@@ -8,9 +8,9 @@
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "4.3.0",
-    "bootstrap": "4.4.1",
+    "flatpickr": "^4.6.9",
     "jquery": "^3.6.0",
-    "popper.js": "^1.16.1",
+    "purecss": "^2.0.6",
     "turbolinks": "^5.2.0"
   },
   "version": "0.1.0",
