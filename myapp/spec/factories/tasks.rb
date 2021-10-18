@@ -5,6 +5,6 @@ FactoryBot.define do
     priority { Task.prioritys[:low] }
     status { Task.statuses[:waiting] }
     due_date { Time.zone.now.tomorrow }
-    sequence(:created_at) { |n| Time.current + (n * 60) }
+    sequence(:created_at) { |n| Time.current + (n * 60 * 10) }
   end
 end
