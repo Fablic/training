@@ -17,6 +17,10 @@
 
   <body>
     <%= notice %>
-    <%= yield %>
+    <% if logged_in? %>
+      <%= yield %>
+    <% else %>
+      <%= render 'sessions/new' %>
+    <% end %>
   </body>
 </html>
