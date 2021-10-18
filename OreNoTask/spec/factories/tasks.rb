@@ -2,7 +2,11 @@
 
 FactoryBot.define do
   factory :task do
-    name { 'テストを作成する' }
-    description { '必要なものをインストールし、作成する。' }
+    sequence(:name, "test_task_1")
+    sequence(:start_at, Date.new(2020, 3, 1))
+    sequence(:due_date_at, Date.new(2020, 3, 2))
+    sequence(:created_at, Date.new(2020, 3, 2))
+    description { 'description' }
+    status { 'not_started' }
   end
 end
