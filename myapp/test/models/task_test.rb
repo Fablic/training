@@ -8,11 +8,6 @@ class TaskTest < ActiveSupport::TestCase
     assert_equal 1, t.user.id
   end
 
-  test 'check user of 22task' do
-    t = Task.first()
-    assert_equal 4, t.labels.length()
-  end
-
   # test "the truth" do
   #   assert true
   # end

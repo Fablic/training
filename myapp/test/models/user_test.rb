@@ -12,7 +12,6 @@ class UserTest < ActiveSupport::TestCase
     assert_equal admin.name, u.name
     assert_equal admin.id, u.id
     assert_equal true, u.admin
-
   end
 
   test 'basic user authentication of non admin' do

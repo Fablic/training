@@ -1,41 +1,44 @@
-require "application_system_test_case"
+# frozen_string_literal: true
+
+require 'application_system_test_case'
 
 class LabelsTest < ApplicationSystemTestCase
+  
   setup do
     @label = labels(:one)
   end
 
-  test "visiting the index" do
+  test 'visiting the index' do
     visit labels_url
-    assert_selector "h1", text: "Labels"
+    assert_selector 'h1', text: 'Labels'
   end
 
-  test "creating a Label" do
+  test 'creating a Label' do
     visit labels_url
-    click_on "New Label"
+    click_on 'New Label'
 
-    click_on "Create Label"
+    click_on 'Create Label'
 
-    assert_text "Label was successfully created"
-    click_on "Back"
+    assert_text 'Label was successfully created'
+    click_on 'Back'
   end
 
-  test "updating a Label" do
+  test 'updating a Label' do
     visit labels_url
-    click_on "Edit", match: :first
+    click_on 'Edit', match: :first
 
-    click_on "Update Label"
+    click_on 'Update Label'
 
-    assert_text "Label was successfully updated"
-    click_on "Back"
+    assert_text 'Label was successfully updated'
+    click_on 'Back'
   end
 
-  test "destroying a Label" do
+  test 'destroying a Label' do
     visit labels_url
     page.accept_confirm do
-      click_on "Destroy", match: :first
+      click_on 'Destroy', match: :first
     end
 
-    assert_text "Label was successfully destroyed"
+    assert_text 'Label was successfully destroyed'
   end
 end

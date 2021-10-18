@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_12_233502) do
+ActiveRecord::Schema.define(version: 2021_10_14_233411) do
 
   create_table "cats", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name"
@@ -44,6 +44,8 @@ ActiveRecord::Schema.define(version: 2021_10_12_233502) do
     t.bigint "label_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["label_id"], name: "fk_rails_7dc7cd6c47"
+    t.index ["task_id"], name: "fk_rails_fcbbc0fa3c"
   end
 
   create_table "tasks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
@@ -71,5 +73,7 @@ ActiveRecord::Schema.define(version: 2021_10_12_233502) do
 
   add_foreign_key "labels", "users", column: "created_by", name: "fkeyLabelOwner"
   add_foreign_key "maintenances", "users", column: "created_by", name: "fkeyMaintenanceOwner"
+  add_foreign_key "task_labels", "labels"
+  add_foreign_key "task_labels", "tasks"
   add_foreign_key "tasks", "users", column: "created_by", name: "fkeyTaskOwner"
 end

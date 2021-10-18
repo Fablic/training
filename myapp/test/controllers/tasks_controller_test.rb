@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class TasksControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @task = tasks(:two)
+    @task = create(:task)
   end
 
   test 'should get index' do
@@ -18,8 +20,7 @@ class TasksControllerTest < ActionDispatch::IntegrationTest
   test 'should create task' do
     assert_difference('Task.count') do
       post tasks_url,
-           params: { task: { created_by: @task.created_by, name: @task.name, description: @task.description, started_at: @task.started_at,
-                             finished_at: @task.finished_at } }
+           params: { task: attributes_for(:task) }
     end
 
     assert_redirected_to task_url(Task.last)
@@ -37,8 +38,7 @@ class TasksControllerTest < ActionDispatch::IntegrationTest
 
   test 'should update task' do
     patch task_url(@task),
-          params: { task: { created_by: @task.created_by, name: @task.name, description: @task.description, started_at: @task.started_at,
-                            finished_at: @task.finished_at } }
+          params: { task: attributes_for(:task) }
     assert_redirected_to task_url(@task)
   end
 
