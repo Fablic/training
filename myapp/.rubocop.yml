@@ -6,3 +6,4 @@ AllCops:
   Exclude:
     - 'node_modules/**/*'
     - 'vendor/**/*'
+    - 'bin/*'

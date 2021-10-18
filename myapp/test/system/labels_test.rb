@@ -3,7 +3,6 @@
 require 'application_system_test_case'
 
 class LabelsTest < ApplicationSystemTestCase
-  
   setup do
     @label = labels(:one)
   end
