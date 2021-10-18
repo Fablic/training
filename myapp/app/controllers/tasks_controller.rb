@@ -1,4 +1,5 @@
 class TasksController < ApplicationController
+  before_action :set_menu
 
   # 一覧
   def index
@@ -14,7 +15,7 @@ class TasksController < ApplicationController
   # 新規作成実行
   def create
     @task = Task.new(permitted_params)
-
+    @task.user_id = 1 # 次ステップでログインユーザーIDが入ります。
     if @task.save
       # 一覧へ
       redirect_to tasks_path, notice: t('messages.create.notice')
@@ -67,7 +68,13 @@ class TasksController < ApplicationController
   # ストロングパラメータをとる(検索)
   def permitted_search_params
     params.require(:search_form).permit(:name, :status, :sort, :order)
-    # params.require(:search_form).permit(:name, :status)
   end
 
+  # menuをセットする
+  def set_menu
+    @menus = [
+      Menu.new(t('.menu.btn_list'), tasks_path),
+      Menu.new(t('.menu.btn_add'), new_task_path)
+    ]
+  end
 end

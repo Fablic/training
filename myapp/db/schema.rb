@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 2021_10_04_080859) do
     t.string "name", limit: 256, comment: "タスク名"
     t.string "description", limit: 1024, comment: "コメント"
     t.bigint "user_id"
-    t.integer "status", comment: "状態"
+    t.integer "status", default: 0, comment: "状態"
     t.datetime "due_date", comment: "終了期限"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -39,8 +39,6 @@ ActiveRecord::Schema.define(version: 2021_10_04_080859) do
     t.string "mail_address"
     t.integer "role_id", limit: 1
     t.datetime "last_login_date"
-    t.integer "regist_user_id"
-    t.integer "update_user_id"
     t.boolean "del_flag", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

@@ -1,17 +1,17 @@
 ja:
   views:
     pagination:
-      first: "&laquo;"
-      last: "&raquo;"
-      previous: "&lsaquo; "
-      next: " &rsaquo;"
+      first: "最初"
+      last: "最後"
+      previous: "&lsaquo; 前"
+      next: "次 &rsaquo;"
       truncate: "..."
   helpers:
     page_entries_info:
       one_page:
         display_entries:
           zero: ""
-          one: "<strong>1-1</strong>/1件中"
-          other: "<strong>1-%{count}</strong>/%{count}件中"
+          one: "1-1/1件中"
+          other: "1-%{count}/%{count}件中"
       more_pages:
-        display_entries: "<strong>%{first}-%{last}</strong>/%{total}件中"
+        display_entries: "%{first}-%{last}/%{total}件中"

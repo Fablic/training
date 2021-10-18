@@ -1,60 +1,38 @@
 <% # task登録・編集用form template %>
-<style>
-  .input_form_table td{
-    min-width:100px;
-  }
-  .error{
-    color:red;
-  }
-  .field_with_errors input,
-  .field_with_errors textarea{
-    border-color:red;
-  }
+<%= javascript_pack_tag 'tasks' %>
 
-</style>
-<%= form_for @task do |f| %>
-  <% if @task.errors.any? %>
-    <p class="error"><%= t 'dicrionary.messages.msg_input_err' %></p>
-    <div class="error_detail_area">
-      <ul>
+<!-- message -->
+<% if @task.errors.any? %>
+  <div class="error_message_area">
+    <p><i class="fas fa-exclamation-circle"></i><%= t 'dicrionary.messages.msg_input_err' %></p>
+    <ul>
       <% @task.errors.full_messages.each do |message| %>
-      <li><%= message %></li>
+        <li><%= message %></li>
       <% end %>
     </ul>
+  </div>
+<% end %>
+<!-- form -->
+<%= form_for @task,html:{ class:'pure-form pure-form-aligned'} do |f| %>
+  <fieldset>
+    <div class="pure-control-group">
+      <%= f.label :name %>
+      <%= f.text_field :name ,required:true ,class:'pure-input-3-4' %>
     </div>
-  <% end %>
-  <table class="input_form_table">
-    <tbody>
-      <tr>
-        <td>
-          <%= f.label :name %>
-        </td>
-        <td><%= f.text_field :name %>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <%= f.label :status %>
-        </td>
-        <td>
-          <%= f.select :status, Task.statuses_i18n.invert %>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <%= f.label :description%>
-        </td>
-        <td><%= f.text_area :description %></td>
-      </tr>
-      <tr>
-        <td> <%= f.label :due_date %></td>
-        <td> <%= f.date_field :due_date %></td>
-      </tr>
-    </tbody>
-  </table>
-  <% if local_assigns[:edit_flag].present? %>
-    <%= f.submit t('tasks.edit.btn_regist') %>
-  <% else %>
-    <%= f.submit t('tasks.new.btn_regist') %>
-  <% end %>
+    <div class="pure-control-group">
+      <%= f.label :description%>
+      <%= f.text_area :description,class:'pure-input-3-4' %>
+    </div>
+    <div class="pure-control-group">
+      <%= f.label :status %>
+      <%= f.select :status, Task.statuses_i18n.invert ,{ include_blank: false },{ class:'pure-input-1-4' } %>
+    </div>
+    <div class="pure-control-group">
+      <%= f.label :due_date %>
+      <%= f.date_field :due_date,class:'pure-input-1-4 calendar' %>
+    </div>
+    <div class="pure-controls">
+      <%= f.submit (local_assigns[:edit_flag].present? ? t('tasks.edit.btn_regist'):t('tasks.new.btn_regist')) ,class:'pure-button button-success' %>
+    </div>
+  </fieldset>
 <% end %>
