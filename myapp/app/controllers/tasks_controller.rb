@@ -9,7 +9,7 @@ class TasksController < ApplicationController
                           "%#{ApplicationRecord.sanitize_sql_like(@search_params[:title])}%")
     end
     query = query.where(status: @search_params[:status]) if @search_params[:status].present?
-    @tasks = query.paginate(page: params[:page]).order("#{sort_column} #{sort_direction}")
+    @tasks = query.order("#{sort_column} #{sort_direction}").page(params[:page])
   end
 
   def new

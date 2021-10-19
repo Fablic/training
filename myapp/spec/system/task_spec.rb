@@ -1,15 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe TasksController, type: :system do
-  let(:task_count) { 20 }
+  let(:task_count) { 60 }
   let!(:tasks) { FactoryBot.create_list(:task, task_count) }
 
   describe '#index' do
     before { visit root_path }
     context 'Go to the show page.' do
       it 'Successful transition' do
-        click_link tasks.last.title
-        expect(current_path).to eq task_path(tasks.last.id)
+        click_link tasks.first.title
+        expect(current_path).to eq task_path(tasks.first.id)
       end
     end
 
@@ -23,7 +23,7 @@ RSpec.describe TasksController, type: :system do
     context 'Is the task list represented?' do
       it 'Displayed.' do
         expect(page).to have_content('Tasks')
-        expect(page).to have_content(tasks.last.title)
+        expect(page).to have_content(tasks.first.title)
       end
     end
 
@@ -32,8 +32,9 @@ RSpec.describe TasksController, type: :system do
         visit root_path(direction: 'desc', sort: 'created_at')
         created_ats = page.all('.sort_created_at')
         expect(created_ats.count).to be > 0
+        tasks_sort = tasks.sort_by(&:created_at).reverse
         created_ats.each.with_index(1) do |row, index|
-          expect(row.text).to eq I18n.l(tasks[task_count - index].created_at)
+          expect(row.text).to eq I18n.l(tasks_sort[index - 1].created_at)
         end
       end
     end
@@ -43,23 +44,25 @@ RSpec.describe TasksController, type: :system do
         visit root_path(direction: 'asc', sort: 'due_date')
         columns = page.all('.sort_due_date')
         expect(columns.count).to be > 0
+        tasks_sort = tasks.sort_by(&:due_date)
         columns.each.with_index(1) do |row, index|
-          expect(row.text).to eq I18n.l(tasks[task_count - index].due_date)
+          expect(row.text).to eq I18n.l(tasks_sort[index - 1].due_date)
         end
       end
     end
 
     context 'Check the Search status waiting' do
       it 'Displayed.' do
-        visit root_path(direction: 'desc', sort: 'due_date')
+        visit root_path(direction: 'asc', sort: 'due_date')
 
         select I18n.t('activerecord.enum.task.status.waiting'), from: 'status'
         click_button I18n.t('pages.tasks.search.title')
 
         columns = page.all('.sort_due_date')
         expect(columns.count).to be > 0
+        tasks_sort = tasks.sort_by(&:due_date)
         columns.each.with_index(1) do |row, index|
-          expect(row.text).to eq I18n.l(tasks[task_count - index].due_date)
+          expect(row.text).to eq I18n.l(tasks_sort[index - 1].due_date)
         end
 
         columns = page.all('.sort_status')
@@ -83,18 +86,12 @@ RSpec.describe TasksController, type: :system do
 
     context 'Check the Search title "2"' do
       it 'Displayed.' do
-        visit root_path(direction: 'desc', sort: 'due_date')
-
         fill_in 'title', with: '2'
         click_button I18n.t('pages.tasks.search.title')
 
-        columns = page.all('.sort_due_date')
-        expect(columns.count).to be > 0
-        columns.each.with_index(1) do |row, index|
-          expect(row.text).to eq I18n.l(tasks[task_count - index].due_date)
-        end
-
-        expect(columns.count).to eq tasks.find_all { |task| task.title.include?('2') }.count
+        columns_id = page.all('.sort_id')
+        columns_title = page.all('.sort_title')
+        expect(columns_id.count).to eq columns_title.select { |t| t.text.include?('2') }.count
       end
     end
 
@@ -114,7 +111,25 @@ RSpec.describe TasksController, type: :system do
         click_button I18n.t('pages.tasks.search.title')
 
         columns = page.all('.sort_title')
-        expect(columns.count).to eq task_count
+        expect(columns.count).to be > 0
+      end
+    end
+
+    context 'Click on the pagenation link.' do
+      it 'Displayed.' do
+        expect(page).to have_content(tasks.first.title)
+        click_link 'Next'
+        expect(page).not_to have_content(tasks.first.title)
+        click_link 'Previous'
+        expect(page).to have_content(tasks.first.title)
+        click_link 'Last'
+        expect(page).not_to have_content(tasks.first.title)
+        click_link 'First'
+        expect(page).to have_content(tasks.first.title)
+        click_link '2'
+        expect(page).not_to have_content(tasks.first.title)
+        click_link '1'
+        expect(page).to have_content(tasks.first.title)
       end
     end
   end
@@ -149,6 +164,9 @@ RSpec.describe TasksController, type: :system do
 
         expect(page).to have_current_path(root_path)
         expect(page).to have_content(flush)
+
+        fill_in 'title', with: title
+        click_button I18n.t('pages.tasks.search.title')
 
         click_link title
         expect(page).to have_content(detail)

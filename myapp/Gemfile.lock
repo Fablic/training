@@ -96,6 +96,18 @@ GEM
       ruby-vips (>= 2.0.13, < 3)
     jbuilder (2.11.2)
       activesupport (>= 5.0.0)
+    kaminari (1.2.1)
+      activesupport (>= 4.1.0)
+      kaminari-actionview (= 1.2.1)
+      kaminari-activerecord (= 1.2.1)
+      kaminari-core (= 1.2.1)
+    kaminari-actionview (1.2.1)
+      actionview
+      kaminari-core (= 1.2.1)
+    kaminari-activerecord (1.2.1)
+      activerecord
+      kaminari-core (= 1.2.1)
+    kaminari-core (1.2.1)
     listen (3.5.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
@@ -266,6 +278,7 @@ DEPENDENCIES
   factory_bot_rails
   image_processing (= 1.9.3)
   jbuilder (~> 2.7)
+  kaminari
   listen (~> 3.2)
   mini_magick (= 4.9.5)
   mysql2 (>= 0.4.4)
@@ -284,7 +297,6 @@ DEPENDENCIES
   web-console (>= 3.3.0)
   webdrivers
   webpacker (~> 4.0)
-  will_paginate (= 3.1.8)
 
 RUBY VERSION
    ruby 2.6.7p197

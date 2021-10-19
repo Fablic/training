@@ -4,7 +4,7 @@ FactoryBot.define do
     sequence(:detail) { |n| "DEATAIL#{n}" }
     priority { Task.prioritys[:low] }
     status { Task.statuses[:waiting] }
-    due_date { Time.zone.now.tomorrow }
+    sequence(:due_date) { |n| Time.current + 86_400 + (n * 60 * 10) }
     sequence(:created_at) { |n| Time.current + (n * 60 * 10) }
   end
 end

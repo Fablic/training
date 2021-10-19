@@ -15,7 +15,6 @@
 
 <%= @tasks.count %> <%=t('pages.tasks.search.hit_count')%>
 <% if @tasks.any? %>
-  <%= will_paginate @tasks,:previous_label => ' &lt', :next_label => '&gt' %>
     <table border='1'>
       <thead>
         <tr>
@@ -31,5 +30,5 @@
         <%= render partial: "task", collection: @tasks  %>
       </tbody>
     </table>    
-  <%= will_paginate @tasks,:previous_label => ' &lt', :next_label => '&gt' %>
+  <%= paginate @tasks %>
 <% end %>
