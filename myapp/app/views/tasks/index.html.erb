@@ -33,7 +33,8 @@
       <td><%= task.end_date %></td>
       <td><%= link_to 'Show', task_path(task), method: :get %></td>
       <td><%= link_to 'Edit', edit_task_path(task) %></td>
-      <td><%= link_to 'Destroy', task_path(task), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <td><%= link_to 'Destroy', task_path(task), method: :delete, data: { confirm: 'Are you sure you want to delete it?
+      ' } %></td>
     </tr>
     <% end %>
   </tbody>
