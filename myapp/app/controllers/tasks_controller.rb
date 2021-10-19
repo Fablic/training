@@ -17,10 +17,8 @@ class TasksController < ApplicationController
     @task = Task.new(permitted_params)
     @task.user_id = session[:user_id]
     if @task.save
-      # 一覧へ
       redirect_to tasks_path, notice: t('messages.create.notice')
     else
-      # 登録画面へ
       render action: :new
     end
   end
@@ -46,12 +44,8 @@ class TasksController < ApplicationController
   # 削除
   def destroy
     target_task.destroy
-
-    # 一覧へ
     redirect_to tasks_path, notice: t('messages.destroy.notice')
   end
-
-  # private methods
 
   private
 
