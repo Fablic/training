@@ -3,6 +3,7 @@ $color-selected-font:#00838F;
 $color-success:#00BCD4;
 $color-warning:#FF8F00;
 $color-error:#D32F2F;
+$color-error-back:#FFCDD2;
 
 html{
   background: lightgray;
@@ -17,11 +18,20 @@ body{
 }
 
 .notice_area{
-  background:$color-selected;
   line-height: 30px;
   padding: 0 10px;
-  border-left: 10px solid #00838F;
+  border-left: 10px solid;
+
+  &.notice{
+    background:$color-selected;
+    border-color: #00838F;
+  }
+  &.danger{
+    background:$color-error-back;
+    border-color: $color-error;
+  }
 }
+
 
 /**
  errors
