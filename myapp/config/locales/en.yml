@@ -58,9 +58,9 @@ en:
         task:
           attributes:
             title:
-              blank: title is empty.
+              blank: is empty.
             due_date:
-              blank: due_date is empty.
+              blank: is empty.
               error: Incorrect due date.
 
   common:
@@ -78,3 +78,5 @@ en:
         deleted: Deleted the task.
         fail: Failed to register the task.
       confirm_deletion: Are you sure you want to delete the task?
+      search:
+        title: Search
