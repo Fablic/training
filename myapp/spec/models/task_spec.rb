@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Task, type: :model do
-
   describe '#title' do
     it 'with nil is not valid' do
       task = build(:task, title: nil)
@@ -10,13 +9,13 @@ RSpec.describe Task, type: :model do
     end
 
     it 'Exceeds the specified number of characters' do
-      task = build(:task, title: "a" * 21)
+      task = build(:task, title: 'a' * 21)
       expect(task).not_to be_valid
       expect(task.errors.messages).to include(:title)
     end
 
     it 'Less than the specified number of characters' do
-      task = build(:task, title: "a" * 2)
+      task = build(:task, title: 'a' * 2)
       expect(task).not_to be_valid
       expect(task.errors.messages).to include(:title)
     end
@@ -29,7 +28,7 @@ RSpec.describe Task, type: :model do
     end
 
     it 'Exceeds the specified number of characters' do
-      task = build(:task, detail: "a" * 10001)
+      task = build(:task, detail: 'a' * 10_001)
       expect(task).not_to be_valid
       expect(task.errors.messages).to include(:detail)
     end
@@ -56,7 +55,7 @@ RSpec.describe Task, type: :model do
     end
 
     it 'If an out-of-specification value is received' do
-      task = build(:task, priority: [*0..100].delete_if { |n| Task.prioritys.values.include?(n) }.sample) 
+      task = build(:task, priority: [*0..100].delete_if { |n| Task.prioritys.values.include?(n) }.sample)
       expect(task).not_to be_valid
       expect(task.errors.messages).to include(:priority)
     end
@@ -69,7 +68,7 @@ RSpec.describe Task, type: :model do
     end
 
     it 'If an out-of-specification value is received' do
-      task = build(:task, status: [*0..100].delete_if { |n| Task.statuses.values.include?(n) }.sample) 
+      task = build(:task, status: [*0..100].delete_if { |n| Task.statuses.values.include?(n) }.sample)
       expect(task).not_to be_valid
       expect(task.errors.messages).to include(:status)
     end

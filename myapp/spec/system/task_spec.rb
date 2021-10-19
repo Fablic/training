@@ -22,7 +22,7 @@ RSpec.describe TasksController, type: :system do
       expect(page).to have_content(task.title)
     end
   end
- 
+
   describe 'Check the show page' do
     before { visit task_path(task.id) }
     it 'deital' do
@@ -32,7 +32,7 @@ RSpec.describe TasksController, type: :system do
       expect(page).to have_link 'DELETE', href: task_path(task.id)
     end
   end
- 
+
   describe 'Check the new task' do
     before { visit new_task_path }
 
@@ -45,10 +45,10 @@ RSpec.describe TasksController, type: :system do
       fill_in 'Detail', with: detail
       select 'low', from: 'Priority'
       select 'done', from: 'Status'
-      fill_in 'Due date', with: Time.zone.now.strftime("%Y-%m-%d")
+      fill_in 'Due date', with: Time.zone.now.strftime('%Y-%m-%d')
       click_button 'Register my task'
 
-      expect(page).to have_current_path( root_path )
+      expect(page).to have_current_path(root_path)
       expect(page).to have_content(flush)
 
       click_link title
@@ -65,14 +65,13 @@ RSpec.describe TasksController, type: :system do
       fill_in 'Detail', with: detail
       select 'low', from: 'Priority'
       select 'done', from: 'Status'
-      fill_in 'Due date', with: Time.zone.yesterday.strftime("%Y-%m-%d")
+      fill_in 'Due date', with: Time.zone.yesterday.strftime('%Y-%m-%d')
       click_button 'Register my task'
 
-      expect(page).to have_current_path( tasks_path )
+      expect(page).to have_current_path(tasks_path)
       expect(page).to have_content(flush)
     end
   end
-
 
   describe 'Check the edit task' do
     before { visit edit_task_path(task) }
@@ -84,10 +83,10 @@ RSpec.describe TasksController, type: :system do
 
       fill_in 'Title', with: title
       fill_in 'Detail', with: detail
-      fill_in 'Due date', with: Time.zone.now.strftime("%Y-%m-%d")
+      fill_in 'Due date', with: Time.zone.now.strftime('%Y-%m-%d')
       click_button 'Edit my task'
 
-      expect(page).to have_current_path( task_path(task) )
+      expect(page).to have_current_path(task_path(task))
       expect(page).to have_content(flush)
       expect(page).to have_content(title)
       expect(page).to have_content(detail)
@@ -100,10 +99,10 @@ RSpec.describe TasksController, type: :system do
 
       fill_in 'Title', with: title
       fill_in 'Detail', with: detail
-      fill_in 'Due date', with: Time.zone.yesterday.strftime("%Y-%m-%d")
+      fill_in 'Due date', with: Time.zone.yesterday.strftime('%Y-%m-%d')
       click_button 'Edit my task'
 
-      expect(page).to have_current_path( task_path(task) )
+      expect(page).to have_current_path(task_path(task))
       expect(page).to have_content(flush)
     end
   end
@@ -113,7 +112,7 @@ RSpec.describe TasksController, type: :system do
     it 'Can delete tasks' do
       click_link 'DELETE'
 
-      expect(page).to have_current_path( root_path )
+      expect(page).to have_current_path(root_path)
       expect(page).to have_content('Delete Success')
     end
   end
