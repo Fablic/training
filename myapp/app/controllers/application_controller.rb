@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   rescue_from ActiveRecord::RecordNotFound, with: :_render404
   rescue_from ActionController::RoutingError, with: :_render404
   # end
+  include SessionHelper
 
   def routing_error
     raise ActionController::RoutingError, params[:path]
@@ -19,5 +20,12 @@ class ApplicationController < ActionController::Base
   # 500err
   def _render500
     render 'errors/500.html', status: :internal_server_error, layout: 'error'
+  end
+
+  def login_check
+    unless logged_in?
+      flash[:danger] = t "messages.authenticate.unloginned"
+      redirect_to users_login_path
+    end
   end
 end

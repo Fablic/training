@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-  before_action :set_menu
+  before_action :login_check,:set_menu
 
   # 一覧
   def index
@@ -74,7 +74,8 @@ class TasksController < ApplicationController
   def set_menu
     @menus = [
       Menu.new(t('.menu.btn_list'), tasks_path),
-      Menu.new(t('.menu.btn_add'), new_task_path)
+      Menu.new(t('.menu.btn_add'), new_task_path),
+      Menu.new(t('.menu.btn_logout') , users_logout_path )
     ]
   end
 end
