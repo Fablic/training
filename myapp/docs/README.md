@@ -38,16 +38,17 @@
 
 # DB SCHEMA
 ## tasks
-| column name | data        | default | not null | notes         |
-| ----------- | ----------- | ------- | -------- | ------------- |
-| id          | bigint      |         | ○        | primary key   |
-| created_by  | bigint      |         | ○        | fkey users.id |
-| name        | string(256) |         | ○        |               |
-| description | text        |         |          |               |
-| started_at  | timestamp   |         |          |               |
-| finished_at | timestamp   |         |          |               |
-| created_at  | timestamp   |         | ○        |               |
-| updated_at  | timestamp   |         | ○        |               |
+| column name | data        | default | not null | notes           |
+| ----------- | ----------- | ------- | -------- | --------------- |
+| id          | bigint      |         | ○        | primary key     |
+| created_by  | bigint      |         | ○        | fkey users.id   |
+| name        | string(256) |         | ○        |                 |
+| status      | int         | 0       | ○        | 0:未着手,1:着手,2:完了 |
+| description | text        |         |          |                 |
+| started_at  | timestamp   |         |          |                 |
+| finished_at | timestamp   |         |          |                 |
+| created_at  | timestamp   |         | ○        |                 |
+| updated_at  | timestamp   |         | ○        |                 |
 
 ## users
 | column name | data        | default | not null | notes       |

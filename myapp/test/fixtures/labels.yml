@@ -1,9 +1,11 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  created_by: 
-  name: MyString
+  created_by: 1
+  name: private
+  color: #03fcd7
 
 two:
-  created_by: 
-  name: MyString
+  created_by: 1
+  name: public
+  color: #dffc03
