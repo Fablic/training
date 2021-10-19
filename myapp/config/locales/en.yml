@@ -58,9 +58,9 @@ en:
         task:
           attributes:
             title:
-              blank: title is empty.
+              blank: is empty.
             due_date:
-              blank: due_date is empty.
+              blank: is empty.
               error: Incorrect due date.
 
   common:
