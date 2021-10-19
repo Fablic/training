@@ -45,7 +45,6 @@
         <th class="sort_link_th" name="due_date"><%= t('.label_due_date') %></th>
         <th class="sort_link_th" name="created_at"><%= t('.label_created_at') %></th>
         <th><%= t '.label_updated_at' %></th>
-        <th>ユーザー<!-- テスト用なので次stepで消す--></th>
         <th></th>
       </tr>
     </thead>
@@ -63,7 +62,6 @@
         </td>
         <td> <%= l task.created_at %></td>
         <td> <%= l task.updated_at %></td>
-        <td> <%= task.user.name %></td>
 
         <td>
         <%= link_to t(".btn_del"), task_path(task.id), method: :delete, data: {confirm: t('.msg_del_confirm')}, id: "del_#{task.id}", class: "pure-button del_button" %>
