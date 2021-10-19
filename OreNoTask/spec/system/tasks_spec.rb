@@ -2,6 +2,9 @@
 
 require 'rails_helper'
 describe 'タスク管理機能', type: :system do
+  let(:user) { create(:user, name: 'TaroRakuten', password: 'rakuten' ) }
+  let(:rspec_session) { { user_id: user.id } }
+
   before(:all) do
     create(:task, name: '最初のタスク', description: '説明文', status: 'not_started', start_at: '2021/09/01 10:00', due_date_at: '2021/09/02 11:00', created_at: '2021/07/01 09:00:04')
     create(:task, name: '２番目のタスク', description: '説明文２', status: 'completed', start_at: '2021/08/02 10:00', due_date_at: '2021/08/03 11:00', created_at: '2021/07/01 09:00:03')

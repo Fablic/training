@@ -71,5 +71,16 @@ RSpec.configure do |config|
     if ex.metadata[:type] == :system
       driven_by :selenium, using: :headless_chrome, screen_size: [1400, 1400]
     end
+    # let(:rspec_session) で指定された値を セッションの初期値とします
+    session = defined?(rspec_session) ? rspec_session : {}
+
+    # destroyメソッドを実行してもエラーにならないようにします（必要であれば）
+    session.class_eval { def destroy; nil; end }
+
+    # 追記 実行後のセッションを取得できるようにする
+    config.add_setting(:session, :default => session)
+
+    # 変更 sessionメソッドをRSpec.configuration.sessionで上書き
+    allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(RSpec.configuration.session)
   end
 end

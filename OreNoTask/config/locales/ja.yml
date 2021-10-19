@@ -13,6 +13,8 @@ ja:
       invalid_date: 'の指定が不正です。'
       invalid_date_diff: 'は開始日より前の日付は登録できません。'
       invalid_unique_name: 'は既に登録されています。'
+      confirm_logout: 'ログアウトします。よろしいですか？'
+      failed_logout: 'ログインに失敗しました'
     words:
       to_list: '一覧に戻る'
       save_to_create: '作成'
@@ -25,6 +27,10 @@ ja:
       search_keyword: 'タスク名・内容'
       search_button: '検索'
       select_indicate: '選択して下さい'
+      logout: 'ログアウト'
+      login: 'ログイン'
+      user_name: 'ユーザー名'
+      user_password: 'パスワード'
   enumerize:
     task:
       status:

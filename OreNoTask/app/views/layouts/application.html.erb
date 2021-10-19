@@ -16,7 +16,8 @@
   </head>
 
   <body>
-    <%= notice %>
+    <% if notice.present? %>
+    <% end %>
     <% if logged_in? %>
       <%= yield %>
     <% else %>
