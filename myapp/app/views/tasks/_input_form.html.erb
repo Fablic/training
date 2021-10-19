@@ -22,6 +22,17 @@
     <%= form.label :due_date, t('tasks.due_date') %>
     <%= form.datetime_field :due_date, class: 'form-control' %>
   </div>
+
+  <% if local_assigns[:action_edit] %>
+    <div>
+      <%= form.label :status, t('tasks.status') %>
+      <%= form.select :status, options_for_select(
+        Task.statuses.map { |key, _v| [t("activerecord.attributes.task.status.#{key}"), key] },
+        selected: @task.status
+      ) %>
+    </div>
+  <% end %>
+
   <div class="actions">
     <%= form.submit t('tasks.submit'), class: 'btn btn-primary'%>
   </div>
