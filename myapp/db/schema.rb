@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_04_080859) do
+ActiveRecord::Schema.define(version: 2021_10_14_085659) do
 
   create_table "labels", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.text "name"
@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 2021_10_04_080859) do
     t.string "mail_address"
     t.integer "role_id", limit: 1
     t.datetime "last_login_date"
+    t.string "password_digest", comment: "暗号化パスワード"
     t.boolean "del_flag", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

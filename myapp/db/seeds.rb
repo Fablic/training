@@ -7,9 +7,10 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 # user
-User.create(name: '管理者',role_id: 1 )
+User.create(name: '管理者', role_id: 1, password: 'test', password_confirmation: 'test',
+            mail_address: 'yu.a.hashimoto@rakuten.com')
 
 # task一覧表示確認用：サンプルデータ
-20.times do | n |
-  Task.create(name:"サンプル#{ n }" , user_id:1 )
+20.times do |n|
+  Task.create(name: "サンプル#{n}", user_id: 1)
 end
