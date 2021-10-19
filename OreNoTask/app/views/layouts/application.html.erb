@@ -2,14 +2,16 @@
 <html>
   <head>
     <title>OreNoTask</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= stylesheet_link_tag('/css/normalize.css') %>
-    <%= stylesheet_link_tag('/css/styles.css') %>
-    <%= stylesheet_link_tag('/js/jquery-ui-1.12.1.custom/jquery-ui.css') %>
-    <%= javascript_include_tag('/js/jquery3_6_0.js') %>
-    <%= javascript_include_tag('/js/jquery-ui-1.12.1.custom/jquery-ui.js') %>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag 'style', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kiwi+Maru:wght@500&display=swap" rel="stylesheet">
 
   </head>
 

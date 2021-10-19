@@ -58,7 +58,7 @@ describe 'タスク管理機能', type: :system do
     describe '検索機能' do
       context 'ステータス指定なしでタスク名を検索する' do
         it '検索対象の名前のタスクのみ表示される' do
-          fill_in 'タスク名・内容', with: '追加したタスク'
+          fill_in 'keyword', with: '追加したタスク'
           click_button 'commit'
 
           expect(page).to have_content '追加したタスク'
@@ -70,7 +70,7 @@ describe 'タスク管理機能', type: :system do
 
       context 'ステータス指定なしでタスク内容を検索する' do
         it '検索対象の内容のタスクのみ表示される' do
-          fill_in 'タスク名・内容', with: '説明文２'
+          fill_in 'keyword', with: '説明文２'
           click_button 'commit'
 
           expect(page).to have_content '２番目のタスク'
@@ -82,7 +82,7 @@ describe 'タスク管理機能', type: :system do
 
       context '正しい組み合わせでステータス指定ありでタスク名を検索する' do
         it '検索対象の名前のタスクのみ表示される' do
-          fill_in 'タスク名・内容', with: '２番目のタスク'
+          fill_in 'keyword', with: '２番目のタスク'
           select '完了', from: 'status'
           click_button 'commit'
 
@@ -95,7 +95,7 @@ describe 'タスク管理機能', type: :system do
 
       context '間違った組み合わせでステータス指定ありでタスク名を検索する' do
         it '何も表示されない' do
-          fill_in 'タスク名・内容', with: '２番目のタスク'
+          fill_in 'keyword', with: '２番目のタスク'
           select '作業中', from: 'status'
           click_button 'commit'
 
@@ -108,7 +108,7 @@ describe 'タスク管理機能', type: :system do
 
       context '正しい組み合わせでステータス指定ありでタスク内容を検索する' do
         it '検索対象の名前のタスクのみ表示される' do
-          fill_in 'タスク名・内容', with: '追加した説明文'
+          fill_in 'keyword', with: '追加した説明文'
           select '作業中', from: 'status'
           click_button 'commit'
 
@@ -121,7 +121,7 @@ describe 'タスク管理機能', type: :system do
 
       context '間違った組み合わせでステータス指定ありでタスク内容を検索する' do
         it '何も表示されない' do
-          fill_in 'タスク名・内容', with: '追加した説明文'
+          fill_in 'keyword', with: '追加した説明文'
           select '完了', from: 'status'
           click_button 'commit'
 
@@ -272,7 +272,8 @@ describe 'タスク管理機能', type: :system do
     context 'タスクを削除する' do
       it '期待通りにタスクが削除され、既存データに影響がない' do
         visit tasks_path
-        find('li:nth-child(1)').click_button('削除')
+        find('li:nth-child(1)').click_button('×')
+        page.driver.browser.switch_to.alert.accept
 
         # 作成されたタスクが表示されてない
         expect(page).not_to have_content '最初のタスク'
