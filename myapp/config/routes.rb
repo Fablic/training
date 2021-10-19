@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
-  get 'users/login'
-  get 'users/logout'
-  post 'users/login' => "users#exec_login"
+  get 'users/login' => "users#new"
+  get 'users/logout' => "users#destroy"
+  post 'users/login' => "users#create"
   #root
   root "tasks#index"
 

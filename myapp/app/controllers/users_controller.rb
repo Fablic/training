@@ -1,7 +1,11 @@
 class UsersController < ApplicationController
-  def login; end
+  # ログイン
+  def new
+    render 'login'
+  end
 
-  def exec_login
+  # ログイン実行
+  def create
     user = User.find_by(mail_address: params[:session][:mail_address])
     if authenticate(user)
       log_in(user)
@@ -12,13 +16,16 @@ class UsersController < ApplicationController
     end
   end
 
-  def logout
+  # ログアウト
+  def destroy
     log_out
+    render 'logout'
   end
 
   private
 
+  # ユーザー認証
   def authenticate(user)
-    user.present? && user.authenticate(params[:session][:password])
+    user&.authenticate(params[:session][:password])
   end
 end
