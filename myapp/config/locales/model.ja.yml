@@ -3,6 +3,7 @@ ja:
     models:
       task: タスク
       search_form: タスク検索
+      user: ユーザー
 
     # モデルごとに設定する
     attributes:
@@ -33,6 +34,10 @@ ja:
     destroy:
       notice: タスクを削除しました。
       alert: タスク削除できません。
+    authenticate:
+      success: 認証に成功しました。
+      failed: 認証情報に誤りがあります。
+      unloginned: ログインしてください。
   # enum
   enums:
     task:
