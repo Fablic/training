@@ -23,11 +23,6 @@ class ApplicationController < ActionController::Base
   end
 
   def login_check
-    if logged_in?
-      true
-    else
-      flash[:danger] = t 'messages.authenticate.unloginned'
-      redirect_to users_login_path
-    end
+    redirect_to users_login_path, flash: { danger: t('messages.authenticate.unloginned') } unless logged_in?
   end
 end
