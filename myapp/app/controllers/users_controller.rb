@@ -1,10 +1,9 @@
 class UsersController < ApplicationController
-  def login
-  end
+  def login; end
 
   def exec_login
     user = User.find_by(mail_address: params[:session][:mail_address])
-    if user && user.authenticate(params[:session][:password])
+    if authenticate(user)
       log_in(user)
       redirect_to tasks_path
     else
@@ -15,5 +14,11 @@ class UsersController < ApplicationController
 
   def logout
     log_out
+  end
+
+  private
+
+  def authenticate(user)
+    user.present? && user.authenticate(params[:session][:password])
   end
 end

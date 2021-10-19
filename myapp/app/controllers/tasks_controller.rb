@@ -1,10 +1,10 @@
 class TasksController < ApplicationController
-  before_action :login_check,:set_menu
+  before_action :login_check, :set_menu
 
   # 一覧
   def index
     @search_form = params.key?(:search_form) ? SearchForm.new(permitted_search_params) : SearchForm.new
-    @tasks = @search_form.exec_search(params[:page])
+    @tasks = @search_form.exec_search(params[:page], session[:user_id])
   end
 
   # 新規作成画面
@@ -15,7 +15,7 @@ class TasksController < ApplicationController
   # 新規作成実行
   def create
     @task = Task.new(permitted_params)
-    @task.user_id = 1 # 次ステップでログインユーザーIDが入ります。
+    @task.user_id = session[:user_id]
     if @task.save
       # 一覧へ
       redirect_to tasks_path, notice: t('messages.create.notice')
@@ -75,7 +75,7 @@ class TasksController < ApplicationController
     @menus = [
       Menu.new(t('.menu.btn_list'), tasks_path),
       Menu.new(t('.menu.btn_add'), new_task_path),
-      Menu.new(t('.menu.btn_logout') , users_logout_path )
+      Menu.new(t('.menu.btn_logout'), users_logout_path)
     ]
   end
 end
