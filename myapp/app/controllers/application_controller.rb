@@ -25,4 +25,13 @@ class ApplicationController < ActionController::Base
   def login_check
     redirect_to users_login_path, flash: { danger: t('messages.authenticate.unloginned') } unless logged_in?
   end
+
+  # menuをセットする
+  def set_menu
+    @menus = [
+      Menu.new(t('.menu.btn_list'), tasks_path),
+      Menu.new(t('.menu.btn_add'), new_task_path),
+      Menu.new(t('.menu.btn_logout'), users_logout_path)
+    ]
+  end
 end
