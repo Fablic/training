@@ -6,6 +6,7 @@ RSpec.describe 'Task Model(Post)', type: :model do
   let(:title) { 'title for test' }
   let(:description) { 'description for test' }
   let(:due_date) { '2021-12-01 15:00:00' }
+  let(:status) { 0 }
   let!(:task) { Task.new(title: title, description: description, due_date: due_date) }
 
   describe 'Title' do
@@ -61,7 +62,7 @@ RSpec.describe 'Task Model(Post)', type: :model do
   end
 
   describe 'due_date' do
-    context 'when due_date string' do
+    context 'when input string' do
       let(:due_date) { 'test' }
 
       it 'create faild' do
@@ -69,8 +70,25 @@ RSpec.describe 'Task Model(Post)', type: :model do
       end
     end
 
-    context 'when due_date empty' do
+    context 'when empty' do
       let(:due_date) { '' }
+
+      it 'create faild' do
+        expect(task).not_to be_valid
+      end
+    end
+  end
+
+  describe 'status' do
+    context 'when empty' do
+      let(:status) { ' ' }
+
+      it 'create succesfully' do
+        expect(task).to be_valid
+      end
+    end
+    context 'when string' do
+      let(:due_date) { 'test' }
 
       it 'create faild' do
         expect(task).not_to be_valid

@@ -31,7 +31,7 @@ RSpec.describe 'tasks', type: :system do
 
     context 'when push link to sort by due_date asc' do
       it 'sort by due_date asc, success' do
-        click_on '期日で並び替え' # 1回押すと昇順
+        click_on '期日' # 1回押すと昇順
         expect(find('tr:nth-child(2)')).to have_content I18n.l task_list.first.due_date
         expect(find('tr:nth-child(5)')).to have_content I18n.l task_list.last.due_date
       end
@@ -39,8 +39,8 @@ RSpec.describe 'tasks', type: :system do
 
     context 'when push link to sort by due_date desc' do
       it 'sort by due_date order by desc, success' do
-        click_on '期日で並び替え' # 1回押すと昇順
-        click_on '期日で並び替え' # 2回押すと降順
+        click_on '期日' # 1回押すと昇順
+        click_on '期日' # 2回押すと降順
         expect(find('tr:nth-child(2)')).to have_content I18n.l task_list.last.due_date
         expect(find('tr:nth-child(5)')).to have_content I18n.l task_list.first.due_date
       end
