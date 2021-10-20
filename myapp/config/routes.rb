@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
   root "tasks#index"
-  get 'users/login' => "users#new"
-  get 'users/logout' => "users#destroy"
-  post 'users/login' => "users#create"
+  get 'sessions/login' => "sessions#new"
+  get 'sessions/logout' => "sessions#destroy"
+  post 'sessions/login' => "sessions#create"
   resources :tasks,:only => [:index, :edit, :new, :create, :update,:destroy]
 
   # error page

@@ -1,7 +1,7 @@
-class UsersController < ApplicationController
+class SessionsController < ApplicationController
   # ログイン
   def new
-    render 'login'
+    render 'new'
   end
 
   # ログイン実行
@@ -13,14 +13,14 @@ class UsersController < ApplicationController
       redirect_to tasks_path
     else
       flash.now[:danger] = t 'messages.authenticate.failed'
-      render 'login'
+      render 'sessions/new'
     end
   end
 
   # ログアウト
   def destroy
     log_out if logged_in?
-    render 'logout'
+    render 'sessions/destroy'
   end
 
   private
