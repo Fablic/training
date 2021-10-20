@@ -9,7 +9,7 @@ RSpec.describe 'Task Model(Post)', type: :model do
   let!(:task) { Task.new(title: title, description: description, due_date: due_date) }
 
   describe 'Task' do
-    context 'valid' do
+    context 'when input is valid' do
       context 'when title less than or equal to 50 words' do
         let(:title) { 't' * 50 }
 
@@ -27,7 +27,7 @@ RSpec.describe 'Task Model(Post)', type: :model do
       end
     end
 
-    context 'invalid' do
+    context 'when input is invalid' do
       context 'when title empty' do
         let(:title) { '' }
 
