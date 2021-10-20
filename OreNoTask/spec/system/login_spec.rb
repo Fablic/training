@@ -21,5 +21,18 @@ describe 'ログイン機能', type: :system do
         expect(page).to have_content '最初のタスク'
       end
   	end
+
+  	context '誤った情報でログインしようとする' do
+      it 'ログインできない' do
+        visit tasks_path
+        expect(page).to have_content 'ログイン'
+
+        fill_in 'ユーザー名', with: 'NotTaroRakuten'
+        fill_in 'パスワード', with: 'rakuten'
+        click_button 'commit'
+
+        expect(page).to have_content 'ログインに失敗しました'
+      end
+  	end
   end
 end
