@@ -23,6 +23,9 @@ module Myapp
 
       # ファクトリファイルの置き場を変更
       g.factory_bot dir: 'test/factories'
+
+      config.time_zone = 'Tokyo'
+      config.active_record.default_timezone = :local
     end
   end
 end

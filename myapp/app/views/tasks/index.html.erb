@@ -1,14 +1,14 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Tasks</h1>
+<h1><%= Task.model_name.human %></h1>
 
 <table class="type06">
   <thead>
     <tr>
-      <th>Status</th>
-      <th>Name</th>
-      <th>started</th>
-      <th>finished</th>
+      <th><%= Task.human_attribute_name(:status) %></th>
+      <th><%= Task.human_attribute_name(:name) %></th>
+      <th><%= Task.human_attribute_name(:started_at) %></th>
+      <th><%= Task.human_attribute_name(:finished_at) %></th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -16,13 +16,13 @@
   <tbody>
     <% @tasks.each do |task| %>
       <tr>
-        <td><%= task.status %></td>
+        <td><%= t("enums.task.status.#{task.status}")  %></td>
         <td><%= task.name %></td>
-        <td><%= task.started_at  %></td>
-        <td><%= task.finished_at.in_time_zone("Tokyo") %></td>
-        <td><%= link_to 'Show', task %></td>
-        <td><%= link_to 'Edit', edit_task_path(task) %></td>
-        <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= task.started_at ? l(task.started_at.to_date): ''  %></td>
+        <td><%= l(task.finished_at.to_date) %></td>
+        <td><%= link_to t('actions.show'), task %></td>
+        <td><%= link_to t('actions.edit'), edit_task_path(task) %></td>
+        <td><%= link_to t('actions.destroy'), task, method: :delete, data: { confirm: t('messages.delete_confirm') } %></td>
 
       </tr>
     <% end %>
@@ -31,4 +31,4 @@
 
 <br>
 
-<%= link_to 'New Task', new_task_path %>
+<%= link_to "#{t('actions.new')} #{Task.model_name.human}", new_task_path %>

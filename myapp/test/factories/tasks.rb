@@ -9,6 +9,7 @@ FactoryBot.define do
     name { generate :task_seq }
     description { name.to_s }
     created_by { 1 }
+    status { :pending }
     finished_at { rand(1..100).days.from_now }
   end
 end

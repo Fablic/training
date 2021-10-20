@@ -1,36 +1,36 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>status:</strong>
+  <strong><%= Task.human_attribute_name(:status) %></strong>
   <%= @task.status %>
 </p>
 
 
 <p>
-  <strong>Name:</strong>
+  <strong><%= Task.human_attribute_name(:name) %></strong>
   <%= @task.name %>
 </p>
 
 <p>
-  <strong>description:</strong>
+  <strong><%= Task.human_attribute_name(:description) %></strong>
   <%= @task.description %>
 </p>
 
 <p>
-  <strong>created_by:</strong>
+  <strong><%= Task.human_attribute_name(:created_by) %></strong>
   <%= @task.created_by %>
 </p>
 
 <p>
-  <strong>started_at:</strong>
+  <strong><%= Task.human_attribute_name(:status) %></strong>
   <%= @task.started_at %>
 </p>
 
 <p>
-  <strong>finished_at:</strong>
+  <strong><%= Task.human_attribute_name(:status) %></strong>
   <%= @task.finished_at %>
 </p>
 
 
-<%= link_to 'Edit', edit_task_path(@task) %> |
-<%= link_to 'Back', tasks_path %>
+<%= link_to t('actions.edit'), edit_task_path(@task) %> |
+<%= link_to t('actions.back'), tasks_path %>

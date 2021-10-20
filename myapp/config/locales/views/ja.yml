@@ -1,0 +1,9 @@
+ja:
+  actions:
+    back: 戻る
+    new: 新規
+    show: 表示
+    edit: 編集
+    destroy: 削除
+  messages:
+      delete_confirm: 削除しますか？

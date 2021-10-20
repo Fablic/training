@@ -16,9 +16,9 @@
       <tr>
         <td><%= label.name %></td>
         <td><%= label.color %></td>
-        <td><%= link_to 'Show', label %></td>
-        <td><%= link_to 'Edit', edit_label_path(label) %></td>
-        <td><%= link_to 'Destroy', label, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to t('actions.show'), label %></td>
+        <td><%= link_to t('actions.edit'), edit_label_path(label) %></td>
+        <td><%= link_to t('actions.destroy'), label, method: :delete, data: { confirm: t('messages.delete_confirm') } %></td>
       </tr>
     <% end %>
   </tbody>
