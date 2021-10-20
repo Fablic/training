@@ -9,6 +9,7 @@ class Task < ApplicationRecord
   scope :search_status, -> (status) { where(status: status) if status.present? }
   scope :search_keyword, -> (keyword) { where(["(name like? OR description like?)", "%#{keyword}%", "%#{keyword}%"]) }
   scope :active, -> { where(deleted: 0) }
+  scope :user, -> (user_id) {where(user_id: user_id)}
 
   validates :name, { presence: true, length: { maximum: 50 } }
   validates :description, length: { maximum: 2000 }

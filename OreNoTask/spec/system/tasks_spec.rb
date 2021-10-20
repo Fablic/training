@@ -2,14 +2,17 @@
 
 require 'rails_helper'
 describe 'タスク管理機能', type: :system do
-  let(:user) { create(:user, name: 'TaroRakuten', password: 'rakuten' ) }
-  let(:rspec_session) { { user_id: user.id } }
+
+  let(:rspec_session) { { user_id: @user.id } }
+  let!(:user) { create(:user, name: 'HanakoRakuten', password: 'rakuten' ) }
+  let!(:hanako_task) { create(:task, name: '花子のタスク', description: '花子の説明文', status: 'not_started', start_at: '2021/12/02 10:00', due_date_at: '2021/12/03 11:00', created_at: '2021/07/01 09:00:01', user_id: user.id) }
 
   before(:all) do
-    create(:task, name: '最初のタスク', description: '説明文', status: 'not_started', start_at: '2021/09/01 10:00', due_date_at: '2021/09/02 11:00', created_at: '2021/07/01 09:00:04')
-    create(:task, name: '２番目のタスク', description: '説明文２', status: 'completed', start_at: '2021/08/02 10:00', due_date_at: '2021/08/03 11:00', created_at: '2021/07/01 09:00:03')
-    create(:task, name: '追加したタスク', description: '追加した説明文', status: 'wip', start_at: '2021/10/01 10:00', due_date_at: '2021/10/03 11:00', created_at: '2021/07/01 09:00:02')
-    create(:task, name: '最後のタスク', description: '最後の説明文', status: 'not_started', start_at: '2021/12/02 10:00', due_date_at: '2021/12/03 11:00', created_at: '2021/07/01 09:00:01')
+    @user = create(:user, name: 'TaroRakuten', password: 'rakuten' )
+    create(:task, name: '最初のタスク', description: '説明文', status: 'not_started', start_at: '2021/09/01 10:00', due_date_at: '2021/09/02 11:00', created_at: '2021/07/01 09:00:04', user_id: @user.id )
+    create(:task, name: '２番目のタスク', description: '説明文２', status: 'completed', start_at: '2021/08/02 10:00', due_date_at: '2021/08/03 11:00', created_at: '2021/07/01 09:00:03', user_id: @user.id)
+    create(:task, name: '追加したタスク', description: '追加した説明文', status: 'wip', start_at: '2021/10/01 10:00', due_date_at: '2021/10/03 11:00', created_at: '2021/07/01 09:00:02', user_id: @user.id)
+    create(:task, name: '最後のタスク', description: '最後の説明文', status: 'not_started', start_at: '2021/12/02 10:00', due_date_at: '2021/12/03 11:00', created_at: '2021/07/01 09:00:01', user_id: @user.id)
   end
 
   describe 'タスク一覧' do
@@ -27,6 +30,7 @@ describe 'タスク管理機能', type: :system do
         expect(find('li:nth-child(3)')).to have_content '2021年10月01日(金) 10:00 〜 2021年10月03日(日) 11:00'
         expect(find('li:nth-child(4)')).to have_content '最後のタスク'
         expect(find('li:nth-child(4)')).to have_content '2021年12月02日(木) 10:00 〜 2021年12月03日(金) 11:00'
+        expect(page).not_to have_content '花子のタスク'
       end
     end
 
@@ -176,11 +180,20 @@ describe 'タスク管理機能', type: :system do
           expect(page).to have_content '最後のタスク'
         end
       end
+
+      context '異なるユーザーのタスクは検索できない' do
+        it '検索結果がない' do
+          fill_in 'keyword', with: '花子のタスク'
+          click_button 'commit'
+
+          expect(page).not_to have_content '花子のタスク'
+        end
+      end
     end
 
     describe 'ページング機能' do
       before(:all) do
-        create_list(:task, 10)
+        create_list(:task, 10, user_id: @user.id)
       end
 
       context 'ページングが動作しているか' do
@@ -201,6 +214,14 @@ describe 'タスク管理機能', type: :system do
         expect(page).to have_content '最初のタスク'
         expect(page).to have_content '説明文'
         expect(page).to have_content '2021年09月01日(水) 10:00 〜 2021年09月02日(木) 11:00'
+      end
+    end
+
+    context '異なるユーザーのタスク' do
+      it '詳細情報が表示されず、一覧に戻る' do
+        visit task_path(hanako_task)
+
+        expect(page).to have_content 'タスク一覧'
       end
     end
   end
@@ -269,6 +290,14 @@ describe 'タスク管理機能', type: :system do
         expect(page).to have_content '2021年10月11日(月) 11:12 〜 2021年10月12日(火) 13:14'
       end
     end
+
+    context '異なるユーザーのタスク' do
+      it '編集画面が表示されず、一覧に戻る' do
+        visit edit_task_path(hanako_task)
+
+        expect(page).to have_content 'タスク一覧'
+      end
+    end
   end
 
   describe 'タスクの削除' do
@@ -289,6 +318,21 @@ describe 'タスク管理機能', type: :system do
         expect(find('li:nth-child(2)')).to have_content '2021年10月01日(金) 10:00 〜 2021年10月03日(日) 11:00'
         expect(find('li:nth-child(3)')).to have_content '最後のタスク'
         expect(find('li:nth-child(3)')).to have_content '2021年12月02日(木) 10:00 〜 2021年12月03日(金) 11:00'
+      end
+    end
+  end
+
+  describe 'アソシエーション' do
+    let(:rspec_session) { { user_id: user.id } }
+
+    context 'ユーザーが異なる' do
+      it '一覧が切り替わる' do
+        visit tasks_path
+        expect(page).to have_content '花子のタスク'
+        expect(page).not_to have_content '２番目のタスク'
+        expect(page).not_to have_content '最初のタスク'
+        expect(page).not_to have_content '追加したタスク'
+        expect(page).not_to have_content '最後のタスク'
       end
     end
   end

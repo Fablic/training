@@ -4,7 +4,7 @@ class TasksController < ApplicationController
   before_action :logged_in_user
 
   def index
-    @tasks = Task.active.order("#{sort_column} #{sort_direction}").page(params[:page]).per(10)
+    @tasks = Task.active.user(current_user.id).order("#{sort_column} #{sort_direction}").page(params[:page]).per(10)
   end
 
   def new
@@ -13,12 +13,16 @@ class TasksController < ApplicationController
   end
 
   def edit
-    @task = Task.active.find_by(id: params[:id])
+    @task = Task.active.user(current_user.id).find_by(id: params[:id])
     @submit_label = I18n.t('dictionary.words.save_to_update')
+
+    if @task == nil
+      redirect_to tasks_path
+    end
   end
 
   def update
-    @task = Task.find(params[:id])
+    @task = Task.user(current_user.id).find(params[:id])
 
     if @task.update(task_params)
       redirect_to tasks_path, notice: I18n.t('dictionary.messages.edited_task')
@@ -29,11 +33,17 @@ class TasksController < ApplicationController
 
   def show
     id = params[:id]
-    @task = Task.active.find_by(id: id)
+    @task = Task.active.user(current_user.id).find_by(id: id)
+
+    if @task == nil
+      redirect_to tasks_path
+    end
   end
 
   def create
-    @task = Task.new(task_params)
+    params = task_params
+    params['user_id'] = current_user.id
+    @task = Task.new(params)
 
     if @task.save
       redirect_to tasks_path, notice: I18n.t('dictionary.messages.created_task')
@@ -43,7 +53,7 @@ class TasksController < ApplicationController
   end
 
   def destroy
-    @task = Task.find(params[:id])
+    @task = Task.user(current_user.id).find(params[:id])
     flash[:notice] = if @task.update(deleted: 1)
                        I18n.t('dictionary.messages.deleted_task')
                      else
@@ -54,7 +64,7 @@ class TasksController < ApplicationController
   end
 
   def search
-    @tasks = Task.search(params[:keyword], params[:status]).order("#{sort_column} #{sort_direction}").page(params[:page]).per(10)
+    @tasks = Task.search(params[:keyword], params[:status]).user(current_user.id).order("#{sort_column} #{sort_direction}").page(params[:page]).per(10)
     @keyword = params[:keyword]
     @status = params[:status]
     render :index
