@@ -1,5 +1,5 @@
-$color-selected:#B2EBF2;
-$color-selected-font:#00838F;
+$color-selected-back:#B2EBF2;
+$color-selected:#00838F;
 $color-success:#00BCD4;
 $color-warning:#FF8F00;
 $color-error:#D32F2F;
@@ -23,8 +23,8 @@ body{
   border-left: 10px solid;
 
   &.notice{
-    background:$color-selected;
-    border-color: #00838F;
+    background:$color-selected-back;
+    border-color: $color-selected;
   }
   &.danger{
     background:$color-error-back;
@@ -59,7 +59,7 @@ body{
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
 }
 .pure-button-active{
-  background: $color-selected;
+  background: $color-selected-back;
 }
 
 .button-success {
@@ -89,18 +89,18 @@ body{
  */
 .pure-menu-link{
   &:hover{
-    background: $color-selected;
+    background: $color-selected-back;
   }
 }
 .pure-menu-selected{
   .pure-menu-link{
-    color:$color-selected-font;
+    color:$color-selected;
   }
 }
 .menu-app-name{
   font-weight: bold;
-  border-left: 5px solid $color-selected-font;
-  border-right: 5px solid $color-selected-font;
+  border-left: 5px solid $color-selected;
+  border-right: 5px solid $color-selected;
   padding: 0 10px;
   line-height: 30px;
 }
