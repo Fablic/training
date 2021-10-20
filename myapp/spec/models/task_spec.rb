@@ -8,56 +8,72 @@ RSpec.describe 'Task Model(Post)', type: :model do
   let(:due_date) { '2021-12-01 15:00:00' }
   let!(:task) { Task.new(title: title, description: description, due_date: due_date) }
 
-  describe 'Task' do
-    context 'when input is valid' do
-      context 'when title less than or equal to 50 words' do
-        let(:title) { 't' * 50 }
+  describe 'Title' do
+    context 'when less than or equal 50' do
+      let(:title) { 't' * 50 }
 
-        it 'create succesfully' do
-          expect(task).to be_valid
-        end
-      end
-
-      context 'when description less than or equal to 256 words' do
-        let(:descripton) { 'd' * 255 }
-
-        it 'create success' do
-          expect(task).to be_valid
-        end
+      it 'create succesfully' do
+        expect(task).to be_valid
       end
     end
 
-    context 'when input is invalid' do
-      context 'when title empty' do
-        let(:title) { '' }
+    context 'when over 50 words' do
+      let(:title) { 't' * 51 }
 
-        it 'create faild' do
-          expect(task).not_to be_valid
-        end
+      it 'create faild' do
+        expect(task).not_to be_valid
       end
+    end
 
-      context 'when title over 50 words' do
-        let(:title) { 't' * 51 }
+    context 'when empty' do
+      let(:title) { '' }
 
-        it 'create faild' do
-          expect(task).not_to be_valid
-        end
+      it 'create faild' do
+        expect(task).not_to be_valid
       end
+    end
+  end
 
-      context 'when description over 255 words' do
-        let(:description) { 'd' * 256 }
+  describe 'description' do
+    context 'when empty' do
+      let(:descripton) { '' }
 
-        it 'create faild' do
-          expect(task).not_to be_valid
-        end
+      it 'create success' do
+        expect(task).to be_valid
       end
+    end
 
-      context 'when due_date empty' do
-        let(:due_date) { '' }
+    context 'when less than or equal to 256' do
+      let(:descripton) { 'd' * 255 }
 
-        it 'create faild' do
-          expect(task).not_to be_valid
-        end
+      it 'create success' do
+        expect(task).to be_valid
+      end
+    end
+
+    context 'when description over 255' do
+      let(:description) { 'd' * 256 }
+
+      it 'create faild' do
+        expect(task).not_to be_valid
+      end
+    end
+  end
+
+  describe 'due_date' do
+    context 'when due_date string' do
+      let(:due_date) { 'test' }
+
+      it 'create faild' do
+        expect(task).not_to be_valid
+      end
+    end
+
+    context 'when due_date empty' do
+      let(:due_date) { '' }
+
+      it 'create faild' do
+        expect(task).not_to be_valid
       end
     end
   end
