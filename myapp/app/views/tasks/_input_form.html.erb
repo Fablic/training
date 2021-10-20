@@ -27,7 +27,7 @@
     <div>
       <%= form.label :status, t('tasks.status') %>
       <%= form.select :status, options_for_select(
-        Task.statuses.map { |key, _v| [t("activerecord.attributes.task.status.#{key}"), key] },
+        Task.statuses.map { |key, v| [t("activerecord.attributes.task.status.#{key}"), v] },
         selected: @task.status
       ) %>
     </div>

@@ -11,6 +11,5 @@ ja:
     show: 詳細表示
     created_at: 作成日時
     due_date: 期日
-    due_date_sort: 期日で並び替え
     status: ステータス
-    status_search: ステータスで検索
+    search: 検索
