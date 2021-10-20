@@ -1,34 +1,43 @@
-<h3> Tasks </h3>
+<h3 class="my-3 ml-3"> Tasks </h3>
+<div class="row">
+  <%= form_with url: root_path, method: :get, local: true do |f| %>
+    <div class="col-md-3  col-md-offset-5">
+    <%= f.search_field :title, value: @search_params[:title], placeholder: t('activerecord.attributes.task.title'), class: 'form-control' %>
+    </div>
+    <div class="col-md-2">
+    <%= f.collection_select :status, Task.statuses.values, :to_s, method(:translate_status),{ prompt: '' }, class:"form-control", include_blank: true, selected: @search_params[:status] %>
+    </div>
+    <div class="col-md-1">
+    <%= f.submit t('pages.tasks.search.title'), class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>
 
-<%= form_with url: root_path, method: :get, local: true do |f| %>
-  <h2><%= t('pages.tasks.search.title') %></h2>
-  <div>
-    <%= f.label t('activerecord.attributes.task.title') %>
-    <%= f.search_field :title, value: @search_params[:title] %>
-  </div>
-  <div>
-    <%= f.label t('activerecord.attributes.task.status') %>
-    <%= f.collection_select :status, Task.statuses.values, :to_s, method(:translate_status), include_blank: true, selected: @search_params[:status] %>
-  </div>
-  <%= f.submit t('pages.tasks.search.title') %>
-<% end %>
-
-<%= @tasks.count %> <%=t('pages.tasks.search.hit_count')%>
-<% if @tasks.any? %>
-    <table border='1'>
-      <thead>
-        <tr>
-          <th scope="col"><%= sort_order "id","No",@search_params %></th>
-          <th scope="col"><%= sort_order "title",t('activerecord.attributes.task.title'),@search_params %></th>
-          <th scope="col"><%= sort_order "priority",t('activerecord.attributes.task.priority'),@search_params %></th>
-          <th scope="col"><%= sort_order "status",t('activerecord.attributes.task.status'),@search_params %></th>
-          <th scope="col"><%= sort_order "due_date",t('activerecord.attributes.task.due_date'),@search_params %></th>
-          <th scope="col"><%= sort_order "created_at",t('activerecord.attributes.task.create_date'),@search_params %></th>
-        </tr>
-      </thead>
-      <tbody>
-        <%= render partial: "task", collection: @tasks  %>
-      </tbody>
-    </table>    
-  <%= paginate @tasks %>
-<% end %>
+<div class="col-md-12">
+  <% if @tasks.any? %>
+      <div class="row">
+          <div class="col-md-9">
+            <%= paginate @tasks, theme: 'twitter-bootstrap-4' %>
+          </div>          
+          <div class="col-md-3 h3">
+            <%= @tasks.count %> <%=t('pages.tasks.search.hit_count')%>
+          </div>          
+      </div>    
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col"><%= sort_order "id","No",@search_params %></th>
+            <th scope="col"><%= sort_order "title",t('activerecord.attributes.task.title'),@search_params %></th>
+            <th scope="col"><%= sort_order "priority",t('activerecord.attributes.task.priority'),@search_params %></th>
+            <th scope="col"><%= sort_order "status",t('activerecord.attributes.task.status'),@search_params %></th>
+            <th scope="col"><%= sort_order "due_date",t('activerecord.attributes.task.due_date'),@search_params %></th>
+            <th scope="col"><%= sort_order "created_at",t('activerecord.attributes.task.create_date'),@search_params %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <%= render partial: "task", collection: @tasks  %>
+        </tbody>
+      </table>
+    <%= paginate @tasks, theme: 'twitter-bootstrap-4' %>
+  <% end %>
+</div>

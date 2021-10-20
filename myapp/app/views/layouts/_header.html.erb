@@ -1,10 +1,8 @@
-<header>
+<header class="navbar navbar-fixed-top navbar-inverse">
   <div class="container">
     <%= link_to "MyApp", root_path, id: "logo" %>
-    <nav>
-      <li><%= link_to "Home",   '/' %></li>
+    <nav class="nav navbar-nav navbar-right">
       <li><%= link_to t('common.new'),   new_task_path %></li>
     </nav>
   </div>
 </header>
-<hr>

@@ -1,5 +1,5 @@
-<div>
-  <div >
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
     <%= form_with(model: @task, local: true) do |f| %>
         <%= render 'shared/error_messages', object: f.object %>
         <%= f.label :title %>
@@ -7,19 +7,19 @@
         <br />
   
         <%= f.label :detail %>
-        <%= f.text_field :detail, class: 'form-control' %>
+        <%= f.text_area :detail, class: 'form-control' %>
         <br />
   
         <%= f.label :priority %>
-        <%= f.collection_select :priority, Task.prioritys.values, :to_i, method(:translate_priority), selected:@task.priority %>
+        <%= f.collection_select :priority, Task.prioritys.values, :to_i, method(:translate_priority),{ prompt: '選択してください' }, class:"form-control", selected:@task.priority %>
         <br />
 
         <%= f.label :status %>
-        <%= f.collection_select :status, Task.statuses.values, :to_i, method(:translate_status), selected:@task.status %>
+        <%= f.collection_select :status, Task.statuses.values, :to_i, method(:translate_status),{ prompt: '選択してください' }, class:"form-control", selected:@task.status %>
         <br />
   
         <%= f.label :due_date %>
-        <%= f.text_field :due_date, class: 'form-control'%>
+        <%= f.date_field :due_date, class: 'form-control'%>
         <br />
       
         <%= f.file_field :image, accept: "image/jpeg,image/gif,image/png", class: 'form-control'  %>

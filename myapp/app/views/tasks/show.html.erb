@@ -1,25 +1,49 @@
-<h3><%= @task.title %></h3>
-<table border="1">
+<table class="table">
   <thead>
     <tr>
-      <th scope="col">Detail</th>
+      <th scope="col"><%= t('activerecord.attributes.task.title') %></th>
       <th scope="col"><%= t('activerecord.attributes.task.priority') %></th>
       <th scope="col"><%= t('activerecord.attributes.task.status') %></th>
       <th scope="col"><%= t('activerecord.attributes.task.due_date') %></th>
-      <th scope="col"><%= t('activerecord.attributes.task.image') %></th>
       <th scope="col"></th>
       <th scope="col"></th>
     </tr>
   </thead>
   <tbody>
   <tr >
-    <td><%= @task.detail %></td>
-    <td><%= Task::prioritys.invert[@task.priority] %></td>
-    <td><%= Task::statuses.invert[@task.status] %></td>
+    <td><%= @task.title%></td>
+    <td><%= translate_priority @task.priority %></td>
+    <td><%= translate_status @task.status %></td>
     <td><%= l @task.due_date %></td>
-    <td><%= image_tag @task.display_image if @task.image.attached? %></td>
     <td><%= link_to t('common.edit'),   edit_task_path(@task) %></td>
     <td><%= link_to t('common.delete'), @task, method: :delete, data: { confirm: t('pages.tasks.confirm_deletion') } %></td>
   </tr>
   </tbody>
 </table>    
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col"><%= t('activerecord.attributes.task.detail') %></th>
+    </tr>
+  </thead>
+  <tbody>
+  <tr >
+    <td><%= simple_format(h(@task.detail)) %></td>
+  </tr>
+  </tbody>
+</table>
+
+<% if @task.image.attached? %>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col"><%= t('activerecord.attributes.task.image') %></th>
+      </tr>
+    </thead>
+    <tbody>
+    <tr >
+      <td><%= image_tag @task.display_image %></td>
+    </tr>
+    </tbody>
+  </table>
+<% end %>

@@ -1,6 +1,6 @@
 <% if object.errors.any? %>
-  <div>
-    <div>
+  <div id="error_explanation">
+    <div class="alert alert-danger">
       <%= I18n.t("form.error",smtg: object.errors.count)%>
     </div>
     <ul>

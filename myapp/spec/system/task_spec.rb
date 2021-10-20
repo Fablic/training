@@ -118,17 +118,17 @@ RSpec.describe TasksController, type: :system do
     context 'Click on the pagenation link.' do
       it 'Displayed.' do
         expect(page).to have_content(tasks.first.title)
-        click_link 'Next'
+        click_link 'Next', match: :first
         expect(page).not_to have_content(tasks.first.title)
-        click_link 'Previous'
+        click_link 'Previous', match: :first
         expect(page).to have_content(tasks.first.title)
-        click_link 'Last'
+        click_link 'Last', match: :first
         expect(page).not_to have_content(tasks.first.title)
-        click_link 'First'
+        click_link 'First', match: :first
         expect(page).to have_content(tasks.first.title)
-        click_link '2'
+        click_link '2', match: :first
         expect(page).not_to have_content(tasks.first.title)
-        click_link '1'
+        click_link '1', match: :first
         expect(page).to have_content(tasks.first.title)
       end
     end
