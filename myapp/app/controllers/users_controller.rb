@@ -9,6 +9,7 @@ class UsersController < ApplicationController
     user = User.find_by(mail_address: params[:session][:mail_address])
     if authenticate(user)
       log_in(user)
+      params[:session][:remember_me] == '1' ? remember(user) : forget(user)
       redirect_to tasks_path
     else
       flash.now[:danger] = t 'messages.authenticate.failed'
@@ -18,7 +19,7 @@ class UsersController < ApplicationController
 
   # ログアウト
   def destroy
-    log_out
+    log_out if logged_in?
     render 'logout'
   end
 

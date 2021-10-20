@@ -14,6 +14,10 @@
       <%= f.label :password ,class:'pure-input-1-2' %>
       <%= f.password_field :password ,required:true ,class:'pure-input-1-2' %>
     </div>
+    <div class="pure-control-group">
+      <label id="remember-me-checkbox"><%= f.check_box :remember_me %>
+        ログイン状態を記憶する</label>
+    </div>
     <div class="pure-controls">
       <%= f.submit 'login' ,class:'pure-button button-success' %>
     </div>
