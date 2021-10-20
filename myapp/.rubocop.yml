@@ -8,6 +8,9 @@ Metrics/BlockLength:
 RSpec/MultipleExpectations:
   Max: 2
 
+RSpec/NestedGroups:
+  Max: 5
+
 # https://www.rubydoc.info/gems/rubocop-rspec/RuboCop/Cop/RSpec/FilePath
 # RSpec::FilePath: 
 #   SpecSuffixOnly: true
