@@ -15,14 +15,4 @@ FactoryBot.define do
       sequence(:created_at) { Time.local(2021, 1, 1, 0, 0, 0) }
     end
   end
-
-  factory :user do
-    sequence(:name) { |n| "名前#{n}" }
-    sequence(:mail_address) { |n| "test-#{n}@sample.mail.com" }
-    password_digest { 'test' }
-
-    factory :user1 do
-      id { 1 }
-    end
-  end
 end

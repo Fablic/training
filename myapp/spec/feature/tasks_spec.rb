@@ -10,17 +10,23 @@ RSpec.feature Task, type: :feature, js: true do
   let(:task_list_dom) { all('.task-list-table tbody tr') }
   test_loop_num = 3
 
-  # index
+  background do
+    # 各テスト前にログインしておく
+    @test_user = FactoryBot.create(:user)
+    visit sessions_login_path
+    fill_in('Mail address', with: @test_user.mail_address)
+    fill_in('Password', with: 'test')
+    click_button('login')
+  end
+
   feature '一覧画面' do
     background do
       FactoryBot.rewind_sequences
     end
 
-    # 一覧画面のテスト
     feature 'sort確認' do
       background do
-        # n時間ずらしの生成日でタスク生成
-        FactoryBot.create_list(:task_seq_created_at, test_loop_num)
+        FactoryBot.create_list(:task_seq_created_at, test_loop_num, user: @test_user)
       end
       context '作成日昇順（初期表示）' do
         scenario 'ソートされる' do
@@ -44,8 +50,7 @@ RSpec.feature Task, type: :feature, js: true do
     # index-sort
     feature '期限でソート' do
       background do
-        # データ作成　期限日ずらしで生成
-        FactoryBot.create_list(:task_seq_due_date, test_loop_num)
+        FactoryBot.create_list(:task_seq_due_date, test_loop_num, user: @test_user)
       end
 
       # テスト
@@ -69,11 +74,8 @@ RSpec.feature Task, type: :feature, js: true do
     end
   end
 
-  # task-C
   feature '新規登録画面' do
-    let!(:user1) { FactoryBot.create(:user1) }
     background do
-      # タスク新規登録画面へ遷移
       visit new_task_path
     end
     context 'フォームの入力値が正常の場合' do
@@ -81,16 +83,11 @@ RSpec.feature Task, type: :feature, js: true do
         input_name = 'ガス閉栓手続き'
         input_description = '京葉ガスに連絡・日付確定'
 
-        # フィールドに入力
         fill_in label_name_task, with: input_name
         fill_in label_name_detail, with: input_description
-        # submitをクリックする
         click_button button_name_regist
-        # index_pathへ遷移することを期待する
         expect(current_path).to eq tasks_path
-        # メッセージが出ていることを確認
         expect(page).to have_content 'タスクを登録しました'
-        # 登録したタスクが表示されていることを確認
         expect(page).to have_content input_name
       end
     end
@@ -100,30 +97,24 @@ RSpec.feature Task, type: :feature, js: true do
         # 入力
         fill_in label_name_task, with: '電気の手続き'
         fill_in label_name_detail, with: nil
-        # ボタンをクリック
         click_button button_name_regist
-        # 完了メッセージが出ていることを確認
         expect(page).to have_content 'タスクを登録しました'
       end
     end
     context '入力閾値チェック' do
       context 'タスク名256オーバー' do
         scenario 'タスク登録失敗する' do
-          # 入力
           fill_in label_name_task, with: SecureRandom.alphanumeric(257)
           fill_in label_name_detail, with: 'test'
           click_button button_name_regist
-          # エラーメッセージが出ていることを確認
           expect(page).to have_content 'タスク名は256文字以内で入力してください'
         end
       end
       context '詳細1024オーバー' do
         scenario 'タスク登録失敗する' do
-          # 入力
           fill_in label_name_task, with: 'test'
           fill_in label_name_detail, with: SecureRandom.alphanumeric(1025)
           click_button button_name_regist
-          # エラーメッセージが出ていることを確認
           expect(page).to have_content '詳細は1024文字以内で入力してください'
         end
       end
@@ -133,7 +124,7 @@ RSpec.feature Task, type: :feature, js: true do
   # 更新
   feature '更新画面' do
     scenario '成功する' do
-      task1 = FactoryBot.create(:task)
+      task1 = FactoryBot.create(:task,user:@test_user)
       input_new_task_name = 'タスク名更新'
       input_new_task_status = '完了'
       visit edit_task_path(id: task1.id)
@@ -149,13 +140,14 @@ RSpec.feature Task, type: :feature, js: true do
   # 削除挙動確認
   feature '一覧から削除実行' do
     background do
-      FactoryBot.create(:task)
+      FactoryBot.create(:task, user:@test_user)
+      FactoryBot.create_list(:task_seq_created_at, test_loop_num, user: @test_user)
     end
     scenario '削除成功する' do
       visit tasks_path
+      save_and_open_page
       page.first('.del_button').click
       expect do
-        # OKボタンを押す
         page.accept_confirm '削除しますか？'
         expect(page).to have_content 'タスクを削除しました。'
       end.to change { Task.count }.by(-1)
