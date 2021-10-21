@@ -6,10 +6,13 @@ Metrics/BlockLength:
     - 'spec/**/*'
 # https://www.rubydoc.info/gems/rubocop-rspec/RuboCop/Cop/RSpec/MultipleExpectations
 RSpec/MultipleExpectations:
-  Max: 2
+  Max: 4
 
 RSpec/NestedGroups:
   Max: 5
+
+RSpec/MultipleMemoizedHelpers:
+  Max: 6
 
 # https://www.rubydoc.info/gems/rubocop-rspec/RuboCop/Cop/RSpec/FilePath
 # RSpec::FilePath: 

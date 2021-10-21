@@ -13,3 +13,6 @@ ja:
     due_date: 期日
     status: ステータス
     search: 検索
+    status_not_started: 未着手
+    status_in_progress: 進行中
+    status_completed: 完了

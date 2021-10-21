@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'tasks', type: :system do
-  describe 'Index Page' do
+  describe '#index' do
     let!(:task_list) { create_list(:task, 4) }
 
     before { visit root_path }
@@ -29,20 +29,22 @@ RSpec.describe 'tasks', type: :system do
       end
     end
 
-    context 'when push link to sort by due_date asc' do
-      it 'sort by due_date asc, success' do
-        click_on '期日' # 1回押すと昇順
-        expect(find('tr:nth-child(2)')).to have_content I18n.l task_list.first.due_date
-        expect(find('tr:nth-child(5)')).to have_content I18n.l task_list.last.due_date
+    context 'when sort with due_date' do
+      context 'when order asc' do
+        it 'success' do
+          click_on '期日' # 1回押すと昇順
+          expect(find('tr:nth-child(2)')).to have_content I18n.l task_list.first.due_date
+          expect(find('tr:nth-child(5)')).to have_content I18n.l task_list.last.due_date
+        end
       end
-    end
 
-    context 'when push link to sort by due_date desc' do
-      it 'sort by due_date order by desc, success' do
-        click_on '期日' # 1回押すと昇順
-        click_on '期日' # 2回押すと降順
-        expect(find('tr:nth-child(2)')).to have_content I18n.l task_list.last.due_date
-        expect(find('tr:nth-child(5)')).to have_content I18n.l task_list.first.due_date
+      context 'when order desc' do
+        it 'success' do
+          click_on '期日' # 1回押すと昇順
+          click_on '期日' # 2回押すと降順
+          expect(find('tr:nth-child(2)')).to have_content I18n.l task_list.last.due_date
+          expect(find('tr:nth-child(5)')).to have_content I18n.l task_list.first.due_date
+        end
       end
     end
 
@@ -68,7 +70,7 @@ RSpec.describe 'tasks', type: :system do
     end
   end
 
-  describe 'Create Page' do
+  describe '#create' do
     before { visit new_task_path }
 
     context 'when create task' do
@@ -90,7 +92,7 @@ RSpec.describe 'tasks', type: :system do
     end
   end
 
-  describe 'Edit Page' do
+  describe '#edit' do
     let!(:task) { create(:task) }
 
     before { visit edit_task_path(task.id) }
@@ -120,7 +122,7 @@ RSpec.describe 'tasks', type: :system do
     end
   end
 
-  describe 'Detail Page' do
+  describe '#show' do
     let(:task) { create(:task) }
 
     before { visit task_path(task.id) }
@@ -154,6 +156,54 @@ RSpec.describe 'tasks', type: :system do
       it 'move to edit page, success' do
         click_on '編集'
         expect(page).to have_content 'Tasks#edit'
+      end
+    end
+  end
+
+  describe 'search with status' do
+    before { visit root_path }
+
+    let!(:task_not_started) { create(:task, status: 0) }
+    let!(:task_in_progress) { create(:task, status: 1) }
+    let!(:task_completed)   { create(:task, status: 2) }
+
+    context 'when search by not_selected' do
+      it 'search by not_selected, success' do
+        select 'Select status', from: 'q_status_eq'
+        click_on '検索'
+        expect(find('tr:nth-child(4)')).to have_content '未着手'
+        expect(find('tr:nth-child(3)')).to have_content '進行中'
+        expect(find('tr:nth-child(2)')).to have_content '完了'
+      end
+    end
+
+    context 'when search by not_satrted' do
+      it 'search by not_satrted, success' do
+        select '未着手', from: 'q_status_eq'
+        click_on '検索'
+        expect(find('tr:nth-child(2)')).to have_content '未着手'
+        expect(find('tr:nth-child(2)')).not_to have_content '進行中'
+        expect(find('tr:nth-child(2)')).not_to have_content '完了'
+      end
+    end
+
+    context 'when search by in_progress' do
+      it 'search by in_progress, success' do
+        select '進行中', from: 'q_status_eq'
+        click_on '検索'
+        expect(find('tr:nth-child(2)')).not_to have_content '未着手'
+        expect(find('tr:nth-child(2)')).to have_content '進行中'
+        expect(find('tr:nth-child(2)')).not_to have_content '完了'
+      end
+    end
+
+    context 'when search by completed' do
+      it 'search by completed, success' do
+        select '完了', from: 'q_status_eq'
+        click_on '検索'
+        expect(find('tr:nth-child(2)')).not_to have_content '未着手'
+        expect(find('tr:nth-child(2)')).not_to have_content '進行中'
+        expect(find('tr:nth-child(2)')).to have_content '完了'
       end
     end
   end
