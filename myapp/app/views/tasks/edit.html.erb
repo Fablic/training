@@ -1,8 +1,8 @@
-<h1>Update task</h1>
+<h1><%= t ".title" %></h1>
 
 <%= form_for @task do |t| %>
    <%= render "form", t: t %>
    <%= t.submit %> 
 <% end %>
 
-<%= link_to "go to Task's list", root_path %>
+<%= link_to t('tasks.common.move_task_list'), root_path %>

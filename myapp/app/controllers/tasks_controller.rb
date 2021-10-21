@@ -21,9 +21,9 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(post_params)
     flash[:notice] = if @task.save
-                       'The task registration is complete.'
+                       t('tasks.flash.complete_task_registration')
                      else
-                       'The task update is error.'
+                       t('tasks.flash.error_task_registration')
                      end
     redirect_to root_path
   end
@@ -31,9 +31,9 @@ class TasksController < ApplicationController
   def update
     @task = Task.find(params[:id])
     flash[:notice] = if @task.update(post_params)
-                       'The task update is complete.'
+                       t('tasks.flash.complete_task_edit')
                      else
-                       'The task update is error.'
+                       t('tasks.flash.error_task_edit')
                      end
     redirect_to root_path
   end
@@ -41,9 +41,9 @@ class TasksController < ApplicationController
   def destroy
     @task = Task.find(params[:id])
     flash[:notice] = if @task.destroy
-                       'The task delete is complete.'
+                       t('tasks.flash.complete_task_destroy')
                      else
-                       'The task delete is error.'
+                       t('tasks.flash.error_task_destroy')
                      end
     redirect_to root_path
   end
