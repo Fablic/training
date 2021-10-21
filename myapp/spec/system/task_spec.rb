@@ -38,12 +38,14 @@ RSpec.describe TasksController, type: :system do
       end
     end
 
-    it 'Check the sort order due_date' do
-      visit root_path(direction: 'asc', sort: 'due_date')
-      columns = page.all('.sort_due_date')
-      expect(columns.count).to be > 0
-      columns.each.with_index(1) do |row, index|
-        expect(row.text).to eq I18n.l(tasks[task_count - index].due_date)
+    context 'Is it sorted by due_date?' do
+      it 'Displayed.' do
+        visit root_path(direction: 'asc', sort: 'due_date')
+        columns = page.all('.sort_due_date')
+        expect(columns.count).to be > 0
+        columns.each.with_index(1) do |row, index|
+          expect(row.text).to eq I18n.l(tasks[task_count - index].due_date)
+        end
       end
     end
   end
