@@ -3,10 +3,8 @@ class TasksController < ApplicationController
 
   # 一覧
   def index
-    p "1"
     @search_form = params.key?(:search_form) ? SearchForm.new(permitted_search_params) : SearchForm.new
     @tasks = login_user.searched_tasks(@search_form, params[:page])
-    p "1-1"
   end
 
   # 新規作成画面
