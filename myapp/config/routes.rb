@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
-  root  'tasks#index'
+  root 'tasks#index'
   resources :tasks
-  #resolve('Tasks') { [:tasks] }
+  # resolve('Tasks') { [:tasks] }
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
