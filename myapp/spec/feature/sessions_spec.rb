@@ -6,7 +6,7 @@ RSpec.feature 'sessions', type: :feature do
       @test_user = FactoryBot.create(:user)
     end
     context '正しいメール・パスワードの組み合わせ' do
-      scenario 'ルートページへ遷移する' do
+      scenario 'タスク一覧へ遷移する' do
         exec_login(@test_user.mail_address, @test_user.password)
         expect(page).to have_current_path(tasks_path)
       end
