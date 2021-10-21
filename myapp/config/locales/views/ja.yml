@@ -2,8 +2,10 @@ ja:
   actions:
     back: 戻る
     new: 新規
-    show: 表示
+    show: 詳細
     edit: 編集
     destroy: 削除
+    list: 一覧
   messages:
       delete_confirm: 削除しますか？
+      

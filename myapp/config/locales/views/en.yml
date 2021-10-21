@@ -1,0 +1,10 @@
+ja:
+  actions:
+    back: Back
+    new: New
+    show: Show
+    edit: Edit
+    destroy: Delete
+  messages:
+      delete_confirm: will be deleted. OK?
+      

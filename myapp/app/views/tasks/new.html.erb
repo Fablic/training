@@ -1,4 +1,4 @@
-<h1>New Task</h1>
+<h1><%=t('actions.new') + Task.model_name.human() %></h1>
 
 <%= render 'form', task: @task %>
 

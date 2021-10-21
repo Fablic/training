@@ -1,8 +1,8 @@
 <p id="notice"><%= notice %></p>
 
-<h1><%= Task.model_name.human %></h1>
+<h1><%= Task.model_name.human + t('actions.list')%></h1>
 
-<table class="type06">
+<table class="type06" id="task_list">
   <thead>
     <tr>
       <th><%= Task.human_attribute_name(:status) %></th>

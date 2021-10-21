@@ -4,12 +4,14 @@ FactoryBot.define do
   sequence :task_seq do |i|
     "task_#{i}"
   end
-
+  sequence :desc_seq do |i|
+    "description_#{i}"
+  end
   factory :task, class: Task do
     name { generate :task_seq }
-    description { name.to_s }
-    created_by { 1 }
+    description { generate :desc_seq }
     status { :pending }
+    created_by { 1 }
     finished_at { rand(1..100).days.from_now }
   end
 end

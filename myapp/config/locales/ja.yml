@@ -20,3 +20,7 @@ ja:
         long: "%Y/%m/%d %H:%M"
         short: "%m/%d %H:%M"
       pm: 午後
+
+  earlier_date_error: "を%{start}より前にすることはできません" 
+  today: 今日
+  

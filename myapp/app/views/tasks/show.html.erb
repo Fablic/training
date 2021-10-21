@@ -1,8 +1,9 @@
 <p id="notice"><%= notice %></p>
 
+<h1><%=t('actions.show') + Task.model_name.human() %></h1>
 <p>
   <strong><%= Task.human_attribute_name(:status) %></strong>
-  <%= @task.status %>
+  <%= t("enums.task.status.#{@task.status}") %>
 </p>
 
 

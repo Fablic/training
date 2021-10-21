@@ -30,4 +30,5 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  earlier_date_error: "${end} can't be earlier then ${start}" 
+  today: today
