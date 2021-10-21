@@ -2,10 +2,12 @@ class User < ApplicationRecord
   attr_accessor :remember_token
 
   has_many :tasks
+  has_many :labels
   has_secure_password
 
   def searched_tasks(search_form, page)
-    return [] unless search_form.is_a?(SearchForm) and search_form&.valid?
+    return [] unless search_form.is_a?(SearchForm) && search_form&.valid?
+
     searched_tasks = tasks.order("tasks.#{search_form.sort_value} #{search_form.order_value}")
     searched_tasks.where!('name LIKE ?', "%#{search_form.name}%") if search_form.name.present?
     searched_tasks.where!(status: search_form.status) if search_form.status.present?
@@ -32,6 +34,7 @@ class User < ApplicationRecord
 
   def authenticated?(remember_token)
     return false if remember_digest.nil?
+
     BCrypt::Password.new(remember_digest).is_password?(remember_token)
   end
 

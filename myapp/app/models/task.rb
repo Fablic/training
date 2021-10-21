@@ -4,4 +4,5 @@ class Task < ApplicationRecord
   validates :status, presence: true
   enum status: { new: 0, progress: 1, complete: 2 }, _prefix: :status
   belongs_to :user
+  has_many :task_labels
 end
