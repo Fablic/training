@@ -11,7 +11,7 @@ function execSort(column){
     const sortSelector = $("input[name='search_form[sort]']");
     const orderSelector = $("input[name='search_form[order]']");
     const beforeSortValue = sortSelector.val();
-    orderSelector.val(orderSelector.val() == "asc" && beforeSortValue == column ? "desc" : "asc")
+    orderSelector.val(orderSelector.val() == "asc" && beforeSortValue == column ? "desc" : "asc");
     sortSelector.val(column);
     $("#search_form").submit();
 }
