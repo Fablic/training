@@ -11,12 +11,8 @@ RSpec.feature Task, type: :feature, js: true do
   test_loop_num = 3
 
   background do
-    # 各テスト前にログインしておく
     @test_user = FactoryBot.create(:user)
-    visit sessions_login_path
-    fill_in('Mail address', with: @test_user.mail_address)
-    fill_in('Password', with: 'test')
-    click_button('login')
+    valid_login(@test_user)
   end
 
   feature '一覧画面' do
@@ -124,7 +120,7 @@ RSpec.feature Task, type: :feature, js: true do
   # 更新
   feature '更新画面' do
     scenario '成功する' do
-      task1 = FactoryBot.create(:task,user:@test_user)
+      task1 = FactoryBot.create(:task, user: @test_user)
       input_new_task_name = 'タスク名更新'
       input_new_task_status = '完了'
       visit edit_task_path(id: task1.id)
@@ -140,12 +136,11 @@ RSpec.feature Task, type: :feature, js: true do
   # 削除挙動確認
   feature '一覧から削除実行' do
     background do
-      FactoryBot.create(:task, user:@test_user)
+      FactoryBot.create(:task, user: @test_user)
       FactoryBot.create_list(:task_seq_created_at, test_loop_num, user: @test_user)
     end
     scenario '削除成功する' do
       visit tasks_path
-      save_and_open_page
       page.first('.del_button').click
       expect do
         page.accept_confirm '削除しますか？'
