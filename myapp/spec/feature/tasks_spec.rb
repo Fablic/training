@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.feature Task, type: :feature, js: true do
-  # 画面ラベル名
   let(:label_name_task) { 'タスク名' }
   let(:label_name_detail) { '詳細' }
   let(:label_name_status) { '状態' }
@@ -49,7 +48,6 @@ RSpec.feature Task, type: :feature, js: true do
         FactoryBot.create_list(:task_seq_due_date, test_loop_num, user: @test_user)
       end
 
-      # テスト
       context '終了期限昇順' do
         scenario 'ソートされる' do
           visit tasks_path(search_form: { sort: 'due_date', order: 'asc' })
@@ -117,7 +115,6 @@ RSpec.feature Task, type: :feature, js: true do
     end
   end
 
-  # 更新
   feature '更新画面' do
     scenario '成功する' do
       task1 = FactoryBot.create(:task, user: @test_user)
@@ -133,7 +130,6 @@ RSpec.feature Task, type: :feature, js: true do
     end
   end
 
-  # 削除挙動確認
   feature '一覧から削除実行' do
     background do
       FactoryBot.create(:task, user: @test_user)
