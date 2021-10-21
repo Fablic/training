@@ -7,7 +7,7 @@
 <% end %>
 
 <p>
-<%= link_to "Create New Task", new_task_path %> 
+<%= link_to "Create New Task", new_task_path, id: 'click_new'  %> 
 </p>
 
 <table class='table table-list' border=1>
@@ -17,6 +17,7 @@
       <th>タスク名</th>
       <th>ステータス</th>
       <th>ラベル</th>
+      <th>優先度</th>
       <th>開始日時</th>
       <th>終了日時</th>
       <th colspan="3"></th>
@@ -29,12 +30,13 @@
       <td><%= task.task_name %></td>
       <td><%= task.status %></td>
       <td><%= task.label %></td>
+      <td><%= task.priority %></td>
       <td><%= task.start_date %></td>
       <td><%= task.end_date %></td>
-      <td><%= link_to 'Show', task_path(task), method: :get %></td>
-      <td><%= link_to 'Edit', edit_task_path(task) %></td>
+      <td><%= link_to 'Show', task_path(task), method: :get, id: 'click_show' %></td>
+      <td><%= link_to 'Edit', edit_task_path(task), id: 'click_edit' %></td>
       <td><%= link_to 'Destroy', task_path(task), method: :delete, data: { confirm: 'Are you sure you want to delete it?
-      ' } %></td>
+      ' } , id: 'click_destroy' %></td>
     </tr>
     <% end %>
   </tbody>

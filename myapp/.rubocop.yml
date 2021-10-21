@@ -1,3 +1,6 @@
 inherit_gem:
   fablicop:
     - "config/.base_rubocop.yml"
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
