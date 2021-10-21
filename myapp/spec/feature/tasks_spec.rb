@@ -104,10 +104,10 @@ RSpec.feature Task, type: :feature, js: true do
     context '入力閾値チェック' do
       context 'タスク名256オーバー' do
         scenario 'タスク登録失敗する' do
-          fill_in label_name_task, with: SecureRandom.alphanumeric(257)
+          fill_in label_name_task, with: SecureRandom.alphanumeric(192)
           fill_in label_name_detail, with: 'test'
           click_button button_name_regist
-          expect(page).to have_content 'タスク名は256文字以内で入力してください'
+          expect(page).to have_content 'タスク名は191文字以内で入力してください'
         end
       end
       context '詳細1024オーバー' do
