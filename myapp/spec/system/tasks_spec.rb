@@ -1,86 +1,186 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe 'Tasks', type: :system do
-  let!(:task_list) { create_list(:task, 4) }
+RSpec.describe 'tasks', type: :system do
+  describe '#index' do
+    let!(:task_list) { create_list(:task, 4) }
 
-  describe 'Index Page' do
     before { visit root_path }
 
-    it 'list view' do
-      expect(page).to have_title 'Taskun'
-      expect(page).to have_content(task_list.last.title)
+    context 'when open index page' do
+      context 'with displayed title' do
+        it 'display success' do
+          expect(page).to have_content task_list.first.title
+        end
+      end
+
+      context 'with displayed created_at' do
+        it 'display success' do
+          expect(page).to have_content I18n.l task_list.first.created_at
+        end
+      end
+
+      context 'with displayed due_date' do
+        it 'display success' do
+          expect(page).to have_content I18n.l task_list.first.due_date
+        end
+      end
     end
 
-    it 'move to create page' do
-      click_on '作成'
-      expect(page).to have_content 'Tasks#new'
+    context 'when click create button' do
+      it 'move success' do
+        click_on '作成'
+        expect(page).to have_content 'Tasks#new'
+      end
     end
 
-    it 'sort by created_at order by desc' do
-      expect(find('tr:nth-child(2)')).to have_content I18n.l task_list.last.created_at
-      expect(find('tr:nth-child(3)')).to have_content I18n.l task_list[2].created_at
-      expect(find('tr:nth-child(4)')).to have_content I18n.l task_list[1].created_at
-      expect(find('tr:nth-child(5)')).to have_content I18n.l task_list.first.created_at
+    context 'when click edit button' do
+      it 'move success' do
+        all('table tr')[1].click_on '編集'
+        expect(page).to have_content 'Tasks#edit'
+      end
     end
 
-    it 'move to edit page' do
-      all('table tr')[1].click_on '編集'
-      expect(page).to have_content 'Tasks#edit'
-    end
-
-    it 'move to detail page' do
-      find('tr:nth-child(2)').click_on task_list.last.title
-      expect(page).to have_content 'Tasks#detail'
+    context 'when click detail button' do
+      it 'move success' do
+        find('tr:nth-child(2)').click_on task_list.last.title
+        expect(page).to have_content 'Tasks#detail'
+      end
     end
   end
 
-  describe 'Create Page' do
+  describe '#create' do
     before { visit new_task_path }
 
-    it 'create task' do
-      fill_in 'task[title]',       with: task_list.last.title
-      fill_in 'task[description]', with: task_list.last.description
-      click_button '送信'
-      expect(page).to have_content 'Successfully created'
-      expect(page).to have_content 'Tasks#list'
+    context 'when create task' do
+      # https://github.com/faker-ruby/faker#usage
+      it 'create success' do
+        fill_in 'task[title]',       with: 'new task'
+        fill_in 'task[description]', with: 'new description'
+        fill_in 'task[due_date]',    with: Faker::Time.forward(days: 23, period: :morning)
+        click_button '送信'
+        expect(page).to have_content 'Successfully created'
+      end
     end
 
-    it 'back to index' do
-      click_on class: 'button-back'
-      expect(page).to have_content 'Tasks#list'
-    end
-  end
-
-  describe 'Edit Page' do
-    before { visit edit_task_path(task_list.first.id) }
-
-    let(:params) { { title: 'title for edit', description: 'description for edit' } }
-
-    it 'list task detail' do
-      expect(page).to have_field '件名', with: task_list.first.title
-      expect(page).to have_field '詳細', with: task_list.first.description
-    end
-
-    it 'edit and resister task' do
-      fill_in 'task[title]',       with: params[:title]
-      fill_in 'task[description]', with: params[:description]
-      click_button '送信'
-      expect(page).to have_content 'Successfully updated'
-      expect(page).to have_content 'Tasks#list'
+    context 'when click back button' do
+      it 'back to index page, success' do
+        click_on '戻る'
+        expect(page).to have_content 'Tasks#list'
+      end
     end
   end
 
-  describe 'Detail Page' do
-    before { visit task_path(task_list.first.id) }
+  describe '#edit' do
+    let!(:task) { create(:task) }
 
-    it 'list task details' do
-      expect(page).to have_content task_list.first.title
-      expect(page).to have_content task_list.first.description
+    before { visit edit_task_path(task.id) }
+
+    context 'when open edit page' do
+      context 'with displayed title' do
+        it 'display success' do
+          expect(page).to have_field '件名', with: task.title
+        end
+      end
+
+      context 'with displayed created_at' do
+        it 'display success' do
+          expect(page).to have_field '詳細', with: task.description
+        end
+      end
+
+      context 'with displayed due_date' do
+        it 'display success' do
+          expect(page).to have_field '期日', with: task.due_date.strftime('%Y-%m-%dT%H:%M:%S')
+        end
+      end
     end
 
-    it 'back to list page' do
-      click_on '戻る'
-      expect(page).to have_content 'Tasks#list'
+    context 'when edit and resister task' do
+      it 'edit and resister task, success' do
+        fill_in 'task[title]',       with: 'title for edit'
+        fill_in 'task[description]', with: 'description for edit'
+        fill_in 'task[due_date]',    with: Faker::Time.forward(days: 23, period: :morning)
+        click_button '送信'
+        expect(page).to have_content 'Successfully updated'
+      end
+    end
+  end
+
+  describe '#show' do
+    let(:task) { create(:task) }
+
+    before { visit task_path(task.id) }
+
+    context 'when open list page' do
+      context 'with displayed title' do
+        it 'display success' do
+          expect(page).to have_content task.title
+        end
+      end
+
+      context 'with displayed description' do
+        it 'display success' do
+          expect(page).to have_content task.description
+        end
+      end
+
+      context 'with displayed created_at' do
+        it 'display success' do
+          expect(page).to have_content task.created_at.strftime('%Y/%m/%d %H:%M:%S')
+        end
+      end
+
+      context 'with displayed due_date' do
+        it 'display success' do
+          expect(page).to have_content task.due_date.strftime('%Y/%m/%d %H:%M:%S')
+        end
+      end
+    end
+
+    context 'when click back button' do
+      it 'move success' do
+        click_on '戻る'
+        expect(page).to have_content 'Tasks#list'
+      end
+    end
+
+    context 'when click edit button' do
+      it 'move success' do
+        click_on '編集'
+        expect(page).to have_content 'Tasks#edit'
+      end
+    end
+  end
+
+  describe 'sort function' do
+    let!(:task_list) { create_list(:task, 4) }
+
+    before { visit root_path }
+
+    context 'when open list page(sort by created_at order by desc)' do
+      it 'order success' do
+        expect(find('tr:nth-child(2)')).to have_content I18n.l task_list.last.created_at
+        expect(find('tr:nth-child(5)')).to have_content I18n.l task_list.first.created_at
+      end
+    end
+
+    context 'when click link to sort by due_date asc' do
+      it 'order success' do
+        click_on '期日で並び替え' # 1回押すと昇順
+        expect(find('tr:nth-child(2)')).to have_content I18n.l task_list.first.due_date
+        expect(find('tr:nth-child(5)')).to have_content I18n.l task_list.last.due_date
+      end
+    end
+
+    context 'when click link to sort by due_date desc' do
+      it 'order success' do
+        click_on '期日で並び替え' # 1回押すと昇順
+        click_on '期日で並び替え' # 2回押すと降順
+        expect(find('tr:nth-child(2)')).to have_content I18n.l task_list.last.due_date
+        expect(find('tr:nth-child(5)')).to have_content I18n.l task_list.first.due_date
+      end
     end
   end
 end

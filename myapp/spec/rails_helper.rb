@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
 ENV['RAILS_ENV'] ||= 'test'
@@ -71,7 +73,7 @@ RSpec.configure do |config|
 
   config.before(:each, type: :system, js: true) do
     driven_by :remote_chrome
-    Capybara.server_host = Socket.ip_address_list.detect { |addr| addr.ipv4_private? }.ip_address
+    Capybara.server_host = Socket.ip_address_list.detect(&:ipv4_private?).ip_address
     Capybara.server_port = 3001
     Capybara.app_host = "https://#{Capybara.server_host}:#{Capybara.server_port}"
   end

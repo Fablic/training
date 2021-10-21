@@ -12,18 +12,22 @@
 
   <div>
     <%= form.label :title, t('tasks.title') %>
-    <%= form.text_field :title %>
+    <%= form.text_field :title, class: 'form-control'%>
   </div>
   <div>
     <%= form.label :description, t('tasks.description') %>
-    <%= form.text_field :description %>
+    <%= form.text_area :description, class: 'form-control' %>
+  </div>
+  <div>
+    <%= form.label :due_date, t('tasks.due_date') %>
+    <%= form.datetime_field :due_date, class: 'form-control' %>
   </div>
   <div class="actions">
-    <%= form.submit t('tasks.submit') %>
+    <%= form.submit t('tasks.submit'), class: 'btn btn-primary'%>
   </div>
 
   <% if local_assigns[:action_edit] %>
     <%= link_to t('tasks.show'), @task %>
   <% end %>
-  <%= link_to t('tasks.back'), tasks_path, class: 'button-back' %>
+  <%= link_to t('tasks.back'), tasks_path, class: 'btn btn-secondary' %>
 <% end %>
