@@ -87,6 +87,7 @@ RSpec.describe 'Task', type: :model do
         expect(task).to be_valid
       end
     end
+
     context 'when string' do
       let(:due_date) { 'test' }
 
