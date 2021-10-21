@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   root "tasks#index"
   get 'sessions/login' => "sessions#new"
-  get 'sessions/logout' => "sessions#delete"
+  delete 'sessions/logout' => "sessions#destroy"
   post 'sessions/login' => "sessions#create"
   resources :tasks,:only => [:index, :edit, :new, :create, :update, :destroy]
 

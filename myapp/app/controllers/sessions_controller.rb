@@ -18,7 +18,7 @@ class SessionsController < ApplicationController
   end
 
   # ログアウト
-  def delete
+  def destroy
     log_out if logged_in?
     render 'sessions/destroy'
   end
