@@ -50,7 +50,7 @@ RSpec.configure do |config|
   # You can disable this behaviour by removing the line below, and instead
   # explicitly tag your specs with their type, e.g.:
   #
-  #     RSpec.describe UsersController, type: :controller do
+  #     RSpec.describe SessionsController, type: :controller do
   #       # ...
   #     end
   #
@@ -105,5 +105,4 @@ RSpec.configure do |config|
       Bullet.end_request
     end
   end
-
 end

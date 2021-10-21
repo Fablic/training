@@ -1,0 +1,27 @@
+<%= stylesheet_link_tag 'sessions' %>
+<h1>ログイン</h1>
+<% if flash[:danger] %>
+  <p class="notice_area danger"><%= flash[:danger] %><p>
+<% end %>
+<!-- form -->
+<%= form_for :session , url:sessions_login_path ,html:{ class:'pure-form pure-form-aligned login-form'} do |f| %>
+  <fieldset>
+    <div class="pure-control-group">
+      <%= f.label :mail_address ,class:'pure-input-1-2' %>
+      <%= f.text_field :mail_address ,required:true ,class:'pure-input-1-2' %>
+    </div>
+    <div class="pure-control-group">
+      <%= f.label :password ,class:'pure-input-1-2' %>
+      <%= f.password_field :password ,required:true ,class:'pure-input-1-2' %>
+    </div>
+    <div class="pure-control-group">
+      <label id="remember-me-checkbox">
+        <%= f.check_box :remember_me %>
+        ログイン状態を記憶する
+      </label>
+    </div>
+    <div class="pure-controls">
+      <%= f.submit 'login' ,class:'pure-button button-success' %>
+    </div>
+  </fieldset>
+<% end %>

@@ -1,26 +1,23 @@
 class TasksController < ApplicationController
-  before_action :set_menu
+  before_action :login_check, :set_menu
 
   # 一覧
   def index
     @search_form = params.key?(:search_form) ? SearchForm.new(permitted_search_params) : SearchForm.new
-    @tasks = @search_form.exec_search(params[:page])
+    @tasks = login_user.searched_tasks(@search_form, params[:page])
   end
 
   # 新規作成画面
   def new
-    @task = Task.new
+    @task = login_user.tasks.build
   end
 
   # 新規作成実行
   def create
-    @task = Task.new(permitted_params)
-    @task.user_id = 1 # 次ステップでログインユーザーIDが入ります。
+    @task = login_user.tasks.build(permitted_params)
     if @task.save
-      # 一覧へ
       redirect_to tasks_path, notice: t('messages.create.notice')
     else
-      # 登録画面へ
       render action: :new
     end
   end
@@ -35,10 +32,8 @@ class TasksController < ApplicationController
     @task = target_task
 
     if @task.update(permitted_params)
-      # 一覧へ
       redirect_to tasks_path, notice: t('messages.update.notice')
     else
-      # 編集画面へ
       render action: :edit
     end
   end
@@ -46,12 +41,8 @@ class TasksController < ApplicationController
   # 削除
   def destroy
     target_task.destroy
-
-    # 一覧へ
     redirect_to tasks_path, notice: t('messages.destroy.notice')
   end
-
-  # private methods
 
   private
 
@@ -68,13 +59,5 @@ class TasksController < ApplicationController
   # ストロングパラメータをとる(検索)
   def permitted_search_params
     params.require(:search_form).permit(:name, :status, :sort, :order)
-  end
-
-  # menuをセットする
-  def set_menu
-    @menus = [
-      Menu.new(t('.menu.btn_list'), tasks_path),
-      Menu.new(t('.menu.btn_add'), new_task_path)
-    ]
   end
 end

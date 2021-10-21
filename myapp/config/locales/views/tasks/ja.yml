@@ -4,6 +4,7 @@ ja:
     menu:
       btn_add: '追加'
       btn_list: '一覧'
+      btn_logout: 'ログアウト'
     index:
       title: 'タスク一覧'
       btn_del: '削除'
@@ -22,4 +23,3 @@ ja:
     edit:
       title: 'タスク編集'
       btn_regist: '更新'
-

@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
-  #root
   root "tasks#index"
-  #task.rb-path
-  resources :tasks,:only => [:index, :edit, :new, :create, :update,:destroy]
+  get 'sessions/login' => "sessions#new"
+  delete 'sessions/logout' => "sessions#destroy"
+  post 'sessions/login' => "sessions#create"
+  resources :tasks,:only => [:index, :edit, :new, :create, :update, :destroy]
 
   # error page
   get '*not_found' => 'application#routing_error'
