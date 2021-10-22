@@ -8,12 +8,16 @@ class User < ApplicationRecord
   def searched_tasks(search_form, page)
     return [] unless search_form.is_a?(SearchForm) && search_form&.valid?
 
-    searched_tasks = tasks.order("tasks.#{search_form.sort_value} #{search_form.order_value}")
-    searched_tasks.where!('name LIKE ?', "%#{search_form.name}%") if search_form.name.present?
+    searched_tasks = tasks
+                     .includes(:labels)
+                     .order("tasks.#{search_form.sort_value} #{search_form.order_value}")
+    searched_tasks.where!('tasks.name LIKE ?', "%#{search_form.name}%") if search_form.name.present?
     searched_tasks.where!(status: search_form.status) if search_form.status.present?
+    searched_tasks.includes!(:labels_tasks).where!(labels_tasks: { label_id: search_form.label_ids }) if search_form.label_ids.present?
     searched_tasks.page(page)
   end
 
+  # randomなtoken
   def new_token
     SecureRandom.urlsafe_base64
   end
@@ -38,6 +42,7 @@ class User < ApplicationRecord
     BCrypt::Password.new(remember_digest).is_password?(remember_token)
   end
 
+  # ログイン情報の破棄
   def forget
     update_attribute(:remember_digest, nil)
   end

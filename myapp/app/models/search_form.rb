@@ -10,6 +10,7 @@ class SearchForm
   attribute :status, :string
   attribute :sort, :string, default: 'created_at'
   attribute :order, :string, default: 'asc'
+  attribute :label_ids
 
   def sort_value
     Task.column_names.include?(sort) ? sort : SORT_DEFAULT
