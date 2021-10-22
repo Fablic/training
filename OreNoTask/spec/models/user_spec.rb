@@ -3,18 +3,19 @@
 require 'rails_helper'
 
 RSpec.describe 'Userモデルのテスト', type: :model do
-  before(:all) do
-    create(:user, name: 'HanakoRakuten', password: 'hanakopass', privilege: 'user', deleted: 0)
-    create(:user, name: 'YoshioRakuten', password: 'yoshiopass', privilege: 'user', deleted: 1)
-  end
-
+  let!(:user_hanako) { create(:user, name: 'HanakoRakuten', password: 'hanakopass', privilege: 'user', deleted: 0) }
+  let!(:user_yoshio) { create(:user, name: 'YoshioRakuten', password: 'yoshiopass', privilege: 'user', deleted: 1) }
   let(:user) { User.new(name: name, password: password, privilege: privilege) }
   let(:name) { 'TaroRakuten' }
   let(:password) { 'rakutenpass' }
   let(:privilege) { 'user' }
 
   describe '正常系' do
-    subject { user }
+    subject {
+      user_hanako
+      user_yoshio
+      user
+    }
 
     context '全項目入力' do
       it { is_expected.to be_valid }
@@ -22,6 +23,12 @@ RSpec.describe 'Userモデルのテスト', type: :model do
   end
 
   describe 'バリデーションのテスト' do
+    subject {
+      user_hanako
+      user_yoshio
+      user
+    }
+
     describe 'nameカラム' do
       subject { user }
 
