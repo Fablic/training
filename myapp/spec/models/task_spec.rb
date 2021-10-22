@@ -2,139 +2,120 @@ require 'rails_helper'
 
 RSpec.describe Task, type: :model do
   let(:task) { build(:task) }
+
+  shared_examples 'When it was invalid.' do
+    it 'Invalidated and returns an error message' do
+      task.send("#{column}=", val)
+      expect(task).not_to be_valid
+      expect(task.errors.messages).to include(column.to_sym)
+    end
+  end
+
+  shared_examples 'When it was valid.' do
+    it 'Invalidated and returns an error message' do
+      task.send("#{column}=", val)
+      expect(task).to be_valid
+      expect(task.errors.messages).not_to include(column.to_sym)
+    end
+  end
+
   describe '#title' do
-    context 'If nil is set' do
-      it 'Invalidated and returns an error message' do
-        task.title = nil
-        expect(task).not_to be_valid
-        expect(task.errors.messages).to include(:title)
-      end
+    let(:column) { 'title' }
+
+    context 'When nil is set.' do
+      let(:val) { nil }
+      it_behaves_like 'When it was invalid.'
     end
 
-    context 'If empty is set.' do
-      it 'Invalidated and returns an error message' do
-        task.title = ''
-        expect(task).not_to be_valid
-        expect(task.errors.messages).to include(:title)
-      end
+    context 'When empty is set.' do
+      let(:val) { '' }
+      it_behaves_like 'When it was invalid.'
     end
 
-    context 'If the number of characters is set to be more than the specified number' do
-      it 'Invalidated and returns an error message' do
-        task.title = 'a' * 21
-        expect(task).not_to be_valid
-        expect(task.errors.messages).to include(:title)
-      end
+    context 'When the number of characters in the title is exceeded.' do
+      let(:val) { 'a' * 21 }
+      it_behaves_like 'When it was invalid.'
     end
 
-    context 'If the number of characters is set to less than the specified value' do
-      it 'Invalidated and returns an error message' do
-        task.title = 'a' * 2
-        expect(task).not_to be_valid
-        expect(task.errors.messages).to include(:title)
-      end
+    context 'When the title is low on characters.' do
+      let(:val) { 'a' * 2 }
+      it_behaves_like 'When it was invalid.'
     end
   end
 
   describe '#detail' do
-    context 'If nil is set' do
-      it 'Invalidated and returns an error message' do
-        task.detail = nil
-        expect(task).to be_valid
-        expect(task.errors.messages).not_to include(:detail)
-      end
+    let(:column) { 'detail' }
+
+    context 'When nil is set.' do
+      let(:val) { nil }
+      it_behaves_like 'When it was valid.'
     end
 
-    context 'If empty is set.' do
-      it 'Invalidated and returns an error message' do
-        task.detail = ''
-        expect(task).to be_valid
-        expect(task.errors.messages).not_to include(:detail)
-      end
+    context 'When empty is set.' do
+      let(:val) { '' }
+      it_behaves_like 'When it was valid.'
     end
 
-    context 'If the number of characters is set to be more than the specified number' do
-      it 'Invalidated and returns an error message' do
-        task.detail = 'a' * 10_001
-        expect(task).not_to be_valid
-        expect(task.errors.messages).to include(:detail)
-      end
+    context 'When the number of characters in the title is exceeded.' do
+      let(:val) { 'a' * 10_001 }
+      it_behaves_like 'When it was invalid.'
     end
   end
 
   describe '#due_date' do
-    context 'If nil is set' do
-      it 'Invalidated and returns an error message' do
-        task.due_date = nil
-        expect(task).not_to be_valid
-        expect(task.errors.messages).to include(:due_date)
-      end
+    let(:column) { 'due_date' }
+
+    context 'When nil is set.' do
+      let(:val) { nil }
+      it_behaves_like 'When it was invalid.'
     end
 
-    context 'If empty is set.' do
-      it 'Invalidated and returns an error message' do
-        task.due_date = ''
-        expect(task).not_to be_valid
-        expect(task.errors.messages).to include(:due_date)
-      end
+    context 'When empty is set.' do
+      let(:val) { '' }
+      it_behaves_like 'When it was invalid.'
     end
 
-    context 'If todays date is set' do
-      it 'Enabled, no error message returned' do
-        task.due_date = Time.zone.now
-        expect(task).to be_valid
-        expect(task.errors.messages).not_to include(:due_date)
-      end
+    context 'When today is set' do
+      let(:val) { Time.zone.now }
+      it_behaves_like 'When it was valid.'
     end
 
-    context 'If tomorrow date is set' do
-      it 'Invalidated and returns an error message' do
-        task.due_date = Time.zone.tomorrow
-        expect(task).to be_valid
-        expect(task.errors.messages).not_to include(:due_date)
-      end
+    context 'When tomorrow is set' do
+      let(:val) { Time.zone.tomorrow }
+      it_behaves_like 'When it was valid.'
     end
 
-    context 'If yesterday date is set' do
-      it 'Invalidated and returns an error message' do
-        task.due_date = Time.zone.yesterday
-        expect(task).not_to be_valid
-        expect(task.errors.messages).to include(:due_date)
-      end
+    context 'When yesterday is set' do
+      let(:val) { Time.zone.yesterday }
+      it_behaves_like 'When it was invalid.'
     end
   end
 
   describe '#priority' do
-    context 'If nil is set' do
-      it 'be invalidated' do
-        task.priority = nil
-        expect(task).not_to be_valid
-      end
+    let(:column) { 'priority' }
+
+    context 'When nil is set.' do
+      let(:val) { nil }
+      it_behaves_like 'When it was invalid.'
     end
 
-    context 'If an unintended value is set' do
-      it 'Invalidated and returns an error message' do
-        task.priority = [*0..100].delete_if { |n| Task.prioritys.values.include?(n) }.sample
-        expect(task).not_to be_valid
-        expect(task.errors.messages).to include(:priority)
-      end
+    context 'When unintended value  is set' do
+      let(:val) { [*0..100].delete_if { |n| Task.prioritys.values.include?(n) }.sample }
+      it_behaves_like 'When it was invalid.'
     end
   end
 
   describe '#status' do
-    context 'If nil is set' do
-      it 'be invalidated' do
-        task.status = nil
-        expect(task).not_to be_valid
-      end
+    let(:column) { 'status' }
+
+    context 'When nil is set.' do
+      let(:val) { nil }
+      it_behaves_like 'When it was invalid.'
     end
 
-    context 'If an unintended value is set' do
-      it 'Invalidated and returns an error message' do
-        task.status = [*0..100].delete_if { |n| Task.statuses.values.include?(n) }.sample
-        expect(task).not_to be_valid
-        expect(task.errors.messages).to include(:status)
-      end
+    context 'When unintended value  is set' do
+      let(:val) { [*0..100].delete_if { |n| Task.statuses.values.include?(n) }.sample }
+      it_behaves_like 'When it was invalid.'
     end
   end
 end

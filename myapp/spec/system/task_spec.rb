@@ -4,119 +4,105 @@ RSpec.describe TasksController, type: :system do
   let(:task_count) { 60 }
   let!(:tasks) { FactoryBot.create_list(:task, task_count) }
 
+  shared_examples 'When the task list is sorted' do
+    it 'Displayed in a sorted' do
+      visit root_path(direction: 'asc', sort: sort)
+      columns = page.all(".sort_#{sort}")
+      expect(columns.count).to be > 0
+      expect(columns.map(&:text)).to match(tasks.map { |t| I18n.l(t.send(sort)) }.slice(0, columns.count))
+    end
+  end
+
+  shared_examples 'When searching for status' do
+    it 'Only the specified status will be displayed.' do
+      visit root_path(direction: 'asc', sort: sort)
+      select I18n.t("activerecord.enum.task.status.#{status}"), from: 'status'
+      click_button I18n.t('pages.tasks.search.title')
+      page.all('.sort_status').map { |c| expect(c.text).to eq I18n.t("activerecord.enum.task.status.#{status}") }
+
+      columns = page.all(".sort_#{sort}")
+      expect(columns.count).to eq count
+      expect(columns.map(&:text)).to match(tasks.map { |t| I18n.l(t.send(sort)) }.slice(0, columns.count)) if count > 0
+    end
+  end
+
+  shared_examples 'When searching for title with' do
+    it 'Only tasks that contain XXX will be displayed.' do
+      visit root_path(direction: 'asc', sort: 'due_date')
+
+      fill_in 'title', with: title
+      click_button I18n.t('pages.tasks.search.title')
+
+      columns = page.all('.sort_due_date')
+      tasks_include_title = tasks.find_all { |task| task.title.include?(title) }
+      expect(columns.map(&:text)).to match(tasks_include_title.map { |t| I18n.l(t.due_date) }.slice(0, columns.count))
+    end
+  end
+
   describe '#index' do
     before { visit root_path }
-    context 'Go to the show page.' do
+    context 'When the show page is accessed.' do
       it 'Successful transition' do
         click_link tasks.first.title
         expect(current_path).to eq task_path(tasks.first.id)
       end
     end
 
-    context 'Go to the new page.' do
+    context 'When the new page is accessed.' do
       it 'Successful transition' do
         click_link I18n.t('common.new')
         expect(current_path).to eq new_task_path
       end
     end
 
-    context 'Is the task list represented?' do
-      it 'Displayed.' do
+    context 'When the index page is accessed.' do
+      it 'The title appears.' do
         expect(page).to have_content('Tasks')
         expect(page).to have_content(tasks.first.title)
       end
     end
 
-    context 'Is it sorted by created_at?' do
-      it 'Displayed.' do
-        visit root_path(direction: 'desc', sort: 'created_at')
-        created_ats = page.all('.sort_created_at')
-        expect(created_ats.count).to be > 0
-        tasks_sort = tasks.sort_by(&:created_at).reverse
-        created_ats.each.with_index(1) do |row, index|
-          expect(row.text).to eq I18n.l(tasks_sort[index - 1].created_at)
-        end
-      end
+    context 'When sorting by created_at in order' do
+      let(:sort) { 'created_at' }
+      it_behaves_like 'When the task list is sorted'
     end
 
-    context 'Is it sorted by due_date?' do
-      it 'Displayed.' do
-        visit root_path(direction: 'asc', sort: 'due_date')
-        columns = page.all('.sort_due_date')
-        expect(columns.count).to be > 0
-        tasks_sort = tasks.sort_by(&:due_date)
-        columns.each.with_index(1) do |row, index|
-          expect(row.text).to eq I18n.l(tasks_sort[index - 1].due_date)
-        end
-      end
+    context 'When sorting by due_date in order' do
+      let(:sort) { 'due_date' }
+      it_behaves_like 'When the task list is sorted'
     end
 
-    context 'Check the Search status waiting' do
-      it 'Displayed.' do
-        visit root_path(direction: 'asc', sort: 'due_date')
-
-        select I18n.t('activerecord.enum.task.status.waiting'), from: 'status'
-        click_button I18n.t('pages.tasks.search.title')
-
-        columns = page.all('.sort_due_date')
-        expect(columns.count).to be > 0
-        tasks_sort = tasks.sort_by(&:due_date)
-        columns.each.with_index(1) do |row, index|
-          expect(row.text).to eq I18n.l(tasks_sort[index - 1].due_date)
-        end
-
-        columns = page.all('.sort_status')
-        columns.each.with_index(1) do |row, _index|
-          expect(row.text).to eq I18n.t('activerecord.enum.task.status.waiting')
-        end
-      end
+    context 'When searching for status with waiting.' do
+      let(:sort) { 'due_date' }
+      let(:status) { 'waiting' }
+      let(:count) { Task.page(1).limit_value }
+      it_behaves_like 'When searching for status'
     end
 
-    context 'Check the Search status done' do
-      it 'Displayed.' do
-        visit root_path(direction: 'desc', sort: 'due_date')
-
-        select I18n.t('activerecord.enum.task.status.done'), from: 'status'
-        click_button I18n.t('pages.tasks.search.title')
-
-        columns = page.all('.sort_due_date')
-        expect(columns.count).to eq 0
-      end
+    context 'When searching for status with done.' do
+      let(:sort) { 'due_date' }
+      let(:status) { 'done' }
+      let(:count) { 0 }
+      it_behaves_like 'When searching for status'
     end
 
-    context 'Check the Search title "2"' do
-      it 'Displayed.' do
-        fill_in 'title', with: '2'
-        click_button I18n.t('pages.tasks.search.title')
-
-        columns_id = page.all('.sort_id')
-        columns_title = page.all('.sort_title')
-        expect(columns_id.count).to eq columns_title.select { |t| t.text.include?('2') }.count
-      end
+    context 'When searching for title with "2"' do
+      let(:title) { '2' }
+      it_behaves_like 'When searching for title with'
     end
 
-    context 'Check the Search title "ZZZZ"' do
-      it 'Displayed.' do
-        fill_in 'title', with: 'ZZZZ'
-        click_button I18n.t('pages.tasks.search.title')
-
-        columns = page.all('.sort_due_date')
-        expect(columns.count).to eq 0
-      end
+    context 'When the title is searched for a non-existent character.' do
+      let(:title) { 'ZZZZ' }
+      it_behaves_like 'When searching for title with'
     end
 
-    context 'Check the Search title empty' do
-      it 'Displayed.' do
-        fill_in 'title', with: ''
-        click_button I18n.t('pages.tasks.search.title')
-
-        columns = page.all('.sort_title')
-        expect(columns.count).to be > 0
-      end
+    context 'When you search for an empty title.' do
+      let(:title) { '' }
+      it_behaves_like 'When searching for title with'
     end
 
-    context 'Click on the pagenation link.' do
-      it 'Displayed.' do
+    context 'When using pagenation.' do
+      it 'Successful transition.' do
         expect(page).to have_content(tasks.first.title)
         click_link 'Next', match: :first
         expect(page).not_to have_content(tasks.first.title)
@@ -136,8 +122,8 @@ RSpec.describe TasksController, type: :system do
 
   describe '#show' do
     before { visit task_path(tasks.last.id) }
-    context 'Is the task list represented?' do
-      it 'Displayed.' do
+    context 'When the show page is accessed.' do
+      it 'Task details will be displayed.' do
         expect(page).to have_content(tasks.last.title)
         expect(page).to have_content(tasks.last.detail)
         expect(page).to have_link I18n.t('common.edit'), href: edit_task_path(tasks.last)
@@ -148,13 +134,12 @@ RSpec.describe TasksController, type: :system do
 
   describe '#new' do
     before { visit new_task_path }
+    let(:title) { 'new Title' }
+    let(:detail) { 'new Detail' }
 
-    context 'If the task is registered successfully' do
-      it 'Screen transition.' do
-        title = 'new Title'
-        detail = 'new Detail'
+    context 'When a task is registered' do
+      it 'Tasks can be registered, and tasks will be displayed.' do
         flush = I18n.t('pages.tasks.flash.added')
-
         fill_in I18n.t('activerecord.attributes.task.title'), with: title
         fill_in I18n.t('activerecord.attributes.task.detail'), with: detail
         select I18n.t('activerecord.enum.task.priority.low'), from: I18n.t('activerecord.attributes.task.priority')
@@ -174,11 +159,8 @@ RSpec.describe TasksController, type: :system do
       end
     end
 
-    context 'If the registration of a task fails' do
+    context 'When registration of a task fails' do
       it 'Display an error without transitioning.' do
-        title = 'new Title'
-        detail = 'new Detail'
-
         fill_in I18n.t('activerecord.attributes.task.title'), with: title
         fill_in I18n.t('activerecord.attributes.task.detail'), with: detail
         select I18n.t('activerecord.enum.task.priority.low'), from: I18n.t('activerecord.attributes.task.priority')
@@ -195,13 +177,12 @@ RSpec.describe TasksController, type: :system do
 
   describe '#edit' do
     before { visit edit_task_path(tasks.last.id) }
+    let(:title) { 'edit Title' }
+    let(:detail) { 'edit Detail' }
 
-    context 'If the task is edit successfully' do
-      it 'Screen transition.' do
-        title = 'edit Title'
-        detail = 'edit Detail'
+    context 'When a task is edited' do
+      it 'Tasks can be registered, and tasks will be displayed.' do
         flush = I18n.t('pages.tasks.flash.edited')
-
         fill_in I18n.t('activerecord.attributes.task.title'), with: title
         fill_in I18n.t('activerecord.attributes.task.detail'), with: detail
         fill_in I18n.t('activerecord.attributes.task.due_date'), with: Time.zone.now.tomorrow.strftime('%Y-%m-%d')
@@ -214,11 +195,8 @@ RSpec.describe TasksController, type: :system do
       end
     end
 
-    context 'If the edit of a task fails.' do
+    context 'When edit of a task fails' do
       it 'Display an error without transitioning.' do
-        title = 'edit Title'
-        detail = 'edit Detail'
-
         fill_in I18n.t('activerecord.attributes.task.title'), with: title
         fill_in I18n.t('activerecord.attributes.task.detail'), with: detail
         fill_in I18n.t('activerecord.attributes.task.due_date'), with: Time.zone.yesterday.strftime('%Y-%m-%d')
@@ -233,8 +211,8 @@ RSpec.describe TasksController, type: :system do
 
   describe '#delete' do
     before { visit task_path(tasks.last.id) }
-    context 'If the task is delete successfully' do
-      it 'Screen transition.' do
+    context 'When a task is deleted' do
+      it 'The task is deleted and the screen transitions.' do
         click_link I18n.t('common.delete')
 
         expect(page).to have_current_path(root_path)

@@ -19,6 +19,15 @@ class Task < ApplicationRecord
   validates :image, content_type: { in: %w[image/jpeg image/gif image/png], message: 'must be a valid image format' },
                     size: { less_than: 5.megabytes, message: 'should be less than 5MB' }
 
+  scope :search_title, lambda { |title|
+                         where('title LIKE ?', "%#{ApplicationRecord.sanitize_sql_like(title)}%") if title.present?
+                       }
+  scope :search_status, ->(status) { where(status: status) if status.present? }
+
+  def self.search(params)
+    search_title(params[:title]).search_status(params[:status])
+  end
+
   def display_image
     image.variant(resize_to_limit: [500, 500])
   end

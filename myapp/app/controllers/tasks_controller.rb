@@ -3,13 +3,7 @@ class TasksController < ApplicationController
 
   def index
     @search_params = search_params
-    query = Task.all
-    if @search_params[:title].present?
-      query = query.where('title LIKE ?',
-                          "%#{ApplicationRecord.sanitize_sql_like(@search_params[:title])}%")
-    end
-    query = query.where(status: @search_params[:status]) if @search_params[:status].present?
-    @tasks = query.order("#{sort_column} #{sort_direction}").page(params[:page])
+    @tasks = Task.search(@search_params).order("#{sort_column} #{sort_direction}").page(params[:page])
   end
 
   def new
