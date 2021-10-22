@@ -6,9 +6,6 @@ require("@rails/activestorage").start()
 require("channels")
 
 require("jquery")
-import flatpickr from "flatpickr";
-const japanese = require("flatpickr/dist/l10n/ja").default.ja;
-document.addEventListener("turbolinks:load", () => {
-    flatpickr("[class='calendar']", japanese)
-});
+require("select2/dist/js/select2")
+require("flatpickr")
 require("../stylesheets/application.scss")

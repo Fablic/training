@@ -1,4 +1,5 @@
-//document
+import "./common"
+
 $(window).ready(function(){
     $(".sort_link_th").click(function (){
         const targetName = $(this).attr("name");
