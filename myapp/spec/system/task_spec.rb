@@ -75,7 +75,7 @@ RSpec.describe TasksController, type: :system do
     context 'When searching for status with waiting.' do
       let(:sort) { 'due_date' }
       let(:status) { 'waiting' }
-      let(:count) { 25 }
+      let(:count) { Task.page(1).limit_value }
       it_behaves_like 'When searching for status'
     end
 
