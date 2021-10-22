@@ -1,9 +1,10 @@
-# This file is copied to spec/ when you run 'rails generate rspec:install'
+# frozen_string_literal: true
+
 require 'spec_helper'
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../config/environment', __dir__)
 # Prevent database truncation if the environment is production
-abort("The Rails environment is running in production mode!") if Rails.env.production?
+abort('The Rails environment is running in production mode!') if Rails.env.production?
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 
@@ -63,7 +64,6 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
   RSpec.configure do |config|
     config.include FactoryBot::Syntax::Methods
-
   end
 
   # headless
@@ -75,10 +75,14 @@ RSpec.configure do |config|
     session = defined?(rspec_session) ? rspec_session : {}
 
     # destroyメソッドを実行してもエラーにならないようにします（必要であれば）
-    session.class_eval { def destroy; nil; end }
+    session.class_eval {
+      def destroy
+        nil
+      end
+    }
 
     # 追記 実行後のセッションを取得できるようにする
-    config.add_setting(:session, :default => session)
+    config.add_setting(:session, default: session)
 
     # 変更 sessionメソッドをRSpec.configuration.sessionで上書き
     allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(RSpec.configuration.session)

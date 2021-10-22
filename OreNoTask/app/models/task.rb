@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
 class Task < ApplicationRecord
-  has_one :users
+  has_one :users, dependent: :restrict_with_error
   extend Enumerize
 
   enumerize :status, in: { not_started: 0, wip: 1, completed: 2 }, default: :not_started, scope: true
 
   scope :search_status, -> (status) { where(status: status) if status.present? }
-  scope :search_keyword, -> (keyword) { where(["(name like? OR description like?)", "%#{keyword}%", "%#{keyword}%"]) }
+  scope :search_keyword, -> (keyword) { where(['(name like? OR description like?)', "%#{keyword}%", "%#{keyword}%"]) }
   scope :active, -> { where(deleted: 0) }
-  scope :user, -> (user_id) {where(user_id: user_id)}
+  scope :user, -> (user_id) { where(user_id: user_id) }
 
   validates :name, { presence: true, length: { maximum: 50 } }
   validates :description, length: { maximum: 2000 }
@@ -24,7 +24,7 @@ class Task < ApplicationRecord
       self.start_at < self.due_date_at
   end
 
-  def self.search(keyword, status)
-    return active.search_status(status).search_keyword(keyword)
+  def self.search(keyword, status, user, order)
+    active.search_status(status).search_keyword(keyword).user(user).order(order)
   end
 end

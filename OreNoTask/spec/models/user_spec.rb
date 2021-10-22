@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'Userモデルのテスト', type: :model do
@@ -79,11 +81,13 @@ RSpec.describe 'Userモデルのテスト', type: :model do
     describe 'privilegeカラム' do
       subject { user }
 
-      context '許容される値' do
+      context '許容される値(user)' do
         let(:privilege) { 'user' }
 
         it { is_expected.to be_valid }
+      end
 
+      context '許容される値(admin)' do
         let(:privilege) { 'admin' }
 
         it { is_expected.to be_valid }

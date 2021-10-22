@@ -16,9 +16,7 @@ class TasksController < ApplicationController
     @task = Task.active.user(current_user.id).find_by(id: params[:id])
     @submit_label = I18n.t('dictionary.words.save_to_update')
 
-    if @task == nil
-      redirect_to tasks_path
-    end
+    redirect_to tasks_path if @task.nil?
   end
 
   def update
@@ -35,9 +33,7 @@ class TasksController < ApplicationController
     id = params[:id]
     @task = Task.active.user(current_user.id).find_by(id: id)
 
-    if @task == nil
-      redirect_to tasks_path
-    end
+    redirect_to tasks_path if @task.nil?
   end
 
   def create
@@ -64,7 +60,7 @@ class TasksController < ApplicationController
   end
 
   def search
-    @tasks = Task.search(params[:keyword], params[:status]).user(current_user.id).order("#{sort_column} #{sort_direction}").page(params[:page]).per(10)
+    @tasks = Task.search(params[:keyword], params[:status], current_user.id, "#{sort_column} #{sort_direction}").page(params[:page]).per(10)
     @keyword = params[:keyword]
     @status = params[:status]
     render :index
