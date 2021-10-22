@@ -11,4 +11,3 @@ en:
       created_success: "%{target} was successfully created."
       updated_success: "%{target} was successfully updated."
       deleted_success: "%{target} was successfully destroyed."
-      
