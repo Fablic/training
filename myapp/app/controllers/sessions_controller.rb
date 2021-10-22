@@ -6,7 +6,7 @@ class SessionsController < ApplicationController
 
   # ログイン実行
   def create
-    user = User.find_by(mail_address: params[:session][:mail_address])
+    user = find_user
     if authenticate(user)
       log_in(user)
       params[:session][:remember_me] == '1' ? remember(user) : forget(user)
@@ -28,5 +28,9 @@ class SessionsController < ApplicationController
   # ユーザー認証
   def authenticate(user)
     user&.authenticate(params[:session][:password])
+  end
+
+  def find_user
+    User.find_by(mail_address: params[:session][:mail_address])
   end
 end

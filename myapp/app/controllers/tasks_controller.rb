@@ -53,11 +53,11 @@ class TasksController < ApplicationController
 
   # ストロングパラメータをとる
   def permitted_params
-    params.require(:task).permit(:name, :description, :due_date, :status)
+    params.require(:task).permit(:name, :description, :due_date, :status, label_ids: [])
   end
 
   # ストロングパラメータをとる(検索)
   def permitted_search_params
-    params.require(:search_form).permit(:name, :status, :sort, :order)
+    params.require(:search_form).permit(:name, :status, :sort, :order, label_ids: [])
   end
 end

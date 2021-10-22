@@ -5,6 +5,7 @@ class User < ApplicationRecord
   has_many :labels
   has_secure_password
 
+  # rubocop:disable Metrics/AbcSize
   def searched_tasks(search_form, page)
     return [] unless search_form.is_a?(SearchForm) && search_form&.valid?
 
@@ -13,9 +14,12 @@ class User < ApplicationRecord
                      .order("tasks.#{search_form.sort_value} #{search_form.order_value}")
     searched_tasks.where!('tasks.name LIKE ?', "%#{search_form.name}%") if search_form.name.present?
     searched_tasks.where!(status: search_form.status) if search_form.status.present?
-    searched_tasks.includes!(:labels_tasks).where!(labels_tasks: { label_id: search_form.label_ids }) if search_form.label_ids.present?
+    if search_form.label_ids.present?
+      searched_tasks.includes!(:labels_tasks).where!(labels_tasks: { label_id: search_form.label_ids })
+    end
     searched_tasks.page(page)
   end
+  # rubocop:enable Metrics/AbcSize
 
   # randomなtoken
   def new_token
