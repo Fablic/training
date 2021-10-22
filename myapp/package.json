@@ -11,6 +11,7 @@
     "flatpickr": "^4.6.9",
     "jquery": "^3.6.0",
     "purecss": "^2.0.6",
+    "select2": "^4.1.0-rc.0",
     "turbolinks": "^5.2.0"
   },
   "version": "0.1.0",
