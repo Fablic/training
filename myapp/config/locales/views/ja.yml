@@ -8,4 +8,6 @@ ja:
     list: 一覧
   messages:
       delete_confirm: 削除しますか？
-      
+      created_success: "%{target}を作成しました."
+      updated_success: "%{target}を更新しました."
+      deleted_success: "%{target}を削除しました."

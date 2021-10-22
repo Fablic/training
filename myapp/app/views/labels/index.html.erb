@@ -1,12 +1,13 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Labels</h1>
+<h1><%= Label.model_name.human + t('actions.list')%></h1>
 
 <table class="type06">
   <thead>
     <tr>
-      <th>Name</th>
-      <th>color</th>
+      <th><%= link_to Label.human_attribute_name(:name), {sort: :name, direction: get_sort_direction(:name)} %></th>
+      <th><%= link_to Label.human_attribute_name(:color) , {sort: :color, direction: get_sort_direction(:color)}%></th>
+
       <th colspan="3"></th>
     </tr>
   </thead>

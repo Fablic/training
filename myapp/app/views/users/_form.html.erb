@@ -10,29 +10,29 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :name %>
+    <%= form.label User.human_attribute_name(:name) %>
     <%= form.text_field :name %>
   </div>
 
 
   <div class="field">
-    <%= form.label :username %>
+    <%= form.label User.human_attribute_name(:username)  %>
     <%= form.text_field :username %>
   </div>
 
 
   <div class="field">
-    <%= form.label :password %>
+    <%= form.label User.human_attribute_name(:password)  %>
     <%= form.password_field :password %>
   </div>
 <div class="field">
-    <%= form.label :password %>
+    <%= form.label User.human_attribute_name(:password_confirmation)  %>
     <%= form.password_field :password_confirmation %>
   </div>
  
 
     <div class="field">
-    <%= form.label :admin %>
+    <%= form.label User.human_attribute_name(:admin)  %>
     <%= form.check_box :admin %>
   </div>
 

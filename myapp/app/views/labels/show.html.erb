@@ -1,12 +1,12 @@
 <p id="notice"><%= notice %></p>
-
+<h1><%=t('actions.show') + Label.model_name.human() %></h1>
 <p>
-  <strong>Name:</strong>
+  <strong><%= Task.human_attribute_name(:name) %> </strong>
   <%= @label.name %>
 </p>
 
 <p>
-  <strong>color:</strong>
+  <strong><%= Task.human_attribute_name(:color) %></strong>
   <%= @label.color %>
 </p>
 

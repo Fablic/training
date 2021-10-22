@@ -10,13 +10,13 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :name %>
+    <%= form.label Label.human_attribute_name(:name) %>
     <%= form.text_field :name %>
   </div>
 
 
   <div class="field">
-    <%= form.label :color %>
+    <%= form.label Label.human_attribute_name(:color) %>
     <%= form.color_field :color %>
   </div>
 

@@ -5,10 +5,11 @@
 <table class="type06" id="task_list">
   <thead>
     <tr>
-      <th><%= Task.human_attribute_name(:status) %></th>
-      <th><%= Task.human_attribute_name(:name) %></th>
-      <th><%= Task.human_attribute_name(:started_at) %></th>
-      <th><%= Task.human_attribute_name(:finished_at) %></th>
+      <th><%= link_to Task.human_attribute_name(:status), {sort: :status, direction: get_sort_direction(:status)} %></th>
+      <th><%= link_to Task.human_attribute_name(:name), {sort: :name, direction: get_sort_direction(:name)} %></th>
+      <th><%= link_to Task.human_attribute_name(:started_at), {sort: :started_at, direction: get_sort_direction(:started_at)} %></th>
+      <th><%= link_to Task.human_attribute_name(:finished_at), {sort: :finished_at, direction: get_sort_direction(:finished_at)} %></th>
+      <th><%= link_to Task.human_attribute_name(:created_at), {sort: :created_at, direction: get_sort_direction(:created_at)} %></th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -20,6 +21,7 @@
         <td><%= task.name %></td>
         <td><%= task.started_at ? l(task.started_at.to_date): ''  %></td>
         <td><%= l(task.finished_at.to_date) %></td>
+        <td><%= l(task.created_at) %></td>
         <td><%= link_to t('actions.show'), task %></td>
         <td><%= link_to t('actions.edit'), edit_task_path(task) %></td>
         <td><%= link_to t('actions.destroy'), task, method: :delete, data: { confirm: t('messages.delete_confirm') } %></td>

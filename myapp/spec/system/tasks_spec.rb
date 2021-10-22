@@ -25,6 +25,7 @@ RSpec.describe 'tasks', type: :system do
         expect(page).to have_content 'タスク名'
         expect(page).to have_content '開始日'
         expect(page).to have_content '終了日'
+        expect(page).to have_content '作成日'
 
         expect(page).to have_content '詳細'
         expect(page).to have_content '編集'
@@ -77,7 +78,7 @@ RSpec.describe 'tasks', type: :system do
       visit new_task_path
     end
 
-    context 'Normal cases' do
+    context 'with Normal cases' do
       it 'check ui elements' do
         expect(page).to have_content '新規タスク'
       end
@@ -87,7 +88,7 @@ RSpec.describe 'tasks', type: :system do
         fill_in 'task[description]', with: params[:description]
         fill_in 'task[created_by]', with: user.id
         click_on '登録する'
-        expect(page).to have_content 'Task was successfully created.'
+        expect(page).to have_content 'タスクを作成しました.'
       end
 
       it 'add started task successfully' do
@@ -96,7 +97,7 @@ RSpec.describe 'tasks', type: :system do
         fill_in 'task[created_by]', with: user.id
         select '着手', from: 'task[status]'
         click_on '登録する'
-        expect(page).to have_content 'Task was successfully created.'
+        expect(page).to have_content 'タスクを作成しました.'
         expect(page).to have_content '詳細タスク'
         expect(page).to have_content 'ステータス 着手'
       end
@@ -107,7 +108,7 @@ RSpec.describe 'tasks', type: :system do
         fill_in 'task[created_by]', with: user.id
         select '完了', from: 'task[status]'
         click_on '登録する'
-        expect(page).to have_content 'Task was successfully created.'
+        expect(page).to have_content 'タスクを作成しました.'
         expect(page).to have_content '詳細タスク'
         expect(page).to have_content 'ステータス 完了'
       end
@@ -115,23 +116,23 @@ RSpec.describe 'tasks', type: :system do
       it 'start & finished in future' do
         fill_in 'task[name]', with: params[:name]
         fill_in 'task[created_by]', with: user.id
-        select Time.now.year+2, from: 'task[finished_at(1i)]'
-        select Time.now.year+1, from: 'task[started_at(1i)]'
+        select Time.zone.now.year + 2, from: 'task[finished_at(1i)]'
+        select Time.zone.now.year + 1, from: 'task[started_at(1i)]'
         click_on '登録する'
-        expect(page).to have_content 'Task was successfully created.'
+        expect(page).to have_content 'タスクを作成しました.'
       end
 
       it 'start in past , end  in future' do
         fill_in 'task[name]', with: params[:name]
         fill_in 'task[created_by]', with: user.id
-        select Time.now.year+1, from: 'task[finished_at(1i)]'
-        select Time.now.year-1, from: 'task[started_at(1i)]'
+        select Time.zone.now.year + 1, from: 'task[finished_at(1i)]'
+        select Time.zone.now.year - 1, from: 'task[started_at(1i)]'
         click_on '登録する'
-        expect(page).to have_content 'Task was successfully created.'
+        expect(page).to have_content 'タスクを作成しました.'
       end
     end
 
-    context 'Validation Error case' do
+    context 'with Validation Error case' do
       it 'blank name and owner' do
         click_on '登録する'
         expect(page).to have_content 'オーナーを入力してください'
@@ -157,8 +158,8 @@ RSpec.describe 'tasks', type: :system do
       it 'finished_at less than started_at' do
         fill_in 'task[name]', with: params[:name]
         fill_in 'task[created_by]', with: user.id
-        select Time.now.year+1, from: 'task[finished_at(1i)]'
-        select Time.now.year+2, from: 'task[started_at(1i)]'
+        select Time.zone.now.year + 1, from: 'task[finished_at(1i)]'
+        select Time.zone.now.year + 2, from: 'task[started_at(1i)]'
         click_on '登録する'
         expect(page).to have_content '終了日を開始日より前にすることはできません'
       end
@@ -166,13 +167,11 @@ RSpec.describe 'tasks', type: :system do
       it 'finished_at is in the past' do
         fill_in 'task[name]', with: params[:name]
         fill_in 'task[created_by]', with: user.id
-        select Time.now.year-1, from: 'task[finished_at(1i)]'
-        select Time.now.year-2, from: 'task[started_at(1i)]'
+        select Time.zone.now.year - 1, from: 'task[finished_at(1i)]'
+        select Time.zone.now.year - 2, from: 'task[started_at(1i)]'
         click_on '登録する'
         expect(page).to have_content '終了日を今日より前にすることはできません'
       end
-
-
     end
   end
 end

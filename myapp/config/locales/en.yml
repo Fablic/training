@@ -30,5 +30,5 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  earlier_date_error: "${end} can't be earlier then ${start}" 
+  earlier_date_error: " can't be earlier than %{start}" 
   today: today
