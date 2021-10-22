@@ -20,6 +20,11 @@
           <%= f.select :status, Task.statuses_i18n.invert ,{ include_blank: true },{ class:'pure-u-23-24' } %>
         </div>
         <div class="pure-u-lg-1-4 pure-u-md-1-4 pure-u-sm-1 pure-u-1-4">
+          <%= f.label :label_ids %>
+          <%= f.select :label_ids, login_user.labels.collect{ |l| [l.name , l.id] }, {prompt: false , include_hidden: false }, { multiple: true ,class: "pure-u-23-24 select2"}%>
+        </div>
+
+        <div class="pure-u-lg-1-4 pure-u-md-1-4 pure-u-sm-1 pure-u-1-4">
           <%= f.hidden_field :sort %>
           <%= f.hidden_field :order %>
           <label>　</label>
@@ -43,6 +48,7 @@
         <th class="sort_link_th" name="status"><%= t('.label_status') %></th>
         <th><%= t '.label_description' %></th>
         <th class="sort_link_th" name="due_date"><%= t('.label_due_date') %></th>
+        <th>ラベル</th>
         <th class="sort_link_th" name="created_at"><%= t('.label_created_at') %></th>
         <th><%= t '.label_updated_at' %></th>
         <th></th>
@@ -58,6 +64,11 @@
         <td>
           <% if task.due_date.present? %>
           <%= l task.due_date,format: :yymmdd %>
+          <% end %>
+        </td>
+        <td>
+          <% task.labels.each do |l| %>
+            <%= l.name %>
           <% end %>
         </td>
         <td> <%= l task.created_at %></td>

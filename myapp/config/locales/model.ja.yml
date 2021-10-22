@@ -14,6 +14,7 @@ ja:
         user_id: 担当者
         due_date: 終了期限
         status: 状態
+        label_ids: ラベル
       task/status:
         status_new: 未着手
         status_progoress: 着手中
@@ -54,3 +55,4 @@ ja:
       search_form:
         name: タスク名
         status: 状態
+        label_ids: ラベル

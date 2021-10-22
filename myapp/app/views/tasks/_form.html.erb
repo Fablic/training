@@ -31,6 +31,12 @@
       <%= f.label :due_date %>
       <%= f.date_field :due_date,class:'pure-input-1-4 calendar' %>
     </div>
+
+    <div class="pure-control-group">
+      <%= f.label :label_ids %>
+      <%= f.collection_select :label_ids, login_user.labels, :id, :name, {:prompt => false}, {:class => "pure-input-1-4 select2", :multiple => true }%>
+    </div>
+
     <div class="pure-controls">
       <%= f.submit (local_assigns[:edit_flag].present? ? t('tasks.edit.btn_regist'):t('tasks.new.btn_regist')) ,class:'pure-button button-success' %>
     </div>
