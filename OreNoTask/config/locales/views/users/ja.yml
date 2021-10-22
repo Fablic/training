@@ -1,0 +1,13 @@
+ja:
+  users:
+    index:
+      title: 'ユーザー一覧'
+      create: 'ユーザー新規作成'
+      edit: '編集'
+      delete: '×'
+    show:
+      title: 'ユーザーの詳細'
+    new:
+      title: 'ユーザーを新規作成'
+    edit:
+      title: 'ユーザーを編集'
