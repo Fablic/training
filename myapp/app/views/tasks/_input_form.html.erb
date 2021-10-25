@@ -1,13 +1,14 @@
-<%= form_with model: @task, local: true do |form| %>
+<div>
+  <%= form_with model: @task, local: true do |form| %>
 
   <% if @task.errors.any? %>
-    <div id="error_explanation">
-      <ul>
-        <% @task.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
-      </ul>
-    </div>
+  <div id="error_explanation">
+    <ul>
+      <% @task.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
   <% end %>
 
   <div>
@@ -22,23 +23,21 @@
     <%= form.label :due_date, t('tasks.due_date') %>
     <%= form.datetime_field :due_date, class: 'form-control' %>
   </div>
-
-  <% if local_assigns[:action_edit] %>
-    <div>
-      <%= form.label :status, t('tasks.status') %>
-      <%= form.select :status, options_for_select(
+  <div>
+    <%= form.label :status, t('tasks.status') %>
+    <%= form.select :status, options_for_select(
         Task.statuses.map { |key, v| [t("activerecord.attributes.task.status.#{key}"), key] },
         selected: @task.status
       ) %>
-    </div>
-  <% end %>
+  </div>
 
   <div class="actions">
     <%= form.submit t('tasks.submit'), class: 'btn btn-primary'%>
   </div>
 
   <% if local_assigns[:action_edit] %>
-    <%= link_to t('tasks.show'), @task %>
+  <%= link_to t('tasks.show'), @task %>
   <% end %>
   <%= link_to t('tasks.back'), tasks_path, class: 'btn btn-secondary' %>
-<% end %>
+  <% end %>
+</div>

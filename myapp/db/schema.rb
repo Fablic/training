@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_18_153225) do
+ActiveRecord::Schema.define(version: 2021_10_25_025548) do
 
   create_table "tasks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "title", limit: 50, null: false
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 2021_10_18_153225) do
     t.integer "deleted", limit: 1, default: 0, null: false
     t.datetime "due_date", null: false
     t.integer "status", default: 0, null: false
+    t.index ["title", "status"], name: "index_tasks_on_title_and_status"
   end
 
 end

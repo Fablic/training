@@ -202,23 +202,50 @@ RSpec.describe 'tasks', type: :system do
     end
   end
 
-  describe 'sort function' do
-    let!(:task_list) { create_list(:task, 4) }
+  describe 'search with title' do
+    before { visit root_path }
 
+    let!(:task_not_started) { create(:task, title: 'first') }
+    let!(:task_in_progress) { create(:task, title: 'last' ) }
+    
+    context 'when search by first' do
+      it 'search success' do
+        fill_in 'q[title_cont]', with: 'first'
+        click_on '検索'
+        expect(find('tr:nth-child(2)')).to have_content 'first'
+        expect(find('tr:nth-child(2)')).not_to have_content 'last'
+      end
+    end
+
+    context 'when search by last' do
+      it 'search success' do
+        fill_in 'q[title_cont]', with: 'last'
+        click_on '検索'
+        expect(find('tr:nth-child(2)')).to have_content 'last'
+        expect(find('tr:nth-child(2)')).not_to have_content 'first'
+      end
+    end
+  end
+
+  describe 'sort function' do
+    let!(:task1) { create(:task, due_date: '2022/10/04 00:00:00') }
+    let!(:task2) { create(:task, due_date: '2022/10/05 00:00:00') }
+    let!(:task3) { create(:task, due_date: '2022/10/06 00:00:00') }
+    let!(:task4) { create(:task, due_date: '2022/10/07 00:00:00') }
     before { visit root_path }
 
     context 'when open list page(sort by created_at order by desc)' do
       it 'order success' do
-        expect(find('tr:nth-child(2)')).to have_content I18n.l task_list.last.created_at
-        expect(find('tr:nth-child(5)')).to have_content I18n.l task_list.first.created_at
+        expect(find('tr:nth-child(2)')).to have_content I18n.l task4.created_at
+        expect(find('tr:nth-child(5)')).to have_content I18n.l task1.created_at
       end
     end
 
     context 'when click link to sort by due_date asc' do
       it 'order success' do
         click_on '期日' # 1回押すと昇順
-        expect(find('tr:nth-child(2)')).to have_content I18n.l task_list.first.due_date
-        expect(find('tr:nth-child(5)')).to have_content I18n.l task_list.last.due_date
+        expect(find('tr:nth-child(2)')).to have_content I18n.l task1.due_date
+        expect(find('tr:nth-child(5)')).to have_content I18n.l task4.due_date
       end
     end
 
@@ -226,8 +253,8 @@ RSpec.describe 'tasks', type: :system do
       it 'order success' do
         click_on '期日' # 1回押すと昇順
         click_on '期日' # 2回押すと降順
-        expect(find('tr:nth-child(2)')).to have_content I18n.l task_list.last.due_date
-        expect(find('tr:nth-child(5)')).to have_content I18n.l task_list.first.due_date
+        expect(find('tr:nth-child(2)')).to have_content I18n.l task4.due_date
+        expect(find('tr:nth-child(5)')).to have_content I18n.l task1.due_date
       end
     end
   end
