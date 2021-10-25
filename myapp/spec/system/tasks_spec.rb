@@ -66,6 +66,19 @@ RSpec.describe 'tasks', type: :system do
       expect(page).to have_content '戻る'
       expect(page).to have_content '詳細'
     end
+
+    it 'can change sort order of created_by' do
+      
+      expect(find('#task_list > tbody:nth-child(2) > tr:nth-child(1)')).to have_content task_list[0].name
+      expect(find('#task_list > tbody:nth-child(2) > tr:nth-child(4)')).to have_content task_list[3].name
+
+      click_on '作成日'
+
+      expect(find('#task_list > tbody:nth-child(2) > tr:nth-child(1)')).to have_content task_list[3].name
+      expect(find('#task_list > tbody:nth-child(2) > tr:nth-child(4)')).to have_content task_list[0].name
+
+    end
+
   end
 
   describe 'New Page' do
