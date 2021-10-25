@@ -6,23 +6,15 @@ describe 'タスク管理機能', type: :system do
   let!(:user_taro) { create(:user, name: 'TaroRakuten', password: 'rakuten') }
   let(:user_hanako) { create(:user, name: 'HanakoRakuten', password: 'rakuten') }
   let!(:hanako_task) { create(:task, name: '花子のタスク', status: 'not_started', start_at: '2021/12/02 10:00', due_date_at: '2021/12/03 11:00', user_id: user_hanako.id) }
-  let!(:taro_task1) { create(:task, name: '最初のタスク', description: '説明文', status: 'not_started', start_at: '2021/09/01 10:00', due_date_at: '2021/09/02 11:00', created_at: '2021/07/01 09:00:04', user_id: user_taro.id) }
-  let!(:taro_task2) { create(:task, name: '２番目のタスク', description: '説明文２', status: 'completed', start_at: '2021/08/02 10:00', due_date_at: '2021/08/03 11:00', created_at: '2021/07/01 09:00:03', user_id: user_taro.id) }
-  let!(:taro_task3) { create(:task, name: '追加したタスク', description: '追加した説明文', status: 'wip', start_at: '2021/10/01 10:00', due_date_at: '2021/10/03 11:00', created_at: '2021/07/01 09:00:02', user_id: user_taro.id) }
-  let!(:taro_task4) { create(:task, name: '最後のタスク', status: 'not_started', start_at: '2021/12/02 10:00', due_date_at: '2021/12/03 11:00', created_at: '2021/07/01 09:00:01', user_id: user_taro.id) }
+
+  before do
+    create(:task, name: '最初のタスク', description: '説明文', status: 'not_started', start_at: '2021/09/01 10:00', due_date_at: '2021/09/02 11:00', created_at: '2021/07/01 09:00:04', user_id: user_taro.id)
+    create(:task, name: '２番目のタスク', description: '説明文２', status: 'completed', start_at: '2021/08/02 10:00', due_date_at: '2021/08/03 11:00', created_at: '2021/07/01 09:00:03', user_id: user_taro.id)
+    create(:task, name: '追加したタスク', description: '追加した説明文', status: 'wip', start_at: '2021/10/01 10:00', due_date_at: '2021/10/03 11:00', created_at: '2021/07/01 09:00:02', user_id: user_taro.id)
+    create(:task, name: '最後のタスク', status: 'not_started', start_at: '2021/12/02 10:00', due_date_at: '2021/12/03 11:00', created_at: '2021/07/01 09:00:01', user_id: user_taro.id)
+  end
 
   describe 'タスク一覧' do
-    subject {
-      rspec_session
-      user_taro
-      user_hanako
-      hanako_task
-      taro_task1
-      taro_task2
-      taro_task3
-      taro_task4
-    }
-
     before do
       visit tasks_path
     end
@@ -212,14 +204,6 @@ describe 'タスク管理機能', type: :system do
   end
 
   describe 'タスク詳細' do
-    subject {
-      rspec_session
-      user_taro
-      user_hanako
-      hanako_task
-      taro_task1
-    }
-
     context '詳細画面に遷移し、内容を確認する' do
       it '表示される詳細画面の情報が期待通り' do
         visit tasks_path
@@ -241,15 +225,6 @@ describe 'タスク管理機能', type: :system do
   end
 
   describe 'タスク新規作成' do
-    subject {
-      rspec_session
-      user_taro
-      taro_task1
-      taro_task2
-      taro_task3
-      taro_task4
-    }
-
     context '新規作成画面でタスクを作成する' do
       it '期待通りの新規タスクが作成され、既存データに影響がない' do
         visit new_task_path
@@ -284,17 +259,6 @@ describe 'タスク管理機能', type: :system do
   end
 
   describe 'タスク編集' do
-    subject {
-      rspec_session
-      user_taro
-      user_hanako
-      hanako_task
-      taro_task1
-      taro_task2
-      taro_task3
-      taro_task4
-    }
-
     context 'タスクを編集する' do
       it '期待通りにタスクが編集され、既存データに影響がない' do
         visit tasks_path
@@ -335,15 +299,6 @@ describe 'タスク管理機能', type: :system do
   end
 
   describe 'タスクの削除' do
-    subject {
-      rspec_session
-      user_taro
-      taro_task1
-      taro_task2
-      taro_task3
-      taro_task4
-    }
-
     context 'タスクを削除する' do
       it '期待通りにタスクが削除され、既存データに影響がない' do
         visit tasks_path
@@ -366,17 +321,6 @@ describe 'タスク管理機能', type: :system do
   end
 
   describe 'アソシエーション' do
-    subject {
-      rspec_session
-      user_taro
-      user_hanako
-      hanako_task
-      taro_task1
-      taro_task2
-      taro_task3
-      taro_task4
-    }
-
     let(:rspec_session) { { user_id: user_hanako.id } }
 
     context 'ユーザーが異なる' do
