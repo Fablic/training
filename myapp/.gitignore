@@ -1,5 +1,5 @@
-node_modules/
-tmp/cache/
+/tmp/cache/
+/log/*.log
 /public/packs
 /public/packs-test
 /node_modules
