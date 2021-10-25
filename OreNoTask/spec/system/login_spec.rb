@@ -6,11 +6,6 @@ describe 'ログイン機能', type: :system do
   let!(:task) { create(:task, name: '最初のタスク', status: 'not_started', start_at: '2021/09/01 10:00', due_date_at: '2021/09/02 11:00', user_id: user.id) }
 
   describe 'ログイン画面' do
-    subject {
-      user
-      task
-    }
-
     context 'ログイン画面からログインできる' do
       it '正常ログイン' do
         visit tasks_path
