@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class TasksController < ApplicationController
-  before_action :logged_in_user
+  before_action :ensure_logged_in
 
   def index
     @tasks = Task.active.user(current_user.id).order("#{sort_column} #{sort_direction}").page(params[:page]).per(10)
