@@ -1,0 +1,12 @@
+<%= render 'layouts/error_messages', model: form.object %>
+<table>
+  <tr>
+    <th><%= form.label :name, User.human_attribute_name(:name) %></th>
+    <td><%= form.text_field :name %></td>
+  </tr>
+  <tr>
+    <th><%= form.label :name, User.human_attribute_name(:password) %></th>
+    <td><%= form.password_field :password %></td>
+  </tr>
+</table>
+<p><%= form.submit @submit_label, class: 'btn btn-primary' %></p>

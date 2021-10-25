@@ -1,16 +1,24 @@
 <header class='border-bottom rounded-bottom position-fixed w-100'>
-  <h1><%= I18n.t('users.index.title') %></h1><%= button_to I18n.t('dictionary.words.logout'), logout_path, method: :delete, data: {confirm: I18n.t('dictionary.messages.confirm_logout')}, class: 'btn btn-dark logout' %>
+  <h1><%= I18n.t('users.index.title') %></h1>
+  <%= button_to I18n.t('dictionary.words.logout'), logout_path, method: :delete, data: {confirm: I18n.t('dictionary.messages.confirm_logout')}, class: 'btn btn-dark logout' %>
+  <%= link_to I18n.t('login.index.title'), tasks_path, class: 'btn btn-success change-management' %>
 </header>
 
 <div class='container' id='main-container'>
+  <% if notice.present? %>
+  <%= render partial: 'common/notice', locals: { notice: notice } %>
+  <% end %>
+
+<div id='create-task'><%= link_to I18n.t('users.index.create'), new_user_path, class: 'btn btn-success mr-2' %></div>
+
 <ul class='list-group rounded'>
   <% @users.each do |user| %><li class='list-group-item'>
     <div class='d-inline-block'>
-    <%= button_to I18n.t('users.index.delete'), admin_users_path(user), method: :delete, data: {confirm: I18n.t('dictionary.messages.confirm_delete')} %>
+    <%= button_to I18n.t('users.index.delete'), delete_user_path(user), method: :delete, data: {confirm: I18n.t('dictionary.messages.confirm_delete')} %>
     </div>
     <h2 class='task-name d-inline-block'>
-      <span class='border rounded d-inline-block'></span><%= link_to user.name, admin_users_path(user) %>
-      <%= link_to I18n.t('users.index.edit'), edit_user_path(user), class: 'btn btn-dark mr-2'%>
+      <%= link_to user.name, admin_user_path(user) %>
+      <%= link_to I18n.t('users.index.edit'), edit_user_path(user), class: 'btn btn-dark mr-2' %>
     </h2>
   </li>
   <% end %>
