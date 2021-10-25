@@ -87,6 +87,7 @@ RSpec.describe 'tasks', type: :system do
         fill_in 'task[name]', with: params[:name]
         fill_in 'task[description]', with: params[:description]
         fill_in 'task[created_by]', with: user.id
+        fill_in 'task[finished_at]', with: Time.zone.today.strftime('%Y-%m-%d')
         click_on '登録する'
         expect(page).to have_content 'タスクを作成しました.'
       end
@@ -95,6 +96,7 @@ RSpec.describe 'tasks', type: :system do
         fill_in 'task[name]', with: params[:name]
         fill_in 'task[description]', with: params[:description]
         fill_in 'task[created_by]', with: user.id
+        fill_in 'task[finished_at]', with: Time.zone.today.strftime('%Y-%m-%d')
         select '着手', from: 'task[status]'
         click_on '登録する'
         expect(page).to have_content 'タスクを作成しました.'
@@ -106,6 +108,7 @@ RSpec.describe 'tasks', type: :system do
         fill_in 'task[name]', with: params[:name]
         fill_in 'task[description]', with: params[:description]
         fill_in 'task[created_by]', with: user.id
+        fill_in 'task[finished_at]', with: Time.zone.today.strftime('%Y-%m-%d')
         select '完了', from: 'task[status]'
         click_on '登録する'
         expect(page).to have_content 'タスクを作成しました.'
@@ -116,8 +119,10 @@ RSpec.describe 'tasks', type: :system do
       it 'start & finished in future' do
         fill_in 'task[name]', with: params[:name]
         fill_in 'task[created_by]', with: user.id
-        select Time.zone.now.year + 2, from: 'task[finished_at(1i)]'
-        select Time.zone.now.year + 1, from: 'task[started_at(1i)]'
+
+        fill_in 'task[started_at]', with: 5.days.from_now.strftime('%Y-%m-%d')
+        fill_in 'task[finished_at]', with: 10.days.from_now.strftime('%Y-%m-%d')
+
         click_on '登録する'
         expect(page).to have_content 'タスクを作成しました.'
       end
@@ -125,8 +130,8 @@ RSpec.describe 'tasks', type: :system do
       it 'start in past , end  in future' do
         fill_in 'task[name]', with: params[:name]
         fill_in 'task[created_by]', with: user.id
-        select Time.zone.now.year + 1, from: 'task[finished_at(1i)]'
-        select Time.zone.now.year - 1, from: 'task[started_at(1i)]'
+        fill_in 'task[started_at]', with: 5.days.ago.strftime('%Y-%m-%d')
+        fill_in 'task[finished_at]', with: 10.days.from_now.strftime('%Y-%m-%d')
         click_on '登録する'
         expect(page).to have_content 'タスクを作成しました.'
       end
@@ -158,19 +163,26 @@ RSpec.describe 'tasks', type: :system do
       it 'finished_at less than started_at' do
         fill_in 'task[name]', with: params[:name]
         fill_in 'task[created_by]', with: user.id
-        select Time.zone.now.year + 1, from: 'task[finished_at(1i)]'
-        select Time.zone.now.year + 2, from: 'task[started_at(1i)]'
+        fill_in 'task[started_at]', with: 15.days.from_now.strftime('%Y-%m-%d')
+        fill_in 'task[finished_at]', with: 5.days.from_now.strftime('%Y-%m-%d')
         click_on '登録する'
         expect(page).to have_content '終了日を開始日より前にすることはできません'
       end
 
-      it 'finished_at is in the past' do
+      it 'invalid date format' do
         fill_in 'task[name]', with: params[:name]
-        fill_in 'task[created_by]', with: user.id
-        select Time.zone.now.year - 1, from: 'task[finished_at(1i)]'
-        select Time.zone.now.year - 2, from: 'task[started_at(1i)]'
+
+        fill_in 'task[finished_at]', with: 'hoge'
         click_on '登録する'
-        expect(page).to have_content '終了日を今日より前にすることはできません'
+        expect(page).to have_content '無効な日付です'
+      end
+
+      it 'invalid date ' do
+        fill_in 'task[name]', with: params[:name]
+
+        fill_in 'task[finished_at]', with: '2021-02-31'
+        click_on '登録する'
+        expect(page).to have_content '無効な日付です'
       end
     end
   end

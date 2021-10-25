@@ -11,3 +11,4 @@ ja:
       created_success: "%{target}を作成しました."
       updated_success: "%{target}を更新しました."
       deleted_success: "%{target}を削除しました."
+      invalid_date: '無効な日付です。'

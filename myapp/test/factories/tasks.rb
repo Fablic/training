@@ -12,7 +12,7 @@ FactoryBot.define do
     description { generate :desc_seq }
     status { :pending }
     created_by { 1 }
-    finished_at { rand(1..100).days.from_now }
+    finished_at { rand(1..100).days.from_now.strftime('%Y-%m-%d') }
   end
 end
 

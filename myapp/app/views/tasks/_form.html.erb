@@ -32,12 +32,12 @@
 
   <div class="field">
     <%= form.label Task.human_attribute_name(:started_at) %>
-    <%= form.date_select :started_at %>
+    <%= form.date_field :started_at %>
   </div>
 
   <div class="field">
     <%= form.label Task.human_attribute_name(:finished_at) %>
-    <%= form.date_select :finished_at %>
+    <%= form.date_field :finished_at %>
   </div>
 
   <div class="actions">

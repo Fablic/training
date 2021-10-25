@@ -5,6 +5,7 @@
 <table class="type06" id="task_list">
   <thead>
     <tr>
+      <th><%= User.human_attribute_name(:name)  %></th>
       <th><%= link_to Task.human_attribute_name(:status), {sort: :status, direction: get_sort_direction(:status)} %></th>
       <th><%= link_to Task.human_attribute_name(:name), {sort: :name, direction: get_sort_direction(:name)} %></th>
       <th><%= link_to Task.human_attribute_name(:started_at), {sort: :started_at, direction: get_sort_direction(:started_at)} %></th>
@@ -17,6 +18,7 @@
   <tbody>
     <% @tasks.each do |task| %>
       <tr>
+        <td><%= task.user.name %></td>
         <td><%= t("enums.task.status.#{task.status}")  %></td>
         <td><%= task.name %></td>
         <td><%= task.started_at ? l(task.started_at.to_date): ''  %></td>

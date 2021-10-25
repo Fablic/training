@@ -8,7 +8,7 @@ class TasksController < ApplicationController
     params[:sort] ||= :id
     params[:direction] ||= 'ASC'
 
-    @tasks = Task.all.order(params[:sort] => params[:direction])
+    @tasks = Task.all.order(params[:sort] => params[:direction]).includes(:user)
   end
 
   # GET /tasks/1 or /tasks/1.json
