@@ -24,6 +24,7 @@
       
         <%= f.file_field :image, accept: "image/jpeg,image/gif,image/png", class: 'form-control'  %>
         <br />
+        <%= f.hidden_field :user_id, :value => current_user.id %>
         
       <%= f.submit button_value, class: "btn btn-primary" %>
     <% end %>

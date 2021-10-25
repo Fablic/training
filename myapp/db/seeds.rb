@@ -6,6 +6,8 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+user =  User.create( name: "seed")
+
 50.times do |i|
-  tasks =  Task.create( title: "seed #{i+1}", detail: "seed detail", priority: 10, status:10, due_date: "2021-10-31")
+  task =  Task.create( title: "seed #{i+1}", detail: "seed detail", priority: 10, status:10, due_date: "2021-10-31",user: user)
 end

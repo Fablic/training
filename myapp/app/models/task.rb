@@ -1,6 +1,8 @@
 class Task < ApplicationRecord
   include LiberalEnum
 
+  belongs_to :user
+
   validates :title, presence: true, length: { minimum: 3, maximum: 20 }
   validates :detail, length: { maximum: 1000 }
 

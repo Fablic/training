@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Task, type: :model do
-  let(:task) { build(:task) }
+  let!(:user) { create(:user) }
+  let(:task) { create(:task, user: user) }
 
   shared_examples 'When it was invalid.' do
     it 'Invalidated and returns an error message' do

@@ -1,8 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe TasksController, type: :system do
+  let!(:user) { create(:user) }
   let(:task_count) { 60 }
-  let!(:tasks) { FactoryBot.create_list(:task, task_count) }
+  let!(:tasks) { FactoryBot.create_list(:task, task_count, user: user) }
 
   shared_examples 'When the task list is sorted' do
     it 'Displayed in a sorted' do
