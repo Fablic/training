@@ -2,7 +2,6 @@
 
 class Task < ApplicationRecord
   after_initialize :set_defaults
-  attr_accessor :start_tmp
 
   enum status: {
     pending: 0,

@@ -5,8 +5,8 @@ class TasksController < ApplicationController
 
   # GET /tasks or /tasks.json
   def index
-    params[:sort] ||= :created_by
-    params[:direction] ||= 'ASC'
+    params[:sort] ||= :created_at
+    params[:direction] ||= 'DESC'
 
     @tasks = Task.all.order(params[:sort] => params[:direction]).includes(:user)
   end
