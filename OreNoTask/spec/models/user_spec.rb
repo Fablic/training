@@ -30,8 +30,6 @@ RSpec.describe 'Userモデルのテスト', type: :model do
     }
 
     describe 'nameカラム' do
-      subject { user }
-
       context '空欄' do
         let(:name) { '' }
 
@@ -64,8 +62,6 @@ RSpec.describe 'Userモデルのテスト', type: :model do
     end
 
     describe 'passwordカラム' do
-      subject { user }
-
       context '空欄' do
         let(:password) { '' }
 
@@ -86,8 +82,6 @@ RSpec.describe 'Userモデルのテスト', type: :model do
     end
 
     describe 'privilegeカラム' do
-      subject { user }
-
       context '許容される値(user)' do
         let(:privilege) { 'user' }
 
