@@ -206,8 +206,8 @@ RSpec.describe 'tasks', type: :system do
     before { visit root_path }
 
     let!(:task_not_started) { create(:task, title: 'first') }
-    let!(:task_in_progress) { create(:task, title: 'last' ) }
-    
+    let!(:task_in_progress) { create(:task, title: 'last') }
+
     context 'when search by first' do
       it 'search success' do
         fill_in 'q[title_cont]', with: 'first'
@@ -232,11 +232,14 @@ RSpec.describe 'tasks', type: :system do
     let!(:task2) { create(:task, due_date: '2022/10/05 00:00:00') }
     let!(:task3) { create(:task, due_date: '2022/10/06 00:00:00') }
     let!(:task4) { create(:task, due_date: '2022/10/07 00:00:00') }
+
     before { visit root_path }
 
     context 'when open list page(sort by created_at order by desc)' do
       it 'order success' do
         expect(find('tr:nth-child(2)')).to have_content I18n.l task4.created_at
+        expect(find('tr:nth-child(3)')).to have_content I18n.l task3.created_at
+        expect(find('tr:nth-child(4)')).to have_content I18n.l task2.created_at
         expect(find('tr:nth-child(5)')).to have_content I18n.l task1.created_at
       end
     end

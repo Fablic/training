@@ -1,6 +1,7 @@
 <h1>Tasks#list</h1>
 
 <%= render "filter" %>
+<%= link_to t('tasks.create'), new_task_path, class: "btn btn-info mb-3" %>
 
 <table>
   <tr>
@@ -14,7 +15,6 @@
     <th><%= t('tasks.status') %></th>
     <th>
   </tr>
-
   <% @tasks.each do |task| %>
   <tr>
     <td><%= task.id %></td>
@@ -28,4 +28,4 @@
   <% end %>
 </table>
 
-<p><%= link_to t('tasks.create'), new_task_path, class: "task-new" %></p>
+<%= paginate @tasks %>
