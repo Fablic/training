@@ -1,5 +1,10 @@
 /tmp/cache/
-/log/*.log
+# Ignore all logfiles and tempfiles.
+log/*
+tmp/*
+!log/.keep
+!tmp/.keep
+
 /public/packs
 /public/packs-test
 /node_modules
