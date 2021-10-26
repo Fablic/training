@@ -1,7 +1,11 @@
 <p id="notice"><%= notice %></p>
 
 <h1><%= Task.model_name.human + t('actions.list')%></h1>
-
+<hr/>
+<h2>UNFINISHED:  <%=link_to  @dash_unfinished, q:{status_lt: 2}%></h2>
+<h2>OVERDUE: <%=link_to @dash_overdue, q:{finished_at_lt: Time.zone.today} %></h2>
+<h2>DUE TODAY :<%=link_to  @dash_due_today, q:{finished_at_eq: Time.zone.today}%></h2>
+<hr/>
 <%=  search_form_for @q do |f| %>
   <div class="field">
     <%= f.label :name_cont %>
@@ -18,8 +22,9 @@
 <% end %>
 
 
+<hr/>
 <%= paginate @tasks %>
-<br>
+<hr/>
 
 <%= link_to "#{t('actions.new')} #{Task.model_name.human}", new_task_path %>
 

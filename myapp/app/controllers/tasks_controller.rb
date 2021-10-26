@@ -5,8 +5,12 @@ class TasksController < ApplicationController
 
   # GET /tasks or /tasks.json
   def index
+    @dash_unfinished = Task.ransack(status_lt: 2).result.count
+    @dash_overdue = Task.ransack(finished_at_lt: Time.zone.today.strftime('%Y-%m-%d')).result.count
+    @dash_due_today = Task.ransack(finished_at_eq: Time.zone.today.strftime('%Y-%m-%d')).result.count
+
     @q = Task.ransack(params[:q])
-    @q.sorts = 'created_at desc' if  @q.sorts.empty? 
+    @q.sorts = 'created_at desc' if @q.sorts.empty?
     @tasks = @q.result.includes(:user).page(params[:page])
   end
 
