@@ -1,11 +1,11 @@
 FactoryBot.define do
   factory :task, class: Task do
-#    sequence(:task_name) { |n| "task_name{n}" }
-#    sequence(:description) { |n| "description{n}" }
-    task_name { 'TEST task' }
-    description { 'TEST desc' }
-    priority { 1 }
-    start_date = Date.parse("2021/01/01")
-    end_date   = Date.parse("2021/12/31")
+    sequence(:task_name) { |n| "Task_name#{n}" }
+    sequence(:description) { |n| "Description#{n}" }
+#    task_name { 'TEST task' }
+#    description { 'TEST desc' }
+     sequence(:priority) { |n| "#{n}" }
+    start_date = Time.zone.yesterday.strftime('%Y/%m/%d %H:%M:$S')
+    end_date   = Time.zone.today.strftime('%Y/%m/%d %H:%M:$S')
   end
 end

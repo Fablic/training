@@ -11,7 +11,7 @@
 <%= link_to t('.move_new_task'), new_task_path, id: 'click_new'  %> 
 </p>
 
-<table class='table table-list' border=1>
+<table class='table table-list' id='task_list' border=1>
   <thead>
     <tr>
       <th><%= t('tasks.common.id') %></th>
@@ -38,6 +38,7 @@
       <td><%= link_to t('.move_edit_task'), edit_task_path(task), id: 'click_edit' %></td>
       <td><%= link_to t('.move_destroy_task'), task_path(task), method: :delete, data: { confirm: 'Are you sure you want to delete it?
       ' } , id: 'click_destroy' %></td>
+    </tr>      
     <% end %>
   </tbody>
 </table>

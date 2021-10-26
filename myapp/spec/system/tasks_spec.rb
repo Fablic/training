@@ -2,8 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Tasks', type: :system do
-  let!(:task) { FactoryBot.create(:task) }
+RSpec.describe 'tasks', type: :system do
 
   # 画面ラベル名
   let(:label_task_name) { I18n.t('tasks.common.task_name') }
@@ -58,8 +57,65 @@ RSpec.describe 'Tasks', type: :system do
     end
   end
 
+  describe 'Show task' do
+    before {
+      visit root_path
+      # move to Show
+      page.all('#click_show')[0].click
+    }
+
+    it 'show display' do
+      expect(page).to have_content I18n.t('tasks.show.title')
+    end
+
+    it "go to Task's list" do
+      click_on I18n.t('tasks.common.move_task_list')
+      expect(page).to have_current_path root_path, ignore_query: true
+    end
+  end
+
+  describe 'Edit task' do
+    before {
+      visit root_path
+      # move to Edit
+      page.all('#click_edit')[0].click
+    }
+
+    it 'show display' do
+      expect(page).to have_content I18n.t('tasks.edit.title')\
+    end
+
+    it "go to Task's list" do
+      click_on I18n.t('tasks.common.move_task_list')
+      expect(page).to have_current_path root_path, ignore_query: true
+    end
+  end
+
+  describe 'Delete task' do
+    before {
+      visit root_path
+    }
+
+    it 'Destroy' do
+      page.accept_confirm do
+        page.all('#click_destroy')[0].click
+      end
+
+      expect(page).to have_content I18n.t('tasks.index.title')
+      expect(page).to have_content I18n.t('tasks.flash.complete_task_destroy')
+    end
+  end
+
   describe 'Index' do
+    let!(:task_list) { create_list(:task, 10) }
+
     before { visit root_path }
+
+    it 'table colums check' do
+      within('#task_list') do
+        expect(page).to have_content I18n.t('tasks.common.task_name')
+      end
+    end
 
     it 'Go to registration page' do
       click_on I18n.t('tasks.index.move_new_task')
@@ -67,69 +123,24 @@ RSpec.describe 'Tasks', type: :system do
     end
 
     it 'Go to Show page' do
+      expect(page).to have_content task_list[0].task_name
       page.all('#click_show')[0].click
       expect(page).to have_content I18n.t('tasks.show.title')
     end
 
     it 'Go to Edit page' do
+      expect(page).to have_content task_list[0].task_name
       page.all('#click_edit')[0].click
       expect(page).to have_content I18n.t('tasks.edit.title')
     end
 
     it 'Show dialog of delete' do
+      expect(page).to have_content task_list[0].task_name
       page.dismiss_confirm do
         page.all('#click_destroy')[0].click
       end
       expect(page).to have_content I18n.t('tasks.index.title')
     end
-
-    describe 'Show task' do
-      before {
-        visit root_path
-        # move to Show
-        page.all('#click_show')[0].click
-      }
-
-      it 'show display' do
-        expect(page).to have_content I18n.t('tasks.show.title')
-      end
-
-      it "go to Task's list" do
-        click_on I18n.t('tasks.common.move_task_list')
-        expect(page).to have_current_path root_path, ignore_query: true
-      end
-    end
-
-    describe 'Edit task' do
-      before {
-        visit root_path
-        # move to Edit
-        page.all('#click_edit')[0].click
-      }
-
-      it 'show display' do
-        expect(page).to have_content I18n.t('tasks.edit.title')\
-      end
-
-      it "go to Task's list" do
-        click_on I18n.t('tasks.common.move_task_list')
-        expect(page).to have_current_path root_path, ignore_query: true
-      end
-    end
-
-    describe 'Delete task' do
-      before {
-        visit root_path
-      }
-
-      it 'Destroy' do
-        page.accept_confirm do
-          page.all('#click_destroy')[0].click
-        end
-
-        expect(page).to have_content I18n.t('tasks.index.title')
-        expect(page).to have_content I18n.t('tasks.flash.complete_task_destroy')
-      end
-    end
   end
+
 end
