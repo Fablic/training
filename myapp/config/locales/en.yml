@@ -68,7 +68,12 @@ en:
             due_date:
               blank: is empty.
               error: Incorrect due date.
-
+        user:
+          attributes:
+            name:
+              blank: can't be blank
+              too_short: is too short (minimum is %{count} characters)
+              too_long: is too long (maximum is %{count} characters)             
   common:
     new: Create New
     edit: Edit
