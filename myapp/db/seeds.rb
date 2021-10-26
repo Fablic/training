@@ -9,5 +9,5 @@
 user =  User.create( name: "seed")
 
 50.times do |i|
-  task =  Task.create( title: "seed #{i+1}", detail: "seed detail", priority: 10, status:10, due_date: "2021-10-31",user: user)
+  Task.create( title: "seed #{i+1}", detail: "seed detail", priority: 10, status:10, due_date: "2021-10-31",user: user)
 end

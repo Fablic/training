@@ -62,6 +62,12 @@ ja:
             due_date:
               blank: は入力必須です
               error: 期限が誤っています
+        user:
+          attributes:
+            name:
+              blank: は入力必須です
+              too_short: は%{count}文字以上で入力してください
+              too_long: は%{count}文字以内で入力してください
   common:
     new: 新規作成
     edit: 編集
