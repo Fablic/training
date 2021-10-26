@@ -50,35 +50,57 @@ RSpec.describe 'tasks', type: :system do
     end
 
     it 'moves to show page' do
-      find('tr:nth-child(2)').click_on '詳細'
-      expect(page).to have_content task_list[1].name
+      find('#task_list > tbody:nth-child(2) > tr:nth-child(1)').click_on '詳細'
+      expect(page).to have_content task_list[3].name
       expect(page).to have_content '詳細タスク'
       expect(page).to have_content '戻る'
       expect(page).to have_content '編集'
     end
 
     it 'moves to edit page' do
-      find('tr:nth-child(2)').click_on '編集'
-      expect(page).to have_field('task_name', with: task_list[1].name)
-      expect(page).to have_field('task_description', with: task_list[1].description)
+      find('#task_list > tbody:nth-child(2) > tr:nth-child(1)').click_on '編集'
+      expect(page).to have_field('task_name', with: task_list[3].name)
+      expect(page).to have_field('task_description', with: task_list[3].description)
       expect(page).to have_content '編集タスク'
       expect(page).to have_content 'タスク名'
       expect(page).to have_content '戻る'
       expect(page).to have_content '詳細'
     end
+  end
 
-    it 'can change sort order of created_by' do
-      
-      expect(find('#task_list > tbody:nth-child(2) > tr:nth-child(1)')).to have_content task_list[0].name
-      expect(find('#task_list > tbody:nth-child(2) > tr:nth-child(4)')).to have_content task_list[3].name
+  describe 'Sorting' do
+    let!(:task_list) {
+      create_list(:task, 4, created_by: user.id) do |task, i|
+        task.finished_at = i.days.from_now.strftime('%Y-%m-%d')
+        task.save
+      end
+    }
 
-      click_on '作成日'
+    before do
+      visit root_path
+    end
 
+    it 'can change sort order of created_at DESC' do
       expect(find('#task_list > tbody:nth-child(2) > tr:nth-child(1)')).to have_content task_list[3].name
       expect(find('#task_list > tbody:nth-child(2) > tr:nth-child(4)')).to have_content task_list[0].name
 
+      click_on '作成日' # sort ASC
+
+      expect(find('#task_list > tbody:nth-child(2) > tr:nth-child(1)')).to have_content task_list[0].name
+      expect(find('#task_list > tbody:nth-child(2) > tr:nth-child(4)')).to have_content task_list[3].name
     end
 
+    it 'can change sort order by finished_at' do
+      click_on '終了日'
+    
+      expect(find('#task_list > tbody:nth-child(2) > tr:nth-child(1)')).to have_content task_list[0].name
+      expect(find('#task_list > tbody:nth-child(2) > tr:nth-child(4)')).to have_content task_list[3].name
+
+      click_on '終了日'
+
+      expect(find('#task_list > tbody:nth-child(2) > tr:nth-child(1)')).to have_content task_list[3].name
+      expect(find('#task_list > tbody:nth-child(2) > tr:nth-child(4)')).to have_content task_list[0].name
+    end
   end
 
   describe 'New Page' do
