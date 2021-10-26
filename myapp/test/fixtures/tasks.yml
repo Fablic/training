@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  description: MyString
+  status: 1
+  priority: 1
+  expires_at: 2021-10-22 08:00:50
+
+two:
+  title: MyString
+  description: MyString
+  status: 1
+  priority: 1
+  expires_at: 2021-10-22 08:00:50

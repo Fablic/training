@@ -1,0 +1,6 @@
+dsn:
+  mysql://root:password@127.0.0.1:3316/myapp_development
+
+exclude:
+   - ar_internal_metadata
+   - schema_migrations
