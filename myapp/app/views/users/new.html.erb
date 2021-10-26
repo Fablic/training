@@ -1,5 +1,5 @@
-<h1>New User</h1>
+<h1><%=t('actions.new') + User.model_name.human() %></h1>
 
 <%= render 'form', user: @user %>
 
-<%= link_to 'Back', users_path %>
+<%= link_to t('actions.back'), users_path %>

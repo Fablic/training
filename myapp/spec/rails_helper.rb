@@ -71,7 +71,7 @@ RSpec.configure do |config|
   config.before(:each, type: :system) do
     driven_by :rack_test
   end
-  
+
   Capybara.register_driver :remote_chrome do |app|
     hub_url = 'https://chrome:4444/wd/hub'
     chrome_capabilities = ::Selenium::WebDriver::Remote::Capabilities.chrome(
@@ -81,7 +81,6 @@ RSpec.configure do |config|
     )
     Capybara::Selenium::Driver.new(app, browser: :remote, url: hub_url, desired_capabilities: chrome_capabilities)
   end
-  
 
   config.before(:each, type: :system, js: true) do
     driven_by :remote_chrome

@@ -1,0 +1,14 @@
+en:
+  actions:
+    back: Back
+    new: New
+    show: Show
+    edit: Edit
+    destroy: Delete
+    list: " List"
+  messages:
+      delete_confirm: will be deleted. OK?
+      created_success: "%{target} was successfully created."
+      updated_success: "%{target} was successfully updated."
+      deleted_success: "%{target} was successfully destroyed."
+      invalid_date: ' invalid date'

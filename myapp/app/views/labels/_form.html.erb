@@ -1,8 +1,6 @@
 <%= form_with(model: label, local: true) do |form| %>
   <% if label.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(label.errors.count, "error") %> prohibited this label from being saved:</h2>
-
       <ul>
         <% label.errors.full_messages.each do |message| %>
           <li><%= message %></li>
@@ -12,13 +10,13 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :name %>
+    <%= form.label Label.human_attribute_name(:name) %>
     <%= form.text_field :name %>
   </div>
 
 
   <div class="field">
-    <%= form.label :color %>
+    <%= form.label Label.human_attribute_name(:color) %>
     <%= form.color_field :color %>
   </div>
 

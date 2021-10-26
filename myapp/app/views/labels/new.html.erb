@@ -1,5 +1,5 @@
-<h1>New Label</h1>
+<h1><%=t('actions.new') + Label.model_name.human() %></h1>
 
 <%= render 'form', label: @label %>
 
-<%= link_to 'Back', labels_path %>
+<%= link_to t('actions.back'), labels_path %>

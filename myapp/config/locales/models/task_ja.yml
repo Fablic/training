@@ -1,0 +1,20 @@
+ja:
+  activerecord:
+    models:
+      task: タスク
+    attributes:
+      task:
+        name: タスク名
+        description: 内容
+        created_by: オーナー
+        started_at: 開始日
+        finished_at: 終了日
+        created_at: 作成日
+        labels: ラベル
+        status: ステータス
+  enums:
+    task:
+      status:
+        pending: 未着手
+        started: 着手
+        finished: 完了

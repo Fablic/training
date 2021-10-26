@@ -1,8 +1,6 @@
 <%= form_with(model: task, local: true) do |form| %>
   <% if task.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(task.errors.count, "error") %> prohibited this task from being saved:</h2>
-
       <ul>
         <% task.errors.full_messages.each do |message| %>
           <li><%= message %></li>
@@ -12,34 +10,34 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :status %>
-    <%= form.select :status, Task.statuses.keys.to_a %>
+    <%= form.label Task.human_attribute_name(:status) %>
+    <%= form.select :status,  Task.statuses_i18n.keys.map { |k| [Task.statuses_i18n[k], k]} %>
   </div>
 
   <div class="field">
-    <%= form.label :name %>
+    <%= form.label Task.human_attribute_name(:name) %>
     <%= form.text_field :name %>
   </div>
 
 
   <div class="field">
-    <%= form.label :description %>
+    <%= form.label Task.human_attribute_name(:description) %>
     <%= form.text_field :description %>
   </div>
 
     <div class="field">
-    <%= form.label :created_by %>
+    <%= form.label Task.human_attribute_name(:created_by) %>
     <%= form.text_field :created_by %>
   </div>
 
   <div class="field">
-    <%= form.label :started_at %>
-    <%= form.date_select :started_at %>
+    <%= form.label Task.human_attribute_name(:started_at) %>
+    <%= form.date_field :started_at %>
   </div>
 
   <div class="field">
-    <%= form.label :finished_at %>
-    <%= form.date_select :finished_at %>
+    <%= form.label Task.human_attribute_name(:finished_at) %>
+    <%= form.date_field :finished_at %>
   </div>
 
   <div class="actions">

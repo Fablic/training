@@ -22,7 +22,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
       post users_url, params: { user: attributes_for(:generic_user) }
     end
 
-    assert_redirected_to user_url(User.last)
+    assert_redirected_to "#{user_url(User.last)}?locale=ja"
   end
 
   test 'should show user' do
@@ -37,7 +37,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 
   test 'should update user' do
     patch user_url(@user), params: { user: attributes_for(:generic_user) }
-    assert_redirected_to user_url(@user)
+    assert_redirected_to "#{user_url(@user)}?locale=ja"
   end
 
   test 'should destroy user' do
@@ -45,6 +45,6 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
       delete user_url(@user)
     end
 
-    assert_redirected_to users_url
+    assert_redirected_to "#{users_url}?locale=ja"
   end
 end
