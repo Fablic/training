@@ -43,6 +43,12 @@ ja:
         due_date: 期限
         create_date: 作成日時
         image: 画像
+      user:
+        name: 名前
+        email: Email
+        authority: 管理者権限
+        password: パスワード
+        password_confirmation: 確認
     enum:
       task:
         priority:
@@ -67,6 +73,10 @@ ja:
     edit: 編集
     submit: 送信
     delete: 削除
+    login: ログイン
+    logout: ログアウト
+    profile: プロフィール
+    signup: ユーザー登録
   form:
     error: 入力に誤りがあります(%{smtg}件)
   pages:
@@ -80,3 +90,14 @@ ja:
       search:
         title: 検索
         hit_count: 件
+    users:
+      flash:
+        added: ユーザーを作成しました。
+        edited: ユーザーを編集しました。
+    sessions:
+      flash:
+        login: ログイン失敗。メールアドレスかパスワードが間違っています
+        loginerror: ログインしてください
+        
+      
+

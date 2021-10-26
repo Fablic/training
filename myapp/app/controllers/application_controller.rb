@@ -1,10 +1,21 @@
 class ApplicationController < ActionController::Base
+  include SessionsHelper
+
   rescue_from Exception,                      with: :_render_internal_server_error
   rescue_from ActiveRecord::RecordNotFound,   with: :_render_not_found
   rescue_from ActionController::RoutingError, with: :_render_not_found
 
+  before_action :logged_in_user
+
   def routing_error
     raise ActionController::RoutingError, params[:path]
+  end
+
+  def logged_in_user
+    return if logged_in?
+
+    flash[:danger] = I18n.t('pages.sessions.flash.loginerror')
+    redirect_to login_url
   end
 
   private

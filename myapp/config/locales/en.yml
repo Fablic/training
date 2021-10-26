@@ -43,6 +43,12 @@ en:
         due_date: due_date
         create_date: create_date
         image: image
+      user:
+        name: Name
+        email: Email
+        authority: Authority
+        password: Password
+        password_confirmation: Confirmation
     enum:
       task:
         priority:
@@ -68,6 +74,10 @@ en:
     edit: Edit
     submit: Submit
     delete: Delete
+    login: LogIn
+    logout: LogOut
+    profile: Profile
+    signup: Sign Up
   form:
     error: The form contains %{smtg} error
   pages:
@@ -81,3 +91,12 @@ en:
       search:
         title: Search
         hit_count: hits
+    users:
+      flash:
+        added: User has been registered
+        edited: User has been edited.
+    sessions:
+      flash:
+        login: Login failed. Incorrect email address or password.
+        loginerror: Please log in.
+        

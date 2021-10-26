@@ -5,6 +5,10 @@ RSpec.describe TasksController, type: :system do
   let(:task_count) { 60 }
   let!(:tasks) { FactoryBot.create_list(:task, task_count, user: user) }
 
+  before do
+    log_in_as user
+  end
+
   shared_examples 'When the task list is sorted' do
     it 'Displayed in a sorted' do
       visit root_path(direction: 'asc', sort: sort)
@@ -43,6 +47,7 @@ RSpec.describe TasksController, type: :system do
   shared_examples 'page have task title' do
     it { expect(page).to have_content(tasks.first.title) }
   end
+
   shared_examples 'page does not have task title' do
     it { expect(page).not_to have_content(tasks.first.title) }
   end

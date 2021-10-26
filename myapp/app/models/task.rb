@@ -25,9 +25,10 @@ class Task < ApplicationRecord
                          where('title LIKE ?', "%#{ApplicationRecord.sanitize_sql_like(title)}%") if title.present?
                        }
   scope :search_status, ->(status) { where(status: status) if status.present? }
+  scope :search_user, ->(user) { where(user: user) if user.present? }
 
-  def self.search(params)
-    search_title(params[:title]).search_status(params[:status])
+  def self.search(user, params)
+    search_user(user).search_title(params[:title]).search_status(params[:status])
   end
 
   def display_image

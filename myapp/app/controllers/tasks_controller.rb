@@ -3,7 +3,7 @@ class TasksController < ApplicationController
 
   def index
     @search_params = search_params
-    @tasks = Task.search(@search_params).order("#{sort_column} #{sort_direction}").page(params[:page])
+    @tasks = Task.search(current_user, @search_params).order("#{sort_column} #{sort_direction}").page(params[:page])
   end
 
   def new
