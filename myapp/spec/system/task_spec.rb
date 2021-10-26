@@ -40,6 +40,13 @@ RSpec.describe TasksController, type: :system do
     end
   end
 
+  shared_examples 'page have task title' do
+    it { expect(page).to have_content(tasks.first.title) }
+  end
+  shared_examples 'page does not have task title' do
+    it { expect(page).not_to have_content(tasks.first.title) }
+  end
+
   describe '#index' do
     before { visit root_path }
     context 'When the show page is accessed.' do
@@ -102,22 +109,43 @@ RSpec.describe TasksController, type: :system do
       it_behaves_like 'When searching for title with'
     end
 
-    context 'When using pagenation.' do
-      it 'Successful transition.' do
-        expect(page).to have_content(tasks.first.title)
+    context 'When click Next' do
+      before { click_link 'Next', match: :first }
+      it_behaves_like 'page does not have task title'
+    end
+
+    context 'When click Previous' do
+      before do
         click_link 'Next', match: :first
-        expect(page).not_to have_content(tasks.first.title)
         click_link 'Previous', match: :first
-        expect(page).to have_content(tasks.first.title)
-        click_link 'Last', match: :first
-        expect(page).not_to have_content(tasks.first.title)
-        click_link 'First', match: :first
-        expect(page).to have_content(tasks.first.title)
-        click_link '2', match: :first
-        expect(page).not_to have_content(tasks.first.title)
-        click_link '1', match: :first
-        expect(page).to have_content(tasks.first.title)
       end
+      it_behaves_like 'page have task title'
+    end
+
+    context 'When click Last' do
+      before { click_link 'Last', match: :first }
+      it_behaves_like 'page does not have task title'
+    end
+
+    context 'When click First' do
+      before do
+        click_link 'Last', match: :first
+        click_link 'First', match: :first
+      end
+      it_behaves_like 'page have task title'
+    end
+
+    context 'When click 2' do
+      before { click_link '2', match: :first }
+      it_behaves_like 'page does not have task title'
+    end
+
+    context 'When click 1' do
+      before do
+        click_link '2', match: :first
+        click_link '1', match: :first
+      end
+      it_behaves_like 'page have task title'
     end
   end
 
