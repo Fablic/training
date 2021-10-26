@@ -92,7 +92,7 @@ RSpec.describe 'tasks', type: :system do
 
     it 'can change sort order by finished_at' do
       click_on '終了日'
-    
+
       expect(find('#task_list > tbody:nth-child(2) > tr:nth-child(1)')).to have_content task_list[0].name
       expect(find('#task_list > tbody:nth-child(2) > tr:nth-child(4)')).to have_content task_list[3].name
 

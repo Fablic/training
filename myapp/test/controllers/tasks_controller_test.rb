@@ -23,7 +23,7 @@ class TasksControllerTest < ActionDispatch::IntegrationTest
            params: { task: attributes_for(:task) }
     end
 
-    assert_redirected_to task_url(Task.last)
+    assert_redirected_to "#{task_url(Task.last)}?locale=ja"
   end
 
   test 'should show task' do
@@ -39,7 +39,7 @@ class TasksControllerTest < ActionDispatch::IntegrationTest
   test 'should update task' do
     patch task_url(@task),
           params: { task: attributes_for(:task) }
-    assert_redirected_to task_url(@task)
+    assert_redirected_to "#{task_url(@task)}?locale=ja"
   end
 
   test 'should destroy task' do
@@ -47,6 +47,6 @@ class TasksControllerTest < ActionDispatch::IntegrationTest
       delete task_url(@task)
     end
 
-    assert_redirected_to tasks_url
+    assert_redirected_to "#{tasks_url}?locale=ja"
   end
 end

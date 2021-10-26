@@ -22,7 +22,7 @@ class LabelsControllerTest < ActionDispatch::IntegrationTest
       post labels_url, params: { label: attributes_for(:label) }
     end
 
-    assert_redirected_to label_url(Label.last)
+    assert_redirected_to "#{label_url(Label.last)}?locale=ja"
   end
 
   test 'should show label' do
@@ -37,7 +37,7 @@ class LabelsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should update label' do
     patch label_url(@label), params: { label: attributes_for(:label) }
-    assert_redirected_to label_url(@label)
+    assert_redirected_to "#{label_url(@label)}?locale=ja"
   end
 
   test 'should destroy label' do
@@ -45,6 +45,6 @@ class LabelsControllerTest < ActionDispatch::IntegrationTest
       delete label_url(@label)
     end
 
-    assert_redirected_to labels_url
+    assert_redirected_to "#{labels_url}?locale=ja"
   end
 end
