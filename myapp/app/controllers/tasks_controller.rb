@@ -5,10 +5,9 @@ class TasksController < ApplicationController
 
   # GET /tasks or /tasks.json
   def index
-    params[:sort] ||= :created_at
-    params[:direction] ||= 'DESC'
-
-    @tasks = Task.all.order(params[:sort] => params[:direction]).includes(:user)
+    @q = Task.ransack(params[:q])
+    @q.sorts = 'created_at desc' if  @q.sorts.empty? 
+    @tasks = @q.result.includes(:user).page(params[:page])
   end
 
   # GET /tasks/1 or /tasks/1.json
@@ -71,7 +70,7 @@ class TasksController < ApplicationController
   # Only allow a list of trusted parameters through.
   def task_params
     params.require(:task)
-      .permit(:name, :created_by, :created_at, :started_at, :finished_at, :description, :status)
+      .permit(:name, :created_by, :created_at, :started_at, :finished_at, :description, :status, :priority)
       .with_defaults(created_by: 1)
   end
 end

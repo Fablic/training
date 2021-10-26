@@ -13,6 +13,12 @@
 </p>
 
 <p>
+  <strong><%= Task.human_attribute_name(:priority) %></strong>
+  <%= @task.priority %>
+</p>
+
+
+<p>
   <strong><%= Task.human_attribute_name(:description) %></strong>
   <%= @task.description %>
 </p>

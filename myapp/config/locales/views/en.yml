@@ -12,3 +12,4 @@ en:
       updated_success: "%{target} was successfully updated."
       deleted_success: "%{target} was successfully destroyed."
       invalid_date: ' invalid date'
+      search: Search

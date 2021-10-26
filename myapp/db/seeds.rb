@@ -14,3 +14,27 @@ User.create(id: 1,
             pw: BCrypt::Password.create('test1234'),
             first_run: false,
             admin: true)
+
+User.create(id: 2,
+            name: 'mvincent',
+            username: 'mvincent.yap@gmail.com',
+            pw: BCrypt::Password.create('test1234'),
+            first_run: false,
+            admin: false)
+
+Label.create(id: 1,
+             name: 'public',
+             created_by: 1,
+             color: '#e6e6e6')
+
+Label.create(id: 2,
+             name: 'private',
+             created_by: 1,
+             color: '#4dd2ff')
+
+FactoryBot.create_list(:task, 49, created_by: 1) do |task, _i|
+  task.status = rand(0..2)
+  task.priority = rand(1..10)
+  task.finished_at = rand(1..100).days.from_now.strftime('%Y-%m-%d')
+  task.save!
+end

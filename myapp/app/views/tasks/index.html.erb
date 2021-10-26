@@ -2,15 +2,37 @@
 
 <h1><%= Task.model_name.human + t('actions.list')%></h1>
 
+<%=  search_form_for @q do |f| %>
+  <div class="field">
+    <%= f.label :name_cont %>
+    <%= f.search_field :name_cont %>
+   </div>
+
+  <div class="field">
+    <%= f.label :status_eq %>
+    <%= f.select :status_eq,  Task.statuses_i18n.keys.map { |k| [Task.statuses_i18n[k], Task.statuses[k]]}, :include_blank => true %>
+  </div> 
+  <div class="field">
+    <%= f.submit t('messages.search') %>
+  </div> 
+<% end %>
+
+
+<%= paginate @tasks %>
+<br>
+
+<%= link_to "#{t('actions.new')} #{Task.model_name.human}", new_task_path %>
+
 <table class="type06" id="task_list">
   <thead>
     <tr>
-      <th><%= User.human_attribute_name(:name)  %></th>
-      <th><%= link_to Task.human_attribute_name(:status), {sort: :status, direction: get_sort_direction(:status)} %></th>
-      <th><%= link_to Task.human_attribute_name(:name), {sort: :name, direction: get_sort_direction(:name)} %></th>
-      <th><%= link_to Task.human_attribute_name(:started_at), {sort: :started_at, direction: get_sort_direction(:started_at)} %></th>
-      <th><%= link_to Task.human_attribute_name(:finished_at), {sort: :finished_at, direction: get_sort_direction(:finished_at)} %></th>
-      <th><%= link_to Task.human_attribute_name(:created_at), {sort: :created_at, direction: get_sort_direction(:created_at)} %></th>
+      <th><%= sort_link(@q, 'user_name') %></th>
+      <th><%= sort_link(@q, :status) %></th>
+      <th><%= sort_link(@q, :priority) %></th>
+       <th><%= sort_link(@q, :name) %></th>
+       <th><%= sort_link(@q, :started_at) %></th>
+      <th><%= sort_link(@q, :finished_at) %></th>
+       <th><%= sort_link(@q, :created_at) %></th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -20,6 +42,7 @@
       <tr>
         <td><%= task.user.name %></td>
         <td><%= t("enums.task.status.#{task.status}")  %></td>
+        <td><%= task.priority %></td> 
         <td><%= task.name %></td>
         <td><%= task.started_at ? l(task.started_at.to_date): ''  %></td>
         <td><%= l(task.finished_at.to_date) %></td>
@@ -32,7 +55,3 @@
     <% end %>
   </tbody>
 </table>
-
-<br>
-
-<%= link_to "#{t('actions.new')} #{Task.model_name.human}", new_task_path %>
