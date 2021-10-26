@@ -24,20 +24,23 @@
 
 <hr/>
 <%= paginate @tasks %>
+<%= page_entries_info @tasks %>
 <hr/>
 
 <%= link_to "#{t('actions.new')} #{Task.model_name.human}", new_task_path %>
 
+
 <table class="type06" id="task_list">
   <thead>
     <tr>
+      <th><%= sort_link(@q, :id) %></th>
       <th><%= sort_link(@q, 'user_name') %></th>
       <th><%= sort_link(@q, :status) %></th>
       <th><%= sort_link(@q, :priority) %></th>
-       <th><%= sort_link(@q, :name) %></th>
-       <th><%= sort_link(@q, :started_at) %></th>
+      <th><%= sort_link(@q, :name) %></th>
+      <th><%= sort_link(@q, :started_at) %></th>
       <th><%= sort_link(@q, :finished_at) %></th>
-       <th><%= sort_link(@q, :created_at) %></th>
+      <th><%= sort_link(@q, :created_at) %></th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -45,6 +48,7 @@
   <tbody>
     <% @tasks.each do |task| %>
       <tr>
+        <td><%= task.id %></td>
         <td><%= task.user.name %></td>
         <td><%= t("enums.task.status.#{task.status}")  %></td>
         <td><%= task.priority %></td> 

@@ -5,10 +5,9 @@ class LabelsController < ApplicationController
 
   # GET /labels or /labels.json
   def index
-    params[:sort] ||= :id
-    params[:direction] ||= 'ASC'
-
-    @labels = Label.all.order(params[:sort] => params[:direction])
+    @q = Label.ransack(params[:q])
+    @q.sorts = 'id asc' if @q.sorts.empty?
+    @labels = @q.result.page(params[:page])
   end
 
   # GET /labels/1 or /labels/1.json

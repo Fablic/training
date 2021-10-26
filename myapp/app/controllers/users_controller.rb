@@ -5,10 +5,9 @@ class UsersController < ApplicationController
 
   # GET /users or /users.json
   def index
-    params[:sort] ||= :id
-    params[:direction] ||= 'ASC'
-
-    @users = User.all.order(params[:sort] => params[:direction])
+    @q = User.ransack(params[:q])
+    @q.sorts = 'id asc' if @q.sorts.empty?
+    @users = @q.result.page(params[:page])
   end
 
   # GET /users/1 or /users/1.json
