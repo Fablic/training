@@ -1,22 +1,27 @@
-<h1>Tasks#list</h1>
+<div class="d-flex align-items-end">
+  <h1>Tasks#list</h1>
+  <%= link_to t('tasks.create'), new_task_path, class: "btn btn-info ml-auto" %>
+</div>
 
 <%= render "filter" %>
-<%= link_to t('tasks.create'), new_task_path, class: "btn btn-info mb-3" %>
 
-<table class="mb-3">
-  <tr>
-    <th><%= t('tasks.id') %></th>
-    <th><%= t('tasks.title') %></th>
-    <th><%= t('tasks.created_at') %></th>
-    <th><%= sort_link(@search, :due_date) do %>
-      <%= t('tasks.due_date') %>
-      <% end %>
-    </th>
-    <th><%= t('tasks.status') %></th>
-    <th>
-  </tr>
+<table class="table table-striped mb-3">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col"><%= '#' %></th>
+      <th scope="col"><%= 'Title' %></th>
+      <th scope="col"><%= 'Created' %></th>
+      <th scope="col"><%= sort_link(@search, :due_date) do %>
+        <%= 'DueDate' %>
+        <% end %>
+      </th>
+      <th scope="col"><%= 'Status' %></th>
+      <th scope="col"><%= 'Actions' %></th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
   <% @tasks.each do |task| %>
-  <tr>
+  <tr scope="row">
     <td><%= task.id %></td>
     <td><%= link_to task.title, task %></td>
     <td><%= l task.created_at %></td>

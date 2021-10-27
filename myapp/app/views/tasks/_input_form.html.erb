@@ -11,33 +11,35 @@
   </div>
   <% end %>
 
-  <div>
-    <%= form.label :title, t('tasks.title') %>
-    <%= form.text_field :title, class: 'form-control'%>
-  </div>
-  <div>
-    <%= form.label :description, t('tasks.description') %>
-    <%= form.text_area :description, class: 'form-control' %>
-  </div>
-  <div>
-    <%= form.label :due_date, t('tasks.due_date') %>
-    <%= form.datetime_field :due_date, class: 'form-control' %>
-  </div>
-  <div>
-    <%= form.label :status, t('tasks.status') %>
-    <%= form.select :status, options_for_select(
+  <form>
+    <div class="mb-auto p-2 form-group">
+      <%= form.label :title, t('tasks.title') %>
+      <%= form.text_field :title, class: 'form-control'%>
+    </div>
+    <div class="p-2 form-group">
+      <%= form.label :description, t('tasks.description') %>
+      <%= form.text_area :description, class: 'form-control' %>
+    </div>
+    <div class="p-2 form-group">
+      <%= form.label :due_date, t('tasks.due_date') %>
+      <%= form.datetime_field :due_date, class: 'form-control' %>
+    </div>
+    <div class="p-2 form-group">
+      <%= form.label :status, t('tasks.status') %>
+      <%= form.select :status, options_for_select(
         Task.statuses.map { |key, v| [t("activerecord.attributes.task.status.#{key}"), key] },
         selected: @task.status
-      ) %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit t('tasks.submit'), class: 'btn btn-primary'%>
-  </div>
-
-  <% if local_assigns[:action_edit] %>
-  <%= link_to t('tasks.show'), @task %>
-  <% end %>
-  <%= link_to t('tasks.back'), tasks_path, class: 'btn btn-secondary' %>
+      ), class: 'form-control' %>
+    </div>
+    <div class="d-flex align-items-start">
+      <%= link_to t('tasks.back'), tasks_path, class: 'btn btn-secondary p-2 ' %>
+      <% if local_assigns[:action_edit] %>
+        <%= link_to t('tasks.show'), @task, class: 'btn btn-secondary p-2 ml-3'%>
+      <% end %>
+      <div class="actions ml-auto p-2">
+        <%= form.submit t('tasks.submit'), class: 'btn btn-primary'%>
+      </div>
+    </div>  
+  </form>
   <% end %>
 </div>
