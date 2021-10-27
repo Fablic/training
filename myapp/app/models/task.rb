@@ -2,6 +2,11 @@
 
 class Task < ApplicationRecord
   after_initialize :set_defaults
+  
+  scope :role_filtered, -> (admin, user_id) { where(created_by: user_id) unless admin }
+  scope :unfinished, -> { where('status <> ?', Task.statuses[:finished]) }
+  scope :overdue, -> { unfinished.where('finished_at < ?', Time.zone.today.strftime('%Y-%m-%d')) }
+  scope :due_today, -> { unfinished.where(finished_at: Time.zone.today.strftime('%Y-%m-%d')) }
 
   enum status: {
     pending: 0,

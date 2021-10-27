@@ -4,6 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'tasks', type: :system do
   let!(:user) { create(:generic_user) }
+  let!(:admin) { create(:admin) }
 
   describe 'Index Page' do
     let!(:task_list) do
@@ -11,6 +12,7 @@ RSpec.describe 'tasks', type: :system do
     end
 
     before do
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
       visit root_path
     end
 
@@ -77,6 +79,7 @@ RSpec.describe 'tasks', type: :system do
     }
 
     before do
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
       visit root_path
     end
 
@@ -110,6 +113,7 @@ RSpec.describe 'tasks', type: :system do
     }
 
     before do
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
       visit new_task_path
     end
 
@@ -218,6 +222,33 @@ RSpec.describe 'tasks', type: :system do
         fill_in 'task[finished_at]', with: '2021-02-31'
         click_on '登録する'
         expect(page).to have_content '無効な日付です'
+      end
+    end
+  end
+
+  describe 'Filtered index' do
+    let!(:admin_list) { create_list(:task, 4, created_by: admin.id) }
+    let!(:normal_list) { create_list(:task, 4, created_by: user.id) }
+
+    context ' with admin' do
+      it ' sees all items' do
+        allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(admin)
+        visit root_path
+        expect(page).to have_content admin_list[0].name
+        expect(page).to have_content admin_list[3].name
+        expect(page).to have_content normal_list[0].name
+        expect(page).to have_content normal_list[3].name
+      end
+    end
+
+    context ' with non-admin' do
+      it ' sees only own tasks' do
+        allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+        visit root_path
+        expect(page).not_to have_content admin_list[0].name
+        expect(page).not_to have_content admin_list[3].name
+        expect(page).to have_content normal_list[0].name
+        expect(page).to have_content normal_list[3].name
       end
     end
   end

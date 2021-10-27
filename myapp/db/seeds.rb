@@ -9,7 +9,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 User.create(id: 1,
-            name: 'mvincent',
+            name: 'admin',
             username: 'mvincent.yap@rakuten.com',
             pw: BCrypt::Password.create('test1234'),
             first_run: false,
@@ -21,6 +21,7 @@ User.create(id: 2,
             pw: BCrypt::Password.create('test1234'),
             first_run: false,
             admin: false)
+FactoryBot.create_list(:generic_user, 20)
 
 Label.create(id: 1,
              name: 'public',
@@ -31,7 +32,6 @@ Label.create(id: 2,
              name: 'private',
              created_by: 1,
              color: '#4dd2ff')
-
 FactoryBot.create_list(:task, 49, created_by: 1) do |task, _i|
   task.status = rand(0..2)
   task.priority = rand(1..10)

@@ -5,11 +5,14 @@ class TasksController < ApplicationController
 
   # GET /tasks or /tasks.json
   def index
-    @dash_unfinished = Task.ransack(status_lt: 2).result.count
-    @dash_overdue = Task.ransack(finished_at_lt: Time.zone.today.strftime('%Y-%m-%d')).result.count
-    @dash_due_today = Task.ransack(finished_at_eq: Time.zone.today.strftime('%Y-%m-%d')).result.count
+    @dash_unfinished = Task.role_filtered(admin?, current_user.id).unfinished.count
+    @dash_overdue = Task.role_filtered(admin?, current_user.id).overdue.count
+    @dash_due_today = Task.role_filtered(admin?, current_user.id).due_today.count
 
-    @q = Task.ransack(params[:q])
+    params[:q] = params[:q].presence || {}
+
+    # @q = Task.ransack(params[:q].try(:merge, own))
+    @q = Task.role_filtered(admin?, current_user.id).ransack(params[:q])
     @q.sorts = 'created_at desc' if @q.sorts.empty?
     @tasks = @q.result.includes(:user).page(params[:page])
   end
@@ -68,13 +71,15 @@ class TasksController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_task
-    @task = Task.find(params[:id])
+    @task = Task.role_filtered(admin?, current_user.id).find(params[:id])
+
+    raise ActiveRecord::RecordNotFound if @task.nil?
   end
 
   # Only allow a list of trusted parameters through.
   def task_params
     params.require(:task)
       .permit(:name, :created_by, :created_at, :started_at, :finished_at, :description, :status, :priority)
-      .with_defaults(created_by: 1)
+      .with_defaults(created_by: current_user.id)
   end
 end

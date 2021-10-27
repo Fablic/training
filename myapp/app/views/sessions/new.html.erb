@@ -10,9 +10,20 @@
   </head>
 
   <body>
-  <h1>Task-u-ten    HI: <%= current_user.name%></h1>
-  <%= link_to "Log out", logout_path, method: :delete %>
-  <hr/>
-    <%= yield %>
+
+
+<h1>Login</h1>
+<p id="alert"><%= alert %></p>
+<%= form_tag '/login' do %>
+    <%= label_tag :username%>
+    <%= text_field_tag :username %>
+    <%= label_tag :password%>
+    <%= password_field_tag :password%>
+    <%= submit_tag "Login" %>
+<%end%>
+
+
   </body>
 </html>
+
+

@@ -26,6 +26,6 @@ FactoryBot.define do
     username { name.to_s }
     password { 'test123' }
     password_confirmation { 'test123' }
-    admin { true }
+    admin { false }
   end
 end
