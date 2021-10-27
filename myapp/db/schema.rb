@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_25_025548) do
+ActiveRecord::Schema.define(version: 2021_10_27_063433) do
 
   create_table "tasks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "title", limit: 50, null: false
@@ -20,7 +20,18 @@ ActiveRecord::Schema.define(version: 2021_10_25_025548) do
     t.integer "deleted", limit: 1, default: 0, null: false
     t.datetime "due_date", null: false
     t.integer "status", default: 0, null: false
+    t.bigint "user_id", null: false
     t.index ["title", "status"], name: "index_tasks_on_title_and_status"
+    t.index ["user_id"], name: "index_tasks_on_user_id"
   end
 
+  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "password_digest", null: false
+    t.boolean "is_admin", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  add_foreign_key "tasks", "users"
 end
