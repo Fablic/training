@@ -13,14 +13,14 @@ class TasksController < ApplicationController
   end
 
   def edit
-    @task = Task.active.user(current_user.id).find_by(id: params[:id])
+    @task = Task.available(current_user.id).find_by(id: params[:id])
     @submit_label = I18n.t('dictionary.words.save_to_update')
 
     redirect_to tasks_path if @task.nil?
   end
 
   def update
-    @task = Task.user(current_user.id).find(params[:id])
+    @task = Task.available(current_user.id).find(params[:id])
 
     if @task.update(task_params)
       redirect_to tasks_path, notice: I18n.t('dictionary.messages.edited_task')
@@ -31,7 +31,7 @@ class TasksController < ApplicationController
 
   def show
     id = params[:id]
-    @task = Task.active.user(current_user.id).find_by(id: id)
+    @task = Task.available(current_user.id).find_by(id: id)
 
     redirect_to tasks_path if @task.nil?
   end
@@ -49,7 +49,7 @@ class TasksController < ApplicationController
   end
 
   def destroy
-    @task = Task.user(current_user.id).find(params[:id])
+    @task = Task.available(current_user.id).find(params[:id])
     flash[:notice] = if @task.update(deleted: 1)
                        I18n.t('dictionary.messages.deleted_task')
                      else

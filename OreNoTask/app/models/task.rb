@@ -10,6 +10,7 @@ class Task < ApplicationRecord
   scope :search_keyword, -> (keyword) { where(['(name like? OR description like?)', "%#{keyword}%", "%#{keyword}%"]) }
   scope :active, -> { where(deleted: 0) }
   scope :user, -> (user_id) { where(user_id: user_id) }
+  scope :available, -> (user_id) { active.user(user_id) }
 
   validates :name, { presence: true, length: { maximum: 50 } }
   validates :description, length: { maximum: 2000 }
@@ -25,6 +26,6 @@ class Task < ApplicationRecord
   end
 
   def self.search(keyword, status, user, order)
-    active.search_status(status).search_keyword(keyword).user(user).order(order)
+    available(user).search_status(status).search_keyword(keyword).order(order)
   end
 end
