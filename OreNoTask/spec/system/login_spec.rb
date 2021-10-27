@@ -2,8 +2,11 @@
 
 require 'rails_helper'
 describe 'ログイン機能', type: :system do
-  let!(:user) { create(:user, name: 'YoshioRakuten', password: 'rakuten') }
-  let!(:task) { create(:task, name: '最初のタスク', status: 'not_started', start_at: '2021/09/01 10:00', due_date_at: '2021/09/02 11:00', user_id: user.id) }
+  let(:user) { create(:user, name: 'YoshioRakuten', password: 'rakuten') }
+
+  before do
+    create(:task, name: '最初のタスク', status: 'not_started', start_at: '2021/09/01 10:00', due_date_at: '2021/09/02 11:00', user_id: user.id)
+  end
 
   describe 'ログイン画面' do
     context 'ログイン画面からログインできる' do

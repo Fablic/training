@@ -59,7 +59,7 @@ class TasksController < ApplicationController
     redirect_to tasks_path
   end
 
-  def search
+  def search # rubocop:disable Metrics/AbcSize
     @tasks = Task.search(params[:keyword], params[:status], current_user.id, "#{sort_column} #{sort_direction}").page(params[:page]).per(10)
     @keyword = params[:keyword]
     @status = params[:status]

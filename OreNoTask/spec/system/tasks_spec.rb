@@ -5,13 +5,13 @@ describe 'タスク管理機能', type: :system do
   let(:rspec_session) { { user_id: user_taro.id } }
   let!(:user_taro) { create(:user, name: 'TaroRakuten', password: 'rakuten') }
   let(:user_hanako) { create(:user, name: 'HanakoRakuten', password: 'rakuten') }
-  let!(:hanako_task) { create(:task, name: '花子のタスク', status: :not_started, start_at: '2021/12/02 10:00', due_date_at: '2021/12/03 11:00', user_id: user_hanako.id) }
+  let!(:hanako_task) { create(:task, name: '花子のタスク', status: :not_started, start_at: '2021/12/02 10:00', due_date_at: '2021/12/03 11:00', user_id: user_hanako.id) } # rubocop:disable Layout/LineLength
 
   before do
     create(:task, name: '最初のタスク', description: '説明文', status: :not_started, start_at: '2021/09/01 10:00', due_date_at: '2021/09/02 11:00', created_at: '2021/07/01 09:00:04', user_id: user_taro.id) # rubocop:disable Layout/LineLength
     create(:task, name: '２番目のタスク', description: '説明文２', status: :completed, start_at: '2021/08/02 10:00', due_date_at: '2021/08/03 11:00', created_at: '2021/07/01 09:00:03', user_id: user_taro.id) # rubocop:disable Layout/LineLength
     create(:task, name: '追加したタスク', description: '追加した説明文', status: :wip, start_at: '2021/10/01 10:00', due_date_at: '2021/10/03 11:00', created_at: '2021/07/01 09:00:02', user_id: user_taro.id) # rubocop:disable Layout/LineLength
-    create(:task, name: '最後のタスク', status: :not_started, start_at: '2021/12/02 10:00', due_date_at: '2021/12/03 11:00', created_at: '2021/07/01 09:00:01', user_id: user_taro.id)
+    create(:task, name: '最後のタスク', status: :not_started, start_at: '2021/12/02 10:00', due_date_at: '2021/12/03 11:00', created_at: '2021/07/01 09:00:01', user_id: user_taro.id) # rubocop:disable Layout/LineLength
   end
 
   describe 'タスク一覧' do

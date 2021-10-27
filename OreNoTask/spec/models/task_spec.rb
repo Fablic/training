@@ -66,15 +66,19 @@ RSpec.describe 'Taskモデルのテスト', type: :model do
     describe 'statusカラム' do
       subject { task }
 
-      context '許容される値' do
+      context '許容される値 not_started' do
         let(:status) { :not_started }
 
         it { is_expected.to be_valid }
+      end
 
+      context '許容される値 wip' do
         let(:status) { :wip }
 
         it { is_expected.to be_valid }
+      end
 
+      context '許容される値 completed' do
         let(:status) { :completed }
 
         it { is_expected.to be_valid }
