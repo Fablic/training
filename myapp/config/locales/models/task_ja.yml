@@ -6,6 +6,7 @@ ja:
       task:
         name: タスク名
         description: 内容
+        priority: 優先
         created_by: オーナー
         started_at: 開始日
         finished_at: 終了日

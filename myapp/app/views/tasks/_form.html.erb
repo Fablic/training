@@ -16,18 +16,23 @@
 
   <div class="field">
     <%= form.label Task.human_attribute_name(:name) %>
-    <%= form.text_field :name %>
+    <%= form.text_field :name, :maxlength=> 30 %>
   </div>
 
 
   <div class="field">
+    <%= form.label Task.human_attribute_name(:priority) %>
+    <%= form.text_field :priority, :maxlength=> 3%>
+  </div>
+
+  <div class="field">
     <%= form.label Task.human_attribute_name(:description) %>
-    <%= form.text_field :description %>
+    <%= form.text_area :description %>
   </div>
 
     <div class="field">
     <%= form.label Task.human_attribute_name(:created_by) %>
-    <%= form.text_field :created_by %>
+    <%= form.text_field :created_by, :maxlength=> 5%>
   </div>
 
   <div class="field">

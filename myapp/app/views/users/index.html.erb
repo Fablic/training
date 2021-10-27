@@ -1,13 +1,17 @@
 <p id="notice"><%= notice %></p>
 
 <h1><%= User.model_name.human + t('actions.list')%></h1>
-
+<hr/>
+<%= paginate @users %>
+<%= page_entries_info @users %>
+<hr/>
 <table class="type06">
   <thead>
     <tr>
-      <th><%= link_to User.human_attribute_name(:name), {sort: :name, direction: get_sort_direction(:name)}%> </th>
-      <th><%= link_to User.human_attribute_name(:username), {sort: :username, direction: get_sort_direction(:username)}%></th>
-      <th><%= link_to User.human_attribute_name(:admin), {sort: :admin, direction: get_sort_direction(:admin)}%></th>
+      <th><%= sort_link(@q, :id)%></th>
+      <th><%= sort_link(@q, :name)%></th>
+      <th><%= sort_link(@q, :username)%></th>
+      <th><%= sort_link(@q, :admin)%></th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -15,6 +19,7 @@
   <tbody>
     <% @users.each do |user| %>
       <tr>
+        <td><%= user.id %></td>
         <td><%= user.name %></td>
         <td><%= user.username %></td>
         <td><%= user.admin %></td>

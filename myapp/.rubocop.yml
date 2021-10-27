@@ -14,7 +14,11 @@ Metrics/BlockLength:
 RSpec/ExampleLength:
   Exclude:
     - 'spec/**/*'
+RSpec/NestedGroups:
+  Max: 5
 RSpec/MultipleExpectations:
+  Max: 10
+RSpec/MultipleMemoizedHelpers:
   Max: 10
 RSpec/Rails/AvoidSetupHook:
   Exclude:
