@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   before_action :editing_authority, only: %i[edit update]
 
   def new
-    redirect_to root_url unless current_user.nil?
+    redirect_to root_path and return unless current_user.nil?
     @user = User.new
   end
 
@@ -12,7 +12,7 @@ class UsersController < ApplicationController
   end
 
   def create
-    redirect_to root_url unless current_user.nil?
+    redirect_to root_path and return unless current_user.nil?
     @user = User.new(user_params)
     if @user.save
       log_in @user
@@ -38,6 +38,6 @@ class UsersController < ApplicationController
   end
 
   def editing_authority
-    redirect_to(root_url) unless User.find(params[:id]).id == current_user.id
+    redirect_to(root_url) and return unless User.find(params[:id]).id == current_user.id
   end
 end
