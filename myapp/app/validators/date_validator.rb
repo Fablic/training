@@ -12,9 +12,10 @@ class DateValidator < ActiveModel::Validator
       Date.strptime(f, '%Y-%m-%d')
     rescue StandardError
       record.errors[:finished_at] << I18n.t('messages.invalid_date')
+      return
     end
 
-    return if record.started_at.blank?
+    return if record.started_at_before_type_cast.blank?
 
     s = record.started_at_before_type_cast
 
@@ -22,9 +23,10 @@ class DateValidator < ActiveModel::Validator
       Date.strptime(s, '%Y-%m-%d')
     rescue StandardError
       record.errors[:started_at] << I18n.t('messages.invalid_date')
+      return
     end
 
-    return if record.finished_at.to_date >= record.started_at.to_date
+    return if record.finished_at >= record.started_at
 
     record.errors.add(:finished_at, I18n.t('earlier_date_error', start: Task.human_attribute_name(:started_at)))
   end

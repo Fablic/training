@@ -9,7 +9,7 @@ class Task < ApplicationRecord
     finished: 2,
   }
   validates :created_by, { presence: true, numericality: { only_integer: true } }
-  validates :priority, { presence: true, numericality: { in: 1..10 } }
+  validates :priority, { presence: true, inclusion: 1..10 }
   validates :name, { presence: true, length: { maximum: 75 } }
   validates :description, { length: { maximum: 1000 } }
   validates :status, { presence: true, inclusion: { in: Task.statuses.keys } }
