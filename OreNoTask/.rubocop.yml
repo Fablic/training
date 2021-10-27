@@ -11,5 +11,3 @@ RSpec/NestedGroups:
   Enabled: false
 RSpec/MultipleMemoizedHelpers:
   Enabled: false
-Layout/LineLength:
-  Enabled: false
