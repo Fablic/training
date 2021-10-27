@@ -58,11 +58,13 @@ RSpec.describe User, type: :model do
 
     context 'When nil is set.' do
       let(:val) { nil }
+      let(:errors) { %w[blank invalid] }
       it_behaves_like 'When it was invalid.'
     end
 
     context 'When empty is set.' do
       let(:val) { '' }
+      let(:errors) { %w[blank invalid] }
       it_behaves_like 'When it was invalid.'
     end
 
@@ -94,16 +96,19 @@ RSpec.describe User, type: :model do
 
     context 'When nil is set.' do
       let(:val) { nil }
+      let(:errors) { %w[blank] }
       it_behaves_like 'When it was invalid.'
     end
 
     context 'When empty is set.' do
       let(:val) { '' }
+      let(:errors) { %w[blank] }
       it_behaves_like 'When it was invalid.'
     end
 
     context 'When unintended value  is set' do
       let(:val) { [*0..100].delete_if { |n| User.authoritys.values.include?(n) }.sample }
+      let(:errors) { %w[inclusion] }
       it_behaves_like 'When it was invalid.'
     end
   end
@@ -113,21 +118,25 @@ RSpec.describe User, type: :model do
 
     context 'When nil is set.' do
       let(:val) { nil }
+      let(:errors) { %w[blank] }
       it_behaves_like 'When it was invalid.'
     end
 
     context 'When empty is set.' do
       let(:val) { ' ' }
+      let(:errors) { %w[blank too_short] }
       it_behaves_like 'When it was invalid.'
     end
 
     context 'When the number of characters in the title is exceeded.' do
       let(:val) { 'a' * 21 }
+      let(:errors) { ['too_long'] }
       it_behaves_like 'When it was invalid.'
     end
 
     context 'When the title is low on characters.' do
       let(:val) { 'a' * 2 }
+      let(:errors) { ['too_short'] }
       it_behaves_like 'When it was invalid.'
     end
   end

@@ -40,6 +40,6 @@ class Task < ApplicationRecord
   def day_after_today
     return unless !due_date.nil? && (due_date < Time.zone.today)
 
-    errors.add(:due_date, I18n.t('activerecord.errors.models.task.attributes.due_date.error'))
+    errors.add(:due_date, :error)
   end
 end
