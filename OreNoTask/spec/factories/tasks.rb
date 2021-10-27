@@ -7,7 +7,7 @@ FactoryBot.define do
     sequence(:due_date_at, Date.new(2020, 3, 2))
     sequence(:created_at, Date.new(2020, 3, 2))
     description { 'description' }
-    status { 'not_started' }
+    status { :not_started }
     association :user
   end
 end
