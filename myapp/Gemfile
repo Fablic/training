@@ -38,7 +38,7 @@ gem 'kaminari'
 gem 'bootstrap-sass'
 gem 'bootstrap4-kaminari-views'
 
-gem 'bcrypt', '~>3.1.11'
+gem 'bcrypt'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
