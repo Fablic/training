@@ -1,14 +1,18 @@
 ja:
   tasks:
-    id:            'ID'
-    title:         '件名'
-    description:   '詳細'
-    edit:          '編集'
-    delete:        '削除'
-    create:        '作成'
-    submit:        '送信'
-    back:          '戻る'
-    show:          '詳細表示'
-    created_at:    '作成日時'
-    due_date:      '期日'
-    sort_due_date: '期日で並び替え'
+    id: ID
+    title: 件名
+    description: 詳細
+    edit: 編集
+    delete: 削除
+    create: 作成
+    submit: 送信
+    back: 戻る
+    show: 詳細表示
+    created_at: 作成日時
+    due_date: 期日
+    status: ステータス
+    search: 検索
+    status_not_started: 未着手
+    status_in_progress: 進行中
+    status_completed: 完了

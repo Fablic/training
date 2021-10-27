@@ -15,8 +15,9 @@ services:
     build: .
     command: bash -c "bundle install && yarn install && bundle exec rails webpacker:install && bundle exec rails db:create && bundle exec rails db:migrate && rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
     volumes:
-      - .:/myapp
+      - .:/${APP_NAME}
       - bundle-install:/usr/local/bundle:delegated
+      - node_modules:/${APP_NAME}/node_modules:delegated
     ports:
       - "3001:3000"
     links:
@@ -25,7 +26,7 @@ services:
       - chrome # Link to the chrome container
     environment: # environment configs for config/database.yml, change here if you want to change db user and password
       DB_USER: root
-      DB_NAME: myapp
+      DB_NAME: ${APP_NAME}
       DB_PASSWORD: password
       DB_HOST: db
 
@@ -39,3 +40,4 @@ volumes:
     driver: local
   bundle-install:
     driver: local
+  node_modules:

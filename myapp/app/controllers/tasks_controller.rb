@@ -60,10 +60,10 @@ class TasksController < ApplicationController
   private
 
   def set_task
-    @task = Task.find_by(id: params[:id], deleted: 0)
+    @task = Task.find(params[:id])
   end
 
   def task_params
-    params.fetch(:task, {}).permit(:title, :description, :due_date)
+    params.fetch(:task, {}).permit(:title, :description, :due_date, :status)
   end
 end
