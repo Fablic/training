@@ -7,7 +7,6 @@ AllCops:
     - 'node_modules/**/*'
     - 'vendor/**/*'
     - 'bin/*'
-    - 'db/schema.rb'
 Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
