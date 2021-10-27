@@ -14,7 +14,7 @@ class User < ApplicationRecord
   validate :unique_user?
 
   def unique_user?
-    errors.add(:name, I18n.t('dictionary.messages.invalid_unique_name')) unless
+    errors.add(:name, I18n.t('dictionary.messages.name_not_unique')) unless
       User.active_user_count(name).zero?
   end
 end

@@ -17,7 +17,7 @@ ja:
       deleted_user_task_failed: 'ユーザーに紐付くタスクの削除に失敗しました'
       invalid_date: 'の指定が不正です。'
       invalid_date_diff: 'は開始日より前の日付は登録できません。'
-      invalid_unique_name: 'は既に登録されています。'
+      name_not_unique: 'は既に登録されています。'
       confirm_logout: 'ログアウトします。よろしいですか？'
       failed_login: 'ログインに失敗しました'
     words:

@@ -6,7 +6,7 @@ RSpec.describe 'Taskモデルのテスト', type: :model do
   let(:task) { Task.new(name: name, description: description, status: status, start_at: start_at, due_date_at: due_date_at) }
   let(:name) { '最初のタスク' }
   let(:description) { '説明文' }
-  let(:status) { 'not_started' }
+  let(:status) { :not_started }
   let(:start_at) { '2021/09/01 10:00' }
   let(:due_date_at) { '2021/09/02 11:00' }
 
@@ -66,22 +66,26 @@ RSpec.describe 'Taskモデルのテスト', type: :model do
     describe 'statusカラム' do
       subject { task }
 
-      context '許容される値' do
-        let(:status) { 'not_started' }
+      context '許容される値 not_started' do
+        let(:status) { :not_started }
 
         it { is_expected.to be_valid }
+      end
 
-        let(:status) { 'wip' }
+      context '許容される値 wip' do
+        let(:status) { :wip }
 
         it { is_expected.to be_valid }
+      end
 
-        let(:status) { 'completed' }
+      context '許容される値 completed' do
+        let(:status) { :completed }
 
         it { is_expected.to be_valid }
       end
 
       context '許容されない値' do
-        let(:status) { 'pending' }
+        let(:status) { :pending }
 
         it { is_expected.not_to be_valid }
       end

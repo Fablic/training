@@ -3,12 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe 'Userモデルのテスト', type: :model do
-  let!(:user_hanako) { create(:user, name: 'HanakoRakuten', password: 'hanakopass', privilege: 'user', deleted: 0) }
-  let!(:user_yoshio) { create(:user, name: 'YoshioRakuten', password: 'yoshiopass', privilege: 'user', deleted: 1) }
+  let!(:user_hanako) { create(:user, name: 'HanakoRakuten', password: 'hanakopass', privilege: :user, deleted: 0) }
+  let!(:user_yoshio) { create(:user, name: 'YoshioRakuten', password: 'yoshiopass', privilege: :user, deleted: 1) }
   let(:user) { User.new(name: name, password: password, privilege: privilege) }
   let(:name) { 'TaroRakuten' }
   let(:password) { 'rakutenpass' }
-  let(:privilege) { 'user' }
+  let(:privilege) { :user }
 
   describe '正常系' do
     subject {
@@ -30,8 +30,6 @@ RSpec.describe 'Userモデルのテスト', type: :model do
     }
 
     describe 'nameカラム' do
-      subject { user }
-
       context '空欄' do
         let(:name) { '' }
 
@@ -64,8 +62,6 @@ RSpec.describe 'Userモデルのテスト', type: :model do
     end
 
     describe 'passwordカラム' do
-      subject { user }
-
       context '空欄' do
         let(:password) { '' }
 
@@ -86,22 +82,20 @@ RSpec.describe 'Userモデルのテスト', type: :model do
     end
 
     describe 'privilegeカラム' do
-      subject { user }
-
       context '許容される値(user)' do
-        let(:privilege) { 'user' }
+        let(:privilege) { :user }
 
         it { is_expected.to be_valid }
       end
 
       context '許容される値(admin)' do
-        let(:privilege) { 'admin' }
+        let(:privilege) { :admin }
 
         it { is_expected.to be_valid }
       end
 
       context '許容されない値' do
-        let(:privilege) { 'anonymous' }
+        let(:privilege) { :anonymous }
 
         it { is_expected.not_to be_valid }
       end
