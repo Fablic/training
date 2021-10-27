@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  before_action :logged_in_user
+  before_action :ensure_logged_in
 
   def index
     @users = User.active.order("name asc").page(params[:page]).per(10)
@@ -30,9 +30,8 @@ class UsersController < ApplicationController
   end
 
   def show
-    id = params[:id]
-    @user = User.active.find_by(id: id)
-
+    @user = User.active.find_by(id: params[:id])
+    @tasks = Task.active.user(params[:id]).order("created_at desc")
     redirect_to admin_users_path if @user.nil?
   end
 
@@ -47,14 +46,14 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    @tasks = Task.find_by(user_id: params[:id])
+    @tasks = Task.active.user(params[:id])
 
     unless @tasks.update(deleted: 1)
       redirect_to admin_users_path, notice: I18n.t('dictionary.messages.deleted_user_task_failed')
     end
 
-    @user = User.active.find_by(id: params[:id])
-    flash[:notice] = if @user.update(deleted: 1)
+    @user = User.active.where(id: params[:id])
+    flash[:notice] = if @user.update({deleted: 1})
                        I18n.t('dictionary.messages.deleted_user')
                      else
                        I18n.t('dictionary.messages.deleted_user_failed')

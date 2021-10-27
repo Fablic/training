@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
       log_in user
       redirect_to root_url
     else
-      flash.now[:notice] = I18n.t('dictionary.messages.failed_login')
+      flash.now[:notice] = I18n.t('dictionary.messages.failed_logout')
       render 'new'
     end
   end
