@@ -13,7 +13,6 @@
 ActiveRecord::Schema.define(version: 2021_10_22_080050) do
 
   create_table "tasks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
-    t.bigint "user_id", null: false, comment: "ユーザーID"
     t.string "title", null: false, comment: "タイトル"
     t.string "description", limit: 768, comment: "内容"
     t.integer "status", limit: 1, comment: "ステータス"
