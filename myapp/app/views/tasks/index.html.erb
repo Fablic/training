@@ -2,10 +2,13 @@
   <%= render 'dashboard'%>
 
 
-  <%= render 'searchbox'%>
 
 
 <div class="section">
+
+<div class="block ">
+  <%= render 'searchbox'%>
+</div>
 
 <h1 class="title has-text-primary">
   <%= Task.model_name.human + t('actions.list')%>
@@ -15,12 +18,11 @@
     </span>
   <% end %>
 </h1>
+
 <div class='box'>
 
 
 <%= paginate @tasks %>
-<%= page_entries_info @tasks %>
-
 <table class="table is-striped is-narrow is-hoverable is-fullwidth" id="task_list">
   <thead>
     <tr>

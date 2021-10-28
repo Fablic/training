@@ -10,7 +10,7 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body class='has-background-white-ter'>
+  <body class='has-background-white-ter is-size-5'>
 
 <% if ! notice.blank? %>
 
@@ -53,7 +53,7 @@
       <div class="navbar-item">
 
         <div class="buttons">
-          <%= link_to "Log out", logout_path, method: :delete, class: 'button is-light' %>
+          <%= link_to "Log out", logout_path, method: :delete, class: 'button is-warning' %>
         </div>
       </div>
     </div>

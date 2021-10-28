@@ -46,7 +46,9 @@
                     <%= form.date_field :finished_at %>
             </div>
 
-        
+          <div class="field">
+                 <%= form.collection_check_boxes(:label_ids, Label.all, :id, :name) %>
+            </div>
 
             <div class="actions">
                 <%= form.submit class: "button is-success" %>

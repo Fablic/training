@@ -13,10 +13,8 @@
 
 
 
-<div class="container"><%= paginate @labels %></div>
-<%= page_entries_info @labels %>
-<hr/>
-<table class="type06">
+<%= paginate @labels %>
+<table class="table is-striped is-narrow is-hoverable is-fullwidth">
   <thead>
     <tr>
       <th><%= sort_link(@q, :id)%></th>
