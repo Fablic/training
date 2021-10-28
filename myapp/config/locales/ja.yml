@@ -59,6 +59,11 @@ ja:
           waiting: 未着手
           doing: 着手
           done: 完了
+      user:
+        authority:
+          member: メンバー
+          adminer: 管理者
+          owner: オーナー
     errors:
       models:
         task:
@@ -74,6 +79,8 @@ ja:
               blank: は入力必須です
               too_short: は%{count}文字以上で入力してください
               too_long: は%{count}文字以内で入力してください
+            authority:
+              last_one: 管理者がいなくなってしまうので変更できません
   common:
     new: 新規作成
     edit: 編集
@@ -96,14 +103,21 @@ ja:
       search:
         title: 検索
         hit_count: 件
+      title: タスク
     users:
       flash:
         added: ユーザーを作成しました。
         edited: ユーザーを編集しました。
+        deleted: ユーザーを削除しました。
+      confirm_deletion: 本当に%{smtg}を削除してよろしいですか？
     sessions:
       flash:
         login: ログイン失敗。メールアドレスかパスワードが間違っています
         loginerror: ログインしてください
+    admin:
+      title: 管理画面
+      users: ユーザー画面
+      account: アカウント
         
       
 

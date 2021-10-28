@@ -1,4 +1,4 @@
-<h3 class="my-3 ml-3"> Tasks </h3>
+<h3 class="my-3 ml-3"><%=@displayed_user.name%>'s Tasks </h3>
 <div class="row">
   <%= form_with url: root_path, method: :get, local: true do |f| %>
     <div class="col-md-3  col-md-offset-5">
@@ -8,6 +8,7 @@
     <%= f.collection_select :status, Task.statuses.values, :to_s, method(:translate_status),{ prompt: '' }, class:"form-control", include_blank: true, selected: @search_params[:status] %>
     </div>
     <div class="col-md-1">
+    <%= f.hidden_field :user_id, :value => @displayed_user.id %>
     <%= f.submit t('pages.tasks.search.title'), class: "btn btn-primary" %>
     </div>
   <% end %>
@@ -23,7 +24,7 @@
             <%= @tasks.count %> <%=t('pages.tasks.search.hit_count')%>
           </div>          
       </div>    
-      <table class="table">
+      <table class="table table-striped">
         <thead>
           <tr>
             <th scope="col"><%= sort_order "id","No",@search_params %></th>

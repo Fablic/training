@@ -1,11 +1,14 @@
 class ApplicationController < ActionController::Base
   include SessionsHelper
+  include ApplicationHelper
+
+  before_action :logged_in_user
+  before_action :non_admin_redirect, if: :admin_controller? 
 
   rescue_from Exception,                      with: :_render_internal_server_error
   rescue_from ActiveRecord::RecordNotFound,   with: :_render_not_found
   rescue_from ActionController::RoutingError, with: :_render_not_found
 
-  before_action :logged_in_user
 
   def routing_error
     raise ActionController::RoutingError, params[:path]

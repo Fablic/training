@@ -1,7 +1,7 @@
 <%= form_with(model: task,  local: true) do |f| %>
   <tr >
     <td class='sort_id'><%= task.id %></td>
-    <td class='sort_title'><%= link_to task.title, task %></td>
+    <td class='sort_title'><%= link_to task.title, task_path(task,{user_id: @displayed_user.id}) %></td>
     <td class='sort_priority'><%= translate_priority task.priority %></td>
     <td class='sort_status'><%= translate_status task.status %></td>
     <td class='sort_due_date'><%= l task.due_date %></td>

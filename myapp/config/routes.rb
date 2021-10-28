@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   get    '/login',   to: 'sessions#new'
   post   '/login',   to: 'sessions#create'
   delete '/logout',  to: 'sessions#destroy'
+  get 'admin',  to: 'admin#index'
+
 
   get '*not_found', to: 'application#routing_error', constraints: lambda { |req|
     req.path.exclude? 'rails/active_storage'

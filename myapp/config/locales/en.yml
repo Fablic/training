@@ -74,6 +74,8 @@ en:
               blank: can't be blank
               too_short: is too short (minimum is %{count} characters)
               too_long: is too long (maximum is %{count} characters)             
+            authority:
+              last_one: can't change it because the administrator will be gone.
   common:
     new: Create New
     edit: Edit
@@ -96,12 +98,18 @@ en:
       search:
         title: Search
         hit_count: hits
+      title: Task
     users:
       flash:
         added: User has been registered
         edited: User has been edited.
+      confirm_deletion: Are you sure you want to delete %{smtg}?
     sessions:
       flash:
         login: Login failed. Incorrect email address or password.
         loginerror: Please log in.
+    admin:
+      title: Admin
+      users: Users
+      account: Account
         

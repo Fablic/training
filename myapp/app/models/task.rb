@@ -2,6 +2,7 @@ class Task < ApplicationRecord
   include LiberalEnum
 
   belongs_to :user
+  counter_culture :user
 
   validates :title, presence: true, length: { minimum: 3, maximum: 20 }
   validates :detail, length: { maximum: 1000 }

@@ -1,14 +1,15 @@
 class User < ApplicationRecord
+
   before_save :downcase_email
 
   validates :name, presence: true, length: { minimum: 3, maximum: 20 }
   validates :email, presence: true, format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i },
                     uniqueness: { case_sensitive: true }
-  validates :password, presence: true, length: { minimum: 5, maximum: 20 }
+  validates :password, presence: true, length: { minimum: 5, maximum: 20 }, on: :create
   has_secure_password
 
   enum authoritys: { member: 0, adminer: 10, owner: 20 }
-  validates :authority, presence: true, inclusion: { in: User.authoritys.values }
+  validates :authority, presence: true, inclusion: { in: User.authoritys.values }, user_authority: true
 
   has_many :tasks, dependent: :destroy
 

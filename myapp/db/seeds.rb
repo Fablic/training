@@ -6,10 +6,11 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-5.times do |i|
-  User.create( name: "seed #{i+1}", email: "seed#{i+1}@example.com", authority: 20, password: 'password' )
+5.times do |user_num|
+  authority = user_num == 1 ? 20 : User.authoritys.values.sample
+  user = User.create( name: "seed user#{user_num}", email: "seed#{user_num}@example.com", authority: authority, password: 'password' )
+  50.times do |i|
+    Task.create( title: "seed #{i}", detail: "seed detail", priority: Task.prioritys.values.sample, status:Task.statuses.values.sample, due_date: "2021-10-31",user: user)
+  end  
 end
 
-50.times do |i|
-  Task.create( title: "seed #{i+1}", detail: "seed detail", priority: 10, status:10, due_date: "2021-10-31",user: User.first)
-end
