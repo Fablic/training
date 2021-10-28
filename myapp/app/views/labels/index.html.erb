@@ -29,7 +29,10 @@
     <% @labels.each do |label| %>
       <tr>
         <td><%= label.id %></td>
-        <td><%= label.name %></td>
+        <td><div class="tags are-large">
+          <%= render partial: 'shared/label_component', locals:{label:label, has_delete:false} %>
+          </div>
+          </td>
         <td><%= label.color %></td>
         <td><%= link_to t('actions.show'), label , class: "button is-link" %></td>
         <td><%= link_to t('actions.edit'), edit_label_path(label) , class: "button is-link" %></td>

@@ -10,14 +10,6 @@
   <%= render 'searchbox'%>
 </div>
 
-<h1 class="title has-text-primary">
-  <%= Task.model_name.human + t('actions.list')%>
-  <%= link_to new_task_path, class:"button is-success" do %>
-    <span class="icon">
-      <i class="fas fa-plus-circle fa-2x"></i>
-    </span>
-  <% end %>
-</h1>
 
 <div class='box'>
 
@@ -52,7 +44,7 @@
           </span>
         </td>
         <td >
-            <div class="tags">
+            <div class="tags are-medium">
             <% task.labels.each do |label| %>
                <%= render partial: 'shared/label_component', locals: {label: label, has_delete: false }%>
             <% end %>

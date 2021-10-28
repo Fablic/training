@@ -1,6 +1,6 @@
 
 
-<div class="section">
+<div class="section container">
 
 <h1 class="title has-text-primary">
   <%=t('actions.show') + Task.model_name.human() %>
@@ -25,9 +25,11 @@
 
 <strong>TAGS</strong>
   <div class="box">
+    <div class="tags are-large">
         <% @task.labels.each do |label| %>
           <%= render partial: 'shared/label_component', locals: {label: label, has_delete: false}%>
       <% end %>
+      </div>
   </div>
 
 <p>
