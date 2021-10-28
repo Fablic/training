@@ -2,7 +2,7 @@
 
 class TasksController < ApplicationController
   before_action :set_task, only: %i[show edit update destroy]
-
+  around_action :skip_bullet, only: %i[destroy],if: -> { defined?(Bullet) }
   # GET /tasks or /tasks.json
   def index
     
