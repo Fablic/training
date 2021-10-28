@@ -9,11 +9,13 @@
 
 <h1 class="title has-text-primary">
   <%= Task.model_name.human + t('actions.list')%>
-  <%= link_to "#{t('actions.new')} #{Task.model_name.human}", new_task_path, class:"button is-link" %>
+  <%= link_to new_task_path, class:"button is-success" do %>
+    <span class="icon">
+      <i class="fas fa-plus-circle fa-2x"></i>
+    </span>
+  <% end %>
 </h1>
 <div class='box'>
-
-
 
 
 <%= paginate @tasks %>
@@ -42,11 +44,17 @@
         <td><%= task.user.name %></td>
         <td><%= t("enums.task.status.#{task.status}")  %></td>
         <td><%= task.priority %></td> 
-        <td><%= task.name %></td>
         <td>
+          <span class="is-size-4">
+            <%= task.name %>
+          </span>
+        </td>
+        <td >
+            <div class="tags">
             <% task.labels.each do |label| %>
-               <span class="tag"><%= label.name %></span>
+               <%= render partial: 'shared/label_component', locals: {label: label, has_delete: false }%>
             <% end %>
+            </div>
         </td>
         <td><%= task.started_at ? l(task.started_at.to_date): ''  %></td>
         <td><%= l(task.finished_at.to_date) %></td>

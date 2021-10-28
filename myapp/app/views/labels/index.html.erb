@@ -2,7 +2,11 @@
 
 <h1 class="title has-text-primary">
   <%= Label.model_name.human + t('actions.list')%>
-  <%= link_to "#{t('actions.new')} #{Label.model_name.human}", new_label_path, class:"button is-link"  %>
+  <%= link_to  new_label_path, class:"button is-success"   do %>
+    <span class="icon">
+      <i class="fas fa-plus-circle fa-2x"></i>
+    </span>
+  <% end %>
   
 </h1>
 <div class='box'>

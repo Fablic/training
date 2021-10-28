@@ -23,6 +23,12 @@
   <%= @task.priority %>
 </p>
 
+<strong>TAGS</strong>
+  <div class="box">
+        <% @task.labels.each do |label| %>
+          <%= render partial: 'shared/label_component', locals: {label: label, has_delete: false}%>
+      <% end %>
+  </div>
 
 <p>
   <strong><%= Task.human_attribute_name(:description) %></strong>
