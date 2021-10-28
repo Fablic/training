@@ -1,1 +1,13 @@
-<p>404 NOT FOUND</p>
+<!DOCTYPE html>
+<html>
+<%= render partial: '/layouts/head' %>
+
+  <body>
+  	<div class='container' id='error-container'>
+  	  <div class='border rounded' id='error-display'>
+        <h1>404 NOT FOUND</h1>
+        <div id='back-to-list'><%= link_to I18n.t('dictionary.words.back_to_index'), tasks_path, class: 'btn btn-success mr-2' %></div>
+      </div>
+    </div>
+  </body>
+</html>

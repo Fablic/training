@@ -31,6 +31,7 @@ ja:
       login: 'ログイン'
       user_name: 'ユーザー名'
       user_password: 'パスワード'
+      back_to_index: 'タスク管理トップに戻る'
   enumerize:
     task:
       status:

@@ -16,7 +16,7 @@ class TasksController < ApplicationController
     @task = Task.available(current_user.id).find_by(id: params[:id])
     @submit_label = I18n.t('dictionary.words.save_to_update')
 
-    redirect_to tasks_path if @task.nil?
+    render404 if @task.nil?
   end
 
   def update
@@ -33,7 +33,7 @@ class TasksController < ApplicationController
     id = params[:id]
     @task = Task.available(current_user.id).find_by(id: id)
 
-    redirect_to tasks_path if @task.nil?
+    render404 if @task.nil?
   end
 
   def create
