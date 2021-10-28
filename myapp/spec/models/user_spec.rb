@@ -1,11 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  let!(:user) { create(:user) }
+  let(:user) { create(:user) }
+  let(:params) { { name: 'test_name', email: 'one@example.com', authority: 20, password: 'password' } }
 
   shared_examples 'When it was invalid.' do
     it 'Invalidated and returns an error message' do
-      user.update(column => val)
+      params[column.to_sym] = val
+      user = User.create(params)
       expect(user).not_to be_valid
       expect(user.errors.messages).to include(column.to_sym)
       errors.map { |error| expect(user.errors).to be_of_kind(column.to_sym, error.to_sym) }
@@ -14,7 +16,8 @@ RSpec.describe User, type: :model do
 
   shared_examples 'When it was valid.' do
     it 'Invalidated and returns an error message' do
-      user.update(column => val)
+      params[column.to_sym] = val
+      user = User.create(params)
       expect(user).to be_valid
       expect(user.errors.messages).not_to include(column.to_sym)
     end

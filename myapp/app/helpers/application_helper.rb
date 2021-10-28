@@ -1,11 +1,10 @@
 module ApplicationHelper
-
-  def is_adminer?
-    current_user.authority == User.authoritys["owner"] or current_user.authority == User.authoritys["adminer"]
+  def adminer?
+    current_user.authority == User.authoritys['owner'] or current_user.authority == User.authoritys['adminer']
   end
 
   def non_admin_redirect
-   redirect_to root_url unless is_adminer?
+    redirect_to root_url unless adminer?
   end
 
   def admin_controller?

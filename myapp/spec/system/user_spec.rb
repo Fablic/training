@@ -28,16 +28,20 @@ RSpec.describe UsersController, type: :system do
     end
     context 'When the edit is successful.' do
       it 'Register and go to the index page.' do
-        signup
+        fill_in I18n.t('activerecord.attributes.user.name'), with: 'test_name'
+        click_button I18n.t('common.submit')
+
         expect(page).to have_current_path(root_path)
         expect(page).to have_content(I18n.t('pages.users.flash.edited'))
       end
     end
     context 'When edit fails.' do
       it 'The screen does not transition and an error message is displayed.' do
-        signup(name: '', email: '', password: '', password_confirmation: '')
+        fill_in I18n.t('activerecord.attributes.user.name'), with: ''
+        click_button I18n.t('common.submit')
+
         expect(page).to have_current_path(edit_user_path(user))
-        expect(page).to have_content(I18n.t('form.error', smtg: 6))
+        expect(page).to have_content(I18n.t('form.error', smtg: 2))
       end
     end
   end

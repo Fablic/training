@@ -1,9 +1,9 @@
 class TasksController < ApplicationController
-  before_action :logged_in_user
   helper_method :sort_column, :sort_direction, :search_params
-  before_action :set_task, only: [ :show,:edit,:update,:destroy] 
-  before_action :displayed_user, only: [ :index, :show]
-  before_action :is_task_owner?, only: [ :show,:edit,:update,:destroy]
+  before_action :logged_in_user
+  before_action :displayed_user
+  before_action :set_task, only: %i[show edit update destroy]
+  before_action :task_owner?, only: %i[show edit update destroy]
 
   def index
     @search_params = search_params
@@ -14,11 +14,9 @@ class TasksController < ApplicationController
     @task = Task.new
   end
 
-  def show
-  end
+  def show; end
 
-  def edit
-  end
+  def edit; end
 
   def create
     @task = Task.new(task_params)
@@ -68,13 +66,10 @@ class TasksController < ApplicationController
 
   def displayed_user
     user = User.find_by(id: params[:user_id])
-    @displayed_user =  is_adminer? && user.present? ? user : current_user
+    @displayed_user = adminer? && user.present? ? user : current_user
   end
 
-  def is_task_owner?
-    if @task.user_id != @displayed_user.id
-      redirect_to root_path
-    end
+  def task_owner?
+    redirect_to root_path if @task.user_id != @displayed_user.id
   end
-
 end
