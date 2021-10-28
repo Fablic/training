@@ -1,6 +1,14 @@
-<h1><%=t('actions.edit') + User.model_name.human() %></h1>
+<div class="section">
+
+<h1 class="title has-text-primary">
+  <%=t('actions.edit') + User.model_name.human() %>
+</h1>
+<div class='box'>
+<%= link_to t('actions.back'), users_path, class:"delete is-large is-pulled-right" %>
 
 <%= render 'form', user: @user %>
 
-<%= link_to t('actions.show'), @user %> |
-<%= link_to t('actions.back'), users_path %>
+<%= link_to t('actions.show'), @user , class: "button is-link" %>
+
+</div>
+</div>

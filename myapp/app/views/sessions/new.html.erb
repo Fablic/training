@@ -4,22 +4,53 @@
     <title>Task-u-ten</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
+    <%= stylesheet_link_tag 'https://unpkg.com/bulmaswatch/journal/bulmaswatch.min.css' %>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
 
-
-<h1>Login</h1>
-<p id="alert"><%= alert %></p>
 <%= form_tag '/login' do %>
-    <%= label_tag :username%>
-    <%= text_field_tag :username %>
-    <%= label_tag :password%>
-    <%= password_field_tag :password%>
-    <%= submit_tag "Login" %>
+
+<section class="hero is-primary is-fullheight">
+  <div class="hero-body">
+    <div class="container">
+      <div class="columns is-centered">
+       
+        <div class="column is-5-tablet is-4-desktop is-3-widescreen">
+        <h1 class="title is-1">Task-u-ten</h1>
+          <form action="" class="box">
+            <div class="field">
+             <%= label_tag :username, 'Username', class: 'label' %>
+              <div class="control has-icons-left">
+                 <%= text_field_tag :username, '', class: 'input', required:true %>
+                <span class="icon is-small is-left">
+                  <i class="fa fa-envelope"></i>
+                </span>
+              </div>
+            </div>
+            <div class="field">
+              <%= label_tag :password, 'Password', class: 'label' %>
+              <div class="control has-icons-left">
+                <%= password_field_tag :password, '', class: 'input', required:true %>
+                <span class="icon is-small is-left">
+                  <i class="fa fa-lock"></i>
+                </span>
+              </div>
+            </div>
+          
+            <div class="field">
+            <%= submit_tag "Login",class: 'button is-success' %>
+      
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <%end%>
 
 

@@ -1,8 +1,15 @@
-<p id="notice"><%= notice %></p>
+<div class="section">
 
-<h1><%= User.model_name.human + t('actions.list')%></h1>
+<h1 class="title has-text-primary">
+  <%= User.model_name.human + t('actions.list')%>
+  <%= link_to "#{t('actions.new')} #{User.model_name.human}", new_user_path, class:"button is-link" %>
+
+</h1>
+<div class='box'>
+
+
 <hr/>
-<%= paginate @users %>
+<div class="container"><%= paginate @users %></div>
 <%= page_entries_info @users %>
 <hr/>
 <table class="type06">
@@ -23,9 +30,9 @@
         <td><%= user.name %></td>
         <td><%= user.username %></td>
         <td><%= user.admin %></td>
-        <td><%= link_to t('actions.show'), user %></td>
-        <td><%= link_to t('actions.edit'), edit_user_path(user) %></td>
-        <td><%= link_to t('actions.destroy'), user, method: :delete, data: { confirm: t('messages.delete_confirm') } %></td>
+        <td><%= link_to t('actions.show'), user , class: "button is-link" %></td>
+        <td><%= link_to t('actions.edit'), edit_user_path(user) , class: "button is-link" %></td>
+        <td><%= link_to t('actions.destroy'), user, method: :delete, class: "button is-danger", data: { confirm: t('messages.delete_confirm') } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -33,4 +40,6 @@
 
 <br>
 
-<%= link_to "#{t('actions.new')} #{User.model_name.human}", new_user_path %>
+
+</div>
+</div>

@@ -1,5 +1,16 @@
-<h1><%=t('actions.new') + Label.model_name.human() %></h1>
+
+
+<div class="section">
+
+<h1 class="title has-text-primary">
+   <%=t('actions.new') + Label.model_name.human() %>
+</h1>
+<div class='box'>
+<%= link_to t('actions.back'), labels_path, class:"delete is-large is-pulled-right" %>
+
 
 <%= render 'form', label: @label %>
 
-<%= link_to t('actions.back'), labels_path %>
+
+</div>
+</div>

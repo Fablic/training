@@ -5,16 +5,28 @@ class TasksController < ApplicationController
 
   # GET /tasks or /tasks.json
   def index
+    
     @dash_unfinished = Task.role_filtered(admin?, current_user.id).unfinished.count
     @dash_overdue = Task.role_filtered(admin?, current_user.id).overdue.count
     @dash_due_today = Task.role_filtered(admin?, current_user.id).due_today.count
 
     params[:q] = params[:q].presence || {}
 
-    # @q = Task.ransack(params[:q].try(:merge, own))
-    @q = Task.role_filtered(admin?, current_user.id).ransack(params[:q])
+    # always filter via user_id if not admin
+    @q = Task.role_filtered(admin?, current_user.id)
+
+    #run predefined searches 
+    if !params[:dash_search].blank?
+      @q = @q.send(params[:dash_search])
+    end    
+
+    #run other search 
+    @q = @q.ransack(params[:q])
+
+    #set default order by if not specified
     @q.sorts = 'created_at desc' if @q.sorts.empty?
-    @tasks = @q.result.includes(:user).page(params[:page])
+
+    @tasks = @q.result.includes(:user,:labels).page(params[:page])
   end
 
   # GET /tasks/1 or /tasks/1.json

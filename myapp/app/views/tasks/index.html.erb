@@ -1,36 +1,25 @@
-<p id="notice"><%= notice %></p>
 
-<h1><%= Task.model_name.human + t('actions.list')%></h1>
-<hr/>
-<h2>UNFINISHED:  <%=link_to  @dash_unfinished, q:{status_lt: 2}%></h2>
-<h2>OVERDUE: <%=link_to @dash_overdue, q:{finished_at_lt: Time.zone.today} %></h2>
-<h2>DUE TODAY :<%=link_to  @dash_due_today, q:{finished_at_eq: Time.zone.today}%></h2>
-<hr/>
-<%=  search_form_for @q do |f| %>
-  <div class="field">
-    <%= f.label :name_cont %>
-    <%= f.search_field :name_cont %>
-   </div>
-
-  <div class="field">
-    <%= f.label :status_eq %>
-    <%= f.select :status_eq,  Task.statuses_i18n.keys.map { |k| [Task.statuses_i18n[k], Task.statuses[k]]}, :include_blank => true %>
-  </div> 
-  <div class="field">
-    <%= f.submit t('messages.search') %>
-  </div> 
-<% end %>
+  <%= render 'dashboard'%>
 
 
-<hr/>
+  <%= render 'searchbox'%>
+
+
+<div class="section">
+
+<h1 class="title has-text-primary">
+  <%= Task.model_name.human + t('actions.list')%>
+  <%= link_to "#{t('actions.new')} #{Task.model_name.human}", new_task_path, class:"button is-link" %>
+</h1>
+<div class='box'>
+
+
+
+
 <%= paginate @tasks %>
 <%= page_entries_info @tasks %>
-<hr/>
 
-<%= link_to "#{t('actions.new')} #{Task.model_name.human}", new_task_path %>
-
-
-<table class="type06" id="task_list">
+<table class="table is-striped is-narrow is-hoverable is-fullwidth" id="task_list">
   <thead>
     <tr>
       <th><%= sort_link(@q, :id) %></th>
@@ -38,6 +27,7 @@
       <th><%= sort_link(@q, :status) %></th>
       <th><%= sort_link(@q, :priority) %></th>
       <th><%= sort_link(@q, :name) %></th>
+      <th>LABEL</th>
       <th><%= sort_link(@q, :started_at) %></th>
       <th><%= sort_link(@q, :finished_at) %></th>
       <th><%= sort_link(@q, :created_at) %></th>
@@ -53,14 +43,25 @@
         <td><%= t("enums.task.status.#{task.status}")  %></td>
         <td><%= task.priority %></td> 
         <td><%= task.name %></td>
+        <td>
+            <% task.labels.each do |label| %>
+               <span class="tag"><%= label.name %></span>
+            <% end %>
+        </td>
         <td><%= task.started_at ? l(task.started_at.to_date): ''  %></td>
         <td><%= l(task.finished_at.to_date) %></td>
         <td><%= l(task.created_at) %></td>
-        <td><%= link_to t('actions.show'), task %></td>
-        <td><%= link_to t('actions.edit'), edit_task_path(task) %></td>
-        <td><%= link_to t('actions.destroy'), task, method: :delete, data: { confirm: t('messages.delete_confirm') } %></td>
+        <td><%= link_to t('actions.show'), task , class: "button is-link" %></td>
+        <td><%= link_to t('actions.edit'), edit_task_path(task) , class: "button is-link" %></td>
+        <td><%= link_to t('actions.destroy'), task, method: :delete, class: "button is-danger", data: { confirm: t('messages.delete_confirm') } %></td>
 
       </tr>
     <% end %>
   </tbody>
 </table>
+
+
+
+</div>
+</div>
+

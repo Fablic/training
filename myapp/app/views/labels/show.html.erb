@@ -1,5 +1,16 @@
-<p id="notice"><%= notice %></p>
-<h1><%=t('actions.show') + Label.model_name.human() %></h1>
+
+
+
+<div class="section">
+
+<h1 class="title has-text-primary">
+  <%=t('actions.show') + Label.model_name.human() %>
+</h1>
+<div class='box'>
+<%= link_to t('actions.back'), labels_path, class:"delete is-large is-pulled-right" %>
+
+
+
 <p>
   <strong><%= Task.human_attribute_name(:name) %> </strong>
   <%= @label.name %>
@@ -11,5 +22,8 @@
 </p>
 
 
-<%= link_to t('actions.edit'), edit_label_path(@label) %> |
-<%= link_to t('actions.back'), labels_path %>
+<%= link_to t('actions.edit'), edit_label_path(@label) , class: "button is-link" %>
+
+
+</div>
+</div>
