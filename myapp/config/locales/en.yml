@@ -101,7 +101,7 @@ en:
       title: Task
     users:
       flash:
-        added: User has been registered
+        added: User has been registered.
         edited: User has been edited.
       confirm_deletion: Are you sure you want to delete %{smtg}?
     sessions:

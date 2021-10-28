@@ -202,7 +202,7 @@ RSpec.describe TasksController, type: :system do
         fill_in I18n.t('activerecord.attributes.task.due_date'), with: Time.zone.yesterday.strftime('%Y-%m-%d')
         click_button I18n.t('common.submit')
 
-        expect(page).to have_current_path(tasks_path)
+        expect(page).to have_current_path(new_task_path)
         expect(page).to have_content(I18n.t('form.error', smtg: 1))
         expect(page).to have_content(I18n.t('activerecord.errors.models.task.attributes.due_date.error'))
       end
@@ -236,7 +236,7 @@ RSpec.describe TasksController, type: :system do
         fill_in I18n.t('activerecord.attributes.task.due_date'), with: Time.zone.yesterday.strftime('%Y-%m-%d')
         click_button I18n.t('common.submit')
 
-        expect(page).to have_current_path(task_path(tasks.last))
+        expect(page).to have_current_path(edit_task_path(tasks.last))
         expect(page).to have_content(I18n.t('form.error', smtg: 1))
         expect(page).to have_content(I18n.t('activerecord.errors.models.task.attributes.due_date.error'))
       end

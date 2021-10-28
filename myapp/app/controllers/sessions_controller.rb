@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  skip_before_action :logged_in_user, only: %i[new create]
+  before_action :logged_in_user, only: %i[destroy]
   before_action :login?, only: %i[new create]
 
   def new; end
@@ -10,8 +10,7 @@ class SessionsController < ApplicationController
       log_in user
       redirect_to root_url
     else
-      flash.now[:danger] = I18n.t('pages.sessions.flash.login')
-      render 'new'
+      redirect_back fallback_location: login_url, flash: { info: I18n.t('pages.sessions.flash.login') }
     end
   end
 

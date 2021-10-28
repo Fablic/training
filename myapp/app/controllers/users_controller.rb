@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  skip_before_action :logged_in_user, only: %i[new create]
+  before_action :logged_in_user, only: %i[edit update]
   before_action :set_user, only: [ :edit,:update,:destroy] 
   before_action :new_authority, only: %i[new create]
   before_action :editing_authority, only: %i[edit update]
@@ -17,7 +17,7 @@ class UsersController < ApplicationController
       log_in @user
       redirect_to root_path, flash: { info: I18n.t('pages.users.flash.added') }
     else
-      render 'new'
+      redirect_back fallback_location: new_user_path, flash: { validation_error: @user.errors.full_messages }
     end
   end
 
@@ -25,7 +25,7 @@ class UsersController < ApplicationController
     if @user.update(user_edit_params)
       redirect_to root_path, flash: { info: I18n.t('pages.users.flash.edited') }
     else
-      render 'edit'
+      redirect_back fallback_location: edit_user_path, flash: { validation_error: @user.errors.full_messages }
     end
   end
 
@@ -58,6 +58,6 @@ class UsersController < ApplicationController
   end
 
   def new_authority
-    redirect_to root_path and return unless current_user.nil?
+    redirect_to root_path and return if current_user.present?
   end
 end
