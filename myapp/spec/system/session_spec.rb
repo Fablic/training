@@ -7,13 +7,16 @@ RSpec.describe SessionsController, type: :system do
     before { visit login_path }
     context 'When the login is successful.' do
       it 'Go to the index page.' do
-        login
+        login_user(user)
         expect(page).to have_current_path(root_path)
       end
     end
     context 'When the login is fails.' do
       it 'Error occurs without transition to index page.' do
-        login(email: '', password: '')
+        fill_in 'Email', with: ''
+        fill_in 'Password', with: ''
+        click_button I18n.t('common.login')
+
         expect(page).to have_current_path(login_path)
         expect(page).to have_content(I18n.t('pages.sessions.flash.login'))
       end

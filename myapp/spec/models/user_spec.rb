@@ -143,4 +143,15 @@ RSpec.describe User, type: :model do
       it_behaves_like 'When it was invalid.'
     end
   end
+
+  describe '#tasks dependent' do
+    context 'When a user is deleted.' do
+      it 'Task will also be deleted.' do
+        user_id = user.id
+        create_list(:task, 10, user: user)
+        user.destroy
+        expect(Task.where(user_id: user_id).count).to eq 0
+      end
+    end
+  end
 end

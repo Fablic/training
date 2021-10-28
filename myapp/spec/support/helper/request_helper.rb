@@ -24,9 +24,10 @@ module RequestHelpers
     click_button I18n.t('common.submit')
   end
 
-  def login(email: 'one@example.com', password: 'password')
-    fill_in 'Email', with: email
-    fill_in 'Password', with: password
+  def login_user(user)
+    visit login_path
+    fill_in 'Email', with: user.email
+    fill_in 'Password', with: user.password
     click_button I18n.t('common.login')
   end
 end

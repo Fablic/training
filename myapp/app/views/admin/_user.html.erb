@@ -2,7 +2,8 @@
   <td scope="row"></td>
   <td><%= link_to user.name, edit_user_path(user) %></td>
   <td><%= user.email %></td>
+  <td><%= translate_role user.role %></td>
   <td><%= link_to user.tasks_count, tasks_path(user_id: user.id) %></td>
   <td><%= l user.created_at %></td>
-  <td><%= button_to t('common.delete'), user, method: :delete, data: { confirm: t('pages.users.confirm_deletion', smtg: user.name) }, class: "btn btn-primary" %></td>
+  <td><%= button_to t('common.delete'), user, method: :delete, id: "user_delete_button_#{user.id}", class: "btn btn-primary" %></td>
 </tr>
