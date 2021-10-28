@@ -100,6 +100,7 @@ ja:
       flash:
         added: ユーザーを作成しました。
         edited: ユーザーを編集しました。
+        failed: ユーザーの作成に失敗しました。
     sessions:
       flash:
         login: ログイン失敗。メールアドレスかパスワードが間違っています

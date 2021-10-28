@@ -5,8 +5,6 @@ class ApplicationController < ActionController::Base
   rescue_from ActiveRecord::RecordNotFound,   with: :_render_not_found
   rescue_from ActionController::RoutingError, with: :_render_not_found
 
-  before_action :logged_in_user
-
   def routing_error
     raise ActionController::RoutingError, params[:path]
   end

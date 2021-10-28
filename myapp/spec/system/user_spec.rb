@@ -15,7 +15,7 @@ RSpec.describe UsersController, type: :system do
     context 'When registration fails.' do
       it 'The screen does not transition and an error message is displayed.' do
         signup(name: '', email: '', password: '', password_confirmation: '')
-        expect(page).to have_current_path(users_path)
+        expect(page).to have_current_path(signup_path)
         expect(page).to have_content(I18n.t('form.error', smtg: 6))
       end
     end
@@ -36,7 +36,7 @@ RSpec.describe UsersController, type: :system do
     context 'When edit fails.' do
       it 'The screen does not transition and an error message is displayed.' do
         signup(name: '', email: '', password: '', password_confirmation: '')
-        expect(page).to have_current_path(user_path(user))
+        expect(page).to have_current_path(edit_user_path(user))
         expect(page).to have_content(I18n.t('form.error', smtg: 6))
       end
     end

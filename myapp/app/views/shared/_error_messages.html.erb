@@ -1,10 +1,10 @@
-<% if object.errors.any? %>
+<% if flash['validation_error'].present? %>
   <div id="error_explanation">
     <div class="alert alert-danger">
-      <%= I18n.t("form.error",smtg: object.errors.count)%>
+      <%= I18n.t("form.error",smtg: flash['validation_error'].count)%>
     </div>
     <ul>
-    <% object.errors.full_messages.each do |msg| %>
+    <% flash['validation_error'].each do |msg| %>
       <li><%= msg %></li>
     <% end %>
     </ul>

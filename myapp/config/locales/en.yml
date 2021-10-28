@@ -98,8 +98,9 @@ en:
         hit_count: hits
     users:
       flash:
-        added: User has been registered
+        added: User has been registered.
         edited: User has been edited.
+        failed: Failed to create user.
     sessions:
       flash:
         login: Login failed. Incorrect email address or password.
