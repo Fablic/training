@@ -2,6 +2,7 @@ ja:
   activerecord:
     models:
       task: タスク
+      user: ユーザー
     attributes:
       task:
         id: ID
@@ -11,3 +12,8 @@ ja:
         start_at: 開始日
         due_date_at: 終了日
         period: 期間
+      user:
+        id: ID
+        name: ユーザー名
+        password: パスワード
+        privilege: 権限

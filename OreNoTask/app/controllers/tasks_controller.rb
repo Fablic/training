@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
 class TasksController < ApplicationController
+  before_action :ensure_logged_in
+
   def index
-    @tasks = Task.active.order("#{sort_column} #{sort_direction}").page(params[:page]).per(10)
+    @tasks = Task.available(current_user.id).order("#{sort_column} #{sort_direction}").page(params[:page]).per(10)
   end
 
   def new
@@ -11,12 +13,14 @@ class TasksController < ApplicationController
   end
 
   def edit
-    @task = Task.active.find_by(id: params[:id])
+    @task = Task.available(current_user.id).find_by(id: params[:id])
     @submit_label = I18n.t('dictionary.words.save_to_update')
+
+    render404 if @task.nil?
   end
 
   def update
-    @task = Task.find(params[:id])
+    @task = Task.available(current_user.id).find(params[:id])
 
     if @task.update(task_params)
       redirect_to tasks_path, notice: I18n.t('dictionary.messages.edited_task')
@@ -27,11 +31,15 @@ class TasksController < ApplicationController
 
   def show
     id = params[:id]
-    @task = Task.active.find_by(id: id)
+    @task = Task.available(current_user.id).find_by(id: id)
+
+    render404 if @task.nil?
   end
 
   def create
-    @task = Task.new(task_params)
+    params = task_params
+    params['user_id'] = current_user.id
+    @task = Task.new(params)
 
     if @task.save
       redirect_to tasks_path, notice: I18n.t('dictionary.messages.created_task')
@@ -41,7 +49,7 @@ class TasksController < ApplicationController
   end
 
   def destroy
-    @task = Task.find(params[:id])
+    @task = Task.available(current_user.id).find(params[:id])
     flash[:notice] = if @task.update(deleted: 1)
                        I18n.t('dictionary.messages.deleted_task')
                      else
@@ -51,8 +59,8 @@ class TasksController < ApplicationController
     redirect_to tasks_path
   end
 
-  def search
-    @tasks = Task.search(params[:keyword], params[:status]).order("#{sort_column} #{sort_direction}").page(params[:page]).per(10)
+  def search # rubocop:disable Metrics/AbcSize
+    @tasks = Task.search(params[:keyword], params[:status], current_user.id, "#{sort_column} #{sort_direction}").page(params[:page]).per(10)
     @keyword = params[:keyword]
     @status = params[:status]
     render :index

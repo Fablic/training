@@ -1,0 +1,26 @@
+<header class='border-bottom rounded-bottom position-fixed w-100'>
+  <h1><%= I18n.t('login.index.title') %></h1>
+</header>
+
+<div class='container' id='main-container'>
+  <% if notice.present? %>
+  <%= render partial: 'common/notice', locals: { notice: notice } %>
+  <% end %>
+
+<div id='login' class='border rounded'>
+  <h2><%= I18n.t('dictionary.words.login') %></h2>
+  <%= form_for(:session, url: login_path) do |f| %>
+    <table id='edit-form'>
+      <tr>
+        <th><%= f.label :name, I18n.t('dictionary.words.user_name') %></th>
+        <td><%= f.text_field :name %></td>
+      </tr>
+      <tr>
+        <th><%= f.label :password, I18n.t('dictionary.words.user_password') %></th>
+        <td><%= f.password_field :password %></td>
+      </tr>
+    </table>
+    <%= f.submit I18n.t('dictionary.words.login'), class: 'btn btn-primary' %>
+  <% end %>
+</div>
+</div>
