@@ -46,7 +46,7 @@ en:
       user:
         name: Name
         email: Email
-        authority: Authority
+        role: Role
         password: Password
         password_confirmation: Confirmation
     enum:
@@ -74,7 +74,7 @@ en:
               blank: can't be blank
               too_short: is too short (minimum is %{count} characters)
               too_long: is too long (maximum is %{count} characters)             
-            authority:
+            role:
               last_one: can't change it because the administrator will be gone.
   common:
     new: Create New

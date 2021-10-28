@@ -46,7 +46,7 @@ ja:
       user:
         name: 名前
         email: Email
-        authority: 管理者権限
+        role: 管理者権限
         password: パスワード
         password_confirmation: 確認
     enum:
@@ -60,7 +60,7 @@ ja:
           doing: 着手
           done: 完了
       user:
-        authority:
+        role:
           member: メンバー
           adminer: 管理者
           owner: オーナー
@@ -79,7 +79,7 @@ ja:
               blank: は入力必須です
               too_short: は%{count}文字以上で入力してください
               too_long: は%{count}文字以内で入力してください
-            authority:
+            role:
               last_one: 管理者がいなくなってしまうので変更できません
   common:
     new: 新規作成

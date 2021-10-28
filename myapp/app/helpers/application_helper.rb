@@ -1,6 +1,6 @@
 module ApplicationHelper
   def adminer?
-    current_user.authority == User.authoritys['owner'] or current_user.authority == User.authoritys['adminer']
+    current_user.role == User.roles['owner'] or current_user.role == User.roles['adminer']
   end
 
   def non_admin_redirect

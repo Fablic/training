@@ -20,8 +20,8 @@
       <%if action_name == 'edit'%>
         <%= f.hidden_field :user_id, :value => @user.id %>
         <% if adminer? %>
-          <%= f.label :authority %>
-          <%= f.collection_select :authority, User.authoritys.values, :to_i, method(:translate_authority),{ prompt: '選択してください' }, class:"form-control", selected:@user.authority %>
+          <%= f.label :role %>
+          <%= f.collection_select :role, User.roles.values, :to_i, method(:translate_role),{ prompt: '選択してください' }, class:"form-control", selected:@user.role %>
         <% end %>
       <% end %>
 

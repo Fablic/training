@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
   before_action :logged_in_user, only: %i[edit update]
   before_action :set_user, only: %i[edit update destroy]
-  before_action :new_authority, only: %i[new create]
-  before_action :editing_authority, only: %i[edit update]
+  before_action :new_role, only: %i[new create]
+  before_action :editing_role, only: %i[edit update]
 
   def new
     @user = User.new
@@ -42,7 +42,7 @@ class UsersController < ApplicationController
   def user_edit_params
     permit_params = ['name']
     permit_params.push('email') if @user.id == current_user.id
-    permit_params.push('authority') if adminer?
+    permit_params.push('role') if adminer?
     params.require(:user).permit(permit_params.map(&:to_sym))
   end
 
@@ -50,14 +50,14 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
-  def editing_authority
+  def editing_role
     return if adminer?
     return if @user.id == current_user.id
 
     redirect_to(root_url) and return
   end
 
-  def new_authority
+  def new_role
     redirect_to root_path and return if current_user.present?
   end
 end

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   let(:user) { create(:user) }
-  let(:params) { { name: 'test_name', email: 'one@example.com', authority: 20, password: 'password' } }
+  let(:params) { { name: 'test_name', email: 'one@example.com', role: 20, password: 'password' } }
 
   shared_examples 'When it was invalid.' do
     it 'Invalidated and returns an error message' do
@@ -94,8 +94,8 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe '#authority' do
-    let(:column) { 'authority' }
+  describe '#role' do
+    let(:column) { 'role' }
 
     context 'When nil is set.' do
       let(:val) { nil }
@@ -110,7 +110,7 @@ RSpec.describe User, type: :model do
     end
 
     context 'When unintended value  is set' do
-      let(:val) { [*0..100].delete_if { |n| User.authoritys.values.include?(n) }.sample }
+      let(:val) { [*0..100].delete_if { |n| User.roles.values.include?(n) }.sample }
       let(:errors) { %w[inclusion] }
       it_behaves_like 'When it was invalid.'
     end
