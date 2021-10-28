@@ -109,6 +109,7 @@ ja:
         added: ユーザーを作成しました。
         edited: ユーザーを編集しました。
         deleted: ユーザーを削除しました。
+        non_deleted: 削除できません。
       confirm_deletion: 本当に%{smtg}を削除してよろしいですか？
     sessions:
       flash:
@@ -116,7 +117,7 @@ ja:
         loginerror: ログインしてください
     admin:
       title: 管理画面
-      users: ユーザー画面
+      users: ユーザー管理画面
       account: アカウント
         
       

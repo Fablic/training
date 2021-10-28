@@ -5,5 +5,9 @@
   <td><%= translate_role user.role %></td>
   <td><%= link_to user.tasks_count, tasks_path(user_id: user.id) %></td>
   <td><%= l user.created_at %></td>
-  <td><%= button_to t('common.delete'), user, method: :delete, id: "user_delete_button_#{user.id}", class: "btn btn-primary" %></td>
+  <td>
+    <% if current_user.id != user.id and user.role != User.roles['owner']%>
+      <%= button_to t('common.delete'), user, method: :delete, id: "user_delete_button_#{user.id}", class: "btn btn-primary" %>
+    <% end %>
+  </td>
 </tr>

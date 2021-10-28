@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
-  before_action :logged_in_user, only: %i[edit update]
+  before_action :logged_in_user, only: %i[edit update destroy]
   before_action :set_user, only: %i[edit update destroy]
   before_action :new_role, only: %i[new create]
-  before_action :editing_role, only: %i[edit update]
+  before_action :editing_role, only: %i[edit update destroy]
 
   def new
     @user = User.new
@@ -29,6 +29,11 @@ class UsersController < ApplicationController
   end
 
   def destroy
+    if @user.role == User.roles['owner']
+      redirect_to(admin_path,
+                  flash: { info: I18n.t('pages.users.flash.non_deleted') }) and return
+    end
+
     @user.destroy
     redirect_to admin_path, flash: { info: I18n.t('pages.users.flash.deleted') }
   end
@@ -41,7 +46,6 @@ class UsersController < ApplicationController
 
   def user_edit_params
     permit_params = ['name']
-    permit_params.push('email') if @user.id == current_user.id
     permit_params.push('role') if adminer?
     params.require(:user).permit(permit_params.map(&:to_sym))
   end

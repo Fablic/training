@@ -103,6 +103,8 @@ en:
       flash:
         added: User has been registered.
         edited: User has been edited.
+        deleted: User deleted.
+        non_deleted: Cannot delete.
       confirm_deletion: Are you sure you want to delete %{smtg}?
     sessions:
       flash:

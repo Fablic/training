@@ -6,8 +6,4 @@ module ApplicationHelper
   def non_admin_redirect
     redirect_to root_url unless adminer?
   end
-
-  def admin_controller?
-    controller_name == 'admin'
-  end
 end
