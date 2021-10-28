@@ -3,19 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe 'Userモデルのテスト', type: :model do
-  let!(:user_hanako) { create(:user, name: 'HanakoRakuten', password: 'hanakopass', privilege: :user, deleted: 0) }
-  let!(:user_yoshio) { create(:user, name: 'YoshioRakuten', password: 'yoshiopass', privilege: :user, deleted: 1) }
-  let(:user) { User.new(name: name, password: password, privilege: privilege) }
   let(:name) { 'TaroRakuten' }
   let(:password) { 'rakutenpass' }
   let(:privilege) { :user }
 
   describe '正常系' do
-    subject {
-      user_hanako
-      user_yoshio
-      user
-    }
+    subject { User.new(name: name, password: password, privilege: privilege) }
 
     context '全項目入力' do
       it { is_expected.to be_valid }
@@ -23,11 +16,7 @@ RSpec.describe 'Userモデルのテスト', type: :model do
   end
 
   describe 'バリデーションのテスト' do
-    subject {
-      user_hanako
-      user_yoshio
-      user
-    }
+    subject { User.new(name: name, password: password, privilege: privilege) }
 
     describe 'nameカラム' do
       context '空欄' do
@@ -49,12 +38,20 @@ RSpec.describe 'Userモデルのテスト', type: :model do
       end
 
       context 'ユーザー名重複' do
+        before do
+          create(:user, name: 'HanakoRakuten', password: 'hanakopass', privilege: :user, deleted: 0)
+        end
+
         let(:name) { 'HanakoRakuten' }
 
         it { is_expected.not_to be_valid }
       end
 
       context 'deletedのユーザー名と重複' do
+        before do
+          create(:user, name: 'YoshioRakuten', password: 'yoshiopass', privilege: :user, deleted: 1)
+        end
+
         let(:name) { 'YoshioRakuten' }
 
         it { is_expected.to be_valid }
