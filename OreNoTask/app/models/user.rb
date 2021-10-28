@@ -11,9 +11,9 @@ class User < ApplicationRecord
 
   validates :name, { presence: true, length: { maximum: 20 } }
   validates :password, { presence: true, length: { maximum: 20 } }
-  validate :unique_user?
+  validate :unique_user
 
-  def unique_user?
+  def unique_user
     errors.add(:name, I18n.t('dictionary.messages.name_not_unique')) unless
       User.active_user_count(name).zero?
   end

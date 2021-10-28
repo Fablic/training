@@ -216,10 +216,10 @@ describe 'タスク管理機能', type: :system do
     end
 
     context '異なるユーザーのタスク' do
-      it '詳細情報が表示されず、一覧に戻る' do
+      it '詳細情報が表示されず、404ページが表示される' do
         visit task_path(hanako_task)
 
-        expect(page).to have_content 'タスク一覧'
+        expect(page).to have_content '404 NOT FOUND'
       end
     end
   end
@@ -290,10 +290,10 @@ describe 'タスク管理機能', type: :system do
     end
 
     context '異なるユーザーのタスク' do
-      it '編集画面が表示されず、一覧に戻る' do
+      it '編集画面が表示されず、404ページが表示される' do
         visit edit_task_path(hanako_task)
 
-        expect(page).to have_content 'タスク一覧'
+        expect(page).to have_content '404 NOT FOUND'
       end
     end
   end
