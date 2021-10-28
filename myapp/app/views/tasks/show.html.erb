@@ -1,6 +1,6 @@
 <h1><%= t ".title" %></h1>
 
-<%= form_for @task do |t| %>
+<%= form_with(model: @task, local: true) do |t| %>
    <%= render "form", t: t %>
 <% end %>
 

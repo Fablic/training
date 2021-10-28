@@ -11,7 +11,7 @@ class TasksController < ApplicationController
   end
 
   def new
-    @task = Task.new
+    @task = Task.new.valid?
   end
 
   def edit
@@ -20,7 +20,7 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(post_params)
-    flash[:notice] = if @task.save
+    flash[:notice] = if @task.save.valid?
                        t('tasks.flash.complete_task_registration')
                      else
                        t('tasks.flash.error_task_registration')
@@ -30,7 +30,7 @@ class TasksController < ApplicationController
 
   def update
     @task = Task.find(params[:id])
-    flash[:notice] = if @task.update(post_params)
+    flash[:notice] = if @task.update(post_params).valid?
                        t('tasks.flash.complete_task_edit')
                      else
                        t('tasks.flash.error_task_edit')
@@ -40,7 +40,7 @@ class TasksController < ApplicationController
 
   def destroy
     @task = Task.find(params[:id])
-    flash[:notice] = if @task.destroy
+    flash[:notice] = if @task.destroy.valid?
                        t('tasks.flash.complete_task_destroy')
                      else
                        t('tasks.flash.error_task_destroy')

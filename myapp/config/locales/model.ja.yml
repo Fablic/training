@@ -1,0 +1,8 @@
+ja:
+  tasks:
+    errors:
+      messages:
+        invalid_date: は正しい形式で入力してください。
+        invalid_time: は正しい形式で入力してください。
+        invalid_datetime: は正しい形式で入力してください。
+        earlier_date_error: "を%{start}より前に設定できません" 

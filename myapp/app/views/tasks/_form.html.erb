@@ -1,3 +1,17 @@
+<%# ここからエラーメッセージ %>
+<% if t.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(t.errors.count, "error") %> prohibited this tasks from being saved:</h2>
+
+    <ul>
+      <% t.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+<%# ここまでエラーメッセージ %>
+
 <p>
   <%= t.label t('tasks.common.task_name') %>
   <%= t.text_field :task_name, size:50, maxlength:20 %>

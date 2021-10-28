@@ -12,7 +12,8 @@ end
 gem 'rails', '~> 5.1'
 # For 5.0.x, 5.1.x and 5.2.x
 gem 'rails-i18n', '~> 5.1'
-
+# validation
+gem 'validates_timeliness', '~> 6.0.0.alpha1'
 # Use sqlite3 as the database for Active Record
 # gem 'sqlite3'
 gem 'mysql2'

@@ -107,7 +107,7 @@ RSpec.describe 'tasks', type: :system do
   end
 
   describe 'Index' do
-    let!(:task_list) { create_list(:task, 10) }
+    let!(:task_list) { create_list(:task, 5) }
 
     before { visit root_path }
 
