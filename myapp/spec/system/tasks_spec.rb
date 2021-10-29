@@ -18,7 +18,7 @@ RSpec.describe 'tasks', type: :system do
 
     it 'ui elements are present' do
       expect(page).to have_content 'Task-u-ten'
-      expect(page).to have_content '新規 タスク'
+      expect(page).to have_selector(:id, 'add_task_btn')
     end
 
     it 'table elements are present' do
@@ -45,7 +45,7 @@ RSpec.describe 'tasks', type: :system do
 
     # check navigation links
     it 'moves to new page' do
-      click_on '新規 タスク'
+      find( '#add_task_btn').click
       expect(page).to have_content '新規タスク'
       expect(page).to have_content '戻る'
       click_on '登録する'
@@ -66,7 +66,6 @@ RSpec.describe 'tasks', type: :system do
       expect(page).to have_content '編集タスク'
       expect(page).to have_content 'タスク名'
       expect(page).to have_content '戻る'
-      expect(page).to have_content '詳細'
     end
   end
 
