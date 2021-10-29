@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
+  has_many :tasks, -> { where(deleted: 0) }
   has_secure_password
   extend Enumerize
 

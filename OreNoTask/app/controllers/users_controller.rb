@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   before_action :ensure_logged_in
 
   def index
-    @users = User.active.order('name asc').page(params[:page]).per(10)
+    @users = User.active.order('name asc').page(params[:page]).per(10).includes(:tasks)
   end
 
   def new
