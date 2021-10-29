@@ -32,19 +32,19 @@ describe 'ユーザー管理機能', type: :system do
       end
 
       it '表示される詳細画面の情報が期待通り' do
-        click_link 'TaroRakuten'
+        click_link 'TaroRakuten(2)'
         expect(page).to have_content 'TaroRakuten'
         expect(find('li:nth-child(1)')).to have_content 'taro_task2'
         expect(find('li:nth-child(2)')).to have_content 'taro_task1'
       end
 
       it '他のユーザーのタスクが表示されていない' do
-        click_link 'TaroRakuten'
+        click_link 'TaroRakuten(2)'
         expect(page).not_to have_content 'hanako no task'
       end
 
       it '対象ユーザーを切り替えても正しくタスクが表示される' do
-        click_link 'HanakoRakuten'
+        click_link 'HanakoRakuten(1)'
         expect(page).to have_content 'HanakoRakuten'
         expect(find('li:nth-child(1)')).to have_content 'hanako no task'
       end
@@ -61,14 +61,14 @@ describe 'ユーザー管理機能', type: :system do
         click_button 'commit'
 
         # 作成されたユーザーが表示されている
-        expect(find('li:nth-child(2)')).to have_content 'ShintaroRakuten'
+        expect(find('li:nth-child(2)')).to have_content 'ShintaroRakuten(0)'
 
         # 既存のデータに影響がない
-        expect(find('li:nth-child(1)')).to have_content 'HanakoRakuten'
-        expect(find('li:nth-child(3)')).to have_content 'TaroRakuten'
+        expect(find('li:nth-child(1)')).to have_content 'HanakoRakuten(1)'
+        expect(find('li:nth-child(3)')).to have_content 'TaroRakuten(2)'
 
         # 詳細画面で作成したタスクの内容を確認
-        click_link 'ShintaroRakuten'
+        click_link 'ShintaroRakuten(0)'
         expect(page).to have_content 'ShintaroRakuten'
 
         # 作成したユーザーでログインできる
@@ -95,10 +95,10 @@ describe 'ユーザー管理機能', type: :system do
         click_button 'commit'
 
         # 編集されたユーザーが表示されている
-        expect(find('li:nth-child(1)')).to have_content 'HanakoRakuten'
+        expect(find('li:nth-child(1)')).to have_content 'HanakoRakuten(1)'
 
         # 既存のデータに影響がない
-        expect(find('li:nth-child(2)')).to have_content 'TaroRakuten'
+        expect(find('li:nth-child(2)')).to have_content 'TaroRakuten(2)'
 
         # 編集したユーザーでログインできる
         click_button 'ログアウト'
@@ -147,10 +147,10 @@ describe 'ユーザー管理機能', type: :system do
         page.driver.browser.switch_to.alert.accept
 
         # 作成されたタスクが表示されてない
-        expect(page).not_to have_content 'HanakoRakuten'
+        expect(page).not_to have_content 'HanakoRakuten(1)'
 
         # 既存のデータに影響がない
-        expect(find('li:nth-child(1)')).to have_content 'TaroRakuten'
+        expect(find('li:nth-child(1)')).to have_content 'TaroRakuten(2)'
 
         # 削除したユーザーでログインできない
         click_button 'ログアウト'
