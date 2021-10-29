@@ -2,6 +2,12 @@
 
 require 'rails_helper'
 describe 'ユーザー管理機能', type: :system do
+  before do
+    create(:task, name: 'taro_task1', user_id: user_taro.id)
+    create(:task, name: 'taro_task2', user_id: user_taro.id)
+    create(:task, name: 'hanako no task', user_id: user_hanako.id)
+  end
+
   let(:rspec_session) { { user_id: user_taro.id } }
   let(:user_taro) { create(:user, name: 'TaroRakuten', password: 'rakuten', privilege: :admin) }
   let!(:user_hanako) { create(:user, name: 'HanakoRakuten', password: 'rakuten', privilege: :user) }
@@ -13,8 +19,8 @@ describe 'ユーザー管理機能', type: :system do
 
     context 'デフォルト表示' do
       it '一覧のデフォルト表示が期待通り' do
-        expect(page).to have_content 'TaroRakuten'
-        expect(page).to have_content 'HanakoRakuten'
+        expect(page).to have_content 'TaroRakuten(2)'
+        expect(page).to have_content 'HanakoRakuten(1)'
       end
     end
   end
@@ -22,9 +28,6 @@ describe 'ユーザー管理機能', type: :system do
   describe 'ユーザー詳細' do
     context '特定ユーザーの詳細画面に遷移し、内容を確認する' do
       before do
-        create(:task, name: 'taro_task1', user_id: user_taro.id)
-        create(:task, name: 'taro_task2', user_id: user_taro.id)
-        create(:task, name: 'hanako no task', user_id: user_hanako.id)
         visit admin_users_path
       end
 
