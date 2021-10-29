@@ -21,6 +21,7 @@ ja:
       confirm_logout: 'ログアウトします。よろしいですか？'
       failed_login: 'ログインに失敗しました'
       over_length_password_on_update: 'パスワードは20文字以内で入力してください'
+      last_admin: '最後の管理者ユーザーなので削除できません'
     words:
       to_list: '一覧に戻る'
       save_to_create: '作成'
@@ -45,3 +46,7 @@ ja:
         not_started: '未着手'
         wip: '作業中'
         completed: '完了'
+    user:
+      privilege:
+        user: '一般ユーザー'
+        admin: '管理者'

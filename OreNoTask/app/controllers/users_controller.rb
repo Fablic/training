@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  before_action :ensure_logged_in
+  before_action :ensure_logged_in_admin
 
   def index
     @users = User.active.order('name asc').page(params[:page]).per(10).includes(:tasks)
@@ -46,11 +46,17 @@ class UsersController < ApplicationController
   end
 
   def destroy # rubocop:disable Metrics/AbcSize
+    @user = User.active.find_by(id: params[:id])
+
+    if @user.privilege == 1 && User.admin_user_count == 1
+      redirect_to admin_users_path, notice: I18n.t('dictionary.messages.last_admin')
+      return
+    end
+
     @tasks = Task.available(params[:id])
 
     redirect_to admin_users_path, notice: I18n.t('dictionary.messages.deleted_user_task_failed') unless @tasks.update(deleted: 1)
 
-    @user = User.active.find_by(id: params[:id])
     flash[:notice] = if @user.update(deleted: 1)
                        I18n.t('dictionary.messages.deleted_user')
                      else

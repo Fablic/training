@@ -38,4 +38,9 @@ class ApplicationController < ActionController::Base
   def ensure_logged_in
     redirect_to login_url unless logged_in?
   end
+
+  def ensure_logged_in_admin
+    redirect_to login_url unless logged_in?
+    redirect_to tasks_path unless admin?
+  end
 end

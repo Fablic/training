@@ -9,6 +9,7 @@ class User < ApplicationRecord
 
   scope :active, -> { where(deleted: 0) }
   scope :active_user_count, -> (name) { active.where(name: name).count }
+  scope :admin_user_count, -> { active.where(privilege: 1).count }
 
   validates :name, { presence: true, length: { maximum: 20 } }
   validates :password, { presence: true, length: { maximum: 20 }, on: :create }
