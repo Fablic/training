@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   before_action :ensure_logged_in
 
   def index
-    @users = User.active.order("name asc").page(params[:page]).per(10)
+    @users = User.active.order('name asc').page(params[:page]).per(10)
   end
 
   def new
@@ -22,7 +22,7 @@ class UsersController < ApplicationController
   def update
     @user = User.active.find(params[:id])
 
-    if @user.update(user_params)
+    if @user.update(user_params_on_update)
       redirect_to admin_users_path, notice: I18n.t('dictionary.messages.edited_user')
     else
       render :edit
@@ -31,12 +31,12 @@ class UsersController < ApplicationController
 
   def show
     @user = User.active.find_by(id: params[:id])
-    @tasks = Task.active.user(params[:id]).order("created_at desc")
+    @tasks = Task.available(params[:id]).order('created_at desc')
     redirect_to admin_users_path if @user.nil?
   end
 
   def create
-    @user = User.new(user_params)
+    @user = User.new(user_params_on_create)
 
     if @user.save
       redirect_to admin_users_path, notice: I18n.t('dictionary.messages.created_user')
@@ -45,15 +45,13 @@ class UsersController < ApplicationController
     end
   end
 
-  def destroy
-    @tasks = Task.active.user(params[:id])
+  def destroy # rubocop:disable Metrics/AbcSize
+    @tasks = Task.available(params[:id])
 
-    unless @tasks.update(deleted: 1)
-      redirect_to admin_users_path, notice: I18n.t('dictionary.messages.deleted_user_task_failed')
-    end
+    redirect_to admin_users_path, notice: I18n.t('dictionary.messages.deleted_user_task_failed') unless @tasks.update(deleted: 1)
 
-    @user = User.active.where(id: params[:id])
-    flash[:notice] = if @user.update({deleted: 1})
+    @user = User.active.find_by(id: params[:id])
+    flash[:notice] = if @user.update(deleted: 1)
                        I18n.t('dictionary.messages.deleted_user')
                      else
                        I18n.t('dictionary.messages.deleted_user_failed')
@@ -62,7 +60,11 @@ class UsersController < ApplicationController
     redirect_to admin_users_path
   end
 
-  def user_params
+  def user_params_on_create
     params.require(:user).permit(:name, :password, :privilege)
+  end
+
+  def user_params_on_update
+    params.require(:user).permit(:password, :privilege)
   end
 end

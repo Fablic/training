@@ -11,16 +11,16 @@
 
   <div id='show-area' class='border rounded'>
     <h2 class='task-name d-inline-block'><%= @user.name %></h2>
+    <h3><%= I18n.t('users.show.task_list') %></h3>
+    <ul class='list-group rounded'>
+      <% @tasks.each do |task| %><li class='list-group-item'>
+        <h2 class='task-name d-inline-block'>
+          <span class='border rounded d-inline-block'><%= task.status.text %></span><%= task.name %>
+        </h2>
+        <p><%= l task.start_at, format: :long %> 〜 <%= l task.due_date_at, format: :long %></p>
+      </li>
+      <% end %>
+    </ul>
   </div>
-
-  <ul class='list-group rounded'>
-    <% @tasks.each do |task| %><li class='list-group-item'>
-      <h2 class='task-name d-inline-block'>
-        <span class='border rounded d-inline-block'><%= task.status.text %></span><%= task.name %>
-      </h2>
-      <p><%= l task.start_at, format: :long %> 〜 <%= l task.due_date_at, format: :long %></p>
-    </li>
-    <% end %>
-  </ul>
 
 </div>

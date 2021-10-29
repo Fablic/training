@@ -7,10 +7,10 @@
   <%= render partial: 'common/notice', locals: { notice: notice } %>
   <% end %>
 
-  <div id='back-to-list'><%= link_to I18n.t('dictionary.words.to_list'), tasks_path, class: 'btn btn-success mr-2' %></div>
+  <div id='back-to-list'><%= link_to I18n.t('dictionary.words.to_list'), admin_users_path, class: 'btn btn-success mr-2' %></div>
   <div id='edit-form' class='border rounded'>
     <%= form_with url: update_user_path(@user), model: @user do |form| %>
-      <%= render partial: 'form', locals: { form: form, submit_label: @submit_label } %>
+      <%= render partial: 'form', locals: { form: form, submit_label: @submit_label, action: 'edit' } %>
     <% end %>
   </div>
 </div>

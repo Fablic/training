@@ -4,13 +4,13 @@ class SessionsController < ApplicationController
   def new
   end
 
-  def create
-    user = User.find_by(name: params[:session][:name])
+  def create # rubocop:disable Metrics/AbcSize
+    user = User.active.find_by(name: params[:session][:name])
     if user&.authenticate(params[:session][:password])
       log_in user
       redirect_to root_url
     else
-      flash.now[:notice] = I18n.t('dictionary.messages.failed_logout')
+      flash.now[:notice] = I18n.t('dictionary.messages.failed_login')
       render 'new'
     end
   end
