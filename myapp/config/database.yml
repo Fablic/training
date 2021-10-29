@@ -15,7 +15,8 @@ default: &default
 
 development:
   <<: *default
-  database: rspecdb
+#  database: rspecdb
+  database: testdb
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -26,7 +27,7 @@ test:
 
 production:
   <<: *default
-  database: productiondb
+  database: testdb
   username: root
   password:
-  socket: /tmp/mysql.sock
+  
