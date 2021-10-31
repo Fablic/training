@@ -31,6 +31,7 @@
         selected: @task.status
       ), class: 'form-control' %>
     </div>
+    <%= form.hidden_field :user_id, :value => current_user.id %>
     <div class="d-flex align-items-start">
       <%= link_to t('tasks.back'), tasks_path, class: 'btn btn-secondary p-2 ' %>
       <% if local_assigns[:action_edit] %>
@@ -39,7 +40,7 @@
       <div class="actions ml-auto p-2">
         <%= form.submit t('tasks.submit'), class: 'btn btn-primary'%>
       </div>
-    </div>  
+    </div>
   </form>
   <% end %>
 </div>

@@ -3,11 +3,13 @@
 require 'rails_helper'
 
 RSpec.describe 'Task', type: :model do
+  let!(:user) { create(:user) }
   let(:title) { 'title for test' }
   let(:description) { 'description for test' }
   let(:due_date) { '2021-12-01 15:00:00' }
   let(:status) { 0 }
-  let!(:task) { Task.new(title: title, description: description, due_date: due_date) }
+  let(:user_id) { user.id }
+  let!(:task) { Task.new(title: title, description: description, due_date: due_date, user_id: user_id) }
 
   describe '#title' do
     context 'when less than or equal 50 charcters' do

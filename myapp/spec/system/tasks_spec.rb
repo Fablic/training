@@ -3,9 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe 'tasks', type: :system do
-  describe '#index' do
-    let!(:task_list) { create_list(:task, 4) }
+  let!(:user) { create(:user) }
 
+  describe '#index' do
+    let!(:task_list) { create_list(:task, 4, user: user) }
     before { visit root_path }
 
     context 'when open index page' do
@@ -73,7 +74,7 @@ RSpec.describe 'tasks', type: :system do
   end
 
   describe '#edit' do
-    let!(:task) { create(:task) }
+    let!(:task) { create(:task, user: user) }
 
     before { visit edit_task_path(task.id) }
 
@@ -109,7 +110,7 @@ RSpec.describe 'tasks', type: :system do
   end
 
   describe '#show' do
-    let(:task) { create(:task) }
+    let(:task) { create(:task, user: user) }
 
     before { visit task_path(task.id) }
 
@@ -157,9 +158,9 @@ RSpec.describe 'tasks', type: :system do
   describe 'search with status' do
     before { visit root_path }
 
-    let!(:task_not_started) { create(:task, status: 0) }
-    let!(:task_in_progress) { create(:task, status: 1) }
-    let!(:task_completed)   { create(:task, status: 2) }
+    let!(:task_not_started) { create(:task, status: 0, user: user) }
+    let!(:task_in_progress) { create(:task, status: 1, user: user) }
+    let!(:task_completed)   { create(:task, status: 2, user: user) }
 
     context 'when search by not_selected' do
       it 'search by not_selected, success' do
@@ -205,8 +206,8 @@ RSpec.describe 'tasks', type: :system do
   describe 'search with title' do
     before { visit root_path }
 
-    let!(:task_not_started) { create(:task, title: 'first') }
-    let!(:task_in_progress) { create(:task, title: 'last') }
+    let!(:task_not_started) { create(:task, title: 'first', user: user) }
+    let!(:task_in_progress) { create(:task, title: 'last', user: user) }
 
     context 'when search by first' do
       it 'search success' do
@@ -228,10 +229,10 @@ RSpec.describe 'tasks', type: :system do
   end
 
   describe 'sort function' do
-    let!(:task1) { create(:task, due_date: '2022/10/04 00:00:00') }
-    let!(:task2) { create(:task, due_date: '2022/10/05 00:00:00') }
-    let!(:task3) { create(:task, due_date: '2022/10/06 00:00:00') }
-    let!(:task4) { create(:task, due_date: '2022/10/07 00:00:00') }
+    let!(:task1) { create(:task, due_date: '2022/10/04 00:00:00', user: user) }
+    let!(:task2) { create(:task, due_date: '2022/10/05 00:00:00', user: user) }
+    let!(:task3) { create(:task, due_date: '2022/10/06 00:00:00', user: user) }
+    let!(:task4) { create(:task, due_date: '2022/10/07 00:00:00', user: user) }
 
     before { visit root_path }
 
@@ -246,7 +247,7 @@ RSpec.describe 'tasks', type: :system do
 
     context 'when click link to sort by due_date asc' do
       it 'order success' do
-        click_on '期日' # 1回押すと昇順
+        click_on 'DueDate' # 1回押すと昇順
         expect(find('tr:nth-child(2)')).to have_content I18n.l task1.due_date
         expect(find('tr:nth-child(5)')).to have_content I18n.l task4.due_date
       end
@@ -254,8 +255,8 @@ RSpec.describe 'tasks', type: :system do
 
     context 'when click link to sort by due_date desc' do
       it 'order success' do
-        click_on '期日' # 1回押すと昇順
-        click_on '期日' # 2回押すと降順
+        click_on 'DueDate' # 1回押すと昇順
+        click_on 'DueDate' # 2回押すと降順
         expect(find('tr:nth-child(2)')).to have_content I18n.l task4.due_date
         expect(find('tr:nth-child(5)')).to have_content I18n.l task1.due_date
       end
