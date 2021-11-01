@@ -1,13 +1,16 @@
 <h3 class="my-3 ml-3"><%=@displayed_user.name%>'s Tasks </h3>
 <div class="row">
   <%= form_with url: root_path, method: :get, local: true do |f| %>
-    <div class="col-md-3  col-md-offset-5">
+    <div class="col-md-3  col-md-offset-2">
     <%= f.search_field :title, value: @search_params[:title], placeholder: t('activerecord.attributes.task.title'), class: 'form-control' %>
     </div>
     <div class="col-md-2">
     <%= f.collection_select :status, Task.statuses.values, :to_s, method(:translate_status),{ prompt: '' }, class:"form-control", include_blank: true, selected: @search_params[:status] %>
     </div>
-    <div class="col-md-1">
+    <div class="col-md-3">
+    <%= f.search_field :label, value: @search_params[:label], placeholder: t('activerecord.attributes.label.label'), class: 'form-control' %>
+    </div>
+    <div class="col-md-2">
     <%= f.hidden_field :user_id, :value => @displayed_user.id %>
     <%= f.submit t('pages.tasks.search.title'), class: "btn btn-primary" %>
     </div>
@@ -31,6 +34,7 @@
             <th scope="col"><%= sort_order "title",t('activerecord.attributes.task.title'),@search_params %></th>
             <th scope="col"><%= sort_order "priority",t('activerecord.attributes.task.priority'),@search_params %></th>
             <th scope="col"><%= sort_order "status",t('activerecord.attributes.task.status'),@search_params %></th>
+            <th scope="col"><%= t('activerecord.attributes.label.label') %></th>
             <th scope="col"><%= sort_order "due_date",t('activerecord.attributes.task.due_date'),@search_params %></th>
             <th scope="col"><%= sort_order "created_at",t('activerecord.attributes.task.create_date'),@search_params %></th>
           </tr>

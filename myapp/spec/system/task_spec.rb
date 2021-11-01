@@ -44,6 +44,18 @@ RSpec.describe TasksController, type: :system do
     end
   end
 
+  shared_examples 'When searching for label with' do
+    it 'Only tasks that contain XXX will be displayed.' do
+      visit root_path(direction: 'asc', sort: 'due_date')
+
+      fill_in 'label', with: label
+      click_button I18n.t('pages.tasks.search.title')
+
+      columns = page.all('.sort_label')
+      expect(columns.map(&:text).count(label)).to eq count
+    end
+  end
+
   shared_examples 'page have task title' do
     it { expect(page).to have_content(tasks.first.title) }
   end
@@ -114,6 +126,18 @@ RSpec.describe TasksController, type: :system do
       it_behaves_like 'When searching for title with'
     end
 
+    context 'When searching for label with "XXXX"' do
+      let(:label) { 'XXXX' }
+      let(:count) { 25 }
+      it_behaves_like 'When searching for label with'
+    end
+
+    context 'When searching for label with "ZZZZZZ"' do
+      let(:label) { 'ZZZZZZ' }
+      let(:count) { 0 }
+      it_behaves_like 'When searching for label with'
+    end
+
     context 'When click Next' do
       before { click_link 'Next', match: :first }
       it_behaves_like 'page does not have task title'
@@ -170,6 +194,7 @@ RSpec.describe TasksController, type: :system do
     before { visit new_task_path }
     let(:title) { 'new Title' }
     let(:detail) { 'new Detail' }
+    let(:label) { 'LABEL' }
 
     context 'When a task is registered' do
       it 'Tasks can be registered, and tasks will be displayed.' do
@@ -179,6 +204,7 @@ RSpec.describe TasksController, type: :system do
         select I18n.t('activerecord.enum.task.priority.low'), from: I18n.t('activerecord.attributes.task.priority')
         select I18n.t('activerecord.enum.task.status.done'), from: I18n.t('activerecord.attributes.task.status')
         fill_in I18n.t('activerecord.attributes.task.due_date'), with: Time.zone.tomorrow.strftime('%Y-%m-%d')
+        fill_in I18n.t('activerecord.attributes.task.label'), with: label
         click_button I18n.t('common.submit')
 
         expect(page).to have_current_path(root_path)
@@ -189,6 +215,7 @@ RSpec.describe TasksController, type: :system do
 
         click_link title
         expect(page).to have_content(detail)
+        expect(page).to have_content(label)
         expect(page).not_to have_content(flush)
       end
     end
@@ -200,6 +227,7 @@ RSpec.describe TasksController, type: :system do
         select I18n.t('activerecord.enum.task.priority.low'), from: I18n.t('activerecord.attributes.task.priority')
         select I18n.t('activerecord.enum.task.status.done'), from: I18n.t('activerecord.attributes.task.status')
         fill_in I18n.t('activerecord.attributes.task.due_date'), with: Time.zone.yesterday.strftime('%Y-%m-%d')
+        fill_in I18n.t('activerecord.attributes.task.label'), with: label
         click_button I18n.t('common.submit')
 
         expect(page).to have_current_path(new_task_path)
@@ -213,6 +241,7 @@ RSpec.describe TasksController, type: :system do
     before { visit edit_task_path(tasks.last.id) }
     let(:title) { 'edit Title' }
     let(:detail) { 'edit Detail' }
+    let(:label) { 'LABEL' }
 
     context 'When a task is edited' do
       it 'Tasks can be registered, and tasks will be displayed.' do
@@ -220,12 +249,14 @@ RSpec.describe TasksController, type: :system do
         fill_in I18n.t('activerecord.attributes.task.title'), with: title
         fill_in I18n.t('activerecord.attributes.task.detail'), with: detail
         fill_in I18n.t('activerecord.attributes.task.due_date'), with: Time.zone.now.tomorrow.strftime('%Y-%m-%d')
+        fill_in I18n.t('activerecord.attributes.task.label'), with: label
         click_button I18n.t('common.submit')
 
         expect(page).to have_current_path(task_path(tasks.last))
         expect(page).to have_content(flush)
         expect(page).to have_content(title)
         expect(page).to have_content(detail)
+        expect(page).to have_content(label)
       end
     end
 
@@ -234,6 +265,7 @@ RSpec.describe TasksController, type: :system do
         fill_in I18n.t('activerecord.attributes.task.title'), with: title
         fill_in I18n.t('activerecord.attributes.task.detail'), with: detail
         fill_in I18n.t('activerecord.attributes.task.due_date'), with: Time.zone.yesterday.strftime('%Y-%m-%d')
+        fill_in I18n.t('activerecord.attributes.task.label'), with: label
         click_button I18n.t('common.submit')
 
         expect(page).to have_current_path(edit_task_path(tasks.last))

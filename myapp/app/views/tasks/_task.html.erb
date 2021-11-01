@@ -4,6 +4,7 @@
     <td class='sort_title'><%= link_to task.title, task_path(task,{user_id: @displayed_user.id}) %></td>
     <td class='sort_priority'><%= translate_priority task.priority %></td>
     <td class='sort_status'><%= translate_status task.status %></td>
+    <td class='sort_label'><%= label_link( task, @displayed_user).join(' ').html_safe %></td>
     <td class='sort_due_date'><%= l task.due_date %></td>
     <td class='sort_created_at'><%= l task.created_at %></td>
   </tr>

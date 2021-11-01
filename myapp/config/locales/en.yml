@@ -43,12 +43,15 @@ en:
         due_date: due_date
         create_date: create_date
         image: image
+        label: label
       user:
         name: Name
         email: Email
         role: Role
         password: Password
         password_confirmation: Confirmation
+      label:
+        label: Label
     enum:
       task:
         priority:

@@ -11,6 +11,13 @@ module TasksHelper
     raise "Unexpected status `#{status}` is set."
   end
 
+  def label_link(task, user)
+    task.labels.map do |l|
+      content_tag(:span,
+                  link_to(l.label, root_path(task, { user_id: user.id, label: l.label }), class: 'badge badge-light'))
+    end
+  end
+
   def sort_order(column, title, hash_param = {})
     direction = column == sort_column && sort_direction == 'asc' ? 'desc' : 'asc'
     link_to title, { sort: column, direction: direction }.merge(hash_param)
