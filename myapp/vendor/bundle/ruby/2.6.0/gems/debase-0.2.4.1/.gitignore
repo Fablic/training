@@ -1,0 +1,13 @@
+*.gem
+.bundle
+Gemfile.lock
+pkg/*
+ext/**/*.o
+ext/**/*.bundle
+ext/**/Makefile
+ext/**/*.log
+ext/**/*.so
+ext/**/*.def
+.ruby-gemset
+.ruby-version
+.idea/*
