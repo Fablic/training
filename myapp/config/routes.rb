@@ -13,11 +13,11 @@ Rails.application.routes.draw do
   get 'admin',  to: 'admin#index'
 
 
-  # get '*not_found', to: 'application#routing_error', constraints: lambda { |req|
-  #   req.path.exclude? 'rails/active_storage'
-  # }  
-  # post '*not_found', to: 'application#routing_error', constraints: lambda { |req|
-  #   req.path.exclude? 'rails/active_storage'
-  # }  
+  get '*not_found', to: 'application#routing_error', constraints: lambda { |req|
+    req.path.exclude? 'rails/active_storage'
+  }  
+  post '*not_found', to: 'application#routing_error', constraints: lambda { |req|
+    req.path.exclude? 'rails/active_storage'
+  }  
 
 end
