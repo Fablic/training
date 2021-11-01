@@ -21,10 +21,9 @@
         <%= f.hidden_field :user_id, :value => @user.id %>
         <% if adminer? %>
           <%= f.label :role %>
-          <%= f.collection_select :role, User.roles.values, :to_i, method(:translate_role),{ prompt: '選択してください' }, class:"form-control", selected:@user.role %>
+          <%= f.collection_select :role, User.roles.keys, :to_s, method(:translate_role),{ prompt: '選択してください' }, class:"form-control", selected:@user.role %>
         <% end %>
       <% end %>
-
 
       <%= f.submit button_value, class: "btn btn-primary" %>
     <% end %>

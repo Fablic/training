@@ -29,7 +29,7 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    if @user.role == User.roles['owner']
+    if @user.owner?
       redirect_to(admin_path,
                   flash: { info: I18n.t('pages.users.flash.non_deleted') }) and return
     end
