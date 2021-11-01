@@ -33,7 +33,7 @@ describe 'ユーザー管理機能', type: :system do
 
       it '表示される詳細画面の情報が期待通り' do
         click_link 'TaroRakuten(2)'
-        expect(page).to have_content 'TaroRakuten'
+        expect(page).to have_content 'TaroRakuten(管理者)'
         expect(find('li:nth-child(1)')).to have_content 'taro_task2'
         expect(find('li:nth-child(2)')).to have_content 'taro_task1'
       end
@@ -45,7 +45,7 @@ describe 'ユーザー管理機能', type: :system do
 
       it '対象ユーザーを切り替えても正しくタスクが表示される' do
         click_link 'HanakoRakuten(1)'
-        expect(page).to have_content 'HanakoRakuten'
+        expect(page).to have_content 'HanakoRakuten(一般ユーザー)'
         expect(find('li:nth-child(1)')).to have_content 'hanako no task'
       end
     end
@@ -57,6 +57,7 @@ describe 'ユーザー管理機能', type: :system do
         visit new_user_path
         fill_in 'ユーザー名', with: 'ShintaroRakuten'
         fill_in 'パスワード', with: 'rakutenrakuten'
+        select '一般ユーザー', from: 'user[privilege]'
 
         click_button 'commit'
 
@@ -91,6 +92,7 @@ describe 'ユーザー管理機能', type: :system do
       it '期待通りにユーザーが編集され、既存データに影響がない' do
         find('li:nth-child(1)').click_link('編集')
         fill_in 'パスワード', with: 'EditRakuten'
+        select '管理者', from: 'user[privilege]'
 
         click_button 'commit'
 
@@ -107,6 +109,7 @@ describe 'ユーザー管理機能', type: :system do
         fill_in 'パスワード', with: 'EditRakuten'
         click_button 'commit'
         expect(page).to have_content 'タスク一覧'
+        expect(page).to have_content 'ユーザー管理'
       end
     end
 
@@ -140,13 +143,13 @@ describe 'ユーザー管理機能', type: :system do
   end
 
   describe 'ユーザーの削除' do
-    context 'ユーザーを削除する' do
+    context '一般ユーザーを削除する' do
       it '期待通りにユーザーが削除され、既存データに影響がない' do
         visit admin_users_path
         find('li:nth-child(1)').click_button('×')
         page.driver.browser.switch_to.alert.accept
 
-        # 作成されたタスクが表示されてない
+        # 削除したユーザーが表示されてない
         expect(page).not_to have_content 'HanakoRakuten(1)'
 
         # 既存のデータに影響がない
@@ -159,6 +162,38 @@ describe 'ユーザー管理機能', type: :system do
         fill_in 'パスワード', with: 'rakuten'
         click_button 'commit'
         expect(page).to have_content 'ログインに失敗しました'
+      end
+    end
+
+    context '管理者を削除する' do
+      before do
+        create(:user, name: 'YoshioRakuten', password: 'rakuten', privilege: :admin)
+      end
+
+      it '削除できる' do
+        visit admin_users_path
+        find('li:nth-child(3)').click_button('×')
+        page.driver.browser.switch_to.alert.accept
+
+        # 削除したユーザーでログインできない
+        click_button 'ログアウト'
+        page.driver.browser.switch_to.alert.accept
+        fill_in 'ユーザー名', with: 'YoshioRakuten'
+        fill_in 'パスワード', with: 'rakuten'
+        click_button 'commit'
+        expect(page).to have_content 'ログインに失敗しました'
+      end
+    end
+
+    context '最後の管理者を削除する' do
+      it '削除できない' do
+        visit admin_users_path
+        find('li:nth-child(2)').click_button('×')
+        page.driver.browser.switch_to.alert.accept
+
+        # 最後の管理者は削除できない
+        expect(page).to have_content '最後の管理者ユーザーなので削除できません'
+        expect(find('li:nth-child(2)')).to have_content 'TaroRakuten(2)'
       end
     end
   end
