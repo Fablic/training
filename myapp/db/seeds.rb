@@ -9,7 +9,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 # Normal User related
-normal_user = User.create!(name: 'normal', password_digest: 'pass', is_admin: false)
+normal_user = User.create!(name: 'normal', password: 'passwordNormal', password_confirmation: 'passwordNormal', is_admin: false)
 normal_user.tasks.create!(
   [
     { title: 'normal_hoge', description: 'normal_desc', due_date: '2021-02-01 00:00:00' },
@@ -20,7 +20,7 @@ normal_user.tasks.create!(
 )
 
 # Admin User related
-admin_user = User.create!(name: 'admin', password_digest: 'word', is_admin: true)
+admin_user = User.create!(name: 'admin', password: 'passwordAdmin', password_confirmation: 'passwordAdmin', is_admin: true)
 admin_user.tasks.create!(
   [
     { title: 'admin_hoge', description: 'admin_desc', due_date: '2021-02-01 00:00:00' },
