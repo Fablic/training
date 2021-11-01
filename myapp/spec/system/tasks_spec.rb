@@ -142,6 +142,16 @@ RSpec.describe 'tasks', type: :system do
       end
       expect(page).to have_content I18n.t('tasks.index.title')
     end
+  
+    it 'Check sort' do
+      created_list = page.all('.created_at')
+      expect(created_list.count).to be > 0
+      created_list.each.with_index(1) do |row, index|
+        expect(row.text).to eq I18n.l(tasks[task_count - index].created_at)
+      end
+    end
+  end
+
   end
 
 end
