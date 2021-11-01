@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class SessionsController < ApplicationController
+  skip_before_action :maintenance_switch, only: %i[new create destroy maintenance]
   skip_before_action :authorized, only: %i[new create destroy]
   layout false, only: %i[new create]
   def create
@@ -21,5 +22,9 @@ class SessionsController < ApplicationController
   def destroy
     reset_session
     redirect_to login_path
+  end
+
+  def maintenance
+    # render layout: false
   end
 end

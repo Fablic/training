@@ -16,7 +16,7 @@ class TasksController < ApplicationController
     @q = Task.role_filtered(admin?, current_user.id)
 
     #run predefined searches 
-    if !params[:dash_search].blank?
+    if !params[:dash_search].blank? && ['unfinised','overdue','due_today'].include?(params[:dash_search])
       @q = @q.send(params[:dash_search])
     end    
 

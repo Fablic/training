@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  before_action :maintenance_switch
   before_action :authorized
   around_action :switch_locale
   helper_method :current_user
@@ -30,5 +31,11 @@ class ApplicationController < ActionController::Base
 
   def admin?
     current_user.admin
+  end
+
+  def maintenance_switch
+    return if Maintenance.count.zero?
+
+    redirect_to maintenance_path if logged_in? && ! admin? 
   end
 end
