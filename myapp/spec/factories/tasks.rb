@@ -6,7 +6,7 @@ FactoryBot.define do
     status { Task.statuses[:waiting] }
     sequence(:due_date) { |n| Time.current + 86_400 + (n * 600) }
     sequence(:created_at) { |n| Time.current + (n * 600) }
-    user_id { 1 }
-    labels { [Label.where(label: 'XXXX').first_or_create] }
+    user_id { association(:user) }
+    labels { [Label.first || association(:label)] }
   end
 end
