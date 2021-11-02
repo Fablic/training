@@ -72,6 +72,6 @@ class LabelsController < ApplicationController
   def label_params
     params.require(:label)
       .permit(:name, :color)
-      .with_defaults(created_by: 1, color: '#e6e6e6')
+      .with_defaults(created_by: current_user.id, color: '#e6e6e6')
   end
 end

@@ -20,6 +20,17 @@
         <%= notice %>
       </div>
  
+<% end  %>
+
+
+<% if ! alert.blank? %>
+
+ 
+      <div class="notification is-danger ">
+        <button class="delete"></button>
+        <%= alert %>
+      </div>
+ 
 
 <% end  %>
 <nav class="navbar is-primary" role="navigation" aria-label="main navigation">

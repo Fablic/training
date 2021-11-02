@@ -53,6 +53,10 @@ class UsersController < AdminController
 
   # DELETE /users/1 or /users/1.json
   def destroy
+    if @user.admin && User.where(admin: true).count == 1
+      redirect_to @user, alert: t('messages.cant_delete_all_admins')
+      return
+    end
     @user.destroy
     respond_to do |format|
       format.html { redirect_to users_url, notice: t('messages.deleted_success', target: User.model_name.human()) }

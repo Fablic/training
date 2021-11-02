@@ -13,6 +13,9 @@ Metrics/BlockLength:
 RSpec/ExampleLength:
   Exclude:
     - 'spec/**/*'
+RSpec/AnyInstance:
+  Exclude:
+    - 'spec/**/*'
 RSpec/NestedGroups:
   Max: 5
 RSpec/MultipleExpectations:

@@ -39,7 +39,7 @@
 
 <p>
   <strong><%= Task.human_attribute_name(:created_by) %></strong>
-  <%= @task.created_by %>
+  <%= "[#{@task.created_by}] #{@task.user.name}" %>
 </p>
 
 <p>

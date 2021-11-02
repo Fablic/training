@@ -36,6 +36,6 @@ class ApplicationController < ActionController::Base
   def maintenance_switch
     return if Maintenance.count.zero?
 
-    redirect_to maintenance_path if logged_in? && ! admin? 
+    redirect_to maintenance_path if logged_in? && !admin?
   end
 end

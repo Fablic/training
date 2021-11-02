@@ -8,6 +8,6 @@ class AdminController < ApplicationController
   # redirect if user not logged in or does not have a valid role
   def restrict_user_by_role
     #  unless admin?
-    raise ActiveRecord::RecordNotFound  unless admin?
+    raise ActiveRecord::RecordNotFound unless admin?
   end
 end
