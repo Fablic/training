@@ -5,8 +5,16 @@ require 'rails_helper'
 RSpec.describe 'tasks', type: :system do
   let!(:user) { create(:user) }
 
+  before do
+    visit login_path
+    fill_in 'Name', with: user.name
+    fill_in 'Password', with: user.password
+    click_button 'Log in'
+  end
+
   describe '#index' do
     let!(:task_list) { create_list(:task, 4, user: user) }
+
     before { visit root_path }
 
     context 'when open index page' do
