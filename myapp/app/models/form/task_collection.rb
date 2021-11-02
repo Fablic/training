@@ -14,7 +14,7 @@ class Form::TaskCollection
   def save(params)
     Task.transaction do
       @task.image.attach(params[:image])
-      @task.labels = params[:label].split(',').map { |l| Label.where(label: l).first_or_create }
+      @task.labels = labels(params).map(&:strip).map { |l| Label.where(label: l).first_or_create }
       @task.save!
     end
     true
@@ -23,7 +23,7 @@ class Form::TaskCollection
   end
 
   def update(params)
-    labels = params[:label].split(',')
+    labels = labels(params)
     Task.transaction do
       @task.image.attach(params[:image])
       TaskLabel.where(task_id: @task.id).where.not(label_id: Label.where(label: labels)).destroy_all
@@ -33,5 +33,11 @@ class Form::TaskCollection
     true
   rescue StandardError
     false
+  end
+
+  private
+
+  def labels(params)
+    params[:label].split(',').map(&:strip)
   end
 end
