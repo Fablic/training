@@ -48,14 +48,21 @@ class UsersController < ApplicationController
   def destroy # rubocop:disable Metrics/AbcSize
     @tasks = Task.available(params[:id])
 
-    redirect_to admin_users_path, notice: I18n.t('dictionary.messages.deleted_user_task_failed') unless @tasks.update(deleted: 1)
+    ActiveRecord::Base.transaction do
 
-    @user = User.active.find_by(id: params[:id])
-    flash[:notice] = if @user.update(deleted: 1)
-                       I18n.t('dictionary.messages.deleted_user')
-                     else
-                       I18n.t('dictionary.messages.deleted_user_failed')
-                     end
+      if @tasks.update(deleted: 1)
+        @user = User.active.find_by(id: params[:id])
+        if @user.update(deleted: 1)
+          flash[:notice] = I18n.t('dictionary.messages.deleted_user')
+        else
+          redirect_to admin_users_path, notice: I18n.t('dictionary.messages.deleted_user_failed')
+          raise ActiveRecord::Rollback
+        end
+      else
+        raise ActiveRecord::Rollback
+        flash[:notice] = I18n.t('dictionary.messages.deleted_user_task_failed')
+      end
+    end
 
     redirect_to admin_users_path
   end

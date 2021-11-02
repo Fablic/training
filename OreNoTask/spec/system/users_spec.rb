@@ -146,7 +146,7 @@ describe 'ユーザー管理機能', type: :system do
         find('li:nth-child(1)').click_button('×')
         page.driver.browser.switch_to.alert.accept
 
-        # 作成されたタスクが表示されてない
+        # 削除されたユーザーが表示されてない
         expect(page).not_to have_content 'HanakoRakuten(1)'
 
         # 既存のデータに影響がない
