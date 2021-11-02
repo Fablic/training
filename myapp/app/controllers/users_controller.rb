@@ -29,7 +29,7 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    if @user.role == User.roles['owner']
+    if @user.owner?
       redirect_to(admin_path,
                   flash: { info: I18n.t('pages.users.flash.non_deleted') }) and return
     end
@@ -58,10 +58,10 @@ class UsersController < ApplicationController
     return if adminer?
     return if @user.id == current_user.id
 
-    redirect_to(root_url) and return
+    redirect_to(root_url)
   end
 
   def new_role
-    redirect_to root_path and return if current_user.present?
+    redirect_to root_path if current_user.present?
   end
 end

@@ -7,12 +7,10 @@ class User < ApplicationRecord
   validates :password, presence: true, length: { minimum: 5, maximum: 20 }, on: :create
   has_secure_password
 
-  enum roles: { member: 0, adminer: 10, owner: 20 }
-  validates :role, presence: true, inclusion: { in: User.roles.values }, user_role: true
+  enum role: { member: 0, adminer: 10, owner: 20 }
+  validates :role, presence: true, inclusion: { in: User.roles.keys }
 
   has_many :tasks, dependent: :destroy
-
-  attribute :role, :integer, default: 0
 
   def self.digest(string)
     cost = if ActiveModel::SecurePassword.min_cost
