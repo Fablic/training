@@ -2,6 +2,8 @@ class ApplicationController < ActionController::Base
   include SessionsHelper
   include ApplicationHelper
 
+  before_action :_render_503_except_for_whitelisted_ips, if: :maintenance_mode?
+
   rescue_from Exception,                      with: :_render_internal_server_error
   rescue_from ActiveRecord::RecordNotFound,   with: :_render_not_found
   rescue_from ActionController::RoutingError, with: :_render_not_found
@@ -19,6 +21,10 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def maintenance_mode?
+    File.exist?(Constants::MAINTENANCE_FILE_PATH)
+  end
+
   def _render_not_found
     if request.format.to_sym == :json
       render json: { error: '404 Not Found' }, status: :not_found
@@ -33,5 +39,9 @@ class ApplicationController < ActionController::Base
     else
       render file: Rails.root.join('public/500.html'), status: :internal_server_error, layout: false
     end
+  end
+
+  def _render_503_except_for_whitelisted_ips
+    render file: Rails.root.join('public/503.html'), status: :service_unavailable, layout: false
   end
 end
