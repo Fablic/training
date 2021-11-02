@@ -17,8 +17,8 @@
     <td><%= translate_status @task.status %></td>
     <td><%= l @task.due_date %></td>
     <td><%= label_link( @task, @displayed_user).join(' ').html_safe  %></td>
-    <td><%= link_to t('common.edit'),   edit_task_path(@task) %></td>
-    <td><%= link_to t('common.delete'), @task, method: :delete, data: { confirm: t('pages.tasks.confirm_deletion') } %></td>
+    <td><%= link_to t('common.edit'),   edit_task_path(@task) if current_user.id == @displayed_user.id  %></td>
+    <td><%= link_to t('common.delete'), @task, method: :delete, data: { confirm: t('pages.tasks.confirm_deletion') } if current_user.id == @displayed_user.id%></td>
   </tr>
   </tbody>
 </table>    
