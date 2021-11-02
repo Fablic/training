@@ -23,6 +23,25 @@ class TasksController < ApplicationController
     @task = Task.available(current_user.id).find(params[:id])
 
     if @task.update(task_params)
+      if !task_labels[:labels].blank?
+        current_task_label = TaskLabel.where(task_id: @task.id)
+        current_task_label.delete unless !current_task_label.nil?
+
+        @labels = task_labels[:labels].split(",")
+
+        @labels.each do |label|
+          label = Label.active.find_by(name: label)
+
+          if Label.active.find_by(name: label).count.zero?
+            label = Label.new(name: label)
+            label.save
+          end
+
+          tasklabel = TaskLabel.new(task_id: params[:id], label_id: label.id)
+          tasklabel.save
+        end
+      end
+
       redirect_to tasks_path, notice: I18n.t('dictionary.messages.edited_task')
     else
       render :edit
@@ -70,6 +89,10 @@ class TasksController < ApplicationController
 
   def task_params
     params.require(:task).permit(:name, :description, :status, :start_at, :due_date_at)
+  end
+
+  def task_labels
+    params.require(:task).permit(:labels)
   end
 
   def sort_direction

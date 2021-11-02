@@ -24,5 +24,9 @@
     <th><%= form.label :description, Task.human_attribute_name(:description) %></th>
     <td><%= form.text_area :description %></td>
   </tr>
+  <tr>
+    <th>ラベル</th>
+    <td><%= form.text_area :labels %></td>
+  </tr>
 </table>
 <p><%= form.submit @submit_label, class: 'btn btn-primary' %></p>
