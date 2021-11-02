@@ -3,7 +3,7 @@
 FactoryBot.define do
   factory :user, class: User do
     name     { Faker::Name.name }
-    password { Faker::String.random }
+    password { 'password' }
     is_admin { Faker::Boolean.boolean }
   end
 end

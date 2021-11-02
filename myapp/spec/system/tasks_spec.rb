@@ -63,12 +63,11 @@ RSpec.describe 'tasks', type: :system do
     before { visit new_task_path }
 
     context 'when create task' do
-      # https://github.com/faker-ruby/faker#usage
       it 'create success' do
         fill_in 'task[title]',       with: 'new task'
         fill_in 'task[description]', with: 'new description'
         fill_in 'task[due_date]',    with: Faker::Time.forward(days: 23, period: :morning)
-        click_button '送信'
+        click_button '送信' 
         expect(page).to have_content 'Successfully created'
       end
     end
@@ -84,23 +83,24 @@ RSpec.describe 'tasks', type: :system do
   describe '#edit' do
     let!(:task) { create(:task, user: user) }
 
-    before { visit edit_task_path(task.id) }
-
     context 'when open edit page' do
       context 'with displayed title' do
         it 'display success' do
+          visit edit_task_path(task.id)
           expect(page).to have_field '件名', with: task.title
         end
       end
 
       context 'with displayed created_at' do
         it 'display success' do
+          visit edit_task_path(task.id)
           expect(page).to have_field '詳細', with: task.description
         end
       end
 
       context 'with displayed due_date' do
         it 'display success' do
+          visit edit_task_path(task.id)
           expect(page).to have_field '期日', with: task.due_date.strftime('%Y-%m-%dT%H:%M:%S')
         end
       end
@@ -108,6 +108,7 @@ RSpec.describe 'tasks', type: :system do
 
     context 'when edit and resister task' do
       it 'edit and resister task, success' do
+        visit edit_task_path(task.id)
         fill_in 'task[title]',       with: 'title for edit'
         fill_in 'task[description]', with: 'description for edit'
         fill_in 'task[due_date]',    with: Faker::Time.forward(days: 23, period: :morning)

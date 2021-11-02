@@ -13,7 +13,6 @@ class SessionsController < ApplicationController
       log_in user
       redirect_to root_path
     else
-      # flash.now[:danger] = I18n.t('.flash.invalid_password')
       flash.now[:danger] = 'login failed'
       render 'new'
     end
