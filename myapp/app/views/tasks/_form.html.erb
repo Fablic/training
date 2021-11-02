@@ -1,5 +1,5 @@
 <%= form_with(model: task, local: true) do |form| %>
-     <% if task.errors.any? %>
+  <% if task.errors.any? %>
     <div id="error_explanation">
       <ul>
         <% task.errors.full_messages.each do |message| %>
@@ -9,48 +9,48 @@
     </div>
   <% end %>
 
+  <div class="field">
+    <%= form.label Task.human_attribute_name(:status) %>
+    <%= form.select :status,  Task.statuses_i18n.keys.map { |k| [Task.statuses_i18n[k], k]} %>
+  </div>
 
-            <div class="field">
-                <%= form.label Task.human_attribute_name(:status) %>
-                    <%= form.select :status,  Task.statuses_i18n.keys.map { |k| [Task.statuses_i18n[k], k]} %>
-            </div>
+  <div class="field">
+    <%= form.label Task.human_attribute_name(:name) %>
+    <%= form.text_field :name, :maxlength=> 30 %>
+  </div>
 
-            <div class="field">
-                <%= form.label Task.human_attribute_name(:name) %>
-                    <%= form.text_field :name, :maxlength=> 30 %>
-            </div>
+  <div class="field">
+    <%= form.label Task.human_attribute_name(:priority) %>
+    <%= form.text_field :priority, :maxlength=> 3 %>
+  </div>
 
+  <div class="field">
+    <%= form.label Task.human_attribute_name(:description) %>
+    <%= form.text_area :description %>
+  </div>
 
-            <div class="field">
-                <%= form.label Task.human_attribute_name(:priority) %>
-                    <%= form.text_field :priority, :maxlength=> 3%>
-            </div>
+  <% if  admin? %>
+    <div class="field">
+      <%= form.label Task.human_attribute_name(:created_by) %>
+      <%= form.collection_select :created_by, User.all.order(:id),:id, :name %>
+    </div>
+  <% end %>
+  
+  <div class="field">
+    <%= form.label Task.human_attribute_name(:started_at) %>
+    <%= form.date_field :started_at %>
+  </div>
 
-            <div class="field">
-                <%= form.label Task.human_attribute_name(:description) %>
-                    <%= form.text_area :description %>
-            </div>
-<% if  admin? %>
-            <div class="field">
-                <%= form.label Task.human_attribute_name(:created_by) %>
-                    <%= form.collection_select :created_by, User.all.order(:id),:id, :name  %>
-            </div>
+  <div class="field">
+    <%= form.label Task.human_attribute_name(:finished_at) %>
+    <%= form.date_field :finished_at %>
+  </div>
+
+  <div class="field">
+    <%= form.collection_check_boxes(:label_ids, Label.all, :id, :name) %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit class: "button is-success" %>
+  </div>
 <% end %>
-            <div class="field">
-                <%= form.label Task.human_attribute_name(:started_at) %>
-                    <%= form.date_field :started_at %>
-            </div>
-
-            <div class="field">
-                <%= form.label Task.human_attribute_name(:finished_at) %>
-                    <%= form.date_field :finished_at %>
-            </div>
-
-          <div class="field">
-                 <%= form.collection_check_boxes(:label_ids, Label.all, :id, :name) %>
-            </div>
-
-            <div class="actions">
-                <%= form.submit class: "button is-success" %>
-            </div>
-            <% end %>

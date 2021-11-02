@@ -1,51 +1,48 @@
 <div class="section">
 
-<h1 class="title has-text-primary">
-  <%= Label.model_name.human + t('actions.list')%>
-  <%= link_to  new_label_path, class:"button is-success"   do %>
-    <span class="icon">
-      <i class="fas fa-plus-circle fa-2x"></i>
-    </span>
-  <% end %>
-  
-</h1>
-<div class='box'>
-
-
-
-<%= paginate @labels %>
-<table class="table is-striped is-narrow is-hoverable is-fullwidth">
-  <thead>
-    <tr>
-      <th><%= sort_link(@q, :id)%></th>
-      <th><%= sort_link(@q, :name)%></th>
-      <th><%= sort_link(@q, :color)%></th>
-      <th><%= 'task count' %></th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @labels.each do |label| %>
-      <tr>
-        <td><%= label.id %></td>
-        <td><div class="tags are-large">
-          <%= render partial: 'shared/label_component', locals:{label:label, has_delete:false} %>
-          </div>
-          </td>
-        <td><%= label.color %></td>
-        <td><%= link_to  label.tasks.count.to_s, tasks_path('q[labels_id_eq]':label.id), class: 'button' %></td>
-        <td><%= link_to t('actions.show'), label , class: "button is-link" %></td>
-        <td><%= link_to t('actions.edit'), edit_label_path(label) , class: "button is-link" %></td>
-        <td><%= link_to t('actions.destroy'), label, method: :delete, class: "button is-danger", data: { confirm: t('messages.delete_confirm') } %></td>
-      </tr>
+  <h1 class="title has-text-primary">
+    <%= Label.model_name.human + t('actions.list') %>
+    <%= link_to  new_label_path, class:"button is-success"   do %>
+      <span class="icon">
+        <i class="fas fa-plus-circle fa-2x"></i>
+      </span>
     <% end %>
-  </tbody>
-</table>
 
-<br>
+  </h1>
+  <div class='box'>
 
+    <%= paginate @labels %>
+    <table class="table is-striped is-narrow is-hoverable is-fullwidth">
+      <thead>
+        <tr>
+          <th><%= sort_link(@q, :id) %></th>
+          <th><%= sort_link(@q, :name) %></th>
+          <th><%= sort_link(@q, :color) %></th>
+          <th><%= 'task count' %></th>
+          <th colspan="3"></th>
+        </tr>
+      </thead>
 
+      <tbody>
+        <% @labels.each do |label| %>
+          <tr>
+            <td><%= label.id %></td>
+            <td>
+              <div class="tags are-large">
+                <%= render partial: 'shared/label_component', locals:{label:label, has_delete:false} %>
+              </div>
+            </td>
+            <td><%= label.color %></td>
+            <td><%= link_to  label.tasks.count.to_s, tasks_path('q[labels_id_eq]':label.id), class: 'button' %></td>
+            <td><%= link_to t('actions.show'), label , class: "button is-link" %></td>
+            <td><%= link_to t('actions.edit'), edit_label_path(label) , class: "button is-link" %></td>
+            <td><%= link_to t('actions.destroy'), label, method: :delete, class: "button is-danger", data: { confirm: t('messages.delete_confirm') } %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
 
-</div>
+    <br>
+
+  </div>
 </div>

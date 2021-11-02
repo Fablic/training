@@ -1,49 +1,46 @@
 <div class="section">
 
-<h1 class="title has-text-primary">
-  <%= User.model_name.human + t('actions.list')%>
-  <%= link_to  new_user_path, class:"button is-success"  do %>
-    <span class="icon">
-      <i class="fas fa-plus-circle fa-2x"></i>
-    </span>
-  <% end %>
-
-</h1>
-<div class='box'>
-
-
-
-<div class="container"><%= paginate @users %>
-<table class="table is-striped is-narrow is-hoverable is-fullwidth">
-  <thead>
-    <tr>
-      <th><%= sort_link(@q, :id)%></th>
-      <th><%= sort_link(@q, :name)%></th>
-      <th><%= sort_link(@q, :username)%></th>
-      <th><%= sort_link(@q, :admin)%></th>
-      <th><%= 'task count' %></th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @users.each do |user| %>
-      <tr>
-        <td><%= user.id %></td>
-        <td><%= user.name %></td>
-        <td><%= user.username %></td>
-        <td><%= user.admin %></td>
-        <td><%= link_to  user.tasks.count.to_s, tasks_path('q[created_by_eq]':user.id), class: 'button' %></td>
-        <td><%= link_to t('actions.show'), user , class: "button is-link" %></td>
-        <td><%= link_to t('actions.edit'), edit_user_path(user) , class: "button is-link" %></td>
-        <td><%= link_to t('actions.destroy'), user, method: :delete, class: "button is-danger", data: { confirm: t('messages.delete_confirm') } %></td>
-      </tr>
+  <h1 class="title has-text-primary">
+    <%= User.model_name.human + t('actions.list') %>
+    <%= link_to  new_user_path, class:"button is-success"  do %>
+      <span class="icon">
+        <i class="fas fa-plus-circle fa-2x"></i>
+      </span>
     <% end %>
-  </tbody>
-</table>
 
-<br>
+  </h1>
+  <div class='box'>
 
+    <div class="container"><%= paginate @users %>
+      <table class="table is-striped is-narrow is-hoverable is-fullwidth">
+        <thead>
+          <tr>
+            <th><%= sort_link(@q, :id) %></th>
+            <th><%= sort_link(@q, :name) %></th>
+            <th><%= sort_link(@q, :username) %></th>
+            <th><%= sort_link(@q, :admin) %></th>
+            <th><%= 'task count' %></th>
+            <th colspan="3"></th>
+          </tr>
+        </thead>
 
-</div>
-</div>
+        <tbody>
+          <% @users.each do |user| %>
+            <tr>
+              <td><%= user.id %></td>
+              <td><%= user.name %></td>
+              <td><%= user.username %></td>
+              <td><%= user.admin %></td>
+              <td><%= link_to  user.tasks.count.to_s, tasks_path('q[created_by_eq]':user.id), class: 'button' %></td>
+              <td><%= link_to t('actions.show'), user , class: "button is-link" %></td>
+              <td><%= link_to t('actions.edit'), edit_user_path(user) , class: "button is-link" %></td>
+              <td><%= link_to t('actions.destroy'), user, method: :delete, class: "button is-danger", data: { confirm: t('messages.delete_confirm') } %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+      <br>
+
+    </div>
+  </div>

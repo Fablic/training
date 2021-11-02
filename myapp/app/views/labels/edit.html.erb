@@ -1,14 +1,12 @@
 <div class="section container">
 
-<h1 class="title has-text-primary">
-  <%=t('actions.edit') + Label.model_name.human() %>
-</h1>
-<div class='box'>
-<%= link_to t('actions.back'), labels_path, class:"delete is-large is-pulled-right" %>
+  <h1 class="title has-text-primary">
+    <%= t('actions.edit') + Label.model_name.human() %>
+  </h1>
+  <div class='box'>
+    <%= link_to t('actions.back'), labels_path, class:"delete is-large is-pulled-right" %>
 
-<%= render 'form', label: @label %>
+    <%= render 'form', label: @label %>
 
-
-
-</div>
+  </div>
 </div>
