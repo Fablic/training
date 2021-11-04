@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class UsersController < ApplicationController
+class Admin::UsersController < ApplicationController
   before_action :ensure_logged_in
 
   def index

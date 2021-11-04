@@ -1,5 +1,5 @@
 <header class='border-bottom rounded-bottom position-fixed w-100'>
-  <h1><%= I18n.t('users.new.title') %></h1>
+  <h1><%= I18n.t('users.edit.title') %></h1>
   <%= button_to I18n.t('dictionary.words.logout'), logout_path, method: :delete, data: {confirm: I18n.t('dictionary.messages.confirm_logout')}, class: 'btn btn-dark logout' %>
   <%= link_to I18n.t('login.index.title'), tasks_path, class: 'btn btn-success change-management' %>
 </header>
@@ -11,8 +11,8 @@
 
   <div id='back-to-list'><%= link_to I18n.t('dictionary.words.to_list'), admin_users_path, class: 'btn btn-success mr-2' %></div>
   <div id='edit-form' class='border rounded'>
-    <%= form_with url: create_user_path, model: @user do |form| %>
-      <%= render partial: 'form', locals: { form: form, submit_label: @submit_label, action: 'new' } %>
+    <%= form_with url: admin_user_path(@user), model: @user do |form| %>
+      <%= render partial: 'form', locals: { form: form, submit_label: @submit_label, action: 'edit' } %>
     <% end %>
   </div>
 </div>
