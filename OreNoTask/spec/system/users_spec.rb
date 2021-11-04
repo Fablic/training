@@ -26,12 +26,21 @@ describe 'ユーザー管理機能', type: :system do
 
     context 'ページング機能' do
       context 'ページングが動作しているか' do
-        it '２ページ目のユーザーが表示されている' do
+        it 'ページングリンクが正しく動いている' do
           create_list(:user, 10)
 
           visit admin_users_path
           click_link '2'
           expect(find('li:nth-child(1)')).to have_content 'test_user_8(0)'
+
+          click_link '1'
+          expect(find('li:nth-child(1)')).to have_content 'HanakoRakuten(1)'
+
+          click_link 'Next'
+          expect(find('li:nth-child(1)')).to have_content 'test_user_8(0)'
+
+          click_link 'Previous'
+          expect(find('li:nth-child(1)')).to have_content 'HanakoRakuten(1)'
         end
       end
     end
