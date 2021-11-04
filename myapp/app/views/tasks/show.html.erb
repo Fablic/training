@@ -1,0 +1,7 @@
+<h1><%= t ".title" %></h1>
+
+<%= form_for @task do |t| %>
+   <%= render "form", t: t %>
+<% end %>
+
+<%= link_to t('tasks.common.move_task_list'), root_path %>
