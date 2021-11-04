@@ -7,9 +7,7 @@
   <p><%= flash[:error] %></p>
 <% end %>
 
-<p>
-<%= link_to t('.move_new_task'), new_task_path, id: 'click_new'  %> 
-</p>
+<p><%= link_to t('.move_new_task'), new_task_path, id: 'click_new'  %> </p>
 
 <table class='table table-list' id='task_list' border=1>
   <thead>
