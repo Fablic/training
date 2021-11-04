@@ -15,14 +15,17 @@
       <%= form.label :title, t('tasks.title') %>
       <%= form.text_field :title, class: 'form-control'%>
     </div>
+
     <div class="p-2 form-group">
       <%= form.label :description, t('tasks.description') %>
       <%= form.text_area :description, class: 'form-control' %>
     </div>
+
     <div class="p-2 form-group">
       <%= form.label :due_date, t('tasks.due_date') %>
       <%= form.datetime_field :due_date, class: 'form-control' %>
     </div>
+
     <div class="p-2 form-group">
       <%= form.label :status, t('tasks.status') %>
       <%= form.select :status, options_for_select(
@@ -30,6 +33,19 @@
         selected: @task.status
       ), class: 'form-control' %>
     </div>
+
+    <div class="p-2 form-group">
+      <%= form.label :ラベル %>
+        <div class="col">
+          <%= form.collection_check_boxes(
+            :label_ids,
+            current_user.labels,
+            :id,  #value
+            :name #表示名
+          ) %>
+        </div>
+    </div>
+
     <div class="d-flex align-items-start">
       <%= link_to t('tasks.back'), tasks_path, class: 'btn btn-secondary p-2 ' %>
       <% if local_assigns[:action_edit] %>

@@ -65,6 +65,6 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.fetch(:task, {}).permit(:title, :description, :due_date, :status)
+    params.fetch(:task, {}).permit(:title, :description, :due_date, :status, label_ids: [])
   end
 end
