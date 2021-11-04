@@ -11,8 +11,7 @@ class SessionsController < ApplicationController
       session[:user_id] = @user.id
       redirect_to root_path
     else
-      flash.alert = t('messages.invalid_login')
-      render :new
+      render :new, locals: { alert: t('messages.invalid_login')}
     end
   end
 
@@ -25,6 +24,6 @@ class SessionsController < ApplicationController
   end
 
   def maintenance
-    # render layout: false
+    redirect_to root_path  if Maintenance.count.zero?
   end
 end

@@ -15,13 +15,12 @@
     <%= form_tag '/login' do %>
 
       <section class="hero is-primary is-fullheight">
-        <div class="hero-body">
+        <div class="hero-body">       
           <div class="container">
             <div class="columns is-centered">
-
               <div class="column is-5-tablet is-4-desktop is-3-widescreen">
                 <h1 class="title is-1">Task-u-ten</h1>
-                <form action="" class="box">
+                <%= form_with class:'box' do |form| %>
                   <div class="field">
                     <%= label_tag :username, 'Username', class: 'label' %>
                     <div class="control has-icons-left">
@@ -42,10 +41,19 @@
                   </div>
 
                   <div class="field">
-                    <%= submit_tag "Login",class: 'button is-success' %>
-
+                   <%= form.submit 'Login', class: "button is-success" %>
                   </div>
-                </form>
+                  <% end %>
+
+
+                <% if ! alert.blank? %>
+
+                  <div class="notification is-danger ">
+                    <button class="delete"></button>
+                    <%= alert %>
+                  </div>
+
+                <% end %>
               </div>
             </div>
           </div>
