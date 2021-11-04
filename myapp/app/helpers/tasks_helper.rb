@@ -12,7 +12,7 @@ module TasksHelper
   end
 
   def label_link(task, user)
-    tags = task.labels.map  do |l|
+    tags = task.labels.map do |l|
       content_tag(:span,
                   link_to(l.label, root_path(task, { user_id: user.id, label: l.label }), class: 'badge badge-light'))
     end

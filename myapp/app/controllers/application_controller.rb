@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   include SessionsHelper
   include ApplicationHelper
 
-  before_action :_render_503_except_for_whitelisted_ips, if: :maintenance_mode?
+  before_action :_render_503, if: :maintenance_mode?
 
   rescue_from Exception,                      with: :_render_internal_server_error
   rescue_from ActiveRecord::RecordNotFound,   with: :_render_not_found
@@ -41,7 +41,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def _render_503_except_for_whitelisted_ips
+  def _render_503
     render file: Rails.root.join('public/503.html'), status: :service_unavailable, layout: false
   end
 end
