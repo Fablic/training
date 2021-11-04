@@ -9,8 +9,8 @@ describe 'ユーザー管理機能', type: :system do
   end
 
   let(:rspec_session) { { user_id: user_taro.id } }
-  let(:user_taro) { create(:user, name: 'TaroRakuten', password: 'rakuten', privilege: :admin) }
-  let!(:user_hanako) { create(:user, name: 'HanakoRakuten', password: 'rakuten', privilege: :user) }
+  let_it_be(:user_taro) { create(:user, name: 'TaroRakuten', password: 'rakuten', privilege: :admin) }
+  let_it_be(:user_hanako) { create(:user, name: 'HanakoRakuten', password: 'rakuten', privilege: :user) }
 
   describe 'ユーザー一覧' do
     before do
@@ -66,7 +66,7 @@ describe 'ユーザー管理機能', type: :system do
   describe 'ユーザー新規作成' do
     context '新規作成画面でタスクを作成する' do
       it '期待通りの新規ユーザーが作成され、既存データに影響がない' do
-        visit new_user_path
+        visit new_admin_user_path
         fill_in 'ユーザー名', with: 'ShintaroRakuten'
         fill_in 'パスワード', with: 'rakutenrakuten'
 
