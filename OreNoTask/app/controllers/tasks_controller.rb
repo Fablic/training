@@ -51,6 +51,7 @@ class TasksController < ApplicationController
   def show
     id = params[:id]
     @task = Task.available(current_user.id).find_by(id: id)
+    @task_labels = TaskLabel.find_by(task_id: params[:id])
 
     render404 if @task.nil?
   end

@@ -1,2 +1,3 @@
 class TaskLabel < ApplicationRecord
+
 end
