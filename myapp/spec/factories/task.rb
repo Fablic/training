@@ -1,8 +1,11 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
-    factory :task, class: Task do
-        sequence(:title) { |n| "test_title#{n}" }
-        sequence(:description) { |n| "test_description#{n}" }
-        sequence(:created_at) { |n| "2021/10/04 00:00:#{n}"}
-        sequence(:due_date) { |n| "2022/10/04 00:00:#{n}"}
-    end
+  factory :task, class: Task do
+    sequence(:title) { |n| "test_title#{n}" }
+    sequence(:description) { |n| "test_description#{n}" }
+    sequence(:created_at) { |n| "2021/10/04 00:00:#{n}" }
+    sequence(:due_date) { |n| "2022/10/04 00:00:#{n}" }
+    sequence(:user_id) { |n| n }
+  end
 end

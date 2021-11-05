@@ -77,6 +77,18 @@ RSpec.configure do |config|
     Capybara.server_port = 3001
     Capybara.app_host = "https://#{Capybara.server_host}:#{Capybara.server_port}"
   end
+
+  # Check OR Perfoemance
+  if Bullet.enable?
+    config.before(:each, type: :system) do
+      Bullet.start_request
+    end
+
+    config.after(:each, type: :system) do
+      Bullet.perform_out_of_channel_notifications if Bullet.notification? # Bulletによる通知をRSpecの結果に表示
+      Bullet.end_request
+    end
+  end
 end
 
 # settings to use Selenium container in local
