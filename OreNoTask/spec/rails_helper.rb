@@ -87,4 +87,5 @@ RSpec.configure do |config|
     # 変更 sessionメソッドをRSpec.configuration.sessionで上書き
     allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(RSpec.configuration.session)
   end
+  require 'test_prof/recipes/rspec/let_it_be'
 end

@@ -2,11 +2,11 @@
 <table>
   <tr>
     <% if action == 'new' %>
-    <th><%= form.label :name, User.human_attribute_name(:name) %></th>
-    <td><%= form.text_field :name %></td>
+      <th><%= form.label :name, User.human_attribute_name(:name) %></th>
+      <td><%= form.text_field :name %></td>
     <% else %>
-    <th><%= User.human_attribute_name(:name) %></th>
-    <td><%= @user.name %></td>
+      <th><%= User.human_attribute_name(:name) %></th>
+      <td><%= @user.name %></td>
     <% end %>
   </tr>
   <tr>
