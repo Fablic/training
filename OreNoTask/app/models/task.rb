@@ -28,4 +28,12 @@ class Task < ApplicationRecord
   def self.search(keyword, status, user, order)
     available(user).search_status(status).search_keyword(keyword).order(order)
   end
+
+  def self.delete_tasks_by_user_id(user_id)
+    tasks = active.find_by(user_id: user_id)
+
+    return true if tasks.nil?
+
+    tasks.update(deleted: 1) ? (return true) : (raise ActiveRecord::Rollback)
+  end
 end

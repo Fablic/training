@@ -25,4 +25,12 @@ class User < ApplicationRecord
     errors.add(:name, I18n.t('dictionary.messages.over_length_password_on_update')) unless
       self.password.blank? || self.password.length < 20
   end
+
+  def self.delete_user(user_id)
+    user = active.find(user_id)
+
+    return true if user.nil?
+
+    user.update(deleted: 1) ? (return true) : (raise ActiveRecord::Rollback)
+  end
 end

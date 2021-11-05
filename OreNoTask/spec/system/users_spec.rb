@@ -9,8 +9,9 @@ describe 'ユーザー管理機能', type: :system do
   end
 
   let(:rspec_session) { { user_id: user_taro.id } }
-  let(:user_taro) { create(:user, name: 'TaroRakuten', password: 'rakuten', privilege: :admin) }
-  let!(:user_hanako) { create(:user, name: 'HanakoRakuten', password: 'rakuten', privilege: :user) }
+
+  let_it_be(:user_taro) { create(:user, name: 'TaroRakuten', password: 'rakuten', privilege: :admin) }
+  let_it_be(:user_hanako) { create(:user, name: 'HanakoRakuten', password: 'rakuten', privilege: :user) }
 
   describe 'ユーザー一覧' do
     before do
@@ -21,6 +22,27 @@ describe 'ユーザー管理機能', type: :system do
       it '一覧のデフォルト表示が期待通り' do
         expect(page).to have_content 'TaroRakuten(2)'
         expect(page).to have_content 'HanakoRakuten(1)'
+      end
+    end
+
+    context 'ページング機能' do
+      context 'ページングが動作しているか' do
+        it 'ページングリンクが正しく動いている' do
+          create_list(:user, 10)
+
+          visit admin_users_path
+          click_link '2'
+          expect(find('li:nth-child(1)')).to have_content 'test_user_8(0)'
+
+          click_link '1'
+          expect(find('li:nth-child(1)')).to have_content 'HanakoRakuten(1)'
+
+          click_link 'Next'
+          expect(find('li:nth-child(1)')).to have_content 'test_user_8(0)'
+
+          click_link 'Previous'
+          expect(find('li:nth-child(1)')).to have_content 'HanakoRakuten(1)'
+        end
       end
     end
   end
@@ -54,7 +76,7 @@ describe 'ユーザー管理機能', type: :system do
   describe 'ユーザー新規作成' do
     context '新規作成画面でタスクを作成する' do
       it '期待通りの新規ユーザーが作成され、既存データに影響がない' do
-        visit new_user_path
+        visit new_admin_user_path
         fill_in 'ユーザー名', with: 'ShintaroRakuten'
         fill_in 'パスワード', with: 'rakutenrakuten'
         select '一般ユーザー', from: 'user[privilege]'
