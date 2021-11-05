@@ -11,7 +11,6 @@
   </div>
   <% end %>
 
-  <form>
     <div class="mb-auto p-2 form-group">
       <%= form.label :title, t('tasks.title') %>
       <%= form.text_field :title, class: 'form-control'%>
@@ -37,9 +36,8 @@
         <%= link_to t('tasks.show'), @task, class: 'btn btn-secondary p-2 ml-3'%>
       <% end %>
       <div class="actions ml-auto p-2">
-        <%= form.submit t('tasks.submit'), class: 'btn btn-primary'%>
+        <%= form.submit t('tasks.submit'), class: 'btn btn-primary' %>
       </div>
-    </div>  
-  </form>
+    </div>
   <% end %>
 </div>

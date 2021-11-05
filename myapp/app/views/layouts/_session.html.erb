@@ -1,0 +1,8 @@
+<header class="bd-header beta p-3 mb-3">
+  <div class="d-flex justify-content-end">
+    <div class="fs-4 mr-1">
+      <%= @current_user.name if logged_in? %>
+    </div>
+    <%= link_to "ログアウト", logout_path, method: :delete, class: 'link-secondary' if logged_in? %>
+  </div>
+</header>

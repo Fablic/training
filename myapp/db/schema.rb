@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 2021_11_05_023847) do
     t.index ["label_id"], name: "index_task_labels_on_label_id"
     t.index ["task_id"], name: "index_task_labels_on_task_id"
   end
+ActiveRecord::Schema.define(version: 2021_10_27_063433) do
 
   create_table "tasks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "title", limit: 50, null: false

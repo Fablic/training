@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
 class TasksController < ApplicationController
+  before_action :_logged_in_user
   before_action :set_task, only: %i[show edit update destroy]
 
   # GET /tasks(.:format)
   def index
-    @search = Task.ransack(params[:q])
+    @search = current_user.tasks.ransack(params[:q])
     @search.sorts = 'created_at desc' if @search.sorts.empty?
     @tasks = @search.result.page(params[:page]).per(5)
   end
@@ -21,7 +22,7 @@ class TasksController < ApplicationController
 
   # POST /tasks(.:format)
   def create
-    @task = Task.new(task_params)
+    @task = current_user.tasks.new(task_params)
 
     if @task.save
       flash[:success] = 'Successfully created'
@@ -60,7 +61,7 @@ class TasksController < ApplicationController
   private
 
   def set_task
-    @task = Task.find(params[:id])
+    @task = current_user.tasks.find(params[:id])
   end
 
   def task_params
