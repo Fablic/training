@@ -34,6 +34,6 @@ class Task < ApplicationRecord
 
     return true if tasks.nil?
 
-    tasks.update(deleted: 1) ? (return true) : (raise ActiveRecord::Rollback)
+    return if tasks.update!(deleted: 1)
   end
 end

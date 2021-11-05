@@ -46,20 +46,13 @@ module Admin
       end
     end
 
-    def destroy # rubocop:disable Metrics/AbcSize
-      ActiveRecord::Base.transaction do
-        if Task.delete_tasks_by_user_id(params[:id])
-          if User.delete_user(params[:id])
-            flash[:notice] = I18n.t('dictionary.messages.deleted_user')
-          else
-            redirect_to admin_users_path, notice: I18n.t('dictionary.messages.deleted_user_failed')
-          end
-        else
-          redirect_to admin_users_path, notice: I18n.t('dictionary.messages.deleted_user_task_failed')
-        end
+    def destroy
+      if User.delete_user_and_tasks(params[:id])
+        flash[:notice] = I18n.t('dictionary.messages.deleted_user')
+        redirect_to admin_users_path
+      else
+        redirect_to admin_users_path, notice: I18n.t('dictionary.messages.deleted_user_task_failed')
       end
-
-      redirect_to admin_users_path
     end
 
     def user_params_on_create
