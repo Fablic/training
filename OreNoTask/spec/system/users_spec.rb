@@ -9,6 +9,7 @@ describe 'ユーザー管理機能', type: :system do
   end
 
   let(:rspec_session) { { user_id: user_taro.id } }
+
   let_it_be(:user_taro) { create(:user, name: 'TaroRakuten', password: 'rakuten', privilege: :admin) }
   let_it_be(:user_hanako) { create(:user, name: 'HanakoRakuten', password: 'rakuten', privilege: :user) }
 
