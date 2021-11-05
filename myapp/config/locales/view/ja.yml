@@ -16,3 +16,5 @@ ja:
     status_not_started: 未着手
     status_in_progress: 進行中
     status_completed: 完了
+    label: ラベル
+    label_manage: ラベル管理

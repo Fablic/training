@@ -15,6 +15,24 @@
               { class: 'form-control' } %>
       </div>
     </div>
+
+    <div class="form-row">
+      <div class="col mb-3">
+      <%= form.label t('tasks.label') %>
+        <div class="col">
+          <% current_user.labels.each do |label| %>
+          <%= form.check_box :labels_id_eq_any, {
+            multiple: true,
+            checked: label[:checked],
+            disabled: label[:disabled],
+            include_hidden: false
+            }, label[:id] %>
+            <label><%= label.name %></label>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
     <div class="d-flex justify-content-center">
       <%= form.submit t('tasks.search'), class: 'btn btn-secondary' %>
     </div>

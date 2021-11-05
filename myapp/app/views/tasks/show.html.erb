@@ -21,6 +21,12 @@
     <th class="text-white bg-dark col-2"><%= t('tasks.status') %></th>
     <td><%= t("activerecord.attributes.task.status.#{@task.status}") %></td>
   </tr>
+  <tr>
+    <th class="text-white bg-dark col-2"><%= t('tasks.label') %></th>
+    <% @task.labels.each do |label| %>
+    <td><%= label.name %></td>
+    <% end %>
+  </tr>
 </table>
 
 <div class="d-flex align-items-start">

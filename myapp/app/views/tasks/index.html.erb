@@ -1,6 +1,7 @@
 <div class="d-flex align-items-end">
-  <h1>Tasks#list</h1>
-  <%= link_to t('tasks.create'), new_task_path, class: "btn btn-info ml-auto" %>
+  <h1 class="mr-auto">Tasks#list</h1>
+  <%= link_to t('tasks.label_manage'), labels_path, class: 'btn btn-outline-dark mr-1' %>
+  <%= link_to t('tasks.create'), new_task_path, class: "btn btn-outline-info" %>
 </div>
 
 <%= render "filter" %>
