@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class LabelsController < ApplicationController
-  before_action :_logged_in_user
-
   # labels GET /labels(.:format) labels#index
   def index
     @labels = current_user.labels
