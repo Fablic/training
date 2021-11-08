@@ -10,11 +10,17 @@ ja:
       edited_task: 'タスクが更新されました'
       deleted_task: 'タスクが削除されました'
       deleted_task_failed: 'タスクの削除に失敗しました'
+      created_user: 'ユーザーが作成されました'
+      edited_user: 'ユーザーが更新されました'
+      deleted_user: 'ユーザーが削除されました'
+      deleted_user_failed: 'ユーザーの削除に失敗しました'
+      deleted_user_task_failed: 'ユーザーに紐付くタスクの削除に失敗しました'
       invalid_date: 'の指定が不正です。'
       invalid_date_diff: 'は開始日より前の日付は登録できません。'
       name_not_unique: 'は既に登録されています。'
       confirm_logout: 'ログアウトします。よろしいですか？'
       failed_login: 'ログインに失敗しました'
+      over_length_password_on_update: 'パスワードは20文字以内で入力してください'
     words:
       to_list: '一覧に戻る'
       save_to_create: '作成'
@@ -31,6 +37,7 @@ ja:
       login: 'ログイン'
       user_name: 'ユーザー名'
       user_password: 'パスワード'
+      user_management: 'ユーザー管理'
       back_to_index: 'タスク管理トップに戻る'
   enumerize:
     task:

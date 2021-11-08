@@ -1,0 +1,17 @@
+<%= render 'layouts/error_messages', model: form.object %>
+<table>
+  <tr>
+    <% if action == 'new' %>
+      <th><%= form.label :name, User.human_attribute_name(:name) %></th>
+      <td><%= form.text_field :name %></td>
+    <% else %>
+      <th><%= User.human_attribute_name(:name) %></th>
+      <td><%= @user.name %></td>
+    <% end %>
+  </tr>
+  <tr>
+    <th><%= form.label :password, User.human_attribute_name(:password) %></th>
+    <td><%= form.password_field :password %></td>
+  </tr>
+</table>
+<p><%= form.submit @submit_label, class: 'btn btn-primary' %></p>

@@ -28,4 +28,12 @@ class Task < ApplicationRecord
   def self.search(keyword, status, user, order)
     available(user).search_status(status).search_keyword(keyword).order(order)
   end
+
+  def self.delete_tasks_by_user_id(user_id)
+    tasks = active.where(user_id: user_id)
+
+    return true if tasks.count.zero?
+
+    tasks.update_all(deleted: 1)
+  end
 end
