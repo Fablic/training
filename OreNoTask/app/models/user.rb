@@ -30,7 +30,7 @@ class User < ApplicationRecord
 
     return true if user.nil?
 
-    return if user.update!(deleted: 1)
+    user.update!(deleted: 1)
   end
 
   def self.delete_user_and_tasks(user_id)

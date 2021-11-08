@@ -34,6 +34,6 @@ class Task < ApplicationRecord
 
     return true if tasks.count.zero?
 
-    return if tasks.update_all(deleted: 1)
+    tasks.update_all(deleted: 1)
   end
 end
