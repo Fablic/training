@@ -44,4 +44,9 @@ class User < ApplicationRecord
   rescue StandardError
     false
   end
+
+  def self.last_admin?(user_id)
+    @user = User.active.find(user_id)
+    @user.privilege == 1 && User.admin_user_count == 1
+  end
 end

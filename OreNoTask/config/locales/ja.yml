@@ -22,6 +22,7 @@ ja:
       failed_login: 'ログインに失敗しました'
       over_length_password_on_update: 'パスワードは20文字以内で入力してください'
       last_admin: '最後の管理者ユーザーなので削除できません'
+      last_admin_edit: '最後の管理者ユーザーなので変更できません'
     words:
       to_list: '一覧に戻る'
       save_to_create: '作成'

@@ -20,8 +20,13 @@ module Admin
       redirect_to admin_users_path if @user.nil?
     end
 
-    def update
+    def update # rubocop:disable Metrics/AbcSize
       @user = User.active.find(params[:id])
+
+      if User.last_admin?(params[:id]) && user_params_on_update[:privilege] == 'user'
+        redirect_to admin_users_path, notice: I18n.t('dictionary.messages.last_admin_edit')
+        return
+      end
 
       if @user.update(user_params_on_update)
         redirect_to admin_users_path, notice: I18n.t('dictionary.messages.edited_user')
@@ -46,10 +51,8 @@ module Admin
       end
     end
 
-    def destroy
-      @user = User.active.find_by(id: params[:id])
-
-      if @user.privilege == 1 && User.admin_user_count == 1
+    def destroy # rubocop:disable Metrics/AbcSize
+      if User.last_admin?(params[:id])
         redirect_to admin_users_path, notice: I18n.t('dictionary.messages.last_admin')
         return
       end
