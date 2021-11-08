@@ -21,7 +21,7 @@
   </p>
   <p class="form-group field">
     <%= form.label :priority, class: "control-label" %>
-    <%= form.select :priority, Task.priorities.keys.map {|k| [k, k]}, { include_blank: true, selected: 1 }%>
+    <%= form.select :priority, Task.priorities.keys.map {|k| [k, k]}, { include_blank: true }%>
   </p>
   <p class="form-group field">
     <%= form.label :expires_at, class: "control-label" %>
@@ -29,7 +29,7 @@
   </p>
 
   <div class="actions">
-    <%= form.submit "Create Task" %>
+    <%= form.submit %>
   </div>
 
 <% end %>
