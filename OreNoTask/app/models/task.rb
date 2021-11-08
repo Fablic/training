@@ -30,10 +30,10 @@ class Task < ApplicationRecord
   end
 
   def self.delete_tasks_by_user_id(user_id)
-    tasks = active.find_by(user_id: user_id)
+    tasks = active.where(user_id: user_id)
 
-    return true if tasks.nil?
+    return true if tasks.count.zero?
 
-    tasks.update(deleted: 1) ? (return true) : (raise ActiveRecord::Rollback)
+    tasks.update_all(deleted: 1)
   end
 end

@@ -31,6 +31,17 @@ class User < ApplicationRecord
 
     return true if user.nil?
 
-    user.update(deleted: 1) ? (return true) : (raise ActiveRecord::Rollback)
+    user.update!(deleted: 1)
+  end
+
+  def self.delete_user_and_tasks(user_id)
+    ActiveRecord::Base.transaction do
+      Task.delete_tasks_by_user_id(user_id)
+      delete_user(user_id)
+    end
+
+    true
+  rescue StandardError
+    false
   end
 end
