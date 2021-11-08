@@ -2,7 +2,7 @@
 
 <div class='container' id='main-container'>
   <% if notice.present? %>
-  <%= render partial: 'common/notice', locals: { notice: notice } %>
+    <%= render partial: 'common/notice', locals: { notice: notice } %>
   <% end %>
 
   <div id='back-to-list'><%= link_to I18n.t('dictionary.words.to_list'), tasks_path, class: 'btn btn-success mr-2' %></div>

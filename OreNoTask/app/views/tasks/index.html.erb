@@ -2,7 +2,7 @@
 
 <div class='container' id='main-container'>
   <% if notice.present? %>
-  <%= render partial: 'common/notice', locals: { notice: notice } %>
+    <%= render partial: 'common/notice', locals: { notice: notice } %>
   <% end %>
 
 <div id='create-task'><%= link_to I18n.t('tasks.index.create'), new_task_path, class: 'btn btn-success mr-2' %></div>
