@@ -1,0 +1,32 @@
+<%= stylesheet_link_tag params[:controller] %>
+
+<p id="notice"><%= notice %></p>
+
+<h1>Tasks</h1>
+
+<table class="tasks">
+  <thead>
+    <tr>
+      <th>タイトル</th>
+      <th>優先度</th>
+      <th>期限日時</th>
+      <th>編集</th>
+      <th>削除</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tasks.each do |task| %>
+      <tr>
+        <td><%= link_to task.title, task %></td>
+        <td><%= link_to task.priority.blank? ? '' : task.priority , task %></td>
+        <td><%= link_to task.expires_at.blank? ? '' : task.expires_at, task %></td>
+        <td><%= link_to 'Edit', edit_task_path(task) %></td>
+        <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Task', '/tasks/new' %>

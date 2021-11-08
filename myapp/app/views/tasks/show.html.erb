@@ -1,0 +1,11 @@
+<p id="notice"><%= notice %></p>
+
+<%= link_to 'Edit', edit_task_path(@task) %> |
+<%= link_to 'Back', tasks_path %>
+
+<dl>
+  <dt>title:</dt><dd><%= @task.title %></dd>
+  <dt>description:<dt><dd><%= raw(h(@task.description).gsub(/\R/, "<br>")) %></dd>
+  <dt>priority:</dt><dd><%= @task.priority %></dd>
+  <dt>deadline:</dt><dd><%= @task.expires_at %></dd>
+</dl>
