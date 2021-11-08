@@ -21,109 +21,109 @@ RSpec.describe 'tasks', type: :system do
   let(:input_start_date) { Time.zone.yesterday.strftime('%Y-%m-%d') }
   let(:input_end_date) { Time.zone.now.strftime('%Y-%m-%d') }
 
-  # describe 'New task' do
-  #   before { visit new_task_path() }
+  let!(:task_list) { FactoryBot.create_list(:task, 5) }
 
-  #   it 'show display' do
-  #     expect(page).to have_content I18n.t('tasks.new.title')
-  #     expect(page).to have_title 'Myapp'
-  #     expect(page).to have_content label_task_name
-  #     expect(page).to have_content label_description
-  #     expect(page).to have_content label_status
-  #     expect(page).to have_content label_priority
-  #     expect(page).to have_content label_label
-  #     expect(page).to have_content label_start_date
-  #     expect(page).to have_content label_end_date
-  #   end
+  describe 'New task' do
+    before { visit new_task_path() }
 
-  #   it 'registration' do
-  #     fill_in 'task_task_name', with: input_task_name
-  #     fill_in 'task_description', with: input_description
-  #     fill_in 'task_status', with: input_status
-  #     fill_in 'task_priority', with: input_priority
-  #     fill_in 'task_label', with: input_label
-  #     fill_in 'task_start_date', with: input_start_date
-  #     fill_in 'task_end_date', with: input_end_date
+    it 'show display' do
+      expect(page).to have_content I18n.t('tasks.new.title')
+      expect(page).to have_title 'Myapp'
+      expect(page).to have_content label_task_name
+      expect(page).to have_content label_description
+      expect(page).to have_content label_status
+      expect(page).to have_content label_priority
+      expect(page).to have_content label_label
+      expect(page).to have_content label_start_date
+      expect(page).to have_content label_end_date
+    end
 
-  #     click_button '登録する'
+    it 'registration' do
+      fill_in 'task_task_name', with: input_task_name
+      fill_in 'task_description', with: input_description
+      fill_in 'task_status', with: input_status
+      fill_in 'task_priority', with: input_priority
+      fill_in 'task_label', with: input_label
+      fill_in 'task_start_date', with: input_start_date
+      fill_in 'task_end_date', with: input_end_date
 
-  #     expect(page).to have_current_path root_path, ignore_query: true
-  #     expect(page).to have_content I18n.t('tasks.flash.complete_task_registration')
-  #   end
+      click_button 'Create Task'
 
-  #   it "go to Task's list" do
-  #     click_on I18n.t('tasks.common.move_task_list')
-  #     expect(page).to have_current_path root_path, ignore_query: true
-  #   end
-  # end
+      expect(page).to have_current_path root_path, ignore_query: true
+      expect(page).to have_content I18n.t('tasks.flash.complete_task_registration')
+    end
 
-  # describe 'Show task' do
-  #   before {
-  #     visit root_path
-  #     # move to Show
-  #     page.all('#click_show')[0].click
-  #   }
+    it "go to Task's list" do
+      click_on I18n.t('tasks.common.move_task_list')
+      expect(page).to have_current_path root_path, ignore_query: true
+    end
+  end
 
-  #   it 'show display' do
-  #     expect(page).to have_content I18n.t('tasks.show.title')
-  #   end
+  describe 'Show task' do
 
-  #   it "go to Task's list" do
-  #     click_on I18n.t('tasks.common.move_task_list')
-  #     expect(page).to have_current_path root_path, ignore_query: true
-  #   end
-  # end
+    before {
+      visit root_path
+      # move to Show
+      page.all('#click_show')[0].click
+    }
 
-  # describe 'Edit task' do
-  #   before {
-  #     visit root_path
-  #     # move to Edit
-  #     page.all('#click_edit')[0].click
-  #   }
+    it 'show display' do
+      expect(page).to have_content I18n.t('tasks.show.title')
+    end
 
-  #   it 'show display' do
-  #     expect(page).to have_content I18n.t('tasks.edit.title')\
-  #   end
+    it "go to Task's list" do
+      click_on I18n.t('tasks.common.move_task_list')
+      expect(page).to have_current_path root_path, ignore_query: true
+    end
+  end
 
-  #   it "go to Task's list" do
-  #     click_on I18n.t('tasks.common.move_task_list')
-  #     expect(page).to have_current_path root_path, ignore_query: true
-  #   end
-  # end
+  describe 'Edit task' do
+    before {
+      visit root_path
+      # move to Edit
+      page.all('#click_edit')[0].click
+    }
 
-  # describe 'Delete task' do
-  #   before {
-  #     visit root_path
-  #   }
+    it 'show display' do
+      expect(page).to have_content I18n.t('tasks.edit.title')\
+    end
 
-  #   it 'Destroy' do
-  #     page.accept_confirm do
-  #       page.all('#click_destroy')[0].click
-  #     end
+    it "go to Task's list" do
+      click_on I18n.t('tasks.common.move_task_list')
+      expect(page).to have_current_path root_path, ignore_query: true
+    end
+  end
 
-  #     expect(page).to have_content I18n.t('tasks.index.title')
-  #     expect(page).to have_content I18n.t('tasks.flash.complete_task_destroy')
-  #   end
-  # end
+  describe 'Delete task' do
+    before {
+      visit root_path
+    }
+
+    it 'Destroy' do
+      page.all('#click_destroy')[0].click
+      
+      expect(page).to have_content I18n.t('tasks.index.title')
+      expect(page).to have_content I18n.t('tasks.flash.complete_task_destroy')
+    end
+  end
 
   describe 'Index' do
-    let!(:task_list) { create_list(:task, 10) }
 
     before { visit root_path }
 
-    # it 'table colums check' do
-    #   within('#task_list') do
-    #     expect(page).to have_content I18n.t('tasks.common.task_name')
-    #   end
-    # end
+    it 'table colums check' do
+      within('#task_list') do
+        expect(page).to have_content I18n.t('tasks.common.task_name')
+      end
+    end
 
-    # it 'Go to registration page' do
-    #   click_on I18n.t('tasks.index.move_new_task')
-    #   expect(page).to have_content I18n.t('tasks.new.title')
-    # end
+    it 'Go to registration page' do
+      click_on I18n.t('tasks.index.move_new_task')
+      expect(page).to have_content I18n.t('tasks.new.title')
+    end
 
     it 'Go to Show page' do
-      byebug
+      #byebug
       expect(page).to have_content task_list[0].task_name
       page.all('#click_show')[0].click
       expect(page).to have_content I18n.t('tasks.show.title')
@@ -137,21 +137,21 @@ RSpec.describe 'tasks', type: :system do
 
     it 'Show dialog of delete' do
       expect(page).to have_content task_list[0].task_name
-      page.dismiss_confirm do
-        page.all('#click_destroy')[0].click
-      end
+      page.all('#click_destroy')[0].click
       expect(page).to have_content I18n.t('tasks.index.title')
     end
-  
-    it 'Check sort' do
-      created_list = page.all('.created_at')
-      expect(created_list.count).to be > 0
-      created_list.each.with_index(1) do |row, index|
-        expect(row.text).to eq I18n.l(tasks[task_count - index].created_at)
+  end
+
+  describe 'sort function' do
+    before { visit root_path }
+
+    context 'when open list page(sort by created_at order by desc)' do
+      it 'order success' do
+        expect(find('tr:nth-child(2)')).to have_content I18n.l task_list[3].end_date
+        expect(find('tr:nth-child(3)')).to have_content I18n.l task_list[2].end_date
+        expect(find('tr:nth-child(4)')).to have_content I18n.l task_list[1].end_date
+        expect(find('tr:nth-child(5)')).to have_content I18n.l task_list[0].end_date
       end
     end
   end
-
-  end
-
 end

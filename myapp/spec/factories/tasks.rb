@@ -1,5 +1,10 @@
 FactoryBot.define do
-  factory :task do
-    
+  factory :task, class: Task do
+    sequence(:task_name) { |n| "Task_name_#{n}" }
+    sequence(:description) { |n| "description_#{n}" }
+    sequence(:priority) { |n| "#{n}" }
+    sequence(:start_date, Date.today + 1)
+    sequence(:end_date, Date.today + 10)
+    sequence(:created_at, Date.today)
   end
 end

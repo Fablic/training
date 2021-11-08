@@ -3,9 +3,9 @@
 class Task < ApplicationRecord
   def self.search(search)
     if search
-      Task.where(['status like ?', "%#{search}%"]).order('priority is null, priority, end_date')
+      Task.where(['status like ?', "%#{search}%"]).order('created_at desc')
     else
-      Task.all.order('priority is null, priority, end_date')
+      Task.all.order('created_at desc')
     end
   end
 end

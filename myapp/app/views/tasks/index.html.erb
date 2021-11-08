@@ -30,8 +30,20 @@
       <td><%= task.status %></td>
       <td><%= task.label %></td>
       <td><%= task.priority %></td>
-      <td><%= task.start_date %></td>
-      <td><%= task.end_date %></td>
+      <td>
+        <%=
+          if task.start_date.present? 
+            l task.start_date
+          end
+        %>
+      </td>
+      <td>
+        <%=
+          if task.end_date.present? 
+            l task.end_date
+          end
+        %>
+      </td>
       <td><%= link_to t('.move_show_task'), task_path(task), method: :get, id: 'click_show' %></td>
       <td><%= link_to t('.move_edit_task'), edit_task_path(task), id: 'click_edit' %></td>
       <td><%= link_to t('.move_destroy_task'), task_path(task), method: :delete, data: { confirm: 'Are you sure you want to delete it?
