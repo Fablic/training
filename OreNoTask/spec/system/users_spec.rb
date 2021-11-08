@@ -162,6 +162,17 @@ describe 'ユーザー管理機能', type: :system do
         expect(page).to have_content 'パスワードは20文字以内で入力してください'
       end
     end
+
+    context '最後の管理者の権限変更' do
+      it '権限をユーザーに変更できない' do
+        find('li:nth-child(2)').click_link('編集')
+        select '一般ユーザー', from: 'user[privilege]'
+
+        click_button 'commit'
+
+        expect(page).to have_content '最後の管理者ユーザーなので変更できません'
+      end
+    end
   end
 
   describe 'ユーザーの削除' do

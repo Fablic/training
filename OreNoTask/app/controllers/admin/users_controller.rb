@@ -20,8 +20,12 @@ module Admin
       redirect_to admin_users_path if @user.nil?
     end
 
-    def update
+    def update # rubocop:disable Metrics/AbcSize
       @user = User.active.find(params[:id])
+
+      if User.last_admin?(params[:id]) && user_params_on_update[:privilege] == 'user'
+        return redirect_to admin_users_path, notice: I18n.t('dictionary.messages.last_admin_edit')
+      end
 
       if @user.update(user_params_on_update)
         redirect_to admin_users_path, notice: I18n.t('dictionary.messages.edited_user')
@@ -47,26 +51,16 @@ module Admin
     end
 
     def destroy # rubocop:disable Metrics/AbcSize
-      @user = User.active.find_by(id: params[:id])
-
-      if @user.privilege == 1 && User.admin_user_count == 1
-        redirect_to admin_users_path, notice: I18n.t('dictionary.messages.last_admin')
-        return
+      if User.last_admin?(params[:id])
+        return redirect_to admin_users_path, notice: I18n.t('dictionary.messages.last_admin')
       end
 
-      ActiveRecord::Base.transaction do
-        if Task.delete_tasks_by_user_id(params[:id])
-          if User.delete_user(params[:id])
-            flash[:notice] = I18n.t('dictionary.messages.deleted_user')
-          else
-            redirect_to admin_users_path, notice: I18n.t('dictionary.messages.deleted_user_failed')
-          end
-        else
-          redirect_to admin_users_path, notice: I18n.t('dictionary.messages.deleted_user_task_failed')
-        end
+      if User.delete_user_and_tasks(params[:id])
+        flash[:notice] = I18n.t('dictionary.messages.deleted_user')
+        redirect_to admin_users_path
+      else
+        redirect_to admin_users_path, notice: I18n.t('dictionary.messages.deleted_user_task_failed')
       end
-
-      redirect_to admin_users_path
     end
 
     def user_params_on_create

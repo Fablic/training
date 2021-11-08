@@ -1,14 +1,8 @@
-<header class='border-bottom rounded-bottom position-fixed w-100'>
-  <h1><%= I18n.t('tasks.show.title') %></h1>
-  <%= button_to I18n.t('dictionary.words.logout'), logout_path, method: :delete, data: {confirm: I18n.t('dictionary.messages.confirm_logout')}, class: 'btn btn-dark logout' %>
-  <% if admin? %>
-  <%= link_to I18n.t('dictionary.words.user_management'), admin_users_path, class: 'btn btn-success change-management' %>
-  <% end %>
-</header>
+<%= render partial: 'header', locals: { title: I18n.t('tasks.show.title') } %>
 
 <div class='container' id='main-container'>
   <% if notice.present? %>
-  <%= render partial: 'common/notice', locals: { notice: notice } %>
+    <%= render partial: 'common/notice', locals: { notice: notice } %>
   <% end %>
 
   <div id='back-to-list'><%= link_to I18n.t('dictionary.words.to_list'), tasks_path, class: 'btn btn-success mr-2' %></div>

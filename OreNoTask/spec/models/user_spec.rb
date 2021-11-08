@@ -98,4 +98,33 @@ RSpec.describe 'Userモデルのテスト', type: :model do
       end
     end
   end
+
+  describe 'delete_user_and_tasks' do
+    context 'DB更新が正常に実行できた場合' do
+      let(:user_delete) { create(:user, deleted: 0) }
+      let!(:task_delete) { create(:task, name: 'task_delete', user_id: user_delete.id, deleted: 0) }
+
+      it '正常に更新されること' do
+        # 実行
+        expect(User.delete_user_and_tasks(user_delete.id)).to eq true
+        expect(User.find_by(id: user_delete.id).deleted).to eq 1
+        expect(Task.find_by(id: task_delete.id).deleted).to eq 1
+      end
+    end
+
+    context 'DB更新で例外が発生した場合' do
+      let(:user_not_delete) { create(:user, deleted: 0) }
+      let!(:task_not_delete) { create(:task, name: 'task_not_delete', user_id: user_not_delete.id, deleted: 0) }
+
+      it 'ロールバックが実行されること' do
+        # 例外を発生させる
+        allow(User).to receive(:delete_user).and_raise StandardError
+
+        # 実行
+        expect(User.delete_user_and_tasks(user_not_delete.id)).to eq false
+        expect(User.find_by(id: user_not_delete.id).deleted).to eq 0
+        expect(Task.find_by(id: task_not_delete.id).deleted).to eq 0
+      end
+    end
+  end
 end
