@@ -1,0 +1,11 @@
+inherit_gem:
+  fablicop:
+    - "config/.base_rubocop.yml"
+
+AllCops:
+  Exclude:
+    - 'node_modules/**/*'
+    - 'config/**/*'
+    - 'bin/**'
+    - 'config.ru'
+    - 'Gemfile'
