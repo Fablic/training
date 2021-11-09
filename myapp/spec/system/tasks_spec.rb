@@ -47,7 +47,7 @@ RSpec.describe 'tasks', type: :system do
       fill_in 'task_start_date', with: input_start_date
       fill_in 'task_end_date', with: input_end_date
 
-      click_button 'Create Task'
+      click_button I18n.t('helpers.submit.create')
 
       expect(page).to have_current_path root_path, ignore_query: true
       expect(page).to have_content I18n.t('tasks.flash.complete_task_registration')
@@ -147,11 +147,28 @@ RSpec.describe 'tasks', type: :system do
 
     context 'when open list page(sort by created_at order by desc)' do
       it 'order success' do
-        expect(find('tr:nth-child(2)')).to have_content I18n.l task_list[3].end_date
-        expect(find('tr:nth-child(3)')).to have_content I18n.l task_list[2].end_date
-        expect(find('tr:nth-child(4)')).to have_content I18n.l task_list[1].end_date
-        expect(find('tr:nth-child(5)')).to have_content I18n.l task_list[0].end_date
+        expect(find('#task_list > tbody:nth-child(2) > tr:nth-child(2)')).to have_content I18n.l task_list[1].start_date
+        expect(find('#task_list > tbody:nth-child(2) > tr:nth-child(3)')).to have_content I18n.l task_list[2].start_date
+        expect(find('#task_list > tbody:nth-child(2) > tr:nth-child(4)')).to have_content I18n.l task_list[3].start_date
       end
     end
+
+    context 'when click link to sort by end_date asc' do
+      it 'sort success' do
+        click_on label_end_date # 1回押す(昇順)
+        expect(find('#task_list > tbody:nth-child(2) > tr:nth-child(2)')).to have_content I18n.l task_list[1].end_date
+        expect(find('#task_list > tbody:nth-child(2) > tr:nth-child(4)')).to have_content I18n.l task_list[3].end_date
+      end
+    end
+
+    context 'when click link to sort by due_date desc' do
+      it 'sort success' do
+        click_on label_end_date # 1回押す(昇順)
+        click_on label_end_date # 2回押す(降順)
+        expect(find('#task_list > tbody:nth-child(2) > tr:nth-child(2)')).to have_content I18n.l task_list[3].end_date
+        expect(find('#task_list > tbody:nth-child(2) > tr:nth-child(4)')).to have_content I18n.l task_list[1].end_date
+      end
+    end
+
   end
 end

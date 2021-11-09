@@ -11,6 +11,7 @@
 <p>
   <%= t.label t('tasks.common.status') %>
   <%= t.text_field :status, size:30, maxlength:10 %>
+  
 </p>
  
 <p>
@@ -25,10 +26,11 @@
  
 <p>
   <%= t.label t('tasks.common.start_date') %>
-  <%= t.text_field :start_date %>
+  <%= t.datetime_field :start_date %>
 </p>
  
 <p>
+
   <%= t.label t('tasks.common.end_date') %>
-  <%= t.text_field :end_date %>
+  <%= t.datetime_field :end_date %>
 </p>

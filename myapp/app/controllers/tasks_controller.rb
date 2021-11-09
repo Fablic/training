@@ -2,12 +2,16 @@
 
 # task management
 class TasksController < ApplicationController
+  helper_method :sort_column, :sort_direction
+
+  before_action :set_task, only: %i[show edit update destroy]
+
   def index
     @tasks = Task.search(params[:search])
+    @tasks = @tasks.order("#{sort_column} #{sort_direction}")
   end
 
   def show
-    @task = Task.find(params[:id])
   end
 
   def new
@@ -15,31 +19,32 @@ class TasksController < ApplicationController
   end
 
   def edit
-    @task = Task.find(params[:id])
   end
 
   def create
     @task = Task.new(post_params)
-    flash[:notice] = if @task.save
-                       t('tasks.flash.complete_task_registration')
-                     else
-                       t('tasks.flash.error_task_registration')
-                     end
-    redirect_to root_path
+    
+    if @task.save
+      flash[:notice] = t('tasks.flash.complete_task_registration')
+      redirect_to root_path
+    else
+      #flash[:notice] = t('tasks.flash.error_task_registration')
+      render :new
+    end
   end
 
   def update
-    @task = Task.find(params[:id])
-    flash[:notice] = if @task.update(post_params)
-                       t('tasks.flash.complete_task_edit')
-                     else
-                       t('tasks.flash.error_task_edit')
-                     end
-    redirect_to root_path
+    if @task.update(post_params)
+      flash[:notice] = t('tasks.flash.complete_task_edit')
+      redirect_to root_path
+    else
+      #flash[:notice] = t('tasks.flash.error_task_edit')
+      render :edit
+    end
+
   end
 
   def destroy
-    @task = Task.find(params[:id])
     flash[:notice] = if @task.destroy
                        t('tasks.flash.complete_task_destroy')
                      else
@@ -49,10 +54,23 @@ class TasksController < ApplicationController
   end
 
   private
+  
+  def set_task
+    @task = Task.find(params[:id])
+  end
 
   def post_params
     params.require(:task).permit(
       :task_name, :description, :status,
       :priority, :label, :start_date, :end_date)
   end
+
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
+  end
+  
+  def sort_column    
+    Task.column_names.include?(params[:sort]) ? params[:sort] : 'created_at'
+  end
+    
 end
