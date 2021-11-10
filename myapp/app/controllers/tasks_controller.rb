@@ -2,7 +2,7 @@
 
 class TasksController < ApplicationController
   before_action :set_task, only: %i[show edit update destroy]
-  around_action :skip_bullet, only: %i[destroy], if: -> { defined?(Bullet) }
+
   # GET /tasks or /tasks.json
   def index
     @dash_unfinished = Task.role_filtered(admin?, current_user.id).unfinished.count
@@ -15,7 +15,7 @@ class TasksController < ApplicationController
     @q = Task.role_filtered(admin?, current_user.id)
 
     # run predefined searches
-    @q = @q.send(params[:dash_search]) if params[:dash_search].present? && %w[unfinised overdue due_today].include?(params[:dash_search])
+    @q = @q.send(params[:dash_search]) if params[:dash_search].present? && %w[unfinished overdue due_today].include?(params[:dash_search])
 
     # run other search
     @q = @q.ransack(params[:q])

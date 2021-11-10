@@ -4,7 +4,9 @@ require 'test_helper'
 
 class TasksControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @task = create(:task)
+    user = create(:admin)
+    @task = create(:task, created_by: user.id)
+    post '/login', params: { username: user.username, password: user.password }
   end
 
   test 'should get index' do

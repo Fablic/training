@@ -22,16 +22,16 @@
                 <h1 class="title is-1">Task-u-ten</h1>
                 <%= form_with class:'box' do |form| %>
                   <div class="field">
-                    <%= label_tag :username, 'Username', class: 'label' %>
+                    <%= label_tag :username, User.human_attribute_name(:username), class: 'label' %>
                     <div class="control has-icons-left">
-                      <%= text_field_tag :username, '', class: 'input', required:true %>
+                      <%= email_field_tag :username, '', class: 'input', required:true %>
                       <span class="icon is-small is-left">
                         <i class="fa fa-envelope"></i>
                       </span>
                     </div>
                   </div>
                   <div class="field">
-                    <%= label_tag :password, 'Password', class: 'label' %>
+                    <%= label_tag :password,  User.human_attribute_name(:password), class: 'label' %>
                     <div class="control has-icons-left">
                       <%= password_field_tag :password, '', class: 'input', required:true %>
                       <span class="icon is-small is-left">
@@ -41,7 +41,7 @@
                   </div>
 
                   <div class="field">
-                   <%= form.submit 'Login', class: "button is-success" %>
+                   <%= form.submit t('login'), class: "button is-success" %>
                   </div>
                   <% end %>
 

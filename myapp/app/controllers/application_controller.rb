@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
   helper_method :logged_in?
   helper_method :admin?
+  around_action :skip_bullet, only: %i[destroy], if: -> { defined?(Bullet) }
 
   def switch_locale(&action)
     locale = params[:locale] || I18n.default_locale
@@ -37,5 +38,13 @@ class ApplicationController < ActionController::Base
     return if Maintenance.count.zero?
 
     redirect_to maintenance_path if logged_in? && !admin?
+  end
+
+  def skip_bullet
+    previous_value = Bullet.enable?
+    Bullet.enable = false
+    yield
+  ensure
+    Bullet.enable = previous_value
   end
 end

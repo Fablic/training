@@ -5,6 +5,8 @@ require 'test_helper'
 class LabelsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @label = create(:label)
+    user = create(:admin)
+    post '/login', params: { username: user.username, password: user.password }
   end
 
   test 'should get index' do

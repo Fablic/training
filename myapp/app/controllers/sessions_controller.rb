@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
       session[:user_id] = @user.id
       redirect_to root_path
     else
-      render :new, locals: { alert: t('messages.invalid_login')}
+      render :new, locals: { alert: t('messages.invalid_login') }
     end
   end
 
@@ -24,6 +24,6 @@ class SessionsController < ApplicationController
   end
 
   def maintenance
-    redirect_to root_path  if Maintenance.count.zero?
+    redirect_to root_path if Maintenance.count.zero?
   end
 end
