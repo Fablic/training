@@ -11,3 +11,5 @@ ja:
       title: 'タスクを新規作成'
     edit:
       title: 'タスクを編集'
+      label: 'ラベル'
+      label_placeholder: '複数のラベルはカンマ区切りで入力'

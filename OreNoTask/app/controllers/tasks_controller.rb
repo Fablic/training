@@ -16,6 +16,9 @@ class TasksController < ApplicationController
     @task = Task.available(current_user.id).find_by(id: params[:id])
     @submit_label = I18n.t('dictionary.words.save_to_update')
 
+    @label_ids = TaskLabel.where(task_id: params[:id]).pluck(:label_id)
+    @label_names = Label.where(id: @label_ids).pluck(:name)
+
     render404 if @task.nil?
   end
 
@@ -23,24 +26,7 @@ class TasksController < ApplicationController
     @task = Task.available(current_user.id).find(params[:id])
 
     if @task.update(task_params)
-      if !task_labels[:labels].blank?
-        current_task_label = TaskLabel.where(task_id: @task.id)
-        current_task_label.delete unless !current_task_label.nil?
-
-        @labels = task_labels[:labels].split(",")
-
-        @labels.each do |label|
-          label = Label.active.find_by(name: label)
-
-          if Label.active.find_by(name: label).count.zero?
-            label = Label.new(name: label)
-            label.save
-          end
-
-          tasklabel = TaskLabel.new(task_id: params[:id], label_id: label.id)
-          tasklabel.save
-        end
-      end
+      create_labels(@task.id)
 
       redirect_to tasks_path, notice: I18n.t('dictionary.messages.edited_task')
     else
@@ -51,7 +37,7 @@ class TasksController < ApplicationController
   def show
     id = params[:id]
     @task = Task.available(current_user.id).find_by(id: id)
-    @task_labels = TaskLabel.find_by(task_id: params[:id])
+    @labels = TaskLabel.get_labels(id)
 
     render404 if @task.nil?
   end
@@ -62,6 +48,7 @@ class TasksController < ApplicationController
     @task = Task.new(params)
 
     if @task.save
+      create_labels(@task.id)
       redirect_to tasks_path, notice: I18n.t('dictionary.messages.created_task')
     else
       render :new
@@ -80,9 +67,14 @@ class TasksController < ApplicationController
   end
 
   def search # rubocop:disable Metrics/AbcSize
-    @tasks = Task.search(params[:keyword], params[:status], current_user.id, "#{sort_column} #{sort_direction}").page(params[:page]).per(10)
-    @keyword = params[:keyword]
-    @status = params[:status]
+    if !params[:keyword].blank? || !params[:status].blank?
+      @tasks = Task.search(params[:keyword], params[:status], current_user.id, "#{sort_column} #{sort_direction}").page(params[:page]).per(10)
+      @keyword = params[:keyword]
+      @status = params[:status]
+    else
+      return redirect_to tasks_path
+    end
+
     render :index
   end
 
@@ -102,5 +94,26 @@ class TasksController < ApplicationController
 
   def sort_column
     Task.column_names.include?(params[:sort]) ? params[:sort] : 'created_at'
+  end
+
+  def create_labels(task_id)
+    if !task_labels[:labels].blank? && !task_id.nil?
+      current_task_label = TaskLabel.where(task_id: task_id)
+      current_task_label.delete_all
+
+      @labels = task_labels[:labels].split(",")
+
+      @labels.each do |label|
+        if Label.active.where(name: label).count.zero?
+          label_for_save = Label.new(name: label)
+          label_for_save.save
+        else
+          label_for_save = Label.active.find_by(name: label)
+        end
+
+        tasklabel = TaskLabel.new(task_id: task_id, label_id: label_for_save.id)
+        tasklabel.save
+      end
+    end
   end
 end
