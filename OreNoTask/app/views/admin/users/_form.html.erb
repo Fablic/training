@@ -13,5 +13,13 @@
     <th><%= form.label :password, User.human_attribute_name(:password) %></th>
     <td><%= form.password_field :password %></td>
   </tr>
+  <tr>
+    <th><%= User.human_attribute_name(:privilege) %></th>
+    <td><%=
+      form.select :privilege,
+      User.privilege.options,
+      include_blank: I18n.t('dictionary.words.select_indicate')
+    %></td>
+  </tr>
 </table>
 <p><%= form.submit @submit_label, class: 'btn btn-primary' %></p>

@@ -2,7 +2,7 @@
 
 module Admin
   class UsersController < ApplicationController
-    before_action :ensure_logged_in
+    before_action :ensure_logged_in_admin
 
     def index
       @users = User.active.order('name asc').page(params[:page]).per(10).includes(:tasks)
@@ -20,8 +20,12 @@ module Admin
       redirect_to admin_users_path if @user.nil?
     end
 
-    def update
+    def update # rubocop:disable Metrics/AbcSize
       @user = User.active.find(params[:id])
+
+      if User.last_admin?(params[:id]) && user_params_on_update[:privilege] == 'user'
+        return redirect_to admin_users_path, notice: I18n.t('dictionary.messages.last_admin_edit')
+      end
 
       if @user.update(user_params_on_update)
         redirect_to admin_users_path, notice: I18n.t('dictionary.messages.edited_user')
@@ -46,7 +50,11 @@ module Admin
       end
     end
 
-    def destroy
+    def destroy # rubocop:disable Metrics/AbcSize
+      if User.last_admin?(params[:id])
+        return redirect_to admin_users_path, notice: I18n.t('dictionary.messages.last_admin')
+      end
+
       if User.delete_user_and_tasks(params[:id])
         flash[:notice] = I18n.t('dictionary.messages.deleted_user')
         redirect_to admin_users_path

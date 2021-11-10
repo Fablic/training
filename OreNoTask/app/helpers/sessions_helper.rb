@@ -17,6 +17,10 @@ module SessionsHelper
     !current_user.nil?
   end
 
+  def admin?
+    current_user.privilege == 1
+  end
+
   def log_out
     session.delete(:user_id)
   end

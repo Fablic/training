@@ -9,6 +9,7 @@ class User < ApplicationRecord
 
   scope :active, -> { where(deleted: 0) }
   scope :active_user_count, -> (name) { active.where(name: name).count }
+  scope :admin_user_count, -> { active.where(privilege: 1).count }
 
   validates :name, { presence: true, length: { maximum: 20 } }
   validates :password, { presence: true, length: { maximum: 20 }, on: :create }
@@ -42,5 +43,10 @@ class User < ApplicationRecord
     true
   rescue StandardError
     false
+  end
+
+  def self.last_admin?(user_id)
+    @user = User.active.find(user_id)
+    @user.privilege == 1 && User.admin_user_count == 1
   end
 end

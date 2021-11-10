@@ -1,8 +1,4 @@
-<header class='border-bottom rounded-bottom position-fixed w-100'>
-  <h1><%= I18n.t('users.show.title') %></h1>
-  <%= button_to I18n.t('dictionary.words.logout'), logout_path, method: :delete, data: {confirm: I18n.t('dictionary.messages.confirm_logout')}, class: 'btn btn-dark logout' %>
-  <%= link_to I18n.t('login.index.title'), tasks_path, class: 'btn btn-success change-management' %>
-</header>
+<%= render partial: 'header', locals: { title: I18n.t('users.show.title') } %>
 
 <div class='container' id='main-container'>
   <% if notice.present? %>
@@ -12,7 +8,7 @@
   <div id='back-to-list'><%= link_to I18n.t('dictionary.words.to_list'), admin_users_path, class: 'btn btn-success mr-2' %></div>
 
   <div id='show-area' class='border rounded'>
-    <h2 class='task-name d-inline-block'><%= @user.name %></h2>
+    <h2 class='task-name d-inline-block'><%= @user.name %>(<%= @user.privilege.text %>)</h2>
     <h3><%= I18n.t('users.show.task_list') %></h3>
     <ul class='list-group rounded'>
       <% @tasks.each do |task| %><li class='list-group-item'>
