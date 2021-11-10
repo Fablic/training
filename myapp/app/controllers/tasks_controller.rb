@@ -7,7 +7,8 @@ class TasksController < ApplicationController
   before_action :set_task, only: %i[show edit update destroy]
 
   def index
-    @tasks = Task.search(params[:search])
+    @search_params = user_search_params
+    @tasks = Task.search_condition(@search_params)
     @tasks = @tasks.order("#{sort_column} #{sort_direction}")
   end
 
@@ -59,6 +60,10 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
   end
 
+  def user_search_params
+    params.fetch(:search, {}).permit(:task_name, :status)
+  end
+
   def post_params
     params.require(:task).permit(
       :task_name, :description, :status,
@@ -72,5 +77,5 @@ class TasksController < ApplicationController
   def sort_column    
     Task.column_names.include?(params[:sort]) ? params[:sort] : 'created_at'
   end
-    
+
 end

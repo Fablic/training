@@ -21,7 +21,7 @@ RSpec.describe 'tasks', type: :system do
   let(:input_start_date) { Time.zone.yesterday.strftime('%Y-%m-%d') }
   let(:input_end_date) { Time.zone.now.strftime('%Y-%m-%d') }
 
-  let!(:task_list) { FactoryBot.create_list(:task, 5) }
+  let!(:task_list) { create_list(:task, 5) }
 
   describe 'New task' do
     before { visit new_task_path() }
@@ -41,7 +41,7 @@ RSpec.describe 'tasks', type: :system do
     it 'registration' do
       fill_in 'task_task_name', with: input_task_name
       fill_in 'task_description', with: input_description
-      fill_in 'task_status', with: input_status
+      select(value = input_status, from: 'task_status')
       fill_in 'task_priority', with: input_priority
       fill_in 'task_label', with: input_label
       fill_in 'task_start_date', with: input_start_date
@@ -170,5 +170,35 @@ RSpec.describe 'tasks', type: :system do
       end
     end
 
+  end
+
+  describe 'search with title' do
+    before { visit root_path }
+
+    let(:task_name) { 'task_name for test' }
+    let(:status) { 'done' }
+    let(:task_search) { create(:task, task_name: task_name, status: status) }
+    
+    context 'when search by first' do
+      let(:task_name) { 'search_keyword' }
+
+      it 'search success' do
+        byebug
+        fill_in 'search_task_name', with: 'first'
+        click_on I18n.t('helpers.submit.search')
+
+        expect(find('tr:nth-child(2)')).to have_content 'search_keyword'
+        expect(find('tr:nth-child(2)')).not_to have_content 'task_name' # factories.fasks.rbにセットされたデータは検索できないこと
+      end
+    end
+
+  #   context 'when search by last' do
+  #     it 'search success' do
+  #       fill_in 'q[title_cont]', with: 'last'
+  #       click_on '検索'
+  #       expect(find('tr:nth-child(2)')).to have_content 'last'
+  #       expect(find('tr:nth-child(2)')).not_to have_content 'first'
+  #     end
+  #   end
   end
 end
