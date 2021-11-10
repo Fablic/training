@@ -172,33 +172,58 @@ RSpec.describe 'tasks', type: :system do
 
   end
 
-  describe 'search with title' do
+  describe 'search by condition' do
     before { visit root_path }
 
-    let(:task_name) { 'task_name for test' }
-    let(:status) { 'done' }
-    let(:task_search) { create(:task, task_name: task_name, status: status) }
-    
-    context 'when search by first' do
-      let(:task_name) { 'search_keyword' }
+    let(:task_name) { 'search_keyword' }
+    let(:status) { 'inProgress' }
+    let!(:task_search) { create(:task, task_name: task_name, status: status) }
 
+    context 'when search all' do
       it 'search success' do
-        byebug
-        fill_in 'search_task_name', with: 'first'
         click_on I18n.t('helpers.submit.search')
 
-        expect(find('tr:nth-child(2)')).to have_content 'search_keyword'
-        expect(find('tr:nth-child(2)')).not_to have_content 'task_name' # factories.fasks.rbにセットされたデータは検索できないこと
+        expect(find('#task_list > tbody:nth-child(2)')).to have_content 'search_keyword'
+        # factories.fasks.rbにセットされたデータも検索できること
+        expect(find('#task_list > tbody:nth-child(2)')).to have_content 'Task_name_' 
+      end
+    end
+  
+    context 'when search by task_name' do
+
+      it 'search success' do
+        fill_in 'search[task_name_cont]', with: 'search_keyword'
+        click_on I18n.t('helpers.submit.search')
+
+        expect(find('#task_list > tbody:nth-child(2) > tr:nth-child(1)')).to have_content 'search_keyword'
+        # factories.fasks.rbにセットされたデータは検索できないこと
+        expect(find('#task_list > tbody:nth-child(2)')).not_to have_content 'Task_name_' 
       end
     end
 
-  #   context 'when search by last' do
-  #     it 'search success' do
-  #       fill_in 'q[title_cont]', with: 'last'
-  #       click_on '検索'
-  #       expect(find('tr:nth-child(2)')).to have_content 'last'
-  #       expect(find('tr:nth-child(2)')).not_to have_content 'first'
-  #     end
-  #   end
+    context 'when search by status' do
+
+      it 'search success' do
+        select(value = 'inProgress', from: 'search_status_eq')
+        click_on I18n.t('helpers.submit.search')
+
+        expect(find('#task_list > tbody:nth-child(2) > tr:nth-child(1)')).to have_content 'search_keyword'
+        # factories.fasks.rbにセットされたデータは検索できないこと
+        expect(find('#task_list > tbody:nth-child(2)')).not_to have_content 'Task_name_' 
+      end
+    end
+
+    context 'when search by task_name and status' do    
+      it 'search success' do
+        fill_in 'search[task_name_cont]', with: 'search_keyword'
+        select(value = 'inProgress', from: 'search_status_eq')
+        click_on I18n.t('helpers.submit.search')
+
+        expect(find('#task_list > tbody:nth-child(2) > tr:nth-child(1)')).to have_content 'search_keyword'
+        # factories.fasks.rbにセットされたデータは検索できないこと
+        expect(find('#task_list > tbody:nth-child(2) > tr:nth-child(1)')).not_to have_content 'Task_name_' 
+      end
+    end
+
   end
 end

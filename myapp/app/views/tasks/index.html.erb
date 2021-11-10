@@ -10,13 +10,13 @@
 <div class="search-form">
   <%= form_with(scope: :search, url: root_path, method: :get, local: true) do |f| %>
     <div class="field">
-      <%= f.label :task_name, t('tasks.common.task_name') %>
-      <%= f.text_field :task_name, value: @search_params[:task_name] %>
+      <%= f.label :task_name_cont, t('tasks.common.task_name') %>
+      <%= f.search_field :task_name_cont, value: @search_params[:task_name_cont] %>
     </div>
 
     <div class="field">
-      <%= f.label :status, t('tasks.common.status') %>
-      <%= f.select :status, Task.status_lists.keys.to_a, selected: @search_params[:status], include_blank: t('helpers.select.include_blank') %>
+      <%= f.label :status_eq, t('tasks.common.status') %>
+      <%= f.select :status_eq, Task.status_lists.keys.to_a, selected: @search_params[:status_eq], include_blank: t('helpers.select.include_blank') %>
 
     <div class="actions">
       <%= f.submit(t('helpers.submit.search')) %>
