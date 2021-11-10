@@ -18,8 +18,8 @@
     <% @tasks.each do |task| %>
       <tr>
         <td><%= link_to task.title, task %></td>
-        <td><%= link_to task.priority.blank? ? '' : task.priority , task %></td>
-        <td><%= link_to task.expires_at.blank? ? '' : task.expires_at, task %></td>
+        <td><%= link_to task.priority.to_s , task %></td>
+        <td><%= link_to task.expires_at.to_s, task %></td>
         <td><%= link_to 'Edit', edit_task_path(task) %></td>
         <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
@@ -29,4 +29,4 @@
 
 <br>
 
-<%= link_to 'New Task', '/tasks/new' %>
+<%= link_to 'New Task', new_task_path() %>

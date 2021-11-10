@@ -5,7 +5,7 @@
 
 <dl>
   <dt>title:</dt><dd><%= @task.title %></dd>
-  <dt>description:<dt><dd><%= raw(h(@task.description).gsub(/\R/, "<br>")) %></dd>
+  <dt>description:<dt><dd><pre><%= @task.description %></pre></dd>
   <dt>priority:</dt><dd><%= @task.priority %></dd>
   <dt>deadline:</dt><dd><%= @task.expires_at %></dd>
 </dl>
