@@ -17,6 +17,7 @@ ja:
       title: "タスク新規登録"
   
     common:
+      id: "Id"
       title: "タスク登録"
       task_name: 'タスク名'
       description: 'タスク詳細'
