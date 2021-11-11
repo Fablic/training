@@ -13,3 +13,5 @@ en:
       deleted_success: "%{target} was successfully destroyed."
       invalid_date: ' invalid date'
       search: Search
+      invalid_login: invalid username/password
+      cant_delete_all_admins: can't delete ALL admins

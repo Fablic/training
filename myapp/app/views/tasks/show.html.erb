@@ -1,43 +1,55 @@
-<p id="notice"><%= notice %></p>
+<div class="section container">
 
-<h1><%=t('actions.show') + Task.model_name.human() %></h1>
-<p>
-  <strong><%= Task.human_attribute_name(:status) %></strong>
-  <%= t("enums.task.status.#{@task.status}") %>
-</p>
+  <h1 class="title has-text-primary">
+    <%= t('actions.show') + Task.model_name.human() %>
+  </h1>
+  <div class='box'>
+    <%= link_to t('actions.back'), tasks_path, class:"delete is-large is-pulled-right" %>
+    <p>
+      <strong><%= Task.human_attribute_name(:status) %></strong>
+      <%= t("enums.task.status.#{@task.status}") %>
+    </p>
 
+    <p>
+      <strong><%= Task.human_attribute_name(:name) %></strong>
+      <%= @task.name %>
+    </p>
 
-<p>
-  <strong><%= Task.human_attribute_name(:name) %></strong>
-  <%= @task.name %>
-</p>
+    <p>
+      <strong><%= Task.human_attribute_name(:priority) %></strong>
+      <%= @task.priority %>
+    </p>
 
-<p>
-  <strong><%= Task.human_attribute_name(:priority) %></strong>
-  <%= @task.priority %>
-</p>
+    <strong>TAGS</strong>
+    <div class="box">
+      <div class="tags are-large">
+        <% @task.labels.each do |label| %>
+          <%= render partial: 'shared/label_component', locals: {label: label, has_delete: false} %>
+        <% end %>
+      </div>
+    </div>
 
+    <p>
+      <strong><%= Task.human_attribute_name(:description) %></strong>
+      <%= @task.description %>
+    </p>
 
-<p>
-  <strong><%= Task.human_attribute_name(:description) %></strong>
-  <%= @task.description %>
-</p>
+    <p>
+      <strong><%= Task.human_attribute_name(:created_by) %></strong>
+      <%= "[#{@task.created_by}] #{@task.user.name}" %>
+    </p>
 
-<p>
-  <strong><%= Task.human_attribute_name(:created_by) %></strong>
-  <%= @task.created_by %>
-</p>
+    <p>
+      <strong><%= Task.human_attribute_name(:started_at) %></strong>
+      <%= @task.started_at %>
+    </p>
 
-<p>
-  <strong><%= Task.human_attribute_name(:started_at) %></strong>
-  <%= @task.started_at %>
-</p>
+    <p>
+      <strong><%= Task.human_attribute_name(:finished_at) %></strong>
+      <%= @task.finished_at %>
+    </p>
 
-<p>
-  <strong><%= Task.human_attribute_name(:finished_at) %></strong>
-  <%= @task.finished_at %>
-</p>
+    <%= link_to t('actions.edit'), edit_task_path(@task) , class: "button is-link" %>
 
-
-<%= link_to t('actions.edit'), edit_task_path(@task) %> |
-<%= link_to t('actions.back'), tasks_path %>
+  </div>
+</div>

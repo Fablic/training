@@ -64,4 +64,5 @@ end
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 gem 'debug'
+gem 'erb_lint', require: false
 gem 'fablicop', require: false

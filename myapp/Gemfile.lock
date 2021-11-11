@@ -60,6 +60,14 @@ GEM
       public_suffix (>= 2.0.2, < 5.0)
     ast (2.4.2)
     bcrypt (3.1.16)
+    better_html (1.0.16)
+      actionview (>= 4.0)
+      activesupport (>= 4.0)
+      ast (~> 2.0)
+      erubi (~> 1.4)
+      html_tokenizer (~> 0.0.6)
+      parser (>= 2.4)
+      smart_properties
     bindex (0.8.1)
     bootsnap (1.9.1)
       msgpack (~> 1.0)
@@ -85,6 +93,14 @@ GEM
     diff-lcs (1.4.4)
     enum_help (0.0.17)
       activesupport (>= 3.0.0)
+    erb_lint (0.1.1)
+      activesupport
+      better_html (~> 1.0.7)
+      html_tokenizer
+      parser (>= 2.7.1.4)
+      rainbow
+      rubocop
+      smart_properties
     erubi (1.10.0)
     fablicop (1.1.2)
       rubocop (~> 1.14.0)
@@ -98,6 +114,7 @@ GEM
     ffi (1.15.4)
     globalid (0.5.2)
       activesupport (>= 5.0)
+    html_tokenizer (0.0.7)
     i18n (1.8.10)
       concurrent-ruby (~> 1.0)
     io-console (0.5.9)
@@ -240,6 +257,7 @@ GEM
     selenium-webdriver (3.142.7)
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
+    smart_properties (1.16.3)
     spring (2.1.1)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
@@ -288,6 +306,7 @@ DEPENDENCIES
   capybara (>= 2.15)
   debug
   enum_help
+  erb_lint
   fablicop
   factory_bot_rails
   jbuilder (~> 2.7)

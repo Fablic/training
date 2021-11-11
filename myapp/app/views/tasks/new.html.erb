@@ -1,5 +1,12 @@
-<h1><%=t('actions.new') + Task.model_name.human() %></h1>
+<div class="section container">
 
-<%= render 'form', task: @task %>
+  <h1 class="title has-text-primary">
+    <%= t('actions.new') + Task.model_name.human() %>
+  </h1>
+  <div class='box'>
+    <%= link_to t('actions.back'), tasks_path, class:"delete is-large is-pulled-right" %>
 
-<%= link_to t('actions.back'), tasks_path %>
+    <%= render 'form', task: @task %>
+
+  </div>
+</div>

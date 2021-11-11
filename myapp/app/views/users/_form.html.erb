@@ -3,7 +3,9 @@
     <div id="error_explanation">
       <ul>
         <% user.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
+          <li>
+            <%= message %>
+          </li>
         <% end %>
       </ul>
     </div>
@@ -14,29 +16,26 @@
     <%= form.text_field :name %>
   </div>
 
-
   <div class="field">
-    <%= form.label User.human_attribute_name(:username)  %>
+    <%= form.label User.human_attribute_name(:username) %>
     <%= form.text_field :username %>
   </div>
 
-
   <div class="field">
-    <%= form.label User.human_attribute_name(:password)  %>
+    <%= form.label User.human_attribute_name(:password) %>
     <%= form.password_field :password %>
   </div>
-<div class="field">
-    <%= form.label User.human_attribute_name(:password_confirmation)  %>
+  <div class="field">
+    <%= form.label User.human_attribute_name(:password_confirmation) %>
     <%= form.password_field :password_confirmation %>
   </div>
- 
 
-    <div class="field">
-    <%= form.label User.human_attribute_name(:admin)  %>
+  <div class="field">
+    <%= form.label User.human_attribute_name(:admin) %>
     <%= form.check_box :admin %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit class: "button is-success" %>
   </div>
 <% end %>

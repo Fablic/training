@@ -31,5 +31,5 @@ COPY Gemfile /$APP_ROOT/Gemfile
 COPY Gemfile.lock /$APP_ROOT/Gemfile.lock
 ENV BUNDLE_PATH=/usr/local/bundle
 RUN bundle install
-
+RUN ln -snf  /usr/share/zoneinfo/Japan /etc/localtime
 COPY . /$APP_ROOT

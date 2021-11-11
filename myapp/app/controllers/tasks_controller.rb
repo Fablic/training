@@ -5,13 +5,25 @@ class TasksController < ApplicationController
 
   # GET /tasks or /tasks.json
   def index
-    @dash_unfinished = Task.ransack(status_lt: 2).result.count
-    @dash_overdue = Task.ransack(finished_at_lt: Time.zone.today.strftime('%Y-%m-%d')).result.count
-    @dash_due_today = Task.ransack(finished_at_eq: Time.zone.today.strftime('%Y-%m-%d')).result.count
+    @dash_unfinished = Task.role_filtered(admin?, current_user.id).unfinished.count
+    @dash_overdue = Task.role_filtered(admin?, current_user.id).overdue.count
+    @dash_due_today = Task.role_filtered(admin?, current_user.id).due_today.count
 
-    @q = Task.ransack(params[:q])
+    params[:q] = params[:q].presence || {}
+
+    # always filter via user_id if not admin
+    @q = Task.role_filtered(admin?, current_user.id)
+
+    # run predefined searches
+    @q = @q.send(params[:dash_search]) if params[:dash_search].present? && %w[unfinished overdue due_today].include?(params[:dash_search])
+
+    # run other search
+    @q = @q.ransack(params[:q])
+
+    # set default order by if not specified
     @q.sorts = 'created_at desc' if @q.sorts.empty?
-    @tasks = @q.result.includes(:user).page(params[:page])
+
+    @tasks = @q.result.includes(:user, :labels).page(params[:page])
   end
 
   # GET /tasks/1 or /tasks/1.json
@@ -30,6 +42,8 @@ class TasksController < ApplicationController
   # POST /tasks or /tasks.json
   def create
     @task = Task.new(task_params)
+
+    @task.created_by = current_user.id unless admin?
 
     respond_to do |format|
       if @task.save
@@ -68,13 +82,15 @@ class TasksController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_task
-    @task = Task.find(params[:id])
+    @task = Task.role_filtered(admin?, current_user.id).find(params[:id])
+
+    raise ActiveRecord::RecordNotFound if @task.nil?
   end
 
   # Only allow a list of trusted parameters through.
   def task_params
     params.require(:task)
-      .permit(:name, :created_by, :created_at, :started_at, :finished_at, :description, :status, :priority)
-      .with_defaults(created_by: 1)
+      .permit(:name, :created_by, :created_at, :started_at, :finished_at, :description, :status, :priority, { label_ids: [] })
+      .with_defaults(created_by: current_user.id)
   end
 end

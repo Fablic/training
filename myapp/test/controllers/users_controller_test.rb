@@ -4,7 +4,8 @@ require 'test_helper'
 
 class UsersControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @user = create(:generic_user)
+    @user = create(:admin)
+    post '/login', params: { username: @user.username, password: @user.password }
   end
 
   test 'should get index' do

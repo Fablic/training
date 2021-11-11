@@ -1,0 +1,32 @@
+<div class="container">
+  <div class="box">
+    <nav class="level">
+      <div class="level-item has-text-centered">
+        <div>
+          <p class="title has-text-primary">DASHBOARD</p>
+
+        </div>
+      </div>
+
+      <div class="level-item has-text-centered">
+        <div>
+          <p class="heading">UNFINISHED</p>
+          <p class="title"><%= link_to  @dash_unfinished, dash_search: 'unfinished' %></p>
+        </div>
+      </div>
+      <div class="level-item has-text-centered">
+        <div>
+          <p class="heading">OVERDUE</p>
+          <p class="title"><%= link_to @dash_overdue, dash_search: 'overdue' %></p>
+        </div>
+      </div>
+      <div class="level-item has-text-centered">
+        <div>
+          <p class="heading">DUE TODAY</p>
+          <p class="title"><%= link_to  @dash_due_today, dash_search: 'due_today' %></p>
+        </div>
+      </div>
+
+    </nav>
+  </div>
+</div>

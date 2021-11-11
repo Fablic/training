@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>Task-u-ten</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag 'https://unpkg.com/bulmaswatch/journal/bulmaswatch.min.css' %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+
+    <%= form_tag '/login' do %>
+
+      <section class="hero is-primary is-fullheight">
+        <div class="hero-body">       
+          <div class="container">
+            <div class="columns is-centered">
+              <div class="column is-5-tablet is-4-desktop is-3-widescreen">
+                <h1 class="title is-1">Task-u-ten</h1>
+                <%= form_with class:'box' do |form| %>
+                  <div class="field">
+                    <%= label_tag :username, User.human_attribute_name(:username), class: 'label' %>
+                    <div class="control has-icons-left">
+                      <%= email_field_tag :username, '', class: 'input', required:true %>
+                      <span class="icon is-small is-left">
+                        <i class="fa fa-envelope"></i>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="field">
+                    <%= label_tag :password,  User.human_attribute_name(:password), class: 'label' %>
+                    <div class="control has-icons-left">
+                      <%= password_field_tag :password, '', class: 'input', required:true %>
+                      <span class="icon is-small is-left">
+                        <i class="fa fa-lock"></i>
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="field">
+                   <%= form.submit t('login'), class: "button is-success" %>
+                  </div>
+                  <% end %>
+
+
+                <% if  alert.present? %>
+
+                  <div class="notification is-danger ">
+                    <button class="delete"></button>
+                    <%= alert %>
+                  </div>
+
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    <% end %>
+
+  </body>
+
+</html>

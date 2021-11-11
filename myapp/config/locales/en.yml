@@ -32,3 +32,4 @@
 en:
   earlier_date_error: " can't be earlier than %{start}" 
   today: today
+  login: Login

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class UsersController < ApplicationController
+class UsersController < AdminController
   before_action :set_user, only: %i[show edit update destroy]
 
   # GET /users or /users.json
@@ -53,6 +53,10 @@ class UsersController < ApplicationController
 
   # DELETE /users/1 or /users/1.json
   def destroy
+    if @user.admin && User.where(admin: true).count == 1
+      redirect_to @user, alert: t('messages.cant_delete_all_admins')
+      return
+    end
     @user.destroy
     respond_to do |format|
       format.html { redirect_to users_url, notice: t('messages.deleted_success', target: User.model_name.human()) }

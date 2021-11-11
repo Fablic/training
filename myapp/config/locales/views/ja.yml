@@ -13,6 +13,8 @@ ja:
       deleted_success: "%{target}を削除しました."
       invalid_date: '無効な日付です。'
       search: 検索
+      invalid_login: 無効なユーザ・パスワード
+      cant_delete_all_admins: すべての管理ユーザーを削除できない
 
   views:
     pagination:

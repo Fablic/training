@@ -13,24 +13,4 @@
  *= require_tree .
  *= require_self
  */
- table, th, td {
-    border-collapse: collapse;
-    border: 1px solid #ccc;
-    line-height: 1.5;
-  }
-  
-  table.type06 th {
-    padding: 10px;
-    font-weight: bold;
-    vertical-align: top;
-    background: #b90404;
-    color: #ffffff;
-  }
-  table.type06 td {
-    padding: 10px;
-    vertical-align: top;
-  }
-  
-  tr:nth-child(even) {
-    background: #d9d9d9;
-  }
+ 

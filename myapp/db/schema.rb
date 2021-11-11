@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_211_026_043_142) do
+ActiveRecord::Schema.define(version: 20_211_102_013_534) do
   create_table 'cats', options: 'ENGINE=InnoDB DEFAULT CHARSET=utf8mb4', force: :cascade do |t|
     t.string 'name'
     t.string 'color'
@@ -31,13 +31,11 @@ ActiveRecord::Schema.define(version: 20_211_026_043_142) do
   end
 
   create_table 'maintenances', options: 'ENGINE=InnoDB DEFAULT CHARSET=utf8mb4', force: :cascade do |t|
-    t.bigint 'created_by', null: false
     t.string 'name', limit: 256, null: false
     t.timestamp 'started_at'
     t.timestamp 'finished_at'
     t.datetime 'created_at', precision: 6, null: false
     t.datetime 'updated_at', precision: 6, null: false
-    t.index ['created_by'], name: 'fkeyMaintenanceOwner'
   end
 
   create_table 'task_labels', options: 'ENGINE=InnoDB DEFAULT CHARSET=utf8mb4', force: :cascade do |t|
@@ -77,7 +75,6 @@ ActiveRecord::Schema.define(version: 20_211_026_043_142) do
   end
 
   add_foreign_key 'labels', 'users', column: 'created_by', name: 'fkeyLabelOwner'
-  add_foreign_key 'maintenances', 'users', column: 'created_by', name: 'fkeyMaintenanceOwner'
   add_foreign_key 'task_labels', 'labels'
   add_foreign_key 'task_labels', 'tasks'
   add_foreign_key 'tasks', 'users', column: 'created_by', name: 'fkeyTaskOwner'

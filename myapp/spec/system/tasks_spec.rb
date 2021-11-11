@@ -4,6 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'tasks', type: :system do
   let!(:user) { create(:generic_user) }
+  let!(:admin) { create(:admin) }
 
   describe 'Index Page' do
     let!(:task_list) do
@@ -11,12 +12,13 @@ RSpec.describe 'tasks', type: :system do
     end
 
     before do
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
       visit root_path
     end
 
     it 'ui elements are present' do
       expect(page).to have_content 'Task-u-ten'
-      expect(page).to have_content '新規 タスク'
+      expect(page).to have_selector(:id, 'add_task_btn')
     end
 
     it 'table elements are present' do
@@ -43,7 +45,7 @@ RSpec.describe 'tasks', type: :system do
 
     # check navigation links
     it 'moves to new page' do
-      click_on '新規 タスク'
+      find('#add_task_btn').click
       expect(page).to have_content '新規タスク'
       expect(page).to have_content '戻る'
       click_on '登録する'
@@ -64,7 +66,6 @@ RSpec.describe 'tasks', type: :system do
       expect(page).to have_content '編集タスク'
       expect(page).to have_content 'タスク名'
       expect(page).to have_content '戻る'
-      expect(page).to have_content '詳細'
     end
   end
 
@@ -77,6 +78,7 @@ RSpec.describe 'tasks', type: :system do
     }
 
     before do
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
       visit root_path
     end
 
@@ -110,6 +112,7 @@ RSpec.describe 'tasks', type: :system do
     }
 
     before do
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
       visit new_task_path
     end
 
@@ -121,7 +124,6 @@ RSpec.describe 'tasks', type: :system do
       it 'add pending task successfully' do
         fill_in 'task[name]', with: params[:name]
         fill_in 'task[description]', with: params[:description]
-        fill_in 'task[created_by]', with: user.id
         fill_in 'task[finished_at]', with: Time.zone.today.strftime('%Y-%m-%d')
         click_on '登録する'
         expect(page).to have_content 'タスクを作成しました.'
@@ -130,7 +132,6 @@ RSpec.describe 'tasks', type: :system do
       it 'add started task successfully' do
         fill_in 'task[name]', with: params[:name]
         fill_in 'task[description]', with: params[:description]
-        fill_in 'task[created_by]', with: user.id
         fill_in 'task[finished_at]', with: Time.zone.today.strftime('%Y-%m-%d')
         select '着手', from: 'task[status]'
         click_on '登録する'
@@ -142,7 +143,6 @@ RSpec.describe 'tasks', type: :system do
       it 'add finished task successfully' do
         fill_in 'task[name]', with: params[:name]
         fill_in 'task[description]', with: params[:description]
-        fill_in 'task[created_by]', with: user.id
         fill_in 'task[finished_at]', with: Time.zone.today.strftime('%Y-%m-%d')
         select '完了', from: 'task[status]'
         click_on '登録する'
@@ -153,8 +153,6 @@ RSpec.describe 'tasks', type: :system do
 
       it 'start & finished in future' do
         fill_in 'task[name]', with: params[:name]
-        fill_in 'task[created_by]', with: user.id
-
         fill_in 'task[started_at]', with: 5.days.from_now.strftime('%Y-%m-%d')
         fill_in 'task[finished_at]', with: 10.days.from_now.strftime('%Y-%m-%d')
 
@@ -164,7 +162,6 @@ RSpec.describe 'tasks', type: :system do
 
       it 'start in past , end  in future' do
         fill_in 'task[name]', with: params[:name]
-        fill_in 'task[created_by]', with: user.id
         fill_in 'task[started_at]', with: 5.days.ago.strftime('%Y-%m-%d')
         fill_in 'task[finished_at]', with: 10.days.from_now.strftime('%Y-%m-%d')
         click_on '登録する'
@@ -173,31 +170,13 @@ RSpec.describe 'tasks', type: :system do
     end
 
     context 'with Validation Error case' do
-      it 'blank name and owner' do
+      it 'blank name' do
         click_on '登録する'
-        expect(page).to have_content 'オーナーを入力してください'
-        expect(page).to have_content 'オーナーは数値で入力してください'
         expect(page).to have_content 'タスク名を入力してください'
-        expect(page).to have_content 'Userを入力してください'
-      end
-
-      it 'owner does not exist' do
-        fill_in 'task[name]', with: params[:name]
-        fill_in 'task[created_by]', with: user.id + 2134
-        click_on '登録する'
-        expect(page).to have_content 'Userを入力してください'
-      end
-
-      it 'owner is not integer' do
-        fill_in 'task[name]', with: params[:name]
-        fill_in 'task[created_by]', with: 'hoge'
-        click_on '登録する'
-        expect(page).to have_content 'オーナーは数値で入力してください'
       end
 
       it 'finished_at less than started_at' do
         fill_in 'task[name]', with: params[:name]
-        fill_in 'task[created_by]', with: user.id
         fill_in 'task[started_at]', with: 15.days.from_now.strftime('%Y-%m-%d')
         fill_in 'task[finished_at]', with: 5.days.from_now.strftime('%Y-%m-%d')
         click_on '登録する'
@@ -218,6 +197,33 @@ RSpec.describe 'tasks', type: :system do
         fill_in 'task[finished_at]', with: '2021-02-31'
         click_on '登録する'
         expect(page).to have_content '無効な日付です'
+      end
+    end
+  end
+
+  describe 'Filtered index' do
+    let!(:admin_list) { create_list(:task, 4, created_by: admin.id) }
+    let!(:normal_list) { create_list(:task, 4, created_by: user.id) }
+
+    context 'with admin' do
+      it ' sees all items' do
+        allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(admin)
+        visit root_path
+        expect(page).to have_content admin_list[0].name
+        expect(page).to have_content admin_list[3].name
+        expect(page).to have_content normal_list[0].name
+        expect(page).to have_content normal_list[3].name
+      end
+    end
+
+    context 'with non-admin' do
+      it ' sees only own tasks' do
+        allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+        visit root_path
+        expect(page).not_to have_content admin_list[0].name
+        expect(page).not_to have_content admin_list[3].name
+        expect(page).to have_content normal_list[0].name
+        expect(page).to have_content normal_list[3].name
       end
     end
   end

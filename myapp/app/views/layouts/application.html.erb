@@ -1,17 +1,74 @@
 <!DOCTYPE html>
 <html>
+
   <head>
     <title>Task-u-ten</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
+    <%= stylesheet_link_tag 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css' %>
+    <%= stylesheet_link_tag 'https://unpkg.com/bulmaswatch/journal/bulmaswatch.min.css' %>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
-  <h1>Task-u-ten</h1>
-  <hr/>
+  <body class='has-background-white-ter is-size-5'>
+
+    <% if notice.present? %>
+
+      <div class="notification is-success ">
+        <button class="delete"></button>
+        <%= notice %>
+      </div>
+
+    <% end %>
+
+    <% if alert.present? %>
+
+      <div class="notification is-danger ">
+        <button class="delete"></button>
+        <%= alert %>
+      </div>
+
+    <% end %>
+    <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+
+        <h1 class="title is-1 has-text-white">Task-u-ten</h1>
+
+      </div>
+
+      <div id="navbarBasicExample" class="navbar-menu ">
+        <div class="navbar-start is-size-4">
+          <div class='block'>&nbsp;&nbsp;&nbsp;</div>
+
+          <%= link_to 'Tasks', tasks_path , class: 'navbar-item' %>
+          <%= link_to 'Labels', labels_path , class: 'navbar-item' %>
+
+          <% if admin? %>
+            <%= link_to 'Users', users_path , class: 'navbar-item' %>
+          <% end %>
+        </div>
+
+        <div class="navbar-end">
+          <div class="navbar-item is-size-4">
+
+            Hi <%= current_user.name %>!
+
+          </div>
+          <div class="navbar-item">
+
+            <div class="buttons">
+              <%= link_to "Log out", logout_path, method: :delete, class: 'button is-warning' %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <!-- -----START ------  -->
+
     <%= yield %>
+
+    <!-- -----END ------  -->
   </body>
+
 </html>
