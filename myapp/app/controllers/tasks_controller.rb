@@ -10,6 +10,7 @@ class TasksController < ApplicationController
     @search_params = user_search_params
     @tasks = Task.search_condition(@search_params)
     @tasks = @tasks.order("#{sort_column} #{sort_direction}")
+    @tasks = @tasks.page(params[:page]).per(5)
   end
 
   def show
