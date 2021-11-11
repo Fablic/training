@@ -24,12 +24,12 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(post_params)
-    
+
     if @task.save
       flash[:notice] = t('tasks.flash.complete_task_registration')
       redirect_to root_path
     else
-      #flash[:notice] = t('tasks.flash.error_task_registration')
+      # flash[:notice] = t('tasks.flash.error_task_registration')
       render :new
     end
   end
@@ -39,10 +39,9 @@ class TasksController < ApplicationController
       flash[:notice] = t('tasks.flash.complete_task_edit')
       redirect_to root_path
     else
-      #flash[:notice] = t('tasks.flash.error_task_edit')
+      # flash[:notice] = t('tasks.flash.error_task_edit')
       render :edit
     end
-
   end
 
   def destroy
@@ -55,7 +54,7 @@ class TasksController < ApplicationController
   end
 
   private
-  
+
   def set_task
     @task = Task.find(params[:id])
   end
@@ -73,9 +72,8 @@ class TasksController < ApplicationController
   def sort_direction
     %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
   end
-  
-  def sort_column    
+
+  def sort_column
     Task.column_names.include?(params[:sort]) ? params[:sort] : 'created_at'
   end
-
 end
