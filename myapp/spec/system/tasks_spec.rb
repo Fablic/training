@@ -133,7 +133,13 @@ RSpec.describe 'tasks', type: :system do
       context 'Screen display confirmation' do
         it 'table colums check' do
           within('#task_list') do
+            expect(page).to have_content I18n.t('tasks.common.id')
             expect(page).to have_content I18n.t('tasks.common.task_name')
+            expect(page).to have_content I18n.t('tasks.common.status')
+            expect(page).to have_content I18n.t('tasks.common.label')
+            expect(page).to have_content I18n.t('tasks.common.priority')
+            expect(page).to have_content I18n.t('tasks.common.start_date')
+            expect(page).to have_content I18n.t('tasks.common.end_date')
           end
         end
       end
