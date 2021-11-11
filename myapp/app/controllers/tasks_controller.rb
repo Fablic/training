@@ -29,7 +29,6 @@ class TasksController < ApplicationController
       flash[:notice] = t('tasks.flash.complete_task_registration')
       redirect_to root_path
     else
-      # flash[:notice] = t('tasks.flash.error_task_registration')
       render :new
     end
   end
@@ -39,7 +38,6 @@ class TasksController < ApplicationController
       flash[:notice] = t('tasks.flash.complete_task_edit')
       redirect_to root_path
     else
-      # flash[:notice] = t('tasks.flash.error_task_edit')
       render :edit
     end
   end
