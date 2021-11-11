@@ -3,24 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe 'tasks', type: :system do
-
-  # 画面ラベル名
-  let(:label_task_name) { I18n.t('tasks.common.task_name') }
-  let(:label_description) { I18n.t('tasks.common.description') }
-  let(:label_status) { I18n.t('tasks.common.status') }
-  let(:label_priority) { I18n.t('tasks.common.priority') }
-  let(:label_label) { I18n.t('tasks.common.label') }
-  let(:label_start_date) { I18n.t('tasks.common.start_date') }
-  let(:label_end_date) { I18n.t('tasks.common.end_date') }
-  # 項目設定値
-  let(:input_task_name) { 'input Task' }
-  let(:input_description) { 'input Description' }
-  let(:input_status) { 'todo' }
-  let(:input_priority) { 1 }
-  let(:input_label) { 'input Label' }
-  let(:input_start_date) { Time.zone.yesterday.strftime('%Y-%m-%d') }
-  let(:input_end_date) { Time.zone.now.strftime('%Y-%m-%d') }
-
   let!(:task_list) { FactoryBot.create_list(:task, 5) }
 
   describe 'New task' do
@@ -29,23 +11,23 @@ RSpec.describe 'tasks', type: :system do
     it 'show display' do
       expect(page).to have_content I18n.t('tasks.new.title')
       expect(page).to have_title 'Myapp'
-      expect(page).to have_content label_task_name
-      expect(page).to have_content label_description
-      expect(page).to have_content label_status
-      expect(page).to have_content label_priority
-      expect(page).to have_content label_label
-      expect(page).to have_content label_start_date
-      expect(page).to have_content label_end_date
+      expect(page).to have_content I18n.t('tasks.common.task_name')
+      expect(page).to have_content I18n.t('tasks.common.description') 
+      expect(page).to have_content I18n.t('tasks.common.status')
+      expect(page).to have_content I18n.t('tasks.common.priority')
+      expect(page).to have_content I18n.t('tasks.common.label') 
+      expect(page).to have_content I18n.t('tasks.common.start_date')
+      expect(page).to have_content I18n.t('tasks.common.end_date')
     end
 
     it 'registration' do
-      fill_in 'task_task_name', with: input_task_name
-      fill_in 'task_description', with: input_description
-      fill_in 'task_status', with: input_status
-      fill_in 'task_priority', with: input_priority
-      fill_in 'task_label', with: input_label
-      fill_in 'task_start_date', with: input_start_date
-      fill_in 'task_end_date', with: input_end_date
+      fill_in 'task_task_name', with: 'input Task'
+      fill_in 'task_description', with: 'input Description'
+      fill_in 'task_status', with: 'todo'
+      fill_in 'task_priority', with: 1
+      fill_in 'task_label', with: 'input Label'
+      fill_in 'task_start_date', with: Time.zone.yesterday.strftime('%Y-%m-%d') 
+      fill_in 'task_end_date', with: Time.zone.now.strftime('%Y-%m-%d')
 
       click_button 'Create Task'
 
@@ -91,6 +73,15 @@ RSpec.describe 'tasks', type: :system do
     it "go to Task's list" do
       click_on I18n.t('tasks.common.move_task_list')
       expect(page).to have_current_path root_path, ignore_query: true
+    end
+
+    it 'update' do      
+      fill_in 'task_task_name', with: 'update_task_name'
+
+      click_button 'Update Task'
+      visit root_path
+ 
+      expect(page).to have_content 'update_task_name'
     end
   end
 

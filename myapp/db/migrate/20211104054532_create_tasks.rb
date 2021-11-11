@@ -10,15 +10,15 @@ class CreateTasks < ActiveRecord::Migration[6.0]
       t.timestamp :end_date
       t.boolean :deleted, default: 0
       t.integer :login_id
-      t.timestamp :created_at, default: -> { 'NOW()' }
-      t.timestamp :updated_at
+
+      t.timestamps
     end
     create_table :users do |t|
       t.string :login_id, limit: 10
       t.string :password, limit: 12
       t.string :name, limit: 20
-      t.timestamp :created_at, default: -> { 'NOW()' }
-      t.timestamp :updated_at
+
+      t.timestamps
     end
   end
 end
