@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'tasks', type: :system do
-  let!(:task_list) { FactoryBot.create_list(:task, 5) }
+  let!(:task_list) { create_list(:task, 5) }
 
   describe 'New task' do
     before { visit new_task_path() }
