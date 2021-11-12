@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_04_054532) do
+ActiveRecord::Schema.define(version: 2021_11_10_061846) do
 
   create_table "tasks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "task_name", limit: 20
@@ -24,6 +24,8 @@ ActiveRecord::Schema.define(version: 2021_11_04_054532) do
     t.integer "login_id"
     t.timestamp "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.timestamp "updated_at"
+    t.index ["status"], name: "index_tasks_on_status"
+    t.index ["task_name"], name: "index_tasks_on_task_name"
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|

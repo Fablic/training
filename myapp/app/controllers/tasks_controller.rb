@@ -7,7 +7,8 @@ class TasksController < ApplicationController
   before_action :set_task, only: %i[show edit update destroy]
 
   def index
-    @tasks = Task.search(params[:search])
+    @search_params = user_search_params
+    @tasks = Task.search_condition(@search_params)
     @tasks = @tasks.order("#{sort_column} #{sort_direction}")
   end
 
@@ -23,12 +24,11 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(post_params)
-    
+
     if @task.save
       flash[:notice] = t('tasks.flash.complete_task_registration')
       redirect_to root_path
     else
-      #flash[:notice] = t('tasks.flash.error_task_registration')
       render :new
     end
   end
@@ -38,10 +38,8 @@ class TasksController < ApplicationController
       flash[:notice] = t('tasks.flash.complete_task_edit')
       redirect_to root_path
     else
-      #flash[:notice] = t('tasks.flash.error_task_edit')
       render :edit
     end
-
   end
 
   def destroy
@@ -54,9 +52,13 @@ class TasksController < ApplicationController
   end
 
   private
-  
+
   def set_task
     @task = Task.find(params[:id])
+  end
+
+  def user_search_params
+    params.fetch(:search, {}).permit(:task_name_cont, :status_eq)
   end
 
   def post_params
@@ -68,9 +70,8 @@ class TasksController < ApplicationController
   def sort_direction
     %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
   end
-  
-  def sort_column    
+
+  def sort_column
     Task.column_names.include?(params[:sort]) ? params[:sort] : 'created_at'
   end
-    
 end

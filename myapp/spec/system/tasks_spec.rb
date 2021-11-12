@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe 'tasks', type: :system do
-
   # 画面ラベル名
   let(:label_task_name) { I18n.t('tasks.common.task_name') }
   let(:label_description) { I18n.t('tasks.common.description') }
@@ -21,7 +20,7 @@ RSpec.describe 'tasks', type: :system do
   let(:input_start_date) { Time.zone.yesterday.strftime('%Y-%m-%d') }
   let(:input_end_date) { Time.zone.now.strftime('%Y-%m-%d') }
 
-  let!(:task_list) { FactoryBot.create_list(:task, 5) }
+  let!(:task_list) { create_list(:task, 5) }
 
   describe 'New task' do
     before { visit new_task_path() }
@@ -41,7 +40,7 @@ RSpec.describe 'tasks', type: :system do
     it 'registration' do
       fill_in 'task_task_name', with: input_task_name
       fill_in 'task_description', with: input_description
-      fill_in 'task_status', with: input_status
+      select(value = input_status, from: 'task_status')
       fill_in 'task_priority', with: input_priority
       fill_in 'task_label', with: input_label
       fill_in 'task_start_date', with: input_start_date
@@ -60,7 +59,6 @@ RSpec.describe 'tasks', type: :system do
   end
 
   describe 'Show task' do
-
     before {
       visit root_path
       # move to Show
@@ -101,14 +99,13 @@ RSpec.describe 'tasks', type: :system do
 
     it 'Destroy' do
       page.all('#click_destroy')[0].click
-      
+
       expect(page).to have_content I18n.t('tasks.index.title')
       expect(page).to have_content I18n.t('tasks.flash.complete_task_destroy')
     end
   end
 
   describe 'Index' do
-
     before { visit root_path }
 
     it 'table colums check' do
@@ -123,7 +120,7 @@ RSpec.describe 'tasks', type: :system do
     end
 
     it 'Go to Show page' do
-      #byebug
+      # byebug
       expect(page).to have_content task_list[0].task_name
       page.all('#click_show')[0].click
       expect(page).to have_content I18n.t('tasks.show.title')
@@ -169,6 +166,58 @@ RSpec.describe 'tasks', type: :system do
         expect(find('#task_list > tbody:nth-child(2) > tr:nth-child(4)')).to have_content I18n.l task_list[1].end_date
       end
     end
+  end
 
+  describe 'search by condition' do
+    before { visit root_path }
+
+    let(:task_name_origin_prefix) { 'Task_name_' }
+    let(:task_name) { 'search_keyword' }
+    let(:status) { 'inProgress' }
+    let!(:task_search) { create(:task, task_name: task_name, status: status) }
+
+    context 'when search all' do
+      it 'search success' do
+        click_on I18n.t('helpers.submit.search')
+
+        expect(find('#task_list > tbody:nth-child(2)')).to have_content task_name
+        # factories.fasks.rbにセットされたデータも検索できること
+        expect(find('#task_list > tbody:nth-child(2)')).to have_content task_name_origin_prefix
+      end
+    end
+
+    context 'when search by task_name' do
+      it 'search success' do
+        fill_in 'search[task_name_cont]', with: 'search_keyword'
+        click_on I18n.t('helpers.submit.search')
+
+        expect(find('#task_list > tbody:nth-child(2) > tr:nth-child(1)')).to have_content task_name
+        # factories.fasks.rbにセットされたデータは検索できないこと
+        expect(find('#task_list > tbody:nth-child(2)')).not_to have_content task_name_origin_prefix
+      end
+    end
+
+    context 'when search by status' do
+      it 'search success' do
+        select(value = 'inProgress', from: 'search_status_eq')
+        click_on I18n.t('helpers.submit.search')
+
+        expect(find('#task_list > tbody:nth-child(2) > tr:nth-child(1)')).to have_content task_name
+        # factories.fasks.rbにセットされたデータは検索できないこと
+        expect(find('#task_list > tbody:nth-child(2)')).not_to have_content task_name_origin_prefix
+      end
+    end
+
+    context 'when search by task_name and status' do
+      it 'search success' do
+        fill_in 'search[task_name_cont]', with: 'search_keyword'
+        select(value = 'inProgress', from: 'search_status_eq')
+        click_on I18n.t('helpers.submit.search')
+
+        expect(find('#task_list > tbody:nth-child(2) > tr:nth-child(1)')).to have_content task_name
+        # factories.fasks.rbにセットされたデータは検索できないこと
+        expect(find('#task_list > tbody:nth-child(2) > tr:nth-child(1)')).not_to have_content task_name_origin_prefix
+      end
+    end
   end
 end
