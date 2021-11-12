@@ -1,24 +1,41 @@
-# README
+# テーブルスキーマ
+## users テーブル
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+| Column          | DataType     | Options            | 
+| --------------- | ------------ | ------------------ | 
+| user_id         | INT          | PK, AUTO_INCREMENT | 
+| name            | VARCHAR(255) | NOT NULL           | 
+| email           | VARCHAR(255) | NOT NULL           | 
+| password_digest | VARCHAR(255) | NOT NULL           | 
+| admin           | BOOLEAN      | DEFAULT false      | 
+| created_at      | DATETIME     | CURRENT_DATETIME   | 
+| updated_at      | DATETIME     | CURRENT_DATETIME   | 
 
-Things you may want to cover:
+## tasks テーブル
 
-* Ruby version
+| Column     | DataType     | Options                               | 
+| ---------- | ------------ | ------------------------------------- | 
+| task_id    | INT          | PK, AUTO_INCREMENT                    | 
+| title      | VARCHAR(255) | NOT NULL                              | 
+| content    | TEXT         | NOT NULL                              | 
+| priority   | VARCHAR(255) |                                       | 
+| status     | VARCHAR(255) | NOT NULL                              | 
+| due_date   | DATE         | NOT NULL                              | 
+| user_id    | INT          | usersテーブルの主キーを外部キーとする | 
+| created_at | DATETIME     | CURRENT_DATETIME                      | 
+| updated_at | DATETIME     | CURRENT_DATETIME                      | 
 
-* System dependencies
+## labels テーブル
+| Column     | DataType     | Options                               | 
+| ---------- | ------------ | ------------------------------------- | 
+| label_id   | INT          | PK, AUTO_INCREMENT                    | 
+| name       | VARCHAR(255) | NOT NULL                              | 
+| user_id    | INT          | usersテーブルの主キーを外部キーとする | 
+| created_at | DATETIME     | CURRENT_DATETIME                      | 
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## task_labels  テーブル
+| Column     | DataType | Options                                | 
+| ---------- | -------- | -------------------------------------- | 
+| task_id    | INT      | PK                                     | 
+| label_id   | INT      | labelsテーブルの主キーを外部キーとする | 
+| created_at | DATETIME | CURRENT_DATETIME                       | 
