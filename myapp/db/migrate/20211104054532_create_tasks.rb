@@ -17,7 +17,7 @@ class CreateTasks < ActiveRecord::Migration[6.0]
       t.string :login_id, limit: 10
       t.string :password, limit: 12
       t.string :name, limit: 20
-      t.integer :role
+      t.integer :is_admin
 
       t.timestamps
     end
