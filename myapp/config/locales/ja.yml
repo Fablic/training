@@ -8,6 +8,9 @@ ja:
       complete_task_destroy: 'タスク削除が完了しました。'
       error_task_destroy: 'タスク削除がエラーとなりました。'
   activerecord:
+    check:
+      messages:
+        confirmation_destory: '本当に削除していいですか?'
     errors:
       messages:
         record_invalid: 'バリデーションに失敗しました: %{errors}'

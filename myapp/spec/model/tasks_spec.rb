@@ -12,7 +12,7 @@ RSpec.describe 'tasks', type: :system do
   let(:end_date) { '2021-12-31 15:00:00' }
   let(:task) { build(:task, task_name: task_name, description: description, status: status, label: label, start_date: start_date, end_date: end_date) }
 
-  describe 'task_name' do
+  describe 'attribute: task_name' do
     context 'when less than or equal Max charcters' do
       let(:task_name) { 't' * 20 }
 
@@ -25,7 +25,7 @@ RSpec.describe 'tasks', type: :system do
       let(:task_name) { 't' * 21 }
       
       it 'is invalid' do
-        expect(task).not_to be_valid
+        expect(task).to be_invalid
       end
     end
 
@@ -33,7 +33,7 @@ RSpec.describe 'tasks', type: :system do
       let(:task_name) { '' }
 
       it 'is invalid' do
-        expect(task).not_to be_valid
+        expect(task).to be_invalid
       end
     end
   end
@@ -59,7 +59,7 @@ RSpec.describe 'tasks', type: :system do
       let(:description) { 'd' * 101 }
 
       it 'is invalid' do
-        expect(task).not_to be_valid
+        expect(task).to be_invalid
       end
     end
   end
@@ -75,7 +75,7 @@ RSpec.describe 'tasks', type: :system do
     context 'Value out of choice' do
       let(:status) { 'test' }
       it 'create succesfully' do
-        expect(task).not_to be_valid
+        expect(task).to be_invalid
       end
     end
   end
@@ -93,7 +93,7 @@ RSpec.describe 'tasks', type: :system do
       let(:label) { 't' * 21 }
       
       it 'is invalid' do
-        expect(task).not_to be_valid
+        expect(task).to be_invalid
       end
     end
   end
