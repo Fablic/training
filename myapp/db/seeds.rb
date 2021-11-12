@@ -7,5 +7,5 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-User.create(login_id: 'ichinose', password: 'ichinose', name: 'Ichinose ken')
+User.create(login_id: 'ichinose', password: 'ichinose', name: 'Ichinose ken', role: 1)
 Task.create(task_name: 'test_task', description: 'DESCRIPTION', status: 'toDo', priority: 9999)

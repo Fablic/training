@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Task < ApplicationRecord
+  belongs_to :user
+
   enum status_list: {
     todo: 'todo',
     inProgress: 'inProgress',

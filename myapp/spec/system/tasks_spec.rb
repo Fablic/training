@@ -14,10 +14,10 @@ RSpec.describe 'tasks', type: :system do
           expect(page).to have_content I18n.t('tasks.new.title')
           expect(page).to have_title 'Myapp'
           expect(page).to have_content I18n.t('tasks.common.task_name')
-          expect(page).to have_content I18n.t('tasks.common.description') 
+          expect(page).to have_content I18n.t('tasks.common.description')
           expect(page).to have_content I18n.t('tasks.common.status')
           expect(page).to have_content I18n.t('tasks.common.priority')
-          expect(page).to have_content I18n.t('tasks.common.label') 
+          expect(page).to have_content I18n.t('tasks.common.label')
           expect(page).to have_content I18n.t('tasks.common.start_date')
           expect(page).to have_content I18n.t('tasks.common.end_date')
         end
@@ -30,11 +30,11 @@ RSpec.describe 'tasks', type: :system do
           select(value = 'done', from: 'task_status')
           fill_in 'task_priority', with: 1
           fill_in 'task_label', with: 'input Label'
-          fill_in 'task_start_date', with: Time.zone.yesterday.strftime('%Y-%m-%d') 
+          fill_in 'task_start_date', with: Time.zone.yesterday.strftime('%Y-%m-%d')
           fill_in 'task_end_date', with: Time.zone.now.strftime('%Y-%m-%d')
-    
+
           click_button I18n.t('helpers.submit.create')
-    
+
           expect(page).to have_current_path root_path, ignore_query: true
           expect(page).to have_content I18n.t('tasks.flash.complete_task_registration')
         end
@@ -46,11 +46,10 @@ RSpec.describe 'tasks', type: :system do
           expect(page).to have_current_path root_path, ignore_query: true
         end
       end
-    end 
+    end
   end
 
   describe 'Show task' do
-
     before {
       visit root_path
       # move to Show
@@ -94,13 +93,13 @@ RSpec.describe 'tasks', type: :system do
         end
       end
 
-      context 'Update Confirmation' do     
+      context 'Update Confirmation' do
         it 'update' do
           fill_in 'task_task_name', with: 'update_task_name'
 
           click_button I18n.t('helpers.submit.update')
           visit root_path
-    
+
           expect(page).to have_content 'update_task_name'
         end
       end
@@ -108,7 +107,6 @@ RSpec.describe 'tasks', type: :system do
   end
 
   describe 'Delete task' do
-
     before {
       visit root_path
     }
@@ -117,7 +115,7 @@ RSpec.describe 'tasks', type: :system do
       context 'Screen display confirmation' do
         it 'Destroy' do
           page.all('#click_destroy')[0].click
-          
+
           expect(page).to have_content I18n.t('tasks.index.title')
           expect(page).to have_content I18n.t('tasks.flash.complete_task_destroy')
         end
@@ -126,7 +124,6 @@ RSpec.describe 'tasks', type: :system do
   end
 
   describe 'Index' do
-
     before { visit root_path }
 
     context 'Check each function on the index screen.' do
@@ -151,7 +148,7 @@ RSpec.describe 'tasks', type: :system do
         end
 
         it 'Go to Show page' do
-          #byebug
+          # byebug
           expect(page).to have_content task_list[0].task_name
           page.all('#click_show')[0].click
           expect(page).to have_content I18n.t('tasks.show.title')
