@@ -261,6 +261,26 @@ describe 'タスク管理機能', type: :system do
     end
   end
 
+  describe 'タスク新規作成のバリデーション' do
+    context '入力誤り' do
+      it 'エラー表示' do
+        visit new_task_path
+        fill_in 'ラベル', with: ",#{'a' * 21}"
+
+        click_button 'commit'
+        # 編集画面に戻り、エラーが表示されている
+        expect(page).to have_content 'タスクを新規作成'
+        expect(page).to have_content 'タスク名を入力してください'
+        expect(page).to have_content '開始日を入力してください'
+        expect(page).to have_content '開始日の指定が不正です。'
+        expect(page).to have_content '終了日を入力してください'
+        expect(page).to have_content '終了日の指定が不正です。'
+        expect(page).to have_content 'ラベル名を入力してください'
+        expect(page).to have_content 'ラベル名は20文字以内で入力してください'
+      end
+    end
+  end
+
   describe 'タスク編集' do
     context 'タスクを編集する' do
       it '期待通りにタスクが編集され、既存データに影響がない' do
@@ -302,6 +322,31 @@ describe 'タスク管理機能', type: :system do
         visit edit_task_path(hanako_task)
 
         expect(page).to have_content '404 NOT FOUND'
+      end
+    end
+  end
+
+  describe 'タスク編集のバリデーション' do
+    context '入力誤り' do
+      it 'エラー表示' do
+        visit tasks_path
+        find('li:nth-child(1)').click_link('編集')
+        fill_in 'タスク名', with: ''
+        fill_in '内容', with: ''
+        fill_in 'ラベル', with: ",#{'a' * 21}"
+        fill_in 'task[start_at]', with: ''
+        fill_in 'task[due_date_at]', with: ''
+
+        click_button 'commit'
+        # 編集画面に戻り、エラーが表示されている
+        expect(page).to have_content 'タスクを編集'
+        expect(page).to have_content 'タスク名を入力してください'
+        expect(page).to have_content '開始日を入力してください'
+        expect(page).to have_content '開始日の指定が不正です。'
+        expect(page).to have_content '終了日を入力してください'
+        expect(page).to have_content '終了日の指定が不正です。'
+        expect(page).to have_content 'ラベル名を入力してください'
+        expect(page).to have_content 'ラベル名は20文字以内で入力してください'
       end
     end
   end

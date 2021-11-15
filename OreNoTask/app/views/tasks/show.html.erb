@@ -12,7 +12,7 @@
     <p><%= l @task.start_at, format: :long %> 〜 <%= l @task.due_date_at, format: :long %></p>
     <%= simple_format @task.description %>
     <ul class='label-list'>
-      <% @labels.each do |label| %>
+      <% @task.labels.each do |label| %>
         <li class='d-inline-block border rounded'><%= label.name %></li>
       <% end %>
     </ul>

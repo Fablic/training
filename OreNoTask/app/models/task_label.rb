@@ -1,9 +1,17 @@
-class TaskLabel < ApplicationRecord
-	# belongs_to :labels
-	# belongs_to :tasks
+# frozen_string_literal: true
 
-	def self.get_labels(task_id)
-      label_ids = where(task_id: task_id).pluck(:label_id)
-      Label.where(id: label_ids)
-    end
+class TaskLabel < ApplicationRecord
+  belongs_to :label
+  belongs_to :task
+
+  validates :task_id, { presence: true }
+  validates :label_id, { presence: true }
+
+  def self.create_link(task, label)
+    tl = label.task_labels.build
+    tl.task = task
+    return false unless tl.save
+
+    true
+  end
 end
