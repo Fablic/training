@@ -127,11 +127,50 @@ RSpec.describe 'tasks', type: :system do
     end
 
     context 'set date' do
-      let(:end_date) { '2021/01/01 11:00' }
+      let(:end_date) { '2022/01/01 11:00' }
 
       it 'correct date' do
         expect(task).to be_valid
       end
     end
   end
+
+  describe 'start_date and end_date' do
+    context 'only start_date' do
+      let(:start_date) { '2021/11/11 11:00' }
+      let(:end_date) { '' }
+
+      it 'correct date' do
+        expect(task).to be_valid
+      end
+    end
+
+    context 'only end_date' do
+      let(:start_date) { '' }
+      let(:end_date) { '2021/01/01 11:00' }
+
+      it 'correct date' do
+        expect(task).to be_valid
+      end
+    end
+
+    context 'more than end_date' do
+      let(:start_date) { '2021/11/11 11:00' }
+      let(:end_date) { '2021/01/01 11:00' }
+
+      it 'invalid' do
+        expect(task).to be_invalid
+      end
+    end
+
+    context 'more than start_date' do
+      let(:start_date) { '2021/11/11 11:00' }
+      let(:end_date) { '2021/12/01 11:00' }
+
+      it 'correct date' do
+        expect(task).to be_valid
+      end
+    end
+  end
+
 end

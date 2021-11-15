@@ -191,7 +191,6 @@ RSpec.describe 'tasks', type: :system do
 
     context 'when click link to sort by end_date desc' do
       it 'sort success' do
-        byebug
         click_on I18n.t('tasks.common.end_date') # 1回押す(昇順)
         click_on I18n.t('tasks.common.end_date') # 2回押す(降順)
         expect(find('#task_list > tbody:nth-child(2) > tr:nth-child(2)')).to have_content I18n.l task_list[3].end_date
