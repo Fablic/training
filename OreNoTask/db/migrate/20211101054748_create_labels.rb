@@ -2,7 +2,6 @@ class CreateLabels < ActiveRecord::Migration[6.1]
   def change
     create_table :labels do |t|
       t.string :name, null: false, limit: 20
-      t.string :color, null: true, limit: 20
       t.integer :deleted, null: false, default: 0, limit: 1
 
       t.timestamps
