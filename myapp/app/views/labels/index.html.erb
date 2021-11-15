@@ -1,0 +1,35 @@
+<div class="d-flex align-items-end">
+  <h2 class="mr-auto col">Labels#index</h2>
+  <%= link_to 'タスク一覧', root_path, class: 'btn btn-outline-primary mr-3' %>
+</div>
+
+<div  class="p-5 mb-3">
+  <h5>Create Label</h5>
+  <%= form_with model: @label, scope: :label do |form| %>
+  <div class="form-row mb-3">
+    <div class="col">
+      <%= form.text_field :name, class: "form-control" %>
+    </div>
+  <div class="col">
+    <%= form.submit '作成', class: 'btn btn-primary' %>
+  </div>
+  <% end %>
+</div>
+
+
+<h5>Label list</h5>
+<% @labels.each do |label| %>
+  <%= form_with model: label do |form| %>
+    <div class="d-flex mb-2">
+      <div class="mr-auto flex-grow-1 ">
+        <%= form.text_field :name, class: "form-control" %>
+      </div>
+      <div>
+        <%= form.submit '編集', class: 'btn btn-secondary ml-1' %>
+      </div>
+      <div>
+        <%= link_to '削除', label_path(label), method: :delete, data:{ confirm: 'Are you sure?'}, class: 'btn btn-dark mx-1' %>
+      </div>
+    </div>
+  <% end %>
+<% end %>
