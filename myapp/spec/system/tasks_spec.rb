@@ -27,13 +27,13 @@ RSpec.describe 'tasks', type: :system do
         it 'registration' do
           fill_in 'task_task_name', with: 'input Task'
           fill_in 'task_description', with: 'input Description'
-          fill_in 'task_status', with: 'todo'
+          select(value = 'done', from: 'task_status')
           fill_in 'task_priority', with: 1
           fill_in 'task_label', with: 'input Label'
           fill_in 'task_start_date', with: Time.zone.yesterday.strftime('%Y-%m-%d') 
           fill_in 'task_end_date', with: Time.zone.now.strftime('%Y-%m-%d')
     
-          click_button 'Create Task'
+          click_button I18n.t('helpers.submit.create')
     
           expect(page).to have_current_path root_path, ignore_query: true
           expect(page).to have_content I18n.t('tasks.flash.complete_task_registration')
@@ -50,7 +50,6 @@ RSpec.describe 'tasks', type: :system do
   end
 
   describe 'Show task' do
-
     before {
       visit root_path
       # move to Show
@@ -98,7 +97,7 @@ RSpec.describe 'tasks', type: :system do
         it 'update' do
           fill_in 'task_task_name', with: 'update_task_name'
 
-          click_button 'Update Task'
+          click_button I18n.t('helpers.submit.update')
           visit root_path
     
           expect(page).to have_content 'update_task_name'
@@ -126,7 +125,6 @@ RSpec.describe 'tasks', type: :system do
   end
 
   describe 'Index' do
-
     before { visit root_path }
 
     context 'Check each function on the index screen.' do
@@ -185,20 +183,73 @@ RSpec.describe 'tasks', type: :system do
 
     context 'when click link to sort by end_date asc' do
       it 'sort success' do
-        click_on label_end_date # 1回押す(昇順)
+        click_on I18n.t('tasks.common.end_date') # 1回押す(昇順)
         expect(find('#task_list > tbody:nth-child(2) > tr:nth-child(2)')).to have_content I18n.l task_list[1].end_date
         expect(find('#task_list > tbody:nth-child(2) > tr:nth-child(4)')).to have_content I18n.l task_list[3].end_date
       end
     end
 
-    context 'when click link to sort by due_date desc' do
+    context 'when click link to sort by end_date desc' do
       it 'sort success' do
-        click_on label_end_date # 1回押す(昇順)
-        click_on label_end_date # 2回押す(降順)
+        byebug
+        click_on I18n.t('tasks.common.end_date') # 1回押す(昇順)
+        click_on I18n.t('tasks.common.end_date') # 2回押す(降順)
         expect(find('#task_list > tbody:nth-child(2) > tr:nth-child(2)')).to have_content I18n.l task_list[3].end_date
         expect(find('#task_list > tbody:nth-child(2) > tr:nth-child(4)')).to have_content I18n.l task_list[1].end_date
       end
     end
+  end
 
+  describe 'search by condition' do
+    before { visit root_path }
+
+    let(:task_name_origin_prefix) { 'Task_name_' }
+    let(:task_name) { 'search_keyword' }
+    let(:status) { 'inProgress' }
+    let!(:task_search) { create(:task, task_name: task_name, status: status) }
+
+    context 'when search all' do
+      it 'search success' do
+        click_on I18n.t('helpers.submit.search')
+
+        expect(find('#task_list > tbody:nth-child(2)')).to have_content task_name
+        # factories.fasks.rbにセットされたデータも検索できること
+        expect(find('#task_list > tbody:nth-child(2)')).to have_content task_name_origin_prefix
+      end
+    end
+
+    context 'when search by task_name' do
+      it 'search success' do
+        fill_in 'search[task_name_cont]', with: 'search_keyword'
+        click_on I18n.t('helpers.submit.search')
+
+        expect(find('#task_list > tbody:nth-child(2) > tr:nth-child(1)')).to have_content task_name
+        # factories.fasks.rbにセットされたデータは検索できないこと
+        expect(find('#task_list > tbody:nth-child(2)')).not_to have_content task_name_origin_prefix
+      end
+    end
+
+    context 'when search by status' do
+      it 'search success' do
+        select(value = 'inProgress', from: 'search_status_eq')
+        click_on I18n.t('helpers.submit.search')
+
+        expect(find('#task_list > tbody:nth-child(2) > tr:nth-child(1)')).to have_content task_name
+        # factories.fasks.rbにセットされたデータは検索できないこと
+        expect(find('#task_list > tbody:nth-child(2)')).not_to have_content task_name_origin_prefix
+      end
+    end
+
+    context 'when search by task_name and status' do
+      it 'search success' do
+        fill_in 'search[task_name_cont]', with: 'search_keyword'
+        select(value = 'inProgress', from: 'search_status_eq')
+        click_on I18n.t('helpers.submit.search')
+
+        expect(find('#task_list > tbody:nth-child(2) > tr:nth-child(1)')).to have_content task_name
+        # factories.fasks.rbにセットされたデータは検索できないこと
+        expect(find('#task_list > tbody:nth-child(2) > tr:nth-child(1)')).not_to have_content task_name_origin_prefix
+      end
+    end
   end
 end

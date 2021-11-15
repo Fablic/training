@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe 'tasks', type: :system do
-
   let(:task_name) { 'task_name for test' }
   let(:description) { 'description for test' }
   let(:status) { 'done' }
@@ -23,7 +22,7 @@ RSpec.describe 'tasks', type: :system do
 
     context 'when over Max charcters' do
       let(:task_name) { 't' * 21 }
-      
+
       it 'is invalid' do
         expect(task).to be_invalid
       end
@@ -67,6 +66,7 @@ RSpec.describe 'tasks', type: :system do
   describe 'status' do
     context 'Value out of choice' do
       let(:status) { 'todo' }
+
       it 'create succesfully' do
         expect(task).to be_valid
       end
@@ -74,6 +74,7 @@ RSpec.describe 'tasks', type: :system do
 
     context 'Value out of choice' do
       let(:status) { 'test' }
+
       it 'create succesfully' do
         expect(task).to be_invalid
       end
@@ -91,13 +92,13 @@ RSpec.describe 'tasks', type: :system do
 
     context 'when over Max charcters' do
       let(:label) { 't' * 21 }
-      
+
       it 'is invalid' do
         expect(task).to be_invalid
       end
     end
   end
-  
+
   describe 'start_date' do
     context 'when start_date type is string.' do
       let(:start_date) { 'test' }
