@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class SessionsController < ApplicationController
+  skip_before_action :logged_in_user
   # GET /login(.:format)
   def new
     redirect_to root_path if logged_in?

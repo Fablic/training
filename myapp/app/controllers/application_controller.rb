@@ -1,9 +1,12 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  before_action :maintenance_mode_switch
+  before_action :logged_in_user
   rescue_from Exception,                      with: :render_server_error
   rescue_from ActionController::RoutingError, with: :render_not_found
   rescue_from ActiveRecord::RecordNotFound,   with: :render_not_found
+
   include SessionsHelper
 
   def routing_error
@@ -22,9 +25,16 @@ class ApplicationController < ActionController::Base
     render file: Rails.root.join('public/500.html'), status: :internal_server_error, layout: 'application', content_type: 'text/html'
   end
 
-  def _logged_in_user
+  def logged_in_user
     return if logged_in?
 
     redirect_to login_url
+  end
+
+  def maintenance_mode_switch
+    return unless Maintenance.exists?
+    return if Maintenance.first.maintenance_on_flag == false
+
+    redirect_to maintenance_index_path
   end
 end
