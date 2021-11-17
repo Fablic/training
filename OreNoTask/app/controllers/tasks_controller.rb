@@ -27,7 +27,8 @@ class TasksController < ApplicationController
     post_params = task_params
     post_labels = task_labels[:labels]
 
-    @task = build_post_task(Task.available(current_user.id).find_by(id: params[:id]), post_params)
+    @task = Task.available(current_user.id).find_by(id: params[:id])
+    @task.attributes = post_params
     errors = validate_task_and_labels(@task, post_labels)
 
     if errors.present?
@@ -116,15 +117,6 @@ class TasksController < ApplicationController
 
   def sort_column
     Task.column_names.include?(params[:sort]) ? params[:sort] : 'created_at'
-  end
-
-  def build_post_task(task, post_params)
-    task.name = post_params['name']
-    task.status = post_params['status']
-    task.description = post_params['description']
-    task.start_at = post_params['start_at']
-    task.due_date_at = post_params['due_date_at']
-    task
   end
 
   def validate_task_and_labels(task, labels)
