@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   before_action :render503, if: :maintenance_mode?
 
   def maintenance_mode?
-    ENV["MAINTENANCE_MODE"] == "true"
+    File.exist?('on_maint')
   end
 
   unless Rails.env.development?
