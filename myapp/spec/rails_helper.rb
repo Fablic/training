@@ -9,6 +9,10 @@ abort('The Rails environment is running in production mode!') if Rails.env.produ
 require 'rspec/rails'
 
 # Add additional requires below this line. Rails is not loaded until this point!
+<<<<<<< HEAD
+=======
+require 'supports/capybara'
+>>>>>>> origin/ichinoseken
 
 RSpec.configure do |config|
   # 下記の記述を追加
@@ -70,6 +74,7 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
 end
+<<<<<<< HEAD
 
 RSpec.configure do |config|
   Capybara.register_driver :remote_chrome do |app|
@@ -94,3 +99,5 @@ RSpec.configure do |config|
   end
   Capybara.javascript_driver = :selenium_chrome_headless
 end
+=======
+>>>>>>> origin/ichinoseken

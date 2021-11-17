@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # MySQL. Versions 5.5.8 and up are supported.
 #
 # Install the MySQL driver
@@ -23,11 +24,33 @@ default: &default
 development:
   <<: *default
   database: myapp_dev
+=======
+# SQLite version 3.x
+#   gem install sqlite3
+#
+#   Ensure the SQLite 3 gem is defined in your Gemfile
+#   gem 'sqlite3'
+#
+default: &default
+  adapter: mysql2
+  pool: 5
+  timeout: 5000
+
+development:
+  adapter: mysql2
+  encoding: utf8
+  database: testdb
+  pool: 5
+  username: root
+  password:
+  socket: /tmp/mysql.sock
+>>>>>>> origin/ichinoseken
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
+<<<<<<< HEAD
   <<: *default
   database: myapp_test
 
@@ -56,3 +79,21 @@ production:
   username: myapp
   password: <%= ENV['MYAPP_DATABASE_PASSWORD'] %>
   
+=======
+  adapter: mysql2
+  encoding: utf8
+  database: rspecdb
+  pool: 5
+  username: root
+  password:
+  socket: /tmp/mysql.sock
+
+production:
+  adapter: mysql2
+  encoding: utf8
+  database: productiondb
+  pool: 5
+  username: root
+  password:
+  socket: /tmp/mysql.sock
+>>>>>>> origin/ichinoseken
