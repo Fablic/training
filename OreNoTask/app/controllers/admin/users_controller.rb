@@ -30,7 +30,6 @@ module Admin
       if @user.update(user_params_on_update)
         redirect_to admin_users_path, notice: I18n.t('dictionary.messages.edited_user')
       else
-        @errors = @user.errors.full_messages
         @submit_label = I18n.t('dictionary.words.save_to_update')
         render :edit
       end
@@ -48,7 +47,6 @@ module Admin
       if @user.save
         redirect_to admin_users_path, notice: I18n.t('dictionary.messages.created_user')
       else
-        @errors = @user.errors.full_messages
         @submit_label = I18n.t('dictionary.words.save_to_create')
         render :new
       end
