@@ -1,0 +1,30 @@
+ja:
+  tasks:
+    index:
+      title: "タスク一覧"
+      move_new_task: '新規タスク作成'
+      move_show_task: '参照'
+      move_edit_task: '編集'
+      move_destroy_task: '削除'
+
+    show:
+      title: "タスク詳細"
+      
+    edit:
+      title: "タスク更新"
+
+    new:
+      title: "タスク新規登録"
+  
+    common:
+      id: "Id"
+      title: "タスク登録"
+      task_name: 'タスク名'
+      description: 'タスク詳細'
+      status: 'ステータス'
+      label: 'ラベル'
+      priority: '優先度'
+      start_date: '開始日時'
+      end_date: '終了日時'
+      move_task_list: 'タスク一覧へ戻る'
+

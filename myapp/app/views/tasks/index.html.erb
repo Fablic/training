@@ -1,4 +1,9 @@
+<<<<<<< HEAD
+<h1><%= t('.title') %></h1>
+
+=======
 <h1>Task's list</h1>
+>>>>>>> origin/ichinoseken
 <% if flash[:notice] %>
   <p><%= flash[:notice] %></p>
 <% end %>
@@ -6,6 +11,20 @@
   <p><%= flash[:error] %></p>
 <% end %>
 
+<<<<<<< HEAD
+<p><%= link_to t('.move_new_task'), new_task_path, id: 'click_new'  %> </p>
+
+<table class='table table-list' id='task_list' border=1>
+  <thead>
+    <tr>
+      <th><%= t('tasks.common.id') %></th>
+      <th><%= t('tasks.common.task_name') %></th>
+      <th><%= t('tasks.common.status') %></th>
+      <th><%= t('tasks.common.label') %></th>
+      <th><%= t('tasks.common.priority') %></th>
+      <th><%= t('tasks.common.start_date') %></th>
+      <th><%= t('tasks.common.end_date') %></th>
+=======
 <p>
 <%= link_to "Create New Task", new_task_path, id: 'click_new'  %> 
 </p>
@@ -20,6 +39,7 @@
       <th>優先度</th>
       <th>開始日時</th>
       <th>終了日時</th>
+>>>>>>> origin/ichinoseken
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -31,6 +51,27 @@
       <td><%= task.status %></td>
       <td><%= task.label %></td>
       <td><%= task.priority %></td>
+<<<<<<< HEAD
+      <td>
+        <%=
+          if task.start_date.present? 
+            l task.start_date
+          end
+        %>
+      </td>
+      <td>
+        <%=
+          if task.end_date.present? 
+            l task.end_date
+          end
+        %>
+      </td>
+      <td><%= link_to t('.move_show_task'), task_path(task), method: :get, id: 'click_show' %></td>
+      <td><%= link_to t('.move_edit_task'), edit_task_path(task), id: 'click_edit' %></td>
+      <td><%= link_to t('.move_destroy_task'), task_path(task), method: :delete, data: { confirm: 'Are you sure you want to delete it?
+      ' } , id: 'click_destroy' %></td>
+    </tr>      
+=======
       <td><%= task.start_date %></td>
       <td><%= task.end_date %></td>
       <td><%= link_to 'Show', task_path(task), method: :get, id: 'click_show' %></td>
@@ -38,6 +79,7 @@
       <td><%= link_to 'Destroy', task_path(task), method: :delete, data: { confirm: 'Are you sure you want to delete it?
       ' } , id: 'click_destroy' %></td>
     </tr>
+>>>>>>> origin/ichinoseken
     <% end %>
   </tbody>
 </table>

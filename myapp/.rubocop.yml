@@ -3,4 +3,8 @@ inherit_gem:
     - "config/.base_rubocop.yml"
 Metrics/BlockLength:
   Exclude:
+<<<<<<< HEAD
+    - 'spec/**/*' 
+=======
     - 'spec/**/*'
+>>>>>>> origin/ichinoseken
