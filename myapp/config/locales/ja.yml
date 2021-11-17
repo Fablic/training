@@ -1,0 +1,17 @@
+ja:
+  common:
+    index: 一覧
+    new: 新規作成
+    edit: 編集
+    show: 詳細
+    submit: 送信
+    destroy: 削除
+  pages:
+    tasks:
+      flash:
+        registered: タスクを作成しました。
+        edited: タスクを更新しました。
+        destroyed: タスクを削除しました。
+        fail: タスクの登録に失敗しました。
+      confirm:
+        destroy: 本当に削除してよろしいですか？

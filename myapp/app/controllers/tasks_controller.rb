@@ -27,7 +27,7 @@ class TasksController < ApplicationController
 
     respond_to do |format|
       if @task.save
-        format.html { redirect_to @task, notice: 'Task was successfully created.' }
+        format.html { redirect_to @task, notice: I18n.t('pages.tasks.flash.registered') }
       else
         format.html { render :new, status: :unprocessable_entity }
       end
@@ -38,7 +38,7 @@ class TasksController < ApplicationController
   def update
     respond_to do |format|
       if @task.update(task_params)
-        format.html { redirect_to @task, notice: 'Task was successfully updated.' }
+        format.html { redirect_to @task, notice: I18n.t('pages.tasks.flash.edited') }
       else
         format.html { render :edit, status: :unprocessable_entity }
       end
@@ -49,7 +49,7 @@ class TasksController < ApplicationController
   def destroy
     @task.destroy
     respond_to do |format|
-      format.html { redirect_to tasks_url, notice: 'Task was successfully destroyed.' }
+      format.html { redirect_to tasks_url, notice: I18n.t('pages.tasks.flash.destroyed') }
     end
   end
 

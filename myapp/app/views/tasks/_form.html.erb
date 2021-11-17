@@ -21,12 +21,12 @@
   </p>
   <p class="form-group field">
     <%= form.label :priority, class: "control-label" %>
-    <%= form.select :priority, Task.priorities.keys.map {|k| [k, k]}, { include_blank: true }%>
+    <%= form.select :priority, Task.priorities.keys.map {|k| [I18n.t("enums.task.priority.#{k}"), k]}, { include_blank: true }%>
   </p>
 
   <p class="form-group field">
     <%= form.label :status, class: "control-label" %>
-    <%= form.select :status, Task.statuses.keys.map {|k| [k, k]}, { include_blank: true }%>
+    <%= form.select :status, Task.statuses.keys.map {|k| [I18n.t("enums.task.status.#{k}"), k]}, { include_blank: true }%>
   </p>
   <p class="form-group field">
     <%= form.label :expires_at, class: "control-label" %>
