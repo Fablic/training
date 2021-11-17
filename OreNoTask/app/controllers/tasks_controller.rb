@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class TasksController < ApplicationController
+class TasksController < ApplicationController # rubocop:disable Metrics/ClassLength
   before_action :ensure_logged_in
 
   def index

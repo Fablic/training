@@ -11,5 +11,3 @@ RSpec/NestedGroups:
   Enabled: false
 RSpec/MultipleMemoizedHelpers:
   Enabled: false
-Metrics/ClassLength:
-  Enabled: false
