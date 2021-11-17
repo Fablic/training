@@ -26,6 +26,8 @@
 
 <p><%= link_to t('.move_new_task'), new_task_path, id: 'click_new'  %> </p>
 
+<%= paginate @tasks %>
+
 <table class='table table-list' id='task_list' border=1>
   <thead>
     <tr>
