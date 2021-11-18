@@ -182,10 +182,12 @@ RSpec.describe 'Taskモデルのテスト', type: :model do
     end
 
     context 'task_labels更新で例外が発生した場合' do
-      it 'ロールバックが実行されること' do
+      before do
         # 例外を発生させる
         allow(TaskLabel).to receive(:create_link).and_raise StandardError
+      end
 
+      it 'ロールバックが実行されること' do
         # 実行
         expect(Task.save_task_and_label(user.id, task.id, { name: 'task_updated' }, 'label,label2')).to eq false
 
