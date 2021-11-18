@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class TasksController < ApplicationController # rubocop:disable Metrics/ClassLength
+class TasksController < ApplicationController
   before_action :ensure_logged_in
 
   def index
@@ -120,19 +120,10 @@ class TasksController < ApplicationController # rubocop:disable Metrics/ClassLen
   end
 
   def validate_task_and_labels(task, labels)
-    label_validation_result = validate_labels(labels.split(','))
-
     errors = []
-
     errors += task.errors.full_messages unless task.valid?
-    errors += label_validation_result if label_validation_result.present?
 
-    errors
-  end
-
-  def validate_labels(label_names)
-    errors = []
-    label_names.each do |label_name|
+    labels.split(',').each do |label_name|
       @label = Label.new(name: label_name)
       errors += @label.errors.full_messages unless @label.valid?
     end
