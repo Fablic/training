@@ -42,6 +42,22 @@ class TasksController < ApplicationController
     else
       render :edit
     end
+    flash[:notice] = if @task.save
+                       t('tasks.flash.complete_task_registration')
+                     else
+                       t('tasks.flash.error_task_registration')
+                     end
+    redirect_to root_path
+  end
+
+  def update
+    @task = Task.find(params[:id])
+    flash[:notice] = if @task.update(post_params)
+                       t('tasks.flash.complete_task_edit')
+                     else
+                       t('tasks.flash.error_task_edit')
+                     end
+    redirect_to root_path
   end
 
   def destroy
