@@ -39,7 +39,6 @@
       <th scope="col"><%= sort_order 'start_date', t('tasks.common.start_date') %></th>
       <th scope="col"><%= sort_order 'end_date', t('tasks.common.end_date') %></th>
       <th scope="col" colspan="3"></th>
-    </tr>
   </thead>
   <tbody>
     <% @tasks.each do |task| %>
@@ -65,9 +64,8 @@
       </td>
       <td><%= link_to t('.move_show_task'), task_path(task), method: :get, id: 'click_show' %></td>
       <td><%= link_to t('.move_edit_task'), edit_task_path(task), id: 'click_edit' %></td>
-      <td><%= link_to t('.move_destroy_task'), task_path(task), method: :delete, data: { confirm: 'Are you sure you want to delete it?' } , id: 'click_destroy' %></td>
+      <td><%= link_to t('.move_destroy_task'), task_path(task), method: :delete, data: { confirm: t('activerecord.check.messages.confirmation_destory') } , id: 'click_destroy' %></td>
     </tr>      
     <% end %>
   </tbody>
 </table>
-

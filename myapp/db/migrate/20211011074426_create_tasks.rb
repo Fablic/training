@@ -1,4 +1,6 @@
-class CreateTasks < ActiveRecord::Migration[6.0]
+# frozen_string_literal: true
+
+class CreateTasks < ActiveRecord::Migration[5.0]
   def change
     create_table :tasks do |t|
       t.string :task_name, limit: 20
@@ -10,17 +12,8 @@ class CreateTasks < ActiveRecord::Migration[6.0]
       t.timestamp :end_date
       t.boolean :deleted, default: 0
       t.integer :login_id
-
-      t.timestamps
-    end
-
-    create_table :users do |t|
-      t.string :login_id, limit: 10
-      t.text :password
-      t.string :name, limit: 20
-      t.integer :is_admin
-
-      t.timestamps
+      t.timestamp :created_at, default: -> { 'NOW()' }
+      t.timestamp :updated_at
     end
   end
 end

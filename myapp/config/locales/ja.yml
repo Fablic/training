@@ -12,6 +12,9 @@ ja:
       invalid_login: 'IDまたはパスワードが間違えています。'
       no_login: 'ログインしてください。'
   activerecord:
+    check:
+      messages:
+        confirmation_destory: '本当に削除していいですか?'
     errors:
       messages:
         record_invalid: 'バリデーションに失敗しました: %{errors}'
