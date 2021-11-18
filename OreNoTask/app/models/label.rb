@@ -10,8 +10,7 @@ class Label < ApplicationRecord
   def self.create_labels(task, label_names)
     return true if label_names.blank?
 
-    current_task_label = TaskLabel.where(task_id: task.id)
-    current_task_label.delete_all
+    task.labels.destroy_all
 
     label_names.split(',').each do |label|
       if self.active.where(name: label).count.zero?
