@@ -5,8 +5,18 @@ class ApplicationController < ActionController::Base
   rescue_from ActionController::RoutingError, with: :render_not_found
   rescue_from ActiveRecord::RecordNotFound,   with: :render_not_found
 
+  protect_from_forgery with: :exception
+  include SessionsHelper
+
   def routing_error
     raise ActionController::RoutingError, params[:path]
+  end
+
+  def logged_in_user
+    return if logged_in?
+
+    flash[:error] = t('sessions.flash.no_login')
+    redirect_to login_url
   end
 
   private

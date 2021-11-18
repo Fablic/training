@@ -3,7 +3,15 @@
 require 'rails_helper'
 
 RSpec.describe 'tasks', type: :system do
-  let!(:task_list) { FactoryBot.create_list(:task, 5) }
+  let!(:user) { create(:user) }
+  let!(:task_list) { create_list(:task, 5) }
+
+  before do
+    visit login_path
+    fill_in 'session_login_id', with: user.login_id
+    fill_in 'session_password', with: user.password
+    click_button I18n.t('login.new.login')
+  end
 
   describe 'New task' do
     before { visit new_task_path() }

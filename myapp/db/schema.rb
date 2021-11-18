@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_12_000001) do
+ActiveRecord::Schema.define(version: 2021_11_18_052452) do
 
   create_table "tasks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "task_name", limit: 20
@@ -21,8 +21,8 @@ ActiveRecord::Schema.define(version: 2021_11_12_000001) do
     t.timestamp "start_date"
     t.timestamp "end_date"
     t.boolean "deleted", default: false
-    t.timestamp "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
-    t.timestamp "updated_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.bigint "user_id", null: false
     t.index ["status"], name: "index_tasks_on_status"
     t.index ["task_name"], name: "index_tasks_on_task_name"
@@ -31,11 +31,11 @@ ActiveRecord::Schema.define(version: 2021_11_12_000001) do
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "login_id", limit: 10
-    t.string "password", limit: 12
+    t.text "password_digest"
     t.string "name", limit: 20
-    t.boolean "is_admin", default: true, null: false
-    t.timestamp "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
-    t.timestamp "updated_at"
+    t.integer "is_admin"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   add_foreign_key "tasks", "users"

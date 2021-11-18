@@ -15,7 +15,7 @@ class CreateTasks < ActiveRecord::Migration[6.0]
 
     create_table :users do |t|
       t.string :login_id, limit: 10
-      t.string :password, limit: 12
+      t.text :password
       t.string :name, limit: 20
       t.integer :is_admin
 

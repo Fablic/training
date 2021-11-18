@@ -27,4 +27,14 @@ ja:
       start_date: '開始日時'
       end_date: '終了日時'
       move_task_list: 'タスク一覧へ戻る'
-
+  sessions:
+    new:
+      title: 'ログイン'
+  login:
+    new:
+      id: "ID"
+      pw: "パスワード"
+      login: "ログイン"
+      logout: "ログアウト"
+      signup: "サインアップ"
+      comment_remember: "自分のPC内に保存する"

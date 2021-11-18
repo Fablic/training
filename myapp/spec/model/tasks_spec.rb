@@ -2,7 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe 'tasks', type: :system do
+RSpec.describe Task, type: :model do
+  let!(:user) { create(:user) }
   let(:task_name) { 'task_name for test' }
   let(:description) { 'description for test' }
   let(:status) { 'done' }
