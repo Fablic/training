@@ -43,6 +43,14 @@ gem install rubocop
 rails g rspec:install
 ```
 
+### 7.to change maintenance mode
+```
+# メンテナンスモード開始
+rails maint:start
+
+# メンテナンスモード終了
+rails maint:stop
+```
 
 ## table list
 
