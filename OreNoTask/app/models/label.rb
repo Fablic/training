@@ -13,9 +13,7 @@ class Label < ApplicationRecord
     current_task_label = TaskLabel.where(task_id: task.id)
     current_task_label.delete_all
 
-    @labels = label_names.split(',')
-
-    @labels.each do |label|
+    label_names.split(',').each do |label|
       if self.active.where(name: label).count.zero?
         label_for_save = self.new(name: label)
         return false unless label_for_save.save
