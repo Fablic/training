@@ -1,4 +1,4 @@
-<% if !errors.blank? %>
+<% if errors.present? %>
   <div class="alert alert-warning">
     <ul>
       <% errors.each do |message| %>
