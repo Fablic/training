@@ -2,11 +2,12 @@
 
 # task management
 class TasksController < ApplicationController
-  helper_method :sort_column, :sort_direction
+  helper_method :sort_direction
 
   before_action :set_task, only: %i[show edit update destroy]
 
   def index
+#    @tasks = Task.all
     @search_params = user_search_params
     @tasks = Task.search_condition(@search_params)
     @tasks = @tasks.order("#{sort_column} #{sort_direction}")
@@ -41,6 +42,22 @@ class TasksController < ApplicationController
     else
       render :edit
     end
+    flash[:notice] = if @task.save
+                       t('tasks.flash.complete_task_registration')
+                     else
+                       t('tasks.flash.error_task_registration')
+                     end
+    redirect_to root_path
+  end
+
+  def update
+    @task = Task.find(params[:id])
+    flash[:notice] = if @task.update(post_params)
+                       t('tasks.flash.complete_task_edit')
+                     else
+                       t('tasks.flash.error_task_edit')
+                     end
+    redirect_to root_path
   end
 
   def destroy
@@ -69,10 +86,11 @@ class TasksController < ApplicationController
   end
 
   def sort_direction
-    %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
+    %w[asc desc].include?(params[:direction]) && (params[:direction] == 'asc') ? 'desc' : 'asc'
   end
 
   def sort_column
     Task.column_names.include?(params[:sort]) ? params[:sort] : 'created_at'
   end
+
 end
