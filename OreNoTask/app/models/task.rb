@@ -43,21 +43,21 @@ class Task < ApplicationRecord
   def self.save_task_and_label(user_id, task_id, task_params, label_names)
     if task_id.nil?
       task_params['user_id'] = user_id
-      @task = Task.new(task_params)
+      task = Task.new(task_params)
     else
-      @task = Task.available(user_id).find(task_id)
+      task = Task.available(user_id).find(task_id)
     end
 
     ActiveRecord::Base.transaction do
       if task_id.nil?
         task_params['user_id'] = user_id
-        @task = Task.new(task_params)
-        return false unless @task.save
+        task = Task.new(task_params)
+        return false unless task.save
       else
-        @task = Task.available(user_id).find(task_id)
-        return false unless @task.update(task_params)
+        task = Task.available(user_id).find(task_id)
+        return false unless task.update(task_params)
       end
-      return false unless Label.create_labels(@task, label_names)
+      return false unless Label.create_labels(task, label_names)
     end
 
     true
