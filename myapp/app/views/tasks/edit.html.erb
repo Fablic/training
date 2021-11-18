@@ -1,16 +1,9 @@
-<<<<<<< HEAD
 <h1><%= t ".title" %></h1>
-=======
-<h1>Update task</h1>
->>>>>>> origin/ichinoseken
+<%= render "error_form", task: @task %>
 
 <%= form_for @task do |t| %>
    <%= render "form", t: t %>
    <%= t.submit %> 
 <% end %>
 
-<<<<<<< HEAD
 <%= link_to t('tasks.common.move_task_list'), root_path %>
-=======
-<%= link_to "go to Task's list", root_path %>
->>>>>>> origin/ichinoseken

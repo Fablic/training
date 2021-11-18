@@ -2,12 +2,19 @@
 
 # task management
 class TasksController < ApplicationController
+  helper_method :sort_direction
+
+  before_action :set_task, only: %i[show edit update destroy]
+
   def index
-    @tasks = Task.search(params[:search])
+#    @tasks = Task.all
+    @search_params = user_search_params
+    @tasks = Task.search_condition(@search_params)
+    @tasks = @tasks.order("#{sort_column} #{sort_direction}")
+    @tasks = @tasks.page(params[:page]).per(10)
   end
 
   def show
-    @task = Task.find(params[:id])
   end
 
   def new
@@ -15,21 +22,30 @@ class TasksController < ApplicationController
   end
 
   def edit
-    @task = Task.find(params[:id])
   end
 
   def create
     @task = Task.new(post_params)
+
+    if @task.save
+      flash[:notice] = t('tasks.flash.complete_task_registration')
+      redirect_to root_path
+    else
+      render :new
+    end
+  end
+
+  def update
+    if @task.update(post_params)
+      flash[:notice] = t('tasks.flash.complete_task_edit')
+      redirect_to root_path
+    else
+      render :edit
+    end
     flash[:notice] = if @task.save
-<<<<<<< HEAD
                        t('tasks.flash.complete_task_registration')
                      else
                        t('tasks.flash.error_task_registration')
-=======
-                       'The task registration is complete.'
-                     else
-                       'The task update is error.'
->>>>>>> origin/ichinoseken
                      end
     redirect_to root_path
   end
@@ -37,40 +53,44 @@ class TasksController < ApplicationController
   def update
     @task = Task.find(params[:id])
     flash[:notice] = if @task.update(post_params)
-<<<<<<< HEAD
                        t('tasks.flash.complete_task_edit')
                      else
                        t('tasks.flash.error_task_edit')
-=======
-                       'The task update is complete.'
-                     else
-                       'The task update is error.'
->>>>>>> origin/ichinoseken
                      end
     redirect_to root_path
   end
 
   def destroy
-    @task = Task.find(params[:id])
     flash[:notice] = if @task.destroy
-<<<<<<< HEAD
                        t('tasks.flash.complete_task_destroy')
                      else
                        t('tasks.flash.error_task_destroy')
-=======
-                       'The task delete is complete.'
-                     else
-                       'The task delete is error.'
->>>>>>> origin/ichinoseken
                      end
     redirect_to root_path
   end
 
   private
 
+  def set_task
+    @task = Task.find(params[:id])
+  end
+
+  def user_search_params
+    params.fetch(:search, {}).permit(:task_name_cont, :status_eq)
+  end
+
   def post_params
     params.require(:task).permit(
       :task_name, :description, :status,
       :priority, :label, :start_date, :end_date)
   end
+
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) && (params[:direction] == 'asc') ? 'desc' : 'asc'
+  end
+
+  def sort_column
+    Task.column_names.include?(params[:sort]) ? params[:sort] : 'created_at'
+  end
+
 end

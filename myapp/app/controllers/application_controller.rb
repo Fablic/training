@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
-<<<<<<< HEAD
+
   rescue_from Exception,                      with: :render_server_error
   rescue_from ActionController::RoutingError, with: :render_not_found
   rescue_from ActiveRecord::RecordNotFound,   with: :render_not_found
@@ -21,7 +21,4 @@ class ApplicationController < ActionController::Base
     logger.error "Rendering 500 with excaption: #{exc.message}" if exc
     render file: Rails.root.join('public/500_original.html'), status: :internal_server_error, layout: 'application', content_type: 'text/html'
   end
-=======
-  protect_from_forgery with: :exception
->>>>>>> origin/ichinoseken
 end
