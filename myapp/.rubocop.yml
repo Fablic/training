@@ -1,0 +1,19 @@
+inherit_gem:
+  fablicop:
+    - "config/.base_rubocop.yml"
+
+AllCops:
+  Exclude:
+    - "vendor/**/*"
+    - "db/schema*.rb"
+    - "node_modules/**/*"
+    - "app/channels/**/*"
+    - "config/**/*"
+    - "config.ru"
+    - "bin/**/*"
+    - "public/**/*"
+    - "tmp/**/*"
+    - "log/**/*"
+
+Style/FrozenStringLiteralComment:
+  Enabled: false

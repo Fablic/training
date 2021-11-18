@@ -1,0 +1,23 @@
+<h1>Tasks#index</h1>
+<p>Find me in app/views/tasks/index.html.erb</p>
+<%= h(flash[:success]) %>
+<p><%= link_to 'Create task', new_task_path %></p>
+<table>
+    <thead>
+        <tr>
+            <th colspan="5">The table header</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @tasks.each do |task| %>
+            <tr>
+            <td><%= task.name %></td>
+            <td><%= task.description %></td>
+            <td><%= link_to 'Show', task %></td>
+            <td><%= link_to 'Edit', edit_task_path(task) %></td>
+            <td><%= link_to 'Destroy', task, method: :delete,
+                                            data: { confirm: 'Are you sure?' } %></td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>
