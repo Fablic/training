@@ -24,7 +24,6 @@ ActiveRecord::Schema.define(version: 2021_11_01_060229) do
     t.bigint "task_id"
     t.bigint "label_id"
     t.index ["label_id"], name: "index_task_labels_on_label_id"
-    t.index ["task_id", "label_id"], name: "index_task_labels_on_task_id_and_label_id"
     t.index ["task_id"], name: "index_task_labels_on_task_id"
   end
 
