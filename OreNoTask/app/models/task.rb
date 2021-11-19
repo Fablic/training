@@ -10,7 +10,6 @@ class Task < ApplicationRecord
 
   scope :search_status, -> (status) { where(status: status) if status.present? }
   scope :search_keyword, -> (keyword) { where(['(tasks.name like? OR tasks.description like? OR labels.name like?)', "%#{keyword}%", "%#{keyword}%", "%#{keyword}%"]) } # rubocop:disable Layout/LineLength
-  scope :join_labels, -> { eager_load(:labels) }
   scope :active, -> { where(deleted: 0) }
   scope :user, -> (user_id) { where(user_id: user_id) }
   scope :available, -> (user_id) { active.user(user_id) }
@@ -29,7 +28,7 @@ class Task < ApplicationRecord
   end
 
   def self.search(keyword, status, user, order)
-    available(user).search_status(status).search_keyword(keyword).join_labels.order(order)
+    available(user).search_status(status).search_keyword(keyword).eager_load(:labels).order(order)
   end
 
   def self.delete_tasks_by_user_id(user_id)
