@@ -9,16 +9,14 @@ class TasksController < ApplicationController
 
   def new
     @task = Task.new
-    @label_names = ''
+    @label_names = []
     @submit_label = I18n.t('dictionary.words.save_to_create')
   end
 
   def edit
     @task = Task.available(current_user.id).find_by(id: params[:id])
     @submit_label = I18n.t('dictionary.words.save_to_update')
-
-    @label_ids = TaskLabel.where(task_id: params[:id]).pluck(:label_id)
-    @label_names = Label.where(id: @label_ids).pluck(:name).join(',')
+    @label_names = @task.labels.pluck(:name)
 
     render404 if @task.nil?
   end
@@ -33,7 +31,7 @@ class TasksController < ApplicationController
 
     if errors.present?
       @submit_label = I18n.t('dictionary.words.save_to_update')
-      @label_names = post_labels
+      @label_names = post_labels.split(',')
       @errors = errors
       return render :edit
     end
@@ -42,7 +40,7 @@ class TasksController < ApplicationController
       redirect_to tasks_path, notice: I18n.t('dictionary.messages.edited_task')
     else
       @submit_label = I18n.t('dictionary.words.save_to_update')
-      @label_names = post_labels
+      @label_names = post_labels.split(',')
       flash[:notice] = I18n.t('dictionary.messages.failed_save_task')
       render :edit
     end
@@ -65,7 +63,7 @@ class TasksController < ApplicationController
 
     if errors.present?
       @submit_label = I18n.t('dictionary.words.save_to_create')
-      @label_names = post_labels
+      @label_names = post_labels.split(',')
       @errors = errors
       return render :new
     end
@@ -74,7 +72,7 @@ class TasksController < ApplicationController
       redirect_to tasks_path, notice: I18n.t('dictionary.messages.created_task')
     else
       @submit_label = I18n.t('dictionary.words.save_to_create')
-      @label_names = post_labels
+      @label_names = post_labels.split(',')
       flash[:notice] = I18n.t('dictionary.messages.failed_save_task')
       render :new
     end
