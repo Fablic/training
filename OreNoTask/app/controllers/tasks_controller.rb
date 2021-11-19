@@ -116,7 +116,7 @@ class TasksController < ApplicationController
   end
 
   def sort_column
-    Task.column_names.include?(params[:sort]) ? params[:sort] : 'created_at'
+    Task.column_names.include?(params[:sort]) ? params[:sort] : 'tasks.created_at'
   end
 
   def validate_task_and_labels(task, labels)

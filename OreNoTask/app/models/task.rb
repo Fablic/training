@@ -10,7 +10,7 @@ class Task < ApplicationRecord
 
   scope :search_status, -> (status) { where(status: status) if status.present? }
   scope :search_keyword, -> (keyword) { where(['(tasks.name like? OR tasks.description like? OR labels.name like?)', "%#{keyword}%", "%#{keyword}%", "%#{keyword}%"]) } # rubocop:disable Layout/LineLength
-  scope :join_labels, -> { joins('LEFT OUTER JOIN task_labels ON tasks.id = task_labels.task_id LEFT OUTER JOIN labels ON task_labels.label_id = labels.id') }
+  scope :join_labels, -> { eager_load(:labels) }
   scope :active, -> { where(deleted: 0) }
   scope :user, -> (user_id) { where(user_id: user_id) }
   scope :available, -> (user_id) { active.user(user_id) }
