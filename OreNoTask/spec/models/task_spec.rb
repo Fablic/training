@@ -148,7 +148,8 @@ RSpec.describe 'Taskモデルのテスト', type: :model do
   end
 
   describe 'save_task_and_label' do
-    let(:save_task_and_label) { Task.save_task_and_label(user.id, task.id, { name: 'task_updated' }, 'label,label2') }
+    subject(:save_task_and_label) { Task.save_task_and_label(user.id, task.id, { name: 'task_updated' }, 'label,label2') }
+
     let!(:user) { create(:user, name: 'HanakoRakuten', password: 'hanakopass', privilege: :user) }
     let!(:task) { create(:task, name: 'task', description: '', status: :wip, start_at: '2021-09-01 10:00', due_date_at: '2021-09-02 10:00', user_id: user.id) }
     let!(:label) { Label.create(name: 'label') }
@@ -158,8 +159,6 @@ RSpec.describe 'Taskモデルのテスト', type: :model do
     end
 
     context 'DB更新が正常に実行できた場合' do
-      subject { save_task_and_label }
-
       it '正常に更新されること' do
         # 実行
         expect(save_task_and_label).to eq true
@@ -173,8 +172,6 @@ RSpec.describe 'Taskモデルのテスト', type: :model do
     end
 
     context 'task_labels更新で例外が発生した場合' do
-      subject { save_task_and_label }
-
       before do
         # 例外を発生させる
         allow(TaskLabel).to receive(:create_link).and_raise StandardError
@@ -193,8 +190,6 @@ RSpec.describe 'Taskモデルのテスト', type: :model do
     end
 
     context 'labels更新で例外が発生した場合' do
-      subject { save_task_and_label }
-
       before do
         # 例外を発生させる
         allow(Label).to receive(:create_labels).and_raise StandardError
