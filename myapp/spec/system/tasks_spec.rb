@@ -156,7 +156,6 @@ RSpec.describe 'tasks', type: :system do
         end
 
         it 'Go to Show page' do
-          # byebug
           expect(page).to have_content task_list[0].task_name
           page.all('#click_show')[0].click
           expect(page).to have_content I18n.t('tasks.show.title')
@@ -191,8 +190,8 @@ RSpec.describe 'tasks', type: :system do
     context 'when click link to sort by end_date asc' do
       it 'sort success' do
         click_on I18n.t('tasks.common.end_date') # 1回押す(昇順)
-        expect(find('#task_list > tbody:nth-child(2) > tr:nth-child(2)')).to have_content I18n.l task_list[1].end_date
-        expect(find('#task_list > tbody:nth-child(2) > tr:nth-child(4)')).to have_content I18n.l task_list[3].end_date
+        expect(find('#task_list > tbody:nth-child(2) > tr:nth-child(1)')).to have_content I18n.l task_list[4].end_date
+        expect(find('#task_list > tbody:nth-child(2) > tr:nth-child(4)')).to have_content I18n.l task_list[1].end_date
       end
     end
 
@@ -200,8 +199,8 @@ RSpec.describe 'tasks', type: :system do
       it 'sort success' do
         click_on I18n.t('tasks.common.end_date') # 1回押す(昇順)
         click_on I18n.t('tasks.common.end_date') # 2回押す(降順)
-        expect(find('#task_list > tbody:nth-child(2) > tr:nth-child(2)')).to have_content I18n.l task_list[3].end_date
-        expect(find('#task_list > tbody:nth-child(2) > tr:nth-child(4)')).to have_content I18n.l task_list[1].end_date
+        expect(find('#task_list > tbody:nth-child(2) > tr:nth-child(1)')).to have_content I18n.l task_list[0].end_date
+        expect(find('#task_list > tbody:nth-child(2) > tr:nth-child(4)')).to have_content I18n.l task_list[3].end_date
       end
     end
   end
