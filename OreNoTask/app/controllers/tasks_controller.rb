@@ -15,10 +15,11 @@ class TasksController < ApplicationController
 
   def edit
     @task = Task.available(current_user.id).find_by(id: params[:id])
+
+    return render404 if @task.nil?
+
     @submit_label = I18n.t('dictionary.words.save_to_update')
     @label_names = @task.labels.pluck(:name)
-
-    render404 if @task.nil?
   end
 
   def update # rubocop:disable Metrics/AbcSize
@@ -36,7 +37,7 @@ class TasksController < ApplicationController
       return render :edit
     end
 
-    if Task.save_task_and_label(current_user.id, params[:id], post_params, post_labels)
+    if Task.update_task_and_label(@task, post_labels)
       redirect_to tasks_path, notice: I18n.t('dictionary.messages.edited_task')
     else
       @submit_label = I18n.t('dictionary.words.save_to_update')
@@ -57,6 +58,7 @@ class TasksController < ApplicationController
     post_params = task_params
     post_labels = task_labels[:labels]
 
+    post_params['user_id'] = current_user.id
     @task = Task.new(post_params)
 
     errors = validate_task_and_labels(@task, post_labels)
@@ -68,7 +70,7 @@ class TasksController < ApplicationController
       return render :new
     end
 
-    if Task.save_task_and_label(current_user.id, nil, post_params, post_labels)
+    if Task.save_task_and_label(@task, post_labels)
       redirect_to tasks_path, notice: I18n.t('dictionary.messages.created_task')
     else
       @submit_label = I18n.t('dictionary.words.save_to_create')

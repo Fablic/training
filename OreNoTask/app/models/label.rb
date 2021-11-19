@@ -6,21 +6,4 @@ class Label < ApplicationRecord
   scope :active, -> { where(deleted: 0) }
 
   validates :name, { presence: true, length: { maximum: 20 } }
-
-  def self.create_labels(task, label_names)
-    return true if label_names.blank?
-
-    task.labels.destroy_all
-
-    label_names.split(',').each do |label|
-      if self.active.where(name: label).count.zero?
-        label_for_save = self.new(name: label)
-        return false unless label_for_save.save
-      else
-        label_for_save = self.active.find_by(name: label)
-      end
-
-      TaskLabel.create_link(task, label_for_save)
-    end
-  end
 end

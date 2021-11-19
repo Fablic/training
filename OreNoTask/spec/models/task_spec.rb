@@ -148,7 +148,40 @@ RSpec.describe 'Taskモデルのテスト', type: :model do
   end
 
   describe 'save_task_and_label' do
-    subject(:save_task_and_label) { Task.save_task_and_label(user.id, task.id, { name: 'task_updated' }, 'label,label2') }
+    subject(:save_task_and_label) { Task.save_task_and_label(task, 'label,label2') }
+
+    let!(:user) { create(:user, name: 'HanakoRakuten', password: 'hanakopass', privilege: :user) }
+    let!(:task) { Task.new(name: 'task', description: '', status: :wip, start_at: '2021-09-01 10:00', due_date_at: '2021-09-02 10:00', user_id: user.id) }
+
+    context 'DB更新が正常に実行できた場合' do
+      it '正常に更新されること' do
+        # 実行
+        expect(save_task_and_label).to eq true
+
+        result_task = Task.find(task.id)
+        result_task_label_ids = TaskLabel.where(task_id: task.id).pluck('label_id')
+        result_label_names = Label.where(id: result_task_label_ids).pluck('name')
+        expect(result_task.name).to eq 'task'
+        expect(result_label_names).to eq %w[label label2]
+      end
+    end
+
+    context 'saveで例外が発生した場合' do
+      before do
+        # 例外を発生させる
+        allow(Task).to receive(:exec_save_with_label).and_raise StandardError
+      end
+
+      it 'ロールバックが実行されること' do
+        # 実行
+        expect(save_task_and_label).to eq false
+        expect(task.id).to eq nil
+      end
+    end
+  end
+
+  describe 'update_task_and_label' do
+    subject(:update_task_and_label) { Task.update_task_and_label(task, 'label,label2') }
 
     let!(:user) { create(:user, name: 'HanakoRakuten', password: 'hanakopass', privilege: :user) }
     let!(:task) { create(:task, name: 'task', description: '', status: :wip, start_at: '2021-09-01 10:00', due_date_at: '2021-09-02 10:00', user_id: user.id) }
@@ -161,43 +194,25 @@ RSpec.describe 'Taskモデルのテスト', type: :model do
     context 'DB更新が正常に実行できた場合' do
       it '正常に更新されること' do
         # 実行
-        expect(save_task_and_label).to eq true
-
-        result_task = Task.find(task.id)
-        result_task_label_ids = TaskLabel.where(task_id: task.id).pluck('label_id')
-        result_label_names = Label.where(id: result_task_label_ids).pluck('name')
-        expect(result_task.name).to eq 'task_updated'
-        expect(result_label_names).to eq %w[label label2]
-      end
-    end
-
-    context 'task_labels更新で例外が発生した場合' do
-      before do
-        # 例外を発生させる
-        allow(TaskLabel).to receive(:create_link).and_raise StandardError
-      end
-
-      it 'ロールバックが実行されること' do
-        # 実行
-        expect(save_task_and_label).to eq false
+        expect(update_task_and_label).to eq true
 
         result_task = Task.find(task.id)
         result_task_label_ids = TaskLabel.where(task_id: task.id).pluck('label_id')
         result_label_names = Label.where(id: result_task_label_ids).pluck('name')
         expect(result_task.name).to eq 'task'
-        expect(result_label_names).to eq ['label']
+        expect(result_label_names).to eq %w[label label2]
       end
     end
 
-    context 'labels更新で例外が発生した場合' do
+    context 'saveで例外が発生した場合' do
       before do
         # 例外を発生させる
-        allow(Label).to receive(:create_labels).and_raise StandardError
+        allow(task).to receive(:save).and_raise StandardError
       end
 
       it 'ロールバックが実行されること' do
         # 実行
-        expect(save_task_and_label).to eq false
+        expect(update_task_and_label).to eq false
 
         result_task = Task.find(task.id)
         result_task_label_ids = TaskLabel.where(task_id: task.id).pluck('label_id')
