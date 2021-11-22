@@ -28,4 +28,7 @@ RSpec.configure do |config|
   config.before(:each, type: :system, js: true) do
     driven_by :selenium_chrome_headless
   end
+
+  # FactoryBotの省略
+  config.include FactoryBot::Syntax::Methods
 end
