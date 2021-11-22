@@ -50,7 +50,6 @@ RSpec.describe 'tasks', type: :system do
   end
 
   describe 'Show task' do
-
     before {
       visit root_path
       # move to Show
