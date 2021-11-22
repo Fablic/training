@@ -5,18 +5,22 @@
 <table>
     <thead>
         <tr>
-            <th colspan="5">The table header</th>
+          <th>タスク名</th>
+          <th>説明</th>
+          <th>詳細</th>
+          <th>編集</th>
+          <th>削除</th>
         </tr>
     </thead>
     <tbody>
         <% @tasks.each do |task| %>
             <tr>
-            <td><%= task.name %></td>
-            <td><%= task.description %></td>
-            <td><%= link_to 'Show', task %></td>
-            <td><%= link_to 'Edit', edit_task_path(task) %></td>
-            <td><%= link_to 'Destroy', task, method: :delete,
-                                            data: { confirm: 'Are you sure?' } %></td>
+              <td><%= task.name %></td>
+              <td><%= task.description %></td>
+              <td><%= link_to 'Show', task %></td>
+              <td><%= link_to 'Edit', edit_task_path(task) %></td>
+              <td><%= link_to 'Destroy', task, method: :delete,
+                                              data: { confirm: 'Are you sure?' } %></td>
             </tr>
         <% end %>
     </tbody>
