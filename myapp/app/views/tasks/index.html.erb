@@ -8,6 +8,7 @@
   <thead>
     <tr>
       <th>タイトル</th>
+      <th>ステータス</th>
       <th>優先度</th>
       <th>期限日時</th>
       <th>編集</th>
@@ -18,6 +19,7 @@
     <% @tasks.each do |task| %>
       <tr>
         <td><%= link_to task.title, task %></td>
+        <td><%= link_to task.status.to_s , task %></td>
         <td><%= link_to task.priority.to_s , task %></td>
         <td><%= link_to task.expires_at.to_s, task %></td>
         <td><%= link_to 'Edit', edit_task_path(task) %></td>

@@ -1,11 +1,13 @@
 <p id="notice"><%= notice %></p>
 
 <%= link_to 'Edit', edit_task_path(@task) %> |
-<%= link_to 'Back', tasks_path %>
+<%= link_to 'Back', tasks_path %> |
+<%= link_to 'Destroy', @task, method: :delete, data: { confirm: 'Are you sure?' } %>
 
 <dl>
   <dt>title:</dt><dd><%= @task.title %></dd>
   <dt>description:<dt><dd><pre><%= @task.description %></pre></dd>
   <dt>priority:</dt><dd><%= @task.priority %></dd>
+  <dt>status:</dt><dd><%= @task.status %></dd>
   <dt>deadline:</dt><dd><%= @task.expires_at %></dd>
 </dl>
