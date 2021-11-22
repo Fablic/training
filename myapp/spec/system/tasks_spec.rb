@@ -124,7 +124,6 @@ RSpec.describe 'tasks', type: :system do
   end
 
   describe 'Index' do
-
     before { visit root_path }
 
     context 'Check each function on the index screen.' do
