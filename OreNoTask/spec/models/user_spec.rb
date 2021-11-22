@@ -98,11 +98,11 @@ RSpec.describe 'Userモデルのテスト', type: :model do
   end
 
   describe 'delete_user_and_tasks' do
-    context 'DB更新が正常に実行できた場合' do
+    context '例外が発生しない場合' do
       let(:user_delete) { create(:user, deleted: 0) }
       let!(:task_delete) { create(:task, name: 'task_delete', user_id: user_delete.id, deleted: 0) }
 
-      it '正常に更新されること' do
+      it '正常にDB更新されること' do
         # 実行
         expect(User.delete_user_and_tasks(user_delete.id)).to eq true
         expect(User.find_by(id: user_delete.id).deleted).to eq 1
