@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'tasks', type: :system do
-  let!(:task_list) { FactoryBot.create_list(:task, 5) }
+  let!(:task_list) { create_list(:task, 5) }
 
   describe 'New task' do
     before { visit new_task_path() }
@@ -189,7 +189,7 @@ RSpec.describe 'tasks', type: :system do
       end
     end
 
-    context 'when click link to sort by due_date desc' do
+    context 'when click link to sort by end_date desc' do
       it 'sort success' do
         click_on I18n.t('tasks.common.end_date') # 1回押す(昇順)
         click_on I18n.t('tasks.common.end_date') # 2回押す(降順)
