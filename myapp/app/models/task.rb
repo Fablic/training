@@ -23,9 +23,10 @@ class Task < ApplicationRecord
 
   def valid_date_from_to?
     return unless self.start_date.present? && self.end_date.present?
-    
+
     errors.add(:end_date, I18n.t('activerecord.errors.messages.earlier_date_error', start: I18n.t('tasks.common.end_date'))) unless
       self.start_date < self.end_date 
+  end
 
   scope :search_condition, lambda { |search_params|
                              return if search_params.blank?
