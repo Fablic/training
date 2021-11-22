@@ -153,8 +153,8 @@ RSpec.describe 'Taskモデルのテスト', type: :model do
     let!(:user) { create(:user, name: 'HanakoRakuten', password: 'hanakopass', privilege: :user) }
     let!(:task) { Task.new(name: 'task', description: '', status: :wip, start_at: '2021-09-01 10:00', due_date_at: '2021-09-02 10:00', user_id: user.id) }
 
-    context 'DB更新が正常に実行できた場合' do
-      it '正常に更新されること' do
+    context '例外が発生しない場合' do
+      it '正常にDB更新されること' do
         # 実行
         expect(save_task_and_label).to eq true
 
