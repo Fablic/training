@@ -13,12 +13,21 @@
     <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
       <h5 class="my-0 mr-md-auto font-weight-normal">[Rails training]</h5>
       <nav class="my-2 my-md-0 mr-md-3">
-        <a class="p-2 text-dark" href="/"><%= t('tasks.index.title') %></a>
-        <a class="p-2 text-dark" href="/tasks/new"><%= t('tasks.new.title') %></a>
+        <a class="p-2 text-dark" href=<%= root_path %>><%= t('tasks.index.title') %></a>
+        <a class="p-2 text-dark" href=<%= new_task_path %>><%= t('tasks.new.title') %></a>
+        <% if !current_user.nil? && current_user.is_admin? %>
+          <a class="p-2 text-dark" href=<%= users_path %>><%= t('users.index.title') %></a>
+          <a class="p-2 text-dark" href=<%= new_user_path %>><%= t('users.new.title') %></a>
+        <% end %>
       </nav>
-      <td><%= link_to t('login.new.signup'), "#", method: :get, class: "btn btn-outline-primary" %></td>
       <td><%= link_to t('login.new.logout'), logout_path, method: :delete, class: "btn btn-outline-primary" %></td>
+
     </div>
+    <% if !current_user.nil? %>
+      <div class="navbar-item">
+        <%= current_user.name %> さん !
+      </div>
+    <% end %>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
     <%= yield %>

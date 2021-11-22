@@ -1,0 +1,48 @@
+<h1><%= t('.title') %></h1>
+
+<div class="search-form">
+  <%= form_with(scope: :search, url: users_path, method: :get, local: true) do |f| %>
+    <div class="field">
+      <%= f.label :name_cont, t('users.common.name') %>
+      <%= f.search_field :name_cont, value: @search_params[:name_cont] %>
+    </div>
+
+    <div class="field">
+      <%= f.label :login_id_eq, t('users.common.id') %>
+      <%= f.search_field :login_id_eq, value: @search_params[:login_id_eq] %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit(t('helpers.submit.search')) %>
+    </div>
+  <% end %>
+</div>
+
+<%= paginate @users %>
+
+<table class='table table-list' id='task_list' border=1>
+  <thead>
+    <tr>
+      <th scope="col"><%= sort_order 'name', t('users.common.name') %></th>
+      <th scope="col"><%= sort_order 'login_id', t('users.common.id') %></th>
+      <th scope="col"><%= sort_order 'is_admin', t('users.common.is_admin') %></th>
+      <th scope="col"><%= sort_order 'task count', t('users.index.task_count')  %></th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.name %></td>
+        <td><%= user.login_id %></td>
+        <td><%= user.is_admin %></td>
+        <td><%= user.tasks.count.to_s %></td>
+        <td><%= link_to t('.move_edit_user'), edit_user_path(user), id: 'click_edit' %></td>
+        <td><%= link_to t('.move_destroy_user'), user_path(user), method: :delete, data: { confirm: t('activerecord.check.messages.confirmation_destory') } , id: 'click_destroy' %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>

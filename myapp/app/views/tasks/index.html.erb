@@ -1,12 +1,5 @@
 <h1><%= t('.title') %></h1>
 
-<% if flash[:notice] %>
-  <p><%= flash[:notice] %></p>
-<% end %>
-<% if flash[:error] %>
-  <p><%= flash[:error] %></p>
-<% end %> 
-
 <div class="search-form">
   <%= form_with(scope: :search, url: root_path, method: :get, local: true) do |f| %>
     <div class="field">

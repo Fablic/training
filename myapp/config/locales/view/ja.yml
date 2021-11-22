@@ -35,8 +35,30 @@ ja:
   login:
     new:
       id: "ID"
-      pw: "パスワード"
+      password: "パスワード"
       login: "ログイン"
       logout: "ログアウト"
       signup: "サインアップ"
       comment_remember: "自分のPC内に保存する"
+
+  users:
+    index:
+      title: "ユーザ一覧"
+      move_new_user: '新規ユーザ作成'
+      move_edit_user: '編集'
+      move_destroy_user: '削除'
+      task_count: 'タスク数'
+
+    new:
+      title: "ユーザ新規登録"
+      
+    edit:
+      title: "タスク更新"
+        
+    common:
+      id: "Id"
+      password: "パスワード"
+      name: "ニックネーム"
+      password_confirmation: "パスワード確認"
+      is_admin: "管理者権限"
+      move_user_list: "ユーザ一覧へ戻る"

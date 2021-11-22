@@ -7,6 +7,15 @@ ja:
       error_task_edit: 'タスク更新がエラーとなりました。'
       complete_task_destroy: 'タスク削除が完了しました。'
       error_task_destroy: 'タスク削除がエラーとなりました。'
+  users:
+    flash:
+      complete_user_registration: 'ユーザ登録が完了しました。'
+      error_user_registration: 'ユーザ登録がエラーとなりました。'
+      complete_user_edit: 'ユーザ更新が完了しました。'
+      error_user_edit: 'ユーザ更新がエラーとなりました。'
+      complete_user_destroy: 'ユーザ削除が完了しました。'
+      error_user_destroy: 'ユーザ削除がエラーとなりました。'
+      only_one_admin: '管理者ユーザーは１人以上必要です。'
   sessions:
     flash:
       invalid_login: 'IDまたはパスワードが間違えています。'
