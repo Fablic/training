@@ -11,6 +11,9 @@ class TasksController < ApplicationController
     @search_params = user_search_params
     @search_params[:user_id] = current_user.id if current_user.is_admin.zero?
     @tasks = Task.search_condition(@search_params)
+
+    @tasks = @tasks.joins(:labels).where(labels: { id: params[:labels_id_eq] }) if params[:labels_id_eq].present?
+
     @tasks = @tasks.order("#{sort_column} #{sort_direction}")
     @tasks = @tasks.page(params[:page]).per(10)
   end
@@ -61,13 +64,13 @@ class TasksController < ApplicationController
   end
 
   def user_search_params
-    params.fetch(:search, {}).permit(:task_name_cont, :status_eq)
+    params.fetch(:search, {}).permit(:task_name_cont, :status_eq, :label_ids_eq)
   end
 
   def post_params
     params.require(:task).permit(
       :task_name, :description, :status,
-      :priority, :label, :start_date, :end_date,
+      :priority, { label_ids: [] }, :start_date, :end_date,
       :user_id)
   end
 

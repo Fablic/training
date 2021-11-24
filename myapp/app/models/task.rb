@@ -2,6 +2,8 @@
 
 class Task < ApplicationRecord
   belongs_to :user
+  has_many :labellings, dependent: :destroy
+  has_many :labels, through: :labellings
 
   enum status_list: {
     todo: 'todo',
@@ -14,8 +16,6 @@ class Task < ApplicationRecord
             length: { maximum: 20 }
   validates :description,
             length: { maximum: 100 }
-  validates :label,
-            length: { maximum: 20 }
   validates :status,
             presence: true,
             inclusion: {
