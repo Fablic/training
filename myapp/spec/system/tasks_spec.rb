@@ -1,9 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe 'Tasks', type: :system, js: true do
-  let!(:task) { create(:task) }
+  # let!(:task) { create(:task) }
+  let!(:task_list) { create_list(:task,5) }
 
-  describe 'Index' do
+  describe 'タスク一覧画面' do
     before do
       visit root_path
     end
@@ -16,17 +17,30 @@ RSpec.describe 'Tasks', type: :system, js: true do
       expect(page).to have_content('削除')
     end
 
+    it '登録してあるタスクが表示される' do
+      expect(page).to have_content(task_list[0].name)
+      expect(page).to have_content(task_list[1].name)
+      expect(page).to have_content(task_list[2].name)
+      expect(page).to have_content(task_list[3].name)
+      expect(page).to have_content(task_list[4].name)
+    end
+
     it 'タスク作成画面に遷移できる' do
       click_link 'Create task'
       expect(page).to have_content('Tasks#new')
     end
 
-    it 'タスク詳細画面に遷移できる' do
-      click_link task.name
+    it '表示されてるタスク名を選択してタスク詳細画面に遷移できる' do
+      click_link task_list[0].name
       expect(page).to have_content('Tasks#show')
     end
 
-    it 'Destroyを押すとダイアログが出る' do
+    it '表示されてるタスクのEditを選択してタスク編集画面に遷移できる' do
+      all('tbody tr')[0].click_link 'Edit'
+      expect(page).to have_content('Tasks#edit')
+    end
+
+    it '表示されてるタスクのDestroyを押すと削除確認ダイアログが出て削除ができる' do
       page.dismiss_confirm("Are you sure?") do
         click_link 'Destroy', match: :first
       end
@@ -37,7 +51,7 @@ RSpec.describe 'Tasks', type: :system, js: true do
     end
   end
 
-  describe 'New' do
+  describe 'タスク作成画面' do
     before do
       visit new_task_path
     end
@@ -46,7 +60,7 @@ RSpec.describe 'Tasks', type: :system, js: true do
       expect(page).to have_content('Tasks#new')
     end
 
-    it 'タスク作成が出来る' do
+    it '新しくタスクが作成出来る' do
       fill_in 'task_name', with: 'input Task'
       fill_in 'task_description', with: 'input Description'
       click_button 'Post'
@@ -57,28 +71,31 @@ RSpec.describe 'Tasks', type: :system, js: true do
     end
   end
 
-  describe 'Show' do
+  describe 'タスク詳細画面' do
     before do
-      visit task_path task
+      visit task_path task_list[0]
     end
 
     it 'タスク詳細画面が表示される' do
       expect(page).to have_content('Tasks#show')
-      expect(page).to have_content(task.name)
-      expect(page).to have_content(task.description)
+    end
+
+    it '選択したタスクの詳細情報が表示される' do
+      expect(page).to have_content(task_list[0].name)
+      expect(page).to have_content(task_list[0].description)
     end
   end
 
-  describe 'Edit' do
+  describe 'タスク編集画面' do
     before do
-      visit edit_task_path task
+      visit edit_task_path task_list[0]
     end
 
     it 'タスク編集画面が表示される' do
       expect(page).to have_content('Tasks#edit')
     end
 
-    it 'タスク更新が出来る' do
+    it 'タスクを選択して情報更新が出来る' do
       fill_in 'task_name', with: 'update Task'
       fill_in 'task_description', with: 'update Description'
       click_button 'Post'
