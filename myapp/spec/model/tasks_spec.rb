@@ -10,7 +10,7 @@ RSpec.describe Task, type: :model do
   let(:label) { 'label for test' }
   let(:start_date) { '2021-12-01 15:00:00' }
   let(:end_date) { '2021-12-31 15:00:00' }
-  let(:task) { build(:task, task_name: task_name, description: description, status: status, label: label, start_date: start_date, end_date: end_date) }
+  let(:task) { build(:task, task_name: task_name, description: description, status: status, label: label, start_date: start_date, end_date: end_date, user_id: user.id) }
 
   describe 'attribute: task_name' do
     context 'when less than or equal Max charcters' do

@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'tasks', type: :system do
   let!(:user) { create(:user) }
-  let!(:task_list) { create_list(:task, 5) }
+  let!(:task_list) { create_list(:task, 5, user_id: user.id) }
 
   before do
     visit login_path
@@ -211,7 +211,7 @@ RSpec.describe 'tasks', type: :system do
     let(:task_name_origin_prefix) { 'Task_name_' }
     let(:task_name) { 'search_keyword' }
     let(:status) { 'inProgress' }
-    let!(:task_search) { create(:task, task_name: task_name, status: status) }
+    let!(:task_search) { create(:task, task_name: task_name, status: status, user_id: user.id) }
 
     context 'when search all' do
       it 'search success' do

@@ -10,6 +10,5 @@ FactoryBot.define do
     sequence(:start_date, Date.today + 1)
     sequence(:end_date, Date.today + 10)
     sequence(:created_at, Date.today)
-    user_id { 999999 }
   end
 end
