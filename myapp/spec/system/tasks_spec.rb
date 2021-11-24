@@ -2,23 +2,17 @@ require 'rails_helper'
 
 RSpec.describe 'Tasks', type: :system, js: true do
   let(:task) { create(:task) }
-  let(:destroy_task) { create(:task) }
-
-  before do
-    task
-    destroy_task
-  end
 
   describe 'タスク一覧画面' do
     before do
+      task
       visit root_path
     end
-
     context 'タスク一覧画面に遷移した時' do
+
       it 'タスク一覧タイトルが表示される' do
         expect(page).to have_selector('h1', text: 'タスク一覧')
       end
-
       it '登録してあるタスクが表示される' do
         expect(page).to have_content(task.name)
       end
@@ -26,15 +20,21 @@ RSpec.describe 'Tasks', type: :system, js: true do
 
     context 'タスク作成リンクをクリックした時' do
       it 'タスク作成画面に遷移できる' do
-        find('#click_new_task').click
+        find('#new_task_link').click
         expect(page).to have_selector('h1', text: 'タスク作成')
       end
     end
 
     context '表示されてるタスク名を選択した時' do
+      let(:other_task) { create(:task, name: 'other_task_name') }
+      before do
+        other_task
+        visit root_path
+      end
       it 'タスク詳細画面に遷移できる' do
-        find("#task_name_#{task.id}").click
+        click_link other_task.name
         expect(page).to have_selector('h1', text: 'タスク詳細')
+        expect(page).to have_content(other_task.name)
       end
     end
 
@@ -45,23 +45,22 @@ RSpec.describe 'Tasks', type: :system, js: true do
       end
     end
 
-    context '表示されてるタスクのDestroyを押した時' do
-      context '削除確認ダイアログでOKを押した時' do
-        it 'タスクの削除ができる' do
-          page.accept_confirm do
-            find("#link_destroy_task_#{destroy_task.id}").click
-          end
-          expect(page).to have_content('タスク削除成功！')
-          expect(page.all("#task_name_#{destroy_task.id}").empty?).to eq true
+    context 'Destroyを押して削除確認ダイアログでOKを押した時' do
+      it 'タスクの削除ができる' do
+        page.accept_confirm do
+          find("#link_destroy_task_#{task.id}").click
         end
+        expect(page).to have_content('タスク削除成功！')
+        expect(page.all("#task_name_#{task.id}").empty?).to eq true
       end
-      context '削除確認ダイアログでキャンセルを押した時' do
-        it '削除をキャンセル出来る' do
-          page.dismiss_confirm do
-            find("#link_destroy_task_#{destroy_task.id}").click
-          end
-          expect(page.has_selector?("#task_name_#{destroy_task.id}")).to eq true
+    end
+
+    context 'Destroyを押して削除確認ダイアログでキャンセルを押した時' do
+      it '削除をキャンセル出来る' do
+        page.dismiss_confirm do
+          find("#link_destroy_task_#{task.id}").click
         end
+        expect(page.has_selector?("#task_name_#{task.id}")).to eq true
       end
     end
   end
@@ -108,9 +107,8 @@ RSpec.describe 'Tasks', type: :system, js: true do
   end
 
   describe 'タスク編集画面' do
-    let(:edit_task) { create(:task) }
     before do
-      visit edit_task_path edit_task
+      visit edit_task_path task
     end
 
     context 'タスク編集画面に遷移した時' do
