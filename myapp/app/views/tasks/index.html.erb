@@ -1,7 +1,6 @@
-<h1>Tasks#index</h1>
-<p>Find me in app/views/tasks/index.html.erb</p>
+<h1>タスク一覧</h1>
 <%= h(flash[:success]) %>
-<p><%= link_to 'Create task', new_task_path %></p>
+<p><%= link_to 'タスク作成', new_task_path, id: 'click_new_task' %></p>
 <table>
     <thead>
         <tr>
@@ -14,11 +13,11 @@
     <tbody>
         <% @tasks.each do |task| %>
             <tr>
-              <td><%= link_to task.name, task %></td>
+              <td><%= link_to task.name, task,id: "task_name_#{task.id}" %></td>
               <td><%= task.description %></td>
-              <td><%= link_to 'Edit', edit_task_path(task) %></td>
+              <td><%= link_to 'Edit', edit_task_path(task) ,id: "link_edit_task_#{task.id}"%></td>
               <td><%= link_to 'Destroy', task, method: :delete,
-                                              data: { confirm: 'Are you sure?' } %></td>
+                                              data: { confirm: 'Are you sure?' } ,id: "link_destroy_task_#{task.id}"%></td>
             </tr>
         <% end %>
     </tbody>
