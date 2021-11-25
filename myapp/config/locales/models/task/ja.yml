@@ -1,0 +1,21 @@
+ja:
+  activerecord:
+    models:
+      task: タスク
+    attributes:
+      task:
+        title: タイトル
+        description: 説明
+        status: ステータス
+        priority: 優先度
+        expires_at: 期限日時
+  enums:
+    task:
+      priority:
+        low: 低
+        middle: 中
+        high: 高
+      status:
+        todo: 未着手
+        in_progress: 着手中
+        done: 完了

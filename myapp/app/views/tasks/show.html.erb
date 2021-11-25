@@ -1,13 +1,13 @@
 <p id="notice"><%= notice %></p>
 
-<%= link_to 'Edit', edit_task_path(@task) %> |
-<%= link_to 'Back', tasks_path %> |
-<%= link_to 'Destroy', @task, method: :delete, data: { confirm: 'Are you sure?' } %>
+<%= link_to t('common.edit'), edit_task_path(@task) %> |
+<%= link_to t('common.index'), tasks_path %> |
+<%= link_to t('common.destroy'), @task, method: :delete, data: { confirm: 'Are you sure?' } %>
 
 <dl>
-  <dt>title:</dt><dd><%= @task.title %></dd>
-  <dt>description:<dt><dd><pre><%= @task.description %></pre></dd>
-  <dt>priority:</dt><dd><%= @task.priority %></dd>
-  <dt>status:</dt><dd><%= @task.status %></dd>
-  <dt>deadline:</dt><dd><%= @task.expires_at %></dd>
+  <dt><%= t('activerecord.attributes.task.title') %>:</dt><dd><%= @task.title %></dd>
+  <dt><%= t('activerecord.attributes.task.description') %>:<dt><dd><pre><%= @task.description %></pre></dd>
+  <dt><%= t('activerecord.attributes.task.priority') %>:</dt><dd><%= @task.priority && I18n.t("enums.task.priority.#{@task.priority}") %></dd>
+  <dt><%= t('activerecord.attributes.task.status') %>:</dt><dd><%=  @task.status && I18n.t("enums.task.status.#{@task.status}") %></dd>
+  <dt><%= t('activerecord.attributes.task.expires_at') %>:</dt><dd><%= @task.expires_at %></dd>
 </dl>
