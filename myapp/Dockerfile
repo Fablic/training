@@ -48,4 +48,7 @@ COPY Gemfile.lock /$APP_ROOT/Gemfile.lock
 ENV BUNDLE_PATH=/usr/local/bundle
 RUN bundle install
 
+# Timezoneを設定
+ENV TZ=Asia/Tokyo
+
 COPY . /$APP_ROOT
