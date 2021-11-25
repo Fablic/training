@@ -1,7 +1,7 @@
 <h1><%= t '.title' %></h1>
 <%= h(flash[:success]) %>
 
-<p>タスク名</p>
+<p><%= t 'tasks.label.name' %></p>
 <%= @task.name %>
-<p>説明</p>
+<p><%= t 'tasks.label.description' %></p>
 <%= @task.description %>

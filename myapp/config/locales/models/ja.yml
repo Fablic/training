@@ -1,0 +1,15 @@
+ja:
+  # 共通
+  attributes:
+    created_at: '作成日'
+    updated_at: '更新日'
+
+  activerecord:
+    models:
+      task: 'タスク'
+
+    attributes:
+      task:
+        id: 'ID'
+        name: 'タスク名'
+        description: '詳細'

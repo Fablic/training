@@ -205,14 +205,3 @@ ja:
       long: "%Y/%m/%d %H:%M"
       short: "%m/%d %H:%M"
     pm: 午後
-
-  # アプリ独自の設定
-  tasks:
-    new:
-      title: "タスク作成"
-    index:
-      title: "タスク一覧"
-    show:
-      title: "タスク詳細"
-    edit:
-      title: "タスク編集"
