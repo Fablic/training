@@ -96,7 +96,7 @@ RSpec.feature Task, type: :feature, js: true do
       end
     end
     context '入力閾値チェック' do
-      context 'タスク名256オーバー' do
+      context 'タスク名191オーバー' do
         scenario 'タスク登録失敗する' do
           fill_in label_name_task, with: SecureRandom.alphanumeric(192)
           fill_in label_name_detail, with: 'test'
