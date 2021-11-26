@@ -11,7 +11,7 @@ class TasksController < ApplicationController
     @search_params = user_search_params
     @search_params[:user_id] = current_user.id if current_user.is_admin.zero?
 
-    @tasks = Task.search_condition(@search_params)
+    @tasks = Task.includes([:labels, :labellings]).search_condition(@search_params)
     @tasks = @tasks.order("#{sort_column} #{sort_direction}")
     @tasks = @tasks.page(params[:page]).per(10)
   end
@@ -77,6 +77,6 @@ class TasksController < ApplicationController
   end
 
   def sort_column
-    Task.column_names.include?(params[:sort]) ? params[:sort] : 'created_at'
+    Task.column_names.include?(params[:sort]) ? params[:sort] : 'tasks.created_at'
   end
 end
