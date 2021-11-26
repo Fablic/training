@@ -1,7 +1,7 @@
 <%= form_for(@task) do |f| %>
     <%= f.label :name %>
-    <%= f.text_field :name, placeholder: "タスク名" %>
+    <%= f.text_field :name, placeholder: t('tasks.label.name') %>
     <%= f.label :description %>
-    <%= f.text_area :description, placeholder: "タスク内容" %>
-    <%= f.submit "Post", class: "btn btn-primary", id: "post_task_button" %>
+    <%= f.text_area :description, placeholder: t('tasks.label.description') %>
+    <%= f.submit t('tasks.button.post'), class: "btn btn-primary", id: "post_task_button" %>
 <% end %>

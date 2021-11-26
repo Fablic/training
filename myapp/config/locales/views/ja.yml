@@ -1,0 +1,22 @@
+ja:
+  tasks:
+    label:
+      name: "タスク名"
+      description: "説明"
+      edit: "編集"
+      destroy: "削除"
+
+    button:
+      post: "登録"
+
+    message:
+      destroy: "タスクを削除します。よろしいですか？"
+
+    new:
+      title: "タスク作成"
+    index:
+      title: "タスク一覧"
+    show:
+      title: "タスク詳細"
+    edit:
+      title: "タスク編集"
