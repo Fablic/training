@@ -2,10 +2,15 @@ require 'rails_helper'
 
 RSpec.describe 'Tasks', type: :system, js: true do
   let(:task) { create(:task) }
+  # Listで作ると降順にならないので一旦この作り方
+  let(:task_2) { create(:task, created_at: Date.today + 1) }
+  let(:task_3) { create(:task, created_at: Date.today + 2) }
 
   describe 'タスク一覧画面' do
     before do
       task
+      task_2
+      task_3
       visit root_path
     end
 
@@ -64,6 +69,15 @@ RSpec.describe 'Tasks', type: :system, js: true do
           find("#link_destroy_task_#{task.id}").click
         end
         expect(page.has_selector?("#task_name_#{task.id}")).to eq true
+      end
+    end
+
+    context 'タスクが作成日時別に複数ある時' do
+      it '作成日時の降順で表示される' do
+        tr_list = all('tbody tr')
+        expect(tr_list[0].first('td').text).to eq task_3.name
+        expect(tr_list[1].first('td').text).to eq task_2.name
+        expect(tr_list[2].first('td').text).to eq task.name
       end
     end
   end
