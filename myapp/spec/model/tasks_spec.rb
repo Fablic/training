@@ -91,13 +91,6 @@ RSpec.describe Task, type: :model do
       end
     end
 
-    context 'when over Max charcters' do
-      let(:label) { 't' * 21 }
-
-      it 'is invalid' do
-        expect(task).to be_invalid
-      end
-    end
   end
 
   describe 'start_date' do
