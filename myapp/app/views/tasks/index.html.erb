@@ -10,7 +10,12 @@
       <th><%= t('activerecord.attributes.task.title') %></th>
       <th><%= t('activerecord.attributes.task.status') %></th>
       <th><%= t('activerecord.attributes.task.priority') %></th>
-      <th><%= t('activerecord.attributes.task.expires_at') %></th>
+      <th>
+        <%= sort_order 'expires_at', "#{t('activerecord.attributes.task.expires_at')}#{direction_arrow('expires_at')}" %>
+      </th>
+      <th>
+        <%= sort_order 'created_at', "#{t('activerecord.attributes.task.created_at')}#{direction_arrow('created_at')}" %>
+      </th>
       <th><%= t('common.edit') %></th>
       <th><%= t('common.destroy') %></th>
     </tr>
@@ -22,6 +27,7 @@
         <td><%= link_to task.status.to_s , task %></td>
         <td><%= link_to task.priority.to_s , task %></td>
         <td><%= link_to task.expires_at.to_s, task %></td>
+        <td><%= link_to task.created_at.to_s, task %></td>
         <td><%= link_to t('common.edit'), edit_task_path(task) %></td>
         <td><%= link_to t('common.destroy'), task, method: :delete, data: { confirm: I18n.t('pages.tasks.confirm.destroy') } %></td>
       </tr>

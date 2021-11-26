@@ -24,22 +24,81 @@ RSpec.describe 'Tasks', type: :system do
         page.first('[data-method="delete"]').click
       }.to change(Task, :count).by(-1)
     end
+
+    context 'when sorting by created_at,' do
+      example 'tasks can be sorted in ascending direcction.' do
+        visit tasks_url(sort: 'created_at', direction: 'asc')
+        expect(page.body.index(tasks.first.title)).to be < page.body.index(tasks.last.title)
+      end
+
+      example 'tasks can be sorted in descending direcction.' do
+        visit tasks_url(sort: 'created_at', direction: 'desc')
+        expect(page.body.index(tasks.first.title)).to be > page.body.index(tasks.last.title)
+      end
+    end
+
+    context 'when sorting by expires_at,' do
+      example 'tasks can be sorted in ascending direcction.' do
+        visit tasks_url(sort: 'expires_at', direction: 'asc')
+        expect(page.body.index(tasks.first.title)).to be < page.body.index(tasks.last.title)
+      end
+
+      example 'tasks can be sorted in descending direcction.' do
+        visit tasks_url(sort: 'expires_at', direction: 'desc')
+        expect(page.body.index(tasks.first.title)).to be > page.body.index(tasks.last.title)
+      end
+    end
   end
 
   describe '#new' do
     before do
       visit new_task_path()
 
+      # 全て入力しておく
       fill_in 'task[title]', with: 'spec test title'
       fill_in 'task[description]', with: 'spec test description'
+      select I18n.t('enums.task.status.todo'), from: I18n.t('activerecord.attributes.task.status')
       select I18n.t('enums.task.priority.low'), from: I18n.t('activerecord.attributes.task.priority')
       fill_in 'task[expires_at]', with: '2021-11-19T10:58'
-
-      find('[name=commit]').click
     end
 
     example 'A task can be registered.' do
+      find('[name=commit]').click
       expect(page).to have_content I18n.t('pages.tasks.flash.registered')
+    end
+
+    describe 'Title' do
+      example 'less or euqal than 255' do
+        # タイトルを空にする
+        fill_in 'task[title]', with: Faker::Base.regexify('[a-zA-Z0-9亜-熙ぁ-んァ-ヶ]{256}')
+        find('[name=commit]').click
+        expect(page).to have_content 'タイトルは255文字以内で入力してください'
+      end
+
+      example 'is required' do
+        # タイトルを空にする
+        fill_in 'task[title]', with: ''
+        find('[name=commit]').click
+        expect(page).to have_content 'タイトルを入力してください'
+      end
+    end
+
+    describe 'priority' do
+      example 'A task can be registered without status.' do
+        select '', from: I18n.t('activerecord.attributes.task.priority')
+        find('[name=commit]').click
+
+        expect(page).to have_content I18n.t('pages.tasks.flash.registered')
+      end
+    end
+
+    describe 'status' do
+      example 'A task can be registered without status.' do
+        select '', from: I18n.t('activerecord.attributes.task.status')
+        find('[name=commit]').click
+
+        expect(page).to have_content I18n.t('pages.tasks.flash.registered')
+      end
     end
   end
 

@@ -4,10 +4,11 @@ require 'faker'
 
 FactoryBot.define do
   factory :task do
-    title { Faker::Lorem.characters(number: 20) }
-    description { Faker::Lorem.characters(number: 500) }
+    title { Faker::Lorem.unique.characters(number: 255) }
+    description { Faker::Lorem.unique.characters(number: 768) }
     status { Task.statuses.values.sample }
     priority { Task.priorities.values.sample }
-    expires_at { Faker::Time.between(from: DateTime.now - 1, to: DateTime.now) }
+    sequence(:expires_at) { |n| Faker::Time.between(from: DateTime.now + n, to: DateTime.now + n + 1) }
+    sequence(:created_at) { |n| Faker::Time.between(from: DateTime.yesterday + n, to: DateTime.yesterday + n + 1) }
   end
 end
