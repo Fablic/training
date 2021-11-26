@@ -36,9 +36,11 @@ class Task < ApplicationRecord
                              task_name_like(search_params[:task_name_cont])
                              .status_is(search_params[:status_eq])
                              .user_id_is(search_params[:user_id])
+                             .label_id_is(search_params[:label_id_eq])
                            }
 
   scope :task_name_like, -> (task_name_cont) { where('task_name LIKE ?', "%#{task_name_cont}%") if task_name_cont.present? }
   scope :status_is, -> (status_eq) { where(status: status_eq) if status_eq.present? }
   scope :user_id_is, -> (user_id) { where(user_id: user_id) if user_id.present? }
+  scope :label_id_is, ->(label_id_eq) { joins(:labels).where(labellings: { label_id: label_id_eq }) if label_id_eq.present? }
 end

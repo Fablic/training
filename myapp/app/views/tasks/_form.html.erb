@@ -20,7 +20,7 @@
  
 <p>
   <%= t.label :label, t('tasks.common.label') %>
-  <%= f.collection_check_boxes(:label_ids, Label.all, :id, :name) %>
+  <%= t.collection_check_boxes(:label_ids, Label.all, :id, :name) %>
 </p>
  
 <p>

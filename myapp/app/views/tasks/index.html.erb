@@ -14,7 +14,7 @@
 
     <div class="field">
       <%= f.label :label_id_eq, t('tasks.common.label') %>
-      <%= f.select :label_id_eq, Label.pluck(:name, :id), { include_blank: true } %>
+      <%= f.select :label_id_eq, Label.pluck(:name, :id), selected: @search_params[:label_id_eq], include_blank: t('helpers.select.include_blank') %>
     </div>
 
     <div class="actions">
@@ -48,7 +48,7 @@
       <td><%= task.status %></td>
       <td>
         <% task.labels.each do |label| %>
-          <%= label.name %>
+          <span class="badge bg-light text-dark border"><%= label.name %></span>
         <% end %>
       </td>
       <td><%= task.priority %></td>
