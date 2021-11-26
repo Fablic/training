@@ -8,11 +8,12 @@ RSpec.describe 'Tasks', type: :system, js: true do
       task
       visit root_path
     end
-    context 'タスク一覧画面に遷移した時' do
 
+    context 'タスク一覧画面に遷移した時' do
       it 'タスク一覧タイトルが表示される' do
         expect(page).to have_selector('h1', text: 'タスク一覧')
       end
+
       it '登録してあるタスクが表示される' do
         expect(page).to have_content(task.name)
       end
@@ -27,10 +28,12 @@ RSpec.describe 'Tasks', type: :system, js: true do
 
     context '表示されてるタスク名を選択した時' do
       let(:other_task) { create(:task, name: 'other_task_name') }
+
       before do
         other_task
         visit root_path
       end
+
       it 'タスク詳細画面に遷移できる' do
         click_link other_task.name
         expect(page).to have_selector('h1', text: 'タスク詳細')

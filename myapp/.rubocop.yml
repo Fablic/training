@@ -17,3 +17,16 @@ AllCops:
 
 Style/FrozenStringLiteralComment:
   Enabled: false
+
+# エラーカスタムページ用の記述を許容するため
+Naming/VariableNumber:
+  Exclude:
+    - 'app/controllers/application_controller.rb'
+Naming/MethodParameterName:
+  Exclude:
+    - 'app/controllers/application_controller.rb'
+
+# Timezoneを設定しているためこの警告は不要
+Rails/Date:
+  Enabled: false
+
