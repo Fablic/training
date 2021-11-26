@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 2021_11_18_052452) do
     t.timestamp "start_date"
     t.timestamp "end_date"
     t.boolean "deleted", default: false
+    t.integer "login_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "user_id", null: false

@@ -2,7 +2,7 @@
 
 class UsersController < ApplicationController
   helper_method :sort_direction
-
+  before_action :admin_user
   before_action :logged_in_user
   before_action :set_user, only: %i[show edit update destroy]
 
