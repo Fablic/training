@@ -1,3 +1,11 @@
+<% if @task.errors.any? %>
+  <ul>
+    <% @task.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+<% end %>
+
 <%= form_for(@task) do |f| %>
     <%= f.label :name %>
     <%= f.text_field :name, placeholder: t('tasks.label.name') %>
