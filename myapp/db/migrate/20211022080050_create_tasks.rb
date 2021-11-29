@@ -8,7 +8,8 @@ class CreateTasks < ActiveRecord::Migration[6.0]
       t.integer :status, limit: 1, comment: 'ステータス'
       t.integer :priority, limit: 3, comment: '優先度'
       t.datetime :expires_at, comment: '期限日時'
-
+      t.index ['status'], name: 'index_status'
+      t.index %w[title status], name: 'index_title_status'
       t.timestamps
     end
   end

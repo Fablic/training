@@ -1,13 +1,16 @@
 # frozen_string_literal: true
 
 class TasksController < ApplicationController
-  helper_method :sort_column, :sort_direction
+  PAGE_LIMIT = 5
+
+  helper_method :sort_column, :sort_direction, :status_selected
 
   before_action :set_task, only: %i[show edit update destroy]
 
-  # GET /tasks or /tasks.json
   def index
-    @tasks = Task.all.order("#{sort_column} #{sort_direction}")
+    @task = Task.new
+    @tasks = Task.search(params).page(params[:page]).per(PAGE_LIMIT).order("#{sort_column} #{sort_direction}")
+    # @tasks = Kaminari.paginate_array(@tasks)
   end
 
   # GET /tasks/1 or /tasks/1.json
@@ -73,5 +76,9 @@ class TasksController < ApplicationController
 
   def sort_column
     Task.column_names.include?(params[:sort]) ? params[:sort] : 'expires_at'
+  end
+
+  def status_selected
+    Task.statuses.keys.include?(params[:status]) ? params[:status] : ''
   end
 end

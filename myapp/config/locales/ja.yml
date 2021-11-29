@@ -6,6 +6,7 @@ ja:
     show: 詳細
     submit: 送信
     destroy: 削除
+    search: 検索
   pages:
     tasks:
       flash:

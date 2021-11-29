@@ -4,8 +4,6 @@ require 'rails_helper'
 
 RSpec.describe 'Task Model', type: :model do
   describe 'validation' do
-    subject { proc { task.valid? } }
-
     let!(:task) { FactoryBot.create(:task) }
 
     describe 'title' do
