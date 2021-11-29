@@ -20,6 +20,10 @@ class ApplicationController < ActionController::Base
     redirect_to login_url
   end
 
+  def admin_user
+    redirect_to root_url unless admin?
+  end
+
   private
 
   def render_not_found(exc = nil)
