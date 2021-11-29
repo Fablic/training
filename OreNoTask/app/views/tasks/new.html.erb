@@ -8,7 +8,7 @@
   <div id='back-to-list'><%= link_to I18n.t('dictionary.words.to_list'), tasks_path, class: 'btn btn-success mr-2' %></div>
   <div id='edit-form' class='border rounded'>
     <%= form_with url: tasks_path, model: @task do |form| %>
-      <%= render partial: 'form', locals: { form: form, submit_label: @submit_label, label_names: @label_names.join(','), errors: @errors } %>
+      <%= render partial: 'form', locals: { form: form, submit_label: I18n.t('dictionary.words.save_to_create'), label_names: @label_names.join(','), errors: @errors } %>
     <% end %>
   </div>
 </div>

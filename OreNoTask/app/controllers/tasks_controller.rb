@@ -10,7 +10,6 @@ class TasksController < ApplicationController
   def new
     @task = Task.new
     @label_names = []
-    @submit_label = I18n.t('dictionary.words.save_to_create')
   end
 
   def edit
@@ -18,33 +17,30 @@ class TasksController < ApplicationController
 
     return render404 if @task.nil?
 
-    @submit_label = I18n.t('dictionary.words.save_to_update')
     @label_names = @task.labels.pluck(:name)
   end
 
   def update # rubocop:disable Metrics/AbcSize
-    post_params = task_params
-    post_labels = task_labels[:labels]
+    @label_names = task_labels[:labels].split(',')
 
     @task = Task.available(current_user.id).find_by(id: params[:id])
-    @task.attributes = post_params
-    errors = validate_task_and_labels(@task, post_labels)
+    @task.attributes = task_params
+    errors = validate_with_labels(@task, @label_names)
 
     if errors.present?
-      @submit_label = I18n.t('dictionary.words.save_to_update')
-      @label_names = post_labels.split(',')
       @errors = errors
       return render :edit
     end
 
-    if Task.update_task_and_label(@task, post_labels)
-      redirect_to tasks_path, notice: I18n.t('dictionary.messages.edited_task')
-    else
-      @submit_label = I18n.t('dictionary.words.save_to_update')
-      @label_names = post_labels.split(',')
-      flash[:notice] = I18n.t('dictionary.messages.failed_save_task')
-      render :edit
+    ActiveRecord::Base.transaction do
+      @task.labels.destroy_all
+      self.save_with_labels(@task, @label_names)
     end
+
+    redirect_to tasks_path, notice: I18n.t('dictionary.messages.edited_task')
+  rescue StandardError
+    flash[:notice] = I18n.t('dictionary.messages.failed_save_task')
+    render :edit
   end
 
   def show
@@ -56,28 +52,24 @@ class TasksController < ApplicationController
 
   def create # rubocop:disable Metrics/AbcSize
     post_params = task_params
-    post_labels = task_labels[:labels]
+    @label_names = task_labels[:labels].split(',')
 
     post_params['user_id'] = current_user.id
     @task = Task.new(post_params)
 
-    errors = validate_task_and_labels(@task, post_labels)
+    errors = validate_with_labels(@task, @label_names)
 
     if errors.present?
-      @submit_label = I18n.t('dictionary.words.save_to_create')
-      @label_names = post_labels.split(',')
       @errors = errors
       return render :new
     end
 
-    if Task.save_task_and_label(@task, post_labels)
-      redirect_to tasks_path, notice: I18n.t('dictionary.messages.created_task')
-    else
-      @submit_label = I18n.t('dictionary.words.save_to_create')
-      @label_names = post_labels.split(',')
-      flash[:notice] = I18n.t('dictionary.messages.failed_save_task')
-      render :new
-    end
+    self.save_with_labels(@task, @label_names)
+
+    redirect_to tasks_path, notice: I18n.t('dictionary.messages.created_task')
+  rescue StandardError
+    flash[:notice] = I18n.t('dictionary.messages.failed_save_task')
+    render :new
   end
 
   def destroy
@@ -119,14 +111,26 @@ class TasksController < ApplicationController
     Task.column_names.include?(params[:sort]) ? params[:sort] : 'tasks.created_at'
   end
 
-  def validate_task_and_labels(task, labels)
+  def validate_with_labels(task, label_names)
     errors = []
     errors += task.errors.full_messages unless task.valid?
 
-    labels.split(',').each do |label_name|
+    label_names.each do |label_name|
       @label = Label.new(name: label_name)
       errors += @label.errors.full_messages unless @label.valid?
     end
     errors.uniq
+  end
+
+  def save_with_labels(task, label_names)
+    label_names.each do |label|
+      if Label.where(name: label).count.zero?
+        task.labels.build(name: label)
+      else
+        task.task_labels.build(label_id: Label.find_by(name: label).id)
+      end
+    end
+
+    raise StandardError unless task.save
   end
 end
