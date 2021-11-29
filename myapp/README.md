@@ -18,7 +18,7 @@
 | description| text     | NOT NULL         |  最大1024文字                        　| 
 | priority   | string   |                  |                                       | 
 | status     | string   | NOT NULL         |                                       | 
-| due_date   | date     | NOT NULL         |                                       | 
+| deadline   | datetime | NOT NULL         |                                       | 
 | user_id    | integer  |                  | usersテーブルの主キーを外部キーとする 　    | 
 | created_at | datetime | CURRENT_DATETIME |                                       | 
 | updated_at | datetime | CURRENT_DATETIME |                                       | 

@@ -11,5 +11,7 @@
     <%= f.text_field :name, placeholder: t('tasks.label.name') %>
     <%= f.label :description %>
     <%= f.text_area :description, placeholder: t('tasks.label.description') %>
+    <%= f.label :deadline %>
+    <%= f.datetime_select :deadline, placeholder: t('tasks.label.deadline') %>
     <%= f.submit t('tasks.button.post'), class: "btn btn-primary", id: "post_task_button" %>
 <% end %>
