@@ -4,9 +4,9 @@
 <table>
     <thead>
         <tr>
-          <th><%= t 'tasks.label.name' %></th>
-          <th><%= t 'tasks.label.description' %></th>
-          <th><%= t 'tasks.label.deadline' %></th>
+          <th><%= sort_order "name", t('tasks.label.name') %></th>
+          <th><%= sort_order "description", t('tasks.label.description') %></th>
+          <th><%= sort_order "deadline", t('tasks.label.deadline') %></th>
           <th><%= t 'tasks.label.edit' %></th>
           <th><%= t 'tasks.label.destroy' %></th>
         </tr>
