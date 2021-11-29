@@ -10,14 +10,14 @@ RSpec.describe 'Taskモデルのテスト', type: :model do
   let(:start_at) { '2021/09/01 10:00' }
   let(:due_date_at) { '2021/09/02 11:00' }
 
-  describe 'バリデーションのテスト' do
+  describe 'バリデーション' do
     subject { task }
 
     context '全項目入力' do
       it { is_expected.to be_valid }
     end
 
-    describe 'nameカラム' do
+    context 'nameカラム' do
       context '空欄' do
         let(:name) { '' }
 
@@ -37,7 +37,7 @@ RSpec.describe 'Taskモデルのテスト', type: :model do
       end
     end
 
-    describe 'descriptionカラム' do
+    context 'descriptionカラム' do
       context '空欄' do
         let(:description) { '' }
 
@@ -57,7 +57,7 @@ RSpec.describe 'Taskモデルのテスト', type: :model do
       end
     end
 
-    describe 'statusカラム' do
+    context 'statusカラム' do
       context '許容される値 not_started' do
         let(:status) { :not_started }
 
@@ -83,7 +83,7 @@ RSpec.describe 'Taskモデルのテスト', type: :model do
       end
     end
 
-    describe 'start_atカラム' do
+    context 'start_atカラム' do
       context '空欄でないこと' do
         let(:start_at) { '' }
 
@@ -109,7 +109,7 @@ RSpec.describe 'Taskモデルのテスト', type: :model do
       end
     end
 
-    describe 'due_date_atカラム' do
+    context 'due_date_atカラム' do
       context '空欄でないこと' do
         let(:due_date_at) { '' }
 
@@ -135,7 +135,7 @@ RSpec.describe 'Taskモデルのテスト', type: :model do
       end
     end
 
-    describe '複合' do
+    context '複合' do
       context 'start_at > due_date_atでないこと' do
         let(:start_at) { '2021/09/01 10:00' }
         let(:due_date_at) { '2021/08/31 10:00' }

@@ -7,14 +7,14 @@ RSpec.describe 'Userモデルのテスト', type: :model do
   let(:password) { 'rakutenpass' }
   let(:privilege) { :user }
 
-  describe 'バリデーションのテスト' do
+  describe 'バリデーション' do
     subject { User.new(name: name, password: password, privilege: privilege) }
 
     context '全項目入力' do
       it { is_expected.to be_valid }
     end
 
-    describe 'nameカラム' do
+    context 'nameカラム' do
       context '空欄' do
         let(:name) { '' }
 
@@ -54,7 +54,7 @@ RSpec.describe 'Userモデルのテスト', type: :model do
       end
     end
 
-    describe 'passwordカラム' do
+    context 'passwordカラム' do
       context '空欄' do
         let(:password) { '' }
 
@@ -74,7 +74,7 @@ RSpec.describe 'Userモデルのテスト', type: :model do
       end
     end
 
-    describe 'privilegeカラム' do
+    context 'privilegeカラム' do
       context '許容される値(user)' do
         let(:privilege) { :user }
 
@@ -95,7 +95,7 @@ RSpec.describe 'Userモデルのテスト', type: :model do
     end
   end
 
-  describe 'delete_user_and_tasks' do
+  context 'delete_user_and_tasks' do
     context '例外が発生しない場合' do
       let(:user_delete) { create(:user, deleted: 0) }
       let!(:task_delete) { create(:task, name: 'task_delete', user_id: user_delete.id, deleted: 0) }
