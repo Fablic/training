@@ -17,22 +17,16 @@ RSpec.describe TaskLabel, type: :model do
       it { is_expected.to be_valid }
     end
 
-    context '各項目' do
-      describe 'task_idカラム' do
-        context '空欄' do
-          let(:task_id) { nil }
+    context 'task_idカラムが空欄' do
+      let(:task_id) { nil }
 
-          it { is_expected.not_to be_valid }
-        end
-      end
+      it { is_expected.not_to be_valid }
+    end
 
-      describe 'label_idカラム' do
-        context '空欄' do
-          let(:label_id) { nil }
+    context 'label_idカラムが空欄' do
+      let(:label_id) { nil }
 
-          it { is_expected.not_to be_valid }
-        end
-      end
+      it { is_expected.not_to be_valid }
     end
   end
 end
