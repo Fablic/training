@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class TasksController < ApplicationController
+  DEFAULT_SORT_COLUMN = 'created_at'
+  DEFAULT_SORT_DIRECTION = 'desc'
+
   helper_method :sort_column, :sort_direction
 
   before_action :set_task, only: %i[show edit update destroy]
@@ -68,10 +71,10 @@ class TasksController < ApplicationController
   end
 
   def sort_direction
-    %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : DEFAULT_SORT_DIRECTION
   end
 
   def sort_column
-    Task.column_names.include?(params[:sort]) ? params[:sort] : 'expires_at'
+    Task.column_names.include?(params[:sort]) ? params[:sort] : DEFAULT_SORT_COLUMN
   end
 end
