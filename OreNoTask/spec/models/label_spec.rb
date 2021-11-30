@@ -12,26 +12,22 @@ RSpec.describe Label, type: :model do
       it { is_expected.to be_valid }
     end
 
-    context '各項目' do
-      describe 'label_nameカラム' do
-        context '空欄' do
-          let(:label_name) { '' }
+    context 'label_nameカラムが空欄' do
+      let(:label_name) { '' }
 
-          it { is_expected.not_to be_valid }
-        end
+      it { is_expected.not_to be_valid }
+    end
 
-        context '20文字以内' do
-          let(:label_name) { 'a' * 20 }
+    context 'label_nameカラムが20文字以内' do
+      let(:label_name) { 'a' * 20 }
 
-          it { is_expected.to be_valid }
-        end
+      it { is_expected.to be_valid }
+    end
 
-        context '21文字' do
-          let(:label_name) { 'a' * 21 }
+    context 'label_nameカラムが21文字' do
+      let(:label_name) { 'a' * 21 }
 
-          it { is_expected.not_to be_valid }
-        end
-      end
+      it { is_expected.not_to be_valid }
     end
   end
 end
