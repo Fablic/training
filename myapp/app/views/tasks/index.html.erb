@@ -12,8 +12,8 @@
         </tr>
     </thead>
     <tbody>
-        <% @tasks.each do |task| %>
-            <tr>
+        <% @tasks.each_with_index do |task, i| %>
+            <tr id="task_row_<%= i %>">
               <td><%= link_to task.name, task,id: "task_name_#{task.id}" %></td>
               <td><%= task.description %></td>
               <td><%= task.deadline %></td>
