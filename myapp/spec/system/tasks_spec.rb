@@ -5,11 +5,7 @@ RSpec.describe 'Tasks System', type: :system, js: true do
   # Listで作ると降順にならないので一旦この作り方
   let(:task_2) { create(:task, deadline: 2.days.since, created_at: Date.today + 1) }
   let(:task_3) { create(:task, deadline: 1.days.since, created_at: Date.today + 2) }
-
-  # let(:deadline_task_last) { create(:task, deadline: 3.days.since) }
-  # let(:deadline_task_middle) { create(:task, deadline: 2.days.since, created_at: Date.today + 1) }
-  # let(:deadline_task_first) { create(:task, deadline: 1.days.since, created_at: Date.today + 2) }
-
+  
   describe 'タスク一覧画面' do
     before do
       task
