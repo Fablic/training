@@ -5,9 +5,8 @@ class Task < ApplicationRecord
   validate  :since_now
 
   private
-    def since_now
-      unless deadline == nil
-        errors.add(:deadline, 'は、未来日時を登録して下さい') if deadline <= DateTime.now
-      end
-    end
+
+  def since_now
+    errors.add(:deadline, 'は、未来日時を登録して下さい') if !deadline.nil? && (deadline <= DateTime.now)
+  end
 end

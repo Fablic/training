@@ -30,3 +30,11 @@ Naming/MethodParameterName:
 Rails/Date:
   Enabled: false
 
+# 日本語でテストケース書いてるためこの警告を除外
+RSpec/ContextWording:
+  Enabled: false
+RSpec/MultipleExpectations:
+  Enabled: false
+RSpec/ExampleLength:
+  Enabled: false
+

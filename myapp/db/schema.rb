@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(version: 2021_11_29_002642) do
     t.text "description", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.datetime "deadline", null: false
+    t.datetime "deadline", default: -> { "CURRENT_TIMESTAMP" }, null: false
   end
 
 end
