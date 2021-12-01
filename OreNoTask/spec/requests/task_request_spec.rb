@@ -171,7 +171,7 @@ RSpec.describe 'Tasks', type: :request do
     context 'Taskが存在しない' do
       it 'アクセスできない' do
         get task_path(id: 1000)
-        expect(response.response_code).to eq(404)
+        expect(response).to have_http_status(:not_found)
       end
     end
 
@@ -181,7 +181,7 @@ RSpec.describe 'Tasks', type: :request do
 
       it 'アクセスできない' do
         get task_path(id: hanako_task.id)
-        expect(response.response_code).to eq(404)
+        expect(response).to have_http_status(:not_found)
       end
     end
   end
