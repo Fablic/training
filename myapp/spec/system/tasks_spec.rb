@@ -95,6 +95,16 @@ RSpec.describe 'Tasks System', type: :system, js: true do
         expect(find('#task_row_2').first('td').text).to eq task.name
       end
     end
+
+    context '終了期限のカラムを2回クリックした時' do
+      it '終了期限の降順になる' do
+        find('#tasks_deadline_at_link').click
+        find('#tasks_deadline_at_link').click
+        expect(find('#task_row_0').first('td').text).to eq task.name
+        expect(find('#task_row_1').first('td').text).to eq task_second.name
+        expect(find('#task_row_2').first('td').text).to eq task_third.name
+      end
+    end
   end
 
   describe 'タスク作成画面' do
