@@ -72,7 +72,7 @@ RSpec.describe 'Tasks System', type: :system, js: true do
       end
     end
 
-    context 'タスクが作成日時別に複数ある時(Default)' do
+    context 'タスクが作成日時別に複数ある時の初期表示' do
       before do
         task_second
         task_third
