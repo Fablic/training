@@ -136,6 +136,13 @@ RSpec.describe 'Tasks System', type: :system, js: true do
         expect(page).to have_content('input Description')
       end
     end
+
+    context '一覧に戻るリンクをクリックした時' do
+      it 'タスク一覧画面が表示される' do
+        find('#back_root_link').click
+        expect(page).to have_selector('h1', text: 'タスク一覧')
+      end
+    end
   end
 
   describe 'タスク詳細画面' do
@@ -151,6 +158,13 @@ RSpec.describe 'Tasks System', type: :system, js: true do
       it '選択したタスクの詳細情報が表示される' do
         expect(page).to have_content(task.name)
         expect(page).to have_content(task.description)
+      end
+    end
+
+    context '一覧に戻るリンクをクリックした時' do
+      it 'タスク一覧画面が表示される' do
+        find('#back_root_link').click
+        expect(page).to have_selector('h1', text: 'タスク一覧')
       end
     end
   end
@@ -175,6 +189,13 @@ RSpec.describe 'Tasks System', type: :system, js: true do
         expect(page).to have_content('タスク更新に成功しました！')
         expect(page).to have_content('update Task')
         expect(page).to have_content('update Description')
+      end
+    end
+
+    context '一覧に戻るリンクをクリックした時' do
+      it 'タスク一覧画面が表示される' do
+        find('#back_root_link').click
+        expect(page).to have_selector('h1', text: 'タスク一覧')
       end
     end
   end
