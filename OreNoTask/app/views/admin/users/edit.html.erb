@@ -8,7 +8,7 @@
   <div id='back-to-list'><%= link_to I18n.t('dictionary.words.to_list'), admin_users_path, class: 'btn btn-success mr-2' %></div>
   <div id='edit-form' class='border rounded'>
     <%= form_with url: admin_user_path(@user), model: @user do |form| %>
-      <%= render partial: 'form', locals: { form: form, submit_label: @submit_label, action: 'edit', errors: @user.errors.full_messages } %>
+      <%= render partial: 'form', locals: { form: form, submit_label: I18n.t('dictionary.words.save_to_update'), action: 'edit', errors: @user.errors.full_messages } %>
     <% end %>
   </div>
 </div>
