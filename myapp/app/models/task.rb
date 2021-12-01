@@ -4,6 +4,8 @@ class Task < ApplicationRecord
   validates :deadline, presence: true
   validate  :since_now
 
+  enum status: { not_started: 0, in_progress: 1, done: 2 }
+
   private
     def since_now
       unless deadline == nil
