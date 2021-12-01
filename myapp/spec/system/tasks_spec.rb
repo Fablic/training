@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe 'Tasks System', type: :system, js: true do
-  let(:task) { create(:task, deadline: 3.days.since) }
+  let(:task) { create(:task, deadline_at: 3.days.since) }
   # Listで作ると降順にならないので一旦この作り方
-  let(:task_second) { create(:task, deadline: 2.days.since, created_at: Date.today + 1) }
-  let(:task_third) { create(:task, deadline: 1.day.since, created_at: Date.today + 2) }
+  let(:task_second) { create(:task, deadline_at: 2.days.since, created_at: Date.today + 1) }
+  let(:task_third) { create(:task, deadline_at: 1.day.since, created_at: Date.today + 2) }
 
   describe 'タスク一覧画面' do
     before do
@@ -89,7 +89,7 @@ RSpec.describe 'Tasks System', type: :system, js: true do
 
     context '終了期限のカラムをクリックした時' do
       it '終了期限の昇順になる' do
-        find('#tasks_deadline_link').click
+        find('#tasks_deadline_at_link').click
         expect(find('#task_row_0').first('td').text).to eq task_third.name
         expect(find('#task_row_1').first('td').text).to eq task_second.name
         expect(find('#task_row_2').first('td').text).to eq task.name
@@ -113,12 +113,12 @@ RSpec.describe 'Tasks System', type: :system, js: true do
         fill_in 'task_name', with: 'input Task'
         fill_in 'task_description', with: 'input Description'
         # nowだとクリックまでに時間経過してValidateに引っかかるため
-        deadline = 1.hour.since
-        find('#task_deadline_1i').find("option[value='#{deadline.strftime('%Y')}']").select_option
-        find('#task_deadline_2i').find("option[value='#{deadline.strftime('%m')}']").select_option
-        find('#task_deadline_3i').find("option[value='#{deadline.strftime('%d')}']").select_option
-        find('#task_deadline_4i').find("option[value='#{deadline.strftime('%H')}']").select_option
-        find('#task_deadline_5i').find("option[value='#{deadline.strftime('%M')}']").select_option
+        deadline_at = 1.hour.since
+        find('#task_deadline_at_1i').find("option[value='#{deadline_at.strftime('%Y')}']").select_option
+        find('#task_deadline_at_2i').find("option[value='#{deadline_at.month}']").select_option
+        find('#task_deadline_at_3i').find("option[value='#{deadline_at.day}']").select_option
+        find('#task_deadline_at_4i').find("option[value='#{deadline_at.strftime('%H')}']").select_option
+        find('#task_deadline_at_5i').find("option[value='#{deadline_at.strftime('%M')}']").select_option
         find('#post_task_button').click
         expect(page).to have_selector('h1', text: 'タスク詳細')
         expect(page).to have_content('タスク作成に成功しました！')

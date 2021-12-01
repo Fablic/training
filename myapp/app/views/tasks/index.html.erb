@@ -6,7 +6,7 @@
         <tr>
           <th><%= sort_order "name", t('tasks.label.name') %></th>
           <th><%= sort_order "description", t('tasks.label.description') %></th>
-          <th><%= sort_order "deadline", t('tasks.label.deadline') %></th>
+          <th><%= sort_order "deadline_at", t('tasks.label.deadline_at') %></th>
           <th><%= t 'tasks.label.edit' %></th>
           <th><%= t 'tasks.label.destroy' %></th>
         </tr>
@@ -16,7 +16,7 @@
             <tr id="task_row_<%= i %>">
               <td><%= link_to task.name, task,id: "task_name_#{task.id}" %></td>
               <td><%= task.description %></td>
-              <td><%= task.deadline %></td>
+              <td><%= task.deadline_at %></td>
               <td><%= link_to t('tasks.label.edit'), edit_task_path(task) ,id: "link_edit_task_#{task.id}"%></td>
               <td><%= link_to t('tasks.label.destroy'), task, method: :delete,
                                               data: { confirm: t('tasks.message.destroy') } ,id: "link_destroy_task_#{task.id}"%></td>

@@ -39,19 +39,19 @@ RSpec.describe 'Tasks Model', type: :model do
       end
     end
 
-    context 'deadlineカラム' do
+    context 'deadline_atカラム' do
       it '空欄でない事' do
-        task.deadline = ''
+        task.deadline_at = ''
         expect(task_valid).to eq false
       end
 
       it 'nilでない事' do
-        task.deadline = nil
+        task.deadline_at = nil
         expect(task_valid).to eq false
       end
 
       it '過去日時でない事' do
-        task.deadline = 1.hour.ago
+        task.deadline_at = 1.hour.ago
         expect(task_valid).to eq false
       end
     end
