@@ -34,7 +34,7 @@ class TasksController < ApplicationController
 
     ActiveRecord::Base.transaction do
       @task.labels.destroy_all
-      self.save_with_labels(@task, @label_names)
+      save_with_labels(@task, @label_names)
     end
 
     redirect_to tasks_path, notice: I18n.t('dictionary.messages.edited_task')
@@ -64,7 +64,7 @@ class TasksController < ApplicationController
       return render :new
     end
 
-    self.save_with_labels(@task, @label_names)
+    save_with_labels(@task, @label_names)
 
     redirect_to tasks_path, notice: I18n.t('dictionary.messages.created_task')
   rescue StandardError
