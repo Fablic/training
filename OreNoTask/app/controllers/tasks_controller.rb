@@ -112,24 +112,22 @@ class TasksController < ApplicationController
   end
 
   def validate_with_labels(task, label_names)
+    in_db_labels = Label.where(name: label_names).pluck(:name)
+
     errors = []
     errors += task.errors.full_messages unless task.valid?
 
     label_names.each do |label_name|
-      @label = Label.new(name: label_name)
-      errors += @label.errors.full_messages unless @label.valid?
+      unless in_db_labels.include?(label_name)
+        label = Label.new(name: label_name)
+        errors += label.errors.full_messages unless label.valid?
+      end
     end
     errors.uniq
   end
 
   def save_with_labels(task, label_names)
-    label_names.each do |label|
-      if Label.where(name: label).count.zero?
-        task.labels.build(name: label)
-      else
-        task.task_labels.build(label_id: Label.find_by(name: label).id)
-      end
-    end
+    label_names.each { |label| task.labels << Label.find_or_initialize_by(name: label) }
 
     raise StandardError unless task.save
   end

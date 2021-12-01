@@ -16,6 +16,7 @@ ActiveRecord::Schema.define(version: 2021_11_01_060229) do
     t.string "name", limit: 20, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_labels_on_name", unique: true
   end
 
   create_table "task_labels", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
