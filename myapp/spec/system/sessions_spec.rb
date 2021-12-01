@@ -9,7 +9,7 @@ RSpec.describe 'sessions', type: :system do
   describe '#new' do
     before { visit login_path }
 
-    context 'when click the login botton' do
+    context 'when click the login button' do
       it 'move to root page' do
         fill_in 'session_login_id', with: user.login_id
         fill_in 'session_password', with: user.password
@@ -23,7 +23,7 @@ RSpec.describe 'sessions', type: :system do
   describe '#create' do
     before { visit login_path }
 
-    context 'when click login botton without enter id' do
+    context 'when click login button without enter id' do
       it 'login failed' do
         fill_in 'session_password', with: user.password
         click_button I18n.t('login.new.login')
@@ -31,7 +31,7 @@ RSpec.describe 'sessions', type: :system do
       end
     end
 
-    context 'when click login botton without enter password' do
+    context 'when click login button without enter password' do
       it 'login failed' do
         fill_in 'session_login_id', with: user.name
         click_button I18n.t('login.new.login')
@@ -39,7 +39,7 @@ RSpec.describe 'sessions', type: :system do
       end
     end
 
-    context 'when click login botton with enter wrong id' do
+    context 'when click login button with enter wrong id' do
       it 'login failed' do
         fill_in 'session_login_id', with: 'wrong id'
         fill_in 'session_password', with: user.password
@@ -57,7 +57,7 @@ RSpec.describe 'sessions', type: :system do
       click_button I18n.t('login.new.login')
     end
 
-    context 'when click the logout botton' do
+    context 'when click the logout button' do
       it 'move to login page' do
         click_on I18n.t('login.new.logout')
         expect(page).to have_current_path login_path, ignore_query: true

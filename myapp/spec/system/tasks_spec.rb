@@ -37,7 +37,6 @@ RSpec.describe 'tasks', type: :system do
           fill_in 'task_description', with: 'input Description'
           select(value = 'done', from: 'task_status')
           fill_in 'task_priority', with: 1
-          fill_in 'task_label', with: 'input Label'
           fill_in 'task_start_date', with: Time.zone.yesterday.strftime('%Y-%m-%d')
           fill_in 'task_end_date', with: Time.zone.now.strftime('%Y-%m-%d')
 

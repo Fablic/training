@@ -10,6 +10,12 @@
     <div class="field">
       <%= f.label :status_eq, t('tasks.common.status') %>
       <%= f.select :status_eq, Task.status_lists.keys.to_a, selected: @search_params[:status_eq], include_blank: t('helpers.select.include_blank') %>
+    </div>
+
+    <div class="field">
+      <%= f.label :label_id_eq, t('tasks.common.label') %>
+      <%= f.select :label_id_eq, Label.pluck(:name, :id), selected: @search_params[:label_id_eq], include_blank: t('helpers.select.include_blank') %>
+    </div>
 
     <div class="actions">
       <%= f.submit(t('helpers.submit.search')) %>
@@ -40,7 +46,11 @@
       <td><%= task.id %></td>
       <td><%= task.task_name %></td>
       <td><%= task.status %></td>
-      <td><%= task.label %></td>
+      <td>
+        <% task.labels.each do |label| %>
+          <span class="badge bg-light text-dark border"><%= label.name %></span>
+        <% end %>
+      </td>
       <td><%= task.priority %></td>
       <td>
         <%=
