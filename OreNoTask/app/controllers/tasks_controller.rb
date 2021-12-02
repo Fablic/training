@@ -25,21 +25,17 @@ class TasksController < ApplicationController
 
     @task = Task.available(current_user.id).find_by(id: params[:id])
     @task.attributes = task_params
-    errors = validate_with_labels(@task, @label_names)
-
-    if errors.present?
-      @errors = errors
-      return render :edit
-    end
 
     ActiveRecord::Base.transaction do
       @task.labels.destroy_all
-      save_with_labels(@task, @label_names)
+      return redirect_to tasks_path, notice: I18n.t('dictionary.messages.edited_task') if save_with_labels(@task, @label_names)
+
+      raise ActiveRecord::Rollback
     end
 
-    redirect_to tasks_path, notice: I18n.t('dictionary.messages.edited_task')
-  rescue StandardError
-    flash[:notice] = I18n.t('dictionary.messages.failed_save_task')
+    @errors = validate_with_labels(@task, @label_names)
+
+    flash.now[:notice] = I18n.t('dictionary.messages.failed_save_task') if @errors.blank?
     render :edit
   end
 
@@ -57,19 +53,13 @@ class TasksController < ApplicationController
     post_params['user_id'] = current_user.id
     @task = Task.new(post_params)
 
-    errors = validate_with_labels(@task, @label_names)
-
-    if errors.present?
-      @errors = errors
-      return render :new
+    if save_with_labels(@task, @label_names)
+      redirect_to tasks_path, notice: I18n.t('dictionary.messages.created_task')
+    else
+      @errors = validate_with_labels(@task, @label_names)
+      flash.now[:notice] = I18n.t('dictionary.messages.failed_save_task') if @errors.blank?
+      render :new
     end
-
-    save_with_labels(@task, @label_names)
-
-    redirect_to tasks_path, notice: I18n.t('dictionary.messages.created_task')
-  rescue StandardError
-    flash[:notice] = I18n.t('dictionary.messages.failed_save_task')
-    render :new
   end
 
   def destroy
@@ -127,8 +117,12 @@ class TasksController < ApplicationController
   end
 
   def save_with_labels(task, label_names)
-    label_names.each { |label| task.labels << Label.find_or_initialize_by(name: label) }
+    label_names.each do |label|
+      return false if Label.find_or_initialize_by(name: label).invalid?
 
-    raise StandardError unless task.save
+      task.labels << Label.find_or_initialize_by(name: label)
+    end
+
+    task.save
   end
 end

@@ -144,7 +144,7 @@ RSpec.describe 'Tasks', type: :request do
 
       before do
         create(:task_label, task_id: task.id, label_id: label.id)
-        allow(mock_tasks_controller).to receive(:save_with_labels).and_raise StandardError
+        allow(mock_tasks_controller).to receive(:save_with_labels).and_return false
         allow(TasksController).to receive(:new).and_return mock_tasks_controller
       end
 
