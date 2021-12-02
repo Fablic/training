@@ -5,6 +5,7 @@ class Task < ApplicationRecord
   validates :description, presence: true, length: { maximum: 1024 }
   validates :deadline_at, presence: true
   validate  :deadline_at_is_feature_datetime
+  validates :status, presence: true
 
   private
 

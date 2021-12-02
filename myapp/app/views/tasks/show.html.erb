@@ -1,11 +1,13 @@
 <h1><%= t '.title' %></h1>
 <%= h(flash[:success]) %>
 
-<p><%= t 'tasks.label.name' %></p>
-<%= @task.name %>
-<p><%= t 'tasks.label.description' %></p>
-<%= @task.description %>
-<p><%= t 'tasks.label.deadline_at' %></p>
-<%= l(@task.deadline_at, format: :long_ja) %>
+<h2><%= t 'tasks.label.name' %></h2>
+<%= @task.name %></p>
+<h2><%= t 'tasks.label.description' %></h2>
+<p><%= @task.description %></p>
+<h2><%= t 'tasks.label.status' %></h2>
+<p><%= @task.status_i18n %></p>
+<h2><%= t 'tasks.label.deadline_at' %></h2>
+<p><%= l(@task.deadline_at, format: :long_ja) %></p>
 <!--Bootstrapでデザインを入れる時にヘッダーで共通化予定-->
 <p><%= link_to '一覧に戻る', root_path, id: 'back_root_link' %></p>

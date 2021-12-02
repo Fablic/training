@@ -118,8 +118,8 @@ RSpec.describe 'Tasks System', type: :system, js: true do
       end
     end
 
-    context '新しいタスクを作成した時' do
-      it '新しいタスクが作成される' do
+    context '新しいタスクを作成した時(ステータスはDefault)' do
+      it '未着手のステータスで新しいタスクが作成される' do
         fill_in 'task_name', with: 'input Task'
         fill_in 'task_description', with: 'input Description'
         # nowだとクリックまでに時間経過してValidateに引っかかるため
@@ -134,6 +134,29 @@ RSpec.describe 'Tasks System', type: :system, js: true do
         expect(page).to have_content('タスク作成に成功しました！')
         expect(page).to have_content('input Task')
         expect(page).to have_content('input Description')
+        expect(page).to have_content('未着手')
+      end
+    end
+
+    context 'ステータスを変更して新しいタスクを作成した時' do
+      it '着手中のステータスで新しいタスクが作成される' do
+        fill_in 'task_name', with: 'input Task'
+        fill_in 'task_description', with: 'input Description'
+        # nowだとクリックまでに時間経過してValidateに引っかかるため
+        deadline_at = 1.hour.since
+        find('#task_status').find("option[value='in_progress']").select_option
+        find('#task_deadline_at_1i').find("option[value='#{deadline_at.strftime('%Y')}']").select_option
+        find('#task_deadline_at_2i').find("option[value='#{deadline_at.month}']").select_option
+        find('#task_deadline_at_3i').find("option[value='#{deadline_at.day}']").select_option
+        find('#task_deadline_at_4i').find("option[value='#{deadline_at.strftime('%H')}']").select_option
+        find('#task_deadline_at_5i').find("option[value='#{deadline_at.strftime('%M')}']").select_option
+        find('#post_task_button').click
+        expect(page).to have_selector('h1', text: 'タスク詳細')
+        expect(page).to have_content('タスク作成に成功しました！')
+        expect(page).to have_content('input Task')
+        expect(page).to have_content('input Description')
+        expect(page).to have_content(I18n.l(deadline_at, format: :long_ja))
+        expect(page).to have_content('着手中')
       end
     end
 
@@ -158,6 +181,8 @@ RSpec.describe 'Tasks System', type: :system, js: true do
       it '選択したタスクの詳細情報が表示される' do
         expect(page).to have_content(task.name)
         expect(page).to have_content(task.description)
+        expect(page).to have_content(I18n.l(task.deadline_at, format: :long_ja))
+        expect(page).to have_content(task.status_i18n)
       end
     end
 
@@ -184,11 +209,20 @@ RSpec.describe 'Tasks System', type: :system, js: true do
       it 'タスクの情報が変更されている' do
         fill_in 'task_name', with: 'update Task'
         fill_in 'task_description', with: 'update Description'
+        deadline_at = 1.week.since
+        find('#task_status').find("option[value='in_progress']").select_option
+        find('#task_deadline_at_1i').find("option[value='#{deadline_at.strftime('%Y')}']").select_option
+        find('#task_deadline_at_2i').find("option[value='#{deadline_at.month}']").select_option
+        find('#task_deadline_at_3i').find("option[value='#{deadline_at.day}']").select_option
+        find('#task_deadline_at_4i').find("option[value='#{deadline_at.strftime('%H')}']").select_option
+        find('#task_deadline_at_5i').find("option[value='#{deadline_at.strftime('%M')}']").select_option
         find('#post_task_button').click
         expect(page).to have_selector('h1', text: 'タスク詳細')
         expect(page).to have_content('タスク更新に成功しました！')
         expect(page).to have_content('update Task')
         expect(page).to have_content('update Description')
+        expect(page).to have_content(I18n.l(deadline_at, format: :long_ja))
+        expect(page).to have_content('着手中')
       end
     end
 
