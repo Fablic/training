@@ -105,7 +105,7 @@ ja:
       hour: 時
       day: 日
       month: 月
-      year: 年
+      year: 年a
   errors:
     format: "%{attribute}%{message}"
     messages:
@@ -203,5 +203,6 @@ ja:
     formats:
       default: "%Y年%m月%d日(%a) %H時%M分%S秒 %z"
       long: "%Y/%m/%d %H:%M"
+      long_ja: "%Y年%m月%d日(%a) %H時%M分"
       short: "%m/%d %H:%M"
     pm: 午後

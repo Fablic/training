@@ -11,6 +11,8 @@
     <%= f.text_field :name, placeholder: t('tasks.label.name') %>
     <%= f.label :description %>
     <%= f.text_area :description, placeholder: t('tasks.label.description') %>
+    <%= f.label :status %>
+    <%= f.select :status, Task.statuses_i18n.invert %>
     <%= f.label :deadline_at %>
     <%= f.datetime_select :deadline_at, {default: 1.weeks.since}, placeholder: t('tasks.label.deadline_at') %>
     <%= f.submit t('tasks.button.post'), class: "btn btn-primary", id: "post_task_button" %>
