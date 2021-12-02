@@ -3,6 +3,7 @@ ja:
     label:
       name: "タスク名"
       description: "説明"
+      deadline_at: "終了期限"
       edit: "編集"
       destroy: "削除"
 

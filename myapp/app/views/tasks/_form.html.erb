@@ -1,7 +1,17 @@
+<% if @task.errors.any? %>
+  <ul>
+    <% @task.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+<% end %>
+
 <%= form_for(@task) do |f| %>
     <%= f.label :name %>
     <%= f.text_field :name, placeholder: t('tasks.label.name') %>
     <%= f.label :description %>
     <%= f.text_area :description, placeholder: t('tasks.label.description') %>
+    <%= f.label :deadline_at %>
+    <%= f.datetime_select :deadline_at, {default: 1.weeks.since}, placeholder: t('tasks.label.deadline_at') %>
     <%= f.submit t('tasks.button.post'), class: "btn btn-primary", id: "post_task_button" %>
 <% end %>

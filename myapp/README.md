@@ -14,11 +14,11 @@
 
 | Column     | DataType | Options          | Descripition                          | 
 | ---------- | -------- | ---------------- | ------------------------------------- | 
-| title      | string   | NOT NULL         |                                       | 
-| content    | text     | NOT NULL         |                                       | 
+| name       | string   | NOT NULL         |  最大255文字                           | 
+| description| text     | NOT NULL         |  最大1024文字                        　| 
 | priority   | string   |                  |                                       | 
 | status     | string   | NOT NULL         |                                       | 
-| due_date   | date     | NOT NULL         |                                       | 
+| deadline_at   | datetime | NOT NULL         |                                       | 
 | user_id    | integer  |                  | usersテーブルの主キーを外部キーとする 　    | 
 | created_at | datetime | CURRENT_DATETIME |                                       | 
 | updated_at | datetime | CURRENT_DATETIME |                                       | 
