@@ -9,6 +9,7 @@ ja:
         status: ステータス
         priority: 優先度
         expires_at: 期限日時
+        created_at: 作成日時
   enums:
     task:
       priority:
