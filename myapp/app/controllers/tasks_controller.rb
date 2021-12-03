@@ -3,6 +3,11 @@ class TasksController < ApplicationController
 
   def index
     @tasks = Task.order("#{sort_column} #{sort_direction}")
+    content = params[:content]
+    if content.present?
+      @tasks = @tasks.where('name LIKE ?', "%#{content}%")
+                 .or(@tasks.where('description LIKE ?', "%#{content}%"))
+    end
   end
 
   def show

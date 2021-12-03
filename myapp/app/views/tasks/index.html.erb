@@ -1,5 +1,13 @@
 <h1><%= t '.title' %></h1>
 <%= h(flash[:success]) %>
+
+<div>
+  <%= form_with url: tasks_path,method: :get ,local: true do |f| %>
+    <%= f.text_field :content %>
+    <%= f.submit'検索' %>
+  <% end %>
+</div>
+
 <p><%= link_to 'タスク作成', new_task_path, id: 'new_task_link' %></p>
 <table>
     <thead>

@@ -77,7 +77,7 @@ RSpec.describe 'Tasks Model', type: :model do
 
     context 'statusの値が定義されてる値の時' do
       it 'バリデーションがTrueになる事' do
-        task.status = Task.statuses.keys.shuffle[0]
+        task.status = Task.statuses.keys.sample
         expect(task_valid).to eq true
       end
     end
