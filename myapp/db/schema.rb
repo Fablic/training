@@ -10,7 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_18_052452) do
+ActiveRecord::Schema.define(version: 2021_11_22_023764) do
+
+  create_table "labellings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.bigint "task_id", null: false
+    t.bigint "label_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["label_id"], name: "index_labellings_on_label_id"
+    t.index ["task_id"], name: "index_labellings_on_task_id"
+  end
+
+  create_table "labels", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "tasks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "task_name", limit: 20
@@ -39,5 +54,7 @@ ActiveRecord::Schema.define(version: 2021_11_18_052452) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "labellings", "labels"
+  add_foreign_key "labellings", "tasks"
   add_foreign_key "tasks", "users"
 end

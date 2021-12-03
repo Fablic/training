@@ -1,12 +1,14 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
-
   rescue_from Exception,                      with: :render_server_error
   rescue_from ActionController::RoutingError, with: :render_not_found
   rescue_from ActiveRecord::RecordNotFound,   with: :render_not_found
 
+  before_action :render_maint_for_whitelisted_ips, if: :maintenance_mode?
+
   protect_from_forgery with: :exception
+
   include SessionsHelper
 
   def routing_error
@@ -20,6 +22,14 @@ class ApplicationController < ActionController::Base
     redirect_to login_url
   end
 
+  def admin_user
+    redirect_to root_url unless admin?
+  end
+
+  def maintenance_mode?
+    File.exist?(Rails.public_path.join('maintenance.txt'))
+  end
+
   private
 
   def render_not_found(exc = nil)
@@ -30,5 +40,13 @@ class ApplicationController < ActionController::Base
   def render_server_error(exc = nil)
     logger.error "Rendering 500 with excaption: #{exc.message}" if exc
     render file: Rails.root.join('public/500_original.html'), status: :internal_server_error, layout: 'application', content_type: 'text/html'
+  end
+
+  def render_maint_for_whitelisted_ips
+    logger.info 'mainte mode'
+    ips_in_whitelist = (ENV['ALLOWED_IPS'] || '').split(',')
+    return if ips_in_whitelist.include?(request.remote_ip)
+
+    render file: Rails.root.join('public/maint.html'), status: :service_unavailable, layout: 'application', content_type: 'text/html'
   end
 end

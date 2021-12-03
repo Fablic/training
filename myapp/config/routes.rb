@@ -8,7 +8,13 @@ Rails.application.routes.draw do
   get    'login'   => 'sessions#new'
   post   'login'   => 'sessions#create'
   delete 'logout'  => 'sessions#destroy'
-  resources :users
+
+  scope '/admin' do
+    resources :users
+  end
+  # namespace :admin do
+  #   resources :users
+  # end
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   get '*not_found' => 'application#routing_error'
