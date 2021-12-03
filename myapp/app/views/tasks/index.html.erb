@@ -3,7 +3,10 @@
 
 <div>
   <%= form_with url: tasks_path,method: :get ,local: true do |f| %>
+    <%= f.label t('tasks.label.name') %>
     <%= f.text_field :content %>
+    <%= f.label t('tasks.label.status') %>
+    <%= f.select :status, Task.statuses_i18n.invert, { include_blank: true } %>
     <%= f.submit'検索' %>
   <% end %>
 </div>
