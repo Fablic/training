@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Task < ApplicationRecord
+  belongs_to :user
+
   enum status_list: {
     todo: 'todo',
     inProgress: 'inProgress',
@@ -23,17 +25,19 @@ class Task < ApplicationRecord
 
   def valid_date_from_to?
     return unless self.start_date.present? && self.end_date.present?
-    
+
     errors.add(:end_date, I18n.t('activerecord.errors.messages.earlier_date_error', start: I18n.t('tasks.common.end_date'))) unless
       self.start_date < self.end_date 
+  end
 
   scope :search_condition, lambda { |search_params|
                              return if search_params.blank?
 
                              task_name_like(search_params[:task_name_cont])
-                               .status_is(search_params[:status_eq])
-                           }
+                             .status_is(search_params[:status_eq])
+                             .user_id_is(search_params[:user_id])}
 
   scope :task_name_like, -> (task_name_cont) { where('task_name LIKE ?', "%#{task_name_cont}%") if task_name_cont.present? }
   scope :status_is, -> (status_eq) { where(status: status_eq) if status_eq.present? }
+  scope :user_id_is, -> (user_id) { where(user_id: user_id) if user_id.present? }
 end

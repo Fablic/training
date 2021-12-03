@@ -4,11 +4,13 @@
 class TasksController < ApplicationController
   helper_method :sort_direction
 
+  before_action :logged_in_user
   before_action :set_task, only: %i[show edit update destroy]
 
   def index
 #    @tasks = Task.all
     @search_params = user_search_params
+    @search_params[:user_id] = current_user.id
     @tasks = Task.search_condition(@search_params)
     @tasks = @tasks.order("#{sort_column} #{sort_direction}")
     @tasks = @tasks.page(params[:page]).per(10)
@@ -25,7 +27,7 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.new(post_params)
+    @task = current_user.tasks.new(post_params)
 
     if @task.save
       flash[:notice] = t('tasks.flash.complete_task_registration')
@@ -82,7 +84,8 @@ class TasksController < ApplicationController
   def post_params
     params.require(:task).permit(
       :task_name, :description, :status,
-      :priority, :label, :start_date, :end_date)
+      :priority, :label, :start_date, :end_date,
+      :user_id)
   end
 
   def sort_direction
