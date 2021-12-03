@@ -1,0 +1,26 @@
+<% provide(:title, "Log in") %>
+<h1><%= t(".title") %></h1>
+
+<% if flash[:notice] %>
+  <p><%= flash[:notice] %></p>
+<% end %>
+<% if flash[:error] %>
+  <p><%= flash[:error] %></p>
+<% end %> 
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_for(:session, url: login_path) do |f| %>
+
+      <%= f.label :login_id, t('login.new.id') %>
+      <%= f.text_field :login_id, class: 'form-control' %>
+
+      <%= f.label :password, t('login.new.password')  %>
+      <%= f.password_field :password, class: 'form-control' %>
+
+      <p><%= f.submit t('login.new.login'), class: "btn btn-primary" %></p>
+    <% end %>
+
+    <p><%= link_to t('login.new.signup'), '/' %></p>
+  </div>
+</div>

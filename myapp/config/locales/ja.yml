@@ -7,6 +7,10 @@ ja:
       error_task_edit: 'タスク更新がエラーとなりました。'
       complete_task_destroy: 'タスク削除が完了しました。'
       error_task_destroy: 'タスク削除がエラーとなりました。'
+  sessions:
+    flash:
+      invalid_login: 'IDまたはパスワードが間違えています。'
+      no_login: 'ログインしてください。'
   activerecord:
     check:
       messages:

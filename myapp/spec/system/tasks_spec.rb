@@ -3,7 +3,15 @@
 require 'rails_helper'
 
 RSpec.describe 'tasks', type: :system do
-  let!(:task_list) { create_list(:task, 5) }
+  let!(:user) { create(:user) }
+  let!(:task_list) { create_list(:task, 5, user_id: user.id) }
+
+  before do
+    visit login_path
+    fill_in 'session_login_id', with: user.login_id
+    fill_in 'session_password', with: user.password
+    click_button I18n.t('login.new.login')
+  end
 
   describe 'New task' do
     before { visit new_task_path() }
@@ -115,7 +123,7 @@ RSpec.describe 'tasks', type: :system do
       context 'Screen display confirmation' do
         it 'Destroy' do
           page.all('#click_destroy')[0].click
-          
+
           expect(page).to have_content I18n.t('tasks.index.title')
           expect(page).to have_content I18n.t('tasks.flash.complete_task_destroy')
         end
@@ -148,7 +156,6 @@ RSpec.describe 'tasks', type: :system do
         end
 
         it 'Go to Show page' do
-          #byebug
           expect(page).to have_content task_list[0].task_name
           page.all('#click_show')[0].click
           expect(page).to have_content I18n.t('tasks.show.title')
@@ -183,8 +190,8 @@ RSpec.describe 'tasks', type: :system do
     context 'when click link to sort by end_date asc' do
       it 'sort success' do
         click_on I18n.t('tasks.common.end_date') # 1回押す(昇順)
-        expect(find('#task_list > tbody:nth-child(2) > tr:nth-child(2)')).to have_content I18n.l task_list[1].end_date
-        expect(find('#task_list > tbody:nth-child(2) > tr:nth-child(4)')).to have_content I18n.l task_list[3].end_date
+        expect(find('#task_list > tbody:nth-child(2) > tr:nth-child(1)')).to have_content I18n.l task_list[4].end_date
+        expect(find('#task_list > tbody:nth-child(2) > tr:nth-child(4)')).to have_content I18n.l task_list[1].end_date
       end
     end
 
@@ -192,8 +199,8 @@ RSpec.describe 'tasks', type: :system do
       it 'sort success' do
         click_on I18n.t('tasks.common.end_date') # 1回押す(昇順)
         click_on I18n.t('tasks.common.end_date') # 2回押す(降順)
-        expect(find('#task_list > tbody:nth-child(2) > tr:nth-child(2)')).to have_content I18n.l task_list[3].end_date
-        expect(find('#task_list > tbody:nth-child(2) > tr:nth-child(4)')).to have_content I18n.l task_list[1].end_date
+        expect(find('#task_list > tbody:nth-child(2) > tr:nth-child(1)')).to have_content I18n.l task_list[0].end_date
+        expect(find('#task_list > tbody:nth-child(2) > tr:nth-child(4)')).to have_content I18n.l task_list[3].end_date
       end
     end
   end
@@ -204,7 +211,7 @@ RSpec.describe 'tasks', type: :system do
     let(:task_name_origin_prefix) { 'Task_name_' }
     let(:task_name) { 'search_keyword' }
     let(:status) { 'inProgress' }
-    let!(:task_search) { create(:task, task_name: task_name, status: status) }
+    let!(:task_search) { create(:task, task_name: task_name, status: status, user_id: user.id) }
 
     context 'when search all' do
       it 'search success' do
