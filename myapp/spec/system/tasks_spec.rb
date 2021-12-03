@@ -4,7 +4,7 @@ RSpec.describe 'Tasks System', type: :system, js: true do
   let(:task) { create(:task, deadline_at: 3.days.since) }
   # Listで作ると降順にならないので一旦この作り方
   let(:task_second) { create(:task, deadline_at: 2.days.since, created_at: Date.today + 1) }
-  let(:task_third) { create(:task, deadline_at: 1.day.since, created_at: Date.today + 2) }
+  let(:task_third) { create(:task, deadline_at: 1.day.since, created_at: Date.today + 2, status: 'done') }
 
   describe 'タスク一覧画面' do
     before do
@@ -103,6 +103,15 @@ RSpec.describe 'Tasks System', type: :system, js: true do
         expect(find('#task_row_0').first('td').text).to eq task.name
         expect(find('#task_row_1').first('td').text).to eq task_second.name
         expect(find('#task_row_2').first('td').text).to eq task_third.name
+      end
+    end
+
+    context 'タスクとステータスを埋めて検索ボタンを押した時' do
+      it '条件に合致するタスクが一覧に表示される' do
+        fill_in 'search_content', with: task_third.name
+        find('#search_status').find("option[value='#{task_third.status}']").select_option
+        find('#search_submit').click
+        expect(page).to have_selector('a', text: task_third.name)
       end
     end
   end
