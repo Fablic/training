@@ -2,7 +2,7 @@ class TasksController < ApplicationController
   helper_method :sort_column, :sort_direction
 
   def index
-    @tasks = Task.order("#{sort_column} #{sort_direction}")
+    @tasks = Task.order("#{sort_column} #{sort_direction}").page(params[:page]).per(10)
     content = params[:content]
     status = params[:status]
     @tasks = @tasks.where('name LIKE ?', "%#{content}%") if content.present?
