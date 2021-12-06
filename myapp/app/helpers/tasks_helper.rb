@@ -11,17 +11,13 @@ module TasksHelper
     return sort_direction == 'asc' ? '↑' : '↓' if column == sort_column
   end
 
-  def put_priority(priority)
+  def translate_priority(priority)
     return if priority.nil?
     return I18n.t("enums.task.priority.#{priority}") if Task.priorities.keys.include?(priority)
-
-    raise "Unexpected priority `#{priority}` is set."
   end
 
-  def put_status(status)
+  def translate_status(status)
     return if status.nil?
     return I18n.t("enums.task.status.#{status}") if Task.statuses.keys.include?(status)
-
-    raise "Unexpected status `#{status}` is set."
   end
 end

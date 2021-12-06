@@ -12,7 +12,6 @@ class TasksController < ApplicationController
   def index
     @task = Task.new
     @tasks = Task.search(params).page(params[:page]).per(PAGE_LIMIT).order("#{sort_column} #{sort_direction}")
-    # @tasks = Kaminari.paginate_array(@tasks)
   end
 
   # GET /tasks/1 or /tasks/1.json
