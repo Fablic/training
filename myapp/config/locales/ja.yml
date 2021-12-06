@@ -105,7 +105,7 @@ ja:
       hour: 時
       day: 日
       month: 月
-      year: 年a
+      year: 年
   errors:
     format: "%{attribute}%{message}"
     messages:
