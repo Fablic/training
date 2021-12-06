@@ -8,11 +8,16 @@ class TasksController < ApplicationController
   helper_method :sort_column, :sort_direction, :status_selected
 
   before_action :set_task, only: %i[show edit update destroy]
+  before_action :logged_in_user
 
   def index
     @task = Task.new
-    @tasks = Task.search(params).page(params[:page]).per(PAGE_LIMIT).order("#{sort_column} #{sort_direction}")
-    # @tasks = Kaminari.paginate_array(@tasks)
+    @tasks = current_user
+    .tasks
+    .search(params)
+    .page(params[:page])
+    .per(PAGE_LIMIT)
+    .order("#{sort_column} #{sort_direction}")
   end
 
   # GET /tasks/1 or /tasks/1.json
@@ -21,7 +26,7 @@ class TasksController < ApplicationController
 
   # GET /tasks/new
   def new
-    @task = Task.new
+    @task = current_user.tasks.new
   end
 
   # GET /tasks/1/edit
@@ -30,7 +35,7 @@ class TasksController < ApplicationController
 
   # POST /tasks or /tasks.json
   def create
-    @task = Task.new(task_params)
+    @task = current_user.tasks.build(task_params)
 
     respond_to do |format|
       if @task.save
@@ -82,5 +87,12 @@ class TasksController < ApplicationController
 
   def status_selected
     Task.statuses.keys.include?(params[:status]) ? params[:status] : ''
+  end
+
+  def logged_in_user
+    return if logged_in?
+
+    flash[:danger] = 'Please log in.'
+    redirect_to login_url
   end
 end
