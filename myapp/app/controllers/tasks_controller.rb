@@ -10,7 +10,6 @@ class TasksController < ApplicationController
   before_action :set_task, only: %i[show edit update destroy]
 
   def index
-    @task = Task.new
     @tasks = Task.search(params).page(params[:page]).per(PAGE_LIMIT).order("#{sort_column} #{sort_direction}")
   end
 
