@@ -1,13 +1,25 @@
 <h1><%= t '.title' %></h1>
 <%= h(flash[:success]) %>
 
-<h2><%= t 'tasks.label.name' %></h2>
-<%= @task.name %></p>
-<h2><%= t 'tasks.label.description' %></h2>
-<p><%= @task.description %></p>
-<h2><%= t 'tasks.label.status' %></h2>
-<p><%= @task.status_i18n %></p>
-<h2><%= t 'tasks.label.deadline_at' %></h2>
-<p><%= l(@task.deadline_at, format: :long_ja) %></p>
-<!--Bootstrapでデザインを入れる時にヘッダーで共通化予定-->
-<p><%= link_to '一覧に戻る', root_path, id: 'back_root_link' %></p>
+<table class="table table-sm table-bordered mt-4">
+  <tbody>
+  <tr>
+    <th scope='row'><%= t 'tasks.label.name' %></th>
+    <td><%= @task.name %></td>
+  </tr>
+  <tr>
+    <th scope='row'><%= t 'tasks.label.description' %></th>
+    <td><%= @task.description %></td>
+  </tr>
+  <tr>
+    <th scope='row'><%= t 'tasks.label.status' %></th>
+    <td><%= @task.status_i18n %></td>
+  </tr>
+  <tr>
+    <th scope='row'><%= t 'tasks.label.deadline_at' %></th>
+    <td><%= l(@task.deadline_at, format: :long_ja) %></td>
+  </tr>
+  </tbody>
+</table>
+
+<%= link_to '一覧に戻る', root_path, id: 'back_root_link' %>
