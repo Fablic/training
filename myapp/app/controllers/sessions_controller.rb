@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
       log_in user
       redirect_to root_path
     else
-      flash.now[:danger] = 'Invalid email/password combination'
+      flash.now[:danger] = I18n.t('pages.session.flash.login_fail')
       render 'new'
     end
   end

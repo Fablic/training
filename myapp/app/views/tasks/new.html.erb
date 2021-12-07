@@ -1,7 +1,7 @@
 <div class="container">
 
     <h1><%=  t('activerecord.models.task') + t('common.new') %></h1>
-    <%= render partial: "form", locals: { task: @task } %>
+    <%= render partial: 'form', locals: { task: @task } %>
 
     <%= link_to t('common.index'), tasks_path %>
 </div>

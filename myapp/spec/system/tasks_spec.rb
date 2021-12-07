@@ -3,19 +3,18 @@
 require 'rails_helper'
 
 RSpec.describe 'Tasks', type: :system do
+  let!(:user) { FactoryBot.create(:user) }
+  let!(:tasks) { FactoryBot.create_list(:task, 2, user: user) }
+  let!(:query_params) {
+    {
+      status: tasks.last.status,
+      title: tasks.last.title.slice(5, 5),
+    }
+  }
+
+  before { login_as(user) }
+
   describe '#index' do
-    let!(:tasks) { FactoryBot.create_list(:task, 2) }
-    let!(:query_params) {
-      {
-        status: tasks.last.status,
-        title: tasks.last.title.slice(5, 5),
-      }
-    }
-
-    before {
-      visit root_path()
-    }
-
     example 'all tasks are displayed.' do
       expect(page).to have_content tasks.last.title
     end
@@ -37,30 +36,30 @@ RSpec.describe 'Tasks', type: :system do
 
     example 'a task can be deleted.' do
       expect {
-        page.first('[data-method="delete"]').click
+        page.first('.destroy').click
       }.to change(Task, :count).by(-1)
     end
 
     context 'when sorting by created_at,' do
       example 'tasks can be sorted in ascending direcction.' do
-        visit tasks_url(sort: 'created_at', direction: 'asc')
+        visit root_path(sort: 'created_at', direction: 'asc')
         expect(page.body.index(tasks.first.title)).to be < page.body.index(tasks.last.title)
       end
 
       example 'tasks can be sorted in descending direcction.' do
-        visit tasks_url(sort: 'created_at', direction: 'desc')
+        visit root_path(sort: 'created_at', direction: 'desc')
         expect(page.body.index(tasks.first.title)).to be > page.body.index(tasks.last.title)
       end
     end
 
     context 'when sorting by expires_at,' do
       example 'tasks can be sorted in ascending direcction.' do
-        visit tasks_url(sort: 'expires_at', direction: 'asc')
+        visit root_path(sort: 'expires_at', direction: 'asc')
         expect(page.body.index(tasks.first.title)).to be < page.body.index(tasks.last.title)
       end
 
       example 'tasks can be sorted in descending direcction.' do
-        visit tasks_url(sort: 'expires_at', direction: 'desc')
+        visit root_path(sort: 'expires_at', direction: 'desc')
         expect(page.body.index(tasks.first.title)).to be > page.body.index(tasks.last.title)
       end
     end
@@ -183,6 +182,14 @@ RSpec.describe 'Tasks', type: :system do
       visit task_path(task)
       click_link I18n.t('common.destroy')
       expect { task.reload }.to raise_error(ActiveRecord::RecordNotFound)
+    end
+  end
+
+  context 'without login' do
+    example 'redirect to login_path' do
+      visit logout_path
+      visit tasks_path
+      expect(page).to have_current_path login_path
     end
   end
 end

@@ -7,6 +7,8 @@ ja:
     submit: 送信
     destroy: 削除
     search: 検索
+    login: ログイン
+    logout: ログアウト
   pages:
     tasks:
       flash:
@@ -16,3 +18,7 @@ ja:
         fail: タスクの登録に失敗しました。
       confirm:
         destroy: 本当に削除してよろしいですか？
+    session:
+      flash:
+        login: ログインしてください。
+        login_fail: メールアドレスまたはパスワードが間違っています。

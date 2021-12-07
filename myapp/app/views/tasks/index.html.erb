@@ -47,16 +47,16 @@
       <tr>
         <td><%= link_to task.title, task %></td>
         <td>
-          <%= put_status(task.status) %>
+          <%= translate_status(task.status) %>
         </td>
         <td>
-          <%= put_priority(task.priority) %>
+          <%= translate_priority(task.priority) %>
         </td>
         <td><%= link_to task.expires_at.to_s, task %></td>
         <td><%= link_to task.created_at.to_s, task %></td>
         <td><%= link_to t('common.edit'), edit_task_path(task) %></td>
         <td>
-          <%= link_to t('common.destroy'), task, method: :delete, data: { confirm: I18n.t('pages.tasks.confirm.destroy') } %>
+          <%= link_to t('common.destroy'), task, method: :delete, data: { confirm: I18n.t('pages.tasks.confirm.destroy') }, class: 'destroy' %>
         </td>
       </tr>
       <% end %>

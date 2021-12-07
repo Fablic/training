@@ -11,7 +11,6 @@ class TasksController < ApplicationController
   before_action :logged_in_user
 
   def index
-    @task = Task.new
     @tasks = current_user
     .tasks
     .search(params)
@@ -92,7 +91,7 @@ class TasksController < ApplicationController
   def logged_in_user
     return if logged_in?
 
-    flash[:danger] = 'Please log in.'
+    flash[:danger] = I18n.t('pages.session.flash.login')
     redirect_to login_url
   end
 end
