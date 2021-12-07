@@ -33,4 +33,11 @@ class Task < ApplicationRecord
     allow_blank: true,
     inclusion: { in: self.priorities.keys },
   }
+  scope :search_title, -> (title) { where('title LIKE ?', "%#{ApplicationRecord.sanitize_sql_like(title)}%") if title.present? }
+
+  scope :search_status, ->(status) { where(status: status) if status.present? }
+
+  def self.search(params)
+    search_title(params[:title]).search_status(params[:status])
+  end
 end

@@ -30,6 +30,10 @@ gem 'bootsnap', '>= 1.4.2', require: false
 
 gem 'rails-i18n'
 gem 'enum_help'
+gem 'kaminari'
+gem 'bootstrap', '~> 4.1.1'
+gem 'jquery-rails'
+gem 'bootstrap4-kaminari-views'
 
 group :development, :test do
   gem 'rspec-rails'

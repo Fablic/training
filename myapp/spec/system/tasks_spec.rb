@@ -5,6 +5,12 @@ require 'rails_helper'
 RSpec.describe 'Tasks', type: :system do
   describe '#index' do
     let!(:tasks) { FactoryBot.create_list(:task, 2) }
+    let!(:query_params) {
+      {
+        status: tasks.last.status,
+        title: tasks.last.title.slice(5, 5),
+      }
+    }
 
     before {
       visit root_path()
@@ -12,6 +18,16 @@ RSpec.describe 'Tasks', type: :system do
 
     example 'all tasks are displayed.' do
       expect(page).to have_content tasks.last.title
+    end
+
+    context 'with filtering params' do
+      before {
+        visit root_path query_params
+      }
+
+      example 'filtered task is displayed.' do
+        expect(page).to have_no_content tasks.first.title
+      end
     end
 
     example 'one task can be shown.' do

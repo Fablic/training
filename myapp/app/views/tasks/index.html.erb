@@ -1,40 +1,70 @@
 <%= stylesheet_link_tag params[:controller] %>
 
-<p id="notice"><%= notice %></p>
+<div class="container">
+  <p id="notice"><%= notice %></p>
 
-<h1><%= t('activerecord.models.task') + t('common.index') %></h1>
+  <h1><%= t('activerecord.models.task') + t('common.index') %></h1>
 
-<table class="tasks">
-  <thead>
-    <tr>
-      <th><%= t('activerecord.attributes.task.title') %></th>
-      <th><%= t('activerecord.attributes.task.status') %></th>
-      <th><%= t('activerecord.attributes.task.priority') %></th>
-      <th>
-        <%= sort_order 'expires_at', "#{t('activerecord.attributes.task.expires_at')}#{direction_arrow('expires_at')}" %>
-      </th>
-      <th>
-        <%= sort_order 'created_at', "#{t('activerecord.attributes.task.created_at')}#{direction_arrow('created_at')}" %>
-      </th>
-      <th><%= t('common.edit') %></th>
-      <th><%= t('common.destroy') %></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @tasks.each do |task| %>
+  <%= form_with url: request.path, method: :get, local: true do |form| %>
+  <div id="filter">
+    <h2>フィルター</h2>
+    <%= hidden_field_tag :sort, params[:sort] %>
+    <%= hidden_field_tag :direction, params[:direction] %>
+    <div class="form-row">
+      <div class="form-group col-md-2">
+        <%= form.label t('activerecord.attributes.task.status') %>:
+        <%= form.select :status, options_for_select(Task.statuses.keys.map {|k| [I18n.t("enums.task.status.#{k}"), k]}, {selected: status_selected}), {include_blank: true}, class: 'form-control' %>
+      </div>
+      <div class="form-group col-md-3">
+        <%= form.label t('activerecord.attributes.task.title') %>:
+        <%= form.text_field :title, placeholder: t('activerecord.attributes.task.title'), value: params[:title], class: 'form-control' %>
+      </div>
+    </div>
+    <%= form.submit t('common.search'), class: 'btn btn-primary' %>
+
+  </div>
+  <% end %>
+
+  <hr>
+  <table class="tasks">
+    <thead>
+      <tr>
+        <th><%= t('activerecord.attributes.task.title') %></th>
+        <th><%= t('activerecord.attributes.task.status') %></th>
+        <th><%= t('activerecord.attributes.task.priority') %></th>
+        <th>
+          <%= sort_order 'expires_at', "#{t('activerecord.attributes.task.expires_at')}#{direction_arrow('expires_at')}" %>
+        </th>
+        <th>
+          <%= sort_order 'created_at', "#{t('activerecord.attributes.task.created_at')}#{direction_arrow('created_at')}" %>
+        </th>
+        <th><%= t('common.edit') %></th>
+        <th><%= t('common.destroy') %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @tasks.each do |task| %>
       <tr>
         <td><%= link_to task.title, task %></td>
-        <td><%= link_to task.status.to_s , task %></td>
-        <td><%= link_to task.priority.to_s , task %></td>
+        <td>
+          <%= translate_status(task.status) %>
+        </td>
+        <td>
+          <%= translate_priority(task.priority) %>
+        </td>
         <td><%= link_to task.expires_at.to_s, task %></td>
         <td><%= link_to task.created_at.to_s, task %></td>
         <td><%= link_to t('common.edit'), edit_task_path(task) %></td>
-        <td><%= link_to t('common.destroy'), task, method: :delete, data: { confirm: I18n.t('pages.tasks.confirm.destroy') } %></td>
+        <td>
+          <%= link_to t('common.destroy'), task, method: :delete, data: { confirm: I18n.t('pages.tasks.confirm.destroy') } %>
+        </td>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+      <% end %>
+    </tbody>
+  </table>
+  <%= paginate @tasks, theme: 'twitter-bootstrap-4' %>
 
-<br>
+  <hr>
 
-<%= link_to t('common.new'), new_task_path %>
+  <%= link_to t('common.new'), new_task_path %>
+</div>

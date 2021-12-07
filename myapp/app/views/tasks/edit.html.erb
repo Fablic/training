@@ -1,6 +1,8 @@
-<h1><%=  t('activerecord.models.task') + t('common.edit') %></h1>
+<div class="container">
+  <h1><%=  t('activerecord.models.task') + t('common.edit') %></h1>
 
-<%= render 'form', task: @task %>
+  <%= render 'form', task: @task %>
 
-<%= link_to t('common.show'), @task %> |
-<%= link_to t('common.index'), tasks_path %>
+  <%= link_to t('common.show'), @task %> |
+  <%= link_to t('common.index'), tasks_path %>
+</div>

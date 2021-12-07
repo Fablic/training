@@ -4,6 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'Task Model', type: :model do
   let!(:task) { FactoryBot.create(:task) }
+  let!(:tasks) { FactoryBot.create_list(:task, 10) }
 
   describe 'title' do
     context 'when blank' do
@@ -72,6 +73,61 @@ RSpec.describe 'Task Model', type: :model do
     it 'can be blank' do
       task.expires_at = ''
       expect(task.valid?).to eq true
+    end
+  end
+
+  describe '#search_title' do
+    context 'when prefix match' do
+      it 'can find the row' do
+        result = Task.search_title(tasks.first.title.slice(0, 5))
+        expect(result.first.title == tasks.first.title).to eq true
+      end
+    end
+
+    context 'when backward match' do
+      it 'can find the row' do
+        result = Task.search_title(tasks.first.title.slice(-5, 5))
+        expect(result.first.title == tasks.first.title).to eq true
+      end
+    end
+  end
+
+  describe '#search_status' do
+    context 'when prefix match' do
+      it 'can find the row' do
+        result = Task.search_status(tasks.last.status)
+        expect(result.last.title == tasks.last.title).to eq true
+      end
+    end
+  end
+
+  describe '#search' do
+    context 'with multi params' do
+      let(:param) {
+        {
+          title: tasks.first.title.slice(5, 5),
+          status: tasks.first.status,
+        }
+      }
+
+      it 'can find the row' do
+        result = Task.search(param)
+        expect(result.first.title == tasks.first.title).to eq true
+      end
+    end
+
+    context 'with title param' do
+      it 'can find the row' do
+        result = Task.search({ title: tasks.first.title.slice(5, 5) })
+        expect(result.first.title == tasks.first.title).to eq true
+      end
+    end
+
+    context 'with status params' do
+      it 'can find the row' do
+        result = Task.search({ status: tasks.first.status })
+        expect(result.first.title == tasks.first.title).to eq true
+      end
     end
   end
 end
