@@ -6,6 +6,8 @@
         <% if logged_in? %>
         <%= link_to I18n.t('common.logout'), logout_path, method: 'delete', class: 'btn btn-primary' %>
         </li>
+        <% elsif request.path.eql?(login_path) %>
+        <% #ログインページの場合は表示しない %>
         <% else %>
         <li><%= link_to I18n.t('common.login'), login_path, class: 'btn btn-primary' %></li>
         <% end %>
