@@ -1,8 +1,11 @@
 class Task < ApplicationRecord
+  enum status: { not_started: 0, in_progress: 1, done: 2 }
+
   validates :name, presence: true, length: { maximum: 255 }
   validates :description, presence: true, length: { maximum: 1024 }
   validates :deadline_at, presence: true
   validate  :deadline_at_is_feature_datetime
+  validates :status, presence: true
 
   private
 

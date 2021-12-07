@@ -67,5 +67,25 @@ RSpec.describe 'Tasks Model', type: :model do
         expect(task_valid).to eq false
       end
     end
+
+    context 'statusの値がnil' do
+      it 'バリデーションがFalseになる事' do
+        task.status = nil
+        expect(task_valid).to eq false
+      end
+    end
+
+    context 'statusの値が定義されてる値の時' do
+      it 'バリデーションがTrueになる事' do
+        task.status = Task.statuses.keys.sample
+        expect(task_valid).to eq true
+      end
+    end
+
+    context 'statusの値が定義されていない値の時' do
+      it '無効となること' do
+        expect { task.status = 'not-defined' }.to raise_error(ArgumentError, "'not-defined' is not a valid status")
+      end
+    end
   end
 end

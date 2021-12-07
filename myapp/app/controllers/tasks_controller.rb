@@ -2,7 +2,11 @@ class TasksController < ApplicationController
   helper_method :sort_column, :sort_direction
 
   def index
-    @tasks = Task.order("#{sort_column} #{sort_direction}")
+    @tasks = Task.order("#{sort_column} #{sort_direction}").page(params[:page]).per(10)
+    content = params[:content]
+    status = params[:status]
+    @tasks = @tasks.where('name LIKE ?', "%#{content}%") if content.present?
+    @tasks = @tasks.where(status: status) if status.present?
   end
 
   def show
@@ -46,7 +50,7 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:name, :description, :deadline_at)
+    params.require(:task).permit(:name, :description, :deadline_at, :status)
   end
 
   def sort_direction

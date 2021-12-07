@@ -14,3 +14,4 @@ ja:
         name: 'タスク名'
         description: '詳細'
         deadline_at: '終了期限'
+        status: "ステータス"

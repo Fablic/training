@@ -1,5 +1,16 @@
 <h1><%= t '.title' %></h1>
 <%= h(flash[:success]) %>
+
+<div>
+  <%= form_with url: tasks_path,method: :get ,local: true do |f| %>
+    <%= f.label t('tasks.label.name') %>
+    <%= f.text_field :content ,id: "search_content", maxlength: 255 , size: 20 %>
+    <%= f.label t('tasks.label.status') %>
+    <%= f.select :status, Task.statuses_i18n.invert, { include_blank: true },id: "search_status" %>
+    <%= f.submit'検索' ,id: "search_submit" %>
+  <% end %>
+</div>
+
 <p><%= link_to 'タスク作成', new_task_path, id: 'new_task_link' %></p>
 <table>
     <thead>
@@ -7,6 +18,7 @@
           <th><%= sort_order "name", t('tasks.label.name') %></th>
           <th><%= sort_order "description", t('tasks.label.description') %></th>
           <th><%= sort_order "deadline_at", t('tasks.label.deadline_at') %></th>
+          <th><%= sort_order "status", t('tasks.label.status') %></th>
           <th><%= t 'tasks.label.edit' %></th>
           <th><%= t 'tasks.label.destroy' %></th>
         </tr>
@@ -16,7 +28,8 @@
             <tr id="task_row_<%= i %>">
               <td><%= link_to task.name, task,id: "task_name_#{task.id}" %></td>
               <td><%= task.description %></td>
-              <td><%= task.deadline_at %></td>
+              <td><%= l(task.deadline_at, format: :long_ja) %></td>
+              <td><%= task.status_i18n %></td>
               <td><%= link_to t('tasks.label.edit'), edit_task_path(task) ,id: "link_edit_task_#{task.id}"%></td>
               <td><%= link_to t('tasks.label.destroy'), task, method: :delete,
                                               data: { confirm: t('tasks.message.destroy') } ,id: "link_destroy_task_#{task.id}"%></td>
@@ -24,3 +37,5 @@
         <% end %>
     </tbody>
 </table>
+
+<%= paginate @tasks %>
