@@ -70,8 +70,6 @@ rails maint:stop
 | :---          | :---     | ---:   | ---:    | ---:     | :---              | :---                    |
 | id            | int      | 10     |       - | not null | primary; auto inc |                         |
 | name          | vchr     | 20     |       - | not null | unique            |                         |
-| color         | chr      | 6      |       - |     null |                   |                         |
-| deleted       | int      | 1      |       0 | not null |                   | 0 = active, 1 = deleted |
 | created_at    | datetime |      - |       - | not null |                   |                         |
 | updated_at    | datetime |      - |    null | null     |                   |                         |
 

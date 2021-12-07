@@ -9,42 +9,42 @@ class TasksController < ApplicationController
 
   def new
     @task = Task.new
-    @label_names = ''
-    @submit_label = I18n.t('dictionary.words.save_to_create')
+    @label_names = []
+  end
+
+  def create
+    post_params = task_params
+    post_params['user_id'] = current_user.id
+    @task = Task.new(post_params)
+    @label_names = task_labels[:labels].split(',')
+    labels = build_labels(@label_names)
+
+    return render :new unless validate_all(@task, labels)
+
+    return save_success if Task.save_all(@task, labels)
+
+    save_fault(:new)
   end
 
   def edit
     @task = Task.available(current_user.id).find_by(id: params[:id])
-    @submit_label = I18n.t('dictionary.words.save_to_update')
 
-    @label_ids = TaskLabel.where(task_id: params[:id]).pluck(:label_id)
-    @label_names = Label.where(id: @label_ids).pluck(:name).join(',')
+    return render404 if @task.nil?
 
-    render404 if @task.nil?
+    @label_names = @task.labels.pluck(:name)
   end
 
-  def update # rubocop:disable Metrics/AbcSize
-    post_params = task_params
-    post_labels = task_labels[:labels]
+  def update
+    @task = current_task
+    @task.attributes = task_params
+    @label_names = task_labels[:labels].split(',')
+    labels = build_labels(@label_names)
 
-    @task = build_post_task(Task.available(current_user.id).find_by(id: params[:id]), post_params)
-    errors = validate_task_and_labels(@task, post_labels)
+    return render :edit unless validate_all(@task, labels)
 
-    if errors.present?
-      @submit_label = I18n.t('dictionary.words.save_to_update')
-      @label_names = post_labels
-      @errors = errors
-      return render :edit
-    end
+    return save_success if Task.save_all(@task, labels)
 
-    if Task.save_task_and_label(current_user.id, params[:id], post_params, post_labels)
-      redirect_to tasks_path, notice: I18n.t('dictionary.messages.edited_task')
-    else
-      @submit_label = I18n.t('dictionary.words.save_to_update')
-      @label_names = post_labels
-      flash[:notice] = I18n.t('dictionary.messages.failed_save_task')
-      render :edit
-    end
+    save_fault(:edit)
   end
 
   def show
@@ -52,31 +52,6 @@ class TasksController < ApplicationController
     @task = Task.available(current_user.id).includes(:labels).find_by(id: id)
 
     render404 if @task.nil?
-  end
-
-  def create # rubocop:disable Metrics/AbcSize
-    post_params = task_params
-    post_labels = task_labels[:labels]
-
-    @task = Task.new(post_params)
-
-    errors = validate_task_and_labels(@task, post_labels)
-
-    if errors.present?
-      @submit_label = I18n.t('dictionary.words.save_to_create')
-      @label_names = post_labels
-      @errors = errors
-      return render :new
-    end
-
-    if Task.save_task_and_label(current_user.id, nil, post_params, post_labels)
-      redirect_to tasks_path, notice: I18n.t('dictionary.messages.created_task')
-    else
-      @submit_label = I18n.t('dictionary.words.save_to_create')
-      @label_names = post_labels
-      flash[:notice] = I18n.t('dictionary.messages.failed_save_task')
-      render :new
-    end
   end
 
   def destroy
@@ -90,10 +65,10 @@ class TasksController < ApplicationController
     redirect_to tasks_path
   end
 
-  def search # rubocop:disable Metrics/AbcSize
+  def search
     return redirect_to tasks_path if params[:keyword].blank? && params[:status].blank?
 
-    @tasks = Task.search(params[:keyword], params[:status], current_user.id, "#{sort_column} #{sort_direction}").page(params[:page]).per(10)
+    @tasks = searched_tasks
     @keyword = params[:keyword]
     @status = params[:status]
 
@@ -101,6 +76,10 @@ class TasksController < ApplicationController
   end
 
   private
+
+  def searched_tasks
+    Task.search(params[:keyword], params[:status], current_user.id, "#{sort_column} #{sort_direction}").page(params[:page]).per(10)
+  end
 
   def task_params
     params.require(:task).permit(:name, :description, :status, :start_at, :due_date_at)
@@ -115,35 +94,44 @@ class TasksController < ApplicationController
   end
 
   def sort_column
-    Task.column_names.include?(params[:sort]) ? params[:sort] : 'created_at'
+    Task.column_names.include?(params[:sort]) ? params[:sort] : 'tasks.created_at'
   end
 
-  def build_post_task(task, post_params)
-    task.name = post_params['name']
-    task.status = post_params['status']
-    task.description = post_params['description']
-    task.start_at = post_params['start_at']
-    task.due_date_at = post_params['due_date_at']
-    task
-  end
-
-  def validate_task_and_labels(task, labels)
-    label_validation_result = validate_labels(labels.split(','))
-
-    errors = []
-
-    errors += task.errors.full_messages unless task.valid?
-    errors += label_validation_result if label_validation_result.present?
-
-    errors
-  end
-
-  def validate_labels(label_names)
-    errors = []
-    label_names.each do |label_name|
-      @label = Label.new(name: label_name)
-      errors += @label.errors.full_messages unless @label.valid?
+  def build_labels(label_names)
+    label_names.map do |label_name|
+      Label.find_or_initialize_by(name: label_name)
     end
+  end
+
+  def current_task
+    Task.available(current_user.id).find_by(id: params[:id])
+  end
+
+  def validate_all(task, labels)
+    invalid_labels = labels.select(&:invalid?)
+
+    return true if invalid_labels.blank? && task.valid?
+
+    @errors = build_errors(task, invalid_labels)
+    false
+  end
+
+  def build_errors(task, invalid_labels)
+    errors = invalid_labels.each_with_object([]) do |label, loop_errors|
+      loop_errors.concat(label.errors.full_messages)
+    end.tap do |loop_errors|
+      loop_errors.concat(task.errors.full_messages) if task.invalid?
+    end
+
     errors.uniq
+  end
+
+  def save_success
+    redirect_to tasks_path, notice: I18n.t('dictionary.messages.edited_task')
+  end
+
+  def save_fault(template)
+    flash.now[:notice] = I18n.t('dictionary.messages.failed_save_task')
+    render template
   end
 end

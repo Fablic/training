@@ -10,31 +10,23 @@ RSpec.describe TaskLabel, type: :model do
   let(:task_id) { task.id }
   let(:label_id) { label.id }
 
-  describe '正常系' do
+  describe 'バリデーションのテスト' do
     subject { described_class.new(task_id: task_id, label_id: label_id) }
 
     context '全項目入力' do
       it { is_expected.to be_valid }
     end
-  end
 
-  describe 'バリデーションのテスト' do
-    subject { described_class.new(task_id: task_id, label_id: label_id) }
+    context 'task_idカラムが空欄' do
+      let(:task_id) { nil }
 
-    describe 'task_idカラム' do
-      context '空欄' do
-        let(:task_id) { nil }
-
-        it { is_expected.not_to be_valid }
-      end
+      it { is_expected.not_to be_valid }
     end
 
-    describe 'label_idカラム' do
-      context '空欄' do
-        let(:label_id) { nil }
+    context 'label_idカラムが空欄' do
+      let(:label_id) { nil }
 
-        it { is_expected.not_to be_valid }
-      end
+      it { is_expected.not_to be_valid }
     end
   end
 end

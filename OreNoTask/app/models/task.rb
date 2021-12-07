@@ -10,7 +10,6 @@ class Task < ApplicationRecord
 
   scope :search_status, -> (status) { where(status: status) if status.present? }
   scope :search_keyword, -> (keyword) { where(['(tasks.name like? OR tasks.description like? OR labels.name like?)', "%#{keyword}%", "%#{keyword}%", "%#{keyword}%"]) } # rubocop:disable Layout/LineLength
-  scope :join_labels, -> { joins('LEFT OUTER JOIN task_labels ON tasks.id = task_labels.task_id LEFT OUTER JOIN labels ON task_labels.label_id = labels.id') }
   scope :active, -> { where(deleted: 0) }
   scope :user, -> (user_id) { where(user_id: user_id) }
   scope :available, -> (user_id) { active.user(user_id) }
@@ -29,7 +28,7 @@ class Task < ApplicationRecord
   end
 
   def self.search(keyword, status, user, order)
-    available(user).search_status(status).search_keyword(keyword).join_labels.order(order)
+    available(user).search_status(status).search_keyword(keyword).eager_load(:labels).order(order)
   end
 
   def self.delete_tasks_by_user_id(user_id)
@@ -40,28 +39,19 @@ class Task < ApplicationRecord
     tasks.update_all(deleted: 1) # rubocop:disable Rails/SkipsModelValidations
   end
 
-  def self.save_task_and_label(user_id, task_id, task_params, label_names)
-    if task_id.nil?
-      task_params['user_id'] = user_id
-      @task = Task.new(task_params)
-    else
-      @task = Task.available(user_id).find(task_id)
-    end
-
+  def self.save_all(task, labels)
     ActiveRecord::Base.transaction do
-      if task_id.nil?
-        task_params['user_id'] = user_id
-        @task = Task.new(task_params)
-        return false unless @task.save
-      else
-        @task = Task.available(user_id).find(task_id)
-        return false unless @task.update(task_params)
-      end
-      return false unless Label.create_labels(@task, label_names)
+      TaskLabel.delete(id: task.labels.pluck(:id) - labels.pluck(:id))
+      task.labels = labels
+      exec_save(task)
     end
 
     true
-  rescue StandardError
+  rescue ActiveRecord::RecordInvalid
     false
+  end
+
+  def self.exec_save(task)
+    task.save!
   end
 end

@@ -7,18 +7,14 @@ RSpec.describe 'Userモデルのテスト', type: :model do
   let(:password) { 'rakutenpass' }
   let(:privilege) { :user }
 
-  describe '正常系' do
+  describe 'バリデーション' do
     subject { User.new(name: name, password: password, privilege: privilege) }
 
     context '全項目入力' do
       it { is_expected.to be_valid }
     end
-  end
 
-  describe 'バリデーションのテスト' do
-    subject { User.new(name: name, password: password, privilege: privilege) }
-
-    describe 'nameカラム' do
+    context 'nameカラム' do
       context '空欄' do
         let(:name) { '' }
 
@@ -58,7 +54,7 @@ RSpec.describe 'Userモデルのテスト', type: :model do
       end
     end
 
-    describe 'passwordカラム' do
+    context 'passwordカラム' do
       context '空欄' do
         let(:password) { '' }
 
@@ -78,7 +74,7 @@ RSpec.describe 'Userモデルのテスト', type: :model do
       end
     end
 
-    describe 'privilegeカラム' do
+    context 'privilegeカラム' do
       context '許容される値(user)' do
         let(:privilege) { :user }
 
@@ -99,12 +95,12 @@ RSpec.describe 'Userモデルのテスト', type: :model do
     end
   end
 
-  describe 'delete_user_and_tasks' do
-    context 'DB更新が正常に実行できた場合' do
+  context 'delete_user_and_tasks' do
+    context '例外が発生しない場合' do
       let(:user_delete) { create(:user, deleted: 0) }
       let!(:task_delete) { create(:task, name: 'task_delete', user_id: user_delete.id, deleted: 0) }
 
-      it '正常に更新されること' do
+      it '正常にDB更新されること' do
         # 実行
         expect(User.delete_user_and_tasks(user_delete.id)).to eq true
         expect(User.find_by(id: user_delete.id).deleted).to eq 1
