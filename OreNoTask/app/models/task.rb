@@ -41,7 +41,7 @@ class Task < ApplicationRecord
 
   def self.save_all(task, labels)
     ActiveRecord::Base.transaction do
-      task.labels.destroy_all
+      TaskLabel.delete(id: task.labels.pluck(:id) - labels.pluck(:id))
       task.labels = labels
       exec_save(task)
     end
