@@ -131,29 +131,10 @@ RSpec.describe 'Tasks', type: :request do
       let(:user_hanako) { create(:user, name: 'HanakoRakuten', password: 'rakuten') }
       let!(:hanako_task) { create(:task, name: '花子のタスク', user_id: user_hanako.id) }
 
-      it 'status 505' do
+      it 'status 500' do
         put task_path(hanako_task), params: params
         expect(response).to have_http_status(:internal_server_error)
         expect(Task.active.count).to eq 2
-      end
-    end
-
-    context 'task.save時にエラー' do
-      let(:mock_tasks_controller) { TasksController.new }
-      let(:label) { create(:label, name: 'ラベル') }
-
-      before do
-        create(:task_label, task_id: task.id, label_id: label.id)
-        allow(mock_tasks_controller).to receive(:save_with_labels).and_return false
-        allow(TasksController).to receive(:new).and_return mock_tasks_controller
-      end
-
-      it 'ロールバックが実行されること' do
-        put task_path(task), params: params
-        expect(response).to have_http_status(:ok)
-        expect(Task.active.count).to eq 1
-        expect(Label.all.count).to eq 1
-        expect(TaskLabel.all.count).to eq 1
       end
     end
   end

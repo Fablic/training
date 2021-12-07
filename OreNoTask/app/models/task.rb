@@ -38,4 +38,20 @@ class Task < ApplicationRecord
 
     tasks.update_all(deleted: 1) # rubocop:disable Rails/SkipsModelValidations
   end
+
+  def self.save_all(task, labels)
+    ActiveRecord::Base.transaction do
+      task.labels.destroy_all
+      task.labels = labels
+      exec_save(task)
+    end
+
+    true
+  rescue ActiveRecord::RecordInvalid
+    false
+  end
+
+  def self.exec_save(task)
+    task.save!
+  end
 end

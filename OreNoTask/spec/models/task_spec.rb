@@ -144,4 +144,39 @@ RSpec.describe 'Taskモデルのテスト', type: :model do
       end
     end
   end
+
+  describe '#save_all' do
+    let!(:user_taro) { create(:user, name: 'TaroRakuten', password: 'rakuten') }
+    let!(:task_taro) { create(:task, name: '最初のタスク', user_id: user_taro.id) }
+    let(:label) { create(:label, name: 'ラベル') }
+    let(:task) { Task.find(task_taro.id) }
+    let(:labels) { %w[abc ddd].map { |label_name| Label.find_or_initialize_by(name: label_name) } }
+
+    before do
+      create(:task_label, task_id: task.id, label_id: label.id)
+    end
+
+    context '例外が発生しない場合' do
+      it 'ロールバックが発生せず、データが保存される' do
+        # 実行
+        expect(Task.save_all(task, labels)).to eq true
+        expect(Task.active.count).to eq 1
+        expect(Label.all.count).to eq 3
+        expect(TaskLabel.all.count).to eq 2
+      end
+    end
+
+    context 'DB更新で例外が発生した場合' do
+      it 'ロールバックが実行されること' do
+        # 例外が発生
+        allow(Task).to receive(:exec_save).and_raise ActiveRecord::RecordInvalid
+
+        # 実行
+        expect(Task.save_all(task, labels)).to eq false
+        expect(Task.active.count).to eq 1
+        expect(Label.all.count).to eq 1
+        expect(TaskLabel.all.count).to eq 1
+      end
+    end
+  end
 end

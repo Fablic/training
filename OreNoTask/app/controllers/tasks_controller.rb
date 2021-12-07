@@ -12,6 +12,20 @@ class TasksController < ApplicationController
     @label_names = []
   end
 
+  def create
+    post_params = task_params
+    post_params['user_id'] = current_user.id
+    @task = Task.new(post_params)
+    @label_names = task_labels[:labels].split(',')
+    labels = build_labels(@label_names)
+
+    return render :new unless validate_all(@task, labels)
+
+    return save_success if Task.save_all(@task, labels)
+
+    save_fault(:new)
+  end
+
   def edit
     @task = Task.available(current_user.id).find_by(id: params[:id])
 
@@ -20,23 +34,17 @@ class TasksController < ApplicationController
     @label_names = @task.labels.pluck(:name)
   end
 
-  def update # rubocop:disable Metrics/AbcSize
-    @label_names = task_labels[:labels].split(',')
-
-    @task = Task.available(current_user.id).find_by(id: params[:id])
+  def update
+    @task = current_task
     @task.attributes = task_params
+    @label_names = task_labels[:labels].split(',')
+    labels = build_labels(@label_names)
 
-    ActiveRecord::Base.transaction do
-      @task.labels.destroy_all
-      return redirect_to tasks_path, notice: I18n.t('dictionary.messages.edited_task') if save_with_labels(@task, @label_names)
+    return render :edit unless validate_all(@task, labels)
 
-      raise ActiveRecord::Rollback
-    end
+    return save_success if Task.save_all(@task, labels)
 
-    @errors = validate_with_labels(@task, @label_names)
-
-    flash.now[:notice] = I18n.t('dictionary.messages.failed_save_task') if @errors.blank?
-    render :edit
+    save_fault(:edit)
   end
 
   def show
@@ -44,22 +52,6 @@ class TasksController < ApplicationController
     @task = Task.available(current_user.id).includes(:labels).find_by(id: id)
 
     render404 if @task.nil?
-  end
-
-  def create # rubocop:disable Metrics/AbcSize
-    post_params = task_params
-    @label_names = task_labels[:labels].split(',')
-
-    post_params['user_id'] = current_user.id
-    @task = Task.new(post_params)
-
-    if save_with_labels(@task, @label_names)
-      redirect_to tasks_path, notice: I18n.t('dictionary.messages.created_task')
-    else
-      @errors = validate_with_labels(@task, @label_names)
-      flash.now[:notice] = I18n.t('dictionary.messages.failed_save_task') if @errors.blank?
-      render :new
-    end
   end
 
   def destroy
@@ -73,10 +65,10 @@ class TasksController < ApplicationController
     redirect_to tasks_path
   end
 
-  def search # rubocop:disable Metrics/AbcSize
+  def search
     return redirect_to tasks_path if params[:keyword].blank? && params[:status].blank?
 
-    @tasks = Task.search(params[:keyword], params[:status], current_user.id, "#{sort_column} #{sort_direction}").page(params[:page]).per(10)
+    @tasks = searched_tasks
     @keyword = params[:keyword]
     @status = params[:status]
 
@@ -84,6 +76,10 @@ class TasksController < ApplicationController
   end
 
   private
+
+  def searched_tasks
+    Task.search(params[:keyword], params[:status], current_user.id, "#{sort_column} #{sort_direction}").page(params[:page]).per(10)
+  end
 
   def task_params
     params.require(:task).permit(:name, :description, :status, :start_at, :due_date_at)
@@ -101,28 +97,41 @@ class TasksController < ApplicationController
     Task.column_names.include?(params[:sort]) ? params[:sort] : 'tasks.created_at'
   end
 
-  def validate_with_labels(task, label_names)
-    in_db_labels = Label.where(name: label_names).pluck(:name)
-
-    errors = []
-    errors += task.errors.full_messages unless task.valid?
-
-    label_names.each do |label_name|
-      unless in_db_labels.include?(label_name)
-        label = Label.new(name: label_name)
-        errors += label.errors.full_messages unless label.valid?
-      end
+  def build_labels(label_names)
+    label_names.map do |label_name|
+      Label.find_or_initialize_by(name: label_name)
     end
+  end
+
+  def current_task
+    Task.available(current_user.id).find_by(id: params[:id])
+  end
+
+  def validate_all(task, labels)
+    invalid_labels = labels.select(&:invalid?)
+
+    return true if invalid_labels.blank? && task.valid?
+
+    @errors = build_errors(task, invalid_labels)
+    false
+  end
+
+  def build_errors(task, invalid_labels)
+    errors = invalid_labels.each_with_object([]) do |label, loop_errors|
+      loop_errors.concat(label.errors.full_messages)
+    end.tap do |loop_errors|
+      loop_errors.concat(task.errors.full_messages) if task.invalid?
+    end
+
     errors.uniq
   end
 
-  def save_with_labels(task, label_names)
-    label_names.each do |label|
-      return false if Label.find_or_initialize_by(name: label).invalid?
+  def save_success
+    redirect_to tasks_path, notice: I18n.t('dictionary.messages.edited_task')
+  end
 
-      task.labels << Label.find_or_initialize_by(name: label)
-    end
-
-    task.save
+  def save_fault(template)
+    flash.now[:notice] = I18n.t('dictionary.messages.failed_save_task')
+    render template
   end
 end
