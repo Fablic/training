@@ -6,6 +6,7 @@
 
 .DS_Store
 vendor/bundle
+on_maint
 
 # Ignore bundler config.
 /.bundle

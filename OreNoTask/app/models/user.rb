@@ -13,6 +13,7 @@ class User < ApplicationRecord
 
   validates :name, { presence: true, length: { maximum: 20 } }
   validates :password, { presence: true, length: { maximum: 20 }, on: :create }
+  validates :privilege, { presence: true }
   validate :unique_user, { on: :create }
   validate :password_on_update, { on: :update }
 

@@ -3,6 +3,12 @@
 class ApplicationController < ActionController::Base
   include SessionsHelper
 
+  before_action :render503, if: :maintenance_mode?
+
+  def maintenance_mode?
+    File.exist?('on_maint')
+  end
+
   unless Rails.env.development?
     rescue_from Exception,                      with: :render500
     rescue_from ActiveRecord::RecordNotFound,   with: :render404
@@ -32,6 +38,14 @@ class ApplicationController < ActionController::Base
       render json: { error: '500 Internal Server Error' }, status: :internal_server_error
     else
       render 'errors/500.html', status: :internal_server_error, layout: 'error'
+    end
+  end
+
+  def render503
+    if request.format.to_sym == :json
+      render json: { error: '503 service_unavailable' }, status: :service_unavailable
+    else
+      render 'errors/503.html', status: :service_unavailable, layout: 'error'
     end
   end
 

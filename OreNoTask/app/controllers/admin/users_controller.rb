@@ -30,6 +30,8 @@ module Admin
       if @user.update(user_params_on_update)
         redirect_to admin_users_path, notice: I18n.t('dictionary.messages.edited_user')
       else
+        @errors = @user.errors.full_messages
+        @submit_label = I18n.t('dictionary.words.save_to_update')
         render :edit
       end
     end
@@ -46,14 +48,14 @@ module Admin
       if @user.save
         redirect_to admin_users_path, notice: I18n.t('dictionary.messages.created_user')
       else
+        @errors = @user.errors.full_messages
+        @submit_label = I18n.t('dictionary.words.save_to_create')
         render :new
       end
     end
 
     def destroy # rubocop:disable Metrics/AbcSize
-      if User.last_admin?(params[:id])
-        return redirect_to admin_users_path, notice: I18n.t('dictionary.messages.last_admin')
-      end
+      return redirect_to admin_users_path, notice: I18n.t('dictionary.messages.last_admin') if User.last_admin?(params[:id])
 
       if User.delete_user_and_tasks(params[:id])
         flash[:notice] = I18n.t('dictionary.messages.deleted_user')

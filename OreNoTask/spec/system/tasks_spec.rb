@@ -21,14 +21,14 @@ describe 'タスク管理機能', type: :system do
 
     context 'デフォルト表示' do
       it '一覧のデフォルト表示が期待通り' do
-        expect(find('li:nth-child(1)')).to have_content '最初のタスク'
-        expect(find('li:nth-child(1)')).to have_content '2021年09月01日(水) 10:00 〜 2021年09月02日(木) 11:00'
-        expect(find('li:nth-child(2)')).to have_content '２番目のタスク'
-        expect(find('li:nth-child(2)')).to have_content '2021年08月02日(月) 10:00 〜 2021年08月03日(火) 11:00'
-        expect(find('li:nth-child(3)')).to have_content '追加したタスク'
-        expect(find('li:nth-child(3)')).to have_content '2021年10月01日(金) 10:00 〜 2021年10月03日(日) 11:00'
-        expect(find('li:nth-child(4)')).to have_content '最後のタスク'
-        expect(find('li:nth-child(4)')).to have_content '2021年12月02日(木) 10:00 〜 2021年12月03日(金) 11:00'
+        expect(find('.task-list > li:nth-child(1)')).to have_content '最初のタスク'
+        expect(find('.task-list > li:nth-child(1)')).to have_content '2021年09月01日(水) 10:00 〜 2021年09月02日(木) 11:00'
+        expect(find('.task-list > li:nth-child(2)')).to have_content '２番目のタスク'
+        expect(find('.task-list > li:nth-child(2)')).to have_content '2021年08月02日(月) 10:00 〜 2021年08月03日(火) 11:00'
+        expect(find('.task-list > li:nth-child(3)')).to have_content '追加したタスク'
+        expect(find('.task-list > li:nth-child(3)')).to have_content '2021年10月01日(金) 10:00 〜 2021年10月03日(日) 11:00'
+        expect(find('.task-list > li:nth-child(4)')).to have_content '最後のタスク'
+        expect(find('.task-list > li:nth-child(4)')).to have_content '2021年12月02日(木) 10:00 〜 2021年12月03日(金) 11:00'
         expect(page).not_to have_content '花子のタスク'
       end
     end
@@ -37,26 +37,26 @@ describe 'タスク管理機能', type: :system do
       context '各リンクをクリックする' do
         it '正しく降順に並ぶ' do
           click_link '降順'
-          expect(find('li:nth-child(1)')).to have_content '最後のタスク'
-          expect(find('li:nth-child(2)')).to have_content '追加したタスク'
-          expect(find('li:nth-child(3)')).to have_content '最初のタスク'
-          expect(find('li:nth-child(4)')).to have_content '２番目のタスク'
+          expect(find('.task-list > li:nth-child(1)')).to have_content '最後のタスク'
+          expect(find('.task-list > li:nth-child(2)')).to have_content '追加したタスク'
+          expect(find('.task-list > li:nth-child(3)')).to have_content '最初のタスク'
+          expect(find('.task-list > li:nth-child(4)')).to have_content '２番目のタスク'
         end
 
         it '正しく昇順に並ぶ' do
           click_link '昇順'
-          expect(find('li:nth-child(1)')).to have_content '２番目のタスク'
-          expect(find('li:nth-child(2)')).to have_content '最初のタスク'
-          expect(find('li:nth-child(3)')).to have_content '追加したタスク'
-          expect(find('li:nth-child(4)')).to have_content '最後のタスク'
+          expect(find('.task-list > li:nth-child(1)')).to have_content '２番目のタスク'
+          expect(find('.task-list > li:nth-child(2)')).to have_content '最初のタスク'
+          expect(find('.task-list > li:nth-child(3)')).to have_content '追加したタスク'
+          expect(find('.task-list > li:nth-child(4)')).to have_content '最後のタスク'
         end
 
         it '並び替えがリセットされる' do
           click_link 'クリア'
-          expect(find('li:nth-child(1)')).to have_content '最初のタスク'
-          expect(find('li:nth-child(2)')).to have_content '２番目のタスク'
-          expect(find('li:nth-child(3)')).to have_content '追加したタスク'
-          expect(find('li:nth-child(4)')).to have_content '最後のタスク'
+          expect(find('.task-list > li:nth-child(1)')).to have_content '最初のタスク'
+          expect(find('.task-list > li:nth-child(2)')).to have_content '２番目のタスク'
+          expect(find('.task-list > li:nth-child(3)')).to have_content '追加したタスク'
+          expect(find('.task-list > li:nth-child(4)')).to have_content '最後のタスク'
         end
       end
     end
@@ -230,30 +230,53 @@ describe 'タスク管理機能', type: :system do
         visit new_task_path
         fill_in 'タスク名', with: '作ったタスク'
         fill_in '内容', with: 'タスクの内容'
+        fill_in 'ラベル', with: '開発'
         fill_in 'task[start_at]', with: '002021-10-01-01:02'
         fill_in 'task[due_date_at]', with: '002021-10-02-03:04'
 
         click_button 'commit'
 
         # 作成されたタスクが表示されている
-        expect(find('li:nth-child(1)')).to have_content '作ったタスク'
-        expect(find('li:nth-child(1)')).to have_content '2021年10月01日(金) 01:02 〜 2021年10月02日(土) 03:04'
+        expect(find('.task-list > li:nth-child(1)')).to have_content '作ったタスク'
+        expect(find('.task-list > li:nth-child(1) > .label-list > li:nth-child(1)')).to have_content '開発'
+        expect(find('.task-list > li:nth-child(1)')).to have_content '2021年10月01日(金) 01:02 〜 2021年10月02日(土) 03:04'
 
         # 既存のデータに影響がない
-        expect(find('li:nth-child(2)')).to have_content '最初のタスク'
-        expect(find('li:nth-child(2)')).to have_content '2021年09月01日(水) 10:00 〜 2021年09月02日(木) 11:00'
-        expect(find('li:nth-child(3)')).to have_content '２番目のタスク'
-        expect(find('li:nth-child(3)')).to have_content '2021年08月02日(月) 10:00 〜 2021年08月03日(火) 11:00'
-        expect(find('li:nth-child(4)')).to have_content '追加したタスク'
-        expect(find('li:nth-child(4)')).to have_content '2021年10月01日(金) 10:00 〜 2021年10月03日(日) 11:00'
-        expect(find('li:nth-child(5)')).to have_content '最後のタスク'
-        expect(find('li:nth-child(5)')).to have_content '2021年12月02日(木) 10:00 〜 2021年12月03日(金) 11:00'
+        expect(find('.task-list > li:nth-child(2)')).to have_content '最初のタスク'
+        expect(find('.task-list > li:nth-child(2)')).to have_content '2021年09月01日(水) 10:00 〜 2021年09月02日(木) 11:00'
+        expect(find('.task-list > li:nth-child(3)')).to have_content '２番目のタスク'
+        expect(find('.task-list > li:nth-child(3)')).to have_content '2021年08月02日(月) 10:00 〜 2021年08月03日(火) 11:00'
+        expect(find('.task-list > li:nth-child(4)')).to have_content '追加したタスク'
+        expect(find('.task-list > li:nth-child(4)')).to have_content '2021年10月01日(金) 10:00 〜 2021年10月03日(日) 11:00'
+        expect(find('.task-list > li:nth-child(5)')).to have_content '最後のタスク'
+        expect(find('.task-list > li:nth-child(5)')).to have_content '2021年12月02日(木) 10:00 〜 2021年12月03日(金) 11:00'
 
         # 詳細画面で作成したタスクの内容を確認
         click_link '作ったタスク'
         expect(page).to have_content '作ったタスク'
         expect(page).to have_content 'タスクの内容'
         expect(page).to have_content '2021年10月01日(金) 01:02 〜 2021年10月02日(土) 03:04'
+        expect(find('.label-list > li:nth-child(1)')).to have_content '開発'
+      end
+    end
+  end
+
+  describe 'タスク新規作成のバリデーション' do
+    context '入力誤り' do
+      it 'エラー表示' do
+        visit new_task_path
+        fill_in 'ラベル', with: ",#{'a' * 21}"
+
+        click_button 'commit'
+        # 編集画面に戻り、エラーが表示されている
+        expect(page).to have_content 'タスクを新規作成'
+        expect(page).to have_content 'タスク名を入力してください'
+        expect(page).to have_content '開始日を入力してください'
+        expect(page).to have_content '開始日の指定が不正です。'
+        expect(page).to have_content '終了日を入力してください'
+        expect(page).to have_content '終了日の指定が不正です。'
+        expect(page).to have_content 'ラベル名を入力してください'
+        expect(page).to have_content 'ラベル名は20文字以内で入力してください'
       end
     end
   end
@@ -265,26 +288,31 @@ describe 'タスク管理機能', type: :system do
         find('li:nth-child(1)').click_link('編集')
         fill_in 'タスク名', with: '最初のタスクを編集'
         fill_in '内容', with: 'タスクの内容を編集'
+        fill_in 'ラベル', with: '開発,テスト'
         fill_in 'task[start_at]', with: '002021-10-11-11:12'
         fill_in 'task[due_date_at]', with: '002021-10-12-13:14'
 
         click_button 'commit'
         # 編集されたタスクが表示されている
-        expect(find('li:nth-child(1)')).to have_content '最初のタスクを編集'
-        expect(find('li:nth-child(1)')).to have_content '2021年10月11日(月) 11:12 〜 2021年10月12日(火) 13:14'
+        expect(find('.task-list > li:nth-child(1)')).to have_content '最初のタスクを編集'
+        expect(find('.task-list > li:nth-child(1) > .label-list > li:nth-child(1)')).to have_content '開発'
+        expect(find('.task-list > li:nth-child(1) > .label-list > li:nth-child(2)')).to have_content 'テスト'
+        expect(find('.task-list > li:nth-child(1)')).to have_content '2021年10月11日(月) 11:12 〜 2021年10月12日(火) 13:14'
 
         # 既存のデータに影響がない
-        expect(find('li:nth-child(2)')).to have_content '２番目のタスク'
-        expect(find('li:nth-child(2)')).to have_content '2021年08月02日(月) 10:00 〜 2021年08月03日(火) 11:00'
-        expect(find('li:nth-child(3)')).to have_content '追加したタスク'
-        expect(find('li:nth-child(3)')).to have_content '2021年10月01日(金) 10:00 〜 2021年10月03日(日) 11:00'
-        expect(find('li:nth-child(4)')).to have_content '最後のタスク'
-        expect(find('li:nth-child(4)')).to have_content '2021年12月02日(木) 10:00 〜 2021年12月03日(金) 11:00'
+        expect(find('.task-list > li:nth-child(2)')).to have_content '２番目のタスク'
+        expect(find('.task-list > li:nth-child(2)')).to have_content '2021年08月02日(月) 10:00 〜 2021年08月03日(火) 11:00'
+        expect(find('.task-list > li:nth-child(3)')).to have_content '追加したタスク'
+        expect(find('.task-list > li:nth-child(3)')).to have_content '2021年10月01日(金) 10:00 〜 2021年10月03日(日) 11:00'
+        expect(find('.task-list > li:nth-child(4)')).to have_content '最後のタスク'
+        expect(find('.task-list > li:nth-child(4)')).to have_content '2021年12月02日(木) 10:00 〜 2021年12月03日(金) 11:00'
 
         # 詳細画面で編集したタスクの内容を確認
         click_link '最初のタスクを編集'
         expect(page).to have_content '最初のタスクを編集'
         expect(page).to have_content 'タスクの内容を編集'
+        expect(find('.label-list > li:nth-child(1)')).to have_content '開発'
+        expect(find('.label-list > li:nth-child(2)')).to have_content 'テスト'
         expect(page).to have_content '2021年10月11日(月) 11:12 〜 2021年10月12日(火) 13:14'
       end
     end
@@ -294,6 +322,31 @@ describe 'タスク管理機能', type: :system do
         visit edit_task_path(hanako_task)
 
         expect(page).to have_content '404 NOT FOUND'
+      end
+    end
+  end
+
+  describe 'タスク編集のバリデーション' do
+    context '入力誤り' do
+      it 'エラー表示' do
+        visit tasks_path
+        find('li:nth-child(1)').click_link('編集')
+        fill_in 'タスク名', with: ''
+        fill_in '内容', with: ''
+        fill_in 'ラベル', with: ",#{'a' * 21}"
+        fill_in 'task[start_at]', with: ''
+        fill_in 'task[due_date_at]', with: ''
+
+        click_button 'commit'
+        # 編集画面に戻り、エラーが表示されている
+        expect(page).to have_content 'タスクを編集'
+        expect(page).to have_content 'タスク名を入力してください'
+        expect(page).to have_content '開始日を入力してください'
+        expect(page).to have_content '開始日の指定が不正です。'
+        expect(page).to have_content '終了日を入力してください'
+        expect(page).to have_content '終了日の指定が不正です。'
+        expect(page).to have_content 'ラベル名を入力してください'
+        expect(page).to have_content 'ラベル名は20文字以内で入力してください'
       end
     end
   end
@@ -310,12 +363,12 @@ describe 'タスク管理機能', type: :system do
         expect(page).not_to have_content '2021年09月01日(水) 10:00 〜 2021年09月02日(木) 11:00'
 
         # 既存のデータに影響がない
-        expect(find('li:nth-child(1)')).to have_content '２番目のタスク'
-        expect(find('li:nth-child(1)')).to have_content '2021年08月02日(月) 10:00 〜 2021年08月03日(火) 11:00'
-        expect(find('li:nth-child(2)')).to have_content '追加したタスク'
-        expect(find('li:nth-child(2)')).to have_content '2021年10月01日(金) 10:00 〜 2021年10月03日(日) 11:00'
-        expect(find('li:nth-child(3)')).to have_content '最後のタスク'
-        expect(find('li:nth-child(3)')).to have_content '2021年12月02日(木) 10:00 〜 2021年12月03日(金) 11:00'
+        expect(find('.task-list > li:nth-child(1)')).to have_content '２番目のタスク'
+        expect(find('.task-list > li:nth-child(1)')).to have_content '2021年08月02日(月) 10:00 〜 2021年08月03日(火) 11:00'
+        expect(find('.task-list > li:nth-child(2)')).to have_content '追加したタスク'
+        expect(find('.task-list > li:nth-child(2)')).to have_content '2021年10月01日(金) 10:00 〜 2021年10月03日(日) 11:00'
+        expect(find('.task-list > li:nth-child(3)')).to have_content '最後のタスク'
+        expect(find('.task-list > li:nth-child(3)')).to have_content '2021年12月02日(木) 10:00 〜 2021年12月03日(金) 11:00'
       end
     end
   end

@@ -17,3 +17,6 @@ ja:
         name: ユーザー名
         password: パスワード
         privilege: 権限
+      label:
+        id: ID
+        name: ラベル名

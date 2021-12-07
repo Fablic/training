@@ -1,4 +1,4 @@
-<%= render 'layouts/error_messages', model: form.object %>
+<%= render 'layouts/error_messages', errors: errors %>
 <table>
   <tr>
     <th><%= form.label :name, Task.human_attribute_name(:name) %></th>
@@ -23,6 +23,12 @@
   <tr>
     <th><%= form.label :description, Task.human_attribute_name(:description) %></th>
     <td><%= form.text_area :description %></td>
+  </tr>
+  <tr>
+    <th><%= form.label :labels, I18n.t('tasks.edit.label') %></th>
+    <td>
+      <%= form.text_area :labels, value: label_names, placeholder: I18n.t('tasks.edit.label_placeholder') %>
+    </td>
   </tr>
 </table>
 <p><%= form.submit @submit_label, class: 'btn btn-primary' %></p>

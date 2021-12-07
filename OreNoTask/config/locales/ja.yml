@@ -15,6 +15,7 @@ ja:
       deleted_user: 'ユーザーが削除されました'
       deleted_user_failed: 'ユーザーの削除に失敗しました'
       deleted_user_task_failed: 'ユーザーに紐付くタスクの削除に失敗しました'
+      failed_save_task: 'タスクの保存に失敗しました'
       invalid_date: 'の指定が不正です。'
       invalid_date_diff: 'は開始日より前の日付は登録できません。'
       name_not_unique: 'は既に登録されています。'
