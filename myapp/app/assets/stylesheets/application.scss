@@ -32,8 +32,13 @@ footer ul li {
   margin-left: 15px;
 }
 
-//一覧に戻るリンクのマージン
+//一覧に戻るリンク用
 #back_root_link {
   margin-top:10px;
   margin-bottom:10px;
+}
+
+// Kaminariページネーション用
+.pagination {
+  justify-content: center;
 }
