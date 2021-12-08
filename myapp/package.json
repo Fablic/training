@@ -12,5 +12,5 @@
   "devDependencies": {
     "webpack-dev-server": "^4.6.0"
   },
-  "license": "UNLICENSED"
+  "license": "MIT"
 }

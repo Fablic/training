@@ -1,10 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe 'Tasks System', type: :system, js: true do
-  let(:task) { create(:task, deadline_at: 3.days.since) }
+  let(:user) { create(:user) }
+  let(:task) { create(:task, deadline_at: 3.days.since, user: user) }
   # Listで作ると降順にならないので一旦この作り方
-  let(:task_second) { create(:task, deadline_at: 2.days.since, created_at: Date.today + 1) }
-  let(:task_third) { create(:task, deadline_at: 1.day.since, created_at: Date.today + 2, status: 'done') }
+  let(:task_second) { create(:task, deadline_at: 2.days.since, created_at: Date.today + 1, user: user) }
+  let(:task_third) { create(:task, deadline_at: 1.day.since, created_at: Date.today + 2, status: 'done', user: user) }
 
   describe 'タスク一覧画面' do
     before do
@@ -118,6 +119,7 @@ RSpec.describe 'Tasks System', type: :system, js: true do
 
   describe 'タスク作成画面' do
     before do
+      user
       visit new_task_path
     end
 
