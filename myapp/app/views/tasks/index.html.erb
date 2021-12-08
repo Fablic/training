@@ -7,7 +7,7 @@
     <%= f.text_field :content ,id: "search_content", maxlength: 255 , size: 20 %>
     <%= f.label t('tasks.label.status') %>
     <%= f.select :status, Task.statuses_i18n.invert, { include_blank: true },id: "search_status" %>
-    <%= f.submit'検索' ,id: "search_submit" %>
+    <%= f.submit'検索' ,id: "search_submit", class: 'btn btn-primary' %>
   <% end %>
 </div>
 

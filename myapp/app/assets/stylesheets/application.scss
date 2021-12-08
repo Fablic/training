@@ -1,5 +1,6 @@
 // Custom bootstrap variables must be set or imported *before* bootstrap.
 @import "bootstrap";
+
 /* footer */
 
 footer {
@@ -29,4 +30,10 @@ footer ul {
 footer ul li {
   float: left;
   margin-left: 15px;
+}
+
+//一覧に戻るリンクのマージン
+#back_root_link {
+  margin-top:10px;
+  margin-bottom:10px;
 }
