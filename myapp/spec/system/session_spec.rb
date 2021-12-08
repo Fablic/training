@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Tasks', type: :system do
+RSpec.describe 'Session', type: :system do
   describe '#create' do
     let!(:user) { FactoryBot.create(:user) }
     let!(:params) {
