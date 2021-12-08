@@ -7,6 +7,7 @@ ja:
   activerecord:
     models:
       task: 'タスク'
+      user: 'ユーザー'
 
     attributes:
       task:
@@ -15,3 +16,6 @@ ja:
         description: '詳細'
         deadline_at: '終了期限'
         status: "ステータス"
+      user:
+        id: 'ID'
+        name: 'ユーザー名'

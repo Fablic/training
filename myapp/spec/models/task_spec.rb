@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Tasks Model', type: :model do
+RSpec.describe Task, type: :model do
   describe 'TaskModelのバリデーションチェック' do
     let(:task) { create(:task) }
     let(:task_valid) { task.valid? }
