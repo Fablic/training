@@ -2,7 +2,7 @@
 # 本番での使用はしない想定です。
 
 user_name = 'shogo.kinjo'
-User.create!(name: user_name)
+user = User.create!(name: user_name)
 
 99.times do |n|
   name = Faker::Types.rb_string
@@ -15,6 +15,7 @@ User.create!(name: user_name)
                description: description,
                deadline_at: deadline_at,
                status: status,
+               user_id: user.id,
                created_at: created_at,
                updated_at: updated_at)
 end

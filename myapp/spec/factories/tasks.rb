@@ -6,5 +6,6 @@ FactoryBot.define do
     status { 'not_started' }
     created_at { Date.today }
     updated_at { Date.today }
+    user
   end
 end
