@@ -1,9 +1,4 @@
 Rails.application.configure do
-  # Settings specified here will take precedence over those in config/application.rb.
-
-  # In the development environment your application's code is reloaded on
-  # every request. This slows down response time but is perfect for development
-  # since you don't have to restart the web server when you make code changes.
   config.cache_classes = false
 
   # Do not eager load code on boot.
@@ -59,4 +54,14 @@ Rails.application.configure do
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+
+  # Bulletの設定
+  config.after_initialize do
+    Bullet.enable = true # Bulletを有効化する
+    Bullet.alert = true # JavaScriptのポップアップアラートを表示する
+    Bullet.bullet_logger = true # log/bullet.logに出力
+    Bullet.console = true # ブラウザのconsole.logに出力
+    Bullet.rails_logger = true # Railsのログに結果を出力
+    Bullet.add_footer = true # ページの左下に結果を表示
+  end
 end

@@ -2,6 +2,7 @@ class TasksController < ApplicationController
   helper_method :sort_column, :sort_direction
 
   def index
+    # 次のStepで以下にeager_loadする必要がありそう
     @tasks = Task.order("#{sort_column} #{sort_direction}").page(params[:page]).per(10)
     content = params[:content]
     status = params[:status]
@@ -19,6 +20,9 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
+    # 以下2行は次のStepでログインユーザーに変更するため、暫定処置
+    user = User.first
+    @task = user
     if @task.save
       flash[:success] = 'タスク作成に成功しました！'
       redirect_to @task

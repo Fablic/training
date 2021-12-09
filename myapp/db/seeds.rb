@@ -1,6 +1,9 @@
 # このSeedは開発環境で実データを作成するための運用です。
 # 本番での使用はしない想定です。
 
+user_name = 'shogo.kinjo'
+user = User.create!(name: user_name)
+
 99.times do |n|
   name = Faker::Types.rb_string
   description = "これは説明です。#{n + 1}"
@@ -12,6 +15,7 @@
                description: description,
                deadline_at: deadline_at,
                status: status,
+               user_id: user.id,
                created_at: created_at,
                updated_at: updated_at)
 end

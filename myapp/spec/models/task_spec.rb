@@ -1,8 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe 'Tasks Model', type: :model do
+RSpec.describe Task, type: :model do
   describe 'TaskModelのバリデーションチェック' do
-    let(:task) { create(:task) }
+    let(:user) { create(:user) }
+    let(:task) { create(:task, user: user) }
     let(:task_valid) { task.valid? }
 
     context 'nameの値が空欄の時' do
@@ -77,7 +78,7 @@ RSpec.describe 'Tasks Model', type: :model do
 
     context 'statusの値が定義されてる値の時' do
       it 'バリデーションがTrueになる事' do
-        task.status = Task.statuses.keys.sample
+        task.status = described_class.statuses.keys.sample
         expect(task_valid).to eq true
       end
     end
@@ -85,6 +86,13 @@ RSpec.describe 'Tasks Model', type: :model do
     context 'statusの値が定義されていない値の時' do
       it '無効となること' do
         expect { task.status = 'not-defined' }.to raise_error(ArgumentError, "'not-defined' is not a valid status")
+      end
+    end
+
+    context 'user_idの値がnil' do
+      it 'バリデーションがFalseになる事' do
+        task.user_id = nil
+        expect(task_valid).to eq false
       end
     end
   end

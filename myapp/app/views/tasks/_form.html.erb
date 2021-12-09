@@ -7,13 +7,21 @@
 <% end %>
 
 <%= form_for(@task) do |f| %>
-    <%= f.label :name %>
-    <%= f.text_field :name, placeholder: t('tasks.label.name'), maxlength: 255 , size: 20 %>
-    <%= f.label :description %>
-    <%= f.text_area :description, placeholder: t('tasks.label.description') , maxlength: 1024 %>
-    <%= f.label :status %>
-    <%= f.select :status, Task.statuses_i18n.invert %>
-    <%= f.label :deadline_at %>
+  <div class="mb-3">
+    <%= f.label :name, class: 'form-labe' %>
+    <%= f.text_field :name, placeholder: t('tasks.label.name'), maxlength: 255 , size: 20, class: 'form-control' %>
+  </div>
+  <div class="mb-3">
+    <%= f.label :description, class: 'form-labe' %>
+    <%= f.text_area :description, placeholder: t('tasks.label.description') , maxlength: 1024, class: 'form-control' %>
+  </div>
+  <div class="mb-3">
+    <%= f.label :status, class: 'form-labe' %>
+    <%= f.select :status, Task.statuses_i18n.invert, class: 'form-select' %>
+  </div>
+  <div class="mb-3">
+    <%= f.label :deadline_at, class: 'form-labe' %>
     <%= f.datetime_select :deadline_at, {default: 1.weeks.since}, placeholder: t('tasks.label.deadline_at') %>
+  </div>
     <%= f.submit t('tasks.button.post'), class: "btn btn-primary", id: "post_task_button" %>
 <% end %>

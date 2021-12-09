@@ -31,4 +31,16 @@ RSpec.configure do |config|
 
   # FactoryBotの省略
   config.include FactoryBot::Syntax::Methods
+
+  # Bulletの設定
+  if Bullet.enable?
+    config.before do
+      Bullet.start_request
+    end
+
+    config.after do
+      Bullet.perform_out_of_channel_notifications if Bullet.notification? # Bulletによる通知をRSpecの結果に表示
+      Bullet.end_request
+    end
+  end
 end
