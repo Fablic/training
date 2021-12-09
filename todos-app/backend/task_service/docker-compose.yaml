@@ -1,0 +1,27 @@
+services:
+  api:
+    build: .
+    image: task-service
+    container_name: task-service-api
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_NAME: task
+      DB_USER: rakuma
+      DB_PASSWORD: password
+
+  db:
+    image: mysql:5.6
+    container_name: task-db
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: todos-app
+      MYSQL_USER: rakuma
+      MYSQL_PASSWORD: password
