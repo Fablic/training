@@ -10,8 +10,8 @@ services:
     depends_on:
       - db
     environment:
-      DB_HOST: db
-      DB_NAME: task
+      DB_HOST: task-db
+      DB_NAME: todos-app
       DB_USER: rakuma
       DB_PASSWORD: password
 
