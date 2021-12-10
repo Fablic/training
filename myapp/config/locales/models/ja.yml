@@ -19,3 +19,5 @@ ja:
       user:
         id: 'ID'
         name: 'ユーザー名'
+        email: 'メールアドレス'
+        password_digest: 'パスワードハッシュ'

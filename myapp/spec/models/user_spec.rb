@@ -43,7 +43,7 @@ RSpec.describe User, type: :model do
 
     context 'nameの値が256文字以上の時' do
       it 'バリデーションがFalseになる事' do
-        user.email = ('a' * 245) + '@example.com'
+        user.email = "#{'a' * 245}@example.com"
         expect(user_valid).to eq false
       end
     end
@@ -79,6 +79,20 @@ RSpec.describe User, type: :model do
         user.email = mixed_case_email
         user.save
         expect(mixed_case_email.downcase).to eq user.reload.email
+      end
+    end
+
+    context 'passwordが8文字未満だった場合' do
+      it 'バリデーションがfalseになる事' do
+        user.password = user.password_confirmation = 'a' * 7
+        expect(user.valid?).to eq false
+      end
+    end
+
+    context 'passwordが空文字8文字だった場合' do
+      it 'バリデーションがfalseになる事' do
+        user.password = user.password_confirmation = ' ' * 8
+        expect(user.valid?).to eq false
       end
     end
   end

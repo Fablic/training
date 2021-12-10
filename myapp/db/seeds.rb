@@ -2,7 +2,10 @@
 # 本番での使用はしない想定です。
 
 user_name = 'shogo.kinjo'
-user = User.create!(name: user_name)
+email = 'shogo.kinjo@example.com'
+password = 'password'
+password_confirmation = 'password'
+user = User.create!(name: user_name, email: email, password: password, password_confirmation: password_confirmation)
 
 99.times do |n|
   name = Faker::Types.rb_string
