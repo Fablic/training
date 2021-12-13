@@ -5,6 +5,7 @@ ja:
       description: "説明"
       deadline_at: "終了期限"
       status: "ステータス"
+      user: "タスク作成者"
       edit: "編集"
       destroy: "削除"
     button:

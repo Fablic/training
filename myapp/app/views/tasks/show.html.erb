@@ -18,6 +18,10 @@
     <th scope='row'><%= t 'tasks.label.deadline_at' %></th>
     <td><%= l(@task.deadline_at, format: :long_ja) %></td>
   </tr>
+  <tr>
+    <th scope='row'><%= t 'tasks.label.user' %></th>
+    <td><%= @task.user.name %></td>
+  </tr>
   </tbody>
 </table>
 
