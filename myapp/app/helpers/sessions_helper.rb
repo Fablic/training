@@ -10,11 +10,15 @@ module SessionsHelper
   end
 
   def logged_in?
-    !current_user.nil?
+    current_user.present?
   end
 
   def log_out
     session.delete(:user_id)
     @current_user = nil
+  end
+
+  def login_page?
+    request.path.eql?(login_path)
   end
 end
