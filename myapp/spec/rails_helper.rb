@@ -8,6 +8,7 @@ require File.expand_path('../config/environment', __dir__)
 abort('The Rails environment is running in production mode!') if Rails.env.production?
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
+Dir[Rails.root.join('spec/support/**/*.rb')].sort.each { |f| require f }
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -84,4 +85,17 @@ RSpec.configure do |config|
     Capybara.server_port = 3000
     Capybara.app_host = "https://#{Capybara.server_host}:#{Capybara.server_port}"
   end
+
+  if Bullet.enable?
+    config.before do
+      Bullet.start_request
+    end
+
+    config.after do
+      Bullet.perform_out_of_channel_notifications if Bullet.notification? # Bulletによる通知をRSpecの結果に表示
+      Bullet.end_request
+    end
+  end
+
+  config.include LoginModule
 end

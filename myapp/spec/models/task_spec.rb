@@ -112,21 +112,21 @@ RSpec.describe 'Task Model', type: :model do
 
       it 'can find the row' do
         result = Task.search(param)
-        expect(result.first.title == tasks.first.title).to eq true
+        expect(result.first.title).to eq tasks.first.title
       end
     end
 
     context 'with title param' do
       it 'can find the row' do
         result = Task.search({ title: tasks.first.title.slice(5, 5) })
-        expect(result.first.title == tasks.first.title).to eq true
+        expect(result.first.title).to eq tasks.first.title
       end
     end
 
     context 'with status params' do
       it 'can find the row' do
         result = Task.search({ status: tasks.first.status })
-        expect(result.first.title == tasks.first.title).to eq true
+        expect(result.first.title).to eq tasks.first.title
       end
     end
   end

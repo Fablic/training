@@ -1,0 +1,17 @@
+<header class="navbar navbar-fixed-top navbar-inverse">
+  <div class="container">
+    <%= link_to "My App", root_path, id: "logo" %>
+    <nav>
+      <ul class="nav navbar-nav navbar-right">
+        <% if logged_in? %>
+        <%= link_to I18n.t('common.logout'), logout_path, method: 'delete', class: 'btn btn-primary' %>
+        </li>
+        <% elsif login_page? %>
+        <% #ログインページの場合は表示しない %>
+        <% else %>
+        <li><%= link_to I18n.t('common.login'), login_path, class: 'btn btn-primary' %></li>
+        <% end %>
+      </ul>
+    </nav>
+  </div>
+</header>

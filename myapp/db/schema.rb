@@ -12,13 +12,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_211_022_080_050) do
+ActiveRecord::Schema.define(version: 20_211_201_065_713) do
   create_table 'tasks', options: 'ENGINE=InnoDB DEFAULT CHARSET=utf8mb4', force: :cascade do |t|
+    t.bigint 'user_id', comment: 'User ID'
     t.string 'title', null: false, comment: 'タイトル'
     t.string 'description', limit: 768, comment: '内容'
     t.integer 'status', limit: 1, comment: 'ステータス'
     t.integer 'priority', limit: 3, comment: '優先度'
     t.datetime 'expires_at', comment: '期限日時'
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
+    t.index ['status'], name: 'index_status'
+    t.index %w[title status], name: 'index_title_status'
+    t.index ['user_id'], name: 'index_user_id'
+  end
+
+  create_table 'users', options: 'ENGINE=InnoDB DEFAULT CHARSET=utf8mb4', force: :cascade do |t|
+    t.string 'name', limit: 32, comment: '名前'
+    t.string 'email', limit: 128, comment: 'Emailアドレス'
+    t.string 'password_digest', comment: 'パスワード'
     t.datetime 'created_at', precision: 6, null: false
     t.datetime 'updated_at', precision: 6, null: false
   end
