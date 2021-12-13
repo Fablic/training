@@ -102,11 +102,14 @@ RSpec.describe 'Task Model', type: :model do
   end
 
   describe '#search' do
+    let!(:tasks) { FactoryBot.create_list(:task, 10, :with_labels) }
+
     context 'with multi params' do
       let(:param) {
         {
           title: tasks.first.title.slice(5, 5),
           status: tasks.first.status,
+          label_id: tasks.first.labels.first.id,
         }
       }
 
@@ -126,6 +129,13 @@ RSpec.describe 'Task Model', type: :model do
     context 'with status params' do
       it 'can find the row' do
         result = Task.search({ status: tasks.first.status })
+        expect(result.pluck(:status).uniq).to eq [tasks.first.status]
+      end
+    end
+
+    context 'with label_id params' do
+      it 'can find the row' do
+        result = Task.search({ label_id: tasks.first.labels.first.id })
         expect(result.first.title).to eq tasks.first.title
       end
     end

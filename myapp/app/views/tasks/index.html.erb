@@ -19,6 +19,10 @@
         <%= form.label t('activerecord.attributes.task.title') %>:
         <%= form.text_field :title, placeholder: t('activerecord.attributes.task.title'), value: params[:title], class: 'form-control' %>
       </div>
+      <div class="form-group col-md-3">
+        <%= form.label t('activerecord.attributes.label.name') %>:
+        <%= form.select "label_id", Label.pluck(:name, :id), { include_blank: true,  selected: params[:label_id] }, class: 'form-control' %>
+      </div>
     </div>
     <%= form.submit t('common.search'), class: 'btn btn-primary' %>
 
@@ -32,6 +36,7 @@
         <th><%= t('activerecord.attributes.task.title') %></th>
         <th><%= t('activerecord.attributes.task.status') %></th>
         <th><%= t('activerecord.attributes.task.priority') %></th>
+        <th><%= t('activerecord.attributes.label.name') %></th>
         <th>
           <%= sort_order 'expires_at', "#{t('activerecord.attributes.task.expires_at')}#{direction_arrow('expires_at')}" %>
         </th>
@@ -51,6 +56,11 @@
         </td>
         <td>
           <%= translate_priority(task.priority) %>
+        </td>
+        <td>
+          <% task.labels.pluck(:name).each do |label_name|%>
+            <span class="badge badge-pill badge-primary"><%= label_name %></span>
+          <% end %>
         </td>
         <td><%= link_to task.expires_at.to_s, task %></td>
         <td><%= link_to task.created_at.to_s, task %></td>

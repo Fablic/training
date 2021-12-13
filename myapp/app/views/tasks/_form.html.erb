@@ -33,6 +33,11 @@
     <%= form.datetime_field :expires_at, class: 'form-control' %>
   </p>
 
+  <p class="form-group field">
+    <%= form.label I18n.t('activerecord.attributes.label.name'), class: 'control-label' %>
+    <%= form.collection_check_boxes :label_ids, Label.all, :id, :name, class: 'form-check-input' %>
+  </p>
+
   <div class="actions">
     <%= form.submit nil, class: 'btn btn-primary' %>
   </div>
