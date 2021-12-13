@@ -13,15 +13,15 @@ User.create!(
   password: 'password',
 )
 Label.create!(name: 'Label1')
-Label.create!(name: "Label2")
-label1 = Label.create!(name: "Label3")
-label2 = Label.create!(name: "Label4")
+Label.create!(name: 'Label2')
+label1 = Label.create!(name: 'Label3')
+label2 = Label.create!(name: 'Label4')
 
 5.times do
   Task.create!(
     user_id: User.last.id,
     title: Faker::Hobby.activity,
-    description: "memo",
+    description: 'memo',
     status: Task.statuses.values.sample,
     priority: Task.priorities.values.sample,
     expires_at: Faker::Date.between(from: Time.current + 1.day, to: Time.current + 1.year),
