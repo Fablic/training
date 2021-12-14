@@ -7,11 +7,15 @@ RSpec.describe 'Tasks System', type: :system, js: true do
   let(:task_second) { create(:task, name: 'task_second', deadline_at: 2.days.since, created_at: Date.today + 1, user: user) }
   let(:task_third) { create(:task, name: 'task_third', deadline_at: 1.day.since, created_at: Date.today + 2, status: 'done', user: user) }
 
+  let(:other_user) { create(:user,name: 'other_user',email: 'other_user@example.com') }
+  let(:other_user_task) { create(:task, name: 'other_user_task', user: other_user) }
   describe 'タスク一覧画面(ログイン済み)' do
     before do
       task
       task_second
       task_third
+      other_user
+      other_user_task
       log_in_as user
       visit root_path
     end
@@ -23,6 +27,10 @@ RSpec.describe 'Tasks System', type: :system, js: true do
 
       it '登録してあるタスクが表示される' do
         expect(page).to have_content(task.name)
+      end
+
+      it '他のユーザーが作成したタスクが表示されない事' do
+        expect(page).not_to have_content(other_user_task.name)
       end
     end
 
