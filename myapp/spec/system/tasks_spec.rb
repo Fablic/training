@@ -2,16 +2,17 @@ require 'rails_helper'
 
 RSpec.describe 'Tasks System', type: :system, js: true do
   let(:user) { create(:user) }
-  let(:task) { create(:task, deadline_at: 3.days.since, user: user) }
+  let(:task) { create(:task, name: 'task_first',  deadline_at: 3.days.since, user: user) }
   # Listで作ると降順にならないので一旦この作り方
-  let(:task_second) { create(:task, deadline_at: 2.days.since, created_at: Date.today + 1, user: user) }
-  let(:task_third) { create(:task, deadline_at: 1.day.since, created_at: Date.today + 2, status: 'done', user: user) }
+  let(:task_second) { create(:task, name: 'task_second', deadline_at: 2.days.since, created_at: Date.today + 1, user: user) }
+  let(:task_third) { create(:task, name: 'task_third', deadline_at: 1.day.since, created_at: Date.today + 2, status: 'done', user: user) }
 
-  describe 'タスク一覧画面' do
+  describe 'タスク一覧画面(ログイン済み)' do
     before do
       task
       task_second
       task_third
+      log_in_as user
       visit root_path
     end
 
@@ -33,7 +34,7 @@ RSpec.describe 'Tasks System', type: :system, js: true do
     end
 
     context '表示されてるタスク名を選択した時' do
-      let(:other_task) { create(:task, name: 'other_task_name') }
+      let(:other_task) { create(:task, name: 'other_task_name', user: user) }
 
       before do
         other_task
@@ -90,7 +91,7 @@ RSpec.describe 'Tasks System', type: :system, js: true do
 
     context '終了期限のカラムをクリックした時' do
       it '終了期限の昇順になる' do
-        find('#tasks_deadline_at_link').click
+        find('a', text: '終了期限').click
         expect(find('#task_row_0').first('td').text).to eq task_third.name
         expect(find('#task_row_1').first('td').text).to eq task_second.name
         expect(find('#task_row_2').first('td').text).to eq task.name
@@ -99,8 +100,8 @@ RSpec.describe 'Tasks System', type: :system, js: true do
 
     context '終了期限のカラムを2回クリックした時' do
       it '終了期限の降順になる' do
-        find('#tasks_deadline_at_link').click
-        find('#tasks_deadline_at_link').click
+        find('a', text: '終了期限').click
+        find('a', text: '終了期限').click
         expect(find('#task_row_0').first('td').text).to eq task.name
         expect(find('#task_row_1').first('td').text).to eq task_second.name
         expect(find('#task_row_2').first('td').text).to eq task_third.name
@@ -117,9 +118,10 @@ RSpec.describe 'Tasks System', type: :system, js: true do
     end
   end
 
-  describe 'タスク作成画面' do
+  describe 'タスク作成画面(ログイン済み)' do
     before do
       user
+      log_in_as user
       visit new_task_path
     end
 
@@ -179,8 +181,9 @@ RSpec.describe 'Tasks System', type: :system, js: true do
     end
   end
 
-  describe 'タスク詳細画面' do
+  describe 'タスク詳細画面(ログイン済み)' do
     before do
+      log_in_as user
       visit task_path task
     end
 
@@ -205,8 +208,9 @@ RSpec.describe 'Tasks System', type: :system, js: true do
     end
   end
 
-  describe 'タスク編集画面' do
+  describe 'タスク編集画面(ログイン済み)' do
     before do
+      log_in_as user
       visit edit_task_path task
     end
 
@@ -241,6 +245,45 @@ RSpec.describe 'Tasks System', type: :system, js: true do
       it 'タスク一覧画面が表示される' do
         find('#back_root_link').click
         expect(page).to have_selector('h1', text: 'タスク一覧')
+      end
+    end
+  end
+
+  describe '未ログイン状態' do
+
+    context 'タスク一覧画面に遷移した時' do
+      before do
+        visit root_path
+      end
+      it 'ログイン画面が表示される' do
+        expect(page).to have_selector('h1', text: 'ログイン')
+      end
+    end
+
+    context 'タスク作成画面に遷移した時' do
+      before do
+        visit new_task_path task
+      end
+      it 'ログイン画面が表示される' do
+        expect(page).to have_selector('h1', text: 'ログイン')
+      end
+    end
+
+    context 'タスク詳細画面に遷移した時' do
+      before do
+        visit task_path task
+      end
+      it 'ログイン画面が表示される' do
+        expect(page).to have_selector('h1', text: 'ログイン')
+      end
+    end
+
+    context 'タスク編集画面に遷移した時' do
+      before do
+        visit edit_task_path task
+      end
+      it 'ログイン画面が表示される' do
+        expect(page).to have_selector('h1', text: 'ログイン')
       end
     end
   end

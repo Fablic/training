@@ -21,9 +21,7 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
-    # 以下2行は次のStepでログインユーザーに変更するため、暫定処置
-    user = User.first
-    @task = user
+    @task.user = current_user
     if @task.save
       flash[:success] = 'タスク作成に成功しました！'
       redirect_to @task
