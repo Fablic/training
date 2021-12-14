@@ -1,0 +1,36 @@
+services:
+  frontend:
+    build: ./frontend
+    image: todos-frontend
+    container_name: todos-frontend
+    ports: 
+      - 8080:8080
+    volumes:
+      - ./frontend:/app
+    depends_on:
+      - task-service
+
+  task-service:
+    build: ./backend/task_service
+    image: task-service
+    container_name: task-service
+    ports:
+      - 3000:3000
+    volumes:
+      - ./backend/task_service:/app
+    depends_on:
+      - task-db
+    environment:
+      DB_HOST: task-db
+      DB_NAME: todos-app
+      DB_USER: root
+      DB_PASSWORD: password
+  
+  task-db:
+    image: mysql:5.6
+    container_name: task-db
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      TZ: Asia/Tokyo
