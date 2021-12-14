@@ -7,5 +7,6 @@ WORKDIR /app
 COPY . .
 RUN bundle install
 ENV TZ "Asia/Tokyo"
+ENTRYPOINT ["./entrypoint.sh"]
 
 CMD ["rails", "server", "-b", "0.0.0.0"]
