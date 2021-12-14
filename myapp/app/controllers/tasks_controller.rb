@@ -1,7 +1,7 @@
 class TasksController < ApplicationController
   helper_method :sort_column, :sort_direction
   before_action :logged_in_user
-  before_action :correct_user, only: [:destroy,:edit]
+  before_action :correct_user, only: %i[destroy edit]
 
   def index
     @tasks = current_user.tasks.order("#{sort_column} #{sort_direction}").page(params[:page]).per(10)

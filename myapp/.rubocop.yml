@@ -38,3 +38,6 @@ RSpec/MultipleExpectations:
 RSpec/ExampleLength:
   Enabled: false
 
+Rails/UniqueValidationWithoutIndex:
+  Enabled: false
+

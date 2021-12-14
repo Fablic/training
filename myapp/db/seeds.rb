@@ -19,7 +19,7 @@ user_ids = User.ids
 
 99.times do |n|
   name = Faker::Types.rb_string
-  user_id = user_ids.shuffle[0]
+  user_id = user_ids.sample
   description = "これは#{n + 1}についての説明です。User.idは#{user_id}"
   deadline_at = Faker::Time.between(from: DateTime.now + 1, to: DateTime.now + 30)
   status = Task.statuses.keys.sample
