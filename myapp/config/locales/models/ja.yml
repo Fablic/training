@@ -21,3 +21,5 @@ ja:
         name: 'ユーザー名'
         email: 'メールアドレス'
         password_digest: 'パスワードハッシュ'
+        password: 'パスワード'
+        password_confirmation: 'パスワード確認用'

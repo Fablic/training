@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Tasks System', type: :system, js: true do
   let(:user) { create(:user) }
-  let(:task) { create(:task, name: 'task_first',  deadline_at: 3.days.since, user: user) }
+  let(:task) { create(:task, name: 'task_first', deadline_at: 3.days.since, user: user) }
   # Listで作ると降順にならないので一旦この作り方
   let(:task_second) { create(:task, name: 'task_second', deadline_at: 2.days.since, created_at: Date.today + 1, user: user) }
   let(:task_third) { create(:task, name: 'task_third', deadline_at: 1.day.since, created_at: Date.today + 2, status: 'done', user: user) }
@@ -250,11 +250,11 @@ RSpec.describe 'Tasks System', type: :system, js: true do
   end
 
   describe '未ログイン状態' do
-
     context 'タスク一覧画面に遷移した時' do
       before do
         visit root_path
       end
+
       it 'ログイン画面が表示される' do
         expect(page).to have_selector('h1', text: 'ログイン')
       end
@@ -264,6 +264,7 @@ RSpec.describe 'Tasks System', type: :system, js: true do
       before do
         visit new_task_path task
       end
+
       it 'ログイン画面が表示される' do
         expect(page).to have_selector('h1', text: 'ログイン')
       end
@@ -273,6 +274,7 @@ RSpec.describe 'Tasks System', type: :system, js: true do
       before do
         visit task_path task
       end
+
       it 'ログイン画面が表示される' do
         expect(page).to have_selector('h1', text: 'ログイン')
       end
@@ -282,6 +284,7 @@ RSpec.describe 'Tasks System', type: :system, js: true do
       before do
         visit edit_task_path task
       end
+
       it 'ログイン画面が表示される' do
         expect(page).to have_selector('h1', text: 'ログイン')
       end

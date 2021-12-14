@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :task do
-    name { "task_name" }
+    name { 'task_name' }
     description { 'description' }
     deadline_at { 1.hour.since }
     status { 'not_started' }
