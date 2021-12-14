@@ -12,15 +12,15 @@
 
 ActiveRecord::Schema.define(version: 20211208145027) do
 
-  create_table "tasks", force: :cascade do |t|
-    t.integer  "user_id"
-    t.string   "title"
-    t.text     "description"
-    t.integer  "priority"
-    t.integer  "status"
-    t.datetime "due_date"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+  create_table "tasks", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
+    t.integer "user_id", null: false
+    t.string "title", null: false
+    t.text "description"
+    t.integer "priority", default: 0, null: false
+    t.integer "status", default: 0, null: false
+    t.datetime "due_datetime"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

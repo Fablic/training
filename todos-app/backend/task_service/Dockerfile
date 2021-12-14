@@ -6,5 +6,6 @@ RUN apt-get update && \
 WORKDIR /app
 COPY . .
 RUN bundle install
+ENV TZ "Asia/Tokyo"
 
 CMD ["rails", "server", "-b", "0.0.0.0"]
