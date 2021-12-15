@@ -1,5 +1,7 @@
 class Task < ApplicationRecord
   belongs_to :user
+  has_many :labels, through: :task_labels
+  has_many :task_labels
 
   enum status: { not_started: 0, in_progress: 1, done: 2 }
 

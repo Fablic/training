@@ -15,8 +15,13 @@ User.create!(name: user_name, email: email, password: password, password_confirm
   User.create!(name: name, email: email, password: password, password_confirmation: password_confirmation)
 end
 
-user_ids = User.ids
 
+labels = ['仕事','家族','買い物']
+labels.each do |label|
+  Label.create!(name: label)
+end
+
+user_ids = User.ids
 99.times do |n|
   name = Faker::Types.rb_string
   user_id = user_ids.sample
