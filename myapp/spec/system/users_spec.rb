@@ -39,7 +39,7 @@ RSpec.describe 'Users System', type: :system, js: true do
         fill_in 'user_password', with: 'password'
         fill_in 'user_password_confirmation', with: 'password'
         find('#signup-button').click
-        expect(page).to have_selector('div', text: 'Welcome to the Sample App!')
+        expect(page).to have_selector('div', text: 'ようこそ、タスク管理システムへ!')
       end
     end
 

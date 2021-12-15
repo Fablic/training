@@ -14,7 +14,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       log_in @user
-      flash[:success] = 'Welcome to the Sample App!'
+      flash[:success] = 'ようこそ、タスク管理システムへ!'
       redirect_back_or @user
     else
       render 'new'
