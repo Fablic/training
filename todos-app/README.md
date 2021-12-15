@@ -55,3 +55,17 @@ This is a todos app built with Ruby on Rails that does following key features
 | description | VARCHAR |
 | created_at | DATETIME |
 | updated_at | DATETIME |
+
+# How to Use
+You can setup the whole stack, frontend and backend with a single command.
+
+## Requirements
+* Docker
+  
+## Running the App
+To set up both frontend and backend, simply run,
+```bash
+docker compose up
+```
+Wait a few seconds, and the frontend app should be up and running at http://localhost:8080/.  
+You can use the frontend app to navigate between pages and do basic CRUD operations on tasks.
