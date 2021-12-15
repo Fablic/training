@@ -1,0 +1,36 @@
+# Ignore all logfiles and tempfiles.
+myapp/log/*
+myapp/tmp/*
+!myapp/log/.keep
+!myapp/tmp/.keep
+
+# TODO Comment out this rule if you are OK with secrets being uploaded to the repo
+myapp/config/initializers/secret_token.rb
+myapp/config/master.key
+
+# dotenv, dotenv-rails
+*.env
+
+## Environment normalization:
+myapp/.bundle
+myapp/vendor/bundle
+
+# Ignore node_modules
+myapp/node_modules/
+
+# Ignore yarn files
+myapp/yarn-error.log
+*yarn-debug.log*
+*.yarn-integrity
+
+# Ignore uploaded files in development
+myapp/storage/*
+!myapp/storage/.keep
+
+*.DS_Store
+myapp/public/packs
+myapp/public/packs-test
+myapp/node_modules
+
+# Ignore .idea directory.
+myapp/.idea/*
