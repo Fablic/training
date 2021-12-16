@@ -12,7 +12,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_211_201_065_713) do
+ActiveRecord::Schema.define(version: 20_211_208_030_118) do
+  create_table 'labels', options: 'ENGINE=InnoDB DEFAULT CHARSET=utf8mb4', force: :cascade do |t|
+    t.string 'name', limit: 16
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
+  end
+
+  create_table 'task_labels', options: 'ENGINE=InnoDB DEFAULT CHARSET=utf8mb4', force: :cascade do |t|
+    t.bigint 'task_id', comment: 'Task ID'
+    t.bigint 'label_id', comment: 'Label ID'
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
+  end
+
   create_table 'tasks', options: 'ENGINE=InnoDB DEFAULT CHARSET=utf8mb4', force: :cascade do |t|
     t.bigint 'user_id', comment: 'User ID'
     t.string 'title', null: false, comment: 'タイトル'

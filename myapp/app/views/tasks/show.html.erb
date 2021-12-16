@@ -17,6 +17,13 @@
     <dd class="col-10"><%= @task.priority && I18n.t("enums.task.priority.#{@task.priority}") %></dd>
     <dt class="col-2"><%= t('activerecord.attributes.task.status') %>:</dt>
     <dd class="col-10"><%=  @task.status && I18n.t("enums.task.status.#{@task.status}") %></dd>
+    <dt class="col-2"><%= t('activerecord.attributes.label.name') %>:</dt>
+    <dd class="col-10">
+      <% @task.labels.pluck(:name).each do |label_name|%>
+      <span class="badge badge-pill badge-primary"><%= label_name %></span>
+      <% end %>
+    </dd>
+
     <dt class="col-2"><%= t('activerecord.attributes.task.expires_at') %>:</dt>
     <dd class="col-10"><%= @task.expires_at %></dd>
   </dl>

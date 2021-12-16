@@ -4,6 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'Tasks', type: :system do
   let!(:user) { FactoryBot.create(:user) }
+  let!(:labels) { FactoryBot.create_list(:label, 3) }
   let!(:tasks) { FactoryBot.create_list(:task, 2, user: user) }
   let!(:query_params) {
     {
@@ -75,6 +76,7 @@ RSpec.describe 'Tasks', type: :system do
       select I18n.t('enums.task.status.todo'), from: I18n.t('activerecord.attributes.task.status')
       select I18n.t('enums.task.priority.low'), from: I18n.t('activerecord.attributes.task.priority')
       fill_in 'task[expires_at]', with: '2021-11-19T10:58'
+      all('[id^=task_label_ids_]').each { |checkbox| checkbox.set(true) }
     end
 
     example 'A task can be registered.' do

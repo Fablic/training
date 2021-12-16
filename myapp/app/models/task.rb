@@ -3,6 +3,9 @@
 class Task < ApplicationRecord
   belongs_to :user
 
+  has_many :task_labels, dependent: :destroy
+  has_many :labels, through: :task_labels
+
   enum status: {
     todo: 0,
     in_progress: 1,
@@ -43,7 +46,9 @@ class Task < ApplicationRecord
 
   scope :search_status, ->(status) { where(status: status) if status.present? }
 
+  scope :search_label, -> (label_id) { joins(:labels).where(labels: { id: label_id }) if label_id.present? }
+
   def self.search(params)
-    search_title(params[:title]).search_status(params[:status])
+    search_title(params[:title]).search_status(params[:status]).search_label(params[:label_id])
   end
 end

@@ -1,40 +1,53 @@
 <%= form_with(model: task, local: true) do |form| %>
-  <% if task.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(task.errors.count, "error") %> prohibited this task from being saved:</h2>
+<% if task.errors.any? %>
+<div id="error_explanation">
+  <h2><%= pluralize(task.errors.count, "error") %> prohibited this task from being saved:</h2>
 
-      <ul>
-        <% task.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
+  <ul>
+    <% task.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+    <% end %>
+  </ul>
+</div>
+<% end %>
+
+<p class="form-group field">
+  <%= form.label :title, class: 'control-label' %>
+  <%= form.text_field :title, class: 'form-control' %>
+</p>
+<p class="form-group field">
+  <%= form.label :description, class: 'control-label' %>
+  <%= form.text_area :description, class: 'form-control' %>
+</p>
+<p class="form-group field">
+  <%= form.label :priority, class: 'control-label' %>
+  <%= form.select :priority, Task.priorities.keys.map {|k| [I18n.t("enums.task.priority.#{k}"), k]}, { include_blank: true }, class: 'form-control' %>
+</p>
+
+<p class="form-group field">
+  <%= form.label :status, class: 'control-label' %>
+  <%= form.select :status, Task.statuses.keys.map {|k| [I18n.t("enums.task.status.#{k}"), k]}, { include_blank: true }, class: 'form-control' %>
+</p>
+<p class="form-group field">
+  <%= form.label :expires_at, class: 'control-label' %>
+  <%= form.datetime_field :expires_at, class: 'form-control' %>
+</p>
+
+<p class="form-group field">
+  <%= form.label I18n.t('activerecord.attributes.label.name'), class: 'control-label' %>
+  <%= form.collection_check_boxes :label_ids, Label.all, :id, :name do |b| %>
+  <span class="form-check">
+    <%= b.label class: 'form-check-label' do %>
+      <%= b.check_box class: 'form-check-input' %>
+      <%= b.object.name %>
+    <% end %>
+  </span>
   <% end %>
 
-  <p class="form-group field">
-    <%= form.label :title, class: 'control-label' %>
-    <%= form.text_field :title, class: 'form-control' %>
-  </p>
-  <p class="form-group field">
-    <%= form.label :description, class: 'control-label' %>
-    <%= form.text_area :description, class: 'form-control' %>
-  </p>
-  <p class="form-group field">
-    <%= form.label :priority, class: 'control-label' %>
-    <%= form.select :priority, Task.priorities.keys.map {|k| [I18n.t("enums.task.priority.#{k}"), k]}, { include_blank: true }, class: 'form-control' %>
-  </p>
+</p>
 
-  <p class="form-group field">
-    <%= form.label :status, class: 'control-label' %>
-    <%= form.select :status, Task.statuses.keys.map {|k| [I18n.t("enums.task.status.#{k}"), k]}, { include_blank: true }, class: 'form-control' %>
-  </p>
-  <p class="form-group field">
-    <%= form.label :expires_at, class: 'control-label' %>
-    <%= form.datetime_field :expires_at, class: 'form-control' %>
-  </p>
-
-  <div class="actions">
-    <%= form.submit nil, class: 'btn btn-primary' %>
-  </div>
+<div class="actions">
+  <%= form.submit nil, class: 'btn btn-primary' %>
+</div>
 
 <% end %>

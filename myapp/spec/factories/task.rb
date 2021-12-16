@@ -12,4 +12,10 @@ FactoryBot.define do
     sequence(:created_at) { |n| Faker::Time.between(from: DateTime.yesterday + n, to: DateTime.yesterday + n + 1) }
     association :user, factory: :user
   end
+
+  trait :with_labels do
+    after(:create) do |task|
+      create_list(:task_label, 1, task: task, label: create(:label))
+    end
+  end
 end

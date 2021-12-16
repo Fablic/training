@@ -73,7 +73,7 @@ class TasksController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def task_params
-    params.fetch(:task).permit(:title, :description, :priority, :status, :expires_at)
+    params.fetch(:task).permit(:title, :description, :priority, :status, :expires_at, { label_ids: [] })
   end
 
   def sort_direction
