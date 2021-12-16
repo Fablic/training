@@ -15,7 +15,7 @@ class UsersController < ApplicationController
     if @user.save
       log_in @user
       flash[:success] = 'ようこそ、タスク管理システムへ!'
-      redirect_back_or @user
+      redirect_back_or_default @user
     else
       render 'new'
     end
