@@ -13,7 +13,7 @@ RSpec.describe 'Errors', type: :system do
     }
 
     example 'Maintenance Page is shown' do
-        visit root_path
+      visit root_path
       expect(page).to have_http_status :service_unavailable
     end
   end

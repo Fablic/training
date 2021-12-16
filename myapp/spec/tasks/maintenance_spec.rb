@@ -11,8 +11,7 @@ describe 'MaintenanceTask' do
     after { File.delete(Maintenance::MAINTENANCE_FILE_PATH) }
 
     example 'set maintenance mode' do
-      task.invoke
-      expect(File).to exist(maintenance_file_path)
+      expect { task.invoke }.to output("メンテナンスにしました\n").to_stdout
     end
   end
 
@@ -22,8 +21,7 @@ describe 'MaintenanceTask' do
     before { File.open(Maintenance::MAINTENANCE_FILE_PATH, 'w') }
 
     example 'unset maintenance mode' do
-      task.invoke
-      expect(File).not_to exist(maintenance_file_path)
+      expect { task.invoke }.to output("メンテナンス解除しました\n").to_stdout
     end
   end
 

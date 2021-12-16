@@ -1,19 +1,19 @@
 # frozen_string_literal: true
 
+require 'tmpdir'
+
 class Maintenance
-  MAINTENANCE_FILE_PATH = './config/maintanance.txt'
+  MAINTENANCE_FILE_PATH = Rails.root.join(Dir.tmpdir, 'maintenance.txt')
 
   def self.start
-    file = File.open(MAINTENANCE_FILE_PATH, 'w')
-    file.puts()
-    file.close
+    FileUtils.touch MAINTENANCE_FILE_PATH
   end
 
   def self.stop
-    File.delete(MAINTENANCE_FILE_PATH) if File.exist? MAINTENANCE_FILE_PATH
+    FileUtils.rm_f MAINTENANCE_FILE_PATH
   end
 
   def self.status?
-    File.exist?(MAINTENANCE_FILE_PATH)
+    File.exist? MAINTENANCE_FILE_PATH
   end
 end
