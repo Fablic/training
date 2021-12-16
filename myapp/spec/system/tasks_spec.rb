@@ -3,19 +3,13 @@ require 'rails_helper'
 RSpec.describe 'Tasks System', type: :system, js: true do
   let(:user) { create(:user) }
   let(:task) { create(:task, name: 'task_first', deadline_at: 3.days.since, user: user) }
-  # Listで作ると降順にならないので一旦この作り方
-  let(:task_second) { create(:task, name: 'task_second', deadline_at: 2.days.since, created_at: Date.today + 1, user: user) }
-  let(:task_third) { create(:task, name: 'task_third', deadline_at: 1.day.since, created_at: Date.today + 2, status: 'done', user: user) }
 
-  let(:other_user) { create(:user,name: 'other_user',email: 'other_user@example.com') }
-  let(:other_user_task) { create(:task, name: 'other_user_task', user: other_user) }
   describe 'タスク一覧画面(ログイン済み)' do
+    let(:task_second) { create(:task, name: 'task_second', deadline_at: 2.days.since, created_at: Date.today + 1, user: user) }
+    let(:task_third) { create(:task, name: 'task_third', deadline_at: 1.day.since, created_at: Date.today + 2, status: 'done', user: user) }
+
     before do
       task
-      task_second
-      task_third
-      other_user
-      other_user_task
       log_in_as user
       visit root_path
     end
@@ -30,6 +24,8 @@ RSpec.describe 'Tasks System', type: :system, js: true do
       end
 
       it '他のユーザーが作成したタスクが表示されない事' do
+        other_user = create(:user, name: 'other_user', email: 'other_user@example.com')
+        other_user_task = create(:task, name: 'other_user_task', user: other_user)
         expect(page).not_to have_content(other_user_task.name)
       end
     end
@@ -266,15 +262,31 @@ RSpec.describe 'Tasks System', type: :system, js: true do
       it 'ログイン画面が表示される' do
         expect(page).to have_selector('h1', text: 'ログイン')
       end
+
+      it 'ログイン画面が表示されてログインしてタスク一覧画面が表示される' do
+        expect(page).to have_selector('h1', text: 'ログイン')
+        fill_in 'session_email', with: user.email
+        fill_in 'session_password', with: user.password
+        find('#login_button').click
+        expect(page).to have_selector('h1', text: 'タスク一覧')
+      end
     end
 
     context 'タスク作成画面に遷移した時' do
       before do
-        visit new_task_path task
+        visit new_task_path
       end
 
       it 'ログイン画面が表示される' do
         expect(page).to have_selector('h1', text: 'ログイン')
+      end
+
+      it 'ログイン画面が表示されてログインしてタスク作成画面が表示される' do
+        expect(page).to have_selector('h1', text: 'ログイン')
+        fill_in 'session_email', with: user.email
+        fill_in 'session_password', with: user.password
+        find('#login_button').click
+        expect(page).to have_selector('h1', text: 'タスク作成')
       end
     end
 
@@ -286,6 +298,14 @@ RSpec.describe 'Tasks System', type: :system, js: true do
       it 'ログイン画面が表示される' do
         expect(page).to have_selector('h1', text: 'ログイン')
       end
+
+      it 'ログイン画面が表示されてログインしてタスク作成画面が表示される' do
+        expect(page).to have_selector('h1', text: 'ログイン')
+        fill_in 'session_email', with: user.email
+        fill_in 'session_password', with: user.password
+        find('#login_button').click
+        expect(page).to have_selector('h1', text: 'タスク詳細')
+      end
     end
 
     context 'タスク編集画面に遷移した時' do
@@ -295,6 +315,14 @@ RSpec.describe 'Tasks System', type: :system, js: true do
 
       it 'ログイン画面が表示される' do
         expect(page).to have_selector('h1', text: 'ログイン')
+      end
+
+      it 'ログイン画面が表示されてログインしてタスク作成画面が表示される' do
+        expect(page).to have_selector('h1', text: 'ログイン')
+        fill_in 'session_email', with: user.email
+        fill_in 'session_password', with: user.password
+        find('#login_button').click
+        expect(page).to have_selector('h1', text: 'タスク編集')
       end
     end
   end
