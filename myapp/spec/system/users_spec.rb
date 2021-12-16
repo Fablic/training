@@ -28,7 +28,6 @@ RSpec.describe 'Users System', type: :system, js: true do
 
   describe 'ユーザー登録画面' do
     before do
-      user
       visit signup_path
     end
 
