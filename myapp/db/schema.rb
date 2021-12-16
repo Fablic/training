@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 20_211_208_030_118) do
   end
 
   create_table 'tasks', options: 'ENGINE=InnoDB DEFAULT CHARSET=utf8mb4', force: :cascade do |t|
-    t.bigint 'user_id', comment: 'Usesr ID'
+    t.bigint 'user_id', comment: 'User ID'
     t.string 'title', null: false, comment: 'タイトル'
     t.string 'description', limit: 768, comment: '内容'
     t.integer 'status', limit: 1, comment: 'ステータス'
