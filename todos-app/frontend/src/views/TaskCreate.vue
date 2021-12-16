@@ -37,10 +37,10 @@ export default {
     })
 
     function createTask(task) {
-      axios.post("http://localhost:3000/tasks", {task}).then(() => {
+      axios.post(process.env.VUE_APP_TASK_SERVICE_BASE_URL + "/tasks", {task}).then(() => {
         //TODO Flash message is substituted with alert for now. Will be replaced later as Bootstrap is introduced.
         alert("Task created successfully!")
-        router.push({name: "TaskDetail", params: {id: task.id}})
+        router.push({name: "TaskIndex"})
       }).catch(() => {
         alert("Error while creating task!")
       })

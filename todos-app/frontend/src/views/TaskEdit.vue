@@ -32,7 +32,7 @@ export default {
     const task = ref({})
 
     onMounted(() => {
-          axios.get(`http://localhost:3000/tasks/${route.params.id}`).then((response) => {
+          axios.get(process.env.VUE_APP_TASK_SERVICE_BASE_URL + `/tasks/${route.params.id}`).then((response) => {
             task.value = response.data
             // reformats the datetime string, so it's properly displayed in datetime-local typed input
             if (task.value.due_datetime) {
@@ -45,7 +45,7 @@ export default {
     )
 
     function editTask(task) {
-      axios.put(`http://localhost:3000/tasks/${task.id}`, {task}).then(() => {
+      axios.put(process.env.VUE_APP_TASK_SERVICE_BASE_URL + `/tasks/${task.id}`, {task}).then(() => {
         //TODO Flash message is substituted with alert for now. Will be replaced later as Bootstrap is introduced.
         alert("Task edited successfully!")
         router.push({name: "TaskDetail", params: {id: task.id}})
