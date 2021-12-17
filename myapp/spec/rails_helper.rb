@@ -43,4 +43,6 @@ RSpec.configure do |config|
       Bullet.end_request
     end
   end
+
+  config.include LoginHelpers
 end

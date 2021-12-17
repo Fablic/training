@@ -1,9 +1,10 @@
 class TasksController < ApplicationController
   helper_method :sort_column, :sort_direction
+  before_action :logged_in_user
+  before_action :correct_user, only: %i[destroy edit]
 
   def index
-    # 次のStepで以下にeager_loadする必要がありそう
-    @tasks = Task.order("#{sort_column} #{sort_direction}").page(params[:page]).per(10)
+    @tasks = current_user.tasks.order("#{sort_column} #{sort_direction}").page(params[:page]).per(10)
     content = params[:content]
     status = params[:status]
     @tasks = @tasks.where('name LIKE ?', "%#{content}%") if content.present?
@@ -20,9 +21,7 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
-    # 以下2行は次のStepでログインユーザーに変更するため、暫定処置
-    user = User.first
-    @task = user
+    @task.user = current_user
     if @task.save
       flash[:success] = 'タスク作成に成功しました！'
       redirect_to @task
@@ -63,5 +62,10 @@ class TasksController < ApplicationController
 
   def sort_column
     Task.column_names.include?(params[:sort]) ? params[:sort] : 'created_at'
+  end
+
+  def correct_user
+    @task = current_user.tasks.find_by(id: params[:id])
+    redirect_to root_url if @task.nil?
   end
 end

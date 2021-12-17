@@ -1,0 +1,19 @@
+<% provide(:title, @user.name) %>
+<h1>ユーザー情報</h1>
+
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <table class="table table-sm table-bordered mt-4">
+      <tbody>
+      <tr>
+        <th scope='row'><%= t 'users.label.name' %></th>
+        <td><%= @user.name %></td>
+      </tr>
+      <tr>
+        <th scope='row'><%= t 'users.label.email' %></th>
+        <td><%= @user.email %></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

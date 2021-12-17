@@ -1,12 +1,21 @@
 class ApplicationController < ActionController::Base
-  # unless Rails.env.development?
   rescue_from Exception,                      with: :_render_500
   rescue_from ActiveRecord::RecordNotFound,   with: :_render_404
   rescue_from ActionController::RoutingError, with: :_render_404
-  # end
+
+  include SessionsHelper
 
   def routing_error
     raise ActionController::RoutingError, params[:path]
+  end
+
+  # ログイン済みユーザーかどうか確認
+  def logged_in_user
+    return if logged_in?
+
+    store_location
+    flash[:danger] = 'ログインしてください。'
+    redirect_to login_url
   end
 
   private

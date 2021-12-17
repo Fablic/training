@@ -42,3 +42,28 @@ footer ul li {
 .pagination {
   justify-content: center;
 }
+
+@mixin box_sizing {
+  -moz-box-sizing:    border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing:         border-box;
+}
+
+.debug_dump {
+  clear: both;
+  float: left;
+  width: 100%;
+  margin-top: 45px;
+  @include box_sizing;
+}
+
+.login-logout a {
+  color: #EFEFEF;
+}
+.login-logout a:hover{
+  color: aqua;
+}
+
+h1 {
+  text-align: center;
+}
