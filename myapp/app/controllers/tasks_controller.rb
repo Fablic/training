@@ -7,11 +7,12 @@ class TasksController < ApplicationController
     @tasks = current_user.tasks.order("#{sort_column} #{sort_direction}").page(params[:page]).per(10)
     content = params[:content]
     status = params[:status]
+    labels = params[:label]
     p '-----------------'
-    label = params[:label]
     # p label[0][:check_1]
     # p label[:check_1]
-    p label
+    p labels&.values
+    # p labels&.values.map(&:to_i)
     p '-----------------'
     @tasks = @tasks.where('name LIKE ?', "%#{content}%") if content.present?
     @tasks = @tasks.where(status: status) if status.present?
@@ -24,6 +25,8 @@ class TasksController < ApplicationController
 
   def new
     @task = Task.new
+    @labels = Label.all.select("id, name")
+    p @labels
   end
 
   def create
@@ -39,6 +42,7 @@ class TasksController < ApplicationController
 
   def edit
     @task = Task.find(params[:id])
+    @labels = Label.all.select("id, name")
   end
 
   def update
