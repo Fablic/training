@@ -19,7 +19,7 @@ module SessionsHelper
     session.delete(:user_id)
   end
 
-  def redirect_back_or_default(default)
+  def redirect_back_or(default)
     redirect_to(session[:forwarding_url] || default)
     session.delete(:forwarding_url)
   end
