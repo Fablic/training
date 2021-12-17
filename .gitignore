@@ -9,28 +9,27 @@ myapp/config/initializers/secret_token.rb
 myapp/config/master.key
 
 # dotenv, dotenv-rails
-*.env
+.env
 
 ## Environment normalization:
-myapp/.bundle
+.bundle
 myapp/vendor/bundle
 
 # Ignore node_modules
-myapp/node_modules/
+node_modules
 
 # Ignore yarn files
-myapp/yarn-error.log
-*yarn-debug.log*
-*.yarn-integrity
+yarn-error.log
+yarn-debug.log*
+.yarn-integrity
 
 # Ignore uploaded files in development
 myapp/storage/*
 !myapp/storage/.keep
 
-*.DS_Store
+.DS_Store
 myapp/public/packs
 myapp/public/packs-test
-myapp/node_modules
 
 # Ignore .idea directory.
 myapp/.idea/*
