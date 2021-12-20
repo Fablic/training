@@ -5,7 +5,7 @@ class TasksController < ApplicationController
   def index
     @tasks = Task.all
 
-    render json: @tasks, only: [:id, :title, :description, :priority, :status, :due_datetime]
+    render json: @tasks
   end
 
   # GET /tasks/1
@@ -17,20 +17,14 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(task_params)
 
-    if @task.save
-      render json: @task, status: :created, location: @task
-    else
-      render json: @task.errors, status: :unprocessable_entity
-    end
+    @task.save!
+    render json: @task, status: :created, location: @task
   end
 
   # PATCH/PUT /tasks/1
   def update
-    if @task.update(task_params)
-      render json: @task
-    else
-      render json: @task.errors, status: :unprocessable_entity
-    end
+    @task.update!(task_params)
+    render json: @task
   end
 
   # DELETE /tasks/1
