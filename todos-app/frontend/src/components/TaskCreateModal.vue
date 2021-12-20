@@ -17,17 +17,17 @@
             <label class="form-label mt-4">Priority</label>
             <select class="form-select" v-model="task.priority" required>
               <option disabled selected value="">How urgent?</option>
-              <option value="0">High</option>
-              <option value="1">Medium</option>
-              <option value="2">Low</option>
+              <option value="high">High</option>
+              <option value="medium">Medium</option>
+              <option value="low">Low</option>
             </select>
 
             <label class="form-label mt-4">Status</label>
             <select class="form-select" v-model="task.status" required>
               <option disabled selected value="">What's the progress?</option>
-              <option value="0">Not Started</option>
-              <option value="1">In Progress</option>
-              <option value="2">Done</option>
+              <option value="not_started">Not Started</option>
+              <option value="in_progress">In Progress</option>
+              <option value="done">Done</option>
             </select>
 
             <label class="form-label mt-4">Due Date</label>

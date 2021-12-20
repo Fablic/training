@@ -5,15 +5,15 @@
       <p class="card-text">{{ task.description }}</p>
       <div class="py-2">
         <span class="text-muted">Priority: </span>
-        <span v-if="parseInt(task.priority) === 0" class="badge bg-danger">High</span>
-        <span v-else-if="parseInt(task.priority) === 1" class="badge bg-warning">Medium</span>
+        <span v-if="task.priority === 'high'" class="badge bg-danger">High</span>
+        <span v-else-if="task.priority === 'medium'" class="badge bg-warning">Medium</span>
         <span v-else class="badge bg-info">Low</span>
 
         <br/>
 
         <span class="text-muted">Status: </span>
-        <span v-if="parseInt(task.status) === 0" class="badge bg-secondary">Not Started</span>
-        <span v-else-if="parseInt(task.status) === 1" class="badge bg-primary">In Progress</span>
+        <span v-if="task.status === 'not_started'" class="badge bg-secondary">Not Started</span>
+        <span v-else-if="task.status === 'in_progress'" class="badge bg-primary">In Progress</span>
         <span v-else class="badge bg-success">Done</span>
 
         <p v-if="task.due_datetime !== null"><span class="text-muted">Due date:</span> {{ (new Date(task.due_datetime)).toLocaleString() }}</p>
