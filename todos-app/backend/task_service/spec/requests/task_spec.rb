@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "Tasks", type: :request do
   describe "GET /tasks" do
-    context "given no task exists" do
+    context "when no task exists" do
       it "returns empty list" do
         get "/tasks"
         expect(response.status).to eq(200)
@@ -11,7 +11,7 @@ RSpec.describe "Tasks", type: :request do
       end
     end
 
-    context "given one task exists" do
+    context "when one task exists" do
       it "returns one task" do
         expected_task = create(:task)
         get "/tasks"
@@ -23,7 +23,7 @@ RSpec.describe "Tasks", type: :request do
       end
     end
 
-    context "given multiple tasks exists" do
+    context "when multiple tasks exists" do
       it "returns all tasks" do
         expected_tasks = create_list(:task, 5)
         get "/tasks"
@@ -36,7 +36,7 @@ RSpec.describe "Tasks", type: :request do
   end
 
   describe "GET /tasks/:id" do
-    context "given target task exists" do
+    context "when target task exists" do
       it "returns the target task" do
         expected_task = create(:task)
         get "/tasks/#{expected_task.id}"
@@ -47,7 +47,7 @@ RSpec.describe "Tasks", type: :request do
       end
     end
 
-    context "given target task doesn't exist" do
+    context "when target task doesn't exist" do
       it "returns not found response" do
         get "/tasks/1"
         expect(response.status).to eq(404)
@@ -56,7 +56,7 @@ RSpec.describe "Tasks", type: :request do
   end
 
   describe "POST /tasks" do
-    context "given valid request body" do
+    context "with valid request body" do
       it "save to DB and return created" do
         post "/tasks", params: {
           task: {
@@ -67,7 +67,7 @@ RSpec.describe "Tasks", type: :request do
             status: 0,
             due_datetime: "2021-05-12 14:15:25"
           }
-        }
+        }, as: :json
         expect(response.status).to eq(201)
         expect(JSON.parse(response.body)["title"]).to eq("test title")
         # Check DB
@@ -76,7 +76,7 @@ RSpec.describe "Tasks", type: :request do
       end
     end
 
-    context "given missing required attribute in the request body" do
+    context "with missing required attribute in the request body" do
       it "returns 422" do
         post "/tasks", params: {
           task: {
@@ -87,12 +87,12 @@ RSpec.describe "Tasks", type: :request do
             status: 0,
             due_datetime: "2021-05-12 14:15:25"
           }
-        }
+        }, as: :json
         expect(response.status).to eq(422)
       end
     end
 
-    context "given missing optional attribute in the request body" do
+    context "with missing optional attribute in the request body" do
       it "set default, save to DB and return created" do
         post "/tasks", params: {
           task: {
@@ -103,16 +103,16 @@ RSpec.describe "Tasks", type: :request do
             # missing status
             # missing due_datetime
           }
-        }
+        }, as: :json
         expect(response.status).to eq(201)
         expect(JSON.parse(response.body)["description"]).to be_nil
-        expect(JSON.parse(response.body)["status"]).to eq(0)
+        expect(JSON.parse(response.body)["status"]).to eq(Task::statuses.key(0))
         expect(Task.count).to eq(1)
         expect(Task.last.description).to be_nil
       end
     end
 
-    context "given invalid value in the request body" do
+    context "with invalid value in the request body" do
       it "returns 422" do
         post "/tasks", params: {
           task: {
@@ -123,14 +123,14 @@ RSpec.describe "Tasks", type: :request do
             status: 0,
             due_datetime: "2021-05-12 14:15:25"
           }
-        }
+        }, as: :json
         expect(response.status).to eq(422)
       end
     end
   end
 
   describe "PUT/PATCH /tasks/:id" do
-    context "given target task exists and request has valid body" do
+    context "when target task exists and request has valid body" do
       it "update DB and return updated task" do
         before_update = create(:task)
         patch "/tasks/#{before_update.id}", params: {
@@ -144,7 +144,7 @@ RSpec.describe "Tasks", type: :request do
       end
     end
 
-    context "given target task doesn't exist and request has valid body" do
+    context "when target task doesn't exist and request has valid body" do
       it "returns 404" do
         patch "/tasks/1", params: {
           task: {
@@ -157,7 +157,7 @@ RSpec.describe "Tasks", type: :request do
   end
 
   describe "DELETE /tasks/:id" do
-    context "given target task exists" do
+    context "when target task exists" do
       it "deletes task from DB and return 204" do
         task = create(:task)
         delete "/tasks/#{task.id}"
@@ -166,7 +166,7 @@ RSpec.describe "Tasks", type: :request do
       end
     end
 
-    context "given target task doesn't exist" do
+    context "when target task doesn't exist" do
       it 'returns 404' do
         delete "/tasks/1"
         expect(response.status).to be(404)

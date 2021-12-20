@@ -4,56 +4,78 @@ RSpec.describe Task, type: :model do
   subject {
     build(:task)
   }
-  it "is valid with all attributes" do
-    expect(subject).to be_valid
-  end
-  it "is not valid without user_id" do
-    subject.user_id = nil
-    expect(subject).to_not be_valid
+
+  context "with all attributes" do
+    it "is valid" do
+      expect(subject).to be_valid
+    end
   end
 
-  it "is not valid without a title" do
-    subject.title = nil
-    expect(subject).to_not be_valid
+  context "without user_id" do
+    it "is invalid" do
+      subject.user_id = nil
+      expect(subject).to_not be_valid
+    end
   end
 
-  it "is valid without a description" do
-    subject.description = nil
-    expect(subject).to be_valid
+  context "without a title" do
+    it "is invalid" do
+      subject.title = nil
+      expect(subject).to_not be_valid
+    end
   end
 
-  it "is not valid without a status" do
-    subject.status = nil
-    expect(subject).to_not be_valid
+  context "without a description" do
+    it "is valid" do
+      subject.description = nil
+      expect(subject).to be_valid
+    end
   end
 
-  it "is not valid with status value not in 0, 1, 2" do
-    subject.status = 3
-    expect(subject).to_not be_valid
+  context "without a status" do
+    it "is not valid" do
+      subject.status = nil
+      expect(subject).to_not be_valid
+    end
   end
 
-  it "is not valid without a priority" do
-    subject.priority = nil
-    expect(subject).to_not be_valid
+  context "when status not in 0, 1, 2" do
+    it "is invalid" do
+      expect{subject.status = 3}.to raise_error(ArgumentError)
+    end
   end
 
-  it "is not valid with priority value not in 0, 1, 2" do
-    subject.priority = 3
-    expect(subject).to_not be_valid
+  context "without a priority" do
+    it "is invalid" do
+      subject.priority = nil
+      expect(subject).to_not be_valid
+    end
   end
 
-  it "is valid without due_datetime" do
-    subject.due_datetime = nil
-    expect(subject).to be_valid
+  context "when priority not in 0, 1, 2" do
+    it "is invalid" do
+      expect{subject.priority = 3}.to raise_error(ArgumentError)
+    end
   end
 
-  it "is not valid if not datetime" do
-    subject.due_datetime = "not datetime"
-    expect(subject).to_not be_valid
+  context "without due_datetime" do
+    it "is valid" do
+      subject.due_datetime = nil
+      expect(subject).to be_valid
+    end
   end
 
-  it "is not valid if not correct datetime format" do
-    subject.due_datetime = "2020-13-20 13:11:10"
-    expect(subject).to_not be_valid
+  context "when due_datetime is not datetime" do
+    it "is invalid" do
+      subject.due_datetime = "not datetime"
+      expect(subject).to_not be_valid
+    end
+  end
+
+  context "when due_datetime not in correct datetime format" do
+    it "is invalid" do
+      subject.due_datetime = "2020-13-20 13:11:10"
+      expect(subject).to_not be_valid
+    end
   end
 end
