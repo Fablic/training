@@ -13,11 +13,15 @@ This is a todos app built with Ruby on Rails that does following key features
 * Maintenance mode
 
 # Service Design
+## Overview
 ![service_diagram](docs/rakuma_training_c4_container.png)
 - Frontend application will talk to User Service API to do all CRUD operations related to users.
   The User Service will also be responsible for authentication/authorization for the users.
 - Frontend application will talk to Task Service API to do all CRUD operations related to tasks.
 - Each service will have its own DB instance.
+
+## Frontend
+![frontend_diagram](docs/training_frontend.png)
 
 # Logical Model Relation
 ![model_diagram](docs/logical_relation.png)
