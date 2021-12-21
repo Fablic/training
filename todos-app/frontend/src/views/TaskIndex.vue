@@ -23,13 +23,15 @@ export default {
     const tasks = ref([])
 
     onMounted(() => {
-      axios.get("http://localhost:3000/tasks").then(response => {
+      axios.get(process.env.VUE_APP_TASK_SERVICE_BASE_URL + "/tasks").then(response => {
         tasks.value = response.data
+      }).catch(() => {
+        alert("Error while fetching tasks!")
       })
     })
 
     function deleteTask(id) {
-      axios.delete(`http://localhost:3000/tasks/${id}`).then(() => {
+      axios.delete(process.env.VUE_APP_TASK_SERVICE_BASE_URL + `/tasks/${id}`).then(() => {
         tasks.value = tasks.value.filter(task => task.id !== id)
         alert("Task deleted successfully!")
       }).catch(() => {

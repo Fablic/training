@@ -25,7 +25,7 @@ export default {
     const task = ref({})
 
     onMounted(() => {
-          axios.get(`http://localhost:3000/tasks/${route.params.id}`).then((response) => {
+          axios.get(process.env.VUE_APP_TASK_SERVICE_BASE_URL + `/tasks/${route.params.id}`).then((response) => {
             task.value = response.data
           }).catch(() => {
             alert("Error while fetching task!")
@@ -60,7 +60,7 @@ export default {
     }
 
     function deleteTask(id) {
-      axios.delete(`http://localhost:3000/tasks/${id}`).then(() => {
+      axios.delete(process.env.VUE_APP_TASK_SERVICE_BASE_URL + `/tasks/${id}`).then(() => {
         alert("Task deleted successfully!")
         router.push({name: "TaskIndex"})
       }).catch(() => {
