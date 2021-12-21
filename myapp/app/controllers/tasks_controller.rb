@@ -4,19 +4,18 @@ class TasksController < ApplicationController
   before_action :correct_user, only: %i[destroy edit]
 
   def index
-    @tasks = current_user.tasks.order("#{sort_column} #{sort_direction}").page(params[:page]).per(10)
     content = params[:content]
     status = params[:status]
     labels = params[:label]
-    p '-----------------'
-    # p label[0][:check_1]
-    # p label[:check_1]
-    p labels&.values
-    # p labels&.values.map(&:to_i)
-    p '-----------------'
+    @tasks = current_user.tasks.order("#{sort_column} #{sort_direction}").page(params[:page]).per(10)
     @tasks = @tasks.where('name LIKE ?', "%#{content}%") if content.present?
     @tasks = @tasks.where(status: status) if status.present?
-    @labels = Label.all.select("id, name")
+    if labels.present?
+      label_ids = labels.values
+      task_ids = TaskLabel.where(label_id: label_ids).select(:task_id)
+      @tasks = @tasks.where(id: task_ids)
+    end
+    @labels = Label.all.select('id, name')
   end
 
   def show
@@ -25,12 +24,13 @@ class TasksController < ApplicationController
 
   def new
     @task = Task.new
-    @labels = Label.all.select("id, name")
-    p @labels
+    @labels = Label.all.select('id, name')
   end
 
   def create
+    labels = params[:task][:label]
     @task = Task.new(task_params)
+    @task.label_ids = labels.values.map(&:to_i) if labels.present?
     @task.user = current_user
     if @task.save
       flash[:success] = 'タスク作成に成功しました！'
@@ -42,11 +42,13 @@ class TasksController < ApplicationController
 
   def edit
     @task = Task.find(params[:id])
-    @labels = Label.all.select("id, name")
+    @labels = Label.all.select('id, name')
   end
 
   def update
+    labels = params[:task][:label]
     @task = Task.find(params[:id])
+    @task.label_ids = labels.values.map(&:to_i) if labels.present?
     if @task.update(task_params)
       flash[:success] = 'タスク更新に成功しました！'
       redirect_to @task
@@ -65,6 +67,8 @@ class TasksController < ApplicationController
 
   def task_params
     params.require(:task).permit(:name, :description, :deadline_at, :status)
+    # params.require(:task).permit(:name, :description, :deadline_at, :status, :label)
+    # params.require(:task).permit(:name, :description, :deadline_at, :status, label: [:check_1,:check_2,:check_3])
   end
 
   def sort_direction

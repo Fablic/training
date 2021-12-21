@@ -15,8 +15,7 @@ User.create!(name: user_name, email: email, password: password, password_confirm
   User.create!(name: name, email: email, password: password, password_confirmation: password_confirmation)
 end
 
-
-labels = ['仕事','家族','買い物']
+labels = %w[仕事 家族 買い物]
 labels.each do |label|
   Label.create!(name: label)
 end

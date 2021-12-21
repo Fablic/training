@@ -3,13 +3,13 @@
 <div>
   <%= form_with url: tasks_path,method: :get ,local: true do |f| %>
     <%= f.label t('tasks.label.name')  %>
-    <%= f.text_field :content ,id: "search_content", maxlength: 255 , size: 20 %>
+    <%= f.text_field :content ,id: "search_content" ,value: "#{params[:content]}" , maxlength: 255 , size: 20 %>
     <%= f.label t('tasks.label.status') %>
-    <%= f.select :status, Task.statuses_i18n.invert, { include_blank: true },id: "search_status" %>
+    <%= f.select :status, Task.statuses_i18n.invert, { include_blank: true, selected: "#{params[:status]}" },id: "search_status" %>
     <% @labels.each do |label| %>
       <div class="form-check">
           <%= f.label label.name, class: 'form-check-label' %>
-          <%= f.check_box "label[check_#{label.id}]", { class: 'form-check-input', id: "label_check_#{label.id}" }, label.id, false %>
+          <%= f.check_box "label[check_#{label.id}]", { class: 'form-check-input', id: "label_check_#{label.id}", checked: label_checked?(label.id) }, label.id, false %>
       </div>
     <% end %>
     <%= f.submit'検索' ,id: "search_submit", class: 'btn btn-primary' %>
@@ -36,7 +36,7 @@
               <td><%= task.description %></td>
               <td><%= l(task.deadline_at, format: :long_ja) %></td>
               <td><%= task.status_i18n %></td>
-              <td>test</td>
+              <td><%= label_names(task) %></td>
               <td><%= link_to t('tasks.label.edit'), edit_task_path(task) ,id: "link_edit_task_#{task.id}"%></td>
               <td><%= link_to t('tasks.label.destroy'), task, method: :delete,
                                               data: { confirm: t('tasks.message.destroy') } ,id: "link_destroy_task_#{task.id}"%></td>

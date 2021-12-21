@@ -1,5 +1,9 @@
+<% provide(:http_method, 'patch') %>
 <h1><%= t '.title' %></h1>
 
-<%= render 'form' %>
-<!--Bootstrapでデザインを入れる時にヘッダーで共通化予定-->
-<%= link_to '一覧に戻る', root_path, id: 'back_root_link', class: 'btn btn-info' %>
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <%= render 'form' %>
+    <%= link_to '一覧に戻る', root_path, id: 'back_root_link', class: 'btn btn-info' %>
+  </div>
+</div>
