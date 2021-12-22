@@ -24,13 +24,70 @@ RSpec.describe "Tasks", type: :request do
     end
 
     context "when multiple tasks exists" do
-      it "returns all tasks" do
-        expected_tasks = create_list(:task, 5)
-        get "/tasks"
-        expect(response.status).to eq(200)
-        actual_tasks = JSON.parse(response.body)
-        expect(actual_tasks.length).to eq(5)
-        actual_tasks.each_with_index { |task, i| expect(task["id"]).to eq(expected_tasks[i].id) }
+      context "without sort param" do
+        it "returns all tasks sorted by id" do
+          expected_tasks = create_list(:task, 5)
+          get "/tasks"
+          expect(response.status).to eq(200)
+          actual_tasks = JSON.parse(response.body)
+          expect(actual_tasks.length).to eq(5)
+          actual_tasks.each_with_index { |task, i| expect(task["id"]).to eq(expected_tasks[i].id) }
+        end
+      end
+
+      context "with valid sort param" do
+        it "returns all tasks sorted by updated datetime" do
+          task_1 = create(:task, :updated_at => Date.new(2020, 1, 1))
+          task_2 = create(:task, :updated_at => Date.new(2020, 10, 1))
+          task_3 = create(:task, :updated_at => Date.new(2020, 3, 1))
+          # get tasks ordered by updated datetime descending
+          get "/tasks?sort=updated_at:desc"
+          expect(response.status).to eq(200)
+          actual_tasks = JSON.parse(response.body)
+          expect(actual_tasks.length).to eq(3)
+          expect(actual_tasks[0]["id"]).to eq(task_2.id)
+          expect(actual_tasks[1]["id"]).to eq(task_3.id)
+          expect(actual_tasks[2]["id"]).to eq(task_1.id)
+
+          # get tasks ordered by updated datetime descending
+          get "/tasks?sort=updated_at:asc"
+          expect(response.status).to eq(200)
+          actual_tasks = JSON.parse(response.body)
+          expect(actual_tasks.length).to eq(3)
+          expect(actual_tasks[0]["id"]).to eq(task_1.id)
+          expect(actual_tasks[1]["id"]).to eq(task_3.id)
+          expect(actual_tasks[2]["id"]).to eq(task_2.id)
+        end
+
+        it "returns all tasks sorted by created datetime" do
+          task_1 = create(:task, :created_at => Date.new(2020, 1, 1))
+          task_2 = create(:task, :created_at => Date.new(2020, 10, 1))
+          task_3 = create(:task, :created_at => Date.new(2020, 3, 1))
+          # get tasks ordered by created datetime descending
+          get "/tasks?sort=created_at:desc"
+          expect(response.status).to eq(200)
+          actual_tasks = JSON.parse(response.body)
+          expect(actual_tasks.length).to eq(3)
+          expect(actual_tasks[0]["id"]).to eq(task_2.id)
+          expect(actual_tasks[1]["id"]).to eq(task_3.id)
+          expect(actual_tasks[2]["id"]).to eq(task_1.id)
+
+          # get tasks ordered by created datetime ascending
+          get "/tasks?sort=created_at:asc"
+          expect(response.status).to eq(200)
+          actual_tasks = JSON.parse(response.body)
+          expect(actual_tasks.length).to eq(3)
+          expect(actual_tasks[0]["id"]).to eq(task_1.id)
+          expect(actual_tasks[1]["id"]).to eq(task_3.id)
+          expect(actual_tasks[2]["id"]).to eq(task_2.id)
+        end
+      end
+
+      context "with invalid sort param" do
+        it "returns 400" do
+          get "/tasks?sort=invalid_param:desc"
+          expect(response.status).to eq(400)
+        end
       end
     end
   end
