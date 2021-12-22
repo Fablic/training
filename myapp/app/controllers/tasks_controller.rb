@@ -7,15 +7,14 @@ class TasksController < ApplicationController
     content = params[:content]
     status = params[:status]
     labels = params[:label]
+    @labels = Label.all.select('id, name')
     @tasks = current_user.tasks.order("#{sort_column} #{sort_direction}").page(params[:page]).per(10)
     @tasks = @tasks.where('name LIKE ?', "%#{content}%") if content.present?
     @tasks = @tasks.where(status: status) if status.present?
-    if labels.present?
-      label_ids = labels.values
-      task_ids = TaskLabel.where(label_id: label_ids).select(:task_id)
-      @tasks = @tasks.where(id: task_ids)
-    end
-    @labels = Label.all.select('id, name')
+    return if labels.blank?
+
+    task_ids = TaskLabel.where(label_id: labels.values).select(:task_id)
+    @tasks = @tasks.where(id: task_ids)
   end
 
   def show

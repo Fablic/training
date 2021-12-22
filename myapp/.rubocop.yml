@@ -41,3 +41,11 @@ RSpec/ExampleLength:
 Rails/UniqueValidationWithoutIndex:
   Enabled: false
 
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
+
+# 一旦妥協として設定
+Metrics/AbcSize:
+  Max: 30
+
+
