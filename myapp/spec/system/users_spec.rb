@@ -9,9 +9,9 @@ RSpec.describe 'Users System', type: :system, js: true do
     end
 
     context '存在するユーザーでログインした時' do
-      it 'ユーザー情報タイトルが表示される' do
+      it 'タスク一覧タイトルが表示される' do
         log_in_as user
-        expect(page).to have_selector('h1', text: 'ユーザー情報')
+        expect(page).to have_selector('h1', text: 'タスク一覧')
       end
     end
 

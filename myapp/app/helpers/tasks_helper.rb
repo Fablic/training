@@ -7,13 +7,15 @@ module TasksHelper
   def label_checked?(label_id)
     label_params = params[:label]
     return false if label_params.blank?
+
     label_params.value?(label_id.to_s)
   end
 
   def label_names(task)
     labels = task.labels
     return '' if labels.includes([:task_labels]).blank?
-    label_names = labels.includes([:task_labels]).map { |label| label.name}
+
+    label_names = labels.includes([:task_labels]).map(&:name)
     label_names.join(', ')
   end
 end

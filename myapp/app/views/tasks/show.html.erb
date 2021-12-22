@@ -19,6 +19,10 @@
     <td><%= l(@task.deadline_at, format: :long_ja) %></td>
   </tr>
   <tr>
+    <th scope='row'><%= t 'tasks.label.label' %></th>
+    <td id='task_label_value'><%= label_names(@task) %></td>
+  </tr>
+  <tr>
     <th scope='row'><%= t 'tasks.label.user' %></th>
     <td><%= @task.user.name %></td>
   </tr>

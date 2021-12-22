@@ -48,7 +48,7 @@ class TasksController < ApplicationController
   def update
     labels = params[:task][:label]
     @task = Task.find(params[:id])
-    @task.label_ids = labels.values.map(&:to_i) if labels.present?
+    @task.label_ids = labels.present? ? labels.values.map(&:to_i) : []
     if @task.update(task_params)
       flash[:success] = 'タスク更新に成功しました！'
       redirect_to @task
@@ -67,8 +67,6 @@ class TasksController < ApplicationController
 
   def task_params
     params.require(:task).permit(:name, :description, :deadline_at, :status)
-    # params.require(:task).permit(:name, :description, :deadline_at, :status, :label)
-    # params.require(:task).permit(:name, :description, :deadline_at, :status, label: [:check_1,:check_2,:check_3])
   end
 
   def sort_direction

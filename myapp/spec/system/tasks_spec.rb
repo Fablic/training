@@ -2,13 +2,21 @@ require 'rails_helper'
 
 RSpec.describe 'Tasks System', type: :system, js: true do
   let(:user) { create(:user) }
+  let(:label_one) { create(:label) }
+  let(:label_second) { create(:label) }
+  let(:label_third) { create(:label) }
   let(:task) { create(:task, name: 'task_first', deadline_at: 3.days.since, user: user) }
+  let(:labeled_task) { create(:task, name: 'labeled_task', status: 'done', user: user, labels: [label_one, label_second, label_third]) }
+  let(:non_labeled_task) { create(:task, name: 'non_labeled_task', user: user) }
 
   describe 'タスク一覧画面(ログイン済み)' do
     let(:task_second) { create(:task, name: 'task_second', deadline_at: 2.days.since, created_at: Date.today + 1, user: user) }
     let(:task_third) { create(:task, name: 'task_third', deadline_at: 1.day.since, created_at: Date.today + 2, status: 'done', user: user) }
 
     before do
+      label_one
+      labeled_task
+      non_labeled_task
       task
       log_in_as user
       visit root_path
@@ -120,11 +128,62 @@ RSpec.describe 'Tasks System', type: :system, js: true do
         expect(page).to have_selector('a', text: task_third.name)
       end
     end
+
+    context 'ラベルを指定して検索したとき' do
+      before do
+        find("#label_check_#{label_one.id}").set(true)
+        find('#search_submit').click
+      end
+
+      it '指定したラベルが付いてるタスクが一覧に表示される事' do
+        expect(page).to have_selector('a', text: labeled_task.name)
+      end
+
+      it '指定したラベルが付いていないタスクが表示されない事' do
+        expect(page).not_to have_selector('a', text: non_labeled_task.name)
+      end
+    end
+
+    context 'ラベルとテキストを指定して検索したとき' do
+      before do
+        fill_in 'search_content', with: labeled_task.name
+        find("#label_check_#{label_one.id}").set(true)
+        find('#search_submit').click
+      end
+
+      it '(指定したラベルANDテキスト一致)のタスクが一覧に表示される事' do
+        expect(page).to have_selector('a', text: labeled_task.name)
+      end
+
+      it '(指定したラベルANDテキスト一致)に該当しないタスクが表示されない事' do
+        expect(page).not_to have_selector('a', text: non_labeled_task.name)
+      end
+    end
+
+    context 'ラベルとステータスとテキストを指定して検索したとき' do
+      before do
+        fill_in 'search_content', with: labeled_task.name
+        find('#search_status').find("option[value='done']").select_option
+        find("#label_check_#{label_one.id}").set(true)
+        find('#search_submit').click
+      end
+
+      it '(指定したラベルANDテキスト一致ANDステータス)のタスクが一覧に表示される事' do
+        expect(page).to have_selector('a', text: labeled_task.name)
+      end
+
+      it '(指定したラベルANDテキスト一致ANDステータス)に該当しないタスクが表示されない事' do
+        expect(page).not_to have_selector('a', text: non_labeled_task.name)
+      end
+    end
   end
 
   describe 'タスク作成画面(ログイン済み)' do
     before do
       user
+      label_one
+      label_second
+      label_third
       log_in_as user
       visit new_task_path
     end
@@ -177,6 +236,45 @@ RSpec.describe 'Tasks System', type: :system, js: true do
       end
     end
 
+    context 'ラベルをチェックして新しいタスクを作成した時(一つだけチェックしない)' do
+      it 'チェックしたラベルが付与された状態でで新しいタスクが作成される' do
+        fill_in 'task_name', with: 'input Task'
+        fill_in 'task_description', with: 'input Description'
+        find("#label_check_#{label_one.id}").set(true)
+        find("#label_check_#{label_second.id}").set(true)
+        find("#label_check_#{label_third.id}").set(false) # 明示的にチェックを外す（デフォルトで外れてるが）
+        find('#post_task_button').click
+        expect(page).to have_selector('h1', text: 'タスク詳細')
+        expect(page).to have_content('タスク作成に成功しました！')
+        expect(page).to have_content('input Task')
+        expect(page).to have_content('input Description')
+        expect(page).to have_content(label_one.name)
+        expect(page).to have_content(label_second.name)
+        expect(page).not_to have_content(label_third.name) # 表示されない事
+      end
+    end
+
+    context 'ラベルをチェックしないで新しいタスクを作成した時' do
+      it 'ラベルが付与されない状態で新しいタスクが作成される事' do
+        fill_in 'task_name', with: 'input Task'
+        fill_in 'task_description', with: 'input Description'
+        # 明示的にチェックを外す（デフォルトで外れてるが）
+        find("#label_check_#{label_one.id}").set(false)
+        find("#label_check_#{label_second.id}").set(false)
+        find("#label_check_#{label_third.id}").set(false)
+
+        find('#post_task_button').click
+        expect(page).to have_selector('h1', text: 'タスク詳細')
+        expect(page).to have_content('タスク作成に成功しました！')
+        expect(page).to have_content('input Task')
+        expect(page).to have_content('input Description')
+        # 表示されない事
+        expect(page).not_to have_content(label_one.name)
+        expect(page).not_to have_content(label_second.name)
+        expect(page).not_to have_content(label_third.name)
+      end
+    end
+
     context '一覧に戻るリンクをクリックした時' do
       it 'タスク一覧画面が表示される' do
         find('#back_root_link').click
@@ -188,10 +286,13 @@ RSpec.describe 'Tasks System', type: :system, js: true do
   describe 'タスク詳細画面(ログイン済み)' do
     before do
       log_in_as user
-      visit task_path task
     end
 
     context 'タスク詳細画面に遷移した時' do
+      before do
+        visit task_path task
+      end
+
       it 'タスク詳細タイトルが表示される' do
         expect(page).to have_selector('h1', text: 'タスク詳細')
       end
@@ -204,7 +305,34 @@ RSpec.describe 'Tasks System', type: :system, js: true do
       end
     end
 
+    context 'ラベル付きのタスク詳細画面に遷移した時' do
+      before do
+        visit task_path labeled_task
+      end
+
+      it 'ラベル付きのタスクのラベル情報が表示される事' do
+        expect(page).to have_content(labeled_task.name)
+        labeled_task.labels.each do |label|
+          expect(page).to have_content(label.name)
+        end
+      end
+    end
+
+    context 'ラベルなしのタスク詳細画面に遷移した時' do
+      before do
+        visit task_path non_labeled_task
+      end
+
+      it 'ラベルなしタスクのラベルが表示されない事' do
+        expect(page).to have_selector('#task_label_value', text: '')
+      end
+    end
+
     context '一覧に戻るリンクをクリックした時' do
+      before do
+        visit task_path task
+      end
+
       it 'タスク一覧画面が表示される' do
         find('#back_root_link').click
         expect(page).to have_selector('h1', text: 'タスク一覧')
@@ -214,6 +342,9 @@ RSpec.describe 'Tasks System', type: :system, js: true do
 
   describe 'タスク編集画面(ログイン済み)' do
     before do
+      label_one
+      label_second
+      label_third
       log_in_as user
       visit edit_task_path task
     end
@@ -242,6 +373,47 @@ RSpec.describe 'Tasks System', type: :system, js: true do
         expect(page).to have_content('update Description')
         expect(page).to have_content(I18n.l(deadline_at, format: :long_ja))
         expect(page).to have_content('着手中')
+      end
+    end
+
+    context 'ラベルをチェックして更新した時(一つだけチェックしない)' do
+      it 'チェックしたラベルが付与された状態で更新される' do
+        fill_in 'task_name', with: 'update Task'
+        fill_in 'task_description', with: 'update Description'
+        find("#label_check_#{label_one.id}").set(true)
+        find("#label_check_#{label_second.id}").set(true)
+        find("#label_check_#{label_third.id}").set(false)
+        find('#post_task_button').click
+        expect(page).to have_selector('h1', text: 'タスク詳細')
+        expect(page).to have_content('タスク更新に成功しました！')
+        expect(page).to have_content('update Task')
+        expect(page).to have_content('update Description')
+        expect(page).to have_content(label_one.name)
+        expect(page).to have_content(label_second.name)
+        expect(page).not_to have_content(label_third.name) # 表示されない事
+      end
+    end
+
+    context 'ラベルを全てチェック外してタスクを更新した時' do
+      before do
+        visit edit_task_path labeled_task
+      end
+
+      it 'ラベルが全て外れた状態で更新される事' do
+        fill_in 'task_name', with: 'update Task'
+        fill_in 'task_description', with: 'update Description'
+        labeled_task.label_ids.each do |label_id|
+          find("#label_check_#{label_id}").set(false)
+        end
+        find('#post_task_button').click
+        expect(page).to have_selector('h1', text: 'タスク詳細')
+        expect(page).to have_content('タスク更新に成功しました！')
+        expect(page).to have_content('update Task')
+        expect(page).to have_content('update Description')
+        # 表示されない事
+        labeled_task.labels.each do |label|
+          expect(page).not_to have_content(label.name)
+        end
       end
     end
 
