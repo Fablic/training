@@ -7,7 +7,7 @@
     <%= f.label t('tasks.label.status') %>
     <%= f.select :status, Task.statuses_i18n.invert, { include_blank: true, selected: "#{params[:status]}" },id: "search_status" %>
     <% @labels.each do |label| %>
-      <div class="form-check">
+      <div class="form-check form-check-inline">
           <%= f.label label.name, class: 'form-check-label' %>
           <%= f.check_box "label[check_#{label.id}]", { class: 'form-check-input', id: "label_check_#{label.id}", checked: label_checked?(label.id) }, label.id, false %>
       </div>
@@ -24,7 +24,7 @@
           <th><%= sort_order "description", t('tasks.label.description') %></th>
           <th><%= sort_order "deadline_at", t('tasks.label.deadline_at') %></th>
           <th><%= sort_order "status", t('tasks.label.status') %></th>
-          <th><%= t('tasks.label.lable') %></th>
+          <th><%= t('tasks.label.label') %></th>
           <th><%= t 'tasks.label.edit' %></th>
           <th><%= t 'tasks.label.destroy' %></th>
         </tr>
