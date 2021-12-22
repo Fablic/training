@@ -8,42 +8,61 @@ describe 'MaintenanceTask' do
   describe 'maintainance:start' do
     subject(:task) { Rake.application['maintenance:start'] }
 
-    after { File.delete(Maintenance::MAINTENANCE_FILE_PATH) }
+    before {
+      allow(Maintenance).to receive(:start)
+    }
+
+    after { FileUtils.rm_f(Maintenance::MAINTENANCE_FILE_PATH) }
 
     example 'set maintenance mode' do
       expect { task.invoke }.to output("メンテナンスにしました\n").to_stdout
+    end
+
+    example 'Maintenance.start is called' do
+      task.invoke
+      expect(Maintenance).to have_received(:start).once
     end
   end
 
   describe 'maintainance:stop' do
     subject(:task) { Rake.application['maintenance:stop'] }
 
-    before { File.open(Maintenance::MAINTENANCE_FILE_PATH, 'w') }
+    before {
+      FileUtils.touch(Maintenance::MAINTENANCE_FILE_PATH)
+      allow(Maintenance).to receive(:stop)
+    }
 
     example 'unset maintenance mode' do
       expect { task.invoke }.to output("メンテナンス解除しました\n").to_stdout
+    end
+
+    example 'Maintenance.stop is called' do
+      task.invoke
+      expect(Maintenance).to have_received(:stop).once
     end
   end
 
   describe 'maintainance:status' do
     subject(:task) { Rake.application['maintenance:status'] }
 
-    before { File.delete(Maintenance::MAINTENANCE_FILE_PATH) if File.exist?(Maintenance::MAINTENANCE_FILE_PATH) }
-
-    after { File.delete(Maintenance::MAINTENANCE_FILE_PATH) if File.exist?(Maintenance::MAINTENANCE_FILE_PATH) }
-
     context 'when in maintenance' do
-      before { Maintenance.start }
+      before {
+        allow(Maintenance).to receive(:status?).and_return(true)
+      }
 
       example 'maintenance announcement is displayed' do
+        pp File.exist?(maintenance_file_path)
         expect { task.invoke }.to output("メンテナンス中です\n").to_stdout
       end
     end
 
     context 'when out of maintenance' do
-      before { Maintenance.stop }
+      before {
+        allow(Maintenance).to receive(:status?).and_return(false)
+      }
 
       example 'out of maintenance announcement is displayed' do
+        pp File.exist?(maintenance_file_path)
         expect { task.invoke }.to output("メンテナンス解除中です\n").to_stdout
       end
     end

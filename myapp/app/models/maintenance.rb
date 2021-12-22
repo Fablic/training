@@ -3,7 +3,7 @@
 require 'tmpdir'
 
 class Maintenance
-  MAINTENANCE_FILE_PATH = Rails.root.join(Dir.tmpdir, 'maintenance.txt')
+  MAINTENANCE_FILE_PATH = Rails.root.join('tmp/maintenance.txt')
 
   def self.start
     FileUtils.touch MAINTENANCE_FILE_PATH
