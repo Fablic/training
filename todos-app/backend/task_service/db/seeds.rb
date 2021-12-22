@@ -9,7 +9,7 @@
 5.times do
   Task.create(
     user_id: 1,
-    title: Faker::Lorem.sentence,
+    title: Faker::Lorem.word,
     description: Faker::Lorem.paragraph,
     priority: Faker::Number.between(from: 0, to: 2),
     status: Faker::Number.between(from: 0, to: 2),
