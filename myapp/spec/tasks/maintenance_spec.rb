@@ -8,10 +8,6 @@ describe 'MaintenanceTask' do
   describe 'maintainance:start' do
     subject(:task) { Rake.application['maintenance:start'] }
 
-    before {
-      allow(Maintenance).to receive(:start)
-    }
-
     after { FileUtils.rm_f(Maintenance::MAINTENANCE_FILE_PATH) }
 
     example 'set maintenance mode' do
@@ -19,6 +15,7 @@ describe 'MaintenanceTask' do
     end
 
     example 'Maintenance.start is called' do
+      allow(Maintenance).to receive(:start)
       task.invoke
       expect(Maintenance).to have_received(:start).once
     end
@@ -29,7 +26,6 @@ describe 'MaintenanceTask' do
 
     before {
       FileUtils.touch(Maintenance::MAINTENANCE_FILE_PATH)
-      allow(Maintenance).to receive(:stop)
     }
 
     example 'unset maintenance mode' do
@@ -37,6 +33,7 @@ describe 'MaintenanceTask' do
     end
 
     example 'Maintenance.stop is called' do
+      allow(Maintenance).to receive(:stop)
       task.invoke
       expect(Maintenance).to have_received(:stop).once
     end
@@ -51,7 +48,6 @@ describe 'MaintenanceTask' do
       }
 
       example 'maintenance announcement is displayed' do
-        pp File.exist?(maintenance_file_path)
         expect { task.invoke }.to output("メンテナンス中です\n").to_stdout
       end
     end
@@ -62,7 +58,6 @@ describe 'MaintenanceTask' do
       }
 
       example 'out of maintenance announcement is displayed' do
-        pp File.exist?(maintenance_file_path)
         expect { task.invoke }.to output("メンテナンス解除中です\n").to_stdout
       end
     end
