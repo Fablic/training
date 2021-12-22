@@ -9,7 +9,7 @@ RSpec.describe 'Users System', type: :system, js: true do
     end
 
     context '存在するユーザーでログインした時' do
-      it 'タスク一覧タイトルが表示される' do
+      it 'タスク一覧タイトルが表示される事' do
         log_in_as user
         expect(page).to have_selector('h1', text: 'タスク一覧')
       end
@@ -32,7 +32,7 @@ RSpec.describe 'Users System', type: :system, js: true do
     end
 
     context '新しいユーザーを正しく登録した時' do
-      it 'ユーザー情報タイトルが表示される' do
+      it 'ユーザー情報タイトルが表示される事' do
         fill_in 'user_name', with: 'new.rakuten.taro'
         fill_in 'user_email', with: 'new-rakuten-taro@example.com'
         fill_in 'user_password', with: 'password'

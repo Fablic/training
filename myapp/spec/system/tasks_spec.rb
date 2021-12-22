@@ -23,11 +23,11 @@ RSpec.describe 'Tasks System', type: :system, js: true do
     end
 
     context 'タスク一覧画面に遷移した時' do
-      it 'タスク一覧タイトルが表示される' do
+      it 'タスク一覧タイトルが表示される事' do
         expect(page).to have_selector('h1', text: 'タスク一覧')
       end
 
-      it '登録してあるタスクが表示される' do
+      it '登録してあるタスクが表示される事' do
         expect(page).to have_content(task.name)
       end
 
@@ -93,7 +93,7 @@ RSpec.describe 'Tasks System', type: :system, js: true do
         visit root_path
       end
 
-      it '作成日時の降順で表示される' do
+      it '作成日時の降順で表示される事' do
         tr_list = all('tbody tr')
         expect(tr_list[0].first('td').text).to eq task_third.name
         expect(tr_list[1].first('td').text).to eq task_second.name
@@ -121,7 +121,7 @@ RSpec.describe 'Tasks System', type: :system, js: true do
     end
 
     context 'タスクとステータスを埋めて検索ボタンを押した時' do
-      it '条件に合致するタスクが一覧に表示される' do
+      it '条件に合致するタスクが一覧に表示される事' do
         fill_in 'search_content', with: task_third.name
         find('#search_status').find("option[value='#{task_third.status}']").select_option
         find('#search_submit').click
@@ -189,13 +189,13 @@ RSpec.describe 'Tasks System', type: :system, js: true do
     end
 
     context 'タスク作成画面に遷移した時' do
-      it 'タスク作成タイトルが表示される' do
+      it 'タスク作成タイトルが表示される事' do
         expect(page).to have_selector('h1', text: 'タスク作成')
       end
     end
 
     context '新しいタスクを作成した時(ステータスはDefault)' do
-      it '未着手のステータスで新しいタスクが作成される' do
+      it '未着手のステータスで新しいタスクが作成される事' do
         fill_in 'task_name', with: 'input Task'
         fill_in 'task_description', with: 'input Description'
         # nowだとクリックまでに時間経過してValidateに引っかかるため
@@ -215,7 +215,7 @@ RSpec.describe 'Tasks System', type: :system, js: true do
     end
 
     context 'ステータスを変更して新しいタスクを作成した時' do
-      it '着手中のステータスで新しいタスクが作成される' do
+      it '着手中のステータスで新しいタスクが作成される事' do
         fill_in 'task_name', with: 'input Task'
         fill_in 'task_description', with: 'input Description'
         # nowだとクリックまでに時間経過してValidateに引っかかるため
@@ -237,7 +237,7 @@ RSpec.describe 'Tasks System', type: :system, js: true do
     end
 
     context 'ラベルをチェックして新しいタスクを作成した時(一つだけチェックしない)' do
-      it 'チェックしたラベルが付与された状態でで新しいタスクが作成される' do
+      it 'チェックしたラベルが付与された状態でで新しいタスクが作成される事' do
         fill_in 'task_name', with: 'input Task'
         fill_in 'task_description', with: 'input Description'
         find("#label_check_#{label_one.id}").set(true)
@@ -276,7 +276,7 @@ RSpec.describe 'Tasks System', type: :system, js: true do
     end
 
     context '一覧に戻るリンクをクリックした時' do
-      it 'タスク一覧画面が表示される' do
+      it 'タスク一覧画面が表示される事' do
         find('#back_root_link').click
         expect(page).to have_selector('h1', text: 'タスク一覧')
       end
@@ -293,11 +293,11 @@ RSpec.describe 'Tasks System', type: :system, js: true do
         visit task_path task
       end
 
-      it 'タスク詳細タイトルが表示される' do
+      it 'タスク詳細タイトルが表示される事' do
         expect(page).to have_selector('h1', text: 'タスク詳細')
       end
 
-      it '選択したタスクの詳細情報が表示される' do
+      it '選択したタスクの詳細情報が表示される事' do
         expect(page).to have_content(task.name)
         expect(page).to have_content(task.description)
         expect(page).to have_content(I18n.l(task.deadline_at, format: :long_ja))
@@ -333,7 +333,7 @@ RSpec.describe 'Tasks System', type: :system, js: true do
         visit task_path task
       end
 
-      it 'タスク一覧画面が表示される' do
+      it 'タスク一覧画面が表示される事' do
         find('#back_root_link').click
         expect(page).to have_selector('h1', text: 'タスク一覧')
       end
@@ -350,7 +350,7 @@ RSpec.describe 'Tasks System', type: :system, js: true do
     end
 
     context 'タスク編集画面に遷移した時' do
-      it 'タスク編集タイトルが表示される' do
+      it 'タスク編集タイトルが表示される事' do
         expect(page).to have_selector('h1', text: 'タスク編集')
       end
     end
@@ -377,7 +377,7 @@ RSpec.describe 'Tasks System', type: :system, js: true do
     end
 
     context 'ラベルをチェックして更新した時(一つだけチェックしない)' do
-      it 'チェックしたラベルが付与された状態で更新される' do
+      it 'チェックしたラベルが付与された状態で更新される事' do
         fill_in 'task_name', with: 'update Task'
         fill_in 'task_description', with: 'update Description'
         find("#label_check_#{label_one.id}").set(true)
@@ -418,7 +418,7 @@ RSpec.describe 'Tasks System', type: :system, js: true do
     end
 
     context '一覧に戻るリンクをクリックした時' do
-      it 'タスク一覧画面が表示される' do
+      it 'タスク一覧画面が表示される事' do
         find('#back_root_link').click
         expect(page).to have_selector('h1', text: 'タスク一覧')
       end
@@ -431,11 +431,11 @@ RSpec.describe 'Tasks System', type: :system, js: true do
         visit root_path
       end
 
-      it 'ログイン画面が表示される' do
+      it 'ログイン画面が表示される事' do
         expect(page).to have_selector('h1', text: 'ログイン')
       end
 
-      it 'ログイン画面が表示されてログインしてタスク一覧画面が表示される' do
+      it 'ログイン画面が表示されてログインしてタスク一覧画面が表示される事' do
         expect(page).to have_selector('h1', text: 'ログイン')
         fill_in 'session_email', with: user.email
         fill_in 'session_password', with: user.password
@@ -449,11 +449,11 @@ RSpec.describe 'Tasks System', type: :system, js: true do
         visit new_task_path
       end
 
-      it 'ログイン画面が表示される' do
+      it 'ログイン画面が表示される事' do
         expect(page).to have_selector('h1', text: 'ログイン')
       end
 
-      it 'ログイン画面が表示されてログインしてタスク作成画面が表示される' do
+      it 'ログイン画面が表示されてログインしてタスク作成画面が表示される事' do
         expect(page).to have_selector('h1', text: 'ログイン')
         fill_in 'session_email', with: user.email
         fill_in 'session_password', with: user.password
@@ -467,11 +467,11 @@ RSpec.describe 'Tasks System', type: :system, js: true do
         visit task_path task
       end
 
-      it 'ログイン画面が表示される' do
+      it 'ログイン画面が表示される事' do
         expect(page).to have_selector('h1', text: 'ログイン')
       end
 
-      it 'ログイン画面が表示されてログインしてタスク作成画面が表示される' do
+      it 'ログイン画面が表示されてログインしてタスク作成画面が表示される事' do
         expect(page).to have_selector('h1', text: 'ログイン')
         fill_in 'session_email', with: user.email
         fill_in 'session_password', with: user.password
@@ -485,11 +485,11 @@ RSpec.describe 'Tasks System', type: :system, js: true do
         visit edit_task_path task
       end
 
-      it 'ログイン画面が表示される' do
+      it 'ログイン画面が表示される事' do
         expect(page).to have_selector('h1', text: 'ログイン')
       end
 
-      it 'ログイン画面が表示されてログインしてタスク作成画面が表示される' do
+      it 'ログイン画面が表示されてログインしてタスク作成画面が表示される事' do
         expect(page).to have_selector('h1', text: 'ログイン')
         fill_in 'session_email', with: user.email
         fill_in 'session_password', with: user.password
