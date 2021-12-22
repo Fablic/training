@@ -50,7 +50,7 @@ class TasksController < ApplicationController
 
   def sort_param
     # Possible sort params
-    sort_params = %w[created_at:desc created_at:asc updated_at:desc updated_at:asc]
+    sort_params = %w[created_at:desc created_at:asc updated_at:desc updated_at:asc due_datetime:desc due_datetime:asc]
     if params[:sort]
       if sort_params.include?(params[:sort])
         [params[:sort].split(":")[0], params[:sort].split(":")[1]]

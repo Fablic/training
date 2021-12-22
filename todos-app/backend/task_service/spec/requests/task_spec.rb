@@ -81,6 +81,32 @@ RSpec.describe "Tasks", type: :request do
           expect(actual_tasks[1]["id"]).to eq(task_3.id)
           expect(actual_tasks[2]["id"]).to eq(task_2.id)
         end
+
+        it "returns all tasks sorted by due datetime" do
+          task_1 = create(:task, :due_datetime => Date.new(2020, 1, 1))
+          task_2 = create(:task, :due_datetime => Date.new(2020, 10, 1))
+          task_3 = create(:task, :due_datetime => Date.new(2020, 3, 1))
+          task_4 = create(:task, :due_datetime => nil)
+          # get tasks ordered by due datetime descending
+          get "/tasks?sort=due_datetime:desc"
+          expect(response.status).to eq(200)
+          actual_tasks = JSON.parse(response.body)
+          expect(actual_tasks.length).to eq(4)
+          expect(actual_tasks[0]["id"]).to eq(task_2.id)
+          expect(actual_tasks[1]["id"]).to eq(task_3.id)
+          expect(actual_tasks[2]["id"]).to eq(task_1.id)
+          expect(actual_tasks[3]["id"]).to eq(task_4.id)
+
+          # get tasks ordered by due datetime ascending
+          get "/tasks?sort=due_datetime:asc"
+          expect(response.status).to eq(200)
+          actual_tasks = JSON.parse(response.body)
+          expect(actual_tasks.length).to eq(4)
+          expect(actual_tasks[0]["id"]).to eq(task_4.id)
+          expect(actual_tasks[1]["id"]).to eq(task_1.id)
+          expect(actual_tasks[2]["id"]).to eq(task_3.id)
+          expect(actual_tasks[3]["id"]).to eq(task_2.id)
+        end
       end
 
       context "with invalid sort param" do

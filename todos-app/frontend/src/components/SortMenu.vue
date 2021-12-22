@@ -10,6 +10,8 @@
             v-if="store.state.sortBy === 'created_at'" class="bi bi-check"></i></a></li>
         <li><a class="dropdown-item" @click="store.state.sortBy = 'updated_at'">Last Updated<i
             v-if="store.state.sortBy === 'updated_at'" class="bi bi-check"></i></a></li>
+        <li><a class="dropdown-item" @click="store.state.sortBy = 'due_datetime'">Due Date<i
+            v-if="store.state.sortBy === 'due_datetime'" class="bi bi-check"></i></a></li>
         <li>
           <hr class="dropdown-divider">
         </li>
