@@ -1,6 +1,6 @@
 <!--Page that displays all tasks-->
 <template>
-  <div class="row row-cols-1 row-cols-md-6 g-4 m-5">
+  <div class="row row-cols-1 row-cols-md-6 g-4 m-3">
     <div class="col">
 
       <!--New task placeholder-->
@@ -13,7 +13,7 @@
 
     <!--Task grid list-->
     <div class="col" v-for="item in tasks" :key="item.id">
-      <Task :task="item" @edit-clicked="showEditModal" @delete-task="deleteTask"/>
+      <Task :task="item" @edit-clicked="showEditModal" @delete-clicked="deleteTask"/>
     </div>
   </div>
 
@@ -23,7 +23,8 @@
   <!--Modal form for task edition-->
   <TaskEditModal id="taskEditModal" :target-task="targetTask" @edit-task="editTask"/>
 
-  <div id="toast" class="toast position-absolute top-0 start-50 translate-middle-x mt-5" role="alert" aria-live="assertive" aria-atomic="true">
+  <div id="toast" class="toast position-absolute top-0 start-50 translate-middle-x mt-5" role="alert"
+       aria-live="assertive" aria-atomic="true">
     <div class="toast-header">
       <strong class="me-auto">Todos</strong>
       <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
@@ -35,42 +36,52 @@
 </template>
 
 <script>
-import {onMounted, ref} from "vue";
+import {inject, onMounted, ref, watch} from "vue";
 import axios from "axios";
 import Task from "@/components/Task";
 import TaskCreateModal from "@/components/TaskCreateModal";
 import TaskEditModal from "@/components/TaskEditModal";
-import { Toast, Modal } from 'bootstrap';
+import {Modal, Toast} from 'bootstrap';
 
 export default {
   name: "TaskIndex",
   components: {TaskCreateModal, TaskEditModal, Task},
   setup() {
+    const store = inject("store")
     const tasks = ref([])
     const toastMessage = ref("")
     let targetTask = ref({})
 
     onMounted(() => {
-      axios.get(process.env.VUE_APP_TASK_SERVICE_BASE_URL + "/tasks").then(response => {
+      getTasks()
+    })
+
+    watch(store.state, () => {
+      getTasks()
+    })
+
+    function getTasks() {
+      let params = {sort: `${store.state.sortBy}:${store.state.sortDir}`}
+      axios.get(process.env.VUE_APP_TASK_SERVICE_BASE_URL + "/tasks", {params}).then(response => {
         tasks.value = response.data
       }).catch(() => {
         triggerToast("Error while fetching tasks!")
       })
-    })
+    }
 
     function createTask(task) {
-      axios.post(process.env.VUE_APP_TASK_SERVICE_BASE_URL + "/tasks", {task}).then((response) => {
-        tasks.value.push(response.data)
+      axios.post(process.env.VUE_APP_TASK_SERVICE_BASE_URL + "/tasks", {task}).then(() => {
+        getTasks()
         triggerToast("Task created successfully!")
-      }).catch(()=> {
+      }).catch(() => {
         triggerToast("Error while creating task!")
       })
       Modal.getInstance(document.getElementById("taskCreateModal")).hide()
     }
 
     function editTask(id, editedTask) {
-      axios.put(process.env.VUE_APP_TASK_SERVICE_BASE_URL + `/tasks/${id}`, {task: editedTask}).then((response) => {
-        tasks.value[tasks.value.findIndex(task => task.id === id)] = response.data
+      axios.put(process.env.VUE_APP_TASK_SERVICE_BASE_URL + `/tasks/${id}`, {task: editedTask}).then(() => {
+        getTasks()
         triggerToast("Task edited successfully!")
       }).catch((error) => {
         console.log(error)
