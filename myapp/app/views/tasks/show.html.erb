@@ -1,32 +1,36 @@
 <h1><%= t '.title' %></h1>
 
-<table class="table table-sm table-bordered mt-4">
-  <tbody>
-  <tr>
-    <th scope='row'><%= t 'tasks.label.name' %></th>
-    <td><%= @task.name %></td>
-  </tr>
-  <tr>
-    <th scope='row'><%= t 'tasks.label.description' %></th>
-    <td><%= @task.description %></td>
-  </tr>
-  <tr>
-    <th scope='row'><%= t 'tasks.label.status' %></th>
-    <td><%= @task.status_i18n %></td>
-  </tr>
-  <tr>
-    <th scope='row'><%= t 'tasks.label.deadline_at' %></th>
-    <td><%= l(@task.deadline_at, format: :long_ja) %></td>
-  </tr>
-  <tr>
-    <th scope='row'><%= t 'tasks.label.label' %></th>
-    <td id='task_label_value'><%= label_names(@task) %></td>
-  </tr>
-  <tr>
-    <th scope='row'><%= t 'tasks.label.user' %></th>
-    <td><%= @task.user.name %></td>
-  </tr>
-  </tbody>
-</table>
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <table class="table table-sm table-bordered mt-4">
+      <tbody>
+      <tr>
+        <th scope='row'><%= t 'tasks.label.name' %></th>
+        <td><%= @task.name %></td>
+      </tr>
+      <tr>
+        <th scope='row'><%= t 'tasks.label.description' %></th>
+        <td><%= @task.description %></td>
+      </tr>
+      <tr>
+        <th scope='row'><%= t 'tasks.label.status' %></th>
+        <td><%= @task.status_i18n %></td>
+      </tr>
+      <tr>
+        <th scope='row'><%= t 'tasks.label.deadline_at' %></th>
+        <td><%= l(@task.deadline_at, format: :long_ja) %></td>
+      </tr>
+      <tr>
+        <th scope='row'><%= t 'tasks.label.label' %></th>
+        <td id='task_label_value'><%= label_names(@task) %></td>
+      </tr>
+      <tr>
+        <th scope='row'><%= t 'tasks.label.user' %></th>
+        <td><%= @task.user.name %></td>
+      </tr>
+      </tbody>
+    </table>
 
-<%= link_to '一覧に戻る', root_path, id: 'back_root_link', class: 'btn btn-info'  %>
+    <%= link_to '一覧に戻る', root_path, id: 'back_root_link', class: 'btn btn-info'  %>
+  </div>
+</div>
