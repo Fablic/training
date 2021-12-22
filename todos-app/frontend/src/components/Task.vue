@@ -37,14 +37,14 @@ export default {
   props: {
     task: Object
   },
-  emits: ["edit-clicked", "delete-task"],
-  setup(props, { emit }) {
+  emits: ["edit-clicked", "delete-clicked"],
+  setup(props, {emit}) {
     function editClicked(task) {
       emit("edit-clicked", task)
     }
 
     function deleteClicked(id) {
-      emit("delete-task", id)
+      emit("delete-clicked", id)
     }
 
     function getLastUpdatedString(baseTime, targetTime) {
