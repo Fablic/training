@@ -2,22 +2,18 @@ require 'rails_helper'
 
 RSpec.describe 'Tasks System', type: :system, js: true do
   let(:user) { create(:user) }
-  let(:label_one) { create(:label) }
-  let(:label_second) { create(:label) }
-  let(:label_third) { create(:label) }
-  let(:task) { create(:task, name: 'task_first', deadline_at: 3.days.since, user: user) }
-  let(:labeled_task) { create(:task, name: 'labeled_task', status: 'done', user: user, labels: [label_one, label_second, label_third]) }
-  let(:non_labeled_task) { create(:task, name: 'non_labeled_task', user: user) }
+  let!(:label_one) { create(:label) }
+  let!(:label_second) { create(:label) }
+  let!(:label_third) { create(:label) }
+  let!(:task) { create(:task, name: 'task_first', deadline_at: 3.days.since, user: user) }
+  let!(:labeled_task) { create(:task, name: 'labeled_task', status: 'done', user: user, labels: [label_one, label_second, label_third]) }
+  let!(:non_labeled_task) { create(:task, name: 'non_labeled_task', user: user) }
 
   describe 'タスク一覧画面(ログイン済み)' do
-    let(:task_second) { create(:task, name: 'task_second', deadline_at: 2.days.since, created_at: Date.today + 1, user: user) }
-    let(:task_third) { create(:task, name: 'task_third', deadline_at: 1.day.since, created_at: Date.today + 2, status: 'done', user: user) }
+    let!(:task_second) { create(:task, name: 'task_second', deadline_at: 2.days.since, created_at: Date.today + 1, user: user) }
+    let!(:task_third) { create(:task, name: 'task_third', deadline_at: 1.day.since, created_at: Date.today + 2, status: 'done', user: user) }
 
     before do
-      label_one
-      labeled_task
-      non_labeled_task
-      task
       log_in_as user
       visit root_path
     end
@@ -46,10 +42,9 @@ RSpec.describe 'Tasks System', type: :system, js: true do
     end
 
     context '表示されてるタスク名を選択した時' do
-      let(:other_task) { create(:task, name: 'other_task_name', user: user) }
+      let!(:other_task) { create(:task, name: 'other_task_name', user: user) }
 
       before do
-        other_task
         visit root_path
       end
 
@@ -87,12 +82,6 @@ RSpec.describe 'Tasks System', type: :system, js: true do
     end
 
     context 'タスクが作成日時別に複数ある時の初期表示' do
-      before do
-        task_second
-        task_third
-        visit root_path
-      end
-
       it '作成日時の降順で表示される事' do
         tr_list = all('tbody tr')
         expect(tr_list[0].first('td').text).to eq task_third.name
@@ -180,10 +169,6 @@ RSpec.describe 'Tasks System', type: :system, js: true do
 
   describe 'タスク作成画面(ログイン済み)' do
     before do
-      user
-      label_one
-      label_second
-      label_third
       log_in_as user
       visit new_task_path
     end
@@ -342,9 +327,6 @@ RSpec.describe 'Tasks System', type: :system, js: true do
 
   describe 'タスク編集画面(ログイン済み)' do
     before do
-      label_one
-      label_second
-      label_third
       log_in_as user
       visit edit_task_path task
     end
