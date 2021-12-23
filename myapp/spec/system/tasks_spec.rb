@@ -6,17 +6,17 @@ RSpec.describe 'Tasks System', type: :system, js: true do
   let!(:label_second) { create(:label) }
   let!(:label_third) { create(:label) }
   let!(:task) { create(:task, name: 'task_first', deadline_at: 3.days.since, user: user) }
-  let!(:labeled_task) { create(:task, name: 'labeled_task', status: 'done', user: user, labels: [label_one, label_second, label_third]) }
-  let!(:non_labeled_task) { create(:task, name: 'non_labeled_task', user: user) }
+  # 以下二つは並び順などを問うテストケースと混ざってしまうためletで宣言しました。
+  let(:labeled_task) { create(:task, name: 'labeled_task', status: 'done', user: user, labels: [label_one, label_second, label_third]) }
+  let(:non_labeled_task) { create(:task, name: 'non_labeled_task', user: user) }
 
   describe 'タスク一覧画面(ログイン済み)' do
+    subject { visit root_path }
+
     let!(:task_second) { create(:task, name: 'task_second', deadline_at: 2.days.since, created_at: Date.today + 1, user: user) }
     let!(:task_third) { create(:task, name: 'task_third', deadline_at: 1.day.since, created_at: Date.today + 2, status: 'done', user: user) }
 
-    before do
-      log_in_as user
-      visit root_path
-    end
+    before { log_in_as user }
 
     context 'タスク一覧画面に遷移した時' do
       it 'タスク一覧タイトルが表示される事' do
@@ -44,11 +44,8 @@ RSpec.describe 'Tasks System', type: :system, js: true do
     context '表示されてるタスク名を選択した時' do
       let!(:other_task) { create(:task, name: 'other_task_name', user: user) }
 
-      before do
-        visit root_path
-      end
-
       it 'タスク詳細画面に遷移できる' do
+        visit root_path # other_taskを先に作ってからRootにアクセスするため
         click_link other_task.name
         expect(page).to have_selector('h1', text: 'タスク詳細')
         expect(page).to have_content(other_task.name)
@@ -120,6 +117,8 @@ RSpec.describe 'Tasks System', type: :system, js: true do
 
     context 'ラベルを指定して検索したとき' do
       before do
+        labeled_task
+        non_labeled_task
         find("#label_check_#{label_one.id}").set(true)
         find('#search_submit').click
       end
@@ -135,6 +134,8 @@ RSpec.describe 'Tasks System', type: :system, js: true do
 
     context 'ラベルとテキストを指定して検索したとき' do
       before do
+        labeled_task
+        non_labeled_task
         fill_in 'search_content', with: labeled_task.name
         find("#label_check_#{label_one.id}").set(true)
         find('#search_submit').click
@@ -151,6 +152,8 @@ RSpec.describe 'Tasks System', type: :system, js: true do
 
     context 'ラベルとステータスとテキストを指定して検索したとき' do
       before do
+        labeled_task
+        non_labeled_task
         fill_in 'search_content', with: labeled_task.name
         find('#search_status').find("option[value='done']").select_option
         find("#label_check_#{label_one.id}").set(true)
@@ -168,6 +171,7 @@ RSpec.describe 'Tasks System', type: :system, js: true do
   end
 
   describe 'タスク作成画面(ログイン済み)' do
+    # 以下もsubjectを使いたいところですが、log_in_asの後にvisitをする必要があり以下となります。
     before do
       log_in_as user
       visit new_task_path
@@ -269,14 +273,10 @@ RSpec.describe 'Tasks System', type: :system, js: true do
   end
 
   describe 'タスク詳細画面(ログイン済み)' do
-    before do
-      log_in_as user
-    end
+    before { log_in_as user }
 
     context 'タスク詳細画面に遷移した時' do
-      before do
-        visit task_path task
-      end
+      before { visit task_path task }
 
       it 'タスク詳細タイトルが表示される事' do
         expect(page).to have_selector('h1', text: 'タスク詳細')
@@ -291,9 +291,7 @@ RSpec.describe 'Tasks System', type: :system, js: true do
     end
 
     context 'ラベル付きのタスク詳細画面に遷移した時' do
-      before do
-        visit task_path labeled_task
-      end
+      before { visit task_path labeled_task }
 
       it 'ラベル付きのタスクのラベル情報が表示される事' do
         expect(page).to have_content(labeled_task.name)
@@ -304,9 +302,7 @@ RSpec.describe 'Tasks System', type: :system, js: true do
     end
 
     context 'ラベルなしのタスク詳細画面に遷移した時' do
-      before do
-        visit task_path non_labeled_task
-      end
+      before { visit task_path non_labeled_task }
 
       it 'ラベルなしタスクのラベルが表示されない事' do
         expect(page).to have_selector('#task_label_value', text: '')
@@ -314,9 +310,7 @@ RSpec.describe 'Tasks System', type: :system, js: true do
     end
 
     context '一覧に戻るリンクをクリックした時' do
-      before do
-        visit task_path task
-      end
+      before { visit task_path task }
 
       it 'タスク一覧画面が表示される事' do
         find('#back_root_link').click
@@ -327,6 +321,7 @@ RSpec.describe 'Tasks System', type: :system, js: true do
 
   describe 'タスク編集画面(ログイン済み)' do
     before do
+      # 以下もsubjectを使いたいところですが、log_in_asの後にvisitをする必要があり以下となります。
       log_in_as user
       visit edit_task_path task
     end
@@ -377,9 +372,7 @@ RSpec.describe 'Tasks System', type: :system, js: true do
     end
 
     context 'ラベルを全てチェック外してタスクを更新した時' do
-      before do
-        visit edit_task_path labeled_task
-      end
+      before { visit edit_task_path labeled_task }
 
       it 'ラベルが全て外れた状態で更新される事' do
         fill_in 'task_name', with: 'update Task'
@@ -409,9 +402,7 @@ RSpec.describe 'Tasks System', type: :system, js: true do
 
   describe '未ログイン状態' do
     context 'タスク一覧画面に遷移した時' do
-      before do
-        visit root_path
-      end
+      before { visit root_path }
 
       it 'ログイン画面が表示される事' do
         expect(page).to have_selector('h1', text: 'ログイン')
@@ -427,9 +418,7 @@ RSpec.describe 'Tasks System', type: :system, js: true do
     end
 
     context 'タスク作成画面に遷移した時' do
-      before do
-        visit new_task_path
-      end
+      before { visit new_task_path }
 
       it 'ログイン画面が表示される事' do
         expect(page).to have_selector('h1', text: 'ログイン')
@@ -445,9 +434,7 @@ RSpec.describe 'Tasks System', type: :system, js: true do
     end
 
     context 'タスク詳細画面に遷移した時' do
-      before do
-        visit task_path task
-      end
+      before { visit task_path task }
 
       it 'ログイン画面が表示される事' do
         expect(page).to have_selector('h1', text: 'ログイン')
@@ -463,9 +450,7 @@ RSpec.describe 'Tasks System', type: :system, js: true do
     end
 
     context 'タスク編集画面に遷移した時' do
-      before do
-        visit edit_task_path task
-      end
+      before { visit edit_task_path task }
 
       it 'ログイン画面が表示される事' do
         expect(page).to have_selector('h1', text: 'ログイン')
