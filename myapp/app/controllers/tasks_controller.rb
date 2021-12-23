@@ -28,6 +28,8 @@ class TasksController < ApplicationController
   end
 
   def create
+    # https://github.com/Fablic/training/pull/1226#pullrequestreview-838289963
+    # TODO: 配列で渡せるようにする
     labels = params[:task][:label]
     @task = Task.new(task_params)
     @task.label_ids = labels.values.map(&:to_i) if labels.present?
