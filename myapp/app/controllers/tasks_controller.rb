@@ -6,14 +6,15 @@ class TasksController < ApplicationController
   def index
     content = params[:content]
     status = params[:status]
-    labels = params[:label]
-    @labels = Label.all.select('id, name')
     @tasks = current_user.tasks.order("#{sort_column} #{sort_direction}").page(params[:page]).per(10)
     @tasks = @tasks.where('name LIKE ?', "%#{content}%") if content.present?
     @tasks = @tasks.where(status: status) if status.present?
+
+    @labels = Label.all.select('id, name')
+    labels = params[:label]
     return if labels.blank?
 
-    task_ids = TaskLabel.where(label_id: labels.values).select(:task_id)
+    task_ids = TaskLabel.where(label_id: labels.values).pluck(:task_id)
     @tasks = @tasks.where(id: task_ids)
   end
 
