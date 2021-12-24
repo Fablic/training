@@ -117,6 +117,28 @@ RSpec.describe 'Tasks', type: :request do
           expect(response.status).to eq(400)
         end
       end
+
+      context "with valid search param" do
+        it "returns tasks with a title that contains search param string" do
+          task_1 = create(:task, :title => "hello world")
+          task_2 = create(:task, :title => "holla world")
+          task_3 = create(:task, :title => "bonjour world")
+
+          get "/tasks?search=hello"
+          expect(response.status).to eq(200)
+          expect(JSON.parse(response.body).length).to eq(1)
+          expect(JSON.parse(response.body).first["id"]).to eq(task_1.id)
+
+          get "/tasks?search=bonjour"
+          expect(response.status).to eq(200)
+          expect(JSON.parse(response.body).length).to eq(1)
+          expect(JSON.parse(response.body).first["id"]).to eq(task_3.id)
+
+          get "/tasks?search=world"
+          expect(response.status).to eq(200)
+          expect(JSON.parse(response.body).length).to eq(3)
+        end
+      end
     end
   end
 

@@ -2,4 +2,5 @@
 
 module Exceptions
   class InvalidSortParams < StandardError; end
+  class InvalidStatusParams < StandardError; end
 end
