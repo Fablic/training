@@ -23,6 +23,7 @@
   <!--Modal form for task edition-->
   <TaskEditModal id="taskEditModal" :target-task="targetTask" @edit-task="editTask"/>
 
+  <!--Toast for notification-->
   <div id="toast" class="toast position-absolute top-0 start-50 translate-middle-x mt-5" role="alert"
        aria-live="assertive" aria-atomic="true">
     <div class="toast-header">
@@ -62,6 +63,12 @@ export default {
 
     function getTasks() {
       let params = {sort: `${store.state.sortBy}:${store.state.sortDir}`}
+      if (store.state.statusFilter) {
+        params.status = store.state.statusFilter
+      }
+      if (store.state.search) {
+        params.search = store.state.search
+      }
       axios.get(process.env.VUE_APP_TASK_SERVICE_BASE_URL + "/tasks", {params}).then(response => {
         tasks.value = response.data
       }).catch(() => {
