@@ -1,11 +1,12 @@
 <!--Page that displays all tasks-->
 <template>
-  <div class="row row-cols-1 row-cols-md-6 g-4 m-3">
+  <h1 v-if="store.state.search" class="display-6 ms-5">Showing results for "{{store.state.search}}"</h1>
+  <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-4 m-3">
     <div class="col">
 
       <!--New task placeholder-->
       <div class="card h-100 w-100 justify-content-center align-items-center"
-           style="cursor: pointer"
+           style="cursor: pointer; min-height: 310px"
            @click="showCreateModal"
       ><i class="bi bi-plus-lg" style="font-size: 4rem"></i>
       </div>
@@ -52,17 +53,29 @@ export default {
     const tasks = ref([])
     const toastMessage = ref("")
     let targetTask = ref({})
+    const MAX_FETCH_COUNT = 20
+    let currentOffset = 0
+    let didReachEnd = false
 
     onMounted(() => {
+      currentOffset = 0
       getTasks()
     })
 
+    // watch for changes in sort / filter
     watch(store.state, () => {
+      currentOffset = 0
+      tasks.value = []
+      didReachEnd = false
       getTasks()
     })
 
     function getTasks() {
-      let params = {sort: `${store.state.sortBy}:${store.state.sortDir}`}
+      let params = {
+        sort: `${store.state.sortBy}:${store.state.sortDir}`,
+        offset: currentOffset,
+        limit: MAX_FETCH_COUNT
+      }
       if (store.state.statusFilter) {
         params.status = store.state.statusFilter
       }
@@ -70,7 +83,9 @@ export default {
         params.search = store.state.search
       }
       axios.get(process.env.VUE_APP_TASK_SERVICE_BASE_URL + "/tasks", {params}).then(response => {
-        tasks.value = response.data
+        tasks.value.push(...response.data)
+        // checking if there's more to load
+        didReachEnd = response.data.length < MAX_FETCH_COUNT
       }).catch(() => {
         triggerToast("Error while fetching tasks!")
       })
@@ -87,8 +102,8 @@ export default {
     }
 
     function editTask(id, editedTask) {
-      axios.put(process.env.VUE_APP_TASK_SERVICE_BASE_URL + `/tasks/${id}`, {task: editedTask}).then(() => {
-        getTasks()
+      axios.put(process.env.VUE_APP_TASK_SERVICE_BASE_URL + `/tasks/${id}`, {task: editedTask}).then((response) => {
+        tasks.value[tasks.value.findIndex(el => el.id === response.data.id)] = response.data
         triggerToast("Task edited successfully!")
       }).catch((error) => {
         console.log(error)
@@ -122,7 +137,16 @@ export default {
       toast.show()
     }
 
+    // handle infinite scrolling
+    window.onscroll = () => {
+      if (!didReachEnd && document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight) {
+        currentOffset += MAX_FETCH_COUNT
+        getTasks()
+      }
+    }
+
     return {
+      store,
       tasks,
       targetTask,
       toastMessage,

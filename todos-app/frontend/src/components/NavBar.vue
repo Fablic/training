@@ -1,12 +1,12 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <nav class="navbar navbar-expand navbar-dark bg-dark">
     <div class="container-fluid justify-content-start">
       <a class="navbar-brand" href="/">Todos</a>
       <div class="navbar-nav">
         <a class="nav-link active" aria-current="page" href="/">Home</a>
       </div>
     </div>
-    <div class="container-fluid justify-content-end col-2">
+    <div class="container-fluid justify-content-end col-md-3 col-lg-2 col-xl-2">
       <input class="form-control" type="text" placeholder="Search Title" v-model="store.state.search">
     </div>
   </nav>
