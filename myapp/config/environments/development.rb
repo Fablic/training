@@ -58,7 +58,7 @@ Rails.application.configure do
   # Bulletの設定
   config.after_initialize do
     Bullet.enable = true # Bulletを有効化する
-    Bullet.alert = true # JavaScriptのポップアップアラートを表示する
+    Bullet.alert = false # JavaScriptのポップアップアラートを表示しない
     Bullet.bullet_logger = true # log/bullet.logに出力
     Bullet.console = true # ブラウザのconsole.logに出力
     Bullet.rails_logger = true # Railsのログに結果を出力

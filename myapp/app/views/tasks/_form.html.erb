@@ -6,22 +6,30 @@
   </ul>
 <% end %>
 
-<%= form_for(@task) do |f| %>
+<%= form_with model: @task ,local: true do |f| %>
   <div class="mb-3">
-    <%= f.label :name, class: 'form-labe' %>
+    <%= f.label :name, class: 'form-label' %>
     <%= f.text_field :name, placeholder: t('tasks.label.name'), maxlength: 255 , size: 20, class: 'form-control' %>
   </div>
   <div class="mb-3">
-    <%= f.label :description, class: 'form-labe' %>
+    <%= f.label :description, class: 'form-label' %>
     <%= f.text_area :description, placeholder: t('tasks.label.description') , maxlength: 1024, class: 'form-control' %>
   </div>
   <div class="mb-3">
-    <%= f.label :status, class: 'form-labe' %>
+    <%= f.label :status, class: 'form-label' %>
     <%= f.select :status, Task.statuses_i18n.invert, class: 'form-select' %>
   </div>
   <div class="mb-3">
-    <%= f.label :deadline_at, class: 'form-labe' %>
+    <%= f.label :deadline_at, class: 'form-label' %>
     <%= f.datetime_select :deadline_at, {default: 1.weeks.since}, placeholder: t('tasks.label.deadline_at') %>
+  </div>
+  <div class="mb-3">
+    <% Label.all.each do |label| %>
+      <div class="form-check">
+          <%= f.label label.name, class: 'form-check-label' %>
+          <%= f.check_box "label[check_#{label.id}]", { class: 'form-check-input', id: "label_check_#{label.id}" ,checked: @task.labels.exists?(label.id) }, label.id, false %>
+      </div>  
+    <% end %>
   </div>
     <%= f.submit t('tasks.button.post'), class: "btn btn-primary", id: "post_task_button" %>
 <% end %>

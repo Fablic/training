@@ -4,11 +4,18 @@ class TasksController < ApplicationController
   before_action :correct_user, only: %i[destroy edit]
 
   def index
-    @tasks = current_user.tasks.order("#{sort_column} #{sort_direction}").page(params[:page]).per(10)
     content = params[:content]
     status = params[:status]
+    @tasks = current_user.tasks.order("#{sort_column} #{sort_direction}").page(params[:page]).per(10)
     @tasks = @tasks.where('name LIKE ?', "%#{content}%") if content.present?
     @tasks = @tasks.where(status: status) if status.present?
+
+    @labels = Label.all.select('id, name')
+    labels = params[:label]
+    return if labels.blank?
+
+    task_ids = TaskLabel.where(label_id: labels.values).pluck(:task_id)
+    @tasks = @tasks.where(id: task_ids)
   end
 
   def show
@@ -17,10 +24,15 @@ class TasksController < ApplicationController
 
   def new
     @task = Task.new
+    @labels = Label.all.select('id, name')
   end
 
   def create
+    # https://github.com/Fablic/training/pull/1226#pullrequestreview-838289963
+    # TODO: 配列で渡せるようにする
+    labels = params[:task][:label]
     @task = Task.new(task_params)
+    @task.label_ids = labels.values.map(&:to_i) if labels.present?
     @task.user = current_user
     if @task.save
       flash[:success] = 'タスク作成に成功しました！'
@@ -32,10 +44,13 @@ class TasksController < ApplicationController
 
   def edit
     @task = Task.find(params[:id])
+    @labels = Label.all.select('id, name')
   end
 
   def update
+    labels = params[:task][:label]
     @task = Task.find(params[:id])
+    @task.label_ids = labels.present? ? labels.values.map(&:to_i) : []
     if @task.update(task_params)
       flash[:success] = 'タスク更新に成功しました！'
       redirect_to @task

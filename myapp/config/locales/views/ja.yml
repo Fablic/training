@@ -8,6 +8,7 @@ ja:
       user: "タスク作成者"
       edit: "編集"
       destroy: "削除"
+      label: "ラベル"
     button:
       post: "登録"
     message:
