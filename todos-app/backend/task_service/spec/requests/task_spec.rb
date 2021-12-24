@@ -164,6 +164,39 @@ RSpec.describe 'Tasks', type: :request do
           expect(JSON.parse(response.body).length).to eq(3)
         end
       end
+
+      context "with valid pagination params" do
+        it "returns tasks in correct chunks" do
+          tasks = create_list(:task, 50)
+
+          get "/tasks?offset=0&limit=20"
+          expect(response.status).to eq(200)
+          returned_tasks = JSON.parse(response.body)
+          expect(returned_tasks.length).to eq(20)
+          expect(returned_tasks.first["id"]).to eq(tasks.first.id)
+          expect(returned_tasks.last["id"]).to eq(tasks.at(19).id)
+
+          get "/tasks?offset=35&limit=20"
+          expect(response.status).to eq(200)
+          returned_tasks = JSON.parse(response.body)
+          expect(returned_tasks.length).to eq(15)
+          expect(returned_tasks.first["id"]).to eq(tasks.at(35).id)
+          expect(returned_tasks.last["id"]).to eq(tasks.last.id)
+        end
+      end
+
+      context "with invalid pagination params" do
+        it "returns 400" do
+          get "/tasks?offset=asb"
+          expect(response.status).to eq(400)
+
+          get "/tasks?limit=fer"
+          expect(response.status).to eq(400)
+
+          get "/tasks?offset=35&limit=qwer"
+          expect(response.status).to eq(400)
+        end
+      end
     end
   end
 

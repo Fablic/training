@@ -3,12 +3,13 @@
 class ApplicationController < ActionController::API
   rescue_from Exceptions::InvalidSortParams, with: :bad_request
   rescue_from Exceptions::InvalidStatusParams, with: :bad_request
+  rescue_from Exceptions::InvalidPaginationParams, with: :bad_request
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
   rescue_from ActiveRecord::RecordInvalid, with: :unprocessable_entity
   rescue_from ArgumentError, with: :invalid_enum
 
   def bad_request(exception)
-    render json: { error: exception.message }, status: :bad_request
+    render json: {error: exception.message}, status: :bad_request
   end
 
   def unprocessable_entity(exception)
