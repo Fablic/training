@@ -96,16 +96,6 @@ RSpec.describe 'Tasks System', type: :system, js: true do
       end
     end
 
-    context '終了期限のカラムを2回クリックした時' do
-      it '終了期限の降順になる' do
-        find('a', text: '終了期限').click
-        find('a', text: '終了期限').click
-        expect(find('#task_row_0').first('td').text).to eq task.name
-        expect(find('#task_row_1').first('td').text).to eq task_second.name
-        expect(find('#task_row_2').first('td').text).to eq task_third.name
-      end
-    end
-
     context 'タスクとステータスを埋めて検索ボタンを押した時' do
       it '条件に合致するタスクが一覧に表示される事' do
         fill_in 'search_content', with: task_third.name
