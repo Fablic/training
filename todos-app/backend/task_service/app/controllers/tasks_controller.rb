@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
 class TasksController < ApplicationController
+  before_action :authorize
   before_action :set_task, only: %i[show update destroy]
 
   # GET /tasks
   def index
-    @tasks = Task.all
+    @tasks = Task.where(user_id: @user_id)
     @tasks = @tasks.where(status: status_param) if status_param
 
     @tasks = @tasks.order(sort_param[0] => sort_param[1]) if sort_param
