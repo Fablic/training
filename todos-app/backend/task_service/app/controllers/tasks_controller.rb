@@ -62,11 +62,9 @@ class TasksController < ApplicationController
   end
 
   def status_param
-    # Possible status params
-    status_params = %w[not_started in_progress done]
     return unless params[:status]
 
-    raise Exceptions::InvalidStatusParams, "#{params[:status]} is not a valid status param" unless status_params.include?(params[:status])
+    raise Exceptions::InvalidStatusParams, "#{params[:status]} is not a valid status param" unless Task.statuses.include?(params[:status])
 
     params[:status]
   end
