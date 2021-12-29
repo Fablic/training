@@ -118,6 +118,31 @@ RSpec.describe 'Tasks', type: :request do
         end
       end
 
+      context 'with valid status param' do
+        it 'returns all tasks with the given status param' do
+          task_1 = create(:task, status: 'not_started')
+          task_2 = create(:task, status: 'in_progress')
+          task_3 = create(:task, status: 'done')
+          task_4 = create(:task, status: 'in_progress')
+          get '/tasks?status=not_started'
+          expect(response.status).to eq(200)
+          expect(JSON.parse(response.body).length).to eq(1)
+          expect(JSON.parse(response.body).first['status']).to eq('not_started')
+
+          get '/tasks?status=in_progress'
+          expect(response.status).to eq(200)
+          expect(JSON.parse(response.body).length).to eq(2)
+          expect(JSON.parse(response.body).first['status']).to eq('in_progress')
+        end
+      end
+
+      context 'with invalid status param' do
+        it 'returns 400' do
+          get '/tasks?status=not_valid'
+          expect(response.status).to eq(400)
+        end
+      end
+
       context 'with valid search param' do
         it 'returns tasks with a title that contains search param string' do
           task_1 = create(:task, title: 'hello world')
