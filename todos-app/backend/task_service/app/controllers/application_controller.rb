@@ -23,4 +23,30 @@ class ApplicationController < ActionController::API
   def not_found(exception)
     render json: { error: exception.message }, status: :not_found
   end
+
+  def decoded_payload
+    if request.headers['Authorization']
+      # {Authorization: Bearer <token>}
+      token = request.headers['Authorization'].split.pop
+      begin
+        decoded = JWT.decode(token, Rails.application.secrets.jwt_secret_key, true, algorithm: 'HS256')
+        # first element is the JWT payload, second element is the JWT header
+        decoded.first
+      rescue JWT::DecodeError
+        nil
+      end
+    end
+  end
+  
+  def logged_in?
+    !decoded_payload.nil?
+  end
+
+  def authorize
+    if logged_in?
+      @user_id = decoded_payload['user_id']
+    else
+      render json: { error: 'Unauthorized' }, status: :unauthorized
+    end
+  end
 end

@@ -8,9 +8,9 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-50.times do
+100.times do
   Task.create(
-    user_id: 1,
+    user_id: Faker::Number.between(from: 0, to: 10),
     title: Faker::Lorem.word,
     description: Faker::Lorem.paragraph,
     priority: Faker::Number.between(from: 0, to: 2),

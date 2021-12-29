@@ -24,7 +24,7 @@ class TasksController < ApplicationController
 
   # POST /tasks
   def create
-    @task = Task.new(task_params)
+    @task = Task.new(task_params.merge!(user_id: @user_id))
 
     @task.save!
     render json: @task, status: :created, location: @task
@@ -32,7 +32,7 @@ class TasksController < ApplicationController
 
   # PATCH/PUT /tasks/1
   def update
-    @task.update!(task_params)
+    @task.update!(task_params.merge!(user_id: @user_id))
     render json: @task
   end
 
@@ -50,7 +50,7 @@ class TasksController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def task_params
-    params.require(:task).permit(:user_id, :title, :description, :priority, :status, :due_datetime)
+    params.require(:task).permit(:title, :description, :priority, :status, :due_datetime)
   end
 
   def sort_param
