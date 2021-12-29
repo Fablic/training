@@ -9,7 +9,7 @@ class ApplicationController < ActionController::API
   rescue_from ArgumentError, with: :invalid_enum
 
   def bad_request(exception)
-    render json: {error: exception.message}, status: :bad_request
+    render json: { error: exception.message }, status: :bad_request
   end
 
   def unprocessable_entity(exception)

@@ -71,26 +71,26 @@ class TasksController < ApplicationController
   end
 
   def pagination_params
-    if not params[:offset].nil?
+    if params[:offset].nil?
+      @offset = 0
+    else
       begin
         @offset = Integer(params[:offset])
       rescue ArgumentError
         raise Exceptions::InvalidPaginationParams, "Given offset #{params[:offset]} is not integer"
       end
-    else
-      @offset = 0
     end
 
-    if not params[:limit].nil?
+    if params[:limit].nil?
+      @limit = 20
+    else
       begin
         @limit = Integer(params[:limit])
       rescue ArgumentError
         raise Exceptions::InvalidPaginationParams, "Given limit #{params[:limit]} is not integer"
       end
-    else
-      @limit = 20
     end
 
-    {offset: @offset, limit: @limit}
+    { offset: @offset, limit: @limit }
   end
 end
