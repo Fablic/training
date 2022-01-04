@@ -9,7 +9,7 @@ const state = reactive({
     sortBy: sortOptions.Created,
     sortDir: sortDirOptions.Descending,
     statusFilter: null,
-    search: ""
+    search: "",
 })
 
 const getters = {
@@ -19,6 +19,10 @@ const getters = {
 
     getCurrentStatusKey() {
         return Object.keys(statusOptions).find(key => statusOptions[key] === state.statusFilter)
+    },
+
+    getAuthHeaders() {
+        return {Authorization: "Bearer " + localStorage.token}
     }
 }
 

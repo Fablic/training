@@ -1,16 +1,28 @@
 // Routes users to specific pages depending on the given path
 import {createRouter, createWebHistory} from 'vue-router'
-import TaskIndex from "@/views/TaskIndex";
+import Login from "@/views/Login";
+import Home from "@/views/Home";
+import Register from "@/views/Register";
 
 const routes = [
   {
-    path: '/tasks/index',
-    name: "TaskIndex",
-    component: TaskIndex
+    path: '/',
+    name: "Home",
+    component: Home
+  },
+  {
+    path: '/login',
+    name: "Login",
+    component: Login
+  },
+  {
+    path: '/register',
+    name: "Register",
+    component: Register
   },
   {
     path: '/:catchAll(.*)',
-    redirect: '/tasks/index',
+    redirect: '/',
   },
 ]
 
