@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe "/auth", type: :request do
-  describe "POST /login" do
+RSpec.describe '/auth', type: :request do
+  describe 'POST /login' do
     context 'with correct credentials' do
       it 'renders a successful response' do
         user = create(:user, password: 'p@ssword')

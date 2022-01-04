@@ -11,7 +11,7 @@ User.create(
   email: 'admin@example.com',
   username: 'admin',
   role: 0,
-  password: 'admin'
+  password: 'admin',
 )
 
 5.times do

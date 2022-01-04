@@ -11,7 +11,7 @@ class ApplicationController < ActionController::API
     payload = {
       user_id: user.id,
       role: user.role,
-      exp: Time.now.to_i + expire_after
+      exp: Time.now.to_i + expire_after,
     }
     JWT.encode(payload, Rails.application.secrets.jwt_secret_key, 'HS256')
   end
@@ -19,7 +19,7 @@ class ApplicationController < ActionController::API
   def decoded_payload
     if request.headers['Authorization']
       # {Authorization: Bearer <token>}
-      token = request.headers['Authorization'].split(' ').pop
+      token = request.headers['Authorization'].split.pop
       begin
         decoded = JWT.decode(token, Rails.application.secrets.jwt_secret_key, true, algorithm: 'HS256')
         # first element is the JWT payload, second element is the JWT header
@@ -35,15 +35,11 @@ class ApplicationController < ActionController::API
   end
 
   def authorize_user_role
-    unless logged_in? && (decoded_payload['role'] == 'user' || decoded_payload['role'] == 'admin')
-      render json: { error: 'Unauthorized' }, status: :unauthorized
-    end
+    render json: { error: 'Unauthorized' }, status: :unauthorized unless logged_in? && (decoded_payload['role'] == 'user' || decoded_payload['role'] == 'admin')
   end
 
   def authorize_admin_role
-    unless logged_in? && decoded_payload['role'] == 'admin'
-      render json: { error: 'Unauthorized' }, status: :unauthorized
-    end
+    render json: { error: 'Unauthorized' }, status: :unauthorized unless logged_in? && decoded_payload['role'] == 'admin'
   end
 
   def current_user

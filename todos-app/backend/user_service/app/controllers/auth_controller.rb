@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class AuthController < ApplicationController
   def login
-    user = User.find_by_email(user_params[:email])
+    user = User.find_by(email: user_params[:email])
     if user&.authenticate(user_params[:password])
       token = encode_token(user)
       render json: { token: token }

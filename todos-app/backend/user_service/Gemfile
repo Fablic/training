@@ -3,11 +3,11 @@
 source 'https://rubygems.org'
 
 gem 'bcrypt', '~> 3.1.7'
+gem 'jwt'
 gem 'mysql2'
 gem 'puma', '~> 3.7'
-gem 'rails', '~> 5.1.7'
-gem 'jwt'
 gem 'rack-cors'
+gem 'rails', '~> 5.1.7'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
