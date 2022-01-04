@@ -129,12 +129,12 @@ RSpec.describe 'Tasks', type: :request do
           task_2 = create(:task, status: 'in_progress')
           task_3 = create(:task, status: 'done')
           task_4 = create(:task, status: 'in_progress')
-          get '/tasks?status=not_started'
+          get '/tasks?status=not_started', headers: valid_user_headers
           expect(response.status).to eq(200)
           expect(JSON.parse(response.body).length).to eq(1)
           expect(JSON.parse(response.body).first['status']).to eq('not_started')
 
-          get '/tasks?status=in_progress'
+          get '/tasks?status=in_progress', headers: valid_user_headers
           expect(response.status).to eq(200)
           expect(JSON.parse(response.body).length).to eq(2)
           expect(JSON.parse(response.body).first['status']).to eq('in_progress')
@@ -143,7 +143,7 @@ RSpec.describe 'Tasks', type: :request do
 
       context 'with invalid status param' do
         it 'returns 400' do
-          get '/tasks?status=not_valid'
+          get '/tasks?status=not_valid', headers: valid_user_headers
           expect(response.status).to eq(400)
         end
       end
