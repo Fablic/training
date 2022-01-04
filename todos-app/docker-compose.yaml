@@ -25,12 +25,41 @@ services:
       DB_NAME: todos-app
       DB_USER: root
       DB_PASSWORD: password
+      # the JWT key here must match the one in user-service
+      JWT_SECRET_KEY: supersecretkey
   
   task-db:
     image: mysql:5.6
     container_name: task-db
     ports:
       - 3316:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      TZ: Asia/Tokyo
+
+  user-service:
+    build: ./backend/user_service
+    image: user-service
+    container_name: user-service
+    ports:
+      - 3002:3000
+    depends_on:
+      - user-db
+    volumes:
+      - ./backend/user_service:/app
+    environment:
+      DB_HOST: user-db
+      DB_NAME: todos-app
+      DB_USER: root
+      DB_PASSWORD: password
+      # the JWT key here must match the one in task-service
+      JWT_SECRET_KEY: supersecretkey
+
+  user-db:
+    image: mysql:5.6
+    container_name: user-db
+    ports:
+      - 3326:3306
     environment:
       MYSQL_ROOT_PASSWORD: password
       TZ: Asia/Tokyo
