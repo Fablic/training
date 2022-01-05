@@ -12,6 +12,7 @@ class TasksController < ApplicationController
 
     @tasks = @tasks.where('title LIKE ?', "%#{params[:search]}%") if params[:search]
 
+    @tasks = @tasks.offset(pagination_params[:offset]).limit(pagination_params[:limit])
     render json: @tasks
   end
 
@@ -67,5 +68,29 @@ class TasksController < ApplicationController
     raise Exceptions::InvalidStatusParams, "#{params[:status]} is not a valid status param" unless Task.statuses.include?(params[:status])
 
     params[:status]
+  end
+
+  def pagination_params
+    if params[:offset].nil?
+      @offset = 0
+    else
+      begin
+        @offset = Integer(params[:offset])
+      rescue ArgumentError
+        raise Exceptions::InvalidPaginationParams, "Given offset #{params[:offset]} is not integer"
+      end
+    end
+
+    if params[:limit].nil?
+      @limit = 20
+    else
+      begin
+        @limit = Integer(params[:limit])
+      rescue ArgumentError
+        raise Exceptions::InvalidPaginationParams, "Given limit #{params[:limit]} is not integer"
+      end
+    end
+
+    { offset: @offset, limit: @limit }
   end
 end
