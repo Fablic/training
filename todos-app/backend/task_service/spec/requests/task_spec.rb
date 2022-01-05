@@ -117,6 +117,86 @@ RSpec.describe 'Tasks', type: :request do
           expect(response.status).to eq(400)
         end
       end
+
+      context 'with valid status param' do
+        it 'returns all tasks with the given status param' do
+          task_1 = create(:task, status: 'not_started')
+          task_2 = create(:task, status: 'in_progress')
+          task_3 = create(:task, status: 'done')
+          task_4 = create(:task, status: 'in_progress')
+          get '/tasks?status=not_started'
+          expect(response.status).to eq(200)
+          expect(JSON.parse(response.body).length).to eq(1)
+          expect(JSON.parse(response.body).first['status']).to eq('not_started')
+
+          get '/tasks?status=in_progress'
+          expect(response.status).to eq(200)
+          expect(JSON.parse(response.body).length).to eq(2)
+          expect(JSON.parse(response.body).first['status']).to eq('in_progress')
+        end
+      end
+
+      context 'with invalid status param' do
+        it 'returns 400' do
+          get '/tasks?status=not_valid'
+          expect(response.status).to eq(400)
+        end
+      end
+
+      context 'with valid search param' do
+        it 'returns tasks with a title that contains search param string' do
+          task_1 = create(:task, title: 'hello world')
+          task_2 = create(:task, title: 'holla world')
+          task_3 = create(:task, title: 'bonjour world')
+
+          get '/tasks?search=hello'
+          expect(response.status).to eq(200)
+          expect(JSON.parse(response.body).length).to eq(1)
+          expect(JSON.parse(response.body).first['id']).to eq(task_1.id)
+
+          get '/tasks?search=bonjour'
+          expect(response.status).to eq(200)
+          expect(JSON.parse(response.body).length).to eq(1)
+          expect(JSON.parse(response.body).first['id']).to eq(task_3.id)
+
+          get '/tasks?search=world'
+          expect(response.status).to eq(200)
+          expect(JSON.parse(response.body).length).to eq(3)
+        end
+      end
+
+      context 'with valid pagination params' do
+        it 'returns tasks in correct chunks' do
+          tasks = create_list(:task, 50)
+
+          get '/tasks?offset=0&limit=20'
+          expect(response.status).to eq(200)
+          returned_tasks = JSON.parse(response.body)
+          expect(returned_tasks.length).to eq(20)
+          expect(returned_tasks.first['id']).to eq(tasks.first.id)
+          expect(returned_tasks.last['id']).to eq(tasks.at(19).id)
+
+          get '/tasks?offset=35&limit=20'
+          expect(response.status).to eq(200)
+          returned_tasks = JSON.parse(response.body)
+          expect(returned_tasks.length).to eq(15)
+          expect(returned_tasks.first['id']).to eq(tasks.at(35).id)
+          expect(returned_tasks.last['id']).to eq(tasks.last.id)
+        end
+      end
+
+      context 'with invalid pagination params' do
+        it 'returns 400' do
+          get '/tasks?offset=asb'
+          expect(response.status).to eq(400)
+
+          get '/tasks?limit=fer'
+          expect(response.status).to eq(400)
+
+          get '/tasks?offset=35&limit=qwer'
+          expect(response.status).to eq(400)
+        end
+      end
     end
   end
 

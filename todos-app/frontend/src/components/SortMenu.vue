@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex align-items-center justify-content-end my-3 mx-5">
+  <div class="d-flex align-items-center my-3 me-3">
     <label class="text-black mx-3">Sort By</label>
     <div class="dropdown">
       <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="sortDropdown"

@@ -1,28 +1,29 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
+  <nav class="navbar navbar-expand navbar-dark bg-dark">
+    <div class="container-fluid justify-content-start">
       <a class="navbar-brand" href="/">Todos</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-          <a class="nav-link active" aria-current="page" href="/">Home</a>
-        </div>
+      <div class="navbar-nav">
+        <a class="nav-link active" aria-current="page" href="/">Home</a>
       </div>
     </div>
-    <div class="container-fluid justify-content-end">
-      <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-light" type="submit">Search</button>
-      </form>
+    <div class="container-fluid justify-content-end col-md-3 col-lg-2 col-xl-2">
+      <input class="form-control" type="text" placeholder="Search Title" v-model="store.state.search">
     </div>
   </nav>
 </template>
 
 <script>
+import {inject} from "vue";
+
 export default {
-  name: "NavBar"
+  name: "NavBar",
+  setup() {
+    const store = inject("store")
+
+    return {
+      store
+    }
+  }
 }
 </script>
 

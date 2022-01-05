@@ -5,12 +5,14 @@ class TasksController < ApplicationController
 
   # GET /tasks
   def index
-    @tasks = if sort_param
-               Task.all.order(sort_param[0] => sort_param[1])
-             else
-               Task.all
-             end
+    @tasks = Task.all
+    @tasks = @tasks.where(status: status_param) if status_param
 
+    @tasks = @tasks.order(sort_param[0] => sort_param[1]) if sort_param
+
+    @tasks = @tasks.where('title LIKE ?', "%#{params[:search]}%") if params[:search]
+
+    @tasks = @tasks.offset(pagination_params[:offset]).limit(pagination_params[:limit])
     render json: @tasks
   end
 
@@ -53,12 +55,42 @@ class TasksController < ApplicationController
   def sort_param
     # Possible sort params
     sort_params = %w[created_at:desc created_at:asc updated_at:desc updated_at:asc due_datetime:desc due_datetime:asc]
-    if params[:sort]
-      if sort_params.include?(params[:sort])
-        [params[:sort].split(':')[0], params[:sort].split(':')[1]]
-      else
-        raise Exceptions::InvalidSortParams, "#{params[:sort]} is not a valid sort param"
+    return unless params[:sort]
+
+    raise Exceptions::InvalidSortParams, "#{params[:sort]} is not a valid sort param" unless sort_params.include?(params[:sort])
+
+    [params[:sort].split(':')[0], params[:sort].split(':')[1]]
+  end
+
+  def status_param
+    return unless params[:status]
+
+    raise Exceptions::InvalidStatusParams, "#{params[:status]} is not a valid status param" unless Task.statuses.include?(params[:status])
+
+    params[:status]
+  end
+
+  def pagination_params
+    if params[:offset].nil?
+      @offset = 0
+    else
+      begin
+        @offset = Integer(params[:offset])
+      rescue ArgumentError
+        raise Exceptions::InvalidPaginationParams, "Given offset #{params[:offset]} is not integer"
       end
     end
+
+    if params[:limit].nil?
+      @limit = 20
+    else
+      begin
+        @limit = Integer(params[:limit])
+      rescue ArgumentError
+        raise Exceptions::InvalidPaginationParams, "Given limit #{params[:limit]} is not integer"
+      end
+    end
+
+    { offset: @offset, limit: @limit }
   end
 end
