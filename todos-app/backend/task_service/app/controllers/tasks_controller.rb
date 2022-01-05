@@ -41,6 +41,12 @@ class TasksController < ApplicationController
     @task.destroy
   end
 
+  def destroy_all
+    params.require(:user_id)
+    @tasks = Task.where(user_id: @user_id)
+    @tasks.destroy_all
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

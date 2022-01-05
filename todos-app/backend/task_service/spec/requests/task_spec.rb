@@ -8,6 +8,11 @@ RSpec.describe 'Tasks', type: :request do
     { Authorization: "Bearer #{mock_token}" }
   end
 
+  let(:valid_admin_headers) do
+    mock_token = JWT.encode({ user_id: 1, role: 'admin' }, Rails.application.secrets.jwt_secret_key, 'HS256')
+    { Authorization: "Bearer #{mock_token}" }
+  end
+
   describe 'GET /tasks' do
     context 'when no task exists' do
       it 'returns empty list' do
@@ -202,6 +207,24 @@ RSpec.describe 'Tasks', type: :request do
           expect(response.status).to eq(400)
         end
       end
+
+      context 'with valid user_id param' do
+        context 'with admin JWT' do
+          it 'returns tasks owned by the given user id' do
+            create_list(:task, 5, user_id: 4)
+            get '/tasks?user_id=4', headers: valid_admin_headers, as: :json
+            expect(response.status).to eq(200)
+            expect(JSON.parse(response.body).length).to eq(5)
+          end
+        end
+
+        context 'with user JWT' do
+          it 'returns 401' do
+            get '/tasks?user_id=3', headers: valid_user_headers, as: :json
+            expect(response.status).to eq(401)
+          end
+        end
+      end
     end
 
     context 'without valid auth headers' do
@@ -391,6 +414,33 @@ RSpec.describe 'Tasks', type: :request do
         task = create(:task)
         delete "/tasks/#{task.id}"
         expect(response.status).to eq(401)
+      end
+    end
+  end
+
+  describe 'DELETE /tasks' do
+    context 'when user_id param is given' do
+      context 'with valid admin JWT' do
+        it 'deletes tasks owned by the given user_id' do
+          create_list(:task, 5, user_id: 3)
+          delete '/tasks?user_id=3', headers: valid_admin_headers, as: :json
+          expect(response.status).to be(204)
+          expect(Task.where(user_id: 3)).to be_empty
+        end
+      end
+
+      context 'without valid admin JWT' do
+        it 'returns 401' do
+          delete '/tasks?user_id=1'
+          expect(response.status).to be(401)
+        end
+      end
+    end
+
+    context 'when user_id param is not given' do
+      it 'returns 400' do
+        delete '/tasks', headers: valid_user_headers, as: :json
+        expect(response.status).to be(400)
       end
     end
   end
