@@ -15,23 +15,22 @@ RSpec.describe 'Tasks', type: :request do
 
   describe 'GET /tasks' do
     context 'when no task exists' do
-      it 'returns empty list' do
+      it 'returns empty task list' do
         get '/tasks', headers: valid_user_headers, as: :json
         expect(response.status).to eq(200)
-        json_object = JSON.parse(response.body)
-        expect(json_object.length).to eq(0)
+        expect(JSON.parse(response.body)['tasks']).to be_empty
+        expect(JSON.parse(response.body)['total_count']).to be(0)
       end
     end
 
     context 'when one task exists' do
       it 'returns one task' do
-        expected_task = create(:task)
+        create(:task)
         get '/tasks', headers: valid_user_headers, as: :json
         expect(response.status).to eq(200)
         json_object = JSON.parse(response.body)
-        expect(json_object.length).to eq(1)
-        actual_task = json_object.first
-        expect(actual_task['id']).to eq(expected_task.id)
+        expect(json_object['tasks'].length).to eq(1)
+        expect(json_object['total_count']).to eq(1)
       end
     end
 
@@ -41,7 +40,7 @@ RSpec.describe 'Tasks', type: :request do
           expected_tasks = create_list(:task, 5)
           get '/tasks', headers: valid_user_headers, as: :json
           expect(response.status).to eq(200)
-          actual_tasks = JSON.parse(response.body)
+          actual_tasks = JSON.parse(response.body)['tasks']
           expect(actual_tasks.length).to eq(5)
           actual_tasks.each_with_index { |task, i| expect(task['id']).to eq(expected_tasks[i].id) }
         end
@@ -55,7 +54,7 @@ RSpec.describe 'Tasks', type: :request do
           # get tasks ordered by updated datetime descending
           get '/tasks?sort=updated_at:desc', headers: valid_user_headers, as: :json
           expect(response.status).to eq(200)
-          actual_tasks = JSON.parse(response.body)
+          actual_tasks = JSON.parse(response.body)['tasks']
           expect(actual_tasks.length).to eq(3)
           expect(actual_tasks[0]['id']).to eq(task_2.id)
           expect(actual_tasks[1]['id']).to eq(task_3.id)
@@ -64,7 +63,7 @@ RSpec.describe 'Tasks', type: :request do
           # get tasks ordered by updated datetime descending
           get '/tasks?sort=updated_at:asc', headers: valid_user_headers, as: :json
           expect(response.status).to eq(200)
-          actual_tasks = JSON.parse(response.body)
+          actual_tasks = JSON.parse(response.body)['tasks']
           expect(actual_tasks.length).to eq(3)
           expect(actual_tasks[0]['id']).to eq(task_1.id)
           expect(actual_tasks[1]['id']).to eq(task_3.id)
@@ -78,7 +77,7 @@ RSpec.describe 'Tasks', type: :request do
           # get tasks ordered by created datetime descending
           get '/tasks?sort=created_at:desc', headers: valid_user_headers, as: :json
           expect(response.status).to eq(200)
-          actual_tasks = JSON.parse(response.body)
+          actual_tasks = JSON.parse(response.body)['tasks']
           expect(actual_tasks.length).to eq(3)
           expect(actual_tasks[0]['id']).to eq(task_2.id)
           expect(actual_tasks[1]['id']).to eq(task_3.id)
@@ -87,7 +86,7 @@ RSpec.describe 'Tasks', type: :request do
           # get tasks ordered by created datetime ascending
           get '/tasks?sort=created_at:asc', headers: valid_user_headers, as: :json
           expect(response.status).to eq(200)
-          actual_tasks = JSON.parse(response.body)
+          actual_tasks = JSON.parse(response.body)['tasks']
           expect(actual_tasks.length).to eq(3)
           expect(actual_tasks[0]['id']).to eq(task_1.id)
           expect(actual_tasks[1]['id']).to eq(task_3.id)
@@ -102,7 +101,7 @@ RSpec.describe 'Tasks', type: :request do
           # get tasks ordered by due datetime descending
           get '/tasks?sort=due_datetime:desc', headers: valid_user_headers, as: :json
           expect(response.status).to eq(200)
-          actual_tasks = JSON.parse(response.body)
+          actual_tasks = JSON.parse(response.body)['tasks']
           expect(actual_tasks.length).to eq(4)
           expect(actual_tasks[0]['id']).to eq(task_2.id)
           expect(actual_tasks[1]['id']).to eq(task_3.id)
@@ -112,7 +111,7 @@ RSpec.describe 'Tasks', type: :request do
           # get tasks ordered by due datetime ascending
           get '/tasks?sort=due_datetime:asc', headers: valid_user_headers, as: :json
           expect(response.status).to eq(200)
-          actual_tasks = JSON.parse(response.body)
+          actual_tasks = JSON.parse(response.body)['tasks']
           expect(actual_tasks.length).to eq(4)
           expect(actual_tasks[0]['id']).to eq(task_4.id)
           expect(actual_tasks[1]['id']).to eq(task_1.id)
@@ -136,13 +135,13 @@ RSpec.describe 'Tasks', type: :request do
           task_4 = create(:task, status: 'in_progress')
           get '/tasks?status=not_started', headers: valid_user_headers
           expect(response.status).to eq(200)
-          expect(JSON.parse(response.body).length).to eq(1)
-          expect(JSON.parse(response.body).first['status']).to eq('not_started')
+          expect(JSON.parse(response.body)['tasks'].length).to eq(1)
+          expect(JSON.parse(response.body)['tasks'].first['status']).to eq('not_started')
 
           get '/tasks?status=in_progress', headers: valid_user_headers
           expect(response.status).to eq(200)
-          expect(JSON.parse(response.body).length).to eq(2)
-          expect(JSON.parse(response.body).first['status']).to eq('in_progress')
+          expect(JSON.parse(response.body)['tasks'].length).to eq(2)
+          expect(JSON.parse(response.body)['tasks'].first['status']).to eq('in_progress')
         end
       end
 
@@ -161,17 +160,17 @@ RSpec.describe 'Tasks', type: :request do
 
           get '/tasks?search=hello', headers: valid_user_headers, as: :json
           expect(response.status).to eq(200)
-          expect(JSON.parse(response.body).length).to eq(1)
-          expect(JSON.parse(response.body).first['id']).to eq(task_1.id)
+          expect(JSON.parse(response.body)['tasks'].length).to eq(1)
+          expect(JSON.parse(response.body)['tasks'].first['id']).to eq(task_1.id)
 
           get '/tasks?search=bonjour', headers: valid_user_headers, as: :json
           expect(response.status).to eq(200)
-          expect(JSON.parse(response.body).length).to eq(1)
-          expect(JSON.parse(response.body).first['id']).to eq(task_3.id)
+          expect(JSON.parse(response.body)['tasks'].length).to eq(1)
+          expect(JSON.parse(response.body)['tasks'].first['id']).to eq(task_3.id)
 
           get '/tasks?search=world', headers: valid_user_headers, as: :json
           expect(response.status).to eq(200)
-          expect(JSON.parse(response.body).length).to eq(3)
+          expect(JSON.parse(response.body)['tasks'].length).to eq(3)
         end
       end
 
@@ -181,14 +180,14 @@ RSpec.describe 'Tasks', type: :request do
 
           get '/tasks?offset=0&limit=20', headers: valid_user_headers, as: :json
           expect(response.status).to eq(200)
-          returned_tasks = JSON.parse(response.body)
+          returned_tasks = JSON.parse(response.body)['tasks']
           expect(returned_tasks.length).to eq(20)
           expect(returned_tasks.first['id']).to eq(tasks.first.id)
           expect(returned_tasks.last['id']).to eq(tasks.at(19).id)
 
           get '/tasks?offset=35&limit=20', headers: valid_user_headers, as: :json
           expect(response.status).to eq(200)
-          returned_tasks = JSON.parse(response.body)
+          returned_tasks = JSON.parse(response.body)['tasks']
           expect(returned_tasks.length).to eq(15)
           expect(returned_tasks.first['id']).to eq(tasks.at(35).id)
           expect(returned_tasks.last['id']).to eq(tasks.last.id)
@@ -214,7 +213,8 @@ RSpec.describe 'Tasks', type: :request do
             create_list(:task, 5, user_id: 4)
             get '/tasks?user_id=4', headers: valid_admin_headers, as: :json
             expect(response.status).to eq(200)
-            expect(JSON.parse(response.body).length).to eq(5)
+            expect(JSON.parse(response.body)['tasks'].length).to eq(5)
+            expect(JSON.parse(response.body)['total_count']).to eq(5)
           end
         end
 

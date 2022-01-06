@@ -12,9 +12,10 @@ class TasksController < ApplicationController
     @tasks = @tasks.order(sort_param[0] => sort_param[1]) if sort_param
 
     @tasks = @tasks.where('title LIKE ?', "%#{params[:search]}%") if params[:search]
+    total_count = @tasks.count
 
     @tasks = @tasks.offset(pagination_params[:offset]).limit(pagination_params[:limit])
-    render json: @tasks
+    render json: { tasks: @tasks, total_count: total_count }
   end
 
   # GET /tasks/1
