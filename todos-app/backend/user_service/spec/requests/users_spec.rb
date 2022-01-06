@@ -28,6 +28,12 @@ RSpec.describe '/users', type: :request do
         get users_url, headers: valid_admin_headers, as: :json
         expect(response).to be_successful
       end
+
+      it 'returns all users' do
+        create_list(:user, 5)
+        get users_url, headers: valid_admin_headers, as: :json
+        expect(JSON.parse(response.body).length).to eq(5)
+      end
     end
 
     context 'when requested by user' do
@@ -142,7 +148,7 @@ RSpec.describe '/users', type: :request do
   describe 'DELETE /destroy' do
     context 'when requested by admin' do
       it 'destroys the requested user' do
-        user = create(:user)
+        user = create(:user, role: 'user')
         expect do
           delete user_url(user), headers: valid_admin_headers, as: :json
         end.to change(User, :count).by(-1)
@@ -154,6 +160,14 @@ RSpec.describe '/users', type: :request do
         user = create(:user)
         delete user_url(user), headers: valid_user_headers, as: :json
         expect(response.status).to eq(401)
+      end
+    end
+
+    context 'when target user is admin' do
+      it 'renders forbidden' do
+        user = create(:user, role: 'admin')
+        delete user_url(user), headers: valid_admin_headers, as: :json
+        expect(response.status).to eq(403)
       end
     end
   end
