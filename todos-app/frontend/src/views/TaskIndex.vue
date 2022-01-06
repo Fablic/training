@@ -14,7 +14,7 @@
 
     <!--Task grid list-->
     <div class="col" v-for="item in tasks" :key="item.id">
-      <Task :task="item" @edit-clicked="showEditModal" @delete-clicked="deleteTask"/>
+      <Task :enable-edit="true" :task="item" @edit-clicked="showEditModal" @delete-clicked="deleteTask"/>
     </div>
   </div>
 
@@ -23,18 +23,6 @@
 
   <!--Modal form for task edition-->
   <TaskEditModal id="taskEditModal" :target-task="targetTask" @edit-task="editTask"/>
-
-  <!--Toast for notification-->
-  <div id="toast" class="toast position-absolute top-0 start-50 translate-middle-x mt-5" role="alert"
-       aria-live="assertive" aria-atomic="true">
-    <div class="toast-header">
-      <strong class="me-auto">Todos</strong>
-      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-    </div>
-    <div class="toast-body" style="font-size: 1rem">
-      {{ toastMessage }}
-    </div>
-  </div>
 </template>
 
 <script>
@@ -43,7 +31,7 @@ import axios from "axios";
 import Task from "@/components/Task";
 import TaskCreateModal from "@/components/TaskCreateModal";
 import TaskEditModal from "@/components/TaskEditModal";
-import {Modal, Toast} from 'bootstrap';
+import {Modal} from 'bootstrap';
 import {useRouter} from "vue-router";
 
 export default {
@@ -53,19 +41,17 @@ export default {
     const router = useRouter()
     const store = inject("store")
     const tasks = ref([])
-    const toastMessage = ref("")
     let targetTask = ref({})
     const MAX_FETCH_COUNT = 20
     let currentOffset = 0
     let didReachEnd = false
 
     onMounted(() => {
-      currentOffset = 0
-      getTasks()
+      resetPage()
     })
 
     // watch for changes in sort / filter
-    watch(store.state, () => {
+    watch(() => [store.state.search, store.state.statusFilter, store.state.sortBy, store.state.sortDir], () => {
       resetPage()
     })
 
@@ -89,22 +75,22 @@ export default {
         params.search = store.state.search
       }
       axios.get(process.env.VUE_APP_TASK_SERVICE_BASE_URL + "/tasks", {params, headers: store.getters.getAuthHeaders()}).then(response => {
-        tasks.value.push(...response.data)
+        tasks.value.push(...response.data.tasks)
         // checking if there's more to load
-        didReachEnd = response.data.length < MAX_FETCH_COUNT
+        didReachEnd = response.data.tasks.length < MAX_FETCH_COUNT
       }).catch((error) => {
         if (error.response.status === 401) router.push("login")
-        triggerToast("Error while fetching tasks!")
+        store.methods.triggerToast("Error while fetching tasks!")
       })
     }
 
     function createTask(task) {
       axios.post(process.env.VUE_APP_TASK_SERVICE_BASE_URL + "/tasks", {task}, {headers: store.getters.getAuthHeaders()}).then(() => {
         resetPage()
-        triggerToast("Task created successfully!")
+        store.methods.triggerToast("Task created successfully!")
       }).catch((error) => {
         if (error.response.status === 401) router.push("login")
-        triggerToast("Error while creating task!")
+        store.methods.triggerToast("Error while creating task!")
       })
       Modal.getInstance(document.getElementById("taskCreateModal")).hide()
     }
@@ -112,10 +98,10 @@ export default {
     function editTask(id, editedTask) {
       axios.put(process.env.VUE_APP_TASK_SERVICE_BASE_URL + `/tasks/${id}`, {task: editedTask}, {headers: store.getters.getAuthHeaders()}).then((response) => {
         tasks.value[tasks.value.findIndex(el => el.id === response.data.id)] = response.data
-        triggerToast("Task edited successfully!")
+        store.methods.triggerToast("Task edited successfully!")
       }).catch((error) => {
         console.log(error)
-        triggerToast("Error while editing task!")
+        store.methods.triggerToast("Error while editing task!")
       })
       Modal.getInstance(document.getElementById("taskEditModal")).hide()
     }
@@ -123,9 +109,9 @@ export default {
     function deleteTask(taskId) {
       axios.delete(process.env.VUE_APP_TASK_SERVICE_BASE_URL + `/tasks/${taskId}`, {headers: store.getters.getAuthHeaders()}).then(() => {
         tasks.value = tasks.value.filter((task) => task.id !== taskId)
-        triggerToast("Task deleted successfully!")
+        store.methods.triggerToast("Task deleted successfully!")
       }).catch(() => {
-        triggerToast("Error while deleting task!")
+        store.methods.triggerToast("Error while deleting task!")
       })
     }
 
@@ -137,12 +123,6 @@ export default {
     function showCreateModal() {
       let modal = new Modal(document.getElementById("taskCreateModal"))
       modal.show()
-    }
-
-    function triggerToast(message) {
-      let toast = new Toast(document.getElementById("toast"))
-      toastMessage.value = message
-      toast.show()
     }
 
     // handle infinite scrolling
@@ -157,7 +137,6 @@ export default {
       store,
       tasks,
       targetTask,
-      toastMessage,
       createTask,
       editTask,
       deleteTask,

@@ -3,6 +3,8 @@ import {createRouter, createWebHistory} from 'vue-router'
 import Login from "@/views/Login";
 import Home from "@/views/Home";
 import Register from "@/views/Register";
+import Admin from "@/views/Admin";
+import store from "@/store";
 
 const routes = [
   {
@@ -19,6 +21,19 @@ const routes = [
     path: '/register',
     name: "Register",
     component: Register
+  },
+  {
+    path: '/admin',
+    name: "Admin",
+    component: Admin,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.currentUser && JSON.parse(localStorage.currentUser).role === 'admin') {
+        next()
+      } else {
+        store.methods.triggerToast("Only for admins!")
+        next("/")
+      }
+    }
   },
   {
     path: '/:catchAll(.*)',

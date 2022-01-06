@@ -3,7 +3,7 @@
     <div class="card-body d-flex flex-column justify-content-between">
       <div class="d-flex justify-content-between">
         <h5 class="card-title">{{ task.title }}</h5>
-        <div class="d-flex justify-content-end">
+        <div v-if="enableEdit" class="d-flex justify-content-end">
           <i type="button" class="bi bi-pencil-square mx-2" @click="editClicked(task)"></i>
           <i type="button" class="bi bi-trash" @click="deleteClicked(task.id)"></i>
         </div>
@@ -36,6 +36,7 @@
 export default {
   name: "Task",
   props: {
+    enableEdit: Boolean,
     task: Object
   },
   emits: ["edit-clicked", "delete-clicked"],
