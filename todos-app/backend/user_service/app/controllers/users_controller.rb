@@ -2,23 +2,17 @@
 
 class UsersController < ApplicationController
   before_action :authorize_admin_role, only: %i[index show update destroy]
-  before_action :authorize_user_role, only: [:my_profile]
   before_action :set_user, only: %i[show update destroy]
 
   # GET /users
   def index
     @users = User.all
-
-    render json: @users
+    render json: @users, only: %i[id email username role]
   end
 
   # GET /users/1
   def show
-    render json: @user
-  end
-
-  def my_profile
-    render json: current_user
+    render json: @user, only: %i[id email username role]
   end
 
   # POST /users
@@ -26,7 +20,7 @@ class UsersController < ApplicationController
     @user = User.new(user_create_params)
 
     if @user.save
-      render json: { user: @user, token: encode_token(@user) }, status: :created, location: @user
+      render json: { user: @user, only: %i[email username role], token: encode_token(@user) }, status: :created, location: @user
     else
       render json: @user.errors, status: :unprocessable_entity
     end
@@ -35,7 +29,7 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   def update
     if @user.update(user_update_params)
-      render json: @user
+      render json: @user, only: %i[email username role]
     else
       render json: @user.errors, status: :unprocessable_entity
     end
@@ -43,7 +37,11 @@ class UsersController < ApplicationController
 
   # DELETE /users/1
   def destroy
-    @user.destroy
+    if @user.role == 'admin'
+      render json: { error: 'Admin cannot be deleted' }, status: :forbidden
+    else
+      @user.destroy
+    end
   end
 
   private
