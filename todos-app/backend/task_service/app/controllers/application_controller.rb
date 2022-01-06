@@ -37,7 +37,7 @@ class ApplicationController < ActionController::API
       end
     end
   end
-  
+
   def logged_in?
     !decoded_payload.nil?
   end
