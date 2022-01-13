@@ -9,7 +9,7 @@
         <span class="navbar-text ps-5">Welcome {{currentUser.username}}!</span>
     </div>
     <div class="container-fluid justify-content-end col-md-3 col-lg-2 col-xl-2">
-      <input class="form-control" type="text" placeholder="Search Title" v-model="store.state.search">
+      <input v-if="router.currentRoute.value.name === 'Home'" class="form-control" type="text" placeholder="Search Title" v-model="store.state.search">
     </div>
     <div class="me-3">
       <button type="button" class="btn btn-outline-light" @click="logout">Logout</button>
@@ -40,6 +40,7 @@ export default {
 
     return {
       store,
+      router,
       currentUser,
       logout
     }
