@@ -97,6 +97,8 @@ export default {
     function editUser(user) {
       axios.put(process.env.VUE_APP_USER_SERVICE_BASE_URL + `/users/${user.id}`, {user}, {headers: store.getters.getAuthHeaders()}).then(() => {
         store.methods.triggerToast("User edited successfully!")
+      }).catch(() => {
+        store.methods.triggerToast("You cannot edit yourself!")
       })
     }
 
@@ -112,7 +114,7 @@ export default {
           store.methods.triggerToast("User deleted successfully!")
         })
       }).catch(() => {
-        store.methods.triggerToast("Error while deleting user!")
+        store.methods.triggerToast("You cannot delete an admin user!")
       })
     }
 
