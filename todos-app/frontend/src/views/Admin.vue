@@ -16,7 +16,7 @@
         <td>{{ user.email }}</td>
         <td>{{ user.username }}</td>
         <td>
-          <select class="form-select-sm" v-model="user.role" @change="editUser(user)">
+          <select class="form-select-sm" v-model="user.role" @change="editUser(user)" :disabled="isCurrentUser(user.id)">
             <option value="admin">admin</option>
             <option value="user">user</option>
           </select>
@@ -116,13 +116,18 @@ export default {
       })
     }
 
+    function isCurrentUser(id) {
+      return JSON.parse(localStorage.currentUser).id === id
+    }
+
     return {
       users,
       userTasks,
       targetUserTasks,
       currentPage,
       editUser,
-      deleteUser
+      deleteUser,
+      isCurrentUser
     }
   }
 }

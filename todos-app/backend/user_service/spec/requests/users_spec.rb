@@ -132,6 +132,15 @@ RSpec.describe '/users', type: :request do
           expect(response.status).to eq(401)
         end
       end
+
+      context 'when requested user is their own' do
+        it 'renders bad request' do
+          user = create(:user, role: 'admin', id: 1)
+          patch user_url(user),
+                params: { user: new_attributes }, headers: valid_admin_headers, as: :json
+          expect(response.status).to eq(400)
+        end
+      end
     end
 
     context 'with invalid parameters' do
