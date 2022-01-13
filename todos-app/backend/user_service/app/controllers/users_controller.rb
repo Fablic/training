@@ -28,7 +28,7 @@ class UsersController < ApplicationController
 
   # PATCH/PUT /users/1
   def update
-    render json: { error: 'A user cannot update themselves' }, status: :bad_request and return if @user.id == decoded_payload["user_id"]
+    render json: { error: 'A user cannot update themselves' }, status: :bad_request and return if @user.id == decoded_payload['user_id']
 
     if @user.update(user_update_params)
       render json: @user, only: %i[email username role]
