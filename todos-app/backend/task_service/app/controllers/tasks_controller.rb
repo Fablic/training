@@ -66,9 +66,7 @@ class TasksController < ApplicationController
   def set_labels
     return unless params[:task][:labels]
 
-    unless params[:task][:labels].is_a?(Array) && !params[:task][:labels].empty?
-      raise Exceptions::InvalidLabelParams, 'Labels attribute must be a non-empty array'
-    end
+    raise Exceptions::InvalidLabelParams, 'Labels attribute must be an array' unless params[:task][:labels].is_a?(Array)
 
     @labels = []
     params[:task][:labels].each { |name| @labels.push(Label.where(user_id: @user_id, name: name).first_or_initialize) }
