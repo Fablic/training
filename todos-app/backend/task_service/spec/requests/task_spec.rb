@@ -475,4 +475,42 @@ RSpec.describe 'Tasks', type: :request do
       end
     end
   end
+
+  describe 'maintenance mode' do
+    before do
+      Rake::Task['maintenance:start'].execute
+    end
+
+    after(:all) do
+      Rake::Task['maintenance:end'].execute
+    end
+
+    context 'when GET request is received' do
+      it 'return 503' do
+        get '/tasks'
+        expect(response.status).to eq(503)
+      end
+    end
+
+    context 'when POST request is received' do
+      it 'return 503' do
+        post '/tasks'
+        expect(response.status).to eq(503)
+      end
+    end
+
+    context 'when PUT request is received' do
+      it 'return 503' do
+        put '/tasks/1'
+        expect(response.status).to eq(503)
+      end
+    end
+
+    context 'when DELETE request is received' do
+      it 'return 503' do
+        delete '/tasks/1'
+        expect(response.status).to eq(503)
+      end
+    end
+  end
 end

@@ -73,3 +73,14 @@ docker compose up
 ```
 Wait a few seconds, and the frontend app should be up and running at http://localhost:8080/.  
 You can use the frontend app to navigate between pages and do basic CRUD operations on tasks.
+
+## Maintenance Mode
+To have a service enter maintenance mode, exec into the container and run rake command,
+```bash
+rake maintenance:start
+```
+
+To exit maintenance mode, 
+```bash
+rake maintenance:end
+```
