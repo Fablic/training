@@ -16,6 +16,11 @@ RSpec.describe '/labels', type: :request do
     { Authorization: "Bearer #{mock_token}" }
   end
 
+  let(:valid_admin_headers) do
+    mock_token = JWT.encode({ user_id: 1, role: 'admin' }, Rails.application.secrets.jwt_secret_key, 'HS256')
+    { Authorization: "Bearer #{mock_token}" }
+  end
+
   describe 'GET /index' do
     it 'renders a successful response' do
       create(:label)
@@ -106,6 +111,33 @@ RSpec.describe '/labels', type: :request do
       expect {
         delete label_url(label), headers: valid_user_headers, as: :json
       }.to change(Label, :count).by(-1)
+    end
+  end
+
+  describe 'DELETE /destroy_all' do
+    context 'when user_id param is given' do
+      context 'with valid admin JWT' do
+        it 'deletes tasks owned by the given user_id' do
+          create_list(:label, 5, user_id: 3)
+          delete '/labels?user_id=3', headers: valid_admin_headers, as: :json
+          expect(response.status).to be(204)
+          expect(Label.where(user_id: 3)).to be_empty
+        end
+      end
+
+      context 'without valid admin JWT' do
+        it 'returns 401' do
+          delete '/labels?user_id=1'
+          expect(response.status).to be(401)
+        end
+      end
+    end
+
+    context 'when user_id param is not given' do
+      it 'returns 400' do
+        delete '/labels', headers: valid_user_headers, as: :json
+        expect(response.status).to be(400)
+      end
     end
   end
 end

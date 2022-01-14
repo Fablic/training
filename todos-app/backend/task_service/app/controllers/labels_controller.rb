@@ -41,6 +41,12 @@ class LabelsController < ApplicationController
     @label.destroy
   end
 
+  def destroy_all
+    params.require(:user_id)
+    @labels = Label.where(user_id: @user_id)
+    @labels.destroy_all
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
