@@ -106,11 +106,17 @@ export default {
       // delete target user
       axios.delete(process.env.VUE_APP_USER_SERVICE_BASE_URL + `/users/${userId}`, {headers: store.getters.getAuthHeaders()}).then(() => {
         users.value = users.value.filter((user) => user.id !== userId)
-        // delete all tasks owned by the user
-        axios.delete(process.env.VUE_APP_TASK_SERVICE_BASE_URL + `/tasks`, {
-          params: {user_id: userId},
-          headers: store.getters.getAuthHeaders()
-        }).then(() => {
+        // delete all tasks and labels owned by the user
+        axios.all([
+          axios.delete(process.env.VUE_APP_TASK_SERVICE_BASE_URL + `/tasks`, {
+            params: {user_id: userId},
+            headers: store.getters.getAuthHeaders()
+          }),
+          axios.delete(process.env.VUE_APP_TASK_SERVICE_BASE_URL + `/labels`, {
+            params: {user_id: userId},
+            headers: store.getters.getAuthHeaders()
+          })
+        ]).then(() => {
           store.methods.triggerToast("User deleted successfully!")
         })
       }).catch(() => {
