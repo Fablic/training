@@ -180,4 +180,42 @@ RSpec.describe '/users', type: :request do
       end
     end
   end
+
+  describe 'maintenance mode' do
+    before do
+      Rake::Task['maintenance:start'].execute
+    end
+
+    after(:all) do
+      Rake::Task['maintenance:end'].execute
+    end
+
+    context 'when GET request is received' do
+      it 'return 503' do
+        get '/users'
+        expect(response.status).to eq(503)
+      end
+    end
+
+    context 'when POST request is received' do
+      it 'return 503' do
+        post '/users'
+        expect(response.status).to eq(503)
+      end
+    end
+
+    context 'when PUT request is received' do
+      it 'return 503' do
+        put '/users/1'
+        expect(response.status).to eq(503)
+      end
+    end
+
+    context 'when DELETE request is received' do
+      it 'return 503' do
+        delete '/users/1'
+        expect(response.status).to eq(503)
+      end
+    end
+  end
 end

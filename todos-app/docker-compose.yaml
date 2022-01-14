@@ -5,8 +5,6 @@ services:
     container_name: todos-frontend
     ports: 
       - 8080:80
-    volumes:
-      - ./frontend/src:/app/src
     depends_on:
       - task-service
 
@@ -45,6 +43,8 @@ services:
       - 3002:3000
     depends_on:
       - user-db
+    volumes:
+      - ./backend/user_service:/app
     environment:
       DB_HOST: user-db
       DB_NAME: todos-app
