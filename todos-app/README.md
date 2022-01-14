@@ -75,12 +75,26 @@ Wait a few seconds, and the frontend app should be up and running at http://loca
 You can use the frontend app to navigate between pages and do basic CRUD operations on tasks.
 
 ## Maintenance Mode
-To have a service enter maintenance mode, exec into the container and run rake command,
+### Backend API
+To have a service enter maintenance mode, execute a rake command,
 ```bash
-rake maintenance:start
+# could be user-service
+docker exec -it task-service rake maintenance:start
 ```
 
 To exit maintenance mode, 
 ```bash
-rake maintenance:end
+# could be user-service
+docker exec -it task-service rake maintenance:end
+```
+
+### Frontend App
+To prevent users from accessing the frontend application on the web server level,
+```bash
+docker exec -it todos-frontend mv _maintenance.html maintenance.html
+```
+
+To enable the app again,
+```bash
+docker exec -it todos-frontend mv maintenance.html _maintenance.html
 ```
