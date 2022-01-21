@@ -5,5 +5,7 @@ module Exceptions
 
   class InvalidStatusParams < StandardError; end
 
+  class InvalidLabelParams < StandardError; end
+
   class InvalidPaginationParams < StandardError; end
 end

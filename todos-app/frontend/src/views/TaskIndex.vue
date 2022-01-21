@@ -22,7 +22,7 @@
   <TaskCreateModal id="taskCreateModal" @create-task="createTask"/>
 
   <!--Modal form for task edition-->
-  <TaskEditModal id="taskEditModal" :target-task="targetTask" @edit-task="editTask"/>
+  <TaskEditModal id="taskEditModal" :target-task="targetTask" :target-labels="targetTask.labels" @edit-task="editTask"/>
 </template>
 
 <script>

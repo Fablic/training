@@ -32,6 +32,17 @@
 
             <label class="form-label mt-4">Due Date</label>
             <input type="datetime-local" class="form-control" v-model="task.due_datetime">
+
+            <label class="form-label mt-4">Tags</label>
+            <div class="d-flex flex-wrap">
+              <span v-for="(label, i) in task.labels" :key="i" class="badge rounded-pill badge-outline-secondary m-1">#{{label}}<i type="button" class="bi bi-x" @click="removeLabel(label)"></i></span>
+            </div>
+            <div class="input-group">
+              <input name="label" type="text" class="form-control" placeholder="Max 15 characters without space" v-model="labelInput">
+              <button type="button" class="btn btn-outline-secondary input-group-text" @click="addLabel">
+                <i class="bi bi-plus-circle"></i>
+              </button>
+            </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -54,8 +65,21 @@ export default {
       status: "",
       priority: "",
       due_datetime: null,
-      updated_at: new Date()
+      updated_at: new Date(),
+      labels: [],
     })
+    const labelInput = ref("")
+
+    function addLabel() {
+      labelInput.value = labelInput.value.replaceAll(" ","")
+      labelInput.value = labelInput.value.substr(0, 15)
+      task.value.labels.push(labelInput.value)
+      labelInput.value = ""
+    }
+
+    function removeLabel(name) {
+      task.value.labels.value = task.value.labels.filter(label => label !== name)
+    }
 
     function createTask(task) {
       emit("create-task", task)
@@ -63,6 +87,9 @@ export default {
 
     return {
       task,
+      labelInput,
+      addLabel,
+      removeLabel,
       createTask,
     }
   }
@@ -70,5 +97,10 @@ export default {
 </script>
 
 <style scoped>
-
+.badge-outline-secondary {
+  color: #6c757d;
+  background-color: transparent;
+  background-image: none;
+  border: 1px solid #6c757d;
+}
 </style>

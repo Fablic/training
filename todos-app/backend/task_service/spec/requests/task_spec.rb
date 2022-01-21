@@ -3,6 +3,21 @@
 require 'rails_helper'
 
 RSpec.describe 'Tasks', type: :request do
+  let(:valid_attributes) do
+    {
+      user_id: 1,
+      title: 'test title',
+      description: 'test description',
+      priority: 0,
+      status: 0,
+      due_datetime: '2021-05-12 14:15:25',
+    }
+  end
+
+  let(:invalid_attributes) do
+    { name: 'missing user_id' }
+  end
+
   let(:valid_user_headers) do
     mock_token = JWT.encode({ user_id: 1, role: 'user' }, Rails.application.secrets.jwt_secret_key, 'HS256')
     { Authorization: "Bearer #{mock_token}" }
@@ -31,6 +46,14 @@ RSpec.describe 'Tasks', type: :request do
         json_object = JSON.parse(response.body)
         expect(json_object['tasks'].length).to eq(1)
         expect(json_object['total_count']).to eq(1)
+      end
+
+      it 'returns a task with associated labels' do
+        task = create(:task)
+        label = create(:label)
+        task.labels << label
+        get '/tasks', headers: valid_user_headers, as: :json
+        expect(JSON.parse(response.body)['tasks'].first['labels'].first['name']).to eq(label.name)
       end
     end
 
@@ -266,16 +289,7 @@ RSpec.describe 'Tasks', type: :request do
   describe 'POST /tasks' do
     context 'with valid request body' do
       it 'save to DB and return created' do
-        post '/tasks', params: {
-          task: {
-            user_id: 1,
-            title: 'test title',
-            description: 'test description',
-            priority: 0,
-            status: 0,
-            due_datetime: '2021-05-12 14:15:25',
-          },
-        }, headers: valid_user_headers, as: :json
+        post '/tasks', params: { task: valid_attributes }, headers: valid_user_headers, as: :json
         expect(response.status).to eq(201)
         expect(JSON.parse(response.body)['title']).to eq('test title')
         # Check DB
@@ -286,32 +300,17 @@ RSpec.describe 'Tasks', type: :request do
 
     context 'with missing required attribute in the request body' do
       it 'returns 422' do
-        post '/tasks', params: {
-          task: {
-            user_id: 1,
-            # missing title
-            description: 'test description',
-            priority: 0,
-            status: 0,
-            due_datetime: '2021-05-12 14:15:25',
-          },
-        }, headers: valid_user_headers, as: :json
+        # missing title
+        invalid_attributes = valid_attributes.except(:title)
+        post '/tasks', params: { task: invalid_attributes }, headers: valid_user_headers, as: :json
         expect(response.status).to eq(422)
       end
     end
 
     context 'with missing optional attribute in the request body' do
       it 'set default, save to DB and return created' do
-        post '/tasks', params: {
-          task: {
-            user_id: 1,
-            title: 'test title',
-            # missing description
-            priority: 0,
-            # missing status
-            # missing due_datetime
-          },
-        }, headers: valid_user_headers, as: :json
+        # missing description, status, priority
+        post '/tasks', params: { task: valid_attributes.except(:description, :status, :priority) }, headers: valid_user_headers, as: :json
         expect(response.status).to eq(201)
         expect(JSON.parse(response.body)['description']).to be_nil
         expect(JSON.parse(response.body)['status']).to eq(Task.statuses.key(0))
@@ -322,33 +321,36 @@ RSpec.describe 'Tasks', type: :request do
 
     context 'with invalid value in the request body' do
       it 'returns 422' do
-        post '/tasks', params: {
-          task: {
-            user_id: 1,
-            title: 'test title',
-            description: 'test description',
-            priority: 3, # must be either 0, 1 or 2
-            status: 0,
-            due_datetime: '2021-05-12 14:15:25',
-          },
-        }, headers: valid_user_headers, as: :json
+        # priority must be 0, 1 or 2
+        invalid_attributes = valid_attributes.merge!(priority: 3)
+        post '/tasks', params: { task: invalid_attributes }, headers: valid_user_headers, as: :json
         expect(response.status).to eq(422)
       end
     end
 
     context 'without valid auth headers' do
       it 'return 401' do
-        post '/tasks', params: {
-          task: {
-            user_id: 1,
-            title: 'test title',
-            description: 'test description',
-            priority: 3, # must be either 0, 1 or 2
-            status: 0,
-            due_datetime: '2021-05-12 14:15:25',
-          },
-        }
+        post '/tasks', params: valid_attributes
         expect(response.status).to eq(401)
+      end
+    end
+
+    context 'with new labels' do
+      it 'create and associate given labels' do
+        labels = %w[test1 test2]
+        post '/tasks', params: { task: valid_attributes.merge!(labels: labels) }, headers: valid_user_headers, as: :json
+        expect(Label.count).to eq(2)
+        expect(response.status).to eq(201)
+      end
+    end
+
+    context 'with duplicate labels' do
+      it 'create only non-existing and associate given labels' do
+        create(:label, name: 'test1')
+        labels = %w[test1 test2]
+        post '/tasks', params: { task: valid_attributes.merge!(labels: labels) }, headers: valid_user_headers, as: :json
+        expect(Label.count).to eq(2)
+        expect(response.status).to eq(201)
       end
     end
   end
@@ -357,14 +359,15 @@ RSpec.describe 'Tasks', type: :request do
     context 'when target task exists and request has valid body' do
       it 'update DB and return updated task' do
         before_update = create(:task)
+        before_update.labels.create(user_id: 1, name: 'test3')
         patch "/tasks/#{before_update.id}", params: {
           task: {
             title: 'updated title',
           },
         }, headers: valid_user_headers, as: :json
         expect(response.status).to eq(200)
-        expect(JSON.parse(response.body)['title']).to eq('updated title')
-        expect(Task.find(before_update.id).title).to eq('updated title')
+        before_update.reload
+        expect(before_update.title).to eq('updated title')
       end
     end
 
@@ -376,6 +379,22 @@ RSpec.describe 'Tasks', type: :request do
           },
         }, headers: valid_user_headers, as: :json
         expect(response.status).to eq(404)
+      end
+    end
+
+    context 'when labels are included' do
+      it 'create or find labels and associate with task' do
+        before_update = create(:task)
+        before_update.labels.create(user_id: 1, name: 'test1')
+        patch "/tasks/#{before_update.id}", params: {
+          task: {
+            title: 'updated title',
+            labels: %w[test2 test3],
+          },
+        }, headers: valid_user_headers, as: :json
+        expect(response.status).to eq(200)
+        before_update.reload
+        expect(before_update.labels.count).to eq(2)
       end
     end
 
@@ -414,6 +433,18 @@ RSpec.describe 'Tasks', type: :request do
         task = create(:task)
         delete "/tasks/#{task.id}"
         expect(response.status).to eq(401)
+      end
+    end
+
+    context 'when task has associated labels' do
+      it 'also deletes association, but not the labels themselves' do
+        task = create(:task)
+        task.labels.create(user_id: 1, name: 'test1')
+        task.labels.create(user_id: 1, name: 'test2')
+        delete "/tasks/#{task.id}", headers: valid_user_headers, as: :json
+        expect(Task.count).to eq(0)
+        expect(TaskLabelLink.count).to eq(0)
+        expect(Label.count).to eq(2)
       end
     end
   end

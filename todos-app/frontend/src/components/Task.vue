@@ -24,6 +24,9 @@
 
         <p v-if="task.due_datetime !== null"><span class="text-muted">Due date:</span> {{ (new Date(task.due_datetime)).toLocaleString() }}</p>
       </div>
+      <div class="d-flex flex-wrap">
+        <span v-for="label in task.labels" :key="label.name" class="badge rounded-pill badge-outline-secondary m-1">#{{label.name}}</span>
+      </div>
     </div>
     <div class="card-footer">
       <small class="text-muted">Last updated at: {{ getLastUpdatedString(new Date(), new Date(task.updated_at)) }}</small>
@@ -70,3 +73,12 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.badge-outline-secondary {
+  color: #6c757d;
+  background-color: transparent;
+  background-image: none;
+  border: 1px solid #6c757d;
+}
+</style>

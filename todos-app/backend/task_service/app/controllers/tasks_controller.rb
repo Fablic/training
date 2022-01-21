@@ -3,6 +3,7 @@
 class TasksController < ApplicationController
   before_action :authorize
   before_action :set_task, only: %i[show update destroy]
+  before_action :set_labels, only: %i[create update]
 
   # GET /tasks
   def index
@@ -11,11 +12,16 @@ class TasksController < ApplicationController
 
     @tasks = @tasks.order(sort_param[0] => sort_param[1]) if sort_param
 
-    @tasks = @tasks.where('title LIKE ?', "%#{params[:search]}%") if params[:search]
+    if params[:search]
+      @tasks = @tasks
+                 .distinct
+                 .left_outer_joins(:labels)
+                 .where('tasks.title LIKE ? OR labels.name LIKE ?', "%#{params[:search]}%", "%#{params[:search]}%")
+    end
     total_count = @tasks.count
 
     @tasks = @tasks.offset(pagination_params[:offset]).limit(pagination_params[:limit])
-    render json: { tasks: @tasks, total_count: total_count }
+    render json: { tasks: @tasks.as_json(include: { labels: { only: :name } }), total_count: total_count }
   end
 
   # GET /tasks/1
@@ -26,15 +32,17 @@ class TasksController < ApplicationController
   # POST /tasks
   def create
     @task = Task.new(task_params.merge!(user_id: @user_id))
-
+    @task.labels = @labels if @labels
     @task.save!
-    render json: @task, status: :created, location: @task
+    render json: @task.as_json(include: { labels: { only: :name } }), status: :created, location: @task
   end
 
   # PATCH/PUT /tasks/1
   def update
-    @task.update!(task_params.merge!(user_id: @user_id))
-    render json: @task
+    @task.assign_attributes(task_params.merge!(user_id: @user_id))
+    @task.labels = @labels if @labels
+    @task.save!
+    render json: @task.as_json(include: { labels: { only: :name } })
   end
 
   # DELETE /tasks/1
@@ -53,6 +61,15 @@ class TasksController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_task
     @task = Task.find(params[:id])
+  end
+
+  def set_labels
+    return unless params[:task][:labels]
+
+    raise Exceptions::InvalidLabelParams, 'Labels attribute must be an array' unless params[:task][:labels].is_a?(Array)
+
+    @labels = []
+    params[:task][:labels].each { |name| @labels.push(Label.where(user_id: @user_id, name: name).first_or_initialize) }
   end
 
   # Only allow a trusted parameter "white list" through.
