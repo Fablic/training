@@ -44,6 +44,7 @@ export default {
       }
       axios.post(process.env.VUE_APP_USER_SERVICE_BASE_URL + "/login", {auth}).then((response) => {
         localStorage.token = response.data.token
+        localStorage.currentUser = JSON.stringify(response.data.user)
         router.push("Home")
       }).catch(() => {
         loginFailed.value = true

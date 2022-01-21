@@ -7,7 +7,8 @@ class ApplicationController < ActionController::API
     render json: { error: exception.message }, status: :unprocessable_entity
   end
 
-  def encode_token(user, expire_after = 5 * 60)
+  # 30 min expiration by default
+  def encode_token(user, expire_after = 30 * 60)
     payload = {
       user_id: user.id,
       role: user.role,
@@ -40,9 +41,5 @@ class ApplicationController < ActionController::API
 
   def authorize_admin_role
     render json: { error: 'Unauthorized' }, status: :unauthorized unless logged_in? && decoded_payload['role'] == 'admin'
-  end
-
-  def current_user
-    User.find(decoded_payload['user_id']) if logged_in?
   end
 end

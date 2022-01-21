@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::API
+  rescue_from ActionController::ParameterMissing, with: :bad_request
   rescue_from Exceptions::InvalidSortParams, with: :bad_request
   rescue_from Exceptions::InvalidStatusParams, with: :bad_request
   rescue_from Exceptions::InvalidPaginationParams, with: :bad_request
@@ -43,8 +44,14 @@ class ApplicationController < ActionController::API
   end
 
   def authorize
-    if logged_in?
-      @user_id = decoded_payload['user_id']
+    render json: { error: 'Unauthorized' }, status: :unauthorized and return unless logged_in?
+
+    @user_id = decoded_payload['user_id']
+    return unless params[:user_id]
+
+    # user_id param can only be used by admins
+    if decoded_payload['role'] == 'admin'
+      @user_id = params[:user_id]
     else
       render json: { error: 'Unauthorized' }, status: :unauthorized
     end

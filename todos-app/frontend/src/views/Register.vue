@@ -54,6 +54,7 @@ export default {
       }
       axios.post(process.env.VUE_APP_USER_SERVICE_BASE_URL + "/users", {user}).then((response) => {
         localStorage.token = response.data.token
+        localStorage.currentUser = JSON.stringify(response.data.user)
         router.push("Home")
       }).catch(() => {
         registerFailed.value = true

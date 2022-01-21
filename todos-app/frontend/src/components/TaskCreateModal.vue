@@ -51,8 +51,6 @@ export default {
   emits: ["create-task"],
   setup(props, {emit}) {
     const task = ref({
-      //TODO Needs to be assigned dynamically as user function is implemented
-      user_id: 1,
       status: "",
       priority: "",
       due_datetime: null,
