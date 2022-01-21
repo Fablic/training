@@ -44,11 +44,13 @@ import Task from "@/components/Task";
 import TaskCreateModal from "@/components/TaskCreateModal";
 import TaskEditModal from "@/components/TaskEditModal";
 import {Modal, Toast} from 'bootstrap';
+import {useRouter} from "vue-router";
 
 export default {
   name: "TaskIndex",
   components: {TaskCreateModal, TaskEditModal, Task},
   setup() {
+    const router = useRouter()
     const store = inject("store")
     const tasks = ref([])
     const toastMessage = ref("")
@@ -64,11 +66,15 @@ export default {
 
     // watch for changes in sort / filter
     watch(store.state, () => {
+      resetPage()
+    })
+
+    function resetPage() {
       currentOffset = 0
       tasks.value = []
       didReachEnd = false
       getTasks()
-    })
+    }
 
     function getTasks() {
       let params = {
@@ -82,27 +88,29 @@ export default {
       if (store.state.search) {
         params.search = store.state.search
       }
-      axios.get(process.env.VUE_APP_TASK_SERVICE_BASE_URL + "/tasks", {params}).then(response => {
+      axios.get(process.env.VUE_APP_TASK_SERVICE_BASE_URL + "/tasks", {params, headers: store.getters.getAuthHeaders()}).then(response => {
         tasks.value.push(...response.data)
         // checking if there's more to load
         didReachEnd = response.data.length < MAX_FETCH_COUNT
-      }).catch(() => {
+      }).catch((error) => {
+        if (error.response.status === 401) router.push("login")
         triggerToast("Error while fetching tasks!")
       })
     }
 
     function createTask(task) {
-      axios.post(process.env.VUE_APP_TASK_SERVICE_BASE_URL + "/tasks", {task}).then(() => {
-        getTasks()
+      axios.post(process.env.VUE_APP_TASK_SERVICE_BASE_URL + "/tasks", {task}, {headers: store.getters.getAuthHeaders()}).then(() => {
+        resetPage()
         triggerToast("Task created successfully!")
-      }).catch(() => {
+      }).catch((error) => {
+        if (error.response.status === 401) router.push("login")
         triggerToast("Error while creating task!")
       })
       Modal.getInstance(document.getElementById("taskCreateModal")).hide()
     }
 
     function editTask(id, editedTask) {
-      axios.put(process.env.VUE_APP_TASK_SERVICE_BASE_URL + `/tasks/${id}`, {task: editedTask}).then((response) => {
+      axios.put(process.env.VUE_APP_TASK_SERVICE_BASE_URL + `/tasks/${id}`, {task: editedTask}, {headers: store.getters.getAuthHeaders()}).then((response) => {
         tasks.value[tasks.value.findIndex(el => el.id === response.data.id)] = response.data
         triggerToast("Task edited successfully!")
       }).catch((error) => {
@@ -113,7 +121,7 @@ export default {
     }
 
     function deleteTask(taskId) {
-      axios.delete(process.env.VUE_APP_TASK_SERVICE_BASE_URL + `/tasks/${taskId}`).then(() => {
+      axios.delete(process.env.VUE_APP_TASK_SERVICE_BASE_URL + `/tasks/${taskId}`, {headers: store.getters.getAuthHeaders()}).then(() => {
         tasks.value = tasks.value.filter((task) => task.id !== taskId)
         triggerToast("Task deleted successfully!")
       }).catch(() => {

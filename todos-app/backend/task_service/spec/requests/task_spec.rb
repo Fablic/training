@@ -3,10 +3,15 @@
 require 'rails_helper'
 
 RSpec.describe 'Tasks', type: :request do
+  let(:valid_user_headers) do
+    mock_token = JWT.encode({ user_id: 1, role: 'user' }, Rails.application.secrets.jwt_secret_key, 'HS256')
+    { Authorization: "Bearer #{mock_token}" }
+  end
+
   describe 'GET /tasks' do
     context 'when no task exists' do
       it 'returns empty list' do
-        get '/tasks'
+        get '/tasks', headers: valid_user_headers, as: :json
         expect(response.status).to eq(200)
         json_object = JSON.parse(response.body)
         expect(json_object.length).to eq(0)
@@ -16,7 +21,7 @@ RSpec.describe 'Tasks', type: :request do
     context 'when one task exists' do
       it 'returns one task' do
         expected_task = create(:task)
-        get '/tasks'
+        get '/tasks', headers: valid_user_headers, as: :json
         expect(response.status).to eq(200)
         json_object = JSON.parse(response.body)
         expect(json_object.length).to eq(1)
@@ -29,7 +34,7 @@ RSpec.describe 'Tasks', type: :request do
       context 'without sort param' do
         it 'returns all tasks sorted by id' do
           expected_tasks = create_list(:task, 5)
-          get '/tasks'
+          get '/tasks', headers: valid_user_headers, as: :json
           expect(response.status).to eq(200)
           actual_tasks = JSON.parse(response.body)
           expect(actual_tasks.length).to eq(5)
@@ -43,7 +48,7 @@ RSpec.describe 'Tasks', type: :request do
           task_2 = create(:task, updated_at: Date.new(2020, 10, 1))
           task_3 = create(:task, updated_at: Date.new(2020, 3, 1))
           # get tasks ordered by updated datetime descending
-          get '/tasks?sort=updated_at:desc'
+          get '/tasks?sort=updated_at:desc', headers: valid_user_headers, as: :json
           expect(response.status).to eq(200)
           actual_tasks = JSON.parse(response.body)
           expect(actual_tasks.length).to eq(3)
@@ -52,7 +57,7 @@ RSpec.describe 'Tasks', type: :request do
           expect(actual_tasks[2]['id']).to eq(task_1.id)
 
           # get tasks ordered by updated datetime descending
-          get '/tasks?sort=updated_at:asc'
+          get '/tasks?sort=updated_at:asc', headers: valid_user_headers, as: :json
           expect(response.status).to eq(200)
           actual_tasks = JSON.parse(response.body)
           expect(actual_tasks.length).to eq(3)
@@ -66,7 +71,7 @@ RSpec.describe 'Tasks', type: :request do
           task_2 = create(:task, created_at: Date.new(2020, 10, 1))
           task_3 = create(:task, created_at: Date.new(2020, 3, 1))
           # get tasks ordered by created datetime descending
-          get '/tasks?sort=created_at:desc'
+          get '/tasks?sort=created_at:desc', headers: valid_user_headers, as: :json
           expect(response.status).to eq(200)
           actual_tasks = JSON.parse(response.body)
           expect(actual_tasks.length).to eq(3)
@@ -75,7 +80,7 @@ RSpec.describe 'Tasks', type: :request do
           expect(actual_tasks[2]['id']).to eq(task_1.id)
 
           # get tasks ordered by created datetime ascending
-          get '/tasks?sort=created_at:asc'
+          get '/tasks?sort=created_at:asc', headers: valid_user_headers, as: :json
           expect(response.status).to eq(200)
           actual_tasks = JSON.parse(response.body)
           expect(actual_tasks.length).to eq(3)
@@ -90,7 +95,7 @@ RSpec.describe 'Tasks', type: :request do
           task_3 = create(:task, due_datetime: Date.new(2020, 3, 1))
           task_4 = create(:task, due_datetime: nil)
           # get tasks ordered by due datetime descending
-          get '/tasks?sort=due_datetime:desc'
+          get '/tasks?sort=due_datetime:desc', headers: valid_user_headers, as: :json
           expect(response.status).to eq(200)
           actual_tasks = JSON.parse(response.body)
           expect(actual_tasks.length).to eq(4)
@@ -100,7 +105,7 @@ RSpec.describe 'Tasks', type: :request do
           expect(actual_tasks[3]['id']).to eq(task_4.id)
 
           # get tasks ordered by due datetime ascending
-          get '/tasks?sort=due_datetime:asc'
+          get '/tasks?sort=due_datetime:asc', headers: valid_user_headers, as: :json
           expect(response.status).to eq(200)
           actual_tasks = JSON.parse(response.body)
           expect(actual_tasks.length).to eq(4)
@@ -113,7 +118,7 @@ RSpec.describe 'Tasks', type: :request do
 
       context 'with invalid sort param' do
         it 'returns 400' do
-          get '/tasks?sort=invalid_param:desc'
+          get '/tasks?sort=invalid_param:desc', headers: valid_user_headers, as: :json
           expect(response.status).to eq(400)
         end
       end
@@ -124,12 +129,12 @@ RSpec.describe 'Tasks', type: :request do
           task_2 = create(:task, status: 'in_progress')
           task_3 = create(:task, status: 'done')
           task_4 = create(:task, status: 'in_progress')
-          get '/tasks?status=not_started'
+          get '/tasks?status=not_started', headers: valid_user_headers
           expect(response.status).to eq(200)
           expect(JSON.parse(response.body).length).to eq(1)
           expect(JSON.parse(response.body).first['status']).to eq('not_started')
 
-          get '/tasks?status=in_progress'
+          get '/tasks?status=in_progress', headers: valid_user_headers
           expect(response.status).to eq(200)
           expect(JSON.parse(response.body).length).to eq(2)
           expect(JSON.parse(response.body).first['status']).to eq('in_progress')
@@ -138,7 +143,7 @@ RSpec.describe 'Tasks', type: :request do
 
       context 'with invalid status param' do
         it 'returns 400' do
-          get '/tasks?status=not_valid'
+          get '/tasks?status=not_valid', headers: valid_user_headers
           expect(response.status).to eq(400)
         end
       end
@@ -149,17 +154,17 @@ RSpec.describe 'Tasks', type: :request do
           task_2 = create(:task, title: 'holla world')
           task_3 = create(:task, title: 'bonjour world')
 
-          get '/tasks?search=hello'
+          get '/tasks?search=hello', headers: valid_user_headers, as: :json
           expect(response.status).to eq(200)
           expect(JSON.parse(response.body).length).to eq(1)
           expect(JSON.parse(response.body).first['id']).to eq(task_1.id)
 
-          get '/tasks?search=bonjour'
+          get '/tasks?search=bonjour', headers: valid_user_headers, as: :json
           expect(response.status).to eq(200)
           expect(JSON.parse(response.body).length).to eq(1)
           expect(JSON.parse(response.body).first['id']).to eq(task_3.id)
 
-          get '/tasks?search=world'
+          get '/tasks?search=world', headers: valid_user_headers, as: :json
           expect(response.status).to eq(200)
           expect(JSON.parse(response.body).length).to eq(3)
         end
@@ -169,14 +174,14 @@ RSpec.describe 'Tasks', type: :request do
         it 'returns tasks in correct chunks' do
           tasks = create_list(:task, 50)
 
-          get '/tasks?offset=0&limit=20'
+          get '/tasks?offset=0&limit=20', headers: valid_user_headers, as: :json
           expect(response.status).to eq(200)
           returned_tasks = JSON.parse(response.body)
           expect(returned_tasks.length).to eq(20)
           expect(returned_tasks.first['id']).to eq(tasks.first.id)
           expect(returned_tasks.last['id']).to eq(tasks.at(19).id)
 
-          get '/tasks?offset=35&limit=20'
+          get '/tasks?offset=35&limit=20', headers: valid_user_headers, as: :json
           expect(response.status).to eq(200)
           returned_tasks = JSON.parse(response.body)
           expect(returned_tasks.length).to eq(15)
@@ -187,15 +192,22 @@ RSpec.describe 'Tasks', type: :request do
 
       context 'with invalid pagination params' do
         it 'returns 400' do
-          get '/tasks?offset=asb'
+          get '/tasks?offset=asb', headers: valid_user_headers, as: :json
           expect(response.status).to eq(400)
 
-          get '/tasks?limit=fer'
+          get '/tasks?limit=fer', headers: valid_user_headers, as: :json
           expect(response.status).to eq(400)
 
-          get '/tasks?offset=35&limit=qwer'
+          get '/tasks?offset=35&limit=qwer', headers: valid_user_headers, as: :json
           expect(response.status).to eq(400)
         end
+      end
+    end
+
+    context 'without valid auth headers' do
+      it 'return 401' do
+        get '/tasks'
+        expect(response.status).to eq(401)
       end
     end
   end
@@ -204,7 +216,7 @@ RSpec.describe 'Tasks', type: :request do
     context 'when target task exists' do
       it 'returns the target task' do
         expected_task = create(:task)
-        get "/tasks/#{expected_task.id}"
+        get "/tasks/#{expected_task.id}", headers: valid_user_headers, as: :json
         expect(response.status).to eq(200)
         actual_task = JSON.parse(response.body)
         expect(actual_task['id']).to eq(expected_task.id)
@@ -214,8 +226,16 @@ RSpec.describe 'Tasks', type: :request do
 
     context "when target task doesn't exist" do
       it 'returns not found response' do
-        get '/tasks/1'
+        get '/tasks/1', headers: valid_user_headers, as: :json
         expect(response.status).to eq(404)
+      end
+    end
+
+    context 'without valid auth headers' do
+      it 'return 401' do
+        create(:task)
+        get '/tasks/1'
+        expect(response.status).to eq(401)
       end
     end
   end
@@ -232,7 +252,7 @@ RSpec.describe 'Tasks', type: :request do
             status: 0,
             due_datetime: '2021-05-12 14:15:25',
           },
-        }, as: :json
+        }, headers: valid_user_headers, as: :json
         expect(response.status).to eq(201)
         expect(JSON.parse(response.body)['title']).to eq('test title')
         # Check DB
@@ -252,7 +272,7 @@ RSpec.describe 'Tasks', type: :request do
             status: 0,
             due_datetime: '2021-05-12 14:15:25',
           },
-        }, as: :json
+        }, headers: valid_user_headers, as: :json
         expect(response.status).to eq(422)
       end
     end
@@ -268,7 +288,7 @@ RSpec.describe 'Tasks', type: :request do
             # missing status
             # missing due_datetime
           },
-        }, as: :json
+        }, headers: valid_user_headers, as: :json
         expect(response.status).to eq(201)
         expect(JSON.parse(response.body)['description']).to be_nil
         expect(JSON.parse(response.body)['status']).to eq(Task.statuses.key(0))
@@ -288,8 +308,24 @@ RSpec.describe 'Tasks', type: :request do
             status: 0,
             due_datetime: '2021-05-12 14:15:25',
           },
-        }, as: :json
+        }, headers: valid_user_headers, as: :json
         expect(response.status).to eq(422)
+      end
+    end
+
+    context 'without valid auth headers' do
+      it 'return 401' do
+        post '/tasks', params: {
+          task: {
+            user_id: 1,
+            title: 'test title',
+            description: 'test description',
+            priority: 3, # must be either 0, 1 or 2
+            status: 0,
+            due_datetime: '2021-05-12 14:15:25',
+          },
+        }
+        expect(response.status).to eq(401)
       end
     end
   end
@@ -302,7 +338,7 @@ RSpec.describe 'Tasks', type: :request do
           task: {
             title: 'updated title',
           },
-        }
+        }, headers: valid_user_headers, as: :json
         expect(response.status).to eq(200)
         expect(JSON.parse(response.body)['title']).to eq('updated title')
         expect(Task.find(before_update.id).title).to eq('updated title')
@@ -315,8 +351,20 @@ RSpec.describe 'Tasks', type: :request do
           task: {
             title: 'updated title',
           },
-        }
+        }, headers: valid_user_headers, as: :json
         expect(response.status).to eq(404)
+      end
+    end
+
+    context 'without valid auth headers' do
+      it 'return 401' do
+        before_update = create(:task)
+        patch "/tasks/#{before_update.id}", params: {
+          task: {
+            title: 'updated title',
+          },
+        }
+        expect(response.status).to eq(401)
       end
     end
   end
@@ -325,7 +373,7 @@ RSpec.describe 'Tasks', type: :request do
     context 'when target task exists' do
       it 'deletes task from DB and return 204' do
         task = create(:task)
-        delete "/tasks/#{task.id}"
+        delete "/tasks/#{task.id}", headers: valid_user_headers, as: :json
         expect(response.status).to eq(204)
         expect { Task.find(task.id) }.to raise_error(ActiveRecord::RecordNotFound)
       end
@@ -333,8 +381,16 @@ RSpec.describe 'Tasks', type: :request do
 
     context "when target task doesn't exist" do
       it 'returns 404' do
-        delete '/tasks/1'
+        delete '/tasks/1', headers: valid_user_headers, as: :json
         expect(response.status).to be(404)
+      end
+    end
+
+    context 'without valid auth headers' do
+      it 'return 401' do
+        task = create(:task)
+        delete "/tasks/#{task.id}"
+        expect(response.status).to eq(401)
       end
     end
   end

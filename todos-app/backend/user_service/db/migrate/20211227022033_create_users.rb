@@ -3,7 +3,7 @@ class CreateUsers < ActiveRecord::Migration[5.1]
     create_table :users do |t|
       t.string :email, limit: 150
       t.string :username, limit: 30
-      t.integer :role
+      t.integer :role, default: 0
       t.string :password_digest
 
       t.timestamps

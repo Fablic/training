@@ -2,5 +2,6 @@
 
 Rails.application.routes.draw do
   resources :users
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  get '/current-user', to: 'auth#logged_in_user'
+  post '/login', to: 'auth#login'
 end

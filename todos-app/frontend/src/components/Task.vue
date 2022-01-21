@@ -1,9 +1,15 @@
 <template>
   <div class="card h-100">
     <div class="card-body d-flex flex-column justify-content-between">
-      <h5 class="card-title">{{ task.title }}</h5>
+      <div class="d-flex justify-content-between">
+        <h5 class="card-title">{{ task.title }}</h5>
+        <div class="d-flex justify-content-end">
+          <i type="button" class="bi bi-pencil-square mx-2" @click="editClicked(task)"></i>
+          <i type="button" class="bi bi-trash" @click="deleteClicked(task.id)"></i>
+        </div>
+      </div>
       <p class="card-text">{{ task.description }}</p>
-      <div class="py-2">
+      <div class="py-1">
         <span class="text-muted">Priority: </span>
         <span v-if="task.priority === 'high'" class="badge bg-danger">High</span>
         <span v-else-if="task.priority === 'medium'" class="badge bg-warning">Medium</span>
@@ -17,11 +23,6 @@
         <span v-else class="badge bg-success">Done</span>
 
         <p v-if="task.due_datetime !== null"><span class="text-muted">Due date:</span> {{ (new Date(task.due_datetime)).toLocaleString() }}</p>
-      </div>
-
-      <div class="d-flex justify-content-end">
-        <button type="button" class="btn btn-primary mx-1" @click="editClicked(task)">Edit</button>
-        <button type="button" class="btn btn-danger" @click="deleteClicked(task.id)">Delete</button>
       </div>
     </div>
     <div class="card-footer">
