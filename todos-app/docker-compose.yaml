@@ -4,9 +4,7 @@ services:
     image: todos-frontend
     container_name: todos-frontend
     ports: 
-      - 8080:8080
-    volumes:
-      - ./frontend/src:/app/src
+      - 8080:80
     depends_on:
       - task-service
 
