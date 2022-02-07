@@ -11,11 +11,11 @@ Top画面は緊急度/優先度マトリクスの各フィールドを横並び�
 | --- | --- | --- | --- | --- | --- |
 | ユーザーID |  PK | id | INT | NO | unique |
 | 名前      |     | name     | VARCHAR(45) | NO | - |
-| メールアドレス |  | email    | VARCHAR(45) | NO | unique |
+| メールアドレス |  | email    | VARCHAR(255) | NO | unique |
 | パスワード |     | password | VARCHAR(45) | NO | - |
 | 削除フラグ |     | deleted  |     INT     | NO (default 0) | - |
-| 作成日 |        | create_at | DATETIME   | NO | - |v
-| 更新日 |        | update_at | DATETIME   | NO | - |v
+| 作成日 |        | created_at | DATETIME   | NO | - |
+| 更新日 |        | updated_at | DATETIME   | NO | - |
 
 ## Tasks
 | 項目名 | 制約 | Column | Type | NULL | Options |
@@ -30,8 +30,8 @@ Top画面は緊急度/優先度マトリクスの各フィールドを横並び�
 | 優先順位ポイント |  | priority_point |  INT | NO | - |
 | 期限      |  | deadline  | DATETIME  | NO | - |
 | 削除フラグ |  | deleted  |    INT     | NO (default 0) | - |
-| 作成日    |  | create_at | DATETIME  | NO | - |
-| 更新日    |  | update_at | DATETIME  | NO | - |
+| 作成日    |  | created_at | DATETIME  | NO | - |
+| 更新日    |  | updated_at | DATETIME  | NO | - |
 
 ## Labels
 | 項目名 | 制約 | Column | Type | NULL | Options |
@@ -41,15 +41,15 @@ Top画面は緊急度/優先度マトリクスの各フィールドを横並び�
 | 名前      |     | name     | VARCHAR(45) | NO | - |
 | カラー    |     | color    | INT | NO | enumを利用 |
 | 削除フラグ |     | deleted  | INT | NO (default 0) | - |
-| 作成日     |     | create_at | DATETIME  | NO | - |
-| 更新日     |     | update_at | DATETIME  | NO | - |
+| 作成日     |     | created_at | DATETIME  | NO | - |
+| 更新日     |     | updated_at | DATETIME  | NO | - |
 
-## belong_tasks
+## tasks_labels
 | 項目名 | 制約 | Column | Type | NULL | Options |
 | --- | --- | --- | --- | --- | --- |
 | 所属タスクID | PK | id      | INT | NO | unique |
 | ユーザーID   | FK | user_id | INT | NO | - |
 | ラベルID     | FK | label_id | INT | NO | - |
 | 削除フラグ   |    | deleted   | INT | NO (default 0) | - |
-| 作成日       |    | create_at | DATETIME  | NO | - |
-| 更新日       |    | update_at | DATETIME  | NO | - |
+| 作成日       |    | created_at | DATETIME  | NO | - |
+| 更新日       |    | updated_at | DATETIME  | NO | - |
