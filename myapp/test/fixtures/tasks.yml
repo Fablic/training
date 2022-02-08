@@ -1,0 +1,23 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 1
+  title: MyString
+  body: MyString
+  status: 1
+  urgency: 1
+  importance: 1
+  priority_point: 1
+  deadline: 2022-02-07 05:14:48
+  deleted: 1
+
+two:
+  user_id: 1
+  title: MyString
+  body: MyString
+  status: 1
+  urgency: 1
+  importance: 1
+  priority_point: 1
+  deadline: 2022-02-07 05:14:48
+  deleted: 1
