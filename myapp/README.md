@@ -23,9 +23,11 @@ Things you may want to cover:
 
 * ...
 
-##app image
+## app image
+
 ![デザイン](docs/step5_appimage.png)
-###タスク管理
+
+### タスク管理
 | 機能 | 概要 |
 | --- | --- |
 | ログイン | アカウントとパスワードでログインできる |
@@ -37,9 +39,11 @@ Things you may want to cover:
 | タスク削除 | タスクを削除できる |
 | ラベル登録 | ラベルを登録できる |
 
-##models
+## models
+
 ![モデル](docs/step5_model.png)
-###users
+
+### users
 | 項目名 | 制約 | Colum | Type | NULL | Default | Options |
 | --- | --- | --- | --- | --- | --- | --- |
 | ユーザID | PK | id | INT | NOT NULL | -  | unique |
@@ -50,7 +54,8 @@ Things you may want to cover:
 | 削除フラグ | | deleted | INT | NOT NULL | 0 | - |
 | 更新日時 | | modified | DATETIME | NOT NULL | -  | - |
 | 作成日時 | | created | DATETIME | NOT NULL | -  | - |
-###tasks
+
+### tasks
 | 項目名 | 制約 | Colum | Type | NULL | Default | Options |
 | --- | --- | --- | --- | --- | --- | --- |
 | タスクID | PK | id | INT | NOT NULL | - | unique |
@@ -61,9 +66,10 @@ Things you may want to cover:
 | 優先順位 | | priority | INT | NOT NULL | 2 | - |
 | ラベル | | label | VARCHAR(150) | NOT NULL | '' | - |
 | ステータス | | status | INT | NOT NULL | 1 | - |
-###labels
+
+### labels
 | 項目名 | 制約 | Colum | Type | NULL | Default | Options |
 | --- | --- | --- | --- | --- | --- | --- |
 | ラベルID | PK | id | INT | NOT NULL | -  | unique |
 | ラベル名 | FK | label | VARCHAR(50) | NOT NULL | -  | unique |
-| カラー | | color | VARCHAR(50) | NOT NULL | １ | |
+| カラー | | color | INT | NOT NULL | １ | |
