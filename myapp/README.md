@@ -19,7 +19,7 @@
 | id          | int          | O | O | auto-increment |
 | title       | varchar(256) | O | |||
 
-### board_users
+### boards_users
 * Boards - Users mapping
 
 | Column   | Type | Not Null? | PK  | default        | description            |
@@ -32,7 +32,7 @@
 * Each Tasks
 
   | Column      | Type         | Not Null? | PK | default        | description |
--------------|-------------|--------------|--- | --- |----------------|-------------|
+  |-------------|-------------|--------------|--- | --- |----------------|
   | id          | int          | O | O | auto-increment |
   | board_id    | int | O | |||
   | user_id     | int | O | |||
@@ -45,16 +45,6 @@
   | modified_at | datetime | O | |||
 
 * index: [board_id, status_id]
-
-### password_reset_keys
-* Password reset key
-
-  | Column      | Type         | Not Null? | PK | default        | description |
-    |-------------|--------------|--- | --- |----------------|-------------|
-  | reset_key          | varchar(64)          | O | O |  |
-  | user_id       | int | O | |||
-  | created_at       | datetime | O | |||
-  | valid_until       | datetime | O | |||
 
 ### priorities
 * Priority list
@@ -88,7 +78,7 @@
 
 * index: [board_id]
 
-### tag_tasks
+### tags_tasks
 * Mapper for tags - tasks
 
   | Column      | Type         | Not Null? | PK | default        | description |
