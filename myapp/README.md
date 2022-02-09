@@ -50,7 +50,6 @@ Things you may want to cover:
 | 名前 | | name | VARCHAR(50) | NOT NULL | -  | - |
 | メールアドレス | | email | VARCHAR(256) | NOT NULL | - | unique |
 | パスワード | | password | VARCHAR(256) | NOT NULL | - | - |
-| 権限 | | role | INT | NOT NULL | 1 | - |
 | 削除フラグ | | deleted | INT | NOT NULL | 0 | - |
 | 更新日時 | | modified | DATETIME | NOT NULL | -  | - |
 | 作成日時 | | created | DATETIME | NOT NULL | -  | - |
@@ -72,4 +71,4 @@ Things you may want to cover:
 | --- | --- | --- | --- | --- | --- | --- |
 | ラベルID | PK | id | INT | NOT NULL | -  | unique |
 | ラベル名 | FK | label | VARCHAR(50) | NOT NULL | -  | unique |
-| カラー | | color | INT | NOT NULL | １ | |
+| カラー | | color | INT | NOT NULL | - | |
