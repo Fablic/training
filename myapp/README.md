@@ -63,7 +63,7 @@ Things you may want to cover:
 | 説明文 | | body | TEXT | NOT NULL | '' | - |
 | 終了期限 | | deadline | DATE | NULL | -  | - |
 | 優先順位 | | priority | INT | NOT NULL | 2 | - |
-| ラベル | | label | VARCHAR(150) | NOT NULL | '' | - |
+| ラベルID | | label_id | INT | NULL | - | - |
 | ステータス | | status | INT | NOT NULL | 1 | - |
 
 ### labels
