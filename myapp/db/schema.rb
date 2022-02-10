@@ -10,20 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_07_051447) do
-
-  create_table "tasks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
-    t.integer "user_id", null: false, comment: "ユーザーID"
-    t.string "title", limit: 45, null: false, comment: "タイトル"
-    t.string "body", comment: "内容"
-    t.integer "status", null: false, comment: "ステータス"
-    t.integer "urgency", null: false, comment: "緊急度"
-    t.integer "importance", null: false, comment: "重要度"
-    t.integer "priority_point", null: false, comment: "優先順位ポイント"
-    t.datetime "deadline", null: false, comment: "期限"
-    t.integer "deleted", default: 0, null: false, comment: "削除フラグ"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+ActiveRecord::Schema.define(version: 20_220_207_051_447) do
+  create_table 'tasks', options: 'ENGINE=InnoDB DEFAULT CHARSET=utf8mb4', force: :cascade do |t|
+    t.integer 'user_id', null: false, comment: 'ユーザーID'
+    t.string 'title', limit: 45, null: false, comment: 'タイトル'
+    t.string 'body', comment: '内容'
+    t.integer 'status', null: false, comment: 'ステータス'
+    t.integer 'urgency', null: false, comment: '緊急度'
+    t.integer 'importance', null: false, comment: '重要度'
+    t.integer 'priority_point', null: false, comment: '優先順位ポイント'
+    t.datetime 'deadline', null: false, comment: '期限'
+    t.integer 'deleted', default: 0, null: false, comment: '削除フラグ'
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
   end
-
 end
