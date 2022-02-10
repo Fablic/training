@@ -1,0 +1,34 @@
+<section class="task-new">
+    <div class="create-task-form">
+        <%= form_for(@task, url: update_task_path, method: :patch) do |f| %>
+            <%= f.hidden_field :user_id, :value => 1 %>
+            <p>
+                <%= f.label :title, "タイトル" %><br>
+                <%= f.text_field :title %>
+            </p>
+            <p>
+                <%= f.label :body, "内容" %><br>
+                <%= f.text_field :body %>
+            </p>
+            <p>
+                <%= f.label :status, "ステータス" %><br>
+                <%= f.select :status, [['未着手', 1], ['着手', 2], ['完了', 3]], { include_blank: false, selected: @task.status } %>
+            </p>
+            <p>
+                <%= f.label :urgency, "どれくらいのペースでする？" %><br>
+                <%= f.select :urgency, [['特に決まってない', 1], ['空いた時間にやる', 2], ['いつものペースでやる', 3], ['急いで終わらせる', 4], ['何よりも早く終わらせる', 5]], { include_blank: false, selected: @task.urgency}, { id: "user_id", class: "user_class" } %>
+            </p>
+            <p>
+                <%= f.label :importance, "やらないとどうなる？" %><br>
+                <%= f.select :importance, [['いつか忘れる', 1], ['誰かやってくれる', 2], ['誰かが困る', 3], ['結構怒られる', 4], ['地獄が待ってる', 5]], { include_blank: false, selected:  @task.importance}, { id: "user_id", class: "user_class" } %>
+            </p>
+            <%= f.hidden_field :priority_point, :value => 10 %>
+            <p>
+                <%= f.label :deadline, "期限" %><br>
+                <%= f.date_field :deadline %>
+            </p>
+            <%= f.submit "登録する", data: { confirm: "入力した内容で登録しますか？"} %>
+        <% end %>
+    </div>
+</section>
+

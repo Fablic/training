@@ -1,0 +1,29 @@
+<% if flash[:notice] %>
+  <p><%= flash[:notice] %></p>
+<% end %>
+<section id="task-list-option">
+    <div class="create-task-ticket">
+        <div class="create-field">
+            <span class="task-id">タスクを作成</span>
+        </div>
+    </div>
+</section>
+
+<section id="task-list">
+<% @tasks.each do |task| %>
+    <div class="task-ticket" draggable="true" value=111>
+        <div class="task-id-field">
+            <span class="task-id">#<%= task.id %></span>
+        </div>
+        <div class="task-title-field">
+            <span class="task-title"><%= task.title %></span>
+        </div>
+    </div>
+<% end %>
+</section>
+
+<div class="trash-box" style="width:100%; height: 80px; background-color:gray;text-align:center;line-height:80px">
+<span class="trash-box">ゴミ箱</span>
+</div>
+
+<%= javascript_pack_tag 'tasks_list', 'data-turbolinks-track': 'reload' %>
