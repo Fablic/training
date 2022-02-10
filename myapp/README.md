@@ -12,7 +12,7 @@
 * index: [email]
 
 ### boards
-* Board information
+* Board information. Board consists 1 kanban board and contains one or more tasks 
 
 | Column      | Type         | Not Null? | PK | default        | description |
 |-------------|--------------|--- | --- |----------------|-------------|
@@ -49,12 +49,12 @@
 ### priorities
 * Priority list
 
-| Column      | Type         | Not Null? | PK | default        | description |
-  |-------------|--------------|--- | --- |----------------|-------------|
+| Column      | Type         | Not Null? | PK | default        | description                              |
+  |-------------|--------------|--- | --- |------------------------------------------|-------------|
 | id          | int          | O | O | auto-increment |
-| board_id       | int | O | |||
-| title       | varchar(32) | O | O |||
-| sort       | int | O | O |||
+| board_id | int | O | | | board id that this priority is available |
+| title       | varchar(32) | O |  |||
+| sort       | int | O |  |||
 
 * index: [board_id]
 
@@ -66,15 +66,17 @@
 | from_status_id          | int          | O | O |  |
 | to_status_id       | int | O | O |||
 
+* since from_status_id, to_status_id will be PK, there is no id(auto-increment) column
+
 ### statuses
 * Status list
 
-| Column      | Type         | Not Null? | PK | default        | description |
-  |-------------|--------------|--- | --- |----------------|-------------|
-| id          | int          | O | O | auto-increment |
-| board_id       | int | O | |||
-| title       | varchar(32) | O |  |||
-| sort       | int | O |  |||
+| Column   | Type         | Not Null? | PK | default                                | description |
+|----------|-------------|--------------|--- |----------------------------------------|----------------|
+| id       | int          | O | O | auto-increment                         |
+| board_id | int | O | | | board id that this status is available |
+| title    | varchar(32) | O |  |||
+| sort     | int | O |  |||
 
 * index: [board_id]
 
@@ -85,6 +87,7 @@
     |-------------|--------------|--- | --- |----------------|-------------|
   | tag_id          | int          | O | O |  |
   | task_id       | int | O | O |||
+* since tag_id, task_id will be PK, there is no id(auto-increment) column
 
 ### tags
 * tag list
