@@ -51,8 +51,8 @@ Things you may want to cover:
 | メールアドレス | | email | VARCHAR(256) | NOT NULL | - | unique |
 | パスワード | | password | VARCHAR(256) | NOT NULL | - | - |
 | 削除フラグ | | deleted | INT | NOT NULL | 0 | - |
-| 更新日時 | | modified | DATETIME | NOT NULL | -  | - |
-| 作成日時 | | created | DATETIME | NOT NULL | -  | - |
+| 作成日時 | | created_at | DATETIME | NOT NULL | -  | - |
+| 更新日時 | | updated_at | DATETIME | NOT NULL | -  | - |
 
 ### tasks
 | 項目名 | 制約 | Colum | Type | NULL | Default | Options |
@@ -65,6 +65,9 @@ Things you may want to cover:
 | 優先順位 | | priority | INT | NOT NULL | 2 | - |
 | ラベルID | | label_id | INT | NULL | - | - |
 | ステータス | | status | INT | NOT NULL | 1 | - |
+| 削除フラグ | | deleted | INT | NOT NULL | 0 | - |
+| 作成日時 | | created_at | DATETIME | NOT NULL | -  | - |
+| 更新日時 | | updated_at | DATETIME | NOT NULL | -  | - |
 
 ### labels
 | 項目名 | 制約 | Colum | Type | NULL | Default | Options |
@@ -72,3 +75,6 @@ Things you may want to cover:
 | ラベルID | PK | id | INT | NOT NULL | -  | unique |
 | ラベル名 | FK | label | VARCHAR(50) | NOT NULL | -  | unique |
 | カラー | | color | INT | NOT NULL | - | |
+| 削除フラグ | | deleted | INT | NOT NULL | 0 | - |
+| 作成日時 | | created_at | DATETIME | NOT NULL | -  | - |
+| 更新日時 | | updated_at | DATETIME | NOT NULL | -  | - |
