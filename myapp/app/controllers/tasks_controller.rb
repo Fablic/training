@@ -37,6 +37,15 @@ class TasksController < ApplicationController
     redirect_to root_path, notice: '#' + params[:id] + 'を削除しました'
   end
 
+  def destroy_api
+    task = Task.find(params[:id])
+    if task.destroy then
+        render json: { status: 'SUCCESS'}
+    else
+        render json: { status: 'ERROR'}
+    end
+  end
+
   private
 
   def task_params

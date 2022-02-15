@@ -39,7 +39,19 @@ window.addEventListener('DOMContentLoaded', (elemnt) => {
         if (e.target.classList.value === "trash-box") {
             let result = confirm('本当に削除しますか？')
             if (result) {
-                dragged.parentNode.removeChild(dragged);
+                let taskId = dragged.innerText.split('\n')[0].replace('#', '');
+                $.ajax({
+                        url: 'api/tasks/' + taskId + '/delete',
+                        type: 'get',
+                        cache: false,
+                        dataType: 'json',
+                    })
+                    .done(function(response) {
+                        dragged.parentNode.removeChild(dragged);
+                    })
+                    .fail(function(xhr) {
+                        //通信失敗時の処理
+                    });
             }
             e.target.style.opacity = 1;
         }
