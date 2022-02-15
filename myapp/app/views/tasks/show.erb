@@ -2,10 +2,11 @@
 <p><%= @task.id %></p>
 <p><%= @task.title %></p>
 <p><%= @task.body %></p>
-<p><%= Task::STATUS[@task.status - 1] %></p>
-<p><%= Task::URGENCY[@task.urgency - 1] %></p>
-<p><%= Task::IMPORTANCE[@task.importance - 1] %></p>
-<p><%= @task.deadline %></p>
+<p><%= @task.status %></p>
+<p><%= @task.urgency %></p>
+<p><%= @task.importance %></p>
+<p><%= @task.priority_point %></p>
+<p><%= @task.deadline.strftime("%Y-%m-%e") %></p>
 <p><%= button_to '編集', "/tasks/#{@task.id}/edit", method: :get  %></p>
 <p><%= button_to '削除', "/tasks/#{@task.id}", method: :delete %></p>
 </section>

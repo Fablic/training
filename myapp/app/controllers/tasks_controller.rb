@@ -4,8 +4,9 @@ class TasksController < ApplicationController
   end
 
   def create
-    task = Task.new(task_params)
-    task.save
+    @task = Task.new(task_params)
+    @task.priority_point = @task.cal_priority_point
+    @task.save
     redirect_to root_path, notice: '新しいタスクを作成しました'
   end
 
@@ -25,6 +26,7 @@ class TasksController < ApplicationController
 
   def update
     task = Task.find(params[:id])
+    task.priority_point = Task.new(task_params).cal_priority_point
     task.update(task_params)
     redirect_to root_path, notice: '#' + params[:id] + 'を更新しました'
   end
@@ -38,6 +40,6 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:user_id, :title, :body, :status, :urgency, :importance, :priority_point, :deadline)
+    params.require(:task).permit(:user_id, :title, :body, :status, :urgency, :importance, :deadline)
   end
 end

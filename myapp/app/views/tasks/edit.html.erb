@@ -12,17 +12,16 @@
             </p>
             <p>
                 <%= f.label :status, "ステータス" %><br>
-                <%= f.select :status, [['未着手', 1], ['着手', 2], ['完了', 3]], { include_blank: false, selected: @task.status } %>
+                <%= f.select :status, Task.statuses.keys.to_a, {} %>
             </p>
             <p>
-                <%= f.label :urgency, "どれくらいのペースでする？" %><br>
-                <%= f.select :urgency, [['特に決まってない', 1], ['空いた時間にやる', 2], ['いつものペースでやる', 3], ['急いで終わらせる', 4], ['何よりも早く終わらせる', 5]], { include_blank: false, selected: @task.urgency}, { id: "user_id", class: "user_class" } %>
+                <%= f.label :urgency, "どれくらい緊急ですか？" %><br>
+                <%= f.select :urgency, Task.urgencies.keys.to_a, {} %>
             </p>
             <p>
-                <%= f.label :importance, "やらないとどうなる？" %><br>
-                <%= f.select :importance, [['いつか忘れる', 1], ['誰かやってくれる', 2], ['誰かが困る', 3], ['結構怒られる', 4], ['地獄が待ってる', 5]], { include_blank: false, selected:  @task.importance}, { id: "user_id", class: "user_class" } %>
+                <%= f.label :importance, "どれくらい重要ですか？" %><br>
+                <%= f.select :importance, Task.importances.keys.to_a, {} %>
             </p>
-            <%= f.hidden_field :priority_point, :value => 10 %>
             <p>
                 <%= f.label :deadline, "期限" %><br>
                 <%= f.date_field :deadline %>
