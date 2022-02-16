@@ -1,0 +1,27 @@
+<h1>Tasks#edit</h1>
+<p>Find me in app/views/tasks/edit.html.erb</p>
+
+<div>
+    <%= form_for(@task) do |taskForm| %>
+      <%= taskForm.label :title, 'タスク名'  %>
+      <%= taskForm.text_field :title %>
+
+      <%= taskForm.label :body, '内容'  %>
+      <%= taskForm.text_area :body %>
+
+      <%= taskForm.label :deadline, '終了期限' %>
+      <%= taskForm.date_select :deadline %>
+
+      <%= taskForm.label :priority, '優先順位' %>
+      <%= taskForm.select :priority, [['高','1'],['中','2'],['低','3']] %>
+
+      <%= taskForm.label :status, 'ステータス' %>
+      <%= taskForm.select :status, [['未着手','1'],['着手','2'],['完了','3']] %>
+
+      <%= taskForm.label :label_id, 'ラベル' %>
+      <%= taskForm.text_field :label_id %>
+
+      <%= taskForm.submit "登録", class: "" %>
+    <% end %>
+</div>
+    

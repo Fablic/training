@@ -1,0 +1,31 @@
+<h1>Tasks#index</h1>
+<p>Find me in app/views/tasks/index.html.erb</p>
+
+<div>
+    <a href="/tasks/new">タスク追加</a>
+</div>
+
+<div>
+<% if @taskList.length > 0 %>
+    <table class="task-list">
+        <tr>
+            <th>タスク名</th>
+            <th>ステータス</th>
+            <th>終了期限</th>
+            <th>優先順位</th>
+            <th>ラベル</th>
+        </tr>
+    <% @taskList.each do |task| %>
+        <tr>
+            <td><%= task.title %></td>
+            <td><%= task.status %></td>
+            <td><%= task.deadline %></td>
+            <td><%= task.priority %></td>
+            <td><%= task.label_id %></td>
+        </tr>
+    <% end %>
+    </table>
+<% else %>
+    <p>タスクが登録されていません</p>
+<% end %>
+</div>
