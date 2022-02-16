@@ -15,7 +15,7 @@ ActiveRecord::Schema.define(version: 2022_02_10_022921) do
   create_table "labels", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "label"
     t.integer "color"
-    t.integer "deleted"
+    t.integer "deleted", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -26,9 +26,9 @@ ActiveRecord::Schema.define(version: 2022_02_10_022921) do
     t.text "body"
     t.date "deadline"
     t.integer "priority"
-    t.integer "label_id"
+    t.integer "label_id", null: false
     t.integer "status"
-    t.integer "deleted"
+    t.integer "deleted", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -37,7 +37,7 @@ ActiveRecord::Schema.define(version: 2022_02_10_022921) do
     t.string "name"
     t.string "email"
     t.string "password"
-    t.integer "deleted"
+    t.integer "deleted", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
