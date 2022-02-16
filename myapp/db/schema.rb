@@ -13,31 +13,31 @@
 ActiveRecord::Schema.define(version: 2022_02_10_022921) do
 
   create_table "labels", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
-    t.string "label"
-    t.integer "color"
-    t.integer "deleted", default: 0
+    t.string "label", null: false
+    t.integer "color", null: false
+    t.integer "deleted", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "tasks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
-    t.integer "user_id"
-    t.string "title"
-    t.text "body"
-    t.date "deadline"
-    t.integer "priority"
-    t.integer "label_id", null: false
-    t.integer "status"
-    t.integer "deleted", default: 0
+    t.integer "user_id", null: false
+    t.string "title", null: false
+    t.text "body", null: false
+    t.date "deadline", null: false
+    t.integer "priority", null: false
+    t.integer "label_id"
+    t.integer "status", null: false
+    t.integer "deleted", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
-    t.string "name"
-    t.string "email"
-    t.string "password"
-    t.integer "deleted", default: 0
+    t.string "name", null: false
+    t.string "email", null: false
+    t.string "password", null: false
+    t.integer "deleted", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
