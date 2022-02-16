@@ -1,0 +1,80 @@
+<!-- kanban -->
+<div class="container">
+  <div class="control-pane">
+    <span style="margin-right:10px;">
+      <a class="btn btn-success" href="#" onclick="EditModal.openNew();return false;">
+       <i class="fas fa-calendar-plus"></i>
+        New
+      </a>
+    </span>
+  </div>
+
+  <div class="row" id="kanban"></div>
+</div>
+
+<div id="modal_background" onclick="Modal.maskClicked();" style="display:none;position:fixed; left:0px;top:0px;right:0px;bottom:0px;background-color: #000000;opacity:0.6"></div>
+
+<!-- write modal -->
+<div id="modal_edit" style="display:none;padding:20px;background-color: #eeeeee;position: fixed;right: 0px;top: 0px;width: 400px;bottom: 0px;">
+    <form id="form_edit">
+      <input type="hidden" id="edit_id" >
+        <div class="mb-3">
+            <label class="form-label">Title</label>
+            <input type="text" class="form-control"  id="edit_title">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Contents</label>
+            <textarea class="form-control"  id="edit_contents"></textarea>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Due Date</label>
+            <input type="text" class="form-control" id="edit_due_date" autocomplete="off">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Priority</label>
+            <select class="form-select" id="edit_priority">
+                <option value="Major" >Major</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Status</label>
+            <select class="form-select" id="edit_status">
+                <option value="Major" >In Progress</option>
+            </select>
+        </div>
+        <button type="button" class="btn btn-primary" onclick="EditModal.save();">Save</button>
+        <a href="#" onclick="EditModal.remove();return false;">Delete</a>
+    </form>
+</div>
+
+<script>
+  $(document).ready(function() {
+    init();
+  });
+
+  async function init() {
+    await Board.init(<%=params[:board_id]%>);
+    Board.draw();
+
+    await Task.init();
+
+    HashState.init();
+    if (HashState.has("create")) {
+      HashState.clear().set("kanban").update();
+      EditModal.openNew();
+    } else if (HashState.has("modify")) {
+      HashState.clear().set("kanban").update();
+      EditModal.openEdit(HashState.get("id"))
+    } else if (HashState.has("kanban")) {
+      //todo: apply sort, visible fields and so on
+    } else {
+      HashState.clear().set("kanban").update();
+
+    }
+
+    
+  }
+
+
+
+</script>
