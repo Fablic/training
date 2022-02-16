@@ -1,12 +1,16 @@
-<section id="show-task-ticket">
-<p><%= @task.id %></p>
-<p><%= @task.title %></p>
-<p><%= @task.body %></p>
-<p><%= @task.status %></p>
-<p><%= @task.urgency %></p>
-<p><%= @task.importance %></p>
-<p><%= @task.priority_point %></p>
-<p><%= @task.deadline.strftime("%Y-%m-%e") %></p>
-<p><%= button_to '編集', "/tasks/#{@task.id}/edit", method: :get  %></p>
-<p><%= button_to '削除', "/tasks/#{@task.id}", method: :delete %></p>
+<section class="show-task">
+    <div class="show-task-box">
+        <p>ID : <%= @task.id %></p>
+        <p>タイトル : <%= @task.title %></p>
+        <p>内容 : <%= @task.body %></p>
+        <p>ステータス : <%= @task.status %></p>
+        <p>緊急度 : <%= @task.urgency %></p>
+        <p>重要度 : <%= @task.importance %></p>
+        <p>優先P : <%= @task.priority_point %></p>
+        <p>期限 : <%= @task.deadline.strftime("%Y-%m-%e") %></p>
+        <p>
+        <%= button_to '編集', "/tasks/#{@task.id}/edit", {method: :get, class: "edit-btn"}%>
+        <%= button_to '削除', "/tasks/#{@task.id}", {method: :delete, class: "delete-btn"} %>
+        </p>
+    </div>
 </section>

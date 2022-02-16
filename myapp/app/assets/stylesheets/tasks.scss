@@ -27,6 +27,28 @@ body {
 }
 
 //
+// tasl_show
+//
+.show-task {
+    width: 50%;
+    background-color: $sub_background_color;
+    margin: auto;
+    padding: 5% 0;
+    border-radius: 15px;
+}
+
+.show-task-box {
+    width: 80%;
+    margin: auto;
+    margin-left: 30%;
+}
+
+.edit-btn {
+    float:left;
+    margin-right: 10%;
+}
+
+//
 // tasl_list
 //
 #task-list-option {
@@ -67,6 +89,7 @@ body {
     border: 2px solid #d8dde2;
     border-radius: 15px;
     cursor: pointer;
+    clear: both;
 }
 
 .task-id-field {
@@ -75,13 +98,18 @@ body {
     float: left;
     text-align: center;
     line-height: 50px;
+    white-space: nowrap;
+    overflow: hidden;
+    min-width: 40px;
 }
 
 .task-title-field {
-    width: 80%;
     height: 100%;
     float: left;
     line-height: 50px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .trash-box {
