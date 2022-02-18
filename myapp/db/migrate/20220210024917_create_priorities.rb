@@ -4,6 +4,7 @@ class CreatePriorities < ActiveRecord::Migration[6.0]
       t.string :title
       t.integer :sort
       t.string :color
+      t.integer :board_id
 
       t.timestamps
     end

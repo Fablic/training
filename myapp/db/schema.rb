@@ -30,17 +30,17 @@ ActiveRecord::Schema.define(version: 2022_02_10_065045) do
     t.string "title"
     t.integer "sort"
     t.string "color"
+    t.integer "board_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "board_id"
   end
 
   create_table "statuses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "title"
     t.integer "sort"
+    t.integer "board_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "board_id"
   end
 
   create_table "tags", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
@@ -51,8 +51,9 @@ ActiveRecord::Schema.define(version: 2022_02_10_065045) do
   end
 
   create_table "tags_tasks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
-    t.integer "task_id"
+    t.integer "board_id"
     t.integer "tag_id"
+    t.integer "task_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
