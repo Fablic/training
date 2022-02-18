@@ -1,3 +1,82 @@
 // Place all the styles related to the Task controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+
+.contents {
+    margin: 0 auto;
+    width: 90%;
+}
+
+.contents h1 {
+    font-size: x-large;
+}
+
+.contents .navi {
+    margin: 10px 0;
+    width: 100%;
+}
+
+.contents table {
+    margin: 0;
+    padding: 0;
+    border: 1px black solid;
+}
+
+.contents th {
+    margin: 0;
+    border: 1px black solid;
+}
+
+.contents td {
+    margin: 0;
+    border: 1px black solid;
+    padding: 3px;
+}
+
+.contents .task-form {
+    margin: 0 auto;
+    width: 80%;
+}
+
+.contents .task-form label {
+    width: 100%;
+}
+
+.contents .task-form input {
+    margin: 5px 0;
+    width: 100%;
+}
+
+.contents .task-form textarea {
+    margin: 5px 0;
+    width: 100%;
+}
+
+.contents .task-form select {
+    margin: 5px 0;
+    width: 100%;
+}
+
+.contents .task-show {
+    margin: 0 auto;
+    width: 80%;
+}
+
+.contents .task-show dl {
+}
+
+.contents .task-show dt {
+    margin-top: 5px;
+}
+
+.contents .task-show dd {
+    margin-bottom: 5px;
+}
+
+.success {
+    color: green;
+}
+
+.alert {
+    color: orangered;
+}

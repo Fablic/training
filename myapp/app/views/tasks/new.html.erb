@@ -1,7 +1,10 @@
-<h1>Tasks#new</h1>
-<p>Find me in app/views/tasks/new.html.erb</p>
+<h1>タスク作成</h1>
 
-<div>
+<div class="navi">
+    <%= link_to '一覧へ', tasks_path %>
+</div>
+
+<div class="task-form">
     <%= form_for(@task) do |taskForm| %>
       <%= taskForm.label :title, 'タスク名'  %>
       <%= taskForm.text_field :title %>
@@ -10,16 +13,18 @@
       <%= taskForm.text_area :body %>
 
       <%= taskForm.label :deadline, '終了期限' %>
-      <%= taskForm.date_select :deadline %>
+      <%= taskForm.date_field :deadline %>
 
       <%= taskForm.label :priority, '優先順位' %>
-      <%= taskForm.select :priority, [['高','1'],['中','2'],['低','3']] %>
+      <%= taskForm.select :priority, Task.priorities.keys.to_a %>
 
       <%= taskForm.label :status, 'ステータス' %>
-      <%= taskForm.select :status, [['未着手','1'],['着手','2'],['完了','3']] %>
+      <%= taskForm.select :status, Task.statuses.keys.to_a %>
 
       <%= taskForm.label :label_id, 'ラベル' %>
       <%= taskForm.text_field :label_id %>
+
+      <%= taskForm.hidden_field :user_id %>
 
       <%= taskForm.submit "登録", class: "" %>
     <% end %>

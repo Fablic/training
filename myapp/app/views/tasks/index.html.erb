@@ -1,31 +1,32 @@
-<h1>Tasks#index</h1>
-<p>Find me in app/views/tasks/index.html.erb</p>
+<h1>タスク一覧</h1>
 
-<div>
-    <a href="/tasks/new">タスク追加</a>
+<div class="navi">
+    <%= link_to 'タスク追加', new_task_path %>
 </div>
 
-<div>
-<% if @taskList.length > 0 %>
-    <table class="task-list">
+<div class="task-list">
+    <% if @taskList.length > 0 %>
+    <table>
         <tr>
             <th>タスク名</th>
             <th>ステータス</th>
             <th>終了期限</th>
             <th>優先順位</th>
             <th>ラベル</th>
+            <th>操作</th>
         </tr>
-    <% @taskList.each do |task| %>
+        <% @taskList.each do |task| %>
         <tr>
-            <td><%= task.title %></td>
+            <td><%= link_to task.title, task %></td>
             <td><%= task.status %></td>
             <td><%= task.deadline %></td>
             <td><%= task.priority %></td>
             <td><%= task.label_id %></td>
+            <td><%= link_to '編集', edit_task_path(task) %> <%= link_to '削除', task_path(task), method: :delete, data: { confirm: '削除します。よろしいですか？' } %></td>
         </tr>
-    <% end %>
+        <% end %>
     </table>
-<% else %>
-    <p>タスクが登録されていません</p>
-<% end %>
+    <% else %>
+    <p class="alert">タスクが登録されていません</p>
+    <% end %>
 </div>

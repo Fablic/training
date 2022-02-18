@@ -1,2 +1,22 @@
-<h1>Tasks#show</h1>
-<p>Find me in app/views/tasks/show.html.erb</p>
+<h1>タスク詳細</h1>
+
+<div class="navi">
+    <%= link_to '一覧へ', tasks_path %>
+</div>
+
+<div class="task-show">
+    <dl>
+        <dt>タスク名:</dt>
+        <dd><%= @task.title %></dd>
+        <dt>内容:</dt>
+        <dd><%= @task.body %></dd>
+        <dt>終了期限:</dt>
+        <dd><%= @task.deadline %></dd>
+        <dt>優先順位:</dt>
+        <dd><%= @task.priority %></dd>
+        <dt>ステータス:</dt>
+        <dd><%= @task.status %></dd>
+        <dt>ラベル:</dt>
+        <dd><%= @task.label_id %></dd>
+    </dl>
+</div>
