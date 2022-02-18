@@ -379,7 +379,7 @@ class EditModal {
         beforeSend(xhr) {
           xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
         },
-        url: "/api/board/" + Board.id + "/task",
+        url: "/api/task",
         data: {
           "title": $("#edit_title").val(),
           "status_id": $("#edit_status").val(),
@@ -401,7 +401,7 @@ class EditModal {
         beforeSend(xhr) {
           xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
         },
-        url: "/api/board/" + Board.id + "/task/" + $("#edit_id").val(),
+        url: "/api/task/" + $("#edit_id").val(),
         data: {
           "title": $("#edit_title").val(),
           "status_id": $("#edit_status").val(),
@@ -426,7 +426,7 @@ class EditModal {
       beforeSend(xhr) {
         xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
       },
-      url: "/api/board/" + Board.id + "/task/" + $("#edit_id").val(),
+      url: "/api/task/" + $("#edit_id").val(),
       dataType : "json"
     }).done(function(data){
       Task.get(data.id).remove();

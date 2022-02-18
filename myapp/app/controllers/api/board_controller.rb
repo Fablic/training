@@ -3,9 +3,9 @@ module Api
     def post
     end
 
-    def get
+    def show
 
-      @board = Board.find(params[:board_id])
+      @board = Board.find(params[:id])
       render :json => @board, include: {
         priority: {
           only: [:id, :title, :sort]

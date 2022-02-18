@@ -1,5 +1,5 @@
 class BoardController < ApplicationController
-  def index
+  def show
     #todo check auth
   end
 

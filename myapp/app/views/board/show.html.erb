@@ -53,7 +53,7 @@
   });
 
   async function init() {
-    await Board.init(<%=params[:board_id]%>);
+    await Board.init(<%=params[:id]%>);
     Board.draw();
 
     await Task.init();

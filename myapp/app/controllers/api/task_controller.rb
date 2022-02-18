@@ -1,7 +1,7 @@
 module Api
   class TaskController < ApplicationController
     
-    def post
+    def create
       task = Task.new
       
       #todo: set proper value when authentication step is done
@@ -27,8 +27,8 @@ module Api
 
     end
 
-    def patch
-      task = Task.find(params[:task_id])
+    def update
+      task = Task.find(params[:id])
 
       #todo: check auth
       editableColumns = [:title, :status_id, :due_date, :contents, :priority_id]
@@ -47,14 +47,14 @@ module Api
       render :json => task, include: Task.apiInclude
     end
 
-    def delete
-      task = Task.find(params[:task_id])
+    def destroy
+      task = Task.find(params[:id])
 
       #todo: check auth
       task.delete
 
       render :json => {
-        'id': params[:task_id]
+        'id': params[:id]
       }
     end
 
