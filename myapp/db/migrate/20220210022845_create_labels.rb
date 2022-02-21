@@ -3,7 +3,7 @@ class CreateLabels < ActiveRecord::Migration[6.0]
     create_table :labels do |t|
       t.string :label, null: false
       t.integer :color, null: false
-      t.integer :deleted, null: false, default: 0
+      t.boolean :deleted, null: false, default: false
 
       t.timestamps
     end
