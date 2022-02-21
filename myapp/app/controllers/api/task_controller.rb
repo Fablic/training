@@ -2,17 +2,13 @@ module Api
   class TaskController < ApplicationController
     
     def create
-      task = Task.new
+      task = Task.new(params.require(:task).permit(Task::EDITABLE_FIELDS))
       
       #todo: set proper value when authentication step is done
       task.user_id = 1
+
       #todo: check write permission
       task.board_id = params[:board_id]
-      
-      for column in Task::EDITABLE_FIELDS
-        task[column] = params[column]
-      end
-
       task.modified_at = Time.now;
       task.save
 
@@ -21,7 +17,7 @@ module Api
     end
 
     def get
-      @tasks = Task.all
+      @tasks = Task.where(board_id: params[:board_id]).all()
       
       render :json => @tasks, include: Task.apiInclude
 
@@ -31,13 +27,7 @@ module Api
       task = Task.find(params[:id])
 
       #todo: check auth
-      editableColumns = [:title, :status_id, :due_date, :contents, :priority_id]
-      
-      for column in Task::EDITABLE_FIELDS
-        if(params.has_key?(column))
-          task[column] = params[column]
-        end
-      end
+      task.update_attributes(params.require(:task).permit(Task::EDITABLE_FIELDS))
             
       #todo: check status change was valid or not
       

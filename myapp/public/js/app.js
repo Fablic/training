@@ -11,6 +11,7 @@ class Status {
 
   static init(statuses) {
     Status.all = {};
+    statuses.sort((a, b) => a.sort - b.sort);
     statuses.forEach(statusInfo => {
       const status = new Status(statusInfo);
       const wrap = document.createElement("div");
@@ -27,7 +28,6 @@ class Status {
       Status.all[status.id] = status;
       Status.bySort.push(status);
     });
-    Status.bySort.sort((a, b) => a.sort - b.sort);
   }
 
   static get(id) {
@@ -379,14 +379,16 @@ class EditModal {
         beforeSend(xhr) {
           xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
         },
-        url: "/api/task",
+        url: "/api/board/" + Board.id + "/task",
         data: {
-          "title": $("#edit_title").val(),
-          "status_id": $("#edit_status").val(),
-          "priority_id": $("#edit_priority").val(),
-          "contents": $("#edit_contents").val(),
-          "due_date": $("#edit_due_date").val(),
-          "status_id": $("#edit_status").val(),
+          "task":{
+            "title": $("#edit_title").val(),
+            "status_id": $("#edit_status").val(),
+            "priority_id": $("#edit_priority").val(),
+            "contents": $("#edit_contents").val(),
+            "due_date": $("#edit_due_date").val(),
+            "status_id": $("#edit_status").val(),
+          }
         },
         dataType : "json"
       }).done(function(data){
@@ -403,12 +405,14 @@ class EditModal {
         },
         url: "/api/task/" + $("#edit_id").val(),
         data: {
-          "title": $("#edit_title").val(),
-          "status_id": $("#edit_status").val(),
-          "priority_id": $("#edit_priority").val(),
-          "contents": $("#edit_contents").val(),
-          "due_date": $("#edit_due_date").val(),
-          "status_id": $("#edit_status").val(),
+          "task": {
+            "title": $("#edit_title").val(),
+            "status_id": $("#edit_status").val(),
+            "priority_id": $("#edit_priority").val(),
+            "contents": $("#edit_contents").val(),
+            "due_date": $("#edit_due_date").val(),
+            "status_id": $("#edit_status").val(),
+          }
         },
         dataType : "json"
       }).done(function(data){
