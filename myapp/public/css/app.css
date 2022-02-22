@@ -1,0 +1,44 @@
+div.control-pane {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+div.card-title {
+  background-color: #666666;
+  color: #ffffff;
+  font-size: 16pt;
+  text-align: center;
+  padding: 5px;
+}
+
+div.card {
+  border: solid 1px #666666; 
+  padding:3px;
+  margin-bottom: 10px;
+}
+
+div.card div.status {
+  font-size:10pt;
+  text-align: right;
+}
+
+span.tag {
+  background-color: #ffff00;
+}
+
+div.card div.status span.priority {
+  padding: 3px;
+}
+
+div.card div.title {
+  font-size:12pt;
+
+}
+div.card div.cont {
+  font-size:10pt;
+} 
+
+div.card div.due_date {
+  font-size:8pt;
+  text-align: right;
+}
