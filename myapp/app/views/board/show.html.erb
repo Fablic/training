@@ -61,8 +61,9 @@
       HashState.clear().set("kanban").update();
       EditModal.openNew();
     } else if (HashState.has("modify")) {
+      const id = HashState.get("id");
       HashState.clear().set("kanban").update();
-      EditModal.openEdit(HashState.get("id"))
+      EditModal.openEdit(id)
     } else if (HashState.has("kanban")) {
       //todo: apply sort, visible fields and so on
     } else {
