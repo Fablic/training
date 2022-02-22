@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  task_name: MyString
+  description: MyString
+  status: MyString
+  starts_on: 2022-02-22
+  ends_on: 2022-02-22
+  priority: MyString
+  label: MyString
+
+two:
+  task_name: MyString
+  description: MyString
+  status: MyString
+  starts_on: 2022-02-22
+  ends_on: 2022-02-22
+  priority: MyString
+  label: MyString
