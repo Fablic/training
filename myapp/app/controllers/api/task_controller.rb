@@ -27,7 +27,7 @@ module Api
       task = Task.find(params[:id])
 
       #todo: check auth
-      task.update_attributes(params.require(:task).permit(Task::EDITABLE_FIELDS))
+      task.update(params.require(:task).permit(Task::EDITABLE_FIELDS))
             
       #todo: check status change was valid or not
       

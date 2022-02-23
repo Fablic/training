@@ -1,4 +1,4 @@
-require "../rails_helper"
+require "rails_helper"
 
 RSpec.describe 'Kanban', type: :system do
   fixtures :boards, :tasks, :statuses, :priorities
@@ -22,6 +22,11 @@ RSpec.describe 'Kanban', type: :system do
       page.fill_in "edit_due_date", with: "2022-05-01 01:01"
 
       page.find(:css, "#edit_due_date").click()
+      # since datetimepicker modal not open sometimes
+      while !have_selector("div.xdsoft_time", "text": "03:00")
+        page.find(:css, "#edit_due_date").click()
+        sleep 0.1
+      end
       page.find("div.xdsoft_time", "text": "03:00").click()
       page.fill_in "edit_contents", with:"sample contents"
       page.select "in progress", :from => "edit_status"

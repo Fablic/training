@@ -1,4 +1,4 @@
-require "../rails_helper"
+require "rails_helper"
 
 RSpec.describe 'Kanban', type: :system do
   fixtures :boards, :tasks, :statuses, :priorities
