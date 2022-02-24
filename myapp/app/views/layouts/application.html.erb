@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Myapp</title>
+    <title>Myapp | <%= yield :title %></title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -10,13 +10,15 @@
   </head>
 
   <body>
-    <div class="notifications">
-      <% flash.each do |key, value| %>
-        <%= content_tag(:div, value, class: key)%>
-      <% end%>
-    </div>
-
     <div class="contents">
+      <h1><%= yield :title %></h1>
+      
+      <div class="notifications">
+        <% flash.each do |key, value| %>
+          <%= content_tag(:div, value, class: key)%>
+        <% end%>
+      </div>
+
       <%= yield %>
     </div>
   </body>
