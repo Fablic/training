@@ -61,10 +61,9 @@ class Status {
   }
 
   draw() {
-    for (const task in this.tasks) {
-      this.attachToDom(task);
+    for (const taskKey in this.tasks) {
+      this.attachToDom(this.tasks[taskKey]);
     }
-
   }
 
   redraw() {
