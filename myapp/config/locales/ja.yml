@@ -1,0 +1,25 @@
+ja:
+  tasks:
+    default:
+      id: "ID"
+      title: "タイトル"
+      body: "test"
+      status: "ステイタス"
+      urgency: "どれくらい緊急ですか？"
+      importance: "どれくらい重要ですか？"
+      priority_point: "優先ポイント"
+      deadline: "期限"
+    new:
+      submit: "登録"
+      confirm: "入力した内容で登録しますか？"
+    edit:
+      submit: "更新"
+      confirm: "変更した内容で更新しますか？"
+    show:
+      urgency: "緊急性の度合い"
+      importance: "重要性の度合い"
+      edit_button: "編集"
+      delete_button: "削除"
+    list:
+      create_button: "タスクを作成"
+      garbage: "ゴミ箱"

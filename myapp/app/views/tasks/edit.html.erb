@@ -3,30 +3,30 @@
         <%= form_for(@task, url: update_task_path, method: :patch) do |f| %>
             <%= f.hidden_field :user_id, :value => 1 %>
             <p>
-                <%= f.label :title, "タイトル" %><br>
+                <%= f.label :title, t("tasks.default.title") %><br>
                 <%= f.text_field :title %>
             </p>
             <p>
-                <%= f.label :body, "内容" %><br>
+                <%= f.label :body, t("tasks.default.body") %><br>
                 <%= f.text_field :body %>
             </p>
             <p>
-                <%= f.label :status, "ステータス" %><br>
+                <%= f.label :status, t("tasks.default.status") %><br>
                 <%= f.select :status, Task.statuses.keys.to_a, {} %>
             </p>
             <p>
-                <%= f.label :urgency, "どれくらい緊急ですか？" %><br>
+                <%= f.label :urgency, t("tasks.default.urgency") %><br>
                 <%= f.select :urgency, Task.urgencies.keys.to_a, {} %>
             </p>
             <p>
-                <%= f.label :importance, "どれくらい重要ですか？" %><br>
+                <%= f.label :importance, t("tasks.default.importance") %><br>
                 <%= f.select :importance, Task.importances.keys.to_a, {} %>
             </p>
             <p>
-                <%= f.label :deadline, "期限" %><br>
+                <%= f.label :deadline, t("tasks.default.deadline") %><br>
                 <%= f.date_field :deadline %>
             </p>
-            <%= f.submit "更新する", data: { confirm: "入力した内容で登録しますか？"} %>
+            <%= f.submit t(".submit"), data: { confirm: t(".confirm")} %>
         <% end %>
     </div>
 </section>
