@@ -1,6 +1,8 @@
 class TasksController < ApplicationController
   def index
-    @taskList = Task.all
+    # @taskList = Task.all
+    # 論理削除
+    @taskList = Task.where(deleted: false)
   end
 
   def show
@@ -39,10 +41,16 @@ class TasksController < ApplicationController
   end
 
   def destroy
-    # todo論理削除にする
-    Task.find(params[:id]).destroy
-    flash[:success] = "削除しました"
-    redirect_to tasks_url
+    task = Task.find(params[:id])
+    # if task.destroy
+    # 論理削除に修正
+    if task.update(deleted: true)
+      flash[:success] = "削除しました"
+      redirect_to tasks_url
+    else
+      flash[:alert] = "削除に失敗しました"
+      redirect_to tasks_url
+    end
   end
 
   private
