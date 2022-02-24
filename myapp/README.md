@@ -50,21 +50,24 @@ Things you may want to cover:
 | 名前 | | name | VARCHAR(50) | NOT NULL | -  | - |
 | メールアドレス | | email | VARCHAR(256) | NOT NULL | - | unique |
 | パスワード | | password | VARCHAR(256) | NOT NULL | - | - |
-| 削除フラグ | | deleted | INT | NOT NULL | 0 | - |
-| 更新日時 | | modified | DATETIME | NOT NULL | -  | - |
-| 作成日時 | | created | DATETIME | NOT NULL | -  | - |
+| 削除フラグ | | deleted | BOOLEAN | NOT NULL | FALSE | - |
+| 作成日時 | | created_at | DATETIME | NOT NULL | -  | - |
+| 更新日時 | | updated_at | DATETIME | NOT NULL | -  | - |
 
 ### tasks
 | 項目名 | 制約 | Colum | Type | NULL | Default | Options |
 | --- | --- | --- | --- | --- | --- | --- |
 | タスクID | PK | id | INT | NOT NULL | - | unique |
-| ユーザID | FK | user_id | INT | NOT NULL | - | - |
+| ユーザID | FK | user_id | BIGINT | NOT NULL | - | - |
 | タスク名 | | title | VARCHAR(128) | NOT NULL | - | - |
 | 説明文 | | body | TEXT | NOT NULL | '' | - |
 | 終了期限 | | deadline | DATE | NULL | -  | - |
 | 優先順位 | | priority | INT | NOT NULL | 2 | - |
-| ラベルID | | label_id | INT | NULL | - | - |
+| ラベルID | | label_id | BIGINT | NULL | - | - |
 | ステータス | | status | INT | NOT NULL | 1 | - |
+| 削除フラグ | | deleted | BOOLEAN | NOT NULL | FALSE | - |
+| 作成日時 | | created_at | DATETIME | NOT NULL | -  | - |
+| 更新日時 | | updated_at | DATETIME | NOT NULL | -  | - |
 
 ### labels
 | 項目名 | 制約 | Colum | Type | NULL | Default | Options |
@@ -72,3 +75,6 @@ Things you may want to cover:
 | ラベルID | PK | id | INT | NOT NULL | -  | unique |
 | ラベル名 | FK | label | VARCHAR(50) | NOT NULL | -  | unique |
 | カラー | | color | INT | NOT NULL | - | |
+| 削除フラグ | | deleted | BOOLEAN | NOT NULL | FALSE | - |
+| 作成日時 | | created_at | DATETIME | NOT NULL | -  | - |
+| 更新日時 | | updated_at | DATETIME | NOT NULL | -  | - |
