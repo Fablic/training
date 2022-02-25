@@ -9,7 +9,7 @@ RSpec.describe 'Kanban', type: :system do
     end
 
     scenario "without_fragment" do
-      visit "/board/1"
+      visit "/en/board/1"
       # wait for ajax
       expect(page).to have_selector("#kanban > div", visible: false) 
       sleep(0.1)
@@ -23,7 +23,7 @@ RSpec.describe 'Kanban', type: :system do
     end
 
     scenario "kanban_mode" do
-      visit "/board/1#kanban"
+      visit "/en/board/1#kanban"
       # wait for ajax
       expect(page).to have_selector("#kanban > div", visible: false) 
       sleep(0.1)
@@ -37,7 +37,7 @@ RSpec.describe 'Kanban', type: :system do
     end
 
     scenario "unexpected_fragment" do
-      visit "/board/1#anything"
+      visit "/en/board/1#anything"
       # wait for ajax
       expect(page).to have_selector("#kanban > div", visible: false) 
       sleep(0.1)
@@ -51,7 +51,7 @@ RSpec.describe 'Kanban', type: :system do
     end
 
     scenario "create_mode_and_cancel" do
-      visit "/board/1#create"
+      visit "/en/board/1#create"
       # wait for ajax
       expect(page).to have_selector("#kanban > div", visible: false) 
       sleep(0.1)
@@ -72,7 +72,7 @@ RSpec.describe 'Kanban', type: :system do
     end
 
     scenario "modify_mode_and_cancel" do
-      visit "/board/1#modify&id=2"
+      visit "/en/board/1#modify&id=2"
       # wait for ajax
       expect(page).to have_selector("#kanban > div", visible: false) 
       sleep(0.1)
@@ -96,7 +96,7 @@ RSpec.describe 'Kanban', type: :system do
     end
 
     scenario "modify_mode_wrong_id" do
-      visit "/board/1#modify&id=999999"
+      visit "/en/board/1#modify&id=999999"
       # wait for ajax
       expect(page).to have_selector("#kanban > div", visible: false) 
       sleep(0.1)

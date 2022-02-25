@@ -7,7 +7,7 @@ RSpec.describe 'Kanban', type: :system do
 
     background do
       Capybara.current_driver = Capybara.javascript_driver
-      visit board_path(1)
+      visit board_path({'id':'1', 'locale':'en'})
 
       # wait for ajax
       expect(page).to have_selector("#kanban > div", visible: false) 
