@@ -1,0 +1,33 @@
+<% content_for :title do %>
+    タスク編集
+<% end %>
+
+<div class="navi">
+    <%= link_to '一覧へ', tasks_path %>
+</div>
+
+<div class="task-form">
+    <%= form_for(@task) do |taskForm| %>
+      <%= taskForm.label :title, 'タスク名'  %>
+      <%= taskForm.text_field :title %>
+
+      <%= taskForm.label :body, '内容'  %>
+      <%= taskForm.text_area :body %>
+
+      <%= taskForm.label :deadline, '終了期限' %>
+      <%= taskForm.date_field :deadline %>
+
+      <%= taskForm.label :priority, '優先順位' %>
+      <%= taskForm.select :priority, Task.priorities.keys.to_a %>
+
+      <%= taskForm.label :status, 'ステータス' %>
+      <%= taskForm.select :status, Task.statuses.keys.to_a %>
+
+      <%= taskForm.label :label_id, 'ラベル' %>
+      <%= taskForm.text_field :label_id %>
+
+      <%= taskForm.hidden_field :user_id %>
+
+      <%= taskForm.submit "登録", class: "" %>
+    <% end %>
+</div>
