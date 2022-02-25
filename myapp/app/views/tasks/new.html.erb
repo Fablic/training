@@ -12,15 +12,15 @@
             </p>
             <p>
                 <%= f.label :status, t("tasks.default.status") %><br>
-                <%= f.select :status, Task.statuses.keys.to_a, {} %>
+                <%= f.select :status,  Task.statuses.keys.map {|k| [t("enums.tasks.status.#{k}"), k]} %>
             </p>
             <p>
                 <%= f.label :urgency, t("tasks.default.urgency") %><br>
-                <%= f.select :urgency, Task.urgencies.keys.to_a, {} %>
+                <%= f.select :urgency, Task.urgencies.keys.map {|k| [t("enums.tasks.urgency.#{k}"), k]} %>
             </p>
             <p>
                 <%= f.label :importance, t("tasks.default.importance") %><br>
-                <%= f.select :importance, Task.importances.keys.to_a, {} %>
+                <%= f.select :importance, Task.importances.keys.map {|k| [t("enums.tasks.importance.#{k}"), k]} %>
             </p>
             <p>
                 <%= f.label :deadline, t("tasks.default.deadline") %><br>

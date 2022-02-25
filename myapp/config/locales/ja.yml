@@ -1,12 +1,29 @@
 ja:
+  enums:
+    tasks:
+      status:
+        not_started: "未着手"
+        start: "着手"
+        done: "完了"
+      urgency:
+        spare_time: "空いた時間にやる"
+        usual_pace: "いつものペースでやる"
+        hurry: "急いで終わらせる"
+        asap: "何よりも早く終わらせる"
+      importance:
+        low: "いつか忘れる"
+        normal: "誰かが困る"
+        high: "結構怒られる"
+        very_high: "いろいろと終わる"
+
   tasks:
     default:
       id: "ID"
       title: "タイトル"
       body: "test"
-      status: "ステイタス"
-      urgency: "どれくらい緊急ですか？"
-      importance: "どれくらい重要ですか？"
+      status: "進捗状況"
+      urgency: "ペースは？"
+      importance: "やらないと？"
       priority_point: "優先ポイント"
       deadline: "期限"
     new:
@@ -16,8 +33,8 @@ ja:
       submit: "更新"
       confirm: "変更した内容で更新しますか？"
     show:
-      urgency: "緊急性の度合い"
-      importance: "重要性の度合い"
+      urgency: "ペースは"
+      importance: "やらないと"
       edit_button: "編集"
       delete_button: "削除"
     list:
