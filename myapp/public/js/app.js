@@ -43,12 +43,11 @@ class Status {
   }
 
   attachToDom(task) {
-    // todo: using user defined sort key and direction
     // todo: apply second key for identical value
     for (let i=0; i < this.dom.children.length; i++) {
       const target = this.dom.children[i];
 
-      if (task.due_date < Task.get(target.dataset.id).due_date) {
+      if (task.compareSort(Task.get(target.dataset.id)) < 0) {
         this.dom.insertBefore(task.getDom(), target);
         return;
       }
@@ -73,7 +72,7 @@ class Status {
 }
 
 class Task {
-  static all = {};
+  static all = null;
   dom = null;
   constructor (org) {
     this.id = org.id;
@@ -83,6 +82,7 @@ class Task {
     this.contents = org.contents;
     this.title = org.title;
     this.due_date = org.due_date;
+    this.created_at = org.created_at;
     this.dom = null;
     
   }
@@ -104,6 +104,7 @@ class Task {
   }
 
   static async refresh() {
+    Task.all = {};
     await $.ajax({
       url: "/api/board/" + Board.id + "/tasks", 
       success: function( result ) {
@@ -189,6 +190,43 @@ class Task {
 
   }
 
+  // compare function
+  compareSort(target) {
+    let sort = Board.sort;
+    let reversed = false;
+    if (sort.substring(0,1) === '-') {
+      reversed = true;
+      sort = sort.substring(1);
+    }
+
+    let valueA = this[sort];
+    let valueB = target[sort];
+    
+    // in case if there is sort property (like status, priority)
+    if (valueA.hasOwnProperty("sort")) {
+      valueA = valueA.sort;
+      valueB = valueB.sort;
+    }
+    
+
+    let result = 0;
+    if (valueA < valueB) {
+      result = -1;
+    } else if (valueA > valueB) {
+      result = 1;
+    } else {
+      // make id as second key 
+      result = this.id - target.id;
+    }
+
+    if (reversed) {
+      result *= -1;
+    }
+
+    return result;
+  }
+
+
 }
 
 class Board {
@@ -212,6 +250,30 @@ class Board {
 
   static draw() {
     Status.bySort.forEach(status => status.draw());
+  }
+
+  static changeSort(sort) {
+    Board.sort = sort;
+
+    // find current sort name and set sort button text
+    const sortOptions = $("#modal_sort").children();
+    for (let i=0; i < sortOptions.length; i++) {
+      if (sortOptions[i].dataset.sort_type === sort) {
+        $("#sort_button").text(sortOptions[i].innerText);
+        break;
+      }
+    }
+
+    // if task is not initialized, pass
+    if (Task.all === null) {
+      return;
+    }
+
+    HashState.set("sort", sort).update();
+    for (const statusId in Status.all) {
+      Status.get(statusId).redraw();
+    }
+    
   }
 };
 
@@ -300,6 +362,12 @@ class Modal {
   static current = null;
   static maskClicked() {
     Modal.current.close();
+  }
+
+  static setPosition(target, reference) {
+    const refRect = reference.getBoundingClientRect();
+    target.style.left = refRect.x + "px";
+    target.style.top = refRect.y + "px";
   }
 }
 
@@ -441,5 +509,25 @@ class EditModal {
     }).fail(function(XMLHttpRequest, status, e){
       alert(e);
     });
+  }
+}
+
+class SortModal {
+  static show() {
+    Modal.setPosition($("#modal_sort")[0], $("#sort_button")[0]);
+    $("#modal_background").show();
+    $("#modal_sort").show();
+    Modal.current = SortModal;
+    
+  }
+
+  static close() {
+    $("#modal_background").hide();
+    $("#modal_sort").hide();
+  }
+
+  static apply(sort) {
+    Board.changeSort(sort);
+    SortModal.close();
   }
 }

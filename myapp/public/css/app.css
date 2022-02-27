@@ -3,6 +3,10 @@ div.control-pane {
   margin-bottom: 10px;
 }
 
+div.control-pane > span {
+  margin-right:10px;
+}
+
 div.card-title {
   background-color: #666666;
   color: #ffffff;
@@ -41,4 +45,20 @@ div.card div.cont {
 div.card div.due_date {
   font-size:8pt;
   text-align: right;
+}
+
+div.sort_item {
+  cursor: pointer;
+}
+
+div.sort_item:hover {
+  background-color: #ffff00;
+}
+
+div#modal_sort {
+  display:none;
+  position:fixed; 
+  width:200px;
+  border:solid 1px #505050;
+  background-color:#ffffff;
 }

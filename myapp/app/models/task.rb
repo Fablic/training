@@ -10,10 +10,10 @@ class Task < ApplicationRecord
   def self.apiInclude()
     return {
       priority: {
-        only: [:id, :title, :color]
+        only: [:id, :title, :color, :sort]
       },
       status: {
-        only: [:id, :title]
+        only: [:id, :title, :sort]
       },
       tag: {
         only: [:tag]

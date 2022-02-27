@@ -15,7 +15,7 @@ RSpec.describe 'Kanban', type: :system do
       sleep(0.1)
 
       # check fragment
-      expect(URI::parse(page.current_url).fragment).to eq("kanban")
+      expect(URI::parse(page.current_url).fragment).to eq("kanban&sort=-created_at")
       
       # check view/edit modal is not visible
       expect(page).to have_selector("#modal_edit", visible: false)
@@ -29,7 +29,7 @@ RSpec.describe 'Kanban', type: :system do
       sleep(0.1)
 
       # check fragment
-      expect(URI::parse(page.current_url).fragment).to eq("kanban")
+      expect(URI::parse(page.current_url).fragment).to eq("kanban&sort=-created_at")
       
       # check view/edit modal is not visible
       expect(page).to have_selector("#modal_edit", visible: false)
@@ -43,7 +43,7 @@ RSpec.describe 'Kanban', type: :system do
       sleep(0.1)
 
       # check fragment
-      expect(URI::parse(page.current_url).fragment).to eq("kanban")
+      expect(URI::parse(page.current_url).fragment).to eq("kanban&sort=-created_at")
       
       # check view/edit modal is not visible
       expect(page).to have_selector("#modal_edit", visible: false)
@@ -67,7 +67,7 @@ RSpec.describe 'Kanban', type: :system do
       expect(page).to have_selector("#modal_edit", visible: false)
 
       # check fragment
-      expect(URI::parse(page.current_url).fragment).to eq("kanban")
+      expect(URI::parse(page.current_url).fragment).to eq("kanban&sort=-created_at")
 
     end
 
@@ -91,7 +91,7 @@ RSpec.describe 'Kanban', type: :system do
       expect(page).to have_selector("#modal_edit", visible: false)
 
       # check fragment
-      expect(URI::parse(page.current_url).fragment).to eq("kanban")
+      expect(URI::parse(page.current_url).fragment).to eq("kanban&sort=-created_at")
 
     end
 
@@ -102,7 +102,7 @@ RSpec.describe 'Kanban', type: :system do
       sleep(0.1)
 
       # check fragment
-      expect(URI::parse(page.current_url).fragment).to eq("kanban")
+      expect(URI::parse(page.current_url).fragment).to eq("kanban&sort=-created_at")
 
       # check view/edit modal is not visible
       expect(page).to have_selector("#modal_edit", visible: false)

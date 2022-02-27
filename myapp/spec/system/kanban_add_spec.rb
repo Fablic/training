@@ -41,7 +41,7 @@ RSpec.describe 'Kanban', type: :system do
       cards = page.all(:css, 'div.card')
       expect(cards.length).to eq(5)
       cards = page.all(:css, '#kanban > div')[1].all(:css, 'div.card')
-      card_components = cards[2].all(:css, 'div')
+      card_components = cards[0].all(:css, 'div')
       expect(card_components[0].text).to eq("minor")
       expect(card_components[1].text).to eq("sample title")
       expect(card_components[2].text).to eq("sample contents")

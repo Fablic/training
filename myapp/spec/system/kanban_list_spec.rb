@@ -14,6 +14,31 @@ RSpec.describe 'Kanban', type: :system do
 
     end
 
+    scenario "order_desc" do 
+      page.find('span#sort_button').click();
+      page.find('div.sort_item', "text": "Priority ▽").click();
+
+      # check sorted result
+      titles = page.all(:css, '#kanban div.title')
+      expect(titles[0].text).to eq("test 4")
+      expect(titles[1].text).to eq("test 3")
+      expect(titles[2].text).to eq("test 1")
+      expect(titles[3].text).to eq("test 2")
+    end
+
+    scenario "order_asc" do 
+      page.find('span#sort_button').click();
+      page.find('div.sort_item', "text": "Priority ▽").click();
+
+      # check sorted result
+      titles = page.all(:css, '#kanban div.title')
+      expect(titles[0].text).to eq("test 4")
+      expect(titles[1].text).to eq("test 3")
+      expect(titles[2].text).to eq("test 1")
+      expect(titles[3].text).to eq("test 2")
+
+    end
+
     scenario "visit kanban" do
       kanbans = page.all(:css, '#kanban > div')
 
