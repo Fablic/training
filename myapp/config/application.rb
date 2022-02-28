@@ -12,10 +12,10 @@ module Myapp
     config.load_defaults 6.0
     config.consider_all_requests_local = false
 
-    config.i18n.available_locales = [:en, :ja]
+    config.i18n.available_locales = %i[en ja]
     config.i18n.default_locale = :en
     config.time_zone = 'Tokyo'
-    config.active_record.default_timezone = :local    
+    config.active_record.default_timezone = :local
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
