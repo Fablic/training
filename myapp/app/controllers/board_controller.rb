@@ -1,6 +1,5 @@
 class BoardController < ApplicationController
   def show
-    #todo check auth
+    # TODO: check auth
   end
-
 end

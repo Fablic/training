@@ -1,5 +1,5 @@
 class Task < ApplicationRecord
-  EDITABLE_FIELDS = [:title, :status_id, :due_date, :contents, :priority_id]
+  EDITABLE_FIELDS = %i[title status_id due_date contents priority_id]
 
   belongs_to :priority
   belongs_to :board
@@ -7,23 +7,21 @@ class Task < ApplicationRecord
   has_many :tags_task
   has_many :tag, through: :tags_task
 
-  def self.apiInclude()
-    return {
+  def self.apiInclude
+    {
       priority: {
-        only: [:id, :title, :color, :sort]
+        only: %i[id title color sort]
       },
       status: {
-        only: [:id, :title, :sort]
+        only: %i[id title sort]
       },
       tag: {
         only: [:tag]
       }
     }
-
-  end  
+  end
 
   def due_date
-    attributes['due_date'].strftime("%Y/%m/%d %H:%M")
-  end  
-
+    attributes['due_date'].strftime('%Y/%m/%d %H:%M')
+  end
 end
