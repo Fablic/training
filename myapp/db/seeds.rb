@@ -29,3 +29,9 @@ Status.create([
                   updated_at: Time.now },
                 { id: 3, title: 'Closed', sort: 3, board_id: board.id, created_at: Time.now, updated_at: Time.now }
               ])
+StatusStep.create([
+                    { id: 1, from_status_id: 2, to_status_id: 1, created_at: Time.now, updated_at: Time.now },
+                    { id: 2, from_status_id: 1, to_status_id: 3, created_at: Time.now, updated_at: Time.now },
+                    { id: 3, from_status_id: 1, to_status_id: 2, created_at: Time.now, updated_at: Time.now },
+                    { id: 4, from_status_id: 3, to_status_id: 1, created_at: Time.now, updated_at: Time.now }
+                  ])

@@ -9,9 +9,13 @@ module Api
       # TODO: check write permission
       task.board_id = params[:board_id]
       task.modified_at = Time.now
-      task.save
 
-      render json: task, include: Task.apiInclude
+      if task.valid?
+        task.save
+        render json: task, include: Task.apiInclude
+      else
+        render json: { 'error': task.errors }
+      end
     end
 
     def get
@@ -25,13 +29,14 @@ module Api
 
       # TODO: check auth
       task.update(params.require(:task).permit(Task::EDITABLE_FIELDS))
-
-      # TODO: check status change was valid or not
-
       task.modified_at = Time.now
-      task.save
 
-      render json: task, include: Task.apiInclude
+      if task.valid?
+        task.save
+        render json: task, include: Task.apiInclude
+      else
+        render json: { 'error': task.errors }
+      end
     end
 
     def destroy

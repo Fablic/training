@@ -9,7 +9,12 @@ module Api
           only: %i[id title sort]
         },
         status: {
-          only: %i[id title sort]
+          only: %i[id title sort],
+          include: {
+            to_status: {
+              only: %i[id]
+            }
+          }
         },
         tag: {
           only: [:tag]

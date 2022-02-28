@@ -28,25 +28,30 @@
       <input type="hidden" id="edit_id" >
         <div class="mb-3">
             <label class="form-label"><%= t :form_title %></label>
-            <input type="text" class="form-control"  id="edit_title">
+            <input type="text" class="form-control" id="edit_title">
+            <div class="invalid-feedback" id="edit_title_message"></div>            
         </div>
         <div class="mb-3">
             <label class="form-label"><%= t :form_contents %></label>
             <textarea class="form-control"  id="edit_contents"></textarea>
+            <div class="invalid-feedback" id="edit_contents_message"></div>            
         </div>
         <div class="mb-3">
             <label class="form-label"><%= t :form_due_date %></label>
             <input type="text" class="form-control" id="edit_due_date" autocomplete="off">
+            <div class="invalid-feedback" id="edit_due_date_message"></div>            
         </div>
         <div class="mb-3">
             <label class="form-label"><%= t :form_priority %></label>
             <select class="form-select" id="edit_priority">
             </select>
+            <div class="invalid-feedback" id="edit_priority_message"></div>            
         </div>
         <div class="mb-3">
             <label class="form-label"><%= t :form_status %></label>
             <select class="form-select" id="edit_status">
             </select>
+            <div class="invalid-feedback" id="edit_status_message"></div>            
         </div>
         <button type="button" class="btn btn-primary" onclick="EditModal.save();"><%= t :save_button %></button>
         <a href="#" onclick="EditModal.remove();return false;"><%= t :delete_button %></a>

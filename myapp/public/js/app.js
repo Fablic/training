@@ -6,6 +6,7 @@ class Status {
     this.id = org.id;
     this.title = org.title;
     this.sort = org.sort;
+    this.to_status = org.to_status;
     this.tasks = {};
   }
 
@@ -411,12 +412,26 @@ class EditModal {
     EditModal.clear();
     const task = Task.get(taskId);
 
+    $("#edit_status option").attr('disabled', true);
+    
+    // available next status
+    const status_enabled = Status.get(task.status.id).to_status;
+    for (let i=0; i < status_enabled.length; i++) {
+      $('#edit_status option[value="' + status_enabled[i].id + '"]').attr('disabled', false);
+    }
+    
+    // by default current status is usable.
+    $('#edit_status option[value="' + task.status.id + '"]').attr('disabled', false);
+
     $("#edit_id").val(task.id)
     $("#edit_title").val(task.title)
     $("#edit_contents").val(task.contents)
     $("#edit_priority").val(task.priority.id)
     $("#edit_status").val(task.status.id)
     $("#edit_due_date").val(task.due_date)
+
+    //$("#edit_status option")
+
 
     HashState.push().clear().set("modify").set("id", task.id).update();
     EditModal.show();
@@ -425,6 +440,7 @@ class EditModal {
   static show() {
     $("#modal_background").show();
     $("#modal_edit").show();
+    EditModal.updateErrorMsg();
     Modal.current = EditModal;
     
   }
@@ -440,6 +456,7 @@ class EditModal {
       EditModal.init();
     }
 
+    $("#edit_status option").attr('disabled', false);
     $("#form_edit")[0].reset();
   }
 
@@ -463,6 +480,10 @@ class EditModal {
         },
         dataType : "json"
       }).done(function(data){
+        if (typeof(data.error) !== "undefined") {
+          EditModal.updateErrorMsg(data.error);
+          return
+        }
         Task.create(data);
         EditModal.close();
       }).fail(function(XMLHttpRequest, status, e){
@@ -487,12 +508,32 @@ class EditModal {
         },
         dataType : "json"
       }).done(function(data){
+        if (typeof(data.error) !== "undefined") {
+          EditModal.updateErrorMsg(data.error);
+          return
+        }
         Task.get(data.id).refresh(data);
         EditModal.close();
       }).fail(function(XMLHttpRequest, status, e){
         alert(e);
       });
     }
+  }
+
+  static updateErrorMsg(errors) {
+    // clear all errors
+    $("#modal_edit .form-control").removeClass("is-invalid");
+    $("#modal_edit .form-select").removeClass("is-invalid");
+    $("#modal_edit .invalid-feedback").text('');
+    if (typeof(errors) === "undefined") {
+      return;
+    }
+    
+    for (const [key, messages] of Object.entries(errors)) {
+      $("#edit_" + key).addClass("is-invalid");
+      $("#edit_" + key + "_message").text(messages.join(","));
+    }
+
   }
 
   static remove() {
