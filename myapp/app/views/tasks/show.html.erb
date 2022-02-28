@@ -11,7 +11,7 @@
         <dt>タスク名:</dt>
         <dd><%= @task.title %></dd>
         <dt>内容:</dt>
-        <dd><%= @task.body %></dd>
+        <dd><%= raw(h(@task.body).gsub(/\R/, "<br>")) %></dd>
         <dt>終了期限:</dt>
         <dd><%= @task.deadline %></dd>
         <dt>優先順位:</dt>
