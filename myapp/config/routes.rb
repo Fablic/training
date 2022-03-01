@@ -10,4 +10,6 @@ Rails.application.routes.draw do
   post 'tasks', to: 'tasks#create', as: 'create_task'
   patch 'tasks/:id', to: 'tasks#update', as: 'update_task'
   delete 'tasks/:id', to: 'tasks#destroy', as: 'destroy_task'
+  get '*not_found' => 'application#routing_error'
+  post '*not_found' => 'application#routing_error'
 end
