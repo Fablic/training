@@ -1,10 +1,19 @@
 require 'rails_helper'
 
 RSpec.describe 'Kanban', type: :system do
-  fixtures :boards, :tasks, :statuses, :priorities
-
   feature 'create_task' do
     background do
+      FactoryBot.create(:board)
+
+      @status1 = FactoryBot.create(:status, sort: 2)
+      @status2 = FactoryBot.create(:status, sort: 3)
+      @status3 = FactoryBot.create(:status, sort: 1)
+
+      @priority1 = FactoryBot.create(:priority, sort: 1)
+      @priority2 = FactoryBot.create(:priority, sort: 3)
+      @priority3 = FactoryBot.create(:priority, sort: 2)
+      @task1 = FactoryBot.create(:task, priority: @priority1, status: @status1)
+
       Capybara.current_driver = Capybara.javascript_driver
       visit board_path(1)
 
@@ -14,7 +23,7 @@ RSpec.describe 'Kanban', type: :system do
 
     scenario 'create_normal' do
       cards = page.all(:css, 'div.card')
-      expect(cards.length).to eq(4)
+      expect(cards.length).to eq(1)
 
       page.click_link('New')
       page.fill_in 'edit_title', with: 'sample title'
@@ -28,8 +37,8 @@ RSpec.describe 'Kanban', type: :system do
       end
       page.find('div.xdsoft_time', "text": '03:00').click
       page.fill_in 'edit_contents', with: 'sample contents'
-      page.select 'in progress', from: 'edit_status'
-      page.select 'minor', from: 'edit_priority'
+      page.select @status2.title, from: 'edit_status'
+      page.select @priority3.title, from: 'edit_priority'
       page.find('button', 'text': 'Save').click
 
       # wait for ajax
@@ -37,11 +46,9 @@ RSpec.describe 'Kanban', type: :system do
       sleep(0.1)
 
       # confirm newly added item
-      cards = page.all(:css, 'div.card')
-      expect(cards.length).to eq(5)
-      cards = page.all(:css, '#kanban > div')[1].all(:css, 'div.card')
-      card_components = cards[2].all(:css, 'div')
-      expect(card_components[0].text).to eq('minor')
+      cards = page.all(:css, '#kanban > div')[2].all(:css, 'div.card')
+      card_components = cards[0].all(:css, 'div')
+      expect(card_components[0].text).to eq(@priority3.title)
       expect(card_components[1].text).to eq('sample title')
       expect(card_components[2].text).to eq('sample contents')
       expect(card_components[3].text).to eq('Due Date: 2022/05/01 03:00')

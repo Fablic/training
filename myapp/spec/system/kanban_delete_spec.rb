@@ -1,10 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe 'Kanban', type: :system do
-  fixtures :boards, :tasks, :statuses, :priorities
-
   feature 'delete_task' do
     background do
+      FactoryBot.create(:board)
+
+      status = FactoryBot.create(:status, sort: 2)
+      priority = FactoryBot.create(:priority, sort: 1)
+
+      FactoryBot.create(:task, priority: priority, status: status, created_at: '2022-01-02')
+      @task2 = FactoryBot.create(:task, priority: priority, status: status, created_at: '2022-01-01')
+      @task3 = FactoryBot.create(:task, priority: priority, status: status, created_at: '2022-01-03')
+
       Capybara.current_driver = Capybara.javascript_driver
       visit board_path(1)
 
@@ -15,7 +22,7 @@ RSpec.describe 'Kanban', type: :system do
     scenario 'delete_normal' do
       # check initial state
       cards = page.all(:css, 'div.card')
-      expect(cards.length).to eq(4)
+      expect(cards.length).to eq(3)
 
       # selete item to remove
       cards = page.all(:css, 'div.card')
@@ -29,12 +36,11 @@ RSpec.describe 'Kanban', type: :system do
 
       # confirm removed
       cards = page.all(:css, 'div.card')
-      expect(cards.length).to eq(3)
+      expect(cards.length).to eq(2)
 
       # check remain items
-      expect(cards[0].find('div.title').text).to eq('test 1')
-      expect(cards[1].find('div.title').text).to eq('test 3')
-      expect(cards[2].find('div.title').text).to eq('test 2')
+      expect(cards[0].find('div.title').text).to eq(@task2.title)
+      expect(cards[1].find('div.title').text).to eq(@task3.title)
     end
   end
 end

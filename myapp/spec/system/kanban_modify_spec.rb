@@ -1,10 +1,19 @@
 require 'rails_helper'
 
 RSpec.describe 'Kanban', type: :system do
-  fixtures :boards, :tasks, :statuses, :priorities
-
   feature 'update_task' do
     background do
+      FactoryBot.create(:board)
+
+      @status1 = FactoryBot.create(:status, sort: 2)
+      @status2 = FactoryBot.create(:status, sort: 3)
+      @status3 = FactoryBot.create(:status, sort: 1)
+
+      @priority1 = FactoryBot.create(:priority, sort: 1)
+      @priority2 = FactoryBot.create(:priority, sort: 3)
+      @priority3 = FactoryBot.create(:priority, sort: 2)
+      @task1 = FactoryBot.create(:task, priority: @priority1, status: @status1)
+
       Capybara.current_driver = Capybara.javascript_driver
       visit board_path(1)
 
@@ -18,10 +27,10 @@ RSpec.describe 'Kanban', type: :system do
       cards[0].click
 
       # check old values
-      expect(page.find('#edit_title').value).to eq('test 4')
-      expect(page.find('#edit_status').value).to eq('3')
-      expect(page.find('#edit_contents').value).to eq('test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test test')
-      expect(page.find('#edit_priority').value).to eq('3')
+      expect(page.find('#edit_title').value).to eq(@task1.title)
+      expect(page.find('#edit_status').value).to eq(@status1.id.to_s)
+      expect(page.find('#edit_contents').value).to eq('test')
+      expect(page.find('#edit_priority').value).to eq(@priority1.id.to_s)
       expect(page.find('#edit_due_date').value).to eq('2022/01/01 01:01')
 
       page.fill_in 'edit_title', with: 'title_modified'
@@ -33,8 +42,8 @@ RSpec.describe 'Kanban', type: :system do
       end
       page.find('div.xdsoft_time', "text": '02:00').click
       page.fill_in 'edit_contents', with: 'contents modified'
-      page.select 'in progress', from: 'edit_status'
-      page.select 'major', from: 'edit_priority'
+      page.select @status2.title, from: 'edit_status'
+      page.select @priority2.title, from: 'edit_priority'
       page.find('button', 'text': 'Save').click
 
       # wait for ajax
@@ -42,11 +51,9 @@ RSpec.describe 'Kanban', type: :system do
       sleep(0.1)
 
       # confirm edited item
-      cards = page.all(:css, 'div.card')
-      expect(cards.length).to eq(4)
-      cards = page.all(:css, '#kanban > div')[1].all(:css, 'div.card')
-      card_components = cards[2].all(:css, 'div')
-      expect(card_components[0].text).to eq('major')
+      cards = page.all(:css, '#kanban > div')[2].all(:css, 'div.card')
+      card_components = cards[0].all(:css, 'div')
+      expect(card_components[0].text).to eq(@priority2.title)
       expect(card_components[1].text).to eq('title_modified')
       expect(card_components[2].text).to eq('contents modified')
       expect(card_components[3].text).to eq('Due Date: 2022/01/01 02:00')
@@ -68,7 +75,7 @@ RSpec.describe 'Kanban', type: :system do
       # open new tab again, and see input values are discarded
       cards = page.all(:css, 'div.card')
       cards[0].click
-      expect(page.find('#edit_title').value).to eq('test 4')
+      expect(page.find('#edit_title').value).to eq(@task1.title)
     end
   end
 end
