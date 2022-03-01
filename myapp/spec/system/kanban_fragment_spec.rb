@@ -1,10 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe 'Kanban', type: :system do
-  fixtures :boards, :tasks, :statuses, :priorities
-
   feature 'fragment' do
     background do
+      FactoryBot.create(:board)
+
+      status = FactoryBot.create(:status, sort: 2)
+      priority = FactoryBot.create(:priority, sort: 1)
+
+      FactoryBot.create(:task, priority: priority, status: status, created_at: '2022-01-02')
+      @task2 = FactoryBot.create(:task, priority: priority, status: status, created_at: '2022-01-01')
+      FactoryBot.create(:task, priority: priority, status: status, created_at: '2022-01-03')
+
       Capybara.current_driver = Capybara.javascript_driver
     end
 
@@ -89,7 +96,7 @@ RSpec.describe 'Kanban', type: :system do
       expect(page).to have_selector('#modal_edit', visible: true)
 
       # check valid item is showing in edit modal
-      expect(page.find('#edit_title').value).to eq('test 2')
+      expect(page.find('#edit_title').value).to eq(@task2.title)
 
       # close modal and confirm
       page.find('#modal_background').click
