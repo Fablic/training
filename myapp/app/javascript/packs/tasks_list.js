@@ -5,7 +5,7 @@ window.addEventListener('DOMContentLoaded', (elemnt) => {
     taskTicket.forEach(function(el, i) {
         el.addEventListener('click', function() {
             let ticketId = el.innerText.split('\n')[0].replace('#', '');
-            window.location = 'tasks/' + ticketId + '/show'
+            window.location = 'tasks/' + ticketId
         });
 
         el.addEventListener('dragstart', function(e) {

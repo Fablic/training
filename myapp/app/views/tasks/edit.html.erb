@@ -1,6 +1,6 @@
 <section class="task-new">
     <div class="create-task-form">
-        <%= form_for(@task, url: update_task_path, method: :patch) do |f| %>
+        <%= form_for(@task, url: task_path, method: :put) do |f| %>
             <%= f.hidden_field :user_id, :value => 1 %>
             <p>
                 <%= f.label :title, "タイトル" %><br>
