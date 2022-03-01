@@ -1,0 +1,9 @@
+<% content_for :title do %>
+    タスク編集
+<% end %>
+
+<div class="navi">
+    <%= link_to '一覧へ', tasks_path %>
+</div>
+
+<%= render "tasks/form" %>

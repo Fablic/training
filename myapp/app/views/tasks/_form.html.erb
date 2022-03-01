@@ -1,0 +1,25 @@
+<div class="task-form">
+    <%= form_for(@task) do |f| %>
+      <%= f.label :title, 'タスク名'  %>
+      <%= f.text_field :title %>
+
+      <%= f.label :body, '内容'  %>
+      <%= f.text_area :body %>
+
+      <%= f.label :deadline, '終了期限' %>
+      <%= f.date_field :deadline %>
+
+      <%= f.label :priority, '優先順位' %>
+      <%= f.select :priority, Task.priorities.keys.to_a %>
+
+      <%= f.label :status, 'ステータス' %>
+      <%= f.select :status, Task.statuses.keys.to_a %>
+
+      <%= f.label :label_id, 'ラベル' %>
+      <%= f.text_field :label_id %>
+
+      <%= f.hidden_field :user_id %>
+
+      <%= f.submit "登録" %>
+    <% end %>
+</div>
