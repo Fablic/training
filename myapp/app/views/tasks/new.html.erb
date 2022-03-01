@@ -1,6 +1,6 @@
 <section class="task-new">
     <div class="create-task-form">
-        <%= form_for(@task, url: create_task_path, method: :post) do |f| %>
+        <%= form_for(@task, url: tasks_path, method: :post) do |f| %>
             <%= f.hidden_field :user_id, :value => 1 %>
             <p>
                 <%= f.label :title, t("tasks.default.title") %><br>

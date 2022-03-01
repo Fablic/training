@@ -13,7 +13,7 @@
 <% @tasks.each do |task| %>
     <div class="task-ticket" draggable="true" value=111>
         <div class="task-id-field">
-            <span class="task-id">#<%= task.id %></span>
+            <a class="none-under-line" href="/tasks/<%= task.id %>">#<%= task.id %></a>
         </div>
         <div class="task-title-field">
             <span class="task-title"><%= task.title %></span>
