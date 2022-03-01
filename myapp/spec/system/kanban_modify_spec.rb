@@ -14,6 +14,12 @@ RSpec.describe 'Kanban', type: :system do
       @priority3 = FactoryBot.create(:priority, sort: 2)
       @task1 = FactoryBot.create(:task, priority: @priority1, status: @status1)
 
+      FactoryBot.create(:status_step, from_status: @status3, to_status: @status1)
+      FactoryBot.create(:status_step, from_status: @status1, to_status: @status3)
+      FactoryBot.create(:status_step, from_status: @status1, to_status: @status2)
+      FactoryBot.create(:status_step, from_status: @status2, to_status: @status1)
+    
+
       Capybara.current_driver = Capybara.javascript_driver
       visit board_path({ 'id': '1', 'locale': 'en' })
 
