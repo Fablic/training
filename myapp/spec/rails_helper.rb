@@ -30,6 +30,20 @@ rescue ActiveRecord::PendingMigrationError => e
   puts e.to_s.strip
   exit 1
 end
+
+Capybara.register_driver :selenium_chrome_headless do |app|
+  options = ::Selenium::WebDriver::Chrome::Options.new
+
+  options.add_argument('--headless')
+  options.add_argument('--no-sandbox')
+  options.add_argument('--disable-dev-shm-usage')
+  options.add_argument('--window-size=1400,1400')
+
+  driver = Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
+end
+
+Capybara.javascript_driver = :selenium_chrome_headless
+
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
@@ -61,16 +75,6 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
-
-  Capybara.register_driver :remote_chrome do |app|
-    hub_url = 'https://chrome:4444/wd/hub'
-    chrome_capabilities = ::Selenium::WebDriver::Remote::Capabilities.chrome(
-      'goog:chromeOptions' => {
-        'args' => %w[no-sandbox headless disable-gpu window-size=1680,1050],
-      },
-    )
-    Capybara::Selenium::Driver.new(app, browser: :remote, url: hub_url, desired_capabilities: chrome_capabilities)
-  end
   
   config.before(:each, type: :system) do
     driven_by :rack_test
@@ -83,5 +87,4 @@ RSpec.configure do |config|
     Capybara.app_host = "https://#{Capybara.server_host}:#{Capybara.server_port}"
   end
 
-  Capybara.javascript_driver = :selenium_chrome_headless
 end
