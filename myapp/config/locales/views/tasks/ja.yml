@@ -1,0 +1,11 @@
+ja:
+  tasks:
+    index:
+      title: 'タスク一覧'
+      operation: '操作'
+    new:
+      title: 'タスク作成'
+    edit:
+      title: 'タスク編集'
+    show:
+      title: 'タスク詳細'

@@ -1,9 +1,9 @@
 <% content_for :title do %>
-    タスク編集
+<%= t('.title')%>
 <% end %>
 
 <div class="navi">
-    <%= link_to '一覧へ', tasks_path %>
+    <%= link_to t('dictionary.button.to_index'), tasks_path %>
 </div>
 
 <%= render "tasks/form" %>

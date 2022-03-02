@@ -1,25 +1,25 @@
 <div class="task-form">
     <%= form_for(@task) do |f| %>
-      <%= f.label :title, 'タスク名'  %>
+      <%= f.label :title, t('activerecord.attributes.tasks.title') %>
       <%= f.text_field :title %>
 
-      <%= f.label :body, '内容'  %>
+      <%= f.label :body, t('activerecord.attributes.tasks.body') %>
       <%= f.text_area :body %>
 
-      <%= f.label :deadline, '終了期限' %>
+      <%= f.label :deadline, t('activerecord.attributes.tasks.deadline') %>
       <%= f.date_field :deadline %>
 
-      <%= f.label :priority, '優先順位' %>
+      <%= f.label :priority, t('activerecord.attributes.tasks.priority') %>
       <%= f.select :priority, Task.priorities.keys.to_a %>
 
-      <%= f.label :status, 'ステータス' %>
+      <%= f.label :status, t('activerecord.attributes.tasks.status') %>
       <%= f.select :status, Task.statuses.keys.to_a %>
 
-      <%= f.label :label_id, 'ラベル' %>
+      <%= f.label :label_id, t('activerecord.attributes.tasks.label_id') %>
       <%= f.text_field :label_id %>
 
       <%= f.hidden_field :user_id %>
 
-      <%= f.submit "登録" %>
+      <%= f.submit t('dictionary.button.entry') %>
     <% end %>
 </div>

@@ -1,24 +1,24 @@
 <% content_for :title do %>
-    タスク詳細
+<%= t('.title')%>
 <% end %>
 
 <div class="navi">
-    <%= link_to '一覧へ', tasks_path %>
+    <%= link_to t('dictionary.button.to_index'), tasks_path %>
 </div>
 
 <div class="task-show">
     <dl>
-        <dt>タスク名:</dt>
+        <dt><%= t('tasks.labels.title') %>:</dt>
         <dd><%= @task.title %></dd>
-        <dt>内容:</dt>
+        <dt><%= t('tasks.labels.body') %>:</dt>
         <dd><%= raw(h(@task.body).gsub(/\R/, "<br>")) %></dd>
-        <dt>終了期限:</dt>
+        <dt><%= t('tasks.labels.deadline') %>:</dt>
         <dd><%= @task.deadline %></dd>
-        <dt>優先順位:</dt>
+        <dt><%= t('tasks.labels.priority') %>:</dt>
         <dd><%= @task.priority %></dd>
-        <dt>ステータス:</dt>
+        <dt><%= t('tasks.labels.status') %>:</dt>
         <dd><%= @task.status %></dd>
-        <dt>ラベル:</dt>
+        <dt><%= t('tasks.labels.label') %>:</dt>
         <dd><%= @task.label_id %></dd>
     </dl>
 </div>

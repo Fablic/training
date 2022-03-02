@@ -15,10 +15,10 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(task_params)
     if @task.save
-      flash[:success] = "保存しました"
+      flash[:success] = t('dictionry.message.save.success')
       redirect_to @task # Tasks#showへ
     else
-      flash.now[:alert] = "保存に失敗しました"
+      flash.now[:alert] = t('dictionry.message.save.fail')
       render 'new'
     end
   end
@@ -30,10 +30,10 @@ class TasksController < ApplicationController
   def update
     @task = Task.find(params[:id])
     if @task.update(task_params)
-      flash[:success] = "保存しました"
+      flash[:success] = t('dictionry.message.save.success')
       redirect_to @task
     else
-      flash.now[:alert] = "保存に失敗しました"
+      flash.now[:alert] = t('dictionry.message.save.fail')
       render 'edit'
     end
   end
@@ -41,9 +41,9 @@ class TasksController < ApplicationController
   def destroy
     task = Task.find(params[:id])
     if task.update(deleted: true)
-      flash[:success] = "削除しました"
+      flash[:success] = t('dictionry.message.destroy.success')
     else
-      flash[:alert] = "削除に失敗しました"
+      flash[:alert] = t('dictionry.message.destroy.fail')
     end
     redirect_to tasks_url
   end
