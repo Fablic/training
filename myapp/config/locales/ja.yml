@@ -1,6 +1,6 @@
 ja:
   enums:
-    tasks:
+    task:
       status:
         not_started: "未着手"
         start: "着手"

@@ -3,14 +3,14 @@
         <p><%= t("tasks.default.id") %> : <%= @task.id %></p>
         <p><%= t("tasks.default.title") %> : <%= @task.title %></p>
         <p><%= t("tasks.default.body") %> : <%= @task.body %></p>
-        <p><%= t("tasks.default.status") %> : <%= t("enums.tasks.status.#{@task.status}") %></p>
-        <p><%= t(".urgency") %> : <%=t("enums.tasks.urgency.#{@task.urgency}") %></p>
-        <p><%= t(".importance") %> : <%= t("enums.tasks.importance.#{@task.importance}") %></p>
+        <p><%= t("tasks.default.status") %> : <%= t("enums.task.status.#{@task.status}") %></p>
+        <p><%= t(".urgency") %> : <%= t("enums.task.urgency.#{@task.urgency}") %></p>
+        <p><%= t(".importance") %> : <%= t("enums.task.importance.#{@task.importance}") %></p>
         <p><%= t("tasks.default.priority_point") %> : <%= @task.priority_point %></p>
         <p><%= t("tasks.default.deadline") %> : <%= @task.deadline.strftime("%Y-%m-%e") %></p>
         <p>
-        <%= button_to t(".edit_button"), "/tasks/#{@task.id}/edit", {method: :get, class: "edit-btn"}%>
-        <%= button_to t(".delete_button"), "/tasks/#{@task.id}", {method: :delete, class: "delete-btn"} %>
+        <%= button_to t(".edit_button"), edit_task_path(@task), {method: :get, class: "edit-btn"}%>
+        <%= button_to t(".delete_button"), @task, {method: :delete, class: "delete-btn"} %>
         </p>
     </div>
 </section>

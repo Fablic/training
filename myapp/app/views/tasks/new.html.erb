@@ -1,33 +1,9 @@
 <section class="task-new">
     <div class="create-task-form">
-        <%= form_for(@task, url: tasks_path, method: :post) do |f| %>
-            <%= f.hidden_field :user_id, :value => 1 %>
-            <p>
-                <%= f.label :title, t("tasks.default.title") %><br>
-                <%= f.text_field :title %>
-            </p>
-            <p>
-                <%= f.label :body, t("tasks.default.body") %><br>
-                <%= f.text_field :body %>
-            </p>
-            <p>
-                <%= f.label :status, t("tasks.default.status") %><br>
-                <%= f.select :status,  Task.statuses.keys.map {|k| [t("enums.tasks.status.#{k}"), k]} %>
-            </p>
-            <p>
-                <%= f.label :urgency, t("tasks.default.urgency") %><br>
-                <%= f.select :urgency, Task.urgencies.keys.map {|k| [t("enums.tasks.urgency.#{k}"), k]} %>
-            </p>
-            <p>
-                <%= f.label :importance, t("tasks.default.importance") %><br>
-                <%= f.select :importance, Task.importances.keys.map {|k| [t("enums.tasks.importance.#{k}"), k]} %>
-            </p>
-            <p>
-                <%= f.label :deadline, t("tasks.default.deadline") %><br>
-                <%= f.date_field :deadline %>
-            </p>
-            <%= f.submit t(".submit"), data: { confirm: t(".confirm") } %>
-        <% end %>
+    <%= form_for(@task, url: tasks_path, method: :post) do |f| %>
+        <%= render :partial => "form", :locals => {:f => f}  %>
+        <%= f.submit t(".submit"), data: { confirm: t(".confirm") } %>
+    <% end %>
     </div>
 </section>
 
