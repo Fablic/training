@@ -119,7 +119,7 @@ RSpec.describe 'Tasks', type: :request do
     context 'タスク削除が成功した時' do
       subject(:new_task) { delete task_url task }
 
-      let!(:task) { create(:task) }
+      let(:task) { create(:task) }
 
       it 'レスポンスが正しいこと' do
         new_task
@@ -136,10 +136,9 @@ RSpec.describe 'Tasks', type: :request do
         expect(response).to redirect_to(tasks_url)
       end
 
-      it 'タスクが削除されていること' do
-        expect do
-          new_task
-        end.to change(Task, :count).by(-1)
+      it '該当IDで検索してもエラーになること' do
+        new_task
+        expect { Task.find(task.id) }.to raise_exception(ActiveRecord::RecordNotFound)
       end
     end
   end
