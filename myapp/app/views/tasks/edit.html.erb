@@ -1,32 +1,8 @@
 <section class="task-new">
     <div class="create-task-form">
         <%= form_for(@task, url: task_path, method: :put) do |f| %>
-            <%= f.hidden_field :user_id, :value => 1 %>
-            <p>
-                <%= f.label :title, "タイトル" %><br>
-                <%= f.text_field :title %>
-            </p>
-            <p>
-                <%= f.label :body, "内容" %><br>
-                <%= f.text_field :body %>
-            </p>
-            <p>
-                <%= f.label :status, "ステータス" %><br>
-                <%= f.select :status, Task.statuses.keys.to_a, {} %>
-            </p>
-            <p>
-                <%= f.label :urgency, "どれくらい緊急ですか？" %><br>
-                <%= f.select :urgency, Task.urgencies.keys.to_a, {} %>
-            </p>
-            <p>
-                <%= f.label :importance, "どれくらい重要ですか？" %><br>
-                <%= f.select :importance, Task.importances.keys.to_a, {} %>
-            </p>
-            <p>
-                <%= f.label :deadline, "期限" %><br>
-                <%= f.date_field :deadline %>
-            </p>
-            <%= f.submit "更新する", data: { confirm: "入力した内容で登録しますか？"} %>
+            <%= render :partial => "form", :locals => {:f => f}  %>
+            <%= f.submit t(".submit"), data: { confirm: t(".confirm")} %>
         <% end %>
     </div>
 </section>

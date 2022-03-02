@@ -4,7 +4,7 @@
 <section id="task-list-option">
     <div class="create-task-ticket">
         <div class="create-field">
-            <span>タスクを作成</span>
+            <span class="task-id"><%= t(".create_button") %></span>
         </div>
     </div>
 </section>
@@ -23,7 +23,7 @@
 </section>
 
 <div class="trash-box">
-<span class="trash-box">ゴミ箱</span>
+<span class="trash-box"><%= t(".garbage") %></span>
 </div>
 
 <%= javascript_pack_tag 'tasks_list', 'data-turbolinks-track': 'reload' %>
