@@ -20,7 +20,7 @@ ja:
     default:
       id: "ID"
       title: "タイトル"
-      body: "test"
+      body: "内容"
       status: "進捗状況"
       urgency: "ペースは？"
       importance: "やらないと？"
