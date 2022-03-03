@@ -8,17 +8,17 @@
 
 <div class="task-show">
     <dl>
-        <dt><%= t('tasks.labels.title') %>:</dt>
+        <dt><%= t('activerecord.attributes.tasks.title') %>:</dt>
         <dd><%= @task.title %></dd>
-        <dt><%= t('tasks.labels.body') %>:</dt>
+        <dt><%= t('activerecord.attributes.tasks.body') %>:</dt>
         <dd><%= raw(h(@task.body).gsub(/\R/, "<br>")) %></dd>
-        <dt><%= t('tasks.labels.deadline') %>:</dt>
+        <dt><%= t('activerecord.attributes.tasks.deadline') %>:</dt>
         <dd><%= @task.deadline %></dd>
-        <dt><%= t('tasks.labels.priority') %>:</dt>
+        <dt><%= t('activerecord.attributes.tasks.priority') %>:</dt>
         <dd><%= @task.priority %></dd>
-        <dt><%= t('tasks.labels.status') %>:</dt>
+        <dt><%= t('activerecord.attributes.tasks.status') %>:</dt>
         <dd><%= @task.status %></dd>
-        <dt><%= t('tasks.labels.label') %>:</dt>
+        <dt><%= t('activerecord.attributes.tasks.label_id') %>:</dt>
         <dd><%= @task.label_id %></dd>
     </dl>
 </div>
