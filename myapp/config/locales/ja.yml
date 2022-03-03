@@ -1,0 +1,10 @@
+ja:
+  activerecord:
+    errors:
+      models:
+        task:
+          attributes:
+            task_name:
+              blank: "空になっています。入力してください。"
+            description:
+              blank: "空になっています。入力してください。"
