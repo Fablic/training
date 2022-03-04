@@ -1,4 +1,3 @@
-<!-- kanban -->
 <div class="container">
   <div style="text-align:right;">
     <div class="btn-group" role="group" aria-label="Basic example">
@@ -9,16 +8,51 @@
   </div>
   <div class="control-pane">
     <span>
+      <div class="btn-group" role="group">
+        <a href="#" id="btn_kanban" class="btn btn-lg btn-primary" onclick="TaskList.close();return false;"><i class="fas fa-columns"></i></a>
+        <a href="#" id="btn_list" class="btn btn-lg btn-outline-secondary" onclick="TaskList.show();return false;"><i class="fal fa-table"></i></a>
+      </div>
+    </span>  
+    <span>
       <a class="btn btn-success" href="#" onclick="EditModal.openNew();return false;">
        <i class="fas fa-calendar-plus"></i>
         <%= t :create_button %>
       </a>
     </span>
+    <span id="status_button" onclick="FilterModal.show('status');" >Status: All</span>
     <span id="sort_button" onclick="SortModal.show();">Priority↓</span>
+    <input type="text" placeholder="Keyword" id="keyword" />
   </div>
 
-  <div class="row" id="kanban"></div>
-</div>
+  <!-- kanban -->
+
+  <div class="row" id="kanban" style="display:none;"></div>
+
+  <!-- listview -->
+  <div id="listView">
+    <table class="table">
+      <thead>
+        <tr>
+          <td>Status</td>
+          <td>Priority</td>
+          <td>Title</td>
+          <td>Due date</td>
+        </tr>
+      </thead>
+      <tbody id="tasklist">  
+      </tbody>
+    </table>
+  </div>
+
+  <nav>
+    <ul class="pagination" id="paging">
+      <li class="page-item"><a class="page-link" href="#">1</a></li>
+      <li class="page-item"><a class="page-link" href="#">2</a></li>
+      <li class="page-item"><a class="page-link" href="#">3</a></li>
+    </ul>
+  </nav>
+  </div>
+
 
 <div id="modal_background" onclick="Modal.maskClicked();" style="display:none;position:fixed; left:0px;top:0px;right:0px;bottom:0px;background-color: #000000;opacity:0.6"></div>
 
@@ -68,6 +102,14 @@
     <div class="sort_item" onclick="SortModal.apply('-created_at');" data-sort_type="-created_at">Created ▽</div>
 </div>    
 
+
+<!-- filter modal -->
+<div id="modal_filter">
+  <ul class="list-group" id="filter_list">
+  </ul>
+</div>    
+
+
 <script>
   $(document).ready(function() {
     init();
@@ -80,31 +122,60 @@
       sort = "-created_at";
     }
 
+    if (HashState.get("page") !== null) {
+      TaskList.page = HashState.get("page");
+    }
+
     await Board.init(<%=params[:id]%>);
     Board.changeSort(sort);
     Board.draw();
 
-    await Task.init();
-
-
-    if (HashState.has("create")) {
-      HashState.clear().set("kanban").set("sort", sort).update();
-      EditModal.openNew();
-    } else if (HashState.has("modify")) {
-      const id = HashState.get("id");
-      HashState.clear().set("kanban").set("sort", sort).update();
-      EditModal.openEdit(id)
-    } else if (HashState.has("kanban")) {
-      //todo: apply sort, visible fields and so on
-      if (sort !== HashState.get("sort")) {
-        HashState.set("sort", sort).update();
+    let status_ids = HashState.get("status");
+    if (status_ids !== null) {
+      status_ids = status_ids.split(",");
+      let ids_for_hide = [];
+      for (let id in Status.all) {
+        ids_for_hide.push(id);
       }
-    } else {
-      HashState.clear().set("kanban").set("sort", sort).update();
 
+      ids_for_hide = ids_for_hide.filter(function (e) {
+        return !status_ids.includes(e);
+      });
+      ids_for_hide.forEach(e => {
+        Status.get(e).hide();
+      });
+
+      FilterModal.updateButtonText();
     }
 
+    //await Task.init();
+    let viewmode = HashState.get("viewmode");
+    if (viewmode === null) viewmode = "kanban";
+    let modal = null;
+    let id = "";
+    if (HashState.has("create")) {
+      modal = "create";
+      HashState.remove("create");
+    } else if (HashState.has("modify")) {
+      modal = "modify";
+      id = HashState.get("id");
+      HashState.remove("modify");
+      HashState.remove("id");
+    }
+
+    KeywordWatch.init();
+
+    if (viewmode === "kanban") {
+      await TaskList.close();
+    } else {
+      await TaskList.show();
+    }
     
+    if (modal === "create") {
+      EditModal.openNew();
+    } else if (modal === "modify") {
+      EditModal.openEdit(id);
+    }
   }
 
 
