@@ -3,7 +3,7 @@ class Task < ApplicationRecord
   enum status: { '未着手' => 1, '着手' => 2, '完了' => 3 }
 
   validates :user_id, presence: true, numericality: { only_integer: true }
-  validates :title, length: { in: 1..256 }
+  validates :title, presence: true, length: { maximum: 255 }
   validates :body, presence: true
   validates :deadline, presence: true
   validates :priority, presence: true, inclusion: { in: Task.priority.keys }

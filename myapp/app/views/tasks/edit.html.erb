@@ -6,4 +6,14 @@
     <%= link_to t('dictionary.button.to_index'), tasks_path %>
 </div>
 
+<% if @task.errors.any? %>
+<div class="errors">
+    <ul>
+<% @task.errors.full_messages.each do |message| %>
+        <%= content_tag(:li, message, class: 'alert') %>
+<% end %>
+    </ul>
+</div>
+<% end %>
+
 <%= render "tasks/form" %>
