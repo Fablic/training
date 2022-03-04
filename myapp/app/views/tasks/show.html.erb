@@ -1,39 +1,39 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Task name:</strong>
+  <strong><%= t '.task_name' %></strong>
   <%= @task.task_name %>
 </p>
 
 <p>
-  <strong>Description:</strong>
+  <strong><%= t '.description' %></strong>
   <%= @task.description %>
 </p>
 
 <p>
-  <strong>Starts on:</strong>
+  <strong><%= t '.starts_on' %></strong>
   <%= @task.starts_on %>
 </p>
 
 <p>
-  <strong>Ends on:</strong>
+  <strong><%= t '.ends_on' %></strong>
   <%= @task.ends_on %>
 </p>
 
 <p>
-  <strong>Priority:</strong>
+  <strong><%= t '.priority' %></strong>
   <%= @task.priority %>
 </p>
 
 <p>
-  <strong>Label:</strong>
+  <strong><%= t '.label' %></strong>
   <%= @task.label %>
 </p>
 
 <p>
-  <strong>Status:</strong>
+  <strong><%= t '.status' %></strong>
   <%= @task.status %>
 </p>
 
-<%= link_to 'Edit', edit_task_path(@task) %> |
-<%= link_to 'Back', tasks_path %>
+<%= link_to (t '.edit'), edit_task_path(@task) %> |
+<%= link_to (t '.back'), tasks_path %>

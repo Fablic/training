@@ -1,0 +1,13 @@
+ja:
+  activerecord:
+    models:
+      task: タスク
+    attributes:
+      task:
+        task_name: タスク名
+        description: 説明文
+        starts_on: 開始日
+        ends_on: 終了日
+        priority: 優先度
+        label: ラベル
+        status: ステータス

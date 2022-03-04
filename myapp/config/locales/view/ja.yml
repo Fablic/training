@@ -1,0 +1,34 @@
+ja:
+  tasks:
+    index:
+      task_name: タスク名
+      description: 説明文
+      starts_on: 開始日
+      ends_on: 終了日
+      priority: 優先度
+      label: ラベル
+      status: ステータス
+      title: タスク一覧
+      show: 詳細
+      edit: 編集
+      destory: 削除
+      Are you sure?: 本当に削除しますか？
+      new_task: タスク作成
+    show:
+      task_name: タスク名
+      description: 説明文
+      starts_on: 開始日
+      ends_on: 終了日
+      priority: 優先度
+      label: ラベル
+      status: ステータス
+      edit: 編集
+      back: 戻る
+    edit:
+      title: タスク編集
+      show: 編集
+      back: 戻る
+    new:
+      title: タスク作成
+      show: 編集
+      back: 戻る

@@ -1,18 +1,17 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Tasks</h1>
+<h1><%= t '.title' %></h1>
 
 <table>
   <thead>
     <tr>
-      <th>Task name</th>
-      <th>Description</th>
-      <th>Starts on</th>
-      <th>Ends on</th>
-      <th>Priority</th>
-      <th>Label</th>
-      <th>Status</th>
-      <th colspan="3"></th>
+      <th><%= t '.task_name' %></th>
+      <th><%= t '.description' %></th>
+      <th><%= t '.starts_on' %></th>
+      <th><%= t '.ends_on' %></th>
+      <th><%= t '.priority' %></th>
+      <th><%= t '.label' %></th>
+      <th><%= t '.status' %></th>
     </tr>
   </thead>
 
@@ -26,9 +25,9 @@
         <td><%= task.priority %></td>
         <td><%= task.label %></td>
         <td><%= task.status %></td>
-        <td><%= link_to 'Show', task %></td>
-        <td><%= link_to 'Edit', edit_task_path(task) %></td>
-        <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to (t '.show'), task %></td>
+        <td><%= link_to (t '.edit'), edit_task_path(task) %></td>
+        <td><%= link_to (t '.destory'), task, method: :delete, data: { confirm: (t '.Are you sure?') } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -36,4 +35,4 @@
 
 <br>
 
-<%= link_to 'New Task', new_task_path %>
+<%= link_to (t '.new_task'), new_task_path %>
