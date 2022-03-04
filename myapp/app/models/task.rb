@@ -24,12 +24,12 @@ class Task < ApplicationRecord
   end
 
   def self.get_list(board_id, sort_key, status_ids, title)
+    reversed = false
     if sort_key && sort_key[0] == '-'
       reversed = true
       sort_key = sort_key[1..]
     end
 
-    reversed = false
     if ['status', 'priority'].include? sort_key
       # sort keys those have sort fields
       if sort_key == 'status'
