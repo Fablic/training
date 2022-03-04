@@ -1,11 +1,28 @@
 require 'rails_helper'
 
 RSpec.describe 'Tasks', type: :system do
-  fixtures :tasks
+
+  feature 'タスク一覧(登録タスクが0件)' do
+    background do
+      Capybara.current_driver = Capybara.javascript_driver
+    end
+
+    context '画面に表示する項目' do
+      it '必要な項目が表示されている' do
+        # タスク一覧画面を開く
+        visit tasks_path
+
+        expect(page).to have_content 'タスク一覧'
+        # ０件メッセージ確認
+        expect(page).to have_content 'タスクが登録されていません'
+      end
+    end
+  end
 
   feature 'タスク一覧' do
     background do
       Capybara.current_driver = Capybara.javascript_driver
+      @task1 = FactoryBot.create(:task)
     end
 
     context '画面に表示する項目' do
@@ -22,9 +39,9 @@ RSpec.describe 'Tasks', type: :system do
         expect(page).to have_content '終了期限'
         expect(page).to have_content 'ラベル'
 
-        expect(page).to have_link 'テストタスク１'
-        expect(page).to have_content '未着手'
-        expect(page).to have_content '2022-03-10'
+        expect(page).to have_link @task1.title
+        expect(page).to have_content @task1.status
+        expect(page).to have_content @task1.deadline
         expect(page).to have_link '編集'
         expect(page).to have_link '削除'
       end
@@ -34,7 +51,7 @@ RSpec.describe 'Tasks', type: :system do
       it 'タスク詳細画面へ遷移する' do
         # タスク一覧画面を開く
         visit tasks_path
-        click_link 'テストタスク１'
+        click_link @task1.title
 
         expect(page).to have_content 'タスク詳細'
       end
@@ -74,6 +91,7 @@ RSpec.describe 'Tasks', type: :system do
   feature 'タスク詳細' do
     background do
       Capybara.current_driver = Capybara.javascript_driver
+      @task1 = FactoryBot.create(:task)
     end
 
     context '画面に表示する項目' do
@@ -92,8 +110,8 @@ RSpec.describe 'Tasks', type: :system do
         expect(page).to have_content 'ステータス'
         expect(page).to have_content 'ラベル'
     
-        expect(page).to have_content 'テストタスク１'
-        expect(page).to have_content 'テスト内容１'
+        expect(page).to have_content 'テストタスク_1'
+        expect(page).to have_content 'テスト内容_1'
         expect(page).to have_content '2022-03-10'
         expect(page).to have_content 'middle'
         expect(page).to have_content '未着手'
@@ -178,6 +196,7 @@ RSpec.describe 'Tasks', type: :system do
   feature 'タスク編集' do
     background do
       Capybara.current_driver = Capybara.javascript_driver
+      @task1 = FactoryBot.create(:task)
     end
 
     context '画面に表示する項目' do
@@ -189,8 +208,8 @@ RSpec.describe 'Tasks', type: :system do
     
         expect(page).to have_link '一覧へ'
     
-        expect(page).to have_field 'タスク名', with: 'テストタスク１'
-        expect(page).to have_field '内容', with: 'テスト内容１'
+        expect(page).to have_field 'タスク名', with: 'テストタスク_1'
+        expect(page).to have_field '内容', with: 'テスト内容_1'
         expect(page).to have_field '終了期限', with: '2022-03-10'
         expect(page).to have_field '優先順位', with: 'middle'
         expect(page).to have_field 'ステータス', with: '未着手'
@@ -228,7 +247,7 @@ RSpec.describe 'Tasks', type: :system do
         # 保存成功メッセージ
         expect(page).to have_content '保存しました'
         # 保存内容
-        expect(page).to have_content 'テストタスク１'
+        expect(page).to have_content 'テストタスク_1'
         expect(page).to have_content '内容ないよー'
         expect(page).to have_content '2022-03-09'
         expect(page).to have_content 'middle'
@@ -240,6 +259,7 @@ RSpec.describe 'Tasks', type: :system do
   feature 'タスク削除' do
     background do
       Capybara.current_driver = Capybara.javascript_driver
+      @task1 = FactoryBot.create(:task)
     end
 
     context 'タスク一覧画面で削除をクリックする' do
@@ -247,7 +267,7 @@ RSpec.describe 'Tasks', type: :system do
         # タスク一覧画面を開く
         visit tasks_path
         # タスクの存在確認
-        expect(page).to have_content 'テストタスク１'
+        expect(page).to have_content 'テストタスク_1'
         # タスク削除
         click_link '削除', match: :first
 
@@ -259,9 +279,7 @@ RSpec.describe 'Tasks', type: :system do
         # 削除成功メッセージ
         expect(page).to have_content '削除しました'
         # お試しタスクの削除確認
-        expect(page).not_to have_content 'テストタスク１'
-        # ０件メッセージ確認
-        expect(page).to have_content 'タスクが登録されていません'
+        expect(page).not_to have_content 'テストタスク_1'
       end
     end
   end
