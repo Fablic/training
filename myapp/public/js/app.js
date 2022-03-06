@@ -222,7 +222,7 @@ class HashState {
 
   static init() {
     HashState.current = {};
-    window.location.hash.split("#").forEach(
+    window.location.hash.substring(1).split("&").forEach(
       (hash) => {
         if (hash === "") return;
         const hashArray = hash.split("=");
@@ -282,7 +282,11 @@ class HashState {
   static update() {
     let out = "";
     for (const [key, value] of Object.entries(HashState.current)) {
-      out += "#" + key;
+      if (out === "") {
+        out = "#" + key;
+      } else {
+        out += "&" + key;
+      }
       if (typeof(value) !== "undefined") {
         out += "=" + value;
       }
