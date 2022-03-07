@@ -1,7 +1,17 @@
 class HomeController < ApplicationController
   def index
-    # TODO: check auth, set proper board_id
-    board_id = 1
-    redirect_to board_path({ "id": board_id })
+    # TODO: get user from session
+    user = User.get_temporary_user
+
+    # if user owns a board, redirect to that
+    own_board = user.boards_user.find_by('permissions & 4')
+    return redirect_to board_path({ "id": own_board.board.id }) if own_board
+
+    # redirect to first board anything that user can view
+    visible_board = user.boards_user.find_by('permissions & 1')
+    return redirect_to board_path({ "id": visible_board.board.id }) if visible_board
+
+    # otherwise, throw 403 because current user has no boards to see
+    head 403
   end
 end

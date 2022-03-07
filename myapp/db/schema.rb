@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_01_235857) do
+ActiveRecord::Schema.define(version: 2022_03_04_105712) do
 
   create_table "boards", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "title"
@@ -86,6 +86,15 @@ ActiveRecord::Schema.define(version: 2022_03_01_235857) do
     t.index ["board_id", "due_date"], name: "index_tasks_on_board_id_and_due_date"
     t.index ["board_id", "priority_id"], name: "index_tasks_on_board_id_and_priority_id"
     t.index ["board_id", "status_id"], name: "index_tasks_on_board_id_and_status_id"
+  end
+
+  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "email"
+    t.integer "permissions"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "password", limit: 256
+    t.index ["email"], name: "index_users_on_email"
   end
 
 end

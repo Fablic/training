@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Kanban', type: :system do
   feature 'fragment' do
     background do
-      FactoryBot.create(:board)
+      board = FactoryBot.create(:board)
 
       status = FactoryBot.create(:status, sort: 2)
       priority = FactoryBot.create(:priority, sort: 1)
@@ -11,6 +11,9 @@ RSpec.describe 'Kanban', type: :system do
       FactoryBot.create(:task, priority: priority, status: status, created_at: '2022-01-02')
       @task2 = FactoryBot.create(:task, priority: priority, status: status, created_at: '2022-01-01')
       FactoryBot.create(:task, priority: priority, status: status, created_at: '2022-01-03')
+
+      user = FactoryBot.create(:user, email: 'admin@example.com', permissions: 1)
+      FactoryBot.create(:boards_user, board_id: board.id, user_id: user.id, permissions: 7)
 
       Capybara.current_driver = Capybara.javascript_driver
     end

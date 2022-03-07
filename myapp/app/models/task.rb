@@ -44,7 +44,7 @@ class Task < ApplicationRecord
     end
 
     order_string += ' desc' if reversed
-    query = order("#{order_string}, id desc")
+    query = preload(:priority, :status, :tag).order("#{order_string}, id desc")
     query = query.where(status_id: status_ids) if status_ids != nil
     query = query.where('title like ?', "%#{title}%") if title != ''
     query.where(board_id: board_id)
