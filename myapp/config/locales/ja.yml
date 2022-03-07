@@ -1,0 +1,58 @@
+ja:
+  activerecord:
+    models:
+      task: タスク
+    attributes:
+      task:
+        title: "タイトル"
+        body: "内容"
+        status: "ステイタス"
+        urgency: "緊急度"
+        importance: "重要度"
+        deadline: "期限"
+  enums:
+    task:
+      status:
+        not_started: "未着手"
+        start: "着手"
+        done: "完了"
+      urgency:
+        spare_time: "空いた時間にやる"
+        usual_pace: "いつものペースでやる"
+        hurry: "急いで終わらせる"
+        asap: "何よりも早く終わらせる"
+      importance:
+        low: "いつか忘れる"
+        normal: "誰かが困る"
+        high: "結構怒られる"
+        very_high: "いろいろと終わる"
+
+  tasks:
+    default:
+      id: "ID"
+      title: "タイトル"
+      body: "内容"
+      status: "進捗状況"
+      urgency: "ペースは？"
+      importance: "やらないと？"
+      priority_point: "優先ポイント"
+      deadline: "期限"
+    new:
+      submit: "登録"
+      confirm: "入力した内容で登録しますか？"
+    edit:
+      submit: "更新"
+      confirm: "変更した内容で更新しますか？"
+    show:
+      urgency: "ペースは"
+      importance: "やらないと"
+      edit_button: "編集"
+      delete_button: "削除"
+    list:
+      create_button: "タスクを作成"
+      garbage: "ゴミ箱"
+
+  errors:
+    http_status:
+      not_found: "お探しのページが見つかりませんでした。"
+      server_error: "このページはご利用頂けません。お手数ですが時間を置いてから再度お試し下さい。"

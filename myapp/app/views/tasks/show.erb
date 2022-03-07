@@ -1,16 +1,16 @@
 <section class="show-task">
     <div class="show-task-box">
-        <p>ID : <%= @task.id %></p>
-        <p>タイトル : <%= @task.title %></p>
-        <p>内容 : <%= @task.body %></p>
-        <p>ステータス : <%= @task.status %></p>
-        <p>緊急度 : <%= @task.urgency %></p>
-        <p>重要度 : <%= @task.importance %></p>
-        <p>優先P : <%= @task.priority_point %></p>
-        <p>期限 : <%= @task.deadline.strftime("%Y-%m-%e") %></p>
+        <p><%= t("tasks.default.id") %> : <%= @task.id %></p>
+        <p><%= t("tasks.default.title") %> : <%= @task.title %></p>
+        <p><%= t("tasks.default.body") %> : <%= @task.body %></p>
+        <p><%= t("tasks.default.status") %> : <%= t("enums.task.status.#{@task.status}") %></p>
+        <p><%= t(".urgency") %> : <%= t("enums.task.urgency.#{@task.urgency}") %></p>
+        <p><%= t(".importance") %> : <%= t("enums.task.importance.#{@task.importance}") %></p>
+        <p><%= t("tasks.default.priority_point") %> : <%= @task.priority_point %></p>
+        <p><%= t("tasks.default.deadline") %> : <%= @task.deadline.strftime("%Y-%m-%e") %></p>
         <p>
-        <%= button_to '編集', "/tasks/#{@task.id}/edit", {method: :get, class: "edit-btn"}%>
-        <%= button_to '削除', "/tasks/#{@task.id}", {method: :delete, class: "delete-btn"} %>
+        <%= button_to t(".edit_button"), edit_task_path(@task), {method: :get, class: "edit-btn"}%>
+        <%= button_to t(".delete_button"), @task, {method: :delete, class: "delete-btn"} %>
         </p>
     </div>
 </section>

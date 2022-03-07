@@ -1,0 +1,26 @@
+            <%= f.hidden_field :user_id, :value => 1 %>
+            <%= render 'layouts/error_messages', model: f.object %>
+            <p>
+                <%= f.label :title, t("tasks.default.title") %><br>
+                <%= f.text_field :title %>
+            </p>
+            <p>
+                <%= f.label :body, t("tasks.default.body") %><br>
+                <%= f.text_field :body %>
+            </p>
+            <p>
+                <%= f.label :status, t("tasks.default.status") %><br>
+                <%= f.select :status, Task.statuses_i18n.invert %>
+            </p>
+            <p>
+                <%= f.label :urgency, t("tasks.default.urgency") %><br>
+                <%= f.select :urgency, Task.urgencies_i18n.invert %>
+            </p>
+            <p>
+                <%= f.label :importance, t("tasks.default.importance") %><br>
+                <%= f.select :importance, Task.importances_i18n.invert %>
+            </p>
+            <p>
+                <%= f.label :deadline, t("task.default.deadline") %><br>
+                <%= f.date_field :deadline %>
+            </p>
