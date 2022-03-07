@@ -1,6 +1,7 @@
 class TasksController < ApplicationController
   def index
-    @taskList = Task.where(deleted: false)
+    # @taskList = Task.where(deleted: false)
+    @taskList = Task.search(params[:search_word], params[:search_status])
   end
 
   def show

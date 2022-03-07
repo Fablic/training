@@ -2,6 +2,16 @@
 <%= t('.title')%>
 <% end %>
 
+<div class="search">
+    <%= form_tag(tasks_path,:method => 'get') do %>
+        <%= t('activerecord.attributes.tasks.title') %>:
+        <%= text_field_tag :search_word, params[:search_word] %>
+        <%= t('activerecord.attributes.tasks.status') %>:
+        <%= select_tag :search_status, options_for_select(Task.statuses, params[:search_status]) %>
+        <%= submit_tag t('.search'), :name => nil %>
+    <% end %>
+</div>
+
 <div class="navi">
     <%= link_to t('.new'), new_task_path %>
 </div>

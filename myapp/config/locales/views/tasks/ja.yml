@@ -3,6 +3,7 @@ ja:
     index:
       title: 'タスク一覧'
       operation: '操作'
+      search: '検索'
       new: 'タスク作成'
       edit: '編集'
       destroy: '削除'

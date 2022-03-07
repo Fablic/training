@@ -11,10 +11,25 @@ class Task < ApplicationRecord
 
   validate :deadline_before_today
 
+  def self.search( search_word, search_status )
+    where = 'deleted = ?'
+    values = [ false ]
+    unless search_word.empty?
+      where.concat( ' AND title LIKE ?' )
+      values.push( "%#{search_word}%" ) 
+    end
+    unless search_status.empty?
+      where.concat( ' AND status = ?' )
+      values.push( search_status )
+    end
+    @taskList = Task.where( where, *values )
+  end
+
   private
 
   def deadline_before_today
     return if deadline.blank?
     errors.add(:deadline, "は今日以降を選択してください") if deadline < Date.today
   end
+
 end
