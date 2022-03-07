@@ -11,6 +11,13 @@ class Task < ApplicationRecord
   THIRD_LEVEL_BASE_POINT   = 80
   FOURTH_LEVEL_BASE_POINT  = 100
 
+  validates :title, {presence: true, length: { maximum: 45 }}
+  validates :body, {presence: true, length: { maximum: 225 }}
+  validates :status, {presence: true, inclusion: { in: Task.statuses.keys }}
+  validates :urgency, {presence: true, inclusion: { in: Task.urgencies.keys }}
+  validates :importance, {presence: true, inclusion: { in: Task.importances.keys }}
+  validates :deadline, presence: true
+
   def get_priority_point
     level = search_apply_level()
     case level

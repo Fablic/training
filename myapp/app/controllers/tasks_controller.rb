@@ -6,8 +6,11 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(task_params)
     @task.priority_point = @task.get_priority_point
-    @task.save
-    redirect_to root_path, notice: '新しいタスクを作成しました'
+    if @task.save
+      return redirect_to root_path, notice: '新しいタスクを作成しました'
+    end
+
+    render :new
   end
 
   def index; end
@@ -27,8 +30,11 @@ class TasksController < ApplicationController
   def update
     task = Task.find(params[:id])
     task.priority_point = Task.new(task_params).get_priority_point
-    task.update(task_params)
-    redirect_to root_path, notice: '#' + params[:id] + 'を更新しました'
+    if task.update(task_params)
+      return redirect_to root_path, notice: '#' + params[:id] + 'を更新しました'
+    end
+
+    render :edit
   end
 
   def destroy

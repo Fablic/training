@@ -4,6 +4,10 @@ body {
   background-color: #fff;
 }
 
+.alert-warning {
+  color: red;
+}
+
 .task-new {
   width: 50%;
   background-color: #edf2f7;
@@ -104,5 +108,9 @@ body {
   background-color: gray;
   text-align: center;
   line-height: 80px;
+}
+
+.none-under-line {
+  text-decoration: none;
 }
 /*# sourceMappingURL=tasks.css.map */
