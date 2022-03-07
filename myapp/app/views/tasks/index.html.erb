@@ -3,7 +3,7 @@
 <% end %>
 
 <div class="navi">
-    <%= link_to t('tasks.new.title'), new_task_path %>
+    <%= link_to t('.new'), new_task_path %>
 </div>
 
 <div class="task-list">
@@ -25,8 +25,8 @@
             <td><%= task.priority %></td>
             <td><%= task.label_id %></td>
             <td>
-                <%= link_to t('dictionary.button.edit'), edit_task_path(task) %>
-                <%= link_to t('dictionary.button.destroy'), task_path(task), method: :delete, data: { confirm: t('dictionary.message.destroy.confirm') } %>
+                <%= link_to t('.edit'), edit_task_path(task) %>
+                <%= link_to t('.destroy'), task_path(task), method: :delete, data: { confirm: t('dictionary.message.destroy.confirm') } %>
             </td>
         </tr>
         <% end %>
