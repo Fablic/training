@@ -5,7 +5,9 @@ ja:
       operation: '操作'
     new:
       title: 'タスク作成'
+      submit: '登録'
     edit:
       title: 'タスク編集'
+      submit: '更新'
     show:
       title: 'タスク詳細'
