@@ -50,4 +50,27 @@ RSpec.describe Task, type: :model do
       end
     end
   end    
+
+  feature '検索のテスト' do
+    background do
+      Capybara.current_driver = Capybara.javascript_driver
+      @task1 = FactoryBot.create(:task, title: 'task_1', status: 1)
+      @task2 = FactoryBot.create(:task, title: 'task_2', status: 1)
+      @task3 = FactoryBot.create(:task, title: 'task_3', status: 2)
+      @task4 = FactoryBot.create(:task, title: 'task_4', status: 3)
+    end
+
+    context 'title=,status=' do
+      it 'すべて表示されること' do
+        Task.search( '', '')
+      end
+    end
+
+    context 'title=_1,status=1' do
+      it 'task1のみ表示されること' do
+        Task.search( '_1', '1')
+      end
+    end
+  end
+
 end
