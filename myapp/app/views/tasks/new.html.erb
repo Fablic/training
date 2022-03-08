@@ -1,7 +1,6 @@
 <section class="task-new">
     <div class="create-task-form">
     <%= form_for(@task, url: tasks_path, method: :post) do |f| %>
-        <%= render 'layouts/error_messages', model: f.object %>
         <%= render :partial => "form", :locals => {:f => f}  %>
         <%= f.submit t(".submit"), data: { confirm: t(".confirm") } %>
     <% end %>

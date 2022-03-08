@@ -7,7 +7,7 @@ class TasksController < ApplicationController
     @task = Task.new(task_params)
     if @task.valid?
       @task.priority_point = @task.get_priority_point
-      @task.save
+      @task.save(validate: false)
       return redirect_to root_path, notice: '新しいタスクを作成しました'
     end
 
