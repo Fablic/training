@@ -8,6 +8,6 @@ class Task < ApplicationRecord
   def ends_on_must_be_after_starts_on
     return if starts_on.blank? || ends_on.blank?
 
-    errors.add(:ends_on, :end_date_error) if starts_on > ends_on
+    errors.add(:ends_on, :must_be_after_starts_on) if starts_on > ends_on
   end
 end

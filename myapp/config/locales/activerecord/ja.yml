@@ -14,4 +14,6 @@ ja:
     errors:
       models:
         task:
-          end_date_error: は開始日より後の日程に設定してください。
+          attributes:
+            ends_on:
+              must_be_after_starts_on: は開始日より後の日程に設定してください。
