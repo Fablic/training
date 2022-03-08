@@ -1,15 +1,16 @@
 <div class="container">
   <div style="text-align:right;">
-    <div class="btn-group" role="group" aria-label="Basic example">
+    <div class="btn-group" role="group">
 <% I18n.available_locales.each do |locale, var| %>
       <a href="<%= board_path({"id": params[:id], "locale":locale}) %>" class="btn <% if(locale == I18n.locale) %>btn-primary<% else %>btn-light<%end%> btn-sm"><%= I18n.name_for_locale(locale) %></a>
 <% end %>
     </div>
+    <a href="<%= logout_path %>">logout</a>
   </div>
   <div class="control-pane">
     <span>
       <div class="btn-group" role="group">
-        <a href="#" id="btn_kanban" class="btn btn-lg btn-primary" onclick="TaskList.close();return false;"><i class="fas fa-columns"></i></a>
+        <a href="#" id="btn_kanban" class="btn btn-lg btn-outline-secondary" onclick="TaskList.close();return false;"><i class="fas fa-columns"></i></a>
         <a href="#" id="btn_list" class="btn btn-lg btn-outline-secondary" onclick="TaskList.show();return false;"><i class="fal fa-table"></i></a>
       </div>
     </span>  
@@ -46,9 +47,6 @@
 
   <nav>
     <ul class="pagination" id="paging">
-      <li class="page-item"><a class="page-link" href="#">1</a></li>
-      <li class="page-item"><a class="page-link" href="#">2</a></li>
-      <li class="page-item"><a class="page-link" href="#">3</a></li>
     </ul>
   </nav>
   </div>

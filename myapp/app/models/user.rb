@@ -5,6 +5,7 @@ class User < ApplicationRecord
   PERM_ADMIN = 0b1000
 
   has_many :boards_user
+  has_many :users_autologin, dependent: :destroy
   has_many :board, through: :boards_user
 
   def get_permission_for(board_id)
@@ -22,11 +23,6 @@ class User < ApplicationRecord
     permissions & PERM_ADMIN != 0
   end
 
-  def self.get_temporary_user()
-    # todo remove after login functions are made
-    order('id desc').find_by(email: 'admin@example.com')
-  end
-
   def self.create_hash(value)
     seed = [('a'..'z'), ('A'..'Z'), ('0'..'9')].map(&:to_a).flatten
     salt = (0...8).map {
@@ -38,8 +34,8 @@ class User < ApplicationRecord
   end
 
   def check_hash(value)
-    salt = this.password[0..7]
-    hash = this.password[8..]
+    salt = password[0..7]
+    hash = password[8..]
 
     hash == Digest::SHA256.hexdigest(salt + value)
   end

@@ -5,6 +5,12 @@ Rails.application.routes.draw do
   get root to: 'home#index'
   scope '/:locale', locale: /en|ja/ do
     resources :board
+
+    scope :member do
+      get 'login', to: 'member#login'
+      post 'login', to: 'member#login_process'
+      get 'logout', to: 'member#logout'
+    end
   end
 
   namespace :api do
@@ -13,4 +19,5 @@ Rails.application.routes.draw do
     get 'board/:board_id/tasks', to: 'task#get'
     post 'board/:board_id/task', to: 'task#create'
   end
+
 end

@@ -1,7 +1,10 @@
 class HomeController < ApplicationController
   def index
     # TODO: get user from session
-    user = User.get_temporary_user
+    return redirect_to login_path unless session[:user]
+
+    user = User.find(session[:user]['id'])
+    return redirect_to login_path unless user
 
     # if user owns a board, redirect to that
     own_board = user.boards_user.find_by('permissions & 4')

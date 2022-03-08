@@ -16,6 +16,16 @@ RSpec.describe 'Kanban', type: :system do
       FactoryBot.create(:boards_user, board_id: board.id, user_id: user.id, permissions: 7)
 
       Capybara.current_driver = Capybara.javascript_driver
+
+      visit login_path({'locale': 'en'})
+
+      page.fill_in 'email', with: user.email
+      page.fill_in 'password', with: 'test'
+      page.find('input.btn').click
+
+      # wait for redirect
+      expect(page).to have_selector('#kanban')
+
       visit board_path({ 'id': '1', 'locale': 'en' })
 
       # wait for ajax

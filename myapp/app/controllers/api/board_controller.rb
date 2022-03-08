@@ -1,14 +1,19 @@
 module Api
   class BoardController < ApplicationController
-    def post; end
+    before_action :check_login
+
+    def check_login
+      if session[:user]
+        @user = User.find(session[:user]['id'])
+        return if @user
+      end
+
+      head 401
+    end
 
     def show
-      # todo: get user from session
-      user = User.get_temporary_user
-      
       @board = Board.find(params[:id])
-      throw 403 unless user.get_permission_for(@board.id).can_read?
-      
+      return head 403 unless @user.get_permission_for(@board.id).can_read?
 
       render json: @board, include: {
         priority: {
