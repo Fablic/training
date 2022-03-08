@@ -1,3 +1,14 @@
+<% if task.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= task.errors.count %>件のエラーが発生しています。</h2>
+    <ul>
+      <% task.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
 <%= form_for @task do |f| %>
     <div class="field">
       <%= f.label :task_name %>
