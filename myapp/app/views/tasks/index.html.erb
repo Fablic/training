@@ -17,7 +17,7 @@
 </div>
 
 <div class="task-list">
-    <% if @taskList.length > 0 %>
+    <% if @tasks.length > 0 %>
     <table>
         <tr>
             <th><%= t('activerecord.attributes.tasks.title') %></th>
@@ -27,7 +27,7 @@
             <th><%= t('activerecord.attributes.tasks.label_id') %></th>
             <th><%= t('.operation') %></th>
         </tr>
-        <% @taskList.each do |task| %>
+        <% @tasks.each do |task| %>
         <tr>
             <td><%= link_to task.title, task %></td>
             <td><%= task.status %></td>
@@ -41,6 +41,7 @@
         </tr>
         <% end %>
     </table>
+    <%= paginate @tasks %>
     <% else %>
     <p class="alert"><%= t('dictionary.message.no_task') %></p>
     <% end %>

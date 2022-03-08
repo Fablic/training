@@ -11,7 +11,15 @@ ja:
       title: 'タスク作成'
       submit: '登録'
       to_index: '一覧へ'
+    create:
+      title: 'タスク作成'
+      submit: '登録'
+      to_index: '一覧へ'
     edit:
+      title: 'タスク編集'
+      submit: '更新'
+      to_index: '一覧へ'
+    update:
       title: 'タスク編集'
       submit: '更新'
       to_index: '一覧へ'

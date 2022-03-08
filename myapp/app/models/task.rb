@@ -11,7 +11,7 @@ class Task < ApplicationRecord
 
   validate :deadline_before_today
 
-  def self.search( search_word, search_status )
+  def self.search( search_word, search_status, page)
     where = 'deleted = ?'
     values = [ false ]
     unless search_word.empty?
@@ -22,7 +22,7 @@ class Task < ApplicationRecord
       where.concat( ' AND status = ?' )
       values.push( search_status )
     end
-    @taskList = Task.where( where, *values )
+    Task.where( where, *values ).page(page).per(10)
   end
 
   private

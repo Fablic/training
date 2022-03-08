@@ -2,7 +2,9 @@ class TasksController < ApplicationController
   def index
     params[:search_word] = '' unless params[:search_word]
     params[:search_status] = '0' unless params[:search_status]
-    @taskList = Task.search(params[:search_word], params[:search_status])
+    params[:page] = 1 unless params[:page]
+    # @tasks = Task.page(parames[:page]).per(10) #.search(params[:search_word], params[:search_status])
+    @tasks = Task.search(params[:search_word], params[:search_status], params[:page])
   end
 
   def show
