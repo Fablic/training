@@ -19,6 +19,34 @@ RSpec.describe 'Tasks_index', type: :system do
     end
   end
 
+  feature 'タスク一覧(検索)' do
+    background do
+      Capybara.current_driver = Capybara.javascript_driver
+      @task1 = FactoryBot.create(:task, title: 'task_1', status: 1)
+      @task2 = FactoryBot.create(:task, title: 'task_2', status: 2)
+      @task3 = FactoryBot.create(:task, title: 'task_3', status: 3)
+    end
+
+    context '画面に表示する項目' do
+      it '必要な項目が表示されている' do
+        # タスク一覧画面を開く
+        visit tasks_path
+
+        expect(page).to have_content @task1.title
+        expect(page).to have_content @task2.title
+        expect(page).to have_content @task3.title
+
+        fill_in 'search_word', with: '_1'
+        select '全て', from: 'search_status'
+        click_button '検索'
+
+        expect(page).to have_content @task1.title
+        expect(page).not_to have_content @task2.title
+        expect(page).not_to have_content @task3.title
+      end
+    end
+  end
+
   feature 'タスク一覧' do
     background do
       Capybara.current_driver = Capybara.javascript_driver

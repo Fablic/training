@@ -18,7 +18,7 @@ class Task < ApplicationRecord
       where.concat( ' AND title LIKE ?' )
       values.push( "%#{search_word}%" ) 
     end
-    unless search_status.empty?
+    if Task.statuses.has_value?(search_status.to_i)
       where.concat( ' AND status = ?' )
       values.push( search_status )
     end

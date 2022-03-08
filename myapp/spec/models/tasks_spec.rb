@@ -60,17 +60,32 @@ RSpec.describe Task, type: :model do
       @task4 = FactoryBot.create(:task, title: 'task_4', status: 3)
     end
 
-    context 'title=,status=' do
-      it 'すべて表示されること' do
-        Task.search( '', '')
+    context 'title="",status="0"(全て)' do
+      it 'すべて抽出されること' do
+        tasks = Task.search( '', '')
+        expect(tasks.count).to eq(4)
       end
     end
 
-    context 'title=_1,status=1' do
-      it 'task1のみ表示されること' do
-        Task.search( '_1', '1')
+    context 'title="_1",status="1"' do
+      it 'task1のみが抽出されること' do
+        tasks = Task.search( '_1', '1')
+        expect(tasks).to include(@task1)
+      end
+    end
+
+    context 'title="_3",status="0"(全て)' do
+      it 'task_3のみが抽出されること' do
+        tasks = Task.search( '_3', '0')
+        expect(tasks).to include(@task3)
+      end
+    end
+
+    context 'title="",status="1"' do
+      it 'task_1,task_2の2件が抽出されること' do
+        tasks = Task.search( '', '1')
+        expect(tasks.count).to eq(2)
       end
     end
   end
-
 end

@@ -1,6 +1,7 @@
 class TasksController < ApplicationController
   def index
-    # @taskList = Task.where(deleted: false)
+    params[:search_word] = '' unless params[:search_word]
+    params[:search_status] = '0' unless params[:search_status]
     @taskList = Task.search(params[:search_word], params[:search_status])
   end
 
