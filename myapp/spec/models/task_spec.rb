@@ -66,8 +66,8 @@ RSpec.describe Task, type: :model do
   end
 
   describe 'description' do
-    context '説明文が99文字の時' do
-      let(:task) { build(:task, description: 'a' * 99) }
+    context '説明文が100文字の時' do
+      let(:task) { build(:task, description: 'a' * 100) }
 
       it 'バリデーションエラーにならないこと' do
         expect(task.valid?).to eq true

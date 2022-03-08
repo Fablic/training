@@ -3,11 +3,11 @@
 class Task < ApplicationRecord
   validates :task_name, presence: true, length: { maximum: 30 }
   validates :description, presence: true, length: { maximum: 100 }
-  validate :integrative_check?
+  validate :ends_on_must_be_after_starts_on
 
-  def integrative_check?
+  def ends_on_must_be_after_starts_on
     return if starts_on.blank? || ends_on.blank?
 
-    errors.add(:ends_on, 'は開始日より後の日程に設定してください。') if starts_on > ends_on
+    errors.add(:ends_on, :end_date_error) if starts_on > ends_on
   end
 end

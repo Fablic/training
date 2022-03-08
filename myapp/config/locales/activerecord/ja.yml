@@ -11,3 +11,7 @@ ja:
         priority: 優先度
         label: ラベル
         status: ステータス
+    errors:
+      models:
+        task:
+          end_date_error: は開始日より後の日程に設定してください。
