@@ -13,15 +13,15 @@
 ActiveRecord::Schema.define(version: 20220304044654) do
 
   create_table "tasks", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
-    t.string   "task_name",   null: false
-    t.string   "description", null: false
+    t.string   "task_name",   limit: 30,  null: false
+    t.string   "description", limit: 100, null: false
     t.string   "status"
     t.date     "starts_on"
     t.date     "ends_on"
     t.string   "priority"
     t.string   "label"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
 end
