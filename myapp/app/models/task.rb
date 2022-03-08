@@ -5,6 +5,8 @@ class Task < ApplicationRecord
   validates :description, presence: true, length: { maximum: 100 }
   validate :ends_on_must_be_after_starts_on
 
+  private
+
   def ends_on_must_be_after_starts_on
     return if starts_on.blank? || ends_on.blank?
 
