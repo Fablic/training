@@ -13,7 +13,7 @@ class TasksController < ApplicationController
   def index; end
 
   def list
-    @tasks = Task.page(params[:page]).per(1)
+    @tasks = Task.page(params[:page]).per(10)
   end
 
   def show
@@ -38,7 +38,7 @@ class TasksController < ApplicationController
   end
 
   def search
-    @tasks = Task.search(params[:keyword], params[:status])
+    @tasks = Task.search(params[:keyword], params[:status]).page(params[:page]).per(10)
     @keyword = params[:keyword]
     @status = params[:status]
     render "list"

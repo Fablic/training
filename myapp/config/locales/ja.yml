@@ -1,4 +1,11 @@
 ja:
+  views:
+    pagination:
+      first: "&laquo; 最初"
+      last: "最後 &raquo;"
+      previous: "&lsaquo; 前"
+      next: "次 &rsaquo;"
+      truncate: "..."
   enums:
     task:
       status:
@@ -39,7 +46,7 @@ ja:
       edit_button: "編集"
       delete_button: "削除"
     list:
-      not_choose: "未選択"
+      not_choose: "全ステータス"
       search: "検索"
       garbage: "ゴミ箱"
 

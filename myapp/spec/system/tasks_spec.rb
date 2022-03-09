@@ -54,4 +54,32 @@ feature 'tasks', type: :system, js: true do
       end
     end
   end
+
+  describe 'タスクを検索する', type: :system do
+    context '一覧画面で存在するタイトルで検索' do
+      it '１件タスクが表示さる。' do
+        visit new_task_path
+        fill_in input_title, with: 'exist keyword'
+        fill_in input_body, with: 'test body'
+        fill_in input_deadline, with: '02-02-2022'
+
+        click_button 'commit'
+        page.driver.browser.switch_to.alert.accept
+        expect(current_path).to eq root_path
+        fill_in 'keyword', with: 'exist keyword'
+        click_button 'commit'
+
+        expect(page).to have_content 'exist keyword'
+      end
+    end
+    context '一覧画面で存在しないタイトルで検索' do
+      it '１件もタスクが表示されない' do
+        visit root_path
+        fill_in 'keyword', with: 'no exist keyword'
+        click_button 'commit'
+
+        expect(page).not_to have_content '#'
+      end
+    end
+  end
 end
