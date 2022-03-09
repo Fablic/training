@@ -9,6 +9,25 @@ body {
     background-color: $main_background_color;
 }
 
+.create-task-ticket {
+    height: 40px;
+    background: #cce6ff;
+    border: 2px solid #d8dde2;
+    border-radius: 15px;
+    cursor: pointer;
+
+    &.list {
+        width: 30%;
+        margin-left: 10%;
+        float: left;
+    }
+
+    &.index {
+        width: 20%;
+        margin: 10px 10px;
+    }
+}
+
 //
 // task_new
 //
@@ -51,21 +70,16 @@ body {
 //
 // tasl_list
 //
+.search-task-ticket {
+    float: right;
+    margin: 5px 10% 0 0 ;
+}
+
 #task-list-option {
     width: 100%;
     padding-top: 20px;
     height: 50px;
     background-color: $sub_background_color;
-}
-
-.create-task-ticket {
-    width: 30%;
-    height: 40px;
-    margin-left: 10%;
-    background: #cce6ff;
-    border: 2px solid #d8dde2;
-    border-radius: 15px;
-    cursor: pointer;
 }
 
 .create-field {

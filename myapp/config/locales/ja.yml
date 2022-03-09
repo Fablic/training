@@ -26,6 +26,7 @@ ja:
       importance: "やらないと？"
       priority_point: "優先ポイント"
       deadline: "期限"
+      create_button: "タスクを作成"
     new:
       submit: "登録"
       confirm: "入力した内容で登録しますか？"
@@ -38,7 +39,8 @@ ja:
       edit_button: "編集"
       delete_button: "削除"
     list:
-      create_button: "タスクを作成"
+      not_choose: "未選択"
+      search: "検索"
       garbage: "ゴミ箱"
 
   errors:

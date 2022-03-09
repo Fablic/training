@@ -62,4 +62,8 @@ class Task < ApplicationRecord
       base_point + day_point - 20
     end
   end
+
+  def self.search(keyword, status)
+    where(["title like? AND status like?", "%#{keyword}%", "%#{status}%"])
+  end
 end

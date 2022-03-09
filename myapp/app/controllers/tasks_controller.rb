@@ -13,7 +13,7 @@ class TasksController < ApplicationController
   def index; end
 
   def list
-    @tasks = Task.all
+    @tasks = Task.page(params[:page]).per(1)
   end
 
   def show
@@ -37,6 +37,13 @@ class TasksController < ApplicationController
     redirect_to root_path, notice: '#' + params[:id] + 'を削除しました'
   end
 
+  def search
+    @tasks = Task.search(params[:keyword], params[:status])
+    @keyword = params[:keyword]
+    @status = params[:status]
+    render "list"
+  end
+
   def destroy_api
     task = Task.find(params[:id])
     if task.destroy then
@@ -44,6 +51,10 @@ class TasksController < ApplicationController
     else
         render json: { status: 'ERROR'}
     end
+  end
+
+  def board_api
+    # render json: [{id: "sample-board-1", title: "第1優先グループ", class: "task", item: [{title: "報告書の作成", status: "not-tarted", taskId: "43"}, {title: "14時から打ち合わせ", status: "start", taskId: "43"}]}]
   end
 
   private
