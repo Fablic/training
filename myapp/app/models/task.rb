@@ -1,5 +1,5 @@
 class Task < ApplicationRecord
-  belong_to :user
+  belongs_to :user
 
   enum priority: { high: 1, middle: 2, low: 3 }
   enum status: { '未着手' => 1, '着手' => 2, '完了' => 3 }
@@ -24,7 +24,7 @@ class Task < ApplicationRecord
       where.concat( ' AND status = ?' )
       values.push( search_status )
     end
-    Task.where( where, *values ).page(page).per(10)
+    Task.where( where, *values).page(page).per(10)
   end
 
   private

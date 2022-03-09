@@ -1,3 +1,3 @@
 class User < ApplicationRecord
-  has_manhy :tasks, dependent: :destroy
+  has_many :tasks, dependent: :destroy
 end
