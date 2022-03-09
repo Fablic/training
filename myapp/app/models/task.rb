@@ -13,9 +13,9 @@ class Task < ApplicationRecord
 
   validate :deadline_before_today
 
-  def self.search( search_word, search_status, page)
-    where = 'deleted = ?'
-    values = [ false ]
+  def self.search( user_id, search_word, search_status, page)
+    where = 'user_id = ? AND deleted = ?'
+    values = [ user_id, false ]
     unless search_word.empty?
       where.concat( ' AND title LIKE ?' )
       values.push( "%#{search_word}%" ) 

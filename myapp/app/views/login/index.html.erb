@@ -1,0 +1,19 @@
+<% content_for :title do %>
+<%= t('.title')%>
+<% end %>
+
+<div class="login">
+    <%= form_tag(login_path,:method => 'post') do %>
+        <div>
+            <%= label_tag :account, t('.account') %>
+            <%= text_field_tag :account, params[:account] %>
+        </div>
+        <div>
+            <%= label_tag :password, t('.password') %>
+            <%= password_field_tag :password %>
+        </div>
+        <div>
+            <%= submit_tag t('.submit'), :name => nil %>
+        </div>
+    <% end %>
+</div>

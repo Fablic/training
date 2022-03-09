@@ -31,4 +31,10 @@ class ApplicationController < ActionController::Base
       render 'errors/500', status: :internal_server_error, layout: 'error'
     end
   end
+
+  def authenticate_user
+    redirect_to login_path unless session[:user]
+    @login_user = session[:user]
+  end
+
 end

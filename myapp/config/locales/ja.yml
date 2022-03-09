@@ -1,6 +1,10 @@
 ja:
   dictionary:
+    system:
+      title: 'タスク管理'
     message:
+      login:
+        fail: 'アカウントまたはパスワードが違います'
       no_task: 'タスクが登録されていません'
       save:
         success: '保存しました'

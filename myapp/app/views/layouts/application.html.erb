@@ -10,6 +10,18 @@
   </head>
 
   <body>
+    <div class="header">
+      <div class="logo">
+        <h1><%= t('dictionary.system.title')%></h1> 
+      </div>
+      <% if @login_user %>
+      <div class="info">
+        <%= @login_user['name']%>
+        <%= link_to t('dictionary.system.logout'), '/logout' %> 
+      </div>
+      <% end %>
+    </div>
+
     <div class="contents">
       <h1><%= yield :title %></h1>
       

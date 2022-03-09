@@ -1,0 +1,7 @@
+ja:
+  login:
+    index:
+      title: 'ログイン'
+      account: 'ログインID'
+      password: 'パスワード'
+      submit: 'ログイン'
