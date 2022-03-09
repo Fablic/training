@@ -25,6 +25,7 @@ RSpec.describe 'Kanban', type: :system do
 
       # wait for redirect
       expect(page).to have_selector('#kanban')
+      visit login_path({'locale': 'en'})
 
     end
 
