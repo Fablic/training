@@ -149,4 +149,26 @@ RSpec.describe Task, type: :model do
       end
     end
   end
+
+  describe 'task_name_partial_search' do
+    let(:task) { create(:task, task_name: 'あいうえお') }
+
+    context 'task_name検索が部分一致する時' do
+      it '部分一致するタスクを表示すること' do
+        expect(described_class.task_name_partial_search('あいう')).to include(task)
+      end
+    end
+
+    context 'task_name検索が部分一致しない時' do
+      it 'タスクを表示しないこと' do
+        expect(described_class.task_name_partial_search('かきく')).not_to include(task)
+      end
+    end
+
+    context 'task_name検索が空白の時' do
+      it '全てのタスクを表示すること' do
+        expect(described_class.task_name_partial_search('')).to include(task)
+      end
+    end
+  end
 end
