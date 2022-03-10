@@ -10,14 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_08_064430) do
+ActiveRecord::Schema.define(version: 2022_03_10_024110) do
 
   create_table "labels", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "label", null: false
-    t.integer "color", null: false
+    t.string "color", default: "#FFFFFF", null: false
     t.boolean "deleted", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "bgcolor", default: "#009688"
   end
 
   create_table "tasks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
@@ -26,7 +27,7 @@ ActiveRecord::Schema.define(version: 2022_03_08_064430) do
     t.text "body", null: false
     t.date "deadline", null: false
     t.integer "priority", null: false
-    t.bigint "label_id"
+    t.string "label_id", default: ""
     t.integer "status", null: false
     t.boolean "deleted", default: false, null: false
     t.datetime "created_at", precision: 6, null: false

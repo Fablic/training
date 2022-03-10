@@ -37,4 +37,11 @@ class ApplicationController < ActionController::Base
     @login_user = session[:user]
   end
 
+  def find_labels
+    @labels = {}
+    records = Label.where("deleted = ?", false)
+    records.each do | r |
+      @labels[r.id] = r #"<span>#{r.label}</span>"
+    end
+  end
 end

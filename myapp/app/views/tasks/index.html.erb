@@ -33,7 +33,7 @@
             <td><%= task.status %></td>
             <td><%= task.deadline %></td>
             <td><%= task.priority %></td>
-            <td><%= task.label_id %></td>
+            <td><%= raw(show_labels(task.label_id)) %></td>
             <td>
                 <%= link_to t('.edit'), edit_task_path(task) %>
                 <%= link_to t('.destroy'), task_path(task), method: :delete, data: { confirm: t('dictionary.message.destroy.confirm') } %>

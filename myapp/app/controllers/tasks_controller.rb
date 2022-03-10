@@ -1,5 +1,6 @@
 class TasksController < ApplicationController
   before_action :authenticate_user
+  before_action :find_labels
 
   def index
     params[:search_word] = '' unless params[:search_word]
