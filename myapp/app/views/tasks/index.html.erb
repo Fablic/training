@@ -29,7 +29,7 @@
         <td><%= task.ends_on %></td>
         <td><%= task.priority %></td>
         <td><%= task.label %></td>
-        <td><%= task.status_i18n %></td>
+        <td><%= task.enum_i18n(:status) %></td>
         <td><%= link_to (t '.show'), task %></td>
         <td><%= link_to (t '.edit'), edit_task_path(task) %></td>
         <td><%= link_to (t '.destory'), task, method: :delete, data: { confirm: (t '.Are you sure?') } %></td>

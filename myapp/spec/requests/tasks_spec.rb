@@ -140,4 +140,36 @@ RSpec.describe 'Tasks', type: :request do
       end
     end
   end
+
+  describe 'status_partial_search' do
+    subject(:task_name_status_serch) { get tasks_path, params: { status: 0 } }
+
+    context 'ステータスの検索結果がある時' do
+      before { create(:task, task_name: 'hoge', status: 0) }
+
+      it 'レスポンスが正しいこと' do
+        task_name_status_serch
+        expect(response).to have_http_status(:ok)
+      end
+
+      it '一致するタスク名が表示されること' do
+        task_name_status_serch
+        expect(response.body).to include 'hoge'
+      end
+    end
+
+    context 'ステータスの検索結果がない時' do
+      before { create(:task, task_name: 'fuga', status: 1) }
+
+      it 'レスポンスが正しいこと' do
+        task_name_status_serch
+        expect(response).to have_http_status(:ok)
+      end
+
+      it '検索したタスク名が表示されていないこと' do
+        task_name_status_serch
+        expect(response.body).not_to include 'fuga'
+      end
+    end
+  end
 end

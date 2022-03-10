@@ -14,9 +14,6 @@ ja:
       destory: 削除
       Are you sure?: 本当に削除しますか？
       new_task: タスク作成
-      yet_started: 未着手
-      being_worked: 着手
-      done: 完了
     show:
       task_name: タスク名
       description: 説明文

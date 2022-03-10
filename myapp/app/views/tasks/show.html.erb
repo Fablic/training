@@ -32,7 +32,7 @@
 
 <p>
   <strong><%= t '.status' %></strong>
-  <%= @task.status_i18n %>
+  <%= @task.enum_i18n(:status) %>
 </p>
 
 <%= link_to (t '.edit'), edit_task_path(@task) %> |
