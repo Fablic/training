@@ -1,16 +1,13 @@
-article[data-status='started'] {
-    background-color: red;
-  }
 
-.task {
-    background-color: #b93b00c5;
+.task_group_1 {
+    background-color: #b93b0075;
 }
-.progress {
-    background-color: #2A92BF;
+.task_group_2 {
+    background-color: #2a92bf88;
 }
-.done {
-    background-color: #00B961;
+.task_group_3 {
+    background-color: #00b960a2;
 }
-.test {
-    background-color: #F4CE46;
+.task_group_4 {
+    background-color: #f4ce46af;
 }

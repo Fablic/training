@@ -8,53 +8,7 @@ window.addEventListener('DOMContentLoaded', (elemnt) => {
         dataType: 'json',
     })
     .done(function(response) {
-        let data = [
-            {
-                "id": "sample-board-1",
-                "title": "第1優先グループ",
-                "class": "task",
-                "item": [
-                    {
-                        "title": "報告書の作成",
-                        "status" : "not-tarted",
-                        "taskId" : "43"
-                    },
-                    {
-                    "title": "14時から打ち合わせ",
-                    "status" : "start",
-                    "taskId" : "43"
-                    }
-                ]
-            },
-
-            {
-                "id": "sample-board-100",
-                "title": "第2優先グループ",
-                "class": "progress",
-                "item": [
-                    {
-                    "title": "○○案の企画書作成",
-                    "status" : "done",
-                    "taskId" : "43"
-                    }
-                ]
-            },
-
-            {
-                "id": "sample-board-3",
-                "title": "第3優先グループ",
-                "class": "done",
-                "item": [{ "title": "日報の提出" }]
-            },
-
-            {
-                "id": "sample-board-4",
-                "title": "第4優先グループ",
-                "class": "test",
-                "item": [{ "title": "日報の提出" }]
-            }
-        ];
-        const kanban = createBoardData(data)
+        const kanban = createBoardData(response)
         setStatusColor();
     })
     .fail(function(xhr) {
@@ -65,11 +19,11 @@ function setStatusColor() {
     const data = document.querySelectorAll('[data-status]');
     data.forEach(el => {
         if (el.dataset.status == "not_started") {
-            el.style.backgroundColor = "red"
+            el.style.backgroundColor = "#dd8383"
         }
 
         if (el.dataset.status == "start") {
-            el.style.backgroundColor = "green"
+            el.style.backgroundColor = "#70b251"
         }
 
         if (el.dataset.status == "done") {

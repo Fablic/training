@@ -54,7 +54,7 @@ class TasksController < ApplicationController
   end
 
   def board_api
-    # render json: [{id: "sample-board-1", title: "第1優先グループ", class: "task", item: [{title: "報告書の作成", status: "not-tarted", taskId: "43"}, {title: "14時から打ち合わせ", status: "start", taskId: "43"}]}]
+    render json: Task.boardDataCreate
   end
 
   private

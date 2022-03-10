@@ -17,7 +17,7 @@
 .kanban-board {
   position: relative;
   float: left;
-  background: #e2e4e6;
+  background: #edf2f7;
   transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
