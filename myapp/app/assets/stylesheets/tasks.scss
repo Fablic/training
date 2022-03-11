@@ -39,22 +39,23 @@
 }
 
 .contents .task-form label {
-    width: 100%;
+    display: inline-block;
+    width: 90px;
 }
 
-.contents .task-form input {
+.contents .task-form input[type=text] {
     margin: 5px 0;
-    width: 100%;
+    width: 70%;
 }
 
 .contents .task-form textarea {
     margin: 5px 0;
-    width: 100%;
+    width: 70%;
 }
 
 .contents .task-form select {
     margin: 5px 0;
-    width: 100%;
+    width: 70%;
 }
 
 .contents .task-show {

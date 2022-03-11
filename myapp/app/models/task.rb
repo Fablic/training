@@ -13,16 +13,24 @@ class Task < ApplicationRecord
 
   validate :deadline_before_today
 
-  def self.search( user_id, search_word, search_status, page)
+  def self.search( user_id, search_word, search_status, search_labels, page)
     where = 'user_id = ? AND deleted = ?'
     values = [ user_id, false ]
-    unless search_word.empty?
+    unless search_word.blank?
       where.concat( ' AND title LIKE ?' )
       values.push( "%#{search_word}%" ) 
     end
     if Task.statuses.has_value?(search_status.to_i)
       where.concat( ' AND status = ?' )
       values.push( search_status )
+    end
+    unless search_labels.blank?
+      labels = []
+      search_labels.keys.each do |lid|
+        labels.push( ' FIND_IN_SET(?, label_id)' )
+        values.push( lid )
+      end
+      where.concat( ' AND' + labels.join(' OR') )
     end
     Task.where( where, *values).page(page).per(10)
   end

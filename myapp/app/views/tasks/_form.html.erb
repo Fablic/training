@@ -1,25 +1,37 @@
 <div class="task-form">
     <%= form_for(@task) do |f| %>
+    <div>
       <%= f.label :title, t('activerecord.attributes.tasks.title') %>
       <%= f.text_field :title %>
-
+    </div>
+    <div>
       <%= f.label :body, t('activerecord.attributes.tasks.body') %>
       <%= f.text_area :body %>
-
+    </div>
+    <div>
       <%= f.label :deadline, t('activerecord.attributes.tasks.deadline') %>
       <%= f.date_field :deadline %>
-
+    </div>
+    <div>
       <%= f.label :priority, t('activerecord.attributes.tasks.priority') %>
       <%= f.select :priority, Task.priorities.keys.to_a %>
-
+    </div>
+    <div>
       <%= f.label :status, t('activerecord.attributes.tasks.status') %>
       <%= f.select :status, Task.statuses.keys.to_a %>
-
+    </div>
+    <div>
       <%= f.label :label_id, t('activerecord.attributes.tasks.label_id') %>
-      <%= f.text_field :label_id %>
-
+      <%= f.hidden_field :label_id %>
+      <% @task_labels.values.each do |tl|%>
+        <%= check_box_tag( "task_labels[#{tl.id}]", tl.id, @task.label_id.present? && @task.label_id.split(',').include?(tl.id.to_s))%>
+        <%= label_tag( "task_labels[#{tl.id}]", raw(show_label(tl.id)) ) %>
+      <% end %>
+    </div>
+    <div>
       <%= f.hidden_field :user_id %>
 
       <%= f.submit task_submit_title %>
+    </div>
     <% end %>
 </div>

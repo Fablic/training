@@ -3,10 +3,7 @@ class TasksController < ApplicationController
   before_action :find_labels
 
   def index
-    params[:search_word] = '' unless params[:search_word]
-    params[:search_status] = '0' unless params[:search_status]
-    params[:page] = 1 unless params[:page]
-    @tasks = Task.search(@login_user['id'], params[:search_word], params[:search_status], params[:page])
+    @tasks = Task.search(@login_user['id'], params[:search_word], params[:search_status], params[:search_labels], params[:page])
   end
 
   def show
@@ -22,6 +19,11 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(task_params)
     redirect_to tasks_url if @task.user_id != @login_user['id']
+    if params[:task_labels].nil?
+      params[:task][:label_id] = ''
+    else
+      params[:task][:label_id] = params['task_labels'].keys.join(',')
+    end
     if @task.save
       flash[:success] = t('dictionary.message.save.success')
       redirect_to @task # Tasks#showへ
@@ -39,6 +41,11 @@ class TasksController < ApplicationController
   def update
     @task = Task.find(params[:id])
     redirect_to tasks_url if @task.user_id != @login_user['id']
+    if params[:task_labels].nil?
+      params[:task][:label_id] = ''
+    else
+      params[:task][:label_id] = params['task_labels'].keys.join(',')
+    end
     if @task.update(task_params)
       flash[:success] = t('dictionary.message.save.success')
       redirect_to @task

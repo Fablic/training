@@ -4,11 +4,23 @@
 
 <div class="search">
     <%= form_tag(tasks_path,:method => 'get') do %>
+        <div>
         <%= label_tag(:search_word,t('activerecord.attributes.tasks.title')) %>:
         <%= text_field_tag :search_word, params[:search_word] %>
+        </div>
+        <div>
         <%= label_tag(:search_status, t('activerecord.attributes.tasks.status')) %>:
         <%= select_tag :search_status, options_for_select({'全て' => 0}.update(Task.statuses), params[:search_status]) %>
+        </div>
+        <div>
+        <% @task_labels.values.each do |tl|%>
+        <%= check_box_tag( "search_labels[#{tl.id}]", tl.id, params[:search_labels].present? && params[:search_labels][tl.id.to_s].present?) %>
+        <%= label_tag( "search_labels[#{tl.id}]", raw(show_label(tl.id)) ) %>
+        <% end %>
+        </div>
+        <div>
         <%= submit_tag t('.search'), :name => nil %>
+        </div>
     <% end %>
 </div>
 

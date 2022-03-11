@@ -19,6 +19,6 @@
         <dt><%= t('activerecord.attributes.tasks.status') %>:</dt>
         <dd><%= @task.status %></dd>
         <dt><%= t('activerecord.attributes.tasks.label_id') %>:</dt>
-        <dd><%= @task.label_id %></dd>
+        <dd><%= raw(show_labels(@task.label_id)) %></dd>
     </dl>
 </div>

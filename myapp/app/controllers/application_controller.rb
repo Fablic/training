@@ -38,10 +38,10 @@ class ApplicationController < ActionController::Base
   end
 
   def find_labels
-    @labels = {}
+    @task_labels = {}
     records = Label.where("deleted = ?", false)
     records.each do | r |
-      @labels[r.id] = r #"<span>#{r.label}</span>"
+      @task_labels[r.id] = r
     end
   end
 end

@@ -3,14 +3,17 @@ module TasksHelper
     t("tasks.#{params[:action]}.submit")
   end
 
-  def show_labels(label_id)
-    return '' if label_id.blank?
-    show_labels = ''
-    label_id.split(',').each do | l |
-      # show_labels.concat("#{@labels[l.to_i]} ")
-      label = @labels[l.to_i]
-      show_labels.concat("<span class=\"task-label\" style=\"color:#{label.color};background-color:#{label.bgcolor};\">#{label.label}</span> ")
+  def show_labels(label_ids)
+    return '' if label_ids.blank?
+    show_labels = []
+    label_ids.split(',').each do | l |
+      show_labels.push(show_label(l.to_i))
     end
-    return show_labels
+    show_labels.join(' ')
+  end
+
+  def show_label(label_id)
+    label = @task_labels[label_id]
+    "<span class=\"task-label\" style=\"color:#{label.color};background-color:#{label.bgcolor};\">#{label.label}</span>"
   end
 end
