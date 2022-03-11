@@ -10,12 +10,6 @@ class Task < ApplicationRecord
   validates :status, presence: true
   validate :ends_on_must_be_after_starts_on
 
-  def enum_i18n(status)
-    return nil if self.send(status).nil?
-
-    I18n.t!("enums.#{self.model_name.i18n_key}.#{status}.#{self.send(status)}")
-  end
-
   private
 
   def ends_on_must_be_after_starts_on
