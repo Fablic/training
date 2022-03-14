@@ -3,3 +3,4 @@ docs/.DS_Store
 myapp/.DS_Store
 myapp/log/
 myapp/tmp/
+public/packs-test/
