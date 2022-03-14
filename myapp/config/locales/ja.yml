@@ -37,9 +37,8 @@ ja:
   save_button: '保存'
   delete_button: '削除'
 
-  form_title: 'タイトル'
+  form_title: 'タスク名'
   form_contents: '説明'
   form_due_date: '期日'
   form_priority: '優先順位'
   form_status: '状況'
-  
