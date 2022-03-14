@@ -10,6 +10,80 @@ RSpec.describe 'Tasks', type: :request do
         expect(response).to have_http_status(:ok)
       end
     end
+
+    context 'タスク名とステータスを同時検索した時' do
+      subject(:task_name_status_search) { get tasks_path, params: { task_name: 'piyo', status: 1 } }
+
+      context '検索したステータスと一致する時' do # rubocop:disable RSpec/NestedGroups
+        before { create(:task, task_name: 'piyo', status: 1) }
+
+        it 'レスポンスが正しいこと' do
+          task_name_status_search
+          expect(response).to have_http_status(:ok)
+        end
+
+        it 'ステータスとタスク名が一致しているタスクが含まれていること' do
+          task_name_status_search
+          expect(response.body).to include('piyo', '未着手')
+        end
+      end
+    end
+
+    context '一致するステータスを検索した時' do
+      subject(:task_name_status_search) { get tasks_path, params: { status: 'yet_started' } }
+
+      before { create(:task, task_name: 'hoge', status: 1) }
+
+      it 'レスポンスが正しいこと' do
+        task_name_status_search
+        expect(response).to have_http_status(:ok)
+      end
+
+      it '一致するタスク名が表示されること' do
+        task_name_status_search
+        expect(response.body).to include 'hoge'
+      end
+    end
+
+    context 'ステータスを検索した時' do
+      subject(:task_name_status_search) { get tasks_path, params: { status: 'being_worked' } }
+
+      context 'ステータスが一致していない時' do # rubocop:disable RSpec/NestedGroups
+        before { create(:task, task_name: 'あいうえお', status: 3) }
+
+        it 'レスポンスが正しいこと' do
+          task_name_status_search
+          expect(response).to have_http_status(:ok)
+        end
+
+        it '検索したタスク名が表示されていないこと' do
+          task_name_status_search
+          expect(response.body).not_to include 'あいうえお'
+        end
+      end
+    end
+
+    context 'ステータスが未選択で値が送られた時' do
+      subject(:task_name_status_search) { get tasks_path, params: { status: 0 } }
+
+      before { create(:task, task_name: '研修', status: 1) }
+
+      it 'タスク名を全て表示すること' do
+        task_name_status_search
+        expect(response.body).to include '研修'
+      end
+    end
+
+    context 'ステータスが未選択で、タスク名のみで検索した時' do
+      subject(:task_name_status_search) { get tasks_path, params: { task_name: 'テスト', status: 0 } }
+
+      before { create(:task, task_name: 'テスト', status: 2) }
+
+      it '該当するタスク名が表示されること' do
+        task_name_status_search
+        expect(response.body).to include 'テスト'
+      end
+    end
   end
 
   describe 'GET /new' do
@@ -137,38 +211,6 @@ RSpec.describe 'Tasks', type: :request do
       it '該当IDで検索してもエラーになること' do
         new_task
         expect { Task.find(task.id) }.to raise_exception(ActiveRecord::RecordNotFound)
-      end
-    end
-  end
-
-  describe 'status_partial_search' do
-    subject(:task_name_status_serch) { get tasks_path, params: { status: 0 } }
-
-    context 'ステータスの検索結果がある時' do
-      before { create(:task, task_name: 'hoge', status: 0) }
-
-      it 'レスポンスが正しいこと' do
-        task_name_status_serch
-        expect(response).to have_http_status(:ok)
-      end
-
-      it '一致するタスク名が表示されること' do
-        task_name_status_serch
-        expect(response.body).to include 'hoge'
-      end
-    end
-
-    context 'ステータスの検索結果がない時' do
-      before { create(:task, task_name: 'fuga', status: 1) }
-
-      it 'レスポンスが正しいこと' do
-        task_name_status_serch
-        expect(response).to have_http_status(:ok)
-      end
-
-      it '検索したタスク名が表示されていないこと' do
-        task_name_status_serch
-        expect(response.body).not_to include 'fuga'
       end
     end
   end
