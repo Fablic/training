@@ -30,7 +30,7 @@ class Task < ApplicationRecord
         labels.push( ' FIND_IN_SET(?, label_id)' )
         values.push( lid )
       end
-      where.concat( ' AND' + labels.join(' OR') )
+      where.concat( ' AND(' + labels.join(' OR') + ')')
     end
     Task.where( where, *values).page(page).per(10)
   end
