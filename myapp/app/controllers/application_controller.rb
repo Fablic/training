@@ -2,13 +2,14 @@ class ApplicationController < ActionController::Base
   before_action :show_maintenance_page, if: :maintenance_mode?
 
   def maintenance_mode?
-    ENV["MAINTENANCE_MODE"] == "true"
+    File.exist?("/tmp/MAINTENANCE")
   end
 
   def show_maintenance_page
-    # ips_in_whitelist = (ENV["ALLOWED_IPS"] || "").split(",")
-    # return if ips_in_whitelist.include?(request.remote_ip)
-
+    # whitelistにIPアドレスがあればreturn
+    # whitelist = ['172.22.0.1']
+    # return if whitelist.include(request.remote_ip)
+    # mentenance page表示
     render(
       file: Rails.public_path.join("503.html"),
       content_type: "text/html",
