@@ -64,7 +64,7 @@ RSpec.describe 'Tasks', type: :request do
     end
 
     context 'ステータスが未選択で値が送られた時' do
-      subject(:task_name_status_search) { get tasks_path, params: { status: 0 } }
+      subject(:task_name_status_search) { get tasks_path, params: { status: '' } }
 
       before { create(:task, task_name: '研修', status: 1) }
 
