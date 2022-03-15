@@ -1,9 +1,10 @@
 window.addEventListener('DOMContentLoaded', (elemnt) => {
     createBtnEvent()
-
+     input = document.querySelectorAll('[data-userNumber]')[0].dataset.usernumber;
     $.ajax({
         url: 'api/tasks/board',
         type: 'get',
+        data: ('userId=' + input),
         cache: false,
         dataType: 'json',
     })

@@ -61,16 +61,22 @@ class Task < ApplicationRecord
     where(["title like? AND status like?", "%#{keyword}%", "%#{status}%"])
   end
 
-  def self.boardDataCreate()
+  def self.boardDataCreate(usreId)
     data = []
     for level in 1..4 do
-      items = getBordItemDataByPriorityLevel(level)
+      items = getBordItemDataByPriorityLevel(level, usreId)
       data << setBoardData(level, items)
     end
     return data
   end
 
-  def self.getBordItemDataByPriorityLevel(level)
+  def self.findByUserId(userId)
+    return where(user_id: userId)
+  end
+
+  private
+
+  def self.getBordItemDataByPriorityLevel(level, usreId)
     case level
     when 1
       from = THIRD_LEVEL_BASE_POINT
@@ -85,7 +91,7 @@ class Task < ApplicationRecord
       from = 0
       to = FIRST_LEVEL_BASE_POINT - 1
     end
-    return where(priority_point: from..to).order(priority_point: "DESC")
+    return where(priority_point: from..to, user_id: usreId).order(priority_point: "DESC")
   end
 
   def self.setBoardData(level, items)

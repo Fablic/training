@@ -3,7 +3,7 @@
 <%= javascript_pack_tag 'tasks_index', 'data-turbolinks-track': 'reload' %>
 <%= javascript_pack_tag 'jkanban', 'data-turbolinks-track': 'reload' %>
 
-<div class="create-task-ticket index">
+<div class="create-task-ticket index" data-userNumber=<%= @current_user.id %>>
     <div class="create-field">
         <span class="task-id"><%= t("tasks.default.create_button") %></span>
     </div>

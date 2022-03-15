@@ -7,6 +7,7 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
+    @task.user_id = current_user.id
     @task.priority_point = @task.get_priority_point
     @task.save
     redirect_to root_path, notice: '新しいタスクを作成しました'
@@ -15,7 +16,8 @@ class TasksController < ApplicationController
   def index; end
 
   def list
-    @tasks = Task.page(params[:page]).per(10)
+    @taskList = Task.findByUserId(@current_user.id)
+    @tasks = Kaminari.paginate_array(@taskList).page(params[:page]).per(10)
   end
 
   def show
@@ -56,7 +58,7 @@ class TasksController < ApplicationController
   end
 
   def board_api
-    render json: Task.boardDataCreate
+    render json: Task.boardDataCreate(params[:userId])
   end
 
   private
