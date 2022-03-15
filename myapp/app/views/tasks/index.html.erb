@@ -1,6 +1,11 @@
 <p id="notice"><%= notice %></p>
 
 <h1><%= t '.title' %></h1>
+<%= form_tag(tasks_path,:method => 'get') do %>
+  <%= t '.status' %>:<%= select_tag(:status, options_for_select(Task.statuses.keys.map { |k| [t("activerecord.enums.task.status.#{k}"), k]}),:include_blank => "未選択") %>
+  <%= t '.task_name' %>:<%= text_field_tag :task_name %>
+  <%= submit_tag :search %>
+<% end %>
 
 <table>
   <thead>
@@ -24,7 +29,7 @@
         <td><%= task.ends_on %></td>
         <td><%= task.priority %></td>
         <td><%= task.label %></td>
-        <td><%= task.status %></td>
+        <td><%= t("activerecord.enums.task.status.#{task.status}")  %></td>
         <td><%= link_to (t '.show'), task %></td>
         <td><%= link_to (t '.edit'), edit_task_path(task) %></td>
         <td><%= link_to (t '.destory'), task, method: :delete, data: { confirm: (t '.Are you sure?') } %></td>

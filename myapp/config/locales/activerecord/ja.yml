@@ -1,5 +1,11 @@
 ja:
   activerecord:
+    enums:
+      task:
+        status:
+          yet_started: 未着手
+          being_worked: 着手
+          done: 完了
     models:
       task: タスク
     attributes:
