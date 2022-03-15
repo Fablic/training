@@ -58,7 +58,7 @@ class TasksController < ApplicationController
   end
 
   def board_api
-    render json: Task.boardDataCreate(params[:userId])
+    render json: Task.boardDataCreate(params[:keyword])
   end
 
   private

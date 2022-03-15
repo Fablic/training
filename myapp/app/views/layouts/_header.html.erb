@@ -1,0 +1,10 @@
+<%= stylesheet_link_tag 'header', media: 'all', 'data-turbolinks-track': 'reload' %>
+<div class="herder-menu">
+<% if signed_in? %>
+    <p><%= @current_user.name %>さん</p>
+    <p><%= link_to 'ログアウト', logout_path %></p>
+<% else %>
+    <p><%= link_to '新規作成', new_user_path %></p>
+<% end %>
+</div>
+
