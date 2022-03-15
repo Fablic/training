@@ -75,7 +75,7 @@ RSpec.describe 'Tasks', type: :request do
     end
 
     context 'ステータスが未選択で、タスク名のみで検索した時' do
-      subject(:task_name_status_search) { get tasks_path, params: { task_name: 'テスト', status: 0 } }
+      subject(:task_name_status_search) { get tasks_path, params: { task_name: 'テスト', status: '' } }
 
       before { create(:task, task_name: 'テスト', status: 2) }
 
