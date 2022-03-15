@@ -12,10 +12,10 @@
 
 ActiveRecord::Schema.define(version: 2022_03_01_235857) do
 
-  create_table "boards", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
-    t.string "title"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+  create_table 'boards', options: 'ENGINE=InnoDB DEFAULT CHARSET=utf8mb4', force: :cascade do |t|
+    t.string :title
+    t.datetime :created_at, precision: 6, null: false
+    t.datetime :updated_at, precision: 6, null: false
   end
 
   create_table "boards_users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
