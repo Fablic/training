@@ -21,9 +21,34 @@ RSpec.describe 'Kanban', type: :system do
       FactoryBot.create(:task, board: @board2, priority: @priority1, status: @status1)
 
       Capybara.current_driver = Capybara.javascript_driver
-      visit board_path(1)
+      visit board_path({ 'id': '1', 'locale': 'en' })
+
       # wait for ajax
       expect(page).to have_selector('#kanban > div', visible: false)
+    end
+
+    scenario 'order_desc' do
+      page.find('span#sort_button').click
+      page.find('div.sort_item', "text": 'Priority ▽').click
+
+      # check sorted result
+      titles = page.all(:css, '#kanban div.title')
+      expect(titles[0].text).to eq(@task4.title)
+      expect(titles[1].text).to eq(@task3.title)
+      expect(titles[2].text).to eq(@task1.title)
+      expect(titles[3].text).to eq(@task2.title)
+    end
+
+    scenario 'order_asc' do
+      page.find('span#sort_button').click
+      page.find('div.sort_item', "text": 'Priority ▽').click
+
+      # check sorted result
+      titles = page.all(:css, '#kanban div.title')
+      expect(titles[0].text).to eq(@task4.title)
+      expect(titles[1].text).to eq(@task3.title)
+      expect(titles[2].text).to eq(@task1.title)
+      expect(titles[3].text).to eq(@task2.title)
     end
 
     scenario 'visit kanban' do
@@ -47,13 +72,13 @@ RSpec.describe 'Kanban', type: :system do
       cards = kanbans[1].all(:css, 'div.card')
       expect(cards.length).to eq(2)
       card_components = cards[0].all(:css, 'div')
-      expect(card_components[0].text).to eq(@priority1.title)
-      expect(card_components[1].text).to eq(@task1.title)
+      expect(card_components[0].text).to eq(@priority3.title)
+      expect(card_components[1].text).to eq(@task3.title)
       expect(card_components[2].text).to eq('test')
       expect(card_components[3].text).to eq('Due Date: 2022/01/01 01:01')
       card_components = cards[1].all(:css, 'div')
-      expect(card_components[0].text).to eq(@priority3.title)
-      expect(card_components[1].text).to eq(@task3.title)
+      expect(card_components[0].text).to eq(@priority1.title)
+      expect(card_components[1].text).to eq(@task1.title)
       expect(card_components[2].text).to eq('test')
       expect(card_components[3].text).to eq('Due Date: 2022/01/01 01:01')
 

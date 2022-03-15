@@ -1,12 +1,20 @@
 <!-- kanban -->
 <div class="container">
+  <div style="text-align:right;">
+    <div class="btn-group" role="group" aria-label="Basic example">
+<% I18n.available_locales.each do |locale, var| %>
+      <a href="<%= board_path({"id": params[:id], "locale":locale}) %>" class="btn <% if(locale == I18n.locale) %>btn-primary<% else %>btn-light<%end%> btn-sm"><%= I18n.name_for_locale(locale) %></a>
+<% end %>
+    </div>
+  </div>
   <div class="control-pane">
-    <span style="margin-right:10px;">
+    <span>
       <a class="btn btn-success" href="#" onclick="EditModal.openNew();return false;">
        <i class="fas fa-calendar-plus"></i>
-        New
+        <%= t :create_button %>
       </a>
     </span>
+    <span id="sort_button" onclick="SortModal.show();">Priority↓</span>
   </div>
 
   <div class="row" id="kanban"></div>
@@ -19,31 +27,46 @@
     <form id="form_edit">
       <input type="hidden" id="edit_id" >
         <div class="mb-3">
-            <label class="form-label">Title</label>
-            <input type="text" class="form-control"  id="edit_title">
+            <label class="form-label"><%= t :form_title %></label>
+            <input type="text" class="form-control" id="edit_title">
+            <div class="invalid-feedback" id="edit_title_message"></div>            
         </div>
         <div class="mb-3">
-            <label class="form-label">Contents</label>
+            <label class="form-label"><%= t :form_contents %></label>
             <textarea class="form-control"  id="edit_contents"></textarea>
+            <div class="invalid-feedback" id="edit_contents_message"></div>            
         </div>
         <div class="mb-3">
-            <label class="form-label">Due Date</label>
+            <label class="form-label"><%= t :form_due_date %></label>
             <input type="text" class="form-control" id="edit_due_date" autocomplete="off">
+            <div class="invalid-feedback" id="edit_due_date_message"></div>            
         </div>
         <div class="mb-3">
-            <label class="form-label">Priority</label>
+            <label class="form-label"><%= t :form_priority %></label>
             <select class="form-select" id="edit_priority">
             </select>
+            <div class="invalid-feedback" id="edit_priority_message"></div>            
         </div>
         <div class="mb-3">
-            <label class="form-label">Status</label>
+            <label class="form-label"><%= t :form_status %></label>
             <select class="form-select" id="edit_status">
             </select>
+            <div class="invalid-feedback" id="edit_status_message"></div>            
         </div>
-        <button type="button" class="btn btn-primary" onclick="EditModal.save();">Save</button>
-        <a href="#" onclick="EditModal.remove();return false;">Delete</a>
+        <button type="button" class="btn btn-primary" onclick="EditModal.save();"><%= t :save_button %></button>
+        <a href="#" onclick="EditModal.remove();return false;"><%= t :delete_button %></a>
     </form>
 </div>
+
+<!-- sort modal -->
+<div id="modal_sort">
+    <div class="sort_item" onclick="SortModal.apply('priority');" data-sort_type="priority">Priority △</div>
+    <div class="sort_item" onclick="SortModal.apply('-priority');" data-sort_type="-priority">Priority ▽</div>
+    <div class="sort_item" onclick="SortModal.apply('due_date');" data-sort_type="due_date">Due Date △</div>
+    <div class="sort_item" onclick="SortModal.apply('-due_date');" data-sort_type="-due_date">Due Date ▽</div>
+    <div class="sort_item" onclick="SortModal.apply('created_at');" data-sort_type="created_at">Created △</div>
+    <div class="sort_item" onclick="SortModal.apply('-created_at');" data-sort_type="-created_at">Created ▽</div>
+</div>    
 
 <script>
   $(document).ready(function() {
@@ -51,23 +74,33 @@
   });
 
   async function init() {
+    HashState.init();
+    let sort = HashState.get("sort");
+    if (sort === null) {
+      sort = "-created_at";
+    }
+
     await Board.init(<%=params[:id]%>);
+    Board.changeSort(sort);
     Board.draw();
 
     await Task.init();
 
-    HashState.init();
+
     if (HashState.has("create")) {
-      HashState.clear().set("kanban").update();
+      HashState.clear().set("kanban").set("sort", sort).update();
       EditModal.openNew();
     } else if (HashState.has("modify")) {
       const id = HashState.get("id");
-      HashState.clear().set("kanban").update();
+      HashState.clear().set("kanban").set("sort", sort).update();
       EditModal.openEdit(id)
     } else if (HashState.has("kanban")) {
       //todo: apply sort, visible fields and so on
+      if (sort !== HashState.get("sort")) {
+        HashState.set("sort", sort).update();
+      }
     } else {
-      HashState.clear().set("kanban").update();
+      HashState.clear().set("kanban").set("sort", sort).update();
 
     }
 

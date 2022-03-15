@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
-  get root to: 'home#index'
+  match '/404', to: 'errors#not_found', via: :all
+  match '/500', to: 'errors#internal_server_error', via: :all
 
-  resources :board
+  get root to: 'home#index'
+  scope '/:locale', locale: /en|ja/ do
+    resources :board
+  end
 
   namespace :api do
     resources :board
