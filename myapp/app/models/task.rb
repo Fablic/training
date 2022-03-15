@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Task < ApplicationRecord
-  enum status: { not_selected: 0, yet_started: 1, being_worked: 2, done: 3 }
+  enum status: { yet_started: 0, being_worked: 1, done: 2 }
 
   scope :task_name_partial_search, -> (task_name) { where('task_name LIKE ?', "%#{task_name}%") }
 

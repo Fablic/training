@@ -32,7 +32,7 @@ RSpec.describe 'Tasks', type: :request do
     context '一致するステータスを検索した時' do
       subject(:task_name_status_search) { get tasks_path, params: { status: 'yet_started' } }
 
-      before { create(:task, task_name: 'hoge', status: 1) }
+      before { create(:task, task_name: 'hoge', status: 0) }
 
       it 'レスポンスが正しいこと' do
         task_name_status_search
@@ -49,7 +49,7 @@ RSpec.describe 'Tasks', type: :request do
       subject(:task_name_status_search) { get tasks_path, params: { status: 'being_worked' } }
 
       context 'ステータスが一致していない時' do # rubocop:disable RSpec/NestedGroups
-        before { create(:task, task_name: 'あいうえお', status: 3) }
+        before { create(:task, task_name: 'あいうえお', status: 2) }
 
         it 'レスポンスが正しいこと' do
           task_name_status_search

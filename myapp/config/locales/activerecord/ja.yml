@@ -3,7 +3,6 @@ ja:
     enums:
       task:
         status:
-          not_selected: 未選択
           yet_started: 未着手
           being_worked: 着手
           done: 完了

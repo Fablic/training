@@ -1,4 +1,4 @@
-class RemoveStatusToTasks < ActiveRecord::Migration[5.0]
+class ChangeColumnStatusToTasks < ActiveRecord::Migration[5.0]
   def change
     remove_column :tasks, :status, :string
     add_column :tasks, :status, :integer, null: false, default: 0
