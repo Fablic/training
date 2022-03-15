@@ -1,0 +1,19 @@
+<%= form_for(@user, url: users_path, method: :post) do |f| %>
+    <p>
+        <%= f.label :name, t(".name") %><br>
+        <%= f.text_field :name %>
+    </p>
+    <p>
+        <%= f.label :email, t(".email") %><br>
+        <%= f.text_field :email %>
+    </p>
+    <p>
+        <%= f.label :password, t(".password") %><br>
+        <%= f.password_field :password %>
+    </p>
+    <p>
+        <%= f.label :password_confirmation, t(".password_confirmation") %><br>
+        <%= f.password_field :password_confirmation %>
+    </p>
+    <%= f.submit t(".submit") %>
+<% end %>

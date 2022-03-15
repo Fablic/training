@@ -6,6 +6,7 @@ ja:
       previous: "&lsaquo; 前"
       next: "次 &rsaquo;"
       truncate: "..."
+
   enums:
     task:
       status:
@@ -49,6 +50,15 @@ ja:
       not_choose: "全ステータス"
       search: "検索"
       garbage: "ゴミ箱"
+
+  users:
+    new:
+      name: "名前"
+      email: "メールアドレス"
+      password: "パスワード"
+      password_confirmation: "パスワード確認"
+      submit: "登録"
+
 
   errors:
     http_status:

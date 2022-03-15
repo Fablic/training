@@ -1,4 +1,6 @@
 class Task < ApplicationRecord
+  belongs_to :user
+
   # 未着手 着手 完了
   enum status: {not_started: 1, start: 2, done: 3}
   # 空いた時間にやる いつものペースでやる 急いで終わらせる 何よりも早く終わらせる

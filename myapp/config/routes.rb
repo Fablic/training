@@ -1,6 +1,12 @@
 Rails.application.routes.draw do
   root to: 'tasks#list'
   resources :tasks
+  resources :users
+
+  get  'login' => 'sessions#new', as: :login
+  post 'login' => 'sessions#create'
+  get  'logout' => 'sessions#destroy'
+
   get 'api/tasks/board' => 'tasks#board_api'
   get 'search' => 'tasks#search'
   get '*not_found' => 'application#routing_error'
