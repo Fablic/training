@@ -6,8 +6,8 @@ class Task < ApplicationRecord
   validates :title, presence: true, length: { maximum: 30 }
   validates :body, presence: true
   validates :deadline, presence: true
-  validates :priority, presence: true, inclusion: { in: Task.priorities.keys }
-  validates :status, presence: true, inclusion: { in: Task.statuses.keys }
+  validates :priority, presence: true
+  validates :status, presence: true
 
   validate :deadline_before_today
 
