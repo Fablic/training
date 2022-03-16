@@ -10,6 +10,80 @@ RSpec.describe 'Tasks', type: :request do
         expect(response).to have_http_status(:ok)
       end
     end
+
+    context 'タスク名とステータスを同時検索した時' do
+      subject(:task_name_status_search) { get tasks_path, params: { task_name: 'piyo', status: 1 } }
+
+      context '検索したステータスと一致する時' do # rubocop:disable RSpec/NestedGroups
+        before { create(:task, task_name: 'piyo', status: 1) }
+
+        it 'レスポンスが正しいこと' do
+          task_name_status_search
+          expect(response).to have_http_status(:ok)
+        end
+
+        it 'ステータスとタスク名が一致しているタスクが含まれていること' do
+          task_name_status_search
+          expect(response.body).to include('piyo', '未着手')
+        end
+      end
+    end
+
+    context '一致するステータスを検索した時' do
+      subject(:task_name_status_search) { get tasks_path, params: { status: 'yet_started' } }
+
+      before { create(:task, task_name: 'hoge', status: 0) }
+
+      it 'レスポンスが正しいこと' do
+        task_name_status_search
+        expect(response).to have_http_status(:ok)
+      end
+
+      it '一致するタスク名が表示されること' do
+        task_name_status_search
+        expect(response.body).to include 'hoge'
+      end
+    end
+
+    context 'ステータスを検索した時' do
+      subject(:task_name_status_search) { get tasks_path, params: { status: 'being_worked' } }
+
+      context 'ステータスが一致していない時' do # rubocop:disable RSpec/NestedGroups
+        before { create(:task, task_name: 'あいうえお', status: 2) }
+
+        it 'レスポンスが正しいこと' do
+          task_name_status_search
+          expect(response).to have_http_status(:ok)
+        end
+
+        it '検索したタスク名が表示されていないこと' do
+          task_name_status_search
+          expect(response.body).not_to include 'あいうえお'
+        end
+      end
+    end
+
+    context 'ステータスが未選択で値が送られた時' do
+      subject(:task_name_status_search) { get tasks_path, params: { status: '' } }
+
+      before { create(:task, task_name: '研修', status: 1) }
+
+      it 'タスク名を全て表示すること' do
+        task_name_status_search
+        expect(response.body).to include '研修'
+      end
+    end
+
+    context 'ステータスが未選択で、タスク名のみで検索した時' do
+      subject(:task_name_status_search) { get tasks_path, params: { task_name: 'テスト', status: '' } }
+
+      before { create(:task, task_name: 'テスト', status: 2) }
+
+      it '該当するタスク名が表示されること' do
+        task_name_status_search
+        expect(response.body).to include 'テスト'
+      end
+    end
   end
 
   describe 'GET /new' do
@@ -141,34 +215,39 @@ RSpec.describe 'Tasks', type: :request do
     end
   end
 
-  describe 'status_partial_search' do
-    subject(:task_name_status_serch) { get tasks_path, params: { status: 0 } }
-
-    context 'ステータスの検索結果がある時' do
-      before { create(:task, task_name: 'hoge', status: 0) }
-
-      it 'レスポンスが正しいこと' do
-        task_name_status_serch
-        expect(response).to have_http_status(:ok)
+  describe 'kaminari' do
+    context 'タスクが6つ登録されている時' do
+      before do
+        create_list(:task, 5)
+        create(:task, task_name: 'aiueo')
       end
 
-      it '一致するタスク名が表示されること' do
-        task_name_status_serch
-        expect(response.body).to include 'hoge'
+      it '2ページ目にタスクが1つ表示されていること' do
+        get tasks_path, params: { page: 2 }
+        expect(response.body).to include 'aiueo'
+      end
+
+      it '1ページ目に6つ目のタスクが表示されていないこと' do
+        get tasks_path, params: { page: 1 }
+        expect(response.body).not_to include 'aiueo'
+      end
+
+      it '1ページ目のボタンが存在すること' do
+        get tasks_path, params: { page: 2 }
+        expect(response.body).to include '<a rel="prev" href="/">1</a>'
       end
     end
 
-    context 'ステータスの検索結果がない時' do
-      before { create(:task, task_name: 'fuga', status: 1) }
+    context 'タスクが5つ登録されている時' do
+      subject(:task_page) { get tasks_path, params: { page: 1 } }
 
-      it 'レスポンスが正しいこと' do
-        task_name_status_serch
-        expect(response).to have_http_status(:ok)
+      before do
+        create_list(:task, 5)
       end
 
-      it '検索したタスク名が表示されていないこと' do
-        task_name_status_serch
-        expect(response.body).not_to include 'fuga'
+      it '2ページ目のボタンが存在しないこと' do
+        task_page
+        expect(response.body).not_to include '<a rel="next" href="/?page=2">2</a>'
       end
     end
   end

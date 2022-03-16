@@ -10,7 +10,7 @@ class Task < ApplicationRecord
   validates :status, presence: true
   validate :ends_on_must_be_after_starts_on
 
-  private
+  paginates_per 5
 
   def ends_on_must_be_after_starts_on
     return if starts_on.blank? || ends_on.blank?

@@ -36,7 +36,7 @@
     </div>
     <div class="field">
       <%= f.label :status %>
-      <%= f.select :status, Task.statuses.keys.map { |k| [t("enums.task.status.#{k}"), k]} %>
+      <%= f.select :status, Task.statuses.keys.map { |k| [t("activerecord.enums.task.status.#{k}"), k]} %>
     </div>
     <div class="actions">
       <%= f.submit %>
