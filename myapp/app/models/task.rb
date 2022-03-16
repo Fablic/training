@@ -57,8 +57,8 @@ class Task < ApplicationRecord
     end
   end
 
-  def self.search(keyword, status)
-    where(["title like? AND status like?", "%#{keyword}%", "%#{status}%"])
+  def self.search(keyword, status, userId)
+    where(["title like? AND status like? AND user_id = ?", "%#{keyword}%", "%#{status}%", userId])
   end
 
   def self.boardDataCreate(usreId)
