@@ -1,9 +1,19 @@
 <% content_for :title do %>
-    タスク編集
+<%= t('.title')%>
 <% end %>
 
 <div class="navi">
-    <%= link_to '一覧へ', tasks_path %>
+    <%= link_to t('.to_index'), tasks_path %>
 </div>
+
+<% if @task.errors.any? %>
+<div class="errors">
+    <ul>
+<% @task.errors.full_messages.each do |message| %>
+        <%= content_tag(:li, message, class: 'alert') %>
+<% end %>
+    </ul>
+</div>
+<% end %>
 
 <%= render "tasks/form" %>

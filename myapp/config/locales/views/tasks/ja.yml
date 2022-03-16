@@ -1,0 +1,19 @@
+ja:
+  tasks:
+    index:
+      title: 'タスク一覧'
+      operation: '操作'
+      new: 'タスク作成'
+      edit: '編集'
+      destroy: '削除'
+    new:
+      title: 'タスク作成'
+      submit: '登録'
+      to_index: '一覧へ'
+    edit:
+      title: 'タスク編集'
+      submit: '更新'
+      to_index: '一覧へ'
+    show:
+      title: 'タスク詳細'
+      to_index: '一覧へ'

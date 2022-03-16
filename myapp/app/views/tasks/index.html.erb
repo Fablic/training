@@ -1,21 +1,21 @@
 <% content_for :title do %>
-    タスク一覧
+<%= t('.title')%>
 <% end %>
 
 <div class="navi">
-    <%= link_to 'タスク作成', new_task_path %>
+    <%= link_to t('.new'), new_task_path %>
 </div>
 
 <div class="task-list">
     <% if @taskList.length > 0 %>
     <table>
         <tr>
-            <th>タスク名</th>
-            <th>ステータス</th>
-            <th>終了期限</th>
-            <th>優先順位</th>
-            <th>ラベル</th>
-            <th>操作</th>
+            <th><%= t('activerecord.attributes.tasks.title') %></th>
+            <th><%= t('activerecord.attributes.tasks.status') %></th>
+            <th><%= t('activerecord.attributes.tasks.deadline') %></th>
+            <th><%= t('activerecord.attributes.tasks.priority') %></th>
+            <th><%= t('activerecord.attributes.tasks.label_id') %></th>
+            <th><%= t('.operation') %></th>
         </tr>
         <% @taskList.each do |task| %>
         <tr>
@@ -24,11 +24,14 @@
             <td><%= task.deadline %></td>
             <td><%= task.priority %></td>
             <td><%= task.label_id %></td>
-            <td><%= link_to '編集', edit_task_path(task) %> <%= link_to '削除', task_path(task), method: :delete, data: { confirm: '削除します。よろしいですか？' } %></td>
+            <td>
+                <%= link_to t('.edit'), edit_task_path(task) %>
+                <%= link_to t('.destroy'), task_path(task), method: :delete, data: { confirm: t('dictionary.message.destroy.confirm') } %>
+            </td>
         </tr>
         <% end %>
     </table>
     <% else %>
-    <p class="alert">タスクが登録されていません</p>
+    <p class="alert"><%= t('dictionary.message.no_task') %></p>
     <% end %>
 </div>

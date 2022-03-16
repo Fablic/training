@@ -1,0 +1,16 @@
+ja:
+  activerecord:
+    models:
+      tasks: 'タスク'
+    attributes:
+      tasks:
+        id: 'ID'
+        user_id: 'ユーザ'
+        title: 'タスク名'
+        body: '内容'
+        deadline: '終了期限'
+        priority: '優先順位'
+        status: 'ステータス'
+        label_id: 'ラベル'
+        created_at: '作成日時'
+        updated_at: '更新日時'
