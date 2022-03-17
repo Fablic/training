@@ -18,7 +18,7 @@
         <% status = {t(".not_choose_status") => "", t("enums.task.status.not_started") => 1,t("enums.task.status.start") => 2,t("enums.task.status.done") => 3,} %>
         <%= f.select :status, status, :selected => @status %>
         <% if @labels.present? %>
-        <%= f.select :label, createLabelSelectOption(@labels), :selected => @label %>
+        <%= f.select :label, create_label_select_option(@labels), :selected => @label %>
         <% end %>
         <%= f.submit t(".search") %>
         <% end %>

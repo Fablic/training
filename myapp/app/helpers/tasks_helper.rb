@@ -1,5 +1,5 @@
 module TasksHelper
-    def getLabelName(labelId)
+    def get_label_name(labelId)
         if labelId.present?
             Label.find(labelId).name
         else
@@ -7,7 +7,7 @@ module TasksHelper
         end
     end
 
-    def createLabelSelectOption(labels)
+    def create_label_select_option(labels)
         selectOptions = {t(".not_choose_label") => ""}
         labels.each do |label|
             selectOptions[label.name] = label.id
