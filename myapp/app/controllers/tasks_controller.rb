@@ -3,6 +3,7 @@ class TasksController < ApplicationController
 
   def new
     @task = Task.new
+    @labels = Label.findByUserId(@current_user.id)
   end
 
   def create
@@ -18,6 +19,7 @@ class TasksController < ApplicationController
   def list
     @taskList = Task.findByUserId(@current_user.id)
     @tasks = Kaminari.paginate_array(@taskList).page(params[:page]).per(10)
+    @labels = Label.findByUserId(@current_user.id)
   end
 
   def show
@@ -26,6 +28,7 @@ class TasksController < ApplicationController
 
   def edit
     @task = Task.find(params[:id])
+    @labels = Label.findByUserId(@current_user.id)
   end
 
   def update
@@ -42,9 +45,11 @@ class TasksController < ApplicationController
   end
 
   def search
-    @tasks = Task.search(params[:keyword], params[:status], @current_user.id).page(params[:page]).per(10)
+    @tasks = Task.search(params[:keyword], params[:status], params[:label],@current_user.id).page(params[:page]).per(10)
+    @labels = Label.findByUserId(@current_user.id)
     @keyword = params[:keyword]
     @status = params[:status]
+    @label = params[:label]
     render "list"
   end
 
@@ -64,6 +69,6 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:user_id, :title, :body, :status, :urgency, :importance, :deadline)
+    params.require(:task).permit(:user_id, :title, :body, :status, :urgency, :importance, :deadline, label_ids:[])
   end
 end

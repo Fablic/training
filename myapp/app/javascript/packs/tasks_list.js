@@ -57,17 +57,21 @@ window.addEventListener('DOMContentLoaded', (elemnt) => {
         }
     });
 
-
-    let createBtn = document.querySelector('.create-task-ticket');
-    createBtn.addEventListener('mouseover', function() {
-        createBtn.style.opacity = 0.7;
-    });
-
-    createBtn.addEventListener('mouseleave', function() {
-        createBtn.style.opacity = 1;
-    });
-
-    createBtn.addEventListener('click', function(e) {
-        window.location = 'tasks/new';
-    });
+    linkBtnAction('.create-task-ticket', 'tasks/new')
+    linkBtnAction('.create-task-label', 'labels/new')
 });
+
+function linkBtnAction(target, link) {
+    let createLabelBtn = document.querySelector(target);
+    createLabelBtn.addEventListener('mouseover', function() {
+        createLabelBtn.style.opacity = 0.7;
+    });
+
+    createLabelBtn.addEventListener('mouseleave', function() {
+        createLabelBtn.style.opacity = 1;
+    });
+
+    createLabelBtn.addEventListener('click', function(e) {
+        window.location = link;
+    });
+}

@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   root to: 'tasks#list'
   resources :tasks
   resources :users
+  resources :labels
 
   get  'login' => 'sessions#new', as: :login
   post 'login' => 'sessions#create'

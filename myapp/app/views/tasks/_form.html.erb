@@ -22,3 +22,12 @@
                 <%= f.label :deadline, t("task.default.deadline") %><br>
                 <%= f.date_field :deadline %>
             </p>
+            <% if @labels.present? %>
+            <p>
+                <%= f.label :label, "ラベル" %><br>
+                <% @labels.each do |label| %>
+                    <%= check_box_tag 'task[label_ids][]', label.id, false %>
+                    <%= label.name %>
+                <% end %>
+            </p>
+            <% end %>

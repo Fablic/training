@@ -1,17 +1,25 @@
 <% if flash[:notice] %>
   <p><%= flash[:notice] %></p>
 <% end %>
-<section id="task-list-option">
+<section class="task-list-option">
     <div class="create-task-ticket list">
         <div class="create-field">
             <span class="task-id"><%= t("tasks.default.create_button") %></span>
         </div>
     </div>
+    <div class="create-task-label">
+        <div class="create-field">
+            <span class="task-id"><%= t("tasks.default.create_label_button") %></span>
+        </div>
+    </div>
     <div class="search-task-ticket">
         <%= form_with url: search_path, method: :get, local: true do |f| %>
         <%= f.text_field :keyword, value: @keyword %>
-        <% status = {t(".not_choose") => "", t("enums.task.status.not_started") => 1,t("enums.task.status.start") => 2,t("enums.task.status.done") => 3,} %>
+        <% status = {t(".not_choose_status") => "", t("enums.task.status.not_started") => 1,t("enums.task.status.start") => 2,t("enums.task.status.done") => 3,} %>
         <%= f.select :status, status, :selected => @status %>
+        <% if @labels.present? %>
+        <%= f.select :label, createLabelSelectOption(@labels), :selected => @label %>
+        <% end %>
         <%= f.submit t(".search") %>
         <% end %>
     </div>

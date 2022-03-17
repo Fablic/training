@@ -1,0 +1,11 @@
+<%= form_for(@label, url: labels_path, method: :post) do |f| %>
+    <p>
+        <%= f.label :name, 'ラベル名' %><br>
+        <%= f.text_field :name %>
+    </p>
+    <p>
+        <%= f.label :color, t("tasks.default.status") %><br>
+        <%= f.select :color, Label.colors_i18n.invert %>
+    </p>
+    <%= f.submit "作成" %>
+<% end %>

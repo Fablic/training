@@ -1,4 +1,6 @@
 class Task < ApplicationRecord
+  has_many :tasks_labels
+  has_many :labels, through: :tasks_labels
   belongs_to :user
 
   # 未着手 着手 完了
@@ -57,8 +59,12 @@ class Task < ApplicationRecord
     end
   end
 
-  def self.search(keyword, status, userId)
-    where(["title like? AND status like? AND user_id = ?", "%#{keyword}%", "%#{status}%", userId])
+  def self.search(keyword, status, labelId, userId)
+    result = joins(:tasks_labels).where(["title like? AND status like? AND user_id = ?", "%#{keyword}%", "%#{status}%", userId])
+    if labelId.present?
+      return result.where(["label_id = ?", labelId])
+    end
+    return result
   end
 
   def self.boardDataCreate(usreId)

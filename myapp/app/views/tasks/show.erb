@@ -9,6 +9,12 @@
         <p><%= t("tasks.default.priority_point") %> : <%= @task.priority_point %></p>
         <p><%= t("tasks.default.deadline") %> : <%= @task.deadline.strftime("%Y-%m-%e") %></p>
         <p>
+        <%= t("tasks.default.label") %> :
+        <% @task.label_ids.each do |label| %>
+        <%= getLabelName(label) %>
+        <% end %>
+        </p>
+        <p>
         <%= button_to t(".edit_button"), edit_task_path(@task), {method: :get, class: "edit-btn"}%>
         <%= button_to t(".delete_button"), @task, {method: :delete, class: "delete-btn"} %>
         </p>

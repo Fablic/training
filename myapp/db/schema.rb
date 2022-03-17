@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_15_014226) do
+ActiveRecord::Schema.define(version: 2022_03_16_015607) do
+
+  create_table "labels", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.integer "user_id", null: false, comment: "ユーザーID"
+    t.string "name", limit: 45, null: false, comment: "名前"
+    t.integer "color", null: false, comment: "カラー"
+    t.integer "deleted", default: 0, null: false, comment: "削除フラグ"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "tasks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.integer "user_id", null: false, comment: "ユーザーID"
@@ -21,6 +30,14 @@ ActiveRecord::Schema.define(version: 2022_03_15_014226) do
     t.integer "importance", null: false, comment: "重要度"
     t.integer "priority_point", null: false, comment: "優先順位ポイント"
     t.datetime "deadline", null: false, comment: "期限"
+    t.integer "deleted", default: 0, null: false, comment: "削除フラグ"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "tasks_labels", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.integer "task_id", null: false, comment: "タスクID"
+    t.integer "label_id", null: false, comment: "ラベルID"
     t.integer "deleted", default: 0, null: false, comment: "削除フラグ"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

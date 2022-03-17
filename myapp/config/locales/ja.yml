@@ -23,6 +23,13 @@ ja:
         normal: "誰かが困る"
         high: "結構怒られる"
         very_high: "いろいろと終わる"
+    label:
+      color:
+        gray:  "グレー"
+        blue:  "ブルー"
+        green: "グリーン"
+        red:   "レッド"
+        purple: "パープル"
 
   tasks:
     default:
@@ -34,7 +41,9 @@ ja:
       importance: "やらないと？"
       priority_point: "優先ポイント"
       deadline: "期限"
+      label: "ラベル"
       create_button: "タスクを作成"
+      create_label_button: "ラベルを作成"
     new:
       submit: "登録"
       confirm: "入力した内容で登録しますか？"
@@ -47,7 +56,8 @@ ja:
       edit_button: "編集"
       delete_button: "削除"
     list:
-      not_choose: "全ステータス"
+      not_choose_status: "全ステータス"
+      not_choose_label: "全ラベル"
       search: "検索"
       garbage: "ゴミ箱"
 

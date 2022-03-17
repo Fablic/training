@@ -4,6 +4,25 @@ body {
   background-color: #fff;
 }
 
+.create-task-ticket {
+  height: 40px;
+  background: #cce6ff;
+  border: 2px solid #d8dde2;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+.create-task-ticket.list {
+  width: 20%;
+  margin-left: 10%;
+  float: left;
+}
+
+.create-task-ticket.index {
+  width: 20%;
+  margin: 10px 10px;
+}
+
 .task-new {
   width: 50%;
   background-color: #edf2f7;
@@ -37,27 +56,33 @@ body {
   margin-right: 10%;
 }
 
-#task-list-option {
+.search-task-ticket {
+  float: right;
+  margin: 5px 10% 0 0;
+}
+
+.task-list-option {
   width: 100%;
   padding-top: 20px;
   height: 50px;
   background-color: #edf2f7;
 }
 
-.create-task-ticket {
-  width: 30%;
-  height: 40px;
-  margin-left: 10%;
-  background: #cce6ff;
-  border: 2px solid #d8dde2;
-  border-radius: 15px;
-  cursor: pointer;
-}
-
 .create-field {
   height: 100%;
   text-align: center;
   line-height: 40px;
+}
+
+.create-task-label {
+  height: 40px;
+  background: #ffd2cc;
+  border: 2px solid #d8dde2;
+  border-radius: 15px;
+  cursor: pointer;
+  width: 20%;
+  margin-left: 10px;
+  float: left;
 }
 
 #task-list {
@@ -75,6 +100,15 @@ body {
   border: 2px solid #d8dde2;
   border-radius: 15px;
   cursor: pointer;
+  clear: both;
+}
+
+.task-pagiation {
+  float: right;
+  margin-right: 10%;
+}
+
+.clear_box {
   clear: both;
 }
 
@@ -104,5 +138,9 @@ body {
   background-color: gray;
   text-align: center;
   line-height: 80px;
+}
+
+.none-under-line {
+  text-decoration: none;
 }
 /*# sourceMappingURL=tasks.css.map */
