@@ -60,7 +60,7 @@ class Task < ApplicationRecord
   end
 
   def self.search(keyword, status, labelId, userId)
-    result = joins(:tasks_labels).where(["title like? AND status like? AND user_id = ?", "%#{keyword}%", "%#{status}%", userId])
+    result = left_joins(:tasks_labels).where(["title like? AND status like? AND user_id = ?", "%#{keyword}%", "%#{status}%", userId])
     if labelId.present?
       return result.where(["label_id = ?", labelId])
     end
