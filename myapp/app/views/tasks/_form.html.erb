@@ -1,4 +1,5 @@
             <%= f.hidden_field :user_id, :value => 1 %>
+            <%= render 'layouts/error_messages', model: f.object %>
             <p>
                 <%= f.label :title, t("tasks.default.title") %><br>
                 <%= f.text_field :title %>

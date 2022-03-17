@@ -1,4 +1,15 @@
 ja:
+  activerecord:
+    models:
+      task: タスク
+    attributes:
+      task:
+        title: "タイトル"
+        body: "内容"
+        status: "ステイタス"
+        urgency: "緊急度"
+        importance: "重要度"
+        deadline: "期限"
   enums:
     task:
       status:
