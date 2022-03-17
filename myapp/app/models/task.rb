@@ -12,6 +12,8 @@ class Task < ApplicationRecord
 
   paginates_per 5
 
+  belongs_to :user
+
   def ends_on_must_be_after_starts_on
     return if starts_on.blank? || ends_on.blank?
 

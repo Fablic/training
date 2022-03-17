@@ -99,6 +99,8 @@ RSpec.describe 'Tasks', type: :request do
     context 'タスクが作成された時' do
       subject(:new_task) { post tasks_path, params: { task: attributes_for(:task) } }
 
+      before { create(:user) }
+
       it 'レスポンスが正しいこと' do
         new_task
         expect(response).to have_http_status(:found)

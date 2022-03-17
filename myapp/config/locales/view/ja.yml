@@ -14,6 +14,7 @@ ja:
       priority: 優先度
       label: ラベル
       status: ステータス
+      user_name: 担当者
       title: タスク一覧
       show: 詳細
       edit: 編集

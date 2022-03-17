@@ -3,5 +3,6 @@ FactoryGirl.define do
     task_name 'MyString'
     description 'hogehoge'
     status 'being_worked'
+    user
   end
 end
