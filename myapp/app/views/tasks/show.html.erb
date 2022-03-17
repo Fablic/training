@@ -1,24 +1,24 @@
 <% content_for :title do %>
-<%= t('.title')%>
+<%= I18n.t('tasks.show.title')%>
 <% end %>
 
 <div class="navi">
-    <%= link_to t('.to_index'), tasks_path %>
+    <%= link_to I18n.t('tasks.show.to_index'), tasks_path %>
 </div>
 
 <div class="task-show">
     <dl>
-        <dt><%= t('activerecord.attributes.tasks.title') %>:</dt>
+        <dt><%= I18n.t('activerecord.attributes.tasks.title') %>:</dt>
         <dd><%= @task.title %></dd>
-        <dt><%= t('activerecord.attributes.tasks.body') %>:</dt>
+        <dt><%= I18n.t('activerecord.attributes.tasks.body') %>:</dt>
         <dd><%= raw(h(@task.body).gsub(/\R/, "<br>")) %></dd>
-        <dt><%= t('activerecord.attributes.tasks.deadline') %>:</dt>
+        <dt><%= I18n.t('activerecord.attributes.tasks.deadline') %>:</dt>
         <dd><%= @task.deadline %></dd>
-        <dt><%= t('activerecord.attributes.tasks.priority') %>:</dt>
+        <dt><%= I18n.t('activerecord.attributes.tasks.priority') %>:</dt>
         <dd><%= @task.priority %></dd>
-        <dt><%= t('activerecord.attributes.tasks.status') %>:</dt>
+        <dt><%= I18n.t('activerecord.attributes.tasks.status') %>:</dt>
         <dd><%= @task.status %></dd>
-        <dt><%= t('activerecord.attributes.tasks.label_id') %>:</dt>
+        <dt><%= I18n.t('activerecord.attributes.tasks.label_id') %>:</dt>
         <dd><%= @task.label_id %></dd>
     </dl>
 </div>

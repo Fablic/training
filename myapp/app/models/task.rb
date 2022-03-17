@@ -11,18 +11,12 @@ class Task < ApplicationRecord
 
   validate :deadline_before_today
 
+  scope :undeleted, -> { where(deleted: :false) }
+  scope :title_like, ->(search_word) { where( 'title LIKE ?', "%#{search_word}%" ) unless search_word.empty? }
+  scope :status_eq, ->(search_status) { where( 'status = ?', search_status ) if Task.statuses.has_value?(search_status.to_i) }
+
   def self.search( search_word, search_status, page)
-    where = 'deleted = ?'
-    values = [ false ]
-    unless search_word.empty?
-      where.concat( ' AND title LIKE ?' )
-      values.push( "%#{search_word}%" ) 
-    end
-    if Task.statuses.has_value?(search_status.to_i)
-      where.concat( ' AND status = ?' )
-      values.push( search_status )
-    end
-    Task.where( where, *values ).page(page).per(10)
+    Task.undeleted.title_like(search_word).status_eq(search_status).page(page).per(10)
   end
 
   private
