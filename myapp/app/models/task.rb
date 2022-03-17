@@ -2,6 +2,7 @@ class Task < ApplicationRecord
   EDITABLE_FIELDS = %i[title status_id due_date contents priority_id]
   validates_associated :priority, :board, :status
   validates :title, presence: true
+  validates :due_date, presence: true
   validates :contents, presence: true
   validate :valid_step_change, on: :update
 
@@ -66,6 +67,6 @@ class Task < ApplicationRecord
   end
 
   def due_date
-    attributes['due_date'].strftime('%Y/%m/%d %H:%M')
+    attributes['due_date'].strftime('%Y/%m/%d %H:%M') if attributes['due_date']
   end
 end
