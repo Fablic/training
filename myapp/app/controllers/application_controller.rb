@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+    before_action :check_maintenance
     before_action :current_user
     before_action :require_sign_in!
     helper_method :signed_in?
@@ -58,5 +59,9 @@ class ApplicationController < ActionController::Base
     private
     def require_sign_in!
         redirect_to login_path unless signed_in?
+    end
+
+    def check_maintenance
+      redirect_to '/maintenance.html' if File.exist?('public/maintenance')
     end
 end
