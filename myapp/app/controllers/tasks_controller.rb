@@ -32,6 +32,8 @@ class TasksController < ApplicationController
 
   def update
     @task = Task.find(params[:id])
+    logger.debug "update: #{task_params}"
+    logger.debug "update: #{Date.today}"
     if @task.update(task_params)
       flash[:success] = I18n.t('dictionary.message.save.success')
       redirect_to @task
