@@ -1,5 +1,9 @@
-feature 'tasks', type: :system, js: true do
+require 'rails_helper'
 
+feature 'tasks', type: :system, js: true do
+  before(:each) do
+    @task = create(:task)
+  end
   let(:input_title ){ 'task[title]'}
   let(:input_body ){ 'task[body]'}
   let(:input_deadline ){ 'task[deadline]'}
@@ -58,18 +62,11 @@ feature 'tasks', type: :system, js: true do
   describe 'タスクを検索する', type: :system do
     context '一覧画面で存在するタイトルで検索' do
       it '１件タスクが表示さる。' do
-        visit new_task_path
-        fill_in input_title, with: 'exist keyword'
-        fill_in input_body, with: 'test body'
-        fill_in input_deadline, with: '02-02-2022'
-
-        click_button 'commit'
-        page.driver.browser.switch_to.alert.accept
-        expect(current_path).to eq root_path
-        fill_in 'keyword', with: 'exist keyword'
+        visit root_path
+        fill_in 'keyword', with: 'test title'
         click_button 'commit'
 
-        expect(page).to have_content 'exist keyword'
+        expect(page).to have_content 'test title'
       end
     end
     context '一覧画面で存在しないタイトルで検索' do
