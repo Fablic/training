@@ -10,6 +10,16 @@
 |task_desc|text|
 |due_date|date|
 |priority|string|
+|user_id|integer|
+|status_id|integer|
+<br>
+
+### `user`
+|column|type|
+|---|---|
+|user_id|integer|
+|username|string|
+|password|string|
 <br>
 
 ### `status`
@@ -26,20 +36,10 @@
 |label_desc|string|
 <br>
 
-### `user`
+### `task_label`
 |column|type|
 |---|---|
-|user_id|integer|
-|username|string|
-|password|string|
-<br>
-
-### `task record`
-|column|type|
-|---|---|
-|record_id|integer|
+|id|integer|
 |task_id|integer|
-|user_id|integer|
-|status_id|integer|
 |label_id|integer|
 <br>
