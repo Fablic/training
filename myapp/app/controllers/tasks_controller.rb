@@ -39,8 +39,8 @@ class TasksController < ApplicationController
 
   def search
     @tasks = Task.search(params[:keyword], params[:status]).page(params[:page]).per(10)
-    @keyword = params[:keyword]
-    @status = params[:status]
+    @keyword = params[:keyword].present? ? params[:keyword] : ''
+    @status = params[:status].present? ? params[:status] : ''
     render "list"
   end
 
@@ -54,7 +54,7 @@ class TasksController < ApplicationController
   end
 
   def board_api
-    render json: Task.boardDataCreate
+    render json: Task.board_bata_create
   end
 
   private

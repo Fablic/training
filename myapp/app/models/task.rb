@@ -6,35 +6,56 @@ class Task < ApplicationRecord
   # いつか忘れる 誰かが困る 結構怒られる 何よりも重要
   enum importance: {low: 1, normal: 2, high: 3, very_high: 4}
 
-  FIRST_LEVEL_BASE_POINT   = 20
-  SECOUND_LEVEL_BASE_POINT = 50
-  THIRD_LEVEL_BASE_POINT   = 80
-  FOURTH_LEVEL_BASE_POINT  = 100
+  FIRST_LEVEL   = 1
+  SECOUND_LEVEL = 2
+  THIRD_LEVEL   = 3
+  FOURTH_LEVEL  = 4
+
+  FIRST_LEVEL_BASE_POINT   = 100
+  SECOUND_LEVEL_BASE_POINT = 80
+  THIRD_LEVEL_BASE_POINT   = 50
+  FOURTH_LEVEL_BASE_POINT  = 20
+
+  BASE_POINT_MAPPING_HASH = {
+    FIRST_LEVEL   => FIRST_LEVEL_BASE_POINT,
+    SECOUND_LEVEL => SECOUND_LEVEL_BASE_POINT,
+    THIRD_LEVEL   => THIRD_LEVEL_BASE_POINT,
+    FOURTH_LEVEL  => FOURTH_LEVEL_BASE_POINT
+  }
 
   def get_priority_point
-    hash = {
-      1 => [FIRST_LEVEL_BASE_POINT, 4, 3],
-      2 => [SECOUND_LEVEL_BASE_POINT, 6, 5],
-      3 => [THIRD_LEVEL_BASE_POINT, 6, 5],
-      4 => [FOURTH_LEVEL_BASE_POINT, 8, 7]
-    }
     level = search_apply_level()
-    cal_priority_point(*hash[level])
+    cal_priority_point(level)
   end
 
   def search_apply_level
     if Task.importances[importance] >= 3 && Task.urgencies[urgency] >= 3
-      4
+      FIRST_LEVEL
     elsif Task.importances[importance] <= 2 && Task.urgencies[urgency] <= 2
-      1
+      FOURTH_LEVEL
     elsif Task.importances[importance] >  Task.urgencies[urgency]
-      3
+      SECOUND_LEVEL
     else
-      2
+      THIRD_LEVEL
     end
   end
 
-  def cal_priority_point(base_point, first_comparison_value, secound_comparison_value)
+  def self.search(keyword = '', status = '')
+    where(["title like? AND status like?", "%#{keyword}%", "%#{status}%"])
+  end
+
+  def self.board_bata_create()
+    data = []
+    for level in 1..4 do
+      items = get_bord_item_data_by_priority_level(level)
+      data << set_board_data(level, items)
+    end
+    data
+  end
+
+  private
+
+  def cal_priority_point(level)
     date_diff = Date.new(deadline.strftime('%Y').to_i, deadline.strftime('%m').to_i, deadline.strftime('%e').to_i) - Date.today
 
     day_point = 0
@@ -45,48 +66,42 @@ class Task < ApplicationRecord
       end
     }
 
+    # レベル毎に比較する値
+    comparison_hash = {
+      FIRST_LEVEL   => [8, 7],
+      SECOUND_LEVEL => [6, 5],
+      THIRD_LEVEL   => [6, 5],
+      FOURTH_LEVEL  => [4, 3]
+    }
     total = Task.importances[importance] + Task.urgencies[urgency]
-    if total === first_comparison_value
-      base_point + day_point - 5
-    elsif total === secound_comparison_value
-      base_point + day_point - 10
+    if total === comparison_hash[level][0]
+      BASE_POINT_MAPPING_HASH[level] + day_point - 5
+    elsif total === comparison_hash[level][1]
+      BASE_POINT_MAPPING_HASH[level] + day_point - 10
     else
-      base_point + day_point - 20
+      BASE_POINT_MAPPING_HASH[level] + day_point - 20
     end
   end
 
-  def self.search(keyword, status)
-    where(["title like? AND status like?", "%#{keyword}%", "%#{status}%"])
-  end
-
-  def self.boardDataCreate()
-    data = []
-    for level in 1..4 do
-      items = getBordItemDataByPriorityLevel(level)
-      data << setBoardData(level, items)
-    end
-    return data
-  end
-
-  def self.getBordItemDataByPriorityLevel(level)
+  def self.get_bord_item_data_by_priority_level(level)
     case level
-    when 1
-      from = THIRD_LEVEL_BASE_POINT
-      to = FOURTH_LEVEL_BASE_POINT - 1
-    when 2
-      from = SECOUND_LEVEL_BASE_POINT
-      to = THIRD_LEVEL_BASE_POINT - 1
-    when 3
-      from = FIRST_LEVEL_BASE_POINT
-      to = SECOUND_LEVEL_BASE_POINT - 1
-    when 4
+    when FOURTH_LEVEL
       from = 0
+      to = FOURTH_LEVEL_BASE_POINT - 1
+    when THIRD_LEVEL
+      from = FOURTH_LEVEL_BASE_POINT
+      to = THIRD_LEVEL_BASE_POINT - 1
+    when SECOUND_LEVEL
+      from = THIRD_LEVEL_BASE_POINT
+      to = SECOUND_LEVEL_BASE_POINT - 1
+    when FIRST_LEVEL
+      from = SECOUND_LEVEL_BASE_POINT
       to = FIRST_LEVEL_BASE_POINT - 1
     end
-    return where(priority_point: from..to).order(priority_point: "DESC")
+    where(priority_point: from..to).order(priority_point: "DESC")
   end
 
-  def self.setBoardData(level, items)
+  def self.set_board_data(level, items)
     itemData = []
     items.each do |item|
       itemData << {
@@ -96,7 +111,7 @@ class Task < ApplicationRecord
       }
     end
 
-    return {
+    {
       title: "第" + level.to_s + "優先グループ",
       class: "task_group_" + level.to_s,
       item: itemData
