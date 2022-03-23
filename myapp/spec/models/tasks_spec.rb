@@ -16,12 +16,20 @@ RSpec.describe Task, type: :model do
         @task1.title = '----+----1----+----2----+----31'
         expect(@task1.valid?).to eq(false)
       end
+      it '正常' do
+        @task1.title = '----+----1----+----2----+----3'
+        expect(@task1.valid?).to eq(true)
+      end
     end
 
     context 'body' do
       it '空欄でないこと' do
         @task1.body = ''
         expect(@task1.valid?).to eq(false)
+      end
+      it '正常' do
+        @task1.body = "内容ないよー"
+        expect(@task1.valid?).to eq(true)
       end
     end
 
@@ -33,6 +41,11 @@ RSpec.describe Task, type: :model do
       it '今日以降の年月日であること' do
         @task1.deadline = Date.current.yesterday
         expect(@task1.valid?).to eq(false)
+        expect(@task1.errors[:deadline]).to include("は今日以降を選択してください")
+      end
+      it '正常' do
+        @task1.deadline = Date.current
+        expect(@task1.valid?).to eq(true)
       end
     end
 
@@ -41,6 +54,10 @@ RSpec.describe Task, type: :model do
         @task1.priority = ''
         expect(@task1.valid?).to eq(false)
       end
+      it '正常' do
+        @task1.priority = 1
+        expect(@task1.valid?).to eq(true)
+      end
     end
 
     context 'status' do
@@ -48,8 +65,12 @@ RSpec.describe Task, type: :model do
         @task1.status = ''
         expect(@task1.valid?).to eq(false)
       end
+      it '正常' do
+        @task1.status = 1
+        expect(@task1.valid?).to eq(true)
+      end
     end
-  end    
+  end
 
   feature '検索のテスト' do
     background do
