@@ -4,9 +4,9 @@ class TasksController < ApplicationController
   before_action :set_task, only: %i[show edit update destroy]
   def index
     @tasks = if Task.statuses.keys.include?(params[:status])
-               Task.where(status: params[:status]).task_name_partial_search(params[:task_name]).page(params[:page])
+               Task.includes([:user]).where(status: params[:status]).task_name_partial_search(params[:task_name]).page(params[:page])
              else
-               Task.all.task_name_partial_search(params[:task_name]).page(params[:page])
+               Task.includes([:user]).task_name_partial_search(params[:task_name]).page(params[:page])
              end
   end
 
@@ -16,6 +16,7 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
+    @task.user_id = User.first.id
     if @task.save
       redirect_to @task, notice: 'タスクを登録しました。'
     else
