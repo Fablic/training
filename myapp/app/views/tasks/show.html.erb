@@ -1,2 +1,23 @@
-<h1>Tasks#show</h1>
-<p>Find me in app/views/tasks/show.html.erb</p>
+<h1>Detail of task</h1>
+<table>
+  <tbody>
+    <tr>
+      <th>Task</th>
+      <td><%= @task.name %></td>
+    </tr>
+    <tr>
+      <th>Desc</th>
+      <td><%= @task.description %></td>
+    </tr>
+    <tr>
+      <th>Created at</th>
+      <td><%= @task.created_at %></td>
+    </tr>
+    <tr>
+      <th>Updated at</th>
+      <td><%= @task.updated_at %></td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<%= link_to 'Top', tasks_path %>
