@@ -214,4 +214,41 @@ RSpec.describe 'Tasks', type: :request do
       end
     end
   end
+
+  describe 'kaminari' do
+    context 'タスクが6つ登録されている時' do
+      before do
+        create_list(:task, 5)
+        create(:task, task_name: 'aiueo')
+      end
+
+      it '2ページ目にタスクが1つ表示されていること' do
+        get tasks_path, params: { page: 2 }
+        expect(response.body).to include 'aiueo'
+      end
+
+      it '1ページ目に6つ目のタスクが表示されていないこと' do
+        get tasks_path, params: { page: 1 }
+        expect(response.body).not_to include 'aiueo'
+      end
+
+      it '1ページ目のボタンが存在すること' do
+        get tasks_path, params: { page: 2 }
+        expect(response.body).to include '<a rel="prev" href="/">1</a>'
+      end
+    end
+
+    context 'タスクが5つ登録されている時' do
+      subject(:task_page) { get tasks_path, params: { page: 1 } }
+
+      before do
+        create_list(:task, 5)
+      end
+
+      it '2ページ目のボタンが存在しないこと' do
+        task_page
+        expect(response.body).not_to include '<a rel="next" href="/?page=2">2</a>'
+      end
+    end
+  end
 end
