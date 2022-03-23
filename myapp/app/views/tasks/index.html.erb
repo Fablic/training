@@ -1,0 +1,21 @@
+<h1>Task List</h1>
+<%= link_to 'タスクを追加', new_task_path %>
+<br>
+<table>
+  <thead>
+    <tr>
+      <th>Task</th>
+      <th>Desc</th>
+      <th>Created at</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tasks.each do |task| %>
+    <tr>
+      <td><%= task.name %></td>
+      <td><%= task.description %></td>
+      <td><%= task.created_at %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
