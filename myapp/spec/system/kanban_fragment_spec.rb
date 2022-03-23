@@ -22,7 +22,7 @@ RSpec.describe 'Kanban', type: :system do
       sleep(0.1)
 
       # check fragment
-      expect(URI.parse(page.current_url).fragment).to eq('kanban&sort=-created_at')
+      expect(URI.parse(page.current_url).fragment).to eq('sort=-created_at&viewmode=kanban')
 
       # check view/edit modal is not visible
       expect(page).to have_selector('#modal_edit', visible: false)
@@ -32,13 +32,13 @@ RSpec.describe 'Kanban', type: :system do
     end
 
     scenario 'kanban_mode' do
-      visit '/en/board/1#kanban'
+      visit '/en/board/1#viewmode=kanban'
       # wait for ajax
       expect(page).to have_selector('#kanban > div', visible: false)
       sleep(0.1)
 
       # check fragment
-      expect(URI.parse(page.current_url).fragment).to eq('kanban&sort=-created_at')
+      expect(URI.parse(page.current_url).fragment).to eq('viewmode=kanban&sort=-created_at')
 
       # check view/edit modal is not visible
       expect(page).to have_selector('#modal_edit', visible: false)
@@ -54,7 +54,7 @@ RSpec.describe 'Kanban', type: :system do
       sleep(0.1)
 
       # check fragment
-      expect(URI.parse(page.current_url).fragment).to eq('kanban&sort=-created_at')
+      expect(URI.parse(page.current_url).fragment).to eq('anything&sort=-created_at&viewmode=kanban')
 
       # check view/edit modal is not visible
       expect(page).to have_selector('#modal_edit', visible: false)
@@ -80,7 +80,7 @@ RSpec.describe 'Kanban', type: :system do
       expect(page).to have_selector('#modal_edit', visible: false)
 
       # check fragment
-      expect(URI.parse(page.current_url).fragment).to eq('kanban&sort=-created_at')
+      expect(URI.parse(page.current_url).fragment).to eq('sort=-created_at&viewmode=kanban')
     end
 
     scenario 'modify_mode_and_cancel' do
@@ -103,7 +103,7 @@ RSpec.describe 'Kanban', type: :system do
       expect(page).to have_selector('#modal_edit', visible: false)
 
       # check fragment
-      expect(URI.parse(page.current_url).fragment).to eq('kanban&sort=-created_at')
+      expect(URI.parse(page.current_url).fragment).to eq('sort=-created_at&viewmode=kanban')
     end
 
     scenario 'modify_mode_wrong_id' do
@@ -113,7 +113,7 @@ RSpec.describe 'Kanban', type: :system do
       sleep(0.1)
 
       # check fragment
-      expect(URI.parse(page.current_url).fragment).to eq('kanban&sort=-created_at')
+      expect(URI.parse(page.current_url).fragment).to eq('sort=-created_at&viewmode=kanban')
 
       # check view/edit modal is not visible
       expect(page).to have_selector('#modal_edit', visible: false)

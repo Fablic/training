@@ -62,3 +62,13 @@ div#modal_sort {
   border:solid 1px #505050;
   background-color:#ffffff;
 }
+div#modal_filter {
+  display:none;
+  position:fixed; 
+  width:200px;
+}
+
+div#modal_filter li{
+  cursor: pointer;
+}
+
