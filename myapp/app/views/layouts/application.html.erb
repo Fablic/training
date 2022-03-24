@@ -10,9 +10,13 @@
   </head>
 
   <body>
-    <% if flash.notice.present? %>
-      <p><%= flash.notice %></p>
-    <% end %>
-    <%= yield %>
+    <div class="container mt-3">
+      <% if flash.notice.present? %>
+        <p class="alert alert-secondary">
+          <%= flash.notice %>
+        </p>
+      <% end %>
+      <%= yield %>
+    </div>
   </body>
 </html>

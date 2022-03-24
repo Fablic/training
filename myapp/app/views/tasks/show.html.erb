@@ -1,5 +1,5 @@
 <h1>Detail of task</h1>
-<table>
+<table class="table">
   <tbody>
     <tr>
       <th>Task</th>
@@ -19,7 +19,5 @@
     </tr>
   </tbody>
 </table>
-<br>
-<%= link_to 'Edit', edit_task_path %>
-<br>
-<%= link_to 'Top', tasks_path %>
+<%= link_to 'Edit', edit_task_path, class: 'btn btn-primary' %>
+<%= link_to 'Top', tasks_path, class: 'btn btn-link' %>
