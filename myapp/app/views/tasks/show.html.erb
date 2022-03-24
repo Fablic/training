@@ -20,4 +20,5 @@
   </tbody>
 </table>
 <%= link_to 'Edit', edit_task_path, class: 'btn btn-primary' %>
+<%= link_to 'Delete', @task, method: :delete, data: { confirm: "Are you sure you want to delete '#{@task.name}'?" }, class: 'btn btn-danger' %>
 <%= link_to 'Top', tasks_path, class: 'btn btn-link' %>
