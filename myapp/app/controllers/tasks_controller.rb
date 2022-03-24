@@ -2,11 +2,12 @@
 
 class TasksController < ApplicationController
   before_action :set_task, only: %i[show edit update destroy]
+  before_action :logged_in_user
   def index
     @tasks = if Task.statuses.keys.include?(params[:status])
-               Task.includes([:user]).where(status: params[:status]).task_name_partial_search(params[:task_name]).page(params[:page])
+               Task.where(user_id: current_user.id).includes([:user]).where(status: params[:status]).task_name_partial_search(params[:task_name]).page(params[:page])
              else
-               Task.includes([:user]).task_name_partial_search(params[:task_name]).page(params[:page])
+               Task.where(user_id: current_user.id).includes([:user]).task_name_partial_search(params[:task_name]).page(params[:page])
              end
   end
 
@@ -16,7 +17,7 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
-    @task.user_id = User.first.id
+    @task.user_id = current_user.id
     if @task.save
       redirect_to @task, notice: 'タスクを登録しました。'
     else
@@ -25,9 +26,17 @@ class TasksController < ApplicationController
   end
 
   def show
+    @task = Task.find(params[:id])
+    unless @task.user.id == current_user.id
+      redirect_to  tasks_path
+    end
   end
 
   def edit
+    @task = Task.find(params[:id])
+    unless @task.user.id == current_user.id
+      redirect_to  tasks_path
+    end
   end
 
   def update
@@ -51,5 +60,11 @@ class TasksController < ApplicationController
 
   def task_params
     params.require(:task).permit(:task_name, :description, :starts_on, :ends_on, :priority, :label, :status)
+  end
+
+  def logged_in_user
+    if session[:user_id] == nil
+      redirect_to  '/sessions/login'
+    end
   end
 end
