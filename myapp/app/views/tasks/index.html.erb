@@ -7,6 +7,7 @@
       <th>Task</th>
       <th>Desc</th>
       <th>Created at</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -15,6 +16,7 @@
       <td><%= link_to task.name, task %></td>
       <td><%= task.description %></td>
       <td><%= task.created_at %></td>
+      <td><%= link_to 'Edit', edit_task_path(task) %></td>
     </tr>
     <% end %>
   </tbody>

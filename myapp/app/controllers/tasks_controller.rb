@@ -12,12 +12,19 @@ class TasksController < ApplicationController
   end
 
   def edit
+    @task = Task.find(params[:id])
   end
 
   def create
     task = Task.new(task_params)
     task.save!
-    redirect_to tasks_path, notice: "Saved a task #{task.name}"
+    redirect_to tasks_path, notice: "Saved a task '#{task.name}'"
+  end
+
+  def update
+    task = Task.find(params[:id])
+    task.update!(task_params)
+    redirect_to tasks_path, notice: "Updated a task '#{task.name}'"
   end
 
   private
