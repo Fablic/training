@@ -5,9 +5,16 @@ class TasksController < ApplicationController
   before_action :logged_in_user
   def index
     @tasks = if Task.statuses.keys.include?(params[:status])
-               Task.where(user_id: current_user.id).includes([:user]).where(status: params[:status]).task_name_partial_search(params[:task_name]).page(params[:page])
+               Task.includes([:user])
+                   .user_id_search(current_user.id)
+                   .task_name_partial_search(params[:task_name])
+                   .where(status: params[:status])
+                   .page(params[:page])
              else
-               Task.where(user_id: current_user.id).includes([:user]).task_name_partial_search(params[:task_name]).page(params[:page])
+               Task.includes([:user])
+                   .user_id_search(current_user.id)
+                   .task_name_partial_search(params[:task_name])
+                   .page(params[:page])
              end
   end
 
@@ -27,15 +34,19 @@ class TasksController < ApplicationController
 
   def show
     @task = Task.find(params[:id])
-    unless @task.user.id == current_user.id
-      redirect_to  tasks_path
+    if @task.user.id == current_user.id
+      task_path(@task)
+    else
+      render_404
     end
   end
 
   def edit
     @task = Task.find(params[:id])
-    unless @task.user.id == current_user.id
-      redirect_to  tasks_path
+    if @task.user.id == current_user.id
+      task_path(@task)
+    else
+      render_404
     end
   end
 

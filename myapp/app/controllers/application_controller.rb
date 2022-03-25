@@ -6,4 +6,8 @@ class ApplicationController < ActionController::Base
   def current_user
     User.find_by(id: session[:user_id])
   end
+
+  def render_404
+    render file: Rails.root.join('public/404.html'), status: :not_found, content_type: 'text/html'
+  end
 end
