@@ -1,0 +1,12 @@
+<%= form_with model: task, local: true do |f| %>
+  <div class="mb-3">
+    <%= f.label :name, "todo", class: 'form-label' %>
+    <%= f.text_field :name, class: 'form-control' %>
+  </div>
+  <div class="mb-3">
+    <%= f.label :description, "description", class: 'form-label' %>
+    <%= f.text_area :description, class: 'form-control' %>
+  </div>
+  <%= f.submit class: 'btn btn-primary' %>
+<% end %>
+<%= link_to 'Top', tasks_path, class: 'btn btn-link' %>
