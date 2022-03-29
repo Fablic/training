@@ -1,24 +1,24 @@
-<h1>Detail of task</h1>
+<h1><%= t '.title' %></h1>
 <table class="table">
   <tbody>
     <tr>
-      <th>Task</th>
+      <th><%= t 'tasks.task_name' %></th>
       <td><%= @task.name %></td>
     </tr>
     <tr>
-      <th>Desc</th>
+      <th><%= t 'tasks.task_desc' %></th>
       <td><%= @task.description %></td>
     </tr>
     <tr>
-      <th>Created at</th>
+      <th><%= t 'tasks.created_at' %></th>
       <td><%= @task.created_at %></td>
     </tr>
     <tr>
-      <th>Updated at</th>
+      <th><%= t 'tasks.updated_at' %></th>
       <td><%= @task.updated_at %></td>
     </tr>
   </tbody>
 </table>
-<%= link_to 'Edit', edit_task_path, class: 'btn btn-primary' %>
-<%= link_to 'Delete', @task, method: :delete, data: { confirm: "Are you sure you want to delete '#{@task.name}'?" }, class: 'btn btn-danger' %>
-<%= link_to 'Top', tasks_path, class: 'btn btn-link' %>
+<%= link_to t('tasks.edit_task'), edit_task_path, class: 'btn btn-secondary' %>
+<%= link_to t('tasks.delete_task'), @task, method: :delete, data: { confirm: "Are you sure you want to delete '#{@task.name}'?" }, class: 'btn btn-danger' %>
+<%= link_to t('tasks.top'), tasks_path, class: 'btn btn-link' %>
