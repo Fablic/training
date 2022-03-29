@@ -123,10 +123,10 @@ RSpec.describe 'Tasks', type: :request do
   end
 
   describe 'GET /show' do
-    context '詳細画面が存在する時' do
-      subject(:new_task) { get task_path Task.last }
+    context '詳細画面に遷移できる時' do
+      subject(:new_task) { get task_path task }
 
-      before { create(:task, task_name: 'piyo', status: 1, user: user) }
+      let(:task) { create(:task, task_name: 'piyo', status: 1, user: user) }
 
       it 'レスポンスが正しいこと' do
         new_task
@@ -138,10 +138,22 @@ RSpec.describe 'Tasks', type: :request do
         expect(response.body).to include 'piyo'
       end
     end
+
+    context '詳細画面に遷移できない時' do
+      subject(:new_task) { get task_path task }
+
+      let(:other_user) { create(:user) }
+      let(:task) { create(:task, user: other_user) }
+
+      it 'レスポンスが正しいこと' do
+        new_task
+        expect(response).to have_http_status (:not_found)
+      end
+    end
   end
 
   describe 'GET /edit' do
-    context '編集画面が存在する時' do
+    context '編集画面に遷移できる時' do
       subject(:new_task) { get edit_task_path Task.last }
 
       before { create(:task, task_name: 'piyo', status: 1, user: user) }
@@ -154,6 +166,18 @@ RSpec.describe 'Tasks', type: :request do
       it 'taskの情報が取得できていること' do
         new_task
         expect(response.body).to include 'hoge'
+      end
+    end
+
+    context '編集画面に遷移できない時' do
+      subject(:new_task) { get edit_task_path task }
+
+      let(:other_user) { create(:user) }
+      let(:task) { create(:task, user: other_user) }
+
+      it 'レスポンスが正しいこと' do
+        new_task
+        expect(response).to have_http_status (:not_found)
       end
     end
   end

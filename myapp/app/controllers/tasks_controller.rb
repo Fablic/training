@@ -5,16 +5,16 @@ class TasksController < ApplicationController
   before_action :logged_in_user
   def index
     @tasks = if Task.statuses.keys.include?(params[:status])
-               Task.includes([:user])
-                   .user_id_search(current_user.id)
-                   .task_name_partial_search(params[:task_name])
-                   .where(status: params[:status])
-                   .page(params[:page])
+                Task.includes([:user])
+                  .user_id_search(current_user.id)
+                  .task_name_partial_search(params[:task_name])
+                  .where(status: params[:status])
+                  .page(params[:page])
              else
-               Task.includes([:user])
-                   .user_id_search(current_user.id)
-                   .task_name_partial_search(params[:task_name])
-                   .page(params[:page])
+                Task.includes([:user])
+                  .user_id_search(current_user.id)
+                  .task_name_partial_search(params[:task_name])
+                  .page(params[:page])
              end
   end
 
@@ -71,11 +71,5 @@ class TasksController < ApplicationController
 
   def task_params
     params.require(:task).permit(:task_name, :description, :starts_on, :ends_on, :priority, :label, :status)
-  end
-
-  def logged_in_user
-    if session[:user_id] == nil
-      redirect_to  '/sessions/login'
-    end
   end
 end

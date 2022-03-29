@@ -8,7 +8,8 @@ class SessionsController < ApplicationController
       session[:user_id] = user.id
       redirect_to tasks_path, notice: (t 'users.flash.create.notice')
     else
-      redirect_to login_form_path, notice: (t 'users.flash.create.error_notice')
+      flash.now[:alert] = (t 'users.flash.create.error_notice')
+      render :new
     end
   end
 
