@@ -39,3 +39,10 @@ ja:
       title: タスク作成
       show: 編集
       back: 戻る
+  users:
+    flash:
+      create:
+        notice: ログインしました
+        error_notice: パスワードかメールアドレスが間違っています。
+      destroy:
+        notice: ログアウトしました

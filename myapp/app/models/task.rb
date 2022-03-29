@@ -14,6 +14,8 @@ class Task < ApplicationRecord
 
   belongs_to :user
 
+  private
+
   def ends_on_must_be_after_starts_on
     return if starts_on.blank? || ends_on.blank?
 

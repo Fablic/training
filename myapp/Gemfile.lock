@@ -42,6 +42,7 @@ GEM
       public_suffix (>= 2.0.2, < 5.0)
     arel (7.1.4)
     ast (2.4.2)
+    bcrypt (3.1.17)
     bindex (0.8.1)
     builder (3.2.4)
     bullet (7.0.1)
@@ -247,6 +248,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bcrypt (~> 3.1.7)
   bullet
   byebug
   capybara (>= 2.15)

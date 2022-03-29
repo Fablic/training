@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
 <h1><%= t '.title' %></h1>
 <%= form_tag(tasks_path,:method => 'get') do %>
   <%= t '.status' %>:<%= select_tag(:status, options_for_select(Task.statuses.keys.map { |k| [t("activerecord.enums.task.status.#{k}"), k]}),:include_blank => "未選択") %>
@@ -44,3 +42,4 @@
 <br>
 
 <%= link_to (t '.new_task'), new_task_path %>
+<%= link_to 'ログアウト', logout_path, method: :delete %>

@@ -3,7 +3,13 @@
 require 'rails_helper'
 
 RSpec.describe 'Tasks', type: :request do
+  let(:user) { create(:user) }
+
+  before { post login_path, params: { session: { email: user.email, password: 'Passw0rd' } } }
+
   describe 'GET /index' do
+    before { create(:task, task_name: 'piyo', status: 1, user: user) }
+
     context '一覧ページが存在する時' do
       it 'レスポンスが正しいこと' do
         get tasks_path
@@ -15,8 +21,6 @@ RSpec.describe 'Tasks', type: :request do
       subject(:task_name_status_search) { get tasks_path, params: { task_name: 'piyo', status: 1 } }
 
       context '検索したステータスと一致する時' do # rubocop:disable RSpec/NestedGroups
-        before { create(:task, task_name: 'piyo', status: 1) }
-
         it 'レスポンスが正しいこと' do
           task_name_status_search
           expect(response).to have_http_status(:ok)
@@ -24,15 +28,15 @@ RSpec.describe 'Tasks', type: :request do
 
         it 'ステータスとタスク名が一致しているタスクが含まれていること' do
           task_name_status_search
-          expect(response.body).to include('piyo', '未着手')
+          expect(response.body).to include('piyo', '着手')
         end
       end
     end
 
     context '一致するステータスを検索した時' do
-      subject(:task_name_status_search) { get tasks_path, params: { status: 'yet_started' } }
+      subject(:task_name_status_search) { get tasks_path, params: { status: 1 } }
 
-      before { create(:task, task_name: 'hoge', status: 0) }
+      before { create(:task, task_name: 'piyo', status: 1) }
 
       it 'レスポンスが正しいこと' do
         task_name_status_search
@@ -41,15 +45,15 @@ RSpec.describe 'Tasks', type: :request do
 
       it '一致するタスク名が表示されること' do
         task_name_status_search
-        expect(response.body).to include 'hoge'
+        expect(response.body).to include 'piyo'
       end
     end
 
     context 'ステータスを検索した時' do
-      subject(:task_name_status_search) { get tasks_path, params: { status: 'being_worked' } }
+      subject(:task_name_status_search) { get tasks_path, params: { status: 2 } }
 
       context 'ステータスが一致していない時' do # rubocop:disable RSpec/NestedGroups
-        before { create(:task, task_name: 'あいうえお', status: 2) }
+        before { create(:task, task_name: 'あいうえお', status: 1) }
 
         it 'レスポンスが正しいこと' do
           task_name_status_search
@@ -66,22 +70,18 @@ RSpec.describe 'Tasks', type: :request do
     context 'ステータスが未選択で値が送られた時' do
       subject(:task_name_status_search) { get tasks_path, params: { status: '' } }
 
-      before { create(:task, task_name: '研修', status: 1) }
-
       it 'タスク名を全て表示すること' do
         task_name_status_search
-        expect(response.body).to include '研修'
+        expect(response.body).to include 'piyo'
       end
     end
 
     context 'ステータスが未選択で、タスク名のみで検索した時' do
-      subject(:task_name_status_search) { get tasks_path, params: { task_name: 'テスト', status: '' } }
-
-      before { create(:task, task_name: 'テスト', status: 2) }
+      subject(:task_name_status_search) { get tasks_path, params: { task_name: 'piyo', status: '' } }
 
       it '該当するタスク名が表示されること' do
         task_name_status_search
-        expect(response.body).to include 'テスト'
+        expect(response.body).to include 'piyo'
       end
     end
   end
@@ -98,8 +98,6 @@ RSpec.describe 'Tasks', type: :request do
   describe 'POST /create' do
     context 'タスクが作成された時' do
       subject(:new_task) { post tasks_path, params: { task: attributes_for(:task) } }
-
-      before { create(:user) }
 
       it 'レスポンスが正しいこと' do
         new_task
@@ -125,10 +123,10 @@ RSpec.describe 'Tasks', type: :request do
   end
 
   describe 'GET /show' do
-    context '詳細画面が存在する時' do
-      subject(:new_task) { get tasks_path task.id }
+    context '詳細画面に遷移できる時' do
+      subject(:new_task) { get task_path task }
 
-      let(:task) { create(:task, task_name: 'Rails研修') }
+      let(:task) { create(:task, task_name: 'piyo', status: 1, user: user) }
 
       it 'レスポンスが正しいこと' do
         new_task
@@ -137,16 +135,28 @@ RSpec.describe 'Tasks', type: :request do
 
       it 'タスクネームが表示されること' do
         new_task
-        expect(response.body).to include 'Rails研修'
+        expect(response.body).to include 'piyo'
+      end
+    end
+
+    context '詳細画面に遷移できない時' do
+      subject(:new_task) { get task_path task }
+
+      let(:other_user) { create(:user) }
+      let(:task) { create(:task, user: other_user) }
+
+      it 'レスポンスが正しいこと' do
+        new_task
+        expect(response).to have_http_status (:not_found)
       end
     end
   end
 
   describe 'GET /edit' do
-    context '編集画面が存在する時' do
-      subject(:new_task) { get edit_task_path task.id }
+    context '編集画面に遷移できる時' do
+      subject(:new_task) { get edit_task_path Task.last }
 
-      let(:task) { create(:task, task_name: 'hoge') }
+      before { create(:task, task_name: 'piyo', status: 1, user: user) }
 
       it 'レスポンスが正しいこと' do
         new_task
@@ -156,6 +166,18 @@ RSpec.describe 'Tasks', type: :request do
       it 'taskの情報が取得できていること' do
         new_task
         expect(response.body).to include 'hoge'
+      end
+    end
+
+    context '編集画面に遷移できない時' do
+      subject(:new_task) { get edit_task_path task }
+
+      let(:other_user) { create(:user) }
+      let(:task) { create(:task, user: other_user) }
+
+      it 'レスポンスが正しいこと' do
+        new_task
+        expect(response).to have_http_status (:not_found)
       end
     end
   end
@@ -220,8 +242,8 @@ RSpec.describe 'Tasks', type: :request do
   describe 'kaminari' do
     context 'タスクが6つ登録されている時' do
       before do
-        create_list(:task, 5)
-        create(:task, task_name: 'aiueo')
+        create_list(:task, 5, task_name: 'piyo', status: 1, user: user)
+        create(:task, task_name: 'aiueo', user: user)
       end
 
       it '2ページ目にタスクが1つ表示されていること' do
@@ -243,9 +265,7 @@ RSpec.describe 'Tasks', type: :request do
     context 'タスクが5つ登録されている時' do
       subject(:task_page) { get tasks_path, params: { page: 1 } }
 
-      before do
-        create_list(:task, 5)
-      end
+      before { create_list(:task, 5, task_name: 'piyo', status: 1, user: user) }
 
       it '2ページ目のボタンが存在しないこと' do
         task_page
