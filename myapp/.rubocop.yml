@@ -1,3 +1,9 @@
 inherit_gem:
   fablicop:
     - "config/.base_rubocop.yml"
+
+AllCops:
+  Exclude:
+    - bin/*
+    - node_modules/**/*
+    - db/schema.rb
