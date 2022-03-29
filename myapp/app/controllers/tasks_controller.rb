@@ -5,16 +5,14 @@ class TasksController < ApplicationController
   before_action :logged_in_user
   def index
     @tasks = if Task.statuses.keys.include?(params[:status])
-                Task.includes([:user])
-                  .user_id_search(current_user.id)
-                  .task_name_partial_search(params[:task_name])
-                  .where(status: params[:status])
-                  .page(params[:page])
+                current_user.tasks
+                            .task_name_partial_search(params[:task_name])
+                            .where(status: params[:status])
+                            .page(params[:page])
              else
-                Task.includes([:user])
-                  .user_id_search(current_user.id)
-                  .task_name_partial_search(params[:task_name])
-                  .page(params[:page])
+                current_user.tasks
+                            .task_name_partial_search(params[:task_name])
+                            .page(params[:page])
              end
   end
 
@@ -33,8 +31,7 @@ class TasksController < ApplicationController
   end
 
   def show
-    @task = Task.find(params[:id])
-    if @task.user.id == current_user.id
+    if @task
       task_path(@task)
     else
       render_404
@@ -42,8 +39,7 @@ class TasksController < ApplicationController
   end
 
   def edit
-    @task = Task.find(params[:id])
-    if @task.user.id == current_user.id
+    if @task
       task_path(@task)
     else
       render_404
@@ -51,22 +47,31 @@ class TasksController < ApplicationController
   end
 
   def update
-    if @task.update(task_params)
-      redirect_to @task, notice: "ID#{@task.id}のタスクを更新しました。"
+    if @task
+      if @task.update(task_params)
+        redirect_to @task, notice: "ID#{@task.id}のタスクを更新しました。"
+      else
+        render :edit
+      end
     else
-      render :edit
+      render_404
     end
   end
 
   def destroy
-    @task.destroy
-    redirect_to tasks_url, notice: 'タスクを削除しました。'
+    if @task
+      if @task.destroy
+        redirect_to tasks_url, notice: 'タスクを削除しました。'
+      end
+    else
+      render_404
+    end
   end
 
   private
 
   def set_task
-    @task = Task.find(params[:id])
+    @task = current_user.tasks.find_by(id: params[:id])
   end
 
   def task_params
