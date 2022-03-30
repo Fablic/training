@@ -1,0 +1,18 @@
+ja:
+  tasks:
+    top: 'タスク一覧'
+    task_name: 'タスク名'
+    task_desc: '説明'
+    created_at: '作成日時'
+    updated_at: '更新日時'
+    edit_task: '編集'
+    delete_task: '削除'
+    index:
+      title: 'タスク一覧'
+      add_new_task: '新しいタスクを追加'
+    new:
+      title: 'タスクを追加'
+    edit:
+      title: 'タスクを編集'
+    show:
+      title: 'タスク詳細'

@@ -1,12 +1,12 @@
-<h1>Task List</h1>
-<%= link_to 'Add new task', new_task_path, class: 'btn btn-primary' %>
+<h1><%= t '.title' %></h1>
+<%= link_to t('.add_new_task'), new_task_path, class: 'btn btn-primary' %>
 <br>
 <table class="table">
   <thead>
     <tr>
-      <th>Task</th>
-      <th>Desc</th>
-      <th>Created at</th>
+      <th><%= t 'tasks.task_name' %></th>
+      <th><%= t 'tasks.task_desc' %></th>
+      <th><%= t 'tasks.created_at' %></th>
       <th></th>
     </tr>
   </thead>
@@ -15,10 +15,10 @@
     <tr>
       <td><%= link_to task.name, task %></td>
       <td><%= task.description %></td>
-      <td><%= task.created_at %></td>
+      <td><%= l task.created_at, format: :short %></td>
       <td>
-        <%= link_to 'Edit', edit_task_path(task), class: 'btn btn-secondary mr-3' %>
-        <%= link_to 'Delete', task, method: :delete, data: { confirm: "Are you sure you want to delete '#{task.name}'?" }, class: 'btn btn-danger' %>
+        <%= link_to t('tasks.edit_task'), edit_task_path(task), class: 'btn btn-secondary mr-3' %>
+        <%= link_to t('tasks.delete_task'), task, method: :delete, data: { confirm: "Are you sure you want to delete '#{task.name}'?" }, class: 'btn btn-danger' %>
       </td>
     </tr>
     <% end %>
