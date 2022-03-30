@@ -11,11 +11,11 @@
     </tr>
     <tr>
       <th><%= t 'tasks.created_at' %></th>
-      <td><%= @task.created_at %></td>
+      <td><%= l @task.created_at, format: :long %></td>
     </tr>
     <tr>
       <th><%= t 'tasks.updated_at' %></th>
-      <td><%= @task.updated_at %></td>
+      <td><%= l @task.updated_at, format: :long %></td>
     </tr>
   </tbody>
 </table>

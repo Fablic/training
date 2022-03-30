@@ -15,7 +15,7 @@
     <tr>
       <td><%= link_to task.name, task %></td>
       <td><%= task.description %></td>
-      <td><%= task.created_at %></td>
+      <td><%= l task.created_at, format: :short %></td>
       <td>
         <%= link_to t('tasks.edit_task'), edit_task_path(task), class: 'btn btn-secondary mr-3' %>
         <%= link_to t('tasks.delete_task'), task, method: :delete, data: { confirm: "Are you sure you want to delete '#{task.name}'?" }, class: 'btn btn-danger' %>
