@@ -27,7 +27,9 @@
 
 <p>
   <strong><%= t '.label' %></strong>
-  <%= @task.label %>
+  <% @task.labels.each do |label| %>
+    <%= label.label_name %>
+  <% end %>
 </p>
 
 <p>

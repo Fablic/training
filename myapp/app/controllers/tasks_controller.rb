@@ -4,16 +4,11 @@ class TasksController < ApplicationController
   before_action :set_task, only: %i[show edit update destroy]
   before_action :logged_in_user
   def index
-    @tasks = if Task.statuses.keys.include?(params[:status])
-                current_user.tasks
-                            .task_name_partial_search(params[:task_name])
-                            .where(status: params[:status])
-                            .page(params[:page])
-             else
-                current_user.tasks
-                            .task_name_partial_search(params[:task_name])
-                            .page(params[:page])
-             end
+    @tasks = current_user.tasks.includes([:task_labels]).includes([:labels])
+                         .task_name_partial_search(params[:task_name])
+                         .status_search(params[:status])
+                         .label_name_search(params[:label_name])
+                         .page(params[:page])
   end
 
   def new
@@ -75,6 +70,6 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:task_name, :description, :starts_on, :ends_on, :priority, :label, :status)
+    params.require(:task).permit(:task_name, :description, :starts_on, :ends_on, :priority, { label_ids: [] }, :status)
   end
 end
