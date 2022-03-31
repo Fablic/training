@@ -1,8 +1,8 @@
 <h1><%= t '.title' %></h1>
 <%= form_tag(tasks_path,:method => 'get') do %>
-  <%= t '.status' %>:<%= select_tag(:status, options_for_select(Task.statuses.keys.map { |k| [t("activerecord.enums.task.status.#{k}"), k]}),:include_blank => "未選択") %>
+  <%= t '.status' %>:<%= select_tag(:status, options_for_select(Task.statuses.keys.map { |k| [t("activerecord.enums.task.status.#{k}"), k]}),:include_blank => '未選択') %>
   <%= t '.task_name' %>:<%= text_field_tag :task_name %>
-  <%= t '.label' %>:<%= select_tag(:label_name, options_for_select(Label.pluck(:label_name)),:include_blank => "未選択") %>
+  <%= t '.label' %>:<%= select_tag(:label_name, options_for_select(Label.pluck(:label_name)),:include_blank => '未選択') %>
   <%= submit_tag :search %>
 <% end %>
 

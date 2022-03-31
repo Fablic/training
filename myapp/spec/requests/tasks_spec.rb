@@ -78,12 +78,23 @@ RSpec.describe 'Tasks', type: :request do
       end
     end
 
-    context 'タスク名のみで検索した時' do
-      subject(:task_name_status_search) { get tasks_path, params: { task_name: 'piyo', status: '' } }
+    context 'タスク名検索した時' do
+      context 'タスク名のみで検索した時' do # rubocop:disable RSpec/NestedGroups
+        subject(:task_name_status_search) { get tasks_path, params: { task_name: 'piyo', status: '' } }
 
-      it '該当するタスク名が表示されること' do
-        task_name_status_search
-        expect(response.body).to include 'piyo'
+        it '該当するタスク名が表示されること' do
+          task_name_status_search
+          expect(response.body).to include 'piyo'
+        end
+      end
+
+      context 'タスク名が一致していない時' do # rubocop:disable RSpec/NestedGroups
+        subject(:task_name_status_search) { get tasks_path, params: { task_name: 'piyo', status: '' } }
+
+        it '検索したタスク名が表示されていないこと' do
+          task_name_status_search
+          expect(response.body).not_to include 'aiueo'
+        end
       end
     end
 
