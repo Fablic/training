@@ -18,15 +18,21 @@ class TasksController < ApplicationController
   end
 
   def create
-    task = Task.new(task_params)
-    task.save!
-    redirect_to tasks_path, notice: "Saved a task '#{task.name}'"
+    @task = Task.new(task_params)
+    if @task.save
+      redirect_to tasks_path, notice: "Saved a task '#{@task.name}'"
+    else
+      render :new
+    end
   end
 
   def update
-    task = Task.find(params[:id])
-    task.update!(task_params)
-    redirect_to tasks_path, notice: "Updated a task '#{task.name}'"
+    @task = Task.find(params[:id])
+    if @task.update(task_params)
+      redirect_to tasks_path, notice: "Updated a task '#{@task.name}'"
+    else
+      render :edit
+    end
   end
 
   def destroy
