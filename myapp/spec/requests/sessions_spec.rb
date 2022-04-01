@@ -20,7 +20,7 @@ RSpec.describe 'Sessions', type: :request do
 
       it 'レスポンスが正しいこと' do
         login_user
-        expect(response).to redirect_to(login_form_path)
+        expect(response).to have_http_status(:ok)
       end
 
       it 'エラーメッセージが表示されていること' do

@@ -8,7 +8,11 @@ RSpec.describe 'Tasks', type: :request do
   before { post login_path, params: { session: { email: user.email, password: 'Passw0rd' } } }
 
   describe 'GET /index' do
-    before { create(:task, task_name: 'piyo', status: 1, user: user) }
+    before do
+      task = create(:task, task_name: 'piyo', status: 1, user: user)
+      label = create(:label, label_name: 'rails')
+      create(:task_label, task_id: task.id, label_id: label.id)
+    end
 
     context '一覧ページが存在する時' do
       it 'レスポンスが正しいこと' do
@@ -17,43 +21,41 @@ RSpec.describe 'Tasks', type: :request do
       end
     end
 
-    context 'タスク名とステータスを同時検索した時' do
-      subject(:task_name_status_search) { get tasks_path, params: { task_name: 'piyo', status: 1 } }
-
-      context '検索したステータスと一致する時' do # rubocop:disable RSpec/NestedGroups
-        it 'レスポンスが正しいこと' do
-          task_name_status_search
-          expect(response).to have_http_status(:ok)
-        end
-
-        it 'ステータスとタスク名が一致しているタスクが含まれていること' do
-          task_name_status_search
-          expect(response.body).to include('piyo', '着手')
-        end
-      end
-    end
-
-    context '一致するステータスを検索した時' do
-      subject(:task_name_status_search) { get tasks_path, params: { status: 1 } }
-
-      before { create(:task, task_name: 'piyo', status: 1) }
+    context 'タスク名とステータスとラベルを同時検索した時' do
+      subject(:task_name_status_search) { get tasks_path, params: { task_name: 'piyo', status: 1, label_name: 'rails' } }
 
       it 'レスポンスが正しいこと' do
         task_name_status_search
         expect(response).to have_http_status(:ok)
       end
 
-      it '一致するタスク名が表示されること' do
+      it 'ステータスとタスク名とラベルが一致しているタスクが含まれていること' do
         task_name_status_search
-        expect(response.body).to include 'piyo'
+        expect(response.body).to include('piyo', '着手', 'rails')
       end
     end
 
     context 'ステータスを検索した時' do
-      subject(:task_name_status_search) { get tasks_path, params: { status: 2 } }
+      context 'ステータスのみで検索した時' do # rubocop:disable RSpec/NestedGroups
+        subject(:task_name_status_search) { get tasks_path, params: { status: 1 } }
+
+        before { create(:task, task_name: 'テスト', status: 1, user: user) }
+
+        it 'レスポンスが正しいこと' do
+          task_name_status_search
+          expect(response).to have_http_status(:ok)
+        end
+
+        it '該当するタスク名が表示されること' do
+          task_name_status_search
+          expect(response.body).to include 'テスト'
+        end
+      end
 
       context 'ステータスが一致していない時' do # rubocop:disable RSpec/NestedGroups
-        before { create(:task, task_name: 'あいうえお', status: 1) }
+        subject(:task_name_status_search) { get tasks_path, params: { status: 2 } }
+
+        before { create(:task, task_name: 'あいうえお', status: 1, user: user) }
 
         it 'レスポンスが正しいこと' do
           task_name_status_search
@@ -76,12 +78,45 @@ RSpec.describe 'Tasks', type: :request do
       end
     end
 
-    context 'ステータスが未選択で、タスク名のみで検索した時' do
-      subject(:task_name_status_search) { get tasks_path, params: { task_name: 'piyo', status: '' } }
+    context 'タスク名検索した時' do
+      context 'タスク名のみで検索した時' do # rubocop:disable RSpec/NestedGroups
+        subject(:task_name_status_search) { get tasks_path, params: { task_name: 'piyo', status: '' } }
 
-      it '該当するタスク名が表示されること' do
-        task_name_status_search
-        expect(response.body).to include 'piyo'
+        it '該当するタスク名が表示されること' do
+          task_name_status_search
+          expect(response.body).to include 'piyo'
+        end
+      end
+
+      context 'タスク名が一致していない時' do # rubocop:disable RSpec/NestedGroups
+        subject(:task_name_status_search) { get tasks_path, params: { task_name: 'aiueo', status: '' } }
+
+        it '検索したタスク名が表示されていないこと' do
+          task_name_status_search
+          expect(response.body).not_to include 'piyo'
+        end
+      end
+    end
+
+    context 'ラベル検索した時' do
+      context 'ラベルのみで検索した時' do # rubocop:disable RSpec/NestedGroups
+        subject(:task_name_status_search) { get tasks_path, params: { task_name: '', status: '', label_name: 'rails' } }
+
+        it '該当するラベルが表示されること' do
+          task_name_status_search
+          expect(response.body).to include 'rails'
+        end
+      end
+
+      context 'ラベルが一致していない時' do # rubocop:disable RSpec/NestedGroups
+        subject(:task_name_status_search) { get tasks_path, params: { task_name: '', status: '', label_name: 'rails' } }
+
+        before { create(:task, task_name: 'かきくけこ', label: 'ruby') }
+
+        it '検索したタスク名が表示されていないこと' do
+          task_name_status_search
+          expect(response.body).not_to include 'かきくけこ'
+        end
       end
     end
   end
@@ -186,7 +221,7 @@ RSpec.describe 'Tasks', type: :request do
     context 'タスク更新が成功した時' do
       subject(:new_task) { put task_url task, params: { task: attributes_for(:task, task_name: 'hoge') } }
 
-      let(:task) { create(:task) }
+      let(:task) { create(:task, task_name: 'あいうえお', user: user) }
 
       it 'レスポンスが正しいこと' do
         new_task
@@ -215,7 +250,7 @@ RSpec.describe 'Tasks', type: :request do
     context 'タスク削除が成功した時' do
       subject(:new_task) { delete task_url task }
 
-      let(:task) { create(:task) }
+      let(:task) { create(:task, task_name: 'あいうえお', user: user) }
 
       it 'レスポンスが正しいこと' do
         new_task
