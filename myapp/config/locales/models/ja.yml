@@ -6,3 +6,4 @@ ja:
       task:
         name: 'タスク名'
         description: '説明'
+        status: 'ステータス'

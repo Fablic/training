@@ -10,6 +10,10 @@
       <td><%= @task.description %></td>
     </tr>
     <tr>
+      <th><%= t 'tasks.task_status' %></th>
+      <td><%= @task.status %></td>
+    </tr>
+    <tr>
       <th><%= t 'tasks.created_at' %></th>
       <td><%= l @task.created_at, format: :long %></td>
     </tr>

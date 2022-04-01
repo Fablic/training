@@ -16,6 +16,10 @@
     <%= f.label :description, class: 'form-label' %>
     <%= f.text_area :description, class: 'form-control' %>
   </div>
+  <div class="mb-3">
+    <%= f.label :status, class: 'form-label' %>
+    <%= f.select :status, Task.statuses.keys.map { |k| [k, k] }, {}, { class: 'form-select' } %>
+  </div>
   <%= f.submit class: 'btn btn-primary' %>
 <% end %>
 <%= link_to t('tasks.top'), tasks_path, class: 'btn btn-link' %>
