@@ -93,7 +93,7 @@ RSpec.describe 'Tasks', type: :request do
 
         it '検索したタスク名が表示されていないこと' do
           task_name_status_search
-          expect(response.body).not_to include 'aiueo'
+          expect(response.body).not_to include 'piyo'
         end
       end
     end
