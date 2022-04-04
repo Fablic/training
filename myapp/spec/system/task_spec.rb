@@ -27,8 +27,8 @@ describe 'タスク管理機能', type: :system do
     context '新しいタスクを登録したとき' do
       it 'タスクが登録されタスク一覧に表示される' do
         visit new_task_path
-        fill_in 'todo',	with: '新しいタスク'
-        click_button 'Create Task'
+        fill_in 'タスク名',	with: '新しいタスク'
+        click_button '登録する'
         expect(page).to have_content '新しいタスク'
       end
     end
@@ -38,9 +38,9 @@ describe 'タスク管理機能', type: :system do
     context '既存のタスクを編集したとき' do
       it 'タスクが編集がされタスク一覧に反映される' do
         visit tasks_path
-        click_on 'Edit'
-        fill_in 'todo',	with: '編集したタスク'
-        click_on 'Update Task'
+        click_on '編集'
+        fill_in 'タスク名',	with: '編集したタスク'
+        click_on '更新する'
         expect(page).to have_content '編集したタスク'
       end
     end
@@ -50,7 +50,7 @@ describe 'タスク管理機能', type: :system do
     context '既存のタスクを削除したとき' do
       it 'タスクが削除がされタスク一覧に表示されない' do
         visit tasks_path
-        click_on 'Delete'
+        click_on '削除'
         expect(page).to have_no_selector 'td', text: 'task_name'
       end
     end
