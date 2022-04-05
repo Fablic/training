@@ -5,9 +5,9 @@ ja:
         display_entries: "全%{total}件中 %{first}&nbsp;-&nbsp;%{last}件の%{entry_name}を表示しています"
       one_page:
         display_entries:
-          one: "<b>%{count}</b>レコード表示中です %{entry_name}"
-          other: "<b>%{count}</b>レコード表示中です %{entry_name}"
-          zero: "レコードが見つかりませんでした %{entry_name}"
+          one: "%{count}件の%{entry_name}"
+          other: "%{count}件の%{entry_name}"
+          zero: "該当する%{entry_name}はありません"
   views:
     pagination:
       first: "&laquo; 最初"
