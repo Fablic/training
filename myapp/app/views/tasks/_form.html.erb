@@ -1,3 +1,12 @@
+<% if task.errors.present? %>
+  <div class="alert alert-danger">
+    <ul>
+      <% task.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
 <%= form_with model: task, local: true do |f| %>
   <div class="mb-3">
     <%= f.label :name, class: 'form-label' %>
