@@ -1,4 +1,12 @@
 ja:
+  views:
+    pagination:
+      first: "&laquo; 最初"
+      last: "最後 &raquo;"
+      previous: "&lsaquo; 前"
+      next: "次 &rsaquo;"
+      truncate: "..."
+
   activerecord:
     models:
       task: タスク
@@ -10,6 +18,7 @@ ja:
         urgency: "緊急度"
         importance: "重要度"
         deadline: "期限"
+
   enums:
     task:
       status:
@@ -37,6 +46,7 @@ ja:
       importance: "やらないと？"
       priority_point: "優先ポイント"
       deadline: "期限"
+      create_button: "タスクを作成"
     new:
       submit: "登録"
       confirm: "入力した内容で登録しますか？"
@@ -49,7 +59,8 @@ ja:
       edit_button: "編集"
       delete_button: "削除"
     list:
-      create_button: "タスクを作成"
+      not_choose: "全ステータス"
+      search: "検索"
       garbage: "ゴミ箱"
 
   errors:

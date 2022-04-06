@@ -1,1 +1,12 @@
-<h1>index</h1>
+<%= stylesheet_link_tag 'task_board', media: 'all', 'data-turbolinks-track': 'reload' %>
+<%= stylesheet_link_tag 'jkanban', media: 'all', 'data-turbolinks-track': 'reload' %>
+<%= javascript_pack_tag 'tasks_index', 'data-turbolinks-track': 'reload' %>
+<%= javascript_pack_tag 'jkanban', 'data-turbolinks-track': 'reload' %>
+
+<div class="create-task-ticket index">
+    <div class="create-field">
+        <span class="task-id"><%= t("tasks.default.create_button") %></span>
+    </div>
+</div>
+
+<div id="myKanban" style="width:100%"></div>

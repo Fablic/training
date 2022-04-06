@@ -19,11 +19,30 @@ Capybara.register_driver :remote_chrome do |app|
 
   RSpec.configure do |config|
 
+    config.include FactoryBot::Syntax::Methods
+    config.before(:suite) do
+      DatabaseCleaner.strategy = :truncation
+    end
+
+    config.after(:each) do
+      DatabaseCleaner.clean
+    end
+
+    config.before(:all) do
+      DatabaseCleaner.start
+    end
+
+    config.after(:all) do
+      DatabaseCleaner.clean
+    end
+
     config.before(:each, type: :system) do
-        driven_by :selenium, using: :headless_chrome, screen_size: [1280, 800], options: { args: ["headless", "disable-gpu", "no-sandbox", "disable-dev-shm-usage"] }
+      DatabaseCleaner.start
+      driven_by :selenium, using: :headless_chrome, screen_size: [1280, 800], options: { args: ["headless", "disable-gpu", "no-sandbox", "disable-dev-shm-usage"] }
     end
 
     config.before(:each, type: :system, js: true) do
+      DatabaseCleaner.start
       driven_by :remote_chrome
       Capybara.server_host = IPSocket.getaddress(Socket.gethostname)
       Capybara.server_port = 3001

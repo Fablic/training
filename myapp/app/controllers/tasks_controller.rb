@@ -17,7 +17,7 @@ class TasksController < ApplicationController
   def index; end
 
   def list
-    @tasks = Task.all
+    @tasks = Task.page(params[:page]).per(10)
   end
 
   def show
@@ -46,6 +46,13 @@ class TasksController < ApplicationController
     redirect_to root_path, notice: '#' + params[:id] + 'を削除しました'
   end
 
+  def search
+    @tasks = Task.search(params[:keyword], params[:status]).page(params[:page]).per(10)
+    @keyword = params[:keyword].present? ? params[:keyword] : ''
+    @status = params[:status].present? ? params[:status] : ''
+    render "list"
+  end
+
   def destroy_api
     task = Task.find(params[:id])
     if task.destroy then
@@ -53,6 +60,10 @@ class TasksController < ApplicationController
     else
         render json: { status: 'ERROR'}
     end
+  end
+
+  def board_api
+    render json: Task.board_bata_create
   end
 
   private

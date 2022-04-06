@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AACA,AAAA,aAAa,CAAC;EACV,gBAAgB,EAAE,SAAS;CAC9B;;AACD,AAAA,aAAa,CAAC;EACV,gBAAgB,EAAE,SAAS;CAC9B;;AACD,AAAA,aAAa,CAAC;EACV,gBAAgB,EAAE,SAAS;CAC9B;;AACD,AAAA,aAAa,CAAC;EACV,gBAAgB,EAAE,SAAS;CAC9B",
+    "sources": [
+        "task_board.scss"
+    ],
+    "names": [],
+    "file": "task_board.css"
+}

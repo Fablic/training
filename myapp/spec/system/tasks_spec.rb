@@ -1,5 +1,9 @@
-feature 'tasks', type: :system, js: true do
+require 'rails_helper'
 
+feature 'tasks', type: :system, js: true do
+  before(:each) do
+    @task = create(:task)
+  end
   let(:input_title ){ 'task[title]'}
   let(:input_body ){ 'task[body]'}
   let(:input_deadline ){ 'task[deadline]'}
@@ -54,6 +58,27 @@ feature 'tasks', type: :system, js: true do
       end
     end
   end
+
+  describe 'タスクを検索する', type: :system do
+    context '一覧画面で存在するタイトルで検索' do
+      it '１件タスクが表示さる。' do
+        visit root_path
+        fill_in 'keyword', with: 'test title'
+        click_button 'commit'
+
+        expect(page).to have_content 'test title'
+      end
+    end
+
+    context '一覧画面で存在しないタイトルで検索' do
+      it '１件もタスクが表示されない' do
+        visit root_path
+        fill_in 'keyword', with: 'no exist keyword'
+        click_button 'commit'
+
+        expect(page).not_to have_content '#'
+      end
+    end
 
   describe '登録画面のバリデーションの動作を確認する', type: :system do
     context '入力項目を空にして登録ボタンをクリック' do

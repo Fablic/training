@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_07_051447) do
+ActiveRecord::Schema.define(version: 2022_03_16_015607) do
+
+  create_table "labels", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.integer "user_id", null: false, comment: "ユーザーID"
+    t.string "name", limit: 45, null: false, comment: "名前"
+    t.integer "color", null: false, comment: "カラー"
+    t.integer "deleted", default: 0, null: false, comment: "削除フラグ"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "tasks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.integer "user_id", null: false, comment: "ユーザーID"
@@ -24,6 +33,24 @@ ActiveRecord::Schema.define(version: 2022_02_07_051447) do
     t.integer "deleted", default: 0, null: false, comment: "削除フラグ"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "tasks_labels", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.integer "task_id", null: false, comment: "タスクID"
+    t.integer "label_id", null: false, comment: "ラベルID"
+    t.integer "deleted", default: 0, null: false, comment: "削除フラグ"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "name", limit: 45, null: false, comment: "名前"
+    t.string "email", null: false, comment: "メールアドレス"
+    t.string "password_digest", null: false
+    t.integer "deleted", default: 0, null: false, comment: "削除フラグ"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "remember_token"
   end
 
 end
