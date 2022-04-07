@@ -6,3 +6,8 @@ ja:
       task:
         name: 'タスク名'
         description: '説明'
+        status: 'ステータス'
+      task/status:
+        not_started: '未着手'
+        in_progress: '着手中'
+        done: '完了'

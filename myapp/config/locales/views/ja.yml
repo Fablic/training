@@ -3,6 +3,7 @@ ja:
     top: 'タスク一覧'
     task_name: 'タスク名'
     task_desc: '説明'
+    task_status: 'ステータス'
     created_at: '作成日時'
     updated_at: '更新日時'
     edit_task: '編集'

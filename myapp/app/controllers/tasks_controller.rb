@@ -2,7 +2,8 @@
 
 class TasksController < ApplicationController
   def index
-    @tasks = Task.all
+    @q = Task.ransack(params[:q])
+    @tasks = @q.result
   end
 
   def show
@@ -44,6 +45,6 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:name, :description)
+    params.require(:task).permit(:name, :description, :status)
   end
 end
