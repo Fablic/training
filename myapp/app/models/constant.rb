@@ -1,0 +1,2 @@
+class Constant < ApplicationRecord
+end
