@@ -18,7 +18,7 @@
   </div>
   <div class="mb-3">
     <%= f.label :status, class: 'form-label' %>
-    <%= f.select :status, Task.statuses.keys.map { |k| [k, k] }, {}, { class: 'form-select' } %>
+    <%= f.select :status, Task.statuses.keys.map { |k| [Task.human_attribute_name("status.#{k}"), k] }, {}, { class: 'form-select' } %>
   </div>
   <%= f.submit class: 'btn btn-primary' %>
 <% end %>
