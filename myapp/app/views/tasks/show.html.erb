@@ -11,7 +11,7 @@
     </tr>
     <tr>
       <th><%= t 'tasks.task_status' %></th>
-      <td><%= @task.status %></td>
+      <td><%= Task.human_attribute_name("status.#{@task.status}") %></td>
     </tr>
     <tr>
       <th><%= t 'tasks.created_at' %></th>
