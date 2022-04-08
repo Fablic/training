@@ -12,3 +12,5 @@ User.create(user_name: '太郎', email: 'bbb@example.co.jp', password: '1234567'
 5.times do |i|
   Label.create!(label_name: "sample#{i + 1}")
 end
+
+Constant.create(name: 'maintenance', value: 'off')
