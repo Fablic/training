@@ -1,5 +1,7 @@
-User.create(
-  name: 'user1',
-  email: 'user1@example.com',
-  password_digest: 'password',
-)
+3.times do |i|
+  User.create(
+    name: "user#{i}",
+    email: "user#{i}@example.com",
+    password: 'password',
+  )
+end
