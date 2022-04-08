@@ -23,3 +23,5 @@ ja:
       submit: 'ログイン'
     create:
       message_login: 'ログインしました'
+    destroy:
+      message_logout: 'ログアウトしました'
