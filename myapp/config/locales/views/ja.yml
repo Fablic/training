@@ -21,3 +21,5 @@ ja:
     new:
       title: 'ログイン'
       submit: 'ログイン'
+    create:
+      message_login: 'ログインしました'
