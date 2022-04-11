@@ -33,6 +33,7 @@ gem 'jquery-rails'
 
 gem 'fablicop', require: false
 
+gem 'kaminari'
 gem 'ransack'
 
 group :development, :test do

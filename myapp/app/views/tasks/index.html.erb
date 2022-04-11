@@ -19,6 +19,12 @@
 <% end %>
 
 <%= link_to t('.add_new_task'), new_task_path, class: 'btn btn-primary mb-3' %>
+
+<div class="mb-3">
+  <%= paginate @tasks %>
+  <%= page_entries_info @tasks %>
+</div>
+
 <table class="table">
   <thead>
     <tr>
