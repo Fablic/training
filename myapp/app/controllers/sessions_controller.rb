@@ -10,6 +10,7 @@ class SessionsController < ApplicationController
       session[:user_id] = user.id
       redirect_to root_url, notice: t('.message_login')
     else
+      flash.now[:notice] = t('.message_login_failed')
       render :new
     end
   end
