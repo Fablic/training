@@ -7,3 +7,7 @@
     password: 'password',
   )
 end
+
+%w[work private others].each do |l|
+  Label.create!(name: l)
+end
