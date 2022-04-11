@@ -2,11 +2,11 @@
 <%= form_with scope: :session, local: true do |f| %>
   <div class="mb-3">
     <%= f.label :email, class: 'form-label' %>
-    <%= f.text_field :email, class: 'form-control' %>
+    <%= f.text_field :email, class: 'form-control', required: true %>
   </div>
   <div class="mb-3">
     <%= f.label :password, class: 'form-label' %>
-    <%= f.password_field :password, class: 'form-control' %>
+    <%= f.password_field :password, class: 'form-control', required: true %>
   </div>
   <%= f.submit t('.submit'), class: 'btn btn-primary' %>
 <% end %>
