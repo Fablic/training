@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 3.times do |i|
   User.create(
     name: "user#{i}",
