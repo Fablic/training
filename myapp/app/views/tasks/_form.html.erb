@@ -20,6 +20,12 @@
     <%= f.label :status, class: 'form-label' %>
     <%= f.select :status, Task.statuses.keys.map { |k| [Task.human_attribute_name("status.#{k}"), k] }, {}, { class: 'form-select' } %>
   </div>
+  <div class="mb-3">
+    <%= f.collection_check_boxes :label_ids, Label.all, :id, :name do |b| %>
+      <%= b.check_box class: 'form-check-input' %>
+      <%= b.label class: 'form-check-label me-2' %>
+    <% end %>
+  </div>
   <%= f.submit class: 'btn btn-primary' %>
 <% end %>
 <%= link_to t('tasks.top'), tasks_path, class: 'btn btn-link' %>
