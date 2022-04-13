@@ -23,6 +23,12 @@ RSpec.describe User, type: :model do
       user = described_class.new(password: nil)
       expect(user).not_to be_valid
     end
+
+    it 'is invalid when users are duplicated' do
+      described_class.create(name: 'user1', email: 'user1@example.com', password: 'password')
+      user = described_class.new(name: 'user1_dup', email: 'user1@example.com', password: 'password')
+      expect(user).not_to be_valid
+    end
   end
 
   describe 'association' do
