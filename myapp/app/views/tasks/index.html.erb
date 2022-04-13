@@ -31,6 +31,7 @@
       <th><%= t 'tasks.task_name' %></th>
       <th><%= t 'tasks.task_desc' %></th>
       <th><%= t 'tasks.task_status' %></th>
+      <th><%= t 'tasks.task_label' %></th>
       <th><%= t 'tasks.created_at' %></th>
       <th></th>
     </tr>
@@ -41,6 +42,13 @@
       <td><%= link_to task.name, task %></td>
       <td><%= task.description %></td>
       <td><%= Task.human_attribute_name("status.#{task.status}") %></td>
+      <td>
+        <% task.labels.each do |label| %>
+          <span class="btn btn-secondary btn-sm" style="pointer-events:none;">
+            <%= label.name %>
+          </span>
+        <% end %>
+      </td>
       <td><%= l task.created_at, format: :short %></td>
       <td>
         <%= link_to t('tasks.edit_task'), edit_task_path(task), class: 'btn btn-secondary mr-3' %>
