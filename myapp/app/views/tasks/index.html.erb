@@ -3,14 +3,18 @@
 <%= search_form_for @q do |f| %>
   <div class="row">
     <%= f.label :name_cont, t('tasks.task_name'), class: 'col-4 col-form-label' %>
-    <%= f.label :status_eq, t('tasks.task_status'), class: 'col-4 col-form-label' %>
+    <%= f.label :status_eq, t('tasks.task_status'), class: 'col-3 col-form-label' %>
+    <%= f.label :labels_id_eq, t('tasks.task_label'), class: 'col-3 col-form-label' %>
   </div>
   <div class="row mb-4">
     <div class="col-4">
       <%= f.search_field :name_cont, class: 'form-control' %>
     </div>
-    <div class="col-4">
+    <div class="col-3">
       <%= f.select :status_eq, Task.statuses.keys.map.with_index { |k, i| [Task.human_attribute_name("status.#{k}"), i] }, { include_blank: true }, { class: 'form-select' } %>
+    </div>
+    <div class="col-3">
+      <%= f.select :labels_id_eq, options_from_collection_for_select(Label.all, :id, :name), { include_blank: true }, { class: 'form-select' } %>
     </div>
     <div class="col">
       <%= f.submit class: 'btn btn-outline-primary' %>
