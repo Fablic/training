@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class TasksController < ApplicationController
-  before_action :set_task, only: %i[show edit update destroy]
+  before_action :find_task, only: %i[show edit update destroy]
 
   def index
     @q = current_user.tasks.ransack(params[:q])
@@ -46,7 +46,7 @@ class TasksController < ApplicationController
     params.require(:task).permit(:name, :description, :status)
   end
 
-  def set_task
+  def find_task
     @task = current_user.tasks.find(params[:id])
   end
 end
