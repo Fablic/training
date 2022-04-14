@@ -1,4 +1,4 @@
-<h1><%= t('.title') %></h1>
+<h1><%= I18n.t('sessions.new.title') %></h1>
 <%= form_with scope: :session, local: true do |f| %>
   <div class="mb-3">
     <%= f.label :email, class: 'form-label' %>
@@ -8,5 +8,5 @@
     <%= f.label :password, class: 'form-label' %>
     <%= f.password_field :password, class: 'form-control', required: true %>
   </div>
-  <%= f.submit t('.submit'), class: 'btn btn-primary' %>
+  <%= f.submit I18n.t('sessions.new.submit'), class: 'btn btn-primary' %>
 <% end %>

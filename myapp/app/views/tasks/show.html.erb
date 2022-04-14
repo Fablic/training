@@ -1,28 +1,28 @@
-<h1><%= t '.title' %></h1>
+<h1><%= I18n.t 'tasks.show.title' %></h1>
 <table class="table">
   <tbody>
     <tr>
-      <th><%= t 'tasks.task_name' %></th>
+      <th><%= I18n.t 'tasks.task_name' %></th>
       <td><%= @task.name %></td>
     </tr>
     <tr>
-      <th><%= t 'tasks.task_desc' %></th>
+      <th><%= I18n.t 'tasks.task_desc' %></th>
       <td><%= @task.description %></td>
     </tr>
     <tr>
-      <th><%= t 'tasks.task_status' %></th>
+      <th><%= I18n.t 'tasks.task_status' %></th>
       <td><%= Task.human_attribute_name("status.#{@task.status}") %></td>
     </tr>
     <tr>
-      <th><%= t 'tasks.created_at' %></th>
+      <th><%= I18n.t 'tasks.created_at' %></th>
       <td><%= l @task.created_at, format: :long %></td>
     </tr>
     <tr>
-      <th><%= t 'tasks.updated_at' %></th>
+      <th><%= I18n.t 'tasks.updated_at' %></th>
       <td><%= l @task.updated_at, format: :long %></td>
     </tr>
   </tbody>
 </table>
-<%= link_to t('tasks.edit_task'), edit_task_path, class: 'btn btn-secondary' %>
-<%= link_to t('tasks.delete_task'), @task, method: :delete, data: { confirm: "Are you sure you want to delete '#{@task.name}'?" }, class: 'btn btn-danger' %>
-<%= link_to t('tasks.top'), tasks_path, class: 'btn btn-link' %>
+<%= link_to I18n.t('tasks.edit_task'), edit_task_path, class: 'btn btn-secondary' %>
+<%= link_to I18n.t('tasks.delete_task'), @task, method: :delete, data: { confirm: "Are you sure you want to delete '#{@task.name}'?" }, class: 'btn btn-danger' %>
+<%= link_to I18n.t('tasks.top'), tasks_path, class: 'btn btn-link' %>
