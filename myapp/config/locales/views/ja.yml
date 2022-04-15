@@ -17,3 +17,12 @@ ja:
       title: 'タスクを編集'
     show:
       title: 'タスク詳細'
+  sessions:
+    new:
+      title: 'ログイン'
+      submit: 'ログイン'
+    create:
+      message_login: 'ログインしました'
+      message_login_failed: 'ログインできませんでした'
+    destroy:
+      message_logout: 'ログアウトしました'

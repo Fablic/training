@@ -1,13 +1,14 @@
 # frozen_string_literal: true
 
 class TasksController < ApplicationController
+  before_action :find_task, only: %i[show edit update destroy]
+
   def index
-    @q = Task.ransack(params[:q])
+    @q = current_user.tasks.ransack(params[:q])
     @tasks = @q.result.page(params[:page]).per(20)
   end
 
   def show
-    @task = Task.find(params[:id])
   end
 
   def new
@@ -15,11 +16,10 @@ class TasksController < ApplicationController
   end
 
   def edit
-    @task = Task.find(params[:id])
   end
 
   def create
-    @task = Task.new(task_params)
+    @task = current_user.tasks.new(task_params)
     if @task.save
       redirect_to tasks_path, notice: "Saved a task '#{@task.name}'"
     else
@@ -28,7 +28,6 @@ class TasksController < ApplicationController
   end
 
   def update
-    @task = Task.find(params[:id])
     if @task.update(task_params)
       redirect_to tasks_path, notice: "Updated a task '#{@task.name}'"
     else
@@ -37,14 +36,17 @@ class TasksController < ApplicationController
   end
 
   def destroy
-    task = Task.find(params[:id])
-    task.destroy
-    redirect_to tasks_path, notice: "Deleted a task '#{task.name}'"
+    @task.destroy
+    redirect_to tasks_path, notice: "Deleted a task '#{@task.name}'"
   end
 
   private
 
   def task_params
     params.require(:task).permit(:name, :description, :status)
+  end
+
+  def find_task
+    @task = current_user.tasks.find(params[:id])
   end
 end

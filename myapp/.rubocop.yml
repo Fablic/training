@@ -7,3 +7,6 @@ AllCops:
     - bin/*
     - node_modules/**/*
     - db/schema.rb
+    - db/migrate/*
+    - config/**/*
+    - config.ru
