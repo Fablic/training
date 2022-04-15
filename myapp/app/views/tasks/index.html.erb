@@ -1,10 +1,10 @@
-<h1><%= t '.title' %></h1>
+<h1><%= I18n.t 'tasks.index.title' %></h1>
 
 <%= search_form_for @q do |f| %>
   <div class="row">
-    <%= f.label :name_cont, t('tasks.task_name'), class: 'col-4 col-form-label' %>
-    <%= f.label :status_eq, t('tasks.task_status'), class: 'col-3 col-form-label' %>
-    <%= f.label :labels_id_eq, t('tasks.task_label'), class: 'col-3 col-form-label' %>
+    <%= f.label :name_cont, I18n.t('tasks.task_name'), class: 'col-4 col-form-label' %>
+    <%= f.label :status_eq, I18n.t('tasks.task_status'), class: 'col-3 col-form-label' %>
+    <%= f.label :labels_id_eq, I18n.t('tasks.task_label'), class: 'col-3 col-form-label' %>
   </div>
   <div class="row mb-4">
     <div class="col-4">
@@ -22,7 +22,7 @@
   </div>
 <% end %>
 
-<%= link_to t('.add_new_task'), new_task_path, class: 'btn btn-primary mb-3' %>
+<%= link_to I18n.t('tasks.index.add_new_task'), new_task_path, class: 'btn btn-primary mb-3' %>
 
 <div class="mb-3">
   <%= paginate @tasks %>
@@ -32,11 +32,11 @@
 <table class="table">
   <thead>
     <tr>
-      <th><%= t 'tasks.task_name' %></th>
-      <th><%= t 'tasks.task_desc' %></th>
-      <th><%= t 'tasks.task_status' %></th>
-      <th><%= t 'tasks.task_label' %></th>
-      <th><%= t 'tasks.created_at' %></th>
+      <th><%= I18n.t 'tasks.task_name' %></th>
+      <th><%= I18n.t 'tasks.task_desc' %></th>
+      <th><%= I18n.t 'tasks.task_status' %></th>
+      <th><%= I18n.t 'tasks.task_label' %></th>
+      <th><%= I18n.t 'tasks.created_at' %></th>
       <th></th>
     </tr>
   </thead>
@@ -55,8 +55,8 @@
       </td>
       <td><%= l task.created_at, format: :short %></td>
       <td>
-        <%= link_to t('tasks.edit_task'), edit_task_path(task), class: 'btn btn-secondary mr-3' %>
-        <%= link_to t('tasks.delete_task'), task, method: :delete, data: { confirm: "Are you sure you want to delete '#{task.name}'?" }, class: 'btn btn-danger' %>
+        <%= link_to I18n.t('tasks.edit_task'), edit_task_path(task), class: 'btn btn-secondary mr-3' %>
+        <%= link_to I18n.t('tasks.delete_task'), task, method: :delete, data: { confirm: "Are you sure you want to delete '#{task.name}'?" }, class: 'btn btn-danger' %>
       </td>
     </tr>
     <% end %>
