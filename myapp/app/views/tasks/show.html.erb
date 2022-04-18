@@ -14,6 +14,16 @@
       <td><%= Task.human_attribute_name("status.#{@task.status}") %></td>
     </tr>
     <tr>
+      <th><%= t 'tasks.task_label' %></th>
+      <td>
+        <% @task.labels.each do |label| %>
+          <span class="btn btn-secondary btn-sm" style="pointer-events:none;">
+            <%= label.name %>
+          </span>
+        <% end %>
+      </td>
+    </tr>
+    <tr>
       <th><%= I18n.t 'tasks.created_at' %></th>
       <td><%= l @task.created_at, format: :long %></td>
     </tr>

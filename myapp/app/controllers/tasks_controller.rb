@@ -4,7 +4,7 @@ class TasksController < ApplicationController
   before_action :find_task, only: %i[show edit update destroy]
 
   def index
-    @q = current_user.tasks.ransack(params[:q])
+    @q = current_user.tasks.preload(:labels).ransack(params[:q])
     @tasks = @q.result.page(params[:page]).per(20)
   end
 
@@ -43,7 +43,7 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:name, :description, :status)
+    params.require(:task).permit(:name, :description, :status, label_ids: [])
   end
 
   def find_task
