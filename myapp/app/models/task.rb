@@ -6,6 +6,6 @@ class Task < ApplicationRecord
   enum status: { not_started: 0, in_progress: 1, done: 2 }
 
   belongs_to :user
-  has_many :task_labels, dependent: :destroy
+  has_many :task_labels, dependent: :delete_all
   has_many :labels, through: :task_labels
 end
