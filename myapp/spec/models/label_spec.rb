@@ -20,5 +20,10 @@ RSpec.describe Label, type: :model do
       r = described_class.reflect_on_association(:tasks)
       expect(r.macro).to eq(:has_many)
     end
+
+    it 'has many task_labels' do
+      r = described_class.reflect_on_association(:task_labels)
+      expect(r.macro).to eq(:has_many)
+    end
   end
 end
