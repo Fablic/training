@@ -1,0 +1,17 @@
+current directory: /Users/CON-MNA-0047/Desktop/work/task-local/training/myapp/vendor/bundle/ruby/2.6.0/gems/racc-1.6.0/ext/racc/cparse
+/Users/CON-MNA-0047/.rbenv/versions/2.6.0/bin/ruby -I /Users/CON-MNA-0047/.rbenv/versions/2.6.0/lib/ruby/2.6.0 -r ./siteconf20220422-45678-udt2xo.rb extconf.rb
+checking for rb_block_call()... yes
+checking for rb_ary_subseq()... yes
+creating Makefile
+
+current directory: /Users/CON-MNA-0047/Desktop/work/task-local/training/myapp/vendor/bundle/ruby/2.6.0/gems/racc-1.6.0/ext/racc/cparse
+make "DESTDIR=" clean
+
+current directory: /Users/CON-MNA-0047/Desktop/work/task-local/training/myapp/vendor/bundle/ruby/2.6.0/gems/racc-1.6.0/ext/racc/cparse
+make "DESTDIR="
+compiling cparse.c
+linking shared-object racc/cparse.bundle
+
+current directory: /Users/CON-MNA-0047/Desktop/work/task-local/training/myapp/vendor/bundle/ruby/2.6.0/gems/racc-1.6.0/ext/racc/cparse
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 cparse.bundle ./.gem.20220422-45678-1gt97rv/racc

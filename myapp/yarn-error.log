@@ -1,0 +1,40 @@
+Arguments: 
+  /usr/local/Cellar/node/17.9.0/bin/node /usr/local/Cellar/yarn/1.22.18/libexec/bin/yarn.js add --dev webpack-dev-server
+
+PATH: 
+  /Users/CON-MNA-0047/Desktop/work/task-local/training/myapp/vendor/bundle/ruby/2.6.0/bin:/Users/CON-MNA-0047/.rbenv/versions/2.6.0/bin:/usr/local/Cellar/rbenv/1.2.0/libexec:/usr/local/opt/mysql@5.6/bin:/Users/CON-MNA-0047/.rbenv/shims:/Users/CON-MNA-0047/.rbenv/bin:/usr/local/bin/git:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+
+Yarn version: 
+  1.22.18
+
+Node version: 
+  17.9.0
+
+Platform: 
+  darwin x64
+
+Trace: 
+  Error: self signed certificate in certificate chain
+      at TLSSocket.onConnectSecure (node:_tls_wrap:1532:34)
+      at TLSSocket.emit (node:events:527:28)
+      at TLSSocket._finishInit (node:_tls_wrap:946:8)
+      at TLSWrap.ssl.onhandshakedone (node:_tls_wrap:727:12)
+
+npm manifest: 
+  {
+    "name": "myapp",
+    "private": true,
+    "dependencies": {
+      "@rails/ujs": "^6.0.0",
+      "turbolinks": "^5.2.0",
+      "@rails/activestorage": "^6.0.0",
+      "@rails/actioncable": "^6.0.0"
+    },
+    "version": "0.1.0"
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
