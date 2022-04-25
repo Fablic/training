@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 
+  title: MyString
+  description: MyText
+  termination_date: 2022-04-25 16:13:54
+  priority: 
+  status: 
+  label_id: 
+
+two:
+  user_id: 
+  title: MyString
+  description: MyText
+  termination_date: 2022-04-25 16:13:54
+  priority: 
+  status: 
+  label_id: 
