@@ -10,7 +10,9 @@ vendor/bundle
 
 # Ignore all logfiles and tempfiles.
 /log/*.log
+myapp/log/*.log
 /tmp
+myapp/log/tmp
 !/log/.keep
 !/tmp/.keep
 
