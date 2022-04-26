@@ -1,24 +1,43 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## DB テーブルスキーマ
+### users
+|  Field  |  Type  |  Null  |  Key  |  Default  |
+| ---- | ---- | ---- | ---- | ---- |
+| id | INT | NO | PRI |  |
+|  name  |  VARCHAR(50)  |  NO  |    |    |
+|  email  |  VARCHAR(256)  |  NO  |    |    |
+|  encrypted_password  |  VARCHAR(256)  |  NO  |    |    |
+|  created_at  |  DATETIME  |  NO  |    |    |
+|  updated_at  |  DATETIME  |  NO  |    |    |
 
-Things you may want to cover:
+### tasks
+|  Field  |  Type  |  Null  |  Key  |  Default  |
+| ---- | ---- | ---- | ---- | ---- |
+| id | INT | NO | PRI |  |
+| user_id | INT | NO | FK |  |
+|  title  |  VARCHAR(256)  |  NO  |    |    |
+|  description  |  VARCHAR(256)  |  NO  |    |    |
+|  termination_at  |  DATETIME  |  NO  |    |    |
+|  priority  |  TINYINT(4)  |  NO  |    |    |
+|  status  |  TINYINT(4)  |  NO  |    |    |
+|  created_at  |  DATETIME  |  NO  |    |    |
+|  updated_at  |  DATETIME  |  NO  |    |    |
 
-* Ruby version
+### labels
+|  Field  |  Type  |  Null  |  Key  |  Default  |
+| ---- | ---- | ---- | ---- | ---- |
+| id | INT | NO | PRI |  |
+|  name  |  VARCHAR(256)  |  NO  |    |    |
+|  color  |  TINYINT(4)  |  NO  |    |    |
+|  created_at  |  DATETIME  |  NO  |    |    |
+|  updated_at  |  DATETIME  |  NO  |    |    |
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+### tasks_labels
+|  Field  |  Type  |  Null  |  Key  |  Default  |
+| ---- | ---- | ---- | ---- | ---- |
+| id | INT | NO | PRI |  |
+| task_id | INT | NO | FK |  |
+|  label_id  |  INT |  NO  |  FK  |    |
+|  created_at  |  DATETIME  |  NO  |    |    |
+|  updated_at  |  DATETIME  |  NO  |    |    |
