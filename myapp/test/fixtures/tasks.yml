@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 1
+  title: MyString
+  description: MyString
+  termination_at: 2022-04-27 09:54:38
+  priority: 1
+  status: 1
+
+two:
+  user_id: 1
+  title: MyString
+  description: MyString
+  termination_at: 2022-04-27 09:54:38
+  priority: 1
+  status: 1
