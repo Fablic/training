@@ -17,8 +17,8 @@ default: &default
   pool: 5
   database: myapp
   username: root
-  password:
-  host: localhost
+  password: 
+  host: 127.0.0.1
   socket: /tmp/mysql.sock
 
 development:
