@@ -1,2 +1,2 @@
-<h1>Edit Task</h1>
+<h1><%= t "tasks.edit.page_title", task_title: @task.title %></h1>
 <%= render partial: "form", locals: {task: @task} %>

@@ -1,0 +1,32 @@
+ja:
+  tasks:
+    title: 'タイトル'
+    description: '説明'
+    termination_date: '終了期日'
+    priority: '優先度'
+    priority00: '低'
+    priority01: '中'
+    priority02: '高'
+    status: 'ステータス'
+    status00: '未着手'
+    status01: '着手中'
+    status02: '完了'
+    sybol_abbreviations: '...'
+    back_link : '戻る'
+    index:
+      page_title: 'タスク一覧'
+      new_link : '新規'
+      show_link : '詳細'
+      edit_link : '編集'
+      delete_link : '削除'
+    show:
+      page_title: '「%{task_title}」のタスク情報詳細'
+    edit:
+      page_title: '「%{task_title}」のタスク情報編集'
+    new:
+      page_title: '新規タスク作成'
+    form:
+      page_title: 'タスク一覧'
+      priority_select: '選択して下さい(優先度)'
+      status_select: '選択して下さい(ステータス)'
+      register: '登録'
