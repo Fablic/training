@@ -15,7 +15,7 @@
 <div>
     <em><%= t "tasks.termination_date" %></em>
     <br />
-    <%= @task.termination_at %>
+    <%= @task.termination_at.strftime("%Y-%m-%d %H:%M:%S") %>
 </div>
 <div>
     <em><%= t "tasks.priority" %></em>

@@ -21,7 +21,7 @@
         <td>
           <%= task.description.length >= 10 ? task.description.slice(0,10) + t('tasks.sybol_abbreviations') : task.description %>
         </td>
-        <td><%= task.termination_at %></td>
+        <td><%= task.termination_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
         <!--
         TODO : 以下のステップ実施時に重複処理まとめる(index, show.html.erb)
         ステップ13: ステータスを追加して、検索できるようにしよう
