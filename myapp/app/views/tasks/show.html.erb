@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+
+<div>
+    <strong>Title</strong>
+    <br />
+    <%= @task.title %>
+</div>
+<div>
+    <em>Description</em>
+    <br />
+    <%= @task.description %>
+</div>
+<div>
+    <em>Termination date</em>
+    <br />
+    <%= @task.termination_at %>
+</div>
+<div>
+    <em>Priority</em>
+    <br />
+    <% if @task.priority == 0 %>
+        <p>低</>
+    <% elsif @task.priority == 1 %>
+        <p>中</>
+    <% else %>
+        <p>高</>
+    <% end %>
+</div>
+<div>
+    <em>Status</em>
+    <br />
+    <% if @task.status == 0 %>
+        <p>未着手</>
+    <% elsif @task.status == 1 %>
+        <p>着手中</>
+    <% else %>
+        <p>完了</>
+    <% end %>
+</div>
+
+<%= link_to 'Back', tasks_path %>

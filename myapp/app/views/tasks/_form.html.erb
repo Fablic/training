@@ -1,0 +1,15 @@
+<%= form_with model: task do |f| %>
+    <div>Title</div>
+    <%= f.text_field :title %>
+    <div>Description</div>
+    <%= f.text_area :description %>
+    <div>Termination date</div>
+    <%= f.datetime_select :termination_at %>
+    <div>Priority</div>
+    <%= f.select :priority, [["低", 0], ["中", 1], ["高", 2]], include_blank: "選択して下さい(優先度)" %>
+    <div>Status</div>
+    <%= f.select :status, [["未着手", 0], ["着手中", 1], ["完了", 2]], include_blank: "選択して下さい(ステータス)" %>
+    <br />
+    <%= f.submit %>
+<% end %>
+<%= link_to 'Back', tasks_path %>

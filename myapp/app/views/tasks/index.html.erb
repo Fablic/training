@@ -1,0 +1,56 @@
+<p id="notice"><%= notice %></p>
+
+<h1>All Tasks</h1>
+<td><%= link_to "new", new_task_path %></td>
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Termination date</th>
+      <th>Priority</th>
+      <th>Status</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @tasks.each do |task| %>
+      <tr>
+        <td><%= task.title %></td>
+        <td>
+          <%= task.description.length >= 10 ? task.description.slice(0,10) + "..." : task.description %>
+        </td>
+        <td><%= task.termination_at %></td>
+        <!--
+        TODO : 以下のステップ実施時に重複処理まとめる(index, show.html.erb)
+        ステップ13: ステータスを追加して、検索できるようにしよう
+        ステップ12: 終了期限を追加しよう(ソート処理の対象としてステータスも含まれる認識) 
+        現段階では優先順位・ステータスは顧慮しない為、仮実装とした
+        -->
+        <td>
+          <% if task.priority == 0 %>
+              <p>低</>
+          <% elsif task.priority == 1 %>
+              <p>中</>
+          <% else %>
+              <p>高</>
+          <% end %>
+        </td>
+        <td>
+          <% if task.status == 0 %>
+              <p>未着手</>
+          <% elsif task.status == 1 %>
+              <p>着手中</>
+          <% else %>
+              <p>完了</>
+          <% end %>
+        </td>
+        <td><%= link_to "Show", task %></td>
+        <td><%= link_to "Edit", edit_task_path(task) %></td>
+        <td><%= link_to 'Delete', task_path(task), method: :delete %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br>
