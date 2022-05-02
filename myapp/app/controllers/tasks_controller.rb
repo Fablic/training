@@ -19,7 +19,7 @@ class TasksController < ApplicationController
 
     return unless @task.save
 
-    redirect_to @task, notice: 'タスクを作成しました。'
+    redirect_to @task, notice: t("tasks.flash.new")
   end
 
   def edit
@@ -30,14 +30,14 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
     return unless @task.update_attributes(task_params)
 
-    redirect_to @task, notice: 'タスクを更新しました。'
+    redirect_to @task, notice: t("tasks.flash.update")
   end
 
   def destroy
     @task = Task.find(params[:id])
     return unless @task.destroy
     
-    redirect_to tasks_path, notice: 'タスクを削除しました。'
+    redirect_to tasks_path, notice: t("tasks.flash.destroy")
   end
 
   private

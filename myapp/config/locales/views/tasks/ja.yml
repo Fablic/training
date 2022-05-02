@@ -30,3 +30,7 @@ ja:
       priority_select: '選択して下さい(優先度)'
       status_select: '選択して下さい(ステータス)'
       register: '登録'
+    flash:
+      new: 'タスクを作成しました！'
+      update: 'タスクを更新しました！'
+      destroy: 'タスクを削除しました！'
