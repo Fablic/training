@@ -15,7 +15,23 @@ RSpec.describe TasksController, type: :controller do
 
     describe "GET #index" do
         subject {Proc.new { get :index }}
+        let!(:tasks) { create_list(:task, listnum) }
+        let(:listnum) { 5 }
         it_behaves_like "レスポンス(HTTPステータスコード)が正しいこと", 200
+
+        it "タスクが作成日時(降順)で並び替えられた状態で全件取得できていること" do
+            subject.call
+            dislayed_tasks = controller.instance_variable_get('@tasks')
+            
+            expect(dislayed_tasks.size).to be == listnum
+            before_task = nil
+            for task in dislayed_tasks do
+                if before_task then
+                    expect(task.created_at).to be <= before_task.created_at
+                end
+                before_task = task
+            end
+        end
     end
 
     describe "GET #new" do
