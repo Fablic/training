@@ -25,8 +25,8 @@ RSpec.describe TasksController, type: :controller do
 
     describe "GET #show" do
         subject {Proc.new { get :show, params: { id: id } }}
+        let!(:task) { create(:task) }
         context "該当するタスクが存在する場合" do
-            let(:task) { create(:task) }
             context "有効なパラメータの場合" do
                 let(:id) { task.id }
                 it_behaves_like "レスポンス(HTTPステータスコード)が正しいこと", 200
@@ -37,15 +37,15 @@ RSpec.describe TasksController, type: :controller do
             end
         end
         context "該当するタスクが存在しない場合" do
-            let(:id) { Task.last.id + 1  }
+            let(:id) { Task.last.id + 1 }
             it_behaves_like "想定エラーが発生すること", ActiveRecord::RecordNotFound
         end
     end
 
     describe "GET #edit" do
         subject {Proc.new { get :edit, params: { id: id } }}
+        let!(:task) { create(:task) }
         context "該当するタスクが存在する場合" do
-            let(:task) { create(:task) }
             context "有効なパラメータの場合" do
                 let(:id) { task.id }
                 it_behaves_like "レスポンス(HTTPステータスコード)が正しいこと", 200
@@ -69,8 +69,8 @@ RSpec.describe TasksController, type: :controller do
                 title: "test_title_02",
                 description: "test_description_02",
                 termination_at: '2022-01-01 00:00:00',
-                priority: 0,
-                status: 0
+                priority: "high",
+                status: "done"
             } }
             it_behaves_like "レスポンス(HTTPステータスコード)が正しいこと",302
 
@@ -90,8 +90,8 @@ RSpec.describe TasksController, type: :controller do
                 user_id: 1,
                 description: "test_description_02",
                 termination_at: '2022-01-01 00:00:00',
-                priority: 0,
-                status: 0
+                priority: "high",
+                status: "done"
             } }
             it_behaves_like "想定エラーが発生すること", ActiveRecord::NotNullViolation
         end
@@ -99,8 +99,8 @@ RSpec.describe TasksController, type: :controller do
 
     describe "PATCH #update" do
         subject {Proc.new { patch :update, params: {id: id, task: {title: "updated_task"}} }}
+        let!(:task) { create(:task) }
         context "該当するタスクが存在する場合" do
-            let(:task) { create(:task) }
             context "有効なパラメータの場合" do
                 let(:id) { task.id }
                 it_behaves_like "レスポンス(HTTPステータスコード)が正しいこと",302
@@ -129,8 +129,8 @@ RSpec.describe TasksController, type: :controller do
 
     describe "DELETE #destroy" do
         subject {Proc.new { delete :destroy, params: {id: id} }}
+        let!(:task) { create(:task) }
         context "該当するタスクが存在する場合" do
-            let!(:task) { create(:task) }
             let(:id) { task.id }
             it_behaves_like "レスポンス(HTTPステータスコード)が正しいこと", 302
             
