@@ -1,15 +1,15 @@
 <%= form_with model: task do |f| %>
-    <div>Title</div>
+    <div><%= t "tasks.title" %></div>
     <%= f.text_field :title %>
-    <div>Description</div>
+    <div><%= t "tasks.description" %></div>
     <%= f.text_area :description %>
-    <div>Termination date</div>
+    <div><%= t "tasks.termination_date" %></div>
     <%= f.datetime_select :termination_at %>
-    <div>Priority</div>
-    <%= f.select :priority, [["低", 0], ["中", 1], ["高", 2]], include_blank: "選択して下さい(優先度)" %>
-    <div>Status</div>
-    <%= f.select :status, [["未着手", 0], ["着手中", 1], ["完了", 2]], include_blank: "選択して下さい(ステータス)" %>
+    <div><%= t "tasks.priority" %></div>
+    <%= f.select :priority, Task.priorities.keys.map { |k| [Task.human_attribute_name("priority.#{k}"), k] }, include_blank: t('tasks.form.priority_select') %>
+    <div><%= t "tasks.status" %></div>
+    <%= f.select :status, Task.statuses.keys.map { |k| [Task.human_attribute_name("status.#{k}"), k] }, include_blank: t('tasks.form.status_select') %>
     <br />
-    <%= f.submit %>
+    <%= f.submit(t('tasks.form.register')) %>
 <% end %>
-<%= link_to 'Back', tasks_path %>
+<%= link_to t('tasks.back'), tasks_path %>

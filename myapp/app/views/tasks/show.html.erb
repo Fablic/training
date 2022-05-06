@@ -1,41 +1,31 @@
 <p id="notice"><%= notice %></p>
 
+<h1><%= t "tasks.show.page_title", task_title: @task.title %></h1>
+
 <div>
-    <strong>Title</strong>
+    <strong><%= t "tasks.title" %></strong>
     <br />
     <%= @task.title %>
 </div>
 <div>
-    <em>Description</em>
+    <em><%= t "tasks.description" %></em>
     <br />
     <%= @task.description %>
 </div>
 <div>
-    <em>Termination date</em>
+    <em><%= t "tasks.termination_date" %></em>
     <br />
-    <%= @task.termination_at %>
+    <%= @task.termination_at.strftime("%Y-%m-%d %H:%M:%S") %>
 </div>
 <div>
-    <em>Priority</em>
+    <em><%= t "tasks.priority" %></em>
     <br />
-    <% if @task.priority == 0 %>
-        <p>低</>
-    <% elsif @task.priority == 1 %>
-        <p>中</>
-    <% else %>
-        <p>高</>
-    <% end %>
+    <p><%= Task.human_attribute_name("priority.#{@task.priority}") %></p>
 </div>
 <div>
-    <em>Status</em>
+    <em><%= t "tasks.status" %></em>
     <br />
-    <% if @task.status == 0 %>
-        <p>未着手</>
-    <% elsif @task.status == 1 %>
-        <p>着手中</>
-    <% else %>
-        <p>完了</>
-    <% end %>
+    <p><%= Task.human_attribute_name("status.#{@task.status}") %></p>
 </div>
 
-<%= link_to 'Back', tasks_path %>
+<%= link_to t('tasks.back'), tasks_path %>
