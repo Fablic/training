@@ -1,0 +1,13 @@
+ja:
+  activerecord:
+    models:
+      task: 'タスク'
+    attributes:
+      task/priority:
+        row: '低'
+        middle: '中'
+        high: '高'
+      task/status:
+        not_started: '未着手'
+        on_progress: '着手中'
+        done: '完了'

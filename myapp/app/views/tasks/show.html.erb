@@ -20,24 +20,12 @@
 <div>
     <em><%= t "tasks.priority" %></em>
     <br />
-    <% if @task.priority == 0 %>
-        <p><%= t "tasks.priority00" %>
-    <% elsif @task.priority == 1 %>
-        <p><%= t "tasks.priority01" %>
-    <% else %>
-        <p><%= t "tasks.priority02" %>
-    <% end %>
+    <p><%= Task.human_attribute_name("priority.#{@task.priority}") %></p>
 </div>
 <div>
     <em><%= t "tasks.status" %></em>
     <br />
-    <% if @task.status == 0 %>
-        <p><%= t "tasks.status00" %></>
-    <% elsif @task.status == 1 %>
-        <p><%= t "tasks.status01" %></>
-    <% else %>
-        <p><%= t "tasks.status02" %></>
-    <% end %>
+    <p><%= Task.human_attribute_name("status.#{@task.status}") %></p>
 </div>
 
 <%= link_to t('tasks.back'), tasks_path %>

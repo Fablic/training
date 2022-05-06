@@ -22,30 +22,8 @@
           <%= task.description.length >= 10 ? task.description.slice(0,10) + t('tasks.sybol_abbreviations') : task.description %>
         </td>
         <td><%= task.termination_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
-        <!--
-        TODO : 以下のステップ実施時に重複処理まとめる(index, show.html.erb)
-        ステップ13: ステータスを追加して、検索できるようにしよう
-        ステップ12: 終了期限を追加しよう(ソート処理の対象としてステータスも含まれる認識) 
-        現段階では優先順位・ステータスは顧慮しない為、仮実装とした
-        -->
-        <td>
-          <% if task.priority == 0 %>
-              <p><%= t "tasks.priority00" %></>
-          <% elsif task.priority == 1 %>
-              <p><%= t "tasks.priority01" %></>
-          <% else %>
-              <p><p><%= t "tasks.priority02" %></>
-          <% end %>
-        </td>
-        <td>
-          <% if task.status == 0 %>
-              <p><%= t "tasks.status00" %></>
-          <% elsif task.status == 1 %>
-              <p><%= t "tasks.status01" %></>
-          <% else %>
-              <p><%= t "tasks.status02" %></>
-          <% end %>
-        </td>
+        <td><%= Task.human_attribute_name("priority.#{task.priority}") %></td>
+        <td><%= Task.human_attribute_name("status.#{task.status}") %></td>
         <td><%= link_to t('tasks.index.show_link'), task %></td>
         <td><%= link_to t('tasks.index.edit_link'), edit_task_path(task) %></td>
         <td><%= link_to t('tasks.index.delete_link'), task_path(task), method: :delete %></td>

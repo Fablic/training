@@ -6,9 +6,9 @@
     <div><%= t "tasks.termination_date" %></div>
     <%= f.datetime_select :termination_at %>
     <div><%= t "tasks.priority" %></div>
-    <%= f.select :priority, [[t('tasks.priority00'), 0], [t('tasks.priority01'), 1], [t('tasks.priority02'), 2]], include_blank: t('tasks.form.priority_select') %>
+    <%= f.select :priority, Task.priorities.keys.map { |k| [Task.human_attribute_name("priority.#{k}"), k] }, include_blank: t('tasks.form.priority_select') %>
     <div><%= t "tasks.status" %></div>
-    <%= f.select :status, [[t('tasks.status00'), 0], [t('tasks.status01'), 1], [t('tasks.status02'), 2]], include_blank: t('tasks.form.status_select') %>
+    <%= f.select :status, Task.statuses.keys.map { |k| [Task.human_attribute_name("status.#{k}"), k] }, include_blank: t('tasks.form.status_select') %>
     <br />
     <%= f.submit(t('tasks.form.register')) %>
 <% end %>

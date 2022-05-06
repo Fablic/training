@@ -4,13 +4,7 @@ ja:
     description: '説明'
     termination_date: '終了期日'
     priority: '優先度'
-    priority00: '低'
-    priority01: '中'
-    priority02: '高'
     status: 'ステータス'
-    status00: '未着手'
-    status01: '着手中'
-    status02: '完了'
     sybol_abbreviations: '...'
     back_link : '戻る'
     index:
