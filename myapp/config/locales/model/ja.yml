@@ -3,6 +3,13 @@ ja:
     models:
       task: 'タスク'
     attributes:
+      task:
+        user_id: 'ユーザーID'
+        title: 'タイトル'
+        description: '説明'
+        termination_at: '終了期日'
+        priority: '優先度'
+        status: 'ステータス'
       task/priority:
         row: '低'
         middle: '中'
@@ -11,3 +18,7 @@ ja:
         not_started: '未着手'
         on_progress: '着手中'
         done: '完了'
+    errors:
+      models:
+        task:
+          termination_at_must_be_greater_than_current_at: 'は現在時刻より後の日付を指定してください'
