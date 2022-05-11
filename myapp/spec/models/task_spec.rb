@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Task, type: :model do
 
-    MSG_INVALID_LENGHT = 'を入力してください'
+    MSG_INVALID_INPUT = 'を入力してください'
 
     shared_examples_for 'バリデーションエラーとなり、想定するメッセージが表示されること' do | column, message|
         it { expect(task.valid?).to eq false
@@ -40,15 +40,15 @@ RSpec.describe Task, type: :model do
         context 'タイトルに正常な値が入力されていない場合' do
             context 'タイトルが空の場合' do
                 let(:title) { '' }
-                it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること',:title, MSG_INVALID_LENGHT
+                it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること',:title, MSG_INVALID_INPUT
             end
             context 'タイトルが空白の場合' do
                 let(:title) { ' ' }
-                it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること',:title, MSG_INVALID_LENGHT
+                it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること',:title, MSG_INVALID_INPUT
             end
             context 'タイトルがnilの場合' do
                 let(:title) { nil }
-                it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること',:title, MSG_INVALID_LENGHT
+                it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること',:title, MSG_INVALID_INPUT
             end
         end
     end
@@ -82,15 +82,15 @@ RSpec.describe Task, type: :model do
         context '説明に正常な値が入力されていない場合' do
             context '説明が空の場合' do
                 let(:description) { '' }
-                it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること',:description, MSG_INVALID_LENGHT
+                it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること',:description, MSG_INVALID_INPUT
             end
             context '説明が空白の場合' do
                 let(:description) { ' ' }
-                it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること',:description, MSG_INVALID_LENGHT
+                it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること',:description, MSG_INVALID_INPUT
             end
             context '説明がnilの場合' do
                 let(:description) { nil }
-                it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること',:description, MSG_INVALID_LENGHT
+                it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること',:description, MSG_INVALID_INPUT
             end
         end
     end
@@ -120,15 +120,15 @@ RSpec.describe Task, type: :model do
         context "終了期日に正常な値が入力されていない場合" do
             context '終了期日が空の場合' do
                 let(:termination_at) { '' }
-                it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること',:termination_at, MSG_INVALID_LENGHT
+                it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること',:termination_at, MSG_INVALID_INPUT
             end
             context '終了期日が空白の場合' do
                 let(:termination_at) { ' ' }
-                it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること',:termination_at, MSG_INVALID_LENGHT
+                it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること',:termination_at, MSG_INVALID_INPUT
             end
             context '終了期日がnilの場合' do
                 let(:termination_at) { nil }
-                it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること',:termination_at, MSG_INVALID_LENGHT
+                it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること',:termination_at, MSG_INVALID_INPUT
             end
         end
     end

@@ -11,7 +11,7 @@ ja:
         priority: '優先度'
         status: 'ステータス'
       task/priority:
-        row: '低'
+        low: '低'
         middle: '中'
         high: '高'
       task/status:

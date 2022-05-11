@@ -86,19 +86,13 @@ RSpec.describe TasksController, type: :controller do
     describe "POST #create" do
         subject {Proc.new { post :create, params: { task: task } }}
         context "有効なパラメータの場合" do
-            let(:task) { {
-                user_id: 1,
-                title: "test_title_02",
-                description: "test_description_02",
-                termination_at: '2022-01-01 00:00:00',
-                priority: "high",
-                status: "done"
-            } }
+            let(:task){attributes_for(:task, title: "test_title_update")}
+
             it_behaves_like "レスポンス(HTTPステータスコード)が正しいこと",302
 
             it "タスクが作成されること" do
                 expect { subject.call }.to change(Task, :count).by(1)
-                expect(Task.find(Task.last.id).title).to eq("test_title_02")
+                expect(Task.find(Task.last.id).title).to eq("test_title_update")
             end
 
             it "作成したタスク詳細画面へリダイレクトされ、フラッシュメッセージが表示されること" do
@@ -106,16 +100,6 @@ RSpec.describe TasksController, type: :controller do
                 expect(response).to redirect_to "/#{Task.last.id}"
                 expect(flash[:notice]).to match(/^タスクを作成しました！$/)
             end
-        end
-        context "無効なパラメータの場合" do
-            let(:task) { {
-                user_id: 1,
-                description: "test_description_02",
-                termination_at: '2022-01-01 00:00:00',
-                priority: "high",
-                status: "done"
-            } }
-            it_behaves_like "想定エラーが発生すること", ActiveRecord::NotNullViolation
         end
     end
 
