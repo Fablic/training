@@ -132,4 +132,55 @@ RSpec.describe Task, type: :model do
             end
         end
     end
+
+    describe 'priority' do
+        let(:task) { build(:task, priority: priority) }
+
+        context '優先度に正常な値が入力されている場合' do
+            let(:priority) { Task.priorities.key(0) }
+
+            it 'バリデーションエラーにならないこと' do
+                expect(task.valid?).to eq true
+            end
+        end
+        context '優先度に正常な値が入力されていない場合' do
+            context '優先度が空の場合' do
+                let(:priority) { '' }
+                it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること',:priority, MSG_INVALID_INPUT
+            end
+            context '優先度が空白の場合' do
+                let(:priority) { ' ' }
+                it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること',:priority, MSG_INVALID_INPUT
+            end
+            context '優先度がnilの場合' do
+                let(:priority) { nil }
+                it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること',:priority, MSG_INVALID_INPUT
+            end
+        end
+    end
+
+    describe 'status' do
+        let(:task) { build(:task, status: status) }
+        context 'ステータスに正常な値が入力されている場合' do
+            let(:status) { Task.statuses.key(0) }
+
+            it 'バリデーションエラーにならないこと' do
+                expect(task.valid?).to eq true
+            end
+        end
+        context 'ステータスに正常な値が入力されていない場合' do
+            context 'ステータスが空の場合' do
+                let(:status) { '' }
+                it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること',:status, MSG_INVALID_INPUT
+            end
+            context 'ステータスが空白の場合' do
+                let(:status) { ' ' }
+                it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること',:status, MSG_INVALID_INPUT
+            end
+            context 'ステータスがnilの場合' do
+                let(:status) { nil }
+                it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること',:status, MSG_INVALID_INPUT
+            end
+        end
+    end
 end

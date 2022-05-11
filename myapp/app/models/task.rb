@@ -3,6 +3,8 @@ class Task < ApplicationRecord
         validates :title
         validates :description
         validates :termination_at
+        validates :priority
+        validates :status
     end
     validates :title, length: { maximum: 50 }
     validates :description, length: { maximum: 255 }
