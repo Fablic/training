@@ -3,6 +3,8 @@ require 'rails_helper'
 RSpec.describe Task, type: :model do
 
     MSG_INVALID_INPUT = 'を入力してください'
+    TITLE_MAX_LENGHT = 50
+    DESCRIPTION_MAX_LENGHT = 255
 
     shared_examples_for 'バリデーションエラーとなり、想定するメッセージが表示されること' do | column, message|
         it { expect(task.valid?).to eq false
@@ -16,24 +18,23 @@ RSpec.describe Task, type: :model do
 
         context 'タイトルに正常な値が入力されている場合' do
             let(:title) { 'あ' * num }
-            max_num = 50
 
-            context "タイトルが#{ max_num }文字の場合" do
-                let(:num) { max_num }
+            context "タイトルが#{ TITLE_MAX_LENGHT }文字の場合" do
+                let(:num) { TITLE_MAX_LENGHT }
 
                 it 'バリデーションエラーにならないこと' do
                     expect(task.valid?).to eq true
                 end
             end
-            context "タイトルが#{ max_num+1 }文字以上の場合" do
-                let(:num) { max_num+1 }
+            context "タイトルが#{ TITLE_MAX_LENGHT+1 }文字以上の場合" do
+                let(:num) { TITLE_MAX_LENGHT+1 }
 
                 it 'バリデーションエラーになること' do
                     expect(task.valid?).to eq false
                 end
                 it 'エラーメッセージが表示されること' do
                     task.valid?
-                    expect(task.errors.messages[:title]).to include "は#{ max_num }文字以内で入力してください"
+                    expect(task.errors.messages[:title]).to include "は#{ TITLE_MAX_LENGHT }文字以内で入力してください"
                 end
             end
         end
@@ -58,24 +59,23 @@ RSpec.describe Task, type: :model do
 
         context '説明に正常な値が入力されている場合' do
             let(:description) { 'あ' * num }
-            max_num = 255
 
-            context "説明が#{ max_num }文字の場合" do    
-                let(:num) { max_num }
+            context "説明が#{ DESCRIPTION_MAX_LENGHT }文字の場合" do    
+                let(:num) { DESCRIPTION_MAX_LENGHT }
 
                 it 'バリデーションエラーにならないこと' do
                     expect(task.valid?).to eq true
                 end
             end
-            context "説明が#{ max_num+1 }文字以上の場合" do
-                let(:num) { max_num+1 }
+            context "説明が#{ DESCRIPTION_MAX_LENGHT+1 }文字以上の場合" do
+                let(:num) { DESCRIPTION_MAX_LENGHT+1 }
         
                 it 'バリデーションエラーになること' do
                     expect(task.valid?).to eq false
                 end
                 it 'エラーメッセージが表示されること' do
                     task.valid?
-                    expect(task.errors.messages[:description]).to include "は#{ max_num }文字以内で入力してください"
+                    expect(task.errors.messages[:description]).to include "は#{ DESCRIPTION_MAX_LENGHT }文字以内で入力してください"
                 end
             end
         end
