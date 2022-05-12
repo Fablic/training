@@ -86,13 +86,13 @@ RSpec.describe TasksController, type: :controller do
     describe "POST #create" do
         subject {Proc.new { post :create, params: { task: task } }}
         context "有効なパラメータの場合" do
-            let(:task){attributes_for(:task, title: "test_title_update")}
+            let(:task){attributes_for(:task, title: "test_title_create")}
 
             it_behaves_like "レスポンス(HTTPステータスコード)が正しいこと",302
 
             it "タスクが作成されること" do
                 expect { subject.call }.to change(Task, :count).by(1)
-                expect(Task.find(Task.last.id).title).to eq("test_title_update")
+                expect(Task.find(Task.last.id).title).to eq("test_title_create")
             end
 
             it "作成したタスク詳細画面へリダイレクトされ、フラッシュメッセージが表示されること" do
@@ -101,14 +101,23 @@ RSpec.describe TasksController, type: :controller do
                 expect(flash[:notice]).to match(/^タスクを作成しました！$/)
             end
         end
+        context "無効なパラメータの場合" do
+            let(:task){attributes_for(:task, title: nil)}
+            it_behaves_like "レスポンス(HTTPステータスコード)が正しいこと", 200
+            it "タスクが作成されないこと" do
+                expect { subject.call }.to change(Task, :count).by(0)
+            end
+        end
     end
 
     describe "PATCH #update" do
-        subject {Proc.new { patch :update, params: {id: id, task: {title: "updated_task"}} }}
+        subject {Proc.new { patch :update, params: {id: id, task: {title: value}} }}
         let!(:task) { create(:task) }
         context "該当するタスクが存在する場合" do
+            let(:id) { task.id }
+
             context "有効なパラメータの場合" do
-                let(:id) { task.id }
+                let(:value) { "updated_task" }
                 it_behaves_like "レスポンス(HTTPステータスコード)が正しいこと",302
                 
                 it "タスク情報が更新されること" do
@@ -123,12 +132,18 @@ RSpec.describe TasksController, type: :controller do
                 end
             end
             context "無効なパラメータの場合" do
-                let(:id) { nil }
-                it_behaves_like "想定エラーが発生すること", ActionController::UrlGenerationError
+                let(:value){ nil }
+                it_behaves_like "レスポンス(HTTPステータスコード)が正しいこと", 200
+                
+                it "タスク情報が更新されないこと" do
+                    subject.call
+                    expect(task.reload.title).not_to eq nil
+                end
             end
         end
         context "該当するタスクが存在しない場合" do
             let(:id) { Task.last.id + 1 }
+            let(:value) { "updated_task" }
             it_behaves_like "想定エラーが発生すること", ActiveRecord::RecordNotFound
         end
     end

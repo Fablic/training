@@ -2,7 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Task, type: :model do
 
-    MSG_INVALID_INPUT = 'を入力してください'
+    MSG_NO_VALUE = 'を入力してください'
+    MSG_INVALID_VALUE = 'に不正な値が入力されています'
     TITLE_MAX_LENGHT = 50
     DESCRIPTION_MAX_LENGHT = 255
 
@@ -41,15 +42,15 @@ RSpec.describe Task, type: :model do
         context 'タイトルに正常な値が入力されていない場合' do
             context 'タイトルが空の場合' do
                 let(:title) { '' }
-                it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること',:title, MSG_INVALID_INPUT
+                it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること',:title, MSG_NO_VALUE
             end
             context 'タイトルが空白の場合' do
                 let(:title) { ' ' }
-                it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること',:title, MSG_INVALID_INPUT
+                it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること',:title, MSG_NO_VALUE
             end
             context 'タイトルがnilの場合' do
                 let(:title) { nil }
-                it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること',:title, MSG_INVALID_INPUT
+                it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること',:title, MSG_NO_VALUE
             end
         end
     end
@@ -82,15 +83,15 @@ RSpec.describe Task, type: :model do
         context '説明に正常な値が入力されていない場合' do
             context '説明が空の場合' do
                 let(:description) { '' }
-                it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること',:description, MSG_INVALID_INPUT
+                it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること',:description, MSG_NO_VALUE
             end
             context '説明が空白の場合' do
                 let(:description) { ' ' }
-                it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること',:description, MSG_INVALID_INPUT
+                it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること',:description, MSG_NO_VALUE
             end
             context '説明がnilの場合' do
                 let(:description) { nil }
-                it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること',:description, MSG_INVALID_INPUT
+                it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること',:description, MSG_NO_VALUE
             end
         end
     end
@@ -120,15 +121,15 @@ RSpec.describe Task, type: :model do
         context "終了期日に正常な値が入力されていない場合" do
             context '終了期日が空の場合' do
                 let(:termination_at) { '' }
-                it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること',:termination_at, MSG_INVALID_INPUT
+                it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること',:termination_at, MSG_NO_VALUE
             end
             context '終了期日が空白の場合' do
                 let(:termination_at) { ' ' }
-                it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること',:termination_at, MSG_INVALID_INPUT
+                it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること',:termination_at, MSG_NO_VALUE
             end
             context '終了期日がnilの場合' do
                 let(:termination_at) { nil }
-                it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること',:termination_at, MSG_INVALID_INPUT
+                it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること',:termination_at, MSG_NO_VALUE
             end
         end
     end
@@ -137,24 +138,31 @@ RSpec.describe Task, type: :model do
         let(:task) { build(:task, priority: priority) }
 
         context '優先度に正常な値が入力されている場合' do
-            let(:priority) { Task.priorities.key(0) }
+            context 'Enumで定義されている値の場合' do
+                let(:priority) { Task.priorities.key(0) }
 
-            it 'バリデーションエラーにならないこと' do
-                expect(task.valid?).to eq true
+                it 'バリデーションエラーにならないこと' do
+                    expect(task.valid?).to eq true
+                end
+            end
+            context 'Enumで定義されていない値の場合' do
+                let(:priority) { "unknown_priority" }
+                
+                it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること',:priority, MSG_INVALID_VALUE
             end
         end
         context '優先度に正常な値が入力されていない場合' do
             context '優先度が空の場合' do
                 let(:priority) { '' }
-                it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること',:priority, MSG_INVALID_INPUT
+                it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること',:priority, MSG_NO_VALUE
             end
             context '優先度が空白の場合' do
                 let(:priority) { ' ' }
-                it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること',:priority, MSG_INVALID_INPUT
+                it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること',:priority, MSG_NO_VALUE
             end
             context '優先度がnilの場合' do
                 let(:priority) { nil }
-                it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること',:priority, MSG_INVALID_INPUT
+                it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること',:priority, MSG_NO_VALUE
             end
         end
     end
@@ -162,24 +170,32 @@ RSpec.describe Task, type: :model do
     describe 'status' do
         let(:task) { build(:task, status: status) }
         context 'ステータスに正常な値が入力されている場合' do
-            let(:status) { Task.statuses.key(0) }
 
-            it 'バリデーションエラーにならないこと' do
-                expect(task.valid?).to eq true
+            context 'Enumで定義されている値の場合' do
+                let(:status) { Task.statuses.key(0) }
+
+                it 'バリデーションエラーにならないこと' do
+                    expect(task.valid?).to eq true
+                end
+            end
+            context 'Enumで定義されていない値の場合' do
+                let(:status) { "unknown_status" }
+
+                it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること',:status, MSG_INVALID_VALUE
             end
         end
         context 'ステータスに正常な値が入力されていない場合' do
             context 'ステータスが空の場合' do
                 let(:status) { '' }
-                it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること',:status, MSG_INVALID_INPUT
+                it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること',:status, MSG_NO_VALUE
             end
             context 'ステータスが空白の場合' do
                 let(:status) { ' ' }
-                it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること',:status, MSG_INVALID_INPUT
+                it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること',:status, MSG_NO_VALUE
             end
             context 'ステータスがnilの場合' do
                 let(:status) { nil }
-                it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること',:status, MSG_INVALID_INPUT
+                it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること',:status, MSG_NO_VALUE
             end
         end
     end

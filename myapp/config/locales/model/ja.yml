@@ -21,4 +21,5 @@ ja:
     errors:
       models:
         task:
-          termination_at_must_be_greater_than_current_at: 'は現在時刻より後の日付を指定してください'
+          termination_at_must_be_future: 'は現在時刻より後の日付を指定してください'
+          invalid_value: 'に不正な値が入力されています'
