@@ -1,10 +1,12 @@
 class TasksController < ApplicationController
+  before_action :set_task, only: %i[show edit update destroy]
+
   def index
     @tasks = Task.all.order('created_at DESC')
   end
 
   def show
-    @task = Task.find(params[:id])
+    
   end
 
   def new
@@ -17,24 +19,27 @@ class TasksController < ApplicationController
     # 現段階ではユーザーは考慮しないので、NOT NULL制約回避用にダミーデータ格納
     @task.user_id = 0
 
-    return unless @task.save
-
-    redirect_to @task, notice: t("tasks.flash.new")
+    if @task.save
+      redirect_to @task, notice: t("tasks.flash.new")
+    else
+      render :new
+    end
   end
 
   def edit
-    @task = Task.find(params[:id])
+
   end
 
   def update
-    @task = Task.find(params[:id])
-    return unless @task.update_attributes(task_params)
-
-    redirect_to @task, notice: t("tasks.flash.update")
+    if @task.update(task_params)
+      redirect_to @task, notice: t("tasks.flash.update")
+    else
+      render :edit
+    end
   end
 
   def destroy
-    @task = Task.find(params[:id])
+
     return unless @task.destroy
     
     redirect_to tasks_path, notice: t("tasks.flash.destroy")
@@ -44,5 +49,9 @@ class TasksController < ApplicationController
 
     def task_params
       params.require(:task).permit(:user_id, :title, :description, :termination_at, :priority, :status)
+    end
+
+    def set_task
+      @task = Task.find(params[:id])
     end
 end
