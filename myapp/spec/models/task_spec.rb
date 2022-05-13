@@ -14,6 +14,29 @@ RSpec.describe Task, type: :model do
         }
     end
 
+    shared_examples_for "指定された任意のカラムに基づく並び替え順でデータが取得できていること" do |column, equals|
+        it{
+            addDays = 0
+            for task in tasks do
+                task.update({"#{column}": Date.today + addDays})
+                addDays += 1
+            end
+
+            before_task = nil
+            for task in subject.call do
+                if before_task then
+                    case equals
+                    when :asc then
+                        expect(task.send("#{column}")).to be >= before_task.send("#{column}")
+                    when :desc then
+                        expect(task.send("#{column}")).to be <= before_task.send("#{column}")
+                    end
+                end
+                before_task = task
+            end
+        }
+    end
+
     describe 'title' do
         let(:task) { build(:task, title: title) }
 
@@ -196,6 +219,26 @@ RSpec.describe Task, type: :model do
             context 'ステータスがnilの場合' do
                 let(:status) { nil }
                 it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること',:status, MSG_NO_VALUE
+            end
+        end
+    end
+
+    describe 'scope' do
+        let!(:tasks) { create_list(:task, listnum) }
+        let(:listnum) { 5 }
+
+        describe 'all_sort_by' do
+            subject { Proc.new{Task.all_sort_by(column, order)} }
+            context "終了期日が指定された場合" do
+                let(:column){:termination_at}
+                context '昇順が指定された場合' do
+                    let(:order){:asc}
+                    it_behaves_like "指定された任意のカラムに基づく並び替え順でデータが取得できていること", :termination_at, :asc
+                end
+                context '降順が指定された場合' do
+                    let(:order){:desc}
+                    it_behaves_like "指定された任意のカラムに基づく並び替え順でデータが取得できていること", :termination_at, :desc
+                end
             end
         end
     end

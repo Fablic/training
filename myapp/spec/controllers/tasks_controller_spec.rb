@@ -2,6 +2,8 @@ require 'rails_helper'
 
 RSpec.describe TasksController, type: :controller do
 
+    NUMBER_OF_MULTIPLE_DATA = 5
+    
     shared_examples_for "レスポンス(HTTPステータスコード)が正しいこと" do |status|
         it { subject.call; expect(response).to have_http_status(status) }
     end
@@ -13,30 +15,55 @@ RSpec.describe TasksController, type: :controller do
         }
     end
 
-    describe "GET #index" do
-        subject {Proc.new { get :index }}
-        let!(:tasks) { create_list(:task, listnum) }
-        let(:listnum) { 5 }
-        it_behaves_like "レスポンス(HTTPステータスコード)が正しいこと", 200
-
-        it "タスクが作成日時(降順)で並び替えられた状態で全件取得できていること" do
+    shared_examples_for "並び替えが正常に実行されていること" do |column, equals|
+        it{
             addDays = 0
             for task in tasks do
-                task.update(created_at: Date.today + addDays)
+                task.update({"#{column}": Date.today + addDays})
                 addDays += 1
             end
             
             subject.call
             displayed_tasks = controller.instance_variable_get('@tasks')
-            
-            expect(displayed_tasks.size).to be == listnum
+            expect(displayed_tasks.size).to be == NUMBER_OF_MULTIPLE_DATA
+
             before_task = nil
             for task in displayed_tasks do
                 if before_task then
-                    expect(task.created_at).to be <= before_task.created_at
+                    case equals
+                    when :asc then
+                        expect(task.send("#{column}")).to be >= before_task.send("#{column}")
+                    when :desc then
+                        expect(task.send("#{column}")).to be <= before_task.send("#{column}")
+                    end
                 end
                 before_task = task
             end
+        }
+    end
+
+    describe "GET #index" do
+        subject {Proc.new { get :index }}
+        let!(:tasks) { create_list(:task, listnum) }
+        let(:listnum) { NUMBER_OF_MULTIPLE_DATA }
+        it_behaves_like "レスポンス(HTTPステータスコード)が正しいこと", 200
+        it_behaves_like "並び替えが正常に実行されていること", :created_at, :desc
+    end
+
+    describe "GET #sort" do
+        subject {Proc.new { get :sort, params: param }}
+        let!(:tasks) { create_list(:task, listnum) }
+        let(:listnum) { NUMBER_OF_MULTIPLE_DATA }
+
+        context "終了期日(新しい順)が選択された場合" do
+            let(:param){ {termination_at_latest: true} }
+            it_behaves_like "レスポンス(HTTPステータスコード)が正しいこと", 200
+            it_behaves_like "並び替えが正常に実行されていること", :termination_at, :desc
+        end
+        context "終了期日(古い順)が選択された場合" do
+            let(:param){ {termination_at_oldest: true} }
+            it_behaves_like "レスポンス(HTTPステータスコード)が正しいこと", 200
+            it_behaves_like "並び替えが正常に実行されていること", :termination_at, :asc
         end
     end
 

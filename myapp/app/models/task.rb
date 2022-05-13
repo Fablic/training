@@ -14,6 +14,8 @@ class Task < ApplicationRecord
     STATUS_ON_PROGRESS = 1
     STATUS_DONE = 2
 
+    scope :all_sort_by, -> (target, sort_type){ order({"#{target}": sort_type})}
+    
     enum priority: { low: PRIORITY_LOW, middle: PRIORITY_MIDDLE, high: PRIORITY_HIGH }
     enum status: { not_started: STATUS_NOT_STARTED, on_progress: STATUS_ON_PROGRESS, done: STATUS_DONE }
 

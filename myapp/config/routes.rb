@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
-  resources :tasks, path: '/'
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  resources :tasks, path: '/' do
+    collection do
+      get :sort
+    end
+  end
 end
