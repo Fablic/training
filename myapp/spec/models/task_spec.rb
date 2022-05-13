@@ -37,6 +37,31 @@ RSpec.describe Task, type: :model do
     }
   end
 
+  shared_examples_for '検索条件に一致するデータが取得できていること' do |count, sort_type|
+    it {
+      num = 0
+      tasks.first(2).each do |task|
+        task.update_columns(title: search_text, status: num)
+        num += 1
+      end
+
+      searched_tasks = subject.call
+      expect(searched_tasks.size).to eq count
+
+      searched_tasks.each do |task|
+        case sort_type
+        when :title_and_status
+          expect(task.title).to eq search_text
+          expect(task.status).to eq Task.statuses.key(0)
+        when :title_only
+          expect(task.title).to eq search_text
+        when :status_only
+          expect(task.status).to eq Task.statuses.key(1)
+        end
+      end
+    }
+  end
+
   describe 'title' do
     let(:task) { build(:task, title: title) }
 
@@ -238,6 +263,41 @@ RSpec.describe Task, type: :model do
           let(:order) { :desc }
           it_behaves_like '指定された任意のカラムに基づく並び替え順でデータが取得できていること', :termination_at, :desc
         end
+      end
+    end
+
+    describe 'search' do
+      subject { proc { Task.search(params) } }
+      let(:search_text) { 'test_title_for_search' }
+
+      context 'タイトル、ステータス指定されている場合' do
+        let(:params) do
+          {
+            title: search_text,
+            status: Task.statuses[:not_started]
+          }
+        end
+        it_behaves_like '検索条件に一致するデータが取得できていること', 1, :title_and_status
+      end
+      context 'タイトルのみ指定されている場合' do
+        let(:params) do
+          {
+            title: search_text
+          }
+        end
+        it_behaves_like '検索条件に一致するデータが取得できていること', 2, :title_only
+      end
+      context 'ステータスのみ指定されている場合' do
+        let(:params) do
+          {
+            status: Task.statuses[:on_progress]
+          }
+        end
+        it_behaves_like '検索条件に一致するデータが取得できていること', 1, :status_only
+      end
+      context '何も指定されていない場合' do
+        let(:params) { {} }
+        it_behaves_like '検索条件に一致するデータが取得できていること', 5, :nothing
       end
     end
   end

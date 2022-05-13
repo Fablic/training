@@ -14,6 +14,12 @@ class TasksController < ApplicationController
     render :index
   end
 
+  def search
+    @search_params = input_search_params
+    @tasks = Task.search(@search_params)
+    render :index
+  end
+
   def show; end
 
   def new
@@ -57,5 +63,9 @@ class TasksController < ApplicationController
 
     def set_task
       @task = Task.find(params[:id])
+    end
+
+    def input_search_params
+      params.fetch(:search, {}).permit(:title, :status)
     end
 end

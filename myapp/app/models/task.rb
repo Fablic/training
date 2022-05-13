@@ -15,6 +15,14 @@ class Task < ApplicationRecord
   STATUS_DONE = 2
 
   scope :all_sort_by, ->(target, sort_type) { order({ "#{target}": sort_type }) }
+  scope :search, lambda { |search_params|
+    return if search_params.blank?
+
+    extract_matched_title(search_params[:title])
+      .extract_matched_status(search_params[:status])
+  }
+  scope :extract_matched_title, ->(title) { where('title LIKE ?', "%#{title}%") if title.present? }
+  scope :extract_matched_status, ->(status) { where(status: status) if status.present? }
 
   enum priority: { low: PRIORITY_LOW, middle: PRIORITY_MIDDLE, high: PRIORITY_HIGH }
   enum status: { not_started: STATUS_NOT_STARTED, on_progress: STATUS_ON_PROGRESS, done: STATUS_DONE }

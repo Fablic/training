@@ -44,10 +44,25 @@ RSpec.describe TasksController, type: :controller do
     }
   end
 
+  shared_examples_for '検索が正常に実行されていること' do |present, matched_num|
+    it {
+      Task.find(Task.last.id).update_columns(input_value) if present
+
+      subject.call
+      search_params = controller.instance_variable_get('@search_params')
+      expect(search_params.present?).to eq present
+      if present
+        expect(search_params[:title]).to eq input_value[:title]
+        expect(search_params[:status]).to eq input_value[:status].to_s
+      end
+      displayed_tasks = controller.instance_variable_get('@tasks')
+      expect(displayed_tasks.size).to be == matched_num
+    }
+  end
+
   describe 'GET #index' do
     subject { proc { get :index } }
-    let!(:tasks) { create_list(:task, listnum) }
-    let(:listnum) { number_of_multiple_data }
+    let!(:tasks) { create_list(:task, number_of_multiple_data) }
     it_behaves_like 'レスポンス(HTTPステータスコード)が正しいこと', 200
     it_behaves_like '並び替えが正常に実行されていること', :created_at, :desc
   end
@@ -66,6 +81,44 @@ RSpec.describe TasksController, type: :controller do
       let(:param) { { termination_at_oldest: true } }
       it_behaves_like 'レスポンス(HTTPステータスコード)が正しいこと', 200
       it_behaves_like '並び替えが正常に実行されていること', :termination_at, :asc
+    end
+  end
+
+  describe 'GET #search' do
+    subject { proc { get :search, params: params } }
+    let!(:tasks) { create_list(:task, number_of_multiple_data) }
+    let(:params) do
+      {
+        search: input_value
+      }
+    end
+    context '検索条件が入力されている場合' do
+      let(:search_text) { 'test_title_for_search' }
+      context '正しい値が入力されている場合' do
+        let(:input_value) do
+          {
+            title: search_text,
+            status: Task.statuses[:not_started]
+          }
+        end
+        it_behaves_like 'レスポンス(HTTPステータスコード)が正しいこと', 200
+        it_behaves_like '検索が正常に実行されていること', true, 1
+      end
+      context '不正な値が入力されている場合' do
+        let(:input_value) do
+          {
+            unknown01: search_text,
+            unknown02: Task.statuses[:not_started]
+          }
+        end
+        it_behaves_like 'レスポンス(HTTPステータスコード)が正しいこと', 200
+        it_behaves_like '検索が正常に実行されていること', false, number_of_multiple_data
+      end
+    end
+    context '検索条件が入力されていない場合' do
+      let(:input_value) { {} }
+      it_behaves_like 'レスポンス(HTTPステータスコード)が正しいこと', 200
+      it_behaves_like '検索が正常に実行されていること', false, number_of_multiple_data
     end
   end
 
