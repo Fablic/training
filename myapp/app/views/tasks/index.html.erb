@@ -2,8 +2,12 @@
 
 <h1><%= t "tasks.index.page_title" %></h1>
 <td><%= link_to t('tasks.index.new_link'), new_task_path %></td>
-<td><li><%= link_to t('tasks.index.sort_termination_at_latest'), sort_tasks_path(termination_at_latest: 'true'), class:'link-info' %></li></td>
-<td><li><%= link_to t('tasks.index.sort_termination_at_oldest'), sort_tasks_path(termination_at_oldest: 'true'),class:'link-info' %></li></td>
+<td>
+  <li><%= link_to t('tasks.index.sort_termination_at_latest'), sort_tasks_path(termination_at_latest: 'true'), class: 'link-info' %></li>
+</td>
+<td>
+  <li><%= link_to t('tasks.index.sort_termination_at_oldest'), sort_tasks_path(termination_at_oldest: 'true'), class: 'link-info' %></li>
+</td>
 <table>
   <thead>
     <tr>
