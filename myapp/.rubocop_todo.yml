@@ -89,6 +89,10 @@ Layout/TrailingWhitespace:
 Metrics/AbcSize:
   Max: 18
 
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
+
 # Offense count: 1
 # Configuration parameters: IgnoredMethods.
 Metrics/CyclomaticComplexity:
@@ -125,6 +129,7 @@ Style/Documentation:
     - 'app/models/application_record.rb'
     - 'config/application.rb'
     - 'db/migrate/20220427005438_create_tasks.rb'
+  Enabled: false
 
 # Offense count: 3
 # This cop supports safe auto-correction (--auto-correct).
