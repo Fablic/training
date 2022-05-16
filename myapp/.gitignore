@@ -1,35 +1,37 @@
-# Ignore bundler config.
-/.bundle
-
-# Ignore bundler gems.
-vendor/bundle
-
-# Ignore the default SQLite database.
-/db/*.sqlite3
-/db/*.sqlite3-journal
-
+.DS_Store
+.vscode/*
+.devcontainer/*
 # Ignore all logfiles and tempfiles.
-/log/*.log
-myapp/log/*.log
-/tmp
-myapp/log/tmp
+/log/*
+/tmp/*
 !/log/.keep
 !/tmp/.keep
 
-# Ignore other unneeded files.
-doc/
-*.swp
-*~
-.project
-.DS_Store
-.idea
-.secret
-/.yardoc
+## Environment normalization:
+/.bundle
+/vendor/bundle
+
+# Ignore Byebug command history file.
+.byebug_history
+
+# Ignore yarn files
+/yarn-error.log
+yarn-debug.log*
+.yarn-integrity
+
+# Ignore uploaded files in development
+/storage/*
+!/storage/.keep
+/public/uploads
+/public/packs
+/public/packs-test
+
+# Ignore node_modules
+/node_modules
+
 /public/packs
 /public/packs-test
 /node_modules
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
-# Ignore master key for decrypting credentials and more.
-/config/master.key
