@@ -19,12 +19,6 @@ RSpec.describe TasksController, type: :controller do
 
   shared_examples_for '並び替えが正常に実行されていること' do |column, equals|
     it {
-      add_days = 0
-      tasks.each do |task|
-        task.update({ "#{column}": Date.today + add_days })
-        add_days += 1
-      end
-
       subject.call
       displayed_tasks = controller.instance_variable_get('@tasks')
       expect(displayed_tasks.size).to be == number_of_multiple_data

@@ -24,12 +24,6 @@ RSpec.describe Task, type: :model do
 
   shared_examples_for '指定された任意のカラムに基づく並び替え順でデータが取得できていること' do |column, equals|
     it {
-      add_days = 0
-      tasks.each do |task|
-        task.update({ "#{column}": Date.today + add_days })
-        add_days += 1
-      end
-
       before_task = nil
       subject.call.each do |task|
         if before_task
@@ -80,10 +74,11 @@ RSpec.describe Task, type: :model do
         is_next = true
         is_first = false
         is_last = true
-        is_first_data = false
-        is_other_data = true
 
         get tasks_path
+        expect(response.body).not_to include tasks[0].title.to_s
+        expect(response.body).to include tasks[1].title.to_s
+        expect(response.body).to include tasks[kaminari_data_per_page - 1].title.to_s
       when :last
         is_page = true
         is_page_current = true
@@ -91,10 +86,11 @@ RSpec.describe Task, type: :model do
         is_next = false
         is_first = true
         is_last = false
-        is_first_data = true
-        is_other_data = false
 
         get tasks_path, params: { page: 2 }
+        expect(response.body).to include tasks[0].title.to_s
+        expect(response.body).not_to include tasks[1].title.to_s
+        expect(response.body).not_to include tasks[kaminari_data_per_page - 1].title.to_s
       when :no_data
         is_page = false
         is_page_current = false
@@ -112,18 +108,6 @@ RSpec.describe Task, type: :model do
       is_next ? (expect(response.body).to include kaminari_link_next) : (expect(response.body).not_to include kaminari_link_next)
       is_first ? (expect(response.body).to include kaminari_link_first) : (expect(response.body).not_to include kaminari_link_first)
       is_last ? (expect(response.body).to include kaminari_link_last) : (expect(response.body).not_to include kaminari_link_last)
-
-      is_first = true
-      unless type == :no_data
-        tasks.each do |task|
-          if is_first
-            is_first_data ? (expect(response.body).to include task.title.to_s) : (expect(response.body).not_to include task.title.to_s)
-            is_first = false
-          else
-            is_other_data ? (expect(response.body).to include task.title.to_s) : (expect(response.body).not_to include task.title.to_s)
-          end
-        end
-      end
     }
   end
 
