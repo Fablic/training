@@ -1,28 +1,6 @@
 ## 対象課題
 https://github.com/Fablic/training/tree/stakahashi-d/myapp/docs
 
-## テーブルスキーマ(仮)
-### Users
-
-|  カラム名  |  タイプ  |
-| ---- | ---- |
-|  id  |  int  |
-|  name  |  string  |
-|  password  |  string  |
-|  email  |  string  |
-
-### Tasks
-
-|  カラム名  |  タイプ  |
-| ---- | ---- |
-|  id  |  int  |
-|  user_id  |  int  |
-|  name  |  string  |
-|  content  |  string  |
-|  status  |  int  |
-|  label  |  int  |
-|  priority  |  int  |
-|  end_date  |  datetime  |
 
 ## システムの利用
 
