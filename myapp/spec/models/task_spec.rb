@@ -6,6 +6,14 @@ RSpec.describe Task, type: :model do
   title_max_length = 50
   description_max_length = 255
 
+  kaminari_data_per_page = 5
+  kaminari_link_page = '<span class="page">'.freeze
+  kaminari_link_current_page = '<span class="page current">'.freeze
+  kaminari_link_previous = I18n.t('views.pagination.previous').freeze
+  kaminari_link_next = I18n.t('views.pagination.next').freeze
+  kaminari_link_first = I18n.t('views.pagination.first').freeze
+  kaminari_link_last = I18n.t('views.pagination.last').freeze
+
   shared_examples_for 'バリデーションエラーとなり、想定するメッセージが表示されること' do |column, message|
     it {
       expect(task.valid?).to eq false
@@ -57,6 +65,63 @@ RSpec.describe Task, type: :model do
           expect(task.title).to eq search_text
         when :status_only
           expect(task.status).to eq Task.statuses.key(1)
+        end
+      end
+    }
+  end
+
+  shared_examples_for '表示されるタスクデータ、ページリンクが想定通りの内容であること' do |type|
+    it {
+      case type
+      when :first
+        is_page = true
+        is_page_current = true
+        is_prev = false
+        is_next = true
+        is_first = false
+        is_last = true
+        is_first_data = false
+        is_other_data = true
+
+        get tasks_path
+      when :last
+        is_page = true
+        is_page_current = true
+        is_prev = true
+        is_next = false
+        is_first = true
+        is_last = false
+        is_first_data = true
+        is_other_data = false
+
+        get tasks_path, params: { page: 2 }
+      when :no_data
+        is_page = false
+        is_page_current = false
+        is_prev = false
+        is_next = false
+        is_first = false
+        is_last = false
+
+        get tasks_path
+      end
+
+      is_page ? (expect(response.body).to include kaminari_link_page) : (expect(response.body).not_to include kaminari_link_page)
+      is_page_current ? (expect(response.body).to include kaminari_link_current_page) : (expect(response.body).not_to include kaminari_link_current_page)
+      is_prev ? (expect(response.body).to include kaminari_link_previous) : (expect(response.body).not_to include kaminari_link_previous)
+      is_next ? (expect(response.body).to include kaminari_link_next) : (expect(response.body).not_to include kaminari_link_next)
+      is_first ? (expect(response.body).to include kaminari_link_first) : (expect(response.body).not_to include kaminari_link_first)
+      is_last ? (expect(response.body).to include kaminari_link_last) : (expect(response.body).not_to include kaminari_link_last)
+
+      is_first = true
+      unless type == :no_data
+        tasks.each do |task|
+          if is_first
+            is_first_data ? (expect(response.body).to include task.title.to_s) : (expect(response.body).not_to include task.title.to_s)
+            is_first = false
+          else
+            is_other_data ? (expect(response.body).to include task.title.to_s) : (expect(response.body).not_to include task.title.to_s)
+          end
         end
       end
     }
@@ -299,6 +364,18 @@ RSpec.describe Task, type: :model do
         let(:params) { {} }
         it_behaves_like '検索条件に一致するデータが取得できていること', 5, :nothing
       end
+    end
+  end
+
+  describe 'kaminari', type: :request do
+    context 'タスクデータが存在する場合' do
+      let!(:tasks) { create_list(:task, kaminari_data_per_page + 1) }
+      it_behaves_like '表示されるタスクデータ、ページリンクが想定通りの内容であること', :first
+      it_behaves_like '表示されるタスクデータ、ページリンクが想定通りの内容であること', :last
+    end
+    context 'タスクデータが存在しない場合' do
+      let!(:tasks) {}
+      it_behaves_like '表示されるタスクデータ、ページリンクが想定通りの内容であること', :no_data
     end
   end
 end
