@@ -1,0 +1,24 @@
+<table>
+  <thead>
+    <tr>
+      <th>Task</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tasks.each do |t| %>
+    <tr>
+      <td><%= t.title %></td>
+      <td>
+        <!-- 次のタスク詳細取得画面へのリンク -->
+        <a href="/tasks/<%= t.id %>">edit</a>
+      </td>
+      <td>
+        <!-- まだ実装しない -->
+         <button type="submit">delete</button>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
