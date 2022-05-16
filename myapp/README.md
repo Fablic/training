@@ -20,8 +20,8 @@ https://github.com/Fablic/training/tree/stakahashi-d/myapp/docs
 |  user_id  |  int  |
 |  name  |  string  |
 |  description  |  string  |
-|  status_id  |  int  |
-|  priority_id  |  int  |
+|  status  |  int  |
+|  priority  |  int  |
 |  due_date  |  datetime  |
 |  created_at | datetime |
 |  updated_at | datetime |
@@ -41,19 +41,6 @@ https://github.com/Fablic/training/tree/stakahashi-d/myapp/docs
 |  id  |  int  |
 |  name  |  string  |
 
-### status
-
-|  カラム名  |  タイプ  |
-| ---- | ---- |
-|  id  |  int  |
-|  name  |  string  |
-
-### priorities
-
-|  カラム名  |  タイプ  |
-| ---- | ---- |
-|  id  |  int  |
-|  name  |  string  |
 
 ## システムの利用
 
