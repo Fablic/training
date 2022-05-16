@@ -1,7 +1,7 @@
 ## 対象課題
 https://github.com/Fablic/training/tree/stakahashi-d/myapp/docs
 
-## テーブルスキーマ
+## テーブルスキーマ(仮)
 ### Users
 
 |  カラム名  |  タイプ  |
