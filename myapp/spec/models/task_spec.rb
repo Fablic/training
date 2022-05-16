@@ -37,7 +37,7 @@ RSpec.describe Task, type: :model do
     }
   end
 
-  shared_examples_for '検索条件に一致するデータが取得できていること' do |count, sort_type|
+  shared_examples_for '検索条件に一致するデータが取得できていること' do |count, search_type|
     it {
       num = 0
       tasks.first(2).each do |task|
@@ -49,7 +49,7 @@ RSpec.describe Task, type: :model do
       expect(searched_tasks.size).to eq count
 
       searched_tasks.each do |task|
-        case sort_type
+        case search_type
         when :title_and_status
           expect(task.title).to eq search_text
           expect(task.status).to eq Task.statuses.key(0)
