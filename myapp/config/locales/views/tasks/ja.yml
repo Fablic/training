@@ -13,6 +13,8 @@ ja:
       show_link : '詳細'
       edit_link : '編集'
       delete_link : '削除'
+      sort_termination_at_latest: '終了期日(新しい順)'
+      sort_termination_at_oldest: '終了期日(古い順)'
     show:
       page_title: '「%{task_title}」のタスク情報詳細'
     edit:

@@ -1,13 +1,20 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: %i[show edit update destroy]
+  before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def index
-    @tasks = Task.all.order('created_at DESC')
+    @tasks = Task.all_sort_by(:created_at, :desc)
   end
 
-  def show
-    
+  def sort
+    if params[:termination_at_latest]
+      @tasks = Task.all_sort_by(:termination_at, :desc)
+    elsif params[:termination_at_oldest]
+      @tasks = Task.all_sort_by(:termination_at, :asc)
+    end
+    render :index
   end
+
+  def show; end
 
   def new
     @task = Task.new()
@@ -20,29 +27,26 @@ class TasksController < ApplicationController
     @task.user_id = 0
 
     if @task.save
-      redirect_to @task, notice: t("tasks.flash.new")
+      redirect_to @task, notice: t('tasks.flash.new')
     else
       render :new
     end
   end
 
-  def edit
-
-  end
+  def edit; end
 
   def update
     if @task.update(task_params)
-      redirect_to @task, notice: t("tasks.flash.update")
+      redirect_to @task, notice: t('tasks.flash.update')
     else
       render :edit
     end
   end
 
   def destroy
-
     return unless @task.destroy
     
-    redirect_to tasks_path, notice: t("tasks.flash.destroy")
+    redirect_to tasks_path, notice: t('tasks.flash.destroy')
   end
 
   private
