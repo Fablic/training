@@ -32,8 +32,6 @@ RSpec.describe 'Tasks', type: :system do
         expect(page).to have_no_content task.description
       end
     end
-    
-    
   end
 
   describe '#create' do
