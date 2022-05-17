@@ -30,9 +30,11 @@ RSpec.describe TasksController, type: :controller do
   describe 'GET #index' do
     context 'メイン画面にアクセスした場合' do
       subject { proc { get :index } }
+
       let!(:tasks) { create_list(:task, number_of_multiple_data) }
 
       it_behaves_like 'レスポンス(HTTPステータスコード)が想定通りであること', 200
+
       it '作成日時(新しい順)で並び替えられた全てのデータを取得していること' do
         subject.call
         displayed_tasks = controller.instance_variable_get('@tasks')
@@ -49,12 +51,14 @@ RSpec.describe TasksController, type: :controller do
 
   describe 'GET #sort' do
     subject { proc { get :sort, params: param } }
+
     let!(:tasks) { create_list(:task, number_of_multiple_data) }
 
     context '終了期日(新しい順)が選択された場合' do
       let(:param) { { termination_at_latest: true } }
 
       it_behaves_like 'レスポンス(HTTPステータスコード)が想定通りであること', 200
+
       it '終了期日(新しい順)で並び替えられた全てのデータを取得していること' do
         subject.call
         displayed_tasks = controller.instance_variable_get('@tasks')
@@ -72,6 +76,7 @@ RSpec.describe TasksController, type: :controller do
       let(:param) { { termination_at_oldest: true } }
 
       it_behaves_like 'レスポンス(HTTPステータスコード)が想定通りであること', 200
+
       it '終了期日(古い順)で並び替えられた全てのデータを取得していること' do
         subject.call
         displayed_tasks = controller.instance_variable_get('@tasks')
@@ -88,12 +93,9 @@ RSpec.describe TasksController, type: :controller do
 
   describe 'GET #search' do
     subject { proc { get :search, params: params } }
+
     let!(:tasks) { create_list(:task, number_of_multiple_data) }
-    let(:params) do
-      {
-        search: input_value
-      }
-    end
+    let(:params) { { search: input_value } }
 
     context '検索条件に値が入力されている場合' do
       let(:search_text) { 'test_title_for_search' }
@@ -110,6 +112,7 @@ RSpec.describe TasksController, type: :controller do
           end
 
           it_behaves_like 'レスポンス(HTTPステータスコード)が想定通りであること', 200
+
           it 'input_search_paramsによるバリデーション後の値を使用し、検索条件に一致するデータを1件取得していること' do
             subject.call
             search_params = controller.instance_variable_get('@search_params')
@@ -124,11 +127,7 @@ RSpec.describe TasksController, type: :controller do
         end
 
         context 'タイトルのみ入力されている場合' do
-          let(:input_value) do
-            {
-              title: search_text
-            }
-          end
+          let(:input_value) { { title: search_text } }
 
           it 'input_search_paramsによるバリデーション後の値を使用し、検索条件に一致するデータを1件取得していること' do
             subject.call
@@ -144,11 +143,8 @@ RSpec.describe TasksController, type: :controller do
         end
 
         context 'ステータスのみ入力されている場合' do
-          let(:input_value) do
-            {
-              status: Task.statuses[:done]
-            }
-          end
+          let(:input_value) { { status: Task.statuses[:done] } }
+
           it 'input_search_paramsによるバリデーション後の値を使用し、検索条件に一致するデータを1件取得していること' do
             subject.call
             search_params = controller.instance_variable_get('@search_params')
@@ -172,62 +168,74 @@ RSpec.describe TasksController, type: :controller do
         end
 
         it_behaves_like 'レスポンス(HTTPステータスコード)が想定通りであること', 200
+
         it_behaves_like 'input_search_paramsでのバリデーションにより値が無効化され、検索条件の指定なく全てのデータを取得していること'
       end
     end
 
     context '検索条件に値が入力されていない場合' do
       let(:input_value) { {} }
+
       it_behaves_like 'レスポンス(HTTPステータスコード)が想定通りであること', 200
+
       it_behaves_like 'input_search_paramsでのバリデーションにより値が無効化され、検索条件の指定なく全てのデータを取得していること'
     end
   end
 
   describe 'GET #new' do
     subject { proc { get :new } }
+
     it_behaves_like 'レスポンス(HTTPステータスコード)が想定通りであること', 200
   end
 
   describe 'GET #show' do
     subject { proc { get :show, params: { id: id } } }
+
     let!(:task) { create(:task) }
 
     context '該当するタスクが存在する場合' do
       context '有効なパラメータの場合' do
         let(:id) { task.id }
+
         it_behaves_like 'レスポンス(HTTPステータスコード)が想定通りであること', 200
       end
 
       context '無効なパラメータの場合' do
         let(:id) { nil }
+
         it_behaves_like '想定エラーが発生すること', ActionController::UrlGenerationError
       end
     end
 
     context '該当するタスクが存在しない場合' do
       let(:id) { Task.last.id + 1 }
+
       it_behaves_like '想定エラーが発生すること', ActiveRecord::RecordNotFound
     end
   end
 
   describe 'GET #edit' do
     subject { proc { get :edit, params: { id: id } } }
+
     let!(:task) { create(:task) }
 
     context '該当するタスクが存在する場合' do
       context '有効なパラメータの場合' do
         let(:id) { task.id }
+
         it_behaves_like 'レスポンス(HTTPステータスコード)が想定通りであること', 200
       end
 
       context '無効なパラメータの場合' do
         let(:id) { nil }
+
         it_behaves_like '想定エラーが発生すること', ActionController::UrlGenerationError
       end
     end
 
     context '該当するタスクが存在しない場合' do
       let(:id) { Task.last.id + 1 }
+
       it_behaves_like '想定エラーが発生すること', ActiveRecord::RecordNotFound
     end
   end
@@ -254,7 +262,9 @@ RSpec.describe TasksController, type: :controller do
 
     context '無効なパラメータの場合' do
       let(:task) { attributes_for(:task, title: nil) }
+
       it_behaves_like 'レスポンス(HTTPステータスコード)が想定通りであること', 200
+
       it 'タスクが作成されないこと' do
         expect { subject.call }.to change(Task, :count).by(0)
       end
@@ -263,6 +273,7 @@ RSpec.describe TasksController, type: :controller do
 
   describe 'PATCH #update' do
     subject { proc { patch :update, params: { id: id, task: { title: value } } } }
+
     let!(:task) { create(:task) }
 
     context '該当するタスクが存在する場合' do
@@ -270,6 +281,7 @@ RSpec.describe TasksController, type: :controller do
 
       context '有効なパラメータの場合' do
         let(:value) { 'updated_task' }
+
         it_behaves_like 'レスポンス(HTTPステータスコード)が想定通りであること', 302
 
         it 'タスク情報が更新されること' do
@@ -286,6 +298,7 @@ RSpec.describe TasksController, type: :controller do
 
       context '無効なパラメータの場合' do
         let(:value) { nil }
+
         it_behaves_like 'レスポンス(HTTPステータスコード)が想定通りであること', 200
 
         it 'タスク情報が更新されないこと' do
@@ -298,16 +311,19 @@ RSpec.describe TasksController, type: :controller do
     context '該当するタスクが存在しない場合' do
       let(:id) { Task.last.id + 1 }
       let(:value) { 'updated_task' }
+
       it_behaves_like '想定エラーが発生すること', ActiveRecord::RecordNotFound
     end
   end
 
   describe 'DELETE #destroy' do
     subject { proc { delete :destroy, params: { id: id } } }
+
     let!(:task) { create(:task) }
 
     context '該当するタスクが存在する場合' do
       let(:id) { task.id }
+
       it_behaves_like 'レスポンス(HTTPステータスコード)が想定通りであること', 302
 
       it 'タスクが削除されること' do
@@ -324,6 +340,7 @@ RSpec.describe TasksController, type: :controller do
 
     context '該当するタスクが存在しない場合' do
       let(:id) { Task.last.id + 1 }
+
       it_behaves_like '想定エラーが発生すること', ActiveRecord::RecordNotFound
     end
   end
