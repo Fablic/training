@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe TasksController, type: :controller do
   number_of_multiple_data = 5
 
-  shared_examples_for 'レスポンス(HTTPステータスコード)が正しいこと' do |status|
+  shared_examples_for 'レスポンス(HTTPステータスコード)が想定通りであること' do |status|
     it {
       subject.call
       expect(response).to have_http_status(status)
@@ -17,64 +17,72 @@ RSpec.describe TasksController, type: :controller do
     }
   end
 
-  shared_examples_for '並び替えが正常に実行されていること' do |column, equals|
+  shared_examples_for 'input_search_paramsでのバリデーションにより値が無効化され、検索条件の指定なく全てのデータを取得していること' do
     it {
-      subject.call
-      displayed_tasks = controller.instance_variable_get('@tasks')
-      expect(displayed_tasks.size).to be == number_of_multiple_data
-
-      before_task = nil
-      displayed_tasks.each do |task|
-        if before_task
-          case equals
-          when :asc
-            expect(task.send(column.to_s)).to be >= before_task.send(column.to_s)
-          when :desc
-            expect(task.send(column.to_s)).to be <= before_task.send(column.to_s)
-          end
-        end
-        before_task = task
-      end
-    }
-  end
-
-  shared_examples_for '検索が正常に実行されていること' do |present, matched_num|
-    it {
-      Task.find(Task.last.id).update_columns(input_value) if present
-
       subject.call
       search_params = controller.instance_variable_get('@search_params')
-      expect(search_params.present?).to eq present
-      if present
-        expect(search_params[:title]).to eq input_value[:title]
-        expect(search_params[:status]).to eq input_value[:status].to_s
-      end
+      expect(search_params.present?).to eq false
       displayed_tasks = controller.instance_variable_get('@tasks')
-      expect(displayed_tasks.size).to be == matched_num
+      expect(displayed_tasks.size).to be == number_of_multiple_data
     }
   end
 
   describe 'GET #index' do
-    subject { proc { get :index } }
-    let!(:tasks) { create_list(:task, number_of_multiple_data) }
-    it_behaves_like 'レスポンス(HTTPステータスコード)が正しいこと', 200
-    it_behaves_like '並び替えが正常に実行されていること', :created_at, :desc
+    context 'メイン画面にアクセスした場合' do
+      subject { proc { get :index } }
+      let!(:tasks) { create_list(:task, number_of_multiple_data) }
+
+      it_behaves_like 'レスポンス(HTTPステータスコード)が想定通りであること', 200
+      it '作成日時(新しい順)で並び替えられた全てのデータを取得していること' do
+        subject.call
+        displayed_tasks = controller.instance_variable_get('@tasks')
+        expect(displayed_tasks.size).to be == number_of_multiple_data
+
+        before_task = nil
+        displayed_tasks.each do |task|
+          expect(task.send(:created_at)).to be <= before_task.send(:created_at) if before_task
+          before_task = task
+        end
+      end
+    end
   end
 
   describe 'GET #sort' do
     subject { proc { get :sort, params: param } }
-    let!(:tasks) { create_list(:task, listnum) }
-    let(:listnum) { number_of_multiple_data }
+    let!(:tasks) { create_list(:task, number_of_multiple_data) }
 
     context '終了期日(新しい順)が選択された場合' do
       let(:param) { { termination_at_latest: true } }
-      it_behaves_like 'レスポンス(HTTPステータスコード)が正しいこと', 200
-      it_behaves_like '並び替えが正常に実行されていること', :termination_at, :desc
+
+      it_behaves_like 'レスポンス(HTTPステータスコード)が想定通りであること', 200
+      it '終了期日(新しい順)で並び替えられた全てのデータを取得していること' do
+        subject.call
+        displayed_tasks = controller.instance_variable_get('@tasks')
+        expect(displayed_tasks.size).to be == number_of_multiple_data
+
+        before_task = nil
+        displayed_tasks.each do |task|
+          expect(task.send(:termination_at)).to be <= before_task.send(:termination_at) if before_task
+          before_task = task
+        end
+      end
     end
+
     context '終了期日(古い順)が選択された場合' do
       let(:param) { { termination_at_oldest: true } }
-      it_behaves_like 'レスポンス(HTTPステータスコード)が正しいこと', 200
-      it_behaves_like '並び替えが正常に実行されていること', :termination_at, :asc
+
+      it_behaves_like 'レスポンス(HTTPステータスコード)が想定通りであること', 200
+      it '終了期日(古い順)で並び替えられた全てのデータを取得していること' do
+        subject.call
+        displayed_tasks = controller.instance_variable_get('@tasks')
+        expect(displayed_tasks.size).to be == number_of_multiple_data
+
+        before_task = nil
+        displayed_tasks.each do |task|
+          expect(task.send(:termination_at)).to be >= before_task.send(:termination_at) if before_task
+          before_task = task
+        end
+      end
     end
   end
 
@@ -86,18 +94,75 @@ RSpec.describe TasksController, type: :controller do
         search: input_value
       }
     end
-    context '検索条件が入力されている場合' do
+
+    context '検索条件に値が入力されている場合' do
       let(:search_text) { 'test_title_for_search' }
+
       context '正しい値が入力されている場合' do
-        let(:input_value) do
-          {
-            title: search_text,
-            status: Task.statuses[:not_started]
-          }
+        let!(:for_seach_task) { create(:task, input_value) }
+
+        context 'タイトル、ステータスが入力されている場合' do
+          let(:input_value) do
+            {
+              title: search_text,
+              status: Task.statuses[:not_started]
+            }
+          end
+
+          it_behaves_like 'レスポンス(HTTPステータスコード)が想定通りであること', 200
+          it 'input_search_paramsによるバリデーション後の値を使用し、検索条件に一致するデータを1件取得していること' do
+            subject.call
+            search_params = controller.instance_variable_get('@search_params')
+            expect(search_params.present?).to eq true
+            expect(search_params[:title]).to eq input_value[:title]
+            expect(search_params[:status]).to eq input_value[:status].to_s
+            displayed_tasks = controller.instance_variable_get('@tasks')
+            expect(displayed_tasks.size).to be == 1
+            expect(displayed_tasks[0].title).to eq for_seach_task.title
+            expect(displayed_tasks[0].status).to eq for_seach_task.status
+          end
         end
-        it_behaves_like 'レスポンス(HTTPステータスコード)が正しいこと', 200
-        it_behaves_like '検索が正常に実行されていること', true, 1
+
+        context 'タイトルのみ入力されている場合' do
+          let(:input_value) do
+            {
+              title: search_text
+            }
+          end
+
+          it 'input_search_paramsによるバリデーション後の値を使用し、検索条件に一致するデータを1件取得していること' do
+            subject.call
+            search_params = controller.instance_variable_get('@search_params')
+            expect(search_params.present?).to eq true
+            expect(search_params[:title]).to eq input_value[:title]
+            expect(search_params[:status]).to eq nil
+            displayed_tasks = controller.instance_variable_get('@tasks')
+            expect(displayed_tasks.size).to be == 1
+            expect(displayed_tasks[0].title).to eq for_seach_task.title
+            expect(displayed_tasks[0].status).to eq for_seach_task.status
+          end
+        end
+
+        context 'ステータスのみ入力されている場合' do
+          let(:input_value) do
+            {
+              status: Task.statuses[:done]
+            }
+          end
+          it 'input_search_paramsによるバリデーション後の値を使用し、検索条件に一致するデータを1件取得していること' do
+            subject.call
+            search_params = controller.instance_variable_get('@search_params')
+            expect(search_params.present?).to eq true
+            expect(search_params[:title]).to eq nil
+            expect(search_params[:status]).to eq input_value[:status].to_s
+            displayed_tasks = controller.instance_variable_get('@tasks')
+            expect(displayed_tasks.size).to be == 1
+            expect(displayed_tasks[0].title).to eq for_seach_task.title
+            expect(displayed_tasks[0].status).to eq for_seach_task.status
+          end
+        end
       end
+
       context '不正な値が入力されている場合' do
         let(:input_value) do
           {
@@ -105,35 +170,40 @@ RSpec.describe TasksController, type: :controller do
             unknown02: Task.statuses[:not_started]
           }
         end
-        it_behaves_like 'レスポンス(HTTPステータスコード)が正しいこと', 200
-        it_behaves_like '検索が正常に実行されていること', false, number_of_multiple_data
+
+        it_behaves_like 'レスポンス(HTTPステータスコード)が想定通りであること', 200
+        it_behaves_like 'input_search_paramsでのバリデーションにより値が無効化され、検索条件の指定なく全てのデータを取得していること'
       end
     end
-    context '検索条件が入力されていない場合' do
+
+    context '検索条件に値が入力されていない場合' do
       let(:input_value) { {} }
-      it_behaves_like 'レスポンス(HTTPステータスコード)が正しいこと', 200
-      it_behaves_like '検索が正常に実行されていること', false, number_of_multiple_data
+      it_behaves_like 'レスポンス(HTTPステータスコード)が想定通りであること', 200
+      it_behaves_like 'input_search_paramsでのバリデーションにより値が無効化され、検索条件の指定なく全てのデータを取得していること'
     end
   end
 
   describe 'GET #new' do
     subject { proc { get :new } }
-    it_behaves_like 'レスポンス(HTTPステータスコード)が正しいこと', 200
+    it_behaves_like 'レスポンス(HTTPステータスコード)が想定通りであること', 200
   end
 
   describe 'GET #show' do
     subject { proc { get :show, params: { id: id } } }
     let!(:task) { create(:task) }
+
     context '該当するタスクが存在する場合' do
       context '有効なパラメータの場合' do
         let(:id) { task.id }
-        it_behaves_like 'レスポンス(HTTPステータスコード)が正しいこと', 200
+        it_behaves_like 'レスポンス(HTTPステータスコード)が想定通りであること', 200
       end
+
       context '無効なパラメータの場合' do
         let(:id) { nil }
         it_behaves_like '想定エラーが発生すること', ActionController::UrlGenerationError
       end
     end
+
     context '該当するタスクが存在しない場合' do
       let(:id) { Task.last.id + 1 }
       it_behaves_like '想定エラーが発生すること', ActiveRecord::RecordNotFound
@@ -143,16 +213,19 @@ RSpec.describe TasksController, type: :controller do
   describe 'GET #edit' do
     subject { proc { get :edit, params: { id: id } } }
     let!(:task) { create(:task) }
+
     context '該当するタスクが存在する場合' do
       context '有効なパラメータの場合' do
         let(:id) { task.id }
-        it_behaves_like 'レスポンス(HTTPステータスコード)が正しいこと', 200
+        it_behaves_like 'レスポンス(HTTPステータスコード)が想定通りであること', 200
       end
+
       context '無効なパラメータの場合' do
         let(:id) { nil }
         it_behaves_like '想定エラーが発生すること', ActionController::UrlGenerationError
       end
     end
+
     context '該当するタスクが存在しない場合' do
       let(:id) { Task.last.id + 1 }
       it_behaves_like '想定エラーが発生すること', ActiveRecord::RecordNotFound
@@ -161,10 +234,11 @@ RSpec.describe TasksController, type: :controller do
 
   describe 'POST #create' do
     subject { proc { post :create, params: { task: task } } }
+
     context '有効なパラメータの場合' do
       let(:task) { attributes_for(:task, title: 'test_title_create') }
 
-      it_behaves_like 'レスポンス(HTTPステータスコード)が正しいこと', 302
+      it_behaves_like 'レスポンス(HTTPステータスコード)が想定通りであること', 302
 
       it 'タスクが作成されること' do
         expect { subject.call }.to change(Task, :count).by(1)
@@ -177,9 +251,10 @@ RSpec.describe TasksController, type: :controller do
         expect(flash[:notice]).to match(/^タスクを作成しました！$/)
       end
     end
+
     context '無効なパラメータの場合' do
       let(:task) { attributes_for(:task, title: nil) }
-      it_behaves_like 'レスポンス(HTTPステータスコード)が正しいこと', 200
+      it_behaves_like 'レスポンス(HTTPステータスコード)が想定通りであること', 200
       it 'タスクが作成されないこと' do
         expect { subject.call }.to change(Task, :count).by(0)
       end
@@ -189,12 +264,13 @@ RSpec.describe TasksController, type: :controller do
   describe 'PATCH #update' do
     subject { proc { patch :update, params: { id: id, task: { title: value } } } }
     let!(:task) { create(:task) }
+
     context '該当するタスクが存在する場合' do
       let(:id) { task.id }
 
       context '有効なパラメータの場合' do
         let(:value) { 'updated_task' }
-        it_behaves_like 'レスポンス(HTTPステータスコード)が正しいこと', 302
+        it_behaves_like 'レスポンス(HTTPステータスコード)が想定通りであること', 302
 
         it 'タスク情報が更新されること' do
           subject.call
@@ -207,9 +283,10 @@ RSpec.describe TasksController, type: :controller do
           expect(flash[:notice]).to match(/^タスクを更新しました！$/)
         end
       end
+
       context '無効なパラメータの場合' do
         let(:value) { nil }
-        it_behaves_like 'レスポンス(HTTPステータスコード)が正しいこと', 200
+        it_behaves_like 'レスポンス(HTTPステータスコード)が想定通りであること', 200
 
         it 'タスク情報が更新されないこと' do
           subject.call
@@ -217,6 +294,7 @@ RSpec.describe TasksController, type: :controller do
         end
       end
     end
+
     context '該当するタスクが存在しない場合' do
       let(:id) { Task.last.id + 1 }
       let(:value) { 'updated_task' }
@@ -227,9 +305,10 @@ RSpec.describe TasksController, type: :controller do
   describe 'DELETE #destroy' do
     subject { proc { delete :destroy, params: { id: id } } }
     let!(:task) { create(:task) }
+
     context '該当するタスクが存在する場合' do
       let(:id) { task.id }
-      it_behaves_like 'レスポンス(HTTPステータスコード)が正しいこと', 302
+      it_behaves_like 'レスポンス(HTTPステータスコード)が想定通りであること', 302
 
       it 'タスクが削除されること' do
         expect { subject.call }.to change(Task, :count).by(-1)
@@ -242,6 +321,7 @@ RSpec.describe TasksController, type: :controller do
         expect(flash[:notice]).to match(/^タスクを削除しました！$/)
       end
     end
+
     context '該当するタスクが存在しない場合' do
       let(:id) { Task.last.id + 1 }
       it_behaves_like '想定エラーが発生すること', ActiveRecord::RecordNotFound
