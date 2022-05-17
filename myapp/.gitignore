@@ -2,8 +2,8 @@
 .vscode/*
 .devcontainer/*
 # Ignore all logfiles and tempfiles.
-/log/*
-/tmp/*
+myapp/log/*
+myapp/tmp/*
 !/log/.keep
 !/tmp/.keep
 
