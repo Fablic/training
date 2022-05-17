@@ -9,66 +9,11 @@ RSpec.describe Task, type: :model do
   number_of_multiple_data = 5
   search_base_text = 'test_title_for_search'.freeze
 
-  kaminari_data_per_page = 5
-  kaminari_link_page = '<span class="page">'.freeze
-  kaminari_link_current_page = '<span class="page current">'.freeze
-  kaminari_link_previous = I18n.t('views.pagination.previous').freeze
-  kaminari_link_next = I18n.t('views.pagination.next').freeze
-  kaminari_link_first = I18n.t('views.pagination.first').freeze
-  kaminari_link_last = I18n.t('views.pagination.last').freeze
-
   shared_examples_for 'バリデーションエラーとなり、想定するメッセージが表示されること' do |column, message|
     it {
       expect(task.valid?).to eq false
       task.valid?
       expect(task.errors.messages[column]).to include message
-    }
-  end
-
-  shared_examples_for '表示されるタスクデータ、ページリンクが想定通りの内容であること' do |type|
-    it {
-      case type
-      when :first
-        is_page = true
-        is_page_current = true
-        is_prev = false
-        is_next = true
-        is_first = false
-        is_last = true
-
-        get tasks_path
-        expect(response.body).not_to include tasks[0].title.to_s
-        expect(response.body).to include tasks[1].title.to_s
-        expect(response.body).to include tasks[kaminari_data_per_page - 1].title.to_s
-      when :last
-        is_page = true
-        is_page_current = true
-        is_prev = true
-        is_next = false
-        is_first = true
-        is_last = false
-
-        get tasks_path, params: { page: 2 }
-        expect(response.body).to include tasks[0].title.to_s
-        expect(response.body).not_to include tasks[1].title.to_s
-        expect(response.body).not_to include tasks[kaminari_data_per_page - 1].title.to_s
-      when :no_data
-        is_page = false
-        is_page_current = false
-        is_prev = false
-        is_next = false
-        is_first = false
-        is_last = false
-
-        get tasks_path
-      end
-
-      is_page ? (expect(response.body).to include kaminari_link_page) : (expect(response.body).not_to include kaminari_link_page)
-      is_page_current ? (expect(response.body).to include kaminari_link_current_page) : (expect(response.body).not_to include kaminari_link_current_page)
-      is_prev ? (expect(response.body).to include kaminari_link_previous) : (expect(response.body).not_to include kaminari_link_previous)
-      is_next ? (expect(response.body).to include kaminari_link_next) : (expect(response.body).not_to include kaminari_link_next)
-      is_first ? (expect(response.body).to include kaminari_link_first) : (expect(response.body).not_to include kaminari_link_first)
-      is_last ? (expect(response.body).to include kaminari_link_last) : (expect(response.body).not_to include kaminari_link_last)
     }
   end
 
@@ -92,6 +37,7 @@ RSpec.describe Task, type: :model do
         it 'バリデーションエラーになること' do
           expect(task.valid?).to eq false
         end
+
         it 'エラーメッセージが表示されること' do
           task.valid?
           expect(task.errors.messages[:title]).to include "は#{title_max_length}文字以内で入力してください"
@@ -102,16 +48,19 @@ RSpec.describe Task, type: :model do
     context 'タイトルに正常な値が入力されていない場合' do
       context 'タイトルが空の場合' do
         let(:title) { '' }
+
         it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること', :title, msg_no_value
       end
 
       context 'タイトルが空白の場合' do
         let(:title) { ' ' }
+
         it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること', :title, msg_no_value
       end
 
       context 'タイトルがnilの場合' do
         let(:title) { nil }
+
         it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること', :title, msg_no_value
       end
     end
@@ -137,6 +86,7 @@ RSpec.describe Task, type: :model do
         it 'バリデーションエラーになること' do
           expect(task.valid?).to eq false
         end
+
         it 'エラーメッセージが表示されること' do
           task.valid?
           expect(task.errors.messages[:description]).to include "は#{description_max_length}文字以内で入力してください"
@@ -147,16 +97,19 @@ RSpec.describe Task, type: :model do
     context '説明に正常な値が入力されていない場合' do
       context '説明が空の場合' do
         let(:description) { '' }
+
         it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること', :description, msg_no_value
       end
 
       context '説明が空白の場合' do
         let(:description) { ' ' }
+
         it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること', :description, msg_no_value
       end
 
       context '説明がnilの場合' do
         let(:description) { nil }
+
         it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること', :description, msg_no_value
       end
     end
@@ -168,6 +121,7 @@ RSpec.describe Task, type: :model do
     context '終了期日に正常な値が入力されている場合' do
       context '終了期日が現在日時よりも後の日付である場合' do
         let(:termination_at) { Time.now + 1 }
+
         it 'バリデーションエラーにならないこと' do
           expect(task.valid?).to eq true
         end
@@ -179,6 +133,7 @@ RSpec.describe Task, type: :model do
         it 'バリデーションエラーになること' do
           expect(task.valid?).to eq false
         end
+
         it 'エラーメッセージが表示されること' do
           task.valid?
           expect(task.errors.messages[:termination_at]).to include msg_invalid_termination_at
@@ -189,16 +144,19 @@ RSpec.describe Task, type: :model do
     context '終了期日に正常な値が入力されていない場合' do
       context '終了期日が空の場合' do
         let(:termination_at) { '' }
+
         it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること', :termination_at, msg_no_value
       end
 
       context '終了期日が空白の場合' do
         let(:termination_at) { ' ' }
+
         it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること', :termination_at, msg_no_value
       end
 
       context '終了期日がnilの場合' do
         let(:termination_at) { nil }
+
         it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること', :termination_at, msg_no_value
       end
     end
@@ -226,16 +184,19 @@ RSpec.describe Task, type: :model do
     context '優先度に正常な値が入力されていない場合' do
       context '優先度が空の場合' do
         let(:priority) { '' }
+
         it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること', :priority, msg_no_value
       end
 
       context '優先度が空白の場合' do
         let(:priority) { ' ' }
+
         it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること', :priority, msg_no_value
       end
 
       context '優先度がnilの場合' do
         let(:priority) { nil }
+
         it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること', :priority, msg_no_value
       end
     end
@@ -263,16 +224,19 @@ RSpec.describe Task, type: :model do
     context 'ステータスに正常な値が入力されていない場合' do
       context 'ステータスが空の場合' do
         let(:status) { '' }
+
         it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること', :status, msg_no_value
       end
 
       context 'ステータスが空白の場合' do
         let(:status) { ' ' }
+
         it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること', :status, msg_no_value
       end
 
       context 'ステータスがnilの場合' do
         let(:status) { nil }
+
         it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること', :status, msg_no_value
       end
     end
@@ -289,6 +253,7 @@ RSpec.describe Task, type: :model do
 
         context '昇順が指定された場合' do
           let(:order) { :asc }
+
           it '終了期日(昇順)で並び替えられた全てのデータを取得していること' do
             before_task = nil
             get_tasks = subject.call
@@ -303,6 +268,7 @@ RSpec.describe Task, type: :model do
 
         context '降順が指定された場合' do
           let(:order) { :desc }
+
           it '終了期日(降順)で並び替えられた全てのデータを取得していること' do
             before_task = nil
             get_tasks = subject.call
@@ -392,6 +358,7 @@ RSpec.describe Task, type: :model do
           context '該当するタスクが1件存在する場合' do
             # 検索不一致データ(タイトルが不一致)
             let(:data02) {}
+
             it "検索条件(タイトル：「#{search_base_text}」部分一致)に一致するデータ1件を取得していること" do
               searched_tasks = subject.call
               expect(searched_tasks.size).to eq 1
@@ -436,6 +403,7 @@ RSpec.describe Task, type: :model do
           context '該当するタスクが1件存在する場合' do
             # 検索不一致データ(ステータスが不一致)
             let(:data02) {}
+
             it "検索条件(ステータス：#{Task.statuses[:on_progress]})に一致するデータ1件を取得していること" do
               searched_tasks = subject.call
               expect(searched_tasks.size).to eq 1
@@ -466,23 +434,12 @@ RSpec.describe Task, type: :model do
 
       context '値が指定されていない場合' do
         let(:search_params) { {} }
+
         it '検索条件の指定なく、全てのデータを取得していること' do
           searched_tasks = subject.call
           expect(searched_tasks.size).to eq number_of_multiple_data
         end
       end
-    end
-  end
-
-  describe 'kaminari', type: :request do
-    context 'タスクデータが存在する場合' do
-      let!(:tasks) { create_list(:task, kaminari_data_per_page + 1) }
-      it_behaves_like '表示されるタスクデータ、ページリンクが想定通りの内容であること', :first
-      it_behaves_like '表示されるタスクデータ、ページリンクが想定通りの内容であること', :last
-    end
-    context 'タスクデータが存在しない場合' do
-      let!(:tasks) {}
-      it_behaves_like '表示されるタスクデータ、ページリンクが想定通りの内容であること', :no_data
     end
   end
 end
