@@ -1,8 +1,9 @@
+<h1>タスク一覧</h1>
 <table>
   <thead>
     <tr>
-      <th>Task</th>
-      <th></th>
+      <th>タスク</th>
+      <th>説明</th>
       <th></th>
     </tr>
   </thead>
@@ -10,15 +11,15 @@
     <% @tasks.each do |t| %>
     <tr>
       <td><%= t.title %></td>
+      <td><%= t.description %></td>
       <td>
-        <!-- 次のタスク詳細取得画面へのリンク -->
-        <a href="/tasks/<%= t.id %>">edit</a>
+         <td><%= link_to '編集', edit_task_path(t) %></td>
       </td>
       <td>
-        <!-- まだ実装しない -->
-         <button type="submit">delete</button>
+         <%= link_to '削除', task_path(t), method: :delete %>
       </td>
     </tr>
     <% end %>
   </tbody>
 </table>
+<%= link_to 'タスク新規追加', new_task_path %>
