@@ -25,53 +25,6 @@ RSpec.describe Task, type: :model do
     }
   end
 
-  shared_examples_for '表示されるタスクデータ、ページリンクが想定通りの内容であること' do |type|
-    it {
-      case type
-      when :first
-        is_page = true
-        is_page_current = true
-        is_prev = false
-        is_next = true
-        is_first = false
-        is_last = true
-
-        get tasks_path
-        expect(response.body).not_to include tasks[0].title.to_s
-        expect(response.body).to include tasks[1].title.to_s
-        expect(response.body).to include tasks[kaminari_data_per_page - 1].title.to_s
-      when :last
-        is_page = true
-        is_page_current = true
-        is_prev = true
-        is_next = false
-        is_first = true
-        is_last = false
-
-        get tasks_path, params: { page: 2 }
-        expect(response.body).to include tasks[0].title.to_s
-        expect(response.body).not_to include tasks[1].title.to_s
-        expect(response.body).not_to include tasks[kaminari_data_per_page - 1].title.to_s
-      when :no_data
-        is_page = false
-        is_page_current = false
-        is_prev = false
-        is_next = false
-        is_first = false
-        is_last = false
-
-        get tasks_path
-      end
-
-      is_page ? (expect(response.body).to include kaminari_link_page) : (expect(response.body).not_to include kaminari_link_page)
-      is_page_current ? (expect(response.body).to include kaminari_link_current_page) : (expect(response.body).not_to include kaminari_link_current_page)
-      is_prev ? (expect(response.body).to include kaminari_link_previous) : (expect(response.body).not_to include kaminari_link_previous)
-      is_next ? (expect(response.body).to include kaminari_link_next) : (expect(response.body).not_to include kaminari_link_next)
-      is_first ? (expect(response.body).to include kaminari_link_first) : (expect(response.body).not_to include kaminari_link_first)
-      is_last ? (expect(response.body).to include kaminari_link_last) : (expect(response.body).not_to include kaminari_link_last)
-    }
-  end
-
   describe 'title' do
     let(:task) { build(:task, title: title) }
 
@@ -477,12 +430,55 @@ RSpec.describe Task, type: :model do
   describe 'kaminari', type: :request do
     context 'タスクデータが存在する場合' do
       let!(:tasks) { create_list(:task, kaminari_data_per_page + 1) }
-      it_behaves_like '表示されるタスクデータ、ページリンクが想定通りの内容であること', :first
-      it_behaves_like '表示されるタスクデータ、ページリンクが想定通りの内容であること', :last
+
+      context '最初のページを開いている場合' do
+        it "一覧画面に1 ~ #{kaminari_data_per_page}番目のタスクデータ、ページリンク(#{kaminari_link_previous},#{kaminari_link_first}除く)が表示されること" do
+          get tasks_path
+
+          expect(response.body).not_to include tasks[0].title.to_s
+          expect(response.body).to include tasks[1].title.to_s
+          expect(response.body).to include tasks[kaminari_data_per_page - 1].title.to_s
+
+          expect(response.body).to include kaminari_link_page
+          expect(response.body).to include kaminari_link_current_page
+          expect(response.body).not_to include kaminari_link_previous
+          expect(response.body).to include kaminari_link_next
+          expect(response.body).not_to include kaminari_link_first
+          expect(response.body).to include kaminari_link_last
+        end
+      end
+
+      context '最後のページを開いている場合' do
+        it "一覧画面に#{kaminari_data_per_page + 1}番目のタスクデータ、ページリンク(#{kaminari_link_next},#{kaminari_link_last}除く)が表示されること" do
+          get tasks_path, params: { page: 2 }
+
+          expect(response.body).to include tasks[0].title.to_s
+          expect(response.body).not_to include tasks[1].title.to_s
+          expect(response.body).not_to include tasks[kaminari_data_per_page - 1].title.to_s
+
+          expect(response.body).to include kaminari_link_page
+          expect(response.body).to include kaminari_link_current_page
+          expect(response.body).to include kaminari_link_previous
+          expect(response.body).not_to include kaminari_link_next
+          expect(response.body).to include kaminari_link_first
+          expect(response.body).not_to include kaminari_link_last
+        end
+      end
     end
+
     context 'タスクデータが存在しない場合' do
       let!(:tasks) {}
-      it_behaves_like '表示されるタスクデータ、ページリンクが想定通りの内容であること', :no_data
+      
+      it '一覧画面にタスクデータ、ページリンクが一切表示されないこと' do
+        get tasks_path
+
+        expect(response.body).not_to include kaminari_link_page
+        expect(response.body).not_to include kaminari_link_current_page
+        expect(response.body).not_to include kaminari_link_previous
+        expect(response.body).not_to include kaminari_link_next
+        expect(response.body).not_to include kaminari_link_first
+        expect(response.body).not_to include kaminari_link_last
+      end
     end
   end
 end
