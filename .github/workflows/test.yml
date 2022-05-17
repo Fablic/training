@@ -39,6 +39,13 @@ jobs:
       env:
         RAILS_ENV: test
 
+    - name: install webpacker
+      run: |
+        rm -rf bin/webpack*
+        bundle exec rails webpacker:install
+        bundle exec rails webpacker:compile
+      working-directory: myapp
+
     - name: Run RSpec
       run: bundle exec rspec -f d
       working-directory: myapp
