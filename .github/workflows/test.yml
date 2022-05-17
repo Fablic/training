@@ -1,7 +1,5 @@
 name: Run rspec, rubocop
-on: 
-  push:
-  pull_request:
+on: push
 
 
 jobs:
