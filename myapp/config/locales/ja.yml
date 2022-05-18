@@ -204,3 +204,7 @@ ja:
       long: "%Y/%m/%d %H:%M"
       short: "%m/%d %H:%M"
     pm: 午後
+  errors:
+    http_status:
+      not_found: "お探しのページが見つかりませんでした。移動または削除された可能性があります。"
+      server_error: "このページはご利用頂けません。"
