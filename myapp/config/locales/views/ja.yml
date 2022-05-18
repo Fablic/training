@@ -2,6 +2,7 @@ ja:
   tasks: 
     title: 'タスク名'
     desc: '説明'
+    created_at: '作成日時'
     index:
       title: 'タスク一覧'
       add_new_task: 'タスク新規追加'
