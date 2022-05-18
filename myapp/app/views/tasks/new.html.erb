@@ -1,9 +1,9 @@
-<h1>新規タスク</h1>
+<h1><%= t '.title' %></h1>
 <%= form_for(@task) do |f| %>
-  <div><%= f.label :title, "タイトル" %></div>
+  <div><%= f.label :title, t('tasks.title') %></div>
   <div><%= f.text_field :title %></div>
-  <div><%= f.label :description, "説明" %></div>
+  <div><%= f.label :description, t('tasks.desc') %></div>
   <div><%= f.text_field :description %></div>
-  <div><%= f.submit "新規作成" %></div>
+  <div><%= f.submit t('.submit') %></div>
 <% end %>
-<%= link_to '戻る', tasks_path %>
+<%= link_to t('.back'), tasks_path %>

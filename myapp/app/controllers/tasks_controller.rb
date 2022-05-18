@@ -9,7 +9,7 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.create(task_params)
-    redirect_to tasks_path, notice: 'タスクを新規作成しました。'
+    redirect_to tasks_path, notice: t('.flash_success')
   end
 
   def edit
@@ -19,13 +19,13 @@ class TasksController < ApplicationController
   def update
     @task = Task.find(params[:id])
     @task.update(task_params)
-    redirect_to tasks_path, notice: 'タスクの情報を更新しました。'
+    redirect_to tasks_path, notice: t('.flash_success')
   end
 
   def destroy
     @task = Task.find(params[:id])
     @task.destroy
-    redirect_to tasks_path, notice: 'タスクを削除しました。'
+    redirect_to tasks_path, notice: t('.flash_success')
   end
 
   private
