@@ -1,0 +1,17 @@
+ja:
+  tasks: 
+    title: 'タスク名'
+    desc: '説明'
+    index:
+      title: 'タスク一覧'
+      add_new_task: 'タスク新規追加'
+      edit_task: '編集'
+      delete_task: '削除'
+    edit:
+      title: 'タスク編集'
+      submit: '保存'
+      back: '戻る'
+    new:
+      title: '新規タスク'
+      submit: '新規作成'
+      back: '戻る'
