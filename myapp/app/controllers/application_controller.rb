@@ -22,6 +22,6 @@ class ApplicationController < ActionController::Base
 
   def render500(err = nil)
     logger.error "Rendering 500 with excaption: #{err.message}" if err
-    render 'errors/500', status: :internal_server_error, layout: 'error'
+    render 'errors/500.html', status: :internal_server_error
   end
 end
