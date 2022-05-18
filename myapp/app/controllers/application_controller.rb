@@ -8,8 +8,10 @@ class ApplicationController < ActionController::Base
   end
 
   def t(key, options = {})
-    format('key = %<controller>s + _controller. + %<action>% + %<key>%', controller: controller_name,
-                                                                         action: action_name, key: key)
+    if key[0] == '.'
+      key = format('%<controller>s_controller.%<action>s%<key>s', controller: controller_name, action: action_name,
+                                                                  key: key)
+    end
     super
   end
 
