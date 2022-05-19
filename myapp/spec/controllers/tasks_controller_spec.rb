@@ -149,7 +149,6 @@ RSpec.describe TasksController, type: :controller do
         end
 
         context 'タイトルのみ入力されている場合' do
-          
           let(:input_value) do
             {
               title: search_text,
@@ -175,7 +174,6 @@ RSpec.describe TasksController, type: :controller do
         end
 
         context 'ステータスのみ入力されている場合' do
-
           let(:input_value) do
             {
               status: Task.statuses[:done],
@@ -336,7 +334,6 @@ RSpec.describe TasksController, type: :controller do
 
     let!(:task) { create(:task, user: user) }
 
-
     context '該当するタスクが存在する場合' do
       let(:id) { task.id }
 
@@ -387,7 +384,6 @@ RSpec.describe TasksController, type: :controller do
     subject { proc { delete :destroy, params: { id: id } } }
 
     let!(:task) { create(:task, user: user) }
-
 
     context '該当するタスクが存在する場合' do
       let(:id) { task.id }

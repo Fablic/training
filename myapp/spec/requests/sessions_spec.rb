@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Sessions', type: :request do
   let(:msg_invalid_email) { I18n.t('sessions.flash.login.invalid_email') }
   let(:msg_invalid_password) { I18n.t('sessions.flash.login.invalid_password') }
+  let(:login_page_title) { I18n.t('sessions.new.page_title') }
 
   shared_examples_for 'レスポンス(HTTPステータスコード)が正しいこと' do |status|
     it {
@@ -16,7 +17,7 @@ RSpec.describe 'Sessions', type: :request do
 
     it 'ログイン画面に遷移すること' do
       subject.call
-      expect(response.body).to include I18n.t('sessions.new.page_title')
+      expect(response.body).to include login_page_title
     end
 
     it_behaves_like 'レスポンス(HTTPステータスコード)が正しいこと', 200
@@ -53,6 +54,7 @@ RSpec.describe 'Sessions', type: :request do
 
           it 'ログインに失敗し、ログイン画面にフラッシュメッセージ(メールアドレスが間違っています)が表示される' do
             subject.call
+            expect(response.body).to include login_page_title
             expect(flash[:danger]).to match(/^#{msg_invalid_email}$/)
           end
 
@@ -65,6 +67,7 @@ RSpec.describe 'Sessions', type: :request do
 
           it 'ログインに失敗し、ログイン画面にフラッシュメッセージ(パスワードが間違っています)が表示される' do
             subject.call
+            expect(response.body).to include login_page_title
             expect(flash[:danger]).to match(/^#{msg_invalid_password}$/)
           end
 
@@ -85,6 +88,7 @@ RSpec.describe 'Sessions', type: :request do
 
       it 'ログインに失敗し、ログイン画面にフラッシュメッセージ(メールアドレスが間違っています)が表示される' do
         subject.call
+        expect(response.body).to include login_page_title
         expect(flash[:danger]).to match(/^#{msg_invalid_email}$/)
       end
 
@@ -101,9 +105,9 @@ RSpec.describe 'Sessions', type: :request do
       }
     end
 
-    before{
+    before do
       post login_path, params: { session: user_data }
-    }
+    end
 
     subject { proc { delete logout_path } }
 
@@ -115,8 +119,8 @@ RSpec.describe 'Sessions', type: :request do
         expect(session[:user_id]).to eq nil
         expect(response).to redirect_to login_path
       end
-      
-    it_behaves_like 'レスポンス(HTTPステータスコード)が正しいこと', 302
+
+      it_behaves_like 'レスポンス(HTTPステータスコード)が正しいこと', 302
     end
   end
 end
