@@ -1,0 +1,8 @@
+ja:
+  tasks_controller:
+    create:
+      flash_success: 'タスクを新規作成しました。'
+    update:
+      flash_success: 'タスクの情報を更新しました。'
+    destroy:
+      flash_success: 'タスクを削除しました。'
