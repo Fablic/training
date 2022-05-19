@@ -6,7 +6,7 @@ RSpec.describe 'Tasks', type: :system do
 
   describe '一覧ページ' do
     let!(:task_list) { create_list(:task, 4) }
-    let!(:task_order_by) { Task.order(created_at: :desc) }
+    let!(:tasks_order_by_created_at_desc) { Task.order(created_at: :desc) }
     let!(:first_task) { task_order_by[0] }
 
     before { visit tasks_path }
