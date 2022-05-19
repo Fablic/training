@@ -28,7 +28,6 @@ RSpec.describe 'Taskモデルのテスト', type: :model do
         expect(task).not_to be_valid
       end
     end
-    
   end
 
   describe "description" do
@@ -39,5 +38,4 @@ RSpec.describe 'Taskモデルのテスト', type: :model do
       end
     end
   end
-  
 end
