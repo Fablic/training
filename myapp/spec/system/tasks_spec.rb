@@ -5,8 +5,8 @@ RSpec.describe 'Tasks', type: :system do
 
   describe '一覧ページ' do
     let!(:task_list) { create_list(:task, 4) }
-    let!(:task_order_by) { Task.order(created_at: :desc) }
-    let!(:first_task) { task_order_by[0] }
+    let!(:tasks_order_by_created_at_desc) { Task.order(created_at: :desc) }
+    let!(:first_task) { tasks_order_by_created_at_desc[0] }
 
     before { visit tasks_path }
 
@@ -16,7 +16,7 @@ RSpec.describe 'Tasks', type: :system do
       end
 
       it '作成日時の降順でタスクが並んでいること' do
-        expect(page.text).to match(/#{ task_order_by[0].title }.*#{ task_order_by[1].title }.*#{ task_order_by[2].title }/)
+        expect(page.text).to match(/#{ tasks_order_by_created_at_desc[0].title }.*#{ tasks_order_by_created_at_desc[1].title }.*#{ tasks_order_by_created_at_desc[2].title }/)
       end
     end
 

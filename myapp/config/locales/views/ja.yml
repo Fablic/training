@@ -1,7 +1,7 @@
 ja:
   tasks: 
     title: 'タスク名'
-    desc: '説明'
+    description: '説明'
     created_at: '作成日時'
     index:
       title: 'タスク一覧'
