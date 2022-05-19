@@ -43,6 +43,7 @@ RSpec.describe TasksController, type: :controller do
   describe 'GET #index' do
     context 'メイン画面にアクセスした場合' do
       subject { proc { get :index } }
+
       let!(:tasks) { create_list(:task, number_of_multiple_data, user: user) }
 
       it_behaves_like 'ログインしていない場合、ログイン画面にリダイレクトされること'
@@ -113,11 +114,7 @@ RSpec.describe TasksController, type: :controller do
     subject { proc { get :search, params: params } }
 
     let!(:tasks) { create_list(:task, number_of_multiple_data, user: user) }
-    let(:params) do
-      {
-        search: input_value
-      }
-    end
+    let(:params) { { search: input_value } }
 
     context '検索条件に値が入力されている場合' do
       let(:search_text) { 'test_title_for_search' }
@@ -152,6 +149,7 @@ RSpec.describe TasksController, type: :controller do
         end
 
         context 'タイトルのみ入力されている場合' do
+          
           let(:input_value) do
             {
               title: search_text,
@@ -177,6 +175,7 @@ RSpec.describe TasksController, type: :controller do
         end
 
         context 'ステータスのみ入力されている場合' do
+
           let(:input_value) do
             {
               status: Task.statuses[:done],
@@ -334,7 +333,9 @@ RSpec.describe TasksController, type: :controller do
 
   describe 'PATCH #update' do
     subject { proc { patch :update, params: { id: id, task: { title: value } } } }
+
     let!(:task) { create(:task, user: user) }
+
 
     context '該当するタスクが存在する場合' do
       let(:id) { task.id }
@@ -384,7 +385,9 @@ RSpec.describe TasksController, type: :controller do
 
   describe 'DELETE #destroy' do
     subject { proc { delete :destroy, params: { id: id } } }
+
     let!(:task) { create(:task, user: user) }
+
 
     context '該当するタスクが存在する場合' do
       let(:id) { task.id }
