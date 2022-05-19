@@ -1,5 +1,6 @@
 <h1><%= t '.title' %></h1>
 <%= form_for(@task) do |f| %>
+  <%= render 'layouts/error_messages', model: f.object %>
   <div><%= f.label :title, t('tasks.title') %></div>
   <div><%= f.text_field :title %></div>
   <div><%= f.label :description, t('tasks.desc') %></div>
