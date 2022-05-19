@@ -45,6 +45,8 @@ class Task < ApplicationRecord
 
   private
 
+  paginates_per 5
+
   def termination_at_must_be_future
     return if termination_at.blank? || termination_at > Time.now
 

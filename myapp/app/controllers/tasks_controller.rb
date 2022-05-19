@@ -2,21 +2,21 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def index
-    @tasks = Task.all_sort_by(:created_at, :desc)
+    @tasks = Task.all_sort_by(:created_at, :desc).page(params[:page])
   end
 
   def sort
     if params[:termination_at_latest]
-      @tasks = Task.all_sort_by(:termination_at, :desc)
+      @tasks = Task.all_sort_by(:termination_at, :desc).page(params[:page])
     elsif params[:termination_at_oldest]
-      @tasks = Task.all_sort_by(:termination_at, :asc)
+      @tasks = Task.all_sort_by(:termination_at, :asc).page(params[:page])
     end
     render :index
   end
 
   def search
     @search_params = input_search_params
-    @tasks = Task.search(@search_params)
+    @tasks = Task.search(@search_params).page(params[:page])
     render :index
   end
 
