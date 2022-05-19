@@ -7,6 +7,21 @@
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+      <nav>
+        <div>
+          <%= link_to t('nav.page_title'), root_path %>
+          <div>
+            <% if @current_user %>
+              <li>
+                <%= link_to t('nav.home_link'), root_path %>
+              </li>
+              <li>
+                <%= link_to t('nav.logout_link'), logout_path, method: :delete %>
+              </li>
+            <% end %>
+          </div>
+        </div>
+      </nav>
   </head>
 
   <body>

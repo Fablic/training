@@ -1,0 +1,14 @@
+<h1><%= t "sessions.new.page_title" %></h1>
+<p><%= flash[:danger] %></p>
+
+<%= form_with scope: :session, url: login_path, local: true do |f| %>
+
+  <%= f.label :email %>
+  <%= f.text_field :email, required: true %>
+
+  <%= f.label :password %>
+  <%= f.password_field :password, required: true  %>
+
+  <%= f.submit t("sessions.new.page_title") %>
+
+<% end %>

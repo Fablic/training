@@ -17,6 +17,8 @@ RSpec.describe Task, type: :model do
   kaminari_link_first = I18n.t('views.pagination.first').freeze
   kaminari_link_last = I18n.t('views.pagination.last').freeze
 
+  let!(:user) { create(:user) }
+
   shared_examples_for 'バリデーションエラーとなり、想定するメッセージが表示されること' do |column, message|
     it {
       expect(task.valid?).to eq false
@@ -26,7 +28,7 @@ RSpec.describe Task, type: :model do
   end
 
   describe 'title' do
-    let(:task) { build(:task, title: title) }
+    let(:task) { build(:task, title: title, user: user) }
 
     context 'タイトルに正常な値が入力されている場合' do
       let(:title) { 'あ' * num }
@@ -71,7 +73,7 @@ RSpec.describe Task, type: :model do
   end
 
   describe 'description' do
-    let(:task) { build(:task, description: description) }
+    let(:task) { build(:task, description: description, user: user) }
 
     context '説明に正常な値が入力されている場合' do
       let(:description) { 'あ' * num }
@@ -116,7 +118,7 @@ RSpec.describe Task, type: :model do
   end
 
   describe 'termination_at' do
-    let(:task) { build(:task, termination_at: termination_at) }
+    let(:task) { build(:task, termination_at: termination_at, user: user) }
 
     context '終了期日に正常な値が入力されている場合' do
       context '終了期日が現在日時よりも後の日付である場合' do
@@ -158,7 +160,7 @@ RSpec.describe Task, type: :model do
   end
 
   describe 'priority' do
-    let(:task) { build(:task, priority: priority) }
+    let(:task) { build(:task, priority: priority, user: user) }
 
     context '優先度に正常な値が入力されている場合' do
       context 'Enumで定義されている値の場合' do
@@ -195,7 +197,7 @@ RSpec.describe Task, type: :model do
   end
 
   describe 'status' do
-    let(:task) { build(:task, status: status) }
+    let(:task) { build(:task, status: status, user: user) }
 
     context 'ステータスに正常な値が入力されている場合' do
       context 'Enumで定義されている値の場合' do
@@ -232,7 +234,7 @@ RSpec.describe Task, type: :model do
   end
 
   describe 'scope' do
-    let!(:tasks) { create_list(:task, number_of_multiple_data) }
+    let!(:tasks) { create_list(:task, number_of_multiple_data, user: user) }
 
     describe 'all_sort_by' do
       subject { proc { Task.all_sort_by(column, order) } }
@@ -288,7 +290,8 @@ RSpec.describe Task, type: :model do
           let(:data01) do
             {
               title: "#{search_base_text}_01",
-              status: Task.statuses[:not_started]
+              status: Task.statuses[:not_started],
+              user: user
             }
           end
 
@@ -297,7 +300,8 @@ RSpec.describe Task, type: :model do
             let(:data02) do
               {
                 title: "#{search_base_text}_02",
-                status: Task.statuses[:done]
+                status: Task.statuses[:done],
+                user: user
               }
             end
 
@@ -313,7 +317,8 @@ RSpec.describe Task, type: :model do
             let(:data02) do
               {
                 title: "#{search_base_text}_02",
-                status: Task.statuses[:not_started]
+                status: Task.statuses[:not_started],
+                user: user
               }
             end
 
@@ -338,13 +343,14 @@ RSpec.describe Task, type: :model do
           let(:data01) do
             {
               title: "#{search_base_text}_01",
-              status: Task.statuses[:not_started]
+              status: Task.statuses[:not_started],
+              user: user
             }
           end
 
           context '該当するタスクが1件存在する場合' do
             # 検索不一致データ(タイトルが不一致)
-            let(:data02) {}
+            let(:data02) { { user: user } }
             it "検索条件(タイトル：「#{search_base_text}」部分一致)に一致するデータ1件を取得していること" do
               searched_tasks = subject.call
               expect(searched_tasks.size).to eq 1
@@ -357,7 +363,8 @@ RSpec.describe Task, type: :model do
             let(:data02) do
               {
                 title: "#{search_base_text}_02",
-                status: Task.statuses[:done]
+                status: Task.statuses[:done],
+                user: user
               }
             end
 
@@ -382,13 +389,14 @@ RSpec.describe Task, type: :model do
           let(:data01) do
             {
               title: "#{search_base_text}_01",
-              status: Task.statuses[:on_progress]
+              status: Task.statuses[:on_progress],
+              user: user
             }
           end
 
           context '該当するタスクが1件存在する場合' do
             # 検索不一致データ(ステータスが不一致)
-            let(:data02) {}
+            let(:data02) { { user: user } }
             it "検索条件(ステータス：#{Task.statuses[:on_progress]})に一致するデータ1件を取得していること" do
               searched_tasks = subject.call
               expect(searched_tasks.size).to eq 1
@@ -401,7 +409,8 @@ RSpec.describe Task, type: :model do
             let(:data02) do
               {
                 title: "#{search_base_text}_02",
-                status: Task.statuses[:on_progress]
+                status: Task.statuses[:on_progress],
+                user: user
               }
             end
 
@@ -423,61 +432,6 @@ RSpec.describe Task, type: :model do
           searched_tasks = subject.call
           expect(searched_tasks.size).to eq number_of_multiple_data
         end
-      end
-    end
-  end
-
-  describe 'kaminari', type: :request do
-    context 'タスクデータが存在する場合' do
-      let!(:tasks) { create_list(:task, kaminari_data_per_page + 1) }
-
-      context '最初のページを開いている場合' do
-        it "一覧画面に1 ~ #{kaminari_data_per_page}番目のタスクデータ、ページリンク(#{kaminari_link_previous},#{kaminari_link_first}除く)が表示されること" do
-          get tasks_path
-
-          expect(response.body).not_to include tasks[0].title.to_s
-          expect(response.body).to include tasks[1].title.to_s
-          expect(response.body).to include tasks[kaminari_data_per_page - 1].title.to_s
-
-          expect(response.body).to include kaminari_link_page
-          expect(response.body).to include kaminari_link_current_page
-          expect(response.body).not_to include kaminari_link_previous
-          expect(response.body).to include kaminari_link_next
-          expect(response.body).not_to include kaminari_link_first
-          expect(response.body).to include kaminari_link_last
-        end
-      end
-
-      context '最後のページを開いている場合' do
-        it "一覧画面に#{kaminari_data_per_page + 1}番目のタスクデータ、ページリンク(#{kaminari_link_next},#{kaminari_link_last}除く)が表示されること" do
-          get tasks_path, params: { page: 2 }
-
-          expect(response.body).to include tasks[0].title.to_s
-          expect(response.body).not_to include tasks[1].title.to_s
-          expect(response.body).not_to include tasks[kaminari_data_per_page - 1].title.to_s
-
-          expect(response.body).to include kaminari_link_page
-          expect(response.body).to include kaminari_link_current_page
-          expect(response.body).to include kaminari_link_previous
-          expect(response.body).not_to include kaminari_link_next
-          expect(response.body).to include kaminari_link_first
-          expect(response.body).not_to include kaminari_link_last
-        end
-      end
-    end
-
-    context 'タスクデータが存在しない場合' do
-      let!(:tasks) {}
-      
-      it '一覧画面にタスクデータ、ページリンクが一切表示されないこと' do
-        get tasks_path
-
-        expect(response.body).not_to include kaminari_link_page
-        expect(response.body).not_to include kaminari_link_current_page
-        expect(response.body).not_to include kaminari_link_previous
-        expect(response.body).not_to include kaminari_link_next
-        expect(response.body).not_to include kaminari_link_first
-        expect(response.body).not_to include kaminari_link_last
       end
     end
   end
