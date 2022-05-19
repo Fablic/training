@@ -1,12 +1,13 @@
-<h1>タスク一覧</h1>
+<h1><%= t '.title' %></h1>
 <% flash.each do |message_type, message| %>
   <div class="alert alert-<%= message_type %>"><%= message %></div>
 <% end %>
 <table>
   <thead>
     <tr>
-      <th>タスク</th>
-      <th>説明</th>
+      <th><%= t 'tasks.title' %></th>
+      <th><%= t 'tasks.desc' %></th>
+      <th><%= t 'tasks.created_at' %></th>
       <th></th>
     </tr>
   </thead>
@@ -15,14 +16,15 @@
     <tr>
       <td><%= t.title %></td>
       <td><%= t.description %></td>
+      <td><%= l t.created_at, format: :long %></td>
       <td>
-         <td><%= link_to '編集', edit_task_path(t) %></td>
+         <td><%= link_to t('.edit_task'), edit_task_path(t) %></td>
       </td>
       <td>
-         <%= link_to '削除', task_path(t), method: :delete %>
+         <%= link_to t('.delete_task'), task_path(t), method: :delete %>
       </td>
     </tr>
     <% end %>
   </tbody>
 </table>
-<%= link_to 'タスク新規追加', new_task_path %>
+<%= link_to t('.add_new_task'), new_task_path %>
