@@ -3,12 +3,21 @@ require 'rails_helper'
 RSpec.describe 'Tasks', type: :system do
   let!(:task) { create(:task) }
 
+
   describe '一覧ページ' do
+    let!(:task_list) { create_list(:task, 4) }
+    let!(:tasks_order_by_created_at_desc) { Task.order(created_at: :desc) }
+    let!(:first_task) { tasks_order_by_created_at_desc[0] }
+
     before { visit tasks_path }
 
     context 'アクセスしたとき' do
       it '画面が正常に表示されること' do
         expect(page).to have_content task.description
+      end
+
+      it '作成日時の降順でタスクが並んでいること' do
+        expect(page.text).to match(/#{ tasks_order_by_created_at_desc[0].title }.*#{ tasks_order_by_created_at_desc[1].title }.*#{ tasks_order_by_created_at_desc[2].title }/)
       end
     end
 
@@ -21,15 +30,15 @@ RSpec.describe 'Tasks', type: :system do
 
     context '編集ボタンが押された時' do
       it '正常に遷移すること' do
-        click_on '編集'
-        expect(current_path).to eq edit_task_path task.id
+        all('table tr')[1].click_on '編集'
+        expect(current_path).to eq edit_task_path first_task.id
       end
     end
 
     context '削除ボタンが押された時' do
       it '削除が正常に行われること' do
-        click_on '削除'
-        expect(page).to have_no_content task.description
+        all('table tr')[1].click_on '削除'
+        expect(page).to have_no_content first_task.description
       end
     end
   end

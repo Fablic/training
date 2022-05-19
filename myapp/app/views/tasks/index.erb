@@ -6,7 +6,8 @@
   <thead>
     <tr>
       <th><%= t 'tasks.title' %></th>
-      <th><%= t 'tasks.desc' %></th>
+      <th><%= t 'tasks.description' %></th>
+      <th><%= t 'tasks.created_at' %></th>
       <th></th>
     </tr>
   </thead>
@@ -15,6 +16,7 @@
     <tr>
       <td><%= t.title %></td>
       <td><%= t.description %></td>
+      <td><%= l t.created_at, format: :long %></td>
       <td>
          <td><%= link_to t('.edit_task'), edit_task_path(t) %></td>
       </td>
