@@ -16,6 +16,8 @@ AllCops:
     - 'db/**/*'
     - 'config/**/*'
     - 'script/**/*'
+    - 'node_modules/**'
+    - 'spec/**/*'
     - !ruby/regexp /old_and_unused\.rb$/
 
 # 日本語でのコメントを許可
