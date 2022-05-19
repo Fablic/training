@@ -3,6 +3,7 @@ ja:
     title: 'タスク名'
     description: '説明'
     created_at: '作成日時'
+    due_date: '終了期限'
     index:
       title: 'タスク一覧'
       add_new_task: 'タスク新規追加'
