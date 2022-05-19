@@ -3,10 +3,10 @@ require 'rails_helper'
 RSpec.describe 'Tasks', type: :system do
   let!(:task) { create(:task) }
 
-  describe '#index' do
+  describe '一覧ページ' do
     before { visit tasks_path }
 
-    context '一覧ページにアクセスしたとき' do
+    context 'アクセスしたとき' do
       it '画面が正常に表示されること' do
         expect(page).to have_content task.description
       end
@@ -34,7 +34,7 @@ RSpec.describe 'Tasks', type: :system do
     end
   end
 
-  describe '#create' do
+  describe 'タスク新規作成ページ' do
     before { visit new_task_path }
 
     context 'タスク新規作成時' do
@@ -54,10 +54,10 @@ RSpec.describe 'Tasks', type: :system do
     end
   end
 
-  describe '#edit' do
+  describe 'タスク編集ページ' do
     before { visit edit_task_path task }
 
-    context '編集ページにアクセスしたとき' do
+    context 'アクセスしたとき' do
       it '画面が正常に表示されること' do
         expect(page).to have_content 'タスク編集'
       end
