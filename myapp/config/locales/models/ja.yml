@@ -6,6 +6,7 @@ ja:
       task:
         title: 'タスク名'
         description: '説明'
+        due_date: '終了期限'
    # 全てのmodelで共通して使用するattributesを記載
   attributes:
     created_at: 作成日
