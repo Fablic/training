@@ -28,6 +28,15 @@ RSpec.describe 'Tasks', type: :system do
       end
     end
 
+    context '終了期限の並び替えが2回押された時' do
+      let!(:tasks_order_by_due_date_desc) { Task.order(due_date: :desc) }
+      it '終了期限の降順にタスクが並んでいること' do
+        click_on '終了期限'
+        click_on '終了期限'
+        expect(page.text).to match(/#{ tasks_order_by_due_date_desc[0].title }.*#{ tasks_order_by_due_date_desc[1].title }.*#{ tasks_order_by_due_date_desc[2].title }/)
+      end
+    end
+
     context '新規作成ボタンが押された時' do
       it '正常に遷移すること' do
         click_on 'タスク新規追加'
