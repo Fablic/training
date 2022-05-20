@@ -3,7 +3,6 @@ require 'rails_helper'
 RSpec.describe 'Tasks', type: :system do
   let!(:task) { create(:task) }
 
-
   describe '一覧ページ' do
     let!(:task_list) { create_list(:task, 4) }
     let!(:tasks_order_by_created_at_desc) { Task.order(created_at: :desc) }
