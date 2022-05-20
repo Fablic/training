@@ -5,7 +5,8 @@ RSpec.describe 'Taskモデルのテスト', type: :model do
 
   let(:title) {'test title'}
   let(:description) {'test description'}
-  let!(:task) {Task.new(title: title, description: description)}
+  let(:due_date) {'2022/05/10'}
+  let!(:task) {Task.new(title: title, description: description, due_date: due_date)}
 
   describe 'title' do
     context "#{ TITLE_MAX_LENGTH }文字以内" do
@@ -35,6 +36,15 @@ RSpec.describe 'Taskモデルのテスト', type: :model do
       let(:description) {''}
       it 'バリデーションが設定されていないこと' do
         expect(task).to be_valid
+      end
+    end
+  end
+
+  describe "due_date" do
+    context '入力が空の場合' do
+      let(:due_date) {''}
+      it 'バリデーションで弾かれること' do
+        expect(task).not_to be_valid
       end
     end
   end
