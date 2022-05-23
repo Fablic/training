@@ -11,6 +11,7 @@ RSpec.describe TasksController, type: :controller do
   shared_examples_for 'ログインしていない場合、ログイン画面にリダイレクトされること' do
     it {
       session.delete(:user_id)
+
       subject.call
       expect(response).to redirect_to login_path
     }
@@ -236,9 +237,9 @@ RSpec.describe TasksController, type: :controller do
 
   describe 'GET #show' do
     subject { proc { get :show, params: { id: id } } }
-
+    
     let!(:task) { create(:task, user: user) }
-
+    
     context '該当するタスクが存在する場合' do
       context '有効なパラメータの場合' do
         let(:id) { task.id }

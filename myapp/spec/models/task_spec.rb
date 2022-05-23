@@ -167,6 +167,7 @@ RSpec.describe Task, type: :model do
         let(:priority) { Task.priorities.key(0) }
 
         it 'バリデーションエラーにならないこと' do
+          task.valid?
           expect(task.valid?).to eq true
         end
       end
