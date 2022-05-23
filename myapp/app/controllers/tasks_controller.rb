@@ -1,22 +1,23 @@
 class TasksController < ApplicationController
+  before_action :require_log_in
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def index
-    @tasks = Task.all_sort_by(:created_at, :desc).page(params[:page])
+    @tasks = current_user.tasks.all_sort_by(:created_at, :desc).page(params[:page])
   end
 
   def sort
     if params[:termination_at_latest]
-      @tasks = Task.all_sort_by(:termination_at, :desc).page(params[:page])
+      @tasks = current_user.tasks.all_sort_by(:termination_at, :desc).page(params[:page])
     elsif params[:termination_at_oldest]
-      @tasks = Task.all_sort_by(:termination_at, :asc).page(params[:page])
+      @tasks = current_user.tasks.all_sort_by(:termination_at, :asc).page(params[:page])
     end
     render :index
   end
 
   def search
     @search_params = input_search_params
-    @tasks = Task.search(@search_params).page(params[:page])
+    @tasks = current_user.tasks.search(@search_params).page(params[:page])
     render :index
   end
 
@@ -27,10 +28,7 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.new(task_params)
-    # TODO：ステップ16: 複数人で利用できるようにしよう（ユーザの導入）時に合わせて修正
-    # 現段階ではユーザーは考慮しないので、NOT NULL制約回避用にダミーデータ格納
-    @task.user_id = 0
+    @task = current_user.tasks.new(task_params)
 
     if @task.save
       redirect_to @task, notice: t('tasks.flash.new')
@@ -62,7 +60,7 @@ class TasksController < ApplicationController
     end
 
     def set_task
-      @task = Task.find(params[:id])
+      @task = current_user.tasks.find(params[:id])
     end
 
     def input_search_params

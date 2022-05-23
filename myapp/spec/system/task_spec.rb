@@ -1,6 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Task, type: :system do
+  let!(:user) { create(:user) }
+  before { post login_path, params: { session: { email: user.email, password: 'password' } } }
+
   describe 'kaminari' do
     let(:kaminari_data_per_page) { described_class.default_per_page }
     let(:kaminari_link_page) { '<span class="page">' }
@@ -11,7 +14,7 @@ RSpec.describe Task, type: :system do
     let(:kaminari_link_last) { I18n.t('views.pagination.last') }
 
     context 'タスクデータが存在する場合' do
-      let!(:tasks) { create_list(:task, kaminari_data_per_page * 2 + 1) }
+      let!(:tasks) { create_list(:task, kaminari_data_per_page * 2 + 1, user: user) }
 
       context '最初のページを開いている場合' do
         it '一覧画面に1 ~ 5番目(index: 10 ~ 6)のタスクデータ、ページリンク(「前」,「最初」除く)が表示されること' do

@@ -1,0 +1,10 @@
+ja:
+  sessions:
+    new:
+      page_title: 'ログイン画面'
+      login: 'ログイン'
+    flash:
+      login:
+        success: 'ログインしました'
+        invalid_email: 'メールアドレスが間違っています'
+        invalid_password: 'パスワードが間違っています'
