@@ -1,6 +1,4 @@
 class SessionsController < ApplicationController
-  before_action :current_user
-  before_action :require_log_in, only: [:destroy, :session_params]
 
   def new; end
 
