@@ -2,8 +2,8 @@
 <div>
   <%= form_with url: "/", method: :get, local: true do |form| %>
   <%= form.label :search_text, t('.search_label') %>
-  <%= form.text_field :search_text, value:@search_text %>
-  <%= form.select :search_status, options_for_select(Task.statuses.map { |key, v| [t("enums.task.status.#{key}"), v] }, selected: @search_status) %>
+  <%= form.text_field :search_text, value:@search_text, id: 'search_text' %>
+  <%= form.select :search_status, options_for_select(Task.statuses.map { |key, v| [t("enums.task.status.#{key}"), v] }, selected: @search_status, id: 'seach_status') %>
   <%= form.submit t('.search_submit') %>
 <% end %>
 </div>
