@@ -76,7 +76,7 @@ RSpec.describe 'Tasks', type: :system do
           expect(page).to have_no_content task_completed.description
         end
       end
-      
+
       context '文字列を入力&実行中のステータスを選択して検索した時' do
         it '説明&状態での検索が正常に動作していること' do
           find('#search_text').set(task_in_progress.description)
@@ -125,6 +125,7 @@ RSpec.describe 'Tasks', type: :system do
         fill_in 'task[title]',       with: 'edit task'
         fill_in 'task[description]', with: 'edit description'
         fill_in 'task[due_date]',    with: '2022/05/12'
+        find('#task_status').find("option[value='in_progress']").select_option
         click_button '保存'
         expect(page).to have_content 'タスクの情報を更新しました。'
       end

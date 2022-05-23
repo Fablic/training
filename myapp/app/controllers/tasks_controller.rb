@@ -4,8 +4,11 @@ class TasksController < ApplicationController
   def index
     @search_text = params[:search_text]
     @search_status = params[:search_status]
+    @sort_type = sort_type
+    @sort_column = sort_column
     @tasks = if params[:search_text].present? || params[:search_status].present?
-               search_tasks
+               Task.where('(title like ? or description like ?) and status = ?', "%#{params[:search_text]}%",
+               "%#{params[:search_text]}%", params[:search_status]).order("#{sort_column} #{sort_type}")
              else
                Task.order("#{sort_column} #{sort_type}")
              end
@@ -55,10 +58,5 @@ class TasksController < ApplicationController
 
   def sort_column
     Task.column_names.include?(params[:sort]) ? params[:sort] : 'created_at'
-  end
-
-  def search_tasks
-    Task.where('(title like ? or description like ?) and status = ?', "%#{params[:search_text]}%",
-               "%#{params[:search_text]}%", params[:search_status])
   end
 end
