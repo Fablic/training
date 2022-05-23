@@ -18,7 +18,7 @@
       <th><%= t 'tasks.title' %></th>
       <th><%= t 'tasks.description' %></th>
       <th><%= t 'tasks.status' %></th>
-      <th><%= sort_order 'due_date', t('tasks.due_date') %></th>
+      <th><%= link_to t('tasks.due_date'), { sort: 'due_date', type: sort_order('due_date'), search_text: @search_text, search_status: @search_status } %></th>
       <th><%= t 'tasks.created_at' %></th>
       <th></th>
     </tr>
