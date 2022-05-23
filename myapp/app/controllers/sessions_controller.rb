@@ -6,7 +6,7 @@ class SessionsController < ApplicationController
 
   def create
     @user = User.find_by(email: session_params[:email])
-    unless @user.present?
+    if @user.blank?
       flash.now[:danger] = t('sessions.flash.login.invalid_email')
       return render :new
     end
