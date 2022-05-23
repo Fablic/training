@@ -87,7 +87,7 @@ Layout/TrailingWhitespace:
 # Offense count: 1
 # Configuration parameters: IgnoredMethods, CountRepeatedAttributes.
 Metrics/AbcSize:
-  Max: 18
+  Max: 25
 
 Metrics/BlockLength:
   Exclude:

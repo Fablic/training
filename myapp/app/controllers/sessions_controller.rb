@@ -1,10 +1,16 @@
 class SessionsController < ApplicationController
-  skip_before_action :require_log_in, only: [:new, :create]
-  before_action :verify_email, only: [:create]
+  before_action :current_user
+  before_action :require_log_in, only: [:destroy, :session_params]
 
   def new; end
 
   def create
+    @user = User.find_by(email: session_params[:email])
+    unless @user.present?
+      flash.now[:danger] = t('sessions.flash.login.invalid_email')
+      return render :new
+    end
+
     if @user.authenticate(session_params[:password])
       session[:user_id] = @user.id
       redirect_to root_path
@@ -20,13 +26,6 @@ class SessionsController < ApplicationController
   end
 
   private
-
-  def verify_email
-    @user = User.find_by!(email: session_params[:email])
-  rescue StandardError
-    flash.now[:danger] = t('sessions.flash.login.invalid_email')
-    render :new
-  end
 
   def session_params
     params.require(:session).permit(:email, :password)
