@@ -1,4 +1,12 @@
 <h1><%= t '.title' %></h1>
+<div>
+  <%= form_with url: "/", method: :get, local: true do |form| %>
+  <%= form.label :search_text, t('.search_label') %>
+  <%= form.text_field :search_text, value:@search_text %>
+  <%= form.select :search_status, options_for_select(Task.statuses.map { |key, v| [t("enums.task.status.#{key}"), v] }, selected: @search_status) %>
+  <%= form.submit t('.search_submit') %>
+<% end %>
+</div>
 <% flash.each do |message_type, message| %>
   <div class="alert alert-<%= message_type %>"><%= message %></div>
 <% end %>
@@ -7,6 +15,7 @@
     <tr>
       <th><%= t 'tasks.title' %></th>
       <th><%= t 'tasks.description' %></th>
+      <th><%= t 'tasks.status' %></th>
       <th><%= sort_order 'due_date', t('tasks.due_date') %></th>
       <th><%= t 'tasks.created_at' %></th>
       <th></th>
@@ -17,6 +26,7 @@
     <tr>
       <td><%= t.title %></td>
       <td><%= t.description %></td>
+      <td><%= t("enums.task.status.#{t.status}") %></td>
       <td><%= l t.due_date, format: :date_only %></td>
       <td><%= l t.created_at, format: :date_only %></td>
       <td>

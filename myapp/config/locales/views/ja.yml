@@ -3,12 +3,15 @@ ja:
     title: 'タスク名'
     description: '説明'
     created_at: '作成日時'
+    status: '状態'
     due_date: '終了期限'
     index:
       title: 'タスク一覧'
       add_new_task: 'タスク新規追加'
       edit_task: '編集'
       delete_task: '削除'
+      search_label: '検索文字列:'
+      search_submit: '検索'
     edit:
       title: 'タスク編集'
       submit: '保存'
