@@ -7,7 +7,17 @@ ja:
         title: 'タスク名'
         description: '説明'
         due_date: '終了期限'
-   # 全てのmodelで共通して使用するattributesを記載
+        status:
+          not_started: 未着手
+          in_progress: 進行中
+          completed: 完了
+  enums:
+    task:
+      status:
+        not_started: 未着手
+        in_progress: 進行中
+        completed: 完了
+  # 全てのmodelで共通して使用するattributesを記載
   attributes:
     created_at: 作成日
     updated_at: 更新日
