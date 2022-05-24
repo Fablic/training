@@ -57,6 +57,13 @@ RSpec.describe 'Tasks', type: :system do
           expect(page).to have_no_content first_task.description
         end
       end
+
+      context 'アクセス時' do
+        it 'ページングのデフォルト表示の件数が正しいこと' do
+          create_list(:task, 3)
+          expect(all('tbody tr').size).to eq(5)
+        end
+      end
     end
 
     describe '検索機能' do
