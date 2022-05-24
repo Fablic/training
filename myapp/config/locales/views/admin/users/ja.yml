@@ -1,18 +1,18 @@
 ja:
   admin:
     users:
-      user_name: 'ユーザー名'
+      user_name: 'ユーザ名'
       user_email: 'メールアドレス'
       admin: '管理ユーザ'
       general: '一般ユーザ'
       back: '戻る'
       index:
-        page_title: 'ユーザー管理画面'
+        page_title: 'ユーザ管理画面'
         new_link: '新規'
         task_count: 'タスク件数'
         task_count_unit: '件'
       new:
-        page_title: 'ユーザー新規作成'
+        page_title: 'ユーザ新規作成'
       show:
         page_title: '「%{user_name}」のタスク一覧'
         no_task: '関連タスクなし'
