@@ -1,18 +1,24 @@
-<h1><%= t '.title' %></h1>
-<div>
-  <%= form_with url: "/", method: :get, local: true do |form| %>
-  <%= form.label :search_text, t('.search_label') %>
-  <%= form.text_field :search_text, value:@search_text, id: 'search_text' %>
-  <%= form.select :search_status, options_for_select(Task.statuses.map { |key, v| [t("enums.task.status.#{key}"), v] }, selected: @search_status, id: 'seach_status') %>
-  <%= form.hidden_field :sort, :value => @sort_column%>
-  <%= form.hidden_field :type, :value => @sort_type%>
-  <%= form.submit t('.search_submit') %>
-<% end %>
+<%= render partial: 'layouts/page_title', locals: { title: t('.title') } %>
+
+<div class="p-3">
+  <form>
+    <%= form_with url: "/", method: :get, local: true do |form| %>
+      <div class="col mb-3">
+        <%= form.label :search_text, t('.search_label'), class: 'form-label' %>
+        <%= form.text_field :search_text, value:@search_text, id: 'search_text' %>
+        <%= form.select :search_status, options_for_select(Task.statuses.map { |key, v| [t("enums.task.status.#{key}"), v] }, selected: @search_status), {}, {id: "seach_status", class: "form-select-sm" } %>
+        <%= form.hidden_field :sort, :value => @sort_column%>
+        <%= form.hidden_field :type, :value => @sort_type%>
+        <%= form.submit t('.search_submit'), class: 'btn btn-primary' %>
+      </div>
+    </form>
+  <% end %>
 </div>
+
 <% flash.each do |message_type, message| %>
   <div class="alert alert-<%= message_type %>"><%= message %></div>
 <% end %>
-<table>
+<table class="table table-striped">
   <thead>
     <tr>
       <th><%= t 'tasks.title' %></th>
@@ -42,4 +48,4 @@
   </tbody>
 </table>
 <%= paginate @tasks %>
-<%= link_to t('.add_new_task'), new_task_path %>
+<%= link_to t('.add_new_task'), new_task_path, class: 'btn btn-primary' %>
