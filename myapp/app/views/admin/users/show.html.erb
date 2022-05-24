@@ -7,7 +7,7 @@
     <%= @user.name %>
 </div>
 
-<% if @tasks.size != 0 %>
+<% if @user.tasks.size != 0 %>
     <table>
     <thead>
         <tr>
@@ -21,7 +21,7 @@
     </thead>
 
     <tbody>
-        <% @tasks.each do |task| %>
+        <% @user.tasks.each do |task| %>
         <tr>
             <td><%= task.title %></td>
             <td>

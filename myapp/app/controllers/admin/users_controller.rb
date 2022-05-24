@@ -12,9 +12,7 @@ module Admin
       @user = User.new
     end
 
-    def show
-      @tasks = @user.tasks
-    end
+    def show; end
 
     def edit; end
 
