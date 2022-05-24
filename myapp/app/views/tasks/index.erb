@@ -32,7 +32,7 @@
       <td><%= l t.due_date, format: :date_only %></td>
       <td><%= l t.created_at, format: :date_only %></td>
       <td>
-         <td><%= link_to t('.edit_task'), edit_task_path(t) %></td>
+         <td><%= link_to t('.edit_task'), edit_task_path(t), class: "btn btn-outline-primary btn-sm" %></td>
       </td>
       <td>
          <%= link_to t('.delete_task'), task_path(t), method: :delete %>
