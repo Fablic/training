@@ -42,7 +42,6 @@ jobs:
     - name: install webpacker
       run: |
         rm -rf bin/webpack*
-        yarn add jquery bootstrap popper.js
         bundle exec rails webpacker:install
         bundle exec rails webpacker:compile
       working-directory: myapp
