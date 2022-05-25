@@ -6,7 +6,7 @@
       <div class="col mb-3">
         <%= form.label :search_text, t('.search_label'), class: 'form-label' %>
         <%= form.text_field :search_text, value:@search_text, id: 'search_text' %>
-        <%= form.select :search_status, options_for_select(Task.statuses.map { |key, v| [t("enums.task.status.#{key}"), v] }, selected: @search_status), {}, {id: "seach_status", class: "form-select-sm" } %>
+        <%= form.select :search_status, options_for_select(Task.statuses.map { |key, v| [t("enums.task.status.#{key}"), v] }, selected: @search_status), {}, {id: "search_status", class: "form-select-sm" } %>
         <%= form.hidden_field :sort, :value => @sort_column%>
         <%= form.hidden_field :type, :value => @sort_type%>
         <%= form.submit t('.search_submit'), class: 'btn btn-primary' %>
@@ -15,9 +15,9 @@
   <% end %>
 </div>
 
-<% flash.each do |message_type, message| %>
-  <div class="alert alert-<%= message_type %>"><%= message %></div>
-<% end %>
+<%= render partial: 'layouts/flash_messages', locals: { flash: flash } %>
+
+<%= paginate @tasks, theme: 'bootstrap-5' %>
 <table class="table table-striped">
   <thead>
     <tr>
@@ -41,11 +41,11 @@
          <td><%= link_to t('.edit_task'), edit_task_path(t), class: "btn btn-outline-primary btn-sm" %></td>
       </td>
       <td>
-         <%= link_to t('.delete_task'), task_path(t), method: :delete %>
+         <%= link_to t('.delete_task'), task_path(t), method: :delete, class: "btn btn-danger btn-sm" %>
       </td>
     </tr>
     <% end %>
   </tbody>
 </table>
-<%= paginate @tasks %>
-<%= link_to t('.add_new_task'), new_task_path, class: 'btn btn-primary' %>
+<%= paginate @tasks, theme: 'bootstrap-5' %>
+<%= link_to t('.add_new_task'), new_task_path, {id: 'task-add-btn', class: 'btn btn-primary'} %>
