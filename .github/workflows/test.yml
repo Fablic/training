@@ -23,21 +23,21 @@ jobs:
       run: gem install bundler
       working-directory: myapp
 
-    - name: bundle install
-      run: |
-        BUNDLER_VERSION=2.1.2 bundle install
-        bundle install --jobs 4 --retry 3
-      working-directory: myapp
+#     - name: bundle install
+#       run: |
+#         BUNDLER_VERSION=2.1.2 bundle install
+#         bundle install --jobs 4 --retry 3
+#       working-directory: myapp
 
-    - name: Setup Database
-      run: |
-        cp config/database.yml.ci config/database.yml
-        sudo /etc/init.d/mysql start
-        bundle exec rake db:create
-        bundle exec rake db:migrate
-      working-directory: myapp
-      env:
-        RAILS_ENV: test
+#     - name: Setup Database
+#       run: |
+#         cp config/database.yml.ci config/database.yml
+#         sudo /etc/init.d/mysql start
+#         bundle exec rake db:create
+#         bundle exec rake db:migrate
+#       working-directory: myapp
+#       env:
+#         RAILS_ENV: test
 
     - name: install webpacker
       run: |
