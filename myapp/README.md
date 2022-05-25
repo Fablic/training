@@ -1,10 +1,21 @@
-## 対象課題
+## Target Issue
 https://github.com/Fablic/training/tree/stakahashi-d/myapp/docs
 
-## テーブルスキーマ(仮)
+## Todos Application
+It is a todos app that does following key features
+
+- Create Task
+- Set due date to task
+- Set status to task
+- Delete task
+- Search task by title or description, and status
+- sort tasks by due_date
+
+
+## Table Schema
 ### users
 
-|  カラム名  |  タイプ  |
+|  column  |  type  |
 | ---- | ---- |
 |  id  |  int  |
 |  name  |  string  |
@@ -14,7 +25,7 @@ https://github.com/Fablic/training/tree/stakahashi-d/myapp/docs
 
 ### tasks
 
-|  カラム名  |  タイプ  |
+|  column  |  type  |
 | ---- | ---- |
 |  id  |  int  |
 |  user_id  |  int  |
@@ -28,7 +39,7 @@ https://github.com/Fablic/training/tree/stakahashi-d/myapp/docs
 
 ### task_labels
 
-|  カラム名  |  タイプ  |
+|  colum  |  type  |
 | ---- | ---- |
 |  id  |  int  |
 |  task_id | int |
@@ -36,13 +47,25 @@ https://github.com/Fablic/training/tree/stakahashi-d/myapp/docs
 
 ### labels
 
-|  カラム名  |  タイプ  |
+|  colum  |  type  |
 | ---- | ---- |
 |  id  |  int  |
 |  name  |  string  |
 
 
-## システムの利用
+## how to run
+* use following command to up appication
 
-* ブラウザで下記のURLにアクセスしてください
+```
+docker-compose up --build
+```
+
+* you can dive into docker machine by following command
+
+```
+docker-compose exec api /bin/bash
+docker-compose exec db /bin/bash
+```
+
+* Please access the following URL with your browser
   * http://localhost:3001/
