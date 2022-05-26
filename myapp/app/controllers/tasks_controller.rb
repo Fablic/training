@@ -8,6 +8,7 @@ class TasksController < ApplicationController
     @sort_type = sort_type
     @sort_column = sort_column
     task_list = tasks
+    flash[:info] = t('.flash_no_task') if task_list.count.zero?
     @tasks = task_list.page(params[:page]).per(PER_PAGE)
   end
 
