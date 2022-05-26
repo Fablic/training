@@ -2,12 +2,12 @@ require 'rails_helper'
 
 RSpec.describe 'Taskモデルのテスト', type: :model do
   title_max_length = 50
-
+  let(:user) { create(:normal_user)}
   let(:title) { 'test title' }
   let(:description) { 'test description' }
   let(:due_date) { '2022/05/10' }
   let(:status) { 0 }
-  let!(:task) { Task.new(title: title, description: description, due_date: due_date, status: status) }
+  let!(:task) { Task.new(title: title, description: description, due_date: due_date, status: status, user: user) }
 
   describe 'title' do
     context "#{title_max_length}文字以内" do
