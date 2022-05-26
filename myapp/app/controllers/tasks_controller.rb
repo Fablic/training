@@ -7,6 +7,7 @@ class TasksController < ApplicationController
     @sort_type = sort_type
     @sort_column = sort_column
     @tasks = tasks
+    flash[:info] = t('.flash_no_task') if @tasks.count.zero?
   end
 
   def new
