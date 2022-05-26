@@ -4,57 +4,88 @@ RSpec.describe 'Tasks', type: :system do
   let!(:task) { create(:task) }
 
   describe '一覧ページ' do
-    let!(:task_list) { create_list(:task, 4) }
-    let!(:tasks_order_by_created_at_desc) { Task.order(created_at: :desc) }
-    let!(:first_task) { tasks_order_by_created_at_desc[0] }
+    describe '一覧表示機能' do
+      let!(:task_list) { create_list(:task, 4) }
+      let!(:tasks_order_by_created_at_desc) { Task.order(created_at: :desc) }
+      let!(:first_task) { tasks_order_by_created_at_desc[0] }
 
-    before { visit tasks_path }
+      before { visit tasks_path }
+      context 'アクセスしたとき' do
+        it '画面が正常に表示されること' do
+          expect(page).to have_content task.description
+        end
 
-    context 'アクセスしたとき' do
-      it '画面が正常に表示されること' do
-        expect(page).to have_content task.description
+        it '作成日時の降順でタスクが並んでいること' do
+          expect(page.text).to match(/#{ tasks_order_by_created_at_desc[0].title }.*#{ tasks_order_by_created_at_desc[1].title }.*#{ tasks_order_by_created_at_desc[2].title }/)
+        end
       end
 
-      it '作成日時の降順でタスクが並んでいること' do
-        expect(page.text).to match(/#{ tasks_order_by_created_at_desc[0].title }.*#{ tasks_order_by_created_at_desc[1].title }.*#{ tasks_order_by_created_at_desc[2].title }/)
+      context '終了期限の並び替えが1回押された時' do
+        let!(:tasks_order_by_due_date_asc) { Task.order(due_date: :asc) }
+        it '終了期限の昇順にタスクが並んでいること' do
+          click_on '終了期限'
+          expect(page.text).to match(/#{ tasks_order_by_due_date_asc[0].title }.*#{ tasks_order_by_due_date_asc[1].title }.*#{ tasks_order_by_due_date_asc[2].title }/)
+        end
+      end
+
+      context '終了期限の並び替えが2回押された時' do
+        let!(:tasks_order_by_due_date_desc) { Task.order(due_date: :desc) }
+        it '終了期限の降順にタスクが並んでいること' do
+          click_on '終了期限'
+          click_on '終了期限'
+          expect(page.text).to match(/#{ tasks_order_by_due_date_desc[0].title }.*#{ tasks_order_by_due_date_desc[1].title }.*#{ tasks_order_by_due_date_desc[2].title }/)
+        end
+      end
+
+      context '新規作成ボタンが押された時' do
+        it '正常に遷移すること' do
+          click_on 'タスク新規追加'
+          expect(current_path).to eq new_task_path
+        end
+      end
+
+      context '編集ボタンが押された時' do
+        it '正常に遷移すること' do
+          all('table tr')[1].click_on '編集'
+          expect(current_path).to eq edit_task_path first_task.id
+        end
+      end
+
+      context '削除ボタンが押された時' do
+        it '削除が正常に行われること' do
+          all('table tr')[1].click_on '削除'
+          expect(page).to have_no_content first_task.description
+        end
       end
     end
 
-    context '終了期限の並び替えが1回押された時' do
-      let!(:tasks_order_by_due_date_asc) { Task.order(due_date: :asc) }
-      it '終了期限の昇順にタスクが並んでいること' do
-        click_on '終了期限'
-        expect(page.text).to match(/#{ tasks_order_by_due_date_asc[0].title }.*#{ tasks_order_by_due_date_asc[1].title }.*#{ tasks_order_by_due_date_asc[2].title }/)
-      end
-    end
+    describe '検索機能' do
+      before { visit tasks_path }
 
-    context '終了期限の並び替えが2回押された時' do
-      let!(:tasks_order_by_due_date_desc) { Task.order(due_date: :desc) }
-      it '終了期限の降順にタスクが並んでいること' do
-        click_on '終了期限'
-        click_on '終了期限'
-        expect(page.text).to match(/#{ tasks_order_by_due_date_desc[0].title }.*#{ tasks_order_by_due_date_desc[1].title }.*#{ tasks_order_by_due_date_desc[2].title }/)
-      end
-    end
+      let!(:task_not_started) { create(:task, status: 0, title: 'target') }
+      let!(:task_in_progress) { create(:task, status: 1, description: 'target description') }
+      let!(:task_completed)   { create(:task, status: 2) }
 
-    context '新規作成ボタンが押された時' do
-      it '正常に遷移すること' do
-        click_on 'タスク新規追加'
-        expect(current_path).to eq new_task_path
+      context '文字列を入力&未着手のステータスを選択して検索した時' do
+        it 'タイトル&状態での検索が正常に動作していること' do
+          find('#search_text').set(task_not_started.title)
+          find('#search_status').find("option[value='0']").select_option
+          click_on '検索'
+          expect(page).to have_content task_not_started.description
+          expect(page).to have_no_content task_in_progress.description
+          expect(page).to have_no_content task_completed.description
+        end
       end
-    end
 
-    context '編集ボタンが押された時' do
-      it '正常に遷移すること' do
-        all('table tr')[1].click_on '編集'
-        expect(current_path).to eq edit_task_path first_task.id
-      end
-    end
-
-    context '削除ボタンが押された時' do
-      it '削除が正常に行われること' do
-        all('table tr')[1].click_on '削除'
-        expect(page).to have_no_content first_task.description
+      context '文字列を入力&実行中のステータスを選択して検索した時' do
+        it '説明&状態での検索が正常に動作していること' do
+          find('#search_text').set(task_in_progress.description)
+          find('#search_status').find("option[value='1']").select_option
+          click_on '検索'
+          expect(page).to have_no_content task_not_started.description
+          expect(page).to have_content task_in_progress.description
+          expect(page).to have_no_content task_completed.description
+        end
       end
     end
   end
@@ -94,6 +125,7 @@ RSpec.describe 'Tasks', type: :system do
         fill_in 'task[title]',       with: 'edit task'
         fill_in 'task[description]', with: 'edit description'
         fill_in 'task[due_date]',    with: '2022/05/12'
+        find('#task_status').find("option[value='in_progress']").select_option
         click_button '保存'
         expect(page).to have_content 'タスクの情報を更新しました。'
       end

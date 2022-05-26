@@ -4,5 +4,6 @@ FactoryBot.define do
     sequence(:description) { |n| "test_description#{n}" }
     sequence(:created_at) { |n| "2022/05/18 00:00:#{n}" }
     sequence(:due_date) { |n| "2022/05/18 00:00:#{n}" }
+    status { 0 }
   end
 end

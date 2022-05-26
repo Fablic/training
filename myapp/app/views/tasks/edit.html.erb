@@ -7,6 +7,8 @@
   <div><%= f.text_field :description %></div>
   <div><%= f.label :due_date, t('tasks.due_date') %></div>
   <div><%= f.date_field :due_date %></div>
+  <div><%= f.label :status, t('tasks.status') %></div>
+  <div><%= f.select :status, options_for_select(Task.statuses.map { |key, v| [t("enums.task.status.#{key}"), key] },selected: @task.status) %></div>
   <div><%= f.submit t('.submit') %></div>
 <% end %>
 <%= link_to t('.back'), tasks_path %>

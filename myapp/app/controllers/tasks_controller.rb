@@ -2,7 +2,12 @@ class TasksController < ApplicationController
   helper_method :sort_column, :sort_type
 
   def index
-    @tasks = Task.order("#{sort_column} #{sort_type}")
+    @search_text = params[:search_text]
+    @search_status = params[:search_status]
+    @sort_type = sort_type
+    @sort_column = sort_column
+    @tasks = tasks
+    flash[:info] = t('.flash_no_task') if @tasks.count.zero?
   end
 
   def new
@@ -40,7 +45,7 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:title, :description, :due_date)
+    params.require(:task).permit(:title, :description, :due_date, :status)
   end
 
   def sort_type
@@ -49,5 +54,14 @@ class TasksController < ApplicationController
 
   def sort_column
     Task.column_names.include?(params[:sort]) ? params[:sort] : 'created_at'
+  end
+
+  def tasks
+    if params[:search_text].present? || params[:search_status].present?
+      Task.where('(title like ? or description like ?) and status = ?', "%#{params[:search_text]}%",
+                 "%#{params[:search_text]}%", params[:search_status]).order("#{sort_column} #{sort_type}")
+    else
+      Task.order("#{sort_column} #{sort_type}")
+    end
   end
 end
