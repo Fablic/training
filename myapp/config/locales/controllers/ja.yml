@@ -1,5 +1,7 @@
 ja:
   tasks_controller:
+    index: 
+      flash_no_task: 'タスクが存在しません。'
     create:
       flash_success: 'タスクを新規作成しました。'
     update:
