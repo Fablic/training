@@ -1,13 +1,15 @@
 class TasksController < ApplicationController
   helper_method :sort_column, :sort_type
+  PER_PAGE = 5
 
   def index
     @search_text = params[:search_text]
     @search_status = params[:search_status]
     @sort_type = sort_type
     @sort_column = sort_column
-    @tasks = tasks
-    flash[:info] = t('.flash_no_task') if @tasks.count.zero?
+    task_list = tasks
+    flash[:info] = t('.flash_no_task') if task_list.count.zero?
+    @tasks = task_list.page(params[:page]).per(PER_PAGE)
   end
 
   def new

@@ -88,6 +88,45 @@ RSpec.describe 'Tasks', type: :system do
         end
       end
     end
+
+    describe 'ページング機能' do
+      let!(:add_tasks_for_paging) {create_list(:task, 8)}
+      before { visit tasks_path }
+
+      context 'アクセス時' do
+        it 'ページングのデフォルト表示の件数が正しいこと' do
+          expect(all('tbody tr').size).to eq(5)
+        end
+      end
+
+      context '次のページ、前のページをクリックしたとき' do
+        it 'ページングが正常に機能していること' do
+          click_on '次のページ'
+          expect(all('tbody tr').size).to eq(4)
+          click_on '前のページ'
+          expect(all('tbody tr').size).to eq(5)
+
+        end
+      end
+
+      context '最初、最後をクリックした時' do
+        it 'ページングが正常に機能していること' do
+          click_on '最後'
+          expect(all('tbody tr').size).to eq(4)
+          click_on '最初'
+          expect(all('tbody tr').size).to eq(5)
+        end
+      end
+
+      context 'ナンバリングをクリックした時' do
+        it 'ページ移動が正常に行われること' do
+          click_on '2'
+          expect(all('tbody tr').size).to eq(4)
+          click_on '1'
+          expect(all('tbody tr').size).to eq(5)
+        end
+      end
+    end
   end
 
   describe 'タスク新規作成ページ' do
