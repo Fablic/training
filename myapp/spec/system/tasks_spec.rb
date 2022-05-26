@@ -119,9 +119,9 @@ RSpec.describe 'Tasks', type: :system do
 
       context '次のページ、前のページをクリックしたとき' do
         it 'ページングが正常に機能していること' do
-          click_on '次のページ'
+          click_on '次のページ', match: :first
           expect(all('tbody tr').size).to eq(4)
-          click_on '前のページ'
+          click_on '前のページ', match: :first
           expect(all('tbody tr').size).to eq(5)
 
         end
@@ -129,18 +129,18 @@ RSpec.describe 'Tasks', type: :system do
 
       context '最初、最後をクリックした時' do
         it 'ページングが正常に機能していること' do
-          click_on '最後'
+          click_on '最後', match: :first
           expect(all('tbody tr').size).to eq(4)
-          click_on '最初'
+          click_on '最初', match: :first
           expect(all('tbody tr').size).to eq(5)
         end
       end
 
       context 'ナンバリングをクリックした時' do
         it 'ページ移動が正常に行われること' do
-          click_on '2'
+          click_on '2', match: :first
           expect(all('tbody tr').size).to eq(4)
-          click_on '1'
+          click_on '1', match: :first
           expect(all('tbody tr').size).to eq(5)
         end
       end
