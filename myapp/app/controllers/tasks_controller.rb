@@ -1,6 +1,9 @@
 class TasksController < ApplicationController
   def index
-    @taskList = Task.where(deleted: false)
+    params[:search_word] = '' unless params[:search_word]
+    params[:search_status] = '0' unless params[:search_status]
+    params[:page] = 1 unless params[:page]
+    @tasks = Task.search(params[:search_word], params[:search_status], params[:page])
   end
 
   def show
@@ -15,10 +18,10 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(task_params)
     if @task.save
-      flash[:success] = t('dictionary.message.save.success')
+      flash[:success] = I18n.t('dictionary.message.save.success')
       redirect_to @task # Tasks#showへ
     else
-      flash.now[:alert] = t('dictionary.message.save.fail')
+      flash.now[:alert] = I18n.t('dictionary.message.save.fail')
       render 'new'
     end
   end
@@ -29,11 +32,13 @@ class TasksController < ApplicationController
 
   def update
     @task = Task.find(params[:id])
+    logger.debug "update: #{task_params}"
+    logger.debug "update: #{Date.today}"
     if @task.update(task_params)
-      flash[:success] = t('dictionary.message.save.success')
+      flash[:success] = I18n.t('dictionary.message.save.success')
       redirect_to @task
     else
-      flash.now[:alert] = t('dictionary.message.save.fail')
+      flash.now[:alert] = I18n.t('dictionary.message.save.fail')
       render 'edit'
     end
   end
@@ -41,9 +46,9 @@ class TasksController < ApplicationController
   def destroy
     task = Task.find(params[:id])
     if task.update(deleted: true)
-      flash[:success] = t('dictionary.message.destroy.success')
+      flash[:success] = I18n.t('dictionary.message.destroy.success')
     else
-      flash[:alert] = t('dictionary.message.destroy.fail')
+      flash[:alert] = I18n.t('dictionary.message.destroy.fail')
     end
     redirect_to tasks_url
   end

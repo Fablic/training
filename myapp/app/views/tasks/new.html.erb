@@ -1,9 +1,9 @@
 <% content_for :title do %>
-<%= t('.title')%>
+<%= I18n.t('tasks.new.title')%>
 <% end %>
 
 <div class="navi">
-    <%= link_to t('.to_index'), tasks_path %>
+    <%= link_to I18n.t('tasks.new.to_index'), tasks_path %>
 </div>
 
 <% if @task.errors.any? %>

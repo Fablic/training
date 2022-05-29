@@ -1,23 +1,33 @@
 <% content_for :title do %>
-<%= t('.title')%>
+<%= I18n.t('tasks.index.title')%>
 <% end %>
 
+<div class="search">
+    <%= form_tag(tasks_path,:method => 'get') do %>
+        <%= label_tag(:search_word,I18n.t('activerecord.attributes.tasks.title')) %>:
+        <%= text_field_tag :search_word, params[:search_word] %>
+        <%= label_tag(:search_status, I18n.t('activerecord.attributes.tasks.status')) %>:
+        <%= select_tag :search_status, options_for_select({'全て' => 0}.update(Task.statuses), params[:search_status]) %>
+        <%= submit_tag I18n.t('tasks.index.search'), :name => nil %>
+    <% end %>
+</div>
+
 <div class="navi">
-    <%= link_to t('.new'), new_task_path %>
+    <%= link_to I18n.t('tasks.index.new'), new_task_path %>
 </div>
 
 <div class="task-list">
-    <% if @taskList.length > 0 %>
+    <% if @tasks.length > 0 %>
     <table>
         <tr>
-            <th><%= t('activerecord.attributes.tasks.title') %></th>
-            <th><%= t('activerecord.attributes.tasks.status') %></th>
-            <th><%= t('activerecord.attributes.tasks.deadline') %></th>
-            <th><%= t('activerecord.attributes.tasks.priority') %></th>
-            <th><%= t('activerecord.attributes.tasks.label_id') %></th>
-            <th><%= t('.operation') %></th>
+            <th><%= I18n.t('activerecord.attributes.tasks.title') %></th>
+            <th><%= I18n.t('activerecord.attributes.tasks.status') %></th>
+            <th><%= I18n.t('activerecord.attributes.tasks.deadline') %></th>
+            <th><%= I18n.t('activerecord.attributes.tasks.priority') %></th>
+            <th><%= I18n.t('activerecord.attributes.tasks.label_id') %></th>
+            <th><%= I18n.t('tasks.index.operation') %></th>
         </tr>
-        <% @taskList.each do |task| %>
+        <% @tasks.each do |task| %>
         <tr>
             <td><%= link_to task.title, task %></td>
             <td><%= task.status %></td>
@@ -25,13 +35,14 @@
             <td><%= task.priority %></td>
             <td><%= task.label_id %></td>
             <td>
-                <%= link_to t('.edit'), edit_task_path(task) %>
-                <%= link_to t('.destroy'), task_path(task), method: :delete, data: { confirm: t('dictionary.message.destroy.confirm') } %>
+                <%= link_to I18n.t('tasks.index.edit'), edit_task_path(task) %>
+                <%= link_to I18n.t('tasks.index.destroy'), task_path(task), method: :delete, data: { confirm: I18n.t('dictionary.message.destroy.confirm') } %>
             </td>
         </tr>
         <% end %>
     </table>
+    <%= paginate @tasks %>
     <% else %>
-    <p class="alert"><%= t('dictionary.message.no_task') %></p>
+    <p class="alert"><%= I18n.t('dictionary.message.no_task') %></p>
     <% end %>
 </div>

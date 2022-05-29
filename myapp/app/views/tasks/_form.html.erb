@@ -1,21 +1,21 @@
 <div class="task-form">
     <%= form_for(@task) do |f| %>
-      <%= f.label :title, t('activerecord.attributes.tasks.title') %>
+      <%= f.label :title, I18n.t('activerecord.attributes.tasks.title') %>
       <%= f.text_field :title %>
 
-      <%= f.label :body, t('activerecord.attributes.tasks.body') %>
+      <%= f.label :body, I18n.t('activerecord.attributes.tasks.body') %>
       <%= f.text_area :body %>
 
-      <%= f.label :deadline, t('activerecord.attributes.tasks.deadline') %>
+      <%= f.label :deadline, I18n.t('activerecord.attributes.tasks.deadline') %>
       <%= f.date_field :deadline %>
 
-      <%= f.label :priority, t('activerecord.attributes.tasks.priority') %>
+      <%= f.label :priority, I18n.t('activerecord.attributes.tasks.priority') %>
       <%= f.select :priority, Task.priorities.keys.to_a %>
 
-      <%= f.label :status, t('activerecord.attributes.tasks.status') %>
+      <%= f.label :status, I18n.t('activerecord.attributes.tasks.status') %>
       <%= f.select :status, Task.statuses.keys.to_a %>
 
-      <%= f.label :label_id, t('activerecord.attributes.tasks.label_id') %>
+      <%= f.label :label_id, I18n.t('activerecord.attributes.tasks.label_id') %>
       <%= f.text_field :label_id %>
 
       <%= f.hidden_field :user_id %>
