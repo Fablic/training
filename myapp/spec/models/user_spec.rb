@@ -4,9 +4,9 @@ RSpec.describe 'Userモデルのテスト', type: :model do
   name_max_length = 50
   let(:name) { 'testUser' }
   let(:email) { 'test@gmail.com' }
-  let(:password) { 'testpass' }
+  let(:password_digest) { 'testpass' }
   let(:admin_flg) { 0 }
-  let!(:task) { User.new(name: name, email: email, password: password, admin_flg: admin_flg) }
+  let!(:task) { User.new(name: name, email: email, password_digest: password_digest, admin_flg: admin_flg) }
 
   describe 'name' do
     context "#{name_max_length}文字以内" do
@@ -49,7 +49,7 @@ RSpec.describe 'Userモデルのテスト', type: :model do
 
   describe 'password' do 
     context '入力が空の場合' do
-      let(:password) { '' }
+      let(:password_digest) { '' }
       it 'バリデーションで弾かれること' do
         expect(task).not_to be_valid
       end
