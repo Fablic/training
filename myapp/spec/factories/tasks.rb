@@ -4,6 +4,7 @@ FactoryBot.define do
     sequence(:description) { |n| "test_description#{n}" }
     sequence(:created_at, Date.today)
     sequence(:due_date, Date.today) 
+    sequence(:user_id, 1) 
     status { 0 }
   end
 end
