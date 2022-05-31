@@ -1,0 +1,28 @@
+<%= form_for(@task) do |f| %>
+  <%= render 'layouts/error_messages', model: f.object %>
+  <div class="mb-auto p-2 form-group w-50">
+    <%= f.label :title, t('tasks.title') %>
+    <%= f.text_field :title, class: 'form-control'%>
+  </div>
+  <div class="p-2 form-group w-50">
+    <%= f.label :description, t('tasks.description') %>
+    <%= f.text_field :description, class: 'form-control' %>
+  </div>
+  <div class="p-2 form-group w-25">
+    <%= f.label :due_date, t('tasks.due_date') %>
+    <%= f.date_field :due_date, class: 'form-control' %>
+  </div>
+  <%# 新規作成時はステータスは選択できない %>
+  <% if @task.title.present? %>
+    <div class="p-2 form-group">
+      <%= f.label :status, t('tasks.status') %>
+      <div>
+        <%= f.select :status, options_for_select(Task.statuses.map { |key, v| [t("enums.task.status.#{key}"), key] },selected: @task.status), class: 'form-control form-select-sm' %>
+      </div>
+    </div>
+  <% end %>
+  <div class="p-2 form-group">
+    <%= link_to t('content.back'), tasks_path, class: "btn btn-outline-primary" %>
+    <%= f.submit t('content.save'), class: "btn btn-primary" %>
+  </div>
+<% end %>

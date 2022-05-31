@@ -3,6 +3,24 @@ require 'rails_helper'
 RSpec.describe 'Tasks', type: :system do
   let!(:task) { create(:task) }
 
+  describe 'サイドバー' do
+    context 'タスク一覧をクリックした時' do
+      before { visit new_task_path }
+      it '一覧ページに正常に遷移できること' do
+        find('#sidebar-index-link').click
+        expect(current_path).to eq tasks_path
+      end
+    end
+
+    context '新規作成リンクをクリックした時' do
+      before { visit tasks_path }
+      it 'タスク新規作成画面に正常に遷移できること' do
+        find('#sidebar-new-link').click
+        expect(current_path).to eq new_task_path
+      end
+    end
+  end
+
   describe '一覧ページ' do
     describe '一覧表示機能' do
       let!(:task_list) { create_list(:task, 4) }
@@ -39,7 +57,7 @@ RSpec.describe 'Tasks', type: :system do
 
       context '新規作成ボタンが押された時' do
         it '正常に遷移すること' do
-          click_on 'タスク新規追加'
+          find('#task-add-btn').click
           expect(current_path).to eq new_task_path
         end
       end
@@ -101,9 +119,9 @@ RSpec.describe 'Tasks', type: :system do
 
       context '次のページ、前のページをクリックしたとき' do
         it 'ページングが正常に機能していること' do
-          click_on '次のページ'
+          click_on '次のページ', match: :first
           expect(all('tbody tr').size).to eq(4)
-          click_on '前のページ'
+          click_on '前のページ', match: :first
           expect(all('tbody tr').size).to eq(5)
 
         end
@@ -111,18 +129,18 @@ RSpec.describe 'Tasks', type: :system do
 
       context '最初、最後をクリックした時' do
         it 'ページングが正常に機能していること' do
-          click_on '最後'
+          click_on '最後', match: :first
           expect(all('tbody tr').size).to eq(4)
-          click_on '最初'
+          click_on '最初', match: :first
           expect(all('tbody tr').size).to eq(5)
         end
       end
 
       context 'ナンバリングをクリックした時' do
         it 'ページ移動が正常に行われること' do
-          click_on '2'
+          click_on '2', match: :first
           expect(all('tbody tr').size).to eq(4)
-          click_on '1'
+          click_on '1', match: :first
           expect(all('tbody tr').size).to eq(5)
         end
       end
@@ -137,7 +155,7 @@ RSpec.describe 'Tasks', type: :system do
         fill_in 'task[title]',       with: 'new task'
         fill_in 'task[description]', with: 'new description'
         fill_in 'task[due_date]', with: '2022/05/10'
-        click_button '新規作成'
+        click_button '保存'
         expect(page).to have_content 'タスクを新規作成しました。'
       end
     end

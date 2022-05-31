@@ -1,12 +1,2 @@
-<h1><%= t '.title' %></h1>
-<%= form_for(@task) do |f| %>
-  <%= render 'layouts/error_messages', model: f.object %>
-  <div><%= f.label :title, t('tasks.title') %></div>
-  <div><%= f.text_field :title %></div>
-  <div><%= f.label :description, t('tasks.description') %></div>
-  <div><%= f.text_field :description %></div>
-  <div><%= f.label :due_date, t('tasks.due_date') %></div>
-  <div><%= f.date_field :due_date, value: Time.now.strftime("%Y-%m-%d") %></div>
-  <div><%= f.submit t('.submit') %></div>
-<% end %>
-<%= link_to t('.back'), tasks_path %>
+<%= render partial: 'layouts/page_title', locals: { title: t('.title') } %>
+<%= render partial: 'form' %>
