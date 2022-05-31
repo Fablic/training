@@ -48,4 +48,21 @@ RSpec.describe 'Sessions', type: :system do
       end
     end
   end
+
+  describe "ログアウト処理" do
+    context "ログアウトボタンがクリックされた時" do
+      it 'ログアウトが正常に行えること' do
+        visit login_path
+        fill_in 'session_email', with: user.email
+        fill_in 'session_password', with: user.password
+        click_button 'ログイン'
+        find('#dropdownMenuLink').click
+        find('#logoutLink').click
+        expect(current_path).to eq login_path
+        visit new_task_path
+        expect(current_path).to eq login_path
+      end
+    end
+  end
+  
 end
