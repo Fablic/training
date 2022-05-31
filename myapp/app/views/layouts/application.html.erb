@@ -20,15 +20,18 @@
         </button>
       </div>
       <div class="dropdown user-menu">
-        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-          User menu
-        </a>
-
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-          <li><a class="dropdown-item" href="#">Action</a></li>
-          <li><a class="dropdown-item" href="#">Another</a></li>
-          <li><a class="dropdown-item" href="#">Something</a></li>
-        </ul>
+        <% if logged_in? %>
+          <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+            <%= t('header.user_menu', :name => @current_user.name) %>
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <li><a class="dropdown-item" data-method="delete" href="<%= logout_path %>"><%= t 'header.logout' %></a></li>
+          </ul>
+        <% else %>
+          <a class="btn btn-secondary" href="<% login_path %>">
+            <%= t 'header.login' %>
+          </a>
+        <% end %>
       </div>
     </nav>
     <div class="container-fluid">

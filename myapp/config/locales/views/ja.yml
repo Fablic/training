@@ -20,3 +20,9 @@ ja:
       title: '新規タスク'
       submit: '新規作成'
       back: '戻る'
+  sessions:
+    new:
+      title: 'ログイン'
+      email: 'メールアドレス'
+      password: 'パスワード'
+      submit: 'ログイン'

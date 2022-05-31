@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  include SessionsHelper
+
   unless Rails.env.development?
     rescue_from Exception,                      with: :render500
     rescue_from ActiveRecord::RecordNotFound,   with: :render404
@@ -27,5 +29,10 @@ class ApplicationController < ActionController::Base
   def render500(err = nil)
     logger.error "Rendering 500 with excaption: #{err.message}" if err
     render 'errors/500.html', status: :internal_server_error
+  end
+
+  # ログイン状態のユーザーかどうか確認
+  def logged_in_user
+    redirect_to login_url unless logged_in?
   end
 end

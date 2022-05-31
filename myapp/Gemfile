@@ -33,7 +33,7 @@ gem 'rubocop-rails', require: false
 
 gem 'rails-i18n'
 
-gem 'bcrypt'
+gem 'bcrypt', '3.1.16'
 
 gem 'bootstrap5-kaminari-views', '~> 0.0.1'
 gem 'kaminari'

@@ -3,6 +3,16 @@ require 'rails_helper'
 RSpec.describe 'Tasks', type: :system do
   let!(:normal_user) { create(:normal_user) }
   let!(:task) { create(:task, user: normal_user) }
+
+  let!(:other_user) { create(:other_user) }
+  let!(:other_user_task) { create(:task, user: other_user) }
+
+  before do
+    visit login_path
+    fill_in 'session_email', with: normal_user.email
+    fill_in 'session_password', with: normal_user.password
+    click_button 'ログイン'
+  end
   
 
   describe 'サイドバー' do
@@ -26,7 +36,7 @@ RSpec.describe 'Tasks', type: :system do
   describe '一覧ページ' do
     describe '一覧表示機能' do
       let!(:task_list) { create_list(:task, 4, user: normal_user) }
-      let!(:tasks_order_by_created_at_desc) { Task.order(created_at: :desc) }
+      let!(:tasks_order_by_created_at_desc) { Task.where(user_id: normal_user.id).order(created_at: :desc) }
       let!(:first_task) { tasks_order_by_created_at_desc[0] }
 
       before { visit tasks_path }
@@ -38,10 +48,14 @@ RSpec.describe 'Tasks', type: :system do
         it '作成日時の降順でタスクが並んでいること' do
           expect(page.text).to match(/#{ tasks_order_by_created_at_desc[0].title }.*#{ tasks_order_by_created_at_desc[1].title }.*#{ tasks_order_by_created_at_desc[2].title }/)
         end
+
+        it 'ログインユーザーのタスクのみ表示されていること' do
+          expect(page).to have_no_content other_user_task.description
+        end
       end
 
       context '終了期限の並び替えが1回押された時' do
-        let!(:tasks_order_by_due_date_asc) { Task.order(due_date: :asc) }
+        let!(:tasks_order_by_due_date_asc) { Task.where(user_id: normal_user.id).order(due_date: :asc) }
         it '終了期限の昇順にタスクが並んでいること' do
           click_on '終了期限'
           expect(page.text).to match(/#{ tasks_order_by_due_date_asc[0].title }.*#{ tasks_order_by_due_date_asc[1].title }.*#{ tasks_order_by_due_date_asc[2].title }/)
@@ -49,7 +63,7 @@ RSpec.describe 'Tasks', type: :system do
       end
 
       context '終了期限の並び替えが2回押された時' do
-        let!(:tasks_order_by_due_date_desc) { Task.order(due_date: :desc) }
+        let!(:tasks_order_by_due_date_desc) { Task.where(user_id: normal_user.id).order(due_date: :desc) }
         it '終了期限の降順にタスクが並んでいること' do
           click_on '終了期限'
           click_on '終了期限'
@@ -75,6 +89,14 @@ RSpec.describe 'Tasks', type: :system do
         it '削除が正常に行われること' do
           all('table tr')[1].click_on '削除'
           expect(page).to have_no_content first_task.description
+        end
+      end
+
+      context "他のユーザーのタスクのIDでリクエストが送られた時" do
+        it '削除が行われずに、一覧画面にリダイレクトされること' do
+          delete task_path other_user_task
+          expect(Task.where(id: other_user_task.id)).to exist
+          expect(current_path).to eq tasks_path
         end
       end
     end
@@ -152,16 +174,15 @@ RSpec.describe 'Tasks', type: :system do
   describe 'タスク新規作成ページ' do
     before { visit new_task_path }
 
-    # step17にて実装予定のため、一旦コメントアウト
-    # context 'タスク新規作成時' do
-    #   it 'タスク新規追加が正常に行われること' do
-    #     fill_in 'task[title]',       with: 'new task'
-    #     fill_in 'task[description]', with: 'new description'
-    #     fill_in 'task[due_date]', with: '2022/05/10'
-    #     click_button '保存'
-    #     expect(page).to have_content 'タスクを新規作成しました。'
-    #   end
-    # end
+    context 'タスク新規作成時' do
+      it 'タスク新規追加が正常に行われること' do
+        fill_in 'task[title]',       with: 'new task'
+        fill_in 'task[description]', with: 'new description'
+        fill_in 'task[due_date]', with: '2022/05/10'
+        click_button '保存'
+        expect(page).to have_content 'タスクを新規作成しました。'
+      end
+    end
 
     context '戻るボタンが押された時' do
       it '正常に遷移すること' do
@@ -188,6 +209,13 @@ RSpec.describe 'Tasks', type: :system do
         find('#task_status').find("option[value='in_progress']").select_option
         click_button '保存'
         expect(page).to have_content 'タスクの情報を更新しました。'
+      end
+    end
+
+    context "他のユーザーのタスクにアクセスした時" do
+      it 'アクセスできず、一覧画面にリダイレクトされること' do
+        visit edit_task_path other_user_task
+        expect(current_path).to eq tasks_path
       end
     end
   end
