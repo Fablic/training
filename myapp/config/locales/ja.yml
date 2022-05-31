@@ -210,7 +210,7 @@ ja:
       not_found: "お探しのページが見つかりませんでした。移動または削除された可能性があります。"
       server_error: "このページはご利用頂けません。"
   header:
-    user_menu: "%{name}さん、こんにちは"
+    user_menu: "ユーザーメニュー"
     login: "ログイン"
     logout: "ログアウト"
   sidebar:

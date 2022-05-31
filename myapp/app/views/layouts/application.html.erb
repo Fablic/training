@@ -22,7 +22,7 @@
       <div class="dropdown user-menu">
         <% if logged_in? %>
           <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-            <%= t('header.user_menu', :name => @current_user.name) %>
+            <%= t('header.user_menu') %>
           </a>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
               <li><a class="dropdown-item" data-method="delete" href="<%= logout_path %>"><%= t 'header.logout' %></a></li>
