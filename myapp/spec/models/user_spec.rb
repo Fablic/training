@@ -47,13 +47,12 @@ RSpec.describe 'Userモデルのテスト', type: :model do
     end
   end
 
-  # 次のPRで実装するため一旦コメントアウト
-  # describe 'password' do 
-  #   context '入力が空の場合' do
-  #     let(:password_digest) { '' }
-  #     it 'バリデーションで弾かれること' do
-  #       expect(user).not_to be_valid
-  #     end
-  #   end
-  # end
+  describe 'password' do 
+    context '入力が空の場合' do
+      let(:password_digest) { '' }
+      it 'バリデーションで弾かれること' do
+        expect(user).not_to be_valid
+      end
+    end
+  end
 end
