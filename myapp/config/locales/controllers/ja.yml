@@ -14,3 +14,8 @@ ja:
       success: 'ログインしました。'
     destroy:
       success: 'ログアウトしました。'
+  users_controller: 
+    update: 
+      flash_success: 'ユーザー情報を更新しました。'
+    create:
+      flash_success: 'ユーザーを新規作成しました。'

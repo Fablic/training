@@ -26,3 +26,17 @@ ja:
       email: 'メールアドレス'
       password: 'パスワード'
       submit: 'ログイン'
+  admin:
+    users:
+      name: '名前'
+      email: 'メールアドレス'
+      admin_flg: '管理権限'
+      index:
+        title: 'ユーザー一覧'
+        edit_user: '編集'
+        delete_user: '削除'
+        add_new_user: 'ユーザー追加'
+      edit:
+        title: 'ユーザー情報編集'
+      new:
+        title: 'ユーザー新規作成'

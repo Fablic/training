@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   before_action :logged_in_user, only: %i[index edit new update destroy]
-  helper_method :sort_column, :sort_type
+  include TasksHelper
   PER_PAGE = 5
 
   def index
@@ -55,14 +55,6 @@ class TasksController < ApplicationController
 
   def task_params
     params.require(:task).permit(:title, :description, :due_date, :status)
-  end
-
-  def sort_type
-    %w[asc desc].include?(params[:type]) ? params[:type] : 'desc'
-  end
-
-  def sort_column
-    Task.column_names.include?(params[:sort]) ? params[:sort] : 'created_at'
   end
 
   def tasks
