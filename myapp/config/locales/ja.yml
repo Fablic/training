@@ -209,6 +209,10 @@ ja:
     http_status:
       not_found: "お探しのページが見つかりませんでした。移動または削除された可能性があります。"
       server_error: "このページはご利用頂けません。"
+  header:
+    user_menu: "ユーザーメニュー"
+    login: "ログイン"
+    logout: "ログアウト"
   sidebar:
     task_list: "タスク一覧"
     new_task: "タスク新規追加"

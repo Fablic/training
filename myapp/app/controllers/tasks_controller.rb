@@ -1,4 +1,5 @@
 class TasksController < ApplicationController
+  before_action :logged_in_user, only: %i[index edit new update destroy]
   helper_method :sort_column, :sort_type
   PER_PAGE = 5
 
@@ -17,7 +18,7 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.new(task_params)
+    @task = current_user.tasks.new(task_params)
     if @task.save
       redirect_to tasks_path, flash: { success: t('.flash_success') }
     else
@@ -26,11 +27,15 @@ class TasksController < ApplicationController
   end
 
   def edit
-    @task = Task.find(params[:id])
+    return redirect_to tasks_path unless login_user_task?
+
+    @task = current_user.tasks.find(params[:id])
   end
 
   def update
-    @task = Task.find(params[:id])
+    return redirect_to tasks_path unless login_user_task?
+
+    @task = current_user.tasks.find(params[:id])
     if @task.update(task_params)
       redirect_to tasks_path, flash: { success: t('.flash_success') }
     else
@@ -39,7 +44,9 @@ class TasksController < ApplicationController
   end
 
   def destroy
-    @task = Task.find(params[:id])
+    return redirect_to tasks_path unless login_user_task?
+
+    @task = current_user.tasks.find(params[:id])
     @task.destroy
     redirect_to tasks_path, flash: { success: t('.flash_success') }
   end
@@ -60,10 +67,14 @@ class TasksController < ApplicationController
 
   def tasks
     if params[:search_text].present? || params[:search_status].present?
-      Task.where('(title like ? or description like ?) and status = ?', "%#{params[:search_text]}%",
-                 "%#{params[:search_text]}%", params[:search_status]).order("#{sort_column} #{sort_type}")
+      current_user.tasks.where('(title like ? or description like ?) and status = ?', "%#{params[:search_text]}%",
+                               "%#{params[:search_text]}%", params[:search_status]).order("#{sort_column} #{sort_type}")
     else
-      Task.order("#{sort_column} #{sort_type}")
+      current_user.tasks.order("#{sort_column} #{sort_type}")
     end
+  end
+
+  def login_user_task?
+    current_user.tasks.exists?(id: params[:id])
   end
 end

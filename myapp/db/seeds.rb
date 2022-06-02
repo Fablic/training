@@ -7,7 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 # Creating normal user
-User.create!(name: 'normal', email: 'normal@gmail.com' ,password_digest: 'passwordNormal', admin_flg: 0)
+User.create!(name: 'normal', email: 'normal@gmail.com' ,password: 'passwordNormal', password_confirmation: 'passwordNormal', admin_flg: 0)
 
 # Creating admin user
-User.create!(name: 'admin', email: 'admin@gmail.com' ,password_digest: 'passwordAdmin', admin_flg: 1)
+User.create!(name: 'admin', email: 'admin@gmail.com' ,password: 'passwordAdmin', password_confirmation: 'passwordAdmin', admin_flg: 1)

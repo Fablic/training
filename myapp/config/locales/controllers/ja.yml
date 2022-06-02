@@ -8,3 +8,9 @@ ja:
       flash_success: 'タスクの情報を更新しました。'
     destroy:
       flash_success: 'タスクを削除しました。'
+  sessions_controller:
+    create: 
+      failed: 'メールアドレス、またはパスワードが間違っています。'
+      success: 'ログインしました。'
+    destroy:
+      success: 'ログアウトしました。'

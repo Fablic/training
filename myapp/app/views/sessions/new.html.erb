@@ -1,0 +1,13 @@
+<%= render partial: 'layouts/page_title', locals: { title: t('.title') } %>
+<%= render partial: 'layouts/flash_messages', locals: { flash: flash } %>
+<%= form_for(:session, url: login_path) do |f| %>
+  <div class="mb-auto p-2 form-group w-50">
+    <%= f.label t('.email') %>
+    <%= f.email_field :email %>
+  </div>
+  <div class="p-2 form-group w-25">
+    <%= f.label t('.password') %>
+    <%= f.password_field :password %>
+  </div>
+  <%= f.submit t('.submit'), class: "btn btn-primary"  %>
+<% end %>
