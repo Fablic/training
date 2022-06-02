@@ -4,7 +4,7 @@ RSpec.describe 'Sessions', type: :system do
   let!(:user) { FactoryBot.create(:normal_user) }
 
   describe 'ログイン処理' do
-    before {visit login_path}
+    before { visit login_path }
     context '登録済みのemail、正しいパスワードを入力' do
       it '正常にログインが行われ、トップページが表示されること' do
         fill_in 'session_email', with: user.email
@@ -49,8 +49,8 @@ RSpec.describe 'Sessions', type: :system do
     end
   end
 
-  describe "ログアウト処理" do
-    context "ログアウトボタンがクリックされた時" do
+  describe 'ログアウト処理' do
+    context 'ログアウトボタンがクリックされた時' do
       it 'ログアウトが正常に行えること' do
         visit login_path
         fill_in 'session_email', with: user.email
@@ -63,6 +63,5 @@ RSpec.describe 'Sessions', type: :system do
         expect(current_path).to eq login_path
       end
     end
-  end
-  
+  end  
 end

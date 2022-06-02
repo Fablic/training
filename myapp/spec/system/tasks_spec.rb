@@ -12,8 +12,7 @@ RSpec.describe 'Tasks', type: :system do
     fill_in 'session_email', with: normal_user.email
     fill_in 'session_password', with: normal_user.password
     click_button 'ログイン'
-  end
-  
+  end 
 
   describe 'サイドバー' do
     context 'タスク一覧をクリックした時' do
@@ -92,7 +91,7 @@ RSpec.describe 'Tasks', type: :system do
         end
       end
 
-      context "他のユーザーのタスクのIDでリクエストが送られた時" do
+      context '他のユーザーのタスクのIDでリクエストが送られた時' do
         it '削除が行われずに、一覧画面にリダイレクトされること' do
           delete task_path other_user_task
           expect(Task.where(id: other_user_task.id)).to exist
@@ -212,7 +211,7 @@ RSpec.describe 'Tasks', type: :system do
       end
     end
 
-    context "他のユーザーのタスクにアクセスした時" do
+    context '他のユーザーのタスクにアクセスした時' do
       it 'アクセスできず、一覧画面にリダイレクトされること' do
         visit edit_task_path other_user_task
         expect(current_path).to eq tasks_path
