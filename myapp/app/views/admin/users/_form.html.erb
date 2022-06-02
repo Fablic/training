@@ -8,7 +8,7 @@
     <%= f.label :email, t('admin.users.email') %>
     <%= f.text_field :email, class: 'form-control' %>
   </div>
-  <% unless @user.name.present?%>
+  <% unless @user.persisted?%>
     <div class="p-2 form-group w-50">
       <%= f.label :password, t('admin.users.password') %>
       <%= f.password_field :password, class: 'form-control' %>

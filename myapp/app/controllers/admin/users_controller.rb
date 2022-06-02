@@ -2,7 +2,6 @@ module Admin
   class UsersController < ApplicationController
     def index
       @users = User.all
-      pp(@users)
     end
   
     def new
@@ -32,6 +31,9 @@ module Admin
     end
   
     def destroy
+      user = User.find(params[:id])
+      user.destroy
+      redirect_to admin_users_path, flash: { success: t('.flash_success') }
     end
 
     private
