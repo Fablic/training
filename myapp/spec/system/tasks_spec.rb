@@ -12,7 +12,7 @@ RSpec.describe 'Tasks', type: :system do
     fill_in 'session_email', with: normal_user.email
     fill_in 'session_password', with: normal_user.password
     click_button 'ログイン'
-  end 
+  end
 
   describe 'サイドバー' do
     context 'タスク一覧をクリックした時' do
@@ -146,7 +146,6 @@ RSpec.describe 'Tasks', type: :system do
           expect(all('tbody tr').size).to eq(4)
           click_on '前のページ', match: :first
           expect(all('tbody tr').size).to eq(5)
-
         end
       end
 
