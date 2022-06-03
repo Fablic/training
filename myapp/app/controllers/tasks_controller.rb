@@ -17,6 +17,10 @@ class TasksController < ApplicationController
     @task = Task.new
   end
 
+  def show
+    @task = current_user.tasks.find(params[:id])
+  end
+
   def create
     @task = current_user.tasks.new(task_params)
     if @task.save
@@ -54,7 +58,7 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:title, :description, :due_date, :status)
+    params.require(:task).permit(:title, :description, :due_date, :status, :content)
   end
 
   def tasks

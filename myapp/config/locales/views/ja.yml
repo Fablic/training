@@ -8,6 +8,7 @@ ja:
     index:
       title: 'タスク一覧'
       add_new_task: 'タスク新規追加'
+      show_task: '詳細'
       edit_task: '編集'
       delete_task: '削除'
       search_label: '検索文字列:'
@@ -20,6 +21,8 @@ ja:
       title: '新規タスク'
       submit: '新規作成'
       back: '戻る'
+    show:
+      edit_task: '編集'
   sessions:
     new:
       title: 'ログイン'

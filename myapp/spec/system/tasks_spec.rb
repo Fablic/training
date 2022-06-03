@@ -91,6 +91,13 @@ RSpec.describe 'Tasks', type: :system do
         end
       end
 
+      context '詳細ボタンが押された時' do
+        it '正常に遷移すること' do
+          all('table tr')[1].click_on '詳細'
+          expect(current_path).to eq task_path first_task.id
+        end
+      end
+
       context '他のユーザーのタスクのIDでリクエストが送られた時' do
         it '削除が行われずに、一覧画面にリダイレクトされること' do
           delete task_path other_user_task
@@ -204,7 +211,6 @@ RSpec.describe 'Tasks', type: :system do
         fill_in 'task[title]',       with: 'edit task'
         fill_in 'task[description]', with: 'edit description'
         fill_in 'task[due_date]',    with: '2022/05/12'
-        find('#task_status').find("option[value='in_progress']").select_option
         click_button '保存'
         expect(page).to have_content 'タスクの情報を更新しました。'
       end

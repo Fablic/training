@@ -1,4 +1,5 @@
 class Task < ApplicationRecord
+  has_rich_text :content
   validates :title, presence: true, length: { maximum: 50 }
   validates :due_date, presence: true
 
