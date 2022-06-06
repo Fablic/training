@@ -62,4 +62,13 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
   config.include FactoryGirl::Syntax::Methods
+
+  # settings for bullet　enable/disable.
+  config.before(:each, bullet: :skip) do
+    Bullet.enable = false
+  end
+
+  config.after(:each, bullet: :skip) do
+    Bullet.enable = true
+  end
 end

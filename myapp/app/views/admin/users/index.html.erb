@@ -18,7 +18,8 @@
                 <td><%= user.name %></td>
                 <td><%= user.email %></td>
                 <td><%= user.admin ? t('admin.users.admin') :  t('admin.users.general') %>
-                <td><%= link_to user.tasks.count.to_s + t('admin.users.index.task_count_unit'), admin_user_path(user) %></td> 
+                <% tasks_count = user.tasks.size %>
+                <td><%= tasks_count != 0 ? (link_to tasks_count.to_s + t('admin.users.index.task_count_unit'), admin_user_path(user)) : ("0#{t('admin.users.index.task_count_unit')}") %></td>
                 <td><%= link_to t('tasks.index.edit_link'), edit_admin_user_path(user) %></td>
                 <td><%= link_to t('tasks.index.delete_link'), admin_user_path(user), method: :delete %></td>
             </tr>

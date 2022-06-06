@@ -47,7 +47,7 @@ RSpec.describe 'Admin::Users', type: :request do
   end
 
   describe 'GET #index' do
-    context 'メイン画面にアクセスした場合' do
+    context 'メイン画面にアクセスした場合', bullet: :skip do
       subject { proc { get admin_users_path } }
 
       it_behaves_like '管理ユーザがログインしていない場合、ログイン画面にリダイレクトされること'
