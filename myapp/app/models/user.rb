@@ -2,14 +2,15 @@ class User < ApplicationRecord
   has_secure_password
   has_many :tasks, dependent: :destroy
 
+  MINIMUN_ADMIN_USER_COUNT = 1
+  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i.freeze
+
   validates :name, presence: true, length: { maximum: 50 }
-  validates :email, presence: true, length: { maximum: 255 }
+  validates :email, presence: true, length: { maximum: 255 }, format: { with: VALID_EMAIL_REGEX }
   validates :password, presence: true, length: { minimum: 8 }
   validate :validate_admin
 
   scope :all_sort_by, ->(target, sort_type) { order({ "#{target}": sort_type }) }
-
-  MINIMUN_ADMIN_USER_COUNT = 1
 
   def admin=(value)
     super value

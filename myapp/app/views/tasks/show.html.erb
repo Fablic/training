@@ -4,27 +4,27 @@
 
 <div>
     <strong><%= t "tasks.title" %></strong>
-    <br />
+    <br>
     <%= @task.title %>
 </div>
 <div>
     <em><%= t "tasks.description" %></em>
-    <br />
+    <br>
     <%= @task.description %>
 </div>
 <div>
     <em><%= t "tasks.termination_date" %></em>
-    <br />
+    <br>
     <%= @task.termination_at.strftime("%Y-%m-%d %H:%M:%S") %>
 </div>
 <div>
     <em><%= t "tasks.priority" %></em>
-    <br />
+    <br>
     <p><%= Task.human_attribute_name("priority.#{@task.priority}") %></p>
 </div>
 <div>
     <em><%= t "tasks.status" %></em>
-    <br />
+    <br>
     <p><%= Task.human_attribute_name("status.#{@task.status}") %></p>
 </div>
 

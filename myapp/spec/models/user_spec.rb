@@ -11,7 +11,6 @@ RSpec.describe User, type: :model do
   shared_examples_for 'バリデーションエラーとなり、想定するメッセージが表示されること' do |column, message|
     it {
       expect(user.valid?).to eq false
-      user.valid?
       expect(user.errors.messages[column]).to include message
     }
   end
@@ -69,7 +68,8 @@ RSpec.describe User, type: :model do
     let(:user) { build(:user, email: email) }
 
     context 'メールアドレスに正常な値が入力されている場合' do
-      let(:email) { 'a' * num }
+      let(:format_email) { '@example.com' }
+      let(:email) { 'a' * (num - format_email.length) + format_email }
 
       context 'メールアドレスが255文字の場合' do
         let(:num) { email_max_length }
@@ -94,6 +94,42 @@ RSpec.describe User, type: :model do
     end
 
     context 'メールアドレスに正常な値が入力されていない場合' do
+      context 'メールアドレスの形式が不正な場合(「.」が入力されていない)' do
+        let(:email) { 'test@examplecom' }
+
+        it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること', :email, I18n.t('errors.messages.invalid')
+      end
+
+      context 'メールアドレスの形式が不正な場合(「@」が入力されていない)' do
+        let(:email) { 'test.example.com' }
+
+        it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること', :email, I18n.t('errors.messages.invalid')
+      end
+
+      context 'メールアドレスの形式が不正な場合(「@」以前が入力されていない)' do
+        let(:email) { '@example.com' }
+
+        it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること', :email, I18n.t('errors.messages.invalid')
+      end
+
+      context 'メールアドレスの形式が不正な場合(「@」以降が入力されていない)' do
+        let(:email) { 'test@' }
+
+        it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること', :email, I18n.t('errors.messages.invalid')
+      end
+
+      context 'メールアドレスの形式が不正な場合(「@」以降「.」以前が入力されていない)' do
+        let(:email) { 'test@.com' }
+
+        it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること', :email, I18n.t('errors.messages.invalid')
+      end
+
+      context 'メールアドレスの形式が不正な場合(「.」以降が入力されていない)' do
+        let(:email) { 'test@example.' }
+
+        it_behaves_like 'バリデーションエラーとなり、想定するメッセージが表示されること', :email, I18n.t('errors.messages.invalid')
+      end
+
       context 'メールアドレスが空の場合' do
         let(:email) { '' }
 
@@ -193,7 +229,6 @@ RSpec.describe User, type: :model do
           let(:admin) { true }
 
           it 'バリデーションエラーにならないこと' do
-            user.valid?
             expect(user.valid?).to eq true
           end
         end
@@ -202,7 +237,6 @@ RSpec.describe User, type: :model do
           let(:admin) { false }
 
           it 'バリデーションエラーにならないこと' do
-            user.valid?
             expect(user.valid?).to eq true
           end
         end

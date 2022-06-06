@@ -27,7 +27,7 @@ module Admin
     end
 
     def update
-      if update?(@user)
+      if updatable?(@user)
         if @user.update(user_params)
           redirect_to admin_users_path, notice: t('admin.users.flash.success.update')
         else
@@ -39,7 +39,7 @@ module Admin
     end
 
     def destroy
-      if delete?(@user)
+      if deletable?(@user)
         @user.destroy
         flash[:notice] = t('admin.users.flash.success.destroy')
       else
@@ -63,11 +63,11 @@ module Admin
       @user = User.find(params[:id])
     end
 
-    def update?(user)
+    def updatable?(user)
       !keep_minimum_admin_count?(user) && user_params[:admin].eql?('false') ? false : true
     end
 
-    def delete?(user)
+    def deletable?(user)
       keep_minimum_admin_count?(user)
     end
 
