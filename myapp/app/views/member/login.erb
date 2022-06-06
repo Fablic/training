@@ -1,0 +1,20 @@
+<%= form_with url: login_path, method: :post do |form| %>
+  <br /><br /><br />
+  <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      <input type="text" class="form-control<% if @error_user %> is-invalid<%end%>" id="email" name="email" placeholder="Email address" value="<%= @email%>">
+      <div class="invalid-feedback"><%= @error_user%></div>
+  </div>
+  <div class="mb-3">
+      <label for="password" class="form-label">Password</label>
+      <input type="password" class="form-control<% if @error_password %> is-invalid<%end%>" id="password" name="password" placeholder="Password">
+      <div class="invalid-feedback"><%= @error_password%></div>
+  </div>
+  <div class="mb-3">
+      <label><input type="checkbox" name="remember_me" value="1">Remember me</label>
+  </div>
+  <div class="mb-3">
+      <input type="submit" value="Login" class="btn btn-success"/>
+      or <a href="#" onclick="alert('will be implemented later');return false;">Reset password</a>
+  </div>
+<% end%>

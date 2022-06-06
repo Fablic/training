@@ -155,6 +155,13 @@ class TaskList {
         TaskList.draw(result.tasks);
         TaskList.setPaging(result.paging);
         TaskList.dirty = false;
+      },
+      error: function( jqXHR ) {
+        if (jqXHR.status == 401) {
+          location.href = '/member/login';
+        } else if (jqXHR.status == 403) {
+          alert("permission error");
+        }
       }
     });
   }
@@ -266,6 +273,13 @@ class Task {
           Task.create(result.tasks[i]);
         }
         return result;
+      },
+      error: function( jqXHR ) {
+        if (jqXHR.status == 401) {
+          location.href = '/member/login';
+        } else if (jqXHR.status == 403) {
+          alert("permission error");
+        }
       }
     });
   }
@@ -441,6 +455,13 @@ class Board {
         Board.tags = result.tag;
         Status.init(result.status);
         return true;
+      },
+      error: function( jqXHR ) {
+        if (jqXHR.status == 401) {
+          location.href = '/member/login';
+        } else if (jqXHR.status == 403) {
+          alert("permission error");
+        }
       }
     });
   }
@@ -687,8 +708,12 @@ class EditModal {
         }
         TaskList.setDirty();
         EditModal.close();
-      }).fail(function(XMLHttpRequest, status, e){
-        alert(e);
+      }).error( function( jqXHR ) {
+        if (jqXHR.status == 401) {
+          location.href = '/member/login';
+        } else if (jqXHR.status == 403) {
+          alert("permission error");
+        }
       });
     } else {
       $.ajax({
@@ -719,8 +744,12 @@ class EditModal {
         TaskList.setDirty();
   
         EditModal.close();
-      }).fail(function(XMLHttpRequest, status, e){
-        alert(e);
+      }).error( function( jqXHR ) {
+        if (jqXHR.status == 401) {
+          location.href = '/member/login';
+        } else if (jqXHR.status == 403) {
+          alert("permission error");
+        }
       });
     }
   }
@@ -754,9 +783,14 @@ class EditModal {
         Task.get(data.id).remove();
       }
       EditModal.close();
-    }).fail(function(XMLHttpRequest, status, e){
-      alert(e);
+    }).error( function( jqXHR ) {
+      if (jqXHR.status == 401) {
+        location.href = '/member/login';
+      } else if (jqXHR.status == 403) {
+        alert("permission error");
+      }
     });
+
   }
 }
 

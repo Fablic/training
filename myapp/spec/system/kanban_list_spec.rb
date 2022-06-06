@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Kanban', type: :system do
   feature 'kanban_list' do
     background do
-      FactoryBot.create(:board)
+      @board1 = FactoryBot.create(:board)
       @board2 = FactoryBot.create(:board)
 
       @status1 = FactoryBot.create(:status, sort: 2)
@@ -18,11 +18,23 @@ RSpec.describe 'Kanban', type: :system do
       @task2 = FactoryBot.create(:task, priority: @priority2, status: @status2, created_at: '2022-01-01')
       @task3 = FactoryBot.create(:task, priority: @priority3, status: @status1, created_at: '2022-01-03')
       @task4 = FactoryBot.create(:task, priority: @priority3, status: @status3, created_at: '2022-01-04')
+
+      user = FactoryBot.create(:user, email: 'admin@example.com', permissions: 1)
+      FactoryBot.create(:boards_user, board_id: @board1.id, user_id: user.id, permissions: 7)
       FactoryBot.create(:task, board: @board2, priority: @priority1, status: @status1)
 
       Capybara.current_driver = Capybara.javascript_driver
-      visit board_path({ 'id': '1', 'locale': 'en' })
 
+      visit login_path({'locale': 'en'})
+
+      page.fill_in 'email', with: user.email
+      page.fill_in 'password', with: 'test'
+      page.find('input.btn').click
+
+      # wait for redirect
+      expect(page).to have_selector('#kanban')
+
+      visit board_path({ 'id': '1', 'locale': 'en' })
       # wait for ajax
       expect(page).to have_selector('#kanban > div', visible: false)
     end

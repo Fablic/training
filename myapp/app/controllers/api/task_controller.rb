@@ -1,10 +1,23 @@
 module Api
   class TaskController < ApplicationController
+    before_action :check_login
+
+    def check_login
+      if session[:user]
+        @user = User.find(session[:user]['id'])
+        return if @user
+      end
+
+      head 401
+    end
+
     def create
+      return head 403 unless @user.get_permission_for(params[:board_id]).can_write?
+
       task = Task.new(params.require(:task).permit(Task::EDITABLE_FIELDS))
 
       # TODO: set proper value when authentication step is done
-      task.user_id = 1
+      task.user_id = @user.id
 
       # TODO: check write permission
       task.board_id = params[:board_id]
@@ -19,6 +32,8 @@ module Api
     end
 
     def get
+      return head 403 unless @user.get_permission_for(params[:board_id]).can_read?
+
       page = params[:page] || 0
       sort = params[:sort] || 'id'
       board_id = params[:board_id]
@@ -44,6 +59,7 @@ module Api
 
     def update
       task = Task.find(params[:id])
+      return head 403 unless @user.get_permission_for(task.board.id).can_write?
 
       # TODO: check auth
       task.update(params.require(:task).permit(Task::EDITABLE_FIELDS))
@@ -59,6 +75,8 @@ module Api
 
     def destroy
       task = Task.find(params[:id])
+
+      return head 403 unless @user.get_permission_for(task.board.id).can_write?
 
       # TODO: check auth
       task.delete
