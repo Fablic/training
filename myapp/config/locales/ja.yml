@@ -3,3 +3,4 @@ ja:
     page_title: 'タスク管理アプリ'
     home_link: 'ホーム'
     logout_link: 'ログアウト'
+    admin_users_link: 'ユーザ管理画面'

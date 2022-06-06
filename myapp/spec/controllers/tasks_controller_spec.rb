@@ -11,6 +11,7 @@ RSpec.describe TasksController, type: :controller do
   shared_examples_for 'ログインしていない場合、ログイン画面にリダイレクトされること' do
     it {
       session.delete(:user_id)
+
       subject.call
       expect(response).to redirect_to login_path
     }

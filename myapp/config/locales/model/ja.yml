@@ -23,3 +23,6 @@ ja:
         task:
           termination_at_must_be_future: 'は現在時刻より後の日付を指定してください'
           invalid_value: 'に不正な値が入力されています'
+        user:
+          invalid_value: 'に不正な値が入力されています'
+

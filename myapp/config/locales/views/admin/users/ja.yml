@@ -1,0 +1,32 @@
+ja:
+  admin:
+    users:
+      user_name: 'ユーザ名'
+      user_email: 'メールアドレス'
+      admin: '管理ユーザ'
+      general: '一般ユーザ'
+      back: '戻る'
+      index:
+        page_title: 'ユーザ管理画面'
+        new_link: '新規'
+        task_count: 'タスク件数'
+        task_count_unit: '件'
+      new:
+        page_title: 'ユーザ新規作成'
+      show:
+        page_title: '「%{user_name}」のタスク一覧'
+        no_task: '関連タスクなし'
+      edit:
+        page_title: '「%{user_name}」のユーザ情報編集'
+      form:
+        register: '登録'
+        admin_role: '管理権限'
+      flash:
+        success:
+          create: 'ユーザを作成しました！'
+          update: 'ユーザを更新しました！'
+          destroy: 'ユーザを削除しました！'
+        failure:
+          create: 'ユーザの作成に失敗しました！'
+          update: 'ユーザの更新に失敗しました！'
+          destroy: 'ユーザの削除に失敗しました！'

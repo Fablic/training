@@ -1,0 +1,21 @@
+<% if user.errors.any? %>
+    <div>
+        <% user.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+        <% end %>
+    </div>
+<% end %>
+
+<%= form_with model: [:admin, user], local: true do |f| %>
+    <div><%= t('admin.users.user_name') %></div>
+    <%= f.text_field :name %>
+    <div><%= t('admin.users.user_email') %></div>
+    <%= f.text_field :email %>
+    <div><%= t('admin.users.password') %></div>
+    <%= f.password_field :password %>
+    <div><%= t('admin.users.form.admin_role') %></div>
+    <%= f.check_box :admin %>
+    <br>
+    <%= f.submit(t('admin.users.form.register')) %>
+<% end %>
+<%= link_to t('admin.users.back'), admin_users_path %>

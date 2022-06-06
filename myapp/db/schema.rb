@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_18_011129) do
+ActiveRecord::Schema.define(version: 2022_05_19_084810) do
 
   create_table "tasks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "title", limit: 50, null: false
@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 2022_05_18_011129) do
     t.string "password_digest", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "admin", default: false, null: false
   end
 
   add_foreign_key "tasks", "users"
