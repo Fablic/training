@@ -10,7 +10,7 @@ class User < ApplicationRecord
   validates :password, presence: true, length: { minimum: 8 }
   validate :validate_admin
 
-  scope :all_sort_by, ->(target, sort_type) { includes(:tasks).order({ "#{target}": sort_type }) }
+  scope :all_sort_by, ->(target, sort_type) { eager_load(:tasks).order({ "#{target}": sort_type }) }
 
   def admin=(value)
     super value
