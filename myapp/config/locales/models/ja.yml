@@ -17,6 +17,7 @@ ja:
         not_started: 未着手
         in_progress: 進行中
         completed: 完了
+        
   # 全てのmodelで共通して使用するattributesを記載
   attributes:
     created_at: 作成日

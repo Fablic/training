@@ -1,6 +1,10 @@
 module Admin
   class UsersController < ApplicationController
+    before_action :logged_in_admin_user, only: %i[index new create edit update destroy]
+
     def index
+      logged_in_admin_user
+      pp('aaa')
       @users = User.all
     end
 

@@ -35,4 +35,10 @@ class ApplicationController < ActionController::Base
   def logged_in_user
     redirect_to login_url unless logged_in?
   end
+
+  # 管理権限を持つユーザーかどうか確認
+  def logged_in_admin_user
+    return logged_in_user unless logged_in?
+    redirect_to tasks_path unless admin_user?
+  end
 end
