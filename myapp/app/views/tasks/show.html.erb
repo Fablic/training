@@ -1,0 +1,6 @@
+<%= render partial: 'layouts/page_title', locals: { title: @task.title } %>
+<%= @task.content %>
+<div class="p-2 form-group">
+  <%= link_to t('content.back'), tasks_path, class: "btn btn-outline-primary" %>
+  <%= link_to t('.edit_task'), edit_task_path(@task), class: "btn btn-outline-primary" %>
+</div>

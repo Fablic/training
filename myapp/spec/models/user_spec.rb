@@ -33,7 +33,7 @@ RSpec.describe 'Userモデルのテスト', type: :model do
 
   describe 'email' do
     context 'email以外の形式が入力された時' do
-      let(:email) {'abcde12345'}
+      let(:email) { 'abcde12345' }
       it 'バリデーションで弾かれること' do
         expect(user).not_to be_valid
       end
@@ -45,9 +45,17 @@ RSpec.describe 'Userモデルのテスト', type: :model do
         expect(user).not_to be_valid
       end
     end
+
+    context 'すでに登録済みのメールアドレスで登録する場合' do
+      let!(:other_user) { FactoryBot.create(:normal_user) }
+      let!(:email) { other_user.email }
+      it 'バリデーションで弾かれること' do
+        expect(user).not_to be_valid
+      end
+    end
   end
 
-  describe 'password' do 
+  describe 'password' do
     context '入力が空の場合' do
       let(:password_digest) { '' }
       it 'バリデーションで弾かれること' do

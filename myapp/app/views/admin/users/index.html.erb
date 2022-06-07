@@ -1,0 +1,29 @@
+<%= render partial: 'layouts/page_title', locals: { title: t('.title') } %>
+<%= render partial: 'layouts/flash_messages', locals: { flash: flash } %>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= t 'admin.users.name' %></th>
+      <th><%= t 'admin.users.email' %></th>
+      <th><%= t 'admin.users.tasks_count' %></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |u| %>
+      <tr>
+        <td><%= u.name %></td>
+        <td><%= u.email %></td>
+        <td><%= u.tasks.count %></td>
+        <td><%= link_to t('.user_tasks'), admin_user_tasks_path(u), class: "btn btn-outline-primary btn-sm" %></td>
+        <td>
+          <td><%= link_to t('.edit_user'), edit_admin_user_path(u), class: "btn btn-outline-primary btn-sm" %></td>
+        </td>
+        <td>
+          <%= link_to t('.delete_user'), admin_user_path(u), method: :delete, class: "btn btn-danger btn-sm" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= link_to t('.add_new_user'), new_admin_user_path, {id: 'task-user-btn', class: 'btn btn-primary'} %>

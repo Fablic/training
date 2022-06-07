@@ -1,0 +1,24 @@
+<%= render partial: 'layouts/page_title', locals: { title: t('.title') } %>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= t 'tasks.title' %></th>
+      <th><%= t 'tasks.description' %></th>
+      <th><%= t 'tasks.status' %></th>
+      <th><%= t 'tasks.due_date' %></th>
+      <th><%= t 'tasks.created_at' %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tasks.each do |t| %>
+    <tr>
+      <td><%= t.title %></td>
+      <td><%= t.description %></td>
+      <td><%= t("enums.task.status.#{t.status}") %></td>
+      <td><%= l t.due_date, format: :date_only %></td>
+      <td><%= l t.created_at, format: :date_only %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= link_to t('content.back'), admin_users_path, class: "btn btn-outline-primary" %>

@@ -1,0 +1,23 @@
+<%= form_with model: [:admin, user], local: true do |f| %>
+  <%= render 'layouts/error_messages', model: f.object %>
+  <div class="mb-auto p-2 form-group w-50">
+    <%= f.label :name, t('admin.users.name') %>
+    <%= f.text_field :name, class: 'form-control'%>
+  </div>
+  <div class="p-2 form-group w-50">
+    <%= f.label :email, t('admin.users.email') %>
+    <%= f.text_field :email, class: 'form-control' %>
+  </div>
+  <div class="p-2 form-group w-50">
+    <%= f.label :password, t('admin.users.password') %>
+    <%= f.password_field :password, class: 'form-control' %>
+  </div>
+  <div class="p-2 form-group">
+      <%= f.label :admin_flg, t('admin.users.admin_flg') %>
+      <%= f.check_box :admin_flg, class: "form-check-input" %>
+  </div>
+  <div class="p-2 form-group">
+    <%= link_to t('content.back'), admin_users_path, class: "btn btn-outline-primary" %>
+    <%= f.submit t('content.save'), class: "btn btn-primary" %>
+  </div>
+<% end %>

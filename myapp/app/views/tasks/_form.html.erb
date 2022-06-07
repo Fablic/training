@@ -8,6 +8,10 @@
     <%= f.label :description, t('tasks.description') %>
     <%= f.text_field :description, class: 'form-control' %>
   </div>
+  <div class="p-2 form-group w-75">
+    <%= f.label :content, '詳細' %>
+    <%= f.rich_text_area :content %>
+  </div>
   <div class="p-2 form-group w-25">
     <%= f.label :due_date, t('tasks.due_date') %>
     <%= f.date_field :due_date, class: 'form-control' %>

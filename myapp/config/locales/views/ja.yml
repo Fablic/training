@@ -8,6 +8,7 @@ ja:
     index:
       title: 'タスク一覧'
       add_new_task: 'タスク新規追加'
+      show_task: '詳細'
       edit_task: '編集'
       delete_task: '削除'
       search_label: '検索文字列:'
@@ -20,9 +21,32 @@ ja:
       title: '新規タスク'
       submit: '新規作成'
       back: '戻る'
+    show:
+      edit_task: '編集'
   sessions:
     new:
       title: 'ログイン'
       email: 'メールアドレス'
       password: 'パスワード'
       submit: 'ログイン'
+  admin:
+    users:
+      name: '名前'
+      email: 'メールアドレス'
+      password: 'パスワード'
+      admin_flg: '管理権限'
+      tasks_count: '登録タスク数'
+      index:
+        title: 'ユーザー一覧'
+        edit_user: '編集'
+        delete_user: '削除'
+        add_new_user: 'ユーザー追加'
+        user_tasks: 'タスク一覧'
+      edit:
+        title: 'ユーザー情報編集'
+      new:
+        title: 'ユーザー新規作成'
+    tasks:
+      show: 
+        title: 'ユーザータスク一覧'
+        

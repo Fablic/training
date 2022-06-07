@@ -28,7 +28,7 @@
               <li><a class="dropdown-item" data-method="delete" id="logoutLink" href="<%= logout_path %>"><%= t 'header.logout' %></a></li>
           </ul>
         <% else %>
-          <a class="btn btn-secondary" href="<% login_path %>">
+          <a class="btn btn-secondary" href="<%= login_path %>">
             <%= t 'header.login' %>
           </a>
         <% end %>

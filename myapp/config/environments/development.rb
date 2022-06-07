@@ -68,4 +68,6 @@ Rails.application.configure do
     Bullet.rails_logger = true # Railsのログに結果を出力
     Bullet.add_footer = true # ページの左下に結果を表示
   end
+
+  BetterErrors::Middleware.allow_ip! "0.0.0.0/0"
 end
