@@ -87,8 +87,10 @@ RSpec.describe 'AdminUsers', type: :system do
       it '更新が正常に行われること' do
         name = 'edit name'
         email = 'edit@gmail.com'
+        password = 'changepass'
         fill_in 'user[name]', with: name
         fill_in 'user[email]', with: email
+        fill_in 'user[password]', with: password
         check 'user[admin_flg]'
         click_button '保存'
         expect(page).to have_content 'ユーザー情報を更新しました。'
@@ -96,6 +98,16 @@ RSpec.describe 'AdminUsers', type: :system do
         expect(current_user.name).to eq name
         expect(current_user.email).to eq email
         expect(current_user.admin_flg).to eq 1
+        expect(current_user.authenticate(password)).not_to eq false
+      end
+    end
+
+    context 'パスワードを空で更新した時' do
+      it 'パスワードの更新が行われないこと' do
+        click_button '保存'
+        expect(page).to have_content 'ユーザー情報を更新しました。'
+        current_user = User.find(normal_user.id)
+        expect(current_user.authenticate(normal_user.password)).not_to eq false
       end
     end
   end

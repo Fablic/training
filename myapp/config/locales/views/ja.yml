@@ -33,6 +33,8 @@ ja:
     users:
       name: '名前'
       email: 'メールアドレス'
+      password: 'パスワード'
+      admin_flg: '管理権限'
       tasks_count: '登録タスク数'
       admin_flg:
         true: '管理者'
