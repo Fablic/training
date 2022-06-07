@@ -93,6 +93,7 @@ Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
     - 'config/**/*'
+    - 'db/schema.rb'
 
 # Offense count: 1
 # Configuration parameters: IgnoredMethods.

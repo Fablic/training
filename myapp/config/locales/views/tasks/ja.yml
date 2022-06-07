@@ -5,6 +5,7 @@ ja:
     termination_date: '終了期日'
     priority: '優先度'
     status: 'ステータス'
+    label: 'ラベル'
     sybol_abbreviations: '...'
     back_link : '戻る'
     index:
@@ -24,7 +25,8 @@ ja:
     form:
       page_title: 'タスク一覧'
       priority_select: '選択して下さい(優先度)'
-      status_select: '選択して下さい(ステータス)'
+      status_select: '指定可(ステータス)'
+      label_select: '指定可(ラベル)'
       register: '登録'
     search:
       page_title: '検索機能'

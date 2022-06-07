@@ -4,7 +4,8 @@ RSpec.describe Task, type: :model do
   let(:title_max_length) { described_class.validators_on(:title).detect { |v| v.is_a?(ActiveModel::Validations::LengthValidator) }.options[:maximum] }
   let(:description_max_length) { described_class.validators_on(:description).detect { |v| v.is_a?(ActiveModel::Validations::LengthValidator) }.options[:maximum] }
   let(:number_of_multiple_data) { 5 }
-  let(:search_base_text) { 'test_title_for_search' }
+  let(:search_title_text) { 'test_title_for_search' }
+  let(:search_label_text) { 'sample_label01' }
 
   shared_examples_for 'バリデーションエラーとなり、想定するメッセージが表示されること' do |column, message|
     it {
@@ -12,6 +13,49 @@ RSpec.describe Task, type: :model do
       task.valid?
       expect(task.errors.messages[column]).to include message
     }
+  end
+
+  describe 'Association' do
+    let(:association) { described_class.reflect_on_association(target) }
+
+    context '対Labelテーブルの場合' do
+      let(:target) { :labels }
+
+      it '関連付けが「has_many」であること' do
+        expect(association.class_name).to eq 'Label'
+        expect(association.macro).to eq :has_many
+      end
+    end
+
+    context '対Tasks_labelテーブルの場合' do
+      let(:target) { :tasks_labels }
+
+      it '関連付けが「has_many」であること' do
+        expect(association.class_name).to eq 'TasksLabel'
+        expect(association.macro).to eq :has_many
+      end
+    end
+
+    context '対Userテーブルの場合' do
+      let(:target) { :user }
+
+      it '関連付けが「belongs_to」であること' do
+        expect(association.class_name).to eq 'User'
+        expect(association.macro).to eq :belongs_to
+      end
+    end
+  end
+
+  describe 'Dependent' do
+    let!(:task) { create(:task) }
+    let!(:related_user) { task.user_id }
+
+    context 'user_idに紐づくUserデータが削除された場合' do
+      it '紐づくTaskデータが削除されること' do
+        expect { User.find(related_user).destroy }.to change { Task.count }.by(-1)
+        expect { Task.find_by!(user_id: related_user) }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
   end
 
   describe 'title' do
@@ -287,53 +331,62 @@ RSpec.describe Task, type: :model do
         let!(:for_search_task01) { create(:task, data01) }
         let!(:for_search_task02) { create(:task, data02) }
 
-        context 'タイトル、ステータスが指定されている場合' do
+        let!(:label) { create(:label, name: search_label_text) }
+        let!(:tasks_labels01) { create(:tasks_label, task_id: for_search_task01.id, label_id: label.id) }
+
+        context 'タイトル、ステータス、ラベルIDが指定されている場合' do
           let(:search_params) do
             {
-              title: search_base_text,
-              status: Task.statuses[:not_started]
+              title: search_title_text,
+              status: Task.statuses[:not_started],
+              label_id: label.id
             }
           end
 
           let(:data01) do
             {
-              title: "#{search_base_text}_01",
+              title: "#{search_title_text}_01",
               status: Task.statuses[:not_started]
             }
           end
 
           context '該当するタスクが1件存在する場合' do
+            let!(:tasks_labels02) { create(:tasks_label, task_id: for_search_task02.id, label_id: label.id) }
             # 検索不一致データ(ステータスが不一致)
             let(:data02) do
               {
-                title: "#{search_base_text}_02",
+                title: "#{search_title_text}_02",
                 status: Task.statuses[:done]
               }
             end
 
-            it '検索条件(タイトル：「search_base_text」部分一致, ステータス：「未着手」)に一致するデータ1件を取得していること' do
+            it '検索条件(タイトル：「search_title_text」部分一致, ステータス：「未着手」, ラベル：「sample_label01」)に一致するデータ1件を取得していること' do
               searched_tasks = subject.call
               expect(searched_tasks.size).to eq 1
               expect(searched_tasks[0].title).to eq for_search_task01.title
               expect(searched_tasks[0].status).to eq for_search_task01.status
+              expect(searched_tasks[0].labels[0].name).to eq search_label_text
             end
           end
 
           context '該当するタスクが複数(2件)存在する場合' do
+            let!(:tasks_labels02) { create(:tasks_label, task_id: for_search_task02.id, label_id: label.id) }
             let(:data02) do
               {
-                title: "#{search_base_text}_02",
+                title: "#{search_title_text}_02",
                 status: Task.statuses[:not_started]
               }
             end
 
-            it '検索条件(タイトル：「search_base_text」部分一致, ステータス：「未着手」})に一致するデータ2件を取得していること' do
+            it '検索条件(タイトル：「search_title_text」部分一致, ステータス：「未着手」, ラベル：「sample_label01」})に一致するデータ2件を取得していること' do
               searched_tasks = subject.call
               expect(searched_tasks.size).to eq 2
               expect(searched_tasks[0].title).to eq for_search_task01.title
               expect(searched_tasks[0].status).to eq for_search_task01.status
+              expect(searched_tasks[0].labels[0].name).to eq search_label_text
               expect(searched_tasks[1].title).to eq for_search_task02.title
               expect(searched_tasks[1].status).to eq for_search_task02.status
+              expect(searched_tasks[1].labels[0].name).to eq search_label_text
             end
           end
         end
@@ -341,13 +394,13 @@ RSpec.describe Task, type: :model do
         context 'タイトルのみ指定されている場合' do
           let(:search_params) do
             {
-              title: search_base_text
+              title: search_title_text
             }
           end
 
           let(:data01) do
             {
-              title: "#{search_base_text}_01",
+              title: "#{search_title_text}_01",
               status: Task.statuses[:not_started]
             }
           end
@@ -356,7 +409,7 @@ RSpec.describe Task, type: :model do
             # 検索不一致データ(タイトルが不一致)
             let(:data02) { {} }
 
-            it '検索条件(タイトル：「search_base_text」部分一致)に一致するデータ1件を取得していること' do
+            it '検索条件(タイトル：「search_title_text」部分一致)に一致するデータ1件を取得していること' do
               searched_tasks = subject.call
               expect(searched_tasks.size).to eq 1
               expect(searched_tasks[0].title).to eq for_search_task01.title
@@ -367,12 +420,12 @@ RSpec.describe Task, type: :model do
           context '該当するタスクが複数(2件)存在する場合' do
             let(:data02) do
               {
-                title: "#{search_base_text}_02",
+                title: "#{search_title_text}_02",
                 status: Task.statuses[:done]
               }
             end
 
-            it '検索条件(タイトル：「search_base_text」部分一致)に一致するデータ2件を取得していること' do
+            it '検索条件(タイトル：「search_title_text」部分一致)に一致するデータ2件を取得していること' do
               searched_tasks = subject.call
               expect(searched_tasks.size).to eq 2
               expect(searched_tasks[0].title).to eq for_search_task01.title
@@ -392,7 +445,7 @@ RSpec.describe Task, type: :model do
 
           let(:data01) do
             {
-              title: "#{search_base_text}_01",
+              title: "#{search_title_text}_01",
               status: Task.statuses[:on_progress]
             }
           end
@@ -412,7 +465,7 @@ RSpec.describe Task, type: :model do
           context '該当するタスクが複数(2件)存在する場合' do
             let(:data02) do
               {
-                title: "#{search_base_text}_02",
+                title: "#{search_title_text}_02",
                 status: Task.statuses[:on_progress]
               }
             end
@@ -424,6 +477,32 @@ RSpec.describe Task, type: :model do
               expect(searched_tasks[0].status).to eq for_search_task01.status
               expect(searched_tasks[1].title).to eq for_search_task02.title
               expect(searched_tasks[1].status).to eq for_search_task02.status
+            end
+          end
+        end
+
+        context 'ラベルIDのみ指定されている場合' do
+          let(:data01) { {} }
+          let(:data02) { {} }
+          let(:search_params) { { label_id: label.id } }
+
+          context '該当するタスクが1件存在する場合' do
+            it '検索条件(ラベル名：「sample_label01」)に一致するデータ1件を取得していること' do
+              searched_tasks = subject.call
+              expect(searched_tasks.size).to eq 1
+              expect(searched_tasks[0].labels[0].name).to eq search_label_text
+            end
+          end
+
+          context '該当するタスクが複数(2件)存在する場合' do
+            let(:search_params) { { label_id: label.id } }
+            let!(:tasks_labels02) { create(:tasks_label, task_id: for_search_task02.id, label_id: label.id) }
+
+            it '検索条件(ラベル名：「sample_label01」)に一致するデータ2件を取得していること' do
+              searched_tasks = subject.call
+              expect(searched_tasks.size).to eq 2
+              expect(searched_tasks[0].labels[0].name).to eq search_label_text
+              expect(searched_tasks[1].labels[0].name).to eq search_label_text
             end
           end
         end

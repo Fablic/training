@@ -27,5 +27,12 @@
     <br>
     <p><%= Task.human_attribute_name("status.#{@task.status}") %></p>
 </div>
+<div>
+    <em><%= t('tasks.label') %></em>
+    <br>
+    <% @task.labels.each do |label| %>
+        <%= label.name %>
+    <% end %>
+</div>
 
 <%= link_to t('tasks.back'), tasks_path %>

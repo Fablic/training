@@ -121,10 +121,21 @@ RSpec.describe TasksController, type: :controller do
       let(:search_text) { 'test_title_for_search' }
 
       context '正しい値が入力されている場合' do
-        let!(:for_seach_task) { create(:task, input_value) }
+        let!(:for_search_task) { create(:task, data_for_search_task) }
+        let!(:for_search_label) { create(:label, name: 'sample_label01') }
+        let!(:tasks_label) { create(:tasks_label, task_id: for_search_task.id, label_id: for_search_label.id) }
 
-        context 'タイトル、ステータスが入力されている場合' do
+        context 'タイトル、ステータス、ラベルIDが入力されている場合' do
           let(:input_value) do
+            {
+              title: search_text,
+              status: Task.statuses[:not_started],
+              label_id: for_search_label.id,
+              user: user
+            }
+          end
+
+          let(:data_for_search_task) do
             {
               title: search_text,
               status: Task.statuses[:not_started],
@@ -142,10 +153,12 @@ RSpec.describe TasksController, type: :controller do
             expect(search_params.present?).to eq true
             expect(search_params[:title]).to eq input_value[:title]
             expect(search_params[:status]).to eq input_value[:status].to_s
+            expect(search_params[:label_id]).to eq input_value[:label_id].to_s
             displayed_tasks = controller.instance_variable_get('@tasks')
             expect(displayed_tasks.size).to be == 1
-            expect(displayed_tasks[0].title).to eq for_seach_task.title
-            expect(displayed_tasks[0].status).to eq for_seach_task.status
+            expect(displayed_tasks[0].title).to eq for_search_task.title
+            expect(displayed_tasks[0].status).to eq for_search_task.status
+            expect(displayed_tasks[0].labels[0].name).to eq for_search_label.name
           end
         end
 
@@ -157,6 +170,8 @@ RSpec.describe TasksController, type: :controller do
             }
           end
 
+          let(:data_for_search_task) { input_value.dup }
+
           it_behaves_like 'ログインしていない場合、ログイン画面にリダイレクトされること'
 
           it_behaves_like 'レスポンス(HTTPステータスコード)が想定通りであること', 200
@@ -167,10 +182,11 @@ RSpec.describe TasksController, type: :controller do
             expect(search_params.present?).to eq true
             expect(search_params[:title]).to eq input_value[:title]
             expect(search_params[:status]).to eq nil
+            expect(search_params[:label_id]).to eq nil
             displayed_tasks = controller.instance_variable_get('@tasks')
             expect(displayed_tasks.size).to be == 1
-            expect(displayed_tasks[0].title).to eq for_seach_task.title
-            expect(displayed_tasks[0].status).to eq for_seach_task.status
+            expect(displayed_tasks[0].title).to eq for_search_task.title
+            expect(displayed_tasks[0].status).to eq for_search_task.status
           end
         end
 
@@ -182,6 +198,8 @@ RSpec.describe TasksController, type: :controller do
             }
           end
 
+          let(:data_for_search_task) { input_value.dup }
+
           it_behaves_like 'ログインしていない場合、ログイン画面にリダイレクトされること'
 
           it_behaves_like 'レスポンス(HTTPステータスコード)が想定通りであること', 200
@@ -192,10 +210,40 @@ RSpec.describe TasksController, type: :controller do
             expect(search_params.present?).to eq true
             expect(search_params[:title]).to eq nil
             expect(search_params[:status]).to eq input_value[:status].to_s
+            expect(search_params[:label_id]).to eq nil
             displayed_tasks = controller.instance_variable_get('@tasks')
             expect(displayed_tasks.size).to be == 1
-            expect(displayed_tasks[0].title).to eq for_seach_task.title
-            expect(displayed_tasks[0].status).to eq for_seach_task.status
+            expect(displayed_tasks[0].title).to eq for_search_task.title
+            expect(displayed_tasks[0].status).to eq for_search_task.status
+          end
+        end
+
+        context 'ラベルIDのみ入力されている場合' do
+          let(:input_value) do
+            {
+              label_id: for_search_label.id,
+              user: user
+            }
+          end
+
+          let(:data_for_search_task) { { user: user } }
+
+          it_behaves_like 'ログインしていない場合、ログイン画面にリダイレクトされること'
+
+          it_behaves_like 'レスポンス(HTTPステータスコード)が想定通りであること', 200
+
+          it 'input_search_paramsによるバリデーション後の値を使用し、検索条件に一致するデータを1件取得していること' do
+            subject.call
+            search_params = controller.instance_variable_get('@search_params')
+            expect(search_params.present?).to eq true
+            expect(search_params[:title]).to eq nil
+            expect(search_params[:status]).to eq nil
+            expect(search_params[:label_id]).to eq input_value[:label_id].to_s
+            displayed_tasks = controller.instance_variable_get('@tasks')
+            expect(displayed_tasks.size).to be == 1
+            expect(displayed_tasks[0].title).to eq for_search_task.title
+            expect(displayed_tasks[0].status).to eq for_search_task.status
+            expect(displayed_tasks[0].labels[0].name).to eq for_search_label.name
           end
         end
       end
@@ -384,10 +432,12 @@ RSpec.describe TasksController, type: :controller do
   describe 'DELETE #destroy' do
     subject { proc { delete :destroy, params: { id: id } } }
 
-    let!(:task) { create(:task, user: user) }
+    let!(:tasks) { create_list(:task, 2, user: user) }
 
     context '該当するタスクが存在する場合' do
-      let(:id) { task.id }
+      let(:id) { tasks[0].id }
+      let!(:tasks_label01) { create(:tasks_label, task_id: tasks[0].id) }
+      let!(:tasks_label02) { create(:tasks_label, task_id: tasks[1].id) }
 
       it_behaves_like 'ログインしていない場合、ログイン画面にリダイレクトされること'
 
@@ -395,7 +445,14 @@ RSpec.describe TasksController, type: :controller do
 
       it 'タスクが削除されること' do
         expect { subject.call }.to change(Task, :count).by(-1)
-        expect { Task.find(task.id) }.to raise_error(ActiveRecord::RecordNotFound)
+        expect { Task.find(tasks[0].id) }.to raise_error(ActiveRecord::RecordNotFound)
+        expect { Task.find(tasks[1].id) }.not_to raise_error(ActiveRecord::RecordNotFound)
+      end
+
+      it 'タスクに紐づく中間データ(TasksLabel)が削除されること' do
+        expect { subject.call }.to change(TasksLabel, :count).by(-1)
+        expect { TasksLabel.find(tasks_label01.id) }.to raise_error(ActiveRecord::RecordNotFound)
+        expect { TasksLabel.find(tasks_label02.id) }.not_to raise_error(ActiveRecord::RecordNotFound)
       end
 
       it 'タスク一覧画面へリダイレクトされ、フラッシュメッセージが表示されること' do

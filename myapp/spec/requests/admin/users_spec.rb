@@ -321,9 +321,13 @@ RSpec.describe 'Admin::Users', type: :request do
     subject { proc { delete admin_user_path(id) } }
 
     context '該当するユーザが存在する場合' do
+      let!(:tasks_login_user) { create_list(:task, 2, user: login_admin_user) }
+
       context '削除対象ユーザが現在ログインしているユーザである場合' do
         let(:id) { login_admin_user.id }
-        let!(:tasks_user) { create_list(:task, 2, user: login_admin_user) }
+        let!(:label) { create(:label) }
+        let!(:tasks_label01) { create(:tasks_label, task_id: tasks_login_user[0].id, label_id: label.id) }
+        let!(:tasks_label02) { create(:tasks_label, task_id: tasks_login_user[1].id, label_id: label.id) }
 
         it_behaves_like '管理ユーザがログインしていない場合、ログイン画面にリダイレクトされること'
 
@@ -349,6 +353,8 @@ RSpec.describe 'Admin::Users', type: :request do
           let!(:admin_user02) { create(:user, admin: admin) }
           let(:admin) { true }
           let!(:tasks_admin_user02) { create_list(:task, 2, user: admin_user02) }
+          let!(:tasks_label03) { create(:tasks_label, task_id: tasks_admin_user02[0].id, label_id: label.id) }
+          let!(:tasks_label04) { create(:tasks_label, task_id: tasks_admin_user02[1].id, label_id: label.id) }
 
           it 'ユーザが削除されること' do
             expect { subject.call }.to change(User, :count).by(-1)
@@ -364,6 +370,19 @@ RSpec.describe 'Admin::Users', type: :request do
             expect(Task.where(user_id: admin_user02.id).count).to eq 2
           end
 
+          it '削除対象ユーザに紐づくタスクのidに紐づく中間データ(TasksLabel)が削除されること' do
+            expect(TasksLabel.where(task_id: tasks_login_user[0].id).count).to eq 1
+            expect(TasksLabel.where(task_id: tasks_login_user[1].id).count).to eq 1
+            expect(TasksLabel.where(task_id: tasks_admin_user02[0].id).count).to eq 1
+            expect(TasksLabel.where(task_id: tasks_admin_user02[1].id).count).to eq 1
+
+            subject.call
+            expect(TasksLabel.where(task_id: tasks_login_user[0].id).count).to eq 0
+            expect(TasksLabel.where(task_id: tasks_login_user[1].id).count).to eq 0
+            expect(TasksLabel.where(task_id: tasks_admin_user02[0].id).count).to eq 1
+            expect(TasksLabel.where(task_id: tasks_admin_user02[1].id).count).to eq 1
+          end
+
           it_behaves_like 'ユーザ一覧画面へリダイレクトされ、フラッシュメッセージが表示されること', I18n.t('admin.users.flash.success.destroy')
         end
       end
@@ -371,7 +390,15 @@ RSpec.describe 'Admin::Users', type: :request do
       context '削除対象ユーザが現在ログインしているユーザ以外の場合' do
         let!(:user02) { create(:user) }
         let(:id) { user02.id }
+
         let!(:tasks_user02) { create_list(:task, 2, user: user02) }
+
+        let!(:label) { create(:label) }
+
+        let!(:tasks_label01) { create(:tasks_label, task_id: tasks_login_user[0].id, label_id: label.id) }
+        let!(:tasks_label02) { create(:tasks_label, task_id: tasks_login_user[1].id, label_id: label.id) }
+        let!(:tasks_label03) { create(:tasks_label, task_id: tasks_user02[0].id, label_id: label.id) }
+        let!(:tasks_label04) { create(:tasks_label, task_id: tasks_user02[1].id, label_id: label.id) }
 
         it_behaves_like '管理ユーザがログインしていない場合、ログイン画面にリダイレクトされること'
 
@@ -387,6 +414,19 @@ RSpec.describe 'Admin::Users', type: :request do
 
           subject.call
           expect(Task.where(user_id: id).count).to eq 0
+        end
+
+        it '削除対象ユーザに紐づくタスクのidに紐づく中間データ(TasksLabel)が削除されること' do
+          expect(TasksLabel.where(task_id: tasks_login_user[0].id).count).to eq 1
+          expect(TasksLabel.where(task_id: tasks_login_user[1].id).count).to eq 1
+          expect(TasksLabel.where(task_id: tasks_user02[0].id).count).to eq 1
+          expect(TasksLabel.where(task_id: tasks_user02[1].id).count).to eq 1
+
+          subject.call
+          expect(TasksLabel.where(task_id: tasks_login_user[0].id).count).to eq 1
+          expect(TasksLabel.where(task_id: tasks_login_user[1].id).count).to eq 1
+          expect(TasksLabel.where(task_id: tasks_user02[0].id).count).to eq 0
+          expect(TasksLabel.where(task_id: tasks_user02[1].id).count).to eq 0
         end
 
         it_behaves_like 'ユーザ一覧画面へリダイレクトされ、フラッシュメッセージが表示されること', I18n.t('admin.users.flash.success.destroy')

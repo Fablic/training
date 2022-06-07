@@ -56,7 +56,7 @@ class TasksController < ApplicationController
   private
 
     def task_params
-      params.require(:task).permit(:user_id, :title, :description, :termination_at, :priority, :status)
+      params.require(:task).permit(:user_id, :title, :description, :termination_at, :priority, :status, { label_ids: [] })
     end
 
     def set_task
@@ -64,6 +64,6 @@ class TasksController < ApplicationController
     end
 
     def input_search_params
-      params.fetch(:search, {}).permit(:title, :status)
+      params.fetch(:search, {}).permit(:title, :status, :label_id)
     end
 end
