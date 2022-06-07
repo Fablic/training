@@ -8,21 +8,21 @@ class User < ApplicationRecord
 
   validates :name, presence: true, length: { maximum: 50 }
   validates :email, { presence: true, format: { with: VALID_EMAIL_REGEX }, uniqueness: { case_sensitive: false } }
-  validate :at_least_minimum_number_admin
+  validate :at_least_minimum_number_admin, on: :update
   before_destroy :validate_admin_num
 
   private
-  
+
   def at_least_minimum_number_admin
-    if admin_flg == 0 && User.where(admin_flg: 1).count == ADMIN_USER_MINIMUM_COUNT
-      errors.add(:base, :at_least_minimum_number_admin)
-    end
+    return unless admin_flg.zero? && User.where(admin_flg: 1).count == ADMIN_USER_MINIMUM_COUNT
+
+    errors.add(:base, :at_least_minimum_number_admin)
   end
 
   def validate_admin_num
-    if admin_flg == 1 && User.where(admin_flg: 1).count == ADMIN_USER_MINIMUM_COUNT
-      errors.add(:base, :at_least_minimum_number_admin)
-      throw(:abort)
-    end
+    return unless admin_flg == 1 && User.where(admin_flg: 1).count == ADMIN_USER_MINIMUM_COUNT
+
+    errors.add(:base, :at_least_minimum_number_admin)
+    throw(:abort)
   end
 end

@@ -63,4 +63,36 @@ RSpec.describe 'Userモデルのテスト', type: :model do
       end
     end
   end
+
+  describe 'admin_flg' do
+    let!(:admin) { create(:admin_user) }
+    let!(:normal) { create(:normal_user)}
+    context '更新処理で管理ユーザーが一人も存在しなくなる場合' do
+      it 'バリデーションで弾かれること' do
+        admin.update(admin_flg: 0)
+        expect(admin).not_to be_valid
+      end
+    end
+
+    context '一般ユーザーの更新' do
+      it '正常に行えること' do
+        normal.update(admin_flg: 1)
+        expect(admin).to be_valid
+      end
+    end
+
+    context '削除処理で管理ユーザーが一人も存在しなくなる場合' do
+      it '削除が行われないこと' do
+        admin.destroy
+        expect(admin).not_to be_destroyed
+      end
+    end
+
+    context '一般ユーザーが削除される場合' do
+      it '削除が正常に行われること' do
+        normal.destroy
+        expect(normal).to be_destroyed
+      end
+    end
+  end
 end

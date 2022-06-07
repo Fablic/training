@@ -38,7 +38,7 @@ module Admin
       if user.destroy
         redirect_to admin_users_path, flash: { success: t('.flash_success') }
       else
-        flash[:danger] = ""
+        flash[:danger] = ''
         user.errors.full_messages.each do |message|
           flash[:danger] << message
         end
