@@ -11,6 +11,12 @@ ja:
           not_started: 未着手
           in_progress: 進行中
           completed: 完了
+    errors:
+      models:
+        user:
+          attributes:
+            base:
+              at_least_minimum_number_admin: "管理権限を持つユーザーは規定数残してください。"
   enums:
     task:
       status:
