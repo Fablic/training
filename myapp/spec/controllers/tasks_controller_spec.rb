@@ -313,7 +313,7 @@ RSpec.describe TasksController, type: :controller do
       it '作成したタスク詳細画面へリダイレクトされ、フラッシュメッセージが表示されること' do
         subject.call
         expect(response).to redirect_to "/#{Task.last.id}"
-        expect(flash[:notice]).to match(/^タスクを作成しました！$/)
+        expect(flash[:notice]).to match(/^#{I18n.t('tasks.flash.new')}$/)
       end
     end
 
@@ -353,7 +353,7 @@ RSpec.describe TasksController, type: :controller do
         it '更新したタスク詳細画面へリダイレクトされ、フラッシュメッセージが表示されること' do
           subject.call
           expect(response).to redirect_to "/#{task.id}"
-          expect(flash[:notice]).to match(/^タスクを更新しました！$/)
+          expect(flash[:notice]).to match(/^#{I18n.t('tasks.flash.update')}$/)
         end
       end
 
@@ -401,7 +401,7 @@ RSpec.describe TasksController, type: :controller do
       it 'タスク一覧画面へリダイレクトされ、フラッシュメッセージが表示されること' do
         subject.call
         expect(response).to redirect_to '/'
-        expect(flash[:notice]).to match(/^タスクを削除しました！$/)
+        expect(flash[:notice]).to match(/^#{I18n.t('tasks.flash.destroy')}$/)
       end
     end
 
