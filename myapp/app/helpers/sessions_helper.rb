@@ -17,6 +17,6 @@ module SessionsHelper
   end
 
   def admin_user?
-    !current_user.nil? && current_user.admin_flg == 1
+    !current_user.nil? && current_user.admin_flg == User::ADMIN_USER
   end
 end

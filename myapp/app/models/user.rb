@@ -2,7 +2,9 @@ class User < ApplicationRecord
   has_secure_password
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i.freeze
-  ADMIN_USER_MINIMUM_COUNT = 1
+  ADMIN_USER_MINIMUM_COUNT =
+    ADMIN_USER = 1
+  NORMAL_USER = 0
 
   has_many :tasks, dependent: :destroy
 
@@ -14,13 +16,13 @@ class User < ApplicationRecord
   private
 
   def at_least_minimum_number_admin
-    return unless admin_flg.zero? && User.where(admin_flg: 1).count == ADMIN_USER_MINIMUM_COUNT
+    return unless admin_flg == NORMAL_USER && User.where(admin_flg: ADMIN_USER).count == ADMIN_USER_MINIMUM_COUNT
 
     errors.add(:base, :at_least_minimum_number_admin)
   end
 
   def validate_admin_num
-    return unless admin_flg == 1 && User.where(admin_flg: 1).count == ADMIN_USER_MINIMUM_COUNT
+    return unless admin_flg == ADMIN_USER && User.where(admin_flg: ADMIN_USER).count == ADMIN_USER_MINIMUM_COUNT
 
     errors.add(:base, :at_least_minimum_number_admin)
     throw(:abort)
