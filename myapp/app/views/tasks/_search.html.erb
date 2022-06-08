@@ -1,7 +1,5 @@
 <h3><%= t('tasks.search.page_title') %></h3>
-<% if @search_params.present? %>
-    <a><%= t('tasks.search.search_condition') %> : <%= @search_params[:title] %><%= Task.human_attribute_name("status.#{@search_params[:status]}") %></a>
-<% end %>
+
 <div class='search-input-box'>
     <%= form_with(scope: :search, url: search_tasks_path, method: :get, local: true) do |f| %>
         <div class='search-input-column-box'>
