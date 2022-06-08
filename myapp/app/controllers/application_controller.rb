@@ -1,5 +1,19 @@
 class ApplicationController < ActionController::Base
   helper_method :current_user
+  before_action :render503, if: :maintenance_mode?
+
+  def maintenance_mode?
+    File.exist?(Constants::MAINTENANCE_FILE_PATH)
+  end
+
+  def render503
+    render(
+      file: Rails.public_path.join('503.html'),
+      content_type: 'text/html',
+      layout: false,
+      status: :service_unavailable
+    )
+  end
 
   private
 
