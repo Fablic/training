@@ -42,6 +42,10 @@ GEM
       globalid (>= 0.3.6)
     activemodel (6.0.5)
       activesupport (= 6.0.5)
+    activemodel-serializers-xml (1.0.2)
+      activemodel (> 5.x)
+      activesupport (> 5.x)
+      builder (~> 3.1)
     activerecord (6.0.5)
       activemodel (= 6.0.5)
       activesupport (= 6.0.5)
@@ -98,6 +102,13 @@ GEM
     crass (1.0.6)
     debug_inspector (1.1.0)
     diff-lcs (1.5.0)
+    draper (4.0.2)
+      actionpack (>= 5.0)
+      activemodel (>= 5.0)
+      activemodel-serializers-xml (>= 1.0)
+      activesupport (>= 5.0)
+      request_store (>= 1.0)
+      ruby2_keywords
     erubi (1.10.0)
     execjs (2.8.1)
     factory_bot (6.2.1)
@@ -197,6 +208,8 @@ GEM
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     regexp_parser (2.5.0)
+    request_store (1.5.1)
+      rack (>= 1.4)
     rexml (3.2.5)
     rspec-core (3.11.0)
       rspec-support (~> 3.11.0)
@@ -233,6 +246,7 @@ GEM
       rack (>= 1.1)
       rubocop (>= 1.7.0, < 2.0)
     ruby-progressbar (1.11.0)
+    ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
     sass-rails (6.0.0)
       sassc-rails (~> 2.1, >= 2.1.1)
@@ -304,6 +318,7 @@ DEPENDENCIES
   bullet
   byebug
   capybara (>= 2.15)
+  draper
   factory_bot_rails
   jbuilder (~> 2.7)
   jquery-rails

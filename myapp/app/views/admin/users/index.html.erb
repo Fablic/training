@@ -16,11 +16,7 @@
         <td><%= u.name %></td>
         <td><%= u.email %></td>
         <td>
-          <% if u.admin_flg == 1 %>
-            <%= t 'admin.users.admin_flg.true' %>
-          <% else %>
-            <%= t 'admin.users.admin_flg.false' %>
-          <% end %>
+          <%= u.decorate.admin_flg_show %>
         </td>
         <td><%= u.tasks.count %></td>
         <td><%= link_to t('.user_tasks'), admin_user_tasks_path(u), class: "btn btn-outline-primary btn-sm" %></td>
