@@ -37,7 +37,7 @@ module Admin
       if user.destroy
         redirect_to admin_users_path, flash: { success: t('.flash_success') }
       else
-        redirect_to admin_users_path, flash: { danger: user.errors.full_messages.first}
+        redirect_to admin_users_path, flash: { danger: user.errors.full_messages.first }
       end
     end
 
