@@ -1,6 +1,6 @@
 module Admin
   class UsersController < ApplicationController
-    before_action :logged_in_admin_user, only: %i[index new create edit update destroy]
+    before_action :logged_in_admin_user
 
     def index
       @users = User.all
@@ -37,11 +37,7 @@ module Admin
       if user.destroy
         redirect_to admin_users_path, flash: { success: t('.flash_success') }
       else
-        flash[:danger] = ''
-        user.errors.full_messages.each do |message|
-          flash[:danger] << message
-        end
-        redirect_to admin_users_path
+        redirect_to admin_users_path, flash: { danger: user.errors.full_messages.first}
       end
     end
 
