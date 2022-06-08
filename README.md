@@ -43,3 +43,6 @@
 | name | VARCHAR | |
 | email | VARCHAR | |
 | password | VARCHAR | |
+
+### ER Diagram
+![](docs/training.drawio.png)
