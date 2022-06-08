@@ -15,4 +15,8 @@ module SessionsHelper
   def logged_in?
     !current_user.nil?
   end
+
+  def admin_user?
+    !current_user.nil? && current_user.admin_flg == User::ADMIN_USER
+  end
 end

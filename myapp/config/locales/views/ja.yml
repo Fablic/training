@@ -36,6 +36,10 @@ ja:
       password: 'パスワード'
       admin_flg: '管理権限'
       tasks_count: '登録タスク数'
+      admin_flg:
+        true: '管理者'
+        false: '一般'
+        title: '権限'
       index:
         title: 'ユーザー一覧'
         edit_user: '編集'

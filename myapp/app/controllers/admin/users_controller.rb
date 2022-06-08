@@ -1,5 +1,7 @@
 module Admin
   class UsersController < ApplicationController
+    before_action :logged_in_admin_user
+
     def index
       @users = User.all
     end
@@ -26,14 +28,17 @@ module Admin
       if @user.update(user_params)
         redirect_to admin_users_path, flash: { success: t('.flash_success') }
       else
-        render :admin_user_edit
+        render :edit
       end
     end
 
     def destroy
       user = User.find(params[:id])
-      user.destroy
-      redirect_to admin_users_path, flash: { success: t('.flash_success') }
+      if user.destroy
+        redirect_to admin_users_path, flash: { success: t('.flash_success') }
+      else
+        redirect_to admin_users_path, flash: { danger: user.errors.full_messages.first }
+      end
     end
 
     private

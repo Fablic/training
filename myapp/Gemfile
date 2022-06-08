@@ -38,6 +38,8 @@ gem 'bcrypt', '3.1.16'
 gem 'bootstrap5-kaminari-views', '~> 0.0.1'
 gem 'kaminari'
 
+gem 'draper'
+
 gem 'bootstrap'
 gem 'jquery-rails'
 gem 'uglifier'
