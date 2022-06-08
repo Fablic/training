@@ -1,5 +1,15 @@
 # Task Management App
 
+## front design
+### Login Page
+![LoginPage](docs/LoginPage.png)
+### Task List Page
+![TaskListPage](docs/TaskListPage.png)
+### Task Detail Page
+![TaskDetailPage](docs/TaskDetailPage.png)
+### Edit/Add Task Page
+![AddTaskPage](docs/AddTaskPage.png)
+
 ## Database
 ### Task
 | Name | Type | Description |
