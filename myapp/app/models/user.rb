@@ -2,9 +2,9 @@ class User < ApplicationRecord
   has_secure_password
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i.freeze
-  ADMIN_USER_MINIMUM_COUNT =
-    ADMIN_USER = 1
+  ADMIN_USER_MINIMUM_COUNT = 1
   NORMAL_USER = 0
+  ADMIN_USER = 1
 
   has_many :tasks, dependent: :destroy
 
