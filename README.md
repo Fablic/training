@@ -1,7 +1,35 @@
-Hello welcome to the Rails Training, here are the links of the training curriculum. Choose the language you prefer.
+# Task Management App
 
-- [English](steps_en.md)
-- [日本語](steps_jp.md)
+## Database
+### Task
+| Name | Type | Description |
+| -- | -- | -- |
+| id | INT | PK |
+| name | VARCHAR | |
+| description | VARCHAR | |
+| limit | DATE | |
+| priority | INT | 1: low, 2: normal, 3: high |
+| status | INT | 1: TODO, 2: IN PROGRESS, 3: DONE |
+| user_id | INT | FK |
+| created_at | DATETIME |
 
-To start the training first please create a branch with your name (i.e rakuten_taro) from this branch and make that branch as your main branch.
-Later when you will send PR, please send PR to your main branch not this or other branches.
+### Label
+| Name | Type | Description |
+| -- | -- | -- |
+| id | INT | PK |
+| name | VARCHAR | |
+
+### Task_Label
+| Name | Type | Description |
+| -- | -- | -- |
+| id | INT | PK |
+| task_id | INT |　FK |
+| label_id | INT | FK |
+
+### User
+| Name | Type | Description |
+| -- | -- | -- |
+| id | INT | PK |
+| name | VARCHAR | |
+| email | VARCHAR | |
+| password | VARCHAR | |
