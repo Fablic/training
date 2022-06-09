@@ -1,21 +1,5 @@
-Hello welcome to the Rails Training, here are the links of the training curriculum. Choose the language you prefer.
-
-- [English](steps_en.md)
-- [日本語](steps_jp.md)
-
-To start the training first please create a branch with your name (i.e rakuten_taro) from this branch and make that branch as your main branch.
-Later when you will send PR, please send PR to your main branch not this or other branches.
-
-## アプリのデザイン
-[Figma](https://www.figma.com/file/9BtMi0qocqZu50QK7esxJX/Rails%E7%A0%94%E4%BF%AE%2F%E3%82%BF%E3%82%B9%E3%82%AF%E7%AE%A1%E7%90%86?node-id=0%3A1)でラフデザインを作成しました。
-(myapp/docs に画像が入っています)
-
-[メインページ](https://rak.box.com/s/5jxlwcrw9bufvpaimy0s3ockxei4uq9z)
-[タスク登録ページ](https://rak.box.com/s/5jxlwcrw9bufvpaimy0s3ockxei4uq9z)
-
 ## DB design (step5)
 
-myapp/docs/db_design.mdと同じです。
 ### users table
 | Column | Type | Option |
 | ------ | ---- | ------ |
