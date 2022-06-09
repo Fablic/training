@@ -36,7 +36,7 @@ myapp/docs/db_design.mdと同じです。
 | user_id | INT | FK |
 | priority | INT | |
 | status | INT | |
-| expired_at | DATETIME | |
+| expire_at | DATETIME | |
 | created_at | DATETIME | |
 | updated_at | DATETIME | |
 
