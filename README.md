@@ -35,7 +35,8 @@ myapp/docs/db_design.mdと同じです。
 | description | VARCHAR(256) | |
 | user_id | INT | FK |
 | priority | INT | |
-| status | ENUM("Not Started", "In progress", "Completed") | |
+| status | INT | |
+| expired_at | DATETIME | |
 | created_at | DATETIME | |
 | updated_at | DATETIME | |
 
