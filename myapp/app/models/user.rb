@@ -7,6 +7,7 @@ class User < ApplicationRecord
   ADMIN_USER = 1
 
   has_many :tasks, dependent: :destroy
+  has_many :labels, dependent: :destroy
 
   validates :name, presence: true, length: { maximum: 50 }
   validates :email, { presence: true, format: { with: VALID_EMAIL_REGEX }, uniqueness: { case_sensitive: false } }
