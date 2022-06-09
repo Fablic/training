@@ -16,7 +16,7 @@ class TasksController < ApplicationController
     @task = Task.new(task_params)
     if @task.save
       # タスク作成を通知
-      flash[:success] = "タスクを作成しました"
+      flash[:success] = "Task created!"
       redirect_to root_path
     else
       render 'new'

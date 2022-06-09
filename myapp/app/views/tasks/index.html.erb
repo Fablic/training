@@ -1,18 +1,19 @@
 <div class="card card-skin">
-  <h1>タスク一覧</h1>
+  <h1>All Tasks</h1>
   <ul>
     <% @tasks.each do | task | %>
-      <%= link_to task.title, task %></br>
-      <%= task.description %>
+      <div><%= link_to task.title, task %></div>
+      <div><%= task.description %></div>
       <%= task.priority %>
       <%= task.status %>
       <%= task.expire_at %>
-
-      <%= link_to "Edit", edit_task_path(task) %>
-      <%= link_to "Delete", task_path(task), method: :delete, data: { comfirm: "Sure?" } %></br>
+      <p>
+        <%= link_to "Edit", edit_task_path(task) %>
+        <%= link_to "Delete", task_path(task), method: :delete, data: { comfirm: "Sure?" } %></br>
+      </p>
     <% end %>
   </ul>
-  
-  <%= link_to "タスク作成", new_task_path, class: 'btn btn-default' %>
+
+  <%= link_to "Create Task", new_task_path, class: 'btn btn-default' %>
   
 </div>
