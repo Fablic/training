@@ -1,10 +1,16 @@
-
-<div class="row">
-  <aside class="col-md-4">
-    <section class="task_info">
-      <h1>
-        <%= @task.name %>
-      </h1>
-    </section>
-  </aside>
+<div class="container">
+  <h1>タスク詳細</h1>
+  <div class="row">
+    <aside class="col-md-4">
+      <section class="task_info">
+        <h1>
+          <%= @task.title %>
+        </h1>
+        <%= @task.description %>
+        <%= @task.priority %>
+        <%= @task.status %>
+        <%= @task.expire_at %>
+      </section>
+    </aside>
+  </div>
 </div>

@@ -1,15 +1,20 @@
-<div>
-  <%= form_with(mode: @task, local:true) do |f| %>
+<div class="container">
+  <%= form_with(model: @task, local: true) do |f| %>
     <%= f.label :title %>
-    <%= f.text_field :title %>
+    <%= f.text_field :title, class: 'form-control' %>
 
     <%= f.label :description %>
-    <%= f.text_field :description %>
+    <%= f.text_field :description, class: 'form-control' %>
 
     <%= f.label :priority %>
-    <%= f.select :priority %>
+    <%= f.select :priority, Task.priorities.keys.map {|k| [k, k]}, class: 'form-control' %>
 
     <%= f.label :status %>
-    <%= f.select :status %>
+    <%= f.select :status, Task.statuses.keys.map { |k| [k, k] } , class: 'form-control' %>
+
+    <%= f.label :expire_at %>
+    <%= f.datetime_field :expire_at, class: 'form-control' %>
+
+    <%= f.submit "Save", class: "button" %>
   <% end %>
 </div>
