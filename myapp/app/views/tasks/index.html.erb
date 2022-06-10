@@ -31,11 +31,7 @@
                 <td><%= task.termination_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
                 <td><%= Task.human_attribute_name("priority.#{task.priority}") %></td>
                 <td><%= Task.human_attribute_name("status.#{task.status}") %></td>
-                <td>
-                    <% task.labels.pluck(:name).each do |name| %>
-                        <%= name %>
-                    <% end %>
-                </td>
+                <td><%= task.labels.pluck(:name).join(" ") %></td>
                 <td><%= link_to t('tasks.index.show_link'), task %></td>
                 <td><%= link_to t('tasks.index.edit_link'), edit_task_path(task) %></td>
                 <td><%= link_to t('tasks.index.delete_link'), task_path(task), method: :delete %></td>
