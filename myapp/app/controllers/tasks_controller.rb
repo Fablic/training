@@ -20,6 +20,7 @@ class TasksController < ApplicationController
   end
 
   def edit
+    @task = Task.find(params[:id])
   end
 
   def show
@@ -27,6 +28,15 @@ class TasksController < ApplicationController
   end
 
   def update
+    @task = Task.find(params[:id])
+
+    if @task.update(params.require(:task).permit(:name, :description))
+      flash[:success] = 'Edit success'
+      redirect_to @task
+    else
+      flash[:danger] = 'Edit failed'
+      render :edit
+    end
   end
 
   def destroy
