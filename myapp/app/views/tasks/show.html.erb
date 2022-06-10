@@ -30,8 +30,8 @@
 <div>
     <em><%= t('tasks.label') %></em>
     <br>
-    <% @task.labels.each do |label| %>
-        <%= label.name %>
+    <% @task.labels.pluck(:name).each do |name| %>
+        <%= name %>
     <% end %>
 </div>
 

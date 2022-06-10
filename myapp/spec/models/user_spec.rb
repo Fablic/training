@@ -15,19 +15,6 @@ RSpec.describe User, type: :model do
     }
   end
 
-  describe 'Association' do
-    let(:association) { described_class.reflect_on_association(target) }
-
-    context '対Taskテーブルの場合' do
-      let(:target) { :tasks }
-
-      it '関連付けが「has_many」であること' do
-        expect(association.class_name).to eq 'Task'
-        expect(association.macro).to eq :has_many
-      end
-    end
-  end
-
   describe 'name' do
     let(:user) { build(:user, name: name) }
 

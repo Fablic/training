@@ -23,10 +23,13 @@ class Task < ApplicationRecord
   scope :search, lambda { |search_params|
     return if search_params.blank?
 
-    includes(:labels)
-      .extract_matched_title(search_params[:title])
-      .extract_matched_status(search_params[:status])
-      .extract_matched_label(search_params[:label_id])
+    includes(:labels).where(id: [
+                              includes(:labels)
+                              .extract_matched_title(search_params[:title])
+                              .extract_matched_status(search_params[:status])
+                              .extract_matched_label(search_params[:label_id])
+                              .pluck(:id)
+                            ])
   }
   scope :extract_matched_title, ->(title) { where('title LIKE ?', "%#{title}%") if title.present? }
   scope :extract_matched_status, ->(status) { where(status: status) if status.present? }
