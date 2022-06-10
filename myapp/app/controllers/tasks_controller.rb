@@ -46,7 +46,9 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:title, :description, :priority, :status, :expire_at)
+    # params.require(:task).permit(:title, :description, :priority, :status, :expire_at)
+    # status, priorityはのちのstepで追加する
+    params.require(:task).permit(:title, :description, :expire_at)
   end
 
   # 指定されたIDのユーザーを取得

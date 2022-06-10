@@ -4,8 +4,8 @@
     <% @tasks.each do | task | %>
       <div><%= link_to task.title, task %></div>
       <div><%= task.description %></div>
-      <%= task.priority %>
-      <%= task.status %>
+      <%# <%= task.priority %>
+      <%# <%= task.status %>
       <%= task.expire_at %>
       <p>
         <%= link_to "Edit", edit_task_path(task) %>

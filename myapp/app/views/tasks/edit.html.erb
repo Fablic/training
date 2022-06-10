@@ -6,11 +6,11 @@
     <%= f.label :description %>
     <%= f.text_field :description, class: 'form-control' %>
 
-    <%= f.label :priority %>
-    <%= f.select :priority, Task.priorities.keys.map {|k| [k, k]}, class: 'form-control' %>
+    <%# <%= f.label :priority %>
+    <%# <%= f.select :priority, Task.priorities.keys.map {|k| [k, k]}, class: 'form-control' %>
 
-    <%= f.label :status %>
-    <%= f.select :status, Task.statuses.keys.map { |k| [k, k] } , class: 'form-control' %>
+    <%# <%= f.label :status %>
+    <%# <%= f.select :status, Task.statuses.keys.map { |k| [k, k] } , class: 'form-control' %>
 
     <%= f.label :expire_at %>
     <%= f.datetime_field :expire_at, class: 'form-control' %>
