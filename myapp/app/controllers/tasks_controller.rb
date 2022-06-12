@@ -1,11 +1,11 @@
 class TasksController < ApplicationController
-  before_action :get_user_by_id, only: %i[show edit update]
+
   def index
     @tasks = Task.all
   end
 
   def show
-    # @task = Task.find(params[:id])
+    @task = Task.find(params[:id])
   end
 
   def new
@@ -24,12 +24,12 @@ class TasksController < ApplicationController
   end
 
   def edit
-    # @task = Task.find(params[:id])
+    @task = Task.find(params[:id])
   end
 
   def update
-    # @task = Task.find(params[:id])
-    if @task.update(task_params)
+    task = Task.find(params[:id])
+    if task.update(task_params)
       flash[:success] = 'Task updated!'
       redirect_to root_path
     else
@@ -46,13 +46,8 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    # params.require(:task).permit(:title, :description, :priority, :status, :expire_at)
     # status, priorityはのちのstepで追加する
     params.require(:task).permit(:title, :description, :expire_at)
   end
 
-  # 指定されたIDのユーザーを取得
-  def get_user_by_id
-    @task = Task.find(params[:id])
-  end
 end
