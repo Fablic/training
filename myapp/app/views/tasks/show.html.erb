@@ -30,9 +30,7 @@
 <div>
     <em><%= t('tasks.label') %></em>
     <br>
-    <% @task.labels.pluck(:name).each do |name| %>
-        <%= name %>
-    <% end %>
+    <%= @task.labels.pluck(:name).join(" ") %>
 </div>
 
 <%= link_to t('tasks.back'), tasks_path %>
