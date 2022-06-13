@@ -1,0 +1,17 @@
+<div class="container">
+  <%= form_with(model: @task, local: true) do |f| %>
+    <%= f.label :title %>
+    <%= f.text_field :title, class: 'form-control' %>
+
+    <%= f.label :description %>
+    <%= f.text_field :description, class: 'form-control' %>
+    
+    <%= f.label :expire_at %>
+    <%= f.datetime_field :expire_at, class: 'form-control' %>
+
+    <%= f.submit "Save", class: "button" %>
+  <% end %>
+
+
+</div>
+

@@ -1,12 +1,10 @@
 class CreateTasks < ActiveRecord::Migration[6.0]
-  def change
-    create_table :tasks do |t|
-      t.string :title, :null => false
-      t.text :description
-      # t.integer :priority
-      # t.integer :status
+    def change
+      create_table :tasks do |t|
+        t.string :title, null: false, presence: true
+        t.text :description
 
-      t.timestamps
+        t.timestamps
+      end
     end
   end
-end
