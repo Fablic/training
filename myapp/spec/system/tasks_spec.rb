@@ -42,12 +42,12 @@ RSpec.describe "Tasks", type: :system do
     fill_in "Expire at", with: "2022-06-10 12:00:00"
     click_button "Save"
 
-    expect(page).to have_content ("Title can't be blank")
+    expect(page).to have_content "Title can't be blank"
   end
   
   # 編集して更新できる
   it "update the task" do
-    task = FactoryBot.create(:task)
+    _ = FactoryBot.create(:task)
     visit root_path
     click_link "Edit"
     fill_in "Title", with: "edited title"
@@ -68,7 +68,7 @@ RSpec.describe "Tasks", type: :system do
     fill_in "Title", with: ""
     click_button "Save"
 
-    expect(page).to have_content ("Title can't be blank")
+    expect(page).to have_content "Title can't be blank"
   end
 
   # タスク詳細が表示される
@@ -86,7 +86,7 @@ RSpec.describe "Tasks", type: :system do
   # タスクが削除できる
   it "delete task" do
     expect{
-      task = FactoryBot.create(:task)
+      _ = FactoryBot.create(:task)
       visit root_path
       click_link "Delete"
     }.to change(Task, :count).by(0)
