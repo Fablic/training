@@ -11,32 +11,32 @@
 # SupportedStyles: slashes, arguments
 Rails/FilePath:
   Exclude:
-    - 'config/environments/development.rb'
+    - "config/environments/development.rb"
 
 # Offense count: 5
 Rails/I18nLocaleTexts:
   Exclude:
-    - 'app/controllers/tasks_controller.rb'
+    - "app/controllers/tasks_controller.rb"
 
 # Offense count: 35
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: EnforcedStyle.
 # SupportedStyles: always, always_true, never
-Style/FrozenStringLiteralComment:
-  Enabled: false
+# Style/FrozenStringLiteralComment:
+#   Enabled: false
 
 # Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).
 Style/GlobalStdStream:
   Exclude:
-    - 'config/environments/production.rb'
+    - "config/environments/production.rb"
 
 # Offense count: 2
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: SafeForConstants.
 Style/RedundantFetchBlock:
   Exclude:
-    - 'config/puma.rb'
+    - "config/puma.rb"
 
 # Offense count: 14
 # This cop supports safe autocorrection (--autocorrect).
@@ -44,11 +44,11 @@ Style/RedundantFetchBlock:
 # SupportedStyles: single_quotes, double_quotes
 Style/StringLiterals:
   Exclude:
-    - 'config/environments/production.rb'
-    - 'config/puma.rb'
-    - 'config/spring.rb'
-    - 'test/application_system_test_case.rb'
-    - 'test/channels/application_cable/connection_test.rb'
+    - "config/environments/production.rb"
+    - "config/puma.rb"
+    - "config/spring.rb"
+    - "test/application_system_test_case.rb"
+    - "test/channels/application_cable/connection_test.rb"
 
 # Offense count: 2
 # This cop supports safe autocorrection (--autocorrect).
@@ -63,7 +63,7 @@ Style/SymbolArray:
 # SupportedStylesForMultiline: comma, consistent_comma, no_comma
 Style/TrailingCommaInArguments:
   Exclude:
-    - 'config/spring.rb'
+    - "config/spring.rb"
 
 # Offense count: 2
 # This cop supports safe autocorrection (--autocorrect).
@@ -71,5 +71,5 @@ Style/TrailingCommaInArguments:
 # SupportedStylesForMultiline: comma, consistent_comma, no_comma
 Style/TrailingCommaInHashLiteral:
   Exclude:
-    - 'config/environments/development.rb'
-    - 'config/environments/test.rb'
+    - "config/environments/development.rb"
+    - "config/environments/test.rb"
