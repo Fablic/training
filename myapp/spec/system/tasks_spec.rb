@@ -19,29 +19,34 @@ RSpec.describe "Tasks", type: :system do
 
   # 新しいタスクを作成
   it "create a new task" do
-    visit root_path
-    click_link "Create Task"
-    fill_in "Title", with:  "test title"
-    fill_in "Description", with: "test description"
-    fill_in "Expire at", with: "2022-06-10 12:00:00"
-    click_button "Save"
-
-    # エラーメッセージを検知する？
-    # expect(page).to 
-
+    expect {
+      visit root_path
+      click_link "Create Task"
+      fill_in "Title", with:  "test title"
+      fill_in "Description", with: "test description"
+      fill_in "Expire at", with: "2022-06-10 12:00:00"
+      click_button "Save"
+  
+      # flashメッセージが表示されるか
+      expect(page).to have_content "Task created!"
+      expect(page).to have_content "test title"
+      expect(page).to have_content "test description"
+      expect(page).to have_content "2022-06-10 12:00:00"
+    }.to change(Task, :count).by(1)
   end
 
   # titleが空欄だとタスクが作成できない
   it "can't create task if title is blank" do
     visit root_path
     click_link "Create Task"
+  
     fill_in "Description", with: "test description"
     fill_in "Expire at", with: "2022-06-10 12:00:00"
     click_button "Save"
+    
+    # エラーメッセージが表示されるか
+    expect(page).to have_content ("Title can't be blank")
 
-    expect(page).to have_content "test title"
-    expect(page).to have_content "test description"
-    expect(page).to have_content "2022-06-10 12:00:00"
   end
   
   # titleを編集できる
