@@ -14,13 +14,12 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
-    if @task.save
-      # タスク作成を通知
-      flash[:success] = 'Task created!'
-      redirect_to root_path
-    else
-      render 'new'
-    end
+
+    return render 'new' unless @task.save
+
+    # タスク作成を通知
+    flash[:success] = 'Task created!'
+    redirect_to root_path
   end
 
   def edit
@@ -29,12 +28,13 @@ class TasksController < ApplicationController
 
   def update
     task = Task.find(params[:id])
-    if task.update(task_params)
-      flash[:success] = 'Task updated!'
-      redirect_to root_path
-    else
-      render 'edit'
-    end
+
+    # 異常系はearly return
+    return render 'edit' unless task.update(task_params)
+
+    # 正常系をmain blockに残す
+    flash[:success] = 'Task updated!'
+    redirect_to root_path
   end
 
   def destroy
