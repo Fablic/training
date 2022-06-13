@@ -29,6 +29,15 @@ ja:
       email: 'メールアドレス'
       password: 'パスワード'
       submit: 'ログイン'
+  labels:
+    name: 'ラベル名' 
+    index:
+      title: 'ラベル一覧'
+      update: '更新'
+      new: '新規作成'
+      new_title: 'ラベル作成'
+      index_title: '作成済みラベル'
+      delete: '削除'
   admin:
     users:
       name: '名前'

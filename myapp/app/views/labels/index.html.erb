@@ -1,0 +1,33 @@
+<%= render partial: 'layouts/page_title', locals: { title: t('.title') } %>
+
+<div class="p-5 mb-3 w-50">
+  <%= render partial: 'layouts/flash_messages', locals: { flash: flash } %>
+  <h5><%= t '.new_title' %></h5>
+  <%= form_with model: @label, scope: :label do |f| %>
+    <div class="d-flex mb-4">
+      <div class="mr-auto flex-grow-1">
+        <%= f.text_field :name, class: "form-control" %>
+      </div>
+      <div>
+        <%= f.submit t('.new'), class: "btn btn-primary ml-1" %>
+      </div>
+    </div>
+  <% end %>
+
+  <h5><%= t '.index_title' %></h5>
+  <% @labels.each do |label| %>
+    <%= form_with model: label do |form| %>
+      <div class="d-flex mb-2">
+        <div class="mr-auto flex-grow-1">
+          <%= form.text_field :name, class: "form-control label-name" %>
+        </div>
+        <div>
+          <%= form.submit t('.update'), class: 'btn btn-info ml-1' %>
+        </div>
+        <div>
+          <%= link_to t('.delete'), label_path(label), method: :delete, class: 'btn btn-danger mx-1 delete-btn' %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+</div>
