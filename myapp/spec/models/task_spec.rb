@@ -15,18 +15,6 @@ RSpec.describe Task, type: :model do
     }
   end
 
-  describe 'Dependent' do
-    let!(:task) { create(:task) }
-    let!(:related_user) { task.user_id }
-
-    context 'user_idに紐づくUserデータが削除された場合' do
-      it '紐づくTaskデータが削除されること' do
-        expect { User.find(related_user).destroy }.to change { Task.count }.by(-1)
-        expect { Task.find_by!(user_id: related_user) }.to raise_error(ActiveRecord::RecordNotFound)
-      end
-    end
-  end
-
   describe 'title' do
     let(:task) { build(:task, title: title) }
 
