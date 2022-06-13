@@ -18,7 +18,7 @@ RSpec.describe "Tasks", type: :system do
   end
 
   # 新しいタスクを作成
-  it "create a new task" do
+  it "create the new task" do
     expect {
       visit root_path
       click_link "Create Task"
@@ -35,7 +35,7 @@ RSpec.describe "Tasks", type: :system do
   end
 
   # titleが空欄だとタスクが作成できない
-  it "can't create task if title is blank" do
+  it "can't create the task if title is blank" do
     visit root_path
     click_link "Create Task"
     fill_in "Description", with: "test description"
@@ -62,7 +62,7 @@ RSpec.describe "Tasks", type: :system do
   end
 
   # titleが空欄だと更新できない
-  it "can't update if the title is blank" do
+  it "can't update the task if the title is blank" do
     task = FactoryBot.create(:task)
     visit edit_task_path(task)
     fill_in "Title", with: ""
@@ -72,7 +72,7 @@ RSpec.describe "Tasks", type: :system do
   end
 
   # タスク詳細が表示される
-  it "show task detail" do
+  it "show the task detail" do
     task = FactoryBot.create(:task)
     visit root_path
     click_link task.title
@@ -84,7 +84,7 @@ RSpec.describe "Tasks", type: :system do
   end
 
   # タスクが削除できる
-  it "delete task" do
+  it "delete the task" do
     expect{
       _ = FactoryBot.create(:task)
       visit root_path
