@@ -18,15 +18,5 @@ FactoryGirl.define do
         task.labels << evaluator.labels
       end
     end
-
-    trait :with_same_label do
-      transient do
-        labels { Label.first || create(:label, name: 'sample_label01') }
-      end
-
-      after(:build) do |task, evaluator|
-        task.labels << evaluator.labels
-      end
-    end
   end
 end

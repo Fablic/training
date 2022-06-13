@@ -297,11 +297,11 @@ RSpec.describe Task, type: :model do
       subject { proc { Task.search(search_params) } }
 
       context '値が指定されている場合' do
-        let!(:task01_for_search) { create(:task, test_data_type, data01) }
-        let!(:task02_for_search) { create(:task, test_data_type, data02) }
+        let!(:task01_for_search) { create(:task, :with_label, data01) }
+        let!(:task02_for_search) { create(:task, :with_label, data02) }
 
         context 'タイトル、ステータス、ラベルIDが指定されている場合' do
-          let(:test_data_type) { :with_same_label }
+          let(:label) { create(:label, name: search_label_text) }
           let(:search_params) do
             {
               title: search_title_text,
@@ -313,7 +313,8 @@ RSpec.describe Task, type: :model do
           let(:data01) do
             {
               title: "#{search_title_text}_01",
-              status: Task.statuses[:not_started]
+              status: Task.statuses[:not_started],
+              labels: label
             }
           end
 
@@ -322,7 +323,8 @@ RSpec.describe Task, type: :model do
             let(:data02) do
               {
                 title: "#{search_title_text}_02",
-                status: Task.statuses[:done]
+                status: Task.statuses[:done],
+                labels: label
               }
             end
 
@@ -339,7 +341,8 @@ RSpec.describe Task, type: :model do
             let(:data02) do
               {
                 title: "#{search_title_text}_02",
-                status: Task.statuses[:not_started]
+                status: Task.statuses[:not_started],
+                labels: label
               }
             end
 
@@ -357,7 +360,6 @@ RSpec.describe Task, type: :model do
         end
 
         context 'タイトルのみ指定されている場合' do
-          let(:test_data_type) { :with_same_label }
           let(:search_params) do
             {
               title: search_title_text
@@ -403,7 +405,6 @@ RSpec.describe Task, type: :model do
         end
 
         context 'ステータスのみ指定されている場合' do
-          let(:test_data_type) { :with_same_label }
           let(:search_params) do
             {
               status: Task.statuses[:on_progress]
@@ -449,12 +450,12 @@ RSpec.describe Task, type: :model do
         end
 
         context 'ラベルIDのみ指定されている場合' do
-          let(:data01) { {} }
-          let(:data02) { {} }
-          let(:search_params) { { label_id: task01_for_search.labels[0].id } }
+          let(:label) { create(:label, name: search_label_text) }
+          let(:search_params) { { label_id: label.id } }
 
           context '該当するタスクが1件存在する場合' do
-            let(:test_data_type) { :with_label }
+            let(:data01) { { labels: label } }
+            let(:data02) { {} }
 
             it '検索条件(ラベル名：「sample_label01」)に一致するデータ1件を取得していること' do
               searched_tasks = subject.call
@@ -464,7 +465,8 @@ RSpec.describe Task, type: :model do
           end
 
           context '該当するタスクが複数(2件)存在する場合' do
-            let(:test_data_type) { :with_same_label }
+            let(:data01) { { labels: label } }
+            let(:data02) { { labels: label } }
 
             it '検索条件(ラベル名：「sample_label01」)に一致するデータ2件を取得していること' do
               searched_tasks = subject.call
