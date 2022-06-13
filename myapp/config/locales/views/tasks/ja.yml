@@ -5,6 +5,7 @@ ja:
     termination_date: '終了期日'
     priority: '優先度'
     status: 'ステータス'
+    label: 'ラベル'
     sybol_abbreviations: '...'
     back_link : '戻る'
     index:
@@ -30,6 +31,8 @@ ja:
       page_title: '検索機能'
       search_condition: '検索条件'
       search: '検索'
+      status_select: '指定可(ステータス)'
+      label_select: '指定可(ラベル)'
     flash:
       new: 'タスクを作成しました！'
       update: 'タスクを更新しました！'

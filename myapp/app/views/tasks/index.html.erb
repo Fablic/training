@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<h1><%= t "tasks.index.page_title" %></h1>
+<h1><%= t('tasks.index.page_title') %></h1>
 <td><%= link_to t('tasks.index.new_link'), new_task_path %></td>
 <td><%= render partial: "search", locals: {task: @task} %></td>
 <td>
@@ -13,11 +13,12 @@
 <table>
     <thead>
         <tr>
-            <th><%= t "tasks.title" %></th>
-            <th><%= t "tasks.description" %></th>
-            <th><%= t "tasks.termination_date" %></th>
-            <th><%= t "tasks.priority" %></th>
-            <th><%= t "tasks.status" %></th>
+            <th><%= t('tasks.title') %></th>
+            <th><%= t('tasks.description') %></th>
+            <th><%= t('tasks.termination_date') %></th>
+            <th><%= t('tasks.priority') %></th>
+            <th><%= t('tasks.status') %></th>
+            <th><%= t('tasks.label') %></th>
             <th colspan="3"></th>
         </tr>
     </thead>
@@ -30,6 +31,7 @@
                 <td><%= task.termination_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
                 <td><%= Task.human_attribute_name("priority.#{task.priority}") %></td>
                 <td><%= Task.human_attribute_name("status.#{task.status}") %></td>
+                <td><%= task.labels.pluck(:name).join(" ") %></td>
                 <td><%= link_to t('tasks.index.show_link'), task %></td>
                 <td><%= link_to t('tasks.index.edit_link'), edit_task_path(task) %></td>
                 <td><%= link_to t('tasks.index.delete_link'), task_path(task), method: :delete %></td>

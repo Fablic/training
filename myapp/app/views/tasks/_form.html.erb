@@ -7,17 +7,19 @@
 <% end %>
 
 <%= form_with model: task, local: true do |f| %>
-    <div><%= t "tasks.title" %></div>
+    <div><%= t('tasks.title') %></div>
     <%= f.text_field :title %>
-    <div><%= t "tasks.description" %></div>
+    <div><%= t('tasks.description') %></div>
     <%= f.text_area :description %>
-    <div><%= t "tasks.termination_date" %></div>
+    <div><%= t('tasks.termination_date') %></div>
     <%= f.datetime_select :termination_at %>
-    <div><%= t "tasks.priority" %></div>
+    <div><%= t('tasks.priority') %></div>
     <%= f.select :priority, Task.priorities.keys.map { |k| [Task.human_attribute_name("priority.#{k}"), k] }, include_blank: t('tasks.form.priority_select') %>
-    <div><%= t "tasks.status" %></div>
+    <div><%= t('tasks.status') %></div>
     <%= f.select :status, Task.statuses.keys.map { |k| [Task.human_attribute_name("status.#{k}"), k] }, include_blank: t('tasks.form.status_select') %>
+    <div><%= t('tasks.label') %></div>
+    <%= f.collection_check_boxes(:label_ids, Label.all, :id, :name) %>
     <br>
     <%= f.submit(t('tasks.form.register')) %>
 <% end %>
-<%= link_to t('tasks.back'), tasks_path %>
+<%= link_to t('tasks.back_link'), tasks_path %>

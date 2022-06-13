@@ -1,15 +1,14 @@
-<h3><%= t("tasks.search.page_title") %></h3>
-<% if @search_params.present? %>
-    <a><%= t("tasks.search.search_condition") %> : <%= @search_params[:title] %><%= Task.human_attribute_name("status.#{@search_params[:status]}") %></a>
-<% end %>
+<h3><%= t('tasks.search.page_title') %></h3>
+
 <div class='search-input-box'>
     <%= form_with(scope: :search, url: search_tasks_path, method: :get, local: true) do |f| %>
         <div class='search-input-column-box'>
-            <%= f.label :title, t("tasks.title") %> : <%= f.text_field :title, placeholder:t("tasks.title") %>
-            <%= f.label :status, t("tasks.status") %> : <%= f.select :status, Task.statuses.keys.map { |k| [Task.human_attribute_name("status.#{k}"), k] }, include_blank: t('tasks.form.status_select') %>
+            <%= f.label :title, t('tasks.title') %> : <%= f.text_field :title, placeholder:t('tasks.title') %>
+            <%= f.label :status, t('tasks.status') %> : <%= f.select :status, Task.statuses.keys.map { |k| [Task.human_attribute_name("status.#{k}"), k] }, include_blank: t('tasks.search.status_select') %>
+            <%= f.label :label_id, t('tasks.label') %> : <%= f.select :label_id, Label.pluck(:name, :id),  include_blank: t('tasks.search.label_select') %>
         </div>
         <div class='search-input-search-button'>
-            <%= f.submit t("tasks.search.search"), class: 'btn btn-outline-primary' %>
+            <%= f.submit t('tasks.search.search'), class: 'btn btn-outline-primary' %>
         </div>
     <% end %>
     <br>

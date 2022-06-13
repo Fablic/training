@@ -321,9 +321,10 @@ RSpec.describe 'Admin::Users', type: :request do
     subject { proc { delete admin_user_path(id) } }
 
     context '該当するユーザが存在する場合' do
+      let!(:tasks_for_login_user) { create_list(:task, 2, :with_label, user: login_admin_user) }
+
       context '削除対象ユーザが現在ログインしているユーザである場合' do
         let(:id) { login_admin_user.id }
-        let!(:tasks_user) { create_list(:task, 2, user: login_admin_user) }
 
         it_behaves_like '管理ユーザがログインしていない場合、ログイン画面にリダイレクトされること'
 
@@ -348,7 +349,7 @@ RSpec.describe 'Admin::Users', type: :request do
         context '管理ユーザが複数人(1人以上)である場合' do
           let!(:admin_user02) { create(:user, admin: admin) }
           let(:admin) { true }
-          let!(:tasks_admin_user02) { create_list(:task, 2, user: admin_user02) }
+          let!(:tasks_for_admin_user02) { create_list(:task, 2, :with_label, user: admin_user02) }
 
           it 'ユーザが削除されること' do
             expect { subject.call }.to change(User, :count).by(-1)
@@ -364,6 +365,19 @@ RSpec.describe 'Admin::Users', type: :request do
             expect(Task.where(user_id: admin_user02.id).count).to eq 2
           end
 
+          it '削除対象ユーザに紐づくタスクのidに紐づく中間データ(TasksLabel)が4件削除されること' do
+            expect(TasksLabel.where(task_id: tasks_for_login_user[0].id).count).to eq 2
+            expect(TasksLabel.where(task_id: tasks_for_login_user[1].id).count).to eq 2
+            expect(TasksLabel.where(task_id: tasks_for_admin_user02[0].id).count).to eq 2
+            expect(TasksLabel.where(task_id: tasks_for_admin_user02[1].id).count).to eq 2
+
+            subject.call
+            expect(TasksLabel.where(task_id: tasks_for_login_user[0].id).count).to eq 0
+            expect(TasksLabel.where(task_id: tasks_for_login_user[1].id).count).to eq 0
+            expect(TasksLabel.where(task_id: tasks_for_admin_user02[0].id).count).to eq 2
+            expect(TasksLabel.where(task_id: tasks_for_admin_user02[1].id).count).to eq 2
+          end
+
           it_behaves_like 'ユーザ一覧画面へリダイレクトされ、フラッシュメッセージが表示されること', I18n.t('admin.users.flash.success.destroy')
         end
       end
@@ -371,7 +385,7 @@ RSpec.describe 'Admin::Users', type: :request do
       context '削除対象ユーザが現在ログインしているユーザ以外の場合' do
         let!(:user02) { create(:user) }
         let(:id) { user02.id }
-        let!(:tasks_user02) { create_list(:task, 2, user: user02) }
+        let!(:tasks_for_user02) { create_list(:task, 2, :with_label, user: user02) }
 
         it_behaves_like '管理ユーザがログインしていない場合、ログイン画面にリダイレクトされること'
 
@@ -387,6 +401,19 @@ RSpec.describe 'Admin::Users', type: :request do
 
           subject.call
           expect(Task.where(user_id: id).count).to eq 0
+        end
+
+        it '削除対象ユーザに紐づくタスクのidに紐づく中間データ(TasksLabel)が4件削除されること' do
+          expect(TasksLabel.where(task_id: tasks_for_login_user[0].id).count).to eq 2
+          expect(TasksLabel.where(task_id: tasks_for_login_user[1].id).count).to eq 2
+          expect(TasksLabel.where(task_id: tasks_for_user02[0].id).count).to eq 2
+          expect(TasksLabel.where(task_id: tasks_for_user02[1].id).count).to eq 2
+
+          subject.call
+          expect(TasksLabel.where(task_id: tasks_for_login_user[0].id).count).to eq 2
+          expect(TasksLabel.where(task_id: tasks_for_login_user[1].id).count).to eq 2
+          expect(TasksLabel.where(task_id: tasks_for_user02[0].id).count).to eq 0
+          expect(TasksLabel.where(task_id: tasks_for_user02[1].id).count).to eq 0
         end
 
         it_behaves_like 'ユーザ一覧画面へリダイレクトされ、フラッシュメッセージが表示されること', I18n.t('admin.users.flash.success.destroy')
