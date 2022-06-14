@@ -7,6 +7,7 @@
         <%= form.label :search_text, t('.search_label'), class: 'form-label' %>
         <%= form.text_field :search_text, value:@search_text, id: 'search_text' %>
         <%= form.select :search_status, options_for_select(Task.statuses.map { |key, v| [t("enums.task.status.#{key}"), v] }, selected: @search_status), {}, {id: "search_status", class: "form-select-sm" } %>
+        <%= form.select("search_label", current_user.labels.pluck(:name, :id), { include_blank: t('.label_placeholder'), selected: @search_label}, { class: "form-select-sm" }) %>
         <%= form.hidden_field :sort, :value => @sort_column%>
         <%= form.hidden_field :type, :value => @sort_type%>
         <%= form.submit t('.search_submit'), class: 'btn btn-primary' %>
@@ -23,6 +24,7 @@
     <tr>
       <th><%= t 'tasks.title' %></th>
       <th><%= t 'tasks.description' %></th>
+      <th><%= t 'tasks.label' %></th>
       <th><%= t 'tasks.status' %></th>
       <th><%= link_to t('tasks.due_date'), { sort: 'due_date', type: sort_order('due_date'), search_text: @search_text, search_status: @search_status } %></th>
       <th><%= t 'tasks.created_at' %></th>
@@ -34,6 +36,11 @@
     <tr>
       <td><%= t.title %></td>
       <td><%= t.description %></td>
+      <td>
+        <% t.labels.each do |l| %>
+          <span class="badge rounded-pill bg-secondary"><%= l.name %></span>
+        <% end %>
+      </td>
       <td><%= t("enums.task.status.#{t.status}") %></td>
       <td><%= l t.due_date, format: :date_only %></td>
       <td><%= l t.created_at, format: :date_only %></td>

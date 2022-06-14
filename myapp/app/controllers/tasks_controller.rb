@@ -6,9 +6,11 @@ class TasksController < ApplicationController
   def index
     @search_text = params[:search_text]
     @search_status = params[:search_status]
-    @sort_type = sort_type
-    @sort_column = sort_column
-    task_list = tasks
+    @search_label = params[:search_label]
+    @sort_type = params[:sort_type] = sort_type
+    @sort_column = params[:sort_column] = sort_column
+    
+    task_list = UserAllTasksQuery.new(current_user).call(params)
     flash[:info] = t('.flash_no_task') if task_list.count.zero?
     @tasks = task_list.page(params[:page]).per(PER_PAGE)
   end
@@ -58,16 +60,7 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:title, :description, :due_date, :status, :content)
-  end
-
-  def tasks
-    if params[:search_text].present? || params[:search_status].present?
-      current_user.tasks.where('(title like ? or description like ?) and status = ?', "%#{params[:search_text]}%",
-                               "%#{params[:search_text]}%", params[:search_status]).order("#{sort_column} #{sort_type}")
-    else
-      current_user.tasks.order("#{sort_column} #{sort_type}")
-    end
+    params.require(:task).permit(:title, :description, :due_date, :status, :content, { label_ids: [] })
   end
 
   def login_user_task?
