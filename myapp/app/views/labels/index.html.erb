@@ -6,7 +6,7 @@
   <%= form_with model: @label, scope: :label do |f| %>
     <div class="d-flex mb-4">
       <div class="mr-auto flex-grow-1">
-        <%= f.text_field :name, class: "form-control" %>
+        <%= f.text_field :name, class: "form-control", id: "new-label-name-input" %>
       </div>
       <div>
         <%= f.submit t('.new'), class: "btn btn-primary ml-1" %>
@@ -22,7 +22,7 @@
           <%= form.text_field :name, class: "form-control label-name" %>
         </div>
         <div>
-          <%= form.submit t('.update'), class: 'btn btn-info ml-1' %>
+          <%= form.submit t('.update'), class: 'btn btn-info ml-1 update-btn' %>
         </div>
         <div>
           <%= link_to t('.delete'), label_path(label), method: :delete, class: 'btn btn-danger mx-1 delete-btn' %>

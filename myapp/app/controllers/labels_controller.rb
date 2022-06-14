@@ -4,12 +4,12 @@ class LabelsController < ApplicationController
     @label = Label.new
   end
 
-  def create 
+  def create
     @label = current_user.labels.new(label_params)
     if @label.save
-      redirect_to labels_path, flash: { success: t('.success')}
+      redirect_to labels_path, flash: { success: t('.success') }
     else
-      redirect_to labels_path, flash: { danger: t('.failed')}
+      redirect_to labels_path, flash: { danger: t('.failed') }
     end
   end
 
@@ -20,9 +20,8 @@ class LabelsController < ApplicationController
     if @label.update(label_params)
       redirect_to labels_path, flash: { success: t('.success') }
     else
-      redirect_to labels_path, flash: { danger: t('.failed')}
+      redirect_to labels_path, flash: { danger: t('.failed') }
     end
-
   end
 
   def destroy

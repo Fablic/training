@@ -9,6 +9,7 @@ RSpec.describe 'Labels', type: :system do
   let!(:other_user_task) { create(:task, user: other_user) }
   let!(:other_user_label) { create(:label, user_id: other_user.id) }
 
+  let!(:new_label_name) { 'new label' }
 
   before do
     visit login_path
@@ -39,13 +40,6 @@ RSpec.describe 'Labels', type: :system do
       end
     end
 
-    context '編集ボタンが押された時' do
-      it '正常に遷移すること' do
-        all('table tr')[1].click_on '編集'
-        expect(current_path).to eq edit_label_path normal_user_label.id
-      end
-    end
-    
     context '削除ボタンが押された時' do
       it '削除が正常に行われること' do
         all('.delete-btn')[0].click
@@ -57,12 +51,55 @@ RSpec.describe 'Labels', type: :system do
       context '空で登録を試みる' do
         it 'バリデーションにかかり登録ができないこと' do
           click_on '新規作成' 
+          expect(page).to have_content 'ラベルの作成に失敗しました。'
         end
       end
       
+      context '登録済みの名前で登録' do
+        it 'バリデーションにかかり登録ができないこと' do
+          fill_in 'new-label-name-input', with: normal_user_label.name
+          click_on '新規作成' 
+          expect(page).to have_content 'ラベルの作成に失敗しました。'
+        end
+      end
+
+      context '正常な入力' do
+        it 'ラベルが新規で追加できること' do
+          fill_in 'new-label-name-input', with: new_label_name
+          click_on '新規作成' 
+          expect(all('.label-name')[1].value).to match new_label_name
+        end
+      end
     end
     
-    
+    describe '更新機能' do
+      context '名前を空で入力して更新' do
+        it 'バリデーションにかかり登録できないこと' do
+          all('.label-name')[0].set('')
+          all('.update-btn')[0].click
+          expect(page).to have_content 'ラベルの更新に失敗しました。'
+        end
+      end
+
+      context '他のラベルと同じ名前を入力して更新' do
+        it 'バリデーションにかかり登録できないこと' do
+          # バリデーションを適用させるためにラベルを作成
+          fill_in 'new-label-name-input', with: new_label_name
+          click_on '新規作成' 
+
+          all('.label-name')[0].set(new_label_name)
+          all('.update-btn')[0].click
+          expect(page).to have_content 'ラベルの更新に失敗しました。'
+        end
+      end
+
+      context '正常な入力' do
+        it 'ラベル名が更新されること' do
+          all('.label-name')[0].set(new_label_name)
+          all('.update-btn')[0].click
+          expect(page).to have_content 'ラベルの更新に成功しました。'
+        end
+      end
+    end
   end
-  
 end
