@@ -17,7 +17,7 @@ class TasksController < ApplicationController
       flash[:success] = 'Added new task'
       redirect_to @task
     else
-      flash[:danger] = 'failed'
+      flash[:error] = 'failed'
       render :new
     end
   end
@@ -41,7 +41,7 @@ class TasksController < ApplicationController
       flash[:success] = 'Edit success'
       redirect_to @task
     else
-      flash[:danger] = 'Edit failed'
+      flash[:error] = 'Edit failed'
       render :edit
     end
   end
