@@ -1,12 +1,17 @@
 # frozen_string_literal: true
 
+private
+def task_params
+  params.require(:task).permit(:name, :description)
+end
+
 class TasksController < ApplicationController
   def index
     @tasks = Task.all
   end
 
   def create
-    @task = Task.new(params.require(:task).permit(:name, :description))
+    @task = Task.new(task_params)
 
     if @task.save
       flash[:success] = 'Added new task'
@@ -32,7 +37,7 @@ class TasksController < ApplicationController
   def update
     @task = Task.find(params[:id])
 
-    if @task.update(params.require(:task).permit(:name, :description))
+    if @task.update(task_params)
       flash[:success] = 'Edit success'
       redirect_to @task
     else
