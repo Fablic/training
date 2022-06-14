@@ -17,9 +17,9 @@
 | id | INT | PK |
 | name | VARCHAR | |
 | description | VARCHAR | |
-| limit | DATE | |
 | priority | INT | 1: low, 2: normal, 3: high |
 | status | INT | 1: TODO, 2: IN PROGRESS, 3: DONE |
+| limit | DATE | |
 | user_id | INT | FK |
 | created_at | DATETIME |
 
