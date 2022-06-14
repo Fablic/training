@@ -1,13 +1,20 @@
 <div class="container">
-  <h1>Task Detail</h1>
+  <h1><%= t '.detail' %></h1>
   <div class="row">
     <aside class="col-md-4">
       <section class="task_info">
         <h1>
+          <%= t '.title' %>
           <%= @task.title %>
         </h1>
-        <%= @task.description %>
-        <%= @task.expire_at %>
+        <p>
+          <%= t '.description' %>
+          <%= @task.description %>
+        </p>
+        <p>
+          <%= t '.expire' %>
+          <%= @task.expire_at %>
+        </p>
       </section>
     </aside>
   </div>

@@ -1,17 +1,17 @@
 <div class="card card-skin">
-  <h1>All Tasks</h1>
+  <h1><%= t '.all' %></h1>
   <ul>
     <% @tasks.each do | task | %>
       <div><%= link_to task.title, task %></div>
       <div><%= task.description %></div>
       <%= task.expire_at %>
       <p>
-        <%= link_to "Edit", edit_task_path(task) %>
-        <%= link_to "Delete", task_path(task), method: :delete, data: { comfirm: "Sure?" } %></br>
+        <%= link_to t('.edit'), edit_task_path(task) %>
+        <%= link_to t('.delete'), task_path(task), method: :delete, data: { comfirm: "Sure?" } %>
       </p>
     <% end %>
   </ul>
 
-  <%= link_to "Create Task", new_task_path, class: 'btn btn-default' %>
+  <%= link_to t('.create'), new_task_path, class: 'btn btn-default' %>
   
 </div>
