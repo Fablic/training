@@ -95,14 +95,17 @@ RSpec.describe 'Tasks', type: :system do
   end
 
   describe 'タスクの削除' do
-    context '1件登録されているとき' do
-      example '選択したタスクを1件レコードから削除され、flashメッセージが表示' do
+    context '2件登録されているとき' do
+      example '1件目のタスクを削除し、2件目のみが表示され、flashメッセージが表示' do
         expect{
-          _ = FactoryBot.create(:task)
+          tasks = FactoryBot.create_list(:task, 2)
           visit root_path
-          click_link "Delete"
-        }.to change(Task, :count).by(0)
-        expect(page).to have_content "Task deleted!"
+          find_by_id("delete-#{tasks[0].id}").click
+          expect(page).to have_content tasks[1].title
+        }.to change(Task, :count).by(1)
+        
+        expect(page).to have_content 'Task deleted!'
+        
       end
     end
   end
