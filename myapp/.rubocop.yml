@@ -16,8 +16,6 @@ AllCops:
     - "tmp/**/*"
     - "node_modules/**/*"
     - "app/channels/**/*"
-    - "app/helpers/**/*"
-    - "app/models/application_record.rb"
     - "config/environments/**"
     - "config/initializers/**"
     - "config/environment.rb"
