@@ -7,10 +7,11 @@ class UserAllTasksQuery
     scope = by_text(@tasks, params[:search_text])
     scope = by_status(scope, params[:search_status])
     scope = by_label(scope, params[:search_label])
-    scope = order_by(scope, params[:sort_column], params[:sort_type])
+    order_by(scope, params[:sort_column], params[:sort_type])
   end
 
-  private 
+  private
+
   def by_text(scope, text)
     text.present? ? scope.where('title like ? or description like ?', "%#{text}%", "%#{text}%") : scope
   end
