@@ -50,11 +50,13 @@ RSpec.describe 'Tasks', type: :system do
 
   # 編集して更新できる
   describe 'タスクを編集して更新' do
-    context '正しいデータで更新したとき' do
-      example '更新されたタスクが表示され、flashメッセージが表示' do
-        _ = FactoryBot.create(:task)
+    context '1件正しいデータで更新したとき' do
+      example '1件目のタスクのみが更新して表示され、flashメッセージが表示' do
+        tasks = FactoryBot.create_list(:task, 2)
+        
         visit root_path
-        click_link "Edit"
+        find_by_id("edit-#{tasks[0].id}").click
+
         fill_in "Title", with: "edited title"
         fill_in "Description", with: "edited desc"
         fill_in "Expire at", with: "2022-06-10 00:00:00"
@@ -64,6 +66,10 @@ RSpec.describe 'Tasks', type: :system do
         expect(page).to have_content "edited title"
         expect(page).to have_content "edited desc"
         expect(page).to have_content "2022-06-10 00:00:00"
+
+        expect(page).to have_content tasks[1].title
+        expect(page).to have_content tasks[1].description
+        expect(page).to have_content tasks[1].expire_at
       end
     end
 
@@ -103,7 +109,7 @@ RSpec.describe 'Tasks', type: :system do
           find_by_id("delete-#{tasks[0].id}").click
           expect(page).to have_content tasks[1].title
         }.to change(Task, :count).by(1)
-        
+
         expect(page).to have_content 'Task deleted!'
         
       end

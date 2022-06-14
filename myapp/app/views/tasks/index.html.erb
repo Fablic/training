@@ -6,7 +6,7 @@
       <div><%= task.description %></div>
       <%= task.expire_at %>
       <p>
-        <%= link_to "Edit", edit_task_path(task) %>
+        <%= link_to "Edit", edit_task_path(task), { id: "edit-#{task.id}" } %>
         <%= link_to "Delete", task_path(task), { method: :delete, data: { comfirm: "Sure?" }, id: "delete-#{task.id}" } %></br>
       </p>
     <% end %>
