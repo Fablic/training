@@ -13,11 +13,6 @@ Rails/FilePath:
   Exclude:
     - "config/environments/development.rb"
 
-# Offense count: 5
-Rails/I18nLocaleTexts:
-  Exclude:
-    - "app/controllers/tasks_controller.rb"
-
 # Offense count: 35
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: EnforcedStyle.

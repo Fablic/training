@@ -9,10 +9,10 @@ class TasksController < ApplicationController
     @task = Task.new(task_params)
 
     if @task.save
-      flash[:success] = 'Added new task'
+      flash[:success] = 'Added new task' # TODO: I18nLocaleTexts error Step9で実装
       redirect_to @task
     else
-      flash[:error] = 'failed'
+      flash[:error] = 'failed' # TODO: I18nLocaleTexts error Step9で実装
       render :new
     end
   end
@@ -33,17 +33,17 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
 
     if @task.update(task_params)
-      flash[:success] = 'Edit success'
+      flash[:success] = 'Edit success' # TODO: I18nLocaleTexts error Step9で実装
       redirect_to @task
     else
-      flash[:error] = 'Edit failed'
+      flash[:error] = 'Edit failed' # TODO: I18nLocaleTexts error Step9で実装
       render :edit
     end
   end
 
   def destroy
     Task.find(params[:id]).destroy
-    flash[:success] = 'delete success'
+    flash[:success] = 'delete success' # TODO: I18nLocaleTexts error Step9で実装
     redirect_to tasks_path
   end
 
