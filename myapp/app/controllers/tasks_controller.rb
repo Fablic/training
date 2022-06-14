@@ -27,10 +27,10 @@ class TasksController < ApplicationController
   end
 
   def update
-    task = Task.find(params[:id])
+    @task = Task.find(params[:id])
 
     # 異常系はearly return
-    return render 'edit' unless task.update(task_params)
+    return render 'edit' unless @task.update(task_params)
 
     # 正常系をmain blockに残す
     flash[:success] = 'Task updated!'

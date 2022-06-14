@@ -1,5 +1,7 @@
 <div class="container">
   <%= form_with(model: @task, local: true) do |f| %>
+    <%= render 'shared/error_messages' %>
+
     <%= f.label :title %>
     <%= f.text_field :title, class: 'form-control' %>
 
@@ -11,7 +13,5 @@
 
     <%= f.submit "Save", class: "button" %>
   <% end %>
-
-
 </div>
 
