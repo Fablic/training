@@ -1,10 +1,5 @@
 # frozen_string_literal: true
 
-private
-def task_params
-  params.require(:task).permit(:name, :description)
-end
-
 class TasksController < ApplicationController
   def index
     @tasks = Task.all
@@ -50,5 +45,11 @@ class TasksController < ApplicationController
     Task.find(params[:id]).destroy
     flash[:success] = 'delete success'
     redirect_to tasks_path
+  end
+
+  private
+
+  def task_params
+    params.require(:task).permit(:name, :description)
   end
 end
