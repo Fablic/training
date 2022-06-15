@@ -1,4 +1,5 @@
 class LabelsController < ApplicationController
+  
   def index
     @labels = current_user.labels
   end

@@ -47,6 +47,15 @@ RSpec.describe 'Labels', type: :system do
       end
     end
 
+    context '他のユーザーのラベルを削除しようとする' do
+      it '削除が行われず、一覧ページにリダイレクトされること' do
+        delete label_path other_user_label
+        expect(Label.where(id: other_user_label.id)).to exist
+        expect(current_path).to eq labels_path
+      end
+    end
+    
+
     describe '新規作成機能' do
       context '空で登録を試みる' do
         it 'バリデーションにかかり登録ができないこと' do
