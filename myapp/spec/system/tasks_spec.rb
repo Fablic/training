@@ -3,6 +3,8 @@ require 'rails_helper'
 RSpec.describe 'Tasks', type: :system do
   let!(:normal_user) { create(:normal_user) }
   let!(:task) { create(:task, user: normal_user) }
+  let!(:label) { create(:label, user_id: normal_user.id) }
+  let!(:other_label) { create(:label, user_id: normal_user.id) }
 
   let!(:other_user) { create(:other_user) }
   let!(:other_user_task) { create(:task, user: other_user) }
@@ -114,6 +116,37 @@ RSpec.describe 'Tasks', type: :system do
       let!(:task_in_progress) { create(:task, status: 1, description: 'target description', user: normal_user) }
       let!(:task_completed)   { create(:task, status: 2, user: normal_user) }
 
+      context '文字列でのみ検索' do
+        it '正常に動作していること' do
+          find('#search_text').set(task_not_started.title)
+          click_on '検索'
+          expect(page).to have_content task_not_started.description
+          expect(page).to have_content task_in_progress.description
+          expect(page).to have_no_content task_completed.description
+        end
+      end
+
+      context '状態でのみ検索' do
+        it '正常に動作していること' do
+          find('#search_status').find("option[value='0']").select_option
+          click_on '検索'
+          expect(page).to have_content task_not_started.description
+          expect(page).to have_no_content task_in_progress.description
+          expect(page).to have_no_content task_completed.description
+        end
+      end
+
+      context 'ラベルでのみ検索' do
+        it '正常に動作していること' do
+          task_not_started.labels << label 
+          find('#search_label').find("option[value=#{label.id}]").select_option
+          click_on '検索'
+          expect(page).to have_content task_not_started.description
+          expect(page).to have_no_content task_in_progress.description
+          expect(page).to have_no_content task_completed.description
+        end
+      end
+      
       context '文字列を入力&未着手のステータスを選択して検索した時' do
         it 'タイトル&状態での検索が正常に動作していること' do
           find('#search_text').set(task_not_started.title)
@@ -132,6 +165,18 @@ RSpec.describe 'Tasks', type: :system do
           click_on '検索'
           expect(page).to have_no_content task_not_started.description
           expect(page).to have_content task_in_progress.description
+          expect(page).to have_no_content task_completed.description
+        end
+      end
+
+      context '文字列を入力&ステータスを選択&ラベルを選択' do
+        it '説明&ステータス&ラベルでの検索が正常に動作していること' do
+          find('#search_text').set(task_in_progress.description)
+          find('#search_status').find("option[value='1']").select_option
+          find('#search_label').find("option[value=#{other_label.id}]").select_option
+          click_on '検索'
+          expect(page).to have_no_content task_not_started.description
+          expect(page).to have_no_content task_in_progress.description
           expect(page).to have_no_content task_completed.description
         end
       end
@@ -183,6 +228,7 @@ RSpec.describe 'Tasks', type: :system do
       it 'タスク新規追加が正常に行われること' do
         fill_in 'task[title]',       with: 'new task'
         fill_in 'task[description]', with: 'new description'
+        check 'task_label_ids_' + label.id.to_s
         fill_in 'task[due_date]', with: '2022/05/10'
         click_button '保存'
         expect(page).to have_content 'タスクを新規作成しました。'
@@ -210,6 +256,7 @@ RSpec.describe 'Tasks', type: :system do
       it '正常に更新が行われること' do
         fill_in 'task[title]',       with: 'edit task'
         fill_in 'task[description]', with: 'edit description'
+        check 'task_label_ids_' + other_label.id.to_s
         fill_in 'task[due_date]',    with: '2022/05/12'
         click_button '保存'
         expect(page).to have_content 'タスクの情報を更新しました。'

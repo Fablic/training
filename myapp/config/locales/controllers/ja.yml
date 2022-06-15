@@ -14,6 +14,15 @@ ja:
       success: 'ログインしました。'
     destroy:
       success: 'ログアウトしました。'
+  labels_controller:
+    create:
+      success: 'ラベルの作成に成功しました。'
+      failed: 'ラベルの作成に失敗しました。'
+    update:
+      success: 'ラベルの更新に成功しました。'
+      failed: 'ラベルの更新に失敗しました。'
+    destroy:
+      success: 'ラベルを削除しました。'
   users_controller: 
     update: 
       flash_success: 'ユーザー情報を更新しました。'

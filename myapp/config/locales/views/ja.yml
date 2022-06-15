@@ -4,6 +4,7 @@ ja:
     description: '説明'
     created_at: '作成日時'
     status: '状態'
+    label: 'ラベル'
     due_date: '終了期限'
     index:
       title: 'タスク一覧'
@@ -13,6 +14,8 @@ ja:
       delete_task: '削除'
       search_label: '検索文字列:'
       search_submit: '検索'
+      label_placeholder: 'ラベル絞り込み'
+      status_placeholder: '状態絞り込み'
     edit:
       title: 'タスク編集'
       submit: '保存'
@@ -29,6 +32,15 @@ ja:
       email: 'メールアドレス'
       password: 'パスワード'
       submit: 'ログイン'
+  labels:
+    name: 'ラベル名' 
+    index:
+      title: 'ラベル一覧'
+      update: '更新'
+      new: '新規作成'
+      new_title: 'ラベル作成'
+      index_title: '作成済みラベル'
+      delete: '削除'
   admin:
     users:
       name: '名前'

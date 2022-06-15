@@ -217,6 +217,7 @@ ja:
     task_list: "タスク一覧"
     new_task: "タスク新規追加"
     users_link: "ユーザー管理画面"
+    label_list: "ラベル一覧"
   content:
     save: "保存"
     back: "戻る"

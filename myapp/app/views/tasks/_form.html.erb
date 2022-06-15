@@ -13,6 +13,10 @@
     <%= f.rich_text_area :content %>
   </div>
   <div class="p-2 form-group w-25">
+    <%= f.label :label, t('tasks.label') %>
+    <%= f.collection_check_boxes(:label_ids, current_user.labels.all, :id, :name) %>
+  </div>
+  <div class="p-2 form-group w-25">
     <%= f.label :due_date, t('tasks.due_date') %>
     <%= f.date_field :due_date, class: 'form-control' %>
   </div>
