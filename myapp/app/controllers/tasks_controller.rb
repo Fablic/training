@@ -1,7 +1,7 @@
 class TasksController < ApplicationController
-
   def index
-    @tasks = Task.all
+    @tasks = Task.order("#{sort_column} #{sort_direction}")
+    @direction = sort_direction
   end
 
   def show
@@ -48,6 +48,17 @@ class TasksController < ApplicationController
   def task_params
     # status, priorityはのちのstepで追加する
     params.require(:task).permit(:title, :description, :expire_at)
+  end
+
+  # TODO: noteに合わせる？
+  # ?sort=hogeでソートするカラムを受け取る. 存在しないカラムの時はtitleでソート
+  def sort_column
+    Task.column_names.include?(params[:sort]) ? params[:sort] : 'title'
+  end
+
+  # ?order=asc[desc] で昇順/降順を指定する. 該当しないときはasc
+  def sort_direction
+    %[asc desc].include?(params[:order]) ? params[:order] : 'asc'
   end
 
 end
