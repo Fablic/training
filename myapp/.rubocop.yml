@@ -26,3 +26,6 @@ AllCops:
     - "Rakefile"
     - "app/controllers/application_controller.rb"
     - "config.ru"
+
+Style/SymbolArray:
+  EnforcedStyle: brackets
