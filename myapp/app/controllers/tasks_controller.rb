@@ -5,16 +5,8 @@ class TasksController < ApplicationController
     @tasks = Task.all
   end
 
-  def create
-    @task = Task.new(task_params)
-
-    if @task.save
-      flash[:success] = 'Added new task' # TODO: I18nLocaleTexts error Step9で実装
-      redirect_to @task
-    else
-      flash[:error] = 'failed' # TODO: I18nLocaleTexts error Step9で実装
-      render :new
-    end
+  def show
+    @task = Task.find(params[:id])
   end
 
   def new
@@ -25,8 +17,16 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
   end
 
-  def show
-    @task = Task.find(params[:id])
+  def create
+    @task = Task.new(task_params)
+
+    if @task.save
+      flash[:success] = 'Added new task' # TODO: I18nLocaleTexts error Step9で実装
+      redirect_to @task
+    else
+      flash[:error] = 'failed' # TODO: I18nLocaleTexts error Step9で実装
+      render :new
+    end
   end
 
   def update
