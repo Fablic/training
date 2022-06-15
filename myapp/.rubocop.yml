@@ -14,6 +14,9 @@ AllCops:
     - "tmp/**/*"
     - "node_modules/**/*"
     - "app/channels/**/*"
+    - "app/controllers/application_controller.rb"
+    - "app/helpers/application_helper.rb"
+    - "app/models/application_record.rb"
     - "config/environments/**"
     - "config/initializers/**"
     - "config/environment.rb"
@@ -22,10 +25,7 @@ AllCops:
     - "config/spring.rb"
     - "config/application.rb"
     - "Rakefile"
-    - "app/controllers/application_controller.rb"
     - "config.ru"
-    - "app/models/application_record.rb"
-    - "app/helpers/application_helper.rb"
 
 Style/SymbolArray:
   EnforcedStyle: brackets
