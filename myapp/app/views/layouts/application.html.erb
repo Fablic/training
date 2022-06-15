@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Myapp</title>
+    <title><%= content_for?(:title) ? yield(:title) : "Task Manager" %></title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
