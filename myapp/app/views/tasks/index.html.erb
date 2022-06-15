@@ -6,8 +6,8 @@
       <div class="col mb-3">
         <%= form.label :search_text, t('.search_label'), class: 'form-label' %>
         <%= form.text_field :search_text, value:@search_text, id: 'search_text' %>
-        <%= form.select :search_status, options_for_select(Task.statuses.map { |key, v| [t("enums.task.status.#{key}"), v] }, selected: @search_status), {}, {id: "search_status", class: "form-select-sm" } %>
-        <%= form.select("search_label", current_user.labels.pluck(:name, :id), { include_blank: t('.label_placeholder'), selected: @search_label}, { class: "form-select-sm" }) %>
+        <%= form.select :search_status, options_for_select(Task.statuses.map { |key, v| [t("enums.task.status.#{key}"), v] }), { include_blank: t('.status_placeholder'), selected: @search_status }, {id: "search_status", class: "form-select-sm" } %>
+        <%= form.select("search_label", current_user.labels.pluck(:name, :id), { include_blank: t('.label_placeholder'), selected: @search_label }, { class: "form-select-sm" }) %>
         <%= form.hidden_field :sort, :value => @sort_column%>
         <%= form.hidden_field :type, :value => @sort_type%>
         <%= form.submit t('.search_submit'), class: 'btn btn-primary' %>

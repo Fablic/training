@@ -116,6 +116,37 @@ RSpec.describe 'Tasks', type: :system do
       let!(:task_in_progress) { create(:task, status: 1, description: 'target description', user: normal_user) }
       let!(:task_completed)   { create(:task, status: 2, user: normal_user) }
 
+      context '文字列でのみ検索' do
+        it '正常に動作していること' do
+          find('#search_text').set(task_not_started.title)
+          click_on '検索'
+          expect(page).to have_content task_not_started.description
+          expect(page).to have_content task_in_progress.description
+          expect(page).to have_no_content task_completed.description
+        end
+      end
+
+      context '状態でのみ検索' do
+        it '正常に動作していること' do
+          find('#search_status').find("option[value='0']").select_option
+          click_on '検索'
+          expect(page).to have_content task_not_started.description
+          expect(page).to have_no_content task_in_progress.description
+          expect(page).to have_no_content task_completed.description
+        end
+      end
+
+      context 'ラベルでのみ検索' do
+        it '正常に動作していること' do
+          task_not_started.labels << label 
+          find('#search_label').find("option[value=#{label.id}]").select_option
+          click_on '検索'
+          expect(page).to have_content task_not_started.description
+          expect(page).to have_no_content task_in_progress.description
+          expect(page).to have_no_content task_completed.description
+        end
+      end
+      
       context '文字列を入力&未着手のステータスを選択して検索した時' do
         it 'タイトル&状態での検索が正常に動作していること' do
           find('#search_text').set(task_not_started.title)

@@ -15,6 +15,7 @@ ja:
       search_label: '検索文字列:'
       search_submit: '検索'
       label_placeholder: 'ラベル絞り込み'
+      status_placeholder: '状態絞り込み'
     edit:
       title: 'タスク編集'
       submit: '保存'
