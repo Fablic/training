@@ -1,5 +1,3 @@
-inherit_from: .rubocop_todo.yml
-
 require:
   - rubocop-performance
   - rubocop-rails
@@ -15,3 +13,19 @@ AllCops:
     - "db/**/*"
     - "tmp/**/*"
     - "node_modules/**/*"
+    - "app/channels/**/*"
+    - "app/controllers/application_controller.rb"
+    - "app/helpers/application_helper.rb"
+    - "app/models/application_record.rb"
+    - "config/environments/**"
+    - "config/initializers/**"
+    - "config/environment.rb"
+    - "config/boot.rb"
+    - "config/puma.rb"
+    - "config/spring.rb"
+    - "config/application.rb"
+    - "Rakefile"
+    - "config.ru"
+
+Style/SymbolArray:
+  EnforcedStyle: brackets
