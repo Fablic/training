@@ -22,5 +22,7 @@ AllCops:
     - "config/boot.rb"
     - "config/puma.rb"
     - "config/spring.rb"
+    - "config/application.rb"
     - "Rakefile"
     - "app/controllers/application_controller.rb"
+    - "config.ru"
