@@ -7,8 +7,9 @@ RSpec.describe 'Tasks', type: :system do
         task = FactoryBot.create(:task)
         visit root_path
         expect(page).to have_content task.title
-        expect(page).to have_content task.description
         expect(page).to have_content task.expire_at
+        expect(page).to have_content task.description
+        expect(page).to have_content task.created_at
         expect(page).to have_content I18n.t('tasks.index.create')
         expect(page).to have_content I18n.t('tasks.index.edit')
         expect(page).to have_content I18n.t('tasks.index.delete')
@@ -64,11 +65,9 @@ RSpec.describe 'Tasks', type: :system do
 
         expect(page).to have_content 'Task updated!'
         expect(page).to have_content 'edited title'
-        expect(page).to have_content 'edited desc'
         expect(page).to have_content '2022-06-10 00:00:00'
 
         expect(page).to have_content tasks[1].title
-        expect(page).to have_content tasks[1].description
         expect(page).to have_content tasks[1].expire_at
       end
     end

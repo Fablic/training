@@ -50,15 +50,20 @@ class TasksController < ApplicationController
     params.require(:task).permit(:title, :description, :expire_at)
   end
 
-  # TODO: noteに合わせる？
   # ?sort=hogeでソートするカラムを受け取る. 存在しないカラムの時はtitleでソート
   def sort_column
-    Task.column_names.include?(params[:sort]) ? params[:sort] : 'title'
+    # params[:sort]がnilのときはtitleでソート
+    col = params[:sort].nil? ? 'title' : params[:sort]
+    #Taskのカラム以外が指定されたときはtitleをソート
+    Task.column_names.include?(col) ? col : 'title'
   end
 
   # ?order=asc[desc] で昇順/降順を指定する. 該当しないときはasc
   def sort_direction
-    %[asc desc].include?(params[:order]) ? params[:order] : 'asc'
+    # params[:order]がnilのときは昇順でソートする
+    ord = params[:order].nil? ? 'asc' : params[:order]
+    # asc/desc以外が指定された時は昇順でソートする
+    %[asc desc].include?(ord) ? ord : 'asc'
   end
 
 end

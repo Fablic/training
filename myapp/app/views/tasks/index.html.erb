@@ -4,8 +4,9 @@
     <thead>
       <tr>
         <th scope="col"><%= t('tasks.form.title') %></th>
+        <th scope="col"><%= t('tasks.form.description') %></th>
         <th scope="col"><%= t('tasks.form.expire') %></th>
-        <th scope="col"><%= sort_order("created_at", "作成日時", @direction) %></th>
+        <th scope="col"><%= sort_order("created_at", t('tasks.form.created_at'), @direction) %></th>
         <th></th>
         <th></th>
       </tr>
@@ -14,6 +15,7 @@
       <% @tasks.each do | task | %>
         <tr>
           <td><%= link_to task.title, task %></td>
+          <td><%= task.description %></td>
           <td><%= task.expire_at %></td>
           <td><%= task.created_at %></td>
           <td><%= link_to t('.edit'), edit_task_path(task), { id: "edit-#{task.id}" } %></td>
