@@ -42,8 +42,11 @@ class TasksController < ApplicationController
   end
 
   def destroy
-    Task.find(params[:id]).destroy
-    flash[:success] = 'delete success' # TODO: I18nLocaleTexts error Step9で実装
+    if Task.find(params[:id]).destroy
+      flash[:success] = 'delete success' # TODO: I18nLocaleTexts error Step9で実装
+    else
+      flash[:error] = 'Delete failed' # TODO: I18nLocaleTexts error Step9で実装
+    end
     redirect_to tasks_path
   end
 
