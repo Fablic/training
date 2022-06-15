@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Myapp</title>
+    <title><%= content_for?(:title) ? yield(:title) : "Task Manager" %></title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -10,6 +10,10 @@
   </head>
 
   <body>
+    <h1><%= yield(:page_title) %></h1>
+    <% flash.each do |message_type, message| %>
+      <%= message %><br/>
+    <% end %>
     <%= yield %>
   </body>
 </html>
