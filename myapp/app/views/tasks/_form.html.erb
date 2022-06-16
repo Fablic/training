@@ -3,5 +3,11 @@
   <%= form.text_field :name %>
   <%= form.label :description, 'Description' %>
   <%= form.text_area :description %>
+  <%= form.label :limit, 'Limit' %>
+  <%= form.date_field :limit %>
+  <%= form.label :status, 'Status' %>
+  <%= form.select :status,  [["TODO",1],["IN PROGRESS",2], ["DONE",3]], {selected: 1} %>
+  <%= form.label :priority, 'Priority' %>
+  <%= form.select :priority,  [["Low",1],["Normal",2], ["High",3]], {selected: 1} %>
   <%= form.submit %>
 <% end %>
