@@ -113,4 +113,36 @@ RSpec.describe 'Tasks', type: :system do
       end
     end
   end
+
+  describe '作成日時でソート' do
+    let!(:task_created_yesterday) {
+      FactoryBot.create(:task, :created_yesterday)
+    }
+    let!(:task_created_1week_ago) {
+      FactoryBot.create(:task, :created_1week_ago)
+    }
+    let!(:task_created_today) {
+      FactoryBot.create(:task)
+    }
+    context '1度作成日時を押したとき' do
+      example '降順にソート' do
+        visit root_path
+        click_link I18n.t('tasks.form.created_at')
+
+        expect(page.body.index(task_created_today.title)).to be < page.body.index(task_created_yesterday.title)
+        expect(page.body.index(task_created_yesterday.title)).to be < page.body.index(task_created_1week_ago.title)
+      end
+    end
+    context '2度作成日時を押したとき' do
+      example '昇順にソート' do
+        visit root_path
+        # 降順→昇順に切り替わる
+        click_link I18n.t('tasks.form.created_at')
+        click_link I18n.t('tasks.form.created_at')
+
+        expect(page.body.index(task_created_1week_ago.title)).to be < page.body.index(task_created_yesterday.title)
+        expect(page.body.index(task_created_yesterday.title)).to be < page.body.index(task_created_today.title)
+      end
+    end
+  end
 end
