@@ -69,3 +69,28 @@ docker-compose exec db /bin/bash
 
 * Please access the following URL with your browser
   * http://localhost:3001/
+
+## how to set mentenance mode
+* you can start mentenance mode by following command
+
+```
+rake maintenance:start
+```
+
+if you get following response, maintenance mode is starting
+
+```
+Started mentenance mode
+```
+
+* you can stop mentenance mode by following command
+
+```
+rake maintenance:stop
+```
+
+if you get following response, maintenance mode is starting
+
+```
+Stopped maintenance mode
+```
