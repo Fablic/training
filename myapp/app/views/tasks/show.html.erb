@@ -1,4 +1,9 @@
 <% content_for(:page_title, 'Task detail') %>
+
+<%= link_to "Edit", edit_task_path(@task) %>
+
+<%= link_to "Delete", @task, method: :delete, data: {confirm: "Do you want to delete #{@task.name}?"} %>
+
 <h2>
   <%= @task.name %>
 </h2>
@@ -18,7 +23,3 @@
 </div>
 
 <%= link_to "Home", '/' %>
-
-<%= link_to "Edit", edit_task_path(@task) %>
-
-<%= link_to "Delete", @task, method: :delete, data: {confirm: "Do you want to delete #{@task.name}?"} %>
