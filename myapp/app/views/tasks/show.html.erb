@@ -2,9 +2,20 @@
 <h2>
   <%= @task.name %>
 </h2>
-<p>
-  <%= @task.description %>
-</p>
+
+<div>
+  <p>
+    <%= @task.description %>
+  </p>
+  <span>
+    <label>Status</label>
+    <%= @task.status %>
+    <label>Priority</label>
+    <%= @task.priority %>
+    <label>Limit</label>
+    <%= @task.limit %>
+  </span>
+</div>
 
 <%= link_to "Home", '/' %>
 
