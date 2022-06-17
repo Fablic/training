@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
   include SessionsHelper
 
+  before_action :render503, if: :maintenance_mode?
+
   unless Rails.env.development?
     rescue_from Exception,                      with: :render500
     rescue_from ActiveRecord::RecordNotFound,   with: :render404
@@ -21,6 +23,10 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def maintenance_mode?
+    File.exist?(Constants::MAINTENANCE_FILE_PATH)
+  end
+
   def render404(err = nil)
     logger.info "Rendering 404 with excaption: #{err.message}" if err
     render 'errors/404.html', status: :not_found
@@ -29,6 +35,10 @@ class ApplicationController < ActionController::Base
   def render500(err = nil)
     logger.error "Rendering 500 with excaption: #{err.message}" if err
     render 'errors/500.html', status: :internal_server_error
+  end
+
+  def render503
+    render('errors/503.html', status: :service_unavailable, layout: false)
   end
 
   # ログイン状態のユーザーかどうか確認
