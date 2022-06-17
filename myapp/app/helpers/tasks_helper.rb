@@ -3,4 +3,8 @@ module TasksHelper
     direction = direction == 'asc' ? 'desc' : 'asc'
     link_to title, { sort: column, order: direction }
   end
+
+  def parse_date(date)
+    return date.strftime("%Y/%m/%d %H:%M")
+  end
 end

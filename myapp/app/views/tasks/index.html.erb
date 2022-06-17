@@ -5,7 +5,7 @@
       <tr>
         <th scope="col"><%= t('tasks.form.title') %></th>
         <th scope="col"><%= t('tasks.form.description') %></th>
-        <th scope="col"><%= t('tasks.form.expire') %></th>
+        <th scope="col"><%= sort_order('expire_at', t('tasks.form.expire'), @direction) %></th>
         <th scope="col"><%= sort_order("created_at", t('tasks.form.created_at'), @direction) %></th>
         <th></th>
         <th></th>
@@ -16,8 +16,12 @@
         <tr>
           <td><%= link_to task.title, task %></td>
           <td><%= task.description %></td>
-          <td><%= task.expire_at %></td>
-          <td><%= task.created_at %></td>
+          <% if task.expire_at.present? %>
+            <td><%= parse_date(task.expire_at) %></td>
+          <% else %>
+            <td><%= t('tasks.index.no_expire') %></td>
+          <% end %>
+          <td><%= parse_date(task.created_at) %></td>
           <td><%= link_to t('.edit'), edit_task_path(task), { id: "edit-#{task.id}" } %></td>
           <td><%= link_to t('.delete'), task_path(task), { method: :delete, data: { comfirm: "Sure?" }, id: "delete-#{task.id}" } %></td>
         </tr>
