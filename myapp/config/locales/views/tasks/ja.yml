@@ -1,0 +1,19 @@
+ja:
+  tasks:
+    form:
+      title: 'タスク名'
+      description: '詳細'
+      expire: '有効期限'
+      save: '保存'
+    new:
+      new: 'タスクの新規作成'
+    index:
+      all: 'タスク一覧'
+      edit: '編集'
+      delete: '削除'
+      create: '新規作成'
+    edit:
+      edit: 'タスクの編集'
+    show:
+      detail: 'タスク詳細'
+    

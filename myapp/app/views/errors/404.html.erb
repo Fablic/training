@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>404エラー</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <style>
+  .rails-error-page {
+    background-color: #F7F7F7;
+    text-align: center;
+  }
+  </style>
+</head>
+
+<body class="rails-error-page">
+  <!-- This file lives in public/404.html -->
+  <div class="container">
+    <div>
+      <h1>ご指定のページが見つかりません</h1>
+      <p>ご指定のページは削除されたか、移動した可能性があります</p>
+    </div>
+
+    <%= link_to "ホームへ戻る", root_path %>
+  </div>
+</body>
+</html>

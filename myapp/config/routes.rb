@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   root 'tasks#index'
   resources :tasks
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  
+  # 404/500エラーページ
+  get '*path' => 'application#render_404'
+  post '*path' => 'application#render_404'
 end

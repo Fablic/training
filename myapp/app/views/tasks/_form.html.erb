@@ -1,0 +1,14 @@
+<%= form_with(model: @task, local: true) do |f| %>
+  <%= render 'shared/error_messages' %>
+
+  <%= f.label :title, t('tasks.form.title') %>
+  <%= f.text_field :title, class: 'form-control' %>
+
+  <%= f.label :description, t('tasks.form.description') %>
+  <%= f.text_field :description, class: 'form-control' %>
+
+  <%= f.label :expire_at, t('tasks.form.expire') %>
+  <%= f.datetime_field :expire_at, class: 'form-control' %>
+
+  <%= f.submit t('tasks.form.save'), class: "button" %>
+<% end %>

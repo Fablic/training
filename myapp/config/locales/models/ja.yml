@@ -1,0 +1,9 @@
+ja:
+  activerecord:
+    models:
+      task: 'タスク'
+    attributes:
+      task:
+        title: 'タイトル'
+        description: '詳細'
+        expire_at: '有効期限'
