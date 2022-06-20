@@ -200,7 +200,7 @@ RSpec.describe 'Task', type: :system do
         visit root_path
       end
 
-      it 'delete task' do
+      it 'delete task' do  # rubocop:disable RSpec/MultipleExpectations
         expect {
           click_on 'Delete'
           expect(page).to have_content 'delete success'
