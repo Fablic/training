@@ -179,4 +179,50 @@ RSpec.describe 'Tasks', type: :system do
       end
     end
   end
+
+  describe '検索' do
+    let!(:task_hoge) {
+      FactoryBot.create(:task, title: 'hogehoge', created_at: Time.current)
+    }
+    let!(:task_fuga) {
+      FactoryBot.create(:task, title: 'fugafuga', created_at: Time.current.tomorrow)
+    }
+    let!(:task_complete) {
+      FactoryBot.create(:task, :status_completed, created_at: Time.current.yesterday)
+    }
+
+    context 'タイトルで検索' do
+      example 'タイトルが部分一致したタスクが表示' do
+        visit root_path
+        fill_in :title, with: 'hoge'
+        click_button 'commit'
+        expect(page).to have_content task_hoge.title
+        # hoge が含まれていないタスクは非表示
+        expect(page).not_to have_content task_fuga.title
+        expect(page).not_to have_content task_complete.title        
+      end
+    end
+    context 'ジャンルで検索' do
+      example 'ジャンルが一致したタスクが表示' do
+        visit root_path
+        select 'completed', from: 'status'
+        click_button 'commit'
+        expect(page).to have_content task_complete.title
+        # completed以外は非表示
+        expect(page).not_to have_content task_hoge.title
+        expect(page).not_to have_content task_fuga.title    
+      end
+    end
+    context '検索した後作成日時でソート' do
+      example '降順にソート' do
+        visit root_path
+        # 条件を指定せず検索
+        click_button 'commit'
+        click_link I18n.t('tasks.form.created_at')
+
+        expect(page.body.index(task_fuga.title)).to be < page.body.index(task_hoge.title)
+        expect(page.body.index(task_hoge.title)).to be < page.body.index(task_complete.title)
+      end
+    end
+  end
 end

@@ -8,7 +8,9 @@
         <li>
             <div class="search_form">
               <%= form_with url: search_path, method: :get, local: true do |f| %>
+                <% f.label :title %>
                 <%= f.text_field :title %>
+                <% f.label :status %>
                 <%= f.select :status, Task.statuses.map { |k, v| [k, v] } %>
 								<%= f.submit 'search' %>
               <% end %>

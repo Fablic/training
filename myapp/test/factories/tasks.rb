@@ -28,5 +28,9 @@ FactoryBot.define do
       expire_at { Time.current + 1.month }
     end
 
+    trait :status_completed do
+      status { 'completed' }
+    end
+
   end
 end
