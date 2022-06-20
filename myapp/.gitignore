@@ -15,11 +15,12 @@ rerun.txt
 pickle-email-*.html
 
 # Ignore all logfiles and tempfiles.
-/log/*
-/tmp/*
+log/*
+tmp/*
 !/log/.keep
 !/tmp/.keep
-
+docs/*
+bin/*
 # TODO Comment out this rule if you are OK with secrets being uploaded to the repo
 config/initializers/secret_token.rb
 config/master.key
@@ -70,9 +71,6 @@ yarn-debug.log*
 /storage/*
 !/storage/.keep
 /public/uploads
-
-
-
 /public/packs
 /public/packs-test
 /node_modules

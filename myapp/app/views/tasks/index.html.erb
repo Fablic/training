@@ -1,19 +1,33 @@
 <div class="card card-skin">
   <h1><%= t '.all' %></h1>
-  <ul>
-    <% @tasks.each do | task | %>
-      <div><%= link_to task.title, task %></div>
-      <div><%= task.description %></div>
-      <%= task.expire_at %>
-      <p>
-
-      <%= link_to t('.edit'), edit_task_path(task), { id: "edit-#{task.id}" } %>
-      <%= link_to t('.delete'), task_path(task), { method: :delete, data: { comfirm: "Sure?" }, id: "delete-#{task.id}" } %></br>
-
-      </p>
-    <% end %>
-  </ul>
-
+  <table>
+    <thead>
+      <tr>
+        <th scope="col"><%= t('tasks.form.title') %></th>
+        <th scope="col"><%= t('tasks.form.description') %></th>
+        <th scope="col"><%= sort_order('expire_at', t('tasks.form.expire'), @direction) %></th>
+        <th scope="col"><%= sort_order("created_at", t('tasks.form.created_at'), @direction) %></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @tasks.each do | task | %>
+        <tr>
+          <td><%= link_to task.title, task %></td>
+          <td><%= task.description %></td>
+          <% if task.expire_at.present? %>
+            <td><%= parse_date(task.expire_at) %></td>
+          <% else %>
+            <td><%= t('tasks.index.no_expire') %></td>
+          <% end %>
+          <td><%= parse_date(task.created_at) %></td>
+          <td><%= link_to t('.edit'), edit_task_path(task), { id: "edit-#{task.id}" } %></td>
+          <td><%= link_to t('.delete'), task_path(task), { method: :delete, data: { comfirm: "Sure?" }, id: "delete-#{task.id}" } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
   <%= link_to t('.create'), new_task_path, class: 'btn btn-default' %>
   
 </div>

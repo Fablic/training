@@ -5,6 +5,7 @@ ja:
       description: '詳細'
       expire: '有効期限'
       save: '保存'
+      created_at: '作成日時'
     new:
       new: 'タスクの新規作成'
     index:
@@ -12,6 +13,7 @@ ja:
       edit: '編集'
       delete: '削除'
       create: '新規作成'
+      no_expire: '期限なし'
     edit:
       edit: 'タスクの編集'
     show:
