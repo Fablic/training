@@ -60,14 +60,12 @@ RSpec.describe 'Task', type: :system do
     end
 
     context 'when user click Delete' do
-      it 'display confirmation dialog' do
-        click_on 'Delete'
-        expect(page).to have_content "delete success"
-        # page.accept_confirm
-        # expect {
-        #   expect(page.accept_confirm).to eq 'Do you want to delete #{task.name}?'
-        #   expect(page).to have_content "delete success"
-        # }.to change {Task.count}.by(-1)
+      it 'display confirmation dialog and delete task' do
+
+        expect {
+          click_on 'Delete'
+          expect(page).to have_content "delete success"
+        }.to change {Task.count}.by(-1)
       end
     end
 
@@ -209,8 +207,10 @@ RSpec.describe 'Task', type: :system do
       end
 
       it 'delete task' do
-        click_on 'Delete'
-        expect(page).to have_content "delete success"
+        expect {
+          click_on 'Delete'
+          expect(page).to have_content "delete success"
+        }.to change {Task.count}.by(-1)
       end
     end
   end
