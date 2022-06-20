@@ -4,6 +4,11 @@ class TasksController < ApplicationController
     @direction = sort_direction
   end
 
+  def search
+    @tasks = Task.search(params[:title], params[:status])
+    render 'index'
+  end
+
   def show
     @task = Task.find(params[:id])
   end
@@ -47,7 +52,7 @@ class TasksController < ApplicationController
 
   def task_params
     # status, priorityはのちのstepで追加する
-    params.require(:task).permit(:title, :description, :expire_at)
+    params.require(:task).permit(:title, :description, :expire_at, :status)
   end
 
   # ?sort=hogeでソートするカラムを受け取る. 存在しないカラムの時はtitleでソート

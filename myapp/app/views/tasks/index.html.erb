@@ -5,6 +5,7 @@
       <tr>
         <th scope="col"><%= t('tasks.form.title') %></th>
         <th scope="col"><%= t('tasks.form.description') %></th>
+        <th scope="col"><%= t('tasks.form.status') %>
         <th scope="col"><%= sort_order('expire_at', t('tasks.form.expire'), @direction) %></th>
         <th scope="col"><%= sort_order("created_at", t('tasks.form.created_at'), @direction) %></th>
         <th></th>
@@ -16,6 +17,7 @@
         <tr>
           <td><%= link_to task.title, task %></td>
           <td><%= task.description %></td>
+          <td><%= task.status %></td>
           <% if task.expire_at.present? %>
             <td><%= parse_date(task.expire_at) %></td>
           <% else %>
