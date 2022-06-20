@@ -61,7 +61,8 @@ RSpec.describe 'Task', type: :system do
 # -----------------------------------------
     context 'when user click Delete' do
       it 'display confirmation dialog' do
-        # click_on 'Delete'
+        click_on 'Delete'
+        # page.accept_confirm
         # expect {
         #   expect(page.accept_confirm).to eq 'Do you want to delete #{task.name}?'
         #   expect(page).to have_content "delete success"
@@ -143,8 +144,8 @@ RSpec.describe 'Task', type: :system do
         expect(page).to have_field 'Task title', with: '散歩'
         expect(page).to have_field 'Description', with: '多摩川を歩く'
         expect(page).to have_field 'Limit', with: '2022-06-20'
-        expect(page).to have_field 'Status', with: 1
-        expect(page).to have_field 'Priority', with: 1
+        expect(page).to have_field 'Status', with: 'TODO'
+        expect(page).to have_field 'Priority', with: 'Low'
       end
 
       context 'when user click "Create Task" button' do
@@ -153,8 +154,8 @@ RSpec.describe 'Task', type: :system do
           expect(page).to have_content '散歩'
           expect(page).to have_content '多摩川を歩く'
           expect(page).to have_content '2022-06-20'
-          expect(page).to have_content 1
-          expect(page).to have_content 1
+          expect(page).to have_content 'TODO'
+          expect(page).to have_content 'Low'
         end
       end
     end
@@ -180,8 +181,8 @@ RSpec.describe 'Task', type: :system do
         expect(page).to have_field 'Task title', with: '運動'
         expect(page).to have_field 'Description', with: '多摩川を走る'
         expect(page).to have_field 'Limit', with: '2022-06-20'
-        expect(page).to have_field 'Status', with: 2
-        expect(page).to have_field 'Priority', with: 2
+        expect(page).to have_field 'Status', with: 'IN_PROGRESS'
+        expect(page).to have_field 'Priority', with: 'Normal'
       end
 
       context 'when user click "Update Task" button' do
@@ -190,8 +191,8 @@ RSpec.describe 'Task', type: :system do
           expect(page).to have_content '運動'
           expect(page).to have_content '多摩川を走る'
           expect(page).to have_content '2022-06-20'
-          expect(page).to have_content 2
-          expect(page).to have_content 2
+          expect(page).to have_content "IN_PROGRESS"
+          expect(page).to have_content 'Normal'
         end
       end
 
