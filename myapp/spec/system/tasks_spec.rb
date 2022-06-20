@@ -58,10 +58,11 @@ RSpec.describe 'Task', type: :system do
       end
 
     end
-# -----------------------------------------
+
     context 'when user click Delete' do
       it 'display confirmation dialog' do
         click_on 'Delete'
+        expect(page).to have_content "delete success"
         # page.accept_confirm
         # expect {
         #   expect(page.accept_confirm).to eq 'Do you want to delete #{task.name}?'
@@ -69,7 +70,6 @@ RSpec.describe 'Task', type: :system do
         # }.to change {Task.count}.by(-1)
       end
     end
-# ------------------------------------------
 
     context 'when user click Home' do
       it 'go to roog page' do
@@ -201,13 +201,17 @@ RSpec.describe 'Task', type: :system do
   end
 
   describe '#destroy' do
-    let(:task) {Task.create!(name: '散歩', description: '多摩川を歩く', priority: 1, status: 1, limit: "2022-6-20".to_date, user_id: 1)}
-    before do
-      visit root_path
-    end
 
     context 'when user click Delete' do
+      before do
+        Task.create!(name: '散歩', description: '多摩川を歩く', user_id: 1)
+        visit root_path
+      end
 
+      it 'delete task' do
+        click_on 'Delete'
+        expect(page).to have_content "delete success"
+      end
     end
   end
 
