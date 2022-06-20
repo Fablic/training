@@ -96,7 +96,6 @@ RSpec.describe 'Task', type: :system do
 
     before do
       visit edit_task_path(task)
-      puts current_path
     end
 
     context 'when user go to this page' do
@@ -113,7 +112,6 @@ RSpec.describe 'Task', type: :system do
   describe '#create' do
     before do
       visit new_task_path
-      puts current_path
     end
 
     context 'when user go to Add task page' do
