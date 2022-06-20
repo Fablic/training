@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'Task', type: :system do
@@ -11,7 +13,7 @@ RSpec.describe 'Task', type: :system do
     end
 
     context 'when user open this page' do
-      it "display default item" do
+      it 'display default item' do
         expect(page).to have_link 'Add Task'
       end
 
@@ -31,15 +33,13 @@ RSpec.describe 'Task', type: :system do
           expect(page).to have_link 'Edit'
           expect(page).to have_link 'Delete'
         end
-
       end
-
     end
-
   end
 
   describe '#show' do
-    let(:task) {Task.create!(name: '散歩', description: '多摩川を歩く', priority: 1, status: 1, limit: "2022-6-20".to_date, user_id: 1)}
+    let(:task) { Task.create!(name: '散歩', description: '多摩川を歩く', priority: 1, status: 1, limit: '2022-6-20'.to_date, user_id: 1) }
+
     before do
       visit task_path(task)
     end
@@ -54,18 +54,16 @@ RSpec.describe 'Task', type: :system do
     context 'when user click Edit' do
       it 'return edit task form' do
         click_on 'Edit'
-        expect(current_path).to eq edit_task_path(task)
+        expect(page).to have_current_path edit_task_path(task), ignore_query: true
       end
-
     end
 
     context 'when user click Delete' do
       it 'display confirmation dialog and delete task' do
-
         expect {
           click_on 'Delete'
-          expect(page).to have_content "delete success"
-        }.to change {Task.count}.by(-1)
+          expect(page).to have_content 'delete success'
+        }.to change { Task.count }.by(-1)
       end
     end
 
@@ -75,7 +73,6 @@ RSpec.describe 'Task', type: :system do
         expect(current_path).to eq root_path
       end
     end
-
   end
 
   describe '#new' do
@@ -92,11 +89,11 @@ RSpec.describe 'Task', type: :system do
         expect(page).to have_field 'Priority'
       end
     end
-
   end
 
   describe '#edit' do
-    let(:task) {Task.create!(name: '散歩', description: '多摩川を歩く', priority: 1, status: 1, limit: "2022-6-20".to_date, user_id: 1)}
+    let(:task) { Task.create!(name: '散歩', description: '多摩川を歩く', priority: 1, status: 1, limit: '2022-6-20'.to_date, user_id: 1) }
+
     before do
       visit edit_task_path(task)
       puts current_path
@@ -157,11 +154,11 @@ RSpec.describe 'Task', type: :system do
         end
       end
     end
-
   end
 
   describe '#update' do
-    let(:task) {Task.create!(name: '散歩', description: '多摩川を歩く', priority: 1, status: 1, limit: "2022-6-20".to_date, user_id: 1)}
+    let(:task) { Task.create!(name: '散歩', description: '多摩川を歩く', priority: 1, status: 1, limit: '2022-6-20'.to_date, user_id: 1) }
+
     before do
       visit edit_task_path(task)
     end
@@ -189,17 +186,14 @@ RSpec.describe 'Task', type: :system do
           expect(page).to have_content '運動'
           expect(page).to have_content '多摩川を走る'
           expect(page).to have_content '2022-06-20'
-          expect(page).to have_content "IN_PROGRESS"
+          expect(page).to have_content 'IN_PROGRESS'
           expect(page).to have_content 'Normal'
         end
       end
-
     end
-
   end
 
   describe '#destroy' do
-
     context 'when user click Delete' do
       before do
         Task.create!(name: '散歩', description: '多摩川を歩く', user_id: 1)
@@ -209,10 +203,9 @@ RSpec.describe 'Task', type: :system do
       it 'delete task' do
         expect {
           click_on 'Delete'
-          expect(page).to have_content "delete success"
-        }.to change {Task.count}.by(-1)
+          expect(page).to have_content 'delete success'
+        }.to change { Task.count }.by(-1)
       end
     end
   end
-
 end
