@@ -1,7 +1,7 @@
 module TasksHelper
-  def sort_order(column, title, direction)
+  def sort_order(column, name, direction, title, status)
     direction = direction == 'asc' ? 'desc' : 'asc'
-    link_to title, { sort: column, order: direction }
+    link_to name, { sort: column, order: direction, title: title, status: status }
   end
 
   def parse_date(date)

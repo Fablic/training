@@ -5,7 +5,10 @@ class TasksController < ApplicationController
   end
 
   def search
-    @tasks = Task.search(params[:title], params[:status])
+    @title = params[:title]
+    @status = params[:status]
+    @direction = sort_direction
+    @tasks = Task.search(@title, @status).order("#{sort_column} #{sort_direction}")
     render 'index'
   end
 
