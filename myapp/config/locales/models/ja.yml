@@ -12,7 +12,7 @@ ja:
         status: "状態"
         limit: "期限"
   enums:
-    user:
+    task:
       priority:
         Low: "低い"
         Normal: "普通"
