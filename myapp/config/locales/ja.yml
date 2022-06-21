@@ -1,0 +1,15 @@
+ja:
+  dictionary:
+    title:
+      create: "新規作成"
+      update: "更新"
+      destory:
+        confirm: "削除確認"
+    button:
+      create: "新規作成"
+      update: "更新"
+      destory: "削除"
+  helpers:
+    submit:
+      create: "新規作成"
+      update: "更新"
