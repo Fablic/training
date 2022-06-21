@@ -6,8 +6,8 @@
   <%= form.label :limit %>
   <%= form.date_field :limit %>
   <%= form.label :status %>
-  <%= form.select :status,  [["TODO",'TODO'],["IN PROGRESS","IN_PROGRESS"], ["DONE","DONE"]], {selected: "TODO"} %>
+  <%= form.select :status,  Task.statuses_i18n.keys.map {|k| [Task.statuses_i18n[k],k]}, {selected: "TODO"} %>
   <%= form.label :priority %>
-  <%= form.select :priority,  [["Low","Low"],["Normal","Normal"], ["High","High"]], {selected: "Low"} %>
+  <%= form.select :priority,  Task.priorities_i18n.keys.map {|k| [Task.priorities_i18n[k],k]}, {selected: "Low"} %>
   <%= form.submit %>
 <% end %>
