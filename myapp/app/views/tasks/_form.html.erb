@@ -1,13 +1,13 @@
 <%= form_with model: task do |form| %>
-  <%= form.label :name, 'Task title' %>
+  <%= form.label :name %>
   <%= form.text_field :name %>
-  <%= form.label :description, 'Description' %>
+  <%= form.label :description %>
   <%= form.text_area :description %>
-  <%= form.label :limit, 'Limit' %>
+  <%= form.label :limit %>
   <%= form.date_field :limit %>
-  <%= form.label :status, 'Status' %>
+  <%= form.label :status %>
   <%= form.select :status,  [["TODO",'TODO'],["IN PROGRESS","IN_PROGRESS"], ["DONE","DONE"]], {selected: "TODO"} %>
-  <%= form.label :priority, 'Priority' %>
+  <%= form.label :priority %>
   <%= form.select :priority,  [["Low","Low"],["Normal","Normal"], ["High","High"]], {selected: "Low"} %>
   <%= form.submit %>
 <% end %>
