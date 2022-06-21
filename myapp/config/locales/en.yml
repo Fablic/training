@@ -30,4 +30,18 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  dictionary:
+    title:
+      create: "Create New Task"
+      update: "Edit Task"
+      destory:
+        confirm: "delete ok?"
+    button:
+      create: "Create Task"
+      update: "Edit"
+      destory: "Delete"
+      home: "Home"
+  helpers:
+    submit:
+      create: "Create Task"
+      update: "Edit Task"
