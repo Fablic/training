@@ -80,6 +80,8 @@ GEM
     concurrent-ruby (1.1.10)
     crass (1.0.6)
     diff-lcs (1.5.0)
+    enum_help (0.0.19)
+      activesupport (>= 3.0.0)
     erubi (1.10.0)
     fablicop (1.4.0)
       rubocop (>= 1.14, < 1.29)
@@ -260,6 +262,7 @@ DEPENDENCIES
   byebug
   capybara (>= 2.15)
   capybara-screenshot
+  enum_help
   fablicop
   jbuilder (~> 2.7)
   listen (~> 3.2)
