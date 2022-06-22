@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'Task', type: :system do
   before do
-    User.create!(id: 1, name: 'test', email: 'test@mail', password: 'password')
+    create(:user)
   end
 
   describe '#index' do
@@ -23,7 +23,7 @@ RSpec.describe 'Task', type: :system do
 
     context 'when user has tasks' do
       before do
-        Task.create!(name: '散歩', description: '多摩川を歩く', user_id: 1)
+        create(:task)
         visit current_path
       end
 
@@ -37,7 +37,7 @@ RSpec.describe 'Task', type: :system do
   end
 
   describe '#show' do
-    let(:task) { Task.create!(name: '散歩', description: '多摩川を歩く', priority: 1, status: 1, limit: '2022-6-20'.to_date, user_id: 1) }
+    let(:task) { create(:task) }
 
     before do
       visit task_path(task)
@@ -91,7 +91,7 @@ RSpec.describe 'Task', type: :system do
   end
 
   describe '#edit' do
-    let(:task) { Task.create!(name: '散歩', description: '多摩川を歩く', priority: 1, status: 1, limit: '2022-6-20'.to_date, user_id: 1) }
+    let(:task) { create(:task) }
 
     before do
       visit edit_task_path(task)
@@ -154,7 +154,7 @@ RSpec.describe 'Task', type: :system do
   end
 
   describe '#update' do
-    let(:task) { Task.create!(name: '散歩', description: '多摩川を歩く', priority: 1, status: 1, limit: '2022-6-20'.to_date, user_id: 1) }
+    let(:task) { create(:task) }
 
     before do
       visit edit_task_path(task)
@@ -193,7 +193,7 @@ RSpec.describe 'Task', type: :system do
   describe '#destroy' do
     context 'when user click Delete' do
       before do
-        Task.create!(name: '散歩', description: '多摩川を歩く', user_id: 1)
+        create(:task)
         visit root_path
       end
 
