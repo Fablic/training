@@ -58,11 +58,15 @@ RSpec.describe 'Task', type: :system do
     end
 
     context 'when user click Delete' do
-      it 'display confirmation dialog and delete task' do
+      it 'delete task' do
         expect {
           click_on 'Delete'
-          expect(page).to have_content 'delete success'
         }.to change { Task.count }.by(-1)
+      end
+
+      it 'display delete success message' do
+        click_on 'Delete'
+        expect(page).to have_content 'delete success'
       end
     end
 
@@ -200,8 +204,12 @@ RSpec.describe 'Task', type: :system do
       it 'delete task' do  # rubocop:disable RSpec/MultipleExpectations
         expect {
           click_on 'Delete'
-          expect(page).to have_content 'delete success'
         }.to change { Task.count }.by(-1)
+      end
+
+      it 'display delete success message' do
+        click_on 'Delete'
+        expect(page).to have_content 'delete success'
       end
     end
   end
