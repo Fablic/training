@@ -1,4 +1,5 @@
 class Task < ApplicationRecord
+  belongs_to :user
   enum status:      { not_select: "", not_started: 0, start: 1, completed: 2 }
 	validates :title, presence: true, length: { maximum: 255 }
 
