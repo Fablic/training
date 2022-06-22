@@ -12,29 +12,28 @@ RSpec.describe 'Task', type: :system do
       visit root_path
     end
 
-    context 'when user open this page' do
-      it 'display default item' do
-        expect(page).to have_link 'Add Task'
+    it 'display default item' do
+      expect(page).to have_link 'Add Task'
+    end
+
+    it 'go to New Task page' do
+      click_on 'Add Task'
+      expect(current_path).to eq new_task_path
+    end
+
+    context 'when user has tasks' do
+      before do
+        Task.create!(name: '散歩', description: '多摩川を歩く', user_id: 1)
+        visit current_path
       end
 
-      it 'go to New Task page' do
-        click_on 'Add Task'
-        expect(current_path).to eq new_task_path
-      end
-
-      context 'when user has tasks' do
-        before do
-          Task.create!(name: '散歩', description: '多摩川を歩く', user_id: 1)
-          visit current_path
-        end
-
-        it "return user's task" do # rubocop:disable RSpec/MultipleExpectations
-          expect(page).to have_link '散歩'
-          expect(page).to have_link 'Edit'
-          expect(page).to have_link 'Delete'
-        end
+      it "return user's task" do # rubocop:disable RSpec/MultipleExpectations
+        expect(page).to have_link '散歩'
+        expect(page).to have_link 'Edit'
+        expect(page).to have_link 'Delete'
       end
     end
+
   end
 
   describe '#show' do
