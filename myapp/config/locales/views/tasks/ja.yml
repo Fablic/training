@@ -6,6 +6,7 @@ ja:
       expire: '有効期限'
       save: '保存'
       created_at: '作成日時'
+      status: 'ステータス'
     new:
       new: 'タスクの新規作成'
     index:

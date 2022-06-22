@@ -7,6 +7,9 @@
   <%= f.label :description, t('tasks.form.description') %>
   <%= f.text_field :description, class: 'form-control' %>
 
+  <%= f.label :status, t('tasks.form.status') %>
+  <%= f.select :status, Task.statuses.keys.map { |k| [k, k] }, class: 'form-control' %>
+
   <%= f.label :expire_at, t('tasks.form.expire') %>
   <%= f.datetime_field :expire_at, class: 'form-control' %>
 

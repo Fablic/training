@@ -12,6 +12,10 @@
           <%= @task.description %>
         </p>
         <p>
+          <%= t 'tasks.form.status' %>
+          <%= @task.status %>
+        </p>
+        <p>
           <%= t 'tasks.form.expire' %>
           <%= @task.expire_at %>
         </p>
