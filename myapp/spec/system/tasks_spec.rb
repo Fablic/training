@@ -202,8 +202,8 @@ RSpec.describe 'Tasks', type: :system do
         expect(page).not_to have_content task_complete.title        
       end
     end
-    context 'ジャンルで検索' do
-      example 'ジャンルが一致したタスクが表示' do
+    context 'ステータスで検索' do
+      example 'ステータスが一致したタスクが表示' do
         visit root_path
         select 'completed', from: 'status'
         click_button 'commit'
