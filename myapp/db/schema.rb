@@ -32,4 +32,5 @@ ActiveRecord::Schema.define(version: 2022_06_22_030138) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "tasks", "users"
 end
