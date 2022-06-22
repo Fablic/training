@@ -211,7 +211,7 @@ RSpec.describe 'Task', type: :system do
   end
 
   describe '#destroy' do
-    context 'when user click Delete' do
+    context 'when user click Delete of todo/done task' do
       before do
         create(:task)
         visit root_path
@@ -226,6 +226,18 @@ RSpec.describe 'Task', type: :system do
       it 'display delete success message' do
         click_on 'Delete'
         expect(page).to have_content 'delete success'
+      end
+    end
+
+    context 'when user click Delete of in progress task ' do
+      before do
+        create(:task, status: 'IN_PROGRESS')
+        visit root_path
+      end
+
+      it 'display delete failed message' do
+        click_on 'Delete'
+        expect(page).to have_content 'Delete failed'
       end
     end
   end
