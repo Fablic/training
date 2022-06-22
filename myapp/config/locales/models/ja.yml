@@ -18,6 +18,6 @@ ja:
         Normal: "普通"
         High: "高い"
       status:
-        TODO: "TODO"
-        IN_PROGRESS: "IN PROGRESS"
-        DONE: "DONE"
+        TODO: "未着手"
+        IN_PROGRESS: "着手中"
+        DONE: "完了"
