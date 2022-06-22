@@ -1,6 +1,8 @@
 class TasksController < ApplicationController
+  PAGE_NUM = 10
+
   def index
-    @tasks = Task.order("#{sort_column} #{sort_direction}")
+    @tasks = Task.order("#{sort_column} #{sort_direction}").page(params[:page]).per(PAGE_NUM)
     @direction = sort_direction
   end
 
@@ -8,7 +10,7 @@ class TasksController < ApplicationController
     @title = params[:title]
     @status = params[:status]
     @direction = sort_direction
-    @tasks = Task.search(@title, @status).order("#{sort_column} #{sort_direction}")
+    @tasks = Task.search(@title, @status).order("#{sort_column} #{sort_direction}").page(params[:page]).per(PAGE_NUM)
     render 'index'
   end
 
