@@ -164,7 +164,7 @@ RSpec.describe 'Task', type: :system do
       visit edit_task_path(task)
     end
 
-    context 'when user edit task form' do
+    context 'when user edit task form correctly' do
       before do
         fill_in 'Task title', with: '運動'
         fill_in 'Description', with: '多摩川を走る'
@@ -189,7 +189,23 @@ RSpec.describe 'Task', type: :system do
           expect(page).to have_content '2022-06-20'
           expect(page).to have_content 'IN_PROGRESS'
           expect(page).to have_content 'Normal'
+          expect(page).to have_content 'Edit success'
         end
+      end
+    end
+
+    context 'when user edit task form incorrectly' do
+      before do
+        fill_in 'Task title', with: ''
+        fill_in 'Description', with: '多摩川を走る'
+        fill_in 'Limit', with: '2022-06-20'
+        select 'IN PROGRESS', from: 'Status'
+        select 'Normal', from: 'Priority'
+      end
+
+      it 'unable to complete editing (because name is blank)' do
+        click_on 'Update Task'
+        expect(page).to have_content 'Edit failed'
       end
     end
   end
