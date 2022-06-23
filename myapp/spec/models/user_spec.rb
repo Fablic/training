@@ -1,5 +1,43 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let(:user_valid) {
+    FactoryBot.build(:user)
+  }
+  example 'emailの長さが256文字以上だと無効' do
+    user_valid.email = 'a' * 256
+    expect(user_valid).not_to be_valid
+  end
+
+  example '同じものが2つ以上あると無効' do
+    user_exist = FactoryBot.create(:user, email: 'fuga@gmail.com')
+    user_valid.email = user_exist.email
+    expect(user_valid).not_to be_valid
+  end
+
+  example 'アットマークから始まるものは無効' do
+    user_valid.email = '@gmail.com'
+    expect(user_valid).not_to be_valid
+  end
+
+  example 'アットマークがないものは無効' do
+    user_valid.email = 'hugagmail.com'
+    expect(user_valid).not_to be_valid
+  end
+
+  example '2次ドメインが入っていないものは無効' do
+    user_valid.email = 'huga@.com'
+    expect(user_valid).not_to be_valid
+  end
+
+  example 'ドットがないものは無効' do
+    user_valid.email = 'huga@gmailcom'
+    expect(user_valid).not_to be_valid
+  end
+  
+  example 'トップレベルドメインがないものは無効' do
+    user_valid.email = 'huga@gmail.'
+    expect(user_valid).not_to be_valid
+  end
+
 end
