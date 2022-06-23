@@ -33,7 +33,7 @@
               <% end %>
             </div>
             <div>
-              <%= link_to task_path(task), { method: :delete, data: { comfirm: "Sure?" }, id: "delete-#{task.id}" } do %>
+              <%= link_to task_path(task), { method: :delete, data: { comfirm: "Sure?" }, id: "delete-#{task.id}", remote: true} do %>
                 <i class="fa-solid fa-trash"></i>
               <% end %>
             </div>

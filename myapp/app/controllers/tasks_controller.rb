@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-  PAGE_NUM = 10
+  PAGE_NUM = 5
 
   def index
     @tasks = Task.order("#{sort_column} #{sort_direction}").page(params[:page]).per(PAGE_NUM)
