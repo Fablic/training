@@ -60,10 +60,7 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
-<<<<<<< HEAD
 gem 'rails-i18n'
 gem 'enum_help'
-=======
 # for secure password
 gem 'bcrypt'
->>>>>>> wataru-okamoto_step8
