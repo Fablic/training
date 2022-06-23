@@ -1,11 +1,11 @@
 <% content_for(:page_title, I18n.t('tasks.index.title')) %>
 
-<%= link_to t('dictionary.button.create'), '/tasks/new' %>
+<%= link_to I18n.t('dictionary.button.create'), '/tasks/new' %>
 
 <div>
   <% @tasks.each do |task| %>
     <%= link_to task.name, task %>
-    <%= link_to t('dictionary.button.edit'), edit_task_path(task) %>
-    <%= link_to t('dictionary.button.destory'), task, method: :delete, data: {confirm: "Do you want to delete #{task.name}?"} %><br />
+    <%= link_to I18n.t('dictionary.button.edit'), edit_task_path(task) %>
+    <%= link_to I18n.t('dictionary.button.destory'), task, method: :delete, data: {confirm: "Do you want to delete #{task.name}?"} %><br />
   <% end %>
 </div>
