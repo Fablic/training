@@ -24,7 +24,7 @@ class TasksController < ApplicationController
       flash[:success] = 'Added new task' # TODO: I18nLocaleTexts error Step9で実装
       redirect_to @task
     else
-      flash[:error] = 'failed' # TODO: I18nLocaleTexts error Step9で実装
+      flash.now[:error] = 'failed' # TODO: I18nLocaleTexts error Step9で実装
       render :new
     end
   end
@@ -36,7 +36,7 @@ class TasksController < ApplicationController
       flash[:success] = 'Edit success' # TODO: I18nLocaleTexts error Step9で実装
       redirect_to @task
     else
-      flash[:error] = 'Edit failed' # TODO: I18nLocaleTexts error Step9で実装
+      flash.now[:error] = 'Edit failed' # TODO: I18nLocaleTexts error Step9で実装
       render :edit
     end
   end
