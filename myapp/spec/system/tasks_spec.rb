@@ -211,12 +211,12 @@ RSpec.describe 'Task', type: :system do
   end
 
   describe '#destroy' do
-    context 'when user click Delete of todo/done task' do
-      before do
-        create(:task)
-        visit root_path
-      end
+    before do
+      create(:task)
+      visit root_path
+    end
 
+    context 'when the deletion process success' do
       it 'delete task' do  # rubocop:disable RSpec/MultipleExpectations
         expect {
           click_on 'Delete'
@@ -229,10 +229,9 @@ RSpec.describe 'Task', type: :system do
       end
     end
 
-    context 'when user click Delete of in progress task ' do
+    context 'when the deletion process fails ' do
       before do
-        create(:task, status: 'IN_PROGRESS')
-        visit root_path
+        allow_any_instance_of(Task).to receive(:destroy).and_return(false)
       end
 
       it 'display delete failed message' do
