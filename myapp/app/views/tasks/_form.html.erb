@@ -1,10 +1,5 @@
-<<<<<<< HEAD
-<%= form_with model: task do |form| %>
-  <%= form.label :name %>
-=======
 <%= form_with model: task, local: true do |form| %>
-  <%= form.label :name, 'Task title' %>
->>>>>>> wataru-okamoto_step8
+  <%= form.label :name %>
   <%= form.text_field :name %>
   <%= form.label :description %>
   <%= form.text_area :description %>
