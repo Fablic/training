@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'Task', type: :system do
   before do
-    User.create!(id: 1, name: 'test', email: 'test@mail', password: 'password')
+    create(:user)
   end
 
   describe '#index' do
@@ -12,33 +12,32 @@ RSpec.describe 'Task', type: :system do
       visit root_path
     end
 
-    context 'when user open this page' do
-      it 'display default item' do
-        expect(page).to have_link 'Add Task'
+    it 'display default item' do
+      expect(page).to have_link 'Add Task'
+    end
+
+    it 'go to New Task page' do
+      click_on 'Add Task'
+      expect(current_path).to eq new_task_path
+    end
+
+    context 'when user has tasks' do
+      before do
+        create(:task)
+        visit current_path
       end
 
-      it 'go to New Task page' do
-        click_on 'Add Task'
-        expect(current_path).to eq new_task_path
-      end
-
-      context 'when user has tasks' do
-        before do
-          Task.create!(name: '散歩', description: '多摩川を歩く', user_id: 1)
-          visit current_path
-        end
-
-        it "return user's task" do # rubocop:disable RSpec/MultipleExpectations
-          expect(page).to have_link '散歩'
-          expect(page).to have_link 'Edit'
-          expect(page).to have_link 'Delete'
-        end
+      it "return user's task" do # rubocop:disable RSpec/MultipleExpectations
+        expect(page).to have_link '散歩'
+        expect(page).to have_link 'Edit'
+        expect(page).to have_link 'Delete'
       end
     end
+
   end
 
   describe '#show' do
-    let(:task) { Task.create!(name: '散歩', description: '多摩川を歩く', priority: 1, status: 1, limit: '2022-6-20'.to_date, user_id: 1) }
+    let(:task) { create(:task) }
 
     before do
       visit task_path(task)
@@ -59,11 +58,15 @@ RSpec.describe 'Task', type: :system do
     end
 
     context 'when user click Delete' do
-      it 'display confirmation dialog and delete task' do
+      it 'delete task' do
         expect {
           click_on 'Delete'
-          expect(page).to have_content 'delete success'
         }.to change { Task.count }.by(-1)
+      end
+
+      it 'display delete success message' do
+        click_on 'Delete'
+        expect(page).to have_content 'delete success'
       end
     end
 
@@ -92,7 +95,7 @@ RSpec.describe 'Task', type: :system do
   end
 
   describe '#edit' do
-    let(:task) { Task.create!(name: '散歩', description: '多摩川を歩く', priority: 1, status: 1, limit: '2022-6-20'.to_date, user_id: 1) }
+    let(:task) { create(:task) }
 
     before do
       visit edit_task_path(task)
@@ -155,13 +158,13 @@ RSpec.describe 'Task', type: :system do
   end
 
   describe '#update' do
-    let(:task) { Task.create!(name: '散歩', description: '多摩川を歩く', priority: 1, status: 1, limit: '2022-6-20'.to_date, user_id: 1) }
+    let(:task) { create(:task) }
 
     before do
       visit edit_task_path(task)
     end
 
-    context 'when user edit task form' do
+    context 'when user edit task form correctly' do
       before do
         fill_in 'Task title', with: '運動'
         fill_in 'Description', with: '多摩川を走る'
@@ -186,23 +189,54 @@ RSpec.describe 'Task', type: :system do
           expect(page).to have_content '2022-06-20'
           expect(page).to have_content 'IN_PROGRESS'
           expect(page).to have_content 'Normal'
+          expect(page).to have_content 'Edit success'
         end
+      end
+    end
+
+    context 'when user edit task form incorrectly' do
+      before do
+        fill_in 'Task title', with: ''
+        fill_in 'Description', with: '多摩川を走る'
+        fill_in 'Limit', with: '2022-06-20'
+        select 'IN PROGRESS', from: 'Status'
+        select 'Normal', from: 'Priority'
+      end
+
+      it 'unable to complete editing (because name is blank)' do
+        click_on 'Update Task'
+        expect(page).to have_content 'Edit failed'
       end
     end
   end
 
   describe '#destroy' do
-    context 'when user click Delete' do
-      before do
-        Task.create!(name: '散歩', description: '多摩川を歩く', user_id: 1)
-        visit root_path
-      end
+    before do
+      create(:task)
+      visit root_path
+    end
 
+    context 'when the deletion process success' do
       it 'delete task' do  # rubocop:disable RSpec/MultipleExpectations
         expect {
           click_on 'Delete'
-          expect(page).to have_content 'delete success'
         }.to change { Task.count }.by(-1)
+      end
+
+      it 'display delete success message' do
+        click_on 'Delete'
+        expect(page).to have_content 'delete success'
+      end
+    end
+
+    context 'when the deletion process fails ' do
+      before do
+        allow_any_instance_of(Task).to receive(:destroy).and_return(false)
+      end
+
+      it 'display delete failed message' do
+        click_on 'Delete'
+        expect(page).to have_content 'Delete failed'
       end
     end
   end
