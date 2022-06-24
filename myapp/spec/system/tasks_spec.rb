@@ -18,7 +18,7 @@ RSpec.describe 'Task', type: :system do
 
     it 'go to New Task page' do
       click_on 'Add Task'
-      expect(current_path).to eq new_task_path
+      expect(page).to have_current_path new_task_path, ignore_query: true
     end
 
     context 'when user has tasks' do
@@ -33,7 +33,6 @@ RSpec.describe 'Task', type: :system do
         expect(page).to have_link 'Delete'
       end
     end
-
   end
 
   describe '#show' do
@@ -61,7 +60,7 @@ RSpec.describe 'Task', type: :system do
       it 'delete task' do
         expect {
           click_on 'Delete'
-        }.to change { Task.count }.by(-1)
+        }.to change(Task, :count).by(-1)
       end
 
       it 'display delete success message' do
@@ -73,7 +72,7 @@ RSpec.describe 'Task', type: :system do
     context 'when user click Home' do
       it 'go to roog page' do
         click_on 'Home'
-        expect(current_path).to eq root_path
+        expect(page).to have_current_path root_path, ignore_query: true
       end
     end
   end
@@ -217,7 +216,7 @@ RSpec.describe 'Task', type: :system do
     end
 
     context 'when the deletion process success' do
-      it 'delete task' do  # rubocop:disable RSpec/MultipleExpectations
+      it 'delete task' do
         expect {
           click_on 'Delete'
         }.to change { Task.count }.by(-1)
@@ -229,7 +228,7 @@ RSpec.describe 'Task', type: :system do
       end
     end
 
-    context 'when the deletion process fails ' do
+    context 'when the deletion process fails' do
       before do
         allow_any_instance_of(Task).to receive(:destroy).and_return(false)
       end
