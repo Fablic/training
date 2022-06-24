@@ -35,7 +35,8 @@ class TasksController < ApplicationController
   end
 
   def edit
-    @task = Task.where(user_id: session[:user_id]).find(params[:id])
+    @task = Task.where(user_id: session[:user_id]).find_by(id: params[:id])
+    redirect_to login_path if @task.nil?
   end
 
   def update
@@ -59,7 +60,7 @@ class TasksController < ApplicationController
 
   def task_params
     # status, priorityはのちのstepで追加する
-    params.require(:task).permit(:title, :description, :expire_at, :status)
+    params.require(:task).permit(:title, :description, :expire_at, :status).merge(user_id: current_user.id)
   end
 
   # ?sort=hogeでソートするカラムを受け取る. 存在しないカラムの時はtitleでソート
@@ -79,7 +80,7 @@ class TasksController < ApplicationController
   end
 
   def logged_in_user
-    redirect_to login_path unless session[:user_id].present?
+    redirect_to login_path unless logged_in?
   end
 
 end
