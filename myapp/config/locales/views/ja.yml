@@ -8,3 +8,13 @@ ja:
       title: "タスク詳細"
     new:
       title: "新規作成"
+    flash:
+      create:
+        success: "Create Task!!"
+        error: "Failed"
+      update:
+        success: "Edit Task!!"
+        error: "Failed"
+      destroy:
+        success: "Delete Task!!"
+        error: "Failed"
