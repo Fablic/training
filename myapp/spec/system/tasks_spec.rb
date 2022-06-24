@@ -219,7 +219,7 @@ RSpec.describe 'Task', type: :system do
       it 'delete task' do
         expect {
           click_on 'Delete'
-        }.to change { Task.count }.by(-1)
+        }.to change(Task, :count).by(-1)
       end
 
       it 'display delete success message' do
