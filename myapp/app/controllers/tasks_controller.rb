@@ -1,8 +1,10 @@
 class TasksController < ApplicationController
+  before_action :logged_in_user
+
   PAGE_NUM = 10
 
   def index
-    @tasks = Task.order("#{sort_column} #{sort_direction}").page(params[:page]).per(PAGE_NUM)
+    @tasks = Task.where(user_id: session[:user_id]).order("#{sort_column} #{sort_direction}").page(params[:page]).per(PAGE_NUM)
     @direction = sort_direction
   end
 
@@ -10,12 +12,12 @@ class TasksController < ApplicationController
     @title = params[:title]
     @status = params[:status]
     @direction = sort_direction
-    @tasks = Task.search(@title, @status).order("#{sort_column} #{sort_direction}").page(params[:page]).per(PAGE_NUM)
+    @tasks = Task.where(user_id: session[:user_id]).search(@title, @status).order("#{sort_column} #{sort_direction}").page(params[:page]).per(PAGE_NUM)
     render 'index'
   end
 
   def show
-    @task = Task.find(params[:id])
+    @task = Task.where(user_id: session[:user_id]).find(params[:id])
   end
 
   def new
@@ -33,11 +35,11 @@ class TasksController < ApplicationController
   end
 
   def edit
-    @task = Task.find(params[:id])
+    @task = Task.where(user_id: session[:user_id]).find(params[:id])
   end
 
   def update
-    @task = Task.find(params[:id])
+    @task = Task.where(user_id: session[:user_id]).find(params[:id])
 
     # 異常系はearly return
     return render 'edit' unless @task.update(task_params)
@@ -48,7 +50,7 @@ class TasksController < ApplicationController
   end
 
   def destroy
-    Task.find(params[:id]).destroy
+    Task.where(user_id: session[:user_id]).find(params[:id]).destroy
     flash[:success] = 'Task deleted!'
     redirect_to root_path
   end
@@ -74,6 +76,10 @@ class TasksController < ApplicationController
     ord = params[:order].nil? ? 'asc' : params[:order]
     # asc/desc以外が指定された時は昇順でソートする
     %[asc desc].include?(ord) ? ord : 'asc'
+  end
+
+  def logged_in_user
+    redirect_to login_path unless session[:user_id].present?
   end
 
 end

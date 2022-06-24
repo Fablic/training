@@ -6,5 +6,5 @@ class Task < ApplicationRecord
   scope :search, -> (title='', status='') { where('title LIKE ? AND status LIKE ?',
                                             "%#{Task.sanitize_sql_like(title)}%",
                                             "%#{Task.sanitize_sql_like(status)}") }
-                                          
+
 end
