@@ -2,8 +2,9 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   let(:user_valid) {
-    FactoryBot.build(:user)
+    FactoryBot.build(:user, id: 1)
   }
+
   example 'emailの長さが256文字以上だと無効' do
     user_valid.email = 'a' * 256
     expect(user_valid).not_to be_valid
@@ -38,6 +39,13 @@ RSpec.describe User, type: :model do
   example 'トップレベルドメインがないものは無効' do
     user_valid.email = 'huga@gmail.'
     expect(user_valid).not_to be_valid
+  end
+
+  example 'ユーザーを削除した時にタスクも削除される' do
+    user = FactoryBot.create(:user)
+    task = FactoryBot.create(:task, user_id: user.id)
+    User.destroy(user.id)
+    expect(Task.find_by(id: task.id)).to be_nil
   end
 
 end
