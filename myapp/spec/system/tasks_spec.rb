@@ -13,8 +13,8 @@ RSpec.describe 'Tasks', type: :system do
         expect(page).to have_content task.description
         expect(page).to have_content parse_date task.created_at
         expect(page).to have_content I18n.t('tasks.index.create')
-        expect(page).to have_content I18n.t('tasks.index.edit')
-        expect(page).to have_content I18n.t('tasks.index.delete')
+        expect(page).to have_link '', href:edit_task_path(task)
+        expect(page).to have_link '', href:task_path(task)
       end
     end
   end
@@ -195,7 +195,7 @@ RSpec.describe 'Tasks', type: :system do
       example 'タイトルが部分一致したタスクが表示' do
         visit root_path
         fill_in :title, with: 'hoge'
-        click_button 'commit'
+        click_button 'search-button'
         expect(page).to have_content task_hoge.title
         # hoge が含まれていないタスクは非表示
         expect(page).not_to have_content task_fuga.title
@@ -206,7 +206,7 @@ RSpec.describe 'Tasks', type: :system do
       example 'ステータスが一致したタスクが表示' do
         visit root_path
         select 'completed', from: 'status'
-        click_button 'commit'
+        click_button 'search-button'
         expect(page).to have_content task_complete.title
         # completed以外は非表示
         expect(page).not_to have_content task_hoge.title
@@ -217,7 +217,7 @@ RSpec.describe 'Tasks', type: :system do
       example '降順にソート' do
         visit root_path
         # 条件を指定せず検索
-        click_button 'commit'
+        click_button 'search-button'
         click_link I18n.t('tasks.form.created_at')
 
         expect(page.body.index(task_fuga.title)).to be < page.body.index(task_hoge.title)

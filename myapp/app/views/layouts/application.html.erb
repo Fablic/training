@@ -13,6 +13,7 @@
     <% if logged_in? %>
       <%= render 'layouts/header' %>
     <% end %>
+
     <!-- flashメッセージ -->
     <% flash.each do |message_type, message| %>
       <div class="alert alert-<%= message_type %>"><%= message %></div>
