@@ -23,14 +23,25 @@ RSpec.describe 'Task', type: :system do
 
     context 'when user has tasks' do
       before do
-        create(:task)
+        create(:task, name: 'test1')
+        create(:task, name: 'test2')
+        create(:task, name: 'test3')
         visit current_path
       end
 
       it "return user's task" do # rubocop:disable RSpec/MultipleExpectations
-        expect(page).to have_link '散歩'
+        expect(page).to have_link 'test1'
+        expect(page).to have_link 'test2'
+        expect(page).to have_link 'test3'
         expect(page).to have_link '編集'
         expect(page).to have_link '削除'
+      end
+
+      it 'tasks displayed in DESC order of creation date' do
+        within '.tasks' do
+          task_titles = all('.task-title').map(&:text)
+          expect(task_titles).to eq %w[test3 test2 test1]
+        end
       end
     end
   end
