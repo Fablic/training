@@ -21,6 +21,16 @@ RSpec.describe Task, type: :model do
         task = build(:task, name: nil)
         expect(task.valid?).to be false
       end
+
+      it 'failure if less than 2 characters' do
+        task = build(:task, name: 't')
+        expect(task.valid?).to be false
+      end
+
+      it 'failure if more than 32 characters' do
+        task = build(:task, name: 'test-input-case-it-is-more-than-32-characters')
+        expect(task.valid?).to be false
+      end
     end
   end
 end
