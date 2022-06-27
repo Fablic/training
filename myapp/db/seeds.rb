@@ -1,8 +1,18 @@
+TASK_NUM = 20
+USER_NUM = 5
 
-100.times do |i|
-	Task.create(
-		title: "Rails研修step#{i}",
-		description: '研修の説明',
-		status: rand(0..2)
-	)
+USER_NUM.times do |i|
+  name = Faker::Name.name
+  user = User.create(
+    name: name,
+    email: "rails#{i}@gmail.com",
+    password: 'password',
+  )
+  TASK_NUM.times do |j|
+    user.tasks.create(
+      title: "#{user.name}-Rails研修step#{j}",
+      description: '研修の説明',
+      status: rand(0..2),
+    )
+  end
 end
