@@ -17,7 +17,7 @@ RSpec.describe 'Task', type: :system do
     end
 
     it 'go to New Task page' do
-      click_on 'Add Task'
+      click_on '新規作成'
       expect(page).to have_current_path new_task_path, ignore_query: true
     end
 
@@ -36,7 +36,7 @@ RSpec.describe 'Task', type: :system do
   end
 
   describe '#show' do
-    let(:task) { create(:task) }
+    let(:task) { create(:task, name: 'テストタスク', description: 'テストのタスク', priority: 1, status: 1, limit: '2022-6-20'.to_date, user_id: 1) }
 
     before do
       visit task_path(task)
@@ -60,19 +60,19 @@ RSpec.describe 'Task', type: :system do
     context 'when user click Delete' do
       it 'delete task' do
         expect {
-          click_on 'Delete'
+          click_on '削除'
         }.to change(Task, :count).by(-1)
       end
 
       it 'display delete success message' do
         click_on '削除'
-        expect(page).to have_content 'delete success'
+        expect(page).to have_content 'Delete Task!!'
       end
     end
 
     context 'when user click Home' do
       it 'go to roog page' do
-        click_on 'Home'
+        click_on '一覧へ'
         expect(page).to have_current_path root_path, ignore_query: true
       end
     end
@@ -189,7 +189,7 @@ RSpec.describe 'Task', type: :system do
           expect(page).to have_content '2022-06-20'
           expect(page).to have_content '着手中'
           expect(page).to have_content '普通'
-          expect(page).to have_content 'Edit success'
+          expect(page).to have_content 'Edit Task!!'
         end
       end
     end
@@ -205,7 +205,7 @@ RSpec.describe 'Task', type: :system do
 
       it 'unable to complete editing (because name is blank)' do
         click_on '更新'
-        expect(page).to have_content 'Edit failed'
+        expect(page).to have_content 'Failed'
       end
     end
   end
@@ -219,13 +219,13 @@ RSpec.describe 'Task', type: :system do
     context 'when the deletion process success' do
       it 'delete task' do
         expect {
-          click_on 'Delete'
+          click_on '削除'
         }.to change(Task, :count).by(-1)
       end
 
       it 'display delete success message' do
         click_on '削除'
-        expect(page).to have_content 'delete success'
+        expect(page).to have_content 'Delete Task!!'
       end
     end
 
@@ -236,7 +236,7 @@ RSpec.describe 'Task', type: :system do
 
       it 'display delete failed message' do
         click_on '削除'
-        expect(page).to have_content 'Delete failed'
+        expect(page).to have_content 'Failed'
       end
     end
   end
