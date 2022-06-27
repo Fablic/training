@@ -13,13 +13,12 @@
  *= require_tree .
  *= require_self
  */
+@import "bootstrap";
+@import "font-awesome";
 
- @import "bootstrap";
- @import "font-awesome";
-
- #nav-header {
+#nav-header {
   background-color: #db4c3f;
   li {
     color: white;
   }
- }
+}

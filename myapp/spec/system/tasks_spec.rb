@@ -2,11 +2,18 @@ require 'rails_helper'
 include TasksHelper
 
 RSpec.describe 'Tasks', type: :system do
+  let!(:user) {
+    FactoryBot.create(:user)
+  }
+
+  before do
+    login(user)
+  end
 
   describe 'タスクの一覧を表示', type: :system do
     context '1件登録されているとき' do
       example 'タスクの各要素とEdit, Deleteボタンが表示' do
-        task = FactoryBot.create(:task)
+        task = FactoryBot.create(:task, user_id: user.id)
         visit root_path
         expect(page).to have_content task.title
         expect(page).to have_content parse_date task.expire_at
@@ -55,7 +62,7 @@ RSpec.describe 'Tasks', type: :system do
   describe 'タスクを編集して更新' do
     context '1件正しいデータで更新したとき' do
       example '1件目のタスクのみが更新して表示され、flashメッセージが表示' do
-        tasks = FactoryBot.create_list(:task, 2)
+        tasks = FactoryBot.create_list(:task, 2, user_id: user.id)
         visit root_path
         find_by_id("edit-#{tasks[0].id}").click
         fill_in I18n.t('tasks.form.title'), with: 'edited title'
@@ -75,7 +82,7 @@ RSpec.describe 'Tasks', type: :system do
 
     context 'タイトルが空欄のとき' do
       example '更新されずにエラーメッセージが表示' do
-        task = FactoryBot.create(:task)
+        task = FactoryBot.create(:task, user_id: user.id)
         visit edit_task_path(task)
         fill_in I18n.t('tasks.form.title'), with: ''
         click_button I18n.t('tasks.form.save')
@@ -88,7 +95,7 @@ RSpec.describe 'Tasks', type: :system do
   describe 'タスクの詳細', type: :system do
     context '1件登録されているとき' do
       example 'タスクの各要素を全て表示' do
-        task = FactoryBot.create(:task)
+        task = FactoryBot.create(:task, user_id: user.id)
         visit root_path
         click_link task.title
 
@@ -104,7 +111,7 @@ RSpec.describe 'Tasks', type: :system do
     context '2件登録されているとき' do
       example '1件目のタスクを削除し、2件目のみが表示され、flashメッセージが表示' do
         expect  do
-          tasks = FactoryBot.create_list(:task, 2)
+          tasks = FactoryBot.create_list(:task, 2, user_id: user.id)
           visit root_path
           find_by_id("delete-#{tasks[0].id}").click
           expect(page).to have_content tasks[1].title
@@ -117,13 +124,13 @@ RSpec.describe 'Tasks', type: :system do
 
   describe '作成日時でソート' do
     let!(:task_created_yesterday) {
-      FactoryBot.create(:task, :created_yesterday)
+      FactoryBot.create(:task, :created_yesterday, user_id: user.id)
     }
     let!(:task_created_1week_ago) {
-      FactoryBot.create(:task, :created_1week_ago)
+      FactoryBot.create(:task, :created_1week_ago, user_id: user.id)
     }
     let!(:task_created_today) {
-      FactoryBot.create(:task)
+      FactoryBot.create(:task, user_id: user.id)
     }
     context '1度作成日時を押したとき' do
       example '降順にソート' do
@@ -149,13 +156,13 @@ RSpec.describe 'Tasks', type: :system do
 
   describe '有効期限でソート' do
     let!(:task_expire_tomorrow) {
-      FactoryBot.create(:task, :expire_tomorrow)
+      FactoryBot.create(:task, :expire_tomorrow, user_id: user.id)
     }
     let!(:task_expire_next_month) {
-      FactoryBot.create(:task, :expire_next_month)
+      FactoryBot.create(:task, :expire_next_month, user_id: user.id)
     }
     let!(:task_expire_today) {
-      FactoryBot.create(:task)
+      FactoryBot.create(:task, user_id: user.id)
     }
 
     context '1度有効期限を押したとき' do
@@ -182,13 +189,13 @@ RSpec.describe 'Tasks', type: :system do
 
   describe '検索' do
     let!(:task_hoge) {
-      FactoryBot.create(:task, title: 'hogehoge', created_at: Time.current)
+      FactoryBot.create(:task, title: 'hogehoge', created_at: Time.current, user_id: user.id)
     }
     let!(:task_fuga) {
-      FactoryBot.create(:task, title: 'fugafuga', created_at: Time.current.tomorrow)
+      FactoryBot.create(:task, title: 'fugafuga', created_at: Time.current.tomorrow, user_id: user.id)
     }
     let!(:task_complete) {
-      FactoryBot.create(:task, :status_completed, created_at: Time.current.yesterday)
+      FactoryBot.create(:task, :status_completed, created_at: Time.current.yesterday, user_id: user.id)
     }
 
     context 'タイトルで検索' do
@@ -199,7 +206,7 @@ RSpec.describe 'Tasks', type: :system do
         expect(page).to have_content task_hoge.title
         # hoge が含まれていないタスクは非表示
         expect(page).not_to have_content task_fuga.title
-        expect(page).not_to have_content task_complete.title        
+        expect(page).not_to have_content task_complete.title
       end
     end
     context 'ステータスで検索' do
@@ -210,7 +217,7 @@ RSpec.describe 'Tasks', type: :system do
         expect(page).to have_content task_complete.title
         # completed以外は非表示
         expect(page).not_to have_content task_hoge.title
-        expect(page).not_to have_content task_fuga.title    
+        expect(page).not_to have_content task_fuga.title
       end
     end
     context '検索した後作成日時でソート' do
