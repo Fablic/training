@@ -4,5 +4,4 @@ FactoryBot.define do
 		password { 'password' }
 		name { 'hoge' }
 	end
-
 end
