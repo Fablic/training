@@ -43,11 +43,11 @@ RSpec.describe 'Task', type: :system do
     end
 
     it 'return task info' do # rubocop:disable RSpec/MultipleExpectations
-      expect(page).to have_content task.name
-      expect(page).to have_content task.description
-      expect(page).to have_content task.status_i18n
-      expect(page).to have_content task.priority_i18n
-      expect(page).to have_content task.limit
+      expect(page).to have_content 'テストタスク'
+      expect(page).to have_content 'テストのタスク'
+      expect(page).to have_content '未着手'
+      expect(page).to have_content '低い'
+      expect(page).to have_content '2022-6-20'.to_date
     end
 
     context 'when user click Edit' do
