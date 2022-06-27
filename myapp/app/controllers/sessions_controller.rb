@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
       log_in(user)
       redirect_to root_path
     else
-      flash.now[:danger] = 'Invalid email or password'
+      flash.now[:danger] = I18n.t('sessions.create.invalid')
       render 'new'
     end
   end
