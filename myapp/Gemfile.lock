@@ -81,6 +81,8 @@ GEM
     concurrent-ruby (1.1.10)
     crass (1.0.6)
     diff-lcs (1.5.0)
+    enum_help (0.0.19)
+      activesupport (>= 3.0.0)
     erubi (1.10.0)
     fablicop (1.4.0)
       rubocop (>= 1.14, < 1.29)
@@ -153,6 +155,9 @@ GEM
       nokogiri (>= 1.6)
     rails-html-sanitizer (1.4.2)
       loofah (~> 2.3)
+    rails-i18n (7.0.3)
+      i18n (>= 0.7, < 2)
+      railties (>= 6.0.0, < 8)
     railties (6.0.5)
       actionpack (= 6.0.5)
       activesupport (= 6.0.5)
@@ -264,6 +269,7 @@ DEPENDENCIES
   byebug
   capybara (>= 2.15)
   capybara-screenshot
+  enum_help
   fablicop
   factory_bot_rails
   jbuilder (~> 2.7)
@@ -271,6 +277,7 @@ DEPENDENCIES
   mysql2 (>= 0.4.4)
   puma (~> 4.1)
   rails (~> 6.0.5)
+  rails-i18n
   rspec-rails
   rubocop
   rubocop-performance

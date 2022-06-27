@@ -1,0 +1,23 @@
+ja:
+  activerecord:
+    models:
+      task: "タスク情報"
+    attributes:
+      task:
+        name: "タスク名"
+        description: "詳細"
+        created_at: "作成日時"
+        updated_at: "更新日時"
+        priority: "優先度"
+        status: "状態"
+        limit: "期限"
+  enums:
+    task:
+      priority:
+        Low: "低い"
+        Normal: "普通"
+        High: "高い"
+      status:
+        TODO: "未着手"
+        IN_PROGRESS: "着手中"
+        DONE: "完了"

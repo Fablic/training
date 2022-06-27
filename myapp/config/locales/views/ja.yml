@@ -1,0 +1,20 @@
+ja:
+  tasks:
+    index:
+      title: "タスク一覧"
+    edit:
+      title: "編集"
+    show:
+      title: "タスク詳細"
+    new:
+      title: "新規作成"
+    flash:
+      create:
+        success: "Create Task!!"
+        error: "Failed"
+      update:
+        success: "Edit Task!!"
+        error: "Failed"
+      destroy:
+        success: "Delete Task!!"
+        error: "Failed"

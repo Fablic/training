@@ -1,8 +1,8 @@
-<% content_for(:page_title, 'Task detail') %>
+<% content_for(:page_title, I18n.t('tasks.show.title')) %>
 
-<%= link_to "Edit", edit_task_path(@task) %>
+<%= link_to I18n.t('dictionary.button.edit'), edit_task_path(@task) %>
 
-<%= link_to "Delete", @task, method: :delete, data: {confirm: "Do you want to delete #{@task.name}?"} %>
+<%= link_to I18n.t('dictionary.button.destory'), @task, method: :delete, data: {confirm: "Do you want to delete #{@task.name}?"} %>
 
 <h2>
   <%= @task.name %>
@@ -14,12 +14,12 @@
   </p>
   <span>
     <label>Status</label>
-    <%= @task.status %>
+    <%= @task.status_i18n %>
     <label>Priority</label>
-    <%= @task.priority %>
+    <%= @task.priority_i18n %>
     <label>Limit</label>
     <%= @task.limit %>
   </span>
 </div>
 
-<%= link_to "Home", '/' %>
+<%= link_to I18n.t('dictionary.button.home'), root_path %>

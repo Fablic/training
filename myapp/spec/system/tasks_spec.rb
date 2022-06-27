@@ -13,11 +13,11 @@ RSpec.describe 'Task', type: :system do
     end
 
     it 'display default item' do
-      expect(page).to have_link 'Add Task'
+      expect(page).to have_link '新規作成'
     end
 
     it 'go to New Task page' do
-      click_on 'Add Task'
+      click_on '新規作成'
       expect(page).to have_current_path new_task_path, ignore_query: true
     end
 
@@ -29,29 +29,30 @@ RSpec.describe 'Task', type: :system do
 
       it "return user's task" do # rubocop:disable RSpec/MultipleExpectations
         expect(page).to have_link '散歩'
-        expect(page).to have_link 'Edit'
-        expect(page).to have_link 'Delete'
+        expect(page).to have_link '編集'
+        expect(page).to have_link '削除'
       end
     end
   end
 
   describe '#show' do
-    let(:task) { create(:task) }
+    let(:task) { create(:task, name: 'テストタスク', description: 'テストのタスク', priority: 1, status: 1, limit: '2022-6-20'.to_date, user_id: 1) }
 
     before do
       visit task_path(task)
     end
 
     it 'return task info' do # rubocop:disable RSpec/MultipleExpectations
-      expect(page).to have_content task.name
-      expect(page).to have_content task.description
-      expect(page).to have_content task.priority
-      expect(page).to have_content task.limit
+      expect(page).to have_content 'テストタスク'
+      expect(page).to have_content 'テストのタスク'
+      expect(page).to have_content '未着手'
+      expect(page).to have_content '低い'
+      expect(page).to have_content '2022-6-20'.to_date
     end
 
     context 'when user click Edit' do
       it 'return edit task form' do
-        click_on 'Edit'
+        click_on '編集'
         expect(page).to have_current_path edit_task_path(task), ignore_query: true
       end
     end
@@ -59,19 +60,19 @@ RSpec.describe 'Task', type: :system do
     context 'when user click Delete' do
       it 'delete task' do
         expect {
-          click_on 'Delete'
+          click_on '削除'
         }.to change(Task, :count).by(-1)
       end
 
       it 'display delete success message' do
-        click_on 'Delete'
-        expect(page).to have_content 'delete success'
+        click_on '削除'
+        expect(page).to have_content 'Delete Task!!'
       end
     end
 
     context 'when user click Home' do
       it 'go to roog page' do
-        click_on 'Home'
+        click_on '一覧へ'
         expect(page).to have_current_path root_path, ignore_query: true
       end
     end
@@ -84,11 +85,11 @@ RSpec.describe 'Task', type: :system do
 
     context 'when user go to this page' do
       it 'display blank task form' do # rubocop:disable RSpec/MultipleExpectations
-        expect(page).to have_field 'Task title'
-        expect(page).to have_field 'Description'
-        expect(page).to have_field 'Limit'
-        expect(page).to have_field 'Status'
-        expect(page).to have_field 'Priority'
+        expect(page).to have_field 'タスク名'
+        expect(page).to have_field '詳細'
+        expect(page).to have_field '期限'
+        expect(page).to have_field '状態'
+        expect(page).to have_field '優先度'
       end
     end
   end
@@ -102,11 +103,11 @@ RSpec.describe 'Task', type: :system do
 
     context 'when user go to this page' do
       it 'display task form' do # rubocop:disable RSpec/MultipleExpectations
-        expect(page).to have_field 'Task title', with: task.name
-        expect(page).to have_field 'Description', with: task.description
-        expect(page).to have_field 'Limit', with: task.limit
-        expect(page).to have_field 'Status', with: task.status
-        expect(page).to have_field 'Priority', with: task.priority
+        expect(page).to have_field 'タスク名', with: task.name
+        expect(page).to have_field '詳細', with: task.description
+        expect(page).to have_field '期限', with: task.limit
+        expect(page).to have_field '状態', with: task.status
+        expect(page).to have_field '優先度', with: task.priority
       end
     end
   end
@@ -118,39 +119,39 @@ RSpec.describe 'Task', type: :system do
 
     context 'when user go to Add task page' do
       it 'display brank form' do # rubocop:disable RSpec/MultipleExpectations
-        expect(page).to have_field 'Task title'
-        expect(page).to have_field 'Description'
-        expect(page).to have_field 'Limit'
-        expect(page).to have_field 'Status'
-        expect(page).to have_field 'Priority'
+        expect(page).to have_field 'タスク名'
+        expect(page).to have_field '詳細'
+        expect(page).to have_field '期限'
+        expect(page).to have_field '状態'
+        expect(page).to have_field '優先度'
       end
     end
 
     context 'when user input task' do
       before do
-        fill_in 'Task title', with: '散歩'
-        fill_in 'Description', with: '多摩川を歩く'
-        fill_in 'Limit', with: '2022-06-20'
-        select 'TODO', from: 'Status'
-        select 'Low', from: 'Priority'
+        fill_in 'タスク名', with: '散歩'
+        fill_in '詳細', with: '多摩川を歩く'
+        fill_in '期限', with: '2022-06-20'
+        select '未着手', from: '状態'
+        select '低い', from: '優先度'
       end
 
       it 'display input task info' do # rubocop:disable RSpec/MultipleExpectations
-        expect(page).to have_field 'Task title', with: '散歩'
-        expect(page).to have_field 'Description', with: '多摩川を歩く'
-        expect(page).to have_field 'Limit', with: '2022-06-20'
-        expect(page).to have_field 'Status', with: 'TODO'
-        expect(page).to have_field 'Priority', with: 'Low'
+        expect(page).to have_field 'タスク名', with: '散歩'
+        expect(page).to have_field '詳細', with: '多摩川を歩く'
+        expect(page).to have_field '期限', with: '2022-06-20'
+        expect(page).to have_field '状態', with: 'TODO'
+        expect(page).to have_field '優先度', with: 'Low'
       end
 
       context 'when user click "Create Task" button' do
         it 'go to Task detail page' do # rubocop:disable RSpec/MultipleExpectations
-          click_on 'Create Task'
+          click_on '新規作成'
           expect(page).to have_content '散歩'
           expect(page).to have_content '多摩川を歩く'
           expect(page).to have_content '2022-06-20'
-          expect(page).to have_content 'TODO'
-          expect(page).to have_content 'Low'
+          expect(page).to have_content '未着手'
+          expect(page).to have_content '低い'
         end
       end
     end
@@ -165,46 +166,46 @@ RSpec.describe 'Task', type: :system do
 
     context 'when user edit task form correctly' do
       before do
-        fill_in 'Task title', with: '運動'
-        fill_in 'Description', with: '多摩川を走る'
-        fill_in 'Limit', with: '2022-06-20'
-        select 'IN PROGRESS', from: 'Status'
-        select 'Normal', from: 'Priority'
+        fill_in 'タスク名', with: '運動'
+        fill_in '詳細', with: '多摩川を走る'
+        fill_in '期限', with: '2022-06-20'
+        select '着手中', from: '状態'
+        select '普通', from: '優先度'
       end
 
       it 'display new task info' do # rubocop:disable RSpec/MultipleExpectations
-        expect(page).to have_field 'Task title', with: '運動'
-        expect(page).to have_field 'Description', with: '多摩川を走る'
-        expect(page).to have_field 'Limit', with: '2022-06-20'
-        expect(page).to have_field 'Status', with: 'IN_PROGRESS'
-        expect(page).to have_field 'Priority', with: 'Normal'
+        expect(page).to have_field 'タスク名', with: '運動'
+        expect(page).to have_field '詳細', with: '多摩川を走る'
+        expect(page).to have_field '期限', with: '2022-06-20'
+        expect(page).to have_field '状態', with: 'IN_PROGRESS'
+        expect(page).to have_field '優先度', with: 'Normal'
       end
 
       context 'when user click "Update Task" button' do
         it 'go to Task detail page' do # rubocop:disable RSpec/MultipleExpectations
-          click_on 'Update Task'
+          click_on '更新'
           expect(page).to have_content '運動'
           expect(page).to have_content '多摩川を走る'
           expect(page).to have_content '2022-06-20'
-          expect(page).to have_content 'IN_PROGRESS'
-          expect(page).to have_content 'Normal'
-          expect(page).to have_content 'Edit success'
+          expect(page).to have_content '着手中'
+          expect(page).to have_content '普通'
+          expect(page).to have_content 'Edit Task!!'
         end
       end
     end
 
     context 'when user edit task form incorrectly' do
       before do
-        fill_in 'Task title', with: ''
-        fill_in 'Description', with: '多摩川を走る'
-        fill_in 'Limit', with: '2022-06-20'
-        select 'IN PROGRESS', from: 'Status'
-        select 'Normal', from: 'Priority'
+        fill_in 'タスク名', with: ''
+        fill_in '詳細', with: '多摩川を走る'
+        fill_in '期限', with: '2022-06-20'
+        select '着手中', from: '状態'
+        select '普通', from: '優先度'
       end
 
       it 'unable to complete editing (because name is blank)' do
-        click_on 'Update Task'
-        expect(page).to have_content 'Edit failed'
+        click_on '更新'
+        expect(page).to have_content 'Failed'
       end
     end
   end
@@ -218,13 +219,13 @@ RSpec.describe 'Task', type: :system do
     context 'when the deletion process success' do
       it 'delete task' do
         expect {
-          click_on 'Delete'
+          click_on '削除'
         }.to change(Task, :count).by(-1)
       end
 
       it 'display delete success message' do
-        click_on 'Delete'
-        expect(page).to have_content 'delete success'
+        click_on '削除'
+        expect(page).to have_content 'Delete Task!!'
       end
     end
 
@@ -234,8 +235,8 @@ RSpec.describe 'Task', type: :system do
       end
 
       it 'display delete failed message' do
-        click_on 'Delete'
-        expect(page).to have_content 'Delete failed'
+        click_on '削除'
+        expect(page).to have_content 'Failed'
       end
     end
   end
