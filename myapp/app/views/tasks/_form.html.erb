@@ -1,4 +1,5 @@
 <%= form_with model: task, local: true do |form| %>
+  <%= render 'layouts/error_message', model: task %>
   <%= form.label :name %>
   <%= form.text_field :name %>
   <%= form.label :description %>
