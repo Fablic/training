@@ -9,9 +9,9 @@ USER_NUM.times do |i|
     password: 'password',
   )
   TASK_NUM.times do |j|
-	  user.tasks.create(
-    title: "#{user.name}-Rails研修step#{j}",
-    description: '研修の説明',
+    user.tasks.create(
+      title: "#{user.name}-Rails研修step#{j}",
+      description: '研修の説明',
       status: rand(0..2),
     )
   end
