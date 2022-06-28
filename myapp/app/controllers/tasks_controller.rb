@@ -2,7 +2,11 @@
 
 class TasksController < ApplicationController
   def index
-    @tasks = Task.all.order(created_at: 'DESC')
+    @tasks = if params[:sort_limit]
+               Task.sort_limit
+             else
+               Task.all.order(created_at: 'DESC')
+             end
   end
 
   def show
