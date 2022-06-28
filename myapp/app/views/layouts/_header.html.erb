@@ -1,22 +1,21 @@
-<header class="navbar navbar-fixed-top navbar-inverse">
-  <div class="container">
-    <%= link_to "Todo App", root_path, id: "logo" %>
-    <nav>
-      <ul class="nav navbar-nav navbar-right">
-        <li><%= link_to "Home",   '#' %></li>
-        <li><%= link_to "Log in", '#' %></li>
-        <li>
-            <div class="search_form">
-              <%= form_with url: search_path, method: :get, local: true do |f| %>
-                <% f.label :title %>
-                <%= f.text_field :title %>
-                <% f.label :status %>
-                <%= f.select :status, Task.statuses.map { |k, v| [k, v] } %>
-								<%= f.submit 'search' %>
-              <% end %>
-            </div>
-        </li>
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="nav-header">
+  <div class="container-fluid">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item"><%= link_to "Home",   root_path, class: "nav-link active text-white" %></li>
+        <li class="nav-item"><%= link_to "Log in", '#', class: "nav-link text-white" %></li>
       </ul>
-    </nav>
+
+      <div class="d-flex">
+        <%= form_with url: search_path, method: :get, local: true, class:"d-flex" do |f| %>
+        <%= f.text_field :title, placeholder: "Search", class: "form-control me-2" %>
+        <%= f.select :status, Task.statuses.map { |k, v| [k, v] }, {}, { class: "form-select" } %>
+				<%= f.button type: 'submit', class: "btn btn-secondary", name: 'search-button' do %>
+          <i class="fa fa-search"></i>
+        <% end %>
+      <% end %>
+      </div>
+      </ul>
+    </div>
   </div>
-</header>
+</nav>
