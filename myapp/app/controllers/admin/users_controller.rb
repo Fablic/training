@@ -1,5 +1,5 @@
 class Admin::UsersController < ApplicationController
   def index
-    # @users
+    @users = User.includes(:tasks).all
   end
 end

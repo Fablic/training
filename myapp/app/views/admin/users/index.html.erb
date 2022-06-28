@@ -1,1 +1,31 @@
-<h1>Admin page</h1>
+<div class="container">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">id</th>
+        <th scope="col">email</th>
+        <th scope="col">name</th>
+        <th scope="col">tasks</th>
+        <th scope="col">tasks_num</th>
+        <th scope="col">role</th>
+        <th scope="col">role_change</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <td><%= user.id %></td>
+          <td><%= user.email %></td>
+          <td><%= user.name %></td>
+          <td>TODO: ユーザーのタスク一覧へのリンク</td>
+          <td><%= user.tasks.length %></td>
+          <td><%= user.role %></td>
+          <%= form_with(url: admin_user_path(user) ) do |f| %>
+            <td><%= f.select :role, User.roles.keys.map { |k| [k, k] }, class: 'form-control' %></td>
+            <td><%= f.submit "change", class: "button" %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
