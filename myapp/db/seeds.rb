@@ -11,7 +11,7 @@ User.create!(
   description = "test-description-#{n+1}"
   priority = rand(1..3)
   status = rand(1..3)
-  limit = "2022-#{rand(1...12)}-#{rand(1...28)}".to_date
+  limit = "2022-#{rand(1..12)}-#{rand(1..28)}".to_date
   user_id = 1
   Task.create!(
     name: name,
