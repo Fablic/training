@@ -7,8 +7,8 @@ RSpec.describe Task, type: :model do
     create(:user)
   end
 
-  describe 'validation test' do
-    context 'when valid input' do
+  describe '#name' do
+    context 'when entering valid input' do
       let(:task) { create(:task) }
 
       it 'addition is success' do
@@ -16,7 +16,7 @@ RSpec.describe Task, type: :model do
       end
     end
 
-    context 'when entering title column' do
+    context 'when entering invalid input' do
       it 'failure if nil' do
         task = build(:task, name: nil)
         expect(task.valid?).to be false
