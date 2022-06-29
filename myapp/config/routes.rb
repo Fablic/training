@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   # admin/**
   namespace :admin do
     resources :users
+    get '/users/:id/tasks', to: 'users#tasks', as: 'users_tasks'
   end
   # 404/500エラーページ
   get '*path' => 'application#render_404'

@@ -4,6 +4,9 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item"><%= link_to "Home",   root_path, class: "nav-link active text-white" %></li>
         <li class="nav-item"><%= link_to 'Logout', logout_path, class: "nav-link text-white" %></li>
+        <% if admin? %>
+          <li class="nav-item"><%= link_to "Admin",   admin_users_path, class: "nav-link active text-white" %></li>
+        <% end %>
       </ul>
       <div class="d-flex">
         <%= form_with url: search_path, method: :get, local: true, class:"d-flex" do |f| %>

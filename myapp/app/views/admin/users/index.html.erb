@@ -1,4 +1,4 @@
-<div class="container">
+<div class="pt-5">
   <table class="table">
     <thead>
       <tr>
@@ -6,9 +6,9 @@
         <th scope="col">email</th>
         <th scope="col">name</th>
         <th scope="col">tasks</th>
-        <th scope="col">tasks_num</th>
+        <th scope="col">total tasks</th>
         <th scope="col">role</th>
-        <th scope="col">role_change</th>
+        <th scope="col"></th>
       </tr>
     </thead>
     <tbody>
@@ -17,15 +17,21 @@
           <td><%= user.id %></td>
           <td><%= user.email %></td>
           <td><%= user.name %></td>
-          <td>TODO: ユーザーのタスク一覧へのリンク</td>
+          <td><%= link_to "#{user.name}'s tasks", admin_users_tasks_path(user) %></td>
           <td><%= user.tasks.length %></td>
           <td><%= user.role %></td>
-          <%= form_with(url: admin_user_path(user) ) do |f| %>
-            <td><%= f.select :role, User.roles.keys.map { |k| [k, k] }, class: 'form-control' %></td>
-            <td><%= f.submit "change", class: "button" %></td>
-          <% end %>
+          <td>
+            <%= link_to admin_user_path(user), { method: :delete, data: { comfirm: "Sure?" }, id: "delete-#{user.id}", remote: true} do %>
+              <i class="fa-solid fa-trash"></i>
+            <% end %>
+            <%= link_to edit_admin_user_path(user), id: "edit-#{user.id}" do %>
+              <i class="fa-solid fa-pen-to-square"></i>
+            <% end %>
+          </td>
         </tr>
       <% end %>
     </tbody>
   </table>
+  <%= paginate @users %>
+  <%= link_to "New User", new_admin_user_path, class: 'btn btn-secondary' %>
 </div>
