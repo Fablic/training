@@ -16,7 +16,6 @@ class Admin::UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-
     return render 'new' unless @user.save
 
     flash[:success] = 'User created'
@@ -29,7 +28,12 @@ class Admin::UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-
+    # adminが0人になる場合は保存しない
+    if @user.role == 'admin' && user_params[:role] == 'normal' && count_admin_user == 1
+      flash[:danger] = 'Require at least 1 admin user'
+      return redirect_to admin_users_path
+    end
+    # その他で保存できないとき
     return render 'edit' unless @user.update(user_params)
 
     flash[:success] = 'User updated!'
@@ -37,11 +41,18 @@ class Admin::UsersController < ApplicationController
   end
 
   def destroy
+    user = User.find(params[:id])
     # 自分を指定しても消せないようにする
-    return redirect_to admin_users_path if params[:id].to_i == session[:user_id]
+    if params[:id].to_i == session[:user_id]
+      flash[:danger] = 'Can not delete yourself'
+      return redirect_to admin_users_path
+    # adminが0人になるときは削除しない
+    elsif user.role == 'admin' && count_admin_user == 1
+      flash[:danger] = 'Require at least 1 admin user'
+      return redirect_to admin_users_path
+    end
 
-    User.find(params[:id]).destroy
-
+    user.destroy
     flash[:success] = 'User deleted!'
     redirect_to admin_users_path
   end
@@ -53,5 +64,9 @@ class Admin::UsersController < ApplicationController
 
   def admin_user
     redirect_to root_path unless admin?
+  end
+
+  def count_admin_user
+    return User.where(role: 'admin').length
   end
 end
