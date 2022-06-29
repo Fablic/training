@@ -44,6 +44,39 @@ RSpec.describe 'Task', type: :system do
         end
       end
     end
+
+    context 'when push sort button' do
+      before do
+        create(:task, name: 'test1', limit: '2022-1-1'.to_date, created_at: '2021-12-1'.to_date)
+        create(:task, name: 'test2', limit: '2022-1-2'.to_date, created_at: '2021-12-2'.to_date)
+        create(:task, name: 'test3', limit: '2022-1-3'.to_date, created_at: '2021-12-3'.to_date)
+        visit current_path
+      end
+
+      it 'sorted by creation date' do
+        click_on '作成日時順'
+        within '.tasks' do
+          task_titles = all('.task-title').map(&:text)
+          expect(task_titles).to eq %w[test3 test2 test1]
+        end
+      end
+
+      it 'sorted in asc order by limit date' do
+        click_on '終了期限近い順'
+        within '.tasks' do
+          task_titles = all('.task-title').map(&:text)
+          expect(task_titles).to eq %w[test1 test2 test3]
+        end
+      end
+
+      it 'sorted in desc order by limit date' do
+        click_on '終了期限遠い順'
+        within '.tasks' do
+          task_titles = all('.task-title').map(&:text)
+          expect(task_titles).to eq %w[test3 test2 test1]
+        end
+      end
+    end
   end
 
   describe '#show' do
