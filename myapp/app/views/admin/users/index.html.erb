@@ -1,4 +1,4 @@
-<div class="pt-5">
+<div class="mt-5">
   <table class="table">
     <thead>
       <tr>
@@ -8,6 +8,7 @@
         <th scope="col">tasks</th>
         <th scope="col">total tasks</th>
         <th scope="col">role</th>
+        <th scope="col">change role</th>
         <th scope="col"></th>
       </tr>
     </thead>
@@ -21,7 +22,15 @@
           <td><%= user.tasks.length %></td>
           <td><%= user.role %></td>
           <td>
-            <%= link_to admin_user_path(user), { method: :delete, data: { comfirm: "Sure?" }, id: "delete-#{user.id}", remote: true} do %>
+            <%= form_with(model: [:admin, user]) do |f| %>
+              <%= f.select :role, User.roles.keys.map { |k| [k, k] }, class: "form-control" %>
+              <%= f.button type: "submit", class: "btn btn-light" do %>
+                <i class="fa-solid fa-arrows-rotate"></i>
+              <% end %>
+            <% end %>
+          </td>
+          <td>
+            <%= link_to admin_user_path(user), { method: :delete, data: { comfirm: "Sure?" }, id: "delete-#{user.id}", remote: true } do %>
               <i class="fa-solid fa-trash"></i>
             <% end %>
             <%= link_to edit_admin_user_path(user), id: "edit-#{user.id}" do %>

@@ -10,15 +10,16 @@
   </head>
 
   <body>
-    <% if logged_in? %>
-      <%= render 'layouts/header' %>
-    <% end %>
-
-    <!-- flashメッセージ -->
-    <% flash.each do |message_type, message| %>
-      <div class="alert alert-<%= message_type %>"><%= message %></div>
-    <% end %>
-    <div class="container pt-5">
+    <div class="container">
+      <% if logged_in? %>
+          <%= render 'layouts/header' %>
+      <% end %>
+    </div>
+    <div class="container p-5">
+      <!-- flashメッセージ -->
+      <% flash.each do |message_type, message| %>
+        <div class="alert alert-<%= message_type %> m-3"><%= message %></div>
+      <% end %>
       <%= yield %>
     </div>
   </body>
