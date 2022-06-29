@@ -15,7 +15,7 @@ RSpec.describe Task, type: :model do
       end
     end
 
-    context 'when entering invalide input' do
+    context 'when entering invalid input' do
       it 'failure if nil' do
         task = build(:task, name: nil)
         expect(task.valid?).to be false
