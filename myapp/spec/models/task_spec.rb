@@ -7,11 +7,10 @@ RSpec.describe Task, type: :model do
     create(:user)
   end
 
-  describe 'validation test' do
+  describe '#name' do
     context 'when valid input' do
-      let(:task) { create(:task) }
-
       it 'addition is success' do
+        task = build(:task, name: 'テストタスク')
         expect(task).to be_valid
       end
     end
