@@ -46,10 +46,6 @@ class Admin::UsersController < ApplicationController
     if params[:id].to_i == session[:user_id]
       flash[:danger] = 'Can not delete yourself'
       return redirect_to admin_users_path
-    # adminが0人になるときは削除しない
-    elsif user.role == 'admin' && count_admin_user == 1
-      flash[:danger] = 'Require at least 1 admin user'
-      return redirect_to admin_users_path
     end
 
     user.destroy
