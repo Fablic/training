@@ -9,9 +9,8 @@ RSpec.describe Task, type: :model do
 
   describe '#name' do
     context 'when entering valid input' do
-      let(:task) { create(:task) }
-
       it 'addition is success' do
+        task = build(:task, name: 'テストタスク')
         expect(task).to be_valid
       end
     end
