@@ -8,14 +8,14 @@ RSpec.describe Task, type: :model do
   end
 
   describe '#name' do
-    context 'when valid input' do
+    context 'when entering valid input' do
       it 'addition is success' do
         task = build(:task, name: 'テストタスク')
         expect(task).to be_valid
       end
     end
 
-    context 'when entering title column' do
+    context 'when entering invalide input' do
       it 'failure if nil' do
         task = build(:task, name: nil)
         expect(task.valid?).to be false
