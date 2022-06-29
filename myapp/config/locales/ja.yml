@@ -11,6 +11,10 @@ ja:
       destory: "削除"
       home: "一覧へ"
       edit: "編集"
+      sort:
+        created: "作成日時順"
+        limit_asc: "終了期限近い順"
+        limit_desc: "終了期限遠い順"
   helpers:
     submit:
       create: "新規作成"
