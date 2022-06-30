@@ -3,8 +3,8 @@
 <%= link_to I18n.t('dictionary.button.create'), '/tasks/new' %>
 <p>
   <%= link_to I18n.t('dictionary.button.sort.created'), root_path %>
-  <%= link_to I18n.t('dictionary.button.sort.limit_asc'), tasks_path(sort_limit_asc: 'true') %>
-  <%= link_to I18n.t('dictionary.button.sort.limit_desc'), tasks_path(sort_limit_desc: 'true') %>
+  <%= link_to I18n.t('dictionary.button.sort.limit_asc'), tasks_path(sort: 'limit') %>
+  <%= link_to I18n.t('dictionary.button.sort.limit_desc'), tasks_path(sort: '-limit') %>
 </p>
 
 <table class="tasks">
