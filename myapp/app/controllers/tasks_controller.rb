@@ -2,7 +2,16 @@
 
 class TasksController < ApplicationController
   def index
-    @tasks = Task.all.order(created_at: 'DESC')
+    sort = params[:sort]
+
+    @tasks = case sort
+             when 'limit'
+               Task.sort_limit_asc
+             when '-limit'
+               Task.sort_limit_desc
+             else
+               Task.all.order(created_at: 'DESC')
+             end
   end
 
   def show

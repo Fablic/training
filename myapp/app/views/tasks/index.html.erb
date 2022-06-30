@@ -1,6 +1,11 @@
 <% content_for(:page_title, I18n.t('tasks.index.title')) %>
 
 <%= link_to I18n.t('dictionary.button.create'), '/tasks/new' %>
+<p>
+  <%= link_to I18n.t('dictionary.button.sort.created'), root_path %>
+  <%= link_to I18n.t('dictionary.button.sort.limit_asc'), tasks_path(sort: 'limit') %>
+  <%= link_to I18n.t('dictionary.button.sort.limit_desc'), tasks_path(sort: '-limit') %>
+</p>
 
 <table class="tasks">
   <tbody>
