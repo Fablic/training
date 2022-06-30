@@ -47,9 +47,9 @@ RSpec.describe 'Task', type: :system do
 
     context 'when push sort button' do
       before do
-        create(:task, name: 'test1', limit: '2022-1-1'.to_date, created_at: '2021-12-1'.to_date)
-        create(:task, name: 'test2', limit: '2022-1-2'.to_date, created_at: '2021-12-2'.to_date)
-        create(:task, name: 'test3', limit: '2022-1-3'.to_date, created_at: '2021-12-3'.to_date)
+        create(:task, name: 'test1', limit: Time.new(2022, 1, 10).in_time_zone, created_at: Time.new(2021, 12, 1).in_time_zone)
+        create(:task, name: 'test2', limit: Time.new(2022, 1, 2).in_time_zone, created_at: Time.new(2021, 12, 2).in_time_zone)
+        create(:task, name: 'test3', limit: Time.new(2022, 1, 30).in_time_zone, created_at: Time.new(2021, 12, 3).in_time_zone)
         visit current_path
       end
 
@@ -65,7 +65,7 @@ RSpec.describe 'Task', type: :system do
         click_on '終了期限近い順'
         within '.tasks' do
           task_titles = all('.task-title').map(&:text)
-          expect(task_titles).to eq %w[test1 test2 test3]
+          expect(task_titles).to eq %w[test2 test1 test3]
         end
       end
 
@@ -73,7 +73,7 @@ RSpec.describe 'Task', type: :system do
         click_on '終了期限遠い順'
         within '.tasks' do
           task_titles = all('.task-title').map(&:text)
-          expect(task_titles).to eq %w[test3 test2 test1]
+          expect(task_titles).to eq %w[test3 test1 test2]
         end
       end
     end
