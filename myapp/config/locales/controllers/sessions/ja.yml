@@ -1,0 +1,4 @@
+ja:
+  sessions:
+    create:
+      invalid: '誤ったメールとパスワードの組み合わせです'

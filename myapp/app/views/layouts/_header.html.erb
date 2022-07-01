@@ -3,19 +3,17 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item"><%= link_to "Home",   root_path, class: "nav-link active text-white" %></li>
-        <li class="nav-item"><%= link_to "Log in", '#', class: "nav-link text-white" %></li>
+        <li class="nav-item"><%= link_to 'Logout', logout_path, class: "nav-link text-white" %></li>
       </ul>
-
       <div class="d-flex">
         <%= form_with url: search_path, method: :get, local: true, class:"d-flex" do |f| %>
-        <%= f.text_field :title, placeholder: "Search", class: "form-control me-2" %>
-        <%= f.select :status, Task.statuses.map { |k, v| [k, v] }, {}, { class: "form-select" } %>
-				<%= f.button type: 'submit', class: "btn btn-secondary", name: 'search-button' do %>
-          <i class="fa fa-search"></i>
+          <%= f.text_field :title, placeholder: "Search", class: "form-control me-2" %>
+          <%= f.select :status, Task.statuses.map { |k, v| [k, v] }, {}, { class: "form-select" } %>
+          <%= f.button type: 'submit', class: "btn btn-secondary", name: 'search-button' do %>
+            <i class="fa fa-search"></i>
+          <% end %>
         <% end %>
-      <% end %>
       </div>
-      </ul>
     </div>
   </div>
 </nav>

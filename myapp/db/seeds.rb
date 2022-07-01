@@ -5,7 +5,7 @@ USER_NUM.times do |i|
   name = Faker::Name.name
   user = User.create(
     name: name,
-    email: "rails#{i}@gmail.com",
+    email: "rails#{i}@example.com",
     password: 'password',
   )
   TASK_NUM.times do |j|
