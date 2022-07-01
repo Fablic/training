@@ -45,17 +45,39 @@ RSpec.describe 'Admin::Users', type: :system do
     end
 
     context 'ユーザー作成したとき' do
-      example '一覧画面にユーザーが一人追加される' do
-        expect do
+      context '正しいデータを入力したとき' do
+        example '一覧画面にユーザーが一人追加される' do
+          expect do
+            click_link 'New User', href: '/admin/users/new'
+            fill_in 'Name', with: 'newuser'
+            fill_in 'Email', with: 'newuser@example.com'
+            fill_in 'Password', with: 'password'
+            fill_in 'Confirmation', with: 'password'
+            click_button 'Submit'
+            new_user = User.find_by(email: 'newuser@example.com')
+            check_user_list(new_user, page)
+          end.to change(User, :count).by(1)
+        end
+      end
+      context '存在するemailを入力したとき' do
+        example '作成されずflashメッセージが表示' do
           click_link 'New User', href: '/admin/users/new'
-          fill_in 'Name', with: 'newuser'
-          fill_in 'Email', with: 'newuser@example.com'
+          fill_in 'Email', with: normal_user.email
           fill_in 'Password', with: 'password'
           fill_in 'Confirmation', with: 'password'
           click_button 'Submit'
-          new_user = User.find_by(email: 'newuser@example.com')
-          check_user_list(new_user, page)
-        end.to change(User, :count).by(1)
+          expect(page).to have_content I18n.t('errors.messages.taken', attribute: 'Email')
+        end
+      end
+      context 'PasswordとConfirmationが異なるとき' do
+        example '作成されずflashメッセージが表示' do
+          click_link 'New User', href: '/admin/users/new'
+          fill_in 'Email', with: 'newuser2@example.com'
+          fill_in 'Password', with: 'password'
+          fill_in 'Confirmation', with: 'hogehoge'
+          click_button 'Submit'
+          expect(page).to have_content I18n.t('errors.messages.confirmation', attribute: 'Password')
+        end
       end
     end
 
@@ -94,6 +116,14 @@ RSpec.describe 'Admin::Users', type: :system do
           click_button 'Submit'
           expect(find_by_id("user_#{normal_user.id}")).to have_content 'Name-update'
           expect(page).to have_content I18n.t('admin.users.update.flash_update')
+        end
+      end
+      context '存在するemailを入力したとき' do
+        example 'emailは更新されずflashメッセージが表示' do
+          click_link "edit-#{normal_user.id}"
+          fill_in 'Email', with: admin_user.email
+          click_button 'Submit'
+          expect(page).to have_content I18n.t('errors.messages.taken', attribute: 'Email')
         end
       end
       context 'PasswordとConfirmationが異なるとき' do

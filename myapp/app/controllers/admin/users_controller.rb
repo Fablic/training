@@ -16,7 +16,10 @@ class Admin::UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    return render 'new' unless @user.save
+    unless @user.save
+      flash[:danger] = @user.errors.full_messages.join('<br>')
+      return render 'new'
+    end
 
     flash[:success] = I18n.t('admin.users.create.flash_created')
     redirect_to admin_users_path
