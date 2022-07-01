@@ -59,6 +59,11 @@ class TasksController < ApplicationController
     redirect_to tasks_path
   end
 
+  def search
+    @tasks = Task.where('name LIKE ?', "%#{params[:keyword]}%")
+    render 'index'
+  end
+
   private
 
   def task_params
