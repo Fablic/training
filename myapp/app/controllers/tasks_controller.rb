@@ -60,7 +60,7 @@ class TasksController < ApplicationController
   end
 
   def search
-    @tasks = Task.where('name LIKE ?', "%#{params[:keyword]}%")
+    @tasks = Task.where('name LIKE ? OR description LIKE ?', "%#{params[:keyword]}%", "%#{params[:keyword]}%")
     render 'index'
   end
 
