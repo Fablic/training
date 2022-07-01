@@ -14,7 +14,7 @@
     </thead>
     <tbody>
       <% @users.each do |user| %>
-        <tr>
+        <tr id=<%= "user_#{user.id}" %>>
           <td><%= user.id %></td>
           <td><%= user.email %></td>
           <td><%= user.name %></td>
@@ -23,8 +23,8 @@
           <td><%= user.role %></td>
           <td>
             <%= form_with(model: [:admin, user]) do |f| %>
-              <%= f.select :role, User.roles.keys.map { |k| [k, k] }, class: "form-control" %>
-              <%= f.button type: "submit", class: "btn btn-light" do %>
+              <%= f.select :role, User.roles.keys.map { |k| [k, k] }, {}, { id: "user_role_#{user.id}", class: "form-select form-select-sm" } %>
+              <%= f.button type: "submit", id: "role_#{user.id}", class: "btn btn-light" do %>
                 <i class="fa-solid fa-arrows-rotate"></i>
               <% end %>
             <% end %>

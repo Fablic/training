@@ -18,7 +18,7 @@ class Admin::UsersController < ApplicationController
     @user = User.new(user_params)
     return render 'new' unless @user.save
 
-    flash[:success] = 'User created'
+    flash[:success] = I18n.t('admin.users.create.flash_created')
     redirect_to admin_users_path
   end
 
@@ -30,13 +30,16 @@ class Admin::UsersController < ApplicationController
     @user = User.find(params[:id])
     # adminが0人になる場合は保存しない
     if @user.role == 'admin' && user_params[:role] == 'normal' && count_admin_user == 1
-      flash[:danger] = 'Require at least 1 admin user'
+      flash[:danger] = I18n.t('admin.users.update.flash_req')
       return redirect_to admin_users_path
     end
     # その他で保存できないとき
-    return render 'edit' unless @user.update(user_params)
+    unless @user.update(user_params)
+      flash[:danger] = @user.errors.full_messages.join('<br>')
+      return render 'edit'
+    end
 
-    flash[:success] = 'User updated!'
+    flash[:success] = I18n.t('admin.users.update.flash_update')
     redirect_to admin_users_path
   end
 
@@ -44,16 +47,17 @@ class Admin::UsersController < ApplicationController
     user = User.find(params[:id])
     # 自分を指定しても消せないようにする
     if params[:id].to_i == session[:user_id]
-      flash[:danger] = 'Can not delete yourself'
+      flash[:danger] = I18n.t('admin.users.destroy.flash_delete_me')
       return redirect_to admin_users_path
     end
 
     user.destroy
-    flash[:success] = 'User deleted!'
+    flash[:success] = I18n.t('admin.users.destroy.flash_deleted')
     redirect_to admin_users_path
   end
 
   private
+
   def user_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation, :role)
   end
@@ -63,6 +67,6 @@ class Admin::UsersController < ApplicationController
   end
 
   def count_admin_user
-    return User.where(role: 'admin').length
+    User.where(role: 'admin').length
   end
 end

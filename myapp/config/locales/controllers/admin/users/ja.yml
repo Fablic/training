@@ -1,0 +1,12 @@
+ja:
+  admin:
+    users:
+      create:
+        flash_created: 'ユーザーが作成されました'
+      update:
+        flash_update: 'ユーザーが更新されました'
+        flash_req: 'Adminユーザーは1人以上必要です'
+        flash_invalid_password: 'パスワードが一致しません'
+      destroy:
+        flash_delete_me: '自分は削除できません'
+        flash_deleted: 'ユーザーが削除されました'
