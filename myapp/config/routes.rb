@@ -3,7 +3,9 @@
 Rails.application.routes.draw do
   root 'tasks#index'
 
-  resources :tasks
+  resources :tasks do
+    get :search, on: :collection
+  end
 
   # for error page
   get '*not_found' => 'application#routing_error'
