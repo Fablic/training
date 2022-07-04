@@ -1,5 +1,6 @@
 class Admin::UsersController < ApplicationController
-  before_action :admin_user
+  include Admin::UsersHelper
+  before_action :check_admin_user
   PAGE_NUM = 10
 
   def index
@@ -32,7 +33,7 @@ class Admin::UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     # adminが0人になる場合は保存しない
-    if @user.role == 'admin' && user_params[:role] == 'normal' && count_admin_user == 1
+    if @user.admin? && user_params[:role] == 'normal' && User.count_admin_user == 1
       flash[:danger] = I18n.t('admin.users.update.flash_req')
       return redirect_to admin_users_path
     end
@@ -65,11 +66,7 @@ class Admin::UsersController < ApplicationController
     params.require(:user).permit(:name, :email, :password, :password_confirmation, :role)
   end
 
-  def admin_user
+  def check_admin_user
     redirect_to root_path unless admin?
-  end
-
-  def count_admin_user
-    User.where(role: 'admin').length
   end
 end
