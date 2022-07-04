@@ -8,4 +8,6 @@ class Task < ApplicationRecord
 
   scope :sort_limit_asc, -> { order(limit: 'ASC') }
   scope :sort_limit_desc, -> { order(limit: 'DESC') }
+
+  paginates_per 10
 end
