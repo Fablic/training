@@ -3,15 +3,24 @@ class TasksController < ApplicationController
   PAGE_NUM = 10
 
   def index
-    @tasks = Task.where(user_id: session[:user_id]).order("#{sort_column} #{sort_direction}").page(params[:page]).per(PAGE_NUM)
+    @tasks = Task.where(user_id: session[:user_id]).includes(:labels).order("#{sort_column} #{sort_direction}").page(params[:page]).per(PAGE_NUM)
     @direction = sort_direction
   end
 
   def search
     @title = params[:title]
     @status = params[:status]
+    @label = params[:labels]
     @direction = sort_direction
-    @tasks = Task.where(user_id: session[:user_id]).search(@title, @status).order("#{sort_column} #{sort_direction}").page(params[:page]).per(PAGE_NUM)
+    @tasks = Task.where(user_id: session[:user_id])
+                 .includes(:task_labels)
+                 .includes(:labels)
+                 .search_title(@title)
+                 .search_status(@status)
+                 .search_label(@label)
+                 .order("#{sort_column} #{sort_direction}")
+                 .page(params[:page])
+                 .per(PAGE_NUM)
     render 'index'
   end
 
@@ -66,7 +75,7 @@ class TasksController < ApplicationController
   def sort_column
     # params[:sort]がnilのときはtitleでソート
     col = params[:sort].nil? ? 'title' : params[:sort]
-    #Taskのカラム以外が指定されたときはtitleをソート
+    # Taskのカラム以外が指定されたときはtitleをソート
     Task.column_names.include?(col) ? col : 'title'
   end
 
@@ -75,11 +84,10 @@ class TasksController < ApplicationController
     # params[:order]がnilのときは昇順でソートする
     ord = params[:order].nil? ? 'asc' : params[:order]
     # asc/desc以外が指定された時は昇順でソートする
-    %[asc desc].include?(ord) ? ord : 'asc'
+    %(asc desc).include?(ord) ? ord : 'asc'
   end
 
   def logged_in_user
     redirect_to login_path unless logged_in?
   end
-
 end

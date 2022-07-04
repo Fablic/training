@@ -7,6 +7,20 @@
         <%= sort_order('expire_at', t('tasks.form.expire'), @direction, @title, @status) %>
         <%= sort_order("created_at", t('tasks.form.created_at'), @direction, @title, @status) %>
       </div>
+
+      <%= form_with url: search_path, method: :get, local: true, class:"d-flex" do |f| %>
+        <div class="form-check">
+          <%= f.collection_check_boxes  :labels, Label.all, :name, :name, include_hidden: false do |b| %>
+            <%= b.label class: "form-check-label"%>
+            <%= b.check_box class:"form-check-input" %>
+          <% end %>
+          <div>
+            <%= f.button type: 'submit', class: "btn btn-primary" do %>
+                <i class="fa fa-search"></i>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
     </div>
 
     <div class="col-md-8 offset-md-1 pt-5">
@@ -23,6 +37,14 @@
                 <% else %>
                   <td><%= t('tasks.index.no_expire') %></td>
                 <% end %>
+                <p>
+                  <% task.labels.each do |label| %>
+                    <span class="badge rounded-pill bg-info">
+                      <%= label.name %>
+                    </span>
+                  <% end %>
+                </p>
+
               </div>
             </a>
           </div>

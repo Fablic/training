@@ -1,27 +1,32 @@
-<div class="container">
+<div class="container pt-5">
   <h1><%= t('.detail') %></h1>
   <div class="row">
     <aside class="col-md-4">
       <section class="task_info">
         <h2>
-          <%= @task.title %>
+          <%= @task.title %>:
         </h2>
         <p>
-          <%= @task.description %>
+          <%= @task.description %>:
         </p>
         <p>
-          <%= t('tasks.form.status') %>
+          <%= t('tasks.form.status') %>:
           <%= @task.status %>
         </p>
         <p>
-          <%= t('tasks.form.expire') %>
+          <%= t('tasks.form.expire') %>:
           <%= @task.expire_at %>
         </p>
         <p>
-          <%= t('tasks.form.created_at') %>
+          <%= t('tasks.form.created_at') %>:
           <%= @task.created_at %>
         </p>
-        <p></p>
+        <p>
+          <%= t('tasks.form.label') %>:
+          <% @task.labels.each do |label| %>
+            <%= label.name %>
+          <% end %>
+        </p>
       </section>
     </aside>
   </div>
