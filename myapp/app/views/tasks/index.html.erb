@@ -3,18 +3,24 @@
     <div class="col-md-2 pt-5 text-center">
       <h2><%= t('.all') %></h2>
       <%= link_to t('.create'), new_task_path, class: 'btn btn-secondary' %>
-      <div class="pt-3">
-        <%= sort_order('expire_at', t('tasks.form.expire'), @direction, @title, @status) %>
-        <%= sort_order("created_at", t('tasks.form.created_at'), @direction, @title, @status) %>
+      <div class="p-3">
+        <div class="p-1">
+          <%= sort_order('expire_at', t('tasks.form.expire'), @direction, @title, @status) %>
+        </div >
+        <div class="p-1">
+          <%= sort_order("created_at", t('tasks.form.created_at'), @direction, @title, @status) %>
+        </div>
       </div>
 
       <%= form_with url: search_path, method: :get, local: true, class:"d-flex" do |f| %>
         <div class="form-check">
           <%= f.collection_check_boxes  :labels, Label.all, :name, :name, include_hidden: false do |b| %>
-            <%= b.label class: "form-check-label"%>
+            <span class="badge rounded-pill bg-info">
+              <%= b.label %>
+            </span>
             <%= b.check_box class:"form-check-input" %>
           <% end %>
-          <div>
+          <div class="pt-3">
             <%= f.button type: 'submit', class: "btn btn-primary" do %>
                 <i class="fa fa-search"></i>
             <% end %>
