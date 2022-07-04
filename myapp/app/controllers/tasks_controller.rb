@@ -68,7 +68,8 @@ class TasksController < ApplicationController
 
   def task_params
     # status, priorityはのちのstepで追加する
-    params.require(:task).permit(:title, :description, :expire_at, :status).merge(user_id: current_user.id)
+    params.require(:task).permit(:title, :description, :expire_at, :status,
+                                 { label_ids: [] }).merge(user_id: current_user.id)
   end
 
   # ?sort=hogeでソートするカラムを受け取る. 存在しないカラムの時はtitleでソート
