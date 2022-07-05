@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  let(:user_valid) {
+  let(:user_valid) do
     FactoryBot.build(:user, id: 1)
-  }
+  end
   context 'emailのバリデーション' do
     example 'emailの長さが256文字以上だと無効' do
       user_valid.email = 'a' * 256
@@ -50,5 +50,4 @@ RSpec.describe User, type: :model do
       expect(Task.find_by(id: task.id)).to be_nil
     end
   end
-
 end
