@@ -4,14 +4,16 @@ class TasksController < ApplicationController
   def index
     sort = params[:sort]
 
-    @tasks = case sort
-             when 'limit'
-               Task.sort_limit_asc
-             when '-limit'
-               Task.sort_limit_desc
-             else
-               Task.all.order(created_at: 'DESC')
-             end
+    tasks = case sort
+            when 'limit'
+              Task.sort_limit_asc
+            when '-limit'
+              Task.sort_limit_desc
+            else
+              Task.all.order(created_at: 'DESC')
+            end
+
+    @tasks = tasks.page(params[:page])
   end
 
   def show
@@ -60,13 +62,15 @@ class TasksController < ApplicationController
   end
 
   def search
-    @tasks = Task.all.order(created_at: 'DESC')
+    tasks = Task.all.order(created_at: 'DESC')
     if params[:keyword] != ''
-      @tasks = Task.where('name LIKE ? OR description LIKE ?', "%#{params[:keyword]}%", "%#{params[:keyword]}%")
+      tasks = Task.where('name LIKE ? OR description LIKE ?', "%#{params[:keyword]}%", "%#{params[:keyword]}%")
     end
     if params[:status]
-      @tasks = Task.where(status: params[:status])
+      tasks = Task.where(status: params[:status])
     end
+
+    @tasks = tasks.page(params[:page])
     render 'index'
   end
 
