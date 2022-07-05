@@ -1,0 +1,18 @@
+<%= form_with(model: [:admin, @user], local: true) do |f| %>
+  <%= f.label :name %>
+  <%= f.text_field :name, class: "form-control" %>
+
+  <%= f.label :email %>
+  <%= f.email_field :email, class: "form-control" %>
+
+  <%= f.label :password %>
+  <%= f.password_field :password, class: "form-control"%>
+
+  <%= f.label :password_confirmation, "Confirmation" %>
+  <%= f.password_field :password_confirmation, class: "form-control" %>
+
+  <%= f.label :role %>
+  <%= f.select :role, User.roles.keys.map { |k| [k, k] }, class: "form-control" %>
+
+  <%= f.submit "Submit", class: "btn btn-primary" %>
+<% end %>

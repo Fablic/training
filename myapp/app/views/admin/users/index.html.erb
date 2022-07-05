@@ -1,0 +1,46 @@
+<div class="mt-5">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">id</th>
+        <th scope="col">email</th>
+        <th scope="col">name</th>
+        <th scope="col">tasks</th>
+        <th scope="col">total tasks</th>
+        <th scope="col">role</th>
+        <th scope="col">change role</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @users.each do |user| %>
+        <tr id=<%= "user_#{user.id}" %>>
+          <td><%= user.id %></td>
+          <td><%= user.email %></td>
+          <td><%= user.name %></td>
+          <td><%= link_to "#{user.name}'s tasks", admin_users_tasks_path(user) %></td>
+          <td><%= user.tasks.length %></td>
+          <td><%= user.role %></td>
+          <td>
+            <%= form_with(model: [:admin, user]) do |f| %>
+              <%= f.select :role, User.roles.keys.map { |k| [k, k] }, {}, { id: "user_role_#{user.id}", class: "form-select form-select-sm" } %>
+              <%= f.button type: "submit", id: "role_#{user.id}", class: "btn btn-light" do %>
+                <i class="fa-solid fa-arrows-rotate"></i>
+              <% end %>
+            <% end %>
+          </td>
+          <td>
+            <%= link_to admin_user_path(user), { method: :delete, data: { comfirm: "Sure?" }, id: "delete-#{user.id}", remote: true } do %>
+              <i class="fa-solid fa-trash"></i>
+            <% end %>
+            <%= link_to edit_admin_user_path(user), id: "edit-#{user.id}" do %>
+              <i class="fa-solid fa-pen-to-square"></i>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= paginate @users %>
+  <%= link_to "New User", new_admin_user_path, class: 'btn btn-secondary' %>
+</div>

@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
-include TasksHelper
 
 RSpec.describe 'Tasks', type: :system do
-  let!(:user) {
+  include TasksHelper
+  let!(:user) do
     FactoryBot.create(:user)
-  }
+  end
 
   before do
     login(user)
@@ -20,8 +22,8 @@ RSpec.describe 'Tasks', type: :system do
         expect(page).to have_content task.description
         expect(page).to have_content parse_date task.created_at
         expect(page).to have_content I18n.t('tasks.index.create')
-        expect(page).to have_link '', href:edit_task_path(task)
-        expect(page).to have_link '', href:task_path(task)
+        expect(page).to have_link '', href: edit_task_path(task)
+        expect(page).to have_link '', href: task_path(task)
       end
     end
   end
@@ -123,15 +125,15 @@ RSpec.describe 'Tasks', type: :system do
   end
 
   describe '作成日時でソート' do
-    let!(:task_created_yesterday) {
+    let!(:task_created_yesterday) do
       FactoryBot.create(:task, :created_yesterday, user_id: user.id)
-    }
-    let!(:task_created_1week_ago) {
+    end
+    let!(:task_created_1week_ago) do
       FactoryBot.create(:task, :created_1week_ago, user_id: user.id)
-    }
-    let!(:task_created_today) {
+    end
+    let!(:task_created_today) do
       FactoryBot.create(:task, user_id: user.id)
-    }
+    end
     context '1度作成日時を押したとき' do
       example '降順にソート' do
         visit root_path
@@ -155,18 +157,18 @@ RSpec.describe 'Tasks', type: :system do
   end
 
   describe '有効期限でソート' do
-    let!(:task_expire_tomorrow) {
+    let!(:task_expire_tomorrow) do
       FactoryBot.create(:task, :expire_tomorrow, user_id: user.id)
-    }
-    let!(:task_expire_next_month) {
+    end
+    let!(:task_expire_next_month) do
       FactoryBot.create(:task, :expire_next_month, user_id: user.id)
-    }
-    let!(:task_expire_today) {
+    end
+    let!(:task_expire_today) do
       FactoryBot.create(:task, user_id: user.id)
-    }
+    end
 
     context '1度有効期限を押したとき' do
-        # 降順→昇順に切り替わる
+      # 降順→昇順に切り替わる
       example '降順にソート' do
         visit root_path
         click_link I18n.t('tasks.form.expire')
@@ -188,15 +190,15 @@ RSpec.describe 'Tasks', type: :system do
   end
 
   describe '検索' do
-    let!(:task_hoge) {
+    let!(:task_hoge) do
       FactoryBot.create(:task, title: 'hogehoge', created_at: Time.current, user_id: user.id)
-    }
-    let!(:task_fuga) {
+    end
+    let!(:task_fuga) do
       FactoryBot.create(:task, title: 'fugafuga', created_at: Time.current.tomorrow, user_id: user.id)
-    }
-    let!(:task_complete) {
+    end
+    let!(:task_complete) do
       FactoryBot.create(:task, :status_completed, created_at: Time.current.yesterday, user_id: user.id)
-    }
+    end
 
     context 'タイトルで検索' do
       example 'タイトルが部分一致したタスクが表示' do

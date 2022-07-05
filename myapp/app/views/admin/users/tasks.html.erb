@@ -1,0 +1,24 @@
+<div class="mt-5">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">title</th>
+        <th scope="col">description</th>
+        <th scope="col">status</th>
+        <th scope="col">expire</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @tasks.each do |task| %>
+        <tr>
+          <td><%= task.title %></td>
+          <td><%= task.description %></td>
+          <td><%= task.status %></td>
+          <td><%= task.expire_at %></td>
+        </tr>
+      <% end %>
+
+    </tbody>
+  </table>
+</div>
