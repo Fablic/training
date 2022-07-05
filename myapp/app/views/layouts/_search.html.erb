@@ -1,5 +1,6 @@
 <%= form_with url: search_tasks_path, method: :get, local: true do |form| %>
   <%= form.text_field :keyword, name: 'keyword', value: params[:keyword] %>
+  <%= form.select :sort, [[I18n.t('dictionary.button.sort.created'), 'created_at'], [I18n.t('dictionary.button.sort.limit_asc'), 'limit'],[I18n.t('dictionary.button.sort.limit_desc'), '-limit']], { include_blank: '並び替え', selected: params[:sort] } %>
   <%= form.select :status, Task.statuses_i18n.keys.map {|k| [Task.statuses_i18n[k],k]}, { include_blank: '状態を選択', selected: params[:status] } %>
   <%= form.submit %>
 <% end %>
