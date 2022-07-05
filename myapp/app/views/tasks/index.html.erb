@@ -3,13 +3,6 @@
 <%= link_to I18n.t('dictionary.button.create'), '/tasks/new' %>
 <%= render partial: 'layouts/search' %>
 
-<div>
-  <%= form_with url: tasks_path, method: :get, local: true do |form| %>
-    <%= form.select :sort, [[I18n.t('dictionary.button.sort.created'), 'created_at'], [I18n.t('dictionary.button.sort.limit_asc'), 'limit'],[I18n.t('dictionary.button.sort.limit_desc'), '-limit']], { include_blank: '並び替え', selected: params[:sort] } %>
-    <%= form.submit %>
-  <% end %>
-</div>
-
 <table class="tasks">
   <tbody>
     <% @tasks.each do |task| %>
