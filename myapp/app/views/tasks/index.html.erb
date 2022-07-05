@@ -10,13 +10,6 @@
   <% end %>
 </div>
 
-<div>
-  <%= link_to I18n.t('enums.task.status.TODO'), search_tasks_path(status: 'TODO') %>
-  <%= link_to I18n.t('enums.task.status.IN_PROGRESS'), search_tasks_path(status: 'IN_PROGRESS') %>
-  <%= link_to I18n.t('enums.task.status.DONE'), search_tasks_path(status: 'DONE') %>
-</div>
-
-
 <table class="tasks">
   <tbody>
     <% @tasks.each do |task| %>
