@@ -60,13 +60,15 @@ class TasksController < ApplicationController
   end
 
   def search
-    @tasks = Task.all.order(created_at: 'DESC')
-    if params[:keyword] != ''
-      @tasks = Task.where('name LIKE ? OR description LIKE ?', "%#{params[:keyword]}%", "%#{params[:keyword]}%")
+    tasks = Task.all.order(created_at: 'DESC')
+    if params[:keyword].present?
+      tasks = tasks.where('name LIKE ? OR description LIKE ?', "%#{params[:keyword]}%", "%#{params[:keyword]}%")
     end
-    if params[:status]
-      @tasks = Task.where(status: params[:status])
+    if params[:status].present?
+      tasks = tasks.where(status: params[:status])
     end
+
+    @tasks = tasks
     render 'index'
   end
 
