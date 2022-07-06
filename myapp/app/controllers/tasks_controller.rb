@@ -50,7 +50,7 @@ class TasksController < ApplicationController
     redirect_to tasks_path
   end
 
-  def search # rubocop:disable all
+  def search
     sort = params[:sort]
     tasks = if sort.present?
               case sort
@@ -65,12 +65,8 @@ class TasksController < ApplicationController
               Task.sort_created_desc
             end
 
-    if params[:keyword].present?
-      tasks = tasks.name_or_description(params[:keyword])
-    end
-    if params[:status].present?
-      tasks = tasks.status(params[:status])
-    end
+    tasks = tasks.name_or_description(params[:keyword])
+    tasks = tasks.status(params[:status])
 
     @tasks = tasks
     render 'index'
