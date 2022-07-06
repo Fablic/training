@@ -16,7 +16,7 @@ class Task < ApplicationRecord
     if column.blank? || direction.blank?
       order(created_at: 'DESC')
     else
-      order("#{column} #{direction}")
+      order("#{column}": direction.to_s)
     end
   }
 end
