@@ -54,7 +54,8 @@ RSpec.describe 'Task', type: :system do
       end
 
       it 'sorted by creation date' do
-        click_on '作成日時順'
+        select '作成日時順', from: 'sort'
+        click_on '検索'
         within '.tasks' do
           task_titles = all('.task-title').map(&:text)
           expect(task_titles).to eq %w[test3 test2 test1]
@@ -62,7 +63,8 @@ RSpec.describe 'Task', type: :system do
       end
 
       it 'sorted in asc order by limit date' do
-        click_on '終了期限近い順'
+        select '終了期限近い順', from: 'sort'
+        click_on '検索'
         within '.tasks' do
           task_titles = all('.task-title').map(&:text)
           expect(task_titles).to eq %w[test2 test1 test3]
@@ -70,7 +72,8 @@ RSpec.describe 'Task', type: :system do
       end
 
       it 'sorted in desc order by limit date' do
-        click_on '終了期限遠い順'
+        select '終了期限遠い順', from: 'sort'
+        click_on '検索'
         within '.tasks' do
           task_titles = all('.task-title').map(&:text)
           expect(task_titles).to eq %w[test3 test1 test2]
@@ -80,24 +83,38 @@ RSpec.describe 'Task', type: :system do
 
     context 'when use search function' do
       before do
-        create(:task, name: '洗濯', description: 'コインランドリーに行く', priority: 'Low', status: 'TODO', limit: Time.new(2022, 1, 10).in_time_zone, created_at: Time.new(2021, 12, 1).in_time_zone)
+        create(:task, name: '洗濯1', description: 'コインランドリーに行く', priority: 'Low', status: 'TODO', limit: Time.new(2022, 1, 10).in_time_zone, created_at: Time.new(2021, 12, 1).in_time_zone)
+        create(:task, name: '洗濯2', description: 'クリーニング屋に行く', priority: 'High', status: 'DONE', limit: Time.new(2022, 1, 10).in_time_zone, created_at: Time.new(2021, 12, 1).in_time_zone)
         create(:task, name: '掃除', description: '洗面所掃除する', priority: 'Normal', status: 'IN_PROGRESS', limit: Time.new(2022, 1, 2).in_time_zone, created_at: Time.new(2021, 12, 2).in_time_zone)
         create(:task, name: '買い物', description: '柔軟剤買う', priority: 'High', status: 'DONE',  limit: Time.new(2022, 1, 30).in_time_zone, created_at: Time.new(2021, 12, 3).in_time_zone)
         visit current_path
       end
 
-      it 'can search using the search form' do # rubocop:disable RSpec/MultipleExpectations
+      it 'can search using the keyword' do # rubocop:disable RSpec/MultipleExpectations
         fill_in 'keyword', with: '洗濯'
         click_on '検索'
-        expect(page).to have_content '洗濯'
+        expect(page).to have_content '洗濯1'
+        expect(page).to have_content '洗濯2'
         expect(page).not_to have_content '掃除'
         expect(page).not_to have_content '買い物'
       end
 
-      it 'can search using status button' do # rubocop:disable RSpec/MultipleExpectations
-        click_on '着手中'
-        expect(page).not_to have_content '洗濯'
+      it 'can search using status' do # rubocop:disable RSpec/MultipleExpectations
+        select '着手中', from: 'status'
+        click_on '検索'
+        expect(page).not_to have_content '洗濯1'
+        expect(page).not_to have_content '洗濯2'
         expect(page).to have_content '掃除'
+        expect(page).not_to have_content '買い物'
+      end
+
+      it 'can search using keyword and status' do # rubocop:disable RSpec/MultipleExpectations
+        fill_in 'keyword', with: '洗濯'
+        select '未着手', from: 'status'
+        click_on '検索'
+        expect(page).to have_content '洗濯1'
+        expect(page).not_to have_content '洗濯2'
+        expect(page).not_to have_content '掃除'
         expect(page).not_to have_content '買い物'
       end
     end

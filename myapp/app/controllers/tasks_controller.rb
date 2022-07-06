@@ -2,6 +2,7 @@
 
 class TasksController < ApplicationController
   def index
+<<<<<<< HEAD
     sort = params[:sort]
 
     tasks = case sort
@@ -14,6 +15,9 @@ class TasksController < ApplicationController
             end
 
     @tasks = tasks.page(params[:page])
+=======
+    @tasks = Task.sort_created_desc
+>>>>>>> wataru-okamoto_step13
   end
 
   def show
@@ -61,16 +65,29 @@ class TasksController < ApplicationController
     redirect_to tasks_path
   end
 
-  def search
-    tasks = Task.all.order(created_at: 'DESC')
-    if params[:keyword] != ''
-      tasks = Task.where('name LIKE ? OR description LIKE ?', "%#{params[:keyword]}%", "%#{params[:keyword]}%")
+  def search # rubocop:disable all
+    sort = params[:sort]
+    tasks = if sort.present?
+              case sort
+              when 'limit'
+                Task.sort_limit_asc
+              when '-limit'
+                Task.sort_limit_desc
+              else
+                Task.sort_created_desc
+              end
+            else
+              Task.sort_created_desc
+            end
+
+    if params[:keyword].present?
+      tasks = tasks.name_or_description(params[:keyword])
     end
-    if params[:status]
-      tasks = Task.where(status: params[:status])
+    if params[:status].present?
+      tasks = tasks.status(params[:status])
     end
 
-    @tasks = tasks.page(params[:page])
+    @tasks = task.spage(params[:page])
     render 'index'
   end
 

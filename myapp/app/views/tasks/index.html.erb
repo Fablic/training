@@ -2,18 +2,6 @@
 
 <%= link_to I18n.t('dictionary.button.create'), '/tasks/new' %>
 <%= render partial: 'layouts/search' %>
-<div>
-  <%= link_to I18n.t('dictionary.button.sort.created'), root_path %>
-  <%= link_to I18n.t('dictionary.button.sort.limit_asc'), tasks_path(sort: 'limit') %>
-  <%= link_to I18n.t('dictionary.button.sort.limit_desc'), tasks_path(sort: '-limit') %>
-</div>
-
-<div>
-  <%= link_to I18n.t('enums.task.status.TODO'), search_tasks_path(status: 'TODO') %>
-  <%= link_to I18n.t('enums.task.status.IN_PROGRESS'), search_tasks_path(status: 'IN_PROGRESS') %>
-  <%= link_to I18n.t('enums.task.status.DONE'), search_tasks_path(status: 'DONE') %>
-</div>
-
 
 <table class="tasks">
   <tbody>
