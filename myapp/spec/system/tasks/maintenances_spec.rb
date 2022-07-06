@@ -24,7 +24,6 @@ RSpec.describe 'Maintenances', type: :system do
     example 'メンテナンスページが表示' do
       visit root_path
       expect(page).to have_http_status 503
-      expect(page).to have_content 'ただいまメンテナンス中です'
     end
 
     example 'メンテナンスを終了できるか' do
@@ -47,6 +46,10 @@ RSpec.describe 'Maintenances', type: :system do
 
     example 'モードの確認ができるか' do
       expect { maintenance_status.invoke }.to output("通常モードです\n").to_stdout
+    end
+
+    example '通常モードでメンテナンスを終了しても何も起こらない' do
+      expect { maintenance_end.invoke }.to output("メンテナンスモードは終了しています。通常モードです\n").to_stdout
     end
   end
 end

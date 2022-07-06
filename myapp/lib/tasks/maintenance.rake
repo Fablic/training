@@ -19,7 +19,7 @@ namespace :maintenance do
       File.delete(Constants::MAINTENANCE_FILE_PATH)
       puts 'メンテナンスモードを終了します'
     else
-      puts '通常モードです'
+      puts 'メンテナンスモードは終了しています。通常モードです'
     end
   end
 
