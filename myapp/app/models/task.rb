@@ -9,6 +9,14 @@ class Task < ApplicationRecord
   scope :sort_created_desc, -> { order(created_at: 'DESC') }
   scope :sort_limit_asc, -> { order(limit: 'ASC') }
   scope :sort_limit_desc, -> { order(limit: 'DESC') }
-  scope :name_or_description, -> (keyword) { where('name LIKE ? OR description LIKE ?', "%#{keyword}%", "%#{keyword}%") }
-  scope :status, -> (status) { where(status: status) }
+  scope :name_or_description, -> (keyword) { where('name LIKE ? OR description LIKE ?', "%#{keyword}%", "%#{keyword}%") if keyword.present? }
+  scope :status, -> (status) { where(status: status) if status.present? }
+
+  scope :sortby, lambda { |column, direction|
+    if column.blank? || direction.blank?
+      order(created_at: 'DESC')
+    else
+      order("#{column} #{direction}")
+    end
+  }
 end
