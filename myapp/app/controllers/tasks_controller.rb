@@ -2,22 +2,7 @@
 
 class TasksController < ApplicationController
   def index
-<<<<<<< HEAD
-    sort = params[:sort]
-
-    tasks = case sort
-            when 'limit'
-              Task.sort_limit_asc
-            when '-limit'
-              Task.sort_limit_desc
-            else
-              Task.all.order(created_at: 'DESC')
-            end
-
-    @tasks = tasks.page(params[:page])
-=======
     @tasks = Task.sort_created_desc
->>>>>>> wataru-okamoto_step13
   end
 
   def show
@@ -87,7 +72,7 @@ class TasksController < ApplicationController
       tasks = tasks.status(params[:status])
     end
 
-    @tasks = task.spage(params[:page])
+    @tasks = tasks.page(params[:page])
     render 'index'
   end
 
