@@ -54,7 +54,8 @@ RSpec.describe 'Task', type: :system do
       end
 
       it 'sorted by creation date' do
-        click_on '作成日時順'
+        select '作成日時順', from: 'sort'
+        click_on '検索'
         within '.tasks' do
           task_titles = all('.task-title').map(&:text)
           expect(task_titles).to eq %w[test3 test2 test1]
@@ -62,7 +63,8 @@ RSpec.describe 'Task', type: :system do
       end
 
       it 'sorted in asc order by limit date' do
-        click_on '終了期限近い順'
+        select '終了期限近い順', from: 'sort'
+        click_on '検索'
         within '.tasks' do
           task_titles = all('.task-title').map(&:text)
           expect(task_titles).to eq %w[test2 test1 test3]
@@ -70,7 +72,8 @@ RSpec.describe 'Task', type: :system do
       end
 
       it 'sorted in desc order by limit date' do
-        click_on '終了期限遠い順'
+        select '終了期限遠い順', from: 'sort'
+        click_on '検索'
         within '.tasks' do
           task_titles = all('.task-title').map(&:text)
           expect(task_titles).to eq %w[test3 test1 test2]
@@ -95,7 +98,8 @@ RSpec.describe 'Task', type: :system do
       end
 
       it 'can search using status button' do # rubocop:disable RSpec/MultipleExpectations
-        click_on '着手中'
+        select '着手中', from: 'status'
+        click_on '検索'
         expect(page).not_to have_content '洗濯'
         expect(page).to have_content '掃除'
         expect(page).not_to have_content '買い物'
