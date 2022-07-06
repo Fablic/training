@@ -6,8 +6,8 @@
 <table class="tasks">
   <thead>
     <tr>
-      <th><%= sort_order "name", "タイトル"%></th>
-      <th><%= sort_order "limit", "期限" %></th>
+      <th><%= sort_order "name", I18n.t('activerecord.attributes.task.name') %></th>
+      <th><%= sort_order "limit", I18n.t('activerecord.attributes.task.limit') %></th>
     </tr>
   </thead>
   <tbody>
