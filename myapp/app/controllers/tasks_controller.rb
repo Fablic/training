@@ -59,13 +59,26 @@ class TasksController < ApplicationController
     redirect_to tasks_path
   end
 
-  def search
-    tasks = Task.all.order(created_at: 'DESC')
+  def search # rubocop:disable all
+    sort = params[:sort]
+    tasks = if sort.present?
+              case sort
+              when 'limit'
+                Task.sort_limit_asc
+              when '-limit'
+                Task.sort_limit_desc
+              else
+                Task.sorted
+              end
+            else
+              Task.sorted
+            end
+
     if params[:keyword].present?
-      tasks = tasks.where('name LIKE ? OR description LIKE ?', "%#{params[:keyword]}%", "%#{params[:keyword]}%")
+      tasks = tasks.name_or_description(params[:keyword])
     end
     if params[:status].present?
-      tasks = tasks.where(status: params[:status])
+      tasks = tasks.status(params[:status])
     end
 
     @tasks = tasks
