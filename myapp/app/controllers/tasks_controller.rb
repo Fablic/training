@@ -68,10 +68,10 @@ class TasksController < ApplicationController
               when '-limit'
                 Task.sort_limit_desc
               else
-                Task.sorted
+                Task.sort_created_desc
               end
             else
-              Task.sorted
+              Task.sort_created_desc
             end
 
     if params[:keyword].present?
