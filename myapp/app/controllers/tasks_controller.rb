@@ -51,20 +51,6 @@ class TasksController < ApplicationController
   end
 
   def search
-    # sort = params[:sort]
-    # tasks = if sort.present?
-    #           case sort
-    #           when 'limit'
-    #             Task.sort_limit_asc
-    #           when '-limit'
-    #             Task.sort_limit_desc
-    #           else
-    #             Task.sort_created_desc
-    #           end
-    #         else
-    #           Task.sort_created_desc
-    #         end
-
     tasks = Task.sortby(params[:sort], params[:direction])
     tasks = tasks.name_or_description(params[:keyword])
     tasks = tasks.status(params[:status])
