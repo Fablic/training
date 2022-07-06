@@ -2,7 +2,7 @@
 
 class TasksController < ApplicationController
   def index
-    @tasks = Task.sort_created_desc
+    @tasks = Task.sort_created_desc.page(params[:page])
   end
 
   def show
