@@ -15,9 +15,9 @@ class Task < ApplicationRecord
       order("#{column}": direction.to_s)
     end
   }
-  scope :search, lambda { |params|
-    search_by_status(params[:status])
-    .search_by_name_or_description(params[:keyword])
-    .sortby(params[:sort], params[:direction])
+  scope :search, lambda { |status:, keyword:, sort:, direction:|
+    search_by_status(status)
+    .search_by_name_or_description(keyword)
+    .sortby(sort, direction)
   }
 end

@@ -2,7 +2,7 @@
 
 class TasksController < ApplicationController
   def index
-    @tasks = Task.search(params)
+    @tasks = Task.search(status: params[:status], keyword: params[:keyword], sort: params[:sort], direction: params[:direction])
   end
 
   def show
