@@ -8,12 +8,16 @@ class Task < ApplicationRecord
 
   scope :search_by_name_or_description, -> (keyword) { where('name LIKE ? OR description LIKE ?', "#{keyword}%", "#{keyword}%") if keyword.present? }
   scope :search_by_status, -> (status) { where(status: status) if status.present? }
-
   scope :sortby, lambda { |column, direction|
     if column.blank? || direction.blank?
       order(created_at: :desc)
     else
       order("#{column}": direction.to_s)
     end
+  }
+  scope :search, lambda { |params|
+    search_by_status(params[:status])
+    .search_by_name_or_description(params[:keyword])
+    .sortby(params[:sort], params[:direction])
   }
 end

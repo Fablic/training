@@ -51,11 +51,7 @@ class TasksController < ApplicationController
   end
 
   def search
-    tasks = Task.sortby(params[:sort], params[:direction])
-    tasks = tasks.search_by_name_or_description(params[:keyword])
-    tasks = tasks.search_by_status(params[:status])
-
-    @tasks = tasks
+    @tasks = Task.search(params)
     render 'index'
   end
 
