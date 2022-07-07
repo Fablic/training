@@ -54,17 +54,15 @@ RSpec.describe 'Task', type: :system do
       end
 
       it 'sorted by creation date' do
-        select '作成日時順', from: 'sort'
-        click_on '検索'
+        click_on '作成日時'
         within '.tasks' do
           task_titles = all('.task-title').map(&:text)
-          expect(task_titles).to eq %w[test3 test2 test1]
+          expect(task_titles).to eq %w[test1 test2 test3]
         end
       end
 
       it 'sorted in asc order by limit date' do
-        select '終了期限近い順', from: 'sort'
-        click_on '検索'
+        click_on '期限'
         within '.tasks' do
           task_titles = all('.task-title').map(&:text)
           expect(task_titles).to eq %w[test2 test1 test3]
@@ -72,8 +70,8 @@ RSpec.describe 'Task', type: :system do
       end
 
       it 'sorted in desc order by limit date' do
-        select '終了期限遠い順', from: 'sort'
-        click_on '検索'
+        click_on '期限'
+        click_on '期限'
         within '.tasks' do
           task_titles = all('.task-title').map(&:text)
           expect(task_titles).to eq %w[test3 test1 test2]
