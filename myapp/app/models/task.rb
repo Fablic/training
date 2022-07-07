@@ -11,7 +11,7 @@ class Task < ApplicationRecord
 
   scope :sortby, lambda { |column, direction|
     if column.blank? || direction.blank?
-      order(created_at: 'DESC')
+      order(created_at: :desc)
     else
       order("#{column}": direction.to_s)
     end
