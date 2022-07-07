@@ -11,7 +11,7 @@
 
   <body>
     <div class="container">
-      <% if logged_in? %>
+      <% if logged_in? && !maintenance? %>
           <%= render 'layouts/header' %>
       <% end %>
     </div>
