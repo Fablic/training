@@ -6,7 +6,7 @@ class Task < ApplicationRecord
   enum priority: { Low: 1, Normal: 2, High: 3 }
   enum status: { TODO: 1, IN_PROGRESS: 2, DONE: 3 }
 
-  scope :name_or_description, -> (keyword) { where('name LIKE ? OR description LIKE ?', "%#{keyword}%", "%#{keyword}%") if keyword.present? }
+  scope :name_or_description, -> (keyword) { where('name LIKE ? OR description LIKE ?', "#{keyword}%", "#{keyword}%") if keyword.present? }
   scope :status, -> (status) { where(status: status) if status.present? }
 
   scope :sortby, lambda { |column, direction|
