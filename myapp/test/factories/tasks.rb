@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :task do
     sequence(:title) { |n| "Rails研修#{n}" }
-    description { "テストデータをFactory Botで管理する" }
+    description { 'テストデータをFactory Botで管理する' }
     expire_at { Time.current }
 
     trait :no_title do
@@ -32,5 +32,10 @@ FactoryBot.define do
       status { 'completed' }
     end
 
+    trait :with_label do
+      after(:build) do |task|
+        task.labels << build(:label)
+      end
+    end
   end
 end

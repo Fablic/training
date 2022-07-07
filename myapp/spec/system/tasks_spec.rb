@@ -26,6 +26,14 @@ RSpec.describe 'Tasks', type: :system do
         expect(page).to have_link '', href: task_path(task)
       end
     end
+
+    context 'タスクにラベルが付与されているとき' do
+      example 'ラベルが表示' do
+        task_with_label = FactoryBot.create(:task, :with_label, user_id: user.id)
+        visit root_path
+        expect(page).to have_content task_with_label.labels[0].name
+      end
+    end
   end
 
   describe '新しいタスクを作成', type: :system do
@@ -56,6 +64,17 @@ RSpec.describe 'Tasks', type: :system do
         click_button I18n.t('tasks.form.save')
 
         expect(page).to have_content I18n.t('errors.messages.blank')
+      end
+    end
+
+    context 'ラベルを付与するとき' do
+      example 'タスクが追加される' do
+        label = FactoryBot.create(:label)
+        click_link I18n.t('tasks.index.create')
+        fill_in I18n.t('tasks.form.title'), with: 'test title'
+        check label.name
+        click_button I18n.t('tasks.form.save')
+        expect(page).to have_content label.name
       end
     end
   end
@@ -90,6 +109,27 @@ RSpec.describe 'Tasks', type: :system do
         click_button I18n.t('tasks.form.save')
 
         expect(page).to have_content I18n.t('errors.messages.blank')
+      end
+    end
+
+    context 'ラベルを追加するとき' do
+      example 'ラベルが追加され、タスクが更新のflashメッセージが表示' do
+        task = FactoryBot.create(:task, user_id: user.id)
+        label = FactoryBot.create(:label)
+        visit edit_task_path(task)
+        check label.name
+        click_button I18n.t('tasks.form.save')
+        expect(page.find('div#all-tasks')).to have_content label.name
+      end
+    end
+
+    context 'ラベルを削除するとき' do
+      example 'ラベルが削除され、タスクが更新のflashメッセージが表示' do
+        task_with_label = FactoryBot.create(:task, :with_label, user_id: user.id)
+        visit edit_task_path(task_with_label)
+        uncheck task_with_label.labels[0].name
+        click_button I18n.t('tasks.form.save')
+        expect(page.find('div#all-tasks')).not_to have_content task_with_label.labels[0].name
       end
     end
   end
@@ -228,9 +268,19 @@ RSpec.describe 'Tasks', type: :system do
         # 条件を指定せず検索
         click_button 'search-button'
         click_link I18n.t('tasks.form.created_at')
-
         expect(page.body.index(task_fuga.title)).to be < page.body.index(task_hoge.title)
         expect(page.body.index(task_hoge.title)).to be < page.body.index(task_complete.title)
+      end
+    end
+
+    context 'ラベルで検索' do
+      example '指定したラベルのタスクのみが表示' do
+        task_with_label = FactoryBot.create(:task, :with_label, user_id: user.id)
+        visit root_path
+        check task_with_label.labels[0].name
+        click_button 'label-search'
+        expect(page).to have_content task_with_label.title
+        expect(page.all('div#all-tasks').count).to eq 1
       end
     end
   end

@@ -13,5 +13,7 @@
   <%= f.label :expire_at, t('tasks.form.expire') %>
   <%= f.datetime_field :expire_at, class: 'form-control' %>
 
+  <%= f.label :labels %>
+  <%= f.collection_check_boxes :label_ids, Label.all, :id, :name %>
   <%= f.submit t('tasks.form.save'), class: "button" %>
 <% end %>

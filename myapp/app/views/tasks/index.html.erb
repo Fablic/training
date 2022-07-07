@@ -3,15 +3,36 @@
     <div class="col-md-2 pt-5 text-center">
       <h2><%= t('.all') %></h2>
       <%= link_to t('.create'), new_task_path, class: 'btn btn-secondary' %>
-      <div class="pt-3">
-        <%= sort_order('expire_at', t('tasks.form.expire'), @direction, @title, @status) %>
-        <%= sort_order("created_at", t('tasks.form.created_at'), @direction, @title, @status) %>
+      <div class="p-3">
+        <div class="p-1">
+          <%= sort_order('expire_at', t('tasks.form.expire'), @direction, @title, @status) %>
+        </div >
+        <div class="p-1">
+          <%= sort_order("created_at", t('tasks.form.created_at'), @direction, @title, @status) %>
+        </div>
       </div>
+
+      <%= form_with url: search_path, method: :get, local: true, class:"d-flex" do |f| %>
+        <div class="form-check">
+          <%= f.collection_check_boxes  :labels, Label.all, :name, :name, include_hidden: false, checked: @label  do |b| %>
+            <span class="badge rounded-pill bg-info">
+              <%= b.label %>
+            </span>
+            <%= b.check_box class: "form-check-input" %>
+          <% end %>
+          <div class="pt-3">
+            <%= f.button type: 'submit', class: "btn btn-primary", id:"label-search" do %>
+                <i class="fa fa-search"></i>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
     </div>
 
-    <div class="col-md-8 offset-md-1 pt-5">
-      <div class="row">
+    <div class="col-md-8 offset-md-1 pt-5" id="all-tasks">
+
         <% @tasks.each do | task | %>
+        <div class="row">
           <div class="col-md-8 border-top border-bottom p-3">
           <a href=<%= task_path(task)%>, class="text-decoration-none text-dark ">
               <h5 class="card-title" ><%= task.title %></h5>
@@ -23,6 +44,14 @@
                 <% else %>
                   <td><%= t('tasks.index.no_expire') %></td>
                 <% end %>
+                <p>
+                  <% task.labels.each do |label| %>
+                    <span class="badge rounded-pill bg-info">
+                      <%= label.name %>
+                    </span>
+                  <% end %>
+                </p>
+
               </div>
             </a>
           </div>
@@ -38,9 +67,9 @@
               <% end %>
             </div>
           </div>
-
+        </div>
         <% end %>
-      </div>
+
       <%= paginate @tasks %>
     </div>
   </div>
