@@ -45,13 +45,13 @@ RSpec.describe Task, type: :model do
     end
 
     describe ':sort_limit_desc' do
-      it 'sorted in desc order by limit ' do # rubocop:disable RSpec/ExcessiveDocstringSpacing
+      it 'sorted in desc order by limit' do
         expect(Task.sort_limit_desc).to eq [task1, task3, task2]
       end
     end
 
     describe ':sort_limit_asc' do
-      it 'sorted in asc order by limit ' do # rubocop:disable RSpec/ExcessiveDocstringSpacing
+      it 'sorted in asc order by limit' do
         expect(Task.sort_limit_asc).to eq [task2, task3, task1]
       end
     end
