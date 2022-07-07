@@ -38,33 +38,41 @@ RSpec.describe Task, type: :model do
     let(:task2) { create(:task, name: 'テスト2', status: 'IN_PROGRESS', limit: Time.new(2021, 1, 2).in_time_zone, created_at: Time.new(2021, 12, 2).in_time_zone) }
     let(:task3) { create(:task, name: 'テスト3', status: 'DONE', limit: Time.new(2021, 1, 3).in_time_zone, created_at: Time.new(2021, 12, 3).in_time_zone) }
 
-    describe ':sort_created_desc' do
-      it 'sorted by creation date' do
-        expect(Task.sort_created_desc).to eq [task3, task2, task1]
+    describe ':sortby' do
+      context 'when specify the limit column and asc direction' do # rubocop:disable RSpec/NestedGroups
+        it 'sorted by limit asc' do
+          expect(Task.sortby('limit', 'asc')).to eq [task2, task3, task1]
+        end
       end
-    end
 
-    describe ':sort_limit_desc' do
-      it 'sorted in desc order by limit' do
-        expect(Task.sort_limit_desc).to eq [task1, task3, task2]
+      context 'when specify the limit column and desc direction' do # rubocop:disable RSpec/NestedGroups
+        it 'sorted by limit desc' do
+          expect(Task.sortby('limit', 'desc')).to eq [task1, task3, task2]
+        end
       end
-    end
 
-    describe ':sort_limit_asc' do
-      it 'sorted in asc order by limit' do
-        expect(Task.sort_limit_asc).to eq [task2, task3, task1]
+      context 'when specify the created_at column and asc direction' do # rubocop:disable RSpec/NestedGroups
+        it 'sorted by creation date asc' do
+          expect(Task.sortby('created_at', 'asc')).to eq [task1, task2, task3]
+        end
+      end
+
+      context 'when specify the created_at column and desc direction' do # rubocop:disable RSpec/NestedGroups
+        it 'sorted by creation date desc' do
+          expect(Task.sortby('created_at', 'desc')).to eq [task3, task2, task1]
+        end
       end
     end
 
     describe ':name_or_description' do
       it 'searched by name or description' do
-        expect(Task.name_or_description('テスト1')).to eq [task1]
+        expect(Task.search_by_name_or_description('テスト1')).to eq [task1]
       end
     end
 
     describe ':status' do
       it 'searched by status' do
-        expect(Task.status('DONE')).to eq [task3]
+        expect(Task.search_by_status('DONE')).to eq [task3]
       end
     end
   end
