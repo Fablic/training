@@ -11,6 +11,7 @@ ja:
       destory: "削除"
       home: "一覧へ"
       edit: "編集"
+      search: "検索"
       sort:
         created: "作成日時順"
         limit_asc: "終了期限近い順"
@@ -19,3 +20,6 @@ ja:
     submit:
       create: "新規作成"
       update: "更新"
+  time:
+    formats:
+      default: "%Y/%m/%d %H:%M"
