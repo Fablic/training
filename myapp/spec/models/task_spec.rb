@@ -34,9 +34,9 @@ RSpec.describe Task, type: :model do
   end
 
   describe '#scope' do
-    let(:task1) { create(:task, name: 'テスト1', status: 'TODO', limit: Time.new(2021, 1, 10).in_time_zone, created_at: Time.new(2021, 12, 1).in_time_zone) }
-    let(:task2) { create(:task, name: 'テスト2', status: 'IN_PROGRESS', limit: Time.new(2021, 1, 2).in_time_zone, created_at: Time.new(2021, 12, 2).in_time_zone) }
-    let(:task3) { create(:task, name: 'テスト3', status: 'DONE', limit: Time.new(2021, 1, 3).in_time_zone, created_at: Time.new(2021, 12, 3).in_time_zone) }
+    let(:task1) { create(:task, name: 'テスト11', status: 'TODO', limit: Time.new(2021, 1, 10).in_time_zone, created_at: Time.new(2021, 12, 1).in_time_zone) }
+    let(:task2) { create(:task, name: 'テスト21', status: 'IN_PROGRESS', limit: Time.new(2021, 1, 2).in_time_zone, created_at: Time.new(2021, 12, 2).in_time_zone) }
+    let(:task3) { create(:task, name: 'テスト31', status: 'DONE', limit: Time.new(2021, 1, 3).in_time_zone, created_at: Time.new(2021, 12, 3).in_time_zone) }
 
     describe ':sortby' do
       context 'when specify the limit column and asc direction' do # rubocop:disable RSpec/NestedGroups
@@ -66,7 +66,11 @@ RSpec.describe Task, type: :model do
 
     describe ':name_or_description' do
       it 'searched by name or description' do
-        expect(Task.search_by_name_or_description('テスト1')).to eq [task1]
+        expect(Task.search_by_name_or_description('テスト11')).to eq [task1]
+      end
+
+      it 'searched by name in forward matching' do
+        expect(Task.search_by_name_or_description('テスト2')).to eq [task2]
       end
     end
 
