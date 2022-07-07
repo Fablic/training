@@ -2,7 +2,7 @@
 
 class TasksController < ApplicationController
   def index
-    @tasks = Task.sort_created_desc.page(params[:page])
+    @tasks = Task.search(status: params[:status], keyword: params[:keyword], sort: params[:sort], direction: params[:direction]).page(params[:page])
   end
 
   def show
@@ -48,32 +48,6 @@ class TasksController < ApplicationController
       flash[:error] = I18n.t('tasks.flash.destroy.error')
     end
     redirect_to tasks_path
-  end
-
-  def search # rubocop:disable all
-    sort = params[:sort]
-    tasks = if sort.present?
-              case sort
-              when 'limit'
-                Task.sort_limit_asc
-              when '-limit'
-                Task.sort_limit_desc
-              else
-                Task.sort_created_desc
-              end
-            else
-              Task.sort_created_desc
-            end
-
-    if params[:keyword].present?
-      tasks = tasks.name_or_description(params[:keyword])
-    end
-    if params[:status].present?
-      tasks = tasks.status(params[:status])
-    end
-
-    @tasks = tasks.page(params[:page])
-    render 'index'
   end
 
   private

@@ -20,3 +20,6 @@ ja:
     submit:
       create: "新規作成"
       update: "更新"
+  time:
+    formats:
+      default: "%Y/%m/%d %H:%M"
