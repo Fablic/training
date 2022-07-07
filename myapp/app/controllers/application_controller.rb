@@ -6,8 +6,6 @@ class ApplicationController < ActionController::Base
   rescue_from ActionController::RoutingError, with: :render_404
   rescue_from Exception, with: :render_500
 
-  private
-
   def render_404
     render template: 'errors/404', status: 404, layout: 'application', content_type: 'text/html'
   end
