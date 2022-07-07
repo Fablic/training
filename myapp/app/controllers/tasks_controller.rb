@@ -2,7 +2,7 @@
 
 class TasksController < ApplicationController
   def index
-    @tasks = Task.sortby(params[:sort], params[:direction])
+    @tasks = Task.search(params)
   end
 
   def show
@@ -48,11 +48,6 @@ class TasksController < ApplicationController
       flash[:error] = I18n.t('tasks.flash.destroy.error')
     end
     redirect_to tasks_path
-  end
-
-  def search
-    @tasks = Task.search(params)
-    render 'index'
   end
 
   private
