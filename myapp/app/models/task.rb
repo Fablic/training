@@ -20,4 +20,6 @@ class Task < ApplicationRecord
     .search_by_name_or_description(keyword)
     .sortby(sort, direction)
   }
+
+  paginates_per 10
 end
