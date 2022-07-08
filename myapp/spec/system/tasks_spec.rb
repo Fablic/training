@@ -116,6 +116,28 @@ RSpec.describe 'Task', type: :system do
         expect(page).not_to have_content '買い物'
       end
     end
+
+    context 'when number of tasks is more than 10' do
+      before do
+        create_list(:task, 11, :taskn)
+        visit current_path
+      end
+
+      it 'displayed pagination' do
+        expect(page).to have_content '最後'
+      end
+    end
+
+    context 'when number of tasks is less than 10' do
+      before do
+        create_list(:task, 10, :taskn)
+        visit current_path
+      end
+
+      it 'did not display pagination' do
+        expect(page).not_to have_content '最後'
+      end
+    end
   end
 
   describe '#show' do

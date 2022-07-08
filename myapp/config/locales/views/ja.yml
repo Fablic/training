@@ -18,3 +18,9 @@ ja:
       destroy:
         success: "Delete Task!!"
         error: "Failed"
+  views:
+    pagination:
+      first: "最初"
+      last: "最後"
+      next: "次のページ"
+      previous: "前のページ"

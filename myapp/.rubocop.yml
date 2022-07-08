@@ -30,3 +30,6 @@ AllCops:
 
 Style/SymbolArray:
   EnforcedStyle: brackets
+
+RSpec/NestedGroups:
+  Enabled: false

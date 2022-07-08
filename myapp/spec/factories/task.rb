@@ -8,5 +8,9 @@ FactoryBot.define do
     status { 1 }
     limit { '2022-6-20'.to_date }
     user_id { 1 }
+
+    trait :taskn do
+      sequence(:name) { |n| "test#{n}" }
+    end
   end
 end

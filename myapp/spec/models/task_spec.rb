@@ -64,7 +64,7 @@ RSpec.describe Task, type: :model do
       end
     end
 
-    describe ':name_or_description' do
+    describe ':search_by_name_or_description' do
       it 'searched by name or description' do
         expect(Task.search_by_name_or_description('テスト11')).to eq [task1]
       end
@@ -74,7 +74,7 @@ RSpec.describe Task, type: :model do
       end
     end
 
-    describe ':status' do
+    describe ':search_by_status' do
       it 'searched by status' do
         expect(Task.search_by_status('DONE')).to eq [task3]
       end

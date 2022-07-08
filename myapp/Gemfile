@@ -65,3 +65,6 @@ gem 'rails-i18n'
 
 # for secure password
 gem 'bcrypt'
+
+# for pagination
+gem 'kaminari'
