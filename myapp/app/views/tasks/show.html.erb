@@ -1,25 +1,27 @@
 <% content_for(:page_title, I18n.t('tasks.show.title')) %>
 
-<%= link_to I18n.t('dictionary.button.edit'), edit_task_path(@task) %>
+<div class="container">
+  <%= link_to I18n.t('dictionary.button.edit'), edit_task_path(@task) %>
 
-<%= link_to I18n.t('dictionary.button.destory'), @task, method: :delete, data: {confirm: "Do you want to delete #{@task.name}?"} %>
+  <%= link_to I18n.t('dictionary.button.destory'), @task, method: :delete, data: {confirm: "Do you want to delete #{@task.name}?"} %>
 
-<h2>
-  <%= @task.name %>
-</h2>
+  <h2>
+    <%= @task.name %>
+  </h2>
 
-<div>
-  <p>
-    <%= @task.description %>
-  </p>
-  <span>
-    <label>Status</label>
-    <%= @task.status_i18n %>
-    <label>Priority</label>
-    <%= @task.priority_i18n %>
-    <label>Limit</label>
-    <%= @task.limit %>
-  </span>
+  <div>
+    <p>
+      <%= @task.description %>
+    </p>
+    <span>
+      <label>Status</label>
+      <%= @task.status_i18n %>
+      <label>Priority</label>
+      <%= @task.priority_i18n %>
+      <label>Limit</label>
+      <%= @task.limit %>
+    </span>
+  </div>
+
+  <%= link_to I18n.t('dictionary.button.home'), root_path %>
 </div>
-
-<%= link_to I18n.t('dictionary.button.home'), root_path %>
