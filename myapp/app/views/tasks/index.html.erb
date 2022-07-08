@@ -1,6 +1,6 @@
 <% content_for(:page_title, I18n.t('tasks.index.title')) %>
 
-<%= link_to I18n.t('dictionary.button.create'), '/tasks/new' %>
+<%= link_to I18n.t('dictionary.button.create'), '/tasks/new', class: "btn btn-primary" %>
 <%= render partial: 'layouts/search' %>
 
 <table class="tasks table table-striped">
