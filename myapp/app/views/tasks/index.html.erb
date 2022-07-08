@@ -3,12 +3,14 @@
 <%= link_to I18n.t('dictionary.button.create'), '/tasks/new' %>
 <%= render partial: 'layouts/search' %>
 
-<table class="tasks">
-  <thead>
+<table class="tasks table table-striped">
+  <thead  class="table-light">
     <tr>
       <th><%= I18n.t('activerecord.attributes.task.name') %></th>
       <th><%= sort_order "limit", I18n.t('activerecord.attributes.task.limit') %></th>
       <th><%= sort_order "created_at", I18n.t('activerecord.attributes.task.created_at') %></th>
+      <th></th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
