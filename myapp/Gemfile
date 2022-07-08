@@ -68,3 +68,5 @@ gem 'bcrypt'
 
 # for pagination
 gem 'kaminari'
+
+gem 'bootstrap', '~> 5.1.3'
