@@ -24,7 +24,7 @@ class TasksController < ApplicationController
       flash[:success] = I18n.t('tasks.flash.create.success')
       redirect_to @task
     else
-      flash.now[:error] = I18n.t('tasks.flash.create.error')
+      flash.now[:danger] = I18n.t('tasks.flash.create.error')
       render :new
     end
   end
@@ -36,7 +36,7 @@ class TasksController < ApplicationController
       flash[:success] = I18n.t('tasks.flash.update.success')
       redirect_to @task
     else
-      flash.now[:error] = I18n.t('tasks.flash.update.error')
+      flash.now[:danger] = I18n.t('tasks.flash.update.error')
       render :edit
     end
   end
@@ -45,7 +45,7 @@ class TasksController < ApplicationController
     if Task.find(params[:id]).destroy
       flash[:success] = I18n.t('tasks.flash.destroy.success')
     else
-      flash[:error] = I18n.t('tasks.flash.destroy.error')
+      flash[:danger] = I18n.t('tasks.flash.destroy.error')
     end
     redirect_to tasks_path
   end
