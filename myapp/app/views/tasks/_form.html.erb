@@ -1,14 +1,30 @@
-<%= form_with model: task, local: true do |form| %>
-  <%= render 'layouts/error_message', model: task %>
-  <%= form.label :name %>
-  <%= form.text_field :name %>
-  <%= form.label :description %>
-  <%= form.text_area :description %>
-  <%= form.label :limit %>
-  <%= form.date_field :limit %>
-  <%= form.label :status %>
-  <%= form.select :status,  Task.statuses_i18n.keys.map {|k| [Task.statuses_i18n[k],k]}, {selected: "TODO"} %>
-  <%= form.label :priority %>
-  <%= form.select :priority,  Task.priorities_i18n.keys.map {|k| [Task.priorities_i18n[k],k]}, {selected: "Low"} %>
-  <%= form.submit %>
-<% end %>
+<div class="container">
+  <%= form_with model: task, local: true do |form| %>
+    <%= render 'layouts/error_message', model: task %>
+    <div class="form-group">
+      <%= form.label :name %>
+      <%= form.text_field :name, class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= form.label :description %>
+      <%= form.text_area :description, class: "form-control" %>
+    </div>
+    <div class="row">
+      <div class="col">
+        <%= form.label :limit %>
+        <%= form.date_field :limit, class: "form-control" %>
+      </div>
+      <div class="col">
+        <%= form.label :status %>
+        <%= form.select :status,  Task.statuses_i18n.keys.map {|k| [Task.statuses_i18n[k],k]}, {selected: "TODO"}, { class: "form-control" } %>
+      </div>
+      <div class="col">
+        <%= form.label :priority %>
+        <%= form.select :priority,  Task.priorities_i18n.keys.map {|k| [Task.priorities_i18n[k],k]}, {selected: "Low"}, { class: "form-control" } %>
+      </div>
+    </div>
+    <div class="d-grid gap-2 col-6 mx-auto mt-4">
+      <%= form.submit class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>

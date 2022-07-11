@@ -1,27 +1,33 @@
 <% content_for(:page_title, I18n.t('tasks.index.title')) %>
 
-<%= link_to I18n.t('dictionary.button.create'), '/tasks/new' %>
-<%= render partial: 'layouts/search' %>
+<div class="container">
+  <%= link_to I18n.t('dictionary.button.create'), '/tasks/new', class: "btn btn-primary mb-2" %>
+  <%= render partial: 'layouts/search' %>
 
-<table class="tasks">
-  <thead>
-    <tr>
-      <th><%= I18n.t('activerecord.attributes.task.name') %></th>
-      <th><%= sort_order "limit", I18n.t('activerecord.attributes.task.limit') %></th>
-      <th><%= sort_order "created_at", I18n.t('activerecord.attributes.task.created_at') %></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @tasks.each do |task| %>
+  <table class="tasks table table-striped mt-2">
+    <thead  class="table-light">
       <tr>
-        <td class="task-title"><%= link_to task.name, task %></td>
-        <td><%= I18n.l(task.limit) %></td>
-        <td><%= I18n.l(task.created_at) %></td>
-        <td><%= link_to I18n.t('dictionary.button.edit'), edit_task_path(task) %></td>
-        <td><%= link_to I18n.t('dictionary.button.destory'), task, method: :delete, data: {confirm: "Do you want to delete #{task.name}?"} %><br /></td>
+        <th><%= I18n.t('activerecord.attributes.task.name') %></th>
+        <th><%= sort_order "status", I18n.t('activerecord.attributes.task.status') %></th>
+        <th><%= sort_order "limit", I18n.t('activerecord.attributes.task.limit') %></th>
+        <th><%= sort_order "created_at", I18n.t('activerecord.attributes.task.created_at') %></th>
+        <th></th>
+        <th></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% @tasks.each do |task| %>
+        <tr>
+          <td class="task-title"><%= link_to task.name, task %></td>
+          <td><%= task.status_i18n %></td>
+          <td><%= I18n.l(task.limit) %></td>
+          <td><%= I18n.l(task.created_at) %></td>
+          <td><%= link_to I18n.t('dictionary.button.edit'), edit_task_path(task), class: "btn btn-info" %></td>
+          <td><%= link_to I18n.t('dictionary.button.destory'), task, method: :delete, data: {confirm: "Do you want to delete #{task.name}?"}, class: "btn btn-danger" %><br /></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 
-<%= paginate @tasks %>
+  <%= paginate @tasks %>
+</div>
