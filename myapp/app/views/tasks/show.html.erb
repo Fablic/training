@@ -1,27 +1,36 @@
 <% content_for(:page_title, I18n.t('tasks.show.title')) %>
 
 <div class="container">
-  <%= link_to I18n.t('dictionary.button.edit'), edit_task_path(@task), class: "btn btn-light" %>
+  <%= link_to I18n.t('dictionary.button.edit'), edit_task_path(@task), class: "btn btn-info" %>
 
-  <%= link_to I18n.t('dictionary.button.destory'), @task, method: :delete, data: {confirm: "Do you want to delete #{@task.name}?"}, class: "btn btn-light" %>
+  <%= link_to I18n.t('dictionary.button.destory'), @task, method: :delete, data: {confirm: "Do you want to delete #{@task.name}?"}, class: "btn btn-danger" %>
 
-  <h2>
-    <%= @task.name %>
-  </h2>
+  <div class="bg-light">
+    <h2>
+      <%= @task.name %>
+    </h2>
 
-  <div>
-    <p>
-      <%= @task.description %>
-    </p>
-    <span>
-      <label>Status</label>
-      <%= @task.status_i18n %>
-      <label>Priority</label>
-      <%= @task.priority_i18n %>
-      <label>Limit</label>
-      <%= @task.limit %>
-    </span>
+    <div>
+      <p>
+        <%= @task.description %>
+      </p>
+      <table class="table table-borderless">
+        <thead>
+          <tr>
+            <th><%= I18n.t('activerecord.attributes.task.limit') %></th>
+            <th><%= I18n.t('activerecord.attributes.task.status') %></th>
+            <th><%= I18n.t('activerecord.attributes.task.priority') %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><%= I18n.l(@task.limit) %></td>
+            <td><%= @task.status_i18n %></td>
+            <td><%= @task.priority_i18n %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
-
   <%= link_to I18n.t('dictionary.button.home'), root_path %>
 </div>

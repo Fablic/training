@@ -1,9 +1,9 @@
 <%= form_with url: tasks_path, method: :get, local: true do |form| %>
-  <div class="row">
-    <div class="col-2">
+  <div class="row justify-content-center">
+    <div class="col-3">
       <%= form.text_field :keyword, name: 'keyword', value: params[:keyword], class: "form-control" %>
     </div>
-    <div class="col-1">
+    <div class="col-2">
       <%= form.select :status, Task.statuses_i18n.keys.map {|k| [Task.statuses_i18n[k],k]}, { include_blank: '状態を選択', selected: params[:status] }, { id: 'status' , class: "form-control" } %>
     </div>
     <div class="col">
