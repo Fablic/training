@@ -8,6 +8,7 @@
     <thead  class="table-light">
       <tr>
         <th><%= I18n.t('activerecord.attributes.task.name') %></th>
+        <th><%= sort_order "status", I18n.t('activerecord.attributes.task.status') %></th>
         <th><%= sort_order "limit", I18n.t('activerecord.attributes.task.limit') %></th>
         <th><%= sort_order "created_at", I18n.t('activerecord.attributes.task.created_at') %></th>
         <th></th>
@@ -18,6 +19,7 @@
       <% @tasks.each do |task| %>
         <tr>
           <td class="task-title"><%= link_to task.name, task %></td>
+          <td><%= task.status_i18n %></td>
           <td><%= I18n.l(task.limit) %></td>
           <td><%= I18n.l(task.created_at) %></td>
           <td><%= link_to I18n.t('dictionary.button.edit'), edit_task_path(task), class: "btn btn-info" %></td>
