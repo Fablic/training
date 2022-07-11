@@ -152,7 +152,7 @@ RSpec.describe 'Task', type: :system do
       expect(page).to have_content 'テストのタスク'
       expect(page).to have_content '未着手'
       expect(page).to have_content '低い'
-      expect(page).to have_content '2022-6-20'.to_date
+      expect(page).to have_content I18n.l('2022-6-20'.to_date)
     end
 
     context 'when user click Edit' do
@@ -251,10 +251,10 @@ RSpec.describe 'Task', type: :system do
 
       context 'when user click "Create Task" button' do
         it 'go to Task detail page' do # rubocop:disable RSpec/MultipleExpectations
-          click_on '新規作成'
+          click_on '作成'
           expect(page).to have_content '散歩'
           expect(page).to have_content '多摩川を歩く'
-          expect(page).to have_content '2022-06-20'
+          expect(page).to have_content I18n.l('2022-06-20'.to_date)
           expect(page).to have_content '未着手'
           expect(page).to have_content '低い'
         end
@@ -291,7 +291,7 @@ RSpec.describe 'Task', type: :system do
           click_on '更新'
           expect(page).to have_content '運動'
           expect(page).to have_content '多摩川を走る'
-          expect(page).to have_content '2022-06-20'
+          expect(page).to have_content I18n.l('2022-06-20'.to_date)
           expect(page).to have_content '着手中'
           expect(page).to have_content '普通'
           expect(page).to have_content 'Edit Task!!'
