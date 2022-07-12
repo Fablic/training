@@ -23,4 +23,10 @@ class ApplicationController < ActionController::Base
     logger.info "Rendering 500 with exception: #{error.message}" if error
     render 'errors/500.html', status: :internal_server_error
   end
+
+  def logged_in_user
+    return if logged_in?
+
+    redirect_to login_path
+  end
 end
