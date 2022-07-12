@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class TasksController < ApplicationController
+  before_action :logged_in_user, only: [:edit, :update, :destroy]
+
   def index
     @tasks = Task.search(status: params[:status], keyword: params[:keyword], sort: params[:sort], direction: params[:direction]).page(params[:page])
   end
