@@ -3,6 +3,8 @@
     <a class="navbar-brand" href="/" >
       <%= yield(:page_title) %>
     </a>
-    <%= link_to "logout", logout_path, method: :delete, class: "btn" %>
+    <% if logged_in? %>
+      <%= link_to "logout", logout_path, method: :delete, class: "btn" %>
+    <% end %>
   </div>
 </nav>
