@@ -10,6 +10,9 @@ RSpec.describe 'Task', type: :system do
   describe '#index' do
     before do
       visit root_path
+      fill_in 'Email', with: 'test@gmail.com'
+      fill_in 'Password', with: 'password'
+      click_on 'Log in'
     end
 
     it 'display default item' do
