@@ -18,7 +18,7 @@ ja:
         limit_desc: "終了期限遠い順"
   helpers:
     submit:
-      create: "新規作成"
+      create: "作成"
       update: "更新"
   time:
     formats:

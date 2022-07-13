@@ -10,9 +10,11 @@
   </head>
 
   <body>
-    <h1><%= yield(:page_title) %></h1>
+    <%= render partial: 'layouts/header' %>
     <% flash.each do |message_type, message| %>
-      <%= message %><br/>
+      <p class="alert alert-<%= message_type %>">
+        <%= message %><br/>
+      </p>
     <% end %>
     <%= yield %>
   </body>
