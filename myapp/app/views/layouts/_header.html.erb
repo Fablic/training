@@ -4,7 +4,13 @@
       <%= yield(:page_title) %>
     </a>
     <% if logged_in? %>
-      <%= link_to "logout", logout_path, method: :delete, class: "btn" %>
+      <div class="btn-group dropdown">
+        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">User</button>
+        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="menu">
+            <%= link_to "logout", logout_path, method: :delete, class: "btn" %>
+        </div>
+      </div>
     <% end %>
   </div>
 </nav>
