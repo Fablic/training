@@ -6,7 +6,7 @@
     <% if logged_in? %>
       <div class="btn-group dropdown">
         <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-            aria-expanded="false">User</button>
+            aria-expanded="false"><%= @current_user.name %></button>
         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="menu">
             <%= link_to "logout", logout_path, method: :delete, class: "btn" %>
         </div>
