@@ -4,15 +4,19 @@ require 'rails_helper'
 
 RSpec.describe 'Task', type: :system do
   before do
-    create(:user)
+    create(:user, name: 'test')
+  end
+
+  def login
+    visit root_path
+    fill_in 'Email', with: 'test@gmail.com'
+    fill_in 'Password', with: 'password'
+    click_on 'Log in'
   end
 
   describe '#index' do
     before do
-      visit root_path
-      fill_in 'Email', with: 'test@gmail.com'
-      fill_in 'Password', with: 'password'
-      click_on 'Log in'
+      login
     end
 
     it 'display default item' do
@@ -141,12 +145,29 @@ RSpec.describe 'Task', type: :system do
         expect(page).not_to have_content '最後'
       end
     end
+
+    context 'when use login fuction' do
+      it 'can be log out' do
+        click_on 'test'
+        click_on 'logout'
+        expect(page).to have_current_path login_path, ignore_query: true
+      end
+
+      it 'can not log in' do
+        visit login_path
+        fill_in 'Email', with: 'test@gmail.com'
+        fill_in 'Password', with: 'passwordpassword'
+        click_on 'Log in'
+        expect(page).to have_current_path login_path, ignore_query: true
+      end
+    end
   end
 
   describe '#show' do
     let(:task) { create(:task, name: 'テストタスク', description: 'テストのタスク', priority: 1, status: 1, limit: '2022-6-20'.to_date, user_id: 1) }
 
     before do
+      login
       visit task_path(task)
     end
 
@@ -206,6 +227,7 @@ RSpec.describe 'Task', type: :system do
     let(:task) { create(:task) }
 
     before do
+      login
       visit edit_task_path(task)
     end
 
@@ -222,6 +244,7 @@ RSpec.describe 'Task', type: :system do
 
   describe '#create' do
     before do
+      login
       visit new_task_path
     end
 
@@ -269,6 +292,7 @@ RSpec.describe 'Task', type: :system do
     let(:task) { create(:task) }
 
     before do
+      login
       visit edit_task_path(task)
     end
 
@@ -320,6 +344,7 @@ RSpec.describe 'Task', type: :system do
 
   describe '#destroy' do
     before do
+      login
       create(:task)
       visit root_path
     end
