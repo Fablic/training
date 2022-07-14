@@ -1,0 +1,22 @@
+<div class="container">
+  <%= form_with model: user, url: admin_users_path, local: true do |form| %>
+    <%= render 'layouts/error_message', model: user %>
+    <div class="form-group">
+      <%= form.label :name %>
+      <%= form.text_field :name, class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= form.label :email %>
+      <%= form.email_field :email, class: "form-control" %>
+    </div>
+    <div class="row">
+      <div class="col">
+        <%= form.label :password %>
+        <%= form.password_field :password, class: "form-control" %>
+      </div>
+    </div>
+    <div class="d-grid gap-2 col-6 mx-auto mt-4">
+      <%= form.submit class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>
