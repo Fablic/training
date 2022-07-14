@@ -21,6 +21,16 @@ ja:
   users:
     show:
       title: "ユーザー情報"
+    flash:
+      create:
+        success: "Create New User!!"
+        error: "Failed"
+      update:
+        success: "Edit User Info!!"
+        error: "Failed"
+      destroy:
+        success: "Delete User!!"
+        error: "Failed"
   admin:
     users:
       index:
