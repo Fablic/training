@@ -21,6 +21,10 @@ ja:
   users:
     show:
       title: "ユーザー情報"
+  admin:
+    users:
+      index:
+        title: "ユーザー一覧"
   views:
     pagination:
       first: "最初"
