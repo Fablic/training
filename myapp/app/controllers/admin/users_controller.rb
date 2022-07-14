@@ -19,8 +19,10 @@ class Admin::UsersController < ApplicationController # rubocop:disable Style/Cla
     @user = User.new(user_params)
 
     if @user.save
+      flash[:success] = I18n.t('users.flash.create.success')
       redirect_to admin_users_path
     else
+      flash.now[:danger] = I18n.t('users.flash.create.error')
       render :new
     end
   end
@@ -29,10 +31,21 @@ class Admin::UsersController < ApplicationController # rubocop:disable Style/Cla
     @user = User.find(params[:id])
 
     if @user.update(user_params)
+      flash[:success] = I18n.t('users.flash.update.success')
       redirect_to admin_users_path
     else
+      flash.now[:danger] = I18n.t('users.flash.update.error')
       render :new
     end
+  end
+
+  def destroy
+    if User.find(params[:id]).destroy
+      flash[:success] = I18n.t('users.flash.destroy.success')
+    else
+      flash[:danger] = I18n.t('users.flash.destroy.success')
+    end
+    redirect_to admin_users_path
   end
 
   private
