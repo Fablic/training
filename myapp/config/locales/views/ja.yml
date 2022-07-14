@@ -24,7 +24,7 @@ ja:
   admin:
     users:
       index:
-        title: "ユーザー一覧"
+        title: "管理画面 : ユーザー一覧"
   views:
     pagination:
       first: "最初"
