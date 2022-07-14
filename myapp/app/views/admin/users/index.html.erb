@@ -1,6 +1,7 @@
 <% content_for(:page_title, I18n.t('admin.users.index.title')) %>
 
 <div class="container">
+  <%= link_to I18n.t('dictionary.button.create'), new_admin_user_path, class: "btn btn-primary mb-2" %>
   <table class="table">
     <thead>
       <tr>
