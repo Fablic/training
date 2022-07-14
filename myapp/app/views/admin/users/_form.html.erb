@@ -1,5 +1,5 @@
 <div class="container">
-  <%= form_with model: user, url: admin_users_path, local: true do |form| %>
+  <%= form_with model: user, url: path, local: true do |form| %>
     <%= render 'layouts/error_message', model: user %>
     <div class="form-group">
       <%= form.label :name %>
