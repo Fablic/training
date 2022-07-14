@@ -18,6 +18,9 @@ ja:
       destroy:
         success: "Delete Task!!"
         error: "Failed"
+  users:
+    show:
+      title: "ユーザー情報"
   views:
     pagination:
       first: "最初"
