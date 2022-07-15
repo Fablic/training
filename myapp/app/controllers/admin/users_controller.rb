@@ -35,12 +35,14 @@ class Admin::UsersController < ApplicationController # rubocop:disable Style/Cla
   def update
     @user = User.find(params[:id])
 
-    if @user.update(user_params)
-      flash[:success] = I18n.t('users.flash.update.success')
-      redirect_to admin_users_path
-    else
-      flash.now[:danger] = I18n.t('users.flash.update.error')
-      render :new
+    if update_admin?
+      if @user.update(user_params)
+        flash[:success] = I18n.t('users.flash.update.success')
+        redirect_to admin_users_path
+      else
+        flash.now[:danger] = I18n.t('users.flash.update.error')
+        render :new
+      end
     end
   end
 
@@ -61,5 +63,17 @@ class Admin::UsersController < ApplicationController # rubocop:disable Style/Cla
 
   def user_params
     params.require(:user).permit(:name, :email, :password, :admin)
+  end
+
+  def update_admin?
+    count_admin = User.where(admin: true).count
+    return true if count_admin > 1
+    # 最後に残ったアドミンユーザー、更新しようとしているユーザー != アドミンだとtrue
+    # 最後に残っているユーザー　== 更新しようとしているユーザー（権限を更新していない時）true
+    if count_admin == 1
+      if User.where(admin: true) == current_user
+
+      end
+    end
   end
 end
