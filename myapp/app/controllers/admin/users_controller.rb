@@ -7,6 +7,10 @@ class Admin::UsersController < ApplicationController # rubocop:disable Style/Cla
     @users = User.all.order(created_at: :desc)
   end
 
+  def show
+    @user = User.find(params[:id])
+  end
+
   def new
     @user = User.new
   end
