@@ -35,6 +35,8 @@ ja:
     users:
       index:
         title: "管理画面 : ユーザー一覧"
+      show:
+        title: "管理画面 : ユーザー情報"
   views:
     pagination:
       first: "最初"
