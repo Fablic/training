@@ -8,6 +8,7 @@
         <th>name</th>
         <th>email</th>
         <th>tasks</th>
+        <th>privilege</th>
       </tr>
     </thead>
     <tbody>
@@ -16,6 +17,11 @@
           <td><%= link_to user.name, admin_user_path(user) %></td>
           <td><%= user.email %></td>
           <td><%= Task.search_by_user_id(user.id).count %></td>
+          <td>
+            <% if user.admin %>
+              admin
+            <% end %>
+          </td>
           <td><%= link_to I18n.t('dictionary.button.edit'), edit_admin_user_path(user), class: "btn btn-info" %></td>
           <td><%= link_to I18n.t('dictionary.button.destory'), admin_user_path(user), method: :delete, data: {confirm: "Do you want to delete #{user.name}?"}, class: "btn btn-danger" %><br /></td>
         </tr>
