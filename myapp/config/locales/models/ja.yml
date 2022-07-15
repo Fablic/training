@@ -21,3 +21,7 @@ ja:
         TODO: "未着手"
         IN_PROGRESS: "着手中"
         DONE: "完了"
+    user:
+      admin:
+        member: "一般ユーザ"
+        admin: "管理ユーザ"

@@ -3,6 +3,7 @@
 class User < ApplicationRecord
   has_many :tasks, dependent: :destroy
   has_secure_password
+  enum admin: { member: false, admin: true }
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i.freeze
   validates :name, presence: true, length: { maximum: 30, allow_blank: true }, uniqueness: true
