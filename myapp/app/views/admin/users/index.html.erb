@@ -18,7 +18,7 @@
           <td><%= user.email %></td>
           <td><%= Task.search_by_user_id(user.id).count %></td>
           <td>
-            <% if user.admin %>
+            <% if user.admin? %>
               admin
             <% end %>
           </td>
