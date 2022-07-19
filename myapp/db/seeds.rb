@@ -3,7 +3,8 @@ User.create!(
   id: 1,
   name: 'test',
   email: 'test@gmail.com',
-  password: 'password'
+  password: 'password',
+  admin: true
 )
 
 User.create!(
