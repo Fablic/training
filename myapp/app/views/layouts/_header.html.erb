@@ -1,7 +1,16 @@
-<nav class="navbar navbar-light bg-ligh">
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-2">
   <div class="container-fluid">
     <a class="navbar-brand" href="/" >
       <%= yield(:page_title) %>
     </a>
+    <% if logged_in? %>
+      <div class="btn-group dropdown">
+        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false"><%= @current_user.name %></button>
+        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="menu">
+            <%= link_to "logout", logout_path, method: :delete, class: "btn" %>
+        </div>
+      </div>
+    <% end %>
   </div>
 </nav>

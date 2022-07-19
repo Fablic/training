@@ -1,0 +1,9 @@
+<div class="container-sm">
+  <%= form_with scope: :session, url: login_path, local: true do |f| %>
+    <%= f.label :email %>
+    <%= f.email_field :email , class: "form-control" %>
+    <%= f.label :password %>
+    <%= f.password_field :password , class: "form-control" %>
+    <%= f.submit "Log in", class: "btn btn-primary mt-2 form-control" %>
+  <% end %>
+</div>

@@ -6,6 +6,13 @@ User.create!(
   password: 'password'
 )
 
+User.create!(
+  id: 2,
+  name: 'test2',
+  email: 'test2@gmail.com',
+  password: 'password'
+)
+
 if Rails.env.development?
   30.times do |n|
     name = "test-#{n+1}"
@@ -13,7 +20,7 @@ if Rails.env.development?
     priority = rand(1..3)
     status = rand(1..3)
     limit = "2022-#{rand(1..12)}-#{rand(1..28)}".to_date
-    user_id = 1
+    user_id = rand(1..2)
     Task.create!(
       name: name,
       description: description,

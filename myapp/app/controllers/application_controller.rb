@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  include SessionsHelper
+
   # error handle
   rescue_from Exception, with: :_render500
   rescue_from ActiveRecord::RecordNotFound, with: :_render404
@@ -20,5 +22,11 @@ class ApplicationController < ActionController::Base
   def _render500(error = nil)
     logger.info "Rendering 500 with exception: #{error.message}" if error
     render 'errors/500.html', status: :internal_server_error
+  end
+
+  def logged_in_user
+    return if logged_in?
+
+    redirect_to login_path
   end
 end

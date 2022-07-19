@@ -24,7 +24,7 @@
         </thead>
         <tbody>
           <tr>
-            <td><%= I18n.l(@task.limit) %></td>
+            <td><%= I18n.l(@task.limit) if @task.limit.present? %></td>
             <td><%= @task.status_i18n %></td>
             <td><%= @task.priority_i18n %></td>
           </tr>
