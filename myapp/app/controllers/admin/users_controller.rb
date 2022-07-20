@@ -32,10 +32,10 @@ class Admin::UsersController < ApplicationController # rubocop:disable Style/Cla
     end
   end
 
-  def update
+  def update # rubocop:disable Metrics/AbcSize
     @user = User.find(params[:id])
 
-    if update_admin?
+    if update_admin(params)
       if @user.update(user_params)
         flash[:success] = I18n.t('users.flash.update.success')
         redirect_to admin_users_path
@@ -43,6 +43,9 @@ class Admin::UsersController < ApplicationController # rubocop:disable Style/Cla
         flash.now[:danger] = I18n.t('users.flash.update.error')
         render :new
       end
+    else
+      flash[:danger] = I18n.t('users.flash.update.error')
+      redirect_to admin_users_path
     end
   end
 
@@ -65,15 +68,13 @@ class Admin::UsersController < ApplicationController # rubocop:disable Style/Cla
     params.require(:user).permit(:name, :email, :password, :admin)
   end
 
-  def update_admin?
+  def update_admin(params)
     count_admin = User.where(admin: true).count
-    return true if count_admin > 1
-    # 最後に残ったアドミンユーザー、更新しようとしているユーザー != アドミンだとtrue
-    # 最後に残っているユーザー　== 更新しようとしているユーザー（権限を更新していない時）true
-    if count_admin == 1
-      if User.where(admin: true) == current_user
 
-      end
+    if count_admin > 1 || User.find_by(admin: true).id != params[:id].to_i || params[:user][:admin] != 'member'
+      return true
     end
+
+    false
   end
 end
