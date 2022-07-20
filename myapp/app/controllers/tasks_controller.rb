@@ -21,7 +21,7 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.new(task_params)
+    @task = current_user.tasks.new(task_params)
 
     if @task.save
       flash[:success] = I18n.t('tasks.flash.create.success')
@@ -56,6 +56,6 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:name, :description, :priority, :status, :limit).merge(user_id: session[:user_id])
+    params.require(:task).permit(:name, :description, :priority, :status, :limit)
   end
 end

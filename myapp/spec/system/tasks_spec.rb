@@ -3,20 +3,11 @@
 require 'rails_helper'
 
 RSpec.describe 'Task', type: :system do
-  before do
-    create(:user, name: 'test')
-  end
-
-  def login
-    visit root_path
-    fill_in 'Email', with: 'test@gmail.com'
-    fill_in 'Password', with: 'password'
-    click_on 'Log in'
-  end
+  let(:user) { create(:user, name: 'test') }
 
   describe '#index' do
     before do
-      login
+      login(user: user)
     end
 
     it 'display default item' do
@@ -167,7 +158,7 @@ RSpec.describe 'Task', type: :system do
     let(:task) { create(:task, name: 'テストタスク', description: 'テストのタスク', priority: 1, status: 1, limit: '2022-6-20'.to_date, user_id: 1) }
 
     before do
-      login
+      login(user: user)
       visit task_path(task)
     end
 
@@ -227,7 +218,7 @@ RSpec.describe 'Task', type: :system do
     let(:task) { create(:task) }
 
     before do
-      login
+      login(user: user)
       visit edit_task_path(task)
     end
 
@@ -244,7 +235,7 @@ RSpec.describe 'Task', type: :system do
 
   describe '#create' do
     before do
-      login
+      login(user: user)
       visit new_task_path
     end
 
@@ -292,7 +283,7 @@ RSpec.describe 'Task', type: :system do
     let(:task) { create(:task) }
 
     before do
-      login
+      login(user: user)
       visit edit_task_path(task)
     end
 
@@ -344,7 +335,7 @@ RSpec.describe 'Task', type: :system do
 
   describe '#destroy' do
     before do
-      login
+      login(user: user)
       create(:task)
       visit root_path
     end
