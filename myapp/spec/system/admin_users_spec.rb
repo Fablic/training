@@ -147,5 +147,15 @@ RSpec.describe 'AdminUsers', type: :system do
         change(Task, :count).by(-1)
       end
     end
+
+    context 'when push destroy button that has last admin user' do
+      before do
+        all('tbody tr td').last.click_link '削除'
+      end
+
+      it 'can not destroy last admin user' do
+        expect(page).to have_content 'The last admin user cannot be deleted!!'
+      end
+    end
   end
 end
