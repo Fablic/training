@@ -50,10 +50,14 @@ class Admin::UsersController < ApplicationController # rubocop:disable Style/Cla
   end
 
   def destroy
-    if User.find(params[:id]).destroy
-      flash[:success] = I18n.t('users.flash.destroy.success')
+    if destroy_admin(params)
+      if User.find(params[:id]).destroy
+        flash[:success] = I18n.t('users.flash.destroy.success')
+      else
+        flash[:danger] = I18n.t('users.flash.destroy.error')
+      end
     else
-      flash[:danger] = I18n.t('users.flash.destroy.success')
+      flash[:danger] = I18n.t('users.flash.destroy.error')
     end
     redirect_to admin_users_path
   end
@@ -72,6 +76,16 @@ class Admin::UsersController < ApplicationController # rubocop:disable Style/Cla
     count_admin = User.where(admin: true).count
 
     if count_admin > 1 || User.find_by(admin: true).id != params[:id].to_i || params[:user][:admin] != 'member'
+      return true
+    end
+
+    false
+  end
+
+  def destroy_admin(params)
+    count_admin = User.where(admin: true).count
+
+    if count_admin > 1 || User.find_by(admin: true).id != params[:id].to_i
       return true
     end
 
