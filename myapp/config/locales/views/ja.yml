@@ -31,6 +31,8 @@ ja:
       destroy:
         success: "Delete User!!"
         error: "Failed"
+        admin:
+          error: "The last admin user cannot be deleted!!"
   admin:
     users:
       index:

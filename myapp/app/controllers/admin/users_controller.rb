@@ -57,7 +57,7 @@ class Admin::UsersController < ApplicationController # rubocop:disable Style/Cla
         flash[:danger] = I18n.t('users.flash.destroy.error')
       end
     else
-      flash[:danger] = I18n.t('users.flash.destroy.error')
+      flash[:danger] = I18n.t('users.flash.destroy.admin.error')
     end
     redirect_to admin_users_path
   end
