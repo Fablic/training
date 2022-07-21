@@ -10,7 +10,7 @@ Rails.application.routes.draw do
     get :search, on: :collection
   end
 
-  resources :users
+  resources :users, only: :show
 
   namespace :admin do
     resources :users
