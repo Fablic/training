@@ -8,7 +8,7 @@
         <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true">
           <%= current_user.name %>
         </button>
-        <ul class="dropdown-menu">
+        <ul class="dropdown-menu" style="right: 5px;">
             <li><%= link_to "user info", user_path(current_user), class: "btn dropdown-item" %></li>
             <li><%= link_to "logout", logout_path, method: :delete, class: "btn dropdown-item" %></li>
         </ul>
