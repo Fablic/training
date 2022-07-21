@@ -10,7 +10,11 @@ module Admin
 
     def show
       @user = User.find(params[:id])
-      @tasks = Task.search(user_id: @user.id, status: params[:status], keyword: params[:keyword], sort: params[:sort], direction: params[:direction]).page(params[:page])
+      @tasks = Task.search(user_id: @user.id,
+                           status: params[:status],
+                           keyword: params[:keyword],
+                           sort: params[:sort],
+                           direction: params[:direction]).page(params[:page])
     end
 
     def new
