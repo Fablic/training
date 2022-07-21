@@ -31,6 +31,7 @@ ja:
       destroy:
         success: "Delete User!!"
         error: "Failed"
+        login_user: "Logged-in users cannot be deleted"
   admin:
     users:
       index:

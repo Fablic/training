@@ -50,11 +50,14 @@ module Admin
     end
 
     def destroy
-      if User.find(params[:id]).destroy
+      if login_user?
+        flash[:danger] = I18n.t('users.flash.destroy.login_user')
+      elsif User.find(params[:id]).destroy
         flash[:success] = I18n.t('users.flash.destroy.success')
       else
-        flash[:danger] = I18n.t('users.flash.destroy.success')
+        flash[:danger] = I18n.t('users.flash.destroy.error')
       end
+
       redirect_to admin_users_path
     end
 
@@ -66,6 +69,12 @@ module Admin
 
     def user_params
       params.require(:user).permit(:name, :email, :password)
+    end
+
+    def login_user?
+      return true if params[:id].to_i == current_user.id
+
+      false
     end
   end
 end
