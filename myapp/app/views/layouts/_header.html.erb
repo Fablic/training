@@ -11,6 +11,7 @@
         </button>
         <ul class="dropdown-menu dropdown-menu-end" style="right: 5px;" aria-labelledby="menu">
             <li><%= link_to "user info", user_path(current_user), class: "btn dropdown-item" %></li>
+            <li><%= link_to "label management", labels_path, class: "btn dropdown-item" %></li>
             <% if current_user.admin? %>
               <li><%= link_to "admin", admin_users_path, class: "btn dropdown-item" %></li>
             <% end %>
