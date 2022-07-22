@@ -16,7 +16,7 @@ RSpec.describe 'AdminUsers', type: :system do
       visit admin_users_path
     end
 
-    it 'can display admin/users page' do # rubocop:disable RSpec/MultipleExpectations
+    it 'can display admin/users page', :aggregate_failures do
       expect(page).to have_content 'test1'
       expect(page).to have_content 'test1@gmail.com'
       expect(page).to have_content '2'
@@ -32,7 +32,7 @@ RSpec.describe 'AdminUsers', type: :system do
       visit admin_users_path
     end
 
-    it 'can display user info' do # rubocop:disable RSpec/MultipleExpectations
+    it 'can display user info', :aggregate_failures do
       puts current_path
       within '.table' do
         click_on 'test1'
@@ -66,7 +66,7 @@ RSpec.describe 'AdminUsers', type: :system do
       expect(page).to have_current_path edit_admin_user_path(user.id)
     end
 
-    it 'can display user info' do # rubocop:disable RSpec/MultipleExpectations
+    it 'can display user info', :aggregate_failures do
       expect(page).to have_field 'Name', with: 'test1'
       expect(page).to have_field 'Email', with: 'test1@gmail.com'
     end
@@ -85,7 +85,7 @@ RSpec.describe 'AdminUsers', type: :system do
         fill_in 'Password', with: 'password'
       end
 
-      it 'can create new user' do # rubocop:disable RSpec/MultipleExpectations
+      it 'can create new user', :aggregate_failures do
         click_on '作成'
         expect(page).to have_content 'test1'
         expect(page).to have_content 'test2'
@@ -145,6 +145,16 @@ RSpec.describe 'AdminUsers', type: :system do
 
       it 'can destroy task too' do
         change(Task, :count).by(-1)
+      end
+    end
+
+    context 'when push destroy button that has last admin user' do
+      before do
+        all('tbody tr td').last.click_link '削除'
+      end
+
+      it 'can not destroy last admin user' do
+        expect(page).to have_content 'The last admin user cannot be deleted!!'
       end
     end
   end
