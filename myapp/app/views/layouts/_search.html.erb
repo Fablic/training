@@ -7,7 +7,7 @@
       <%= form.select :status, Task.statuses_i18n.keys.map {|k| [Task.statuses_i18n[k],k]}, { include_blank: '状態を選択', selected: params[:status] }, { id: 'status' , class: "form-control" } %>
     </div>
     <div class="col-1">
-      <%= form.select :label_id, Label.pluck(:name, :id), { include_blank: '-' }, { class: "form-control"} %>
+      <%= form.select :label_id, Label.pluck(:name, :id), { include_blank: '-', selected: params[:label_id] }, { class: "form-control"} %>
     </div>
     <div class="col">
       <%= form.submit I18n.t('dictionary.button.search'), class: "btn btn-secondary" %>
