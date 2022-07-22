@@ -18,10 +18,12 @@ class Task < ApplicationRecord
       order("#{column}": direction.to_s)
     end
   }
+  scope :include_labels, -> { includes(:labels) }
   scope :search, lambda { |user_id:, status:, keyword:, sort:, direction:|
     search_by_user_id(user_id)
     .search_by_status(status)
     .search_by_name_or_description(keyword)
     .sortby(sort, direction)
+    .include_labels
   }
 end
