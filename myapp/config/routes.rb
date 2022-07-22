@@ -10,6 +10,12 @@ Rails.application.routes.draw do
     get :search, on: :collection
   end
 
+  resources :users, only: :show
+
+  namespace :admin do
+    resources :users
+  end
+
   # for error page
   get '*not_found' => 'application#routing_error'
   post '*not_found' => 'application#routing_error'

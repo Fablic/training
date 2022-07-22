@@ -1,0 +1,41 @@
+<% content_for(:page_title, I18n.t('admin.users.show.title')) %>
+
+<div class="container">
+  <table class="table">
+    <table class="table">
+      <tbody>
+        <tr>
+          <th>name:</th>
+          <td><%= @user.name %></td>
+        </tr>
+        <tr>
+          <th>email:</th>
+          <td><%= @user.email %></td>
+        </tr>
+      </tbody>
+    </table>
+  </table>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th><%= I18n.t('activerecord.attributes.task.name') %></th>
+        <th><%= sort_order "status", I18n.t('activerecord.attributes.task.status') %></th>
+        <th><%= sort_order "limit", I18n.t('activerecord.attributes.task.limit') %></th>
+        <th><%= sort_order "created_at", I18n.t('activerecord.attributes.task.created_at') %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @tasks.each do |task| %>
+        <tr>
+          <td class="task-title"><%= link_to task.name, task %></td>
+          <td><%= task.status_i18n %></td>
+          <td><%= I18n.l(task.limit) if task.limit.present? %></td>
+          <td><%= I18n.l(task.created_at) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= paginate @tasks %>
+</div>

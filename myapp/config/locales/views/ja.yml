@@ -18,6 +18,26 @@ ja:
       destroy:
         success: "Delete Task!!"
         error: "Failed"
+  users:
+    show:
+      title: "ユーザー情報"
+    flash:
+      create:
+        success: "新しいユーザーを作成しました!!"
+        error: "ユーザーの作成に失敗しました"
+      update:
+        success: "ユーザー情報を更新しました!!"
+        error: "ユーザー情報の更新に失敗しました"
+      destroy:
+        success: "ユーザーを削除しました!!"
+        error: "ユーザーの削除に失敗しました"
+        login_user: "現在ログイン中のユーザーは削除できません"
+  admin:
+    users:
+      index:
+        title: "管理画面 : ユーザー一覧"
+      show:
+        title: "管理画面 : ユーザー情報"
   views:
     pagination:
       first: "最初"
