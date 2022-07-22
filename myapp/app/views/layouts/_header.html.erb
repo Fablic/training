@@ -5,11 +5,11 @@
     </a>
 
     <% if logged_in? %>
-      <div class="btn-group">
-        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true">
+      <div class="dropdown">
+        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <%= current_user.name %>
         </button>
-        <ul class="dropdown-menu dropdown-menu-end" style="right: 5px;" aria-labelledby="menu">
+        <ul class="dropdown-menu" style="right: 5px;" aria-labelledby="dropdownMenuButton">
             <li><%= link_to "user info", user_path(current_user), class: "btn dropdown-item" %></li>
             <li><%= link_to "label management", labels_path, class: "btn dropdown-item" %></li>
             <% if current_user.admin? %>
