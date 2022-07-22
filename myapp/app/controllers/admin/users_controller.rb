@@ -3,13 +3,13 @@
 module Admin
   class UsersController < ApplicationController
     before_action :admin_user
+    before_action :find_by_id, only: [:show, :edit, :update]
 
     def index
       @users = User.all.order(created_at: :desc)
     end
 
     def show
-      @user = User.find(params[:id])
       @tasks = Task.search(user_id: @user.id,
                            status: params[:status],
                            keyword: params[:keyword],
@@ -22,7 +22,6 @@ module Admin
     end
 
     def edit
-      @user = User.find(params[:id])
     end
 
     def create
@@ -37,9 +36,7 @@ module Admin
       end
     end
 
-    def update # rubocop:disable Metrics/AbcSize
-      @user = User.find(params[:id])
-
+    def update
       if update_admin(params)
         if @user.update(user_params)
           flash[:success] = I18n.t('users.flash.update.success')
@@ -73,6 +70,10 @@ module Admin
 
     def admin_user
       redirect_to(root_path) unless current_user.admin?
+    end
+
+    def find_by_id
+      @user = User.find(params[:id])
     end
 
     def login_user?
