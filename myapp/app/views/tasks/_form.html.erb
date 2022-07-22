@@ -23,6 +23,9 @@
         <%= form.select :priority,  Task.priorities_i18n.keys.map {|k| [Task.priorities_i18n[k],k]}, {selected: "Low"}, { class: "form-control" } %>
       </div>
     </div>
+    <div class="field">
+      <%= form.collection_check_boxes :label_ids, Label.all, :id, :name, {}, {class: "form-check-input"} %>
+    </div>
     <div class="d-grid gap-2 col-6 mx-auto mt-4">
       <%= form.submit class: "btn btn-primary" %>
     </div>
