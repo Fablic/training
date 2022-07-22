@@ -37,7 +37,7 @@ module Admin
     end
 
     def update
-      if update_admin(params)
+      if update_admin?(params)
         if @user.update(user_params)
           flash[:success] = I18n.t('users.flash.update.success')
           redirect_to admin_users_path
@@ -54,7 +54,7 @@ module Admin
     def destroy # rubocop:disable Metrics/AbcSize
       if login_user?
         flash[:danger] = I18n.t('users.flash.destroy.login_user')
-      elsif destroy_admin(params)
+      elsif destroy_admin?(params)
         if User.find(params[:id]).destroy
           flash[:success] = I18n.t('users.flash.destroy.success')
         else
@@ -86,7 +86,7 @@ module Admin
       params.require(:user).permit(:name, :email, :password, :admin)
     end
 
-    def update_admin(params)
+    def update_admin?(params)
       count_admin = User.where(admin: true).count
 
       if count_admin > 1 || User.find_by(admin: true).id != params[:id].to_i || params[:user][:admin] != 'member'
@@ -96,7 +96,7 @@ module Admin
       false
     end
 
-    def destroy_admin(params)
+    def destroy_admin?(params)
       count_admin = User.where(admin: true).count
 
       if count_admin > 1 || User.find_by(admin: true).id != params[:id].to_i
