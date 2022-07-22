@@ -23,16 +23,17 @@ ja:
       title: "ユーザー情報"
     flash:
       create:
-        success: "Create New User!!"
-        error: "Failed"
+        success: "新しいユーザーを作成しました!!"
+        error: "ユーザーの作成に失敗しました"
       update:
-        success: "Edit User Info!!"
-        error: "Failed"
+        success: "ユーザー情報を更新しました!!"
+        error: "ユーザー情報の更新に失敗しました"
       destroy:
-        success: "Delete User!!"
-        error: "Failed"
+        success: "ユーザーを削除しました!!"
+        error: "ユーザーの削除に失敗しました"
+        login_user: "現在ログイン中のユーザーは削除できません"
         admin:
-          error: "The last admin user cannot be deleted!!"
+          error: "管理ユーザーは削除できません"
   admin:
     users:
       index:

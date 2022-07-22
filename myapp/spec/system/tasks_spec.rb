@@ -27,7 +27,7 @@ RSpec.describe 'Task', type: :system do
         visit current_path
       end
 
-      it "return user's task" do # rubocop:disable RSpec/MultipleExpectations
+      it "return user's task", :aggregate_failures do
         expect(page).to have_link 'test1'
         expect(page).to have_link 'test2'
         expect(page).to have_link 'test3'
@@ -86,7 +86,7 @@ RSpec.describe 'Task', type: :system do
         visit current_path
       end
 
-      it 'can search using the keyword' do # rubocop:disable RSpec/MultipleExpectations
+      it 'can search using the keyword', :aggregate_failures do
         fill_in 'keyword', with: '洗濯'
         click_on '検索'
         expect(page).to have_content '洗濯1'
@@ -95,7 +95,7 @@ RSpec.describe 'Task', type: :system do
         expect(page).not_to have_content '買い物'
       end
 
-      it 'can search using status' do # rubocop:disable RSpec/MultipleExpectations
+      it 'can search using status', :aggregate_failures do
         select '着手中', from: 'status'
         click_on '検索'
         expect(page).not_to have_content '洗濯1'
@@ -104,7 +104,7 @@ RSpec.describe 'Task', type: :system do
         expect(page).not_to have_content '買い物'
       end
 
-      it 'can search using keyword and status' do # rubocop:disable RSpec/MultipleExpectations
+      it 'can search using keyword and status', :aggregate_failures do
         fill_in 'keyword', with: '洗濯'
         select '未着手', from: 'status'
         click_on '検索'
@@ -162,7 +162,7 @@ RSpec.describe 'Task', type: :system do
       visit task_path(task)
     end
 
-    it 'return task info' do # rubocop:disable RSpec/MultipleExpectations
+    it 'return task info', :aggregate_failures do
       expect(page).to have_content 'テストタスク'
       expect(page).to have_content 'テストのタスク'
       expect(page).to have_content '未着手'
@@ -204,7 +204,7 @@ RSpec.describe 'Task', type: :system do
     end
 
     context 'when user go to this page' do
-      it 'display blank task form' do # rubocop:disable RSpec/MultipleExpectations
+      it 'display blank task form', :aggregate_failures do
         expect(page).to have_field 'タスク名'
         expect(page).to have_field '詳細'
         expect(page).to have_field '期限'
@@ -223,7 +223,7 @@ RSpec.describe 'Task', type: :system do
     end
 
     context 'when user go to this page' do
-      it 'display task form' do # rubocop:disable RSpec/MultipleExpectations
+      it 'display task form', :aggregate_failures do
         expect(page).to have_field 'タスク名', with: task.name
         expect(page).to have_field '詳細', with: task.description
         expect(page).to have_field '期限', with: task.limit
@@ -240,7 +240,7 @@ RSpec.describe 'Task', type: :system do
     end
 
     context 'when user go to Add task page' do
-      it 'display brank form' do # rubocop:disable RSpec/MultipleExpectations
+      it 'display brank form', :aggregate_failures do
         expect(page).to have_field 'タスク名'
         expect(page).to have_field '詳細'
         expect(page).to have_field '期限'
@@ -258,7 +258,7 @@ RSpec.describe 'Task', type: :system do
         select '低い', from: '優先度'
       end
 
-      it 'display input task info' do # rubocop:disable RSpec/MultipleExpectations
+      it 'display input task info', :aggregate_failures do
         expect(page).to have_field 'タスク名', with: '散歩'
         expect(page).to have_field '詳細', with: '多摩川を歩く'
         expect(page).to have_field '期限', with: '2022-06-20'
@@ -267,7 +267,7 @@ RSpec.describe 'Task', type: :system do
       end
 
       context 'when user click "Create Task" button' do
-        it 'go to Task detail page' do # rubocop:disable RSpec/MultipleExpectations
+        it 'go to Task detail page', :aggregate_failures do
           click_on '作成'
           expect(page).to have_content '散歩'
           expect(page).to have_content '多摩川を歩く'
@@ -296,7 +296,7 @@ RSpec.describe 'Task', type: :system do
         select '普通', from: '優先度'
       end
 
-      it 'display new task info' do # rubocop:disable RSpec/MultipleExpectations
+      it 'display new task info', :aggregate_failures do
         expect(page).to have_field 'タスク名', with: '運動'
         expect(page).to have_field '詳細', with: '多摩川を走る'
         expect(page).to have_field '期限', with: '2022-06-20'
@@ -305,7 +305,7 @@ RSpec.describe 'Task', type: :system do
       end
 
       context 'when user click "Update Task" button' do
-        it 'go to Task detail page' do # rubocop:disable RSpec/MultipleExpectations
+        it 'go to Task detail page', :aggregate_failures do
           click_on '更新'
           expect(page).to have_content '運動'
           expect(page).to have_content '多摩川を走る'
