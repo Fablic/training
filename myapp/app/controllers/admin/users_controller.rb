@@ -10,11 +10,7 @@ module Admin
     end
 
     def show
-      @tasks = Task.search(user_id: @user.id,
-                           status: params[:status],
-                           keyword: params[:keyword],
-                           sort: params[:sort],
-                           direction: params[:direction]).page(params[:page])
+      @tasks = Task.search_by_user_id(@user.id).sortby(params[:sort], params[:direction]).page(params[:page])
     end
 
     def new
