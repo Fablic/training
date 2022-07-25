@@ -32,6 +32,8 @@ ja:
         success: "ユーザーを削除しました!!"
         error: "ユーザーの削除に失敗しました"
         login_user: "現在ログイン中のユーザーは削除できません"
+        admin:
+          error: "管理ユーザーは削除できません"
   admin:
     users:
       index:

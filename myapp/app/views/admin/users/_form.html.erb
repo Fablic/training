@@ -15,6 +15,10 @@
         <%= form.password_field :password, class: "form-control" %>
       </div>
     </div>
+    <div class="col">
+      <%= form.label :admin %>
+      <%= form.select :admin,  User.admins_i18n.keys.map {|k| [User.admins_i18n[k], k]}, {selected: user.admin}, { class: "form-control" } %>
+    </div>
     <div class="d-grid gap-2 col-6 mx-auto mt-4">
       <%= form.submit class: "btn btn-primary" %>
     </div>

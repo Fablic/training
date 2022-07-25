@@ -96,17 +96,32 @@ RSpec.describe 'AdminUsers', type: :system do
   describe '#update' do
     before do
       visit admin_users_path
-      click_on '編集'
     end
 
-    context 'when edit user info' do
+    context 'when update user info' do
       before do
+        create(:user, id: 2, name: 'test2', email: 'test2@gmail.com')
+        visit current_path
+        click_on '編集', match: :first
         fill_in 'Name', with: 'おかもと'
+        select '管理ユーザ', from: 'Admin'
       end
 
       it 'can change user info' do
         click_on '更新'
         expect(page).to have_content 'おかもと'
+      end
+    end
+
+    context 'when update last admin user info' do
+      before do
+        click_on '編集', match: :first
+        select '一般ユーザ', from: 'Admin'
+      end
+
+      it 'can not change role' do
+        click_on '更新'
+        expect(page).to have_content 'Failed'
       end
     end
   end
@@ -130,6 +145,16 @@ RSpec.describe 'AdminUsers', type: :system do
 
       it 'can destroy task too' do
         change(Task, :count).by(-1)
+      end
+    end
+
+    context 'when push destroy button that has last admin user' do
+      before do
+        all('tbody tr td').last.click_link '削除'
+      end
+
+      it 'can not destroy last admin user' do
+        expect(page).to have_content 'The last admin user cannot be deleted!!'
       end
     end
   end

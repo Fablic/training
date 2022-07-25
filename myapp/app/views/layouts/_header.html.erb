@@ -3,13 +3,17 @@
     <a class="navbar-brand" href="/" >
       <%= yield(:page_title) %>
     </a>
+
     <% if logged_in? %>
       <div class="btn-group">
         <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true">
           <%= current_user.name %>
         </button>
-        <ul class="dropdown-menu" style="right: 5px;">
+        <ul class="dropdown-menu dropdown-menu-end" style="right: 5px;" aria-labelledby="menu">
             <li><%= link_to "user info", user_path(current_user), class: "btn dropdown-item" %></li>
+            <% if current_user.admin? %>
+              <li><%= link_to "admin", admin_users_path, class: "btn dropdown-item" %></li>
+            <% end %>
             <li><%= link_to "logout", logout_path, method: :delete, class: "btn dropdown-item" %></li>
         </ul>
       </div>
