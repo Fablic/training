@@ -40,17 +40,11 @@ module Admin
       redirect_to admin_users_path, { flash: { danger: I18n.t('users.flash.update.error') } } unless update_admin?(params)
     end
 
-    def destroy # rubocop:disable Metrics/AbcSize
+    def destroy
       if login_user?
         flash[:danger] = I18n.t('users.flash.destroy.login_user')
-      elsif destroy_admin?(params)
-        if User.find(params[:id]).destroy
-          flash[:success] = I18n.t('users.flash.destroy.success')
-        else
-          flash[:danger] = I18n.t('users.flash.destroy.error')
-        end
       else
-        flash[:danger] = I18n.t('users.flash.destroy.admin.error')
+        redirect_to admin_users_path, { flash: { danger: I18n.t('users.flash.destroy.admin.error') } } unless destroy_admin?(params)
       end
       redirect_to admin_users_path
     end
@@ -100,6 +94,12 @@ module Admin
       count_admin = User.where(admin: true).count
 
       if count_admin > 1 || User.find_by(admin: true).id != params[:id].to_i
+        if User.find(params[:id]).destroy
+          flash[:success] = I18n.t('users.flash.destroy.success')
+        else
+          flash[:danger] = I18n.t('users.flash.destroy.error')
+        end
+
         return true
       end
 
