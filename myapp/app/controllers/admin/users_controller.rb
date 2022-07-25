@@ -37,18 +37,7 @@ module Admin
     end
 
     def update
-      if update_admin?(params)
-        if @user.update(user_params)
-          flash[:success] = I18n.t('users.flash.update.success')
-          redirect_to admin_users_path
-        else
-          flash.now[:danger] = I18n.t('users.flash.update.error')
-          render :new
-        end
-      else
-        flash[:danger] = I18n.t('users.flash.update.error')
-        redirect_to admin_users_path
-      end
+      redirect_to admin_users_path, { flash: { danger: I18n.t('users.flash.update.error') } } unless update_admin?(params)
     end
 
     def destroy # rubocop:disable Metrics/AbcSize
@@ -86,7 +75,7 @@ module Admin
       params.require(:user).permit(:name, :email, :password, :admin)
     end
 
-    def update_admin?(params)
+    def update_admin?(params) # rubocop:disable Metrics/AbcSize
       count_admin = User.where(admin: true).count
 
       # 以下のユーザー情報を更新することができる
@@ -94,6 +83,13 @@ module Admin
       # adminユーザーが1人の時で、adminユーザー以外の情報を更新する場合
       # adminユーザーが1人の時で、adminユーザーがロール以外を更新する場合
       if count_admin > 1 || User.find_by(admin: true).id != params[:id].to_i || params[:user][:admin] != 'member'
+        if @user.update(user_params)
+          flash[:success] = I18n.t('users.flash.update.success')
+          redirect_to admin_users_path
+        else
+          flash.now[:danger] = I18n.t('users.flash.update.error')
+          render :new
+        end
         return true
       end
 
