@@ -40,6 +40,8 @@ ja:
         title: "管理画面 : ユーザー一覧"
       show:
         title: "管理画面 : ユーザー情報"
+  labels:
+    management: "ラベル管理"
   views:
     pagination:
       first: "最初"
