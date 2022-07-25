@@ -37,7 +37,7 @@ module Admin
     end
 
     def update
-      redirect_to admin_users_path, { flash: { danger: I18n.t('users.flash.update.error') } } unless update_admin?(params)
+      redirect_to admin_users_path, { flash: { danger: I18n.t('users.flash.update.error') } } unless updatable_admin?(params)
     end
 
     def destroy
@@ -69,7 +69,7 @@ module Admin
       params.require(:user).permit(:name, :email, :password, :admin)
     end
 
-    def update_admin?(params) # rubocop:disable Metrics/AbcSize
+    def updatable_admin?(params) # rubocop:disable Metrics/AbcSize
       count_admin = User.where(admin: true).count
 
       # 以下のユーザー情報を更新することができる
