@@ -89,6 +89,10 @@ module Admin
     def update_admin?(params)
       count_admin = User.where(admin: true).count
 
+      # 以下のユーザー情報を更新することができる
+      # adminユーザーが2人以上の場合
+      # adminユーザーが1人の時で、adminユーザー以外の情報を更新する場合
+      # adminユーザーが1人の時で、adminユーザーがロール以外を更新する場合
       if count_admin > 1 || User.find_by(admin: true).id != params[:id].to_i || params[:user][:admin] != 'member'
         return true
       end
