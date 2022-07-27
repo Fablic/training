@@ -1,5 +1,17 @@
 # Task Management App
 
+## How to turn on maintenance mode
+```
+$ docker-compose exec api /bin/bash
+$ rails runner Constants::Maintenance.on
+```
+
+## How to turn off maintenance mode
+```
+$ docker-compose exec api /bin/bash
+$ rails runner Constants::Maintenance.off
+```
+
 ## front design
 ### Login Page
 ![LoginPage](docs/LoginPage.png)
