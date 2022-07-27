@@ -16,7 +16,7 @@ User.create!(
 
 Constant.create!(
   key: 'maintenance_mode',
-  value: false
+  value: 'false'
 )
 
 if Rails.env.development?
