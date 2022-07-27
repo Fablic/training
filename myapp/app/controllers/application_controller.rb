@@ -33,7 +33,7 @@ class ApplicationController < ActionController::Base
 
   def maintenance_mode?
     maintenance_mode = Constant.find_by(key: 'maintenance_mode')
-    return true if maintenance_mode.value
+    return true if maintenance_mode.value == 'true'
 
     false
   end
