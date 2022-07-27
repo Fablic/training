@@ -300,6 +300,17 @@ RSpec.describe 'Task', type: :system do
         expect(page).to have_content 'ただいまメンテナンス中です'
       end
     end
+
+    context 'when maintenace_mode is false' do
+      before do
+        create(:constant, key: 'maintenance_mode', value: 'false')
+      end
+
+      it 'doesnt display maintenance page' do
+        visit current_path
+        expect(page).not_to have_content 'ただいまメンテナンス中です'
+      end
+    end
   end
 
   describe '#update' do
