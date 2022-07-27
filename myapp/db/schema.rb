@@ -13,7 +13,8 @@
 ActiveRecord::Schema.define(version: 2022_07_27_004547) do
 
   create_table "constants", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
-    t.boolean "maintenance_mode", default: false, null: false
+    t.string "key", null: false
+    t.boolean "value", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
