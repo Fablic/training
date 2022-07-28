@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class LabelsController < ApplicationController
   before_action :set_label, only: %i[ show edit update destroy ]
 
@@ -25,7 +27,7 @@ class LabelsController < ApplicationController
 
     respond_to do |format|
       if @label.save
-        format.html { redirect_to label_url(@label), notice: 'Label was successfully created.' }
+        format.html { redirect_to label_url(@label), notice: I18n.t('labels.flash.create.success') }
         format.json { render :show, status: :created, location: @label }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +40,7 @@ class LabelsController < ApplicationController
   def update
     respond_to do |format|
       if @label.update(label_params)
-        format.html { redirect_to label_url(@label), notice: 'Label was successfully updated.' }
+        format.html { redirect_to label_url(@label), notice: I18n.t('labels.flash.update.success') }
         format.json { render :show, status: :ok, location: @label }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,20 +54,20 @@ class LabelsController < ApplicationController
     @label.destroy
 
     respond_to do |format|
-      format.html { redirect_to labels_url, notice: 'Label was successfully destroyed.' }
+      format.html { redirect_to labels_url, notice: I18n.t('labels.flash.destroy.success') }
       format.json { head :no_content }
     end
   end
 
   private
 
-    # Use callbacks to share common setup or constraints between actions.
-    def set_label
-      @label = Label.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_label
+    @label = Label.find(params[:id])
+  end
 
-    # Only allow a list of trusted parameters through.
-    def label_params
-      params.require(:label).permit(:name)
-    end
+  # Only allow a list of trusted parameters through.
+  def label_params
+    params.require(:label).permit(:name)
+  end
 end
