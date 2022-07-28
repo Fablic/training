@@ -1,27 +1,29 @@
-<p id="notice"><%= notice %></p>
+<% content_for(:page_title, I18n.t('labels.index.title')) %>
 
-<h1>Labels</h1>
+<div class="container">
+  <p id="notice"><%= notice %></p>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @labels.each do |label| %>
+  <table class="table">
+    <thead>
       <tr>
-        <td><%= label.name %></td>
-        <td><%= link_to 'Show', label %></td>
-        <td><%= link_to 'Edit', edit_label_path(label) %></td>
-        <td><%= link_to 'Destroy', label, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th>Name</th>
+        <th colspan="3"></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
 
-<br>
+    <tbody>
+      <% @labels.each do |label| %>
+        <tr>
+          <td><%= label.name %></td>
+          <td><%= link_to 'Show', label %></td>
+          <td><%= link_to 'Edit', edit_label_path(label) %></td>
+          <td><%= link_to 'Destroy', label, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 
-<%= link_to 'New Label', new_label_path %>
+  <br>
+
+  <%= link_to 'New Label', new_label_path %>
+</div>

@@ -1,9 +1,13 @@
-<p id="notice"><%= notice %></p>
+<% content_for(:page_title, I18n.t('labels.show.title')) %>
 
-<p>
-  <strong>Name:</strong>
-  <%= @label.name %>
-</p>
+<div class="container">
+  <p id="notice"><%= notice %></p>
 
-<%= link_to 'Edit', edit_label_path(@label) %> |
-<%= link_to 'Back', labels_path %>
+  <p>
+    <strong>Name:</strong>
+    <%= @label.name %>
+  </p>
+
+  <%= link_to 'Edit', edit_label_path(@label) %> |
+  <%= link_to 'Back', labels_path %>
+</div>
