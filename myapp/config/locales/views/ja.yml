@@ -42,6 +42,16 @@ ja:
         title: "管理画面 : ユーザー情報"
   labels:
     management: "ラベル管理"
+    flash:
+      create:
+        success: "ラベルは正常に作成されました"
+        error: "ラベル作成に失敗しました"
+      update:
+        success: "ラベルは正常に更新されました"
+        error: "ラベルの更新に失敗しました"
+      destroy:
+        success: "ラベルは正常に削除されました"
+        error: "ラベルの削除に失敗しました"
   views:
     pagination:
       first: "最初"
