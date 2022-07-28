@@ -41,6 +41,14 @@ ja:
       show:
         title: "管理画面 : ユーザー情報"
   labels:
+    index:
+      title: "ラベル一覧"
+    edit:
+      title: "ラベル編集"
+    new:
+      title: "ラベル新規作成"
+    show:
+      title: "ラベル詳細"
     management: "ラベル管理"
     flash:
       create:
