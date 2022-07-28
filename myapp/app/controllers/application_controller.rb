@@ -32,11 +32,7 @@ class ApplicationController < ActionController::Base
   end
 
   def maintenance_mode?
-    maintenance_mode = Constant.find_by(key: 'maintenance_mode')
-    return false if maintenance_mode.nil?
-    return true if maintenance_mode.value == 'true'
-
-    false
+    Constant.find_by(key: 'maintenance_mode')&.value == 'true'
   end
 
   def _render503(error = nil)
