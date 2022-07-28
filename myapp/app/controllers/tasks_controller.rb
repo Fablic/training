@@ -6,6 +6,8 @@ class TasksController < ApplicationController
   def index
     user_id = session[:user_id]
     @tasks = Task.search(user_id: user_id, status: params[:status], keyword: params[:keyword], label_id: params[:label_id], sort: params[:sort], direction: params[:direction]).page(params[:page])
+    @tasks = @tasks.includes(:labels)
+    @tasks = @tasks.includes(:task_labels)
   end
 
   def show
