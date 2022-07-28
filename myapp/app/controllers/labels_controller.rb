@@ -1,12 +1,12 @@
 class LabelsController < ApplicationController
   before_action :set_label, only: %i[ show edit update destroy ]
 
-  # GET /labels or /labels.json
+  # GET /labels
   def index
     @labels = Label.all
   end
 
-  # GET /labels/1 or /labels/1.json
+  # GET /labels/1
   def show
   end
 
@@ -19,13 +19,13 @@ class LabelsController < ApplicationController
   def edit
   end
 
-  # POST /labels or /labels.json
+  # POST /labels
   def create
     @label = Label.new(label_params)
 
     respond_to do |format|
       if @label.save
-        format.html { redirect_to label_url(@label), notice: "Label was successfully created." }
+        format.html { redirect_to label_url(@label), notice: 'Label was successfully created.' }
         format.json { render :show, status: :created, location: @label }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +38,7 @@ class LabelsController < ApplicationController
   def update
     respond_to do |format|
       if @label.update(label_params)
-        format.html { redirect_to label_url(@label), notice: "Label was successfully updated." }
+        format.html { redirect_to label_url(@label), notice: 'Label was successfully updated.' }
         format.json { render :show, status: :ok, location: @label }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -47,17 +47,18 @@ class LabelsController < ApplicationController
     end
   end
 
-  # DELETE /labels/1 or /labels/1.json
+  # DELETE /labels/1
   def destroy
     @label.destroy
 
     respond_to do |format|
-      format.html { redirect_to labels_url, notice: "Label was successfully destroyed." }
+      format.html { redirect_to labels_url, notice: 'Label was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
+
     # Use callbacks to share common setup or constraints between actions.
     def set_label
       @label = Label.find(params[:id])
