@@ -2,6 +2,7 @@
 
 class ApplicationController < ActionController::Base
   include SessionsHelper
+  before_action :_render503, if: :maintenance_mode?
 
   # error handle
   rescue_from Exception, with: :_render500
@@ -28,5 +29,14 @@ class ApplicationController < ActionController::Base
     return if logged_in?
 
     redirect_to login_path
+  end
+
+  def maintenance_mode?
+    Constant.find_by(key: 'maintenance_mode')&.value == 'true'
+  end
+
+  def _render503(error = nil)
+    logger.info "Rendering 503 with exception: #{error.message}" if error
+    render 'errors/503.html', content_type: 'text/html', status: :service_unavailable
   end
 end

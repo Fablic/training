@@ -14,6 +14,11 @@ User.create!(
   password: 'password'
 )
 
+Constant.create!(
+  key: 'maintenance_mode',
+  value: 'false'
+)
+
 if Rails.env.development?
   30.times do |n|
     name = "test-#{n+1}"
