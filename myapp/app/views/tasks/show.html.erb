@@ -32,5 +32,19 @@
       </table>
     </div>
   </div>
+
+  <table class="table table-borderless">
+    <tbody>
+      <tr>
+        <th><%= I18n.t('activerecord.attributes.task.labels') %>:</th>
+        <td>
+          <% @task.labels.each do |label| %>
+            #<%= label.name %>
+          <% end %>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
   <%= link_to I18n.t('dictionary.button.home'), root_path %>
 </div>

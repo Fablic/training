@@ -121,7 +121,7 @@ RSpec.describe 'AdminUsers', type: :system do
 
       it 'can not change role' do
         click_on '更新'
-        expect(page).to have_content 'Failed'
+        expect(page).to have_content 'ユーザー情報の更新に失敗しました'
       end
     end
   end
@@ -154,7 +154,7 @@ RSpec.describe 'AdminUsers', type: :system do
       end
 
       it 'can not destroy last admin user' do
-        expect(page).to have_content 'The last admin user cannot be deleted!!'
+        expect(page).to have_content '現在ログイン中のユーザーは削除できません'
       end
     end
   end

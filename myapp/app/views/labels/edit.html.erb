@@ -1,0 +1,8 @@
+<% content_for(:page_title, I18n.t('labels.edit.title')) %>
+
+<div class="container">
+  <%= render 'form', label: @label %>
+
+  <%= link_to 'Show', @label %> |
+  <%= link_to 'Back', labels_path %>
+</div>

@@ -11,6 +11,7 @@ ja:
         priority: "優先度"
         status: "状態"
         limit: "期限"
+        labels: "ラベル"
   enums:
     task:
       priority:

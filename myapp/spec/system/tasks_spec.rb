@@ -79,10 +79,13 @@ RSpec.describe 'Task', type: :system do
 
     context 'when use search function' do
       before do
-        create(:task, name: '洗濯1', description: 'コインランドリーに行く', priority: 'Low', status: 'TODO', limit: Time.new(2022, 1, 10).in_time_zone, created_at: Time.new(2021, 12, 1).in_time_zone)
-        create(:task, name: '洗濯2', description: 'クリーニング屋に行く', priority: 'High', status: 'DONE', limit: Time.new(2022, 1, 10).in_time_zone, created_at: Time.new(2021, 12, 1).in_time_zone)
+        task1 = create(:task, name: '洗濯1', description: 'コインランドリーに行く', priority: 'Low', status: 'TODO', limit: Time.new(2022, 1, 10).in_time_zone, created_at: Time.new(2021, 12, 1).in_time_zone)
+        task2 = create(:task, name: '洗濯2', description: 'クリーニング屋に行く', priority: 'High', status: 'DONE', limit: Time.new(2022, 1, 10).in_time_zone, created_at: Time.new(2021, 12, 1).in_time_zone)
         create(:task, name: '掃除', description: '洗面所掃除する', priority: 'Normal', status: 'IN_PROGRESS', limit: Time.new(2022, 1, 2).in_time_zone, created_at: Time.new(2021, 12, 2).in_time_zone)
         create(:task, name: '買い物', description: '柔軟剤買う', priority: 'High', status: 'DONE',  limit: Time.new(2022, 1, 30).in_time_zone, created_at: Time.new(2021, 12, 3).in_time_zone)
+        label = Label.create(name: '家事')
+        TaskLabel.create(task: task1, label: label)
+        TaskLabel.create(task: task2, label: label)
         visit current_path
       end
 
@@ -110,6 +113,15 @@ RSpec.describe 'Task', type: :system do
         click_on '検索'
         expect(page).to have_content '洗濯1'
         expect(page).not_to have_content '洗濯2'
+        expect(page).not_to have_content '掃除'
+        expect(page).not_to have_content '買い物'
+      end
+
+      it 'can search using label', :aggregate_failures do
+        select '家事', from: 'label'
+        click_on '検索'
+        expect(page).to have_content '洗濯1'
+        expect(page).to have_content '洗濯2'
         expect(page).not_to have_content '掃除'
         expect(page).not_to have_content '買い物'
       end

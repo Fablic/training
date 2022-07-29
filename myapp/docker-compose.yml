@@ -36,6 +36,8 @@ services:
       DB_NAME: myapp
       DB_PASSWORD: password
       DB_HOST: db
+    stdin_open: true
+    tty: true
 
   chrome:
     image: selenium/standalone-chrome:latest

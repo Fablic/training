@@ -1,0 +1,7 @@
+<% content_for(:page_title, I18n.t('labels.new.title')) %>
+
+<div class="container">
+  <%= render 'form', label: @label %>
+
+  <%= link_to 'Back', labels_path %>
+</div>

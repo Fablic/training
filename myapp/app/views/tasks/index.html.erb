@@ -13,6 +13,7 @@
           <th><%= sort_order "status", I18n.t('activerecord.attributes.task.status') %></th>
           <th><%= sort_order "limit", I18n.t('activerecord.attributes.task.limit') %></th>
           <th><%= sort_order "created_at", I18n.t('activerecord.attributes.task.created_at') %></th>
+          <th><%= I18n.t('activerecord.attributes.task.labels') %></th>
           <th></th>
           <th></th>
         </tr>
@@ -24,6 +25,11 @@
             <td><%= task.status_i18n %></td>
             <td><%= I18n.l(task.limit) if task.limit.present? %></td>
             <td><%= I18n.l(task.created_at) %></td>
+            <td>
+              <% task.labels.each do |label| %>
+                #<%= label.name %>
+              <% end %>
+            </td>
             <td><%= link_to I18n.t('dictionary.button.edit'), edit_task_path(task), class: "btn btn-info" %></td>
             <td><%= link_to I18n.t('dictionary.button.destory'), task, method: :delete, data: {confirm: "Do you want to delete #{task.name}?"}, class: "btn btn-danger" %><br /></td>
           </tr>

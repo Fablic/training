@@ -3,9 +3,11 @@
 class TasksController < ApplicationController
   before_action :logged_in_user, only: [:edit, :update, :destroy]
 
-  def index
+  def index # rubocop:disable Metrics/AbcSize
     user_id = session[:user_id]
     @tasks = Task.search(user_id: user_id, status: params[:status], keyword: params[:keyword], sort: params[:sort], direction: params[:direction]).page(params[:page])
+    @tasks = @tasks.includes(:labels, :task_labels)
+    @tasks = @tasks.where(labels: { id: params[:label_id] }) if params[:label_id].present?
   end
 
   def show
@@ -56,6 +58,6 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:name, :description, :priority, :status, :limit)
+    params.require(:task).permit(:name, :description, :priority, :status, :limit, { label_ids: [] })
   end
 end
