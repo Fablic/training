@@ -6,8 +6,7 @@ class TasksController < ApplicationController
   def index # rubocop:disable Metrics/AbcSize
     user_id = session[:user_id]
     @tasks = Task.search(user_id: user_id, status: params[:status], keyword: params[:keyword], sort: params[:sort], direction: params[:direction]).page(params[:page])
-    @tasks = @tasks.includes(:labels)
-    @tasks = @tasks.includes(:task_labels)
+    @tasks = @tasks.includes(:labels, :task_labels)
     @tasks = @tasks.where(labels: { id: params[:label_id] }) if params[:label_id].present?
   end
 
