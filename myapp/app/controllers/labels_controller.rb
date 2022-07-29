@@ -36,7 +36,7 @@ class LabelsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /labels/1 or /labels/1.json
+  # PATCH/PUT /labels/1
   def update
     respond_to do |format|
       if @label.update(label_params)
