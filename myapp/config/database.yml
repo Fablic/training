@@ -12,10 +12,13 @@
 default: &default
   adapter: mysql2
   encoding: utf8mb4
+  charset: utf8mb4 # ここを追加
+  collation: utf8mb4_general_ci # ここを追加
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: root
-  password:
-  host: localhost
+  database: <%= ENV['DB_NAME'] %> # from docker-compose.yml 
+  username: <%= ENV['DB_USER'] %> # from docker-compose.yml 
+  password: <%= ENV['DB_PASSWORD'] %> # from docker-compose.yml 
+  host: <%= ENV['DB_HOST'] %> # from docker-compose.yml 
 
 development:
   <<: *default
