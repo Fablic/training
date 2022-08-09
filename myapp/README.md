@@ -13,7 +13,7 @@ Things you may want to cover:
 | ---- | ---- | ---- | ---- | ---- |
 |  id  |  INT(8)  |  Y  |  Y  |  auto_increment  |
 |  title  |  VARCHAR(128)  |  N  |  Y  |  ''  |
-|  description  |  TEXT  |  N  |  Y  |  ''  |
+|  description  |  TEXT  |  N  |  Y  |  -  |
 |  user_id  |  INT(8)  |  N  |  Y  |  -  |
 |  status  |  VARCHAR(1)  |  N  |  Y  |  '0'  |
 |  label  |  VARCHAR(64)  |  N  |  N  |  -  |s

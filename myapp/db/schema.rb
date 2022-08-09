@@ -14,9 +14,9 @@ ActiveRecord::Schema.define(version: 2022_08_08_080642) do
 
   create_table "tasks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "title", limit: 128, default: "", null: false
-    t.text "description"
-    t.integer "user_id"
-    t.string "status", limit: 1, default: "1", null: false
+    t.text "description", null: false
+    t.bigint "user_id", null: false
+    t.string "status", limit: 1, default: "0", null: false
     t.string "label", limit: 64
     t.datetime "deleted_at"
     t.datetime "created_at", precision: 6, null: false
@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 2022_08_08_080642) do
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
-    t.string "name", default: "", null: false
+    t.string "name", limit: 128, default: "", null: false
     t.datetime "deleted_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
