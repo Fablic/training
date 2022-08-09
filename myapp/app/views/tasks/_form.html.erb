@@ -1,0 +1,25 @@
+<%= form_for(task) do |f|%>
+
+  <div class='field'>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+
+   <div class='field'>
+    <%= f.label :detail %>
+    <%= f.text_field :detail %>
+  </div>
+
+   <div class='field'>
+    <%= f.label :status %>
+    <%= f.text_field :status %>
+  </div>
+
+   <div class='field'>
+    <%= f.label :priority %>
+    <%= f.text_field :priority %>
+  </div>
+
+  <br>
+  <%= f.submit %>
+<%end%>

@@ -1,2 +1,32 @@
-<h1>Tasks#index</h1>
-<p>Find me in app/views/tasks/index.html.erb</p>
+<h1>タスク一覧</h1>
+<table>
+  <thead>
+    <tr>
+      <th>タスク名</th>
+      <th>詳細</th>
+      <th>ステータス</th>
+      <th>優先度</th>
+      <th>登録日時</th>
+      <th>更新日時</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @tasks.each do |task| %>
+      <tr>
+        <td><%= task.name %></td>
+        <td><%= task.detail %></td>
+        <td><%= task.status %></td>
+        <td><%= task.priority %></td>
+        <td><%= task.created_at %></td>
+        <td><%= task.updated_at %></td>
+        <td><%= link_to '詳細', task_path(task.id) %></td>
+        <td><%= link_to '更新', tasks_path(task.id) %></td>
+        <td><%= link_to '削除', tasks_path(task.id) %></td>
+      </tr>
+    <%end%>
+  </tbody>
+</table>
+<br>
+
+<%= link_to '新規登録', new_task_path %>
