@@ -1,20 +1,39 @@
-<h1>タスク一覧</h1>
-<table>
+<h1 class="text-muted pb-3" >タスク一覧</h1>
+
+<% if flash[:notice] %>
+  <p class="alert alert-success">
+    <%= flash[:notice] %>
+  </p>
+<% end %>
+
+<table class="table">
   <thead>
     <tr>
-      <th>タスク名</th>
+      <th scope="col">タスク</th>
+      <th scope="col">説明</th>
+      <th scope="col">編集</th>
+      <th scope="col">削除</th>
     </tr>
   </thead>
   <tbody>
     <% @tasks.each do |task| %>
       <tr>
-        <td><%= link_to task.title, task_path(task) %></td>
-        <td><%= task.description %></td>
-        <td><%= link_to '編集', edit_task_path(task), :class=>"btn btn-light" %></td>
-        <td><%= link_to '削除', task_path(task), method: :delete, :class=>"btn btn-danger" %></td>
+        <td>
+          <%= link_to task.title, task_path(task) %>
+        </td>
+        <td>
+          <%= task.description %>
+        </td>
+        <td>
+          <%= link_to '編集', edit_task_path(task), :class=>"btn btn-light" %>
+        </td>
+        <td>
+          <%= link_to '削除', task_path(task), method: :delete, :class=>"btn btn-danger" %>
+        </td>
       </tr>
     <% end %>
-    <div>
-    </div>
   </tbody>
 </table>
+<div class="d-grid gap-2">
+  <a href="/tasks/new" class="btn btn-primary btn-block">新規登録</a>
+</div>
