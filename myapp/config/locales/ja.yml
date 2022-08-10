@@ -51,9 +51,4 @@ ja:
       create: 登録
       submit: 保存
       update: 更新
-  articles:
-    status:
-      1: 未着手
-      2: 着手中
-      3: 完了
 
