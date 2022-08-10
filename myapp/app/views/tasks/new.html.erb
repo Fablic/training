@@ -1,10 +1,9 @@
 <h1>タスク登録</h1>
-<a href="/tasks" >一覧に戻る</a>
-
 <%= form_for(@task) do |f| %>
   <div><%= f.label :タイトル %></div>
   <div><%= f.text_field :title %></div>
   <div><%= f.label :説明 %></div>
   <div><%= f.text_area :description %></div>
-  <div><%= f.submit :class=>"btn btn-primary" %></div>
+  <input type="submit" name="commit" value="登録" class="btn btn-primary" data-disable-with="登録">
 <% end %>
+<%= link_to '一覧に戻る', tasks_path %>
