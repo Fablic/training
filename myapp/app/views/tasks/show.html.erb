@@ -5,7 +5,7 @@
 <%= render @task %>
 <br>
 
-<%= link_to '更新', edit_task_path(@task.id) %>
+<%= link_to '編集', edit_task_path(@task.id) %>
 <%= link_to '削除', task_path(@task.id), method: :delete, data: { confirm: "タスク「#{@task.name}」を削除します。よろしいですか？"} %>
 <br>
 <br>

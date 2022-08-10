@@ -4,7 +4,6 @@
   <thead>
     <tr>
       <th>タスク名</th>
-      <th>詳細</th>
       <th>ステータス</th>
       <th>優先度</th>
     </tr>
@@ -14,7 +13,6 @@
     <% @tasks.each do |task| %>
       <tr>
         <td><%= task.name %></td>
-        <td><%= task.detail %></td>
         <td><%= task.status %></td>
         <td><%= task.priority %></td>
         <td><%= link_to '詳細', task_path(task.id) %></td>

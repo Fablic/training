@@ -14,11 +14,15 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
-    @task.save!
     
     respond_to do |format|
-      format.html { redirect_to tasks_url, notice: "タスク「#{@task.name}」を登録しました。" }
-      format.json { render :show, status: :ok, location: @task }
+      if @task.save
+        format.html { redirect_to tasks_url, notice: "タスク「#{@task.name}」を登録しました。" }
+        format.json { render :show, status: :ok, location: @task }
+      else
+        format.html { render :new }
+        format.json { render json, @task.errors, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -38,20 +42,24 @@ class TasksController < ApplicationController
   end
 
   def destroy
-    @task.destroy
-    
     respond_to do |format|
-      format.html { redirect_to tasks_url, notice: "タスク「#{@task.name}」を削除しました。" }
-      format.json { head :no_content }
+      if @task.destroy
+        format.html { redirect_to tasks_url, notice: "タスク「#{@task.name}」を削除しました。" }
+        format.json { head :no_content }
+      else
+        format.html { render :show }
+        format.json { render json, @task.errors, status: :unprocessable_entity }
+      end
     end
   end
 
   private
-    def task_params
-      params.require(:task).permit(:name, :detail, :status, :priority)
-    end
 
-    def set_task
-      @task = Task.find(params[:id])
-    end
+  def task_params
+    params.require(:task).permit(:name, :detail, :status, :priority)
+  end
+
+  def set_task
+    @task = Task.find(params[:id])
+  end
 end
