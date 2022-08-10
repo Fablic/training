@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TasksController < ApplicationController
   def index
     @tasks = Task.all
@@ -17,7 +19,7 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.create(task_params)
-    
+
     respond_to do |format|
       if @task.save
         format.html { redirect_to tasks_url, notice: "タスク「#{@task.title}」を登録しました。" }
