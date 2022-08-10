@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>タスク詳細</h1>
+
+<%= render @task %>
+<br>
+
+<%= link_to '編集', edit_task_path(@task.id) %>
+<%= link_to '削除', task_path(@task.id), method: :delete, data: { confirm: "タスク「#{@task.name}」を削除します。よろしいですか？"} %>
+<%= link_to '戻る', tasks_path %> 
