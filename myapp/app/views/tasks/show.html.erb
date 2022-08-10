@@ -32,6 +32,6 @@
   </ul>
   <div class="d-grid gap-2">
     <%= link_to '編集', edit_task_path(@task), :class=>"btn btn-light" %>
-    <%= link_to '削除', task_path(@task), method: :delete, :class=>"btn btn-danger" %>
+    <%= link_to '削除', task_path(@task), method: :delete, data: {confirm: "削除しますか？"}, :class=>"btn btn-danger" %>
   </div>
 <%= link_to '一覧に戻る', tasks_path %>
