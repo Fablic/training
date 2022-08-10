@@ -30,6 +30,9 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 ja:
+  time:
+    formats:
+      default: "%Y/%m/%d %H:%M:%S"
   activerecord:
     models:
       task: タスク
@@ -43,4 +46,14 @@ ja:
   attributes:
     created_at: 登録日時
     updated_at: 更新日時
+  helpers:
+    submit:
+      create: 登録
+      submit: 保存
+      update: 更新
+  articles:
+    status:
+      1: 未着手
+      2: 着手中
+      3: 完了
 

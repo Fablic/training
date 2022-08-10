@@ -1,3 +1,4 @@
+<p style="color: green"><%= notice %></p>
 <h1>タスク一覧</h1>
 <table>
   <thead>
@@ -6,8 +7,6 @@
       <th>詳細</th>
       <th>ステータス</th>
       <th>優先度</th>
-      <th>登録日時</th>
-      <th>更新日時</th>
     </tr>
   </thead>
 
@@ -18,11 +17,7 @@
         <td><%= task.detail %></td>
         <td><%= task.status %></td>
         <td><%= task.priority %></td>
-        <td><%= task.created_at %></td>
-        <td><%= task.updated_at %></td>
         <td><%= link_to '詳細', task_path(task.id) %></td>
-        <td><%= link_to '更新', tasks_path(task.id) %></td>
-        <td><%= link_to '削除', tasks_path(task.id) %></td>
       </tr>
     <%end%>
   </tbody>
