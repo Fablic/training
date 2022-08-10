@@ -1,2 +1,19 @@
-<h1>タスク一覧画面</h1>
-<a href="/tasks/new" class="btn btn-primary">新規登録</a>
+<h1>タスク一覧</h1>
+<table>
+  <thead>
+    <tr>
+      <th>タスク名</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tasks.each do |task| %>
+      <tr>
+        <td><%= task.title %></td>
+        <td><%= task.description %></td>
+      </tr>
+    <% end %>
+    <div>
+    <a href="/tasks/new" class="btn btn-primary">新規登録</a>
+    </div>
+  </tbody>
+</table>

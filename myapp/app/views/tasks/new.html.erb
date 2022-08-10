@@ -1,2 +1,10 @@
-<h1>Tasks#new</h1>
-<p>Find me in app/views/tasks/new.html.erb</p>
+<h1>タスク登録</h1>
+<a href="/tasks" >一覧に戻る</a>
+
+<%= form_for(@task) do |f| %>
+  <div><%= f.label :タイトル %></div>
+  <div><%= f.text_field :title %></div>
+  <div><%= f.label :説明 %></div>
+  <div><%= f.text_area :description %></div>
+  <div><%= f.submit :class=>"btn btn-primary" %></div>
+<% end %>
