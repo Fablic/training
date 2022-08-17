@@ -2,7 +2,37 @@
 
 <h1>タスク詳細画面</h1>
 
-<%= render @task %>
+<div>
+  <p>
+    <strong>タスク名:</strong>
+    <%= @task.name %>
+  </p>
+
+  <p>
+    <strong>詳細:</strong>
+    <%= @task.detail %>
+  </p>
+
+  <p>
+    <strong>ステータス:</strong>
+    <%= @task.status %>
+  </p>
+
+  <p>
+    <strong>優先度:</strong>
+    <%= @task.priority %>
+  </p>
+
+  <p>
+    <strong>登録日時:</strong>
+    <%= @task.created_at %>
+  </p>
+
+  <p>
+    <strong>更新日時:</strong>
+    <%= @task.updated_at %>
+  </p>
+</div>
 <br>
 
 <%= link_to '編集', edit_task_path(@task.id) %>
