@@ -9,20 +9,16 @@ class TasksController < ApplicationController
   end
 
   def new
-    @task = Task.new()
+    @task = Task.new
   end
 
   def create
     @task = Task.new(task_params)
-    
-    respond_to do |format|
-      if @task.save
-        format.html { redirect_to tasks_url, notice: "タスク「#{@task.name}」を登録しました。" }
-        format.json { render :show, status: :ok, location: @task }
-      else
-        format.html { render :new }
-        format.json { render json, @task.errors, status: :unprocessable_entity }
-      end
+
+    if @task.save
+      redirect_to tasks_url, notice: "タスク「#{@task.name}」を登録しました。"
+    else
+      render :new
     end
   end
 
@@ -30,26 +26,18 @@ class TasksController < ApplicationController
   end
 
   def update
-    respond_to do |format|
-      if @task.update(task_params)
-        format.html { redirect_to task_url, notice: "タスク「#{@task.name}」を更新しました。" }
-        format.json { render :show, status: :ok, location: @task }
-      else
-        format.html { render :edit }
-        format.json { render json, @task.errors, status: :unprocessable_entity }
-      end
+    if @task.update(task_params)
+      redirect_to task_url, notice: "タスク「#{@task.name}」を更新しました。"
+    else
+      render :edit
     end
   end
 
   def destroy
-    respond_to do |format|
-      if @task.destroy
-        format.html { redirect_to tasks_url, notice: "タスク「#{@task.name}」を削除しました。" }
-        format.json { head :no_content }
-      else
-        format.html { render :show }
-        format.json { render json, @task.errors, status: :unprocessable_entity }
-      end
+    if @task.destroy
+      redirect_to tasks_url, notice: "タスク「#{@task.name}」を削除しました。"
+    else
+      render :show
     end
   end
 
