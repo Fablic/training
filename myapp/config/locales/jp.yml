@@ -29,5 +29,20 @@
 # To learn more, please read the Rails Internationalization guide
 # available at https://guides.rubyonrails.org/i18n.html.
 
-en:
-  hello: "Hello world"
+ja:
+  activerecord:
+    models:
+      task: タスク
+    attributes:
+      task:
+        id: ID
+        name: タスク名
+        description: 詳細
+  attributes:
+    created_at: 登録日時
+    updated_at: 更新日時
+  helpers:
+    submit:
+      create: タスクを登録
+      submit: タスクを保存
+      update: タスクを更新

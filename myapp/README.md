@@ -21,7 +21,7 @@ http://localhost:3001
 タスク作成エリア
 | item | layer | name | source | type | loop | others |
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
-| button　| 1 | 作成 |  | ボタン | | タスク作成画面へ遷移 |
+| button　| 1 | 新規作成 |  | ボタン | | タスク作成画面へ遷移 |
 <br>
 
 検索エリア
@@ -51,13 +51,13 @@ http://localhost:3001/tasks/{task.id}
 【タスク作成画面】  
 
 URL
-http://localhost:3001/tasks
+http://localhost:3001/tasks/new
 
 | item | layer | name | source | type | loop | others |
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
 | text | 1 | タスク名 | | 文字列 | | |
 | text | 1 | 詳細 | | 文字列 | | |
-| button | 1 | 作成 |  | ボタン | | タスク作成 |
+| button | 1 | タスクを作成 |  | ボタン | | タスク作成 |
 | button | 1 | 戻る |  | ボタン | | タスク一覧画面へ遷移 |
 <br>
 
@@ -70,7 +70,7 @@ http://localhost:3001/tasks/{task.id}/edit
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
 | text | 1 | タスク名 | tasks.name | 文字列 | | |
 | text | 1 | 詳細 | tasks.description | 文字列 | | |
-| button | 1 | 更新 |  | ボタン | | データを更新 |
+| button | 1 | タスクを更新 |  | ボタン | | データを更新 |
 | button | 1 | 詳細へ |  | ボタン | | タスク詳細画面へ遷移 |
 <br>
 
