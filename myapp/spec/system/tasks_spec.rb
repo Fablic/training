@@ -62,7 +62,7 @@ describe 'タスク管理機能', type: :system do
         expect(task.name).to eq(name)
         expect(task.description).to eq(description)
         # Flashメッセージが表示される
-        expect(page).to have_selector '.alert-success', text: "タスク「新規作成テスト用タスク」を登録しました。"
+        expect(page).to have_selector '.alert-success', text: "タスク「#{task.name}」を登録しました。"
         # タスク一覧画面が表示される
         expect(current_path).to eq tasks_path
       end
@@ -91,7 +91,7 @@ describe 'タスク管理機能', type: :system do
         expect(task.name).to eq(name)
         expect(task.description).to eq(description)
         # Flashメッセージが表示される
-        expect(page).to have_selector '.alert-success', text: "タスク「新規作成テスト用タスク２」を更新しました。"
+        expect(page).to have_selector '.alert-success', text: "タスク「#{task.name}」を更新しました。"
       end
     end
   end
