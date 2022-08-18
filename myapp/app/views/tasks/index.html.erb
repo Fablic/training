@@ -1,12 +1,12 @@
-<h1 class="text-muted pb-3" >タスク一覧</h1>
+<h1>タスク一覧</h1>
 
 <% if flash[:notice] %>
-  <p class="alert alert-success">
+  <p>
     <%= flash[:notice] %>
   </p>
 <% end %>
 
-<table class="table">
+<table>
   <thead>
     <tr>
       <th scope="col">タスク</th>
@@ -25,15 +25,15 @@
           <%= task.description %>
         </td>
         <td>
-          <%= link_to '編集', edit_task_path(task), :class=>"btn btn-light" %>
+          <%= link_to '編集', edit_task_path(task) %>
         </td>
         <td>
-          <%= link_to '削除', task_path(task), method: :delete,  data: {confirm: "削除しますか？"}, :class=>"btn btn-danger" %>
+          <%= link_to '削除', task_path(task), method: :delete,  data: {confirm: "削除しますか？"} %>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
-<div class="d-grid gap-2">
-  <a href="/tasks/new" class="btn btn-primary btn-block">新規登録</a>
+<div >
+  <a href="/tasks/new" >新規登録</a>
 </div>
