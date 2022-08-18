@@ -1,0 +1,25 @@
+<p style="color: green"><%= notice %></p>
+<h1>タスク一覧画面</h1>
+<table>
+  <thead>
+    <tr>
+      <th>タスク名</th>
+      <th>ステータス</th>
+      <th>優先度</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @tasks.each do |task| %>
+      <tr>
+        <td><%= task.name %></td>
+        <td><%= task.status %></td>
+        <td><%= task.priority %></td>
+        <td><%= link_to '詳細', task_path(task.id) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br>
+
+<%= link_to '新規登録', new_task_path %>

@@ -1,14 +1,14 @@
 # README
 
 ## アプリケーション名
-タスク管理システム  
+タスク管理システム
 <br>
 
 ## 画面設計
-【タスク一覧画面】  
+【タスク一覧画面】
 
 URL
-http://localhost:3001  
+http://localhost:3001
 
 タスク一覧エリア
 | item | layer | name | source | type | loop | others |
@@ -18,6 +18,7 @@ http://localhost:3001
 | label | 2 | ステータス | tasks.status | 文字列 | | コードを文字列へ変換して表示 1:'未着手'、2:'着手中'、3:'完了' |
 | label | 2 | 優先度 | tasks.priority | 数値 | | |
 | button | 2 | 詳細 |  | ボタン | | タスク詳細画面へ遷移 |
+| button | 1 | 新規登録 |  | ボタン | | タスク作成画面へ遷移 |
 <br>
 
 タスク作成エリア
@@ -34,10 +35,10 @@ http://localhost:3001
 | button　| 1 | 検索ボタン | | ボタン | | タスク一覧を条件に応じて絞り込み |
 <br>
 
-【タスク詳細画面】  
+【タスク詳細画面】
 
 URL
-http://localhost:3001/tasks/{task.id}  
+http://localhost:3001/tasks/{task.id}
 
 | item | layer | name | source | type | loop | others |
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
@@ -49,35 +50,38 @@ http://localhost:3001/tasks/{task.id}
 | label | 1 | 更新日時 | tasks.updated_at | 文字列 | | |
 | button | 1 | 編集 |  | ボタン | | タスク編集画面へ遷移 |
 | button | 1 | 削除 |  | ボタン | | タスクを削除し、タスク一覧画面へ遷移 |
-| button | 1 | 戻る |  | ボタン | | タスク一覧画面へ遷移 |
+| button | 1 | 一覧に戻る |  | ボタン | | タスク一覧画面へ遷移 |
 <br>
 
-【タスク作成画面】  
+【タスク作成画面】
 
 URL
-http://localhost:3001/tasks
+http://localhost:3001/tasks/new
 
 | item | layer | name | source | type | loop | others |
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
 | text | 1 | タスク名 | | 文字列 | | |
 | text | 1 | 詳細 | | 文字列 | | |
-| text | 1 | 優先度 | | 数値 | | |
-| button | 1 | 作成 |  | ボタン | | タスク作成 |
-| button | 1 | 戻る |  | ボタン | | タスク一覧画面へ遷移 |
+| select | 1 | ステータス | | プルダウン | | 1:'未着手'、2:'着手中'、3:'完了' をリスト表示 |
+| select | 1 | 優先度 | | プルダウン | | 1:'低'、2:'中'、3:'高' をリスト表示 |
+| button | 1 | 登録 |  | ボタン | | タスク作成 |
+| button | 1 | 一覧へ戻る |  | ボタン | | タスク一覧画面へ遷移 |
 <br>
 
-【タスク編集画面】  
+【タスク編集画面】
 
 URL
-http://localhost:3001/tasks/{task.id}/edit  
+http://localhost:3001/tasks/{task.id}/edit
 
 | item | layer | name | source | type | loop | others |
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
 | text | 1 | タスク名 | tasks.name | 文字列 | | |
 | text | 1 | 詳細 | tasks.detail | 文字列 | | |
 | select | 1 | ステータス | プルダウン | 文字列 | | 1:'未着手'、2:'着手中'、3:'完了' をリスト表示 |
+| select | 1 | 優先度 | | プルダウン | | 1:'低'、2:'中'、3:'高' をリスト表示 |
 | button | 1 | 更新 |  | ボタン | | データを更新 |
-| button | 1 | 詳細へ |  | ボタン | | タスク詳細画面へ遷移 |
+| button | 1 | 詳細へ戻る |  | ボタン | | タスク詳細画面へ遷移 |
+| button | 1 | 一覧へ戻る |  | ボタン | | タスク一覧画面へ遷移 |
 <br>
 
 

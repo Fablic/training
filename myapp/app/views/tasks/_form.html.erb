@@ -1,0 +1,30 @@
+<%= form_for(task) do |f| %>
+
+  <div class='field'>
+    <%= f.label :name %>
+    <br>
+    <%= f.text_field :name %>
+  </div>
+
+   <div class='field'>
+    <%= f.label :detail %>
+    <br>
+    <%= f.text_field :detail %>
+  </div>
+
+   <div class='field'>
+    <%= f.label :status %>
+    <br>
+    <%= f.select :status, Task.statuses.keys.map { |k| [k, k] } %>
+
+  </div>
+
+   <div class='field'>
+    <%= f.label :priority %>
+    <br>
+    <%= f.select :priority, Task.priorities.keys.map { |k| [k, k] } %>
+  </div>
+
+  <br>
+  <%= f.submit %>
+<% end %>
