@@ -4,13 +4,13 @@
       <%= f.label :タイトル %>
     </div>
     <div class="pb-3">
-      <%= f.text_field :title, :class=>"form-control" %>
+      <%= f.text_field :title, :class=>"form-control", id: "textarea1" %>
     </div>
     <div>
       <%= f.label :説明 %>
     </div>
     <div>
-      <%= f.text_area :description, :class=>"form-control" %>
+      <%= f.text_area :description, :class=>"form-control", id: "textarea2" %>
     </div>
     <div class="d-grid gap-2">
       <input type="submit" name="commit" value="更新" class="btn btn-primary mt-2" data-disable-with="更新">
