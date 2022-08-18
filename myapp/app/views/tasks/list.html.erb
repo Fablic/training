@@ -18,9 +18,9 @@
             <tr>
                 <td><span><%= task.title %></span></td>
                 <td><span><%= task.label %></span></td>
-                <td><%= link_to("Details", tasks_show_path(task), {class: "btn_a"}) %></td>
-                <td><%= link_to("Update", tasks_edit_path(task), {class: "btn_a"}) %></td>
-                <td><%= link_to("Delete", tasks_destroy_path(task), method: :delete, class: "btn_a") %></td>
+                <td><%= link_to("Details", tasks_show_path(task), {id: "show#{task.id}" ,class: "btn_a"}) %></td>
+                <td><%= link_to("Update", tasks_edit_path(task), {id: "update#{task.id}" ,class: "btn_a"}) %></td>
+                <td><%= link_to("Delete", tasks_destroy_path(task), method: :delete, id: "delete#{task.id}" ,class: "btn_a") %></td>
             </tr>
         <% end %>
     </tbody>
