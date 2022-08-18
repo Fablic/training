@@ -1,10 +1,9 @@
-
 require 'rails_helper'
 
 describe 'タスク管理機能', type: :system do
   # タスクを作成
-  let!(:task_a) {FactoryBot.create(:task, title: '最初のタスク', description: '最初のタスクを実施する', status: 0, label: '1')}
-  let!(:task_b) {FactoryBot.create(:task, title: '２つ目のタスク', description: '２つ目のタスクを実施する', status: 0, label: '2')}
+  let!(:task_a) { FactoryBot.create(:task, title: '最初のタスク', description: '最初のタスクを実施する', status: 0, label: '1') }
+  let!(:task_b) { FactoryBot.create(:task, title: '２つ目のタスク', description: '２つ目のタスクを実施する', status: 0, label: '2') }
   # タスクが表示される期待動作を共通化
   shared_examples_for 'タスクが表示される' do
     it { expect(page).to have_content '最初のタスク' }
@@ -24,12 +23,12 @@ describe 'タスク管理機能', type: :system do
     end
 
     context 'タスクが2件(複数)存在する場合' do
-        before do
-          visit tasks_path
-        end
+      before do
+        visit tasks_path
+      end
 
-        it_behaves_like 'タスクが表示される'
-        it_behaves_like '２つ目のタスクが表示される'
+      it_behaves_like 'タスクが表示される'
+      it_behaves_like '２つ目のタスクが表示される'
     end
   end
 
@@ -45,14 +44,14 @@ describe 'タスク管理機能', type: :system do
         expect(page).to have_content 0
         expect(page).to have_content '1'
       end
-    end 
+    end
   end
 
   describe '新規登録機能' do
     before do
-        visit new_task_path
-        fill_in "textarea1", with: title
-        fill_in "textarea2", with: description
+      visit new_task_path
+      fill_in 'textarea1', with: title
+      fill_in 'textarea2', with: description
     end
 
     context 'タスクの内容を入力した場合' do
@@ -61,7 +60,7 @@ describe 'タスク管理機能', type: :system do
 
       it 'タスクが正常に作成される' do
         # DBに登録されている
-        expect{ click_button '登録' }.to change(Task, :count).by(1)
+        expect { click_button '登録' }.to change(Task, :count).by(1)
         # 画面で入力された内容でDBに登録されている
         task = Task.find_by(title: title)
         expect(task.title).to eq(title)
@@ -80,8 +79,8 @@ describe 'タスク管理機能', type: :system do
     end
 
     context 'タスクの各項目を更新した場合' do
-        let(:title) { '新規作成のテスト２' }
-        let(:description) { '新規作成のテストを書く２' }
+      let(:title) { '新規作成のテスト２' }
+      let(:description) { '新規作成のテストを書く２' }
 
       it 'タスクが正常に更新される' do
         # 画面表示時に編集前のタスク内容が各項目に表示されている
@@ -106,10 +105,10 @@ describe 'タスク管理機能', type: :system do
       visit task_path(task_a)
     end
 
-    context 'タスクを削除した場合' do   
+    context 'タスクを削除した場合' do
       it 'タスクが正常に削除される' do
         # DBの該当データが削除される
-        expect{ click_on('削除') }.to change(Task, :count).by(-1)
+        expect { click_on('削除') }.to change(Task, :count).by(-1)
         expect(Task.find_by(title: task_a.title)).to be nil
 
         # Flashメッセージが表示される
