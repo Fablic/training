@@ -19,14 +19,13 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.create(task_params)
+    @task.user_id = 1
 
     respond_to do |format|
       if @task.save
         format.html { redirect_to tasks_url, notice: "タスク「#{@task.title}」を登録しました。" }
-        format.json { render :show, status: :ok, location: @task }
       else
         format.html { render :new }
-        format.json { render json, @task.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -37,10 +36,8 @@ class TasksController < ApplicationController
     respond_to do |format|
       if @task.save
         format.html { redirect_to tasks_url, notice: "タスク「#{@task.title}」を更新しました。" }
-        format.json { render :show, status: :ok, location: @task }
       else
         format.html { render :new }
-        format.json { render json, @task.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -50,10 +47,8 @@ class TasksController < ApplicationController
     respond_to do |format|
       if @task.destroy
         format.html { redirect_to tasks_url, notice: "タスク「#{@task.title}」を削除しました。" }
-        format.json { head :no_content }
       else
         format.html { render :show }
-        format.json { render json, @task.errors, status: :unprocessable_entity }
       end
     end
   end

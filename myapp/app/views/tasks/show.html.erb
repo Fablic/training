@@ -1,37 +1,37 @@
-<h1 class="text-muted pb-3" ><%= @task.title %>の詳細</h1>
-  <ul class="list-group mb-3">
-    <li class="text-muted list-group-item d-flex justify-content-between lh-condensed">タスク
-      <div class="text-info" >
+<h1><%= @task.title %>の詳細</h1>
+  <ul>
+    <li>タスク
+      <div>
         <%= @task.title %>
       </div>
-    <li class="text-muted list-group-item d-flex justify-content-between lh-condensed">説明
-      <div class="text-info" >
+    <li>説明
+      <div>
         <%= @task.description %>
       </div>
-    <li class="text-muted list-group-item d-flex justify-content-between lh-condensed">ステータス
-      <div class="text-info" >
+    <li>ステータス
+      <div>
         <%= @task.status %>
       </div>
-    <li class="text-muted list-group-item d-flex justify-content-between lh-condensed">ラベル
-      <div class="text-info" >
+    <li>ラベル
+      <div>
         <%= @task.label %>
       </div>
-    <li class="text-muted list-group-item d-flex justify-content-between lh-condensed">ユーザID
-      <div class="text-info" >
+    <li>ユーザID
+      <div>
         <%= @task.user_id %>
       </div>
-    <li class="text-muted list-group-item d-flex justify-content-between lh-condensed">登録日時
-      <div class="text-info" >
+    <li>登録日時
+      <div>
         <%= @task.created_at %>
       </div>
-    <li class="text-muted list-group-item d-flex justify-content-between lh-condensed">更新日時
-      <div class="text-info" >
+    <li>更新日時
+      <div>
         <%= @task.updated_at %>
       </div>
 
   </ul>
-  <div class="d-grid gap-2">
-    <%= link_to '編集', edit_task_path(@task), :class=>"btn btn-light" %>
-    <%= link_to '削除', task_path(@task), method: :delete, data: {confirm: "削除しますか？"}, :class=>"btn btn-danger" %>
+  <div>
+    <%= link_to '編集', edit_task_path(@task) %>
+    <%= link_to '削除', task_path(@task), method: :delete, data: {confirm: "削除しますか？"} %>
   </div>
 <%= link_to '一覧に戻る', tasks_path %>

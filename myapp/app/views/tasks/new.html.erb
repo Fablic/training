@@ -1,4 +1,4 @@
-<h1 class="text-muted pb-3" >タスク登録</h1>
+<h1>タスク登録</h1>
   <%= form_for(@task) do |f| %>
     <div>
       <%= f.label :タイトル %>
@@ -12,8 +12,8 @@
     <div>
       <%= f.text_area :description, :class=>"form-control", id: "textarea2" %>
     </div>
-    <div class="d-grid gap-2">
-      <input type="submit" name="commit" value="登録" class="btn btn-primary mt-2" data-disable-with="登録">
+    <div>
+      <input type="submit" name="commit" value="登録" data-disable-with="登録">
     </div>
   <% end %>
 <%= link_to '一覧に戻る', tasks_path %>

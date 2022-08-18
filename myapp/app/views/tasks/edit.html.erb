@@ -1,9 +1,9 @@
-<h1 class="text-muted pb-3" >タスク編集</h1>
+<h1>タスク編集</h1>
   <%= form_for(@task) do |f| %>
     <div>
       <%= f.label :タイトル %>
     </div>
-    <div class="pb-3">
+    <div>
       <%= f.text_field :title, :class=>"form-control", id: "textarea1" %>
     </div>
     <div>
@@ -12,8 +12,8 @@
     <div>
       <%= f.text_area :description, :class=>"form-control", id: "textarea2" %>
     </div>
-    <div class="d-grid gap-2">
-      <input type="submit" name="commit" value="更新" class="btn btn-primary mt-2" data-disable-with="更新">
+    <div>
+      <input type="submit" name="commit" value="更新" data-disable-with="更新">
     </div>
   <% end %>
 <%= link_to '一覧に戻る', tasks_path %>
