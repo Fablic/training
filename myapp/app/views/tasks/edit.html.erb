@@ -1,19 +1,4 @@
 <h1>タスク編集</h1>
-  <%= form_for(@task) do |f| %>
-    <div>
-      <%= f.label :タイトル %>
-    </div>
-    <div>
-      <%= f.text_field :title, :class=>"form-control", id: "textarea1" %>
-    </div>
-    <div>
-      <%= f.label :説明 %>
-    </div>
-    <div>
-      <%= f.text_area :description, :class=>"form-control", id: "textarea2" %>
-    </div>
-    <div>
-      <input type="submit" name="commit" value="更新" data-disable-with="更新">
-    </div>
-  <% end %>
+  <%= render 'form', task: @task %>
+<%= link_to '詳細へ戻る', @task %>
 <%= link_to '一覧に戻る', tasks_path %>

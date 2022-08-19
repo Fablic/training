@@ -1,34 +1,33 @@
 <h1><%= @task.title %>の詳細</h1>
   <ul>
-    <li>タスク
-      <div>
-        <%= @task.title %>
-      </div>
-    <li>説明
-      <div>
-        <%= @task.description %>
-      </div>
-    <li>ステータス
-      <div>
-        <%= @task.status %>
-      </div>
-    <li>ラベル
-      <div>
-        <%= @task.label %>
-      </div>
-    <li>ユーザID
-      <div>
-        <%= @task.user_id %>
-      </div>
-    <li>登録日時
-      <div>
-        <%= @task.created_at %>
-      </div>
-    <li>更新日時
-      <div>
-        <%= @task.updated_at %>
-      </div>
-
+    <li>タスク</li>
+    <div>
+      <%= @task.title %>
+    </div>
+    <li>説明</li>
+    <div>
+      <%= @task.description %>
+    </div>
+    <li>ステータス</li>
+    <div>
+      <%= @task.status %>
+    </div>
+    <li>ラベル</li>
+    <div>
+      <%= @task.label %>
+    </div>
+    <li>ユーザID</li>
+    <div>
+      <%= @task.user_id %>
+    </div>
+    <li>登録日時</li>
+    <div>
+      <%= @task.created_at %>
+    </div>
+    <li>更新日時</li>
+    <div>
+      <%= @task.updated_at %>
+    </div>
   </ul>
   <div>
     <%= link_to '編集', edit_task_path(@task) %>
