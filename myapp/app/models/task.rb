@@ -1,4 +1,4 @@
 class Task < ApplicationRecord
-  enum status: { 未着手: 1, 着手中: 2, 完了: 3 }
-  enum priority: { 低: 1, 中: 2, 高: 3 }
+  enum status: { not_started: 1, in_progress: 2, completed: 3 }
+  enum priority: { low: 1, middle: 2, high: 3 }
 end
