@@ -60,7 +60,7 @@ describe 'タスク管理機能', type: :system do
 
       it 'タスクが正常に作成される' do
         # DBに登録されている
-        expect { click_button '登録' }.to change(Task, :count).by(1)
+        expect { click_button 'submit' }.to change(Task, :count).by(1)
         # 画面で入力された内容でDBに登録されている
         task = Task.find_by(title: title)
         expect(task.title).to eq(title)
@@ -89,7 +89,7 @@ describe 'タスク管理機能', type: :system do
         # 更新処理
         fill_in 'textarea1', with: title
         fill_in 'textarea2', with: description
-        click_button '更新'
+        click_button 'submit'
         # 画面で入力された内容でDBのデータが更新されている
         task = Task.find_by(title: title)
         expect(task.title).to eq(title)

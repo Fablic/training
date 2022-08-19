@@ -3,15 +3,15 @@
       <%= f.label :タイトル %>
     </div>
     <div>
-      <%= f.text_field :title %>
+      <%= f.text_field :title, id: 'textarea1' %>
     </div>
     <div>
       <%= f.label :説明 %>
     </div>
     <div>
-      <%= f.text_area :description %>
+      <%= f.text_area :description, id: 'textarea2' %>
     </div>
     <div>
-    <%= f.submit %>
+    <%= f.submit id: 'submit' %>
     </div>
   <% end %>
