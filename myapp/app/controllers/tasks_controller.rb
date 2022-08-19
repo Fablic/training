@@ -35,11 +35,6 @@ class TasksController < ApplicationController
 
     # 担当者名リスト取得
 #    @user_names = user_names
-
-    # 状況リスト取得
-#    @statuses = status
-
-#    puts @user_names
   end
 
   # Edit Task → Update Task
