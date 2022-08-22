@@ -1,4 +1,13 @@
-<%= form_with(model: @task, url: url, method: method) do |f| %>
+<% if @task.errors.any? %>
+  <div class='error-area'>
+    <ul>
+      <% @task.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+<%= form_with(model: @task, url: url, method: method, local: true) do |f| %>
   <p><%= I18n.t('task.title') %></p>
   <%= f.text_field(:title) %>
 
