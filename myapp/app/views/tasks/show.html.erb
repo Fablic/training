@@ -1,12 +1,8 @@
 <h1>Task Details</h1>
-<p>Title</p>
-<p><%= @show_task[:title] %></p>
-<p>Description</p>
-<p><%= @show_task[:description] %></p>
-<p>Label</p>
-<p><%= @show_task[:label] %></p>
-<p>Status</p>
-<p><%= status_view(@show_task[:status]) %></p>
-<p>UserName</p>
-<p><%= @show_task[:name] %></p>
-<%= link_to("Back", "/") %>
+  <p>Title</p>
+  <p><%= @task.title %></p>
+  <p>Description</p>
+  <p><%= @task.description %></p>
+  <p>Label</p>
+  <p><%= @task.label %></p>
+<%= link_to('Back', tasks_url) %>
