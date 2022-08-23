@@ -42,24 +42,16 @@ describe 'タスク管理機能', type: :system do
   end
   describe '新規登録機能' do
     before do
-      visit new_task_path
-      fill_in 'textarea1', with: title
-      fill_in 'textarea2', with: description
+      visit new_task_path(task_a)
     end
-    context 'タスクの内容を入力した場合' do
-      let(:title) { '新規作成のテスト' }
-      let(:description) { '新規作成のテストを書く' }
-      it 'タスクが正常に作成される' do
-        # DBに登録されている
-        expect { click_button 'submit' }.to change(Task, :count).by(1)
-        # 画面で入力された内容でDBに登録されている
-        task = Task.find_by(title: title)
-        expect(task.title).to eq(title)
-        expect(task.description).to eq(description)
-        # Flashメッセージが表示される
-        expect(page).to have_selector '.alert-success', text: 'Create Task Success!!'
-        # タスク一覧画面が表示される
-        expect(current_path).to eq tasks_path
+    context 'タスクの各項目を登録した場合' do
+      let(:title) { '新規作成のテスト２' }
+      let(:description) { '新規作成のテストを書く２' }
+      it 'タスクが正常に登録される' do
+        # 登録処理
+        fill_in 'textarea1', with: title
+        fill_in 'textarea2', with: description
+        click_button 'submit'
       end
     end
   end
