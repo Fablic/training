@@ -1,8 +1,8 @@
 <h1>Task Details</h1>
 <p>Title</p>
-<p><%= @show_task[:title] %></p>
+<p><%= @task[:title] %></p>
 <p>Description</p>
-<p><%= @show_task[:description] %></p>
+<p><%= @task[:description] %></p>
 <p>Label</p>
-<p><%= @show_task[:label] %></p>
-<%= link_to("Back", "/") %>
+<p><%= @task[:label] %></p>
+<%= link_to('一覧に戻る', tasks_url) %>

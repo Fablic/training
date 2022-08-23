@@ -1,8 +1,3 @@
-
-
-
-
-
 require 'rails_helper'
 describe 'タスク管理機能', type: :system do
   # タスクを作成
@@ -62,7 +57,7 @@ describe 'タスク管理機能', type: :system do
         expect(task.title).to eq(title)
         expect(task.description).to eq(description)
         # Flashメッセージが表示される
-        expect(page).to have_selector '.alert-success', text: '新規作成のテスト'
+        expect(page).to have_selector '.alert-success', text: 'Create Task Success!!'
         # タスク一覧画面が表示される
         expect(current_path).to eq tasks_path
       end
@@ -95,12 +90,12 @@ describe 'タスク管理機能', type: :system do
   describe '削除機能' do
     context 'タスクを削除した場合' do
       it 'タスクが正常に削除される' do
-        visit task_path(task_a)
+        visit tasks_path()
         # DBの該当データが削除される
-        expect { find_by_id("btn_delete_#{task_a.id}").click }.to change(Task, :count).by(-1)
+        expect { find_by_id("delete#{task_a.id}").click }.to change(Task, :count).by(-1)
         expect(Task.find_by(title: task_a.title)).to be nil
         # Flashメッセージが表示される
-        expect(page).to have_selector '.alert-success', text: '削除しました'
+        expect(page).to have_selector '.alert-success', text: 'Destroy Task Success!!'
       end
     end
   end
@@ -108,7 +103,7 @@ describe 'タスク管理機能', type: :system do
     context 'タスク一覧画面から詳細画面へ遷移' do
       before do
         visit tasks_path
-        click_link 'Details', match: :first
+        find_by_id("show#{task_a.id}").click
       end
       it '詳細画面へ遷移できること' do
         expect(current_path).to eq task_path(task_a)
