@@ -16,11 +16,11 @@ describe 'タスク管理機能', type: :system do
           end
           it 'ステータスが表示される' do
             visit_tasks
-            expect(tds[1]).to have_content task_1.status
+            expect(tds[1]).to have_content I18n.t("enums.task.status.#{task_1.status}")
           end
           it '優先度が表示される' do
             visit_tasks
-            expect(tds[2]).to have_content task_1.priority
+            expect(tds[2]).to have_content I18n.t("enums.task.priority.#{task_1.priority}")
           end
         end
       end
@@ -34,11 +34,11 @@ describe 'タスク管理機能', type: :system do
           end
           it 'ステータスが表示される' do
             visit_tasks
-            expect(tds[1]).to have_content task_2.status
+            expect(tds[1]).to have_content I18n.t("enums.task.status.#{task_2.status}")
           end
           it '優先度が表示される' do
             visit_tasks
-            expect(tds[2]).to have_content task_2.priority
+            expect(tds[2]).to have_content I18n.t("enums.task.priority.#{task_2.priority}")
           end
         end
       end
@@ -86,22 +86,22 @@ describe 'タスク管理機能', type: :system do
       context 'タスクが存在する場合' do
         it 'タスク名が表示される' do
           visit_task_a
-          expect(page).to have_content '最初のタスク'
+          expect(page).to have_content task_a.name
         end
 
         it '詳細が表示される' do
           visit_task_a
-          expect(page).to have_content '最初のタスクを実施する'
+          expect(page).to have_content task_a.detail
         end
 
         it 'ステータスが表示される' do
           visit_task_a
-          expect(page).to have_content 'not_started'
+          expect(page).to have_content I18n.t("enums.task.status.#{task_a.status}")
         end
 
         it '優先度が表示される' do
           visit_task_a
-          expect(page).to have_content 'low'
+          expect(page).to have_content I18n.t("enums.task.priority.#{task_a.priority}")
         end
       end
     end
@@ -163,8 +163,8 @@ describe 'タスク管理機能', type: :system do
           visit_new_task
           fill_in 'タスク名', with: name
           fill_in '詳細', with: detail
-          select(value = status, from: 'task[status]')
-          select(value = priority, from: 'task[priority]')
+          select(value = I18n.t("enums.task.status.#{status}"), from: 'task[status]')
+          select(value = I18n.t("enums.task.priority.#{priority}"), from: 'task[priority]')
           # DBに登録されている
           expect { click_button '登録' }.to change(Task, :count).by(1)
         end
@@ -174,8 +174,8 @@ describe 'タスク管理機能', type: :system do
           visit_new_task
           fill_in 'タスク名', with: name
           fill_in '詳細', with: detail
-          select(value = status, from: 'task[status]')
-          select(value = priority, from: 'task[priority]')
+          select(value = I18n.t("enums.task.status.#{status}"), from: 'task[status]')
+          select(value = I18n.t("enums.task.priority.#{priority}"), from: 'task[priority]')
           click_button '登録'
           # 画面で入力された内容でDBに登録されている
           expect(Task.find_by(name: name, detail: detail, status: status, priority: priority)).not_to be_nil
@@ -186,8 +186,8 @@ describe 'タスク管理機能', type: :system do
           visit_new_task
           fill_in 'タスク名', with: name
           fill_in '詳細', with: detail
-          select(value = status, from: 'task[status]')
-          select(value = priority, from: 'task[priority]')
+          select(value = I18n.t("enums.task.status.#{status}"), from: 'task[status]')
+          select(value = I18n.t("enums.task.priority.#{priority}"), from: 'task[priority]')
           # Flashメッセージが表示される
           click_button '登録'
           expect(page).to have_selector '.alert-success', text: "タスク「#{name}」を登録しました。"
@@ -198,8 +198,8 @@ describe 'タスク管理機能', type: :system do
           visit_new_task
           fill_in 'タスク名', with: name
           fill_in '詳細', with: detail
-          select(value = status, from: 'task[status]')
-          select(value = priority, from: 'task[priority]')
+          select(value = I18n.t("enums.task.status.#{status}"), from: 'task[status]')
+          select(value = I18n.t("enums.task.priority.#{priority}"), from: 'task[priority]')
 
           visit_new_task
           click_button '登録'
@@ -248,16 +248,16 @@ describe 'タスク管理機能', type: :system do
       context 'タスクの各項目を更新した場合' do
         let(:name) { '新規作成のテスト２' }
         let(:detail) { '新規作成のテストを書く２' }
-        let(:status) { 'in_progress' }
-        let(:priority) { 'middle' }
+        let(:status) { 'not_started' }
+        let(:priority) { 'low' }
 
         it 'タスクが更新される' do
           visit_task_a_edit
           # 更新処理
           fill_in 'タスク名', with: name
           fill_in '詳細', with: detail
-          select(value = status, from: 'task[status]')
-          select(value = priority, from: 'task[priority]')
+          select(value = I18n.t("enums.task.status.#{status}"), from: 'task[status]')
+          select(value = I18n.t("enums.task.priority.#{priority}"), from: 'task[priority]')
           click_button '更新'
           # 画面で入力された内容でDBのデータが更新されている
           expect(Task.find_by(name: name, detail: detail, status: status, priority: priority)).not_to be_nil
@@ -268,8 +268,8 @@ describe 'タスク管理機能', type: :system do
           # 更新処理
           fill_in 'タスク名', with: name
           fill_in '詳細', with: detail
-          select(value = status, from: 'task[status]')
-          select(value = priority, from: 'task[priority]')
+          select(value = I18n.t("enums.task.status.#{status}"), from: 'task[status]')
+          select(value = I18n.t("enums.task.priority.#{priority}"), from: 'task[priority]')
           click_button '更新'
           # Flashメッセージが表示される
           expect(page).to have_selector '.alert-success', text: "タスク「#{name}」を更新しました。"
