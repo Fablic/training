@@ -4,13 +4,6 @@ describe 'タスク管理機能', type: :system do
   # タスクを作成
   let!(:task_a) { FactoryBot.create(:task, title: '最初のタスク', description: '最初のタスクを実施する', user_id: "1", status: 0, label: '1') }
   let!(:task_b) { FactoryBot.create(:task, title: '２つ目のタスク', description: '２つ目のタスクを実施する', user_id: "1", status: 0, label: '2') }
-  # タスクが表示される期待動作を共通化
-  shared_examples_for 'タスクが表示される' do
-    it { expect(page).to have_content '最初のタスク' }
-  end
-  shared_examples_for '２つ目のタスクが表示される' do
-    it { expect(page).to have_content '２つ目のタスク' }
-  end
 
   describe '一覧表示機能' do
     describe '表示機能'do
