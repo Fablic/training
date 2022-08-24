@@ -52,6 +52,7 @@ ja:
     title: 'タイトル'
     content: '内容'
     label: 'ラベル'
+    created_at: '作成日'
   button:
     create: '作成'
     delete: '削除'
@@ -63,6 +64,9 @@ ja:
     list_back: '一覧へ'
   message:
     delete_confirm: '削除しますか?'
+  time:
+    formats:
+      default: "%Y/%m/%d %H:%M:%S"
   errors:
     format: "%{attribute}%{message}"
     messages:
