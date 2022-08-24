@@ -30,6 +30,12 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
+  enums:
+    task:
+      status:
+        not_started: 'Not started'
+        in_progress: 'In progress'
+        closed: 'Closed'
   view_title:
     index: 'Task List'
     new: 'Task Create'
