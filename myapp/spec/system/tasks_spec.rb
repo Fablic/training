@@ -5,8 +5,8 @@ describe 'Tasks', type: :system do
 
   describe '1 #index' do
 
-    let(:task_one) { FactoryBot.create(:task_not_started) }
-    let(:task_two) { FactoryBot.create(:task_not_started) }
+    let(:task_one) { FactoryBot.create(:task) }
+    let(:task_two) { FactoryBot.create(:task) }
 
     context '1-1 タスク1件' do
 
@@ -244,7 +244,7 @@ describe 'Tasks', type: :system do
 
   describe '3 #show' do
 
-    let(:task_one) { FactoryBot.create(:task_not_started) }
+    let(:task_one) { FactoryBot.create(:task) }
 
     context '3-1 タスク1件' do
 
@@ -285,7 +285,7 @@ describe 'Tasks', type: :system do
 
     context '3-2 画面遷移' do
 
-      let(:task_one) { FactoryBot.create(:task_not_started) }
+      let(:task_one) { FactoryBot.create(:task) }
 
       it '3-2-1 削除ボタン押下でタスク一覧画面へ遷移すること' do
         visit task_path(task_one)
@@ -307,7 +307,7 @@ describe 'Tasks', type: :system do
 
     context '4-1 初期表示' do
 
-      let(:task_one) { FactoryBot.create(:task_not_started) }
+      let(:task_one) { FactoryBot.create(:task) }
 
       it '4-1-1 タイトルが表示されていること' do
 
@@ -334,7 +334,7 @@ describe 'Tasks', type: :system do
 
     context '4-2 全項目変更' do
 
-      let(:task_one) { FactoryBot.create(:task_not_started) }
+      let(:task_one) { FactoryBot.create(:task) }
 
       let(:update_task) {
         {
@@ -359,7 +359,7 @@ describe 'Tasks', type: :system do
 
     context '4-3 タイトルのみ変更' do
 
-      let(:task_one) { FactoryBot.create(:task_not_started) }
+      let(:task_one) { FactoryBot.create(:task) }
 
       let(:update_task) {
         {
@@ -384,7 +384,7 @@ describe 'Tasks', type: :system do
 
     context '4-4 内容のみ変更' do
 
-      let(:task_one) { FactoryBot.create(:task_not_started) }
+      let(:task_one) { FactoryBot.create(:task) }
 
       let(:update_task) {
         {
@@ -409,7 +409,7 @@ describe 'Tasks', type: :system do
 
     context '4-5 ラベルのみ変更' do
 
-      let(:task_one) { FactoryBot.create(:task_not_started) }
+      let(:task_one) { FactoryBot.create(:task) }
 
       let(:update_task) {
         {
@@ -434,7 +434,7 @@ describe 'Tasks', type: :system do
 
     # context '4-6 ステータスのみ変更' do
 
-    #   let(:task_one) { FactoryBot.create(:task_not_started) }
+    #   let(:task_one) { FactoryBot.create(:task) }
 
     #   let(:update_task) {
     #     {
@@ -459,7 +459,7 @@ describe 'Tasks', type: :system do
 
     # context '4-7 ユーザのみ変更' do
 
-    #   let(:task_one) { FactoryBot.create(:task_not_started) }
+    #   let(:task_one) { FactoryBot.create(:task) }
 
     #   let(:update_task) {
     #     {
@@ -484,7 +484,7 @@ describe 'Tasks', type: :system do
 
     context '4-8 画面遷移' do
 
-      let(:task_one) { FactoryBot.create(:task_not_started) }
+      let(:task_one) { FactoryBot.create(:task) }
 
       let(:update_task) {
         {
