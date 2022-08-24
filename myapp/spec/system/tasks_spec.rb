@@ -105,7 +105,7 @@ describe 'Tasks', type: :system do
         click_on '作成'
 
         # 項目比較
-        expect(Task.find_by(title: new_task[:title], content: new_task[:content], label: new_task[:label])).not_to be_nil
+        expect(Task.find_by(new_task)).to be_present
 
       end
 
