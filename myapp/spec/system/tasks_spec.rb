@@ -134,7 +134,7 @@ describe 'Tasks', type: :system do
         click_on '作成'
 
         # 項目比較
-        expect(Task.find_by(title: new_task[:title], content: new_task[:content], label: new_task[:label])).not_to be_nil
+        expect(Task.find_by(new_task)).to be_present
 
       end
 
@@ -162,7 +162,7 @@ describe 'Tasks', type: :system do
         click_on '作成'
 
         # 項目比較
-        expect(Task.find_by(title: new_task[:title], content: new_task[:content], label: new_task[:label])).not_to be_nil
+        expect(Task.find_by(new_task)).to be_present
 
       end
 
@@ -191,7 +191,7 @@ describe 'Tasks', type: :system do
         click_on '作成'
 
         # 項目比較
-        expect(Task.find_by(title: new_task[:title], content: new_task[:content], label: new_task[:label])).not_to be_nil
+        expect(Task.find_by(new_task)).to be_present
 
       end
 
@@ -348,7 +348,7 @@ describe 'Tasks', type: :system do
         fill_in 'task[content]', with: update_task[:content]
         fill_in 'task[label]', with: update_task[:label]
         click_on '更新'
-        expect(Task.find_by(title: update_task[:title], content: update_task[:content], label: update_task[:label])).not_to be_nil
+        expect(Task.find_by(update_task)).to be_present
 
       end
 
@@ -373,7 +373,7 @@ describe 'Tasks', type: :system do
         fill_in 'task[content]', with: update_task[:content]
         fill_in 'task[label]', with: update_task[:label]
         click_on '更新'
-        expect(Task.find_by(title: update_task[:title], content: update_task[:content], label: update_task[:label])).not_to be_nil
+        expect(Task.find_by(update_task)).to be_present
 
       end
 
@@ -398,7 +398,7 @@ describe 'Tasks', type: :system do
         fill_in 'task[content]', with: update_task[:content]
         fill_in 'task[label]', with: update_task[:label]
         click_on '更新'
-        expect(Task.find_by(title: update_task[:title], content: update_task[:content], label: update_task[:label])).not_to be_nil
+        expect(Task.find_by(update_task)).to be_present
 
       end
 
@@ -423,7 +423,7 @@ describe 'Tasks', type: :system do
         fill_in 'task[content]', with: update_task[:content]
         fill_in 'task[label]', with: update_task[:label]
         click_on '更新'
-        expect(Task.find_by(title: update_task[:title], content: update_task[:content], label: update_task[:label])).not_to be_nil
+        expect(Task.find_by(update_task)).to be_present
 
       end
 
