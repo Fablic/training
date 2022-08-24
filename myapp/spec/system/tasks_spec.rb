@@ -2,8 +2,8 @@ require 'rails_helper'
 
 describe 'タスク管理機能', type: :system do
   # タスクを作成
-  let!(:task_a) { FactoryBot.create(:task, title: '最初のタスク', description: '最初のタスクを実施する', status: 0, label: '1') }
-  let!(:task_b) { FactoryBot.create(:task, title: '２つ目のタスク', description: '２つ目のタスクを実施する', status: 0, label: '2') }
+  let!(:task_a) { FactoryBot.create(:task, title: '最初のタスク', description: '最初のタスクを実施する', user_id: "1", status: 0, label: '1') }
+  let!(:task_b) { FactoryBot.create(:task, title: '２つ目のタスク', description: '２つ目のタスクを実施する', user_id: "1", status: 0, label: '2') }
   # タスクが表示される期待動作を共通化
   shared_examples_for 'タスクが表示される' do
     it { expect(page).to have_content '最初のタスク' }
@@ -13,22 +13,62 @@ describe 'タスク管理機能', type: :system do
   end
 
   describe '一覧表示機能' do
-    context 'タスクが1件存在する場合' do
-      before do
-        # 確認するパス（URL）を設定
-        visit tasks_path
+    describe '表示機能'do
+      # タスクが表示される期待動作を共通化
+      shared_examples_for 'タスク表示' do
+        subject(:visit_tasks) { visit tasks_path }
+        subject(:tds){ all('tbody tr')[0].all('td') }
+        context '1件目のタスクの場合' do
+          it 'タスク名が表示される' do
+            visit_tasks
+            expect(tds[0]).to have_content task_1.title
+          end
+        end
+      end
+      shared_examples_for '２件目のタスク表示' do
+        subject(:visit_tasks) { visit tasks_path }
+        subject(:tds){ all('tbody tr')[1].all('td') }
+        context '2件目のタスクの場合' do
+          it 'タスク名が表示される' do
+            visit_tasks
+            expect(tds[0]).to have_content task_2.title
+          end
+        end
       end
 
-      it_behaves_like 'タスクが表示される'
+      context 'タスクが1件存在する場合' do
+        let!(:task_1) { task_a }
+
+        it_behaves_like 'タスク表示'
+      end
+
+      context 'タスクが2件(複数)存在する場合' do
+        let!(:task_1) { task_a }
+        let!(:task_2) { task_b }
+
+        it_behaves_like 'タスク表示'
+        it_behaves_like '２件目のタスク表示'
+      end
     end
 
-    context 'タスクが2件(複数)存在する場合' do
-      before do
-        visit tasks_path
+    describe '画面遷移機能' do
+      context '詳細ボタンをクリックした場合' do
+        let!(:task_1) { task_a }
+
+        it '詳細画面へ遷移できる' do
+          visit tasks_path
+          click_link '詳細リンク', match: :first
+          expect(page).to have_current_path task_path(task_a)
+        end
       end
 
-      it_behaves_like 'タスクが表示される'
-      it_behaves_like '２つ目のタスクが表示される'
+      context '新規登録ボタンをクリックした場合' do
+        it '新規登録画面へ遷移できる' do
+          visit tasks_path
+          click_link '新規登録'
+          expect(page).to have_current_path new_task_path
+        end
+      end
     end
   end
 
