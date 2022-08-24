@@ -240,9 +240,9 @@ describe 'Tasks', type: :system do
 
   describe '#show' do
 
-    describe '表示エリア' do
+    let(:task_one) { FactoryBot.create(:task) }
 
-      let(:task_one) { FactoryBot.create(:task) }
+    describe '表示エリア' do
 
       it 'タイトルが一致すること' do
         visit task_path(task_one)
@@ -263,8 +263,6 @@ describe 'Tasks', type: :system do
 
     describe 'フッターエリア' do
 
-      let(:task_one) { FactoryBot.create(:task) }
-
       it '編集ボタン押下で編集画面へ遷移すること' do
         visit task_path(task_one)
         click_on '編集'
@@ -275,12 +273,6 @@ describe 'Tasks', type: :system do
         visit task_path(task_one)
         click_on '削除'
         expect(Task.find_by(id: task_one.id)).to be_nil
-      end
-
-      it '一覧へボタン押下でタスク一覧画面へ遷移すること' do
-        visit task_path(task_one)
-        click_on '一覧へ'
-        expect(page).to have_current_path root_path
       end
 
       it '削除ボタン押下でタスク一覧画面へ遷移すること' do
@@ -295,17 +287,23 @@ describe 'Tasks', type: :system do
         expect(page).to have_content 'タスク削除成功'
       end
 
+      it '一覧へボタン押下でタスク一覧画面へ遷移すること' do
+        visit task_path(task_one)
+        click_on '一覧へ'
+        expect(page).to have_current_path root_path
+      end
+
     end
 
   end
 
   describe '#edit' do
 
+    let(:task_one) { FactoryBot.create(:task) }
+
     describe '入力エリア' do
 
       context '初期表示' do
-
-        let(:task_one) { FactoryBot.create(:task) }
 
         it 'タイトルが表示されていること' do
 
@@ -331,8 +329,6 @@ describe 'Tasks', type: :system do
       end
 
       context '全項目変更' do
-
-        let(:task_one) { FactoryBot.create(:task) }
 
         let(:update_task) {
           {
@@ -375,8 +371,6 @@ describe 'Tasks', type: :system do
 
       context 'タイトルのみ変更' do
 
-        let(:task_one) { FactoryBot.create(:task) }
-
         let(:update_task) {
           {
             title: '全項目変更 タイトル',
@@ -400,8 +394,6 @@ describe 'Tasks', type: :system do
 
       context '内容のみ変更' do
 
-        let(:task_one) { FactoryBot.create(:task) }
-
         let(:update_task) {
           {
             title: 'テスト1',
@@ -424,8 +416,6 @@ describe 'Tasks', type: :system do
       end
 
       context 'ラベルのみ変更' do
-
-        let(:task_one) { FactoryBot.create(:task) }
 
         let(:update_task) {
           {
@@ -451,8 +441,6 @@ describe 'Tasks', type: :system do
     end
 
     describe 'フッターエリア' do
-
-      let(:task_one) { FactoryBot.create(:task) }
 
       it '一覧へボタン押下でタスク一覧画面へ遷移すること' do
 
