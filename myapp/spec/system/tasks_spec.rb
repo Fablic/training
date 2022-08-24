@@ -36,7 +36,7 @@ describe 'Tasks', type: :system do
     context 'タスク複数件' do
 
       let!(:task_one) { FactoryBot.create(:task) }
-      let!(:task_two) { FactoryBot.create(:task) }
+      let!(:task_two) { FactoryBot.create(:task, title: 'second title', content: 'second content', label: 'second label') }
 
       it '1件目 タイトルが一致すること' do
         visit root_path
