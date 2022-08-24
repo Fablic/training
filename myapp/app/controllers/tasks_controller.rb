@@ -6,7 +6,17 @@ class TasksController < ApplicationController
     # タスク一覧オブジェクト取得
     # user対応コメントアウト
     # @tasks = Task.joins(:user).all
-    @tasks = Task.all.order('tasks.created_at desc')
+    puts 'params'
+    puts params
+    if params && (params[:word].present? || params[:status].present?)
+      puts 'search'
+      # @tasks = Task.search(params[:word], params[:status])
+      @tasks = Task.search(params[:word], Task.statuses[params[:status]])
+    else
+      puts 'not search'
+      @tasks = Task.all.order('tasks.created_at desc')
+    end
+    puts 'end'
   end
 
   # タスク作成画面
@@ -54,11 +64,6 @@ class TasksController < ApplicationController
     #   @select_user_names.push([user.name, user.id])
     # end
 
-    # 状況リスト取得
-    @statuses = []
-    Task::STATUS_VIEW.each do |key, value|
-      @statuses.push([value, key])
-    end
   end
 
   # タスク更新
@@ -90,4 +95,5 @@ class TasksController < ApplicationController
 
     task_params
   end
+
 end

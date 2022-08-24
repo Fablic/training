@@ -9,7 +9,12 @@
       <%= link_to(I18n.t('link.create'), new_task_path) %>
   </div>
   <div name='serch-task'>
-
+  <span>検索</span>
+  <%= form_with(url: root_path, local: true, method: :get) do |f| %>
+    <%= f.text_field(:word) %>
+    <%= f.select(:status, Task.statuses_i18n.keys.map { |k| [Task.statuses_i18n[k], k] }, include_blank: true) %>
+    <%= f.submit('検索') %>
+  <% end %>
   </div>
   <div name='list-task'>
     <table>
