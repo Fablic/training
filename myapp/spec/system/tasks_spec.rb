@@ -188,8 +188,7 @@ describe 'タスク管理機能', type: :system do
           fill_in '詳細', with: detail
           select(value = status, from: 'task[status]')
           select(value = priority, from: 'task[priority]')
-
-          visit_new_task
+          # Flashメッセージが表示される
           click_button '登録'
           expect(page).to have_selector '.alert-success', text: "タスク「#{name}」を登録しました。"
         end
