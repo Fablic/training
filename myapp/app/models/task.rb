@@ -6,4 +6,8 @@ class Task < ApplicationRecord
   validates :name, length: { maximum: 30 }
   validates :detail, presence: true
   validates :detail, length: { maximum: 100 }
+
+  def self.search(name)
+    where(['name like?', "%#{name}%"])
+  end
 end

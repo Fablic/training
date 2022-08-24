@@ -23,13 +23,13 @@
 <br>
 
 <div>
-<%= form_with url: search_path, method: :get do |f| %>
-<p>検索</p>
-<p>タスク名</p>
-<%= f.text_field :name %>
-<p>ステータス</p>
-<%= f.select :status, Task.statuses_i18n.keys.map { |k| [Task.statuses_i18n[k], k] } %>
-<%= f.submit '検索' %>
+<%= form_with url: tasks_path, method: :get, local: true do |f| %>
+  <p>検索フォーム</p>
+  <p>タスク名</p>
+  <%= f.text_field :name %>
+  <p>ステータス</p>
+  <%= f.select :status, Task.statuses_i18n.keys.map { |k| [Task.statuses_i18n[k], k] } %>
+  <%= f.submit '検索' %>
 <% end %>
 </div>
 

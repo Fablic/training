@@ -2,7 +2,11 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def index
-    @tasks = Task.all
+    if params[:name].nil? && params[:status].nil?
+      @tasks = Task.all
+    else
+      @tasks = Task.search(params[:name])
+    end
   end
 
   def show
@@ -39,15 +43,6 @@ class TasksController < ApplicationController
     else
       render :show
     end
-  end
-
-  def search
-    @tasks = Task.search(5)
-    @tasks.each do |f|
-      puts f.name
-    end
-
-    render 'index'
   end
 
   private
