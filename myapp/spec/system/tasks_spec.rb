@@ -73,16 +73,19 @@ describe 'タスク管理機能', type: :system do
   end
 
   describe '詳細表示機能' do
-    context 'タスクが存在する場合' do
-      before do
-        visit task_path(task_a)
-      end
+    subject(:visit_task_a) { visit task_path(task_a) }
 
-      it '各項目が表示される' do
-        expect(page).to have_content '最初のタスク'
-        expect(page).to have_content '最初のタスクを実施する'
-        expect(page).to have_content 0
-        expect(page).to have_content '1'
+    describe '表示機能' do
+      context 'タスクが存在する場合' do
+        it 'タスク名が表示される' do
+          visit_task_a
+          expect(page).to have_content '最初のタスク'
+        end
+
+        it '詳細が表示される' do
+          visit_task_a
+          expect(page).to have_content '最初のタスクを実施する'
+        end
       end
     end
   end
