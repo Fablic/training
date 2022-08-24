@@ -41,6 +41,15 @@ class TasksController < ApplicationController
     end
   end
 
+  def search
+    @tasks = Task.search(5)
+    @tasks.each do |f|
+      puts f.name
+    end
+
+    render 'index'
+  end
+
   private
 
   def task_params
