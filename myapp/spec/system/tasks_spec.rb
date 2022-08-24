@@ -5,21 +5,18 @@ describe 'Tasks', type: :system do
 
   describe '#index' do
 
-    let(:task_one) { FactoryBot.create(:task) }
-    let(:task_two) { FactoryBot.create(:task) }
-
     context 'タスク1件' do
 
-      let!(:task_index_1) { task_one }
+      let!(:task_one) { FactoryBot.create(:task) }
 
       it 'タイトルが一致すること' do
         visit root_path
-        expect(page).to have_content task_index_1.title
+        expect(page).to have_content task_one.title
       end
 
       it 'ラベルが一致すること' do
         visit root_path
-        expect(page).to have_content task_index_1.label
+        expect(page).to have_content task_one.label
       end
 
       it '作成ボタンを押下することでタスク作成画面へ遷移すること' do
@@ -31,34 +28,34 @@ describe 'Tasks', type: :system do
       it '詳細ボタンを押下することでタスク詳細画面へ遷移すること' do
         visit root_path
         click_on '詳細', match: :first
-        expect(page).to have_current_path task_path(task_index_1)
+        expect(page).to have_current_path task_path(task_one)
       end
 
     end
 
     context 'タスク複数件' do
 
-      let!(:task_index_2_one) { task_one }
-      let!(:task_index_2_two) { task_two }
+      let!(:task_one) { FactoryBot.create(:task) }
+      let!(:task_two) { FactoryBot.create(:task) }
 
       it '1件目 タイトルが一致すること' do
         visit root_path
-        expect(page).to have_content task_index_2_one.title
+        expect(page).to have_content task_one.title
       end
 
       it '1件目 ラベルが一致すること' do
         visit root_path
-        expect(page).to have_content task_index_2_one.label
+        expect(page).to have_content task_one.label
       end
 
       it '2件目 タイトルが一致すること' do
         visit root_path
-        expect(page).to have_content task_index_2_two.title
+        expect(page).to have_content task_two.title
       end
 
       it '2件目 ラベルが一致すること' do
         visit root_path
-        expect(page).to have_content task_index_2_two.label
+        expect(page).to have_content task_two.label
       end
 
       it '作成ボタンを押下することでタスク作成画面へ遷移すること' do
@@ -70,13 +67,13 @@ describe 'Tasks', type: :system do
       it '1件目 詳細ボタンを押下することでタスク詳細画面へ遷移すること' do
         visit root_path
         all('a', :text => '詳細')[0].click
-        expect(page).to have_current_path task_path(task_index_2_two)
+        expect(page).to have_current_path task_path(task_two)
       end
 
       it '2件目 詳細ボタンを押下することでタスク詳細画面へ遷移すること' do
         visit root_path
         all('a', :text => '詳細')[1].click
-        expect(page).to have_current_path task_path(task_index_2_one)
+        expect(page).to have_current_path task_path(task_one)
       end
 
     end
@@ -244,9 +241,9 @@ describe 'Tasks', type: :system do
 
   describe '#show' do
 
-    let(:task_one) { FactoryBot.create(:task) }
-
     context 'タスク1件' do
+
+      let(:task_one) { FactoryBot.create(:task) }
 
       it 'タイトルが一致すること' do
         visit task_path(task_one)
