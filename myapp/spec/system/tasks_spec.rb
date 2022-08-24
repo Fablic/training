@@ -84,7 +84,7 @@ describe 'Tasks', type: :system do
 
     context '全項目入力' do
 
-      let(:new_task) {
+      let(:input_values) {
         {
           title: '新規タスク 全項目入力 タイトル',
           content: '新規タスク 全項目入力 内容',
@@ -98,14 +98,14 @@ describe 'Tasks', type: :system do
         visit new_task_path
 
         # 新規タスク登録
-        fill_in 'task[title]', with: new_task[:title]
-        fill_in 'task[content]', with: new_task[:content]
-        fill_in 'task[label]', with: new_task[:label]
+        fill_in 'task[title]', with: input_values[:title]
+        fill_in 'task[content]', with: input_values[:content]
+        fill_in 'task[label]', with: input_values[:label]
         # ボタン押下
         click_on '作成'
 
         # 項目比較
-        expect(Task.find_by(new_task)).to be_present
+        expect(Task.find_by(input_values)).to be_present
 
       end
 
@@ -113,7 +113,7 @@ describe 'Tasks', type: :system do
 
     context 'タイトルのみ入力' do
 
-      let(:new_task) {
+      let(:input_values) {
         {
           title: '新規タスク タイトルのみ入力 タイトル',
           content: '',
@@ -127,21 +127,21 @@ describe 'Tasks', type: :system do
         visit new_task_path
 
         # 新規タスク登録
-        fill_in 'task[title]', with: new_task[:title]
-        fill_in 'task[content]', with: new_task[:content]
-        fill_in 'task[label]', with: new_task[:label]
+        fill_in 'task[title]', with: input_values[:title]
+        fill_in 'task[content]', with: input_values[:content]
+        fill_in 'task[label]', with: input_values[:label]
         # ボタン押下
         click_on '作成'
 
         # 項目比較
-        expect(Task.find_by(new_task)).to be_present
+        expect(Task.find_by(input_values)).to be_present
 
       end
 
     end
 
     context '内容のみ入力' do
-      let(:new_task) {
+      let(:input_values) {
         {
           title: '',
           content: '新規タスク 内容のみ入力 内容',
@@ -155,14 +155,14 @@ describe 'Tasks', type: :system do
         visit new_task_path
 
         # 新規タスク登録
-        fill_in 'task[title]', with: new_task[:title]
-        fill_in 'task[content]', with: new_task[:content]
-        fill_in 'task[label]', with: new_task[:label]
+        fill_in 'task[title]', with: input_values[:title]
+        fill_in 'task[content]', with: input_values[:content]
+        fill_in 'task[label]', with: input_values[:label]
         # ボタン押下
         click_on '作成'
 
         # 項目比較
-        expect(Task.find_by(new_task)).to be_present
+        expect(Task.find_by(input_values)).to be_present
 
       end
 
@@ -170,7 +170,7 @@ describe 'Tasks', type: :system do
 
     context 'ラベルのみ入力' do
 
-      let(:new_task) {
+      let(:input_values) {
         {
           title: '',
           content: '',
@@ -184,14 +184,14 @@ describe 'Tasks', type: :system do
         visit new_task_path
 
         # 新規タスク登録
-        fill_in 'task[title]', with: new_task[:title]
-        fill_in 'task[content]', with: new_task[:content]
-        fill_in 'task[label]', with: new_task[:label]
+        fill_in 'task[title]', with: input_values[:title]
+        fill_in 'task[content]', with: input_values[:content]
+        fill_in 'task[label]', with: input_values[:label]
         # ボタン押下
         click_on '作成'
 
         # 項目比較
-        expect(Task.find_by(new_task)).to be_present
+        expect(Task.find_by(input_values)).to be_present
 
       end
 
@@ -199,7 +199,7 @@ describe 'Tasks', type: :system do
 
     context '画面遷移' do
 
-      let(:new_task) {
+      let(:input_values) {
         {
           title: '新規タスク 全項目入力 タイトル',
           content: '新規タスク 全項目入力 内容',
@@ -216,9 +216,9 @@ describe 'Tasks', type: :system do
       it '作成ボタン押下でタスク一覧画面へ遷移すること' do
         visit new_task_path
         # 新規タスク登録
-        fill_in 'task[title]', with: new_task[:title]
-        fill_in 'task[content]', with: new_task[:content]
-        fill_in 'task[label]', with: new_task[:label]
+        fill_in 'task[title]', with: input_values[:title]
+        fill_in 'task[content]', with: input_values[:content]
+        fill_in 'task[label]', with: input_values[:label]
         # ボタン押下
         click_on '作成'
         expect(page).to have_current_path root_path
@@ -227,9 +227,9 @@ describe 'Tasks', type: :system do
       it '作成後メッセージが表示されること' do
         visit new_task_path
         # 新規タスク登録
-        fill_in 'task[title]', with: new_task[:title]
-        fill_in 'task[content]', with: new_task[:content]
-        fill_in 'task[label]', with: new_task[:label]
+        fill_in 'task[title]', with: input_values[:title]
+        fill_in 'task[content]', with: input_values[:content]
+        fill_in 'task[label]', with: input_values[:label]
         # ボタン押下
         click_on '作成'
         expect(page).to have_content 'タスク作成成功'
