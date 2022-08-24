@@ -92,7 +92,7 @@ describe 'Tasks', type: :system do
         }
       }
 
-      it '登録内容が想定通りであること' do
+      it '入力した値でTaskが作成されていること' do
 
         # 画面遷移
         visit new_task_path
@@ -121,7 +121,7 @@ describe 'Tasks', type: :system do
         }
       }
 
-      it '登録内容が想定通りであること' do
+      it '入力した値でTaskが作成されていること' do
 
         # 画面遷移
         visit new_task_path
@@ -149,7 +149,7 @@ describe 'Tasks', type: :system do
         }
       }
 
-      it '登録内容が想定通りであること' do
+      it '入力した値でTaskが作成されていること' do
 
         # 画面遷移
         visit new_task_path
@@ -178,7 +178,7 @@ describe 'Tasks', type: :system do
         }
       }
 
-      it '登録内容が想定通りであること' do
+      it '入力した値でTaskが作成されていること' do
 
         # 画面遷移
         visit new_task_path
