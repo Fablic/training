@@ -319,7 +319,7 @@ describe 'Tasks', type: :system do
 
     describe '入力エリア' do
 
-      context '全項目入力' do
+      context '正常' do
 
         let(:input_values) {
           {
@@ -330,7 +330,6 @@ describe 'Tasks', type: :system do
         }
 
         it '入力した値でTaskが作成されていること' do
-
           # 画面遷移
           visit new_task_path
 
@@ -343,97 +342,10 @@ describe 'Tasks', type: :system do
 
           # 項目比較
           expect(Task.find_by(input_values)).to be_present
-
-        end
-
-      end
-
-      context 'タイトルのみ入力' do
-
-        let(:input_values) {
-          {
-            title: '新規タスク タイトルのみ入力 タイトル',
-            content: '',
-            label: '',
-          }
-        }
-
-        it '入力した値でTaskが作成されていること' do
-
-          # 画面遷移
-          visit new_task_path
-
-          # 新規タスク登録
-          fill_in 'task[title]', with: input_values[:title]
-          fill_in 'task[content]', with: input_values[:content]
-          fill_in 'task[label]', with: input_values[:label]
-          # ボタン押下
-          click_on '作成'
-
-          # 項目比較
-          expect(Task.find_by(input_values)).to be_present
-
-        end
-
-      end
-
-      context '内容のみ入力' do
-
-        let(:input_values) {
-          {
-            title: '',
-            content: '新規タスク 内容のみ入力 内容',
-            label: '',
-          }
-        }
-
-        it '入力した値でTaskが作成されていること' do
-
-          # 画面遷移
-          visit new_task_path
-
-          # 新規タスク登録
-          fill_in 'task[title]', with: input_values[:title]
-          fill_in 'task[content]', with: input_values[:content]
-          fill_in 'task[label]', with: input_values[:label]
-          # ボタン押下
-          click_on '作成'
-
-          # 項目比較
-          expect(Task.find_by(input_values)).to be_present
-
-        end
-
-      end
-
-      context 'ラベルのみ入力' do
-
-        let(:input_values) {
-          {
-            title: '',
-            content: '',
-            label: '新規タスク ラベルのみ入力 ラベル',
-          }
-        }
-
-        it '入力した値でTaskが作成されていること' do
-
-          # 画面遷移
-          visit new_task_path
-
-          # 新規タスク登録
-          fill_in 'task[title]', with: input_values[:title]
-          fill_in 'task[content]', with: input_values[:content]
-          fill_in 'task[label]', with: input_values[:label]
-          # ボタン押下
-          click_on '作成'
-
-          # 項目比較
-          expect(Task.find_by(input_values)).to be_present
-
         end
 
         it '作成ボタン押下でタスク一覧画面へ遷移すること' do
+          # 画面遷移
           visit new_task_path
           # 新規タスク登録
           fill_in 'task[title]', with: input_values[:title]
@@ -445,6 +357,7 @@ describe 'Tasks', type: :system do
         end
 
         it '作成後メッセージが表示されること' do
+          # 画面遷移
           visit new_task_path
           # 新規タスク登録
           fill_in 'task[title]', with: input_values[:title]
@@ -453,6 +366,263 @@ describe 'Tasks', type: :system do
           # ボタン押下
           click_on '作成'
           expect(page).to have_content 'タスク作成成功'
+        end
+
+      end
+
+      context '入力エラー（タイトル未入力）' do
+
+        let(:input_values) {
+          {
+            title: '',
+            content: 'content',
+            label: 'label',
+          }
+        }
+
+        it 'データ登録されていないこと' do
+          # 画面遷移
+          visit new_task_path
+
+          # 新規タスク登録
+          fill_in 'task[title]', with: input_values[:title]
+          fill_in 'task[content]', with: input_values[:content]
+          fill_in 'task[label]', with: input_values[:label]
+          # ボタン押下
+          click_on '作成'
+
+          expect(Task.find_by(input_values)).to be_nil
+        end
+
+        it 'エラーメッセージが表示されること' do
+          # 画面遷移
+          visit new_task_path
+          # 新規タスク登録
+          fill_in 'task[title]', with: input_values[:title]
+          fill_in 'task[content]', with: input_values[:content]
+          fill_in 'task[label]', with: input_values[:label]
+          # ボタン押下
+          click_on '作成'
+
+          expect(page).to have_content("#{I18n.t('activerecord.attributes.task.title')}#{I18n.t('errors.messages.too_short', count: 1)}")
+        end
+
+      end
+
+      context '入力エラー（タイトル129文字）' do
+
+        let(:input_values) {
+          {
+            title: '12345678901234567890123456789012345678901234567890'\
+                   '12345678901234567890123456789012345678901234567890'\
+                   '12345678901234567890123456789',
+            content: 'content',
+            label: 'label',
+          }
+        }
+
+        it 'データ登録されていないこと' do
+          # 画面遷移
+          visit new_task_path
+
+          # 新規タスク登録
+          fill_in 'task[title]', with: input_values[:title]
+          fill_in 'task[content]', with: input_values[:content]
+          fill_in 'task[label]', with: input_values[:label]
+          # ボタン押下
+          click_on '作成'
+
+          expect(Task.find_by(input_values)).to be_nil
+        end
+
+        it 'エラーメッセージが表示されること' do
+          # 画面遷移
+          visit new_task_path
+          # 新規タスク登録
+          fill_in 'task[title]', with: input_values[:title]
+          fill_in 'task[content]', with: input_values[:content]
+          fill_in 'task[label]', with: input_values[:label]
+          # ボタン押下
+          click_on '作成'
+
+          expect(page).to have_content("#{I18n.t('activerecord.attributes.task.title')}#{I18n.t('errors.messages.too_long', count: 128)}")
+        end
+
+      end
+
+      context '入力エラー（内容が未入力）' do
+
+        let(:input_values) {
+          {
+            title: 'title',
+            content: '',
+            label: 'label',
+          }
+        }
+
+        it 'データ登録されていないこと' do
+          # 画面遷移
+          visit new_task_path
+
+          # 新規タスク登録
+          fill_in 'task[title]', with: input_values[:title]
+          fill_in 'task[content]', with: input_values[:content]
+          fill_in 'task[label]', with: input_values[:label]
+          # ボタン押下
+          click_on '作成'
+
+          expect(Task.find_by(input_values)).to be_nil
+        end
+
+        it 'エラーメッセージが表示されること' do
+          # 画面遷移
+          visit new_task_path
+          # 新規タスク登録
+          fill_in 'task[title]', with: input_values[:title]
+          fill_in 'task[content]', with: input_values[:content]
+          fill_in 'task[label]', with: input_values[:label]
+          # ボタン押下
+          click_on '作成'
+
+          expect(page).to have_content("#{I18n.t('activerecord.attributes.task.content')}#{I18n.t('errors.messages.too_short', count: 1)}")
+        end
+
+      end
+
+      context '入力エラー（内容が1025文字）' do
+
+        let(:input_values) {
+          {
+            title: 'title',
+            content: '12345678901234567890123456789012345678901234567890'\
+                     '12345678901234567890123456789012345678901234567890'\
+                     '12345678901234567890123456789012345678901234567890'\
+                     '12345678901234567890123456789012345678901234567890'\
+                     '12345678901234567890123456789012345678901234567890'\
+                     '12345678901234567890123456789012345678901234567890'\
+                     '12345678901234567890123456789012345678901234567890'\
+                     '12345678901234567890123456789012345678901234567890'\
+                     '12345678901234567890123456789012345678901234567890'\
+                     '12345678901234567890123456789012345678901234567890'\
+                     '12345678901234567890123456789012345678901234567890'\
+                     '12345678901234567890123456789012345678901234567890'\
+                     '12345678901234567890123456789012345678901234567890'\
+                     '12345678901234567890123456789012345678901234567890'\
+                     '12345678901234567890123456789012345678901234567890'\
+                     '12345678901234567890123456789012345678901234567890'\
+                     '12345678901234567890123456789012345678901234567890'\
+                     '12345678901234567890123456789012345678901234567890'\
+                     '12345678901234567890123456789012345678901234567890'\
+                     '12345678901234567890123456789012345678901234567890'\
+                     '1234567890123456789012345',
+            label: 'label',
+          }
+        }
+
+        it 'データ登録されていないこと' do
+          # 画面遷移
+          visit new_task_path
+
+          # 新規タスク登録
+          fill_in 'task[title]', with: input_values[:title]
+          fill_in 'task[content]', with: input_values[:content]
+          fill_in 'task[label]', with: input_values[:label]
+          # ボタン押下
+          click_on '作成'
+
+          expect(Task.find_by(input_values)).to be_nil
+        end
+
+        it 'エラーメッセージが表示されること' do
+          # 画面遷移
+          visit new_task_path
+          # 新規タスク登録
+          fill_in 'task[title]', with: input_values[:title]
+          fill_in 'task[content]', with: input_values[:content]
+          fill_in 'task[label]', with: input_values[:label]
+          # ボタン押下
+          click_on '作成'
+
+          expect(page).to have_content("#{I18n.t('activerecord.attributes.task.content')}#{I18n.t('errors.messages.too_long', count: 1024)}")
+        end
+
+      end
+
+      context '入力エラー（ラベルが未入力）' do
+
+        let(:input_values) {
+          {
+            title: 'title',
+            content: 'content',
+            label: '',
+          }
+        }
+
+        it 'データ登録されていないこと' do
+          # 画面遷移
+          visit new_task_path
+
+          # 新規タスク登録
+          fill_in 'task[title]', with: input_values[:title]
+          fill_in 'task[content]', with: input_values[:content]
+          fill_in 'task[label]', with: input_values[:label]
+          # ボタン押下
+          click_on '作成'
+
+          expect(Task.find_by(input_values)).to be_nil
+        end
+
+        it 'エラーメッセージが表示されること' do
+          # 画面遷移
+          visit new_task_path
+          # 新規タスク登録
+          fill_in 'task[title]', with: input_values[:title]
+          fill_in 'task[content]', with: input_values[:content]
+          fill_in 'task[label]', with: input_values[:label]
+          # ボタン押下
+          click_on '作成'
+
+          expect(page).to have_content("#{I18n.t('activerecord.attributes.task.label')}#{I18n.t('errors.messages.too_short', count: 1)}")
+        end
+
+      end
+
+      context '入力エラー（ラベルが65文字）' do
+
+        let(:input_values) {
+          {
+            title: 'title',
+            content: 'content',
+            label: '12345678901234567890123456789012345678901234567890'\
+                   '123456789012345',
+          }
+        }
+
+        it 'データ登録されていないこと' do
+          # 画面遷移
+          visit new_task_path
+
+          # 新規タスク登録
+          fill_in 'task[title]', with: input_values[:title]
+          fill_in 'task[content]', with: input_values[:content]
+          fill_in 'task[label]', with: input_values[:label]
+          # ボタン押下
+          click_on '作成'
+
+          expect(Task.find_by(input_values)).to be_nil
+        end
+
+        it 'エラーメッセージが表示されること' do
+          # 画面遷移
+          visit new_task_path
+          # 新規タスク登録
+          fill_in 'task[title]', with: input_values[:title]
+          fill_in 'task[content]', with: input_values[:content]
+          fill_in 'task[label]', with: input_values[:label]
+          # ボタン押下
+          click_on '作成'
+
+          expect(page).to have_content("#{I18n.t('activerecord.attributes.task.label')}#{I18n.t('errors.messages.too_long', count: 64)}")
         end
 
       end
@@ -667,6 +837,254 @@ describe 'Tasks', type: :system do
           click_on '更新'
           expect(Task.find_by(update_task)).to be_present
 
+        end
+
+      end
+
+      context '入力エラー（タイトル未入力）' do
+
+        let(:update_task) {
+          {
+            title: '',
+            content: 'こちらはテスト1の内容です。テストテストテストテストテストテストテスト',
+            label: 'テスト',
+          }
+        }
+
+        it 'データ登録されていないこと' do
+          visit edit_task_path(task_one)
+          fill_in 'task[title]', with: update_task[:title]
+          fill_in 'task[content]', with: update_task[:content]
+          fill_in 'task[label]', with: update_task[:label]
+          click_on '更新'
+
+          expect(Task.find_by(update_task)).to be_nil
+        end
+
+        it 'エラーメッセージが表示されること' do
+          visit edit_task_path(task_one)
+          fill_in 'task[title]', with: update_task[:title]
+          fill_in 'task[content]', with: update_task[:content]
+          fill_in 'task[label]', with: update_task[:label]
+          click_on '更新'
+
+          expect(page).to have_content("#{I18n.t('activerecord.attributes.task.title')}#{I18n.t('errors.messages.too_short', count: 1)}")
+        end
+
+      end
+
+      context '入力エラー（タイトル129文字）' do
+
+        let(:update_task) {
+          {
+            title: '12345678901234567890123456789012345678901234567890'\
+                   '12345678901234567890123456789012345678901234567890'\
+                   '12345678901234567890123456789',
+            content: 'こちらはテスト1の内容です。テストテストテストテストテストテストテスト',
+            label: 'テスト',
+          }
+        }
+
+        it 'データ登録されていないこと' do
+          # 画面遷移
+          visit edit_task_path(task_one)
+          # 新規タスク登録
+          fill_in 'task[title]', with: update_task[:title]
+          fill_in 'task[content]', with: update_task[:content]
+          fill_in 'task[label]', with: update_task[:label]
+          # ボタン押下
+          click_on '更新'
+
+          expect(Task.find_by(update_task)).to be_nil
+        end
+
+        it 'エラーメッセージが表示されること' do
+          # 画面遷移
+          visit edit_task_path(task_one)
+          # 新規タスク登録
+          fill_in 'task[title]', with: update_task[:title]
+          fill_in 'task[content]', with: update_task[:content]
+          fill_in 'task[label]', with: update_task[:label]
+          # ボタン押下
+          click_on '更新'
+
+          expect(page).to have_content("#{I18n.t('activerecord.attributes.task.title')}#{I18n.t('errors.messages.too_long', count: 128)}")
+        end
+
+      end
+
+      context '入力エラー（内容が未入力）' do
+
+        let(:update_task) {
+          {
+            title: 'テスト1',
+            content: '',
+            label: 'テスト',
+          }
+        }
+
+        it 'データ登録されていないこと' do
+          # 画面遷移
+          visit edit_task_path(task_one)
+          # 新規タスク登録
+          fill_in 'task[title]', with: update_task[:title]
+          fill_in 'task[content]', with: update_task[:content]
+          fill_in 'task[label]', with: update_task[:label]
+          # ボタン押下
+          click_on '更新'
+
+          expect(Task.find_by(update_task)).to be_nil
+        end
+
+        it 'エラーメッセージが表示されること' do
+          # 画面遷移
+          visit edit_task_path(task_one)
+          # 新規タスク登録
+          fill_in 'task[title]', with: update_task[:title]
+          fill_in 'task[content]', with: update_task[:content]
+          fill_in 'task[label]', with: update_task[:label]
+          # ボタン押下
+          click_on '更新'
+
+          expect(page).to have_content("#{I18n.t('activerecord.attributes.task.content')}#{I18n.t('errors.messages.too_short', count: 1)}")
+        end
+
+      end
+
+      context '入力エラー（内容が1025文字）' do
+
+        let(:update_task) {
+          {
+            title: 'テスト1',
+            content: '12345678901234567890123456789012345678901234567890'\
+                     '12345678901234567890123456789012345678901234567890'\
+                     '12345678901234567890123456789012345678901234567890'\
+                     '12345678901234567890123456789012345678901234567890'\
+                     '12345678901234567890123456789012345678901234567890'\
+                     '12345678901234567890123456789012345678901234567890'\
+                     '12345678901234567890123456789012345678901234567890'\
+                     '12345678901234567890123456789012345678901234567890'\
+                     '12345678901234567890123456789012345678901234567890'\
+                     '12345678901234567890123456789012345678901234567890'\
+                     '12345678901234567890123456789012345678901234567890'\
+                     '12345678901234567890123456789012345678901234567890'\
+                     '12345678901234567890123456789012345678901234567890'\
+                     '12345678901234567890123456789012345678901234567890'\
+                     '12345678901234567890123456789012345678901234567890'\
+                     '12345678901234567890123456789012345678901234567890'\
+                     '12345678901234567890123456789012345678901234567890'\
+                     '12345678901234567890123456789012345678901234567890'\
+                     '12345678901234567890123456789012345678901234567890'\
+                     '12345678901234567890123456789012345678901234567890'\
+                     '1234567890123456789012345',
+            label: 'テスト',
+          }
+        }
+
+        it 'データ登録されていないこと' do
+          # 画面遷移
+          visit edit_task_path(task_one)
+
+          # 新規タスク登録
+          fill_in 'task[title]', with: update_task[:title]
+          fill_in 'task[content]', with: update_task[:content]
+          fill_in 'task[label]', with: update_task[:label]
+          # ボタン押下
+          click_on '更新'
+
+          expect(Task.find_by(update_task)).to be_nil
+        end
+
+        it 'エラーメッセージが表示されること' do
+          # 画面遷移
+          visit edit_task_path(task_one)
+
+          # 新規タスク登録
+          fill_in 'task[title]', with: update_task[:title]
+          fill_in 'task[content]', with: update_task[:content]
+          fill_in 'task[label]', with: update_task[:label]
+          # ボタン押下
+          click_on '更新'
+
+          expect(page).to have_content("#{I18n.t('activerecord.attributes.task.content')}#{I18n.t('errors.messages.too_long', count: 1024)}")
+        end
+
+      end
+
+      context '入力エラー（ラベルが未入力）' do
+
+        let(:update_task) {
+          {
+            title: 'テスト1',
+            content: 'こちらはテスト1の内容です。テストテストテストテストテストテストテスト',
+            label: '',
+          }
+        }
+
+        it 'データ登録されていないこと' do
+          # 画面遷移
+          visit edit_task_path(task_one)
+
+          # 新規タスク登録
+          fill_in 'task[title]', with: update_task[:title]
+          fill_in 'task[content]', with: update_task[:content]
+          fill_in 'task[label]', with: update_task[:label]
+          # ボタン押下
+          click_on '更新'
+
+          expect(Task.find_by(update_task)).to be_nil
+        end
+
+        it 'エラーメッセージが表示されること' do
+          # 画面遷移
+          visit edit_task_path(task_one)
+          # 新規タスク登録
+          fill_in 'task[title]', with: update_task[:title]
+          fill_in 'task[content]', with: update_task[:content]
+          fill_in 'task[label]', with: update_task[:label]
+          # ボタン押下
+          click_on '更新'
+
+          expect(page).to have_content("#{I18n.t('activerecord.attributes.task.label')}#{I18n.t('errors.messages.too_short', count: 1)}")
+        end
+
+      end
+
+      context '入力エラー（ラベルが65文字）' do
+
+        let(:update_task) {
+          {
+            title: 'テスト1',
+            content: 'こちらはテスト1の内容です。テストテストテストテストテストテストテスト',
+            label: '12345678901234567890123456789012345678901234567890'\
+                   '123456789012345',
+          }
+        }
+
+        it 'データ登録されていないこと' do
+          # 画面遷移
+          visit edit_task_path(task_one)
+          # 新規タスク登録
+          fill_in 'task[title]', with: update_task[:title]
+          fill_in 'task[content]', with: update_task[:content]
+          fill_in 'task[label]', with: update_task[:label]
+          # ボタン押下
+          click_on '更新'
+
+          expect(Task.find_by(update_task)).to be_nil
+        end
+
+        it 'エラーメッセージが表示されること' do
+          # 画面遷移
+          visit edit_task_path(task_one)
+          # 新規タスク登録
+          fill_in 'task[title]', with: update_task[:title]
+          fill_in 'task[content]', with: update_task[:content]
+          fill_in 'task[label]', with: update_task[:label]
+          # ボタン押下
+          click_on '更新'
+
+          expect(page).to have_content("#{I18n.t('activerecord.attributes.task.label')}#{I18n.t('errors.messages.too_long', count: 64)}")
         end
 
       end
