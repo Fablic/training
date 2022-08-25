@@ -2,23 +2,23 @@ require 'rails_helper'
 
 describe Task, type: :model do
 
-  describe '1 validation' do
+  describe '#validation' do
     let(:params) { { title: 'title', content: 'content', label: 'label' } }
 
-    context '1-1 title' do
+    context 'title' do
 
-      it '1-1-1 正常' do
+      it '正常' do
         task = Task.new(params)
         expect(task).to be_valid
       end
 
-      it '1-1-2 0文字' do
+      it '0文字' do
         task = Task.new(params)
         task.title = ''
         expect(task).to be_invalid
       end
 
-      it '1-1-3 128文字' do
+      it '128文字' do
         task = Task.new(params)
         task.title =
           '12345678901234567890123456789012345678901234567890'\
@@ -27,7 +27,7 @@ describe Task, type: :model do
         expect(task).to be_valid
       end
 
-      it '1-1-4 129文字' do
+      it '129文字' do
         task = Task.new(params)
         task.title =
           '12345678901234567890123456789012345678901234567890'\
@@ -38,20 +38,20 @@ describe Task, type: :model do
 
     end
 
-    context '1-2 content' do
+    context 'content' do
 
-      it '1-2-1 正常' do
+      it '正常' do
         task = Task.new(params)
         expect(task).to be_valid
       end
-  
-      it '1-2-2 0文字' do
+
+      it '0文字' do
         task = Task.new(params)
         task.content = ''
         expect(task).to be_invalid
       end
-  
-      it '1-2-3 1024文字' do
+
+      it '1024文字' do
         task = Task.new(params)
         task.content =
           '12345678901234567890123456789012345678901234567890'\
@@ -77,8 +77,8 @@ describe Task, type: :model do
           '123456789012345678901234'
         expect(task).to be_valid
       end
-  
-      it '1-2-4 1025文字' do
+
+      it '1025文字' do
         task = Task.new(params)
         task.content =
         task.content =
@@ -105,23 +105,23 @@ describe Task, type: :model do
           '1234567890123456789012345'
         expect(task).to be_invalid
       end
-  
-    end
-  
-    context '1-3 label' do
 
-      it '1-3-1 正常' do
+    end
+
+    context 'label' do
+
+      it '正常' do
         task = Task.new(params)
         expect(task).to be_valid
       end
 
-      it '1-3-2 0文字' do
+      it '0文字' do
         task = Task.new(params)
         task.label = ''
         expect(task).to be_invalid
       end
 
-      it '1-3-3 64文字' do
+      it '64文字' do
         task = Task.new(params)
         task.label =
           '12345678901234567890123456789012345678901234567890'\
@@ -129,7 +129,7 @@ describe Task, type: :model do
         expect(task).to be_valid
       end
 
-      it '1-3-4 65文字' do
+      it '65文字' do
         task = Task.new(params)
         task.label =
         '12345678901234567890123456789012345678901234567890'\
