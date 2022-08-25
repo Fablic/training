@@ -19,7 +19,7 @@
     <% @tasks.each do |task| %>
       <tr>
         <td>
-          <%= link_to task.title, task_path(task), id: '詳細リンク' %>
+          <%= link_to task.title, task_path(task), id: '詳細' %>
         </td>
         <td>
           <%= task.description %>
