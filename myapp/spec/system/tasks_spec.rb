@@ -86,142 +86,51 @@ describe 'Tasks', type: :system do
 
     describe '入力エリア' do
 
-      context '全項目入力' do
-
-        let(:input_values) {
-          {
-            title: '新規タスク 全項目入力 タイトル',
-            content: '新規タスク 全項目入力 内容',
-            label: '新規タスク 全項目入力 ラベル',
-          }
+      let(:input_values) {
+        {
+          title: '新規タスク 全項目入力 タイトル',
+          content: '新規タスク 全項目入力 内容',
+          label: '新規タスク 全項目入力 ラベル',
         }
+      }
 
-        it '入力した値でTaskが作成されていること' do
+      it '入力した値でTaskが作成されていること' do
+        # 画面遷移
+        visit new_task_path
 
-          # 画面遷移
-          visit new_task_path
+        # 新規タスク登録
+        fill_in 'task[title]', with: input_values[:title]
+        fill_in 'task[content]', with: input_values[:content]
+        fill_in 'task[label]', with: input_values[:label]
+        # ボタン押下
+        click_on '作成'
 
-          # 新規タスク登録
-          fill_in 'task[title]', with: input_values[:title]
-          fill_in 'task[content]', with: input_values[:content]
-          fill_in 'task[label]', with: input_values[:label]
-          # ボタン押下
-          click_on '作成'
-
-          # 項目比較
-          expect(Task.find_by(input_values)).to be_present
-
-        end
-
+        # 項目比較
+        expect(Task.find_by(input_values)).to be_present
       end
 
-      context 'タイトルのみ入力' do
-
-        let(:input_values) {
-          {
-            title: '新規タスク タイトルのみ入力 タイトル',
-            content: '',
-            label: '',
-          }
-        }
-
-        it '入力した値でTaskが作成されていること' do
-
-          # 画面遷移
-          visit new_task_path
-
-          # 新規タスク登録
-          fill_in 'task[title]', with: input_values[:title]
-          fill_in 'task[content]', with: input_values[:content]
-          fill_in 'task[label]', with: input_values[:label]
-          # ボタン押下
-          click_on '作成'
-
-          # 項目比較
-          expect(Task.find_by(input_values)).to be_present
-
-        end
-
+      it '作成ボタン押下でタスク一覧画面へ遷移すること' do
+        # 画面遷移
+        visit new_task_path
+        # 新規タスク登録
+        fill_in 'task[title]', with: input_values[:title]
+        fill_in 'task[content]', with: input_values[:content]
+        fill_in 'task[label]', with: input_values[:label]
+        # ボタン押下
+        click_on '作成'
+        expect(page).to have_current_path root_path
       end
 
-      context '内容のみ入力' do
-
-        let(:input_values) {
-          {
-            title: '',
-            content: '新規タスク 内容のみ入力 内容',
-            label: '',
-          }
-        }
-
-        it '入力した値でTaskが作成されていること' do
-
-          # 画面遷移
-          visit new_task_path
-
-          # 新規タスク登録
-          fill_in 'task[title]', with: input_values[:title]
-          fill_in 'task[content]', with: input_values[:content]
-          fill_in 'task[label]', with: input_values[:label]
-          # ボタン押下
-          click_on '作成'
-
-          # 項目比較
-          expect(Task.find_by(input_values)).to be_present
-
-        end
-
-      end
-
-      context 'ラベルのみ入力' do
-
-        let(:input_values) {
-          {
-            title: '',
-            content: '',
-            label: '新規タスク ラベルのみ入力 ラベル',
-          }
-        }
-
-        it '入力した値でTaskが作成されていること' do
-
-          # 画面遷移
-          visit new_task_path
-
-          # 新規タスク登録
-          fill_in 'task[title]', with: input_values[:title]
-          fill_in 'task[content]', with: input_values[:content]
-          fill_in 'task[label]', with: input_values[:label]
-          # ボタン押下
-          click_on '作成'
-
-          # 項目比較
-          expect(Task.find_by(input_values)).to be_present
-
-        end
-
-        it '作成ボタン押下でタスク一覧画面へ遷移すること' do
-          visit new_task_path
-          # 新規タスク登録
-          fill_in 'task[title]', with: input_values[:title]
-          fill_in 'task[content]', with: input_values[:content]
-          fill_in 'task[label]', with: input_values[:label]
-          # ボタン押下
-          click_on '作成'
-          expect(page).to have_current_path root_path
-        end
-
-        it '作成後メッセージが表示されること' do
-          visit new_task_path
-          # 新規タスク登録
-          fill_in 'task[title]', with: input_values[:title]
-          fill_in 'task[content]', with: input_values[:content]
-          fill_in 'task[label]', with: input_values[:label]
-          # ボタン押下
-          click_on '作成'
-          expect(page).to have_content 'タスク作成成功'
-        end
-
+      it '作成後メッセージが表示されること' do
+        # 画面遷移
+        visit new_task_path
+        # 新規タスク登録
+        fill_in 'task[title]', with: input_values[:title]
+        fill_in 'task[content]', with: input_values[:content]
+        fill_in 'task[label]', with: input_values[:label]
+        # ボタン押下
+        click_on '作成'
+        expect(page).to have_content 'タスク作成成功'
       end
 
     end
