@@ -15,7 +15,7 @@ describe 'タスク管理機能', type: :system do
           expect(tds[0]).to have_content task_1.title
         end
 
-        it 'タスク名が表示される' do
+        it '説明が表示される' do
           visit_tasks
           expect(tds[1]).to have_content task_1.description
         end
@@ -29,6 +29,11 @@ describe 'タスク管理機能', type: :system do
         it 'タスク名が表示される' do
           visit_tasks
           expect(tds[0]).to have_content task_2.title
+        end
+
+        it '説明が表示される' do
+          visit_tasks
+          expect(tds[1]).to have_content task_2.description
         end
       end
     end
