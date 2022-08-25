@@ -73,7 +73,6 @@ describe 'タスク管理機能', type: :system do
     end
 
     describe '遷移機能' do
-      let!(:task_a) { FactoryBot.create(:task, name: 'タスク１', description: 'タスク１を実施する') }
 
       context '詳細画面からタスク一覧画面へ遷移' do
         it '一覧画面へ遷移できる' do
@@ -95,7 +94,7 @@ describe 'タスク管理機能', type: :system do
 
   describe '新規登録機能' do
     describe '登録機能' do
-      context 'タスクの内容を正しく入力した場合' do
+      context 'タスクの内容を入力した場合' do
         let(:name) { '新規作成テスト用タスク' }
         let(:description) { '新規作成テスト用タスクを実施する' }
         subject(:visit_new_task){ visit new_task_path }
@@ -110,21 +109,19 @@ describe 'タスク管理機能', type: :system do
           expect(Task.find_by(name: name, description: description)).not_to be_nil
         end
 
-        it 'メッセージが表示される' do
+        it 'Flashメッセージが表示される' do
           visit_new_task
           fill_in 'Name', with: name
           fill_in 'Description', with: description
           click_button 'Create Task'
-          # Flashメッセージが表示される
           expect(page).to have_selector '.alert-success', text: "タスク「#{name}」を登録しました。"
         end
 
-        it 'タスクが正常に作成される' do
+        it 'タスク一覧画面が表示される' do
           visit_new_task
           fill_in 'Name', with: name
           fill_in 'Description', with: description
           click_button 'Create Task'
-          # タスク一覧画面が表示される
           expect(current_path).to eq tasks_path
         end
       end
@@ -187,7 +184,6 @@ describe 'タスク管理機能', type: :system do
     end
 
     describe '遷移機能' do
-      let!(:task_a) { FactoryBot.create(:task, name: 'タスク１', description: 'タスク１を実施する') }
 
       context '編集画面から詳細画面へ遷移' do
         it '詳細画面へ遷移できる' do
