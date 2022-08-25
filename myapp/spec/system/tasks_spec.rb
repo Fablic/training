@@ -5,40 +5,26 @@ describe 'タスク管理機能', type: :system do
     subject(:visit_tasks) { visit tasks_path }
 
     describe '表示機能'do
-      # タスクが表示される期待動作を共通化
-      shared_examples_for 'タスク表示' do
-        let(:tds){ all('tbody tr')[0].all('td') }
-
-        context '1件目のタスクの場合' do
-          it 'タスク名が表示される' do
-            visit_tasks
-            expect(tds[0]).to have_content task_1.title
-          end
-        end
-      end
-      shared_examples_for '２件目のタスク表示' do
-        let(:tds){ all('tbody tr')[1].all('td') }
-
-        context '2件目のタスクの場合' do
-          it 'タスク名が表示される' do
-            visit_tasks
-            expect(tds[0]).to have_content task_2.title
-          end
-        end
-      end
 
       context 'タスクが1件存在する場合' do
         let!(:task_1) { FactoryBot.create(:task, title: '最初のタスク', description: '最初のタスクを実施する', user_id: "1", status: "1", label: 1) }
 
-        it_behaves_like 'タスク表示'
+        let(:tds){ all('tbody tr')[0].all('td') }
+        it 'タスク名が表示される' do
+          visit_tasks
+          expect(tds[0]).to have_content task_1.title
+        end
       end
 
       context 'タスクが2件(複数)存在する場合' do
         let!(:task_1) { FactoryBot.create(:task, title: '最初のタスク', description: '最初のタスクを実施する', user_id: "1", status: "1", label: 1) }
         let!(:task_2) { FactoryBot.create(:task, title: '２つ目のタスク', description: '２つ目のタスクを実施する', user_id: "1", status: "1", label: 2) }
 
-        it_behaves_like 'タスク表示'
-        it_behaves_like '２件目のタスク表示'
+        let(:tds){ all('tbody tr')[1].all('td') }
+        it 'タスク名が表示される' do
+          visit_tasks
+          expect(tds[0]).to have_content task_2.title
+        end
       end
     end
 
