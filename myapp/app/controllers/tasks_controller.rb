@@ -7,9 +7,9 @@ class TasksController < ApplicationController
     # user対応コメントアウト
     # @tasks = Task.joins(:user).all
     if params && (params[:word].present? || params[:status].present?)
-      @tasks = Task.search(params[:word], Task.statuses[params[:status]])
+      @tasks = Task.search(params[:word], Task.statuses[params[:status]]).page(params[:page]).per(5)
     else
-      @tasks = Task.all.order('tasks.created_at desc')
+      @tasks = Task.all.order('tasks.created_at desc').page(params[:page]).per(5)
     end
   end
 
