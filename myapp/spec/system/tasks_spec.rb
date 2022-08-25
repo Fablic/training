@@ -15,6 +15,239 @@ describe 'Tasks', type: :system do
 
     end
 
+    describe '検索エリア' do
+
+      let!(:task_A1) { FactoryBot.create(:task, title: 'titleA1', status: '1') }
+      let!(:task_A2) { FactoryBot.create(:task, title: 'titleA2', status: '2') }
+      let!(:task_B1) { FactoryBot.create(:task, title: 'titleB1', status: '1') }
+      let!(:task_B2) { FactoryBot.create(:task, title: 'titleB2', status: '2') }
+
+      context '条件なし検索' do
+
+        let(:conditions) { { word: '' } }
+
+        it '検索結果の件数が一致すること' do
+          visit root_path
+
+          fill_in 'word', with: conditions[:word]
+          select value = '', from: 'status'
+          click_on '検索'
+
+          expect(all('tbody tr').size).to be(4)
+        end
+
+        it 'titleA1が表示されること' do
+          visit root_path
+
+          fill_in 'word', with: conditions[:word]
+          select value = '', from: 'status'
+          click_on '検索'
+
+          expect(page).to have_content(task_A1[:title])
+        end
+
+        it 'titleA2が表示されること' do
+          visit root_path
+
+          fill_in 'word', with: conditions[:word]
+          select value = '', from: 'status'
+          click_on '検索'
+
+          expect(page).to have_content(task_A2[:title])
+        end
+
+        it 'titleB1が表示されること' do
+          visit root_path
+
+          fill_in 'word', with: conditions[:word]
+          select value = '', from: 'status'
+          click_on '検索'
+
+          expect(page).to have_content(task_B1[:title])
+        end
+
+        it 'titleB2が表示されること' do
+          visit root_path
+
+          fill_in 'word', with: conditions[:word]
+          select value = '', from: 'status'
+          click_on '検索'
+
+          expect(page).to have_content(task_B2[:title])
+        end
+
+      end
+
+      context 'wordのみ指定して検索' do
+
+        let(:conditions) { { word: 'A' } }
+
+        it '検索結果の件数が一致すること' do
+          visit root_path
+
+          fill_in 'word', with: conditions[:word]
+          select value = '', from: 'status'
+          click_on '検索'
+
+          expect(all('tbody tr').size).to be(2)
+        end
+
+        it 'titleA1が表示されること' do
+          visit root_path
+
+          fill_in 'word', with: conditions[:word]
+          select value = '', from: 'status'
+          click_on '検索'
+
+          expect(page).to have_content(task_A1[:title])
+        end
+
+        it 'titleA2が表示されること' do
+          visit root_path
+
+          fill_in 'word', with: conditions[:word]
+          select value = '', from: 'status'
+          click_on '検索'
+
+          expect(page).to have_content(task_A2[:title])
+        end
+
+        it 'titleB1が表示されないこと' do
+          visit root_path
+
+          fill_in 'word', with: conditions[:word]
+          select value = '', from: 'status'
+          click_on '検索'
+
+          expect(page).not_to have_content(task_B1[:title])
+        end
+
+        it 'titleB2が表示されないこと' do
+          visit root_path
+
+          fill_in 'word', with: conditions[:word]
+          select value = '', from: 'status'
+          click_on '検索'
+
+          expect(page).not_to have_content(task_B2[:title])
+        end
+
+      end
+
+      context 'statusのみ指定して検索' do
+
+        let(:conditions) { { status: '未着手' } }
+
+        it '検索結果の件数が一致すること' do
+          visit root_path
+
+          fill_in 'word', with: ''
+          select value = conditions[:status], from: 'status'
+          click_on '検索'
+
+          expect(all('tbody tr').size).to be(2)
+        end
+
+        it 'titleA1が表示されること' do
+          visit root_path
+
+          fill_in 'word', with: ''
+          select value = conditions[:status], from: 'status'
+          click_on '検索'
+
+          expect(page).to have_content(task_A1[:title])
+        end
+
+        it 'titleA2が表示されないこと' do
+          visit root_path
+
+          fill_in 'word', with: ''
+          select value = conditions[:status], from: 'status'
+          click_on '検索'
+
+          expect(page).not_to have_content(task_A2[:title])
+        end
+
+        it 'titleB1が表示されること' do
+          visit root_path
+
+          fill_in 'word', with: ''
+          select value = conditions[:status], from: 'status'
+           click_on '検索'
+
+          expect(page).to have_content(task_B1[:title])
+        end
+
+        it 'titleB2が表示されないこと' do
+          visit root_path
+
+          fill_in 'word', with: ''
+          select value = conditions[:status], from: 'status'
+          click_on '検索'
+
+          expect(page).not_to have_content(task_B2[:title])
+        end
+
+      end
+
+      context 'word、statusを指定して検索' do
+
+        let(:conditions) { { word: 'A', status: '未着手' } }
+
+        it '検索結果の件数が一致すること' do
+          visit root_path
+
+          fill_in 'word', with: conditions[:word]
+          select value = conditions[:status], from: 'status'
+          click_on '検索'
+
+          expect(all('tbody tr').size).to be(1)
+        end
+
+        it 'titleA1が表示されること' do
+          visit root_path
+
+          fill_in 'word', with: conditions[:word]
+          select value = conditions[:status], from: 'status'
+          click_on '検索'
+
+          expect(page).to have_content(task_A1[:title])
+        end
+
+        it 'titleA2が表示されないこと' do
+          visit root_path
+
+          fill_in 'word', with: conditions[:word]
+          select value = conditions[:status], from: 'status'
+          click_on '検索'
+
+          expect(page).not_to have_content(task_A2[:title])
+        end
+
+        it 'titleB1が表示されないこと' do
+          visit root_path
+
+          fill_in 'word', with: conditions[:word]
+          select value = conditions[:status], from: 'status'
+          click_on '検索'
+
+          expect(page).not_to have_content(task_B1[:title])
+        end
+
+        it 'titleB2が表示されないこと' do
+          visit root_path
+
+          fill_in 'word', with: conditions[:word]
+          select value = conditions[:status], from: 'status'
+          click_on '検索'
+
+          expect(page).not_to have_content(task_B2[:title])
+        end
+
+      end
+
+    end
+
     describe '一覧表示エリア' do
 
       context 'タスク1件' do
