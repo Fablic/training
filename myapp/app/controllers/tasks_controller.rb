@@ -6,17 +6,11 @@ class TasksController < ApplicationController
     # タスク一覧オブジェクト取得
     # user対応コメントアウト
     # @tasks = Task.joins(:user).all
-    puts 'params'
-    puts params
     if params && (params[:word].present? || params[:status].present?)
-      puts 'search'
-      # @tasks = Task.search(params[:word], params[:status])
       @tasks = Task.search(params[:word], Task.statuses[params[:status]])
     else
-      puts 'not search'
       @tasks = Task.all.order('tasks.created_at desc')
     end
-    puts 'end'
   end
 
   # タスク作成画面
@@ -69,7 +63,7 @@ class TasksController < ApplicationController
   # タスク更新
   def update
     @task = Task.find(params[:id])
-    
+
     if @task.update(task_params)
       redirect_to(root_path, notice: 'タスク更新成功')
     else
