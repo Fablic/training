@@ -29,24 +29,41 @@
 # To learn more, please read the Rails Internationalization guide
 # available at https://guides.rubyonrails.org/i18n.html.
 
-en:
+ja:
+  activerecord:
+    models:
+      task: タスク
+    attributes:
+      task:
+        title: タイトル
+        content: 内容
+        user_id: ユーザーID
+        status: ステータス
+        label: ラベル
+        deleted_at: 削除日
+        crated_at: 作成日
+        updated_at: 更新日
   view_title:
-    index: 'Task List'
-    new: 'Task Create'
-    show: 'Task Detail'
-    edit: 'Task Edit'
+    index: 'タスク一覧画面'
+    new: 'タスク作成画面'
+    show: 'タスク詳細画面'
+    edit: 'タスク編集画面'
   task:
-    title: 'Title'
-    content: 'Content'
-    label: 'Label'
+    title: 'タイトル'
+    content: '内容'
+    label: 'ラベル'
+    created_at: '作成日'
   button:
-    create: 'Create'
-    delete: 'Delete'
-    update: 'Update'
+    create: '作成'
+    delete: '削除'
+    update: '更新'
   link:
-    create: 'Create'
-    detail: 'Detail'
-    edit: 'Edit'
-    list_back: 'Back'
+    create: '作成'
+    detail: '詳細'
+    edit: '編集'
+    list_back: '一覧へ'
   message:
-    delete_confirm: 'Delete?'
+    delete_confirm: '削除しますか?'
+  time:
+    formats:
+      default: "%Y/%m/%d %H:%M:%S"

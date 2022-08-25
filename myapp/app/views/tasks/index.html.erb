@@ -2,11 +2,11 @@
   <div name='message-area'>
     <%= notice %>
   </div>
-  <h1>タスク一覧画面</h1>
+  <h1><%= I18n.t('view_title.index') %></h1>
 </div>
 <div name='content'>
   <div name='create-task'>
-      <%= link_to('作成', new_task_path) %>
+      <%= link_to(I18n.t('link.create'), new_task_path) %>
   </div>
   <div name='serch-task'>
 
@@ -15,12 +15,13 @@
     <table>
       <thead>
         <tr>
-          <th>タイトル</th>
-          <th>ラベル</th>
+          <th><%= I18n.t('task.title') %></th>
+          <th><%= I18n.t('task.label') %></th>
           <!-- user対応コメントアウト -->
           <!-- <th>担当者</th> -->
           <!-- status対応コメントアウト -->
           <!-- <th>状況</th> -->
+          <th><%= I18n.t('task.created_at') %></th>
           <th></th>
         </tr>
       <thead>
@@ -33,7 +34,8 @@
             <!-- <td><span><%#= task.user.name %></span></td> -->
             <!-- status対応コメントアウト -->
             <!-- <td><span><%#= get_status_view(task.status) %></span></td> -->
-            <td><%= link_to('詳細', task_path(task)) %></td>
+            <td><span><%= I18n.l(task.created_at) %></span></td>
+            <td><%= link_to(I18n.t('link.detail'), task_path(task)) %></td>
           </tr>
         <% end %>
       </tbody>
