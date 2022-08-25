@@ -1,7 +1,7 @@
 <h1>タスク一覧</h1>
 
 <% if flash[:notice] %>
-  <p>
+  <p class="alert-success">
     <%= flash[:notice] %>
   </p>
 <% end %>
@@ -19,7 +19,7 @@
     <% @tasks.each do |task| %>
       <tr>
         <td>
-          <%= link_to task.title, task_path(task) %>
+          <%= link_to task.title, task_path(task), id: '詳細' %>
         </td>
         <td>
           <%= task.description %>
