@@ -24,7 +24,6 @@ describe 'タスク管理機能', type: :system do
             visit_tasks
             expect(tds[0]).to have_content task_2.title
           end
-          it 'ステータスが表示される' do
         end
       end
 
@@ -246,5 +245,4 @@ describe 'タスク管理機能', type: :system do
       end
     end
   end
-end
 end
