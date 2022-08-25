@@ -1,53 +1,58 @@
 require 'rails_helper'
+
 describe 'タスク管理機能', type: :system do
-  # タスクを作成
-  user = User.create!(name: 'name1')
-  let!(:task_a) { FactoryBot.create(:task, title: '最初のタスク', description: '最初のタスクを実施する', status: '1', label: '1', user_id: user[:id]) }
-  let!(:task_b) { FactoryBot.create(:task, title: '２つ目のタスク', description: '２つ目のタスクを実施する', status: '1', label: '2', user_id: user[:id]) }
-  # タスクが表示される期待動作を共通化
-  shared_examples_for 'タスクが表示される' do
-    it { expect(page).to have_content '最初のタスク' }
-  end
-  shared_examples_for '２つ目のタスクが表示される' do
-    it { expect(page).to have_content '２つ目のタスク' }
-  end
   describe '一覧表示機能' do
-    context 'タスクが1件存在する場合' do
-      before do
-        # 確認するパス（URL）を設定
-        visit tasks_path
+    subject(:visit_tasks) { visit tasks_path }
+
+    describe '表示機能' do
+      # タスクが表示される期待動作を共通化
+      shared_examples_for 'タスク表示' do
+        let(:tds){ all('tbody tr')[0].all('td') }
+
+        context 'タスクが1件存在する場合' do
+          it 'タスク名が表示される' do
+            visit_tasks
+            expect(tds[0]).to have_content task_1.title
+          end
+        end
       end
-      it_behaves_like 'タスクが表示される'
-    end
-    context 'タスクが2件(複数)存在する場合' do
-      before do
-        visit tasks_path
+
+      shared_examples_for '２件目のタスク表示' do
+        let(:tds){ all('tbody tr')[1].all('td') }
+
+        context 'タスクが2件(複数)存在する場合' do
+          it 'タスク名が表示される' do
+            visit_tasks
+            expect(tds[0]).to have_content task_2.title
+          end
+        end
       end
-      it_behaves_like 'タスクが表示される'
-      it_behaves_like '２つ目のタスクが表示される'
     end
   end
+
   describe '詳細表示機能' do
-    context 'タスクが存在する場合' do
-      before do
-        visit task_path(task_a)
-      end
-      it '各項目が表示される' do
-        expect(page).to have_content '最初のタスク'
-        expect(page).to have_content '最初のタスクを実施する'
-        expect(page).to have_content '1'
-        expect(page).to have_content '1'
+    user = User.create!(name: 'name1')
+    let!(:task_a) { FactoryBot.create(:task, title: '最初のタスク', description: '最初のタスクを実施する', status: '1', label: '1', user_id: user[:id]) }
+    subject(:visit_task_a) { visit task_path(task_a) }
+
+    describe '表示機能' do
+      context 'タスクが存在する場合' do
+        it '各項目が表示される' do
+          visit_task_a
+          expect(page).to have_content '最初のタスク'
+        end
       end
     end
   end
+
   describe '新規登録機能' do
-    before do
-      visit new_task_path(task_a)
-    end
+    subject(:visit_new_task){ visit new_task_path }
+
     context 'タスクの各項目を登録した場合' do
       let(:title) { '新規作成のテスト２' }
       let(:description) { '新規作成のテストを書く２' }
       it 'タスクが正常に登録される' do
+        visit_new_task
         # 登録処理
         fill_in 'textarea1', with: title
         fill_in 'textarea2', with: description
@@ -55,20 +60,21 @@ describe 'タスク管理機能', type: :system do
       end
     end
   end
+
   describe '編集機能' do
-    before do
-      visit edit_task_path(task_a)
-    end
+    user = User.create!(name: 'name1')
+    let!(:task_a) { FactoryBot.create(:task, title: '最初のタスク', description: '最初のタスクを実施する', status: '1', label: '1', user_id: user[:id]) }
+    subject(:visit_task_a_edit){visit edit_task_path(task_a)}
+
     context 'タスクの各項目を更新した場合' do
       let(:title) { '新規作成のテスト２' }
       let(:description) { '新規作成のテストを書く２' }
       it 'タスクが正常に更新される' do
-        # 画面表示時に編集前のタスク内容が各項目に表示されている
-        expect(page).to have_field 'textarea1', with: task_a.title
-        expect(page).to have_field 'textarea2', with: task_a.description
+        visit_task_a_edit
         # 更新処理
         fill_in 'textarea1', with: title
         fill_in 'textarea2', with: description
+
         click_button 'submit'
         # 画面で入力された内容でDBのデータが更新されている
         task = Task.find_by(title: title)
@@ -76,65 +82,6 @@ describe 'タスク管理機能', type: :system do
         expect(task.description).to eq(description)
         # Flashメッセージが表示される
         expect(page).to have_selector '.alert-success', text: 'Update Task Success!!'
-      end
-    end
-  end
-  describe '削除機能' do
-    context 'タスクを削除した場合' do
-      it 'タスクが正常に削除される' do
-        visit tasks_path()
-        # DBの該当データが削除される
-        expect { find_by_id("delete#{task_a.id}").click }.to change(Task, :count).by(-1)
-        expect(Task.find_by(title: task_a.title)).to be nil
-        # Flashメッセージが表示される
-        expect(page).to have_selector '.alert-success', text: 'Destroy Task Success!!'
-      end
-    end
-  end
-  describe 'ページ遷移' do
-    context 'タスク一覧画面から詳細画面へ遷移' do
-      before do
-        visit tasks_path
-        find_by_id("show#{task_a.id}").click
-      end
-      it '詳細画面へ遷移できること' do
-        expect(current_path).to eq task_path(task_a)
-      end
-    end
-    context '一覧画面から新規登録画面へ遷移' do
-      before do
-        visit tasks_path
-        click_link '新規登録'
-      end
-      it '新規登録画面へ遷移できる' do
-        expect(current_path).to eq new_task_path
-      end
-    end
-    context '新規登録画面からタスク一覧画面へ遷移' do
-      before do
-        visit new_task_path
-        click_link '一覧に戻る'
-      end
-      it '一覧画面へ遷移できる' do
-        expect(current_path).to eq tasks_path
-      end
-    end
-    context '詳細画面からタスク一覧画面へ遷移' do
-      before do
-        visit task_path(task_a)
-        click_link '一覧に戻る'
-      end
-      it '一覧画面へ遷移できる' do
-        expect(current_path).to eq tasks_path
-      end
-    end
-    context '編集画面から一覧画面へ遷移' do
-      before do
-        visit edit_task_path(task_a)
-        click_link '一覧に戻る'
-      end
-      it '詳細画面へ遷移できる' do
-        expect(current_path).to eq tasks_path
       end
     end
   end
