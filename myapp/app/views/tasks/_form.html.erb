@@ -22,7 +22,7 @@
 
   <% if is_status %>
     <p><%= I18n.t('task.status') %></p>
-    <%= f.select(:status, Task.statuses_i18n.keys.map { |k| [Task.statuses_i18n[k], k] }) %>
+    <%= f.select(:status, Task.statuses.keys.map { |k| [I18n.t("enums.task.status.#{k}"), k] }) %>
   <% end %>
 
   <br><br>
