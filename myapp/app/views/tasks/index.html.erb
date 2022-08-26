@@ -22,8 +22,7 @@
         <tr>
           <th><%= I18n.t('task.title') %></th>
           <th><%= I18n.t('task.label') %></th>
-          <!-- user対応コメントアウト -->
-          <!-- <th>担当者</th> -->
+          <th><%= I18n.t('task.user') %></th>
           <th><%= I18n.t('task.status') %></th>
           <th><%= I18n.t('task.created_at') %></th>
           <th></th>
@@ -34,8 +33,7 @@
           <tr>
             <td><span><%= task.title %></span></td>
             <td><span><%= task.label %></span></td>
-            <!-- user対応コメントアウト -->
-            <!-- <td><span><%#= task.user.name %></span></td> -->
+            <td><span><%= task.user.name %></span></td>
             <td><span><%= task.status_i18n %></span></td>
             <td><span><%= l(task.created_at) %></span></td>
             <td><%= link_to(I18n.t('link.detail'), task_path(task)) %></td>

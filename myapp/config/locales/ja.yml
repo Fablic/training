@@ -50,27 +50,28 @@ ja:
         in_progress: 着手中
         closed: 完了
   view_title:
-    index: 'タスク一覧画面'
-    new: 'タスク作成画面'
-    show: 'タスク詳細画面'
-    edit: 'タスク編集画面'
+    index: タスク一覧画面
+    new: タスク作成画面
+    show: タスク詳細画面
+    edit: タスク編集画面
   task:
-    title: 'タイトル'
-    content: '内容'
-    label: 'ラベル'
-    status: 'ステータス'
-    created_at: '作成日'
+    title: タイトル
+    content: 内容
+    label: ラベル
+    status: ステータス
+    user: 担当者
+    created_at: 作成日
   button:
-    create: '作成'
-    delete: '削除'
-    update: '更新'
+    create: 作成
+    delete: 削除
+    update: 更新
   link:
-    create: '作成'
-    detail: '詳細'
-    edit: '編集'
-    list_back: '一覧へ'
+    create: 作成
+    detail: 詳細
+    edit: 編集
+    list_back: 一覧へ
   message:
-    delete_confirm: '削除しますか?'
+    delete_confirm: 削除しますか?
   time:
     formats:
       default: "%Y/%m/%d %H:%M:%S"

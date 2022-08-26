@@ -17,9 +17,8 @@
   <p><%= I18n.t('task.label') %></p>
   <%= f.text_field(:label) %>
 
-  <!-- user対応コメントアウト -->
-  <!-- <p>担当者</p> -->
-  <%#= f.select(:user_id, @select_user_names) %>
+  <p><%= I18n.t('task.user') %></p>
+  <%= f.select(:user_id, @select_user_names) %>
 
   <% if is_status %>
     <p><%= I18n.t('task.status') %></p>
