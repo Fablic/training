@@ -264,6 +264,11 @@ describe 'Tasks', type: :system do
           expect(page).to have_content task_one.label
         end
 
+        it 'ステータスが一致すること' do
+          visit root_path
+          expect(page).to have_content I18n.t("enums.task.status.#{task_one.status}")
+        end
+
         it '詳細ボタンを押下することでタスク詳細画面へ遷移すること' do
           visit root_path
           click_on '詳細', match: :first
@@ -287,6 +292,17 @@ describe 'Tasks', type: :system do
           expect(page).to have_content task_one.label
         end
 
+        it '1件目 ステータスが一致すること' do
+          visit root_path
+          expect(page).to have_content I18n.t("enums.task.status.#{task_one.status}")
+        end
+
+        it '1件目 詳細ボタンを押下することでタスク詳細画面へ遷移すること' do
+          visit root_path
+          all('a', :text => '詳細')[0].click
+          expect(page).to have_current_path task_path(task_two)
+        end
+
         it '2件目 タイトルが一致すること' do
           visit root_path
           expect(page).to have_content task_two.title
@@ -297,10 +313,9 @@ describe 'Tasks', type: :system do
           expect(page).to have_content task_two.label
         end
 
-        it '1件目 詳細ボタンを押下することでタスク詳細画面へ遷移すること' do
+        it '2件目 ステータスが一致すること' do
           visit root_path
-          all('a', :text => '詳細')[0].click
-          expect(page).to have_current_path task_path(task_two)
+          expect(page).to have_content I18n.t("enums.task.status.#{task_two.status}")
         end
 
         it '2件目 詳細ボタンを押下することでタスク詳細画面へ遷移すること' do
@@ -660,6 +675,11 @@ describe 'Tasks', type: :system do
       it '内容が一致すること' do
         visit task_path(task_one)
         expect(page).to have_content task_one.content
+      end
+
+      it 'ステータスが一致すること' do
+        visit task_path(task_one)
+        expect(page).to have_content I18n.t("enums.task.status.#{task_one.status}")
       end
 
     end

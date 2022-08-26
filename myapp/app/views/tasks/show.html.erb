@@ -11,6 +11,9 @@
   <p><%= I18n.t('task.label') %></p>
   <p><%= @task.label %></p>
 
+  <p><%= I18n.t('task.status') %></p>
+  <p><%= I18n.t("enums.task.status.#{@task.status}") %></p>
+
   <!-- user対応コメントアウト -->
   <!-- <p>担当者</p> -->
   <!-- <p><%#= @task.user.name %></p> -->
