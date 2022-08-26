@@ -729,6 +729,13 @@ describe 'Tasks', type: :system do
 
         end
 
+        it 'ステータスが表示されていること' do
+
+          visit edit_task_path(task_one)
+          expect(page).to have_field 'task[status]', with: task_one.status
+
+        end
+
       end
 
       context '全項目変更' do
@@ -738,6 +745,7 @@ describe 'Tasks', type: :system do
             title: '全項目変更 タイトル',
             content: '全項目変更 内容',
             label: '全項目変更 ラベル',
+            status: 'not_started',
           }
         }
 
@@ -747,6 +755,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: update_task[:title]
           fill_in 'task[content]', with: update_task[:content]
           fill_in 'task[label]', with: update_task[:label]
+          select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task[status]'
           click_on '更新'
           expect(Task.find_by(update_task)).to be_present
 
@@ -757,6 +766,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: update_task[:title]
           fill_in 'task[content]', with: update_task[:content]
           fill_in 'task[label]', with: update_task[:label]
+          select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task[status]'
           click_on '更新'
           expect(page).to have_current_path root_path
         end
@@ -766,6 +776,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: update_task[:title]
           fill_in 'task[content]', with: update_task[:content]
           fill_in 'task[label]', with: update_task[:label]
+          select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task[status]'
           click_on '更新'
           expect(page).to have_content 'タスク更新成功'
         end
@@ -779,6 +790,7 @@ describe 'Tasks', type: :system do
             title: '全項目変更 タイトル',
             content: 'こちらはテスト1の内容です。テストテストテストテストテストテストテスト',
             label: 'テスト',
+            status: 'not_started',
           }
         }
 
@@ -788,6 +800,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: update_task[:title]
           fill_in 'task[content]', with: update_task[:content]
           fill_in 'task[label]', with: update_task[:label]
+          select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task[status]'
           click_on '更新'
           expect(Task.find_by(update_task)).to be_present
 
@@ -802,6 +815,7 @@ describe 'Tasks', type: :system do
             title: 'テスト1',
             content: '全項目変更 内容',
             label: 'テスト',
+            status: 'not_started',
           }
         }
 
@@ -811,6 +825,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: update_task[:title]
           fill_in 'task[content]', with: update_task[:content]
           fill_in 'task[label]', with: update_task[:label]
+          select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task[status]'
           click_on '更新'
           expect(Task.find_by(update_task)).to be_present
 
@@ -825,6 +840,7 @@ describe 'Tasks', type: :system do
             title: 'テスト1',
             content: 'こちらはテスト1の内容です。テストテストテストテストテストテストテスト',
             label: '全項目変更 ラベル',
+            status: 'not_started',
           }
         }
 
@@ -834,6 +850,32 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: update_task[:title]
           fill_in 'task[content]', with: update_task[:content]
           fill_in 'task[label]', with: update_task[:label]
+          select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task[status]'
+          click_on '更新'
+          expect(Task.find_by(update_task)).to be_present
+
+        end
+
+      end
+
+      context 'ステータスのみ変更' do
+
+        let(:update_task) {
+          {
+            title: 'テスト1',
+            content: 'こちらはテスト1の内容です。テストテストテストテストテストテストテスト',
+            label: 'テスト',
+            status: 'in_progress',
+          }
+        }
+
+        it '更新されていること' do
+
+          visit edit_task_path(task_one)
+          fill_in 'task[title]', with: update_task[:title]
+          fill_in 'task[content]', with: update_task[:content]
+          fill_in 'task[label]', with: update_task[:label]
+          select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task[status]'
           click_on '更新'
           expect(Task.find_by(update_task)).to be_present
 
@@ -848,6 +890,7 @@ describe 'Tasks', type: :system do
             title: '',
             content: 'こちらはテスト1の内容です。テストテストテストテストテストテストテスト',
             label: 'テスト',
+            status: 'not_started',
           }
         }
 
@@ -856,6 +899,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: update_task[:title]
           fill_in 'task[content]', with: update_task[:content]
           fill_in 'task[label]', with: update_task[:label]
+          select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task[status]'
           click_on '更新'
 
           expect(Task.find_by(update_task)).to be_nil
@@ -866,6 +910,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: update_task[:title]
           fill_in 'task[content]', with: update_task[:content]
           fill_in 'task[label]', with: update_task[:label]
+          select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task[status]'
           click_on '更新'
 
           expect(page).to have_content("#{I18n.t('activerecord.attributes.task.title')}#{I18n.t('errors.messages.too_short', count: 1)}")
@@ -882,6 +927,7 @@ describe 'Tasks', type: :system do
                    '12345678901234567890123456789',
             content: 'こちらはテスト1の内容です。テストテストテストテストテストテストテスト',
             label: 'テスト',
+            status: 'not_started',
           }
         }
 
@@ -892,6 +938,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: update_task[:title]
           fill_in 'task[content]', with: update_task[:content]
           fill_in 'task[label]', with: update_task[:label]
+          select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task[status]'
           # ボタン押下
           click_on '更新'
 
@@ -905,6 +952,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: update_task[:title]
           fill_in 'task[content]', with: update_task[:content]
           fill_in 'task[label]', with: update_task[:label]
+          select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task[status]'
           # ボタン押下
           click_on '更新'
 
@@ -920,6 +968,7 @@ describe 'Tasks', type: :system do
             title: 'テスト1',
             content: '',
             label: 'テスト',
+            status: 'not_started',
           }
         }
 
@@ -930,6 +979,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: update_task[:title]
           fill_in 'task[content]', with: update_task[:content]
           fill_in 'task[label]', with: update_task[:label]
+          select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task[status]'
           # ボタン押下
           click_on '更新'
 
@@ -943,6 +993,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: update_task[:title]
           fill_in 'task[content]', with: update_task[:content]
           fill_in 'task[label]', with: update_task[:label]
+          select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task[status]'
           # ボタン押下
           click_on '更新'
 
@@ -978,6 +1029,7 @@ describe 'Tasks', type: :system do
                      '12345678901234567890123456789012345678901234567890'\
                      '1234567890123456789012345',
             label: 'テスト',
+            status: 'not_started',
           }
         }
 
@@ -989,6 +1041,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: update_task[:title]
           fill_in 'task[content]', with: update_task[:content]
           fill_in 'task[label]', with: update_task[:label]
+          select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task[status]'
           # ボタン押下
           click_on '更新'
 
@@ -1003,6 +1056,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: update_task[:title]
           fill_in 'task[content]', with: update_task[:content]
           fill_in 'task[label]', with: update_task[:label]
+          select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task[status]'
           # ボタン押下
           click_on '更新'
 
@@ -1018,6 +1072,7 @@ describe 'Tasks', type: :system do
             title: 'テスト1',
             content: 'こちらはテスト1の内容です。テストテストテストテストテストテストテスト',
             label: '',
+            status: 'not_started',
           }
         }
 
@@ -1029,6 +1084,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: update_task[:title]
           fill_in 'task[content]', with: update_task[:content]
           fill_in 'task[label]', with: update_task[:label]
+          select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task[status]'
           # ボタン押下
           click_on '更新'
 
@@ -1042,6 +1098,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: update_task[:title]
           fill_in 'task[content]', with: update_task[:content]
           fill_in 'task[label]', with: update_task[:label]
+          select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task[status]'
           # ボタン押下
           click_on '更新'
 
@@ -1058,7 +1115,8 @@ describe 'Tasks', type: :system do
             content: 'こちらはテスト1の内容です。テストテストテストテストテストテストテスト',
             label: '12345678901234567890123456789012345678901234567890'\
                    '123456789012345',
-          }
+                   status: 'not_started',
+                  }
         }
 
         it 'データ登録されていないこと' do
@@ -1068,6 +1126,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: update_task[:title]
           fill_in 'task[content]', with: update_task[:content]
           fill_in 'task[label]', with: update_task[:label]
+          select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task[status]'
           # ボタン押下
           click_on '更新'
 
@@ -1081,6 +1140,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: update_task[:title]
           fill_in 'task[content]', with: update_task[:content]
           fill_in 'task[label]', with: update_task[:label]
+          select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task[status]'
           # ボタン押下
           click_on '更新'
 
