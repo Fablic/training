@@ -11,18 +11,16 @@ class ApplicationController < ActionController::Base
   private
 
   def _render_404(e = nil)
-    logger.info "Rendering 404 with excaption: #{e.message}" if e
     respond_to do |format|
-      format.json { render json: {error: '404 Not Found' }, status: :not_found }
-      format.all { render 'errors/404.html', status: :not_found }
+      format.html { render :file => "#{Rails.root}/public/404", :layout => false, :status => :not_found }
+      format.xml  { head :not_found }
+      format.any  { head :not_found }
     end
   end
 
   def _render_500(e = nil)
-    logger.error "Rendering 500 with excaption: #{e.message}" if e
-    respond_to do |format|
-      format.json { render json: {error: '500 Internal Server Error' }, status: :internal_server_error }
-      format.all { render 'errors/500.html', status: :internal_server_error }
-    end
+    format.html { render :file => "#{Rails.root}/public/500", :layout => false, :status => :internal_server_error }
+    format.xml  { head :internal_server_error }
+    format.any  { head :internal_server_error }
   end
 end
