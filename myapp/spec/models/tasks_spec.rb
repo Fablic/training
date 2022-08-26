@@ -3,138 +3,135 @@ require 'rails_helper'
 describe Task, type: :model do
 
   describe '#validation' do
-    let(:params) { { title: 'title', content: 'content', label: 'label' } }
 
-    context 'title' do
+    describe 'title' do
 
-      it '正常' do
-        task = Task.new(params)
-        expect(task).to be_valid
+      context '0文字' do
+
+        let(:task) { FactoryBot.build(:task, title: '') }
+
+        it 'invalid' do
+          expect(task).to be_invalid
+        end
+
       end
 
-      it '0文字' do
-        task = Task.new(params)
-        task.title = ''
-        expect(task).to be_invalid
+      context '1文字' do
+
+        let(:task) { FactoryBot.build(:task, title: '1') }
+
+        it 'valid' do
+          expect(task).to be_valid
+        end
+
       end
 
-      it '128文字' do
-        task = Task.new(params)
-        task.title =
-          '12345678901234567890123456789012345678901234567890'\
-          '12345678901234567890123456789012345678901234567890'\
-          '1234567890123456789012345678'
-        expect(task).to be_valid
+      context '128文字' do
+
+        let(:task) { FactoryBot.build(:task, title: '1' * 128) }
+
+        it 'valid' do
+          expect(task).to be_valid
+        end
+
       end
 
-      it '129文字' do
-        task = Task.new(params)
-        task.title =
-          '12345678901234567890123456789012345678901234567890'\
-          '12345678901234567890123456789012345678901234567890'\
-          '12345678901234567890123456789'
-        expect(task).to be_invalid
-      end
+      context '129文字' do
 
-    end
+        let(:task) { FactoryBot.build(:task, title: '1' * 129) }
 
-    context 'content' do
+        it 'invalid' do
+          expect(task).to be_invalid
+        end
 
-      it '正常' do
-        task = Task.new(params)
-        expect(task).to be_valid
-      end
-
-      it '0文字' do
-        task = Task.new(params)
-        task.content = ''
-        expect(task).to be_invalid
-      end
-
-      it '1024文字' do
-        task = Task.new(params)
-        task.content =
-          '12345678901234567890123456789012345678901234567890'\
-          '12345678901234567890123456789012345678901234567890'\
-          '12345678901234567890123456789012345678901234567890'\
-          '12345678901234567890123456789012345678901234567890'\
-          '12345678901234567890123456789012345678901234567890'\
-          '12345678901234567890123456789012345678901234567890'\
-          '12345678901234567890123456789012345678901234567890'\
-          '12345678901234567890123456789012345678901234567890'\
-          '12345678901234567890123456789012345678901234567890'\
-          '12345678901234567890123456789012345678901234567890'\
-          '12345678901234567890123456789012345678901234567890'\
-          '12345678901234567890123456789012345678901234567890'\
-          '12345678901234567890123456789012345678901234567890'\
-          '12345678901234567890123456789012345678901234567890'\
-          '12345678901234567890123456789012345678901234567890'\
-          '12345678901234567890123456789012345678901234567890'\
-          '12345678901234567890123456789012345678901234567890'\
-          '12345678901234567890123456789012345678901234567890'\
-          '12345678901234567890123456789012345678901234567890'\
-          '12345678901234567890123456789012345678901234567890'\
-          '123456789012345678901234'
-        expect(task).to be_valid
-      end
-
-      it '1025文字' do
-        task = Task.new(params)
-        task.content =
-        task.content =
-          '12345678901234567890123456789012345678901234567890'\
-          '12345678901234567890123456789012345678901234567890'\
-          '12345678901234567890123456789012345678901234567890'\
-          '12345678901234567890123456789012345678901234567890'\
-          '12345678901234567890123456789012345678901234567890'\
-          '12345678901234567890123456789012345678901234567890'\
-          '12345678901234567890123456789012345678901234567890'\
-          '12345678901234567890123456789012345678901234567890'\
-          '12345678901234567890123456789012345678901234567890'\
-          '12345678901234567890123456789012345678901234567890'\
-          '12345678901234567890123456789012345678901234567890'\
-          '12345678901234567890123456789012345678901234567890'\
-          '12345678901234567890123456789012345678901234567890'\
-          '12345678901234567890123456789012345678901234567890'\
-          '12345678901234567890123456789012345678901234567890'\
-          '12345678901234567890123456789012345678901234567890'\
-          '12345678901234567890123456789012345678901234567890'\
-          '12345678901234567890123456789012345678901234567890'\
-          '12345678901234567890123456789012345678901234567890'\
-          '12345678901234567890123456789012345678901234567890'\
-          '1234567890123456789012345'
-        expect(task).to be_invalid
       end
 
     end
 
-    context 'label' do
+    describe 'content' do
 
-      it '正常' do
-        task = Task.new(params)
-        expect(task).to be_valid
+      context '0文字' do
+
+        let(:task) { FactoryBot.build(:task, content: '') }
+
+        it 'invalid' do
+          expect(task).to be_invalid
+        end
+
       end
 
-      it '0文字' do
-        task = Task.new(params)
-        task.label = ''
-        expect(task).to be_invalid
+      context '1文字' do
+
+        let(:task) { FactoryBot.build(:task, content: '1') }
+
+        it 'valid' do
+          expect(task).to be_valid
+        end
+
       end
 
-      it '64文字' do
-        task = Task.new(params)
-        task.label =
-          '12345678901234567890123456789012345678901234567890'\
-          '12345678901234'
-        expect(task).to be_valid
+      context '1024文字' do
+
+        let(:task) { FactoryBot.build(:task, content: '1' * 1024) }
+
+        it 'valid' do
+          expect(task).to be_valid
+        end
+
       end
 
-      it '65文字' do
-        task = Task.new(params)
-        task.label =
-        '12345678901234567890123456789012345678901234567890'\
-        '123456789012345'
-      expect(task).to be_invalid
+      context '1025文字' do
+
+        let(:task) { FactoryBot.build(:task, content: '1' * 1025) }
+
+        it 'invalid' do
+          expect(task).to be_invalid
+        end
+
+      end
+
+    end
+
+    describe 'label' do
+
+      context '0文字' do
+
+        let(:task) { FactoryBot.build(:task, label: '') }
+
+        it 'invalid' do
+          expect(task).to be_invalid
+        end
+
+      end
+
+      context '1文字' do
+
+        let(:task) { FactoryBot.build(:task, label: '1') }
+
+        it 'valid' do
+          expect(task).to be_valid
+        end
+
+      end
+
+      context '64文字' do
+
+        let(:task) { FactoryBot.build(:task, label: '1' * 64) }
+
+        it 'valid' do
+          expect(task).to be_valid
+        end
+
+      end
+
+      context '65文字' do
+
+        let(:task) { FactoryBot.build(:task, label: '1' * 65) }
+
+        it 'invalid' do
+          expect(task).to be_invalid
+        end
+
       end
 
     end
