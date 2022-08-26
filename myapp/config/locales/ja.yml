@@ -46,6 +46,16 @@ ja:
   attributes:
     created_at: 登録日時
     updated_at: 更新日時
+  enums:
+    task:
+      priority:
+        high: 高
+        middle: 中
+        low: 低
+      status:
+        not_started: 未着手
+        in_progress: 着手中
+        completed: 完了
   helpers:
     submit:
       create: 登録

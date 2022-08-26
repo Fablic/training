@@ -77,6 +77,8 @@ GEM
     concurrent-ruby (1.1.10)
     crass (1.0.6)
     diff-lcs (1.5.0)
+    enum_help (0.0.19)
+      activesupport (>= 3.0.0)
     erubi (1.11.0)
     fablicop (1.7.0)
       rubocop (>= 1.14, < 1.29)
@@ -108,7 +110,7 @@ GEM
     method_source (1.0.0)
     mini_mime (1.1.2)
     mini_portile2 (2.8.0)
-    minitest (5.16.2)
+    minitest (5.16.3)
     msgpack (1.5.4)
     mysql2 (0.5.4)
     nio4r (2.5.8)
@@ -147,6 +149,9 @@ GEM
       nokogiri (>= 1.6)
     rails-html-sanitizer (1.4.3)
       loofah (~> 2.3)
+    rails-i18n (7.0.5)
+      i18n (>= 0.7, < 2)
+      railties (>= 6.0.0, < 8)
     railties (6.0.5.1)
       actionpack (= 6.0.5.1)
       activesupport (= 6.0.5.1)
@@ -253,6 +258,7 @@ DEPENDENCIES
   bootsnap (>= 1.4.2)
   byebug
   capybara (>= 2.15)
+  enum_help
   fablicop
   factory_bot_rails (~> 4.11)
   jbuilder (~> 2.7)
@@ -260,6 +266,7 @@ DEPENDENCIES
   mysql2 (>= 0.4.4)
   puma (~> 4.1)
   rails (~> 6.0.5, >= 6.0.5.1)
+  rails-i18n
   rspec-rails (~> 3.7)
   sass-rails (>= 6)
   selenium-webdriver

@@ -12,15 +12,15 @@ describe 'タスク管理機能', type: :system do
         context '1件目のタスクの場合' do
           it 'タスク名が表示される' do
             visit_tasks
-            expect(tds[0]).to have_content task_1.name
+            expect(tds[0]).to have_content '最初のタスク'
           end
           it 'ステータスが表示される' do
             visit_tasks
-            expect(tds[1]).to have_content task_1.status
+            expect(tds[1]).to have_content '未着手'
           end
           it '優先度が表示される' do
             visit_tasks
-            expect(tds[2]).to have_content task_1.priority
+            expect(tds[2]).to have_content '低'
           end
         end
       end
@@ -30,15 +30,15 @@ describe 'タスク管理機能', type: :system do
         context '2件目のタスクの場合' do
           it 'タスク名が表示される' do
             visit_tasks
-            expect(tds[0]).to have_content task_2.name
+            expect(tds[0]).to have_content '２つ目のタスク'
           end
           it 'ステータスが表示される' do
             visit_tasks
-            expect(tds[1]).to have_content task_2.status
+            expect(tds[1]).to have_content '未着手'
           end
           it '優先度が表示される' do
             visit_tasks
-            expect(tds[2]).to have_content task_2.priority
+            expect(tds[2]).to have_content '中'
           end
         end
       end
@@ -96,12 +96,12 @@ describe 'タスク管理機能', type: :system do
 
         it 'ステータスが表示される' do
           visit_task_a
-          expect(page).to have_content 'not_started'
+          expect(page).to have_content '未着手'
         end
 
         it '優先度が表示される' do
           visit_task_a
-          expect(page).to have_content 'low'
+          expect(page).to have_content '低'
         end
       end
     end
@@ -123,7 +123,7 @@ describe 'タスク管理機能', type: :system do
           visit_task_a
           click_on('削除')
           # Flashメッセージが表示される
-          expect(page).to have_selector '.alert-success', text: "タスク「#{task_a.name}」を削除しました。"
+          expect(page).to have_selector '.alert-success', text: 'タスク「最初のタスク」を削除しました。'
         end
       end
       # メモ：ダイアログでキャンセルを選択した場合のテスト（JS）については、エラーが発生し対応に時間がかかりそうなため省略。
@@ -155,8 +155,8 @@ describe 'タスク管理機能', type: :system do
       context 'タスクの内容を入力した場合' do
         let(:name) { '新規作成のテスト' }
         let(:detail) { '新規作成のテストを書く' }
-        let(:status) { 'not_started' }
-        let(:priority) { 'low' }
+        let(:status) { '未着手' }
+        let(:priority) { '低' }
 
         it 'タスクの件数が1件増える' do
           # タスク内容入力
@@ -178,7 +178,7 @@ describe 'タスク管理機能', type: :system do
           select(value = priority, from: 'task[priority]')
           click_button '登録'
           # 画面で入力された内容でDBに登録されている
-          expect(Task.find_by(name: name, detail: detail, status: status, priority: priority)).not_to be_nil
+          expect(Task.find_by(name: '新規作成のテスト', detail: '新規作成のテストを書く', status: 'not_started', priority: 'low')).not_to be_nil
         end
 
         it 'Flashメッセージが表示される' do
@@ -190,7 +190,7 @@ describe 'タスク管理機能', type: :system do
           select(value = priority, from: 'task[priority]')
           # Flashメッセージが表示される
           click_button '登録'
-          expect(page).to have_selector '.alert-success', text: "タスク「#{name}」を登録しました。"
+          expect(page).to have_selector '.alert-success', text: 'タスク「新規作成のテスト」を登録しました。'
         end
 
         it '一覧画面が表示される' do
@@ -227,19 +227,19 @@ describe 'タスク管理機能', type: :system do
       context '画面を表示した場合' do
         it '編集前のタスク名が表示される' do
           visit_task_a_edit
-          expect(page).to have_field 'タスク名', with: task_a.name
+          expect(page).to have_field 'タスク名', with: '最初のタスク'
         end
         it '編集前の詳細が表示される' do
           visit_task_a_edit
-          expect(page).to have_field '詳細', with: task_a.detail
+          expect(page).to have_field '詳細', with: '最初のタスクを実施する'
         end
-        it '編集前のステータスが表示される' do
+        it '編集前のステータスが選択肢として存在する' do
           visit_task_a_edit
-          expect(page).to have_field 'ステータス', with: task_a.status
+          expect(page).to have_content '未着手'
         end
-        it '編集前の優先度が表示される' do
+        it '編集前の優先度が選択肢として存在する' do
           visit_task_a_edit
-          expect(page).to have_field '優先度', with: task_a.priority
+          expect(page).to have_content '低'
         end
       end
     end
@@ -248,8 +248,8 @@ describe 'タスク管理機能', type: :system do
       context 'タスクの各項目を更新した場合' do
         let(:name) { '新規作成のテスト２' }
         let(:detail) { '新規作成のテストを書く２' }
-        let(:status) { 'in_progress' }
-        let(:priority) { 'middle' }
+        let(:status) { '未着手' }
+        let(:priority) { '低' }
 
         it 'タスクが更新される' do
           visit_task_a_edit
@@ -260,7 +260,7 @@ describe 'タスク管理機能', type: :system do
           select(value = priority, from: 'task[priority]')
           click_button '更新'
           # 画面で入力された内容でDBのデータが更新されている
-          expect(Task.find_by(name: name, detail: detail, status: status, priority: priority)).not_to be_nil
+          expect(Task.find_by(name: name, detail: detail, status: 'not_started', priority: 'low')).not_to be_nil
         end
 
         it 'Flashメッセージが表示される' do
@@ -272,7 +272,7 @@ describe 'タスク管理機能', type: :system do
           select(value = priority, from: 'task[priority]')
           click_button '更新'
           # Flashメッセージが表示される
-          expect(page).to have_selector '.alert-success', text: "タスク「#{name}」を更新しました。"
+          expect(page).to have_selector '.alert-success', text: 'タスク「新規作成のテスト２」を更新しました。'
         end
       end
     end

@@ -13,8 +13,8 @@
     <% @tasks.each do |task| %>
       <tr>
         <td><%= task.name %></td>
-        <td><%= task.status %></td>
-        <td><%= task.priority %></td>
+        <td><%= I18n.t("enums.task.status.#{task.status}") %></td>
+        <td><%= I18n.t("enums.task.priority.#{task.priority}") %></td>
         <td><%= link_to '詳細', task_path(task.id) %></td>
       </tr>
     <% end %>
