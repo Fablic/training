@@ -11,16 +11,10 @@ class ApplicationController < ActionController::Base
   private
 
   def _render_404(e = nil)
-    respond_to do |format|
-      format.html { render :file => "#{Rails.root}/public/404", :layout => false, :status => :not_found }
-      format.xml  { head :not_found }
-      format.any  { head :not_found }
-    end
+      render :file => "#{Rails.root}/public/404", status: :not_found, :layout => false
   end
 
   def _render_500(e = nil)
-    format.html { render :file => "#{Rails.root}/public/500", :layout => false, :status => :internal_server_error }
-    format.xml  { head :internal_server_error }
-    format.any  { head :internal_server_error }
+    render :file => "#{Rails.root}/public/500", status: :internal_server_error,  :layout => false
   end
 end
