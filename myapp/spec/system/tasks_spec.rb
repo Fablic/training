@@ -43,6 +43,54 @@ describe 'タスク管理機能', type: :system do
     end
   end
 
+  describe '検索機能' do
+    context '検索条件に一致するタスクが1件存在する場合' do
+      let!(:task_a) { FactoryBot.create(:task, name: '最初のタスク', detail: '最初のタスクを実施する', status: 1, priority: 1) }
+      let!(:task_b) { FactoryBot.create(:task, name: '２つ目のタスク', detail: '２つ目のタスクを実施する', status: 1, priority: 2) }
+      let(:name) { '最初のタスク' }
+      let(:status) { 'not_started' }
+
+      it 'タスクが表示される' do
+        visit tasks_path
+        fill_in 'タスク名', with: name
+        select(value = status, from: 'task[status]')
+        click_button '検索'
+        it_behaves_like 'タスクが表示される'
+      end
+    end
+
+    context '検索条件に一致するタスクが2件存在する場合' do
+      let!(:task_a) { FactoryBot.create(:task, name: '最初のタスク', detail: '最初のタスクを実施する', status: 1, priority: 1) }
+      let!(:task_b) { FactoryBot.create(:task, name: '２つ目のタスク', detail: '２つ目のタスクを実施する', status: 1, priority: 2) }
+      let(:name) { 'タスク' }
+      let(:status) { 'not_started' }
+
+      it 'タスクが表示される' do
+        visit tasks_path
+        fill_in 'タスク名', with: name
+        select(value = status, from: 'task[status]')
+        click_button '検索'
+        it_behaves_like 'タスクが表示される'
+        it_behaves_like '２つ目のタスクが表示される'
+      end
+    end
+
+    context '検索条件に一致するタスクが存在しない場合' do
+      let!(:task_a) { FactoryBot.create(:task, name: '最初のタスク', detail: '最初のタスクを実施する', status: 1, priority: 1) }
+      let!(:task_b) { FactoryBot.create(:task, name: '２つ目のタスク', detail: '２つ目のタスクを実施する', status: 1, priority: 2) }
+      let(:name) { 'テスト' }
+      let(:status) { 'not_started' }
+
+      it 'タスクが表示されない' do
+        visit tasks_path
+        fill_in 'タスク名', with: name
+        select(value = status, from: 'task[status]')
+        click_button '検索'
+        expect(page).to have_content 'タスク'
+      end
+    end
+  end
+
   describe '詳細表示機能' do
     context 'タスクが存在する場合' do
       before do

@@ -103,103 +103,128 @@ describe 'Taskモデル', type: :model do
   end
 
   describe '検索' do
-    context 'タスク名が完全一致するデータが存在する場合' do
-      let!(:task) { FactoryBot.create(:task, name: 'あいうえお', status: 1) }
+    describe '一致データあり' do
+      describe 'タスク名検索' do
+        context 'タスク名が完全一致する場合' do
+          let!(:task) { FactoryBot.create(:task, name: 'あいうえお', status: 1) }
 
-      it 'タスク名が一致するデータが取得できる' do
-        expect(Task.search('あいうえお', 1).count).to eq 1
-      end
-    end
-
-    context 'タスク名が前方一致するデータが存在する場合' do
-      let!(:task) { FactoryBot.create(:task, name: '検索テスト') }
-
-      it 'タスク名が一致するデータが取得できる' do
-        expect(Task.search('検索', 1).count).to eq 1
-      end
-    end
-
-    context 'タスク名が後方一致するデータが存在する場合' do
-      let!(:task) { FactoryBot.create(:task, name: '検索テスト') }
-
-      it 'タスク名が一致するデータが取得できる' do
-        Task.all.each do |t|
-          puts t.name
+          it 'データが取得できる' do
+            expect(Task.search('あいうえお', 1).count).to eq 1
+          end
         end
-        expect(Task.search('テスト', 1).count).to eq 1
+
+        context 'タスク名が前方一致する場合' do
+          let!(:task) { FactoryBot.create(:task, name: 'あいうえお') }
+
+          it 'データが取得できる' do
+            expect(Task.search('あいう', 1).count).to eq 1
+          end
+        end
+
+        context 'タスク名が後方一致する場合' do
+          let!(:task) { FactoryBot.create(:task, name: 'あいうえお') }
+
+          it 'データが取得できる' do
+            expect(Task.search('うえお', 1).count).to eq 1
+          end
+        end
+
+        context 'タスク名が中央一致する場合' do
+          let!(:task) { FactoryBot.create(:task, name: 'あいうえお') }
+
+          it 'データが取得できる' do
+            expect(Task.search('いうえ', 1).count).to eq 1
+          end
+        end
+      end
+
+      describe 'ステータス検索' do
+        context 'ステータスが一致する場合' do
+          let!(:task) { FactoryBot.create(:task, name: 'あいうえお', status: 1) }
+
+          it 'データが取得できる' do
+            expect(Task.search('あいうえお', 1).count).to eq 1
+          end
+        end
       end
     end
 
-    context 'タスク名が真ん中で一致するデータが存在する場合' do
-      let!(:task) { FactoryBot.create(:task, name: 'あいうえお') }
+    describe '一致データなし' do
+      context 'タスク名が一致しない場合' do
+        let!(:task) { FactoryBot.create(:task, name: 'あいうえお') }
 
-      it 'タスク名が一致するデータが取得できる' do
-        expect(Task.search('いうえ', 1).count).to eq 1
+        it 'データが取得できない' do
+          expect(Task.search('かきくけこ', 1)).to be_empty
+        end
+      end
+
+      context 'ステータスが一致しない場合' do
+        let!(:task) { FactoryBot.create(:task, name: 'あいうえお', status: 2) }
+
+        it 'データを取得できない' do
+          expect(Task.search('あいうえお', 1)).to be_empty
+        end
+      end
+
+      context 'タスク名もステータスも一致しない場合' do
+        let!(:task) { FactoryBot.create(:task, name: 'あいうえお', status: 2) }
+
+        it 'データを取得できない' do
+          expect(Task.search('かきくけこ', 1)).to be_empty
+        end
       end
     end
 
-    context 'タスク名が一致するデータが存在しない場合' do
-      let!(:task) { FactoryBot.create(:task, name: 'あいうえお') }
+    describe '空検索' do
+      context 'タスク名が空の場合' do
+        let!(:task) { FactoryBot.create(:task, name: 'あいうえお', status: 1) }
 
-      it 'データが取得できない' do
-        expect(Task.search('かきくけこ', 1)).to be_empty
+        it 'データを取得できない' do
+          expect(Task.search('', 1).count).to eq 1
+        end
+      end
+
+      context 'タスク名がnilの場合' do
+        let!(:task) { FactoryBot.create(:task, name: 'あいうえお', status: 1) }
+
+        it 'データを取得できない' do
+          expect(Task.search(nil, 1).count).to eq 1
+        end
+      end
+
+      context 'ステータスが空の場合' do
+        let!(:task) { FactoryBot.create(:task, name: 'あいうえお', status: 1) }
+
+        it 'データを取得できる' do
+          expect(Task.search('あいうえお', '').count).to eq 1
+        end
+      end
+
+      context 'ステータスがnilの場合' do
+        let!(:task) { FactoryBot.create(:task, name: 'あいうえお', status: 1) }
+
+        it 'データを取得できる' do
+          expect(Task.search('あいうえお', nil).count).to eq 1
+        end
+      end
+
+      context 'タスク名、ステータスが空の場合' do
+        let!(:task_1) { FactoryBot.create(:task, name: 'あいうえお', status: 1) }
+        let!(:task_2) { FactoryBot.create(:task, name: 'かきくけこ', status: 2) }
+
+        it 'データが２件(全件)取得できる' do
+          expect(Task.search('', '').count).to eq 2
+        end
+      end
+
+      context 'タスク名、ステータスがnilの場合' do
+        let!(:task_1) { FactoryBot.create(:task, name: 'あいうえお', status: 1) }
+        let!(:task_2) { FactoryBot.create(:task, name: 'かきくけこ', status: 2) }
+
+        it 'データが２件(全件)取得される' do
+          expect(Task.search(nil, nil).count).to eq 2
+        end
       end
     end
-
-    context 'ステータスが一致するデータが存在する場合' do
-      let!(:task) { FactoryBot.create(:task, status: 1) }
-
-      it 'ステータスが一致するデータが取得できる' do
-        expect(Task.search(1).count).to eq 1
-      end
-    end
-
-    # context 'ステータスが一致するデータが存在しない場合' do
-    #   it 'データを取得できない' do
-
-    #   end
-    # end
-
-    # context 'タスク名、ステータス両方が一致するデータが存在する場合' do
-    #   it 'データを取得できる' do
-
-    #   end
-    # end
-
-    # context 'タスク名が一致し、ステータスが一致しないデータが存在する場合' do
-    #   it 'データを取得できない' do
-
-    #   end
-    # end
-
-    # context 'タスク名が一致せずステータスが一致するデータが存在する場合' do
-    #   it 'データを取得できない' do
-
-    #   end
-    # end
-
-    # context 'タスク名もステータスも一致するデータが存在しない場合' do
-    #   it 'データを取得できない' do
-
-    #   end
-    # end
-
-    # context 'タスク名が空の場合' do
-    #   it 'データを取得できない' do
-
-    #   end
-    # end
-
-    # context 'ステータスが空の場合' do
-    #   it 'データを取得できない' do
-
-    #   end
-    # end
-
-    # context 'タスク名、ステータスが空の場合' do
-    #   it 'データが全件取得される' do
-
-    #   end
-    # end
   end
 end
