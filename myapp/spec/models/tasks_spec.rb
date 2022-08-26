@@ -3,7 +3,8 @@ require 'rails_helper'
 describe Task, type: :model do
 
   describe '#validation' do
-    let(:params) { { title: 'title', content: 'content', label: 'label' } }
+    let(:user) { FactoryBot.create(:user) }
+    let(:params) { { title: 'title', content: 'content', label: 'label', user_id: user.id } }
 
     context 'title' do
 
