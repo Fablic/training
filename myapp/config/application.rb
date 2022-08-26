@@ -14,7 +14,7 @@ module Myapp
     # 言語を日本語に設定
     config.i18n.default_locale = :ja
     # localeファイルの読み込み設定
-    config.i18n.load_path += Dir[Rails.root.join('path/to', '**').to_s]
+    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{yml}').to_s]
 
     # タイムゾーンを日本に設定
     config.time_zone = 'Tokyo'
