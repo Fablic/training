@@ -95,4 +95,92 @@ describe 'Taskモデル', type: :model do
       end
     end
   end
+
+  describe '検索' do
+    context 'タスク名が完全一致するデータが存在する場合' do
+      it 'タスク名が一致するデータが取得できる' do
+
+      end
+    end
+
+    context 'タスク名が前方一致するデータが存在する場合' do
+      it 'タスク名が一致するデータが取得できる' do
+
+      end
+    end
+
+    context 'タスク名が後方一致するデータが存在する場合' do
+      it 'タスク名が一致するデータが取得できる' do
+
+      end
+    end
+
+    context 'タスク名が真ん中で一致するデータが存在する場合' do
+      it 'タスク名が一致するデータが取得できる' do
+        task = FactoryBot.create(:task, name: 'あいうえお')
+        expect(Task.search('いうえ')).to be_empty
+      end
+    end
+
+    context 'タスク名が一致するデータが存在しない場合' do
+      it 'データが取得できない' do
+        task = FactoryBot.create(:task, name: 'あいう')
+        expect(Task.search('かきく')).to be_empty
+      end
+    end
+
+    context 'ステータスが一致するデータが存在する場合' do
+      it 'ステータスが一致するデータが取得できる' do
+
+      end
+    end
+
+    context 'ステータスが一致するデータが存在しない場合' do
+      it 'データを取得できない' do
+
+      end
+    end
+
+    context 'タスク名、ステータス両方が一致するデータが存在する場合' do
+      it 'データを取得できる' do
+
+      end
+    end
+
+    context 'タスク名が一致し、ステータスが一致しないデータが存在する場合' do
+      it 'データを取得できない' do
+
+      end
+    end
+
+    context 'タスク名が一致せずステータスが一致するデータが存在する場合' do
+      it 'データを取得できない' do
+
+      end
+    end
+
+    context 'タスク名もステータスも一致するデータが存在しない場合' do
+      it 'データを取得できない' do
+
+      end
+    end
+
+    context 'タスク名が空の場合' do
+      it 'データを取得できない' do
+
+      end
+    end
+
+    context 'ステータスが空の場合' do
+      it 'データを取得できない' do
+
+      end
+    end
+
+    context 'タスク名、ステータスが空の場合' do
+      it 'データが全件取得される' do
+
+      end
+    end
+  end
 end

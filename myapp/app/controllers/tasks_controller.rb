@@ -5,7 +5,7 @@ class TasksController < ApplicationController
     if params[:name].nil? && params[:status].nil?
       @tasks = Task.all
     else
-      @tasks = Task.search(params[:name])
+      @tasks = Task.search(params[:name], params[:status])
     end
   end
 
@@ -54,4 +54,9 @@ class TasksController < ApplicationController
   def set_task
     @task = Task.find(params[:id])
   end
+
+  def task_search_params
+    params.fetch(:search, {}).permit(:name, :status)
+  end
+
 end
