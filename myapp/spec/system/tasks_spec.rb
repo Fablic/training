@@ -4,22 +4,17 @@ describe 'Tasks', type: :system do
   include TaskHelper
 
   describe '#index' do
-
     describe '作成エリア' do
-
       it '作成ボタンを押下することでタスク作成画面へ遷移すること' do
         visit root_path
         click_on '作成'
         expect(page).to have_current_path new_task_path
       end
-
     end
 
     describe '一覧表示エリア' do
-
       context 'タスク1件' do
-
-        let!(:task_one) { FactoryBot.create(:task) }
+        let!(:task_one) { create(:task) }
 
         it 'タイトルが一致すること' do
           visit root_path
@@ -36,13 +31,11 @@ describe 'Tasks', type: :system do
           click_on '詳細', match: :first
           expect(page).to have_current_path task_path(task_one)
         end
-
       end
 
       context 'タスク複数件' do
-
-        let!(:task_one) { FactoryBot.create(:task) }
-        let!(:task_two) { FactoryBot.create(:task, title: 'second title', content: 'second content', label: 'second label') }
+        let!(:task_one) { create(:task) }
+        let!(:task_two) { create(:task, title: 'second title', content: 'second content', label: 'second label') }
 
         it '1件目 タイトルが一致すること' do
           visit root_path
@@ -56,7 +49,7 @@ describe 'Tasks', type: :system do
 
         it '1件目 詳細ボタンを押下することでタスク詳細画面へ遷移すること' do
           visit root_path
-          all('a', :text => '詳細')[0].click
+          all('a', text: '詳細')[0].click
           expect(page).to have_current_path task_path(task_two)
         end
 
@@ -73,22 +66,16 @@ describe 'Tasks', type: :system do
 
         it '2件目 詳細ボタンを押下することでタスク詳細画面へ遷移すること' do
           visit root_path
-          all('a', :text => '詳細')[1].click
+          all('a', text: '詳細')[1].click
           expect(page).to have_current_path task_path(task_one)
         end
-
       end
-
     end
-
   end
 
   describe '#new' do
-
     describe 'エラー表示エリア' do
-
       context '入力エラー（タイトル未入力）' do
-
         let(:input_values) {
           {
             title: '',
@@ -123,11 +110,9 @@ describe 'Tasks', type: :system do
 
           expect(page).to have_content('タイトルは1文字以上で入力してください')
         end
-
       end
 
       context '入力エラー（タイトル129文字）' do
-
         let(:input_values) {
           {
             title: '1' * 129,
@@ -162,11 +147,9 @@ describe 'Tasks', type: :system do
 
           expect(page).to have_content('タイトルは128文字以内で入力してください')
         end
-
       end
 
       context '入力エラー（内容が未入力）' do
-
         let(:input_values) {
           {
             title: 'title',
@@ -201,11 +184,9 @@ describe 'Tasks', type: :system do
 
           expect(page).to have_content('内容は1文字以上で入力してください')
         end
-
       end
 
       context '入力エラー（内容が1025文字）' do
-
         let(:input_values) {
           {
             title: 'title',
@@ -240,11 +221,9 @@ describe 'Tasks', type: :system do
 
           expect(page).to have_content('内容は1024文字以内で入力してください')
         end
-
       end
 
       context '入力エラー（ラベルが未入力）' do
-
         let(:input_values) {
           {
             title: 'title',
@@ -279,11 +258,9 @@ describe 'Tasks', type: :system do
 
           expect(page).to have_content('ラベルは1文字以上で入力してください')
         end
-
       end
 
       context '入力エラー（ラベルが65文字）' do
-
         let(:input_values) {
           {
             title: 'title',
@@ -318,13 +295,10 @@ describe 'Tasks', type: :system do
 
           expect(page).to have_content('ラベルは64文字以内で入力してください')
         end
-
       end
-
     end
 
     describe '入力エリア' do
-
       let(:input_values) {
         {
           title: '新規タスク 全項目入力 タイトル',
@@ -371,27 +345,21 @@ describe 'Tasks', type: :system do
         click_on '作成'
         expect(page).to have_content 'タスク作成成功'
       end
-
     end
 
     describe 'フッターエリア' do
-
       it '一覧へボタン押下でタスク一覧画面へ遷移すること' do
         visit new_task_path
         click_on '一覧へ'
         expect(page).to have_current_path root_path
       end
-
     end
-
   end
 
   describe '#show' do
-
-    let(:task_one) { FactoryBot.create(:task) }
+    let(:task_one) { create(:task) }
 
     describe '表示エリア' do
-
       it 'タイトルが一致すること' do
         visit task_path(task_one)
         expect(page).to have_content 'title'
@@ -406,11 +374,9 @@ describe 'Tasks', type: :system do
         visit task_path(task_one)
         expect(page).to have_content 'content'
       end
-
     end
 
     describe 'フッターエリア' do
-
       it '編集ボタン押下で編集画面へ遷移すること' do
         visit task_path(task_one)
         click_on '編集'
@@ -440,19 +406,14 @@ describe 'Tasks', type: :system do
         click_on '一覧へ'
         expect(page).to have_current_path root_path
       end
-
     end
-
   end
 
   describe '#edit' do
-
-    let(:task_one) { FactoryBot.create(:task) }
+    let(:task_one) { create(:task) }
 
     describe 'エラー表示エリア' do
-
       context '入力エラー（タイトル未入力）' do
-
         let(:update_task) {
           {
             title: '',
@@ -480,11 +441,9 @@ describe 'Tasks', type: :system do
 
           expect(page).to have_content('タイトルは1文字以上で入力してください')
         end
-
       end
 
       context '入力エラー（タイトル129文字）' do
-
         let(:update_task) {
           {
             title: '1' * 129,
@@ -518,11 +477,9 @@ describe 'Tasks', type: :system do
 
           expect(page).to have_content('タイトルは128文字以内で入力してください')
         end
-
       end
 
       context '入力エラー（内容が未入力）' do
-
         let(:update_task) {
           {
             title: 'テスト1',
@@ -556,11 +513,9 @@ describe 'Tasks', type: :system do
 
           expect(page).to have_content('内容は1文字以上で入力してください')
         end
-
       end
 
       context '入力エラー（内容が1025文字）' do
-
         let(:update_task) {
           {
             title: 'テスト1',
@@ -596,11 +551,9 @@ describe 'Tasks', type: :system do
 
           expect(page).to have_content('内容は1024文字以内で入力してください')
         end
-
       end
 
       context '入力エラー（ラベルが未入力）' do
-
         let(:update_task) {
           {
             title: 'テスト1',
@@ -635,11 +588,9 @@ describe 'Tasks', type: :system do
 
           expect(page).to have_content('ラベルは1文字以上で入力してください')
         end
-
       end
 
       context '入力エラー（ラベルが65文字）' do
-
         let(:update_task) {
           {
             title: 'テスト1',
@@ -673,40 +624,28 @@ describe 'Tasks', type: :system do
 
           expect(page).to have_content('ラベルは64文字以内で入力してください')
         end
-
       end
-
     end
 
     describe '入力エリア' do
-
       context '初期表示' do
-
         it 'タイトルが表示されていること' do
-
           visit edit_task_path(task_one)
           expect(page).to have_field 'task[title]', with: 'title'
-
         end
 
         it '内容が表示されていること' do
-
           visit edit_task_path(task_one)
           expect(page).to have_field 'task[content]', with: 'content'
-
         end
 
         it 'ラベルが表示されていること' do
-
           visit edit_task_path(task_one)
           expect(page).to have_field 'task[label]', with: 'label'
-
         end
-
       end
 
       context '全項目変更' do
-
         let(:update_task) {
           {
             title: '全項目変更 タイトル',
@@ -716,14 +655,12 @@ describe 'Tasks', type: :system do
         }
 
         it '更新されていること' do
-
           visit edit_task_path(task_one)
           fill_in 'task[title]', with: update_task[:title]
           fill_in 'task[content]', with: update_task[:content]
           fill_in 'task[label]', with: update_task[:label]
           click_on '更新'
           expect(Task.find_by(update_task)).to be_present
-
         end
 
         it '更新ボタン押下でタスク一覧画面へ遷移すること' do
@@ -743,11 +680,9 @@ describe 'Tasks', type: :system do
           click_on '更新'
           expect(page).to have_content 'タスク更新成功'
         end
-
       end
 
       context 'タイトルのみ変更' do
-
         let(:update_task) {
           {
             title: '全項目変更 タイトル',
@@ -757,20 +692,16 @@ describe 'Tasks', type: :system do
         }
 
         it '更新されていること' do
-
           visit edit_task_path(task_one)
           fill_in 'task[title]', with: update_task[:title]
           fill_in 'task[content]', with: update_task[:content]
           fill_in 'task[label]', with: update_task[:label]
           click_on '更新'
           expect(Task.find_by(update_task)).to be_present
-
         end
-
       end
 
       context '内容のみ変更' do
-
         let(:update_task) {
           {
             title: 'テスト1',
@@ -780,20 +711,16 @@ describe 'Tasks', type: :system do
         }
 
         it '更新されていること' do
-
           visit edit_task_path(task_one)
           fill_in 'task[title]', with: update_task[:title]
           fill_in 'task[content]', with: update_task[:content]
           fill_in 'task[label]', with: update_task[:label]
           click_on '更新'
           expect(Task.find_by(update_task)).to be_present
-
         end
-
       end
 
       context 'ラベルのみ変更' do
-
         let(:update_task) {
           {
             title: 'テスト1',
@@ -803,32 +730,23 @@ describe 'Tasks', type: :system do
         }
 
         it '更新されていること' do
-
           visit edit_task_path(task_one)
           fill_in 'task[title]', with: update_task[:title]
           fill_in 'task[content]', with: update_task[:content]
           fill_in 'task[label]', with: update_task[:label]
           click_on '更新'
           expect(Task.find_by(update_task)).to be_present
-
         end
-
       end
-
     end
 
     describe 'フッターエリア' do
-
       it '一覧へボタン押下でタスク一覧画面へ遷移すること' do
-
         visit edit_task_path(task_one)
         click_on '一覧へ'
         expect(page).to have_current_path root_path
-
       end
-
     end
-
 
     # context 'ステータスのみ変更' do
 
@@ -879,7 +797,5 @@ describe 'Tasks', type: :system do
     #   end
 
     # end
-
   end
-
 end
