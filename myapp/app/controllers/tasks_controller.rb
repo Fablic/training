@@ -8,7 +8,7 @@ class TasksController < ApplicationController
     if params && (params[:word].present? || params[:status].present?)
       @tasks = Task.search(params[:word], Task.statuses[params[:status]]).page(params[:page]).per(5)
     else
-      @tasks = Task.joins(:user).all.order('tasks.created_at desc').page(params[:page]).per(5)
+      @tasks = Task.eager_load(:user).all.order('tasks.created_at desc').page(params[:page]).per(5)
     end
   end
 

@@ -24,7 +24,7 @@ class Task < ApplicationRecord
     sql += ' AND ' if sql.present? && status.present?
     sql += " status = '#{status}' " if status.present?
 
-    Task.joins(:user).where(sql).order('tasks.created_at desc')
+    Task.eager_load(:user).where(sql).order('tasks.created_at desc')
   end
 
 end
