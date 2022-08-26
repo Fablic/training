@@ -13,6 +13,10 @@
 
   <p><%= I18n.t('task.user') %></p>
   <p><%= @task.user.name %></p>
+
+  <p><%= I18n.t('task.status') %></p>
+  <p><%= I18n.t("enums.task.status.#{@task.status}") %></p>
+
 </div>
 <div name='footer'>
   <%= link_to(I18n.t('link.edit'), edit_task_path(@task)) %>
