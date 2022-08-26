@@ -14,7 +14,7 @@ describe 'Tasks', type: :system do
 
     describe '一覧表示エリア' do
       context 'タスク1件' do
-        let!(:task_one) { create(:task) }
+        let!(:task_one) { FactoryBot.create(:task) }
 
         it 'タイトルが一致すること' do
           visit root_path
@@ -39,8 +39,8 @@ describe 'Tasks', type: :system do
       end
 
       context 'タスク複数件' do
-        let!(:task_one) { create(:task) }
-        let!(:task_two) { create(:task, title: 'second title', content: 'second content', label: 'second label') }
+        let!(:task_one) { FactoryBot.create(:task) }
+        let!(:task_two) { FactoryBot.create(:task, title: 'second title', content: 'second content', label: 'second label') }
 
         it '1件目 タイトルが一致すること' do
           visit root_path
@@ -372,7 +372,7 @@ describe 'Tasks', type: :system do
   end
 
   describe '#show' do
-    let(:task_one) { create(:task) }
+    let(:task_one) { FactoryBot.create(:task) }
 
     describe '表示エリア' do
       it 'タイトルが一致すること' do
@@ -430,7 +430,7 @@ describe 'Tasks', type: :system do
   end
 
   describe '#edit' do
-    let(:task_one) { create(:task) }
+    let(:task_one) { FactoryBot.create(:task) }
 
     describe 'エラー表示エリア' do
       context '入力エラー（タイトル未入力）' do
