@@ -15,14 +15,14 @@
    <div class='field'>
     <%= f.label :status %>
     <br>
-    <%= f.select :status, Task.statuses_i18n.keys.map { |k| [Task.statuses_i18n[k], k] } %>
+    <%= f.select :status, Task.statuses.keys.map { |k| [I18n.t("enums.task.status.#{k}"), k] } %>
 
   </div>
 
    <div class='field'>
     <%= f.label :priority %>
     <br>
-    <%= f.select :priority, Task.priorities_i18n.keys.map { |k| [Task.priorities_i18n[k], k] } %>
+    <%= f.select :priority, Task.priorities.keys.map { |k| [I18n.t("enums.task.priority.#{k}"), k] } %>
   </div>
 
   <br>
