@@ -11,14 +11,14 @@ class ApplicationController < ActionController::Base
   private
 
     def _render_404(e = nil)
-      if !e.nil?
+      if e.present?
         logger.error "Rendering 404 with exception: #{e.message}"
       end
       render 'errors/404.html', status: :not_found
     end
 
     def _render_500(e = nil)
-      if !e.nil?
+      if e.present?
         logger.error "Rendering 500 with exception: #{e.message}"
       end
       render 'errors/500.html', status: :internal_server_error
