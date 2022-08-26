@@ -17,10 +17,9 @@ class TasksController < ApplicationController
     @task = Task.new
 
     # 担当者名リスト取得
-    @select_user_names = []
-    users = User.all
-    users.each do |user|
-      @select_user_names.push([user.name, user.id])
+    @users_name = []
+    User.all.each do |user|
+      @users_name.push([user.name, user.id])
     end
   end
 
@@ -31,7 +30,7 @@ class TasksController < ApplicationController
     if @task.save
       redirect_to(root_path, notice: 'タスク作成成功')
     else
-      render(:new, status: :unprocessable_entity)
+      render(:new)
     end
 
   end
@@ -46,10 +45,10 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
 
     # 担当者名リスト取得
-    @select_user_names = []
+    @users_name = []
     users = User.all
     users.each do |user|
-      @select_user_names.push([user.name, user.id])
+      @users_name.push([user.name, user.id])
     end
 
   end
@@ -61,7 +60,7 @@ class TasksController < ApplicationController
     if @task.update(task_params)
       redirect_to(root_path, notice: 'タスク更新成功')
     else
-      render(:edit, status: :unprocessable_entity)
+      render(:edit)
     end
   end
 
