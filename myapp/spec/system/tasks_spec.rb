@@ -803,7 +803,7 @@ describe 'Tasks', type: :system do
         it 'ステータスが表示されていること' do
 
           visit edit_task_path(task_one)
-          expect(page).to have_field 'task[status]', with: task_one.status
+          expect(page).to have_select 'task[status]', selected: I18n.t("enums.task.status.#{task_one[:status]}")
 
         end
 
