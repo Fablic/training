@@ -71,11 +71,11 @@ RSpec.configure do |config|
     )
     Capybara::Selenium::Driver.new(app, browser: :remote, url: hub_url, desired_capabilities: chrome_capabilities)
   end
-  
+
   config.before(:each, type: :system) do
     driven_by :rack_test
   end
-  
+
   config.before(:each, type: :system, js: true) do
     driven_by :remote_chrome
     Capybara.server_host = IPSocket.getaddress(Socket.gethostname)
