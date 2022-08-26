@@ -4,7 +4,7 @@ describe Task, type: :model do
   describe '#validation' do
     describe 'title' do
       context '0文字' do
-        let(:task) { build(:task, title: '') }
+        let(:task) { FactoryBot.build(:task, title: '') }
 
         it 'invalid' do
           expect(task).to be_invalid
@@ -12,7 +12,7 @@ describe Task, type: :model do
       end
 
       context '1文字' do
-        let(:task) { build(:task, title: '1') }
+        let(:task) { FactoryBot.build(:task, title: '1') }
 
         it 'valid' do
           expect(task).to be_valid
@@ -20,7 +20,7 @@ describe Task, type: :model do
       end
 
       context '128文字' do
-        let(:task) { build(:task, title: '1' * 128) }
+        let(:task) { FactoryBot.build(:task, title: '1' * 128) }
 
         it 'valid' do
           expect(task).to be_valid
@@ -28,7 +28,7 @@ describe Task, type: :model do
       end
 
       context '129文字' do
-        let(:task) { build(:task, title: '1' * 129) }
+        let(:task) { FactoryBot.build(:task, title: '1' * 129) }
 
         it 'invalid' do
           expect(task).to be_invalid
@@ -38,7 +38,7 @@ describe Task, type: :model do
 
     describe 'content' do
       context '0文字' do
-        let(:task) { build(:task, content: '') }
+        let(:task) { FactoryBot.build(:task, content: '') }
 
         it 'invalid' do
           expect(task).to be_invalid
@@ -46,7 +46,7 @@ describe Task, type: :model do
       end
 
       context '1文字' do
-        let(:task) { build(:task, content: '1') }
+        let(:task) { FactoryBot.build(:task, content: '1') }
 
         it 'valid' do
           expect(task).to be_valid
@@ -54,7 +54,7 @@ describe Task, type: :model do
       end
 
       context '1024文字' do
-        let(:task) { build(:task, content: '1' * 1024) }
+        let(:task) { FactoryBot.build(:task, content: '1' * 1024) }
 
         it 'valid' do
           expect(task).to be_valid
@@ -62,7 +62,7 @@ describe Task, type: :model do
       end
 
       context '1025文字' do
-        let(:task) { build(:task, content: '1' * 1025) }
+        let(:task) { FactoryBot.build(:task, content: '1' * 1025) }
 
         it 'invalid' do
           expect(task).to be_invalid
@@ -72,7 +72,7 @@ describe Task, type: :model do
 
     describe 'label' do
       context '0文字' do
-        let(:task) { build(:task, label: '') }
+        let(:task) { FactoryBot.build(:task, label: '') }
 
         it 'invalid' do
           expect(task).to be_invalid
@@ -80,7 +80,7 @@ describe Task, type: :model do
       end
 
       context '1文字' do
-        let(:task) { build(:task, label: '1') }
+        let(:task) { FactoryBot.build(:task, label: '1') }
 
         it 'valid' do
           expect(task).to be_valid
@@ -88,7 +88,7 @@ describe Task, type: :model do
       end
 
       context '64文字' do
-        let(:task) { build(:task, label: '1' * 64) }
+        let(:task) { FactoryBot.build(:task, label: '1' * 64) }
 
         it 'valid' do
           expect(task).to be_valid
@@ -96,7 +96,7 @@ describe Task, type: :model do
       end
 
       context '65文字' do
-        let(:task) { build(:task, label: '1' * 65) }
+        let(:task) { FactoryBot.build(:task, label: '1' * 65) }
 
         it 'invalid' do
           expect(task).to be_invalid
