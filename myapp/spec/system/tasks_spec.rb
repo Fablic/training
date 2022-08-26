@@ -264,6 +264,11 @@ describe 'Tasks', type: :system do
           expect(page).to have_content task_one.label
         end
 
+        it '担当者が一致すること' do
+          visit root_path
+          expect(page).to have_content task_one.user.name
+        end
+
         it 'ステータスが一致すること' do
           visit root_path
           expect(page).to have_content I18n.t("enums.task.status.#{task_one.status}")
@@ -292,6 +297,11 @@ describe 'Tasks', type: :system do
           expect(page).to have_content task_one.label
         end
 
+        it '1件目 担当者が一致すること' do
+          visit root_path
+          expect(page).to have_content task_one.user.name
+        end
+
         it '1件目 ステータスが一致すること' do
           visit root_path
           expect(page).to have_content I18n.t("enums.task.status.#{task_one.status}")
@@ -311,6 +321,11 @@ describe 'Tasks', type: :system do
         it '2件目 ラベルが一致すること' do
           visit root_path
           expect(page).to have_content task_two.label
+        end
+
+        it '2件目 担当者が一致すること' do
+          visit root_path
+          expect(page).to have_content task_two.user.name
         end
 
         it '2件目 ステータスが一致すること' do
@@ -334,6 +349,8 @@ describe 'Tasks', type: :system do
 
     describe '入力エリア' do
 
+      let!(:user) { FactoryBot.create(:user) }
+
       context '正常' do
 
         let(:input_values) {
@@ -341,6 +358,7 @@ describe 'Tasks', type: :system do
             title: '新規タスク 全項目入力 タイトル',
             content: '新規タスク 全項目入力 内容',
             label: '新規タスク 全項目入力 ラベル',
+            user_id: user.id,
           }
         }
 
@@ -352,6 +370,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: input_values[:title]
           fill_in 'task[content]', with: input_values[:content]
           fill_in 'task[label]', with: input_values[:label]
+          select value = User.find(input_values[:user_id]).name, from: 'task[user_id]'
           # ボタン押下
           click_on '作成'
 
@@ -366,6 +385,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: input_values[:title]
           fill_in 'task[content]', with: input_values[:content]
           fill_in 'task[label]', with: input_values[:label]
+          select value = User.find(input_values[:user_id]).name, from: 'task[user_id]'
           # ボタン押下
           click_on '作成'
           expect(page).to have_current_path root_path
@@ -378,6 +398,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: input_values[:title]
           fill_in 'task[content]', with: input_values[:content]
           fill_in 'task[label]', with: input_values[:label]
+          select value = User.find(input_values[:user_id]).name, from: 'task[user_id]'
           # ボタン押下
           click_on '作成'
           expect(page).to have_content 'タスク作成成功'
@@ -392,6 +413,7 @@ describe 'Tasks', type: :system do
             title: '',
             content: 'content',
             label: 'label',
+            user_id: user.id,
           }
         }
 
@@ -403,6 +425,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: input_values[:title]
           fill_in 'task[content]', with: input_values[:content]
           fill_in 'task[label]', with: input_values[:label]
+          select value = User.find(input_values[:user_id]).name, from: 'task[user_id]'
           # ボタン押下
           click_on '作成'
 
@@ -416,6 +439,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: input_values[:title]
           fill_in 'task[content]', with: input_values[:content]
           fill_in 'task[label]', with: input_values[:label]
+          select value = User.find(input_values[:user_id]).name, from: 'task[user_id]'
           # ボタン押下
           click_on '作成'
 
@@ -433,6 +457,7 @@ describe 'Tasks', type: :system do
                    '12345678901234567890123456789',
             content: 'content',
             label: 'label',
+            user_id: user.id,
           }
         }
 
@@ -444,6 +469,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: input_values[:title]
           fill_in 'task[content]', with: input_values[:content]
           fill_in 'task[label]', with: input_values[:label]
+          select value = User.find(input_values[:user_id]).name, from: 'task[user_id]'
           # ボタン押下
           click_on '作成'
 
@@ -457,6 +483,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: input_values[:title]
           fill_in 'task[content]', with: input_values[:content]
           fill_in 'task[label]', with: input_values[:label]
+          select value = User.find(input_values[:user_id]).name, from: 'task[user_id]'
           # ボタン押下
           click_on '作成'
 
@@ -472,6 +499,7 @@ describe 'Tasks', type: :system do
             title: 'title',
             content: '',
             label: 'label',
+            user_id: user.id,
           }
         }
 
@@ -483,6 +511,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: input_values[:title]
           fill_in 'task[content]', with: input_values[:content]
           fill_in 'task[label]', with: input_values[:label]
+          select value = User.find(input_values[:user_id]).name, from: 'task[user_id]'
           # ボタン押下
           click_on '作成'
 
@@ -496,6 +525,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: input_values[:title]
           fill_in 'task[content]', with: input_values[:content]
           fill_in 'task[label]', with: input_values[:label]
+          select value = User.find(input_values[:user_id]).name, from: 'task[user_id]'
           # ボタン押下
           click_on '作成'
 
@@ -531,6 +561,7 @@ describe 'Tasks', type: :system do
                      '12345678901234567890123456789012345678901234567890'\
                      '1234567890123456789012345',
             label: 'label',
+            user_id: user.id,
           }
         }
 
@@ -542,6 +573,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: input_values[:title]
           fill_in 'task[content]', with: input_values[:content]
           fill_in 'task[label]', with: input_values[:label]
+          select value = User.find(input_values[:user_id]).name, from: 'task[user_id]'
           # ボタン押下
           click_on '作成'
 
@@ -555,6 +587,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: input_values[:title]
           fill_in 'task[content]', with: input_values[:content]
           fill_in 'task[label]', with: input_values[:label]
+          select value = User.find(input_values[:user_id]).name, from: 'task[user_id]'
           # ボタン押下
           click_on '作成'
 
@@ -570,6 +603,7 @@ describe 'Tasks', type: :system do
             title: 'title',
             content: 'content',
             label: '',
+            user_id: user.id,
           }
         }
 
@@ -581,6 +615,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: input_values[:title]
           fill_in 'task[content]', with: input_values[:content]
           fill_in 'task[label]', with: input_values[:label]
+          select value = User.find(input_values[:user_id]).name, from: 'task[user_id]'
           # ボタン押下
           click_on '作成'
 
@@ -594,6 +629,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: input_values[:title]
           fill_in 'task[content]', with: input_values[:content]
           fill_in 'task[label]', with: input_values[:label]
+          select value = User.find(input_values[:user_id]).name, from: 'task[user_id]'
           # ボタン押下
           click_on '作成'
 
@@ -610,6 +646,7 @@ describe 'Tasks', type: :system do
             content: 'content',
             label: '12345678901234567890123456789012345678901234567890'\
                    '123456789012345',
+            user_id: user.id,
           }
         }
 
@@ -621,6 +658,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: input_values[:title]
           fill_in 'task[content]', with: input_values[:content]
           fill_in 'task[label]', with: input_values[:label]
+          select value = User.find(input_values[:user_id]).name, from: 'task[user_id]'
           # ボタン押下
           click_on '作成'
 
@@ -634,6 +672,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: input_values[:title]
           fill_in 'task[content]', with: input_values[:content]
           fill_in 'task[label]', with: input_values[:label]
+          select value = User.find(input_values[:user_id]).name, from: 'task[user_id]'
           # ボタン押下
           click_on '作成'
 
@@ -675,6 +714,11 @@ describe 'Tasks', type: :system do
       it '内容が一致すること' do
         visit task_path(task_one)
         expect(page).to have_content task_one.content
+      end
+
+      it '担当者が一致すること' do
+        visit task_path(task_one)
+        expect(page).to have_content User.find(task_one.user_id).name
       end
 
       it 'ステータスが一致すること' do
@@ -749,6 +793,13 @@ describe 'Tasks', type: :system do
 
         end
 
+        it '担当者が表示されていること' do
+
+          visit edit_task_path(task_one)
+          expect(page).to have_select 'task[user_id]', selected: User.find(task_one.user_id).name
+
+        end
+
         it 'ステータスが表示されていること' do
 
           visit edit_task_path(task_one)
@@ -765,6 +816,7 @@ describe 'Tasks', type: :system do
             title: '全項目変更 タイトル',
             content: '全項目変更 内容',
             label: '全項目変更 ラベル',
+            user_id: task_one.user_id,
             status: 'not_started',
           }
         }
@@ -775,6 +827,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: update_task[:title]
           fill_in 'task[content]', with: update_task[:content]
           fill_in 'task[label]', with: update_task[:label]
+          select value = User.find(update_task[:user_id]).name, from: 'task[user_id]'
           select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task[status]'
           click_on '更新'
           expect(Task.find_by(update_task)).to be_present
@@ -786,6 +839,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: update_task[:title]
           fill_in 'task[content]', with: update_task[:content]
           fill_in 'task[label]', with: update_task[:label]
+          select value = User.find(update_task[:user_id]).name, from: 'task[user_id]'
           select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task[status]'
           click_on '更新'
           expect(page).to have_current_path root_path
@@ -796,6 +850,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: update_task[:title]
           fill_in 'task[content]', with: update_task[:content]
           fill_in 'task[label]', with: update_task[:label]
+          select value = User.find(update_task[:user_id]).name, from: 'task[user_id]'
           select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task[status]'
           click_on '更新'
           expect(page).to have_content 'タスク更新成功'
@@ -810,6 +865,7 @@ describe 'Tasks', type: :system do
             title: '全項目変更 タイトル',
             content: 'こちらはテスト1の内容です。テストテストテストテストテストテストテスト',
             label: 'テスト',
+            user_id: task_one.user_id,
             status: 'not_started',
           }
         }
@@ -820,6 +876,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: update_task[:title]
           fill_in 'task[content]', with: update_task[:content]
           fill_in 'task[label]', with: update_task[:label]
+          select value = User.find(update_task[:user_id]).name, from: 'task[user_id]'
           select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task[status]'
           click_on '更新'
           expect(Task.find_by(update_task)).to be_present
@@ -835,6 +892,7 @@ describe 'Tasks', type: :system do
             title: 'テスト1',
             content: '全項目変更 内容',
             label: 'テスト',
+            user_id: task_one.user_id,
             status: 'not_started',
           }
         }
@@ -845,6 +903,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: update_task[:title]
           fill_in 'task[content]', with: update_task[:content]
           fill_in 'task[label]', with: update_task[:label]
+          select value = User.find(update_task[:user_id]).name, from: 'task[user_id]'
           select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task[status]'
           click_on '更新'
           expect(Task.find_by(update_task)).to be_present
@@ -860,6 +919,7 @@ describe 'Tasks', type: :system do
             title: 'テスト1',
             content: 'こちらはテスト1の内容です。テストテストテストテストテストテストテスト',
             label: '全項目変更 ラベル',
+            user_id: task_one.user_id,
             status: 'not_started',
           }
         }
@@ -870,6 +930,35 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: update_task[:title]
           fill_in 'task[content]', with: update_task[:content]
           fill_in 'task[label]', with: update_task[:label]
+          select value = User.find(update_task[:user_id]).name, from: 'task[user_id]'
+          select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task[status]'
+          click_on '更新'
+          expect(Task.find_by(update_task)).to be_present
+
+        end
+
+      end
+
+      context 'ユーザーのみ変更' do
+
+        let!(:user_two) { FactoryBot.create(:user) }
+        let(:update_task) {
+          {
+            title: 'テスト1',
+            content: 'こちらはテスト1の内容です。テストテストテストテストテストテストテスト',
+            label: 'テスト',
+            user_id: user_two.id,
+            status: 'not_started',
+          }
+        }
+
+        it '更新されていること' do
+
+          visit edit_task_path(task_one)
+          fill_in 'task[title]', with: update_task[:title]
+          fill_in 'task[content]', with: update_task[:content]
+          fill_in 'task[label]', with: update_task[:label]
+          select value = User.find(update_task[:user_id]).name, from: 'task[user_id]'
           select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task[status]'
           click_on '更新'
           expect(Task.find_by(update_task)).to be_present
@@ -885,6 +974,7 @@ describe 'Tasks', type: :system do
             title: 'テスト1',
             content: 'こちらはテスト1の内容です。テストテストテストテストテストテストテスト',
             label: 'テスト',
+            user_id: task_one.user_id,
             status: 'in_progress',
           }
         }
@@ -895,6 +985,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: update_task[:title]
           fill_in 'task[content]', with: update_task[:content]
           fill_in 'task[label]', with: update_task[:label]
+          select value = User.find(update_task[:user_id]).name, from: 'task[user_id]'
           select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task[status]'
           click_on '更新'
           expect(Task.find_by(update_task)).to be_present
@@ -910,6 +1001,7 @@ describe 'Tasks', type: :system do
             title: '',
             content: 'こちらはテスト1の内容です。テストテストテストテストテストテストテスト',
             label: 'テスト',
+            user_id: task_one.user_id,
             status: 'not_started',
           }
         }
@@ -919,6 +1011,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: update_task[:title]
           fill_in 'task[content]', with: update_task[:content]
           fill_in 'task[label]', with: update_task[:label]
+          select value = User.find(update_task[:user_id]).name, from: 'task[user_id]'
           select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task[status]'
           click_on '更新'
 
@@ -930,6 +1023,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: update_task[:title]
           fill_in 'task[content]', with: update_task[:content]
           fill_in 'task[label]', with: update_task[:label]
+          select value = User.find(update_task[:user_id]).name, from: 'task[user_id]'
           select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task[status]'
           click_on '更新'
 
@@ -947,6 +1041,7 @@ describe 'Tasks', type: :system do
                    '12345678901234567890123456789',
             content: 'こちらはテスト1の内容です。テストテストテストテストテストテストテスト',
             label: 'テスト',
+            user_id: task_one.user_id,
             status: 'not_started',
           }
         }
@@ -958,6 +1053,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: update_task[:title]
           fill_in 'task[content]', with: update_task[:content]
           fill_in 'task[label]', with: update_task[:label]
+          select value = User.find(update_task[:user_id]).name, from: 'task[user_id]'
           select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task[status]'
           # ボタン押下
           click_on '更新'
@@ -972,6 +1068,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: update_task[:title]
           fill_in 'task[content]', with: update_task[:content]
           fill_in 'task[label]', with: update_task[:label]
+          select value = User.find(update_task[:user_id]).name, from: 'task[user_id]'
           select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task[status]'
           # ボタン押下
           click_on '更新'
@@ -988,6 +1085,7 @@ describe 'Tasks', type: :system do
             title: 'テスト1',
             content: '',
             label: 'テスト',
+            user_id: task_one.user_id,
             status: 'not_started',
           }
         }
@@ -999,6 +1097,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: update_task[:title]
           fill_in 'task[content]', with: update_task[:content]
           fill_in 'task[label]', with: update_task[:label]
+          select value = User.find(update_task[:user_id]).name, from: 'task[user_id]'
           select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task[status]'
           # ボタン押下
           click_on '更新'
@@ -1013,6 +1112,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: update_task[:title]
           fill_in 'task[content]', with: update_task[:content]
           fill_in 'task[label]', with: update_task[:label]
+          select value = User.find(update_task[:user_id]).name, from: 'task[user_id]'
           select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task[status]'
           # ボタン押下
           click_on '更新'
@@ -1049,6 +1149,7 @@ describe 'Tasks', type: :system do
                      '12345678901234567890123456789012345678901234567890'\
                      '1234567890123456789012345',
             label: 'テスト',
+            user_id: task_one.user_id,
             status: 'not_started',
           }
         }
@@ -1061,6 +1162,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: update_task[:title]
           fill_in 'task[content]', with: update_task[:content]
           fill_in 'task[label]', with: update_task[:label]
+          select value = User.find(update_task[:user_id]).name, from: 'task[user_id]'
           select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task[status]'
           # ボタン押下
           click_on '更新'
@@ -1076,6 +1178,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: update_task[:title]
           fill_in 'task[content]', with: update_task[:content]
           fill_in 'task[label]', with: update_task[:label]
+          select value = User.find(update_task[:user_id]).name, from: 'task[user_id]'
           select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task[status]'
           # ボタン押下
           click_on '更新'
@@ -1092,6 +1195,7 @@ describe 'Tasks', type: :system do
             title: 'テスト1',
             content: 'こちらはテスト1の内容です。テストテストテストテストテストテストテスト',
             label: '',
+            user_id: task_one.user_id,
             status: 'not_started',
           }
         }
@@ -1104,6 +1208,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: update_task[:title]
           fill_in 'task[content]', with: update_task[:content]
           fill_in 'task[label]', with: update_task[:label]
+          select value = User.find(update_task[:user_id]).name, from: 'task[user_id]'
           select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task[status]'
           # ボタン押下
           click_on '更新'
@@ -1118,6 +1223,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: update_task[:title]
           fill_in 'task[content]', with: update_task[:content]
           fill_in 'task[label]', with: update_task[:label]
+          select value = User.find(update_task[:user_id]).name, from: 'task[user_id]'
           select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task[status]'
           # ボタン押下
           click_on '更新'
@@ -1135,8 +1241,9 @@ describe 'Tasks', type: :system do
             content: 'こちらはテスト1の内容です。テストテストテストテストテストテストテスト',
             label: '12345678901234567890123456789012345678901234567890'\
                    '123456789012345',
-                   status: 'not_started',
-                  }
+            user_id: task_one.user_id,
+            status: 'not_started',
+          }
         }
 
         it 'データ登録されていないこと' do
@@ -1146,6 +1253,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: update_task[:title]
           fill_in 'task[content]', with: update_task[:content]
           fill_in 'task[label]', with: update_task[:label]
+          select value = User.find(update_task[:user_id]).name, from: 'task[user_id]'
           select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task[status]'
           # ボタン押下
           click_on '更新'
@@ -1160,6 +1268,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: update_task[:title]
           fill_in 'task[content]', with: update_task[:content]
           fill_in 'task[label]', with: update_task[:label]
+          select value = User.find(update_task[:user_id]).name, from: 'task[user_id]'
           select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task[status]'
           # ボタン押下
           click_on '更新'
