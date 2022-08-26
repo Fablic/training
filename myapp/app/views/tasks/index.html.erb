@@ -37,7 +37,7 @@
             <!-- user対応コメントアウト -->
             <!-- <td><span><%#= task.user.name %></span></td> -->
             <td><span><%= task.status_i18n %></span></td>
-            <td><span><%= l(task.created_at) %></span></td>
+            <td><span><%= I18n.l(task.created_at) %></span></td>
             <td><%= link_to(I18n.t('link.detail'), task_path(task)) %></td>
           </tr>
         <% end %>
