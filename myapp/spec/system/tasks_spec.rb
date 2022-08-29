@@ -831,6 +831,28 @@ describe 'Tasks', type: :system do
     end
 
     describe '入力エリア' do
+      context '初期表示' do
+        it 'タイトルが表示されていること' do
+          visit edit_task_path(task_one)
+          expect(page).to have_field 'task[title]', with: 'title'
+        end
+
+        it '内容が表示されていること' do
+          visit edit_task_path(task_one)
+          expect(page).to have_field 'task[content]', with: 'content'
+        end
+
+        it 'ラベルが表示されていること' do
+          visit edit_task_path(task_one)
+          expect(page).to have_field 'task[label]', with: 'label'
+        end
+
+        it 'ステータスが表示されていること' do
+          visit edit_task_path(task_one)
+          expect(page).to have_select 'task[status]', selected: '未着手'
+        end
+      end
+
       context '全項目変更' do
         let(:update_task) {
           {
