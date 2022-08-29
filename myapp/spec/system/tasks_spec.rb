@@ -265,7 +265,7 @@ describe 'Tasks', type: :system do
       end
 
       context 'タスク複数件' do
-        let!(:task_one) { FactoryBot.create(:task) }
+        let!(:task_one) { create(:task) }
         let!(:task_two) { FactoryBot.create(:task, title: 'second title', content: 'second content', label: 'second label', status: 'in_progress') }
         let(:tds_one){ all('tbody tr')[0].all('td') }
         let(:tds_two){ all('tbody tr')[1].all('td') }
