@@ -101,27 +101,27 @@ describe 'タスク管理機能', type: :system do
 
         it 'タスクが作成される' do
           visit_new_task
-          fill_in 'Name', with: name
-          fill_in 'Description', with: description
+          fill_in 'タスク名', with: name
+          fill_in '詳細', with: description
           # DBに登録されている
-          click_button 'Create Task'
+          click_button 'タスクを登録'
           # 画面で入力された内容でDBに登録されている
-          expect(Task.find_by(name: name, description: description)).not_to be_nil
+          expect(Task.find_by(name: '新規作成テスト用タスク', description: '新規作成テスト用タスクを実施する')).not_to be_nil
         end
 
         it 'Flashメッセージが表示される' do
           visit_new_task
-          fill_in 'Name', with: name
-          fill_in 'Description', with: description
-          click_button 'Create Task'
-          expect(page).to have_selector '.alert-success', text: "タスク「#{name}」を登録しました。"
+          fill_in 'タスク名', with: name
+          fill_in '詳細', with: description
+          click_button 'タスクを登録'
+          expect(page).to have_selector '.alert-success', text: 'タスク「新規作成テスト用タスク」を登録しました。'
         end
 
         it 'タスク一覧画面が表示される' do
           visit_new_task
-          fill_in 'Name', with: name
-          fill_in 'Description', with: description
-          click_button 'Create Task'
+          fill_in 'タスク名', with: name
+          fill_in '詳細', with: description
+          click_button 'タスクを登録'
           expect(current_path).to eq tasks_path
         end
       end
@@ -146,12 +146,12 @@ describe 'タスク管理機能', type: :system do
       context '画面を表示した場合' do
         it '編集前にタスク名が表示される' do
           visit_task_a_edit
-          expect(page).to have_field 'Name', with: task_a.name
+          expect(page).to have_field 'タスク名', with: 'タスク１'
         end
 
         it '編集前に詳細が表示される' do
           visit_task_a_edit
-          expect(page).to have_field 'Description', with: task_a.description
+          expect(page).to have_field '詳細', with: 'タスク１を実施する'
         end
       end
     end
@@ -164,21 +164,21 @@ describe 'タスク管理機能', type: :system do
         it 'タスクが更新される' do
           visit_task_a_edit
           # 更新処理
-          fill_in 'Name', with: name
-          fill_in 'Description', with: description
-          click_button 'Update Task'
+          fill_in 'タスク名', with: name
+          fill_in '詳細', with: description
+          click_button 'タスクを更新'
           # 画面で入力された内容でDBのデータが更新されている
-          expect(Task.find_by(name: name, description: description)).not_to be_nil
+          expect(Task.find_by(name: '新規作成テスト用タスク２', description: '新規作成テスト用タスク２を実施する')).not_to be_nil
         end
 
         it 'Flashメッセージが表示される' do
           visit_task_a_edit
           # 更新処理
-          fill_in 'Name', with: name
-          fill_in 'Description', with: description
-          click_button 'Update Task'
+          fill_in 'タスク名', with: name
+          fill_in '詳細', with: description
+          click_button 'タスクを更新'
           # Flashメッセージが表示される
-          expect(page).to have_selector '.alert-success', text: "タスク「#{name}」を更新しました。"
+          expect(page).to have_selector '.alert-success', text: 'タスク「新規作成テスト用タスク２」を更新しました。'
         end
       end
     end
@@ -210,14 +210,14 @@ describe 'タスク管理機能', type: :system do
         visit_task_a
         click_on('削除')
         # DBの該当データが削除される
-        expect(Task.find_by(name: task_a.name)).to be nil
+        expect(Task.find_by(name: 'タスク１')).to be nil
       end
 
       it 'Flashメッセージが表示される' do
         visit_task_a
         click_on('削除')
         # Flashメッセージが表示される
-        expect(page).to have_selector '.alert-success', text: "タスク「#{task_a.name}」を削除しました。"
+        expect(page).to have_selector '.alert-success', text: 'タスク「タスク１」を削除しました。'
       end
     end
   end

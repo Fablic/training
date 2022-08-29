@@ -13,7 +13,7 @@ module Myapp
 
      # 言語設定（日本語）
      config.i18n.default_locale = :ja
-     config.i18n.load_path += Dir[Rails.root.join('path/to', '**').to_s]
+     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{yml}').to_s]
 
      # タイムゾーン設定（日本）
     config.time_zone = 'Tokyo'
