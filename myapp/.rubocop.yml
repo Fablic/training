@@ -1,0 +1,31 @@
+inherit_from: .rubocop_todo.yml
+
+require:
+  - rubocop-rails
+
+AllCops:
+
+  TargetRubyVersion: 2.6.3
+  Exclude:
+    - 'config.ru'
+    - 'bin/**'
+    - 'lib/**'
+    - 'db/**/*'
+    - 'config/**/*'
+    - 'script/**/*'
+
+AsciiComments:
+  Enabled: false
+
+Documentation:
+  Enabled: false
+
+ClassAndModuleChildren:
+  Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+    - 'Rakefile'
+    - '**/*.rake'
+    - 'test/**/*.rb'
+    - 'spec/**/*'

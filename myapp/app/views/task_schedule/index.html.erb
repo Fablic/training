@@ -1,0 +1,23 @@
+<%= t '.title' %><br>
+<% flash.each do |message_type, message| %>
+  <%= message %>
+<% end %>
+<%= button_to t('.new'), new_task_schedule_path, method: :get %>
+<table>
+  <tr>
+    <th><%= t '.name' %></th><th><%= t '.body' %></th><th><%= t '.created' %>
+      <%= link_to t('.up'), task_schedule_index_path(desc: 'true') %>
+      <%= link_to t('.down'), task_schedule_index_path(asc: 'true') %></th>
+  </tr>
+  <% @tasks.each do |task| %>
+  <tr>
+    <td><%= truncate(task.title, length: 15) %></td>
+    <td><%= truncate(task.body,  length: 15) %></td>
+    <td><%= l(task.created_at, format: :'.default') %></td>
+    <td><%= link_to t('.edit'), edit_task_schedule_path(task) %></td>
+    <td><%= link_to t('.show'), task_schedule_path(task), method: :get %></td>
+    <td><%= link_to t('.delete'), task_schedule_path(task), method: :delete,
+      data: {confirm: t('.delete_confirm')}, class: "btn btn-lg btn-primary" %></td>
+  </tr>
+  <% end %>
+</table>
