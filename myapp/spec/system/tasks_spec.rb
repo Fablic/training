@@ -856,10 +856,10 @@ describe 'Tasks', type: :system do
       context '全項目変更' do
         let(:update_task) {
           {
-            title: '全項目変更 タイトル',
-            content: '全項目変更 内容',
-            label: '全項目変更 ラベル',
-            status: 'not_started',
+            title: 'update title',
+            content: 'update content',
+            label: 'update label',
+            status: 'in_progress',
           }
         }
 
@@ -897,10 +897,10 @@ describe 'Tasks', type: :system do
       context 'タイトルのみ変更' do
         let(:update_task) {
           {
-            title: '全項目変更 タイトル',
-            content: 'こちらはテスト1の内容です。テストテストテストテストテストテストテスト',
-            label: 'テスト',
-            status: 'not_started',
+            title: 'update title',
+            content: task_one[:content],
+            label: task_one[:label],
+            status: task_one[:status],
           }
         }
 
@@ -918,10 +918,10 @@ describe 'Tasks', type: :system do
       context '内容のみ変更' do
         let(:update_task) {
           {
-            title: 'テスト1',
-            content: '全項目変更 内容',
-            label: 'テスト',
-            status: 'not_started',
+            title: task_one[:title],
+            content: 'update content',
+            label: task_one[:label],
+            status: task_one[:status],
           }
         }
 
@@ -939,10 +939,10 @@ describe 'Tasks', type: :system do
       context 'ラベルのみ変更' do
         let(:update_task) {
           {
-            title: 'テスト1',
-            content: 'こちらはテスト1の内容です。テストテストテストテストテストテストテスト',
-            label: '全項目変更 ラベル',
-            status: 'not_started',
+            title: task_one[:title],
+            content: task_one[:content],
+            label: 'update label',
+            status: task_one[:status],
           }
         }
 
@@ -960,9 +960,9 @@ describe 'Tasks', type: :system do
       context 'ステータスのみ変更' do
         let(:update_task) {
           {
-            title: 'テスト1',
-            content: 'こちらはテスト1の内容です。テストテストテストテストテストテストテスト',
-            label: 'テスト',
+            title: task_one[:title],
+            content: task_one[:content],
+            label: task_one[:label],
             status: 'in_progress',
           }
         }
