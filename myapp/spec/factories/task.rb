@@ -1,8 +1,9 @@
 FactoryBot.define do
-  factory :task, class: Task do
-    sequence(:title)    { |n| "テスト#{n}" }
-    sequence(:content)  { |n| "こちらはテスト#{n}の内容です。テストテストテストテストテストテストテスト" }
-    user_id             { 1 }
-    label               { 'テスト' }
+  factory :task, class: 'Task' do
+    title    { 'title' }
+    content  { 'content' }
+    user_id  { 1 }
+    label    { 'label' }
+    status   { 'not_started' }
   end
 end

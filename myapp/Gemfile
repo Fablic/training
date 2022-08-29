@@ -33,9 +33,6 @@ gem 'fablicop', require: false
 gem 'rails-i18n'
 
 # add 2022.08.24
-gem 'enum_help'
-
-# add 2022.08.24
 gem 'kaminari'
 
 group :development, :test do
