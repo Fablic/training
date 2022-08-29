@@ -5,7 +5,7 @@ require:
 
 AllCops:
 
-  TargetRubyVersion: 2.6.3
+  TargetRubyVersion: 2.6.10
   Exclude:
     - 'config.ru'
     - 'bin/**'
@@ -13,6 +13,9 @@ AllCops:
     - 'db/**/*'
     - 'config/**/*'
     - 'script/**/*'
+    - 'node_modules/**/*'
+    - 'tmp/**/*'
+
 
 AsciiComments:
   Enabled: false
