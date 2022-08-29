@@ -4,9 +4,9 @@ describe 'Taskモデル', type: :model do
   describe 'バリデーション' do
     describe 'タスク名カラム' do
       context '30文字で入力されている場合' do
-        let!(:task) { FactoryBot.create(:task, name: 'あいうえおあいうえおあいうえおあいうえおあいうえおあいうえお') }
+        let!(:task) { FactoryBot.build(:task, name: 'あいうえおあいうえおあいうえおあいうえおあいうえおあいうえお') }
 
-        it '登録できる' do
+        it '有効である' do
           expect(task).to be_valid
         end
       end
@@ -88,6 +88,12 @@ describe 'Taskモデル', type: :model do
           expect(task).to be_valid
         end
       end
+
+      context 'enumで設定されていない値の場合' do
+        it '引数エラーの例外を投げる' do
+          expect{ FactoryBot.build(:task, status: 4) }.to raise_error(ArgumentError)
+        end
+      end
     end
 
     describe '優先度カラム' do
@@ -100,10 +106,16 @@ describe 'Taskモデル', type: :model do
       end
 
       context 'nilの場合' do
-        let!(:task) { FactoryBot.create(:task, priority: nil) }
+        let!(:task) { FactoryBot.build(:task, priority: nil) }
 
         it '有効である' do
           expect(task).to be_valid
+        end
+      end
+
+      context 'enumで設定されていない値の場合' do
+        it '引数エラーの例外を投げる' do
+          expect{ FactoryBot.build(:task, priority: 4) }.to raise_error(ArgumentError)
         end
       end
     end
