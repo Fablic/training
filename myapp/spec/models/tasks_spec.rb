@@ -78,8 +78,6 @@ describe Task, type: :model do
 
         it { is_expected.to be_invalid }
       end
-
     end
-
   end
 end
