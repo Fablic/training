@@ -5,53 +5,56 @@ application up and running.
 
 Things you may want to cover:
 
-* Database design  
+* Database design
 
 <br>
 
-tasks  
+tasks
 | column_name | type | null | default |
 | ---- | ---- | ---- | ---- |
 | id | integer(20) | not null | auto_increment |
 | title | varchar(128) | not null | '' |
 | content | varchar(1024) | | |
-| user_id | integer | | |   
-| status | varchar(1) | not null | '1' | 
+| user_id | integer | | |
+| status | varchar(1) | not null | '1' |
 | label | varchar(64) | | |
-| deleted_at | datetime | | | 
+| deleted_at | datetime | | |
 | created_at | datetime | | |
-| updated_at | datetime | | |  
+| updated_at | datetime | | |
 
-※statusについて  
-1:未着手、2:着手中、3:完了  
-※結合キー  
-user_id:N　→ users.id:1  
+※statusについて
+1:未着手、2:着手中、3:完了
+※結合キー
+user_id:N　→ users.id:1
 <br>
-  
+
 users
 | column_name | type | null | default |
 | ---- | ---- | ---- | ---- |
 | id | integer(20) | not null | auto_increment |
 | name | varchar(128) | not null | '' |
-| deleted_at | datetime | | | 
+| password_digest | varchar(256) | not null | '' |
+| salt | varchar(256) | not null | '' |
+| email | varchar(254) | not null | '' |
+| deleted_at | datetime | | |
 | created_at | datetime | | |
-| updated_at | datetime | | |  
- 
-※結合キー  
+| updated_at | datetime | | |
+
+※結合キー
 id:1　→ tasks.user_id:N
 <br>
 
-* Screen design  
+* Screen design
 
-実際に画面設計した方がよいのだと思いますが、こちらに外部設計を模した設計として各画面の設計を記載します。  
+実際に画面設計した方がよいのだと思いますが、こちらに外部設計を模した設計として各画面の設計を記載します。
 必要であれば、他ツールでワイヤフレーム作成します。
 <br>
-【タスク一覧画面】  
-URL:    
+【タスク一覧画面】
+URL:
 　/
 
-表示：  
-  
+表示：
+
 タスク作成エリア
 | item | layer | name | source | type | loop | others |
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
@@ -80,12 +83,12 @@ URL:
 
 <br>
 
-【タスク作成画面】  
-URL:    
-　/task/create  
-  
-表示：  
-  
+【タスク作成画面】
+URL:
+　/task/create
+
+表示：
+
 タスク作成
 | item | layer | name | source | type | loop | others |
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
@@ -98,11 +101,11 @@ URL:
 
 <br>
 
-【タスク詳細画面】  
-URL:    
-　/task/details/{task.id}  
+【タスク詳細画面】
+URL:
+　/task/details/{task.id}
 
-表示：  
+表示：
 
 タスク詳細
 | item | layer | name | source | type | loop | others |
@@ -118,11 +121,11 @@ URL:
 
 <br>
 
-【タスク編集画面】  
-URL:    
-　/task/edit/{task.id}  
+【タスク編集画面】
+URL:
+　/task/edit/{task.id}
 
-表示：  
+表示：
 
 タスク編集
 | item | layer | name | source | type | loop | others |

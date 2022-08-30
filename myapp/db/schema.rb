@@ -30,9 +30,9 @@ ActiveRecord::Schema.define(version: 2022_08_30_001252) do
     t.datetime "deleted_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "password_digest"
-    t.string "salt"
-    t.string "email"
+    t.string "password_digest", limit: 256, default: "", null: false
+    t.string "salt", limit: 256, default: "", null: false
+    t.string "email", limit: 254, default: "", null: false
   end
 
 end
