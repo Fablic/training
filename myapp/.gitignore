@@ -8,3 +8,5 @@ log/
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+yarn.lock
+package.json
