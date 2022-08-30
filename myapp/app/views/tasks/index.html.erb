@@ -1,37 +1,49 @@
-<h1>タスク一覧</h1>
-
-<% if flash[:notice] %>
-  <p class="alert-success">
-    <%= flash[:notice] %>
-  </p>
-<% end %>
-
-<table>
-  <thead>
-    <tr>
-      <th scope="col">タスク</th>
-      <th scope="col">説明</th>
-      <th scope="col">編集</th>
-      <th scope="col">削除</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @tasks.each do |task| %>
-      <tr>
-        <td>
-          <%= link_to task.title, task_path(task), id: '詳細' %>
-        </td>
-        <td>
-          <%= task.description %>
-        </td>
-        <td>
-          <%= link_to '編集', edit_task_path(task) %>
-        </td>
-        <td>
-          <%= link_to '削除', task_path(task), method: :delete,  data: {confirm: "削除しますか？"} %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<div name='header'>
+  <h1>タスク一覧</h1>
+  <% if flash[:notice] %>
+    <p class="alert-success">
+      <%= flash[:notice] %>
+    </p>
+  <% end %>
+</div>
+<div name='content'>
+  <div name='serch-task'>
+  <span>検索</span>
+  <%= form_with(url: root_path, local: true, method: :get) do |f| %>
+    <%= f.text_field(:word) %>
+    <%= f.select(:status, Task.statuses.keys.map { |k| [I18n.t("enums.task.status.#{k}"), k] }, include_blank: true) %>
+    <%= f.submit('検索') %>
+  <% end %>
+  </div>
   <%= link_to '新規登録', new_task_path %>
+  <table>
+    <thead>
+      <tr>
+        <th scope="col">タスク</th>
+        <th scope="col">説明</th>
+        <th scope="col">編集</th>
+        <th scope="col">削除</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @tasks.each do |task| %>
+        <tr>
+          <td>
+            <%= link_to task.title, task_path(task), id: '詳細' %>
+          </td>
+          <td>
+            <%= task.description %>
+          </td>
+          <td>
+            <%= link_to '編集', edit_task_path(task) %>
+          </td>
+          <td>
+            <%= link_to '削除', task_path(task), method: :delete,  data: {confirm: "削除しますか？"} %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<div name='footer'>
+</div>

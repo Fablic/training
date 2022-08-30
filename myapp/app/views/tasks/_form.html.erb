@@ -1,3 +1,12 @@
+<% if @task.errors.any? %>
+  <div style="color: red">
+    <ul>
+      <% @task.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
 <%= form_for(@task) do |f| %>
     <div>
       <%= f.label :タイトル %>
@@ -11,6 +20,15 @@
     <div>
       <%= f.text_area :description, id: 'textarea2' %>
     </div>
+    <div>
+      <% if is_status %>
+        <div>
+          <%= f.label :ステータス %>
+        </div>
+        <%= f.select(:status, Task.statuses.keys.map { |k| [I18n.t("enums.task.status.#{k}"), k] }) %>
+      <% end %>
+    </div>
+    <br>
     <div>
     <%= f.submit id: 'submit' %>
     </div>

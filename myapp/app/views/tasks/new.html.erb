@@ -1,3 +1,9 @@
-<h1>タスク登録</h1>
-  <%= render 'form', task: @task %>
-<%= link_to '一覧に戻る', tasks_path %>
+<div name='header'>
+  <h1>タスク登録</h1>
+</div>
+<div name='content'>
+  <%= render partial: 'form', locals: { url: tasks_path, method: 'post', button_name: I18n.t('button.create'), is_status: false } %>
+</div>
+<div name='footer'>
+  <%= link_to '一覧に戻る', tasks_path %>
+</div>
