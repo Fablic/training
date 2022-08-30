@@ -9,9 +9,7 @@
 10.times do |i|
   password = "test#{i + 1}"
   salt = User.create_salt
-  puts salt
-  password_digest = User.create_password(password, salt)
-  puts password_digest
+  password_digest = User.hash(password, salt)
   user = User.create!(name: "ユーザ#{i + 1}", password_digest: password_digest, salt: salt, email: "email#{i + 1}@example.com")
   Task.create!(
     title: "タスク#{i + 1}",

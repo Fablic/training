@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_08_30_001252) do
+ActiveRecord::Schema.define(version: 2022_08_30_022704) do
 
   create_table "tasks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "title", limit: 128, default: "", null: false
@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(version: 2022_08_30_001252) do
     t.string "password_digest", limit: 256, default: "", null: false
     t.string "salt", limit: 256, default: "", null: false
     t.string "email", limit: 254, default: "", null: false
+    t.string "login_token"
   end
 
 end

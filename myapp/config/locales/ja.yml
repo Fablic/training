@@ -56,6 +56,7 @@ ja:
         in_progress: 着手中
         closed: 完了
   view_title:
+    login: ログイン画面
     index: タスク一覧画面
     new: タスク作成画面
     show: タスク詳細画面
@@ -67,17 +68,23 @@ ja:
     status: ステータス
     user: 担当者
     created_at: 作成日
+  user:
+    email: メールアドレス
+    password: パスワード
   button:
     create: 作成
     delete: 削除
     update: 更新
+    login: ログイン
   link:
     create: 作成
     detail: 詳細
     edit: 編集
     list_back: 一覧へ
+    logout: ログアウト
   message:
     delete_confirm: 削除しますか?
+    login_failed: ログインに失敗しました
   time:
     formats:
       default: "%Y/%m/%d %H:%M:%S"
