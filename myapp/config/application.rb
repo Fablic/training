@@ -1,3 +1,5 @@
+
+
 require_relative 'boot'
 
 require 'rails/all'
@@ -10,6 +12,11 @@ module Myapp
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.0
+
+    # タイムゾーンを日本に設定
+    config.time_zone = 'Tokyo'
+    # DB側から受け取った時刻をローカルのタイムゾーンとして解釈するよう設定
+    config.active_record.default_timezone = :local
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
