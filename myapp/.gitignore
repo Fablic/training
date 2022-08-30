@@ -1,6 +1,6 @@
-tmp/
-vendor/
-log/
+/tmp/
+/vendor/
+/log/
 
 /public/packs
 /public/packs-test
