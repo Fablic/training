@@ -3,7 +3,7 @@
 class User < ApplicationRecord
   has_many :tasks, dependent: :destroy
 
-  validates :email, presence: true, uniqueness: true
+  validates :email, presence: true, uniqueness: { case_sensitive: true }
 
 
   def authenticate(password)
