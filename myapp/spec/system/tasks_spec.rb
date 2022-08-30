@@ -62,7 +62,6 @@ describe 'タスク管理機能', type: :system do
           visit_tasks
           expect(page).not_to have_content '最初のタスク'
         end
-
       end
     end
 

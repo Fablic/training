@@ -25,10 +25,12 @@
 <div>
 <%= form_with url: tasks_path, method: :get, local: true do |f| %>
   <p>検索フォーム</p>
-    <p>タスク名</p>
+    <p style="display: inline">タスク名</p>
     <%= f.text_field :name %>
-    <p>ステータス</p>
+    <br>
+    <p style="display: inline">ステータス</p>
     <%= f.select :status, Task.statuses.keys.map { |k| [I18n.t("enums.task.status.#{k}"), k]} , include_blank: true %>
+  <br>
   <%= f.submit '検索' %>
 <% end %>
 </div>

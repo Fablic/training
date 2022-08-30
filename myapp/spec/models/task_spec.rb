@@ -125,6 +125,7 @@ describe 'Taskモデル', type: :model do
     describe 'タスク名検索' do
       context 'タスク名が完全一致する場合' do
         let!(:task) { FactoryBot.create(:task, name: 'あいうえお', status: 1) }
+
         it 'データが取得できる' do
           expect(Task.search('あいうえお', 1).count).to eq 1
         end
@@ -132,6 +133,7 @@ describe 'Taskモデル', type: :model do
 
       context 'タスク名が前方一致する場合' do
         let!(:task) { FactoryBot.create(:task, name: 'あいうえお') }
+
         it 'データが取得できる' do
           expect(Task.search('あいう', 1).count).to eq 1
         end
@@ -139,12 +141,15 @@ describe 'Taskモデル', type: :model do
 
       context 'タスク名が後方一致する場合' do
         let!(:task) { FactoryBot.create(:task, name: 'あいうえお') }
+
         it 'データが取得できる' do
           expect(Task.search('うえお', 1).count).to eq 1
         end
       end
+
       context 'タスク名が中央一致する場合' do
         let!(:task) { FactoryBot.create(:task, name: 'あいうえお') }
+
         it 'データが取得できる' do
           expect(Task.search('いうえ', 1).count).to eq 1
         end
@@ -178,6 +183,7 @@ describe 'Taskモデル', type: :model do
     describe 'ステータス検索' do
       context 'ステータスが一致する場合' do
         let!(:task) { FactoryBot.create(:task, name: 'あいうえお', status: 1) }
+
         it 'データを取得できる' do
           expect(Task.search('あいうえお', 1).count).to eq 1
         end
@@ -185,6 +191,7 @@ describe 'Taskモデル', type: :model do
 
       context 'ステータスが一致しない場合' do
         let!(:task) { FactoryBot.create(:task, name: 'あいうえお', status: 2) }
+
         it 'データを取得できない' do
           expect(Task.search('あいうえお', 1)).to be_empty
         end
@@ -192,6 +199,7 @@ describe 'Taskモデル', type: :model do
 
       context 'ステータスが空の場合' do
         let!(:task) { FactoryBot.create(:task, name: 'あいうえお', status: 1) }
+
         it 'データを取得できる' do
           expect(Task.search('あいうえお', '').count).to eq 1
         end
@@ -199,6 +207,7 @@ describe 'Taskモデル', type: :model do
 
       context 'ステータスがnilの場合' do
         let!(:task) { FactoryBot.create(:task, name: 'あいうえお', status: 1) }
+
         it 'データを取得できる' do
           expect(Task.search('あいうえお', nil).count).to eq 1
         end
