@@ -5,9 +5,9 @@ class TasksController < ApplicationController
 
   def index
     if params && (params[:word].present? || params[:status].present?)
-      @tasks = Task.search(params[:word], Task.statuses[params[:status]])
+      @tasks = Task.search(params[:name], params[:status]).page(params[:page]).per(5)
     else
-      @tasks = Task.all.order('tasks.created_at desc')
+      @tasks = Task.all.page(params[:page]).per(5)
     end
   end
 
