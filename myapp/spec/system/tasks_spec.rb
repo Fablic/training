@@ -11,6 +11,9 @@ describe 'タスク管理機能', type: :system do
 
         let(:tds){ all('tbody tr')[0].all('td') }
         it 'タスク名が表示される' do
+          Task.all.each do |t|
+            puts t.title
+          end
           visit_tasks
           expect(tds[0]).to have_content task_1.title
         end
@@ -265,6 +268,69 @@ describe 'タスク管理機能', type: :system do
           visit_task_a_edit
           click_link '一覧に戻る'
           expect(page).to have_current_path tasks_path
+        end
+      end
+    end
+  end
+
+  describe 'バリデーション' do
+    describe 'タスク名カラム' do
+      context '30文字で入力されている場合' do
+        let!(:task) { FactoryBot.create(:task, title: 'あいうえおあいうえおあいうえおあいうえおあいうえおあいうえお', description: '最初のタスクを実施する', user_id: "1", status: "1", label: 1) }
+        it '登録できる' do
+          expect(task).to be_valid
+        end
+      end
+
+      context '空の場合' do
+        let!(:task) { FactoryBot.build(:task, title: '', description: '最初のタスクを実施する', user_id: "1", status: "1", label: 1) }
+        it '無効である' do
+          expect(task).to be_invalid
+        end
+      end
+
+      context 'nilの場合' do
+        let!(:task) { FactoryBot.build(:task, title: nil, description: '最初のタスクを実施する', user_id: "1", status: "1", label: 1) }
+        it '無効である' do
+          expect(task).to be_invalid
+        end
+      end
+
+      context '31文字以上の場合' do
+        let!(:task) { FactoryBot.build(:task, title: 'あいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあ', description: '最初のタスクを実施する', user_id: "1", status: "1", label: 1) }
+        it '無効である' do
+          expect(task).to be_invalid
+        end
+      end
+    end
+
+    describe '詳細カラム' do
+      context '100文字で入力されている場合' do
+        let!(:task) { FactoryBot.build(:task, title: '最初のタスク', description: '１いうえおあいうえお２いうえおあいうえお３いうえおあいうえお４いうえお'\
+          'あいうえお５いうえおあいうえお６いうえおあいうえお７いうえおあいうえお８いうえおあいうえお９いうえおあいうえお０いうえおあいうえお', user_id: "1", status: "1", label: 1) }
+        it '有効である' do
+          expect(task).to be_valid
+        end
+      end
+
+      context '空の場合' do
+        let!(:task) { FactoryBot.build(:task, title: '最初のタスク', description: '', user_id: "1", status: "1", label: 1) }
+        it '無効である' do
+          expect(task).to be_invalid
+        end
+      end
+
+      context 'nilの場合' do
+        let!(:task) { FactoryBot.build(:task, title: '最初のタスク', description: nil, user_id: "1", status: "1", label: 1) }
+        it '無効である' do
+          expect(task).to be_invalid
+        end
+      end
+
+      context '101文字以上の場合' do
+        let!(:task) { FactoryBot.build(:task, description: '１いうえおあいうえお２いうえおあいうえお３いうえおあいうえお４いうえおあいうえお５いうえおあいうえお６いうえおあいうえお７いうえおあいうえお８いうえおあいうえお９いうえおあいうえお０いうえおあいうえお１', user_id: '1') }
+        it '無効である' do
+          expect(task).to be_invalid
         end
       end
     end
