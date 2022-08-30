@@ -11,9 +11,6 @@ describe 'タスク管理機能', type: :system do
 
         let(:tds){ all('tbody tr')[0].all('td') }
         it 'タスク名が表示される' do
-          Task.all.each do |t|
-            puts t.title
-          end
           visit_tasks
           expect(tds[0]).to have_content task_1.title
         end
