@@ -2,6 +2,9 @@ ja:
   time:
     formats:
       default: ! '%Y/%m/%d %H:%M'
+  date:
+    formats:
+      default: ! '%Y/%m/%d'
 
   activerecord:
     attributes:
@@ -19,6 +22,7 @@ ja:
       name: 'タイトル'
       body: '本文'
       created: '作成日時'
+      finish: '終了期限'
       up: '▲'
       down: '▼'
       delete_confirm: '削除します。よろしいですか'

@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(version: 2022_08_30_025317) do
     t.text "body", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.timestamp "finish_at"
+    t.date "finish_at"
   end
 
 end

@@ -6,8 +6,12 @@ class TaskScheduleController < ApplicationController
                Task.all.desc
              elsif params[:asc]
                Task.all.asc
+             elsif params[:finish_de]
+               Task.all.finish_de
+             elsif params[:finish_a]
+               Task.all.finish_a
              else
-               Task.all.desc
+               Task.all.finish_a
              end
   end
 
@@ -58,6 +62,6 @@ class TaskScheduleController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:title, :body)
+    params.require(:task).permit(:title, :body, :finish_at)
   end
 end
