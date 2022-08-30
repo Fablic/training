@@ -8,7 +8,6 @@ class Task < ApplicationRecord
   validates :detail, length: { maximum: 100 }
 
   def self.search(name, status)
-    # Task.where(status: "%#{status}%"). where(['name like?', "%#{name}%"]) if name.present?
     sql = ''
     sql += " name like '%#{name}%' " if name.present?
     sql += ' AND ' if sql.present? && status.present?

@@ -5,7 +5,7 @@ class TasksController < ApplicationController
     if params[:name].nil? && params[:status].nil?
       @tasks = Task.all
     else
-      @tasks = Task.search(params[:name], params[:status])
+      @tasks = Task.search(params[:name], Task.statuses[params[:status]])
     end
   end
 

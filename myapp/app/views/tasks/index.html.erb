@@ -25,12 +25,13 @@
 <div>
 <%= form_with url: tasks_path, method: :get, local: true do |f| %>
   <p>検索フォーム</p>
-  <p>タスク名</p>
-  <%= f.text_field :name %>
-  <p>ステータス</p>
-  <%= f.select :status, Task.statuses_i18n.keys.map { |k| [Task.statuses_i18n[k], k] } %>
+    <p>タスク名</p>
+    <%= f.text_field :name %>
+    <p>ステータス</p>
+    <%= f.select :status, Task.statuses.keys.map { |k| [I18n.t("enums.task.status.#{k}"), k]} , include_blank: true %>
   <%= f.submit '検索' %>
 <% end %>
 </div>
+<br>
 
 <%= link_to '新規登録', new_task_path %>
