@@ -19,8 +19,12 @@ class ApplicationController < ActionController::Base
   end
 
   def login_user
-    token = User.encrypt_login_token(cookies[:login_token])
-    @login_user ||= User.find_by(login_token: token)
+    if login?
+      @login_user
+    else
+      token = User.encrypt_login_token(cookies[:login_token])
+      @login_user ||= User.find_by(login_token: token)
+    end
   end
 
   private

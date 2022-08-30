@@ -22,7 +22,6 @@
         <tr>
           <th><%= I18n.t('task.title') %></th>
           <th><%= I18n.t('task.label') %></th>
-          <th><%= I18n.t('task.user') %></th>
           <th><%= I18n.t('task.status') %></th>
           <th><%= I18n.t('task.created_at') %></th>
           <th></th>
@@ -33,7 +32,6 @@
           <tr>
             <td><span><%= task.title %></span></td>
             <td><span><%= task.label %></span></td>
-            <td><span><%= task.user.name %></span></td>
             <td><span><%= I18n.t("enums.task.status.#{task.status}") %></span></td>
             <td><span><%= I18n.l(task.created_at) %></span></td>
             <td><%= link_to(I18n.t('link.detail'), task_path(task)) %></td>

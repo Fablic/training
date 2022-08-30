@@ -16,15 +16,17 @@ class Task < ApplicationRecord
     closed: '3',
   }
 
-  def self.search(word, status)
+  def self.search(user_id, word, status)
     return Task.joins(:user).all.order('tasks.created_at desc') if word.blank? && status.blank?
 
     sql = ''
+    sql += " user_id = #{user_id} " if user_id.present?
+    sql += ' AND ' if sql.length > 0 && word.present?
     sql += " title like '%#{word}%' " if word.present?
-    sql += ' AND ' if sql.present? && status.present?
+    sql += ' AND ' if sql.length > 0 && status.present?
     sql += " status = '#{status}' " if status.present?
 
-    Task.eager_load(:user).where(sql).order('tasks.created_at desc')
+    Task.where(sql).order('tasks.created_at desc')
   end
 
 end
