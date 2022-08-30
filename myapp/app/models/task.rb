@@ -17,7 +17,7 @@ class Task < ApplicationRecord
   }
 
   def self.search(user_id, word, status)
-    return Task.joins(:user).all.order('tasks.created_at desc') if word.blank? && status.blank?
+    return Task.all.order('tasks.created_at desc') if user_id.nil? && word.blank? && status.blank?
 
     sql = ''
     sql += " user_id = #{user_id} " if user_id.present?
@@ -28,5 +28,4 @@ class Task < ApplicationRecord
 
     Task.where(sql).order('tasks.created_at desc')
   end
-
 end
