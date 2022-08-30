@@ -12,12 +12,12 @@
   puts salt
   password_digest = User.create_password(password, salt)
   puts password_digest
-  user = User.create!(name: "ユーザ#{i + 1}", password_digest: password_digest, salt: salt)
+  user = User.create!(name: "ユーザ#{i + 1}", password_digest: password_digest, salt: salt, email: "email#{i + 1}@example.com")
   Task.create!(
     title: "タスク#{i + 1}",
     content: "こちらはタスク#{i + 1}の内容です。テストテストテストテストテストテストテスト",
     user_id: user.id,
     status: '1',
-    label: "ラベル#{i + 1}"
+    label: "ラベル#{i + 1}",
   )
 end
