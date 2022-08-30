@@ -4,16 +4,24 @@ class TasksController < ApplicationController
   before_action :set_task, only: %i[show edit update destroy]
 
   def index
-    @tasks = Task.all
+    if params && (params[:word].present? || params[:status].present?)
+      @tasks = Task.search(params[:word], Task.statuses[params[:status]])
+    else
+      @tasks = Task.all.order('tasks.created_at desc')
+    end
   end
 
-  def show; end
+  def show
+    @task = Task.find(params[:id])
+  end
 
   def new
     @task = Task.new
   end
 
-  def edit; end
+  def edit
+    @task = Task.find(params[:id])
+  end
 
   def create
     @task = Task.new(task_params)
@@ -45,7 +53,7 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:title, :description)
+    params.require(:task).permit(:title, :description, :status)
   end
 
   def set_task
