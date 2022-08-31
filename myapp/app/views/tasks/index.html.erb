@@ -31,7 +31,13 @@
         <% @tasks.each do |task| %>
           <tr>
             <td><span><%= task.title %></span></td>
-            <td><span><%= task.label %></span></td>
+            <td>
+              <ul>
+                <% task.labels.each do |label| %>
+                  <li><%= label.name %></li>
+                <% end %>
+              </ul>
+            </td>
             <td><span><%= I18n.t("enums.task.status.#{task.status}") %></span></td>
             <td><span><%= I18n.l(task.created_at) %></span></td>
             <td><%= link_to(I18n.t('link.detail'), task_path(task)) %></td>

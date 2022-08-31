@@ -4,11 +4,10 @@ class TasksController < ApplicationController
   # タスク一覧画面
   def index
     # タスク一覧オブジェクト取得
-    # @tasks = Task.joins(:user).all
     if params && (params[:word].present? || params[:status].present?)
       @tasks = Task.search(login_user.id, params[:word], Task.statuses[params[:status]]).page(params[:page]).per(5)
     else
-      @tasks = Task.where(user_id: login_user.id).order('tasks.created_at desc').page(params[:page]).per(5)
+      @tasks = Task.eager_load(:labels).where(user_id: login_user.id).order('tasks.created_at desc, labels.created_at desc').page(params[:page]).per(5)
     end
   end
 
