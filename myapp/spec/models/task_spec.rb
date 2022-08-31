@@ -127,7 +127,7 @@ describe 'Taskモデル', type: :model do
         let!(:task) { FactoryBot.create(:task, name: 'あいうえお', status: 1) }
 
         it 'データが取得できる' do
-          expect(Task.search('あいうえお', 1).count).to eq 1
+          expect(Task.name_like('あいうえお').status_equal(1).count).to eq 1
         end
       end
 
@@ -135,7 +135,7 @@ describe 'Taskモデル', type: :model do
         let!(:task) { FactoryBot.create(:task, name: 'あいうえお') }
 
         it 'データが取得できる' do
-          expect(Task.search('あいう', 1).count).to eq 1
+          expect(Task.name_like('あいう').status_equal(1).count).to eq 1
         end
       end
 
@@ -143,7 +143,7 @@ describe 'Taskモデル', type: :model do
         let!(:task) { FactoryBot.create(:task, name: 'あいうえお') }
 
         it 'データが取得できる' do
-          expect(Task.search('うえお', 1).count).to eq 1
+          expect(Task.name_like('うえお').status_equal(1).count).to eq 1
         end
       end
 
@@ -151,7 +151,7 @@ describe 'Taskモデル', type: :model do
         let!(:task) { FactoryBot.create(:task, name: 'あいうえお') }
 
         it 'データが取得できる' do
-          expect(Task.search('いうえ', 1).count).to eq 1
+          expect(Task.name_like('いうえ').status_equal(1).count).to eq 1
         end
       end
 
@@ -159,7 +159,7 @@ describe 'Taskモデル', type: :model do
         let!(:task) { FactoryBot.create(:task, name: 'あいうえお') }
 
         it 'データが取得できない' do
-          expect(Task.search('かきくけこ', 1)).to be_empty
+          expect(Task.name_like('かきくけこ').status_equal(1)).to be_empty
         end
       end
 
@@ -167,7 +167,7 @@ describe 'Taskモデル', type: :model do
         let!(:task) { FactoryBot.create(:task, name: 'あいうえお', status: 1) }
 
         it 'データを取得できない' do
-          expect(Task.search('', 1).count).to eq 1
+          expect(Task.name_like('').status_equal(1).count).to eq 1
         end
       end
 
@@ -175,7 +175,7 @@ describe 'Taskモデル', type: :model do
         let!(:task) { FactoryBot.create(:task, name: 'あいうえお', status: 1) }
 
         it 'データを取得できない' do
-          expect(Task.search(nil, 1).count).to eq 1
+          expect(Task.name_like(nil).status_equal(1).count).to eq 1
         end
       end
     end
@@ -185,7 +185,7 @@ describe 'Taskモデル', type: :model do
         let!(:task) { FactoryBot.create(:task, name: 'あいうえお', status: 1) }
 
         it 'データを取得できる' do
-          expect(Task.search('あいうえお', 1).count).to eq 1
+          expect(Task.name_like('あいうえお').status_equal(1).count).to eq 1
         end
       end
 
@@ -193,7 +193,7 @@ describe 'Taskモデル', type: :model do
         let!(:task) { FactoryBot.create(:task, name: 'あいうえお', status: 2) }
 
         it 'データを取得できない' do
-          expect(Task.search('あいうえお', 1)).to be_empty
+          expect(Task.name_like('あいうえお').status_equal(1)).to be_empty
         end
       end
 
@@ -201,7 +201,7 @@ describe 'Taskモデル', type: :model do
         let!(:task) { FactoryBot.create(:task, name: 'あいうえお', status: 1) }
 
         it 'データを取得できる' do
-          expect(Task.search('あいうえお', '').count).to eq 1
+          expect(Task.name_like('あいうえお').status_equal('').count).to eq 1
         end
       end
 
@@ -209,7 +209,7 @@ describe 'Taskモデル', type: :model do
         let!(:task) { FactoryBot.create(:task, name: 'あいうえお', status: 1) }
 
         it 'データを取得できる' do
-          expect(Task.search('あいうえお', nil).count).to eq 1
+          expect(Task.name_like('あいうえお').status_equal(nil).count).to eq 1
         end
       end
     end
@@ -219,7 +219,7 @@ describe 'Taskモデル', type: :model do
         let!(:task) { FactoryBot.create(:task, name: 'あいうえお', status: 1) }
 
         it 'データを取得できる' do
-          expect(Task.search('あいうえお', 1).count).to eq 1
+          expect(Task.name_like('あいうえお').status_equal(1).count).to eq 1
         end
       end
 
@@ -227,7 +227,7 @@ describe 'Taskモデル', type: :model do
         let!(:task) { FactoryBot.create(:task, name: 'あいうえお', status: 2) }
 
         it 'データを取得できない' do
-          expect(Task.search('かきくけこ', 1)).to be_empty
+          expect(Task.name_like('かきくけこ').status_equal(1)).to be_empty
         end
       end
 
@@ -236,7 +236,7 @@ describe 'Taskモデル', type: :model do
         let!(:task_2) { FactoryBot.create(:task, name: 'かきくけこ', status: 2) }
 
         it 'データを全件（２件）取得できる' do
-          expect(Task.search('', '').count).to eq 2
+          expect(Task.name_like('').status_equal('').count).to eq 2
         end
       end
 
@@ -245,7 +245,7 @@ describe 'Taskモデル', type: :model do
         let!(:task_2) { FactoryBot.create(:task, name: 'かきくけこ', status: 2) }
 
         it 'データを全件（２件）取得できる' do
-          expect(Task.search(nil, nil).count).to eq 2
+          expect(Task.name_like(nil).status_equal(nil).count).to eq 2
         end
       end
     end
