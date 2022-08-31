@@ -988,55 +988,5 @@ describe 'Tasks', type: :system do
         expect(page).to have_current_path root_path
       end
     end
-
-    # context 'ステータスのみ変更' do
-
-    #   let(:task_one) { FactoryBot.create(:task) }
-
-    #   let(:update_task) {
-    #     {
-    #       title: 'テスト1',
-    #       content: 'こちらはテスト1の内容です。テストテストテストテストテストテストテスト',
-    #       label: 'テスト',
-    #     }
-    #   }
-
-    #   it '更新されていること' do
-
-    #     visit edit_task_path(task_one)
-    #     fill_in 'task[title]', with: update_task[:title]
-    #     fill_in 'task[content]', with: update_task[:content]
-    #     fill_in 'task[label]', with: update_task[:label]
-    #     click_on '更新'
-    #     expect(Task.find_by(title: update_task[:title], content: update_task[:content], label: update_task[:label])).not_to be_nil
-
-    #   end
-
-    # end
-
-    # context 'ユーザのみ変更' do
-
-    #   let(:task_one) { FactoryBot.create(:task) }
-
-    #   let(:update_task) {
-    #     {
-    #       title: 'テスト1',
-    #       content: 'こちらはテスト1の内容です。テストテストテストテストテストテストテスト',
-    #       label: 'テスト',
-    #     }
-    #   }
-
-    #   it '更新されていること' do
-
-    #     visit edit_task_path(task_one)
-    #     fill_in 'task[title]', with: update_task[:title]
-    #     fill_in 'task[content]', with: update_task[:content]
-    #     fill_in 'task[label]', with: update_task[:label]
-    #     click_on '更新'
-    #     expect(Task.find_by(title: update_task[:title], content: update_task[:content], label: update_task[:label])).not_to be_nil
-
-    #   end
-
-    # end
   end
 end
