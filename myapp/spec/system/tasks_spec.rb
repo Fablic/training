@@ -117,8 +117,8 @@ describe 'タスク管理機能', type: :system do
       it 'タスクが正常に登録される' do
         visit_new_task
         # 登録処理
-        fill_in 'textarea1', with: input_values[:title]
-        fill_in 'textarea2', with: input_values[:description]
+        fill_in 'textarea1', with: '新規作成のテスト2'
+        fill_in 'textarea2', with: '新規作成のテストを書く2'
         expect { click_button 'submit' }.to change(Task, :count).by(1)
       end
     end
@@ -152,11 +152,11 @@ describe 'タスク管理機能', type: :system do
       context '画面を表示した場合' do
         it '編集前のタスク名が表示される' do
           visit_task_a_edit
-          expect(page).to have_field 'textarea1', with: task_a.title
+          expect(page).to have_field 'textarea1', with: '最初のタスク'
         end
         it '編集前の詳細が表示される' do
           visit_task_a_edit
-          expect(page).to have_field 'textarea2', with: task_a.description
+          expect(page).to have_field 'textarea2', with: '最初のタスクを実施する'
         end
       end
       context 'タスクの各項目を更新した場合' do
@@ -171,8 +171,8 @@ describe 'タスク管理機能', type: :system do
         it 'タスクが正常に更新される' do
           visit_task_a_edit
           # 更新処理
-          fill_in 'textarea1', with: input_values[:title]
-          fill_in 'textarea2', with: input_values[:description]
+          fill_in 'textarea1', with: '最初のタスク'
+          fill_in 'textarea2', with: '最初のタスクを実施する'
           # 画面で入力された内容でDBのデータが更新されている
           expect(Task.find_by(input_values)).to be_present
         end
