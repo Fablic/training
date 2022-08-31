@@ -4,8 +4,8 @@ describe 'Taskモデル', type: :model do
   describe 'バリデーション' do
     describe 'タスク名' do
       context '10文字で入力されている場合' do
-        task = FactoryBot.create(:task, name: 'あいうえおあいうえお')
-        it '登録できる' do
+        task = FactoryBot.build(:task, name: 'あいうえおあいうえお')
+        it '有効である' do
           expect(task).to be_valid
         end
       end
@@ -35,7 +35,7 @@ describe 'Taskモデル', type: :model do
     describe '詳細' do
       context '50文字で入力されている場合' do
         it '有効である' do
-          task = FactoryBot.create(:task, description: 'あいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえお')
+          task = FactoryBot.build(:task, description: 'あいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえお')
           expect(task).to be_valid
         end
       end
