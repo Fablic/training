@@ -14,12 +14,12 @@ describe 'タスク管理機能', type: :system do
         let(:tds){ all('tbody tr')[0].all('td') }
         it 'タスク名が表示される' do
           visit_tasks
-          expect(tds[0]).to have_content task_1.title
+          expect(tds[0]).to have_content '最初のタスク'
         end
 
         it 'ラベルが表示される' do
           visit_tasks
-          expect(tds[1]).to have_content task_1.label
+          expect(tds[1]).to have_content '1'
         end
       end
 
@@ -30,12 +30,12 @@ describe 'タスク管理機能', type: :system do
         let(:tds){ all('tbody tr')[1].all('td') }
         it 'タスク名が表示される' do
           visit_tasks
-          expect(tds[0]).to have_content task_2.title
+          expect(tds[0]).to have_content '1 title'
         end
 
         it 'ラベルが表示される' do
           visit_tasks
-          expect(tds[1]).to have_content task_2.label
+          expect(tds[1]).to have_content '1 label'
         end
       end
 
@@ -76,17 +76,17 @@ describe 'タスク管理機能', type: :system do
       context 'タスクが存在する場合' do
         it 'タスク名が表示される' do
           visit_task_a
-          expect(page).to have_content task_a[:title]
+          expect(page).to have_content '0 title'
         end
 
         it '詳細が表示される' do
           visit_task_a
-          expect(page).to have_content task_a[:description]
+          expect(page).to have_content '最初のタスクを実施する'
         end
 
         it 'ラベルが表示される' do
           visit_task_a
-          expect(page).to have_content task_a[:label]
+          expect(page).to have_content '0 label'
         end
       end
     end
