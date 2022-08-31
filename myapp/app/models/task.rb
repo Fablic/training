@@ -3,11 +3,11 @@
 class Task < ApplicationRecord
   # 結合キー
   belongs_to :user
+  has_many :labels, dependent: :destroy
 
   # バリデーション
   validates :title, length: { minimum: 1, maximum: 128 }
   validates :content, length: { minimum: 1, maximum: 1024 }
-  validates :label, length: { minimum: 1, maximum: 64 }
 
   # ステータスEnum
   enum status: {
