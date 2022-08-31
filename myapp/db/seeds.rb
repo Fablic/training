@@ -17,4 +17,3 @@
       label: "#{n} label"
     )
 end
-  

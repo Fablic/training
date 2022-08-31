@@ -1,6 +1,6 @@
 class Task < ApplicationRecord
   # 結合キー
-  belongs_to :user
+  # belongs_to :user
 
   # ステータスEnum
   enum status: {
