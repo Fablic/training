@@ -1,7 +1,7 @@
 module SessionsHelper
   def login(user)
     token = User.create_login_token
-    cookies.permanent[:login_token] = token
+    cookies[:login_token] = token
     user.update(login_token: User.encrypt_login_token(token))
     @login_user = user
   end
