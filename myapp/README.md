@@ -96,6 +96,15 @@ column_name | type | null | default
 | created_at | datetime | | |
 | updated_at | datetime | | |
 
+users
+column_name | type | null | default
+| ---- | ---- | ---- | ---- |
+| id | integer | not null | auto increment |
+| user_name | varchar | | |
+| password | varchar | | |
+| created_at | datetime | | |
+| updated_at | datetime | | |
+
 
 <br>
 <br>

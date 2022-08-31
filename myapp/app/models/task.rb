@@ -7,6 +7,8 @@ class Task < ApplicationRecord
   validates :detail, presence: true
   validates :detail, length: { maximum: 100 }
 
+  belongs_to :user
+
   def self.search(name, status)
     # Task.where(status: "%#{status}%"). where(['name like?', "%#{name}%"]) if name.present?
     sql = ''

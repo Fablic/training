@@ -3,9 +3,9 @@ class TasksController < ApplicationController
 
   def index
     if params[:name].nil? && params[:status].nil?
-      @tasks = Task.all.page(params[:page]).per(5)
+      @tasks = Task.eager_load(:user).all.page(params[:page]).per(5)
     else
-      @tasks = Task.search(params[:name], params[:status]).page(params[:page]).per(5)
+      @tasks = Task.eager_load(:user).search(params[:name], params[:status]).page(params[:page]).per(5)
     end
   end
 
