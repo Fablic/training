@@ -36,8 +36,8 @@ ja:
     attributes:
       task:
         id: ID
-        # name: タスク名
-        # description: 詳細
+        name: タスク名
+        description: 詳細
   attributes:
     created_at: 登録日時
     updated_at: 更新日時

@@ -23,6 +23,8 @@ gem 'fablicop', require: false
 gem 'rspec-rails', '~> 3.7'
 # FactoryBot
 gem 'factory_bot_rails', '~> 4.11'
+# RailsI18n
+gem 'rails-i18n'
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
