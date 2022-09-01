@@ -81,7 +81,7 @@ RSpec.describe 'TaskSchedule', type: :system do
     expect(page).to have_content 'タスクの編集が完了しました'
     expect(page).to have_no_content 'showタスク'
     expect(page).to have_no_content 'showボディ'
-    expect(page).to have_no_content '2112-09-03'
+    expect(page).to have_no_content '2112/09/03'
   end
 
   it 'failure edit schedule' do
