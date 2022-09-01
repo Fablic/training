@@ -16,6 +16,7 @@ class TasksController < ApplicationController
   # タスク作成画面
   def new
     @task = Task.new
+    @is_status = false
 
     # # 担当者名リスト取得
     # user対応コメントアウト
@@ -49,6 +50,7 @@ class TasksController < ApplicationController
   # タスク編集画面
   def edit
     @task = Task.find(params[:id])
+    @is_status = true
 
     # user対応コメントアウト
     # # 担当者名リスト取得
