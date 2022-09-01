@@ -87,7 +87,7 @@ describe Task, type: :model do
     let!(:titleB1) { FactoryBot.create(:task, title: 'titleB1', status: 'not_started') }
     let!(:titleB2) { FactoryBot.create(:task, title: 'titleB2', status: 'in_progress') }
 
-    context 'word、statusが空白' do
+    context 'title、statusが空白' do
       subject(:title_list) { Task.search('', '').pluck(:title) }
 
       it { is_expected.to include('titleA1') }
@@ -96,7 +96,7 @@ describe Task, type: :model do
       it { is_expected.to include('titleB2') }
     end
 
-    context 'wordのみ指定 ※完全一致' do
+    context 'titleのみ指定 ※完全一致' do
       subject(:title_list) { Task.search('titleA1', '').pluck(:title) }
 
       it { is_expected.to include('titleA1') }
@@ -105,7 +105,7 @@ describe Task, type: :model do
       it { is_expected.not_to include('titleB2') }
     end
 
-    context 'wordのみ指定 ※部分一致' do
+    context 'titleのみ指定 ※部分一致' do
       subject(:title_list) { Task.search('A', '').pluck(:title) }
 
       it { is_expected.to include('titleA1') }
@@ -123,7 +123,7 @@ describe Task, type: :model do
       it { is_expected.not_to include('titleB2') }
     end
 
-    context 'word、statusを指定' do
+    context 'title、statusを指定' do
       subject(:title_list) { Task.search('A', '1').pluck(:title) }
 
       it { is_expected.to include('titleA1') }

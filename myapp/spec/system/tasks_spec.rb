@@ -19,11 +19,11 @@ describe 'Tasks', type: :system do
       let!(:task_B2) { FactoryBot.create(:task, title: 'titleB2', status: 'in_progress') }
 
       context '条件なし検索' do
-        let(:conditions) { { word: '', status: '' } }
+        let(:conditions) { { title: '', status: '' } }
 
         it '検索結果の件数が一致すること' do
           visit root_path
-          fill_in 'word', with: conditions[:word]
+          fill_in 'title', with: conditions[:title]
           select value = conditions[:status], from: 'status'
           click_on '検索'
           expect(all('tbody tr').size).to be(4)
@@ -31,7 +31,7 @@ describe 'Tasks', type: :system do
 
         it 'titleA1が表示されること' do
           visit root_path
-          fill_in 'word', with: conditions[:word]
+          fill_in 'title', with: conditions[:title]
           select value = conditions[:status], from: 'status'
           click_on '検索'
           expect(page).to have_content 'titleA1'
@@ -39,7 +39,7 @@ describe 'Tasks', type: :system do
 
         it 'titleA2が表示されること' do
           visit root_path
-          fill_in 'word', with: conditions[:word]
+          fill_in 'title', with: conditions[:title]
           select value = conditions[:status], from: 'status'
           click_on '検索'
           expect(page).to have_content 'titleA2'
@@ -47,7 +47,7 @@ describe 'Tasks', type: :system do
 
         it 'titleB1が表示されること' do
           visit root_path
-          fill_in 'word', with: conditions[:word]
+          fill_in 'title', with: conditions[:title]
           select value = conditions[:status], from: 'status'
           click_on '検索'
           expect(page).to have_content 'titleB1'
@@ -55,7 +55,7 @@ describe 'Tasks', type: :system do
 
         it 'titleB2が表示されること' do
           visit root_path
-          fill_in 'word', with: conditions[:word]
+          fill_in 'title', with: conditions[:title]
           select value = conditions[:status], from: 'status'
           click_on '検索'
           expect(page).to have_content 'titleB2'
@@ -63,12 +63,12 @@ describe 'Tasks', type: :system do
 
       end
 
-      context 'wordのみ指定して検索' do
-        let(:conditions) { { word: 'A', status: '' } }
+      context 'titleのみ指定して検索' do
+        let(:conditions) { { title: 'A', status: '' } }
 
         it '検索結果の件数が一致すること' do
           visit root_path
-          fill_in 'word', with: conditions[:word]
+          fill_in 'title', with: conditions[:title]
           select value = conditions[:status], from: 'status'
           click_on '検索'
           expect(all('tbody tr').size).to be(2)
@@ -76,7 +76,7 @@ describe 'Tasks', type: :system do
 
         it 'titleA1が表示されること' do
           visit root_path
-          fill_in 'word', with: conditions[:word]
+          fill_in 'title', with: conditions[:title]
           select value = conditions[:status], from: 'status'
           click_on '検索'
           expect(page).to have_content 'titleA1'
@@ -84,7 +84,7 @@ describe 'Tasks', type: :system do
 
         it 'titleA2が表示されること' do
           visit root_path
-          fill_in 'word', with: conditions[:word]
+          fill_in 'title', with: conditions[:title]
           select value = conditions[:status], from: 'status'
           click_on '検索'
           expect(page).to have_content 'titleA2'
@@ -92,7 +92,7 @@ describe 'Tasks', type: :system do
 
         it 'titleB1が表示されないこと' do
           visit root_path
-          fill_in 'word', with: conditions[:word]
+          fill_in 'title', with: conditions[:title]
           select value = conditions[:status], from: 'status'
           click_on '検索'
           expect(page).not_to have_content 'titleB1'
@@ -100,7 +100,7 @@ describe 'Tasks', type: :system do
 
         it 'titleB2が表示されないこと' do
           visit root_path
-          fill_in 'word', with: conditions[:word]
+          fill_in 'title', with: conditions[:title]
           select value = conditions[:status], from: 'status'
           click_on '検索'
           expect(page).not_to have_content 'titleB2'
@@ -108,11 +108,11 @@ describe 'Tasks', type: :system do
       end
 
       context 'statusのみ指定して検索' do
-        let(:conditions) { { word: '', status: '未着手' } }
+        let(:conditions) { { title: '', status: '未着手' } }
 
         it '検索結果の件数が一致すること' do
           visit root_path
-          fill_in 'word', with: conditions[:word]
+          fill_in 'title', with: conditions[:title]
           select value = conditions[:status], from: 'status'
           click_on '検索'
           expect(all('tbody tr').size).to be(2)
@@ -120,7 +120,7 @@ describe 'Tasks', type: :system do
 
         it 'titleA1が表示されること' do
           visit root_path
-          fill_in 'word', with: conditions[:word]
+          fill_in 'title', with: conditions[:title]
           select value = conditions[:status], from: 'status'
           click_on '検索'
           expect(page).to have_content 'titleA1'
@@ -128,7 +128,7 @@ describe 'Tasks', type: :system do
 
         it 'titleA2が表示されないこと' do
           visit root_path
-          fill_in 'word', with: conditions[:word]
+          fill_in 'title', with: conditions[:title]
           select value = conditions[:status], from: 'status'
           click_on '検索'
           expect(page).not_to have_content 'titleA2'
@@ -136,7 +136,7 @@ describe 'Tasks', type: :system do
 
         it 'titleB1が表示されること' do
           visit root_path
-          fill_in 'word', with: conditions[:word]
+          fill_in 'title', with: conditions[:title]
           select value = conditions[:status], from: 'status'
           click_on '検索'
           expect(page).to have_content 'titleB1'
@@ -144,19 +144,19 @@ describe 'Tasks', type: :system do
 
         it 'titleB2が表示されないこと' do
           visit root_path
-          fill_in 'word', with: conditions[:word]
+          fill_in 'title', with: conditions[:title]
           select value = conditions[:status], from: 'status'
           click_on '検索'
           expect(page).not_to have_content 'titleB2'
         end
       end
 
-      context 'word、statusを指定して検索' do
-        let(:conditions) { { word: 'A', status: '未着手' } }
+      context 'title、statusを指定して検索' do
+        let(:conditions) { { title: 'A', status: '未着手' } }
 
         it '検索結果の件数が一致すること' do
           visit root_path
-          fill_in 'word', with: conditions[:word]
+          fill_in 'title', with: conditions[:title]
           select value = conditions[:status], from: 'status'
           click_on '検索'
           expect(all('tbody tr').size).to be(1)
@@ -164,7 +164,7 @@ describe 'Tasks', type: :system do
 
         it 'titleA1が表示されること' do
           visit root_path
-          fill_in 'word', with: conditions[:word]
+          fill_in 'title', with: conditions[:title]
           select value = conditions[:status], from: 'status'
           click_on '検索'
           expect(page).to have_content 'titleA1'
@@ -172,7 +172,7 @@ describe 'Tasks', type: :system do
 
         it 'titleA2が表示されないこと' do
           visit root_path
-          fill_in 'word', with: conditions[:word]
+          fill_in 'title', with: conditions[:title]
           select value = conditions[:status], from: 'status'
           click_on '検索'
           expect(page).not_to have_content 'titleA2'
@@ -180,7 +180,7 @@ describe 'Tasks', type: :system do
 
         it 'titleB1が表示されないこと' do
           visit root_path
-          fill_in 'word', with: conditions[:word]
+          fill_in 'title', with: conditions[:title]
           select value = conditions[:status], from: 'status'
           click_on '検索'
           expect(page).not_to have_content 'titleB1'
@@ -188,7 +188,7 @@ describe 'Tasks', type: :system do
 
         it 'titleB2が表示されないこと' do
           visit root_path
-          fill_in 'word', with: conditions[:word]
+          fill_in 'title', with: conditions[:title]
           select value = conditions[:status], from: 'status'
           click_on '検索'
           expect(page).not_to have_content 'titleB2'

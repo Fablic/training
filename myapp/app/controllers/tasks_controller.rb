@@ -6,8 +6,8 @@ class TasksController < ApplicationController
     # タスク一覧オブジェクト取得
     # user対応コメントアウト
     # @tasks = Task.joins(:user).all
-    if params && (params[:word].present? || params[:status].present?)
-      @tasks = Task.search(params[:word], Task.statuses[params[:status]])
+    if params && (params[:title].present? || params[:status].present?)
+      @tasks = Task.search(params[:title], Task.statuses[params[:status]])
     else
       @tasks = Task.all.order('tasks.created_at desc')
     end
