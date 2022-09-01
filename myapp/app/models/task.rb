@@ -18,14 +18,12 @@ class Task < ApplicationRecord
   }
 
   def self.search(word, status)
-    return Task.all.order('tasks.created_at desc') if word.blank? && status.blank?
+    order = 'tasks.created_at desc';
 
-    sql = ''
-    sql += " title like '%#{word}%' " if word.present?
-    sql += ' AND ' if sql.present? && status.present?
-    sql += " status = '#{status}' " if status.present?
-
-    Task.where(sql).order('tasks.created_at desc')
+    return Task.all.order(order) if word.blank? && status.blank?
+    return Task.where('title like ?', "%#{word}%").order(order) if !word.blank? && status.blank?
+    return Task.where(status: status).order(order) if word.blank? && !status.blank?
+    return Task.where('title like ?', "%#{word}%").where(status: status).order(order) if !word.blank? && !status.blank?
   end
 
 end

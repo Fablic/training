@@ -88,103 +88,48 @@ describe Task, type: :model do
     let!(:titleB2) { FactoryBot.create(:task, title: 'titleB2', status: 'in_progress') }
 
     context 'word、statusが空白' do
-      let(:title_list) { Task.search('', '').pluck(:title) }
+      subject(:title_list) { Task.search('', '').pluck(:title) }
 
-      it 'titleA1が取得されていること' do
-        expect(title_list).to include('titleA1')
-      end
-
-      it 'titleA2が取得されていること' do
-        expect(title_list).to include('titleA2')
-      end
-
-      it 'titleB1が取得されていること' do
-        expect(title_list).to include('titleB1')
-      end
-
-      it 'titleB2が取得されていること' do
-        expect(title_list).to include('titleB2')
-      end
+      it { is_expected.to include('titleA1') }
+      it { is_expected.to include('titleA2') }
+      it { is_expected.to include('titleB1') }
+      it { is_expected.to include('titleB2') }
     end
 
     context 'wordのみ指定 ※完全一致' do
-      let(:title_list) { Task.search('titleA1', '').pluck(:title) }
+      subject(:title_list) { Task.search('titleA1', '').pluck(:title) }
 
-      it 'titleA1が取得されていること' do
-        expect(title_list).to include('titleA1')
-      end
-
-      it 'titleA2が取得されていないこと' do
-        expect(title_list).not_to include('titleA2')
-      end
-
-      it 'titleB1が取得されていないこと' do
-        expect(title_list).not_to include('titleB1')
-      end
-
-      it 'titleB2が取得されていないこと' do
-        expect(title_list).not_to include('titleB2')
-      end
+      it { is_expected.to include('titleA1') }
+      it { is_expected.not_to include('titleA2') }
+      it { is_expected.not_to include('titleB1') }
+      it { is_expected.not_to include('titleB2') }
     end
 
     context 'wordのみ指定 ※部分一致' do
-      let(:title_list) { Task.search('A', '').pluck(:title) }
+      subject(:title_list) { Task.search('A', '').pluck(:title) }
 
-      it 'titleA1が取得されていること' do
-        expect(title_list).to include('titleA1')
-      end
-
-      it 'titleA2が取得されていること' do
-        expect(title_list).to include('titleA2')
-      end
-
-      it 'titleB1が取得されていないこと' do
-        expect(title_list).not_to include('titleB1')
-      end
-
-      it 'titleB2が取得されていないこと' do
-        expect(title_list).not_to include('titleB2')
-      end
+      it { is_expected.to include('titleA1') }
+      it { is_expected.to include('titleA2') }
+      it { is_expected.not_to include('titleB1') }
+      it { is_expected.not_to include('titleB2') }
     end
 
     context 'statusのみ指定' do
-      let(:title_list) { Task.search('', '1').pluck(:title) }
+      subject(:title_list) { Task.search('', '1').pluck(:title) }
 
-      it 'titleA1が取得されていること' do
-        expect(title_list).to include('titleA1')
-      end
-
-      it 'titleA2が取得されていないこと' do
-        expect(title_list).not_to include('titleA2')
-      end
-
-      it 'titleB1が取得されていること' do
-        expect(title_list).to include('titleB1')
-      end
-
-      it 'titleB2が取得されていないこと' do
-        expect(title_list).not_to include('titleB2')
-      end
+      it { is_expected.to include('titleA1') }
+      it { is_expected.not_to include('titleA2') }
+      it { is_expected.to include('titleB1') }
+      it { is_expected.not_to include('titleB2') }
     end
 
     context 'word、statusを指定' do
-      let(:title_list) { Task.search('A', '1').pluck(:title) }
+      subject(:title_list) { Task.search('A', '1').pluck(:title) }
 
-      it 'titleA1が取得されていること' do
-        expect(title_list).to include('titleA1')
-      end
-
-      it 'titleA2が取得されていないこと' do
-        expect(title_list).not_to include('titleA2')
-      end
-
-      it 'titleB1が取得されていないこと' do
-        expect(title_list).not_to include('titleB1')
-      end
-
-      it 'titleB2が取得されていないこと' do
-        expect(title_list).not_to include('titleB2')
-      end
+      it { is_expected.to include('titleA1') }
+      it { is_expected.not_to include('titleA2') }
+      it { is_expected.not_to include('titleB1') }
+      it { is_expected.not_to include('titleB2') }
     end
   end
 end
