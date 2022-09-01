@@ -91,5 +91,4 @@ class TasksController < ApplicationController
 
     task_params
   end
-
 end
