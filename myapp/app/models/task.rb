@@ -16,15 +16,7 @@ class Task < ApplicationRecord
     closed: '3',
   }
 
-  def self.search(word, status)
-    return Task.joins(:user).all.order('tasks.created_at desc') if word.blank? && status.blank?
-
-    sql = ''
-    sql += " title like '%#{word}%' " if word.present?
-    sql += ' AND ' if sql.present? && status.present?
-    sql += " status = '#{status}' " if status.present?
-
-    Task.eager_load(:user).where(sql).order('tasks.created_at desc')
-  end
-
+  # スコープ
+  scope :where_title, -> (title) { where('title like ?', "%#{title}%") if title.present? }
+  scope :where_status, -> (status) { where(status: status) if status.present? }
 end

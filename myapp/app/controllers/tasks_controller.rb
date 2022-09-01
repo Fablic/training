@@ -5,16 +5,17 @@ class TasksController < ApplicationController
   def index
     # タスク一覧オブジェクト取得
     # @tasks = Task.joins(:user).all
-    if params && (params[:word].present? || params[:status].present?)
-      @tasks = Task.search(params[:word], Task.statuses[params[:status]]).page(params[:page]).per(5)
+    if params && (params[:title].present? || params[:status].present?)
+      @tasks = Task.includes(:user).where_title(params[:title]).where_status(params[:status]).order('tasks.created_at desc').page(params[:page]).per(5)
     else
-      @tasks = Task.eager_load(:user).all.order('tasks.created_at desc').page(params[:page]).per(5)
+      @tasks = Task.includes(:user).all.order('tasks.created_at desc').page(params[:page]).per(5)
     end
   end
 
   # タスク作成画面
   def new
     @task = Task.new
+    @is_status = false
 
     # 担当者名リスト取得
     @users_name = users_name
@@ -42,6 +43,7 @@ class TasksController < ApplicationController
   # タスク編集画面
   def edit
     @task = Task.find(params[:id])
+    @is_status = true
 
     # 担当者名リスト取得
     @users_name = users_name
