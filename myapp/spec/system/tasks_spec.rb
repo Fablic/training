@@ -115,7 +115,6 @@ describe 'Tasks', type: :system do
           fill_in 'word', with: conditions[:word]
           select value = conditions[:status], from: 'status'
           click_on '検索'
-
           expect(all('tbody tr').size).to be(2)
         end
 
@@ -124,7 +123,6 @@ describe 'Tasks', type: :system do
           fill_in 'word', with: conditions[:word]
           select value = conditions[:status], from: 'status'
           click_on '検索'
-
           expect(page).to have_content 'titleA1'
         end
 
@@ -133,7 +131,6 @@ describe 'Tasks', type: :system do
           fill_in 'word', with: conditions[:word]
           select value = conditions[:status], from: 'status'
           click_on '検索'
-
           expect(page).not_to have_content 'titleA2'
         end
 
@@ -141,8 +138,7 @@ describe 'Tasks', type: :system do
           visit root_path
           fill_in 'word', with: conditions[:word]
           select value = conditions[:status], from: 'status'
-           click_on '検索'
-
+          click_on '検索'
           expect(page).to have_content 'titleB1'
         end
 
@@ -151,7 +147,6 @@ describe 'Tasks', type: :system do
           fill_in 'word', with: conditions[:word]
           select value = conditions[:status], from: 'status'
           click_on '検索'
-
           expect(page).not_to have_content 'titleB2'
         end
       end
@@ -164,7 +159,6 @@ describe 'Tasks', type: :system do
           fill_in 'word', with: conditions[:word]
           select value = conditions[:status], from: 'status'
           click_on '検索'
-
           expect(all('tbody tr').size).to be(1)
         end
 
@@ -173,7 +167,6 @@ describe 'Tasks', type: :system do
           fill_in 'word', with: conditions[:word]
           select value = conditions[:status], from: 'status'
           click_on '検索'
-
           expect(page).to have_content 'titleA1'
         end
 
@@ -182,7 +175,6 @@ describe 'Tasks', type: :system do
           fill_in 'word', with: conditions[:word]
           select value = conditions[:status], from: 'status'
           click_on '検索'
-
           expect(page).not_to have_content 'titleA2'
         end
 
@@ -191,7 +183,6 @@ describe 'Tasks', type: :system do
           fill_in 'word', with: conditions[:word]
           select value = conditions[:status], from: 'status'
           click_on '検索'
-
           expect(page).not_to have_content 'titleB1'
         end
 
@@ -200,7 +191,6 @@ describe 'Tasks', type: :system do
           fill_in 'word', with: conditions[:word]
           select value = conditions[:status], from: 'status'
           click_on '検索'
-
           expect(page).not_to have_content 'titleB2'
         end
       end
