@@ -56,6 +56,105 @@ describe 'タスク管理機能', type: :system do
         it_behaves_like 'タスク表示'
         it_behaves_like '２件目のタスク表示'
       end
+
+      context 'タスクが存在しない場合' do
+        it 'タスクが表示されない' do
+          visit_tasks
+          expect(page).not_to have_content '最初のタスク'
+        end
+      end
+    end
+
+    describe '検索機能' do
+      # タスクが表示される期待動作を共通化
+      shared_examples_for 'タスク表示' do
+        let(:tds){ all('tbody tr')[0].all('td') }
+
+        context '1件目のタスクの場合' do
+          it 'タスク名が表示される' do
+            visit_tasks
+            fill_in 'name', with: name
+            select(value = status, from: 'status')
+            click_button '検索'
+            expect(tds[0]).to have_content '最初のタスク'
+          end
+          it 'ステータスが表示される' do
+            visit_tasks
+            fill_in 'name', with: name
+            select(value = status, from: 'status')
+            click_button '検索'
+            expect(tds[1]).to have_content '未着手'
+          end
+          it '優先度が表示される' do
+            visit_tasks
+            fill_in 'name', with: name
+            select(value = status, from: 'status')
+            click_button '検索'
+            expect(tds[2]).to have_content '低'
+          end
+        end
+      end
+      shared_examples_for '２件目のタスク表示' do
+        let(:tds){ all('tbody tr')[1].all('td') }
+
+        context '2件目のタスクの場合' do
+          it 'タスク名が表示される' do
+            visit_tasks
+            fill_in 'name', with: name
+            select(value = status, from: 'status')
+            click_button '検索'
+            expect(tds[0]).to have_content '２つ目のタスク'
+          end
+          it 'ステータスが表示される' do
+            visit_tasks
+            fill_in 'name', with: name
+            select(value = status, from: 'status')
+            click_button '検索'
+            expect(tds[1]).to have_content '未着手'
+          end
+          it '優先度が表示される' do
+            visit_tasks
+            fill_in 'name', with: name
+            select(value = status, from: 'status')
+            click_button '検索'
+            expect(tds[2]).to have_content '中'
+          end
+        end
+      end
+
+      context '検索条件に一致するタスクが1件存在する場合' do
+        let!(:task_a) { FactoryBot.create(:task, name: '最初のタスク', detail: '最初のタスクを実施する', status: 1, priority: 1) }
+        let!(:task_b) { FactoryBot.create(:task, name: '２つ目のタスク', detail: '２つ目のタスクを実施する', status: 1, priority: 2) }
+        let(:name) { '最初のタスク' }
+        let(:status) { '未着手' }
+
+        it_behaves_like 'タスク表示'
+      end
+
+      context '検索条件に一致するタスクが2件存在する場合' do
+        let!(:task_a) { FactoryBot.create(:task, name: '最初のタスク', detail: '最初のタスクを実施する', status: 1, priority: 1) }
+        let!(:task_b) { FactoryBot.create(:task, name: '２つ目のタスク', detail: '２つ目のタスクを実施する', status: 1, priority: 2) }
+        let(:name) { 'タスク' }
+        let(:status) { '未着手' }
+
+        it_behaves_like 'タスク表示'
+        it_behaves_like '２件目のタスク表示'
+      end
+
+      context '検索条件に一致するタスクが存在しない場合' do
+        let!(:task_a) { FactoryBot.create(:task, name: '最初のタスク', detail: '最初のタスクを実施する', status: 1, priority: 1) }
+        let!(:task_b) { FactoryBot.create(:task, name: '２つ目のタスク', detail: '２つ目のタスクを実施する', status: 1, priority: 2) }
+        let(:name) { 'テスト' }
+        let(:status) { '完了' }
+
+        it 'タスクが表示されない' do
+          visit_tasks
+          fill_in 'name', with: name
+          select(value = status, from: 'status')
+          click_button '検索'
+          expect(page).not_to have_content 'のタスク'
+        end
+      end
     end
 
     describe '画面遷移機能' do

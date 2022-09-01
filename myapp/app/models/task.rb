@@ -6,4 +6,8 @@ class Task < ApplicationRecord
   validates :name, length: { maximum: 30 }
   validates :detail, presence: true
   validates :detail, length: { maximum: 100 }
+
+  scope :name_like, -> (name) { where('name LIKE ?', "%#{name}%") if name.present? }
+  scope :status_equal, -> (status) { where('status = ?', status) if status.present? }
+
 end
