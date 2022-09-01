@@ -42,11 +42,7 @@ class TasksController < ApplicationController
   end
 
   def search
-    if params[:name].nil? && params[:status].nil?
-      @tasks = Task.all
-    else
-      @tasks = Task.name_like(params[:name]).status_equal(Task.statuses[params[:status]])
-    end
+    @tasks = Task.name_like(params[:name]).status_equal(Task.statuses[params[:status]])
     render :index
   end
 
