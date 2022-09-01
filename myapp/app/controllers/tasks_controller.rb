@@ -13,19 +13,18 @@ class TasksController < ApplicationController
 
   # タスク作成画面
   def new
-    @task = Task.new
+    @task_form = TaskForm.new
   end
 
   # タスク作成画面
   def create
-    @task = Task.new(task_params)
+    @task_form = TaskForm.new(task_params)
 
-    if @task.save
+    if @task_form.save
       redirect_to(root_path, notice: 'タスク作成成功')
     else
       render(:new, status: :unprocessable_entity)
     end
-
   end
 
   # タスク詳細画面
@@ -59,8 +58,7 @@ class TasksController < ApplicationController
 
   # Taskパラメータ
   def task_params
-    task_params = params.require(:task).permit(:title, :content, :label, :status)
-    task_params[:user_id] = login_user.id
-    task_params
+    params.require(:task_form)[:user_id] = login_user.id
+    params.require(:task_form).permit(:title, :content, :label1, :label2, :label3, :label4, :label5, :user_id, :status)
   end
 end
