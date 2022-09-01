@@ -13,23 +13,26 @@ class TasksController < ApplicationController
 
   def show
     @task = Task.find(params[:id])
+    @user = User.find(@task.user_id)
   end
 
   def new
     @task = Task.new
+    @users_name = users_name
   end
 
   def edit
     @task = Task.find(params[:id])
+    @users_name = users_name
   end
 
   def create
     @task = Task.new(task_params)
-    @task.user_id = 1
 
     if @task.save
       redirect_to tasks_url, notice: "タスク「#{@task.title}」を登録しました。"
     else
+      @users_name = users_name
       render :new
     end
   end
@@ -53,10 +56,14 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:title, :description, :status)
+    params.require(:task).permit(:title, :description, :status, :user_id)
   end
 
   def set_task
     @task = Task.find(params[:id])
+  end
+
+  def users_name
+    User.all.map { |k| [k.name, k.id] }
   end
 end

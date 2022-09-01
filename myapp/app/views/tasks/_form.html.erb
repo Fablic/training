@@ -28,6 +28,10 @@
         <%= f.select(:status, Task.statuses.keys.map { |k| [I18n.t("enums.task.status.#{k}"), k] }) %>
       <% end %>
     </div>
+    <div>
+      <%= f.label :ユーザ %>
+     <%= f.select(:user_id, @users_name) %>
+    </div>
     <br>
     <div>
     <%= f.submit id: 'submit' %>
