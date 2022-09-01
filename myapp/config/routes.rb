@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
+
   root to: 'tasks#index'
   resources :tasks
   get 'search' => 'tasks#search'
+
+  get 'login' => 'sessions#new'
+  post 'login' => 'sessions#create'
 
   get '*not_found' => 'application#routing_error'
   post '*not_found' => 'application#routing_error'
