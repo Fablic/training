@@ -18,8 +18,8 @@ class Task < ApplicationRecord
   }
 
   # スコープ
-  scope :where_title, -> (title) { where('title like ?', "%#{title}%") if !title.blank? }
-  scope :where_status, -> (status) { where(status: status) if !status.blank? }
+  scope :where_title, -> (title) { where('title like ?', "%#{title}%") if title.present? }
+  scope :where_status, -> (status) { where(status: status) if status.present? }
 
   def self.search(title, status)
     order = 'tasks.created_at desc';
