@@ -6,12 +6,17 @@ class TasksController < ApplicationController
     # タスク一覧オブジェクト取得
     # user対応コメントアウト
     # @tasks = Task.joins(:user).all
-    @tasks = Task.all.order('tasks.created_at desc')
+    if params && (params[:title].present? || params[:status].present?)
+      @tasks = Task.where_title(params[:title]).where_status(params[:status]).order('tasks.created_at desc')
+    else
+      @tasks = Task.all.order('tasks.created_at desc')
+    end
   end
 
   # タスク作成画面
   def new
     @task = Task.new
+    @is_status = false
 
     # # 担当者名リスト取得
     # user対応コメントアウト
@@ -45,6 +50,7 @@ class TasksController < ApplicationController
   # タスク編集画面
   def edit
     @task = Task.find(params[:id])
+    @is_status = true
 
     # user対応コメントアウト
     # # 担当者名リスト取得
@@ -54,18 +60,12 @@ class TasksController < ApplicationController
     #   @select_user_names.push([user.name, user.id])
     # end
 
-    # status対応コメントアウト
-    # 状況リスト取得
-    # @statuses = []
-    # Task::STATUS_VIEW.each do |key, value|
-    #   @statuses.push([value, key])
-    # end
   end
 
   # タスク更新
   def update
     @task = Task.find(params[:id])
-    
+
     if @task.update(task_params)
       redirect_to(root_path, notice: 'タスク更新成功')
     else
@@ -91,4 +91,5 @@ class TasksController < ApplicationController
 
     task_params
   end
+
 end

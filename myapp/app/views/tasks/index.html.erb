@@ -9,7 +9,12 @@
       <%= link_to(I18n.t('link.create'), new_task_path) %>
   </div>
   <div name='serch-task'>
-
+  <span>検索</span>
+  <%= form_with(url: root_path, local: true, method: :get) do |f| %>
+    <%= f.text_field(:title) %>
+    <%= f.select(:status, Task.statuses.keys.map { |k| [I18n.t("enums.task.status.#{k}"), k] }, include_blank: true) %>
+    <%= f.submit('検索') %>
+  <% end %>
   </div>
   <div name='list-task'>
     <table>
@@ -19,8 +24,7 @@
           <th><%= I18n.t('task.label') %></th>
           <!-- user対応コメントアウト -->
           <!-- <th>担当者</th> -->
-          <!-- status対応コメントアウト -->
-          <!-- <th>状況</th> -->
+          <th><%= I18n.t('task.status') %></th>
           <th><%= I18n.t('task.created_at') %></th>
           <th></th>
         </tr>
@@ -32,8 +36,7 @@
             <td><span><%= task.label %></span></td>
             <!-- user対応コメントアウト -->
             <!-- <td><span><%#= task.user.name %></span></td> -->
-            <!-- status対応コメントアウト -->
-            <!-- <td><span><%#= get_status_view(task.status) %></span></td> -->
+            <td><span><%= I18n.t("enums.task.status.#{task.status}") %></span></td>
             <td><span><%= I18n.l(task.created_at) %></span></td>
             <td><%= link_to(I18n.t('link.detail'), task_path(task)) %></td>
           </tr>

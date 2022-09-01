@@ -43,6 +43,12 @@ ja:
         deleted_at: 削除日
         crated_at: 作成日
         updated_at: 更新日
+  enums:
+    task:
+      status:
+        not_started: 未着手
+        in_progress: 着手中
+        closed: 完了
   view_title:
     index: 'タスク一覧画面'
     new: 'タスク作成画面'
@@ -52,6 +58,7 @@ ja:
     title: 'タイトル'
     content: '内容'
     label: 'ラベル'
+    status: 'ステータス'
     created_at: '作成日'
   button:
     create: '作成'
