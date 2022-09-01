@@ -7,7 +7,7 @@ class TasksController < ApplicationController
     if params && (params[:word].present? || params[:status].present?)
       @tasks = Task.search(login_user.id, params[:word], Task.statuses[params[:status]]).page(params[:page]).per(5)
     else
-      @tasks = Task.eager_load(:labels).where(user_id: login_user.id).order('tasks.created_at desc, labels.created_at desc').page(params[:page]).per(5)
+      @tasks = Task.includes(:labels).where(user_id: login_user.id).order('tasks.created_at desc').page(params[:page]).per(5)
     end
   end
 
@@ -29,7 +29,12 @@ class TasksController < ApplicationController
 
   # タスク詳細画面
   def show
-    @task = Task.find(params[:id])
+    @task = Task.includes(:labels).find(params[:id])
+    @label1 = @task.labels[0].name if @task.labels.size > 0
+    @label2 = @task.labels[1].name if @task.labels.size > 1
+    @label3 = @task.labels[2].name if @task.labels.size > 2
+    @label4 = @task.labels[3].name if @task.labels.size > 3
+    @label5 = @task.labels[4].name if @task.labels.size > 4
   end
 
   # タスク編集画面

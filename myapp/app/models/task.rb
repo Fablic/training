@@ -17,7 +17,7 @@ class Task < ApplicationRecord
   }
 
   def self.search(user_id, word, status)
-    return Task.eager_load(:labels).all.order('tasks.created_at desc, labels.created_at desc') if user_id.nil? && word.blank? && status.blank?
+    return Task.includes(:labels).all.order('tasks.created_at desc') if user_id.nil? && word.blank? && status.blank?
 
     sql = ''
     sql += " user_id = #{user_id} " if user_id.present?
@@ -26,6 +26,6 @@ class Task < ApplicationRecord
     sql += ' AND ' if sql.length > 0 && status.present?
     sql += " status = '#{status}' " if status.present?
 
-    Task.eager_load(:labels).where(sql).order('tasks.created_at desc, labels.created_at desc')
+    Task.includes(:labels).where(sql).order('tasks.created_at desc')
   end
 end
