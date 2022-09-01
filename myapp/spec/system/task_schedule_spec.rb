@@ -5,10 +5,8 @@ require 'rails_helper'
 RSpec.describe 'TaskSchedule', type: :system do
   before do
     @task = Task.create(title: 'showタスク', body: 'showボディ', finish_at: 1.year.from_now)
-    @task2 = Task.create(title: 'secondタスク', body: 'secondボディ', created_at: 1.day.from_now,
-       finish_at: 1.day.from_now)
-    @task3 = Task.create(title: 'thirdタスク', body: 'thirdボディ', created_at: 1.day.ago,
-       finish_at: 1.week.from_now)
+    @task2 = Task.create(title: 'secondタスク', body: 'secondボディ', created_at: 1.day.from_now, finish_at: 1.day.from_now)
+    @task3 = Task.create(title: 'thirdタスク', body: 'thirdボディ', created_at: 1.day.ago, finish_at: 1.week.from_now)
     visit task_schedule_index_path
   end
 

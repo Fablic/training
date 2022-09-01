@@ -3,7 +3,7 @@
 class Task < ApplicationRecord
   validates :title, presence: true
   validates :body,  presence: true
-  validates :finish_at,  presence: true
+  validates :finish_at, presence: true
 
   scope :desc, -> { order(created_at: :desc) }
   scope :finish_de, -> { order(finish_at: :desc) }
