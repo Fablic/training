@@ -17,13 +17,12 @@ class Task < ApplicationRecord
     closed: '3',
   }
 
+  # スコープ
+  scope :where_word, -> (word) { where('title like ?', "%#{word}%") if !word.blank? }
+  scope :where_status, -> (status) { where(status: status) if !status.blank? }
+
   def self.search(word, status)
     order = 'tasks.created_at desc';
-
-    return Task.all.order(order) if word.blank? && status.blank?
-    return Task.where('title like ?', "%#{word}%").order(order) if !word.blank? && status.blank?
-    return Task.where(status: status).order(order) if word.blank? && !status.blank?
-    return Task.where('title like ?', "%#{word}%").where(status: status).order(order) if !word.blank? && !status.blank?
+    return Task.where_word(word).where_status(status).order(order);
   end
-
 end
