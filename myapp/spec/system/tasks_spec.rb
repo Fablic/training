@@ -95,8 +95,8 @@ describe 'タスク管理機能', type: :system do
   describe '新規登録機能' do
     describe '登録機能' do
       context 'タスクの内容を入力した場合' do
-        let(:name) { '新規作成テスト用タスク' }
-        let(:description) { '新規作成テスト用タスクを実施する' }
+        let(:name) { '新規作成テストタスク' }
+        let(:description) { '新規作成テストタスクを実施する' }
         subject(:visit_new_task){ visit new_task_path }
 
         it 'タスクが作成される' do
@@ -106,7 +106,7 @@ describe 'タスク管理機能', type: :system do
           # DBに登録されている
           click_button 'タスクを登録'
           # 画面で入力された内容でDBに登録されている
-          expect(Task.find_by(name: '新規作成テスト用タスク', description: '新規作成テスト用タスクを実施する')).not_to be_nil
+          expect(Task.find_by(name: '新規作成テストタスク', description: '新規作成テストタスクを実施する')).not_to be_nil
         end
 
         it 'Flashメッセージが表示される' do
@@ -114,7 +114,7 @@ describe 'タスク管理機能', type: :system do
           fill_in 'タスク名', with: name
           fill_in '詳細', with: description
           click_button 'タスクを登録'
-          expect(page).to have_selector '.alert-success', text: 'タスク「新規作成テスト用タスク」を登録しました。'
+          expect(page).to have_selector '.alert-success', text: 'タスク「新規作成テストタスク」を登録しました。'
         end
 
         it 'タスク一覧画面が表示される' do
@@ -158,8 +158,8 @@ describe 'タスク管理機能', type: :system do
 
     describe '更新機能' do
       context 'タスクの各項目を更新した場合' do
-        let(:name) { '新規作成テスト用タスク２' }
-        let(:description) { '新規作成テスト用タスク２を実施する' }
+        let(:name) { '更新テストタスク１' }
+        let(:description) { '更新テストタスク１を実施する' }
 
         it 'タスクが更新される' do
           visit_task_a_edit
@@ -168,7 +168,7 @@ describe 'タスク管理機能', type: :system do
           fill_in '詳細', with: description
           click_button 'タスクを更新'
           # 画面で入力された内容でDBのデータが更新されている
-          expect(Task.find_by(name: '新規作成テスト用タスク２', description: '新規作成テスト用タスク２を実施する')).not_to be_nil
+          expect(Task.find_by(name: '更新テストタスク１', description: '更新テストタスク１を実施する')).not_to be_nil
         end
 
         it 'Flashメッセージが表示される' do
@@ -178,7 +178,7 @@ describe 'タスク管理機能', type: :system do
           fill_in '詳細', with: description
           click_button 'タスクを更新'
           # Flashメッセージが表示される
-          expect(page).to have_selector '.alert-success', text: 'タスク「新規作成テスト用タスク２」を更新しました。'
+          expect(page).to have_selector '.alert-success', text: 'タスク「更新テストタスク１」を更新しました。'
         end
       end
     end

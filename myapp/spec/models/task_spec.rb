@@ -35,7 +35,8 @@ describe 'Taskモデル', type: :model do
     describe '詳細' do
       context '50文字で入力されている場合' do
         it '有効である' do
-          task = FactoryBot.build(:task, description: 'あいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえお')
+          task = FactoryBot.build(:task, description: 'あいうえおあいうえおあいうえおあいうえおあいうえお'\
+            'あいうえおあいうえおあいうえおあいうえおあいうえお')
           expect(task).to be_valid
         end
       end
@@ -56,7 +57,8 @@ describe 'Taskモデル', type: :model do
 
       context '51文字以上の場合' do
         it '無効である' do
-          task = FactoryBot.build(:task, description: 'あいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあ')
+          task = FactoryBot.build(:task, description: 'あいうえおあいうえおあいうえおあいうえおあいうえお'\
+            'あいうえおあいうえおあいうえおあいうえおあいうえおあ')
           expect(task).to be_invalid
         end
       end
