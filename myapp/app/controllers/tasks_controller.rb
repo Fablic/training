@@ -2,14 +2,14 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def index
-    if params[:name].nil? && params[:status].nil?
-      @tasks = Task.eager_load(:user).all.page(params[:page]).per(5)
-    else
-      @tasks = Task.eager_load(:user).search(params[:name], params[:status]).page(params[:page]).per(5)
+    @tasks = current_user.tasks.page(params[:page]).per(5)
+    @tasks.each do |f|
+      puts f.user.password
     end
   end
 
   def show
+    current_user.tasks.find(params[:id])
   end
 
   def new
@@ -17,7 +17,7 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.new(task_params)
+    @task = current_user.tasks.new(task_params)
 
     if @task.save
       redirect_to tasks_url, notice: "タスク「#{@task.name}」を登録しました。"
@@ -30,6 +30,8 @@ class TasksController < ApplicationController
   end
 
   def update
+    current_user.tasks.find(params[:id])
+
     if @task.update(task_params)
       redirect_to task_url, notice: "タスク「#{@task.name}」を更新しました。"
     else
@@ -38,6 +40,8 @@ class TasksController < ApplicationController
   end
 
   def destroy
+    current_user.tasks.find(params[:id])
+
     if @task.destroy
       redirect_to tasks_url, notice: "タスク「#{@task.name}」を削除しました。"
     else
