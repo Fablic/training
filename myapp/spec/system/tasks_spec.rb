@@ -278,11 +278,11 @@ describe 'Tasks', type: :system do
 
     describe 'ページングエリア' do
       context 'ページングなし' do
-        let!(:task_one) { FactoryBot.create(:task) }
-        let!(:task_two) { FactoryBot.create(:task) }
-        let!(:task_three) { FactoryBot.create(:task) }
-        let!(:task_four) { FactoryBot.create(:task) }
-        let!(:task_five) { FactoryBot.create(:task) }
+        let!(:task_one) { FactoryBot.create(:task, user_id: user.id) }
+        let!(:task_two) { FactoryBot.create(:task, user_id: user.id) }
+        let!(:task_three) { FactoryBot.create(:task, user_id: user.id) }
+        let!(:task_four) { FactoryBot.create(:task, user_id: user.id) }
+        let!(:task_five) { FactoryBot.create(:task, user_id: user.id) }
 
         it 'ページングが表示されないこと ページ番号1' do
           visit root_path
@@ -306,17 +306,17 @@ describe 'Tasks', type: :system do
       end
 
       context 'ページングあり' do
-        let!(:task_one) { FactoryBot.create(:task, title: 'titleOne') }
-        let!(:task_two) { FactoryBot.create(:task, title: 'titleTwo') }
-        let!(:task_three) { FactoryBot.create(:task, title: 'titleThree') }
-        let!(:task_four) { FactoryBot.create(:task, title: 'titleFour') }
-        let!(:task_five) { FactoryBot.create(:task, title: 'titleFive') }
-        let!(:task_six) { FactoryBot.create(:task, title: 'titleSix') }
-        let!(:task_seven) { FactoryBot.create(:task, title: 'titleSeven') }
-        let!(:task_eight) { FactoryBot.create(:task, title: 'titleEight') }
-        let!(:task_nine) { FactoryBot.create(:task, title: 'titleNine') }
-        let!(:task_ten) { FactoryBot.create(:task, title: 'titleTen') }
-        let!(:task_eleven) { FactoryBot.create(:task, title: 'titleEleven') }
+        let!(:task_one) { FactoryBot.create(:task, title: 'titleOne', user_id: user.id) }
+        let!(:task_two) { FactoryBot.create(:task, title: 'titleTwo', user_id: user.id) }
+        let!(:task_three) { FactoryBot.create(:task, title: 'titleThree', user_id: user.id) }
+        let!(:task_four) { FactoryBot.create(:task, title: 'titleFour', user_id: user.id) }
+        let!(:task_five) { FactoryBot.create(:task, title: 'titleFive', user_id: user.id) }
+        let!(:task_six) { FactoryBot.create(:task, title: 'titleSix', user_id: user.id) }
+        let!(:task_seven) { FactoryBot.create(:task, title: 'titleSeven', user_id: user.id) }
+        let!(:task_eight) { FactoryBot.create(:task, title: 'titleEight', user_id: user.id) }
+        let!(:task_nine) { FactoryBot.create(:task, title: 'titleNine', user_id: user.id) }
+        let!(:task_ten) { FactoryBot.create(:task, title: 'titleTen', user_id: user.id) }
+        let!(:task_eleven) { FactoryBot.create(:task, title: 'titleEleven', user_id: user.id) }
 
         it 'ページングが表示されること ページ番号1' do
           visit root_path

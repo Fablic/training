@@ -5,9 +5,9 @@ class TasksController < ApplicationController
   def index
     # タスク一覧オブジェクト取得
     if params && (params[:title].present? || params[:status].present?)
-      @tasks = Task.where_user_id(ogin_user.id).where_title(params[:title]).where_status(params[:status]).order('tasks.created_at desc').page(params[:page])
+      @tasks = Task.where_user_id(login_user.id).where_title(params[:title]).where_status(params[:status]).order('tasks.created_at desc').page(params[:page])
     else
-      @tasks = Task.where_user_id(ogin_user.id).order('tasks.created_at desc').page(params[:page])
+      @tasks = Task.where_user_id(login_user.id).order('tasks.created_at desc').page(params[:page])
     end
   end
 
@@ -26,7 +26,6 @@ class TasksController < ApplicationController
     else
       render(:new, status: :unprocessable_entity)
     end
-
   end
 
   # タスク詳細画面
@@ -37,6 +36,7 @@ class TasksController < ApplicationController
   # タスク編集画面
   def edit
     @task = Task.find(params[:id])
+    @is_status = true
   end
 
   # タスク更新
