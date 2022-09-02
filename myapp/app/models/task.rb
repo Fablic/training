@@ -10,4 +10,5 @@ class Task < ApplicationRecord
   scope :name_like, -> (name) { where('name LIKE ?', "%#{name}%") if name.present? }
   scope :status_equal, -> (status) { where('status = ?', status) if status.present? }
 
+  belongs_to :user
 end

@@ -2,6 +2,7 @@ require 'rails_helper'
 
 describe 'タスク管理機能', type: :system do
   describe '一覧表示機能' do
+    let!(:user_a) { FactoryBot.create(:user) }
     subject(:visit_tasks) { visit tasks_path }
 
     describe '表示機能'do
@@ -44,14 +45,14 @@ describe 'タスク管理機能', type: :system do
       end
 
       context 'タスクが1件存在する場合' do
-        let!(:task_1) { FactoryBot.create(:task, name: '最初のタスク', detail: '最初のタスクを実施する', status: 1, priority: 1) }
+        let!(:task_1) { FactoryBot.create(:task, name: '最初のタスク', detail: '最初のタスクを実施する', status: 1, priority: 1, user: user_a) }
 
         it_behaves_like 'タスク表示'
       end
 
       context 'タスクが2件(複数)存在する場合' do
-        let!(:task_1) { FactoryBot.create(:task, name: '最初のタスク', detail: '最初のタスクを実施する', status: 1, priority: 1) }
-        let!(:task_2) { FactoryBot.create(:task, name: '２つ目のタスク', detail: '２つ目のタスクを実施する', status: 1, priority: 2) }
+        let!(:task_1) { FactoryBot.create(:task, name: '最初のタスク', detail: '最初のタスクを実施する', status: 1, priority: 1, user: user_a) }
+        let!(:task_2) { FactoryBot.create(:task, name: '２つ目のタスク', detail: '２つ目のタスクを実施する', status: 1, priority: 2, user: user_a) }
 
         it_behaves_like 'タスク表示'
         it_behaves_like '２件目のタスク表示'
@@ -66,6 +67,7 @@ describe 'タスク管理機能', type: :system do
     end
 
     describe '検索機能' do
+      let!(:user_a) { FactoryBot.create(:user) }
       # タスクが表示される期待動作を共通化
       shared_examples_for 'タスク表示' do
         let(:tds){ all('tbody tr')[0].all('td') }
@@ -123,8 +125,8 @@ describe 'タスク管理機能', type: :system do
       end
 
       context '検索条件に一致するタスクが1件存在する場合' do
-        let!(:task_a) { FactoryBot.create(:task, name: '最初のタスク', detail: '最初のタスクを実施する', status: 1, priority: 1) }
-        let!(:task_b) { FactoryBot.create(:task, name: '２つ目のタスク', detail: '２つ目のタスクを実施する', status: 1, priority: 2) }
+        let!(:task_a) { FactoryBot.create(:task, name: '最初のタスク', detail: '最初のタスクを実施する', status: 1, priority: 1, user: user_a) }
+        let!(:task_b) { FactoryBot.create(:task, name: '２つ目のタスク', detail: '２つ目のタスクを実施する', status: 1, priority: 2, user: user_a) }
         let(:name) { '最初のタスク' }
         let(:status) { '未着手' }
 
@@ -132,8 +134,8 @@ describe 'タスク管理機能', type: :system do
       end
 
       context '検索条件に一致するタスクが2件存在する場合' do
-        let!(:task_a) { FactoryBot.create(:task, name: '最初のタスク', detail: '最初のタスクを実施する', status: 1, priority: 1) }
-        let!(:task_b) { FactoryBot.create(:task, name: '２つ目のタスク', detail: '２つ目のタスクを実施する', status: 1, priority: 2) }
+        let!(:task_a) { FactoryBot.create(:task, name: '最初のタスク', detail: '最初のタスクを実施する', status: 1, priority: 1, user: user_a) }
+        let!(:task_b) { FactoryBot.create(:task, name: '２つ目のタスク', detail: '２つ目のタスクを実施する', status: 1, priority: 2, user: user_a) }
         let(:name) { 'タスク' }
         let(:status) { '未着手' }
 
@@ -142,8 +144,8 @@ describe 'タスク管理機能', type: :system do
       end
 
       context '検索条件に一致するタスクが存在しない場合' do
-        let!(:task_a) { FactoryBot.create(:task, name: '最初のタスク', detail: '最初のタスクを実施する', status: 1, priority: 1) }
-        let!(:task_b) { FactoryBot.create(:task, name: '２つ目のタスク', detail: '２つ目のタスクを実施する', status: 1, priority: 2) }
+        let!(:task_a) { FactoryBot.create(:task, name: '最初のタスク', detail: '最初のタスクを実施する', status: 1, priority: 1, user: user_a) }
+        let!(:task_b) { FactoryBot.create(:task, name: '２つ目のタスク', detail: '２つ目のタスクを実施する', status: 1, priority: 2, user: user_a) }
         let(:name) { 'テスト' }
         let(:status) { '完了' }
 
@@ -158,7 +160,7 @@ describe 'タスク管理機能', type: :system do
     end
 
     describe '画面遷移機能' do
-      let!(:task_a) { FactoryBot.create(:task, name: '最初のタスク', detail: '最初のタスクを実施する', status: 1, priority: 1) }
+      let!(:task_a) { FactoryBot.create(:task, name: '最初のタスク', detail: '最初のタスクを実施する', status: 1, priority: 1, user: user_a) }
       context '詳細ボタンをクリックした場合' do
         it '詳細画面へ遷移できる' do
           visit_tasks
@@ -178,7 +180,8 @@ describe 'タスク管理機能', type: :system do
   end
 
   describe '詳細表示機能' do
-    let!(:task_a) { FactoryBot.create(:task, name: '最初のタスク', detail: '最初のタスクを実施する', status: 1, priority: 1) }
+    let!(:user_a) { FactoryBot.create(:user) }
+    let!(:task_a) { FactoryBot.create(:task, name: '最初のタスク', detail: '最初のタスクを実施する', status: 1, priority: 1, user: user_a) }
     subject(:visit_task_a) { visit task_path(task_a) }
 
     describe '表示機能' do
@@ -248,6 +251,7 @@ describe 'タスク管理機能', type: :system do
   end
 
   describe '新規登録機能' do
+    let!(:user_a) { FactoryBot.create(:user) }
     subject(:visit_new_task){ visit new_task_path }
 
     describe '登録機能' do
@@ -256,6 +260,7 @@ describe 'タスク管理機能', type: :system do
         let(:detail) { '新規作成のテストを書く' }
         let(:status) { '未着手' }
         let(:priority) { '低' }
+        let(:user_id) { 1 }
 
         it 'タスクの件数が1件増える' do
           # タスク内容入力
@@ -264,6 +269,7 @@ describe 'タスク管理機能', type: :system do
           fill_in '詳細', with: detail
           select(value = status, from: 'task[status]')
           select(value = priority, from: 'task[priority]')
+          fill_in 'User', with: user_id
           # DBに登録されている
           expect { click_button '登録' }.to change(Task, :count).by(1)
         end
@@ -275,6 +281,7 @@ describe 'タスク管理機能', type: :system do
           fill_in '詳細', with: detail
           select(value = status, from: 'task[status]')
           select(value = priority, from: 'task[priority]')
+          fill_in 'User', with: user_id
           click_button '登録'
           # 画面で入力された内容でDBに登録されている
           expect(Task.find_by(name: '新規作成のテスト', detail: '新規作成のテストを書く', status: 'not_started', priority: 'low')).not_to be_nil
@@ -287,6 +294,7 @@ describe 'タスク管理機能', type: :system do
           fill_in '詳細', with: detail
           select(value = status, from: 'task[status]')
           select(value = priority, from: 'task[priority]')
+          fill_in 'User', with: user_id
           # Flashメッセージが表示される
           click_button '登録'
           expect(page).to have_selector '.alert-success', text: 'タスク「新規作成のテスト」を登録しました。'
@@ -319,7 +327,8 @@ describe 'タスク管理機能', type: :system do
   end
 
   describe '編集機能' do
-    let!(:task_a) { FactoryBot.create(:task, name: '最初のタスク', detail: '最初のタスクを実施する', status: 1, priority: 1) }
+    let!(:user_a) { FactoryBot.create(:user) }
+    let!(:task_a) { FactoryBot.create(:task, name: '最初のタスク', detail: '最初のタスクを実施する', status: 1, priority: 1, user: user_a) }
     subject(:visit_task_a_edit){visit edit_task_path(task_a)}
 
     describe '表示機能' do
