@@ -2,7 +2,7 @@
   <h1><%= I18n.t('view_title.edit') %></h1>
 </div>
 <div name='content'>
-  <%= render partial: 'form', locals: { url: task_path(@task), method: 'put', button_name: I18n.t('button.update'), is_status: true } %>
+  <%= render partial: 'form', locals: { url: task_path(@task), method: 'put', button_name: I18n.t('button.update'), is_status: @is_status } %>
 </div>
 <div name='footer'>
   <%= link_to(I18n.t('link.list_back'), root_path) %>

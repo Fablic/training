@@ -4,17 +4,17 @@ class TasksController < ApplicationController
   # タスク一覧画面
   def index
     # タスク一覧オブジェクト取得
-    # @tasks = Task.joins(:user).all
-    if params && (params[:word].present? || params[:status].present?)
-      @tasks = Task.search(login_user.id, params[:word], Task.statuses[params[:status]]).page(params[:page]).per(5)
+    if params && (params[:title].present? || params[:status].present?)
+      @tasks = Task.where_user_id(ogin_user.id).where_title(params[:title]).where_status(params[:status]).order('tasks.created_at desc').page(params[:page])
     else
-      @tasks = Task.where(user_id: login_user.id).order('tasks.created_at desc').page(params[:page]).per(5)
+      @tasks = Task.where_user_id(ogin_user.id).order('tasks.created_at desc').page(params[:page])
     end
   end
 
   # タスク作成画面
   def new
     @task = Task.new
+    @is_status = false
   end
 
   # タスク作成画面

@@ -16,16 +16,8 @@ class Task < ApplicationRecord
     closed: '3',
   }
 
-  def self.search(user_id, word, status)
-    return Task.all.order('tasks.created_at desc') if user_id.nil? && word.blank? && status.blank?
-
-    sql = ''
-    sql += " user_id = #{user_id} " if user_id.present?
-    sql += ' AND ' if sql.length > 0 && word.present?
-    sql += " title like '%#{word}%' " if word.present?
-    sql += ' AND ' if sql.length > 0 && status.present?
-    sql += " status = '#{status}' " if status.present?
-
-    Task.where(sql).order('tasks.created_at desc')
-  end
+    # スコープ
+    scope :where_title, -> (title) { where('title like ?', "%#{title}%") if title.present? }
+    scope :where_status, -> (status) { where(status: status) if status.present? }
+    scope :where_user_id, -> (user_id) { where(user_id: user_id) if user_id.present? }
 end
