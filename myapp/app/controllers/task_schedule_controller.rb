@@ -11,7 +11,7 @@ class TaskScheduleController < ApplicationController
              elsif params[:finish_asc]
                Task.all.finish_asc
              else
-               Task.all.finish_a
+               Task.all.finish_asc
              end
   end
 
