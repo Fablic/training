@@ -4,22 +4,30 @@ require 'rails_helper'
 
 RSpec.describe 'TaskSchedule', type: :system do
   before do
-    @task = Task.create(title: 'showタスク', body: 'showボディ')
-    @task2 = Task.create(title: 'secondタスク', body: 'secondボディ', created_at: 1.day.from_now)
-    @task3 = Task.create(title: 'thirdタスク', body: 'thirdボディ', created_at: 1.day.ago)
+    @task = Task.create(title: 'showタスク', body: 'showボディ', finish_at: 1.year.from_now)
+    @task2 = Task.create(title: 'secondタスク', body: 'secondボディ', created_at: 1.day.from_now, finish_at: 1.day.from_now)
+    @task3 = Task.create(title: 'thirdタスク', body: 'thirdボディ', created_at: 1.day.ago, finish_at: 1.week.from_now)
     visit task_schedule_index_path
   end
 
   it 'complete initial display' do
-    expect(page.text).to match(/secondタスク.*showタスク.*thirdタスク/)
+    expect(page.text).to match(/secondタスク.*thirdタスク.*showタスク/)
   end
 
   it 'complete order created_at' do
-    click_link '▼'
+    click_link('▼', href: /asc=true/)
     expect(page.text).to match(/thirdボディ.*showボディ.*secondボディ/)
 
-    click_link '▲'
+    click_link('▲', href: /desc=true/)
     expect(page.text).to match(/secondボディ.*showボディ.*thirdボディ/)
+  end
+
+  it 'complete order finish_at' do
+    click_link('▼', href: /finish_a=true/)
+    expect(page.text).to match(/secondタスク.*thirdタスク.*showタスク/)
+
+    click_link('▲', href: /finish_de=true/)
+    expect(page.text).to match(/showボディ.*thirdボディ.*secondボディ/)
   end
 
   it 'complete new task create' do
@@ -28,11 +36,13 @@ RSpec.describe 'TaskSchedule', type: :system do
 
     fill_in 'task[title]', with: 'newタスク'
     fill_in 'task[body]', with: 'newボディ'
+    fill_in 'task[finish_at]', with: '9999-01-01'
     click_button '登録する'
 
     expect(page).to have_content 'タスクの登録が完了しました'
     expect(page).to have_content 'newタスク'
     expect(page).to have_content 'newボディ'
+    expect(page).to have_content '9999/01/01'
   end
 
   it 'failure new task create' do
@@ -46,6 +56,7 @@ RSpec.describe 'TaskSchedule', type: :system do
     expect(page).to have_content '登録に失敗しました'
     expect(page).to have_content 'タスク名を入力してください'
     expect(page).to have_no_content 'タスク本文を入力してください'
+    expect(page).to have_content '終了期限を入力してください'
 
     click_link '一覧に戻る'
     expect(page).to have_no_content 'newボディ'
@@ -64,11 +75,13 @@ RSpec.describe 'TaskSchedule', type: :system do
 
     fill_in 'task[title]', with: 'editタスク'
     fill_in 'task[body]', with: 'editボディ'
+    fill_in 'task[finish_at]', with: '2112-09-03'
     click_button '編集する'
 
     expect(page).to have_content 'タスクの編集が完了しました'
     expect(page).to have_no_content 'showタスク'
     expect(page).to have_no_content 'showボディ'
+    expect(page).to have_no_content '2112/09/03'
   end
 
   it 'failure edit schedule' do
@@ -77,11 +90,13 @@ RSpec.describe 'TaskSchedule', type: :system do
 
     fill_in 'task[title]', with: ''
     fill_in 'task[body]', with: ''
+    fill_in 'task[finish_at]', with: ''
     click_button '編集する'
 
     expect(page).to have_content '編集に失敗しました'
     expect(page).to have_content 'タスク名を入力してください'
     expect(page).to have_content 'タスク本文を入力してください'
+    expect(page).to have_content '終了期限を入力してください'
 
     click_link '一覧に戻る'
     expect(page).to have_content 'showタスク'

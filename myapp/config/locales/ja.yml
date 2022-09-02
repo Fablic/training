@@ -2,12 +2,16 @@ ja:
   time:
     formats:
       default: ! '%Y/%m/%d %H:%M'
+  date:
+    formats:
+      default: ! '%Y/%m/%d'
 
   activerecord:
     attributes:
       task:
         title: 'タスク名'
         body: 'タスク本文'
+        finish_at: '終了期限'
 
   task_schedule:
     index:
@@ -19,6 +23,7 @@ ja:
       name: 'タイトル'
       body: '本文'
       created: '作成日時'
+      finish: '終了期限'
       up: '▲'
       down: '▼'
       delete_confirm: '削除します。よろしいですか'
@@ -26,19 +31,20 @@ ja:
     taskform:
       name: 'タスク名'
       body: 'タスク本文'
+      finish: '終了期限'
+      index: '一覧に戻る'
     new:
       title: 'タスク登録画面'
       create: '登録する'
-      index: '一覧に戻る'
     show:
       title: 'タスク詳細画面'
       name: 'タスク名'
       body: 'タスク本文'
+      finish: '終了期限'
       index: '一覧に戻る'
     edit:
       title: 'タスク編集画面'
       edit: '編集する'
-      index: '一覧に戻る'
 
     update:
       success: "タスクの編集が完了しました"
