@@ -6,7 +6,7 @@ class Task < ApplicationRecord
   validates :finish_at, presence: true
 
   scope :desc, -> { order(created_at: :desc) }
-  scope :finish_de, -> { order(finish_at: :desc) }
+  scope :finish_desc, -> { order(finish_at: :desc) }
   scope :asc, -> { order(created_at: :asc) }
-  scope :finish_a, -> { order(finish_at: :asc) }
+  scope :finish_asc, -> { order(finish_at: :asc) }
 end

@@ -6,10 +6,10 @@ class TaskScheduleController < ApplicationController
                Task.all.desc
              elsif params[:asc]
                Task.all.asc
-             elsif params[:finish_de]
-               Task.all.finish_de
-             elsif params[:finish_a]
-               Task.all.finish_a
+             elsif params[:finish_desc]
+               Task.all.finish_desc
+             elsif params[:finish_asc]
+               Task.all.finish_asc
              else
                Task.all.finish_a
              end
