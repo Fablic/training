@@ -31,7 +31,6 @@ class TasksController < ApplicationController
       @users_name = users_name
       render(:new, status: :unprocessable_entity)
     end
-
   end
 
   # タスク詳細画面
@@ -46,7 +45,6 @@ class TasksController < ApplicationController
 
     # 担当者名リスト取得
     @users_name = users_name
-
   end
 
   # タスク更新
