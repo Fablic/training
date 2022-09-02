@@ -4,11 +4,10 @@ class TasksController < ApplicationController
   # タスク一覧画面
   def index
     # タスク一覧オブジェクト取得
-    # @tasks = Task.joins(:user).all
     if params && (params[:title].present? || params[:status].present?)
-      @tasks = Task.includes(:user).where_title(params[:title]).where_status(params[:status]).order('tasks.created_at desc').page(params[:page]).per(5)
+      @tasks = Task.where_title(params[:title]).where_status(params[:status]).order('tasks.created_at desc').page(params[:page])
     else
-      @tasks = Task.includes(:user).all.order('tasks.created_at desc').page(params[:page]).per(5)
+      @tasks = Task.all.order('tasks.created_at desc').page(params[:page])
     end
   end
 
@@ -84,5 +83,4 @@ class TasksController < ApplicationController
   def users_name
     User.all.map { |k| [k.name, k.id] }
   end
-
 end
