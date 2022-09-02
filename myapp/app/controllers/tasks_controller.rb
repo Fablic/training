@@ -2,11 +2,7 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def index
-    if params[:name].nil? && params[:status].nil?
-      @tasks = Task.eager_load(:user).all.page(params[:page]).per(5)
-    else
-      @tasks = Task.eager_load(:user).search(params[:name], params[:status]).page(params[:page]).per(5)
-    end
+    @tasks = Task.all.page(params[:page]).per(5)
   end
 
   def show
@@ -45,6 +41,11 @@ class TasksController < ApplicationController
     end
   end
 
+  def search
+    @tasks = Task.name_like(params[:name]).status_equal(Task.statuses[params[:status]]).page(params[:page]).per(5)
+    render :index
+  end
+
   private
 
   def task_params
@@ -53,10 +54,6 @@ class TasksController < ApplicationController
 
   def set_task
     @task = Task.find(params[:id])
-  end
-
-  def task_search_params
-    params.fetch(:search, {}).permit(:name, :status)
   end
 
 end

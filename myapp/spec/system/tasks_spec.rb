@@ -1,272 +1,396 @@
 require 'rails_helper'
 
 describe 'タスク管理機能', type: :system do
-  # タスクを作成
-  let!(:task_a) { FactoryBot.create(:task, name: '最初のタスク', detail: '最初のタスクを実施する', status: 1, priority: 1) }
-  let!(:task_b) { FactoryBot.create(:task, name: '２つ目のタスク', detail: '２つ目のタスクを実施する', status: 1, priority: 2) }
-
-  # タスクが表示される期待動作を共通化
-  shared_examples_for 'タスクが表示される' do
-    it {
-      tds = all('tbody tr')[0].all('td')
-      expect(tds[0]).to have_content task_a.name
-      expect(tds[1]).to have_content task_a.status
-      expect(tds[2]).to have_content task_a.priority
-    }
-  end
-  shared_examples_for '２つ目のタスクが表示される' do
-    it {
-      tds = all('tbody tr')[1].all('td')
-      expect(tds[0]).to have_content task_b.name
-      expect(tds[1]).to have_content task_b.status
-      expect(tds[2]).to have_content task_b.priority
-    }
-  end
-
   describe '一覧表示機能' do
-    context 'タスクが1件存在する場合' do
-      before do
-        # 確認するパス（URL）を設定
-        visit tasks_path
+    subject(:visit_tasks) { visit tasks_path }
+
+    describe '表示機能'do
+      # タスクが表示される期待動作を共通化
+      shared_examples_for 'タスク表示' do
+        let(:tds){ all('tbody tr')[0].all('td') }
+
+        context '1件目のタスクの場合' do
+          it 'タスク名が表示される' do
+            visit_tasks
+            expect(tds[0]).to have_content '最初のタスク'
+          end
+          it 'ステータスが表示される' do
+            visit_tasks
+            expect(tds[1]).to have_content '未着手'
+          end
+          it '優先度が表示される' do
+            visit_tasks
+            expect(tds[2]).to have_content '低'
+          end
+        end
+      end
+      shared_examples_for '２件目のタスク表示' do
+        let(:tds){ all('tbody tr')[1].all('td') }
+
+        context '2件目のタスクの場合' do
+          it 'タスク名が表示される' do
+            visit_tasks
+            expect(tds[0]).to have_content '２つ目のタスク'
+          end
+          it 'ステータスが表示される' do
+            visit_tasks
+            expect(tds[1]).to have_content '未着手'
+          end
+          it '優先度が表示される' do
+            visit_tasks
+            expect(tds[2]).to have_content '中'
+          end
+        end
       end
 
-      it_behaves_like 'タスクが表示される'
-    end
+      context 'タスクが1件存在する場合' do
+        let!(:task_1) { FactoryBot.create(:task, name: '最初のタスク', detail: '最初のタスクを実施する', status: 1, priority: 1) }
 
-    context 'タスクが2件(複数)存在する場合' do
-      before do
-        visit tasks_path
+        it_behaves_like 'タスク表示'
       end
 
-      it_behaves_like 'タスクが表示される'
-      it_behaves_like '２つ目のタスクが表示される'
-    end
-  end
+      context 'タスクが2件(複数)存在する場合' do
+        let!(:task_1) { FactoryBot.create(:task, name: '最初のタスク', detail: '最初のタスクを実施する', status: 1, priority: 1) }
+        let!(:task_2) { FactoryBot.create(:task, name: '２つ目のタスク', detail: '２つ目のタスクを実施する', status: 1, priority: 2) }
 
-  describe '検索機能' do
-    context '検索条件に一致するタスクが1件存在する場合' do
+        it_behaves_like 'タスク表示'
+        it_behaves_like '２件目のタスク表示'
+      end
+
+      context 'タスクが存在しない場合' do
+        it 'タスクが表示されない' do
+          visit_tasks
+          expect(page).not_to have_content '最初のタスク'
+        end
+      end
+    end
+
+    describe '検索機能' do
+      # タスクが表示される期待動作を共通化
+      shared_examples_for 'タスク表示' do
+        let(:tds){ all('tbody tr')[0].all('td') }
+
+        context '1件目のタスクの場合' do
+          it 'タスク名が表示される' do
+            visit_tasks
+            fill_in 'name', with: name
+            select(value = status, from: 'status')
+            click_button '検索'
+            expect(tds[0]).to have_content '最初のタスク'
+          end
+          it 'ステータスが表示される' do
+            visit_tasks
+            fill_in 'name', with: name
+            select(value = status, from: 'status')
+            click_button '検索'
+            expect(tds[1]).to have_content '未着手'
+          end
+          it '優先度が表示される' do
+            visit_tasks
+            fill_in 'name', with: name
+            select(value = status, from: 'status')
+            click_button '検索'
+            expect(tds[2]).to have_content '低'
+          end
+        end
+      end
+      shared_examples_for '２件目のタスク表示' do
+        let(:tds){ all('tbody tr')[1].all('td') }
+
+        context '2件目のタスクの場合' do
+          it 'タスク名が表示される' do
+            visit_tasks
+            fill_in 'name', with: name
+            select(value = status, from: 'status')
+            click_button '検索'
+            expect(tds[0]).to have_content '２つ目のタスク'
+          end
+          it 'ステータスが表示される' do
+            visit_tasks
+            fill_in 'name', with: name
+            select(value = status, from: 'status')
+            click_button '検索'
+            expect(tds[1]).to have_content '未着手'
+          end
+          it '優先度が表示される' do
+            visit_tasks
+            fill_in 'name', with: name
+            select(value = status, from: 'status')
+            click_button '検索'
+            expect(tds[2]).to have_content '中'
+          end
+        end
+      end
+
+      context '検索条件に一致するタスクが1件存在する場合' do
+        let!(:task_a) { FactoryBot.create(:task, name: '最初のタスク', detail: '最初のタスクを実施する', status: 1, priority: 1) }
+        let!(:task_b) { FactoryBot.create(:task, name: '２つ目のタスク', detail: '２つ目のタスクを実施する', status: 1, priority: 2) }
+        let(:name) { '最初のタスク' }
+        let(:status) { '未着手' }
+
+        it_behaves_like 'タスク表示'
+      end
+
+      context '検索条件に一致するタスクが2件存在する場合' do
+        let!(:task_a) { FactoryBot.create(:task, name: '最初のタスク', detail: '最初のタスクを実施する', status: 1, priority: 1) }
+        let!(:task_b) { FactoryBot.create(:task, name: '２つ目のタスク', detail: '２つ目のタスクを実施する', status: 1, priority: 2) }
+        let(:name) { 'タスク' }
+        let(:status) { '未着手' }
+
+        it_behaves_like 'タスク表示'
+        it_behaves_like '２件目のタスク表示'
+      end
+
+      context '検索条件に一致するタスクが存在しない場合' do
+        let!(:task_a) { FactoryBot.create(:task, name: '最初のタスク', detail: '最初のタスクを実施する', status: 1, priority: 1) }
+        let!(:task_b) { FactoryBot.create(:task, name: '２つ目のタスク', detail: '２つ目のタスクを実施する', status: 1, priority: 2) }
+        let(:name) { 'テスト' }
+        let(:status) { '完了' }
+
+        it 'タスクが表示されない' do
+          visit_tasks
+          fill_in 'name', with: name
+          select(value = status, from: 'status')
+          click_button '検索'
+          expect(page).not_to have_content 'のタスク'
+        end
+      end
+    end
+
+    describe '画面遷移機能' do
       let!(:task_a) { FactoryBot.create(:task, name: '最初のタスク', detail: '最初のタスクを実施する', status: 1, priority: 1) }
-      let!(:task_b) { FactoryBot.create(:task, name: '２つ目のタスク', detail: '２つ目のタスクを実施する', status: 1, priority: 2) }
-      let(:name) { '最初のタスク' }
-      let(:status) { 'not_started' }
-
-      it 'タスクが表示される' do
-        visit tasks_path
-        fill_in 'タスク名', with: name
-        select(value = status, from: 'task[status]')
-        click_button '検索'
-        it_behaves_like 'タスクが表示される'
+      context '詳細ボタンをクリックした場合' do
+        it '詳細画面へ遷移できる' do
+          visit_tasks
+          click_link '詳細', match: :first
+          expect(page).to have_current_path task_path(task_a)
+        end
       end
-    end
 
-    context '検索条件に一致するタスクが2件存在する場合' do
-      let!(:task_a) { FactoryBot.create(:task, name: '最初のタスク', detail: '最初のタスクを実施する', status: 1, priority: 1) }
-      let!(:task_b) { FactoryBot.create(:task, name: '２つ目のタスク', detail: '２つ目のタスクを実施する', status: 1, priority: 2) }
-      let(:name) { 'タスク' }
-      let(:status) { 'not_started' }
-
-      it 'タスクが表示される' do
-        visit tasks_path
-        fill_in 'タスク名', with: name
-        select(value = status, from: 'task[status]')
-        click_button '検索'
-        it_behaves_like 'タスクが表示される'
-        it_behaves_like '２つ目のタスクが表示される'
-      end
-    end
-
-    context '検索条件に一致するタスクが存在しない場合' do
-      let!(:task_a) { FactoryBot.create(:task, name: '最初のタスク', detail: '最初のタスクを実施する', status: 1, priority: 1) }
-      let!(:task_b) { FactoryBot.create(:task, name: '２つ目のタスク', detail: '２つ目のタスクを実施する', status: 1, priority: 2) }
-      let(:name) { 'テスト' }
-      let(:status) { 'not_started' }
-
-      it 'タスクが表示されない' do
-        visit tasks_path
-        fill_in 'タスク名', with: name
-        select(value = status, from: 'task[status]')
-        click_button '検索'
-        expect(page).to have_content 'タスク'
+      context '新規登録ボタンをクリックした場合' do
+        it '新規登録画面へ遷移できる' do
+          visit_tasks
+          click_link '新規登録'
+          expect(page).to have_current_path new_task_path
+        end
       end
     end
   end
 
   describe '詳細表示機能' do
-    context 'タスクが存在する場合' do
-      before do
-        visit task_path(task_a)
+    let!(:task_a) { FactoryBot.create(:task, name: '最初のタスク', detail: '最初のタスクを実施する', status: 1, priority: 1) }
+    subject(:visit_task_a) { visit task_path(task_a) }
+
+    describe '表示機能' do
+      context 'タスクが存在する場合' do
+        it 'タスク名が表示される' do
+          visit_task_a
+          expect(page).to have_content '最初のタスク'
+        end
+
+        it '詳細が表示される' do
+          visit_task_a
+          expect(page).to have_content '最初のタスクを実施する'
+        end
+
+        it 'ステータスが表示される' do
+          visit_task_a
+          expect(page).to have_content '未着手'
+        end
+
+        it '優先度が表示される' do
+          visit_task_a
+          expect(page).to have_content '低'
+        end
+      end
+    end
+
+    describe '削除機能' do
+      context '削除ボタンをクリックした場合' do
+        it 'タスクが1件削除される' do
+          visit_task_a
+          expect { click_on('削除') }.to change(Task, :count).by(-1)
+        end
+
+        it '対象のタスクが無くなる' do
+          visit_task_a
+          click_on('削除')
+          expect(Task.find_by(name: task_a.name)).to be_nil
+        end
+
+        it 'Flashメッセージが表示される' do
+          visit_task_a
+          click_on('削除')
+          # Flashメッセージが表示される
+          expect(page).to have_selector '.alert-success', text: 'タスク「最初のタスク」を削除しました。'
+        end
+      end
+      # メモ：ダイアログでキャンセルを選択した場合のテスト（JS）については、エラーが発生し対応に時間がかかりそうなため省略。
+    end
+
+    describe '画面遷移機能' do
+      context '一覧へボタンをクリックした場合' do
+        it '一覧画面へ遷移できる' do
+          visit_task_a
+          click_link '一覧へ戻る'
+          expect(page).to have_current_path tasks_path
+        end
       end
 
-      it '各項目が表示される' do
-        expect(page).to have_content '最初のタスク'
-        expect(page).to have_content '最初のタスクを実施する'
-        expect(page).to have_content 'not_started'
-        expect(page).to have_content 'low'
+      context '編集ボタンをクリックした場合' do
+        it '編集画面へ遷移できる' do
+          visit_task_a
+          click_link '編集'
+          expect(page).to have_current_path edit_task_path(task_a)
+        end
       end
     end
   end
 
   describe '新規登録機能' do
-    before do
-      visit new_task_path
-      fill_in 'タスク名', with: name
-      fill_in '詳細', with: detail
-      select(value = status, from: 'task[status]')
-      select(value = priority, from: 'task[priority]')
+    subject(:visit_new_task){ visit new_task_path }
+
+    describe '登録機能' do
+      context 'タスクの内容を入力した場合' do
+        let(:name) { '新規作成のテスト' }
+        let(:detail) { '新規作成のテストを書く' }
+        let(:status) { '未着手' }
+        let(:priority) { '低' }
+
+        it 'タスクの件数が1件増える' do
+          # タスク内容入力
+          visit_new_task
+          fill_in 'タスク名', with: name
+          fill_in '詳細', with: detail
+          select(value = status, from: 'task[status]')
+          select(value = priority, from: 'task[priority]')
+          # DBに登録されている
+          expect { click_button '登録' }.to change(Task, :count).by(1)
+        end
+
+        it '入力された内容でタスクが作成される' do
+          # タスク内容入力
+          visit_new_task
+          fill_in 'タスク名', with: name
+          fill_in '詳細', with: detail
+          select(value = status, from: 'task[status]')
+          select(value = priority, from: 'task[priority]')
+          click_button '登録'
+          # 画面で入力された内容でDBに登録されている
+          expect(Task.find_by(name: '新規作成のテスト', detail: '新規作成のテストを書く', status: 'not_started', priority: 'low')).not_to be_nil
+        end
+
+        it 'Flashメッセージが表示される' do
+          # タスク内容入力
+          visit_new_task
+          fill_in 'タスク名', with: name
+          fill_in '詳細', with: detail
+          select(value = status, from: 'task[status]')
+          select(value = priority, from: 'task[priority]')
+          # Flashメッセージが表示される
+          click_button '登録'
+          expect(page).to have_selector '.alert-success', text: 'タスク「新規作成のテスト」を登録しました。'
+        end
+
+        it '一覧画面が表示される' do
+          # タスク内容入力
+          visit_new_task
+          fill_in 'タスク名', with: name
+          fill_in '詳細', with: detail
+          select(value = status, from: 'task[status]')
+          select(value = priority, from: 'task[priority]')
+
+          visit_new_task
+          click_button '登録'
+          expect(page).to have_current_path tasks_path
+        end
+      end
     end
 
-    context 'タスクの内容を入力した場合' do
-      let(:name) { '新規作成のテスト' }
-      let(:detail) { '新規作成のテストを書く' }
-      let(:status) { 'not_started' }
-      let(:priority) { 'low' }
-
-      it 'タスクが正常に作成される' do
-        # DBに登録されている
-        expect { click_button '登録' }.to change(Task, :count).by(1)
-        # 画面で入力された内容でDBに登録されている
-        task = Task.find_by(name: name)
-        expect(task.name).to eq(name)
-        expect(task.detail).to eq(detail)
-        expect(task.status).to eq(status)
-        expect(task.priority).to eq(priority)
-        # Flashメッセージが表示される
-        expect(page).to have_selector '.alert-success', text: "タスク「#{task.name}」を登録しました。"
-        # タスク一覧画面が表示される
-        expect(page).to have_current_path tasks_path
+    describe '画面遷移機能' do
+      context '一覧へボタンをクリックした場合' do
+        it '一覧画面へ遷移できる' do
+          visit_new_task
+          click_link '一覧へ戻る'
+          expect(page).to have_current_path tasks_path
+        end
       end
     end
   end
 
   describe '編集機能' do
-    before do
-      visit edit_task_path(task_a)
-    end
+    let!(:task_a) { FactoryBot.create(:task, name: '最初のタスク', detail: '最初のタスクを実施する', status: 1, priority: 1) }
+    subject(:visit_task_a_edit){visit edit_task_path(task_a)}
 
-    context 'タスクの各項目を更新した場合' do
-      let(:name) { '新規作成のテスト２' }
-      let(:detail) { '新規作成のテストを書く２' }
-      let(:status) { 'in_progress' }
-      let(:priority) { 'middle' }
-
-      it '画面表示時に編集前のタスク内容が各項目に表示されている' do
-        expect(page).to have_field 'タスク名', with: task_a.name
-        expect(page).to have_field '詳細', with: task_a.detail
-        expect(page).to have_field 'ステータス', with: task_a.status
-        expect(page).to have_field '優先度', with: task_a.priority
-      end
-
-      it 'タスクが正常に更新される' do
-        # 更新処理
-        fill_in 'タスク名', with: name
-        fill_in '詳細', with: detail
-        select(value = status, from: 'task[status]')
-        select(value = priority, from: 'task[priority]')
-        click_button '更新'
-        # 画面で入力された内容でDBのデータが更新されている
-        task = Task.find_by(name: name)
-        expect(task.name).to eq(name)
-        expect(task.detail).to eq(detail)
-        expect(task.status).to eq(status)
-        expect(task.priority).to eq(priority)
-        # Flashメッセージが表示される
-        expect(page).to have_selector '.alert-success', text: "タスク「#{task.name}」を更新しました。"
-      end
-    end
-  end
-
-  describe '削除機能' do
-    before do
-      visit task_path(task_a)
-    end
-
-    context 'タスクを削除した場合' do
-      it 'タスクが正常に削除される' do
-        # DBの該当データが削除される
-        expect { click_on('削除') }.to change(Task, :count).by(-1)
-        expect(Task.find_by(name: task_a.name)).to be_nil
-        # Flashメッセージが表示される
-        expect(page).to have_selector '.alert-success', text: "タスク「#{task_a.name}」を削除しました。"
-      end
-    end
-    # メモ：ダイアログでキャンセルを選択した場合のテスト（JS）については、エラーが発生し対応に時間がかかりそうなため省略。
-  end
-
-  describe 'ページ遷移' do
-    context 'タスク一覧画面から詳細画面へ遷移' do
-      before do
-        visit tasks_path
-        click_link '詳細', match: :first
-      end
-
-      it '詳細画面へ遷移できること' do
-        expect(page).to have_current_path task_path(task_a)
+    describe '表示機能' do
+      context '画面を表示した場合' do
+        it '編集前のタスク名が表示される' do
+          visit_task_a_edit
+          expect(page).to have_field 'タスク名', with: '最初のタスク'
+        end
+        it '編集前の詳細が表示される' do
+          visit_task_a_edit
+          expect(page).to have_field '詳細', with: '最初のタスクを実施する'
+        end
+        it '編集前のステータスが選択肢として存在する' do
+          visit_task_a_edit
+          expect(page).to have_content '未着手'
+        end
+        it '編集前の優先度が選択肢として存在する' do
+          visit_task_a_edit
+          expect(page).to have_content '低'
+        end
       end
     end
 
-    context '一覧画面から新規登録画面へ遷移' do
-      before do
-        visit tasks_path
-        click_link '新規登録'
-      end
+    describe '更新機能' do
+      context 'タスクの各項目を更新した場合' do
+        let(:name) { '新規作成のテスト２' }
+        let(:detail) { '新規作成のテストを書く２' }
+        let(:status) { '未着手' }
+        let(:priority) { '低' }
 
-      it '新規登録画面へ遷移できる' do
-        expect(page).to have_current_path new_task_path
-      end
-    end
+        it 'タスクが更新される' do
+          visit_task_a_edit
+          # 更新処理
+          fill_in 'タスク名', with: name
+          fill_in '詳細', with: detail
+          select(value = status, from: 'task[status]')
+          select(value = priority, from: 'task[priority]')
+          click_button '更新'
+          # 画面で入力された内容でDBのデータが更新されている
+          expect(Task.find_by(name: name, detail: detail, status: 'not_started', priority: 'low')).not_to be_nil
+        end
 
-    context '新規登録画面からタスク一覧画面へ遷移' do
-      before do
-        visit new_task_path
-        click_link '一覧へ戻る'
-      end
-
-      it '一覧画面へ遷移できる' do
-        expect(page).to have_current_path tasks_path
-      end
-    end
-
-    context '詳細画面からタスク一覧画面へ遷移' do
-      before do
-        visit task_path(task_a)
-        click_link '一覧へ戻る'
-      end
-
-      it '一覧画面へ遷移できる' do
-        expect(page).to have_current_path tasks_path
-      end
-    end
-
-    context '詳細画面から編集画面へ遷移' do
-      before do
-        visit task_path(task_a)
-        click_link '編集'
-      end
-
-      it '編集画面へ遷移できる' do
-        expect(page).to have_current_path edit_task_path(task_a)
+        it 'Flashメッセージが表示される' do
+          visit_task_a_edit
+          # 更新処理
+          fill_in 'タスク名', with: name
+          fill_in '詳細', with: detail
+          select(value = status, from: 'task[status]')
+          select(value = priority, from: 'task[priority]')
+          click_button '更新'
+          # Flashメッセージが表示される
+          expect(page).to have_selector '.alert-success', text: 'タスク「新規作成のテスト２」を更新しました。'
+        end
       end
     end
 
-    context '編集画面から詳細画面へ遷移' do
-      before do
-        visit edit_task_path(task_a)
-        click_link '詳細へ戻る'
+    describe '画面遷移機能' do
+      context '詳細へボタンをクリックした場合' do
+        it '詳細画面へ遷移できる' do
+          visit_task_a_edit
+          click_link '詳細へ戻る'
+          expect(page).to have_current_path task_path(task_a)
+        end
       end
 
-      it '詳細画面へ遷移できる' do
-        expect(page).to have_current_path task_path(task_a)
-      end
-    end
-
-    context '編集画面から一覧画面へ遷移' do
-      before do
-        visit edit_task_path(task_a)
-        click_link '一覧へ戻る'
-      end
-
-      it '詳細画面へ遷移できる' do
-        expect(page).to have_current_path tasks_path
+      context '一覧へボタンをクリックした場合' do
+        it '一覧画面へ遷移できる' do
+          visit_task_a_edit
+          click_link '一覧へ戻る'
+          expect(page).to have_current_path tasks_path
+        end
       end
     end
   end

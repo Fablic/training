@@ -15,12 +15,12 @@
 
   <p>
     <strong>ステータス:</strong>
-    <%= @task.status_i18n %>
+    <%= I18n.t("enums.task.status.#{@task.status}") %>
   </p>
 
   <p>
     <strong>優先度:</strong>
-    <%= @task.priority_i18n %>
+    <%= I18n.t("enums.task.priority.#{@task.priority}") %>
   </p>
 
   <p>

@@ -7,15 +7,7 @@ class Task < ApplicationRecord
   validates :detail, presence: true
   validates :detail, length: { maximum: 100 }
 
-  belongs_to :user
+  scope :name_like, -> (name) { where('name LIKE ?', "%#{name}%") if name.present? }
+  scope :status_equal, -> (status) { where('status = ?', status) if status.present? }
 
-  def self.search(name, status)
-    # Task.where(status: "%#{status}%"). where(['name like?', "%#{name}%"]) if name.present?
-    sql = ''
-    sql += " name like '%#{name}%' " if name.present?
-    sql += ' AND ' if sql.present? && status.present?
-    sql += " status = '#{status}' " if status.present?
-
-    Task.where(sql)
-  end
 end
