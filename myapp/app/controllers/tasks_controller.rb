@@ -5,9 +5,9 @@ class TasksController < ApplicationController
   def index
     # タスク一覧オブジェクト取得
     if params && (params[:title].present? || params[:status].present?)
-      @tasks = Task.where_title(params[:title]).where_status(params[:status]).order('tasks.created_at desc').page(params[:page])
+      @tasks = Task.includes(:user).where_title(params[:title]).where_status(params[:status]).order('tasks.created_at desc').page(params[:page])
     else
-      @tasks = Task.all.order('tasks.created_at desc').page(params[:page])
+      @tasks = Task.includes(:user).all.order('tasks.created_at desc').page(params[:page])
     end
   end
 
@@ -36,7 +36,7 @@ class TasksController < ApplicationController
 
   # タスク詳細画面
   def show
-    @task = Task.joins(:user).find(params[:id])
+    @task = Task.includes(:user).find(params[:id])
   end
 
   # タスク編集画面
