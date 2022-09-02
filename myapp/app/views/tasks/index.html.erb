@@ -13,8 +13,8 @@
     <% @tasks.each do |task| %>
       <tr>
         <td><%= task.name %></td>
-        <td><%= task.status_i18n %></td>
-        <td><%= task.priority_i18n %></td>
+        <td><%= I18n.t("enums.task.status.#{task.status}") %></td>
+        <td><%= I18n.t("enums.task.priority.#{task.priority}") %></td>
         <td><%= link_to '詳細', task_path(task.id) %></td>
       </tr>
     <% end %>
@@ -24,15 +24,18 @@
 <%= paginate @tasks %>
 
 <div>
-<%= form_with url: tasks_path, method: :get, local: true do |f| %>
+<%= form_with url: search_path, method: :get, local: true do |f| %>
   <p>検索フォーム</p>
-  <p>タスク名</p>
-  <%= f.text_field :name %>
-  <p>ステータス</p>
-  <%= f.select :status, Task.statuses_i18n.keys.map { |k| [Task.statuses_i18n[k], k] } %>
+    <p style="display: inline">タスク名</p>
+    <%= f.text_field :name %>
+    <br>
+    <p style="display: inline">ステータス</p>
+    <%= f.select :status, Task.statuses.keys.map { |k| [I18n.t("enums.task.status.#{k}"), k]} , include_blank: true %>
+  <br>
   <%= f.submit '検索' %>
 <% end %>
 </div>
+<br>
 
 <%= link_to '新規登録', new_task_path %>
 <br>

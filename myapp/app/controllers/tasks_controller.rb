@@ -2,10 +2,7 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def index
-    @tasks = current_user.tasks.page(params[:page]).per(5)
-    @tasks.each do |f|
-      puts f.user.password
-    end
+    @tasks = Task.eager_load(:user).all.page(params[:page]).per(5)
   end
 
   def show
@@ -49,18 +46,19 @@ class TasksController < ApplicationController
     end
   end
 
+  def search
+    @tasks = Task.eager_load(:user).name_like(params[:name]).status_equal(Task.statuses[params[:status]]).page(params[:page]).per(5)
+    render :index
+  end
+
   private
 
   def task_params
-    params.require(:task).permit(:name, :detail, :status, :priority)
+    params.require(:task).permit(:name, :detail, :status, :priority, :user_id)
   end
 
   def set_task
     @task = Task.find(params[:id])
-  end
-
-  def task_search_params
-    params.fetch(:search, {}).permit(:name, :status)
   end
 
 end
