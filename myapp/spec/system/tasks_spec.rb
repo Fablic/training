@@ -13,10 +13,12 @@ describe 'Tasks', type: :system do
     end
 
     describe '検索エリア' do
-      let!(:task_A1) { FactoryBot.create(:task, title: 'titleA1', status: 'not_started') }
-      let!(:task_A2) { FactoryBot.create(:task, title: 'titleA2', status: 'in_progress') }
-      let!(:task_B1) { FactoryBot.create(:task, title: 'titleB1', status: 'not_started') }
-      let!(:task_B2) { FactoryBot.create(:task, title: 'titleB2', status: 'in_progress') }
+      before do
+        FactoryBot.create(:task, title: 'titleA1', status: 'not_started')
+        FactoryBot.create(:task, title: 'titleA2', status: 'in_progress')
+        FactoryBot.create(:task, title: 'titleB1', status: 'not_started')
+        FactoryBot.create(:task, title: 'titleB2', status: 'in_progress')
+      end
 
       context '条件なし検索' do
         let(:conditions) { { title: '', status: '' } }
@@ -268,6 +270,106 @@ describe 'Tasks', type: :system do
           visit root_path
           all('a', text: '詳細')[1].click
           expect(page).to have_current_path task_path(task_one)
+        end
+      end
+    end
+
+    describe 'ページングエリア' do
+      context 'ページングなし' do
+        before do
+          FactoryBot.create(:task, title: 'title_one')
+          FactoryBot.create(:task, title: 'title_two')
+          FactoryBot.create(:task, title: 'title_three')
+          FactoryBot.create(:task, title: 'title_four')
+          FactoryBot.create(:task, title: 'title_five')
+        end
+
+        it 'ページングが表示されないこと ページ番号1' do
+          visit root_path
+          expect(find('div.pagenation-area')).not_to have_content '1'
+        end
+
+        it 'ページングが表示されないこと ページ番号2' do
+          visit root_path
+          expect(find('div.pagenation-area')).not_to have_content '2'
+        end
+
+        it 'ページングが表示されないこと 次ページボタン' do
+          visit root_path
+          expect(find('div.pagenation-area')).not_to have_content 'Next'
+        end
+
+        it 'ページングが表示されないこと 最終ページボタン' do
+          visit root_path
+          expect(find('div.pagenation-area')).not_to have_content 'Last'
+        end
+      end
+
+      context 'ページングあり' do
+        before do
+          FactoryBot.create(:task, title: 'title_one')
+          FactoryBot.create(:task, title: 'title_two')
+          FactoryBot.create(:task, title: 'title_three')
+          FactoryBot.create(:task, title: 'title_four')
+          FactoryBot.create(:task, title: 'title_five')
+          FactoryBot.create(:task, title: 'title_six')
+          FactoryBot.create(:task, title: 'title_seven')
+          FactoryBot.create(:task, title: 'title_eight')
+          FactoryBot.create(:task, title: 'title_nine')
+          FactoryBot.create(:task, title: 'title_ten')
+          FactoryBot.create(:task, title: 'title_eleven')
+        end
+
+        it 'ページングが表示されること ページ番号1' do
+          visit root_path
+          expect(find('div.pagenation-area')).to have_content '1'
+        end
+
+        it 'ページングが表示されること ページ番号2' do
+          visit root_path
+          expect(find('div.pagenation-area')).to have_content '2'
+        end
+
+        it 'ページングが表示されること 次ページボタン' do
+          visit root_path
+          expect(find('div.pagenation-area')).to have_content 'Next'
+        end
+
+        it 'ページングが表示されること 最終ページボタン' do
+          visit root_path
+          expect(find('div.pagenation-area')).to have_content 'Last'
+        end
+
+        it 'ページ番号2を押下すると次ページの要素が表示されること' do
+          visit root_path
+          click_on '2'
+          expect(page).to have_content 'title_six'
+        end
+
+        it '次ページボタンを押下すると次ページの要素が表示されること' do
+          visit root_path
+          click_on 'Next'
+          expect(page).to have_content 'title_six'
+        end
+
+        it '最終ページボタンを押下すると最終ページの要素が表示されること' do
+          visit root_path
+          click_on 'Last'
+          expect(page).to have_content 'title_one'
+        end
+
+        it '最初のページボタンを押下すると最初のページの要素が表示されること' do
+          visit root_path
+          click_on 'Last'
+          click_on 'First'
+          expect(page).to have_content 'title_eleven'
+        end
+
+        it '前のページボタンを押下すると最初のページの要素が表示されること' do
+          visit root_path
+          click_on 'Last'
+          click_on 'Previous'
+          expect(page).to have_content 'title_six'
         end
       end
     end
