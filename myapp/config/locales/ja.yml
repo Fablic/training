@@ -1,0 +1,51 @@
+ja:
+  time:
+    formats:
+      default: ! '%Y/%m/%d %H:%M'
+
+  activerecord:
+    attributes:
+      task:
+        title: 'タスク名'
+        body: 'タスク本文'
+
+  task_schedule:
+    index:
+      title: 'タスク一覧画面'
+      new: 'タスク登録'
+      edit: '編集'
+      show: '詳細'
+      delete: '削除'
+      name: 'タイトル'
+      body: '本文'
+      created: '作成日時'
+      up: '▲'
+      down: '▼'
+      delete_confirm: '削除します。よろしいですか'
+
+    taskform:
+      name: 'タスク名'
+      body: 'タスク本文'
+    new:
+      title: 'タスク登録画面'
+      create: '登録する'
+      index: '一覧に戻る'
+    show:
+      title: 'タスク詳細画面'
+      name: 'タスク名'
+      body: 'タスク本文'
+      index: '一覧に戻る'
+    edit:
+      title: 'タスク編集画面'
+      edit: '編集する'
+      index: '一覧に戻る'
+
+    update:
+      success: "タスクの編集が完了しました"
+      danger: "編集に失敗しました"
+    create:
+      success: "タスクの登録が完了しました"
+      danger: "登録に失敗しました"
+    destroy:
+      success: "タスクを削除しました"
+      danger: "削除に失敗しました"

@@ -1,0 +1,7 @@
+<%= t '.title' %><br>
+<% flash.each do |message_type, message| %>
+  <%= message %>
+<% end %>
+<%= render partial: 'taskform', locals: {task: @task,  prefix: task_schedule_path(@task),
+  button: t('.edit')} %>
+<%= link_to t('.index'), task_schedule_index_path %>

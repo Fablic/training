@@ -1,0 +1,100 @@
+# frozen_string_literal: true
+
+require 'rails_helper'
+
+RSpec.describe 'TaskSchedule', type: :system do
+  before do
+    @task = Task.create(title: 'showタスク', body: 'showボディ')
+    @task2 = Task.create(title: 'secondタスク', body: 'secondボディ', created_at: 1.day.from_now)
+    @task3 = Task.create(title: 'thirdタスク', body: 'thirdボディ', created_at: 1.day.ago)
+    visit task_schedule_index_path
+  end
+
+  it 'complete initial display' do
+    expect(page.text).to match(/secondタスク.*showタスク.*thirdタスク/)
+  end
+
+  it 'complete order created_at' do
+    click_link '▼'
+    expect(page.text).to match(/thirdボディ.*showボディ.*secondボディ/)
+
+    click_link '▲'
+    expect(page.text).to match(/secondボディ.*showボディ.*thirdボディ/)
+  end
+
+  it 'complete new task create' do
+    click_button 'タスク登録'
+    expect(page).to have_content 'タスク登録画面'
+
+    fill_in 'task[title]', with: 'newタスク'
+    fill_in 'task[body]', with: 'newボディ'
+    click_button '登録する'
+
+    expect(page).to have_content 'タスクの登録が完了しました'
+    expect(page).to have_content 'newタスク'
+    expect(page).to have_content 'newボディ'
+  end
+
+  it 'failure new task create' do
+    click_button 'タスク登録'
+    expect(page).to have_content 'タスク登録画面'
+
+    fill_in 'task[title]', with: ''
+    fill_in 'task[body]', with: 'newボディ'
+    click_button '登録する'
+
+    expect(page).to have_content '登録に失敗しました'
+    expect(page).to have_content 'タスク名を入力してください'
+    expect(page).to have_no_content 'タスク本文を入力してください'
+
+    click_link '一覧に戻る'
+    expect(page).to have_no_content 'newボディ'
+  end
+
+  it 'complete show page' do
+    click_link('詳細', href: task_schedule_path(@task))
+    expect(page).to have_content 'タスク詳細画面'
+    expect(page).to have_content 'showタスク'
+    expect(page).to have_content 'showボディ'
+  end
+
+  it 'complete edit schedule' do
+    click_link('編集', href: edit_task_schedule_path(@task))
+    expect(page).to have_content 'タスク編集画面'
+
+    fill_in 'task[title]', with: 'editタスク'
+    fill_in 'task[body]', with: 'editボディ'
+    click_button '編集する'
+
+    expect(page).to have_content 'タスクの編集が完了しました'
+    expect(page).to have_no_content 'showタスク'
+    expect(page).to have_no_content 'showボディ'
+  end
+
+  it 'failure edit schedule' do
+    click_link('編集', href: edit_task_schedule_path(@task))
+    expect(page).to have_content 'タスク編集画面'
+
+    fill_in 'task[title]', with: ''
+    fill_in 'task[body]', with: ''
+    click_button '編集する'
+
+    expect(page).to have_content '編集に失敗しました'
+    expect(page).to have_content 'タスク名を入力してください'
+    expect(page).to have_content 'タスク本文を入力してください'
+
+    click_link '一覧に戻る'
+    expect(page).to have_content 'showタスク'
+    expect(page).to have_content 'showボディ'
+  end
+
+  it 'complete delete schedule' do
+    click_link('削除', href: task_schedule_path(@task))
+    expect do
+      expect(page.accept_confirm).to eq '削除します。よろしいですか'
+      exmect(page).to have_content 'タスクを削除しました'
+      expect(page).to have_no_content 'showタスク'
+      expect(page).to have_no_content 'showボディ'
+    end
+  end
+end

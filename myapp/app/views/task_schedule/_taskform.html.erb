@@ -1,0 +1,20 @@
+<%= form_for(task, url: prefix) do |f| %>
+  <% if f.object.errors.any? %>
+    <div class="alert alert-warning">
+      <ul>
+        <% f.object.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div>
+    <%= f.label t('.name') %></br>
+    <%= f.text_field :title %>
+  </div>
+  <div>
+    <%= f.label t('.body') %></br>
+    <%= f.text_area :body %>
+  </div>
+  <%= f.submit button %>
+<% end %>
