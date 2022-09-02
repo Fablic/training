@@ -10,19 +10,28 @@ User.destroy_all
 Task.destroy_all
 Label.destroy_all
 
-10.times do |i|
+5.times do |i|
+  # Create Users
   password = "test#{i + 1}"
   salt = User.create_salt
   password_digest = User.hash(password, salt)
   user = User.create!(name: "ユーザ#{i + 1}", password_digest: password_digest, salt: salt, email: "email#{i + 1}@example.com")
-  task = Task.create!(
-    title: "タスク#{i + 1}",
-    content: "こちらはタスク#{i + 1}の内容です。テストテストテストテストテストテストテスト",
-    user_id: user.id,
-    status: '1',
-  )
-  Label.create!(
-    name: "ラベル#{i + 1}",
-    task_id: task.id,
-  )
+
+  # Create Tasks
+  10.times do |j|
+    task = Task.create!(
+      title: "タスク#{i + 1}-#{j + 1}",
+      content: "こちらはタスク#{i + 1}-#{j + 1}の内容です。",
+      user_id: user.id,
+      status: "#{(j % 3) + 1}",
+    )
+
+    # Create Labels
+    (j % 6).times do |k|
+      Label.create!(
+        name: "ラベル#{i + 1}-#{j + 1}-#{k + 1}",
+        task_id: task.id,
+      )
+    end
+  end
 end
