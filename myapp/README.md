@@ -1,10 +1,11 @@
 # README
 
-アプリケーション名:タスク管理アプリ
+## アプリケーション名
+タスク管理アプリ
 
 ---
 
-画面
+## 画面
 * タスク一覧画面
 * タスク新規作成画面
 * タスク編集画面
@@ -13,29 +14,26 @@
 * ログイン画面
 * 検索画面
 
-DB
+## DB
+### Task
+column_name | type    |
+--          | --      |
+id          | integer | 
+state       | integer |
+priority    | integer | 
+label       | varchar |
+title       | varchar |
+description | varchar |
+created_by  | integer |
+limit_date  | datetime|
 
-* Task
-
-column_name | type   |
---          | --     |
-id          | int    | 
-state       | string |
-priority    | string | 
-label       | string |
-title       | string |
-description | string |
-createdby   | int    |
-limit_date  | date   |
-
-* User
-
-column_name | type   |
---          | --     |
-id          | int    |
-name        | string |
-email       | string |
-password    | string |
+### User
+column_name | type    |
+--          | --      |
+id          | integer |
+name        | varchar |
+email       | varchar |
+password    | varchar |
 
 ---
 
