@@ -271,6 +271,102 @@ describe 'Tasks', type: :system do
         end
       end
     end
+
+    describe 'ページングエリア' do
+      context 'ページングなし' do
+        let!(:task_one) { FactoryBot.create(:task) }
+        let!(:task_two) { FactoryBot.create(:task) }
+        let!(:task_three) { FactoryBot.create(:task) }
+        let!(:task_four) { FactoryBot.create(:task) }
+        let!(:task_five) { FactoryBot.create(:task) }
+
+        it 'ページングが表示されないこと ページ番号1' do
+          visit root_path
+          expect(find('div.pagenation-area')).not_to have_content '1'
+        end
+
+        it 'ページングが表示されないこと ページ番号2' do
+          visit root_path
+          expect(find('div.pagenation-area')).not_to have_content '2'
+        end
+
+        it 'ページングが表示されないこと 次ページボタン' do
+          visit root_path
+          expect(find('div.pagenation-area')).not_to have_content 'Next'
+        end
+
+        it 'ページングが表示されないこと 最終ページボタン' do
+          visit root_path
+          expect(find('div.pagenation-area')).not_to have_content 'Last'
+        end
+      end
+
+      context 'ページングあり' do
+        let!(:task_one) { FactoryBot.create(:task, title: 'titleOne') }
+        let!(:task_two) { FactoryBot.create(:task, title: 'titleTwo') }
+        let!(:task_three) { FactoryBot.create(:task, title: 'titleThree') }
+        let!(:task_four) { FactoryBot.create(:task, title: 'titleFour') }
+        let!(:task_five) { FactoryBot.create(:task, title: 'titleFive') }
+        let!(:task_six) { FactoryBot.create(:task, title: 'titleSix') }
+        let!(:task_seven) { FactoryBot.create(:task, title: 'titleSeven') }
+        let!(:task_eight) { FactoryBot.create(:task, title: 'titleEight') }
+        let!(:task_nine) { FactoryBot.create(:task, title: 'titleNine') }
+        let!(:task_ten) { FactoryBot.create(:task, title: 'titleTen') }
+        let!(:task_eleven) { FactoryBot.create(:task, title: 'titleEleven') }
+
+        it 'ページングが表示されること ページ番号1' do
+          visit root_path
+          expect(find('div.pagenation-area')).to have_content '1'
+        end
+
+        it 'ページングが表示されること ページ番号2' do
+          visit root_path
+          expect(find('div.pagenation-area')).to have_content '2'
+        end
+
+        it 'ページングが表示されること 次ページボタン' do
+          visit root_path
+          expect(find('div.pagenation-area')).to have_content 'Next'
+        end
+
+        it 'ページングが表示されること 最終ページボタン' do
+          visit root_path
+          expect(find('div.pagenation-area')).to have_content 'Last'
+        end
+
+        it 'ページ番号2を押下すると次ページの要素が表示されること' do
+          visit root_path
+          click_on '2'
+          expect(page).to have_content 'titleSix'
+        end
+
+        it '次ページボタンを押下すると次ページの要素が表示されること' do
+          visit root_path
+          click_on 'Next'
+          expect(page).to have_content 'titleSix'
+        end
+
+        it '最終ページボタンを押下すると最終ページの要素が表示されること' do
+          visit root_path
+          click_on 'Last'
+          expect(page).to have_content 'titleOne'
+        end
+
+        it '最初のページボタンを押下すると最初のページの要素が表示されること' do
+          visit root_path
+          click_on 'Last'
+          click_on 'First'
+          expect(page).to have_content 'titleEleven'
+        end
+
+        it '前のページボタンを押下すると最初のページの要素が表示されること' do
+          visit root_path
+          click_on 'Last'
+          click_on 'Previous'
+          expect(page).to have_content 'titleSix'
+        end
+      end
+    end
   end
 
   describe '#new' do

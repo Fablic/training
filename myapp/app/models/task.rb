@@ -20,4 +20,7 @@ class Task < ApplicationRecord
   # スコープ
   scope :where_title, -> (title) { where('title like ?', "%#{title}%") if title.present? }
   scope :where_status, -> (status) { where(status: status) if status.present? }
+
+  # ページ内要素数
+  paginates_per 5
 end
