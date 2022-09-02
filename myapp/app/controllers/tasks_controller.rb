@@ -40,15 +40,18 @@ class TasksController < ApplicationController
   # タスク編集画面
   def edit
     @task = Task.find(params[:id])
+    @task_form = TaskForm.new
+    @task_form.setting(params[:id])
   end
 
   # タスク更新
   def update
-    @task = Task.find(params[:id])
+    @task_form = TaskForm.new(task_params)
 
-    if @task.update(task_params)
+    if @task_form.update(params[:id])
       redirect_to(root_path, notice: 'タスク更新成功')
     else
+      @task = Task.find(params[:id])
       render(:edit, status: :unprocessable_entity)
     end
   end
