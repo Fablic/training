@@ -24,6 +24,7 @@ ja:
       body: '本文'
       created: '作成日時'
       finish: '終了期限'
+      status: 'ステータス'
       up: '▲'
       down: '▼'
       delete_confirm: '削除します。よろしいですか'
@@ -55,3 +56,10 @@ ja:
     destroy:
       success: "タスクを削除しました"
       danger: "削除に失敗しました"
+
+  enums:
+    task:
+      status:
+        untouched: '未着手'
+        in_progress: '着手中'
+        completion: '完了'
