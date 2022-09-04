@@ -20,18 +20,24 @@ http://localhost:3001
 | button | 2 | 詳細 |  | ボタン | | タスク詳細画面へ遷移 |
 <br>
 
-タスク作成エリア
-| item | layer | name | source | type | loop | others |
-| ---- | ---- | ---- | ---- | ---- | ---- | ---- |
-| button　| 1 | 新規登録 |  | ボタン | | タスク作成画面へ遷移 |
-<br>
-
 検索エリア
 | item | layer | name | source | type | loop | others |
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
 | select | 1 | 検索方法 | プルダウン | 文字列 |  | 1:'全て'、2:'タスク名'、3:'タスク詳細' |
 | text | 1 | 検索フォーム | | 文字列 | | 部分一致 |
 | button　| 1 | 検索ボタン | | ボタン | | タスク一覧を条件に応じて絞り込み |
+<br>
+
+タスク作成エリア
+| item | layer | name | source | type | loop | others |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| button　| 1 | 新規登録 |  | ボタン | | タスク作成画面へ遷移 |
+<br>
+
+ログアウトエリア
+| item | layer | name | source | type | loop | others |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| button　| 1 | ログアウト |  | ボタン | | ログイン画面へ遷移 |
 <br>
 
 【タスク詳細画面】
@@ -83,6 +89,17 @@ http://localhost:3001/tasks/{task.id}/edit
 | button | 1 | 一覧へ戻る |  | ボタン | | タスク一覧画面へ遷移 |
 <br>
 
+【ログイン画面】
+
+URL
+http://localhost:3001/login
+
+| item | layer | name | source | type | loop | others |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| text | 1 | メールアドレス | | 文字列 | | |
+| text | 1 | パスワード | | 文字列 | | |
+| button | 1 | ログイン |  | ボタン | | ログイン認証 |
+<br>
 
 ## モデル図
 tasks

@@ -1,9 +1,15 @@
 <h1>ログイン画面</h1>
+<div>
 <%= form_with scope: :session, url: login_path, method: :post, local: true do |f| %>
-  <p>メールアドレス</p>
-  <%= f.text_field :email %>
-  <p>パスワード</p>
-  <%= f.text_field :password %>
+  <div class='field'>
+    <p>メールアドレス</p>
+    <%= f.text_field :email %>
+  </div>
+  <div class='field'>
+    <p>パスワード</p>
+    <%= f.text_field :password %>
+  </div>
   <br>
   <%= f.submit 'ログイン' %>
 <% end %>
+</div>

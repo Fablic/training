@@ -43,11 +43,18 @@ RSpec.configure do |config|
     )
     Capybara::Selenium::Driver.new(app, browser: :remote, url: hub_url, desired_capabilities: chrome_capabilities)
   end
-  
+
   config.before(:each, type: :system) do
     driven_by :rack_test
+    # sessionメソッドを使用できるよう設定
+    session = defined?(rspec_session) ? rspec_session : {}
+    # destroyメソッドを実行してもエラーにならないようにする
+    session.class_eval { def destroy; nil; end }
+    # sessionメソッドを上書き
+    allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(session)
+
   end
-  
+
   config.before(:each, type: :system, js: true) do
     driven_by :remote_chrome
     Capybara.server_host = IPSocket.getaddress(Socket.gethostname)
