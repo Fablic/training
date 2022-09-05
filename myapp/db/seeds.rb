@@ -11,6 +11,10 @@
 # user.name = '一真'
 # user.save
 
+Task.delete_all
+User.delete_all
+
 5.times do |i|
-    User.create(name: "一真#{i + 1}")
+    user = User.create(name: "一真#{i + 1}")
+    taks = Task.create(name: "テスト番号#{i + 1}", description: '動作確認', user_id: user.id)
 end

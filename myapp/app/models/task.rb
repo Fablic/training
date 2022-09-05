@@ -1,4 +1,6 @@
 class Task < ApplicationRecord
+  belongs_to :user
+
   enum status: { untouched: 1, doing: 2, completed: 3 }
 
   validates :name, presence: true
