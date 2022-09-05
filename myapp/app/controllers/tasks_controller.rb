@@ -2,7 +2,7 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def index
-    @tasks = Task.eager_load(:user).all.page(params[:page]).per(5)
+    @tasks = Task.all.page(params[:page])
   end
 
   def show
@@ -44,7 +44,7 @@ class TasksController < ApplicationController
   end
 
   def search
-    @tasks = Task.eager_load(:user).name_like(params[:name]).status_equal(Task.statuses[params[:status]]).page(params[:page]).per(5)
+    @tasks = Task.name_like(params[:name]).status_equal(Task.statuses[params[:status]]).page(params[:page])
     render :index
   end
 
