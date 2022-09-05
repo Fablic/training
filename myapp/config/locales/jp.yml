@@ -46,3 +46,10 @@ ja:
       create: タスクを登録
       submit: タスクを保存
       update: タスクを更新
+  enums:
+    task:
+      status:
+        untouched: 未着手
+        doing: 実施中
+        completed: 完了
+

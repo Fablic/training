@@ -64,4 +64,118 @@ describe 'Taskモデル', type: :model do
       end
     end
   end
+
+  describe '検索' do
+    describe 'タスク名検索' do
+      context 'タスク名が完全一致する場合' do
+        let!(:task) { FactoryBot.create(:task, name: 'あいうえお', status: 1) }
+
+        it 'データが取得できる' do
+          expect(Task.name_like('あいうえお').status_equal(1).count).to eq 1
+        end
+      end
+
+      context 'タスク名が部分一致する場合' do
+        let!(:task) { FactoryBot.create(:task, name: 'あいうえお') }
+
+        it 'データが取得できる' do
+          expect(Task.name_like('いうえ').status_equal(1).count).to eq 1
+        end
+      end
+
+      context 'タスク名が一致しない場合' do
+        let!(:task) { FactoryBot.create(:task, name: 'あいうえお') }
+
+        it 'データが取得できない' do
+          expect(Task.name_like('かきくけこ').status_equal(1)).to be_empty
+        end
+      end
+
+      context 'タスク名が空の場合' do
+        let!(:task) { FactoryBot.create(:task, name: 'あいうえお', status: 1) }
+
+        it 'データを取得できない' do
+          expect(Task.name_like('').status_equal(1).count).to eq 1
+        end
+      end
+
+      context 'タスク名がnilの場合' do
+        let!(:task) { FactoryBot.create(:task, name: 'あいうえお', status: 1) }
+
+        it 'データを取得できない' do
+          expect(Task.name_like(nil).status_equal(1).count).to eq 1
+        end
+      end
+    end
+
+    describe 'ステータス検索' do
+      context 'ステータスが一致する場合' do
+        let!(:task) { FactoryBot.create(:task, name: 'あいうえお', status: 1) }
+
+        it 'データを取得できる' do
+          expect(Task.name_like('あいうえお').status_equal(1).count).to eq 1
+        end
+      end
+
+      context 'ステータスが一致しない場合' do
+        let!(:task) { FactoryBot.create(:task, name: 'あいうえお', status: 2) }
+
+        it 'データを取得できない' do
+          expect(Task.name_like('あいうえお').status_equal(1)).to be_empty
+        end
+      end
+
+      context 'ステータスが空の場合' do
+        let!(:task) { FactoryBot.create(:task, name: 'あいうえお', status: 1) }
+
+        it 'データを取得できる' do
+          expect(Task.name_like('あいうえお').status_equal('').count).to eq 1
+        end
+      end
+
+      context 'ステータスがnilの場合' do
+        let!(:task) { FactoryBot.create(:task, name: 'あいうえお', status: 1) }
+
+        it 'データを取得できる' do
+          expect(Task.name_like('あいうえお').status_equal(nil).count).to eq 1
+        end
+      end
+    end
+
+    describe 'タスク名とステータスの複合' do
+      context 'タスク名とステータスが両方一致する場合' do
+        let!(:task) { FactoryBot.create(:task, name: 'あいうえお', status: 1) }
+
+        it 'データを取得できる' do
+          expect(Task.name_like('あいうえお').status_equal(1).count).to eq 1
+        end
+      end
+
+      context 'タスク名もステータスも一致しない場合' do
+        let!(:task) { FactoryBot.create(:task, name: 'あいうえお', status: 2) }
+
+        it 'データを取得できない' do
+          expect(Task.name_like('かきくけこ').status_equal(1)).to be_empty
+        end
+      end
+
+      context 'タスク名、ステータスが空の場合' do
+        let!(:task_1) { FactoryBot.create(:task, name: 'あいうえお', status: 1) }
+        let!(:task_2) { FactoryBot.create(:task, name: 'かきくけこ', status: 2) }
+
+        it 'データを全件（２件）取得できる' do
+          expect(Task.name_like('').status_equal('').count).to eq 2
+        end
+      end
+
+      context 'タスク名、ステータスがnilの場合' do
+        let!(:task_1) { FactoryBot.create(:task, name: 'あいうえお', status: 1) }
+        let!(:task_2) { FactoryBot.create(:task, name: 'かきくけこ', status: 2) }
+
+        it 'データを全件（２件）取得できる' do
+          expect(Task.name_like(nil).status_equal(nil).count).to eq 2
+        end
+      end
+    end
+  end
 end

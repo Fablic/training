@@ -5,6 +5,7 @@
   <thead>
     <tr>
       <th>タスク名</th>
+      <th>ステータス</th>
     </tr>
   </thead>
 
@@ -12,6 +13,7 @@
     <% @tasks.each do |task| %>
       <tr>
         <td><%= task.name %></td>
+        <td><%= I18n.t("enums.task.status.#{task.status}") %></td>
         <td><%= link_to '詳細', task_path(task.id) %></td>
       </tr>
     <% end %>
@@ -20,3 +22,16 @@
 <br>
 
 <%= link_to '新規作成', new_task_path %>
+
+<div>
+<%= form_with url: search_path, method: :get, local: true do |f| %>
+  <p>検索フォーム</p>
+    <p style="display: inline">検索ワード</p>
+    <%= f.text_field :name %>
+    <br>
+    <p style="display: inline">ステータス</p>
+    <%= f.select :status, Task.statuses.keys.map { |k| [I18n.t("enums.task.status.#{k}"), k]} , include_blank: true %>
+  <br>
+  <%= f.submit '検索' %>
+<% end %>
+</div>

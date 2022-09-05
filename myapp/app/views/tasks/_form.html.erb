@@ -16,10 +16,16 @@
       <%= f.text_field :name %>
     </div>
 
-     <div class='field'>
+    <div class='field'>
       <%= f.label :description %>
       <br>
       <%= f.text_field :description %>
+    </div>
+
+    <div class='field'>
+      <%= f.label :status %>
+      <br>
+      <%= f.select :status, Task.statuses.keys.map { |k| [I18n.t("enums.task.status.#{k}"), k] } %>
     </div>
 
     <br>
