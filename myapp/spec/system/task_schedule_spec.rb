@@ -6,7 +6,7 @@ RSpec.describe 'TaskSchedule', type: :system do
   before do
     @task = Task.create(title: 'showタスク', body: 'showボディ', finish_at: 1.year.from_now)
     @task2 = Task.create(title: 'secondタスク', body: 'secondボディ', created_at: 1.day.from_now, finish_at: 1.day.from_now)
-    @task3 = Task.create(title: 'thirdタスク', body: 'thirdボディ', created_at: 1.day.ago, finish_at: 1.week.from_now)
+    @task3 = Task.create(title: 'thirdタスク', body: 'thirdボディ', created_at: 1.day.ago, finish_at: 1.week.from_now, status: 2)
     visit task_schedule_index_path
   end
 
@@ -15,18 +15,18 @@ RSpec.describe 'TaskSchedule', type: :system do
   end
 
   it 'complete order created_at' do
-    click_link('▼', href: /asc=true/)
+    click_link('▼', href: /\?asc=true/)
     expect(page.text).to match(/thirdボディ.*showボディ.*secondボディ/)
 
-    click_link('▲', href: /desc=true/)
+    click_link('▲', href: /\?desc=true/)
     expect(page.text).to match(/secondボディ.*showボディ.*thirdボディ/)
   end
 
   it 'complete order finish_at' do
-    click_link('▼', href: /finish_a=true/)
+    click_link('▼', href: /finish_asc=true/)
     expect(page.text).to match(/secondタスク.*thirdタスク.*showタスク/)
 
-    click_link('▲', href: /finish_de=true/)
+    click_link('▲', href: /finish_desc=true/)
     expect(page.text).to match(/showボディ.*thirdボディ.*secondボディ/)
   end
 
@@ -43,6 +43,7 @@ RSpec.describe 'TaskSchedule', type: :system do
     expect(page).to have_content 'newタスク'
     expect(page).to have_content 'newボディ'
     expect(page).to have_content '9999/01/01'
+    expect(page).to have_content '未着手'
   end
 
   it 'failure new task create' do
@@ -67,6 +68,10 @@ RSpec.describe 'TaskSchedule', type: :system do
     expect(page).to have_content 'タスク詳細画面'
     expect(page).to have_content 'showタスク'
     expect(page).to have_content 'showボディ'
+
+    select '着手中', from: 'task[status]'
+    expect(page).to have_content 'タスク一覧画面'
+    expect(page).to have_content '着手中'
   end
 
   it 'complete edit schedule' do
@@ -81,7 +86,7 @@ RSpec.describe 'TaskSchedule', type: :system do
     expect(page).to have_content 'タスクの編集が完了しました'
     expect(page).to have_no_content 'showタスク'
     expect(page).to have_no_content 'showボディ'
-    expect(page).to have_no_content '2112/09/03'
+    expect(page).to have_content '2112/09/03'
   end
 
   it 'failure edit schedule' do
@@ -111,5 +116,14 @@ RSpec.describe 'TaskSchedule', type: :system do
       expect(page).to have_no_content 'showタスク'
       expect(page).to have_no_content 'showボディ'
     end
+  end
+  it 'complete task search' do
+    fill_in 'search[title]', with: 'second'
+    click_button '検索'
+
+    expect(page).to have_content 'secondタスク'
+    expect(page).to have_no_content 'thirdタスク'
+
+
   end
 end
