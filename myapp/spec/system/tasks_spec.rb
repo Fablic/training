@@ -205,6 +205,7 @@ describe 'Tasks', type: :system do
     describe '一覧表示エリア' do
       context 'タスク1件' do
         let!(:task_one) { FactoryBot.create(:task, user_id: user.id) }
+        let!(:label_one) { FactoryBot.create(:label, name: 'label', task_id: task_one.id) }
 
         it 'タイトルが一致すること' do
           visit root_path
@@ -230,7 +231,9 @@ describe 'Tasks', type: :system do
 
       context 'タスク複数件' do
         let!(:task_one) { FactoryBot.create(:task, user_id: user.id) }
-        let!(:task_two) { FactoryBot.create(:task, title: 'second title', content: 'second content', label: 'second label', status: 'in_progress', user_id: user.id) }
+        let!(:task_two) { FactoryBot.create(:task, title: 'second title', content: 'second content', status: 'in_progress', user_id: user.id) }
+        let!(:label_one) { FactoryBot.create(:label, name: 'label', task_id: task_one.id) }
+        let!(:label_two) { FactoryBot.create(:label, name: 'second label', task_id: task_two.id) }
         let(:tds_one){ all('tbody tr')[0].all('td') }
         let(:tds_two){ all('tbody tr')[1].all('td') }
 
@@ -386,24 +389,24 @@ describe 'Tasks', type: :system do
           {
             title: '',
             content: 'content',
-            label: 'label',
+            label1: 'label1',
           }
         }
 
         it 'データ登録されていないこと' do
           visit new_task_path
-          fill_in 'task[title]', with: input_values[:title]
-          fill_in 'task[content]', with: input_values[:content]
-          fill_in 'task[label]', with: input_values[:label]
+          fill_in 'task_form[title]', with: input_values[:title]
+          fill_in 'task_form[content]', with: input_values[:content]
+          fill_in 'task_form[label1]', with: input_values[:label1]
           click_on '作成'
-          expect(Task.find_by(input_values)).to be_nil
+          expect(Task.find_by(title: input_values[:title], content: input_values[:content])).to be_nil
         end
 
         it 'エラーメッセージが表示されること' do
           visit new_task_path
-          fill_in 'task[title]', with: input_values[:title]
-          fill_in 'task[content]', with: input_values[:content]
-          fill_in 'task[label]', with: input_values[:label]
+          fill_in 'task_form[title]', with: input_values[:title]
+          fill_in 'task_form[content]', with: input_values[:content]
+          fill_in 'task_form[label1]', with: input_values[:label1]
           click_on '作成'
           expect(page).to have_content 'タイトルは1文字以上で入力してください'
         end
@@ -414,24 +417,24 @@ describe 'Tasks', type: :system do
           {
             title: '1' * 129,
             content: 'content',
-            label: 'label',
+            label1: 'label1',
           }
         }
 
         it 'データ登録されていないこと' do
           visit new_task_path
-          fill_in 'task[title]', with: input_values[:title]
-          fill_in 'task[content]', with: input_values[:content]
-          fill_in 'task[label]', with: input_values[:label]
+          fill_in 'task_form[title]', with: input_values[:title]
+          fill_in 'task_form[content]', with: input_values[:content]
+          fill_in 'task_form[label1]', with: input_values[:label1]
           click_on '作成'
-          expect(Task.find_by(input_values)).to be_nil
+          expect(Task.find_by(title: input_values[:title], content: input_values[:content])).to be_nil
         end
 
         it 'エラーメッセージが表示されること' do
           visit new_task_path
-          fill_in 'task[title]', with: input_values[:title]
-          fill_in 'task[content]', with: input_values[:content]
-          fill_in 'task[label]', with: input_values[:label]
+          fill_in 'task_form[title]', with: input_values[:title]
+          fill_in 'task_form[content]', with: input_values[:content]
+          fill_in 'task_form[label1]', with: input_values[:label1]
           click_on '作成'
           expect(page).to have_content 'タイトルは128文字以内で入力してください'
         end
@@ -442,24 +445,24 @@ describe 'Tasks', type: :system do
           {
             title: 'title',
             content: '',
-            label: 'label',
+            label1: 'label1',
           }
         }
 
         it 'データ登録されていないこと' do
           visit new_task_path
-          fill_in 'task[title]', with: input_values[:title]
-          fill_in 'task[content]', with: input_values[:content]
-          fill_in 'task[label]', with: input_values[:label]
+          fill_in 'task_form[title]', with: input_values[:title]
+          fill_in 'task_form[content]', with: input_values[:content]
+          fill_in 'task_form[label1]', with: input_values[:label1]
           click_on '作成'
-          expect(Task.find_by(input_values)).to be_nil
+          expect(Task.find_by(title: input_values[:title], content: input_values[:content])).to be_nil
         end
 
         it 'エラーメッセージが表示されること' do
           visit new_task_path
-          fill_in 'task[title]', with: input_values[:title]
-          fill_in 'task[content]', with: input_values[:content]
-          fill_in 'task[label]', with: input_values[:label]
+          fill_in 'task_form[title]', with: input_values[:title]
+          fill_in 'task_form[content]', with: input_values[:content]
+          fill_in 'task_form[label1]', with: input_values[:label1]
           click_on '作成'
           expect(page).to have_content '内容は1文字以上で入力してください'
         end
@@ -470,80 +473,164 @@ describe 'Tasks', type: :system do
           {
             title: 'title',
             content: '1' * 1025,
-            label: 'label',
+            label1: 'label1',
           }
         }
 
         it 'データ登録されていないこと' do
           visit new_task_path
-          fill_in 'task[title]', with: input_values[:title]
-          fill_in 'task[content]', with: input_values[:content]
-          fill_in 'task[label]', with: input_values[:label]
+          fill_in 'task_form[title]', with: input_values[:title]
+          fill_in 'task_form[content]', with: input_values[:content]
+          fill_in 'task_form[label1]', with: input_values[:label1]
           click_on '作成'
-          expect(Task.find_by(input_values)).to be_nil
+          expect(Task.find_by(title: input_values[:title], content: input_values[:content])).to be_nil
         end
 
         it 'エラーメッセージが表示されること' do
           visit new_task_path
-          fill_in 'task[title]', with: input_values[:title]
-          fill_in 'task[content]', with: input_values[:content]
-          fill_in 'task[label]', with: input_values[:label]
+          fill_in 'task_form[title]', with: input_values[:title]
+          fill_in 'task_form[content]', with: input_values[:content]
+          fill_in 'task_form[label1]', with: input_values[:label1]
           click_on '作成'
           expect(page).to have_content '内容は1024文字以内で入力してください'
         end
       end
 
-      context '入力エラー（ラベルが未入力）' do
+      context '入力エラー（ラベル1が65文字）' do
         let(:input_values) {
           {
             title: 'title',
             content: 'content',
-            label: '',
+            label1: '1' * 65,
           }
         }
 
         it 'データ登録されていないこと' do
           visit new_task_path
-          fill_in 'task[title]', with: input_values[:title]
-          fill_in 'task[content]', with: input_values[:content]
-          fill_in 'task[label]', with: input_values[:label]
+          fill_in 'task_form[title]', with: input_values[:title]
+          fill_in 'task_form[content]', with: input_values[:content]
+          fill_in 'task_form[label1]', with: input_values[:label1]
           click_on '作成'
-          expect(Task.find_by(input_values)).to be_nil
+          expect(Task.find_by(title: input_values[:title], content: input_values[:content])).to be_nil
         end
 
         it 'エラーメッセージが表示されること' do
           visit new_task_path
-          fill_in 'task[title]', with: input_values[:title]
-          fill_in 'task[content]', with: input_values[:content]
-          fill_in 'task[label]', with: input_values[:label]
+          fill_in 'task_form[title]', with: input_values[:title]
+          fill_in 'task_form[content]', with: input_values[:content]
+          fill_in 'task_form[label1]', with: input_values[:label1]
           click_on '作成'
-          expect(page).to have_content 'ラベルは1文字以上で入力してください'
+          expect(page).to have_content 'ラベル名は64文字以内で入力してください'
         end
       end
 
-      context '入力エラー（ラベルが65文字）' do
+      context '入力エラー（ラベル1が65文字）' do
         let(:input_values) {
           {
             title: 'title',
             content: 'content',
-            label: '1' * 65,
+            label1: '1' * 65,
           }
         }
 
         it 'データ登録されていないこと' do
           visit new_task_path
-          fill_in 'task[title]', with: input_values[:title]
-          fill_in 'task[content]', with: input_values[:content]
-          fill_in 'task[label]', with: input_values[:label]
+          fill_in 'task_form[title]', with: input_values[:title]
+          fill_in 'task_form[content]', with: input_values[:content]
+          fill_in 'task_form[label1]', with: input_values[:label1]
           click_on '作成'
-          expect(Task.find_by(input_values)).to be_nil
+          expect(Task.find_by(title: input_values[:title], content: input_values[:content])).to be_nil
         end
 
         it 'エラーメッセージが表示されること' do
           visit new_task_path
-          fill_in 'task[title]', with: input_values[:title]
-          fill_in 'task[content]', with: input_values[:content]
-          fill_in 'task[label]', with: input_values[:label]
+          fill_in 'task_form[title]', with: input_values[:title]
+          fill_in 'task_form[content]', with: input_values[:content]
+          fill_in 'task_form[label1]', with: input_values[:label1]
+          click_on '作成'
+          expect(page).to have_content 'ラベルは64文字以内で入力してください'
+        end
+      end
+
+      context '入力エラー（ラベル1が65文字）' do
+        let(:input_values) {
+          {
+            title: 'title',
+            content: 'content',
+            label1: '1' * 65,
+          }
+        }
+
+        it 'データ登録されていないこと' do
+          visit new_task_path
+          fill_in 'task_form[title]', with: input_values[:title]
+          fill_in 'task_form[content]', with: input_values[:content]
+          fill_in 'task_form[label1]', with: input_values[:label1]
+          click_on '作成'
+          expect(Task.find_by(title: input_values[:title], content: input_values[:content])).to be_nil
+        end
+
+        it 'エラーメッセージが表示されること' do
+          visit new_task_path
+          fill_in 'task_form[title]', with: input_values[:title]
+          fill_in 'task_form[content]', with: input_values[:content]
+          fill_in 'task_form[label1]', with: input_values[:label1]
+          click_on '作成'
+          expect(page).to have_content 'ラベル名は64文字以内で入力してください'
+        end
+      end
+
+      context '入力エラー（ラベル1が65文字）' do
+        let(:input_values) {
+          {
+            title: 'title',
+            content: 'content',
+            label1: '1' * 65,
+          }
+        }
+
+        it 'データ登録されていないこと' do
+          visit new_task_path
+          fill_in 'task_form[title]', with: input_values[:title]
+          fill_in 'task_form[content]', with: input_values[:content]
+          fill_in 'task_form[label1]', with: input_values[:label1]
+          click_on '作成'
+          expect(Task.find_by(title: input_values[:title], content: input_values[:content])).to be_nil
+        end
+
+        it 'エラーメッセージが表示されること' do
+          visit new_task_path
+          fill_in 'task_form[title]', with: input_values[:title]
+          fill_in 'task_form[content]', with: input_values[:content]
+          fill_in 'task_form[label1]', with: input_values[:label1]
+          click_on '作成'
+          expect(page).to have_content 'ラベル名は64文字以内で入力してください'
+        end
+      end
+
+      context '入力エラー（ラベル1が65文字）' do
+        let(:input_values) {
+          {
+            title: 'title',
+            content: 'content',
+            label1: '1' * 65,
+          }
+        }
+
+        it 'データ登録されていないこと' do
+          visit new_task_path
+          fill_in 'task_form[title]', with: input_values[:title]
+          fill_in 'task_form[content]', with: input_values[:content]
+          fill_in 'task_form[label1]', with: input_values[:label1]
+          click_on '作成'
+          expect(Task.find_by(title: input_values[:title], content: input_values[:content])).to be_nil
+        end
+
+        it 'エラーメッセージが表示されること' do
+          visit new_task_path
+          fill_in 'task_form[title]', with: input_values[:title]
+          fill_in 'task_form[content]', with: input_values[:content]
+          fill_in 'task_form[label1]', with: input_values[:label1]
           click_on '作成'
           expect(page).to have_content 'ラベルは64文字以内で入力してください'
         end
