@@ -21,6 +21,7 @@
   </tbody>
 </table>
 <br>
+<%= paginate @tasks %>
 
 <div>
 <%= form_with url: search_path, method: :get, local: true do |f| %>
