@@ -22,22 +22,16 @@
     <%= f.text_field :detail %>
   </div>
 
-   <div class='field'>
+  <div class='field'>
     <%= f.label :status %>
     <br>
     <%= f.select :status, Task.statuses.keys.map { |k| [I18n.t("enums.task.status.#{k}"), k] }, { selected: task.status } %>
   </div>
 
-   <div class='field'>
+  <div class='field'>
     <%= f.label :priority %>
     <br>
     <%= f.select :priority, Task.priorities.keys.map { |k| [I18n.t("enums.task.priority.#{k}"), k]}, { selected: task.priority } %>
-  </div>
-
-  <div class='field'>
-    <%= f.label :user %>
-    <br>
-    <%= f.select :user_id, @users.map { |k| [k.user_name, k.id] }, { selected: task.user_id } %>
   </div>
 
   <br>

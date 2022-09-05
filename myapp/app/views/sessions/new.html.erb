@@ -1,3 +1,5 @@
+<div class="alert alert-failed" style="color: red"><%= alert %></div>
+
 <h1>ログイン画面</h1>
 <div>
 <%= form_with scope: :session, url: login_path, method: :post, local: true do |f| %>

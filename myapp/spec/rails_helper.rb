@@ -50,6 +50,8 @@ RSpec.configure do |config|
     session = defined?(rspec_session) ? rspec_session : {}
     # destroyメソッドを実行してもエラーにならないようにする
     session.class_eval { def destroy; nil; end }
+    # 実行後のセッションを取得できるようにする
+    config.add_setting(:session, :default => session)
     # sessionメソッドを上書き
     allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(session)
 
