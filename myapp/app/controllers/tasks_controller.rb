@@ -2,7 +2,8 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def index
-    @tasks = current_user.tasks.eager_load(:user).all.page(params[:page]).per(5)
+    @tasks = Task.eager_load(:user).all.page(params[:page])
+
   end
 
   def show
@@ -11,6 +12,7 @@ class TasksController < ApplicationController
 
   def new
     @task = Task.new
+    @users = User.all
   end
 
   def create
