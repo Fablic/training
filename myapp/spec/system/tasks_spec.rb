@@ -23,6 +23,10 @@ describe 'タスク管理機能', type: :system do
             visit_tasks
             expect(tds[2]).to have_content '低'
           end
+          it '担当者が表示される' do
+            visit_tasks
+            expect(tds[3]).to have_content 'testUser'
+          end
         end
       end
       shared_examples_for '２件目のタスク表示' do
@@ -40,6 +44,10 @@ describe 'タスク管理機能', type: :system do
           it '優先度が表示される' do
             visit_tasks
             expect(tds[2]).to have_content '中'
+          end
+          it '担当者が表示される' do
+            visit_tasks
+            expect(tds[3]).to have_content 'testUser'
           end
         end
       end
@@ -94,6 +102,13 @@ describe 'タスク管理機能', type: :system do
             click_button '検索'
             expect(tds[2]).to have_content '低'
           end
+          it '担当者が表示される' do
+            visit_tasks
+            fill_in 'name', with: name
+            select(value = status, from: 'status')
+            click_button '検索'
+            expect(tds[3]).to have_content 'testUser'
+          end
         end
       end
       shared_examples_for '２件目のタスク表示' do
@@ -120,6 +135,13 @@ describe 'タスク管理機能', type: :system do
             select(value = status, from: 'status')
             click_button '検索'
             expect(tds[2]).to have_content '中'
+          end
+          it '担当者が表示される' do
+            visit_tasks
+            fill_in 'name', with: name
+            select(value = status, from: 'status')
+            click_button '検索'
+            expect(tds[3]).to have_content 'testUser'
           end
         end
       end
@@ -205,6 +227,10 @@ describe 'タスク管理機能', type: :system do
           visit_task_a
           expect(page).to have_content '低'
         end
+        it '担当者が表示される' do
+          visit_task_a
+          expect(page).to have_content 'testUser'
+        end
       end
     end
 
@@ -260,7 +286,7 @@ describe 'タスク管理機能', type: :system do
         let(:detail) { '新規作成のテストを書く' }
         let(:status) { '未着手' }
         let(:priority) { '低' }
-        let(:user_id) { 1 }
+        let(:user_name) { 'testUser' }
 
         it 'タスクの件数が1件増える' do
           # タスク内容入力
@@ -269,7 +295,7 @@ describe 'タスク管理機能', type: :system do
           fill_in '詳細', with: detail
           select(value = status, from: 'task[status]')
           select(value = priority, from: 'task[priority]')
-          fill_in 'User', with: user_id
+          select(value = user_name, from: 'task[user_id]')
           # DBに登録されている
           expect { click_button '登録' }.to change(Task, :count).by(1)
         end
@@ -281,7 +307,7 @@ describe 'タスク管理機能', type: :system do
           fill_in '詳細', with: detail
           select(value = status, from: 'task[status]')
           select(value = priority, from: 'task[priority]')
-          fill_in 'User', with: user_id
+          select(value = user_name, from: 'task[user_id]')
           click_button '登録'
           # 画面で入力された内容でDBに登録されている
           expect(Task.find_by(name: '新規作成のテスト', detail: '新規作成のテストを書く', status: 'not_started', priority: 'low')).not_to be_nil
@@ -294,7 +320,7 @@ describe 'タスク管理機能', type: :system do
           fill_in '詳細', with: detail
           select(value = status, from: 'task[status]')
           select(value = priority, from: 'task[priority]')
-          fill_in 'User', with: user_id
+          select(value = user_name, from: 'task[user_id]')
           # Flashメッセージが表示される
           click_button '登録'
           expect(page).to have_selector '.alert-success', text: 'タスク「新規作成のテスト」を登録しました。'
@@ -307,8 +333,7 @@ describe 'タスク管理機能', type: :system do
           fill_in '詳細', with: detail
           select(value = status, from: 'task[status]')
           select(value = priority, from: 'task[priority]')
-
-          visit_new_task
+          select(value = user_name, from: 'task[user_id]')
           click_button '登録'
           expect(page).to have_current_path tasks_path
         end
@@ -328,6 +353,7 @@ describe 'タスク管理機能', type: :system do
 
   describe '編集機能' do
     let!(:user_a) { FactoryBot.create(:user) }
+    let!(:user_b) { FactoryBot.create(:user, user_name: 'testUser2', password:'testPassword2') }
     let!(:task_a) { FactoryBot.create(:task, name: '最初のタスク', detail: '最初のタスクを実施する', status: 1, priority: 1, user: user_a) }
     subject(:visit_task_a_edit){visit edit_task_path(task_a)}
 
@@ -341,13 +367,17 @@ describe 'タスク管理機能', type: :system do
           visit_task_a_edit
           expect(page).to have_field '詳細', with: '最初のタスクを実施する'
         end
-        it '編集前のステータスが選択肢として存在する' do
+        it '編集前のステータスが選択されている' do
           visit_task_a_edit
-          expect(page).to have_content '未着手'
+          expect(page).to have_select('task[status]', selected: '未着手')
         end
-        it '編集前の優先度が選択肢として存在する' do
+        it '編集前の優先度が選択されている' do
           visit_task_a_edit
-          expect(page).to have_content '低'
+          expect(page).to have_select('task[priority]', selected: '低')
+        end
+        it '編集前のユーザが選択されている' do
+          visit_task_a_edit
+          expect(page).to have_select('task[user_id]', selected: 'testUser')
         end
       end
     end
@@ -358,6 +388,7 @@ describe 'タスク管理機能', type: :system do
         let(:detail) { '新規作成のテストを書く２' }
         let(:status) { '未着手' }
         let(:priority) { '低' }
+        let(:user_name) { 'testUser2' }
 
         it 'タスクが更新される' do
           visit_task_a_edit
@@ -366,9 +397,10 @@ describe 'タスク管理機能', type: :system do
           fill_in '詳細', with: detail
           select(value = status, from: 'task[status]')
           select(value = priority, from: 'task[priority]')
+          select(value = user_name, from: 'task[user_id]')
           click_button '更新'
           # 画面で入力された内容でDBのデータが更新されている
-          expect(Task.find_by(name: name, detail: detail, status: 'not_started', priority: 'low')).not_to be_nil
+          expect(Task.find_by(name: name, detail: detail, status: 'not_started', priority: 'low', user_id: user_b.id)).not_to be_nil
         end
 
         it 'Flashメッセージが表示される' do
@@ -378,6 +410,7 @@ describe 'タスク管理機能', type: :system do
           fill_in '詳細', with: detail
           select(value = status, from: 'task[status]')
           select(value = priority, from: 'task[priority]')
+          select(value = user_name, from: 'task[user_id]')
           click_button '更新'
           # Flashメッセージが表示される
           expect(page).to have_selector '.alert-success', text: 'タスク「新規作成のテスト２」を更新しました。'

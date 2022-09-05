@@ -43,6 +43,7 @@ ja:
         detail: 詳細
         priority: 優先度
         status: ステータス
+        user: 担当者
   attributes:
     created_at: 登録日時
     updated_at: 更新日時

@@ -6,6 +6,7 @@
       <th>タスク名</th>
       <th>ステータス</th>
       <th>優先度</th>
+      <th>担当者名</th>
     </tr>
   </thead>
 
@@ -15,6 +16,7 @@
         <td><%= task.name %></td>
         <td><%= I18n.t("enums.task.status.#{task.status}") %></td>
         <td><%= I18n.t("enums.task.priority.#{task.priority}") %></td>
+        <td><%= task.user.user_name %></td>
         <td><%= link_to '詳細', task_path(task.id) %></td>
       </tr>
     <% end %>

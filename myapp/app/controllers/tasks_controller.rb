@@ -10,6 +10,7 @@ class TasksController < ApplicationController
 
   def new
     @task = Task.new
+    @users = User.all
   end
 
   def create
@@ -23,6 +24,7 @@ class TasksController < ApplicationController
   end
 
   def edit
+    @users = User.all
   end
 
   def update
