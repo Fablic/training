@@ -6,7 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 10.times do |i|
-    user = User.create!(name: "ユーザ#{i}")
+    user = User.create!(name: "テストユーザ#{i}", email: "sample#{i}@example.com", password: 'password', password_confirmation: 'password')
     Task.create!(
       title: "タスク#{i}",
       description: "こちらはタスク#{i}の内容です。",
