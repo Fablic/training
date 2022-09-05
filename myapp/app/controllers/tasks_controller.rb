@@ -3,7 +3,6 @@
 class TasksController < ApplicationController
   # タスク一覧画面
   def index
-    puts params.inspect
     # タスク一覧オブジェクト取得
     @tasks = Task.eager_load(:labels).where_user_id(login_user.id).where_title(params[:title]).where_label(params[:label]).where_status(params[:status])
     @tasks = Task.where(id: @tasks.map { |t| t.id }).order('tasks.created_at desc').page(params[:page])
