@@ -2,16 +2,17 @@
 
 class TaskScheduleController < ApplicationController
   def index
+    @search_params = task_search_params
     @tasks = if params[:desc]
-               Task.all.desc
+               Task.search(@search_params).desc
              elsif params[:asc]
-               Task.all.asc
+               Task.search(@search_params).asc
              elsif params[:finish_desc]
-               Task.all.finish_desc
+               Task.search(@search_params).finish_desc
              elsif params[:finish_asc]
-               Task.all.finish_asc
+               Task.search(@search_params).finish_asc
              else
-              Task.all.finish_asc
+               Task.search(@search_params).finish_asc
              end
   end
 
@@ -63,5 +64,9 @@ class TaskScheduleController < ApplicationController
 
   def task_params
     params.require(:task).permit(:title, :body, :finish_at, :status)
+  end
+
+  def task_search_params
+    params.fetch(:search, {}).permit(:title, :status)
   end
 end

@@ -16,6 +16,8 @@ ja:
   task_schedule:
     index:
       title: 'タスク一覧画面'
+      search_form: '検索フォーム'
+      search: '検索'
       new: 'タスク登録'
       edit: '編集'
       show: '詳細'
