@@ -24,6 +24,8 @@ gem 'turbolinks', '~> 5'
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
+gem 'rails-i18n'
+
 # FactoryBot
 gem 'factory_bot_rails', '~> 4.11'
 
