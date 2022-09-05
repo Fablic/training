@@ -310,7 +310,8 @@ describe 'タスク管理機能', type: :system do
           select(value = user_name, from: 'task[user_id]')
           click_button '登録'
           # 画面で入力された内容でDBに登録されている
-          expect(Task.find_by(name: '新規作成のテスト', detail: '新規作成のテストを書く', status: 'not_started', priority: 'low')).not_to be_nil
+          expect(Task.find_by(name: '新規作成のテスト', detail: '新規作成のテストを書く',
+            status: 'not_started', priority: 'low', user_id: user_a.id)).not_to be_nil
         end
 
         it 'Flashメッセージが表示される' do

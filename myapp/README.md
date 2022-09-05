@@ -17,6 +17,7 @@ http://localhost:3001
 | label | 2 | タスク名 | tasks.name | 文字列 | | |
 | label | 2 | ステータス | tasks.status | 文字列 | | コードを文字列へ変換して表示 1:'未着手'、2:'着手中'、3:'完了' |
 | label | 2 | 優先度 | tasks.priority | 数値 | | |
+| label | 2 | 担当者 | users.user_name | 文字列 | | |
 | button | 2 | 詳細 |  | ボタン | | タスク詳細画面へ遷移 |
 <br>
 
@@ -45,6 +46,7 @@ http://localhost:3001/tasks/{task.id}
 | label | 1 | 詳細 | tasks.detail | 文字列 | | |
 | label | 1 | ステータス | tasks.status | 文字列 | | コードを文字列へ変換して表示 1:'未着手'、2:'着手中'、3:'完了' |
 | label | 1 | 優先度 | tasks.priority | 数値 | | |
+| label | 1 | 担当者 | users.user_name | 文字列 | | |
 | label | 1 | 登録日時 | tasks.created_at | 文字列 | | |
 | label | 1 | 更新日時 | tasks.updated_at | 文字列 | | |
 | button | 1 | 編集 |  | ボタン | | タスク編集画面へ遷移 |
@@ -63,6 +65,7 @@ http://localhost:3001/tasks/new
 | text | 1 | 詳細 | | 文字列 | | |
 | select | 1 | ステータス | | プルダウン | | 1:'未着手'、2:'着手中'、3:'完了' をリスト表示 |
 | select | 1 | 優先度 | | プルダウン | | 1:'低'、2:'中'、3:'高' をリスト表示 |
+| select | 1 | 担当者 | users.name | プルダウン | | usersテーブルの全ユーザをリスト表示 |
 | button | 1 | 登録 |  | ボタン | | タスク作成 |
 | button | 1 | 一覧へ戻る |  | ボタン | | タスク一覧画面へ遷移 |
 <br>
@@ -78,6 +81,7 @@ http://localhost:3001/tasks/{task.id}/edit
 | text | 1 | 詳細 | tasks.detail | 文字列 | | |
 | select | 1 | ステータス | プルダウン | 文字列 | | 1:'未着手'、2:'着手中'、3:'完了' をリスト表示 |
 | select | 1 | 優先度 | | プルダウン | | 1:'低'、2:'中'、3:'高' をリスト表示 |
+| select | 1 | 担当者 | users.name | プルダウン | | usersテーブルの全ユーザをリスト表示 |
 | button | 1 | 更新 |  | ボタン | | データを更新 |
 | button | 1 | 詳細へ戻る |  | ボタン | | タスク詳細画面へ遷移 |
 | button | 1 | 一覧へ戻る |  | ボタン | | タスク一覧画面へ遷移 |
