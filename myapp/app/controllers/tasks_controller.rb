@@ -3,17 +3,15 @@
 class TasksController < ApplicationController
   # タスク一覧画面
   def index
+    puts params.inspect
     # タスク一覧オブジェクト取得
-    if params && (params[:word].present? || params[:status].present?)
-      @tasks = Task.includes(:labels).where_user_id(login_user.id).where_title(params[:title]).where_status(params[:status]).order('tasks.created_at desc').page(params[:page])
-    else
-      @tasks = Task.includes(:labels).where_user_id(login_user.id).order('tasks.created_at desc').page(params[:page])
-    end
+    @tasks = Task.eager_load(:labels).where_user_id(login_user.id).where_title(params[:title]).where_label(params[:label]).where_status(params[:status])
+    @tasks = Task.where(id: @tasks.map { |t| t.id }).order('tasks.created_at desc').page(params[:page])
   end
 
   # タスク作成画面
   def new
-    @task = Task.new
+    @task_form = TaskForm.new
     @is_status = false
   end
 
