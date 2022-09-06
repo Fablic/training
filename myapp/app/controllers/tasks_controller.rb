@@ -27,7 +27,7 @@ class TasksController < ApplicationController
 
   # タスク詳細画面
   def show
-    @task = Task.includes(:labels).find(params[:id])
+    @task = Task.eager_load(:labels).find(params[:id])
     @label1 = @task.labels[0].name if @task.labels.size > 0
     @label2 = @task.labels[1].name if @task.labels.size > 1
     @label3 = @task.labels[2].name if @task.labels.size > 2
