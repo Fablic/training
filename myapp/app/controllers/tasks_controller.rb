@@ -3,11 +3,7 @@
 class TasksController < ApplicationController
   # タスク一覧画面
   def index
-    # タスク一覧オブジェクト取得
-    if params && (params[:title].present? || params[:status].present?)
       @tasks = Task.where_user_id(login_user.id).where_title(params[:title]).where_status(params[:status]).order('tasks.created_at desc').page(params[:page])
-    else
-      @tasks = Task.where_user_id(login_user.id).order('tasks.created_at desc').page(params[:page])
     end
   end
 
