@@ -15,9 +15,6 @@ class TasksController < ApplicationController
   def new
     @task = Task.new
     @is_status = false
-
-    # 担当者名リスト取得
-    @users_name = users_name
   end
 
   # タスク作成画面
@@ -27,8 +24,6 @@ class TasksController < ApplicationController
     if @task.save
       redirect_to(root_path, notice: 'タスク作成成功')
     else
-      # 担当者名リスト取得
-      @users_name = users_name
       render(:new, status: :unprocessable_entity)
     end
   end
@@ -42,9 +37,6 @@ class TasksController < ApplicationController
   def edit
     @task = Task.find(params[:id])
     @is_status = true
-
-    # 担当者名リスト取得
-    @users_name = users_name
   end
 
   # タスク更新
@@ -54,8 +46,6 @@ class TasksController < ApplicationController
     if @task.update(task_params)
       redirect_to(root_path, notice: 'タスク更新成功')
     else
-      # 担当者名リスト取得
-      @users_name = users_name
       render(:edit, status: :unprocessable_entity)
     end
   end
@@ -75,10 +65,5 @@ class TasksController < ApplicationController
     task_params[:user_id] = task_params[:user_id]
 
     task_params
-  end
-
-  # ユーザー名リスト
-  def users_name
-    User.all.map { |k| [k.name, k.id] }
   end
 end

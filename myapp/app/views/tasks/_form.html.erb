@@ -18,7 +18,7 @@
   <%= f.text_field(:label) %>
 
   <p><%= I18n.t('task.user') %></p>
-  <%= f.select(:user_id, @users_name) %>
+  <%= f.collection_select(:user_id,  User.all, :id, :name) %>
 
   <% if is_status %>
     <p><%= I18n.t('task.status') %></p>
