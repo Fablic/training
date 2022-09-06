@@ -500,48 +500,71 @@ describe 'タスク管理機能', type: :system do
   end
 
   describe 'バリデーション' do
-    describe 'タスク名カラム' do
+    subject(:visit_new_task){ visit new_task_path }
+    describe 'タイトル' do
       context '30文字で入力されている場合' do
-        let!(:task) { FactoryBot.build(:task, title: 'あ' * 30, description: '最初のタスクを実施する', user_id: '1', status: '1', label: 1) }
+        let!(:task) { FactoryBot.create(:task, title: 'あ' * 30, description: '最初のタスクを実施する', user_id: '1', status: '1', label: 1) }
         it '登録できる' do
-          expect(task).to be_valid
+          visit_new_task
+          fill_in 'textarea1', with: task.title
+          fill_in 'textarea2', with: task.description
+          expect { click_button 'submit' }.to change(Task, :count).by(1)
         end
       end
 
       context '空の場合' do
         let!(:task) { FactoryBot.build(:task, title: '', description: '最初のタスクを実施する', user_id: '1', status: '1', label: 1) }
-        it '無効である' do
-          expect(task).to be_invalid
+        it 'エラーメッセージが表示される' do
+          visit_new_task
+          fill_in 'textarea1', with: task.title
+          fill_in 'textarea2', with: task.description
+          click_button 'submit'
+          expect(page).to have_selector '.error_list', text: "Title can't be blank"
         end
       end
 
       context '31文字以上の場合' do
         let!(:task) { FactoryBot.build(:task, title: 'あ' * 31, description: '最初のタスクを実施する', user_id: '1', status: '1', label: 1) }
-        it '無効である' do
-          expect(task).to be_invalid
+        it 'エラーメッセージが表示される' do
+          visit_new_task
+          fill_in 'textarea1', with: task.title
+          fill_in 'textarea2', with: task.description
+          click_button 'submit'
+          expect(page).to have_selector '.error_list', text: "Title is too long (maximum is 30 characters)"
         end
       end
     end
 
-    describe '詳細カラム' do
+    describe '説明' do
       context '100文字で入力されている場合' do
         let!(:task) { FactoryBot.build(:task, title: '最初のタスク', description: 'あ' * 100, user_id: '1', status: '1', label: 1) }
-        it '有効である' do
-          expect(task).to be_valid
+        it '登録できる' do
+          visit_new_task
+          fill_in 'textarea1', with: task.title
+          fill_in 'textarea2', with: task.description
+          expect { click_button 'submit' }.to change(Task, :count).by(1)
         end
       end
 
       context '空の場合' do
         let!(:task) { FactoryBot.build(:task, title: '最初のタスク', description: '', user_id: '1', status: '1', label: 1) }
-        it '無効である' do
-          expect(task).to be_invalid
+        it 'エラーメッセージが表示される' do
+          visit_new_task
+          fill_in 'textarea1', with: task.title
+          fill_in 'textarea2', with: task.description
+          click_button 'submit'
+          expect(page).to have_selector '.error_list', text: "Description can't be blank"
         end
       end
 
       context '101文字以上の場合' do
-        let!(:task) { FactoryBot.build(:task, description: 'あ' * 101, user_id: '1') }
-        it '無効である' do
-          expect(task).to be_invalid
+        let!(:task) { FactoryBot.build(:task, title: '最初のタスク', description: 'あ' * 101, user_id: '1') }
+        it 'エラーメッセージが表示される' do
+          visit_new_task
+          fill_in 'textarea1', with: task.title
+          fill_in 'textarea2', with: task.description
+          click_button 'submit'
+          expect(page).to have_selector '.error_list', text: "Description is too long (maximum is 100 characters)"
         end
       end
     end
