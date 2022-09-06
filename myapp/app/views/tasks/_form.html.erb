@@ -1,3 +1,13 @@
+<% if @task.errors.any? %>
+  <div style="color: red" >
+    <ul>
+      <% @task.errors.full_messages.each do |msg| %>
+        <li class='error_list' ><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
 <%= form_for(@task) do |f| %>
     <div>
       <%= f.label :タイトル %>
