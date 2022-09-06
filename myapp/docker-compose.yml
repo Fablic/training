@@ -21,3 +21,8 @@ services:
       - "3000:3000"
     depends_on:
       - db
+    environment:
+      DB_USER: root
+      DB_NAME: myapp
+      DB_PASSWORD: password
+      DB_HOST: db
