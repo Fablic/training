@@ -70,7 +70,6 @@ RSpec.describe 'TaskSchedule', type: :system do
     expect(page).to have_content 'showボディ'
 
     select '着手中', from: 'task[status]'
-    expect(page).to have_content 'タスク一覧画面'
     expect(page).to have_content '着手中'
   end
 
@@ -120,10 +119,13 @@ RSpec.describe 'TaskSchedule', type: :system do
   it 'complete task search' do
     fill_in 'search[title]', with: 'second'
     click_button '検索'
-
     expect(page).to have_content 'secondタスク'
     expect(page).to have_no_content 'thirdタスク'
 
-
+    fill_in 'search[title]', with: ''
+    select '完了', from: 'search[status]'
+    click_button '検索'
+    expect(page).to have_content 'thirdタスク'
+    expect(page).to have_no_content 'secondタスク'
   end
 end
