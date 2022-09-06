@@ -1,9 +1,8 @@
 <h1>ログイン</h1>
-  <% if flash[:error] %>
-    <p class="alert-faild">
-      <%= flash[:error] %>
-    </p>
-  <% end %>
+<div name='header'>
+  <div name='message-area' class='error-area'>
+    <%= alert %>
+  </div>
 <%= form_with scope: :session, local: true do |f| %>
     <div>
       <%= f.label :メールアドレス %>
@@ -18,6 +17,6 @@
       <%= f.password_field :password %>
     </div>
     <div>
-      <%= f.submit 'ログインする', class: 'btn btn-primary' %>
+      <%= f.submit 'ログインする', id: 'Login' %>
     </div>
 <% end %>
