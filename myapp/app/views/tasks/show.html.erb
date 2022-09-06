@@ -30,7 +30,9 @@
 
   <p>
     <strong>ラベル:</strong>
-    <%= @task.label.label_name %>
+    <% @task.labels.each do |label| %>
+      <%= label.label_name %>
+    <% end %>
   </p>
 
   <p>
