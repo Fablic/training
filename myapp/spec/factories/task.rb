@@ -3,6 +3,7 @@ FactoryBot.define do
     title    { 'title' }
     content  { 'content' }
     status   { 'not_started' }
-    user_id  { FactoryBot.create(:user).id }
+
+    user
   end
 end
