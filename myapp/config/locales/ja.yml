@@ -1,0 +1,11 @@
+ja:
+  enums:
+    task:
+      priority:
+        low: 低
+        normal: 普通
+        high: 高
+      status:
+        untouched: 未着手
+        touched: 着手中
+        completed: 完了

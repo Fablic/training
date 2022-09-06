@@ -96,6 +96,8 @@ GEM
     dotenv-rails (2.8.1)
       dotenv (= 2.8.1)
       railties (>= 3.2)
+    enum_help (0.0.19)
+      activesupport (>= 3.0.0)
     erubi (1.11.0)
     factory_bot (6.2.1)
       activesupport (>= 5.0.0)
@@ -182,6 +184,9 @@ GEM
       nokogiri (>= 1.6)
     rails-html-sanitizer (1.4.3)
       loofah (~> 2.3)
+    rails-i18n (7.0.5)
+      i18n (>= 0.7, < 2)
+      railties (>= 6.0.0, < 8)
     railties (7.0.3.1)
       actionpack (= 7.0.3.1)
       activesupport (= 7.0.3.1)
@@ -281,6 +286,7 @@ DEPENDENCIES
   capybara
   debug
   dotenv-rails
+  enum_help
   factory_bot_rails
   importmap-rails
   jbuilder
@@ -289,6 +295,7 @@ DEPENDENCIES
   pry-rails
   puma (~> 5.0)
   rails (~> 7.0.3, >= 7.0.3.1)
+  rails-i18n (~> 7.0.3)
   rspec-rails (~> 5.1.2)
   rubocop
   rubocop-rails
