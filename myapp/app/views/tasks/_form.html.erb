@@ -13,6 +13,8 @@
   <%= f.text_field :title, id: 'textarea1' %>
   <p>Description</p>
   <%= f.text_field :description, id: 'textarea2' %>
-  <br>
+  <p>Status</p>
+  <%= f.select :status, Task.statuses.keys.map { |k| [I18n.t("enums.task.status.#{k}"), k] } %>
+  <br><br>
   <%= f.submit id: 'submit' %>
 <% end %>
