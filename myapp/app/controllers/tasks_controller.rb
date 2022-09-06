@@ -61,9 +61,6 @@ class TasksController < ApplicationController
 
   # Taskパラメータ
   def task_params
-    task_params = params.require(:task).permit(:title, :content, :label, :user_id, :status)
-    task_params[:user_id] = task_params[:user_id]
-
-    task_params
+    params.require(:task).permit(:title, :content, :label, :user_id, :status)
   end
 end
