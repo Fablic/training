@@ -29,40 +29,43 @@ class TaskForm
   end
 
   def save
-      @task = Task.new(title: self.title, content: self.content, status: self.status.present? ? self.status : Task.statuses[:not_started], user_id: self.user_id)
-      ret_task = @task.save
-
-      ret_labels = true
-      if ret_task
+    begin
+      ActiveRecord::Base.transaction do
+        @task = Task.new(title: self.title, content: self.content, status: self.status.present? ? self.status : Task.statuses[:not_started], user_id: self.user_id)
+        @task.save!
         @labels = []
         @labels.push(Label.new(name: self.label1, task_id: @task.id)) if !self.label1.blank?
         @labels.push(Label.new(name: self.label2, task_id: @task.id)) if !self.label2.blank?
         @labels.push(Label.new(name: self.label3, task_id: @task.id)) if !self.label3.blank?
         @labels.push(Label.new(name: self.label4, task_id: @task.id)) if !self.label4.blank?
         @labels.push(Label.new(name: self.label5, task_id: @task.id)) if !self.label5.blank?
-        @labels.each { |label| ret_labels = false if !label.save }
+        @labels.each { |label| !label.save! }
       end
-
-      ret_task && ret_labels
+      return true
+    rescue
+      return false
+    end
   end
 
   def update(id)
-    @task = Task.find(id)
-    ret_task = @task.update(title: self.title, content: self.content, status: self.status, user_id: self.user_id)
+    begin
+      ActiveRecord::Base.transaction do
+        @task = Task.find(id)
+        @task.update!(title: self.title, content: self.content, status: self.status, user_id: self.user_id)
 
-    ret_labels = true
-    if ret_task
-      @labels = []
-      Label.all.where(task_id: @task.id).destroy_all
-      @labels.push(Label.new(name: self.label1, task_id: @task.id)) if !self.label1.blank?
-      @labels.push(Label.new(name: self.label2, task_id: @task.id)) if !self.label2.blank?
-      @labels.push(Label.new(name: self.label3, task_id: @task.id)) if !self.label3.blank?
-      @labels.push(Label.new(name: self.label4, task_id: @task.id)) if !self.label4.blank?
-      @labels.push(Label.new(name: self.label5, task_id: @task.id)) if !self.label5.blank?
-      @labels.each { |label| ret_labels = false if !label.save }
+        @labels = []
+        Label.all.where(task_id: @task.id).destroy_all
+        @labels.push(Label.new(name: self.label1, task_id: @task.id)) if !self.label1.blank?
+        @labels.push(Label.new(name: self.label2, task_id: @task.id)) if !self.label2.blank?
+        @labels.push(Label.new(name: self.label3, task_id: @task.id)) if !self.label3.blank?
+        @labels.push(Label.new(name: self.label4, task_id: @task.id)) if !self.label4.blank?
+        @labels.push(Label.new(name: self.label5, task_id: @task.id)) if !self.label5.blank?
+        @labels.each { |label| !label.save! }
+      end
+      return true
+    rescue
+      return false
     end
-
-    ret_task && ret_labels
   end
 
   def error_messages
