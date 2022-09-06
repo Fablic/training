@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
 class Task < ApplicationRecord
-  # user対応コメントアウト
-  # # 結合キー
-  # belongs_to :user
+  # 結合キー
+  belongs_to :user
 
   # バリデーション
   validates :title, length: { minimum: 1, maximum: 128 }
