@@ -66,6 +66,189 @@ describe 'タスク管理機能', type: :system do
         end
       end
     end
+
+    describe '検索機能' do
+      let!(:task_A1) { FactoryBot.create(:task, title: 'A1', status: Task.statuses[:not_started]) }
+      let!(:task_A2) { FactoryBot.create(:task, title: 'A2', status: Task.statuses[:in_progress]) }
+      let!(:task_B1) { FactoryBot.create(:task, title: 'B1', status: Task.statuses[:not_started]) }
+      let!(:task_B2) { FactoryBot.create(:task, title: 'B2', status: Task.statuses[:in_progress]) }
+
+      context '条件なし' do
+        let(:conditions) { { title: '', status: '' } }
+
+        it '検索結果の件数が一致すること' do
+          visit root_path
+          fill_in 'title', with: conditions[:title]
+          select value = conditions[:status], from: 'status'
+          click_on '検索'
+          expect(all('tbody tr').size).to be(4)
+        end
+
+        it 'A1が表示されること' do
+          visit root_path
+          fill_in 'title', with: conditions[:title]
+          select value = conditions[:status], from: 'status'
+          click_on '検索'
+          expect(page).to have_content 'A1'
+        end
+
+        it 'A2が表示されること' do
+          visit root_path
+          fill_in 'title', with: conditions[:title]
+          select value = conditions[:status], from: 'status'
+          click_on '検索'
+          expect(page).to have_content 'A2'
+        end
+
+        it 'B1が表示されること' do
+          visit root_path
+          fill_in 'title', with: conditions[:title]
+          select value = conditions[:status], from: 'status'
+          click_on '検索'
+          expect(page).to have_content 'B1'
+        end
+
+        it 'B2が表示されること' do
+          visit root_path
+          fill_in 'title', with: conditions[:title]
+          select value = conditions[:status], from: 'status'
+          click_on '検索'
+          expect(page).to have_content 'B2'
+        end
+      end
+
+      context 'titleのみ指定して検索' do
+        let(:conditions) { { title: 'A', status: '' } }
+
+        it '検索結果の件数が一致すること' do
+          visit root_path
+          fill_in 'title', with: conditions[:title]
+          select value = conditions[:status], from: 'status'
+          click_on '検索'
+          expect(all('tbody tr').size).to be(2)
+        end
+
+        it 'A1が表示されること' do
+          visit root_path
+          fill_in 'title', with: conditions[:title]
+          select value = conditions[:status], from: 'status'
+          click_on '検索'
+          expect(page).to have_content 'A1'
+        end
+
+        it 'A2が表示されること' do
+          visit root_path
+          fill_in 'title', with: conditions[:title]
+          select value = conditions[:status], from: 'status'
+          click_on '検索'
+          expect(page).to have_content 'A2'
+        end
+
+        it 'B1が表示されないこと' do
+          visit root_path
+          fill_in 'title', with: conditions[:title]
+          select value = conditions[:status], from: 'status'
+          click_on '検索'
+          expect(page).not_to have_content 'B1'
+        end
+
+        it 'B2が表示されないこと' do
+          visit root_path
+          fill_in 'title', with: conditions[:title]
+          select value = conditions[:status], from: 'status'
+          click_on '検索'
+          expect(page).not_to have_content 'B2'
+        end
+      end
+
+      context 'statusのみ指定して検索' do
+        let(:conditions) { { title: '', status: '未着手' } }
+
+        it '検索結果の件数が一致すること' do
+          visit root_path
+          fill_in 'title', with: conditions[:title]
+          select value = conditions[:status], from: 'status'
+          click_on '検索'
+          expect(all('tbody tr').size).to be(2)
+        end
+
+        it 'A1が表示されること' do
+          visit root_path
+          fill_in 'title', with: conditions[:title]
+          select value = conditions[:status], from: 'status'
+          click_on '検索'
+          expect(page).to have_content 'A1'
+        end
+
+        it 'A2が表示されないこと' do
+          visit root_path
+          fill_in 'title', with: conditions[:title]
+          select value = conditions[:status], from: 'status'
+          click_on '検索'
+          expect(page).not_to have_content 'A2'
+        end
+
+        it 'B1が表示されること' do
+          visit root_path
+          fill_in 'title', with: conditions[:title]
+          select value = conditions[:status], from: 'status'
+          click_on '検索'
+          expect(page).to have_content 'B1'
+        end
+
+        it 'titleB2が表示されないこと' do
+          visit root_path
+          fill_in 'title', with: conditions[:title]
+          select value = conditions[:status], from: 'status'
+          click_on '検索'
+          expect(page).not_to have_content 'titleB2'
+        end
+      end
+
+      context 'title、statusを指定して検索' do
+        let(:conditions) { { title: 'A', status: '未着手' } }
+
+        it '検索結果の件数が一致すること' do
+          visit root_path
+          fill_in 'title', with: conditions[:title]
+          select value = conditions[:status], from: 'status'
+          click_on '検索'
+          expect(all('tbody tr').size).to be(1)
+        end
+
+        it 'A1が表示されること' do
+          visit root_path
+          fill_in 'title', with: conditions[:title]
+          select value = conditions[:status], from: 'status'
+          click_on '検索'
+          expect(page).to have_content 'A1'
+        end
+
+        it 'A2が表示されないこと' do
+          visit root_path
+          fill_in 'title', with: conditions[:title]
+          select value = conditions[:status], from: 'status'
+          click_on '検索'
+          expect(page).not_to have_content 'A2'
+        end
+
+        it 'B1が表示されないこと' do
+          visit root_path
+          fill_in 'title', with: conditions[:title]
+          select value = conditions[:status], from: 'status'
+          click_on '検索'
+          expect(page).not_to have_content 'B1'
+        end
+
+        it 'B2が表示されないこと' do
+          visit root_path
+          fill_in 'title', with: conditions[:title]
+          select value = conditions[:status], from: 'status'
+          click_on '検索'
+          expect(page).not_to have_content 'B2'
+        end
+      end
+    end
   end
 
   describe '詳細表示機能' do
