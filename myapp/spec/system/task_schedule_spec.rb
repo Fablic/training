@@ -128,4 +128,17 @@ RSpec.describe 'TaskSchedule', type: :system do
     expect(page).to have_content 'thirdタスク'
     expect(page).to have_no_content 'secondタスク'
   end
+
+  it 'complete paginate' do
+    Task.create(title: 'タスク4', body: 'ボディ4', finish_at: 2.years.from_now)
+    Task.create(title: 'タスク5', body: 'ボディ5', finish_at: 3.years.from_now)
+    Task.create(title: 'タスク6', body: 'ボディ6', finish_at: 4.years.from_now)
+    visit task_schedule_index_path
+
+    expect(page).to have_content 'タスク5'
+    expect(page).to have_no_content 'タスク6'
+    click_link '次'
+    expect(page).to have_content 'タスク6'
+    expect(page).to have_no_content 'タスク5'
+  end
 end
