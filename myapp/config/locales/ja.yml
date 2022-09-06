@@ -46,3 +46,9 @@ ja:
   attributes:
     created_at: 登録日時
     updated_at: 更新日時
+  enums:
+    task:
+      status:
+        not_started: 未着手
+        in_progress: 着手中
+        closed: 完了
