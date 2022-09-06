@@ -1,5 +1,6 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
+  before_action :get_users, only: [:new, :edit]
 
   def index
     @tasks = Task.eager_load(:user).all.page(params[:page])
@@ -11,7 +12,6 @@ class TasksController < ApplicationController
 
   def new
     @task = Task.new
-    @users = User.all
   end
 
   def create
@@ -25,7 +25,6 @@ class TasksController < ApplicationController
   end
 
   def edit
-    @users = User.all
   end
 
   def update
@@ -57,6 +56,10 @@ class TasksController < ApplicationController
 
   def set_task
     @task = Task.find(params[:id])
+  end
+
+  def get_users
+    @users = User.all
   end
 
 end
