@@ -2,7 +2,6 @@ require 'rails_helper'
 
 describe 'タスク管理機能', type: :system do
   describe '一覧表示機能' do
-    let!(:user_a) { FactoryBot.create(:user) }
     subject(:visit_tasks) { visit tasks_path }
 
     describe '表示機能'do
@@ -59,15 +58,15 @@ describe 'タスク管理機能', type: :system do
         end
       end
 
-        context 'タスクが1件存在する場合' do
-          let!(:task_1) { FactoryBot.create(:task, name: '最初のタスク', detail: '最初のタスクを実施する', status: 1, priority: 1, user: user_a) }
+      context 'タスクが1件存在する場合' do
+        let!(:task_1) { FactoryBot.create(:task, name: '最初のタスク', detail: '最初のタスクを実施する', status: 1, priority: 1) }
 
           it_behaves_like 'タスク表示'
         end
 
         context 'タスクが2件(複数)存在する場合' do
-          let!(:task_1) { FactoryBot.create(:task, name: '最初のタスク', detail: '最初のタスクを実施する', status: 1, priority: 1, user: user_a) }
-          let!(:task_2) { FactoryBot.create(:task, name: '２つ目のタスク', detail: '２つ目のタスクを実施する', status: 1, priority: 2, user: user_a) }
+          let!(:task_1) { FactoryBot.create(:task, name: '最初のタスク', detail: '最初のタスクを実施する', status: 1, priority: 1) }
+          let!(:task_2) { FactoryBot.create(:task, name: '２つ目のタスク', detail: '２つ目のタスクを実施する', status: 1, priority: 2) }
 
           it_behaves_like 'タスク表示'
           it_behaves_like '２件目のタスク表示'
@@ -180,8 +179,8 @@ describe 'タスク管理機能', type: :system do
       end
 
       context '検索条件に一致するタスクが1件存在する場合' do
-        let!(:task_a) { FactoryBot.create(:task, name: '最初のタスク', detail: '最初のタスクを実施する', status: 1, priority: 1, user: user_a) }
-        let!(:task_b) { FactoryBot.create(:task, name: '２つ目のタスク', detail: '２つ目のタスクを実施する', status: 1, priority: 2, user: user_a) }
+        let!(:task_a) { FactoryBot.create(:task, name: '最初のタスク', detail: '最初のタスクを実施する', status: 1, priority: 1) }
+        let!(:task_b) { FactoryBot.create(:task, name: '２つ目のタスク', detail: '２つ目のタスクを実施する', status: 1, priority: 2) }
         let(:name) { '最初のタスク' }
         let(:status) { '未着手' }
 
@@ -189,8 +188,8 @@ describe 'タスク管理機能', type: :system do
       end
 
       context '検索条件に一致するタスクが2件存在する場合' do
-        let!(:task_a) { FactoryBot.create(:task, name: '最初のタスク', detail: '最初のタスクを実施する', status: 1, priority: 1, user: user_a) }
-        let!(:task_b) { FactoryBot.create(:task, name: '２つ目のタスク', detail: '２つ目のタスクを実施する', status: 1, priority: 2, user: user_a) }
+        let!(:task_a) { FactoryBot.create(:task, name: '最初のタスク', detail: '最初のタスクを実施する', status: 1, priority: 1) }
+        let!(:task_b) { FactoryBot.create(:task, name: '２つ目のタスク', detail: '２つ目のタスクを実施する', status: 1, priority: 2) }
         let(:name) { 'タスク' }
         let(:status) { '未着手' }
 
@@ -199,8 +198,8 @@ describe 'タスク管理機能', type: :system do
       end
 
       context '検索条件に一致するタスクが存在しない場合' do
-        let!(:task_a) { FactoryBot.create(:task, name: '最初のタスク', detail: '最初のタスクを実施する', status: 1, priority: 1, user: user_a) }
-        let!(:task_b) { FactoryBot.create(:task, name: '２つ目のタスク', detail: '２つ目のタスクを実施する', status: 1, priority: 2, user: user_a) }
+        let!(:task_a) { FactoryBot.create(:task, name: '最初のタスク', detail: '最初のタスクを実施する', status: 1, priority: 1) }
+        let!(:task_b) { FactoryBot.create(:task, name: '２つ目のタスク', detail: '２つ目のタスクを実施する', status: 1, priority: 2) }
         let(:name) { 'テスト' }
         let(:status) { '完了' }
 
@@ -277,8 +276,7 @@ describe 'タスク管理機能', type: :system do
   end
 
   describe '詳細表示機能' do
-    let!(:user_a) { FactoryBot.create(:user) }
-    let!(:task_a) { FactoryBot.create(:task, name: '最初のタスク', detail: '最初のタスクを実施する', status: 1, priority: 1, user: user_a) }
+    let!(:task_a) { FactoryBot.create(:task, name: '最初のタスク', detail: '最初のタスクを実施する', status: 1, priority: 1) }
     subject(:visit_task_a) { visit task_path(task_a) }
 
     describe '表示機能' do

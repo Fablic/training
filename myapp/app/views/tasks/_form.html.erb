@@ -31,7 +31,7 @@
   <div class='field'>
     <%= f.label :priority %>
     <br>
-    <%= f.select :priority, Task.priorities.keys.map { |k| [I18n.t("enums.task.priority.#{k}"), k]}, { selected: task.priority } %>
+    <%= f.select :priority, Task.priorities.keys.map { |k| [I18n.t("enums.task.priority.#{k}"), k] }, { selected: task.priority } %>
   </div>
 
   <br>
