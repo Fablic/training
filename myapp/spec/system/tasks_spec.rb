@@ -410,7 +410,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: input_values[:title]
           fill_in 'task[content]', with: input_values[:content]
           fill_in 'task[label]', with: input_values[:label]
-          select value = User.find(input_values[:user_id]).name, from: 'task[user_id]'
+          select value = user.name, from: 'task[user_id]'
           click_on '作成'
           expect(Task.find_by(input_values)).to be_nil
         end
@@ -420,7 +420,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: input_values[:title]
           fill_in 'task[content]', with: input_values[:content]
           fill_in 'task[label]', with: input_values[:label]
-          select value = User.find(input_values[:user_id]).name, from: 'task[user_id]'
+          select value = user.name, from: 'task[user_id]'
           click_on '作成'
           expect(page).to have_content 'タイトルは1文字以上で入力してください'
         end
@@ -441,7 +441,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: input_values[:title]
           fill_in 'task[content]', with: input_values[:content]
           fill_in 'task[label]', with: input_values[:label]
-          select value = User.find(input_values[:user_id]).name, from: 'task[user_id]'
+          select value = user.name, from: 'task[user_id]'
           click_on '作成'
           expect(Task.find_by(input_values)).to be_nil
         end
@@ -451,7 +451,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: input_values[:title]
           fill_in 'task[content]', with: input_values[:content]
           fill_in 'task[label]', with: input_values[:label]
-          select value = User.find(input_values[:user_id]).name, from: 'task[user_id]'
+          select value = user.name, from: 'task[user_id]'
           click_on '作成'
           expect(page).to have_content 'タイトルは128文字以内で入力してください'
         end
@@ -472,7 +472,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: input_values[:title]
           fill_in 'task[content]', with: input_values[:content]
           fill_in 'task[label]', with: input_values[:label]
-          select value = User.find(input_values[:user_id]).name, from: 'task[user_id]'
+          select value = user.name, from: 'task[user_id]'
           click_on '作成'
           expect(Task.find_by(input_values)).to be_nil
         end
@@ -482,7 +482,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: input_values[:title]
           fill_in 'task[content]', with: input_values[:content]
           fill_in 'task[label]', with: input_values[:label]
-          select value = User.find(input_values[:user_id]).name, from: 'task[user_id]'
+          select value = user.name, from: 'task[user_id]'
           click_on '作成'
           expect(page).to have_content '内容は1文字以上で入力してください'
         end
@@ -503,7 +503,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: input_values[:title]
           fill_in 'task[content]', with: input_values[:content]
           fill_in 'task[label]', with: input_values[:label]
-          select value = User.find(input_values[:user_id]).name, from: 'task[user_id]'
+          select value = user.name, from: 'task[user_id]'
           click_on '作成'
           expect(Task.find_by(input_values)).to be_nil
         end
@@ -513,7 +513,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: input_values[:title]
           fill_in 'task[content]', with: input_values[:content]
           fill_in 'task[label]', with: input_values[:label]
-          select value = User.find(input_values[:user_id]).name, from: 'task[user_id]'
+          select value = user.name, from: 'task[user_id]'
           click_on '作成'
           expect(page).to have_content '内容は1024文字以内で入力してください'
         end
@@ -534,7 +534,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: input_values[:title]
           fill_in 'task[content]', with: input_values[:content]
           fill_in 'task[label]', with: input_values[:label]
-          select value = User.find(input_values[:user_id]).name, from: 'task[user_id]'
+          select value = user.name, from: 'task[user_id]'
           click_on '作成'
           expect(Task.find_by(input_values)).to be_nil
         end
@@ -544,7 +544,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: input_values[:title]
           fill_in 'task[content]', with: input_values[:content]
           fill_in 'task[label]', with: input_values[:label]
-          select value = User.find(input_values[:user_id]).name, from: 'task[user_id]'
+          select value = user.name, from: 'task[user_id]'
           click_on '作成'
           expect(page).to have_content 'ラベルは1文字以上で入力してください'
         end
@@ -565,7 +565,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: input_values[:title]
           fill_in 'task[content]', with: input_values[:content]
           fill_in 'task[label]', with: input_values[:label]
-          select value = User.find(input_values[:user_id]).name, from: 'task[user_id]'
+          select value = user.name, from: 'task[user_id]'
           click_on '作成'
           expect(Task.find_by(input_values)).to be_nil
         end
@@ -575,7 +575,7 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: input_values[:title]
           fill_in 'task[content]', with: input_values[:content]
           fill_in 'task[label]', with: input_values[:label]
-          select value = User.find(input_values[:user_id]).name, from: 'task[user_id]'
+          select value = user.name, from: 'task[user_id]'
           click_on '作成'
           expect(page).to have_content 'ラベルは64文字以内で入力してください'
         end
@@ -598,7 +598,7 @@ describe 'Tasks', type: :system do
         fill_in 'task[title]', with: input_values[:title]
         fill_in 'task[content]', with: input_values[:content]
         fill_in 'task[label]', with: input_values[:label]
-        select value = User.find(input_values[:user_id]).name, from: 'task[user_id]'
+        select value = user.name, from: 'task[user_id]'
         click_on '作成'
         expect(Task.find_by(input_values)).to be_present
       end
@@ -608,7 +608,7 @@ describe 'Tasks', type: :system do
         fill_in 'task[title]', with: input_values[:title]
         fill_in 'task[content]', with: input_values[:content]
         fill_in 'task[label]', with: input_values[:label]
-        select value = User.find(input_values[:user_id]).name, from: 'task[user_id]'
+        select value = user.name, from: 'task[user_id]'
         click_on '作成'
         expect(page).to have_current_path root_path
       end
@@ -618,7 +618,7 @@ describe 'Tasks', type: :system do
         fill_in 'task[title]', with: input_values[:title]
         fill_in 'task[content]', with: input_values[:content]
         fill_in 'task[label]', with: input_values[:label]
-        select value = User.find(input_values[:user_id]).name, from: 'task[user_id]'
+        select value = user.name, from: 'task[user_id]'
         click_on '作成'
         expect(page).to have_content 'タスク作成成功'
       end
