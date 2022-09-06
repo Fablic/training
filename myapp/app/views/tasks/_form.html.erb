@@ -9,9 +9,9 @@
 <% end %>
 
 <%= form_for(@task) do |f| %>
-  <p>Title</p>
+  <p><%= I18n.t('task.title') %></p>
   <%= f.text_field :title, id: 'textarea1' %>
-  <p>Description</p>
+  <p><%= I18n.t('task.description') %></p>
   <%= f.text_field :description, id: 'textarea2' %>
   <br>
   <%= f.submit id: 'submit' %>
