@@ -6,6 +6,9 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 10.times do |i|
+    password = 'password'
+    salt = User.create_salt
+    password_digest = User.hash(password, salt)
     user = User.create!(name: "テストユーザ#{i}", email: "sample#{i}@example.com", password: 'password', password_confirmation: 'password')
     Task.create!(
       title: "タスク#{i}",
