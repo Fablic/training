@@ -1,18 +1,15 @@
 class SessionsController < ApplicationController
+  skip_before_action :login_user, only: [:new, :create]
 
   def new
   end
 
   def create
+    # User取得
     @user = User.find_by(email: session_params[:email])
-    # @user_pass = User.find_by(email: session_params[:password])
-    if @user.nil?
-      flash.now[:error] = 'メールアドレスが一致しません'
+    if @user.nil? || !@user.authenticate(session_params[:password])
+      flash.now[:alert] = I18n.t('message.login_failed')
       render(:new)
-    # elsif @user_pass.nil?
-    #   flash.now[:error] = 'パスワードが一致しません'
-    #   puts session_params[:password]
-    #   render(:new)
     else
       login(@user)
       redirect_to(root_path)
@@ -20,17 +17,13 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    reset_session
-    redirect_to root_path, notice: 'ログアウトしました。'
+    logout
+    redirect_to(login_path)
   end
 
   private
 
   def session_params
     params.require(:session).permit(:email, :password)
-  end
-
-  def login(user)
-    session[:user_id] = user.id
   end
 end

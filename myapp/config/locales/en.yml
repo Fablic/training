@@ -6,6 +6,7 @@ en:
         in_progress: 'In progress'
         closed: 'Closed'
   view_title:
+    login: 'Login'
     index: 'Task List'
     new: 'Task Create'
     show: 'Task Detail'
@@ -14,14 +15,19 @@ en:
     title: 'Title'
     content: 'Content'
     label: 'Label'
+  user:
+    email: 'Email'
+    id: 'User Id'
   button:
     create: 'Create'
     delete: 'Delete'
     update: 'Update'
+    login: 'Login'
   link:
     create: 'Create'
     detail: 'Detail'
     edit: 'Edit'
     list_back: 'Back'
+    logout: 'Logout'
   message:
     delete_confirm: 'Delete?'
