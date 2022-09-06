@@ -13,4 +13,6 @@ class Task < ApplicationRecord
   scope :status_equal, -> (status) { where('status = ?', status) if status.present? }
 
   belongs_to :user
+  has_many :labellings, dependent: :destroy
+  has_many :labels, through: :labellings
 end

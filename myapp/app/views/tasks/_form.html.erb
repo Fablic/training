@@ -34,6 +34,12 @@
     <%= f.select :priority, Task.priorities.keys.map { |k| [I18n.t("enums.task.priority.#{k}"), k]}, { selected: task.priority } %>
   </div>
 
+  <div class='field'>
+    <%= f.label 'ラベル' %>
+    <br>
+    <%= f.collection_check_boxes :label_ids, Label.all, :id, :label_name %>
+  </div>
+
   <br>
   <%= f.submit %>
 <% end %>
