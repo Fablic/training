@@ -8,7 +8,7 @@ RSpec.describe '/tasks', type: :request do
 
     it 'renders a successful response' do
       get tasks_url
-      expect(response).to be_successful
+      expect(response).to have_http_status(200)
     end
   end
 
@@ -17,14 +17,14 @@ RSpec.describe '/tasks', type: :request do
 
     it 'renders a successful response' do
       get task_url(task)
-      expect(response).to be_successful
+      expect(response).to have_http_status(200)
     end
   end
 
   describe 'GET /new' do
     it 'renders a successful response' do
       get new_task_url
-      expect(response).to be_successful
+      expect(response).to have_http_status(200)
     end
   end
 
@@ -33,7 +33,7 @@ RSpec.describe '/tasks', type: :request do
 
     it 'renders a successful response' do
       get edit_task_url(task)
-      expect(response).to be_successful
+      expect(response).to have_http_status(200)
     end
   end
 
@@ -80,12 +80,12 @@ RSpec.describe '/tasks', type: :request do
 
       it "renders a successful response (i.e. to display the 'new' template)" do
         post tasks_url, params: invalid_attributes
-        expect(response.status).to eq 422
+        expect(response).to have_http_status(422)
       end
     end
   end
 
-  describe 'PATCH /update' do
+  describe 'PUT /update' do
     context 'with valid parameters' do
       let!(:task) { create(:task) }
 
@@ -100,14 +100,16 @@ RSpec.describe '/tasks', type: :request do
       end
 
       it 'updates the requested task' do
-        patch task_url(task), params: { task: new_attributes }
-        expect(task.reload).to have_attributes new_attributes.reject { |_key| :end_date }
+        put task_url(task), params: { task: new_attributes }
+
+        expect(task.reload).to have_attributes new_attributes.except(:end_date)
+        expect(time_zone(task.end_date)).to eq time_zone(new_attributes[:end_date])
       end
 
       it 'redirects to the task' do
-        patch task_url(task), params: { task: new_attributes }
-        task.reload
-        expect(response).to redirect_to(task_url(task))
+        put task_url(task), params: { task: new_attributes }
+
+        expect(response).to redirect_to(task_url(task.reload))
       end
     end
 
@@ -125,8 +127,9 @@ RSpec.describe '/tasks', type: :request do
       end
 
       it "renders a successful response (i.e. to display the 'edit' template)" do
-        patch task_url(task), params: { task: invalid_attributes }
-        expect(response.status).to eq 302
+        put task_url(task), params: invalid_attributes
+
+        expect(response).to have_http_status(422)
       end
     end
   end
@@ -142,6 +145,7 @@ RSpec.describe '/tasks', type: :request do
 
     it 'redirects to the tasks list' do
       delete task_url(task)
+
       expect(response).to redirect_to(tasks_url)
     end
   end
