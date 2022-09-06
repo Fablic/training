@@ -14,7 +14,7 @@
 Task.delete_all
 User.delete_all
 
-5.times do |i|
-    user = User.create(name: "一真#{i + 1}")
-    taks = Task.create(name: "テスト番号#{i + 1}", description: '動作確認', user_id: user.id)
+3.times do |i|
+    user = User.create(name: "具志堅一真#{i + 1}")
+    taks = Task.create(name: "タスク番号#{i + 1}", description: '動作確認', user_id: user.id)
 end
