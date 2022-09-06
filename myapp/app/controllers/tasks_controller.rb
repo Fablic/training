@@ -57,11 +57,16 @@ class TasksController < ApplicationController
     end
   end
 
+  def search
+    @tasks = Task.where_title(params[:title]).where_status(Task.statuses[params[:status]])
+    render :index
+  end
+
   private
 
   # Get Task Parameter
   def task_params
-    task = params.require(:task).permit(:title, :description, :label)
+    task = params.require(:task).permit(:title, :description, :label, :status)
   end
 
   # Get UserNames
@@ -74,12 +79,4 @@ class TasksController < ApplicationController
 #    user_names
 #  end
 
-  # Get Statuses
-#  def statuses
-#    statuses = []
-#    Task::STATUS_VIEW.each do |key, value|
-#      statuses.push([value, key])
-#    end
-#    statuses
-#  end
 end
