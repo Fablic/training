@@ -40,9 +40,11 @@ describe User, type: :model do
   end
 
   describe '#create_salt' do
-    subject(:salt_length) { User.create_salt.length }
+    let(:salt) { User.create_salt }
 
-    it { is_expected.to be(64) }
+    it '文字列の長さが64桁か' do
+      expect(salt.length).to be(64)
+    end
   end
 
   describe '#hash' do
