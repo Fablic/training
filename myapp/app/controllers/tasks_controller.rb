@@ -2,7 +2,7 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def index
-    @tasks = Task.all
+    @tasks = Task.all.page(params[:page])
   end
 
   def show; end
@@ -39,7 +39,7 @@ class TasksController < ApplicationController
   end
 
   def search
-    @tasks = Task.name_like(params[:name]).status_equal(Task.statuses[params[:status]])
+    @tasks = Task.name_like(params[:name]).status_equal(Task.statuses[params[:status]]).page(params[:page])
     render :index
   end
 

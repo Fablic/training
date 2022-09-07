@@ -25,6 +25,8 @@ gem 'rspec-rails', '~> 3.7'
 gem 'factory_bot_rails', '~> 4.11'
 # RailsI18n
 gem 'rails-i18n'
+# kaminari
+gem 'kaminari'
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
