@@ -6,28 +6,17 @@ class ApplicationController < ActionController::Base
     token = User.create_login_token
     cookies[:login_token] = token
     user.update(login_token: User.encrypt_login_token(token))
-    @login_user = user
   end
 
   def logout
     cookies.delete(:login_token)
-    @login_user = nil
-  end
-
-  def login?
-    @login_user.present?
   end
 
   def login_user
-    if login?
-      @login_user
-    else
-      token = User.encrypt_login_token(cookies[:login_token])
-      @login_user ||= User.find_by(login_token: token)
-    end
+    User.find_by(login_token: User.encrypt_login_token(cookies[:login_token]))
   end
 
   def re_login
-    redirect_to(login_path) if !login?
+    redirect_to(login_path) if login_user.nil?
   end
 end
