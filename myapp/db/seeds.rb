@@ -9,6 +9,7 @@
 User.destroy_all
 Task.destroy_all
 Label.destroy_all
+Function.destroy_all
 
 5.times do |i|
   # Create Users
@@ -28,10 +29,13 @@ Label.destroy_all
 
     # Create Labels
     (j % 6).times do |k|
-      Label.create!(
-        name: "ラベル#{i + 1}-#{j + 1}-#{k + 1}",
-        task_id: task.id,
-      )
+      Label.create!(name: "ラベル#{i + 1}-#{j + 1}-#{k + 1}", task_id: task.id)
     end
   end
 end
+
+# Create Functions
+Function.create!(id: Function::FUNC_ID_CREATE, name: '作成機能', status: Function.statuses[:started])
+Function.create!(id: Function::FUNC_ID_UPDATE, name: '編集機能', status: Function.statuses[:started])
+Function.create!(id: Function::FUNC_ID_DELETE, name: '削除機能', status: Function.statuses[:started])
+
