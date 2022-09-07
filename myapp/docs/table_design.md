@@ -21,8 +21,8 @@
 | ---- | ---- | ---- | ---- |
 |  name  |  タスク名  |  string  |  default: "", null: false  |
 |  end_date  |  終了期限  |  datetime  |      |
-|  priority  |  優先順位  |  integer  |  default: 0, (0: low, 1: normal, 2: high)  |
-|  status  |  ステータス  |  integer  |  default: 0, (0: untouched, 1: touched, 2: completed)  |
+|  priority  |  優先順位  |  integer  |  null: false  |  default: 0, (0: low, 1: normal, 2: high)  |
+|  status  |  ステータス  |  integer  |  null: false  |  default: 0, (0: untouched, 1: touched, 2: completed)  |
 |  explanation  |  説明文  |  text  |      |
 |  user_id  |  ユーザID  |  integer  |  foreign_key  |
 |  created_at  |  作成日時  |  datetime  |  null: false  |
