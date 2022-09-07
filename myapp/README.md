@@ -168,6 +168,18 @@ URL:
 
 * Script run
 
+システム開始
+
+``` shell
+docker-compose exec api rails runner Maintenance::Functions::StartSystem.execute
+```
+
+システム停止
+
+``` shell
+docker-compose exec api rails runner Maintenance::Functions::StopSystem.execute
+```
+
 タスク作成機能開始
 
 ``` shell
