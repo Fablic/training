@@ -38,6 +38,11 @@ class TasksController < ApplicationController
     end
   end
 
+  def search
+    @tasks = Task.name_like(params[:name]).status_equal(Task.statuses[params[:status]])
+    render :index
+  end
+
   private
 
   def set_task
