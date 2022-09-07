@@ -7,6 +7,8 @@ class Task < ApplicationRecord
   after_initialize :set_default_values
 
   validates :name, presence: true, length: { maximum: 255 }
+  validates :priority, presence: true
+  validates :status, presence: true
 
   enum :priority, {
     low: 0,    # 低
