@@ -1,7 +1,7 @@
 class TasksController < ApplicationController
   # Task List
   def index
-    @tasks = Task.all
+    @tasks = Task.all.page(params[:page])
   end
 
   # Show Task
@@ -58,7 +58,7 @@ class TasksController < ApplicationController
   end
 
   def search
-    @tasks = Task.where_title(params[:title]).where_status(Task.statuses[params[:status]])
+    @tasks = Task.where_title(params[:title]).where_status(Task.statuses[params[:status]]).page(params[:page])
     render :index
   end
 

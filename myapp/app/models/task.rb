@@ -13,4 +13,7 @@ class Task < ApplicationRecord
   # scope
   scope :where_title, -> (title) { where('title LIKE ?', "%#{title}%") if title.present? }
   scope :where_status, -> (status) { where('status = ?', status) if status.present? }
+
+  # pagenation
+  paginates_per 5
 end
