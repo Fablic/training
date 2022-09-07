@@ -18,7 +18,7 @@
         <tr>
           <td><span><%= task.title %></span></td>
           <td><span><%= task.label %></span></td>
-          <td><%= link_to('Details', task_path(task), {id: "show#{task.id}" ,class: 'btn_a'}) %></td>
+          <td><%= link_to(I18n.t('button.detail'), task_path(task), {id: "show#{task.id}" ,class: 'btn_a'}) %></td>
           <td><%= link_to(I18n.t('button.update'), edit_task_path(task), {id: "update#{task.id}" ,class: 'btn_a'}) %></td>
           <td><%= link_to(I18n.t('button.delete'), task_path(task), method: :delete, id: "delete#{task.id}" ,class: 'btn_a') %></td>
         </tr>

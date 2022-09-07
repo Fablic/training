@@ -50,6 +50,7 @@ ja:
   link:
     create: 新規登録
   button:
+    detail: 詳細
     delete: 削除
     update: 更新
   message:
