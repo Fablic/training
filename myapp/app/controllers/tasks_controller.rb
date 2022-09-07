@@ -1,6 +1,7 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
   before_action :get_users, only: [:new, :edit]
+  before_action :check_current_user, only: [:edit, :destroy]
 
   def index
     @tasks = current_user.tasks.eager_load(:user).all.page(params[:page])
@@ -26,7 +27,6 @@ class TasksController < ApplicationController
   end
 
   def edit
-    current_user.tasks.find(params[:id])
   end
 
   def update
@@ -38,8 +38,6 @@ class TasksController < ApplicationController
   end
 
   def destroy
-    current_user.tasks.find(params[:id])
-
     if @task.destroy
       redirect_to tasks_url, notice: "タスク「#{@task.name}」を削除しました。"
     else
@@ -66,4 +64,7 @@ class TasksController < ApplicationController
     @users = User.all
   end
 
+  def check_current_user
+    current_user.tasks.find(params[:id])
+  end
 end
