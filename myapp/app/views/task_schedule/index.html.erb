@@ -2,6 +2,17 @@
 <% flash.each do |message_type, message| %>
   <%= message %>
 <% end %>
+<br>
+<%= t '.search_form' %><br>
+  <div class='search_form'>
+    <%= form_with scope: :search, url: task_schedule_index_path, local: true, method: :get do |f| %>
+      <%= f.label t('.name') %> <%= f.text_field :title, value: @search_params[:title] %>
+      <%= f.label t('.status') %> <%= f.select :status, Task.statuses_i18n.invert, {include_blank: true, prompt: false, selected: @search_params[:status]},
+    class:"form-control form-control-sm col-6" %>
+      <%= f.submit t('.search') %>
+    <% end %>
+  </div>
+<br>
 <%= button_to t('.new'), new_task_schedule_path, method: :get %>
 <table>
   <tr>
@@ -11,7 +22,7 @@
       <th><%= t'.finish' %>
       <%= link_to t('.up'), task_schedule_index_path(finish_desc: 'true') %>
       <%= link_to t('.down'), task_schedule_index_path(finish_asc: 'true') %></th>
-
+      <th><%= t '.status' %></th>
   </tr>
   <% @tasks.each do |task| %>
   <tr>
@@ -19,6 +30,7 @@
     <td><%= truncate(task.body,  length: 15) %></td>
     <td><%= l(task.created_at, format: :'.default') %></td>
     <td><%= l(task.finish_at, format: :'.default') %></td>
+    <td><%= task.status_i18n %></td>
     <td><%= link_to t('.edit'), edit_task_schedule_path(task) %></td>
     <td><%= link_to t('.show'), task_schedule_path(task), method: :get %></td>
     <td><%= link_to t('.delete'), task_schedule_path(task), method: :delete,

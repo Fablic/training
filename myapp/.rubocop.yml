@@ -32,3 +32,6 @@ Metrics/BlockLength:
     - '**/*.rake'
     - 'test/**/*.rb'
     - 'spec/**/*'
+
+Style/Lambda:
+  Enabled: false

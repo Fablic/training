@@ -16,6 +16,8 @@ ja:
   task_schedule:
     index:
       title: 'タスク一覧画面'
+      search_form: '検索フォーム'
+      search: '検索'
       new: 'タスク登録'
       edit: '編集'
       show: '詳細'
@@ -24,6 +26,7 @@ ja:
       body: '本文'
       created: '作成日時'
       finish: '終了期限'
+      status: 'ステータス'
       up: '▲'
       down: '▼'
       delete_confirm: '削除します。よろしいですか'
@@ -41,6 +44,7 @@ ja:
       name: 'タスク名'
       body: 'タスク本文'
       finish: '終了期限'
+      status: 'ステータス'
       index: '一覧に戻る'
     edit:
       title: 'タスク編集画面'
@@ -55,3 +59,10 @@ ja:
     destroy:
       success: "タスクを削除しました"
       danger: "削除に失敗しました"
+
+  enums:
+    task:
+      status:
+        untouched: '未着手'
+        in_progress: '着手中'
+        completion: '完了'
