@@ -116,6 +116,7 @@ RSpec.describe 'TaskSchedule', type: :system do
       expect(page).to have_no_content 'showボディ'
     end
   end
+
   it 'complete task search' do
     fill_in 'search[title]', with: 'second'
     click_button '検索'
