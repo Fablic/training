@@ -1,0 +1,22 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>タスク</h1>
+
+<%= link_to "タスクの新規作成", new_task_path %>
+
+<div id="tasks">
+  <table border="1">
+    <tr>
+      <th>タスク名</th>
+      <th>終了時刻</th>
+      <th>優先度</th>
+      <th>ステータス</th>
+      <th>説明</th>
+      <th>詳細</th>
+    </tr>
+
+    <% @tasks.each do |task| %>
+      <%= render task %>
+    <% end %>
+  </table>
+</div>
