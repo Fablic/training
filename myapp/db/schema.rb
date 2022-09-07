@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 2022_09_06_075918) do
     t.date "finish_at", null: false
     t.integer "status", default: 0, null: false
     t.string "user_id", null: false
-    t.index ["title", "status"], name: "index_tasks_on_title_and_status"
+    t.index ["status"], name: "index_tasks_on_status"
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
