@@ -1,10 +1,13 @@
 # frozen_string_literal: true
 
 class Task < ApplicationRecord
+  belongs_to :user
+
   validates :title, presence: true
   validates :body,  presence: true
   validates :finish_at, presence: true
   validates :status, presence: true
+  validates :user_id, presence: true
 
   scope :desc, -> { order(created_at: :desc) }
   scope :finish_desc, -> { order(finish_at: :desc) }

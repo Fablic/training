@@ -3,4 +3,4 @@
   <%= message %>
 <% end %>
 <%= render partial: 'taskform', locals: {task: @task,  prefix: task_schedule_path(@task),
-  button: t('.edit')} %>
+  button: t('.edit'), users: @users} %>

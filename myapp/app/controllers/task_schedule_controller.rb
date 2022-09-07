@@ -14,10 +14,12 @@ class TaskScheduleController < ApplicationController
              else
                Task.search(@search_params).finish_asc.page(params[:page])
              end
+      @users = User.all
   end
 
   def edit
     @task = Task.find(params[:id])
+    @users = User.all
   end
 
   def update
