@@ -40,9 +40,6 @@ class TasksController < ApplicationController
 
   def search
     @tasks = Task.name_like(params[:name]).status_equal(Task.statuses[params[:status]])
-    @tasks.each do |f|
-      f.name
-    end
     render :index
   end
 
