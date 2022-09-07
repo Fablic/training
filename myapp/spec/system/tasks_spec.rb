@@ -44,7 +44,7 @@ describe 'タスク管理機能', type: :system do
         context '詳細ボタンをクリックした場合' do
           it '詳細画面へ遷移できる' do
             visit_tasks
-            click_link 'Details', match: :first
+            click_link I18n.t('button.detail'), match: :first
             expect(page).to have_current_path task_path(task_a)
           end
         end
@@ -60,7 +60,7 @@ describe 'タスク管理機能', type: :system do
         context '編集ボタンをクリックした場合' do
           it '編集画面へ遷移できる' do
             visit_tasks
-            click_link 'Update', match: :first
+            click_link I18n.t('button.update'), match: :first
             expect(page).to have_current_path edit_task_path(task_a)
           end
         end

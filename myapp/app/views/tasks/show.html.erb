@@ -1,9 +1,9 @@
 <h1>Task Details</h1>
-<p>Title</p>
+<p><%= I18n.t('task.title') %></p>
 <p><%= @task[:title] %></p>
-<p>Description</p>
+<p><%= I18n.t('task.description') %></p>
 <p><%= @task[:description] %></p>
-<p>Label</p>
+<p><%= I18n.t('task.label') %></p>
 <p><%= @task[:label] %></p>
 <p>Status</p>
 <p><%= I18n.t("enums.task.status.#{@task.status}") %></p>
