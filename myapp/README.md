@@ -59,6 +59,20 @@ users
 id:1　→ tasks.user_id:N
 <br>
 
+functions
+| column_name | type | null | default |
+| ---- | ---- | ---- | ---- |
+| id | integer(20) | not null | auto_increment |
+| name | varchar(64) | | |
+| status | varchar(1) | not null | '1' |
+| deleted_at | datetime | | |
+| created_at | datetime | | |
+| updated_at | datetime | | |
+
+※statusについて
+1:開始中、9:停止中
+<br>
+
 * Screen design
 
 実際に画面設計した方がよいのだと思いますが、こちらに外部設計を模した設計として各画面の設計を記載します。
@@ -152,6 +166,43 @@ URL:
 
 <br>
 
+* Script run
+
+タスク作成機能開始
+
+``` shell
+docker-compose exec api rails runner Maintenance::Functions::StartCreate.execute
+```
+
+タスク作成機能停止
+
+``` shell
+docker-compose exec api rails runner Maintenance::Functions::StopCreate.execute
+```
+
+タスク更新機能開始
+
+``` shell
+docker-compose exec api rails runner Maintenance::Functions::StartUpdate.execute
+```
+
+タスク更新機能停止
+
+``` shell
+docker-compose exec api rails runner Maintenance::Functions::StopUpdate.execute
+```
+
+タスク削除機能開始
+
+``` shell
+docker-compose exec api rails runner Maintenance::Functions::StartDelete.execute
+```
+
+タスク削除機能停止
+
+``` shell
+docker-compose exec api rails runner Maintenance::Functions::StopDelete.execute
+```
 
 * Ruby version
 
