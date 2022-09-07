@@ -36,34 +36,25 @@ ja:
     attributes:
       task:
         title: タイトル
-        content: 内容
+        description: 内容
         user_id: ユーザーID
         status: ステータス
         label: ラベル
         deleted_at: 削除日
         crated_at: 作成日
         updated_at: 更新日
-  view_title:
-    index: 'タスク一覧画面'
-    new: 'タスク作成画面'
-    show: 'タスク詳細画面'
-    edit: 'タスク編集画面'
   task:
-    title: 'タイトル'
-    content: '内容'
-    label: 'ラベル'
-    created_at: '作成日'
-  button:
-    create: '作成'
-    delete: '削除'
-    update: '更新'
+    title: タイトル
+    description: 内容
+    label: ラベル
   link:
-    create: '作成'
-    detail: '詳細'
-    edit: '編集'
-    list_back: '一覧へ'
+    create: 新規登録
+  button:
+    detail: 詳細
+    delete: 削除
+    update: 更新
   message:
-    delete_confirm: '削除しますか?'
+    delete_confirm: 削除しますか
   time:
     formats:
       default: "%Y/%m/%d %H:%M:%S"
