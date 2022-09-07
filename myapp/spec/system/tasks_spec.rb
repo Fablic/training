@@ -52,7 +52,7 @@ describe 'タスク管理機能', type: :system do
         context '新規登録ボタンをクリックした場合' do
           it '新規登録画面へ遷移できる' do
             visit_tasks
-            click_link '新規登録'
+            click_link I18n.t('link.create')
             expect(page).to have_current_path new_task_path
           end
         end

@@ -58,6 +58,7 @@ ja:
     title: 'タイトル'
     description: '内容'
     label: 'ラベル'
+    status: 'ステータス'
     created_at: '作成日'
   button:
     detail: 詳細
@@ -68,3 +69,5 @@ ja:
   time:
     formats:
       default: "%Y/%m/%d %H:%M:%S"
+  link:
+    create: 作成
