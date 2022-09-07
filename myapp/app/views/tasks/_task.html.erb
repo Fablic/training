@@ -5,6 +5,6 @@
     <td><%= task_priority_enum_to_ja(task.priority) %></td>
     <td><%= task_status_enum_to_ja(task.status) %></td>
     <td><%= task.explanation %></td>
-    <td><%= link_to "詳細を確認", task %></td>
+    <td><%= link_to I18n.t('transition_destination.show'), task %></td>
   </tr>
 </div>
