@@ -1,13 +1,13 @@
 <p class="alert-success"><%= notice %></p>
 <h1>Task List</h1>
-<%= link_to('新規登録', new_task_path, {class: 'btn_a'}) %>
+<%= link_to(I18n.t('link.create'), new_task_path, {class: 'btn_a'}) %>
 <br>
 <br>
 <table>
     <thead>
       <tr>
-        <th>title</th>
-        <th>label</th>
+        <th><%= I18n.t('task.title') %></th>
+        <th><%= I18n.t('task.label') %></th>
         <th></th>
         <th></th>
         <th></th>
@@ -18,9 +18,9 @@
         <tr>
           <td><span><%= task.title %></span></td>
           <td><span><%= task.label %></span></td>
-          <td><%= link_to('Details', task_path(task), {id: "show#{task.id}" ,class: 'btn_a'}) %></td>
-          <td><%= link_to('Update', edit_task_path(task), {id: "update#{task.id}" ,class: 'btn_a'}) %></td>
-          <td><%= link_to('Delete', task_path(task), method: :delete, id: "delete#{task.id}" ,class: 'btn_a') %></td>
+          <td><%= link_to(I18n.t('button.detail'), task_path(task), {id: "show#{task.id}" ,class: 'btn_a'}) %></td>
+          <td><%= link_to(I18n.t('button.update'), edit_task_path(task), {id: "update#{task.id}" ,class: 'btn_a'}) %></td>
+          <td><%= link_to(I18n.t('button.delete'), task_path(task), method: :delete, id: "delete#{task.id}" ,class: 'btn_a') %></td>
         </tr>
       <% end %>
     </tbody>
