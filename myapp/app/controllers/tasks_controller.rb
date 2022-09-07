@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 class TasksController < ApplicationController
+  before_action :check_create_service, only: [:new, :create]
+  before_action :check_update_service, only: [:edit, :update]
+  before_action :check_delete_service, only: [:destroy]
+
   # タスク一覧画面
   def index
     # タスク一覧オブジェクト取得
@@ -67,5 +71,38 @@ class TasksController < ApplicationController
   def task_params
     params.require(:task_form)[:user_id] = login_user.id
     params.require(:task_form).permit(:title, :content, :label1, :label2, :label3, :label4, :label5, :user_id, :status)
+  end
+
+  def check_create_service
+    if Function.is_stopped(Function::FUNC_ID_CREATE)
+      render(
+        file: Rails.public_path.join("503.html"),
+        content_type: "text/html",
+        layout: false,
+        status: :service_unavailable,
+      )
+    end
+  end
+
+  def check_update_service
+    if Function.is_stopped(Function::FUNC_ID_UPDATE)
+      render(
+        file: Rails.public_path.join("503.html"),
+        content_type: "text/html",
+        layout: false,
+        status: :service_unavailable,
+      )
+    end
+  end
+
+  def check_delete_service
+    if Function.is_stopped(Function::FUNC_ID_DELETE)
+      render(
+        file: Rails.public_path.join("503.html"),
+        content_type: "text/html",
+        layout: false,
+        status: :service_unavailable,
+      )
+    end
   end
 end
