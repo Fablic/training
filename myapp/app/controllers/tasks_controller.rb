@@ -5,7 +5,6 @@ class TasksController < ApplicationController
 
   def index
     @tasks = current_user.tasks.eager_load(:user).all.page(params[:page])
-
   end
 
   def show
