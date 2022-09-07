@@ -1,235 +1,6 @@
 require 'rails_helper'
 
 describe 'タスク管理機能', type: :system do
-  describe '検索エリア' do
-    context '条件なし検索' do
-      let!(:task_A1) { FactoryBot.create(:task, title: 'titleA1', status: 'not_started') }
-      let!(:task_A2) { FactoryBot.create(:task, title: 'titleA2', status: 'in_progress') }
-      let!(:task_B1) { FactoryBot.create(:task, title: 'titleB1', status: 'not_started') }
-      let!(:task_B2) { FactoryBot.create(:task, title: 'titleB2', status: 'in_progress') }
-      let(:conditions) { { word: '' } }
-
-      it '検索結果の件数が一致すること' do
-        visit root_path
-        fill_in 'word', with: conditions[:word]
-        select value = '', from: 'status'
-        click_on '検索'
-        expect(all('tbody tr').size).to be(4)
-      end
-
-      it 'titleA1が表示されること' do
-        visit root_path
-        fill_in 'word', with: conditions[:word]
-        select value = '', from: 'status'
-        click_on '検索'
-
-        expect(page).to have_content 'titleA1'
-      end
-
-      it 'titleA2が表示されること' do
-        visit root_path
-        fill_in 'word', with: conditions[:word]
-        select value = '', from: 'status'
-        click_on '検索'
-
-        expect(page).to have_content 'titleA2'
-      end
-
-      it 'titleB1が表示されること' do
-        visit root_path
-        fill_in 'word', with: conditions[:word]
-        select value = '', from: 'status'
-        click_on '検索'
-
-        expect(page).to have_content 'titleB1'
-      end
-
-      it 'titleB2が表示されること' do
-        visit root_path
-
-        fill_in 'word', with: conditions[:word]
-        select value = '', from: 'status'
-        click_on '検索'
-
-        expect(page).to have_content 'titleB2'
-      end
-    end
-
-    context 'wordのみ指定して検索' do
-      let!(:task_A1) { FactoryBot.create(:task, title: 'titleA1', status: 'not_started') }
-      let!(:task_A2) { FactoryBot.create(:task, title: 'titleA2', status: 'in_progress') }
-      let!(:task_B1) { FactoryBot.create(:task, title: 'titleB1', status: 'not_started') }
-      let!(:task_B2) { FactoryBot.create(:task, title: 'titleB2', status: 'in_progress') }
-      let(:conditions) { { word: 'A' } }
-
-      it '検索結果の件数が一致すること' do
-        visit root_path
-
-        fill_in 'word', with: conditions[:word]
-        select value = '', from: 'status'
-        click_on '検索'
-
-        expect(all('tbody tr').size).to be(2)
-      end
-
-      it 'titleA1が表示されること' do
-        visit root_path
-
-        fill_in 'word', with: conditions[:word]
-        select value = '', from: 'status'
-        click_on '検索'
-
-        expect(page).to have_content 'titleA1'
-      end
-
-      it 'titleA2が表示されること' do
-        visit root_path
-
-        fill_in 'word', with: conditions[:word]
-        select value = '', from: 'status'
-        click_on '検索'
-
-        expect(page).to have_content 'titleA2'
-      end
-
-      it 'titleB1が表示されないこと' do
-        visit root_path
-
-        fill_in 'word', with: conditions[:word]
-        select value = '', from: 'status'
-        click_on '検索'
-
-        expect(page).not_to have_content 'titleB1'
-      end
-
-      it 'titleB2が表示されないこと' do
-        visit root_path
-
-        fill_in 'word', with: conditions[:word]
-        select value = '', from: 'status'
-        click_on '検索'
-
-        expect(page).not_to have_content 'titleB2'
-      end
-    end
-
-    context 'statusのみ指定して検索' do
-      let!(:task_A1) { FactoryBot.create(:task, title: 'titleA1', status: 'not_started') }
-      let!(:task_A2) { FactoryBot.create(:task, title: 'titleA2', status: 'in_progress') }
-      let!(:task_B1) { FactoryBot.create(:task, title: 'titleB1', status: 'not_started') }
-      let!(:task_B2) { FactoryBot.create(:task, title: 'titleB2', status: 'in_progress') }
-      let(:conditions) { { status: 'Not started' } }
-
-      it '検索結果の件数が一致すること' do
-        visit root_path
-
-        fill_in 'word', with: ''
-        select value = conditions[:status], from: 'status'
-        click_on '検索'
-
-        expect(all('tbody tr').size).to be(2)
-      end
-
-      it 'titleA1が表示されること' do
-        visit root_path
-
-        fill_in 'word', with: ''
-        select value = conditions[:status], from: 'status'
-        click_on '検索'
-
-        expect(page).to have_content 'titleA1'
-      end
-
-      it 'titleA2が表示されないこと' do
-        visit root_path
-
-        fill_in 'word', with: ''
-        select value = conditions[:status], from: 'status'
-        click_on '検索'
-
-        expect(page).not_to have_content 'titleA2'
-      end
-
-      it 'titleB1が表示されること' do
-        visit root_path
-
-        fill_in 'word', with: ''
-        select value = conditions[:status], from: 'status'
-         click_on '検索'
-
-        expect(page).to have_content 'titleB1'
-      end
-
-      it 'titleB2が表示されないこと' do
-        visit root_path
-
-        fill_in 'word', with: ''
-        select value = conditions[:status], from: 'status'
-        click_on '検索'
-
-        expect(page).not_to have_content 'titleB2'
-      end
-
-    end
-
-    context 'word、statusを指定して検索' do
-      let!(:task_A1) { FactoryBot.create(:task, title: 'titleA1', status: 'not_started') }
-      let!(:task_A2) { FactoryBot.create(:task, title: 'titleA2', status: 'in_progress') }
-      let!(:task_B1) { FactoryBot.create(:task, title: 'titleB1', status: 'not_started') }
-      let!(:task_B2) { FactoryBot.create(:task, title: 'titleB2', status: 'in_progress') }
-      let(:conditions) { { word: 'A', status: 'Not started' } }
-
-      it '検索結果の件数が一致すること' do
-        visit root_path
-
-        fill_in 'word', with: conditions[:word]
-        select value = conditions[:status], from: 'status'
-        click_on '検索'
-
-        expect(all('tbody tr').size).to be(1)
-      end
-
-      it 'titleA1が表示されること' do
-        visit root_path
-
-        fill_in 'word', with: conditions[:word]
-        select value = conditions[:status], from: 'status'
-        click_on '検索'
-
-        expect(page).to have_content 'titleA1'
-      end
-
-      it 'titleA2が表示されないこと' do
-        visit root_path
-
-        fill_in 'word', with: conditions[:word]
-        select value = conditions[:status], from: 'status'
-        click_on '検索'
-
-        expect(page).not_to have_content 'titleA2'
-      end
-
-      it 'titleB1が表示されないこと' do
-        visit root_path
-
-        fill_in 'word', with: conditions[:word]
-        select value = conditions[:status], from: 'status'
-        click_on '検索'
-
-        expect(page).not_to have_content 'titleB1'
-      end
-
-      it 'titleB2が表示されないこと' do
-        visit root_path
-
-        fill_in 'word', with: conditions[:word]
-        select value = conditions[:status], from: 'status'
-        click_on '検索'
-
-        expect(page).not_to have_content 'titleB2'
-      end
-    end
-  end
 
   describe '一覧表示機能' do
     subject(:visit_tasks) { visit tasks_path }
@@ -282,6 +53,94 @@ describe 'タスク管理機能', type: :system do
           visit_tasks
           click_link '新規登録'
           expect(page).to have_current_path new_task_path
+        end
+      end
+    end
+    describe 'ページングエリア' do
+      context 'ページングなし' do
+        let!(:task_one) { FactoryBot.create(:task) }
+        let!(:task_two) { FactoryBot.create(:task) }
+        let!(:task_three) { FactoryBot.create(:task) }
+        let!(:task_four) { FactoryBot.create(:task) }
+        let!(:task_five) { FactoryBot.create(:task) }
+
+        it 'ページングが表示されないこと ページ番号1' do
+          visit root_path
+          expect(find('div.pagenation-area')).not_to have_content '1'
+        end
+
+        it 'ページングが表示されないこと ページ番号2' do
+          visit root_path
+          expect(find('div.pagenation-area')).not_to have_content '2'
+        end
+
+        it 'ページングが表示されないこと 次ページボタン' do
+          visit root_path
+          expect(find('div.pagenation-area')).not_to have_content 'Next'
+        end
+
+        it 'ページングが表示されないこと 最終ページボタン' do
+          visit root_path
+          expect(find('div.pagenation-area')).not_to have_content 'Last'
+        end
+      end
+
+      context 'ページングあり' do
+        let!(:task_one) { FactoryBot.create(:task, title: 'titleOne') }
+        let!(:task_two) { FactoryBot.create(:task, title: 'titleTwo') }
+        let!(:task_three) { FactoryBot.create(:task, title: 'titleThree') }
+        let!(:task_four) { FactoryBot.create(:task, title: 'titleFour') }
+        let!(:task_five) { FactoryBot.create(:task, title: 'titleFive') }
+        let!(:task_six) { FactoryBot.create(:task, title: 'titleSix') }
+        let!(:task_seven) { FactoryBot.create(:task, title: 'titleSeven') }
+        let!(:task_eight) { FactoryBot.create(:task, title: 'titleEight') }
+        let!(:task_nine) { FactoryBot.create(:task, title: 'titleNine') }
+        let!(:task_ten) { FactoryBot.create(:task, title: 'titleTen') }
+        let!(:task_eleven) { FactoryBot.create(:task, title: 'titleEleven') }
+
+        it 'ページングが表示されること ページ番号1' do
+          visit root_path
+          expect(find('div.pagenation-area')).to have_content '1'
+        end
+
+        it 'ページングが表示されること ページ番号2' do
+          visit root_path
+          expect(find('div.pagenation-area')).to have_content '2'
+        end
+
+        it 'ページングが表示されること 次ページボタン' do
+          visit root_path
+          expect(find('div.pagenation-area')).to have_content 'Next'
+        end
+
+        it 'ページングが表示されること 最終ページボタン' do
+          visit root_path
+          expect(find('div.pagenation-area')).to have_content 'Last'
+        end
+
+        it 'ページ番号2を押下すると次ページの要素が表示されること' do
+          visit root_path
+          click_on '2'
+          expect(page).to have_content 'titleSix'
+        end
+
+        it '次ページボタンを押下すると次ページの要素が表示されること' do
+          visit root_path
+          click_on 'Next'
+          expect(page).to have_content 'titleSix'
+        end
+
+        it '最終ページボタンを押下すると最終ページの要素が表示されること' do
+          visit root_path
+          click_on 'Last'
+          expect(page).to have_content 'titleOne'
+        end
+
+        it '最初のページボタンを押下すると最初のページの要素が表示されること' do
+          visit root_path
+          click_on 'Last'
+          click_on 'First'
+          expect(page).to have_content 'titleEleven'
         end
       end
     end
