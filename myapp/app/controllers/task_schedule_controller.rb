@@ -33,6 +33,7 @@ class TaskScheduleController < ApplicationController
 
   def new
     @task = Task.new
+    @users = User.all
   end
 
   def create
@@ -63,7 +64,7 @@ class TaskScheduleController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:title, :body, :finish_at, :status)
+    params.require(:task).permit(:title, :body, :finish_at, :status, :user_id)
   end
 
   def task_search_params
