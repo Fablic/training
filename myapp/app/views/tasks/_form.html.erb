@@ -1,13 +1,13 @@
-<% if @task.errors.any? %>
+<% if @task_form.errors.any? %>
   <div style="color: red">
     <ul>
-      <% @task.errors.full_messages.each do |msg| %>
+      <% @task_form.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
     </ul>
   </div>
 <% end %>
-<%= form_for(@task) do |f| %>
+<%= form_with(model: @task_form, url: url, method: method, local: true) do |f| %>
     <div>
       <%= f.label :タイトル %>
     </div>
@@ -20,6 +20,19 @@
     <div>
       <%= f.text_area :description, id: 'textarea2' %>
     </div>
+    <div>
+      <%= I18n.t('task.label') %>
+    </div>
+      <%= f.text_field :label1 %>
+      <br>
+      <%= f.text_field :label2 %>
+      <br>
+      <%= f.text_field :label3 %>
+      <br>
+      <%= f.text_field :label4 %>
+      <br>
+      <%= f.text_field :label5 %>
+      <br>
     <div>
       <% if is_status %>
         <div>

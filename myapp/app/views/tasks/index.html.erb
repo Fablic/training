@@ -10,9 +10,10 @@
   <div name='serch-task'>
   <span>検索</span>
   <%= form_with(url: root_path, local: true, method: :get) do |f| %>
-    <%= f.text_field(:word) %>
-    <%= f.select(:status, Task.statuses.keys.map { |k| [I18n.t("enums.task.status.#{k}"), k] }, include_blank: true) %>
-    <%= f.submit('検索') %>
+    <%= I18n.t('task.title') %>: <%= f.text_field(:title) %><br>
+    <%= I18n.t('task.label') %>: <%= f.text_field(:label) %><br>
+    <%= I18n.t('task.status') %>: <%= f.select(:status, Task.statuses.keys.map { |k| [I18n.t("enums.task.status.#{k}"), k] }, include_blank: true) %><br>
+    <p><%= f.submit('検索') %></p>
   <% end %>
   </div>
   <%= link_to '新規登録', new_task_path %>

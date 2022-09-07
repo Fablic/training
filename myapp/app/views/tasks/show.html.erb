@@ -12,10 +12,12 @@
     <div>
       <%= @task.status %>
     </div>
-    <li>ラベル</li>
-    <div>
-      <%= @task.label %>
-    </div>
+    <li><%= I18n.t('task.label') %></li>
+      <% if @label1.present? %><%= @label1 %><br><% end %>
+      <% if @label2.present? %><%= @label2 %><br><% end %>
+      <% if @label3.present? %><%= @label3 %><br><% end %>
+      <% if @label4.present? %><%= @label4 %><br><% end %>
+      <% if @label5.present? %><%= @label5 %><br><% end %>
     <li>登録日時</li>
     <div>
       <%= @task.created_at %>
