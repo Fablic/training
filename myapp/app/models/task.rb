@@ -1,5 +1,6 @@
 class Task < ApplicationRecord
   belongs_to :user
+  has_many :labels, dependent: :destroy
 
   validates :title, presence: true
   validates :title, length: { maximum: 30 }
@@ -13,20 +14,11 @@ class Task < ApplicationRecord
       closed: '2',
     }
 
-    def self.search(word, status)
-      return Task.all.order('tasks.created_at desc') if word.blank? && status.blank?
-
-      sql = ''
-      sql += " title like '%#{word}%' " if word.present?
-      sql += ' AND ' if sql.present? && status.present?
-      sql += " status = '#{status}' " if status.present?
-
-      Task.where(sql).order('tasks.created_at desc')
-    end
-          # スコープ
+    # スコープ
     scope :where_title, -> (title) { where('title like ?', "%#{title}%") if title.present? }
     scope :where_status, -> (status) { where(status: status) if status.present? }
     scope :where_user_id, -> (user_id) { where(user_id: user_id) if user_id.present? }
+    scope :where_label, -> (label) { where('labels.name like ?', "%#{label}%") if label.present? }
 
     # ページ内要素数
     paginates_per 5
