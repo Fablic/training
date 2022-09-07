@@ -46,15 +46,6 @@ RSpec.configure do |config|
 
   config.before(:each, type: :system) do
     driven_by :rack_test
-    # sessionメソッドを使用できるよう設定
-    session = defined?(rspec_session) ? rspec_session : {}
-    # destroyメソッドを実行してもエラーにならないようにする
-    session.class_eval { def destroy; nil; end }
-    # 実行後のセッションを取得できるようにする
-    config.add_setting(:session, :default => session)
-    # sessionメソッドを上書き
-    allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(session)
-
   end
 
   config.before(:each, type: :system, js: true) do

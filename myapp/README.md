@@ -123,6 +123,8 @@ column_name | type | null | default
 | id | integer | not null | auto increment |
 | user_name | varchar | | |
 | password | varchar | | |
+| email | varchar | | |
+| salt | varchar | | |
 | created_at | datetime | | |
 | updated_at | datetime | | |
 

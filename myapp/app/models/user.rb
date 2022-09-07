@@ -18,5 +18,5 @@ class User < ApplicationRecord
     SecureRandom.hex(5)
   end
 
-  has_many :tasks
+  has_many :tasks, dependent: :destroy
 end

@@ -4,5 +4,6 @@ FactoryBot.define do
     detail { 'RSpecを書く' }
     status { 1 }
     priority { 1 }
+    association :user
   end
 end
