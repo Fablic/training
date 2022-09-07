@@ -24,11 +24,6 @@
   </p>
 
   <p>
-    <strong>担当者:</strong>
-    <%= @task.user.user_name %>
-  </p>
-
-  <p>
     <strong>ラベル:</strong>
     <% @task.labels.each do |label| %>
       <%= label.label_name %>
