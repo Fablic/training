@@ -23,7 +23,7 @@
       <%= link_to t('.up'), task_schedule_index_path(finish_desc: 'true') %>
       <%= link_to t('.down'), task_schedule_index_path(finish_asc: 'true') %></th>
       <th><%= t '.status' %></th>
-      <th><%= '作成者' %></th>
+      <th><%= t '.editor' %></th>
   </tr>
   <% @tasks.each do |task| %>
   <tr>

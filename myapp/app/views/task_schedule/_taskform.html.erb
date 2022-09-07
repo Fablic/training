@@ -21,8 +21,8 @@
     <%= f.date_field :finish_at %>
   </div>
   <div>
-    <%= f.label '作成した人' %></br>
-    <%= f.collection_select :user_id, users, :id, :name, prompt: true %></br>
+    <%= f.label t('.editor') %></br>
+    <%= f.collection_select :user_id, User.all, :id, :name, prompt: true %></br>
   <div>
   <%= f.submit button %>
 <% end %>

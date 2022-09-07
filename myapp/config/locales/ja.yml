@@ -12,6 +12,7 @@ ja:
         title: 'タスク名'
         body: 'タスク本文'
         finish_at: '終了期限'
+        user: '作成者'
 
   task_schedule:
     index:
@@ -27,6 +28,7 @@ ja:
       created: '作成日時'
       finish: '終了期限'
       status: 'ステータス'
+      editor: '作成者'
       up: '▲'
       down: '▼'
       delete_confirm: '削除します。よろしいですか'
@@ -35,12 +37,14 @@ ja:
       name: 'タスク名'
       body: 'タスク本文'
       finish: '終了期限'
+      editor: '作成者'
       index: '一覧に戻る'
     new:
       title: 'タスク登録画面'
       create: '登録する'
     show:
       title: 'タスク詳細画面'
+      editor: '作成者'
       name: 'タスク名'
       body: 'タスク本文'
       finish: '終了期限'

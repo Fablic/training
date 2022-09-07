@@ -4,22 +4,20 @@ class TaskScheduleController < ApplicationController
   def index
     @search_params = task_search_params
     @tasks = if params[:desc]
-               Task.search(@search_params).desc.page(params[:page])
+               Task.search(@search_params).desc.page(params[:page]).eager_load(:user)
              elsif params[:asc]
-               Task.search(@search_params).asc.page(params[:page])
+               Task.search(@search_params).asc.page(params[:page]).eager_load(:user)
              elsif params[:finish_desc]
-               Task.search(@search_params).finish_desc.page(params[:page])
+               Task.search(@search_params).finish_desc.page(params[:page]).eager_load(:user)
              elsif params[:finish_asc]
-               Task.search(@search_params).finish_asc.page(params[:page])
+               Task.search(@search_params).finish_asc.page(params[:page]).eager_load(:user)
              else
-               Task.search(@search_params).finish_asc.page(params[:page])
+               Task.search(@search_params).finish_asc.page(params[:page]).eager_load(:user)
              end
-      @users = User.all
   end
 
   def edit
     @task = Task.find(params[:id])
-    @users = User.all
   end
 
   def update
@@ -35,7 +33,6 @@ class TaskScheduleController < ApplicationController
 
   def new
     @task = Task.new
-    @users = User.all
   end
 
   def create

@@ -10,3 +10,8 @@ User.create!(
   name: 'Test 太郎',
   pass: 'pass'
 )
+User.create!(
+  personal_id: 'abcde',
+  name: 'Test 二郎',
+  pass: 'pass'
+)
