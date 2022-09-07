@@ -6,11 +6,11 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+Task.destroy_all
+User.destroy_all
+
 10.times do |i|
-  password = "test#{i + 1}"
-  salt = User.create_salt
-  password_digest = User.hash(password, salt)
-  user = User.create!(name: "ユーザ#{i + 1}", password_digest: password_digest, salt: salt, email: "email#{i + 1}@example.com")
+  user = User.create!(name: "ユーザ#{i + 1}", password_digest: "test#{i + 1}", email: "email#{i + 1}@example.com")
   Task.create!(
     title: "タスク#{i + 1}",
     content: "こちらはタスク#{i + 1}の内容です。テストテストテストテストテストテストテスト",
