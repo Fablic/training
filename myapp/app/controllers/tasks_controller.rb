@@ -25,18 +25,18 @@ class TasksController < ApplicationController
 
   # タスク詳細画面
   def show
-    @task = Task.find(params[:id])
+    @task = Task.find_by(id: params[:id], user_id: login_user.id)
   end
 
   # タスク編集画面
   def edit
-    @task = Task.find(params[:id])
+    @task = Task.find_by(id: params[:id], user_id: login_user.id)
     @is_status = true
   end
 
   # タスク更新
   def update
-    @task = Task.find(params[:id])
+    @task = Task.find_by(id: params[:id], user_id: login_user.id)
 
     if @task.update(task_params)
       redirect_to(root_path, notice: 'タスク更新成功')
@@ -47,7 +47,7 @@ class TasksController < ApplicationController
 
   # タスク削除
   def destroy
-    @task = Task.find(params[:id])
+    @task = Task.find_by(id: params[:id], user_id: login_user.id)
     redirect_to(root_path, notice: 'タスク削除成功') if @task.destroy
   end
 

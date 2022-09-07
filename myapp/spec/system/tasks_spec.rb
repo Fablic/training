@@ -597,7 +597,7 @@ describe 'Tasks', type: :system do
   end
 
   describe '#show' do
-    let(:task_one) { FactoryBot.create(:task) }
+    let(:task_one) { FactoryBot.create(:task, user_id: user.id) }
 
     describe '表示エリア' do
       it 'タイトルが一致すること' do
@@ -655,7 +655,7 @@ describe 'Tasks', type: :system do
   end
 
   describe '#edit' do
-    let(:task_one) { FactoryBot.create(:task) }
+    let(:task_one) { FactoryBot.create(:task, user_id: user.id) }
 
     describe 'エラー表示エリア' do
       context '入力エラー（タイトル未入力）' do
