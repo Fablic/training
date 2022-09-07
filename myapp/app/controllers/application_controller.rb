@@ -4,16 +4,16 @@ class ApplicationController < ActionController::Base
 
   def login(user)
     token = User.create_login_token
-    cookies[:login_token] = token
+    session[:login_token] = token
     user.update(login_token: User.encrypt_login_token(token))
   end
 
   def logout
-    cookies.delete(:login_token)
+    session.delete(:login_token)
   end
 
   def login_user
-    User.find_by(login_token: User.encrypt_login_token(cookies[:login_token]))
+    User.find_by(login_token: User.encrypt_login_token(session[:login_token]))
   end
 
   def re_login
