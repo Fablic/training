@@ -514,7 +514,7 @@ describe 'タスク管理機能', type: :system do
           fill_in 'textarea1', with: task.title
           fill_in 'textarea2', with: task.description
           click_button 'submit'
-          expect(page).to have_selector '.error_list', text: "Title can't be blank"
+          expect(page).to have_content "Title can't be blank"
         end
       end
 
@@ -525,7 +525,7 @@ describe 'タスク管理機能', type: :system do
           fill_in 'textarea1', with: task.title
           fill_in 'textarea2', with: task.description
           click_button 'submit'
-          expect(page).to have_selector '.error_list', text: "Title is too long (maximum is 30 characters)"
+          expect(page).to have_content "Title is too long (maximum is 30 characters)"
         end
       end
     end
@@ -548,7 +548,7 @@ describe 'タスク管理機能', type: :system do
           fill_in 'textarea1', with: task.title
           fill_in 'textarea2', with: task.description
           click_button 'submit'
-          expect(page).to have_selector '.error_list', text: "Description can't be blank"
+          expect(page).to have_content "Description can't be blank"
         end
       end
 
@@ -559,7 +559,7 @@ describe 'タスク管理機能', type: :system do
           fill_in 'textarea1', with: task.title
           fill_in 'textarea2', with: task.description
           click_button 'submit'
-          expect(page).to have_selector '.error_list', text: "Description is too long (maximum is 100 characters)"
+          expect(page).to have_content "Description is too long (maximum is 100 characters)"
         end
       end
     end
