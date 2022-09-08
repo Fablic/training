@@ -18,7 +18,7 @@ class Task < ApplicationRecord
     scope :where_title, -> (title) { where('title like ?', "%#{title}%") if title.present? }
     scope :where_status, -> (status) { where(status: status) if status.present? }
     scope :where_user_id, -> (user_id) { where(user_id: user_id) if user_id.present? }
-    scope :where_label, -> (label) { where('labels.name like ?', "%#{label}%") if label.present? }
+    scope :where_label, -> (label) { where('tasks.id IN( SELECT task_id FROM labels WHERE labels.name like ? )', "%#{label}%") if label.present? }
 
     # ページ内要素数
     paginates_per 5
