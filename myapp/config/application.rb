@@ -21,6 +21,9 @@ module Myapp
     # DB側から受け取った時刻をローカルのタイムゾーンとして解釈するよう設定
     config.active_record.default_timezone = :local
 
+    # スクリプトのパス
+    config.autoload_paths += %W(#{config.root}/lib)
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading

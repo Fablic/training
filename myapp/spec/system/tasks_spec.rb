@@ -410,6 +410,14 @@ describe 'タスク管理機能', type: :system do
         end
       end
     end
+
+    content 'メンテナンスモードの場合' do
+      let!() {}
+
+      it 'メンテナンス中画面が表示される' do
+        visit_tasks
+        expect(page).to have_content 'メンテナンス中'
+    end
   end
 
   describe '詳細表示機能' do

@@ -128,6 +128,14 @@ column_name | type | null | default
 | created_at | datetime | | |
 | updated_at | datetime | | |
 
+maintenances
+column_name | type | null | default
+| ---- | ---- | ---- | ---- |
+| id | integer | not null | auto increment |
+| content_id | integer | | |
+| maintenance_flg | integer | | |
+| created_at | datetime | | |
+| updated_at | datetime | | |
 
 <br>
 <br>
