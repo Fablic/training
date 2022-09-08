@@ -4,10 +4,38 @@ describe 'Tasks', type: :system do
   let(:user) { FactoryBot.create(:user, password_digest: 'password') }
 
   before do
+    FactoryBot.create(:function, id: Function::FUNC_ID_SYSTEM)
+    FactoryBot.create(:function, id: Function::FUNC_ID_CREATE)
+    FactoryBot.create(:function, id: Function::FUNC_ID_UPDATE)
+    FactoryBot.create(:function, id: Function::FUNC_ID_DELETE)
     login(user, 'password')
   end
 
   describe '#index' do
+    describe '初期表示' do
+      context 'システムが開始状態の場合'do
+        before do
+          Function.find(Function::FUNC_ID_SYSTEM).update(status: Function.statuses[:started])
+        end
+
+        it 'タスク一覧画面への遷移で503エラーが表示されないこと' do
+          visit root_path
+          expect(page).not_to have_content '503 メンテナンス中'
+        end
+      end
+
+      context 'システムが停止状態の場合'do
+        before do
+          Function.find(Function::FUNC_ID_SYSTEM).update(status: Function.statuses[:stopped])
+        end
+
+        it 'タスク一覧画面への遷移で503エラーが表示されること' do
+          visit root_path
+          expect(page).to have_content '503 メンテナンス中'
+        end
+      end
+    end
+
     describe '作成エリア' do
       it '作成ボタンを押下することでタスク作成画面へ遷移すること' do
         visit root_path
@@ -389,6 +417,52 @@ describe 'Tasks', type: :system do
   end
 
   describe '#new' do
+    describe '初期表示' do
+      context 'システムが開始状態の場合'do
+        before do
+          Function.find(Function::FUNC_ID_SYSTEM).update(status: Function.statuses[:started])
+        end
+
+        it 'タスク作成画面への遷移で503エラーが表示されないこと' do
+          visit new_task_path
+          expect(page).not_to have_content '503 メンテナンス中'
+        end
+      end
+
+      context 'システムが停止状態の場合'do
+        before do
+          Function.find(Function::FUNC_ID_SYSTEM).update(status: Function.statuses[:stopped])
+        end
+
+        it 'タスク作成画面への遷移で503エラーが表示されること' do
+          visit new_task_path
+          expect(page).to have_content '503 メンテナンス中'
+        end
+      end
+
+      context 'タスク作成機能が開始状態の場合'do
+        before do
+          Function.find(Function::FUNC_ID_CREATE).update(status: Function.statuses[:started])
+        end
+
+        it 'タスク作成画面への遷移で503エラーが表示されないこと' do
+          visit new_task_path
+          expect(page).not_to have_content '503 メンテナンス中'
+        end
+      end
+
+      context 'タスク作成機能が停止状態の場合'do
+        before do
+          Function.find(Function::FUNC_ID_CREATE).update(status: Function.statuses[:stopped])
+        end
+
+        it 'タスク作成画面への遷移で503エラーが表示されること' do
+          visit new_task_path
+          expect(page).to have_content '503 メンテナンス中'
+        end
+      end
+    end
+
     describe 'エラー表示エリア' do
       context '入力エラー（タイトル未入力）' do
         let(:input_values) {
@@ -716,6 +790,30 @@ describe 'Tasks', type: :system do
 
     let!(:task_one) { FactoryBot.create(:task, user_id: user.id) }
 
+    describe '初期表示' do
+      context 'システムが開始状態の場合'do
+        before do
+          Function.find(Function::FUNC_ID_SYSTEM).update(status: Function.statuses[:started])
+        end
+
+        it 'タスク詳細画面への遷移で503エラーが表示されないこと' do
+          visit task_path(task_one)
+          expect(page).not_to have_content '503 メンテナンス中'
+        end
+      end
+
+      context 'システムが停止状態の場合'do
+        before do
+          Function.find(Function::FUNC_ID_SYSTEM).update(status: Function.statuses[:stopped])
+        end
+
+        it 'タスク詳細画面への遷移で503エラーが表示されること' do
+          visit task_path(task_one)
+          expect(page).to have_content '503 メンテナンス中'
+        end
+      end
+    end
+
     describe '表示エリア' do
       it 'タイトルが一致すること' do
         visit task_path(task_one)
@@ -788,11 +886,69 @@ describe 'Tasks', type: :system do
         click_on '一覧へ'
         expect(page).to have_current_path root_path
       end
+
+      context 'タスク削除機能が停止状態の場合'do
+        before do
+          Function.find(Function::FUNC_ID_DELETE).update(status: Function.statuses[:stopped])
+        end
+
+        it '削除ボタン押下で503エラーが表示されること' do
+          visit task_path(task_one)
+          click_on '削除'
+          expect(page).to have_content '503 メンテナンス中'
+        end
+      end
     end
   end
 
   describe '#edit' do
     let(:task_one) { FactoryBot.create(:task, user_id: user.id) }
+
+    describe '初期表示' do
+      context 'システムが開始状態の場合'do
+        before do
+          Function.find(Function::FUNC_ID_SYSTEM).update(status: Function.statuses[:started])
+        end
+
+        it 'タスク編集画面への遷移で503エラーが表示されないこと' do
+          visit edit_task_path(task_one)
+          expect(page).not_to have_content '503 メンテナンス中'
+        end
+      end
+
+      context 'システムが停止状態の場合'do
+        before do
+          Function.find(Function::FUNC_ID_SYSTEM).update(status: Function.statuses[:stopped])
+        end
+
+        it 'タスク編集画面への遷移で503エラーが表示されること' do
+          visit edit_task_path(task_one)
+          expect(page).to have_content '503 メンテナンス中'
+        end
+      end
+
+      context 'タスク編集機能が開始状態の場合'do
+        before do
+          Function.find(Function::FUNC_ID_UPDATE).update(status: Function.statuses[:started])
+        end
+
+        it 'タスク編集画面への遷移で503エラーが表示されないこと' do
+          visit edit_task_path(task_one)
+          expect(page).not_to have_content '503 メンテナンス中'
+        end
+      end
+
+      context 'タスク編集機能が停止状態の場合'do
+        before do
+          Function.find(Function::FUNC_ID_UPDATE).update(status: Function.statuses[:stopped])
+        end
+
+        it 'タスク編集画面への遷移で503エラーが表示されること' do
+          visit edit_task_path(task_one)
+          expect(page).to have_content '503 メンテナンス中'
+        end
+      end
+    end
 
     describe 'エラー表示エリア' do
       context '入力エラー（タイトル未入力）' do
