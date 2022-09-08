@@ -59,7 +59,6 @@ ja:
     description: '内容'
     label: 'ラベル'
     status: 'ステータス'
-    created_at: '作成日'
   button:
     detail: 詳細
     delete: 削除
