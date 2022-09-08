@@ -14,8 +14,8 @@ RSpec.describe 'tasks/show', type: :view do
 
     expect(rendered).to match(/#{task.name}/)
     expect(rendered).to match(/#{time_zone(task.end_date)}/)
-    expect(rendered).to match(/#{task.priority}/)
-    expect(rendered).to match(/#{task.status}/)
+    expect(rendered).to match(/#{task_priority_enum_to_ja(task.priority)}/)
+    expect(rendered).to match(/#{task_status_enum_to_ja(task.status)}/)
     expect(rendered).to match(/#{task.explanation}/)
   end
 end
