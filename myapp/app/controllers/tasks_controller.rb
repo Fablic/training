@@ -19,7 +19,7 @@ class TasksController < ApplicationController
     @task = Task.new(task_params)
 
     if @task.save
-      redirect_to task_url(@task), notice: 'タスクがが正常に作成されました'
+      redirect_to task_url(@task), notice: 'タスクが正常に作成されました'
     else
       render :new, status: :unprocessable_entity
     end
@@ -27,7 +27,7 @@ class TasksController < ApplicationController
 
   def update
     if @task.update(task_params)
-      redirect_to task_url(@task), notice: 'タスクがが正常に更新されました'
+      redirect_to task_url(@task), notice: 'タスクが正常に更新されました'
     else
       render :edit, status: :unprocessable_entity
     end
@@ -36,7 +36,7 @@ class TasksController < ApplicationController
   def destroy
     @task.destroy
 
-    redirect_to tasks_url, notice: 'タスクがが正常に削除されました'
+    redirect_to tasks_url, notice: 'タスクが正常に削除されました'
   end
 
   private
