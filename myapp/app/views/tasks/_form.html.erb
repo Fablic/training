@@ -30,7 +30,9 @@
   </div>
   <div>
     <%= f.label :ユーザ %>
-    <%= f.select(:user_id, @users_name) %>
+    <div>
+      <%= f.collection_select(:user_id, User.all, :id, :name) %>
+    </div>
   </div>
   <br>
   <div>

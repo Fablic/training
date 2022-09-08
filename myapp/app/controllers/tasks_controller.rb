@@ -8,19 +8,14 @@ class TasksController < ApplicationController
   end
 
   def show
-    @task = Task.find(params[:id])
-    @user = User.find(@task.user_id)
+    @task = Task.includes(:user).find(params[:id])
   end
 
   def new
     @task = Task.new
-    @users_name = users_name
   end
 
-  def edit
-    @task = Task.find(params[:id])
-    @users_name = users_name
-  end
+  def edit; end
 
   def create
     @task = Task.new(task_params)
@@ -28,7 +23,6 @@ class TasksController < ApplicationController
     if @task.save
       redirect_to tasks_url, notice: "タスク「#{@task.title}」を登録しました。"
     else
-      @users_name = users_name
       render :new
     end
   end
@@ -57,9 +51,5 @@ class TasksController < ApplicationController
 
   def set_task
     @task = Task.find(params[:id])
-  end
-
-  def users_name
-    User.all.map { |k| [k.name, k.id] }
   end
 end
