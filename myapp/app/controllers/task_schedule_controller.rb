@@ -4,15 +4,15 @@ class TaskScheduleController < ApplicationController
   def index
     @search_params = task_search_params
     @tasks = if params[:desc]
-               Task.search(@search_params).desc
+               Task.search(@search_params).desc.page(params[:page])
              elsif params[:asc]
-               Task.search(@search_params).asc
+               Task.search(@search_params).asc.page(params[:page])
              elsif params[:finish_desc]
-               Task.search(@search_params).finish_desc
+               Task.search(@search_params).finish_desc.page(params[:page])
              elsif params[:finish_asc]
-               Task.search(@search_params).finish_asc
+               Task.search(@search_params).finish_asc.page(params[:page])
              else
-               Task.search(@search_params).finish_asc
+               Task.search(@search_params).finish_asc.page(params[:page])
              end
   end
 
