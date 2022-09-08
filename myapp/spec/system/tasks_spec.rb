@@ -1,17 +1,24 @@
 require 'rails_helper'
 
 describe 'タスク管理機能', type: :system do
+  let(:user) { FactoryBot.create(:user, password_digest: 'password') }
+
+  before do
+    login(user, 'password')
+  end
+
   describe '検索エリア' do
     context '条件なし検索' do
-      let!(:task_A1) { FactoryBot.create(:task, title: 'titleA1', status: 'not_started') }
-      let!(:task_A2) { FactoryBot.create(:task, title: 'titleA2', status: 'in_progress') }
-      let!(:task_B1) { FactoryBot.create(:task, title: 'titleB1', status: 'not_started') }
-      let!(:task_B2) { FactoryBot.create(:task, title: 'titleB2', status: 'in_progress') }
-      let(:conditions) { { word: '' } }
+
+      let!(:task_A1) { FactoryBot.create(:task, title: 'titleA1', status: 'not_started', user_id: user.id) }
+      let!(:task_A2) { FactoryBot.create(:task, title: 'titleA2', status: 'in_progress', user_id: user.id) }
+      let!(:task_B1) { FactoryBot.create(:task, title: 'titleB1', status: 'not_started', user_id: user.id) }
+      let!(:task_B2) { FactoryBot.create(:task, title: 'titleB2', status: 'in_progress', user_id: user.id) }
+      let(:conditions) { { title: '', status: '' } }
 
       it '検索結果の件数が一致すること' do
         visit root_path
-        fill_in 'word', with: conditions[:word]
+        fill_in 'title', with: conditions[:title]
         select value = '', from: 'status'
         click_on '検索'
         expect(all('tbody tr').size).to be(4)
@@ -19,7 +26,7 @@ describe 'タスク管理機能', type: :system do
 
       it 'titleA1が表示されること' do
         visit root_path
-        fill_in 'word', with: conditions[:word]
+        fill_in 'title', with: conditions[:title]
         select value = '', from: 'status'
         click_on '検索'
 
@@ -28,7 +35,7 @@ describe 'タスク管理機能', type: :system do
 
       it 'titleA2が表示されること' do
         visit root_path
-        fill_in 'word', with: conditions[:word]
+        fill_in 'title', with: conditions[:title]
         select value = '', from: 'status'
         click_on '検索'
 
@@ -37,7 +44,7 @@ describe 'タスク管理機能', type: :system do
 
       it 'titleB1が表示されること' do
         visit root_path
-        fill_in 'word', with: conditions[:word]
+        fill_in 'title', with: conditions[:title]
         select value = '', from: 'status'
         click_on '検索'
 
@@ -47,7 +54,7 @@ describe 'タスク管理機能', type: :system do
       it 'titleB2が表示されること' do
         visit root_path
 
-        fill_in 'word', with: conditions[:word]
+        fill_in 'title', with: conditions[:title]
         select value = '', from: 'status'
         click_on '検索'
 
@@ -56,16 +63,16 @@ describe 'タスク管理機能', type: :system do
     end
 
     context 'wordのみ指定して検索' do
-      let!(:task_A1) { FactoryBot.create(:task, title: 'titleA1', status: 'not_started') }
-      let!(:task_A2) { FactoryBot.create(:task, title: 'titleA2', status: 'in_progress') }
-      let!(:task_B1) { FactoryBot.create(:task, title: 'titleB1', status: 'not_started') }
-      let!(:task_B2) { FactoryBot.create(:task, title: 'titleB2', status: 'in_progress') }
-      let(:conditions) { { word: 'A' } }
+      let!(:task_A1) { FactoryBot.create(:task, title: 'titleA1', status: 'not_started', user_id: user.id) }
+      let!(:task_A2) { FactoryBot.create(:task, title: 'titleA2', status: 'in_progress', user_id: user.id) }
+      let!(:task_B1) { FactoryBot.create(:task, title: 'titleB1', status: 'not_started', user_id: user.id) }
+      let!(:task_B2) { FactoryBot.create(:task, title: 'titleB2', status: 'in_progress', user_id: user.id) }
+      let(:conditions) { { title: 'A' } }
 
       it '検索結果の件数が一致すること' do
         visit root_path
 
-        fill_in 'word', with: conditions[:word]
+        fill_in 'title', with: conditions[:title]
         select value = '', from: 'status'
         click_on '検索'
 
@@ -75,7 +82,7 @@ describe 'タスク管理機能', type: :system do
       it 'titleA1が表示されること' do
         visit root_path
 
-        fill_in 'word', with: conditions[:word]
+        fill_in 'title', with: conditions[:title]
         select value = '', from: 'status'
         click_on '検索'
 
@@ -85,7 +92,7 @@ describe 'タスク管理機能', type: :system do
       it 'titleA2が表示されること' do
         visit root_path
 
-        fill_in 'word', with: conditions[:word]
+        fill_in 'title', with: conditions[:title]
         select value = '', from: 'status'
         click_on '検索'
 
@@ -95,7 +102,7 @@ describe 'タスク管理機能', type: :system do
       it 'titleB1が表示されないこと' do
         visit root_path
 
-        fill_in 'word', with: conditions[:word]
+        fill_in 'title', with: conditions[:title]
         select value = '', from: 'status'
         click_on '検索'
 
@@ -105,7 +112,7 @@ describe 'タスク管理機能', type: :system do
       it 'titleB2が表示されないこと' do
         visit root_path
 
-        fill_in 'word', with: conditions[:word]
+        fill_in 'title', with: conditions[:title]
         select value = '', from: 'status'
         click_on '検索'
 
@@ -114,16 +121,16 @@ describe 'タスク管理機能', type: :system do
     end
 
     context 'statusのみ指定して検索' do
-      let!(:task_A1) { FactoryBot.create(:task, title: 'titleA1', status: 'not_started') }
-      let!(:task_A2) { FactoryBot.create(:task, title: 'titleA2', status: 'in_progress') }
-      let!(:task_B1) { FactoryBot.create(:task, title: 'titleB1', status: 'not_started') }
-      let!(:task_B2) { FactoryBot.create(:task, title: 'titleB2', status: 'in_progress') }
-      let(:conditions) { { status: 'Not started' } }
+      let!(:task_A1) { FactoryBot.create(:task, title: 'titleA1', status: 'not_started', user_id: user.id) }
+      let!(:task_A2) { FactoryBot.create(:task, title: 'titleA2', status: 'in_progress', user_id: user.id) }
+      let!(:task_B1) { FactoryBot.create(:task, title: 'titleB1', status: 'not_started', user_id: user.id) }
+      let!(:task_B2) { FactoryBot.create(:task, title: 'titleB2', status: 'in_progress', user_id: user.id) }
+      let(:conditions) { { status: '未着手' } }
 
       it '検索結果の件数が一致すること' do
         visit root_path
 
-        fill_in 'word', with: ''
+        fill_in 'title', with: ''
         select value = conditions[:status], from: 'status'
         click_on '検索'
 
@@ -133,7 +140,7 @@ describe 'タスク管理機能', type: :system do
       it 'titleA1が表示されること' do
         visit root_path
 
-        fill_in 'word', with: ''
+        fill_in 'title', with: ''
         select value = conditions[:status], from: 'status'
         click_on '検索'
 
@@ -143,7 +150,7 @@ describe 'タスク管理機能', type: :system do
       it 'titleA2が表示されないこと' do
         visit root_path
 
-        fill_in 'word', with: ''
+        fill_in 'title', with: ''
         select value = conditions[:status], from: 'status'
         click_on '検索'
 
@@ -153,7 +160,7 @@ describe 'タスク管理機能', type: :system do
       it 'titleB1が表示されること' do
         visit root_path
 
-        fill_in 'word', with: ''
+        fill_in 'title', with: ''
         select value = conditions[:status], from: 'status'
          click_on '検索'
 
@@ -163,7 +170,7 @@ describe 'タスク管理機能', type: :system do
       it 'titleB2が表示されないこと' do
         visit root_path
 
-        fill_in 'word', with: ''
+        fill_in 'title', with: ''
         select value = conditions[:status], from: 'status'
         click_on '検索'
 
@@ -173,16 +180,16 @@ describe 'タスク管理機能', type: :system do
     end
 
     context 'word、statusを指定して検索' do
-      let!(:task_A1) { FactoryBot.create(:task, title: 'titleA1', status: 'not_started') }
-      let!(:task_A2) { FactoryBot.create(:task, title: 'titleA2', status: 'in_progress') }
-      let!(:task_B1) { FactoryBot.create(:task, title: 'titleB1', status: 'not_started') }
-      let!(:task_B2) { FactoryBot.create(:task, title: 'titleB2', status: 'in_progress') }
-      let(:conditions) { { word: 'A', status: 'Not started' } }
+      let!(:task_A1) { FactoryBot.create(:task, title: 'titleA1', status: 'not_started', user_id: user.id) }
+      let!(:task_A2) { FactoryBot.create(:task, title: 'titleA2', status: 'in_progress', user_id: user.id) }
+      let!(:task_B1) { FactoryBot.create(:task, title: 'titleB1', status: 'not_started', user_id: user.id) }
+      let!(:task_B2) { FactoryBot.create(:task, title: 'titleB2', status: 'in_progress', user_id: user.id) }
+      let(:conditions) { { word: 'A', status: '未着手' } }
 
       it '検索結果の件数が一致すること' do
         visit root_path
 
-        fill_in 'word', with: conditions[:word]
+        fill_in 'title', with: conditions[:word]
         select value = conditions[:status], from: 'status'
         click_on '検索'
 
@@ -192,7 +199,7 @@ describe 'タスク管理機能', type: :system do
       it 'titleA1が表示されること' do
         visit root_path
 
-        fill_in 'word', with: conditions[:word]
+        fill_in 'title', with: conditions[:word]
         select value = conditions[:status], from: 'status'
         click_on '検索'
 
@@ -202,7 +209,7 @@ describe 'タスク管理機能', type: :system do
       it 'titleA2が表示されないこと' do
         visit root_path
 
-        fill_in 'word', with: conditions[:word]
+        fill_in 'title', with: conditions[:word]
         select value = conditions[:status], from: 'status'
         click_on '検索'
 
@@ -212,7 +219,7 @@ describe 'タスク管理機能', type: :system do
       it 'titleB1が表示されないこと' do
         visit root_path
 
-        fill_in 'word', with: conditions[:word]
+        fill_in 'title', with: conditions[:word]
         select value = conditions[:status], from: 'status'
         click_on '検索'
 
@@ -222,7 +229,7 @@ describe 'タスク管理機能', type: :system do
       it 'titleB2が表示されないこと' do
         visit root_path
 
-        fill_in 'word', with: conditions[:word]
+        fill_in 'title', with: conditions[:word]
         select value = conditions[:status], from: 'status'
         click_on '検索'
 
@@ -237,7 +244,7 @@ describe 'タスク管理機能', type: :system do
     describe '表示機能'do
 
       context 'タスクが1件存在する場合' do
-        let!(:task_1) { FactoryBot.create(:task, title: '最初のタスク', description: '最初のタスクを実施する', user_id: '1', status: '1', label: 1) }
+        let!(:task_1) { FactoryBot.create(:task, title: '最初のタスク', description: '最初のタスクを実施する', user_id: user.id, status: '1') }
 
         let(:tds){ all('tbody tr')[0].all('td') }
         it 'タスク名が表示される' do
@@ -252,8 +259,8 @@ describe 'タスク管理機能', type: :system do
       end
 
       context 'タスクが2件(複数)存在する場合' do
-        let!(:task_1) { FactoryBot.create(:task, title: '最初のタスク', description: '最初のタスクを実施する', user_id: '1', status: '1', label: 1) }
-        let!(:task_2) { FactoryBot.create(:task, title: '２つ目のタスク', description: '２つ目のタスクを実施する', user_id: '1', status: '1', label: 2) }
+        let!(:task_1) { FactoryBot.create(:task, title: '最初のタスク', description: '最初のタスクを実施する', user_id: user.id, status: '1') }
+        let!(:task_2) { FactoryBot.create(:task, title: '２つ目のタスク', description: '２つ目のタスクを実施する', user_id: user.id, status: '1') }
 
         it 'タスク名が表示される' do
           visit_tasks
@@ -268,7 +275,7 @@ describe 'タスク管理機能', type: :system do
     end
 
     describe '画面遷移機能' do
-      let!(:task_a) { FactoryBot.create(:task, title: '最初のタスク', description: '最初のタスクを実施する', user_id: '1', status: '1', label: 1) }
+      let!(:task_a) { FactoryBot.create(:task, title: '最初のタスク', description: '最初のタスクを実施する', user_id: user.id, status: '1') }
       context '詳細ボタンをクリックした場合' do
         it '詳細画面へ遷移できる' do
           visit_tasks
@@ -288,7 +295,7 @@ describe 'タスク管理機能', type: :system do
   end
 
   describe '詳細表示機能' do
-    let!(:task_a) { FactoryBot.create(:task, title: '最初のタスク', description: '最初のタスクを実施する', status: '1', user_id: '1', label: 1) }
+    let!(:task_a) { FactoryBot.create(:task, title: '最初のタスク', description: '最初のタスクを実施する', user_id: user.id) }
     subject(:visit_task_a) { visit task_path(task_a) }
 
     describe '表示機能' do
@@ -306,16 +313,6 @@ describe 'タスク管理機能', type: :system do
         it 'ステータスが表示される' do
           visit_task_a
           expect(page).to have_content task_a[:status]
-        end
-
-        it 'ユーザIDが表示される' do
-          visit_task_a
-          expect(page).to have_content task_a[:user_id]
-        end
-
-        it 'ラベルが表示される' do
-          visit_task_a
-          expect(page).to have_content task_a[:label]
         end
       end
     end
@@ -378,7 +375,7 @@ describe 'タスク管理機能', type: :system do
           {
             title: '新規作成のテスト2',
             description: '新規作成のテストを書く2',
-            user_id: '1',
+            user_id: user.id,
           }
         }
 
@@ -408,7 +405,7 @@ describe 'タスク管理機能', type: :system do
           fill_in 'textarea2', with: input_values[:description]
           # Flashメッセージが表示される
           click_button 'submit'
-          expect(page).to have_selector '.alert-success', text: "タスク「#{input_values[:title]}」を登録しました。"
+          expect(page).to have_selector '.alert-success', text: 'タスクを登録しました'
         end
 
         it '一覧画面が表示される' do
@@ -417,9 +414,8 @@ describe 'タスク管理機能', type: :system do
           fill_in 'textarea1', with: input_values[:title]
           fill_in 'textarea2', with: input_values[:description]
 
-          visit_new_task
           click_button 'submit'
-          expect(page).to have_current_path tasks_path
+          expect(page).to have_current_path root_path
         end
       end
     end
@@ -436,7 +432,7 @@ describe 'タスク管理機能', type: :system do
   end
 
   describe '編集機能' do
-    let!(:task_a) { FactoryBot.create(:task, title: '最初のタスク', description: '最初のタスクを実施する', user_id: '1', status: '1', label: 1) }
+    let!(:task_a) { FactoryBot.create(:task, title: '最初のタスク', description: '最初のタスクを実施する', user_id: user.id, status: '1') }
     subject(:visit_task_a_edit){visit edit_task_path(task_a)}
 
     describe '表示機能' do
@@ -475,7 +471,7 @@ describe 'タスク管理機能', type: :system do
           fill_in 'textarea2', with: description
           click_button 'submit'
           # Flashメッセージが表示される
-          expect(page).to have_selector '.alert-success', text: "タスク「#{title}」を更新しました。"
+          expect(page).to have_selector '.alert-success', text: 'タスクを更新しました'
         end
       end
     end
@@ -494,54 +490,6 @@ describe 'タスク管理機能', type: :system do
           visit_task_a_edit
           click_link '一覧に戻る'
           expect(page).to have_current_path tasks_path
-        end
-      end
-    end
-  end
-
-  describe 'バリデーション' do
-    describe 'タスク名カラム' do
-      context '30文字で入力されている場合' do
-        let!(:task) { FactoryBot.build(:task, title: 'あ' * 30, description: '最初のタスクを実施する', user_id: '1', status: '1', label: 1) }
-        it '登録できる' do
-          expect(task).to be_valid
-        end
-      end
-
-      context '空の場合' do
-        let!(:task) { FactoryBot.build(:task, title: '', description: '最初のタスクを実施する', user_id: '1', status: '1', label: 1) }
-        it '無効である' do
-          expect(task).to be_invalid
-        end
-      end
-
-      context '31文字以上の場合' do
-        let!(:task) { FactoryBot.build(:task, title: 'あ' * 31, description: '最初のタスクを実施する', user_id: '1', status: '1', label: 1) }
-        it '無効である' do
-          expect(task).to be_invalid
-        end
-      end
-    end
-
-    describe '詳細カラム' do
-      context '100文字で入力されている場合' do
-        let!(:task) { FactoryBot.build(:task, title: '最初のタスク', description: 'あ' * 100, user_id: '1', status: '1', label: 1) }
-        it '有効である' do
-          expect(task).to be_valid
-        end
-      end
-
-      context '空の場合' do
-        let!(:task) { FactoryBot.build(:task, title: '最初のタスク', description: '', user_id: '1', status: '1', label: 1) }
-        it '無効である' do
-          expect(task).to be_invalid
-        end
-      end
-
-      context '101文字以上の場合' do
-        let!(:task) { FactoryBot.build(:task, description: 'あ' * 101, user_id: '1') }
-        it '無効である' do
-          expect(task).to be_invalid
         end
       end
     end
