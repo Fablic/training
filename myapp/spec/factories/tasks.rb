@@ -4,5 +4,7 @@ FactoryBot.define do
     description { 'test description' }
     status   { 'not_started' }
     label { '1' }
+
+    user
   end
 end
