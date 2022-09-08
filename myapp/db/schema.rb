@@ -17,10 +17,10 @@ ActiveRecord::Schema.define(version: 2022_09_08_003930) do
     t.text "description", null: false
     t.bigint "user_id", null: false
     t.string "status", limit: 1, default: "0", null: false
-    t.string "label", limit: 64
     t.datetime "deleted_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "label"
     t.index ["status"], name: "index_tasks_on_status"
     t.index ["title"], name: "index_tasks_on_title"
   end
