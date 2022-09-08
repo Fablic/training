@@ -1,0 +1,38 @@
+ja:
+  activerecord:
+    models:
+      task: タスク
+    attributes:
+      task:
+        name: タスク名
+        end_date: 終了期限
+        priority: 優先順位
+        status: ステータス
+        explanation: 説明文
+    errors:
+      count_message: "%{count}件のエラーが発生しました。"
+  enums:
+    task:
+      priority:
+        low: 低
+        normal: 普通
+        high: 高
+      status:
+        untouched: 未着手
+        touched: 着手中
+        completed: 完了
+  transition_destination:
+    index: 一覧に戻る
+    create: 新規作成する
+    show: 詳細を確認する
+    edit: 編集する
+    destroy: 削除する
+  helpers:
+    submit:
+      create: 登録する
+      update: 更新する
+      submit: 保存する
+  crud_messages:
+    create: "%{model_name}が正常に作成されました"
+    update: "%{model_name}が正常に更新されました"
+    destroy: "%{model_name}が正常に削除されました"

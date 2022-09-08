@@ -1,7 +1,7 @@
 <p style="color: green"><%= notice %></p>
 
-<%= link_to '編集する', edit_task_path(@task) %> |
-<%= link_to '一覧に戻る', tasks_path %>
+<%= link_to I18n.t('transition_destination.edit'), edit_task_path(@task) %> |
+<%= link_to I18n.t('transition_destination.index'), tasks_path %>
 
 <table border="1">
   <tr>
@@ -14,10 +14,10 @@
   <tr>
     <td><%= @task.name %></td>
     <td><%= time_zone(@task.end_date) %></td>
-    <td><%= @task.priority %></td>
-    <td><%= @task.status %></td>
+    <td><%= task_priority_enum_to_ja(@task.priority) %></td>
+    <td><%= task_status_enum_to_ja(@task.status) %></td>
     <td><%= @task.explanation %></td>
   </tr>
 </table>
 
-<%= button_to '削除する', @task, method: :delete %>
+<%= button_to I18n.t('transition_destination.destroy'), @task, method: :delete %>
