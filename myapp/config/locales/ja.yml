@@ -39,7 +39,7 @@ ja:
     attributes:
       task:
         title: タイトル
-        content: 内容
+        description: 説明
         user_id: ユーザーID
         status: ステータス
         label: ラベル
@@ -64,7 +64,7 @@ ja:
     edit: タスク編集画面
   task:
     title: タイトル
-    content: 内容
+    description: 説明
     label: ラベル
     status: ステータス
     user: 担当者

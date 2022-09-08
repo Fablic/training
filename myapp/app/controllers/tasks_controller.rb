@@ -4,11 +4,7 @@ class TasksController < ApplicationController
   before_action :set_task, only: %i[show edit update destroy]
 
   def index
-    if params && (params[:word].present? || params[:status].present?)
-      @tasks = Task.search(params[:name], params[:status]).page(params[:page]).per(5)
-    else
-      @tasks = Task.all.page(params[:page]).per(5)
-    end
+    @tasks = Task.where_title(params[:title]).where_status(params[:status]).order('tasks.created_at desc').page(params[:page])
   end
 
   def show

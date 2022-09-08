@@ -1,10 +1,8 @@
 class Task < ApplicationRecord
   belongs_to :user
 
-  validates :title, presence: true
-  validates :title, length: { maximum: 30 }
-  validates :description, presence: true
-  validates :description, length: { maximum: 100 }
+  validates :title, presence: true, length: { maximum: 30 }
+  validates :description, presence: true, length: { maximum: 100 }
 
     # ステータスEnum
     enum status: {
@@ -13,14 +11,8 @@ class Task < ApplicationRecord
       closed: '2',
     }
 
-    def self.search(word, status)
-      return Task.all.order('tasks.created_at desc') if word.blank? && status.blank?
+    scope :where_title, -> (title) { where('title like ?', "%#{title}%") if title.present? }
+    scope :where_status, -> (status) { where(status: status) if status.present? }
 
-      sql = ''
-      sql += " title like '%#{word}%' " if word.present?
-      sql += ' AND ' if sql.present? && status.present?
-      sql += " status = '#{status}' " if status.present?
-
-      Task.where(sql).order('tasks.created_at desc')
-    end
+    paginates_per 5
   end
