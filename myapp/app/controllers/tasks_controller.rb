@@ -19,8 +19,7 @@ class TasksController < ApplicationController
     @task = Task.new(task_params)
 
     if @task.save
-      redirect_to task_url(@task),
-                  notice: I18n.t('crud_messages.create', model_name: I18n.t('activerecord.models.task'))
+      redirect_to task_url(@task), notice: 'タスクがが正常に作成されました'
     else
       render :new, status: :unprocessable_entity
     end
@@ -28,8 +27,7 @@ class TasksController < ApplicationController
 
   def update
     if @task.update(task_params)
-      redirect_to task_url(@task),
-                  notice: I18n.t('crud_messages.update', model_name: I18n.t('activerecord.models.task'))
+      redirect_to task_url(@task), notice: 'タスクがが正常に更新されました'
     else
       render :edit, status: :unprocessable_entity
     end
@@ -38,7 +36,7 @@ class TasksController < ApplicationController
   def destroy
     @task.destroy
 
-    redirect_to tasks_url, notice: I18n.t('crud_messages.destroy', model_name: I18n.t('activerecord.models.task'))
+    redirect_to tasks_url, notice: 'タスクがが正常に削除されました'
   end
 
   private
