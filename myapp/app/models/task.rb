@@ -17,7 +17,7 @@ class Task < ApplicationRecord
     title_like(search_params[:title])
       .status_is(search_params[:status])
   end
-  scope :title_like, ->(title) { where('title LIKE?', "%#{title}%") if title.present? }
+  scope :title_like, ->(title) { where('title LIKE ?', "%#{title}%") if title.present? }
   scope :status_is, ->(status) { where(status: status) if status.present? }
 
   enum status: {
