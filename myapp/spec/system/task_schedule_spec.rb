@@ -145,7 +145,7 @@ RSpec.describe 'TaskSchedule', type: :system do
     end
   end
 
-  context 'pagnate systems check' do
+  context 'paginate systems check' do
     it 'complete paginate' do
       Task.create(title: 'タスク4', body: 'ボディ4', finish_at: 2.years.from_now)
       Task.create(title: 'タスク5', body: 'ボディ5', finish_at: 3.years.from_now)
