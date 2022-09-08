@@ -1,2 +1,10 @@
 <%= t '.title'%><br>
-<%= form_with model: @session %>
+<%= form_with model: @session, local: true do |f| %>
+  <%= flash[:denger] %>
+  <%= f.label :personal_id, t('.personal.id') %>
+  <%= f.text_field :personal_id %>
+
+  <%= f.label :pass, t('.pass') %>
+  <%= f.text_field :pass %>
+  <%= f.submit t('.login') %>
+<% end %>
