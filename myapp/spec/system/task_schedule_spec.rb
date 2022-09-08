@@ -4,9 +4,9 @@ require 'rails_helper'
 
 RSpec.describe 'TaskSchedule', type: :system do
   before do
-    @task = Task.create(title: 'showタスク', body: 'showボディ', finish_at: 1.year.from_now)
-    @task2 = Task.create(title: 'secondタスク', body: 'secondボディ', created_at: 1.day.from_now, finish_at: 1.day.from_now)
-    @task3 = Task.create(title: 'thirdタスク', body: 'thirdボディ', created_at: 1.day.ago, finish_at: 1.week.from_now, status: 2)
+    @task = create(:task, title: 'showタスク', body: 'showボディ', finish_at: 1.year.from_now)
+    create(:task, title: 'secondタスク', body: 'secondボディ', created_at: 1.day.from_now, finish_at: 1.day.from_now)
+    create(:task, title: 'thirdタスク', body: 'thirdボディ', created_at: 1.day.ago, finish_at: 1.week.from_now, status: 2)
     visit task_schedule_index_path
   end
 
@@ -34,12 +34,14 @@ RSpec.describe 'TaskSchedule', type: :system do
 
   context 'create systems check' do
     it 'complete new task create' do
+      create(:user, name: 'user 太郎')
       click_button 'タスク登録'
       expect(page).to have_content 'タスク登録画面'
 
       fill_in 'task[title]', with: 'newタスク'
       fill_in 'task[body]', with: 'newボディ'
       fill_in 'task[finish_at]', with: '9999-01-01'
+      select 'user 太郎', from: 'task[user_id]'
       click_button '登録する'
 
       expect(page).to have_content 'タスクの登録が完了しました'
@@ -47,6 +49,7 @@ RSpec.describe 'TaskSchedule', type: :system do
       expect(page).to have_content 'newボディ'
       expect(page).to have_content '9999/01/01'
       expect(page).to have_content '未着手'
+      expect(page).to have_content 'user 太郎'
     end
 
     it 'failure new task create' do
@@ -61,6 +64,7 @@ RSpec.describe 'TaskSchedule', type: :system do
       expect(page).to have_content 'タスク名を入力してください'
       expect(page).to have_no_content 'タスク本文を入力してください'
       expect(page).to have_content '終了期限を入力してください'
+      expect(page).to have_content '作成者を入力してください'
 
       click_link '一覧に戻る'
       expect(page).to have_no_content 'newボディ'
@@ -73,6 +77,7 @@ RSpec.describe 'TaskSchedule', type: :system do
       expect(page).to have_content 'タスク詳細画面'
       expect(page).to have_content 'showタスク'
       expect(page).to have_content 'showボディ'
+      expect(page).to have_content 'MyName'
 
       select '着手中', from: 'task[status]'
       expect(page).to have_content '着手中'
@@ -81,12 +86,14 @@ RSpec.describe 'TaskSchedule', type: :system do
 
   context 'edit systems check' do
     it 'complete edit task' do
+      create(:user, name: 'user 二郎')
       click_link('編集', href: edit_task_schedule_path(@task))
       expect(page).to have_content 'タスク編集画面'
 
       fill_in 'task[title]', with: 'editタスク'
       fill_in 'task[body]', with: 'editボディ'
       fill_in 'task[finish_at]', with: '2112-09-03'
+      select 'user 二郎', from: 'task[user_id]'
       click_button '編集する'
 
       expect(page).to have_content 'タスクの編集が完了しました'
@@ -95,6 +102,7 @@ RSpec.describe 'TaskSchedule', type: :system do
       expect(page).to have_content 'editタスク'
       expect(page).to have_content 'editボディ'
       expect(page).to have_content '2112/09/03'
+      expect(page).to have_content 'user 二郎'
     end
 
     it 'failure edit task' do
@@ -147,9 +155,9 @@ RSpec.describe 'TaskSchedule', type: :system do
 
   context 'paginate systems check' do
     it 'complete paginate' do
-      Task.create(title: 'タスク4', body: 'ボディ4', finish_at: 2.years.from_now)
-      Task.create(title: 'タスク5', body: 'ボディ5', finish_at: 3.years.from_now)
-      Task.create(title: 'タスク6', body: 'ボディ6', finish_at: 4.years.from_now)
+      create(:task, title: 'タスク4', body: 'ボディ4', finish_at: 2.years.from_now)
+      create(:task, title: 'タスク5', body: 'ボディ5', finish_at: 3.years.from_now)
+      create(:task, title: 'タスク6', body: 'ボディ6', finish_at: 4.years.from_now)
       visit task_schedule_index_path
 
       expect(page).to have_content 'タスク5'

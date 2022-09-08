@@ -6,5 +6,6 @@ FactoryBot.define do
     body { 'MyText' }
     finish_at { '1996/03/23' }
     status { 1 }
+    user
   end
 end
