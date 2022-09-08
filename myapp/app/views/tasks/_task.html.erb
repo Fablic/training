@@ -2,9 +2,9 @@
   <tr>
     <td><%= task.name %></td>
     <td><%= time_zone(task.end_date) %></td>
-    <td><%= task_priority_enum_to_ja(task.priority) %></td>
-    <td><%= task_status_enum_to_ja(task.status) %></td>
+    <td><%= task.priority %></td>
+    <td><%= task.status %></td>
     <td><%= task.explanation %></td>
-    <td><%= link_to I18n.t('transition_destination.show'), task %></td>
+    <td><%= link_to '詳細を確認する', task %></td>
   </tr>
 </div>
