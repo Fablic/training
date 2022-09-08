@@ -7,13 +7,13 @@ describe 'タスク管理機能', type: :system do
     describe '表示機能' do
       shared_examples_for '１つ目のタスクが表示される' do
         it {
-          visit tasks_path
+          visit_tasks
           expect(page).to have_content 'タスク１'
         }
       end
       shared_examples_for '２つ目のタスクが表示される' do
         it {
-          visit tasks_path
+          visit_tasks
           expect(page).to have_content 'タスク２'
         }
       end
@@ -30,6 +30,13 @@ describe 'タスク管理機能', type: :system do
 
         it_behaves_like '１つ目のタスクが表示される'
         it_behaves_like '２つ目のタスクが表示される'
+      end
+
+      context 'タスクが存在しない場合' do
+        it 'タスクが表示されない' do
+          visit_tasks
+          expect(page).not_to have_content '詳細'
+        end
       end
     end
 
