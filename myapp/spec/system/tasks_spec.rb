@@ -180,14 +180,17 @@ describe 'タスク管理機能', type: :system do
   describe '新規登録機能' do
     describe '登録機能' do
       context 'タスクの内容を入力した場合' do
+        let!(:user_a) { FactoryBot.create(:user) }
         let(:name) { '新規作成テストタスク' }
         let(:description) { '新規作成テストタスクを実施する' }
+        let(:user_name) { 'テストユーザ' }
         subject(:visit_new_task){ visit new_task_path }
 
         it 'タスクが作成される' do
           visit_new_task
           fill_in 'タスク名', with: name
           fill_in '詳細', with: description
+          select(value = user_name, from: 'task[user_id]')
           # DBに登録されている
           click_button 'タスクを登録'
           # 画面で入力された内容でDBに登録されている
@@ -198,6 +201,7 @@ describe 'タスク管理機能', type: :system do
           visit_new_task
           fill_in 'タスク名', with: name
           fill_in '詳細', with: description
+          select(value = user_name, from: 'task[user_id]')
           click_button 'タスクを登録'
           expect(page).to have_selector '.alert-success', text: 'タスク「新規作成テストタスク」を登録しました。'
         end
@@ -206,6 +210,7 @@ describe 'タスク管理機能', type: :system do
           visit_new_task
           fill_in 'タスク名', with: name
           fill_in '詳細', with: description
+          select(value = user_name, from: 'task[user_id]')
           click_button 'タスクを登録'
           expect(current_path).to eq tasks_path
         end
@@ -224,6 +229,7 @@ describe 'タスク管理機能', type: :system do
   end
 
   describe '編集機能' do
+    let!(:user_b) { FactoryBot.create(:user, name: 'テストユーザ２') }
     let!(:task_a) { FactoryBot.create(:task, name: 'タスク１', description: 'タスク１を実施する') }
     subject(:visit_task_a_edit){ visit edit_task_path(task_a) }
 
@@ -238,6 +244,11 @@ describe 'タスク管理機能', type: :system do
           visit_task_a_edit
           expect(page).to have_field '詳細', with: 'タスク１を実施する'
         end
+
+        it '編集前にユーザが表示される' do
+          visit_task_a_edit
+          expect(page).to have_select('task[user_id]', selected: 'テストユーザ')
+        end
       end
     end
 
@@ -245,12 +256,14 @@ describe 'タスク管理機能', type: :system do
       context 'タスクの各項目を更新した場合' do
         let(:name) { '更新テストタスク１' }
         let(:description) { '更新テストタスク１を実施する' }
+        let(:user_name) { 'テストユーザ２' }
 
         it 'タスクが更新される' do
           visit_task_a_edit
           # 更新処理
           fill_in 'タスク名', with: name
           fill_in '詳細', with: description
+          select(value = user_name, from: 'task[user_id]')
           click_button 'タスクを更新'
           # 画面で入力された内容でDBのデータが更新されている
           expect(Task.find_by(name: '更新テストタスク１', description: '更新テストタスク１を実施する')).not_to be_nil
@@ -261,6 +274,7 @@ describe 'タスク管理機能', type: :system do
           # 更新処理
           fill_in 'タスク名', with: name
           fill_in '詳細', with: description
+          select(value = user_name, from: 'task[user_id]')
           click_button 'タスクを更新'
           # Flashメッセージが表示される
           expect(page).to have_selector '.alert-success', text: 'タスク「更新テストタスク１」を更新しました。'

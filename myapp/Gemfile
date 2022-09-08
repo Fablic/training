@@ -27,6 +27,8 @@ gem 'factory_bot_rails', '~> 4.11'
 gem 'rails-i18n'
 # kaminari
 gem 'kaminari'
+# bullet
+gem 'bullet'
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'

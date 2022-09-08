@@ -8,7 +8,7 @@ class Task < ApplicationRecord
   validates :description, presence: true
   validates :description, length: { maximum: 50 }
 
-  scope :name_like, -> (name) { where('name LIKE ?', "%#{name}%") if name.present? }
+  scope :name_like, -> (name) { where('tasks.name LIKE ?', "%#{name}%") if name.present? }
   scope :status_equal, -> (status) { where('status = ?', status) if status.present? }
 
   paginates_per 5

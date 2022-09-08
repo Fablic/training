@@ -1,8 +1,9 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
+  before_action :get_users, only: [:new, :edit]
 
   def index
-    @tasks = Task.all.page(params[:page])
+    @tasks = Task.eager_load(:user).all.page(params[:page])
   end
 
   def show; end
@@ -39,7 +40,7 @@ class TasksController < ApplicationController
   end
 
   def search
-    @tasks = Task.name_like(params[:name]).status_equal(Task.statuses[params[:status]]).page(params[:page])
+    @tasks = Task.eager_load(:user).name_like(params[:name]).status_equal(Task.statuses[params[:status]]).page(params[:page])
     render :index
   end
 
@@ -50,7 +51,11 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:name, :description, :status, :priority)
+    params.require(:task).permit(:name, :description, :status, :priority, :user_id)
+  end
+
+  def get_users
+    @users = User.all
   end
 
 end
