@@ -285,6 +285,94 @@ describe 'タスク管理機能', type: :system do
         end
       end
     end
+    describe 'ページングエリア' do
+      context 'ページングなし' do
+        let!(:task_one) { FactoryBot.create(:task, user_id: '1') }
+        let!(:task_two) { FactoryBot.create(:task, user_id: '1') }
+        let!(:task_three) { FactoryBot.create(:task, user_id: '1') }
+        let!(:task_four) { FactoryBot.create(:task, user_id: '1') }
+        let!(:task_five) { FactoryBot.create(:task, user_id: '1') }
+
+        it 'ページングが表示されないこと ページ番号1' do
+          visit root_path
+          expect(find('div.pagenation-area')).not_to have_content '1'
+        end
+
+        it 'ページングが表示されないこと ページ番号2' do
+          visit root_path
+          expect(find('div.pagenation-area')).not_to have_content '2'
+        end
+
+        it 'ページングが表示されないこと 次ページボタン' do
+          visit root_path
+          expect(find('div.pagenation-area')).not_to have_content 'Next'
+        end
+
+        it 'ページングが表示されないこと 最終ページボタン' do
+          visit root_path
+          expect(find('div.pagenation-area')).not_to have_content 'Last'
+        end
+      end
+
+      context 'ページングあり' do
+        let!(:task_one) { FactoryBot.create(:task, title: 'titleOne', user_id: '1') }
+        let!(:task_two) { FactoryBot.create(:task, title: 'titleTwo', user_id: '1') }
+        let!(:task_three) { FactoryBot.create(:task, title: 'titleThree', user_id: '1') }
+        let!(:task_four) { FactoryBot.create(:task, title: 'titleFour', user_id: '1') }
+        let!(:task_five) { FactoryBot.create(:task, title: 'titleFive', user_id: '1') }
+        let!(:task_six) { FactoryBot.create(:task, title: 'titleSix', user_id: '1') }
+        let!(:task_seven) { FactoryBot.create(:task, title: 'titleSeven', user_id: '1') }
+        let!(:task_eight) { FactoryBot.create(:task, title: 'titleEight', user_id: '1') }
+        let!(:task_nine) { FactoryBot.create(:task, title: 'titleNine', user_id: '1') }
+        let!(:task_ten) { FactoryBot.create(:task, title: 'titleTen', user_id: '1') }
+        let!(:task_eleven) { FactoryBot.create(:task, title: 'titleEleven', user_id: '1') }
+
+        it 'ページングが表示されること ページ番号1' do
+          visit root_path
+          expect(find('div.pagenation-area')).to have_content '1'
+        end
+
+        it 'ページングが表示されること ページ番号2' do
+          visit root_path
+          expect(find('div.pagenation-area')).to have_content '2'
+        end
+
+        it 'ページングが表示されること 次ページボタン' do
+          visit root_path
+          expect(find('div.pagenation-area')).to have_content 'Next'
+        end
+
+        it 'ページングが表示されること 最終ページボタン' do
+          visit root_path
+          expect(find('div.pagenation-area')).to have_content 'Last'
+        end
+
+        it 'ページ番号2を押下すると次ページの要素が表示されること' do
+          visit root_path
+          click_on '2'
+          expect(page).to have_content 'titleSix'
+        end
+
+        it '次ページボタンを押下すると次ページの要素が表示されること' do
+          visit root_path
+          click_on 'Next'
+          expect(page).to have_content 'titleSix'
+        end
+
+        it '最終ページボタンを押下すると最終ページの要素が表示されること' do
+          visit root_path
+          click_on 'Last'
+          expect(page).to have_content 'titleOne'
+        end
+
+        it '最初のページボタンを押下すると最初のページの要素が表示されること' do
+          visit root_path
+          click_on 'Last'
+          click_on 'First'
+          expect(page).to have_content 'titleEleven'
+        end
+      end
+    end
   end
 
   describe '詳細表示機能' do
