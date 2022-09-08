@@ -5,6 +5,7 @@ class User < ApplicationRecord
 
   validates :email, presence: true, uniqueness: { case_sensitive: true }
 
+  before_create :set_password
 
   def authenticate(password)
     self.password_digest == User.hash(password, self.salt) ? true : false
@@ -24,5 +25,12 @@ class User < ApplicationRecord
 
   def self.encrypt_login_token(token)
     Digest::SHA256.hexdigest(token.to_s)
+  end
+
+  private
+
+  def set_password
+    self.salt = User.create_salt
+    self.password_digest = User.hash(self.password_digest, self.salt)
   end
 end

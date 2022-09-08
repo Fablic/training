@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(version: 2022_09_06_235803) do
     t.string "salt", limit: 256, default: "", null: false
     t.string "email", limit: 254, default: "", null: false
     t.string "login_token"
+    t.index ["password_digest"], name: "index_users_on_password_digest"
   end
 
 end
