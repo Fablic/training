@@ -29,8 +29,8 @@ RSpec.feature '/task/:id/edit' do
 
       fill_in 'タスク名', with: 'うぷだてタスクやで'
       fill_in '終了期限', with: Time.current.to_s
-      select 'normal', from: 'task[priority]'
-      select 'touched', from: 'task[status]'
+      select '普通', from: 'task[priority]'
+      select '着手中', from: 'task[status]'
       fill_in '説明', with: 'update!!!!!タスク的な説明なやつ'
 
       expect { click_button 'Update Task' }.to change { Task.exists?(name: 'うぷだてタスクやで') }.from(false).to(true)
@@ -45,8 +45,8 @@ RSpec.feature '/task/:id/edit' do
 
       fill_in 'タスク名', with: ''
       fill_in '終了期限', with: Time.current.to_s
-      select 'normal', from: 'task[priority]'
-      select 'touched', from: 'task[status]'
+      select '高', from: 'task[priority]'
+      select '未着手', from: 'task[status]'
       fill_in '説明', with: 'タスク的な説明なやつ'
 
       expect { click_button 'Update Task' }.to change(Task, :count).by(0)

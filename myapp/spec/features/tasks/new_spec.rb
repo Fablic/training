@@ -25,8 +25,8 @@ RSpec.feature '/task/new' do
 
       fill_in 'タスク名', with: 'タスク名ッダーン!!'
       fill_in '終了期限', with: Time.current.to_s
-      select 'normal', from: 'task[priority]'
-      select 'touched', from: 'task[status]'
+      select '低', from: 'task[priority]'
+      select '完了', from: 'task[status]'
       fill_in '説明', with: 'タスク的な説明なやつ'
 
       expect { click_button 'Create Task' }.to change(Task, :count).by(1)
@@ -42,8 +42,8 @@ RSpec.feature '/task/new' do
 
       fill_in 'タスク名', with: ''
       fill_in '終了期限', with: Time.current.to_s
-      select 'normal', from: 'task[priority]'
-      select 'touched', from: 'task[status]'
+      select '普通', from: 'task[priority]'
+      select '着手中', from: 'task[status]'
       fill_in '説明', with: 'タスク的な説明なやつ'
 
       expect { click_button 'Create Task' }.to change(Task, :count).by(0)
