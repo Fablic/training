@@ -11,17 +11,13 @@ class TasksController < ApplicationController
     end
   end
 
-  def show
-    @task = Task.find(params[:id])
-  end
+  def show; end
 
   def new
     @task = Task.new
   end
 
-  def edit
-    @task = Task.find(params[:id])
-  end
+  def edit; end
 
   def create
     @task = Task.new(task_params)

@@ -8,28 +8,28 @@
   </div>
 <% end %>
 <%= form_for(@task) do |f| %>
-    <div>
-      <%= f.label :タイトル %>
-    </div>
-    <div>
-      <%= f.text_field :title, id: 'textarea1' %>
-    </div>
-    <div>
-      <%= f.label :説明 %>
-    </div>
-    <div>
-      <%= f.text_area :description, id: 'textarea2' %>
-    </div>
-    <div>
-      <% if is_status %>
-        <div>
-          <%= f.label :ステータス %>
-        </div>
-        <%= f.select(:status, Task.statuses.keys.map { |k| [I18n.t("enums.task.status.#{k}"), k] }) %>
-      <% end %>
-    </div>
-    <br>
-    <div>
+  <div>
+    <%= f.label :タイトル %>
+  </div>
+  <div>
+    <%= f.text_field :title, id: 'textarea1' %>
+  </div>
+  <div>
+    <%= f.label :説明 %>
+  </div>
+  <div>
+    <%= f.text_area :description, id: 'textarea2' %>
+  </div>
+  <div>
+    <% if is_status %>
+      <div>
+        <%= f.label :ステータス %>
+      </div>
+      <%= f.select(:status, Task.statuses.keys.map { |k| [I18n.t("enums.task.status.#{k}"), k] }) %>
+    <% end %>
+  </div>
+  <br>
+  <div>
     <%= f.submit id: 'submit' %>
-    </div>
-  <% end %>
+  </div>
+<% end %>

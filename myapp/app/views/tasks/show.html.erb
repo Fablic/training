@@ -10,7 +10,7 @@
     </div>
     <li>ステータス</li>
     <div>
-      <%= @task.status %>
+      <%= I18n.t("enums.task.status.#{@task.status}") %>
     </div>
     <li>ラベル</li>
     <div>

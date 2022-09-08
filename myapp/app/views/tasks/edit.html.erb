@@ -1,10 +1,4 @@
-<div name='header'>
-  <h1>タスク編集</h1>
-</div>
-<div name='content'>
+<h1>タスク編集</h1>
   <%= render partial: 'form', locals: { url: task_path(@task), method: 'put', button_name: I18n.t('button.update'), is_status: true } %>
-</div>
-<div name='footer'>
   <%= link_to '詳細へ戻る', @task %>
   <%= link_to '一覧に戻る', tasks_path %>
-</div>
