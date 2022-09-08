@@ -3,8 +3,8 @@
 class TasksController < ApplicationController
   # タスク一覧画面
   def index
-    # タスク一覧オブジェクト取得
-    @tasks = Task.eager_load(:labels).where_user_id(login_user.id).where_title(params[:title]).where_label(params[:label]).where_status(params[:status])
+    # bullet worningが発生するため"eager_load(:labels)"を記載
+    @tasks = login_user.tasks.eager_load(:labels).where_title(params[:title]).where_status(params[:status]).where_label(params[:label])
     @tasks = Task.where(id: @tasks.map { |t| t.id }).order('tasks.created_at desc').page(params[:page])
   end
 
@@ -16,7 +16,9 @@ class TasksController < ApplicationController
 
   # タスク作成画面
   def create
-    @task_form = TaskForm.new(task_params)
+    create_params = task_params
+    create_params[:user_id] = login_user.id
+    @task_form = TaskForm.new(create_params)
 
     if @task_form.save
       redirect_to(root_path, notice: 'タスク作成成功')
@@ -27,37 +29,42 @@ class TasksController < ApplicationController
 
   # タスク詳細画面
   def show
-    @task = Task.eager_load(:labels).find(params[:id])
-    @label1 = @task.labels[0].name if @task.labels.size > 0
-    @label2 = @task.labels[1].name if @task.labels.size > 1
-    @label3 = @task.labels[2].name if @task.labels.size > 2
-    @label4 = @task.labels[3].name if @task.labels.size > 3
-    @label5 = @task.labels[4].name if @task.labels.size > 4
+    @task = Task.find_by(id: params[:id], user_id: login_user.id)
+    if @task.labels.present?
+      @label1 = @task.labels[0].name if @task.labels.size > 0
+      @label2 = @task.labels[1].name if @task.labels.size > 1
+      @label3 = @task.labels[2].name if @task.labels.size > 2
+      @label4 = @task.labels[3].name if @task.labels.size > 3
+      @label5 = @task.labels[4].name if @task.labels.size > 4
+    end
   end
 
   # タスク編集画面
   def edit
-    @task = Task.find(params[:id])
+    @task = Task.find_by(id: params[:id], user_id: login_user.id)
     @is_status = true
     @task_form = TaskForm.new
-    @task_form.setting(params[:id])
+    @task_form.setting(@task.id)
   end
 
   # タスク更新
   def update
-    @task_form = TaskForm.new(task_params)
+    create_params = task_params
+    create_params[:user_id] = login_user.id
+    @task_form = TaskForm.new(create_params)
+    task = Task.find_by(id: params[:id], user_id: login_user.id)
 
-    if @task_form.update(params[:id])
+    if @task_form.update(task.id)
       redirect_to(root_path, notice: 'タスク更新成功')
     else
-      @task = Task.find(params[:id])
+      @task = Task.find_by(id: params[:id], user_id: login_user.id)
       render(:edit, status: :unprocessable_entity)
     end
   end
 
   # タスク削除
   def destroy
-    @task = Task.find(params[:id])
+    @task = Task.find_by(id: params[:id], user_id: login_user.id)
     redirect_to(root_path, notice: 'タスク削除成功') if @task.destroy
   end
 
@@ -65,7 +72,6 @@ class TasksController < ApplicationController
 
   # Taskパラメータ
   def task_params
-    params.require(:task_form)[:user_id] = login_user.id
     params.require(:task_form).permit(:title, :content, :label1, :label2, :label3, :label4, :label5, :user_id, :status)
   end
 end

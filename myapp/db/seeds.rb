@@ -12,10 +12,7 @@ Label.destroy_all
 
 5.times do |i|
   # Create Users
-  password = "test#{i + 1}"
-  salt = User.create_salt
-  password_digest = User.hash(password, salt)
-  user = User.create!(name: "ユーザ#{i + 1}", password_digest: password_digest, salt: salt, email: "email#{i + 1}@example.com")
+  user = User.create!(name: "ユーザ#{i + 1}", password_digest: "test#{i + 1}", email: "email#{i + 1}@example.com")
 
   # Create Tasks
   10.times do |j|

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'Tasks', type: :system do
-  let(:user) { FactoryBot.create(:user) }
+  let(:user) { FactoryBot.create(:user, password_digest: 'password') }
 
   before do
     login(user, 'password')
@@ -707,14 +707,14 @@ describe 'Tasks', type: :system do
 
   describe '#show' do
     before do
-      FactoryBot.create(:label, name: 'label1',task_id: task_one.id)
-      FactoryBot.create(:label, name: 'label2',task_id: task_one.id)
-      FactoryBot.create(:label, name: 'label3',task_id: task_one.id)
-      FactoryBot.create(:label, name: 'label4',task_id: task_one.id)
-      FactoryBot.create(:label, name: 'label5',task_id: task_one.id)
+      FactoryBot.create(:label, name: 'label1', task_id: task_one.id)
+      FactoryBot.create(:label, name: 'label2', task_id: task_one.id)
+      FactoryBot.create(:label, name: 'label3', task_id: task_one.id)
+      FactoryBot.create(:label, name: 'label4', task_id: task_one.id)
+      FactoryBot.create(:label, name: 'label5', task_id: task_one.id)
     end
 
-    let!(:task_one) { FactoryBot.create(:task) }
+    let!(:task_one) { FactoryBot.create(:task, user_id: user.id) }
 
     describe '表示エリア' do
       it 'タイトルが一致すること' do
@@ -792,7 +792,7 @@ describe 'Tasks', type: :system do
   end
 
   describe '#edit' do
-    let!(:task_one) { FactoryBot.create(:task) }
+    let(:task_one) { FactoryBot.create(:task, user_id: user.id) }
 
     describe 'エラー表示エリア' do
       context '入力エラー（タイトル未入力）' do
