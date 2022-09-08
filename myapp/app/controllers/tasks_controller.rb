@@ -4,25 +4,16 @@ class TasksController < ApplicationController
   before_action :set_task, only: %i[show edit update destroy]
 
   def index
-    if params && (params[:title].present? || params[:status].present?)
-      @tasks = Task.where_title(params[:title]).where_status(params[:status]).order('tasks.created_at desc')
-    else
-      @tasks = Task.all.order('tasks.created_at desc')
-    end
+    @tasks = Task.where_title(params[:title]).where_status(params[:status]).order('tasks.created_at desc')
   end
 
-  def show
-    @task = Task.find(params[:id])
-  end
+  def show; end
 
   def new
     @task = Task.new
   end
 
-  def edit
-    @task = Task.find(params[:id])
-    @is_status = true
-  end
+  def edit; end
 
   def create
     @task = Task.new(task_params)
