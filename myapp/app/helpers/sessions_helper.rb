@@ -14,7 +14,7 @@ module SessionsHelper
   end
 
   def require_login
-    redirect_to login_path if !logged_in?
+    redirect_to login_path unless logged_in?
   end
 
   def log_out

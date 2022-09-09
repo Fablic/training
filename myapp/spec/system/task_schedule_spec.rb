@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe 'TaskSchedule', type: :system do
-
   context 'login systems check' do
     before do
       create(:user)
@@ -28,7 +27,6 @@ RSpec.describe 'TaskSchedule', type: :system do
       click_link 'ログアウト'
       expect(page).to have_content 'ログイン画面'
     end
-
   end
 
   before do

@@ -35,3 +35,9 @@ Metrics/BlockLength:
 
 Style/Lambda:
   Enabled: false
+
+GuardClause:
+  MinBodyLength: 4
+
+IfUnlessModifier:
+  Enabled: false
