@@ -14,9 +14,7 @@ class TasksController < ApplicationController
 
   # タスク作成画面
   def create
-    create_params = task_params
-    create_params[:user_id] = login_user.id
-    @task = Task.new(create_params)
+    @task = login_user.tasks.new(task_params)
 
     if @task.save
       redirect_to(root_path, notice: 'タスク作成成功')
