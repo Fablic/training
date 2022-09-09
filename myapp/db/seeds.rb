@@ -10,7 +10,7 @@ Task.destroy_all
 User.destroy_all
 
 10.times do |i|
-  user = User.create!(name: "ユーザ#{i + 1}", password_digest: "test#{i + 1}", email: "email#{i + 1}@example.com")
+  user = User.create!(name: "ユーザ#{i + 1}", password: "test#{i + 1}", email: "email#{i + 1}@example.com")
   Task.create!(
     title: "タスク#{i + 1}",
     content: "こちらはタスク#{i + 1}の内容です。テストテストテストテストテストテストテスト",

@@ -29,14 +29,14 @@ describe User, type: :model do
 
   describe '#authenticate' do
     context 'パスワード一致' do
-      let!(:user) { FactoryBot.create(:user, password_digest: 'password') }
+      let!(:user) { FactoryBot.create(:user, password: 'password') }
       subject(:hash) { user.authenticate('password') }
 
       it { is_expected.to be(true) }
     end
 
     context 'パスワード不一致' do
-      let!(:user) { FactoryBot.create(:user, password_digest: 'password') }
+      let!(:user) { FactoryBot.create(:user, password: 'password') }
       subject(:hash) { user.authenticate('password_disagreement') }
 
       it { is_expected.to be(false) }
