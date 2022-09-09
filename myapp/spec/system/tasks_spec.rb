@@ -5,6 +5,8 @@ describe 'タスク管理機能', type: :system do
     subject(:visit_tasks) { visit tasks_path }
 
     describe '表示機能'do
+      let!(:maintenance) { FactoryBot.create(:maintenance) }
+
       context 'ログインしている場合' do
         # タスクが表示される期待動作を共通化
         shared_examples_for 'タスク表示' do
@@ -167,6 +169,8 @@ describe 'タスク管理機能', type: :system do
     end
 
     describe '検索機能' do
+      let!(:maintenance) { FactoryBot.create(:maintenance) }
+
       # タスクが表示される期待動作を共通化
       shared_examples_for 'タスク表示' do
         let(:tds){ all('tbody tr')[0].all('td') }
@@ -366,6 +370,7 @@ describe 'タスク管理機能', type: :system do
     end
 
     describe 'ログアウト機能' do
+      let!(:maintenance) { FactoryBot.create(:maintenance) }
       let!(:user_a) { FactoryBot.create(:user) }
 
       before do
@@ -385,6 +390,7 @@ describe 'タスク管理機能', type: :system do
     end
 
     describe '画面遷移機能' do
+      let!(:maintenance) { FactoryBot.create(:maintenance) }
       let!(:task_a) { FactoryBot.create(:task, name: '最初のタスク', detail: '最初のタスクを実施する', status: 1, priority: 1) }
 
       before do
@@ -411,12 +417,32 @@ describe 'タスク管理機能', type: :system do
       end
     end
 
-    content 'メンテナンスモードの場合' do
-      let!() {}
+    describe 'メンテナンス機能' do
+      context 'メンテナンス中の場合' do
+        let!(:maintenance) { FactoryBot.create(:maintenance, maintenance_flg: true) }
 
-      it 'メンテナンス中画面が表示される' do
-        visit_tasks
-        expect(page).to have_content 'メンテナンス中'
+        it 'メンテナンス中画面が表示される' do
+          visit_tasks
+          expect(page).to have_content 'メンテナンス中'
+        end
+      end
+
+      context 'メンテナンス中でない場合' do
+        let!(:maintenance) { FactoryBot.create(:maintenance) }
+        let!(:user_a) { FactoryBot.create(:user) }
+
+        before do
+          visit login_path
+          fill_in 'session[email]', with: 'testUser@example.com'
+          fill_in 'session[password]', with: 'testPassword'
+          click_button 'ログイン'
+        end
+
+        it 'タスク一覧画面が表示される' do
+          visit_tasks
+          expect(page).to have_content 'タスク一覧画面'
+        end
+      end
     end
   end
 
@@ -426,6 +452,8 @@ describe 'タスク管理機能', type: :system do
     subject(:visit_task_a) { visit task_path(task_a) }
 
     describe '表示機能' do
+      let!(:maintenance) { FactoryBot.create(:maintenance) }
+
       context 'ログインしている場合' do
         before do
           visit login_path
@@ -550,6 +578,8 @@ describe 'タスク管理機能', type: :system do
     end
 
     describe '削除機能' do
+      let!(:maintenance) { FactoryBot.create(:maintenance) }
+
       before do
         visit login_path
         fill_in 'session[email]', with: 'testUser@example.com'
@@ -580,6 +610,8 @@ describe 'タスク管理機能', type: :system do
     end
 
     describe '画面遷移機能' do
+      let!(:maintenance) { FactoryBot.create(:maintenance) }
+
       before do
         visit login_path
         fill_in 'session[email]', with: 'testUser@example.com'
@@ -603,6 +635,31 @@ describe 'タスク管理機能', type: :system do
         end
       end
     end
+
+    describe 'メンテナンス機能' do
+      context 'メンテナンス中の場合' do
+        let!(:maintenance) { FactoryBot.create(:maintenance, maintenance_flg: true) }
+        it 'メンテナンス中画面が表示される' do
+          visit_task_a
+          expect(page).to have_content 'メンテナンス中'
+        end
+      end
+      context 'メンテナンス中でない場合' do
+        let!(:maintenance) { FactoryBot.create(:maintenance) }
+
+        before do
+          visit login_path
+          fill_in 'session[email]', with: 'testUser@example.com'
+          fill_in 'session[password]', with: 'testPassword'
+          click_button 'ログイン'
+        end
+
+        it 'タスク一覧画面が表示される' do
+          visit_task_a
+          expect(page).to have_content 'タスク詳細画面'
+        end
+      end
+    end
   end
 
   describe '新規登録機能' do
@@ -612,6 +669,8 @@ describe 'タスク管理機能', type: :system do
     subject(:visit_new_task){ visit new_task_path }
 
     describe '登録機能' do
+      let!(:maintenance) { FactoryBot.create(:maintenance) }
+
       context 'ログインしている場合' do
         before do
           visit login_path
@@ -810,6 +869,8 @@ describe 'タスク管理機能', type: :system do
     end
 
     describe '画面遷移機能' do
+      let!(:maintenance) { FactoryBot.create(:maintenance) }
+
       before do
         visit login_path
         fill_in 'session[email]', with: 'testUser@example.com'
@@ -825,6 +886,31 @@ describe 'タスク管理機能', type: :system do
         end
       end
     end
+
+    describe 'メンテナンス機能' do
+      context 'メンテナンス中の場合' do
+        let!(:maintenance) { FactoryBot.create(:maintenance, maintenance_flg: true) }
+        it 'メンテナンス中画面が表示される' do
+          visit_new_task
+          expect(page).to have_content 'メンテナンス中'
+        end
+      end
+      context 'メンテナンス中でない場合' do
+        let!(:maintenance) { FactoryBot.create(:maintenance) }
+
+        before do
+          visit login_path
+          fill_in 'session[email]', with: 'testUser@example.com'
+          fill_in 'session[password]', with: 'testPassword'
+          click_button 'ログイン'
+        end
+
+        it 'タスク作成画面が表示される' do
+          visit_new_task
+          expect(page).to have_content 'タスク作成画面'
+        end
+      end
+    end
   end
 
   describe '編集機能' do
@@ -834,14 +920,16 @@ describe 'タスク管理機能', type: :system do
     let!(:labelling_a) { FactoryBot.create(:labelling, task: task_a, label: label_a) }
     subject(:visit_task_a_edit){ visit edit_task_path(task_a) }
 
-    before do
-      visit login_path
-      fill_in 'session[email]', with: 'testUser@example.com'
-      fill_in 'session[password]', with: 'testPassword'
-      click_button 'ログイン'
-    end
-
     describe '表示機能' do
+      let!(:maintenance) { FactoryBot.create(:maintenance) }
+
+      before do
+        visit login_path
+        fill_in 'session[email]', with: 'testUser@example.com'
+        fill_in 'session[password]', with: 'testPassword'
+        click_button 'ログイン'
+      end
+
       context '画面を表示した場合' do
         it '編集前のタスク名が表示される' do
           visit_task_a_edit
@@ -877,6 +965,15 @@ describe 'タスク管理機能', type: :system do
     end
 
     describe '更新機能' do
+      let!(:maintenance) { FactoryBot.create(:maintenance) }
+
+      before do
+        visit login_path
+        fill_in 'session[email]', with: 'testUser@example.com'
+        fill_in 'session[password]', with: 'testPassword'
+        click_button 'ログイン'
+      end
+
       context 'タスクの各項目を更新した場合' do
         let(:name) { '新規作成のテスト２' }
         let(:detail) { '新規作成のテストを書く２' }
@@ -916,6 +1013,15 @@ describe 'タスク管理機能', type: :system do
     end
 
     describe '画面遷移機能' do
+      let!(:maintenance) { FactoryBot.create(:maintenance) }
+
+      before do
+        visit login_path
+        fill_in 'session[email]', with: 'testUser@example.com'
+        fill_in 'session[password]', with: 'testPassword'
+        click_button 'ログイン'
+      end
+
       context '詳細へボタンをクリックした場合' do
         it '詳細画面へ遷移できる' do
           visit_task_a_edit
@@ -929,6 +1035,31 @@ describe 'タスク管理機能', type: :system do
           visit_task_a_edit
           click_link '一覧へ戻る'
           expect(page).to have_current_path tasks_path
+        end
+      end
+    end
+
+    describe 'メンテナンス機能' do
+      context 'メンテナンス中の場合' do
+        let!(:maintenance) { FactoryBot.create(:maintenance, maintenance_flg: true) }
+        it 'メンテナンス中画面が表示される' do
+          visit_task_a_edit
+          expect(page).to have_content 'メンテナンス中'
+        end
+      end
+      context 'メンテナンス中でない場合' do
+        let!(:maintenance) { FactoryBot.create(:maintenance) }
+
+        before do
+          visit login_path
+          fill_in 'session[email]', with: 'testUser@example.com'
+          fill_in 'session[password]', with: 'testPassword'
+          click_button 'ログイン'
+        end
+
+        it 'タスク編集画面が表示される' do
+          visit_task_a_edit
+          expect(page).to have_content 'タスク編集画面'
         end
       end
     end
