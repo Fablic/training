@@ -30,6 +30,8 @@ gem 'rubocop', require: false
 
 gem 'kaminari'
 
+gem 'bullet'
+
 # RSpec
 gem 'rspec-rails', '~> 3.7'
 

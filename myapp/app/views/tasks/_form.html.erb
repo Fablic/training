@@ -9,13 +9,13 @@
 <% end %>
 <%= form_for(@task) do |f| %>
   <div>
-    <%= f.label :タイトル %>
+    <%= f.label :title %>
   </div>
   <div>
     <%= f.text_field :title, id: 'textarea1' %>
   </div>
   <div>
-    <%= f.label :説明 %>
+    <%= f.label :description %>
   </div>
   <div>
     <%= f.text_area :description, id: 'textarea2' %>
@@ -23,10 +23,16 @@
   <div>
     <% if is_status %>
       <div>
-        <%= f.label :ステータス %>
+        <%= f.label :status %>
       </div>
       <%= f.select(:status, Task.statuses.keys.map { |k| [I18n.t("enums.task.status.#{k}"), k] }) %>
     <% end %>
+  </div>
+  <div>
+    <%= f.label :user %>
+    <div>
+      <%= f.collection_select(:user_id, User.all, :id, :name) %>
+    </div>
   </div>
   <br>
   <div>
