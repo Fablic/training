@@ -28,6 +28,8 @@ gem 'rails-i18n'
 
 gem 'kaminari'
 
+gem 'bullet'
+
 # FactoryBot
 gem 'factory_bot_rails', '~> 4.11'
 
