@@ -8,12 +8,14 @@
   <table border="1">
     <tr>
       <%= render 'task_header' %>
+      <th>詳細</th>
     </tr>
 
     <% @tasks.each do |task| %>
       <div id="<%= dom_id task %>">
         <tr>
           <%= render task %>
+          <td><%= link_to I18n.t('transition_destination.show'), task %></td>
         </tr>
       </div>
     <% end %>
