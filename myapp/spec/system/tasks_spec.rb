@@ -23,10 +23,6 @@ describe 'タスク管理機能', type: :system do
             visit_tasks
             expect(tds[2]).to have_content '低'
           end
-          it '担当者が表示される' do
-            visit_tasks
-            expect(tds[3]).to have_content 'testUser'
-          end
         end
       end
       shared_examples_for '２件目のタスク表示' do
@@ -44,10 +40,6 @@ describe 'タスク管理機能', type: :system do
           it '優先度が表示される' do
             visit_tasks
             expect(tds[2]).to have_content '中'
-          end
-          it '担当者が表示される' do
-            visit_tasks
-            expect(tds[3]).to have_content 'testUser'
           end
         end
       end
@@ -143,13 +135,6 @@ describe 'タスク管理機能', type: :system do
             click_button '検索'
             expect(tds[2]).to have_content '低'
           end
-          it '担当者が表示される' do
-            visit_tasks
-            fill_in 'name', with: name
-            select(value = status, from: 'status')
-            click_button '検索'
-            expect(tds[3]).to have_content 'testUser'
-          end
         end
       end
       shared_examples_for '２件目のタスク表示' do
@@ -176,13 +161,6 @@ describe 'タスク管理機能', type: :system do
             select(value = status, from: 'status')
             click_button '検索'
             expect(tds[2]).to have_content '中'
-          end
-          it '担当者が表示される' do
-            visit_tasks
-            fill_in 'name', with: name
-            select(value = status, from: 'status')
-            click_button '検索'
-            expect(tds[3]).to have_content 'testUser'
           end
         end
       end

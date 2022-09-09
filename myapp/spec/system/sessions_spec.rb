@@ -28,7 +28,7 @@ describe 'セッション管理機能', type: :system do
         fill_in 'session[email]', with: 'aaa@example.com'
         fill_in 'session[password]', with: 'aaa'
         click_button 'ログイン'
-        expect(page).to have_current_path login_path
+        expect(page).to have_content 'ログイン画面'
       end
       it 'Flashメッセージが表示される' do
         visit_login
@@ -45,7 +45,7 @@ describe 'セッション管理機能', type: :system do
         fill_in 'session[email]', with: 'aaa@example.com'
         fill_in 'session[password]', with: 'testPassword'
         click_button 'ログイン'
-        expect(page).to have_current_path login_path
+        expect(page).to have_content 'ログイン画面'
       end
       it 'Flashメッセージが表示される' do
         visit_login
@@ -62,7 +62,7 @@ describe 'セッション管理機能', type: :system do
         fill_in 'session[email]', with: 'testUser@example.com'
         fill_in 'session[password]', with: 'aaa'
         click_button 'ログイン'
-        expect(page).to have_current_path login_path
+        expect(page).to have_content 'ログイン画面'
       end
       it 'Flashメッセージが表示される' do
         visit_login
@@ -79,14 +79,7 @@ describe 'セッション管理機能', type: :system do
         fill_in 'session[email]', with: ''
         fill_in 'session[password]', with: 'testPassword'
         click_button 'ログイン'
-        expect(page).to have_current_path login_path
-      end
-      it 'Flashメッセージが表示される' do
-        visit_login
-        fill_in 'session[email]', with: ''
-        fill_in 'session[password]', with: 'testPassword'
-        click_button 'ログイン'
-        expect(page).to have_selector '.alert-failed', text: 'ログインに失敗しました。'
+        expect(page).to have_content 'ログイン画面'
       end
     end
 
@@ -96,14 +89,7 @@ describe 'セッション管理機能', type: :system do
         fill_in 'session[email]', with: 'testUser@example.com'
         fill_in 'session[password]', with: ''
         click_button 'ログイン'
-        expect(page).to have_current_path login_path
-      end
-      it 'Flashメッセージが表示される' do
-        visit_login
-        fill_in 'session[email]', with: 'testUser@example.com'
-        fill_in 'session[password]', with: ''
-        click_button 'ログイン'
-        expect(page).to have_selector '.alert-failed', text: 'ログインに失敗しました。'
+        expect(page).to have_content 'ログイン画面'
       end
     end
 
@@ -113,14 +99,7 @@ describe 'セッション管理機能', type: :system do
         fill_in 'session[email]', with: ''
         fill_in 'session[password]', with: ''
         click_button 'ログイン'
-        expect(page).to have_current_path login_path
-      end
-      it 'Flashメッセージが表示される' do
-        visit_login
-        fill_in 'session[email]', with: ''
-        fill_in 'session[password]', with: ''
-        click_button 'ログイン'
-        expect(page).to have_selector '.alert-failed', text: 'ログインに失敗しました。'
+        expect(page).to have_content 'ログイン画面'
       end
     end
   end
