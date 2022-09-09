@@ -1,17 +1,17 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
-
   include SessionsHelper
+
   def routing_error
     raise ActionController::RoutingError, params[:path]
   end
 
-  # unless Rails.env.production?
-  #   rescue_from Exception,                        with: :_render500
-  #   rescue_from ActiveRecord::RecordNotFound,     with: :_render404
-  #   rescue_from ActionController::RoutingError,   with: :_render404
-  # end
+  unless Rails.env.production?
+    rescue_from Exception,                        with: :_render500
+    rescue_from ActiveRecord::RecordNotFound,     with: :_render404
+    rescue_from ActionController::RoutingError,   with: :_render404
+  end
 
   private
 
@@ -34,4 +34,5 @@ class ApplicationController < ActionController::Base
       render 'errors/500', status: :internal_server_error
     end
   end
+
 end

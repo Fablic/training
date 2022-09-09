@@ -8,10 +8,10 @@
 User.create!(
   personal_id: '1234',
   name: 'Test 太郎',
-  pass: 'pass'
+  password_digest: 'pass'
 )
 User.create!(
   personal_id: 'abcde',
   name: 'Test 二郎',
-  pass: 'pass'
+  password_digest: 'pass'
 )

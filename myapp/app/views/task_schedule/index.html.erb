@@ -40,4 +40,6 @@
   </tr>
   <% end %>
 </table>
-  <%= paginate @tasks %>
+<%= paginate @tasks %>
+<%= link_to t('.logout'), logout_path, method: :delete %>
+
