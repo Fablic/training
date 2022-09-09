@@ -13,7 +13,10 @@ class ApplicationController < ActionController::Base
   end
 
   def login_user
-    User.find_by(login_token: User.encrypt_login_token(session[:login_token]))
+    if session[:login_token].present?
+      @login_user ||= User.find_by(login_token: User.encrypt_login_token(session[:login_token]))
+    end
+    @login_user
   end
 
   def re_login
