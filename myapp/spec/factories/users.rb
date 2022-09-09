@@ -4,6 +4,6 @@ FactoryBot.define do
   factory :user do
     personal_id { 'MyUserID' }
     name { 'MyName' }
-    pass { 'pass' }
+    password { 'pass' }
   end
 end
