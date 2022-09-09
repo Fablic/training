@@ -27,4 +27,30 @@ RSpec.describe Task, type: :model do
       ).with_prefix
     }
   end
+
+  describe 'scope' do
+    describe 'sort_by_keyword' do
+      let!(:first_task) { create(:task, name: 'ううう') }
+      let!(:second_task) { create(:task, name: 'あああ') }
+      let!(:third_task) { create(:task, name: 'いいい') }
+
+      subject { Task.sort_by_keyword(sort) }
+
+      context 'when sort type is id_asc' do
+        let(:sort) { 'id_asc' }
+
+        it 'sort by specified sort type' do
+          is_expected.to eq [first_task, second_task, third_task]
+        end
+      end
+
+      context 'when sort type is id_desc' do
+        let(:sort) { 'id_desc' }
+
+        it 'sort by specified sort type' do
+          is_expected.to eq [third_task, second_task, first_task]
+        end
+      end
+    end
+  end
 end

@@ -3,6 +3,12 @@
 class Task < ApplicationRecord
   DEFAULT_PRIORITY_VALUE = 1
   DEFAULT_STATUS_VALUE = 0
+  SORT_TYPE = {
+    'id_asc' => 'tasks.id ASC',
+    'id_desc' => 'tasks.id DESC',
+    'name_asc' => 'tasks.name ASC',
+    'name_desc' => 'tasks.name DESC'
+  }.freeze
 
   after_initialize :set_default_values
 
@@ -21,6 +27,8 @@ class Task < ApplicationRecord
     touched: 1,   # 着手中
     completed: 2  # 完了
   }, prefix: true
+
+  scope :sort_by_keyword, ->(sort) { order(SORT_TYPE[sort]) }
 
   def set_default_values
     self.priority ||= DEFAULT_PRIORITY_VALUE

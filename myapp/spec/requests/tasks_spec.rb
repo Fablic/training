@@ -6,9 +6,22 @@ RSpec.describe '/tasks', type: :request do
   describe 'GET /index' do
     let!(:tasks) { create_list(:task, 11) }
 
-    it 'renders a successful response' do
-      get tasks_url
-      expect(response).to have_http_status(200)
+    context 'does not exist search params' do
+      it 'renders a successful response' do
+        get tasks_url
+        expect(response).to have_http_status(200)
+      end
+    end
+
+    context 'exists sort in searc params' do
+      let(:params) do
+        { sort: 'id_desc' }
+      end
+
+      it 'renders a successful response' do
+        get tasks_url, params: params
+        expect(response).to have_http_status(200)
+      end
     end
   end
 

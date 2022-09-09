@@ -1,5 +1,5 @@
-<td><%= task.name %></td>
-<td><%= time_zone(task.end_date) %></td>
-<td><%= Task.priorities_i18n[task.priority] %></td>
-<td><%= Task.statuses_i18n[task.status] %></td>
-<td><%= task.explanation %></td>
+<td class='task_name'><%= task.name %></td>
+<td class='task_end_date'><%= time_zone(task.end_date) %></td>
+<td class='task_priority'><%= Task.priorities_i18n[task.priority] %></td>
+<td class='task_status'><%= Task.statuses_i18n[task.status] %></td>
+<td class='task_explanation'><%= task.explanation %></td>
