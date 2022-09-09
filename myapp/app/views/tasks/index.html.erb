@@ -20,6 +20,7 @@
       <tr>
         <th><%= I18n.t('task.title') %></th>
         <th><%= I18n.t('task.label') %></th>
+        <th><%= I18n.t('task.user') %></th>
         <th><%= I18n.t('task.status') %></th>
         <th></th>
         <th></th>
@@ -31,6 +32,7 @@
         <tr>
           <td><span><%= task.title %></span></td>
           <td><span><%= task.label %></span></td>
+          <td><span><%= task.user.name %></span></td>
           <td><span><%= I18n.t("enums.task.status.#{task.status}") %></span></td>
           <td><%= link_to(I18n.t('button.detail'), task_path(task), {id: "show#{task.id}" ,class: 'btn_a'}) %></td>
           <td><%= link_to(I18n.t('button.update'), edit_task_path(task), {id: "update#{task.id}" ,class: 'btn_a'}) %></td>

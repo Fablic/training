@@ -33,6 +33,7 @@ ja:
   activerecord:
     models:
       task: タスク
+      task: ユーザー
     attributes:
       task:
         title: タイトル
@@ -40,6 +41,11 @@ ja:
         user_id: ユーザーID
         status: ステータス
         label: ラベル
+        deleted_at: 削除日
+        crated_at: 作成日
+        updated_at: 更新日
+      user:
+        name: 名前
         deleted_at: 削除日
         crated_at: 作成日
         updated_at: 更新日
@@ -58,6 +64,7 @@ ja:
     title: 'タイトル'
     description: '内容'
     label: 'ラベル'
+    user: 'ユーザー'
     status: 'ステータス'
   button:
     detail: 詳細

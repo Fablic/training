@@ -1,26 +1,22 @@
 class TasksController < ApplicationController
   # Task List
   def index
-    @tasks = Task.all.page(params[:page])
+    @tasks = Task.includes(:user).all.page(params[:page])
   end
 
   # Show Task
   def show
-    @task =Task.find(params[:id])
+    @task =Task.includes(:user).find(params[:id])
   end
 
   # New Task
   def new
     @task = Task.new
-
-    # UserNames
-#    @user_names = user_names
   end
 
   # New Task → Create Task
   def create
     @task = Task.new(task_params)
-    @task.user_id = 1
 
     if @task.save
       redirect_to(tasks_url, notice: 'Create Task Success!!')
@@ -32,9 +28,6 @@ class TasksController < ApplicationController
   # Edit Task
   def edit
     @task = Task.find(params[:id])
-
-    # 担当者名リスト取得
-#    @user_names = user_names
   end
 
   # Edit Task → Update Task
@@ -58,7 +51,7 @@ class TasksController < ApplicationController
   end
 
   def search
-    @tasks = Task.where_title(params[:title]).where_status(Task.statuses[params[:status]]).page(params[:page])
+    @tasks = Task.includes(:user).where_title(params[:title]).where_status(Task.statuses[params[:status]]).page(params[:page])
     render :index
   end
 
@@ -66,17 +59,6 @@ class TasksController < ApplicationController
 
   # Get Task Parameter
   def task_params
-    task = params.require(:task).permit(:title, :description, :label, :status)
+    task = params.require(:task).permit(:title, :description, :label, :status, :user_id)
   end
-
-  # Get UserNames
-#  def user_names
-#    user_names = []
-#    users = User.all.select('users.id, users.name')
-#    users.each do |user|
-#      user_names.push([user.name, user.id])
-#    end
-#    user_names
-#  end
-
 end
