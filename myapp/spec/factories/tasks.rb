@@ -4,6 +4,7 @@ FactoryBot.define do
     description { 'test description' }
     status { Task.statuses[:not_started] }
     label { '1' }
-    user_id  { 1 }
+
+    user
   end
 end
