@@ -5,18 +5,10 @@
 
 <table border="1">
   <tr>
-    <th>タスク名</th>
-    <th>終了時刻</th>
-    <th>優先度</th>
-    <th>ステータス</th>
-    <th>説明</th>
+    <%= render 'task_header' %>
   </tr>
   <tr>
-    <td><%= @task.name %></td>
-    <td><%= time_zone(@task.end_date) %></td>
-    <td><%= @task.priority %></td>
-    <td><%= @task.status %></td>
-    <td><%= @task.explanation %></td>
+    <%= render @task %>
   </tr>
 </table>
 

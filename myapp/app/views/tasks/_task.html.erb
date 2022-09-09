@@ -1,10 +1,5 @@
-<div id="<%= dom_id task %>">
-  <tr>
-    <td><%= task.name %></td>
-    <td><%= time_zone(task.end_date) %></td>
-    <td><%= task.priority %></td>
-    <td><%= task.status %></td>
-    <td><%= task.explanation %></td>
-    <td><%= link_to '詳細を確認する', task %></td>
-  </tr>
-</div>
+<td><%= task.name %></td>
+<td><%= time_zone(task.end_date) %></td>
+<td><%= task.priority %></td>
+<td><%= task.status %></td>
+<td><%= task.explanation %></td>

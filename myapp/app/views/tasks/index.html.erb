@@ -7,16 +7,17 @@
 <div id="tasks">
   <table border="1">
     <tr>
-      <th>タスク名</th>
-      <th>終了時刻</th>
-      <th>優先度</th>
-      <th>ステータス</th>
-      <th>説明</th>
+      <%= render 'task_header' %>
       <th>詳細</th>
     </tr>
 
     <% @tasks.each do |task| %>
-      <%= render task %>
+      <div id="<%= dom_id task %>">
+        <tr>
+          <%= render task %>
+          <td><%= link_to '詳細を確認する', task %></td>
+        </tr>
+      </div>
     <% end %>
   </table>
 </div>
