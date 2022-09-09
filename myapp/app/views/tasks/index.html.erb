@@ -20,7 +20,7 @@
             <%= label.label_name %>
           <% end %>
         </td>
-        <td><%= link_to '詳細', task_path(task.id) %></td>
+        <td><%= link_to t('common.link.tasks.show'), task_path(task.id) %></td>
       </tr>
     <% end %>
   </tbody>
@@ -34,10 +34,10 @@
     <p style="display: inline"><%= Task.human_attribute_name(:name) %></p>
     <%= f.text_field :name %>
     <br>
-    <p style="display: inline">ステータス</p>
+    <p style="display: inline"><%= Task.human_attribute_name(:status) %></p>
     <%= f.select :status, Task.statuses.keys.map { |k| [I18n.t("enums.task.status.#{k}"), k]} , include_blank: true %>
     <br>
-    <p style="display: inline">ラベル</p>
+    <p style="display: inline"><%= t(Label.model_name.human) %></p>
     <%= f.select :label_id, Label.pluck(:label_name, :id), { include_blank: true } %>
   <br>
   <%= f.submit t('common.button.search') %>

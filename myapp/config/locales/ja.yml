@@ -56,6 +56,7 @@ ja:
       tasks:
         back_to_index: 一覧へ戻る
         back_to_show: 詳細へ戻る
+        show: 詳細
         new: 新規登録
         edit: 編集
         delete: 削除
@@ -63,6 +64,7 @@ ja:
     models:
       task: タスク
       user: ユーザ
+      label: ラベル
     attributes:
       task:
         id: id

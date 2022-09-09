@@ -24,14 +24,14 @@
   </p>
 
   <p>
-    <strong>ラベル:</strong>
+    <strong><%= t(Label.model_name.human) %></strong>
     <% @task.labels.each do |label| %>
       <%= label.label_name %>
     <% end %>
   </p>
 
   <p>
-    <strong>登録日時:</strong>
+    <strong><%= Task.human_attribute_name(:created_at) %></strong>
     <%= @task.created_at %>
   </p>
 

@@ -521,12 +521,6 @@ describe 'タスク管理機能', type: :system do
             end
           end
 
-            it 'ラベルが表示される' do
-              visit_task_a
-              expect(page).to have_content 'testLabel'
-            end
-          end
-
           context 'ラベルが複数(2件)の場合' do
             let!(:label_a) { FactoryBot.create(:label) }
             let!(:label_b) { FactoryBot.create(:label, label_name: 'testLabel2') }
