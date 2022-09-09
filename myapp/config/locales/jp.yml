@@ -38,6 +38,8 @@ ja:
         id: ID
         name: タスク名
         description: 詳細
+        status: ステータス
+        user: 担当者
   attributes:
     created_at: 登録日時
     updated_at: 更新日時
