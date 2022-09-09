@@ -1,12 +1,11 @@
 <div class="alert alert-success" style="color: green"><%= notice %></div>
-<h1>タスク一覧画面</h1>
+<h1><%= t('tasks.index.page_title') %></h1>
 <table>
   <thead>
     <tr>
-      <th>タスク名</th>
-      <th>ステータス</th>
-      <th>優先度</th>
-      <th>担当者名</th>
+      <th><%= Task.human_attribute_name(:name) %></th>
+      <th><%= Task.human_attribute_name(:status) %></th>
+      <th><%= Task.human_attribute_name(:priority) %></th>
     </tr>
   </thead>
 
@@ -16,7 +15,6 @@
         <td><%= task.name %></td>
         <td><%= I18n.t("enums.task.status.#{task.status}") %></td>
         <td><%= I18n.t("enums.task.priority.#{task.priority}") %></td>
-        <td><%= task.user.user_name %></td>
         <td><%= link_to '詳細', task_path(task.id) %></td>
       </tr>
     <% end %>
@@ -28,15 +26,16 @@
 <div>
 <%= form_with url: search_path, method: :get, local: true do |f| %>
   <p>検索フォーム</p>
-    <p style="display: inline">タスク名</p>
+    <p style="display: inline"><%= Task.human_attribute_name(:name) %></p>
     <%= f.text_field :name %>
     <br>
-    <p style="display: inline">ステータス</p>
-    <%= f.select :status, Task.statuses.keys.map { |k| [I18n.t("enums.task.status.#{k}"), k]} , include_blank: true %>
+    <p style="display: inline"><%= Task.human_attribute_name(:status) %></p>
+    <%= f.select :status, Task.statuses.keys.map { |k| [I18n.t("enums.task.status.#{k}"), k] } , include_blank: true %>
   <br>
-  <%= f.submit '検索' %>
+  <%= f.submit t('common.button.search') %>
 <% end %>
 </div>
 <br>
 
-<%= link_to '新規登録', new_task_path %>
+<%= link_to t('common.link.tasks.new'), new_task_path %>
+<br>

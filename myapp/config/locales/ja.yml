@@ -33,9 +33,36 @@ ja:
   time:
     formats:
       default: "%Y/%m/%d %H:%M:%S"
+  tasks:
+    index:
+      page_title: タスク一覧画面
+      buttons:
+        search: 検索
+    show:
+      page_title: タスク詳細画面
+    edit:
+      page_title: タスク編集画面
+    new:
+      page_title: タスク作成画面
+  sessions:
+    new:
+      page_title: ログイン画面
+  common:
+    button:
+      login: ログイン
+      logout: ログアウト
+      search: 検索
+    link:
+      tasks:
+        back_to_index: 一覧へ戻る
+        back_to_show: 詳細へ戻る
+        new: 新規登録
+        edit: 編集
+        delete: 削除
   activerecord:
     models:
       task: タスク
+      user: ユーザ
     attributes:
       task:
         id: id
@@ -43,7 +70,10 @@ ja:
         detail: 詳細
         priority: 優先度
         status: ステータス
-        user: 担当者
+      user:
+        user_name: ユーザ名
+        email: メールアドレス
+        password: パスワード
   attributes:
     created_at: 登録日時
     updated_at: 更新日時

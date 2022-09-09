@@ -10,6 +10,9 @@
   </head>
 
   <body>
+    <div style="text-align: right">
+      <%= link_to t('common.button.logout'), logout_path, method: :delete %>
+    </div>
     <%= yield %>
   </body>
 </html>

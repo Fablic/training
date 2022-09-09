@@ -1,6 +1,6 @@
-<h1>タスク作成画面</h1>
+<h1><%= t('tasks.new.page_title') %></h1>
 
 <%= render 'form', task: @task %>
 <br>
 
-<%= link_to '一覧へ戻る', tasks_path %>
+<%= link_to t('common.link.tasks.back_to_index'), tasks_path %>

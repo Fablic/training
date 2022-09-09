@@ -1,0 +1,17 @@
+<div class="alert alert-failed" style="color: red"><%= alert %></div>
+
+<h1><%= t('sessions.new.page_title') %></h1>
+<div>
+<%= form_with scope: :session, url: login_path, model: @user, method: :post, local: true do |f| %>
+  <div class='field'>
+    <%= f.label :email %>
+    <%= f.text_field :email, required: true %>
+  </div>
+  <div class='field'>
+    <%= f.label :password %>
+    <%= f.text_field :password, required: true %>
+  </div>
+  <br>
+  <%= f.submit t('common.button.login') %>
+<% end %>
+</div>

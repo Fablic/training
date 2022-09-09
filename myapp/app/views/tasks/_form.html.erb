@@ -34,12 +34,6 @@
     <%= f.select :priority, Task.priorities.keys.map { |k| [I18n.t("enums.task.priority.#{k}"), k] }, { selected: task.priority } %>
   </div>
 
-  <div class='field'>
-    <%= f.label :user %>
-    <br>
-    <%= f.collection_select :user_id, @users, :id, :user_name, { selected: task.user_id } %>
-  </div>
-
   <br>
   <%= f.submit %>
 <% end %>
