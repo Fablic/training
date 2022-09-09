@@ -1,10 +1,6 @@
-<div id="<%= dom_id task %>">
-  <tr>
-    <td><%= task.name %></td>
-    <td><%= time_zone(task.end_date) %></td>
-    <td><%= task_priority_enum_to_ja(task.priority) %></td>
-    <td><%= task_status_enum_to_ja(task.status) %></td>
-    <td><%= task.explanation %></td>
-    <td><%= link_to I18n.t('transition_destination.show'), task %></td>
-  </tr>
-</div>
+<td><%= task.name %></td>
+<td><%= time_zone(task.end_date) %></td>
+<td><%= Task.priorities_i18n[task.priority] %></td>
+<td><%= Task.statuses_i18n[task.status] %></td>
+<td><%= task.explanation %></td>
+<td><%= link_to I18n.t('transition_destination.show'), task %></td>

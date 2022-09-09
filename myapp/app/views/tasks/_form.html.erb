@@ -12,27 +12,35 @@
   <% end %>
 
   <div>
-    <%= form.label :name, 'タスク名', style: "display: block" %>
+    <%= form.label :name, I18n.t('activerecord.attributes.task.name'), style: "display: block" %>
     <%= form.text_field :name %>
   </div>
 
   <div>
-    <%= form.label :end_date, '終了期限', style: "display: block" %>
+    <%= form.label :end_date, I18n.t('activerecord.attributes.task.end_date'), style: "display: block" %>
     <%= form.datetime_field :end_date %>
   </div>
 
   <div>
-    <%= form.label :priority, '優先順位', style: "display: block" %>
-    <%= form.select :priority, [['低', 'low'], ['普通', 'normal'], ['高', 'high']] %>
+    <%= form.label :priority, I18n.t('activerecord.attributes.task.priority'), style: "display: block" %>
+    <%= form.select :priority, [
+      [I18n.t('enums.task.priority.low'), 'low'],
+      [I18n.t('enums.task.priority.normal'), 'normal'],
+      [I18n.t('enums.task.priority.high'), 'high']
+    ] %>
   </div>
 
   <div>
-    <%= form.label :status, 'ステータス', style: "display: block" %>
-    <%= form.select :status, [['未着手', 'untouched'], ['着手中', 'touched'], ['完了', 'completed']] %>
+    <%= form.label :status, I18n.t('activerecord.attributes.task.status'), style: "display: block" %>
+    <%= form.select :status, [
+      [I18n.t('enums.task.status.untouched'), 'untouched'],
+      [I18n.t('enums.task.status.touched'), 'touched'],
+      [I18n.t('enums.task.status.completed'), 'completed']
+    ] %>
   </div>
 
   <div>
-    <%= form.label :explanation, '説明', style: "display: block" %>
+    <%= form.label :explanation, I18n.t('activerecord.attributes.task.explanation'), style: "display: block" %>
     <%= form.text_area :explanation %>
   </div>
 

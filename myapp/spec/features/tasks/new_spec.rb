@@ -12,7 +12,7 @@ RSpec.feature '/task/new' do
 
     scenario 'redirects to #index' do
       visit new_task_path
-      click_on '一覧に戻る'
+      click_on I18n.t('transition_destination.index')
 
       expect(current_path).to eq '/tasks'
       expect(page).to have_content 'タスク一覧'
@@ -32,7 +32,7 @@ RSpec.feature '/task/new' do
       expect { click_button I18n.t('helpers.submit.create') }.to change(Task, :count).by(1)
       expect(Task.last.name).to eq 'タスク名ッダーン!!'
       expect(current_path).to eq "/tasks/#{Task.last.id}"
-      expect(page).to have_content 'タスクが正常に作成されました'
+      expect(page).to have_content I18n.t('crud_messages.create', model_name: I18n.t('activerecord.models.task'))
     end
 
     scenario 'does not create no name task' do
@@ -48,7 +48,7 @@ RSpec.feature '/task/new' do
 
       expect { click_button I18n.t('helpers.submit.create') }.to change(Task, :count).by(0)
       expect(current_path).to eq '/tasks'
-      expect(page).to have_content '1件のエラーが発生しました。'
+      expect(page).to have_content I18n.t('activerecord.errors.count_message', count: 1)
       expect(page).to have_content 'タスク名を入力してください'
     end
   end
