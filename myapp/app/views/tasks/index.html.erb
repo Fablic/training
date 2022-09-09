@@ -35,7 +35,7 @@
     <%= f.text_field :name %>
     <br>
     <p style="display: inline"><%= Task.human_attribute_name(:status) %></p>
-    <%= f.select :status, Task.statuses.keys.map { |k| [I18n.t("enums.task.status.#{k}"), k]} , include_blank: true %>
+    <%= f.select :status, Task.statuses.keys.map { |k| [I18n.t("enums.task.status.#{k}"), k] } , include_blank: true %>
     <br>
     <p style="display: inline"><%= t(Label.model_name.human) %></p>
     <%= f.select :label_id, Label.pluck(:label_name, :id), { include_blank: true } %>
