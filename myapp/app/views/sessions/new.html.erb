@@ -1,0 +1,18 @@
+<div name='header'>
+  <div name='message-area' class='error-area'>
+    <%= alert %>
+  </div>
+  <h1><%= I18n.t('view_title.login') %></h1>
+</div>
+<div name='content'>
+  <%= form_for(:session, url: login_path) do |f| %>
+    <p><%= I18n.t('user.email') %></p>
+    <%= f.email_field :email %>
+    <p><%= I18n.t('user.password') %></p>
+    <%= f.password_field :password %>
+    <br><br>
+    <%= f.submit I18n.t('button.login') %>
+  <% end %>
+</div>
+<div name='footer'>
+</div>

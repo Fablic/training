@@ -5,53 +5,56 @@ application up and running.
 
 Things you may want to cover:
 
-* Database design  
+* Database design
 
 <br>
 
-tasks  
+tasks
 | column_name | type | null | default |
 | ---- | ---- | ---- | ---- |
 | id | integer(20) | not null | auto_increment |
 | title | varchar(128) | not null | '' |
 | content | varchar(1024) | | |
-| user_id | integer | | |   
-| status | varchar(1) | not null | '1' | 
+| user_id | integer | | |
+| status | varchar(1) | not null | '1' |
 | label | varchar(64) | | |
-| deleted_at | datetime | | | 
+| deleted_at | datetime | | |
 | created_at | datetime | | |
-| updated_at | datetime | | |  
+| updated_at | datetime | | |
 
-※statusについて  
-1:未着手、2:着手中、3:完了  
-※結合キー  
-user_id:N　→ users.id:1  
+※statusについて
+1:未着手、2:着手中、3:完了
+※結合キー
+user_id:N　→ users.id:1
 <br>
-  
+
 users
 | column_name | type | null | default |
 | ---- | ---- | ---- | ---- |
 | id | integer(20) | not null | auto_increment |
 | name | varchar(128) | not null | '' |
-| deleted_at | datetime | | | 
+| password_digest | varchar(256) | not null | '' |
+| salt | varchar(256) | not null | '' |
+| email | varchar(254) | not null | '' |
+| deleted_at | datetime | | |
 | created_at | datetime | | |
-| updated_at | datetime | | |  
- 
-※結合キー  
+| updated_at | datetime | | |
+
+※結合キー
 id:1　→ tasks.user_id:N
 <br>
 
-* Screen design  
+* Screen design
 
-実際に画面設計した方がよいのだと思いますが、こちらに外部設計を模した設計として各画面の設計を記載します。  
+実際に画面設計した方がよいのだと思いますが、こちらに外部設計を模した設計として各画面の設計を記載します。
 必要であれば、他ツールでワイヤフレーム作成します。
 <br>
-【タスク一覧画面】  
-URL:    
+【タスク一覧画面】
+URL:
 　/
 
-表示：  
-  
+表示：
+
 タスク作成エリア
 | item | layer | name | source | type | loop | others |
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
@@ -74,35 +77,33 @@ URL:
 | - | 1 | タスク | tasks + users | オブジェクト | ○ | tasksとusersを結合したオブジェクトリスト、作成日順 |
 | label | 2 | タイトル | tasks.title | 文字列 | | |
 | label | 2 | ラベル | tasks.label | 文字列 | | |
-| label | 2 | 担当者 | users.name | 文字列 | | |
 | label | 2 | 状況 | tasks.status | 文字列 | | コードを文字列へ変換して表示 1:'未着手'、2:'着手中'、3:'完了' |
 | button | 2 | 詳細ボタン |  | ボタン | | タスク詳細画面へ遷移 |
 
 <br>
 
-【タスク作成画面】  
-URL:    
-　/task/create  
-  
-表示：  
-  
+【タスク作成画面】
+URL:
+　/task/create
+
+表示：
+
 タスク作成
 | item | layer | name | source | type | loop | others |
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
 | text | 1 | タイトル | tasks.title | 文字列 | | 128文字まで |
 | text | 1 | 内容 | tasks.content | 文字列 | | 1024文字まで |
 | text | 1 | ラベル | tasks.label | 文字列 | | 64文字まで |
-| select | 1 | 担当者 | users.name | プルダウン | | users.name全て |
 | button | 1 | 作成ボタン |  | ボタン | | タスク作成 |
 | button | 1 | 一覧へボタン |  | ボタン | | タスク一覧画面へ遷移 |
 
 <br>
 
-【タスク詳細画面】  
-URL:    
-　/task/details/{task.id}  
+【タスク詳細画面】
+URL:
+　/task/details/{task.id}
 
-表示：  
+表示：
 
 タスク詳細
 | item | layer | name | source | type | loop | others |
@@ -110,7 +111,6 @@ URL:
 | label | 1 | タイトル | tasks.title | 文字列 | | |
 | label | 1 | 内容 | tasks.content | 文字列 | | |
 | label | 1 | ラベル | tasks.label | 文字列 | | |
-| label | 1 | 担当者 | users.name | 文字列 | | |
 | label | 1 | 状況 | tasks.status | 文字列 | | コードを文字列へ変換して表示 1:'未着手'、2:'着手中'、3:'完了' |
 | button | 1 | 編集ボタン |  | ボタン | | タスク編集画面へ遷移 |
 | button | 1 | 削除ボタン |  | ボタン | | タスク削除 |
@@ -118,11 +118,11 @@ URL:
 
 <br>
 
-【タスク編集画面】  
-URL:    
-　/task/edit/{task.id}  
+【タスク編集画面】
+URL:
+　/task/edit/{task.id}
 
-表示：  
+表示：
 
 タスク編集
 | item | layer | name | source | type | loop | others |
@@ -131,7 +131,6 @@ URL:
 | text | 1 | 内容 | tasks.content | 文字列 | | |
 | text | 1 | ラベル | tasks.label | 文字列 | | |
 | select | 1 | 状況 | TaskStatus(Enum) | 文字列 | | TaskStatus(Enum)の全てを表示※未着手、着手中、完了の順 |
-| select | 1 | 担当者 | users.name | プルダウン | | users.name全て |
 | button | 1 | 更新ボタン |  | ボタン | | データを更新 |
 | button | 1 | 詳細へボタン |  | ボタン | | タスク詳細画面へ遷移 |
 

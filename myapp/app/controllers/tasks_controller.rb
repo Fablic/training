@@ -3,12 +3,7 @@
 class TasksController < ApplicationController
   # タスク一覧画面
   def index
-    # タスク一覧オブジェクト取得
-    if params && (params[:title].present? || params[:status].present?)
-      @tasks = Task.includes(:user).where_title(params[:title]).where_status(params[:status]).order('tasks.created_at desc').page(params[:page])
-    else
-      @tasks = Task.includes(:user).all.order('tasks.created_at desc').page(params[:page])
-    end
+    @tasks = login_user.tasks.where_title(params[:title]).where_status(params[:status]).order('tasks.created_at desc').page(params[:page])
   end
 
   # タスク作成画面
@@ -19,7 +14,7 @@ class TasksController < ApplicationController
 
   # タスク作成画面
   def create
-    @task = Task.new(task_params)
+    @task = login_user.tasks.new(task_params)
 
     if @task.save
       redirect_to(root_path, notice: 'タスク作成成功')
@@ -30,18 +25,18 @@ class TasksController < ApplicationController
 
   # タスク詳細画面
   def show
-    @task = Task.includes(:user).find(params[:id])
+    @task = login_user.tasks.find(params[:id])
   end
 
   # タスク編集画面
   def edit
-    @task = Task.find(params[:id])
+    @task = login_user.tasks.find(params[:id])
     @is_status = true
   end
 
   # タスク更新
   def update
-    @task = Task.find(params[:id])
+    @task = login_user.tasks.find(params[:id])
 
     if @task.update(task_params)
       redirect_to(root_path, notice: 'タスク更新成功')
@@ -52,8 +47,7 @@ class TasksController < ApplicationController
 
   # タスク削除
   def destroy
-    @task = Task.find(params[:id])
-
+    @task = login_user.tasks.find(params[:id])
     redirect_to(root_path, notice: 'タスク削除成功') if @task.destroy
   end
 
@@ -61,6 +55,6 @@ class TasksController < ApplicationController
 
   # Taskパラメータ
   def task_params
-    params.require(:task).permit(:title, :content, :label, :user_id, :status)
+    params.require(:task).permit(:title, :content, :label, :status)
   end
 end

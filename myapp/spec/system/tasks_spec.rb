@@ -1,7 +1,11 @@
 require 'rails_helper'
 
 describe 'Tasks', type: :system do
-  include TaskHelper
+  let(:user) { FactoryBot.create(:user, password: 'password') }
+
+  before do
+    login(user, 'password')
+  end
 
   describe '#index' do
     describe '作成エリア' do
@@ -14,10 +18,10 @@ describe 'Tasks', type: :system do
 
     describe '検索エリア' do
       before do
-        FactoryBot.create(:task, title: 'titleA1', status: 'not_started')
-        FactoryBot.create(:task, title: 'titleA2', status: 'in_progress')
-        FactoryBot.create(:task, title: 'titleB1', status: 'not_started')
-        FactoryBot.create(:task, title: 'titleB2', status: 'in_progress')
+        FactoryBot.create(:task, title: 'titleA1', status: 'not_started', user_id: user.id)
+        FactoryBot.create(:task, title: 'titleA2', status: 'in_progress', user_id: user.id)
+        FactoryBot.create(:task, title: 'titleB1', status: 'not_started', user_id: user.id)
+        FactoryBot.create(:task, title: 'titleB2', status: 'in_progress', user_id: user.id)
       end
 
       context '条件なし検索' do
@@ -200,7 +204,7 @@ describe 'Tasks', type: :system do
 
     describe '一覧表示エリア' do
       context 'タスク1件' do
-        let!(:task_one) { FactoryBot.create(:task) }
+        let!(:task_one) { FactoryBot.create(:task, user_id: user.id) }
 
         it 'タイトルが一致すること' do
           visit root_path
@@ -210,11 +214,6 @@ describe 'Tasks', type: :system do
         it 'ラベルが一致すること' do
           visit root_path
           expect(page).to have_content 'label'
-        end
-
-        it '担当者が一致すること' do
-          visit root_path
-          expect(page).to have_content 'name'
         end
 
         it 'ステータスが一致すること' do
@@ -230,9 +229,8 @@ describe 'Tasks', type: :system do
       end
 
       context 'タスク複数件' do
-        let(:user_two) { FactoryBot.create(:user, name: 'second name') }
-        let!(:task_one) { FactoryBot.create(:task) }
-        let!(:task_two) { FactoryBot.create(:task, title: 'second title', content: 'second content', label: 'second label', status: 'in_progress', user_id: user_two.id) }
+        let!(:task_one) { FactoryBot.create(:task, user_id: user.id) }
+        let!(:task_two) { FactoryBot.create(:task, title: 'second title', content: 'second content', label: 'second label', status: 'in_progress', user_id: user.id) }
         let(:tds_one){ all('tbody tr')[0].all('td') }
         let(:tds_two){ all('tbody tr')[1].all('td') }
 
@@ -246,14 +244,9 @@ describe 'Tasks', type: :system do
           expect(tds_one[1]).to have_content 'second label'
         end
 
-        it '1件目 担当者が一致すること' do
-          visit root_path
-          expect(tds_one[2]).to have_content 'second name'
-        end
-
         it '1件目 ステータスが一致すること' do
           visit root_path
-          expect(tds_one[3]).to have_content '着手中'
+          expect(tds_one[2]).to have_content '着手中'
         end
 
         it '1件目 詳細ボタンを押下することでタスク詳細画面へ遷移すること' do
@@ -272,14 +265,9 @@ describe 'Tasks', type: :system do
           expect(tds_two[1]).to have_content 'label'
         end
 
-        it '2件目 担当者が一致すること' do
-          visit root_path
-          expect(tds_two[2]).to have_content 'name'
-        end
-
         it '2件目 ステータスが一致すること' do
           visit root_path
-          expect(tds_two[3]).to have_content '未着手'
+          expect(tds_two[2]).to have_content '未着手'
         end
 
         it '2件目 詳細ボタンを押下することでタスク詳細画面へ遷移すること' do
@@ -293,11 +281,11 @@ describe 'Tasks', type: :system do
     describe 'ページングエリア' do
       context 'ページングなし' do
         before do
-          FactoryBot.create(:task, title: 'title_one')
-          FactoryBot.create(:task, title: 'title_two')
-          FactoryBot.create(:task, title: 'title_three')
-          FactoryBot.create(:task, title: 'title_four')
-          FactoryBot.create(:task, title: 'title_five')
+          FactoryBot.create(:task, title: 'title_one', user_id: user.id)
+          FactoryBot.create(:task, title: 'title_two', user_id: user.id)
+          FactoryBot.create(:task, title: 'title_three', user_id: user.id)
+          FactoryBot.create(:task, title: 'title_four', user_id: user.id)
+          FactoryBot.create(:task, title: 'title_five', user_id: user.id)
         end
 
         it 'ページングが表示されないこと ページ番号1' do
@@ -323,17 +311,17 @@ describe 'Tasks', type: :system do
 
       context 'ページングあり' do
         before do
-          FactoryBot.create(:task, title: 'title_one')
-          FactoryBot.create(:task, title: 'title_two')
-          FactoryBot.create(:task, title: 'title_three')
-          FactoryBot.create(:task, title: 'title_four')
-          FactoryBot.create(:task, title: 'title_five')
-          FactoryBot.create(:task, title: 'title_six')
-          FactoryBot.create(:task, title: 'title_seven')
-          FactoryBot.create(:task, title: 'title_eight')
-          FactoryBot.create(:task, title: 'title_nine')
-          FactoryBot.create(:task, title: 'title_ten')
-          FactoryBot.create(:task, title: 'title_eleven')
+          FactoryBot.create(:task, title: 'title_one', user_id: user.id)
+          FactoryBot.create(:task, title: 'title_two', user_id: user.id)
+          FactoryBot.create(:task, title: 'title_three', user_id: user.id)
+          FactoryBot.create(:task, title: 'title_four', user_id: user.id)
+          FactoryBot.create(:task, title: 'title_five', user_id: user.id)
+          FactoryBot.create(:task, title: 'title_six', user_id: user.id)
+          FactoryBot.create(:task, title: 'title_seven', user_id: user.id)
+          FactoryBot.create(:task, title: 'title_eight', user_id: user.id)
+          FactoryBot.create(:task, title: 'title_nine', user_id: user.id)
+          FactoryBot.create(:task, title: 'title_ten', user_id: user.id)
+          FactoryBot.create(:task, title: 'title_eleven', user_id: user.id)
         end
 
         it 'ページングが表示されること ページ番号1' do
@@ -393,15 +381,12 @@ describe 'Tasks', type: :system do
 
   describe '#new' do
     describe 'エラー表示エリア' do
-      let!(:user) { FactoryBot.create(:user) }
-
       context '入力エラー（タイトル未入力）' do
         let(:input_values) {
           {
             title: '',
             content: 'content',
             label: 'label',
-            user_id: user.id,
           }
         }
 
@@ -410,7 +395,6 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: input_values[:title]
           fill_in 'task[content]', with: input_values[:content]
           fill_in 'task[label]', with: input_values[:label]
-          select value = user.name, from: 'task[user_id]'
           click_on '作成'
           expect(Task.find_by(input_values)).to be_nil
         end
@@ -420,7 +404,6 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: input_values[:title]
           fill_in 'task[content]', with: input_values[:content]
           fill_in 'task[label]', with: input_values[:label]
-          select value = user.name, from: 'task[user_id]'
           click_on '作成'
           expect(page).to have_content 'タイトルは1文字以上で入力してください'
         end
@@ -432,7 +415,6 @@ describe 'Tasks', type: :system do
             title: '1' * 129,
             content: 'content',
             label: 'label',
-            user_id: user.id,
           }
         }
 
@@ -441,7 +423,6 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: input_values[:title]
           fill_in 'task[content]', with: input_values[:content]
           fill_in 'task[label]', with: input_values[:label]
-          select value = user.name, from: 'task[user_id]'
           click_on '作成'
           expect(Task.find_by(input_values)).to be_nil
         end
@@ -451,7 +432,6 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: input_values[:title]
           fill_in 'task[content]', with: input_values[:content]
           fill_in 'task[label]', with: input_values[:label]
-          select value = user.name, from: 'task[user_id]'
           click_on '作成'
           expect(page).to have_content 'タイトルは128文字以内で入力してください'
         end
@@ -463,7 +443,6 @@ describe 'Tasks', type: :system do
             title: 'title',
             content: '',
             label: 'label',
-            user_id: user.id,
           }
         }
 
@@ -472,7 +451,6 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: input_values[:title]
           fill_in 'task[content]', with: input_values[:content]
           fill_in 'task[label]', with: input_values[:label]
-          select value = user.name, from: 'task[user_id]'
           click_on '作成'
           expect(Task.find_by(input_values)).to be_nil
         end
@@ -482,7 +460,6 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: input_values[:title]
           fill_in 'task[content]', with: input_values[:content]
           fill_in 'task[label]', with: input_values[:label]
-          select value = user.name, from: 'task[user_id]'
           click_on '作成'
           expect(page).to have_content '内容は1文字以上で入力してください'
         end
@@ -494,7 +471,6 @@ describe 'Tasks', type: :system do
             title: 'title',
             content: '1' * 1025,
             label: 'label',
-            user_id: user.id,
           }
         }
 
@@ -503,7 +479,6 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: input_values[:title]
           fill_in 'task[content]', with: input_values[:content]
           fill_in 'task[label]', with: input_values[:label]
-          select value = user.name, from: 'task[user_id]'
           click_on '作成'
           expect(Task.find_by(input_values)).to be_nil
         end
@@ -513,7 +488,6 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: input_values[:title]
           fill_in 'task[content]', with: input_values[:content]
           fill_in 'task[label]', with: input_values[:label]
-          select value = user.name, from: 'task[user_id]'
           click_on '作成'
           expect(page).to have_content '内容は1024文字以内で入力してください'
         end
@@ -525,7 +499,6 @@ describe 'Tasks', type: :system do
             title: 'title',
             content: 'content',
             label: '',
-            user_id: user.id,
           }
         }
 
@@ -534,7 +507,6 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: input_values[:title]
           fill_in 'task[content]', with: input_values[:content]
           fill_in 'task[label]', with: input_values[:label]
-          select value = user.name, from: 'task[user_id]'
           click_on '作成'
           expect(Task.find_by(input_values)).to be_nil
         end
@@ -544,7 +516,6 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: input_values[:title]
           fill_in 'task[content]', with: input_values[:content]
           fill_in 'task[label]', with: input_values[:label]
-          select value = user.name, from: 'task[user_id]'
           click_on '作成'
           expect(page).to have_content 'ラベルは1文字以上で入力してください'
         end
@@ -556,7 +527,6 @@ describe 'Tasks', type: :system do
             title: 'title',
             content: 'content',
             label: '1' * 65,
-            user_id: user.id,
           }
         }
 
@@ -565,7 +535,6 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: input_values[:title]
           fill_in 'task[content]', with: input_values[:content]
           fill_in 'task[label]', with: input_values[:label]
-          select value = user.name, from: 'task[user_id]'
           click_on '作成'
           expect(Task.find_by(input_values)).to be_nil
         end
@@ -575,7 +544,6 @@ describe 'Tasks', type: :system do
           fill_in 'task[title]', with: input_values[:title]
           fill_in 'task[content]', with: input_values[:content]
           fill_in 'task[label]', with: input_values[:label]
-          select value = user.name, from: 'task[user_id]'
           click_on '作成'
           expect(page).to have_content 'ラベルは64文字以内で入力してください'
         end
@@ -583,13 +551,11 @@ describe 'Tasks', type: :system do
     end
 
     describe '入力エリア' do
-      let!(:user) { FactoryBot.create(:user) }
       let(:input_values) {
         {
           title: '新規タスク 全項目入力 タイトル',
           content: '新規タスク 全項目入力 内容',
           label: '新規タスク 全項目入力 ラベル',
-          user_id: user.id,
         }
       }
 
@@ -598,7 +564,6 @@ describe 'Tasks', type: :system do
         fill_in 'task[title]', with: input_values[:title]
         fill_in 'task[content]', with: input_values[:content]
         fill_in 'task[label]', with: input_values[:label]
-        select value = user.name, from: 'task[user_id]'
         click_on '作成'
         expect(Task.find_by(input_values)).to be_present
       end
@@ -608,7 +573,6 @@ describe 'Tasks', type: :system do
         fill_in 'task[title]', with: input_values[:title]
         fill_in 'task[content]', with: input_values[:content]
         fill_in 'task[label]', with: input_values[:label]
-        select value = user.name, from: 'task[user_id]'
         click_on '作成'
         expect(page).to have_current_path root_path
       end
@@ -618,7 +582,6 @@ describe 'Tasks', type: :system do
         fill_in 'task[title]', with: input_values[:title]
         fill_in 'task[content]', with: input_values[:content]
         fill_in 'task[label]', with: input_values[:label]
-        select value = user.name, from: 'task[user_id]'
         click_on '作成'
         expect(page).to have_content 'タスク作成成功'
       end
@@ -634,7 +597,7 @@ describe 'Tasks', type: :system do
   end
 
   describe '#show' do
-    let(:task_one) { FactoryBot.create(:task) }
+    let(:task_one) { FactoryBot.create(:task, user_id: user.id) }
 
     describe '表示エリア' do
       it 'タイトルが一致すること' do
@@ -650,11 +613,6 @@ describe 'Tasks', type: :system do
       it '内容が一致すること' do
         visit task_path(task_one)
         expect(page).to have_content 'content'
-      end
-
-      it '担当者が一致すること' do
-        visit task_path(task_one)
-        expect(page).to have_content 'name'
       end
 
       it 'ステータスが一致すること' do
@@ -697,7 +655,7 @@ describe 'Tasks', type: :system do
   end
 
   describe '#edit' do
-    let(:task_one) { FactoryBot.create(:task) }
+    let(:task_one) { FactoryBot.create(:task, user_id: user.id) }
 
     describe 'エラー表示エリア' do
       context '入力エラー（タイトル未入力）' do
@@ -886,11 +844,6 @@ describe 'Tasks', type: :system do
           expect(page).to have_field 'task[label]', with: 'label'
         end
 
-        it '担当者が表示されていること' do
-          visit edit_task_path(task_one)
-          expect(page).to have_select 'task[user_id]', selected: 'name'
-        end
-
         it 'ステータスが表示されていること' do
           visit edit_task_path(task_one)
           expect(page).to have_select 'task[status]', selected: '未着手'
@@ -904,7 +857,6 @@ describe 'Tasks', type: :system do
             content: 'update content',
             label: 'update label',
             status: 'in_progress',
-            user_id: task_one.user_id,
           }
         }
 
@@ -914,7 +866,6 @@ describe 'Tasks', type: :system do
           fill_in 'task[content]', with: update_task[:content]
           fill_in 'task[label]', with: update_task[:label]
           select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task[status]'
-          select value = User.find(update_task[:user_id]).name, from: 'task[user_id]'
           click_on '更新'
           expect(Task.find_by(update_task)).to be_present
         end
@@ -925,7 +876,6 @@ describe 'Tasks', type: :system do
           fill_in 'task[content]', with: update_task[:content]
           fill_in 'task[label]', with: update_task[:label]
           select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task[status]'
-          select value = User.find(update_task[:user_id]).name, from: 'task[user_id]'
           click_on '更新'
           expect(page).to have_current_path root_path
         end
@@ -936,7 +886,6 @@ describe 'Tasks', type: :system do
           fill_in 'task[content]', with: update_task[:content]
           fill_in 'task[label]', with: update_task[:label]
           select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task[status]'
-          select value = User.find(update_task[:user_id]).name, from: 'task[user_id]'
           click_on '更新'
           expect(page).to have_content 'タスク更新成功'
         end
@@ -949,7 +898,6 @@ describe 'Tasks', type: :system do
             content: task_one[:content],
             label: task_one[:label],
             status: task_one[:status],
-            user_id: task_one.user_id,
           }
         }
 
@@ -959,7 +907,6 @@ describe 'Tasks', type: :system do
           fill_in 'task[content]', with: update_task[:content]
           fill_in 'task[label]', with: update_task[:label]
           select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task[status]'
-          select value = User.find(update_task[:user_id]).name, from: 'task[user_id]'
           click_on '更新'
           expect(Task.find_by(update_task)).to be_present
         end
@@ -972,7 +919,6 @@ describe 'Tasks', type: :system do
             content: 'update content',
             label: task_one[:label],
             status: task_one[:status],
-            user_id: task_one.user_id,
           }
         }
 
@@ -982,7 +928,6 @@ describe 'Tasks', type: :system do
           fill_in 'task[content]', with: update_task[:content]
           fill_in 'task[label]', with: update_task[:label]
           select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task[status]'
-          select value = User.find(update_task[:user_id]).name, from: 'task[user_id]'
           click_on '更新'
           expect(Task.find_by(update_task)).to be_present
         end
@@ -995,7 +940,6 @@ describe 'Tasks', type: :system do
             content: task_one[:content],
             label: 'update label',
             status: task_one[:status],
-            user_id: task_one.user_id,
           }
         }
 
@@ -1005,7 +949,6 @@ describe 'Tasks', type: :system do
           fill_in 'task[content]', with: update_task[:content]
           fill_in 'task[label]', with: update_task[:label]
           select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task[status]'
-          select value = User.find(update_task[:user_id]).name, from: 'task[user_id]'
           click_on '更新'
           expect(Task.find_by(update_task)).to be_present
         end
@@ -1018,7 +961,6 @@ describe 'Tasks', type: :system do
             content: task_one[:content],
             label: task_one[:label],
             status: 'in_progress',
-            user_id: task_one.user_id,
           }
         }
 
@@ -1028,35 +970,11 @@ describe 'Tasks', type: :system do
           fill_in 'task[content]', with: update_task[:content]
           fill_in 'task[label]', with: update_task[:label]
           select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task[status]'
-          select value = User.find(update_task[:user_id]).name, from: 'task[user_id]'
           click_on '更新'
           expect(Task.find_by(update_task)).to be_present
         end
       end
 
-      context 'ユーザーのみ変更' do
-        let!(:user_two) { FactoryBot.create(:user, name: 'second name') }
-        let(:update_task) {
-          {
-            title: task_one[:title],
-            content: task_one[:content],
-            label: task_one[:label],
-            user_id: user_two.id,
-            status: task_one[:status],
-          }
-        }
-
-        it '更新されていること' do
-          visit edit_task_path(task_one)
-          fill_in 'task[title]', with: update_task[:title]
-          fill_in 'task[content]', with: update_task[:content]
-          fill_in 'task[label]', with: update_task[:label]
-          select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task[status]'
-          select value = User.find(update_task[:user_id]).name, from: 'task[user_id]'
-          click_on '更新'
-          expect(Task.find_by(update_task)).to be_present
-        end
-      end
     end
 
     describe 'フッターエリア' do
