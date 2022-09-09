@@ -5,7 +5,9 @@ class User < ApplicationRecord
 
   validates :email, presence: true, uniqueness: { case_sensitive: true }
 
-  before_create :set_password
+  before_create :set_password_digest
+
+  attr_accessor :password
 
   def authenticate(password)
     self.password_digest == User.hash(password, self.salt) ? true : false
@@ -29,8 +31,8 @@ class User < ApplicationRecord
 
   private
 
-  def set_password
+  def set_password_digest
     self.salt = User.create_salt
-    self.password_digest = User.hash(self.password_digest, self.salt)
+    self.password_digest = User.hash(self.password, self.salt)
   end
 end

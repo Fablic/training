@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'Tasks', type: :system do
-  let(:user) { FactoryBot.create(:user, password_digest: 'password') }
+  let(:user) { FactoryBot.create(:user, password: 'password') }
 
   before do
     login(user, 'password')

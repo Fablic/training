@@ -16,9 +16,7 @@ class TasksController < ApplicationController
 
   # タスク作成画面
   def create
-    create_params = task_params
-    create_params[:user_id] = login_user.id
-    @task_form = TaskForm.new(create_params)
+    @task = login_user.tasks.new(task_params)
 
     if @task_form.save
       redirect_to(root_path, notice: 'タスク作成成功')
@@ -29,7 +27,7 @@ class TasksController < ApplicationController
 
   # タスク詳細画面
   def show
-    @task = Task.find_by(id: params[:id], user_id: login_user.id)
+    @task = login_user.tasks.find(params[:id])
     if @task.labels.present?
       @label1 = @task.labels[0].name if @task.labels.size > 0
       @label2 = @task.labels[1].name if @task.labels.size > 1
@@ -41,7 +39,7 @@ class TasksController < ApplicationController
 
   # タスク編集画面
   def edit
-    @task = Task.find_by(id: params[:id], user_id: login_user.id)
+    @task = login_user.tasks.find(params[:id])
     @is_status = true
     @task_form = TaskForm.new
     @task_form.setting(@task.id)
@@ -52,19 +50,19 @@ class TasksController < ApplicationController
     create_params = task_params
     create_params[:user_id] = login_user.id
     @task_form = TaskForm.new(create_params)
-    task = Task.find_by(id: params[:id], user_id: login_user.id)
+    task = login_user.tasks.find(params[:id])
 
     if @task_form.update(task.id)
       redirect_to(root_path, notice: 'タスク更新成功')
     else
-      @task = Task.find_by(id: params[:id], user_id: login_user.id)
+      @task = login_user.tasks.find(params[:id])
       render(:edit, status: :unprocessable_entity)
     end
   end
 
   # タスク削除
   def destroy
-    @task = Task.find_by(id: params[:id], user_id: login_user.id)
+    @task = login_user.tasks.find(params[:id])
     redirect_to(root_path, notice: 'タスク削除成功') if @task.destroy
   end
 
