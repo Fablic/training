@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   root to: 'task_schedule#index'
   resources :task_schedule
+  scope '/admin' do
+    resources :users
+  end
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
