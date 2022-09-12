@@ -1,0 +1,15 @@
+<p style="color: green"><%= notice %></p>
+
+<%= link_to '編集する', edit_task_path(@task) %> |
+<%= link_to '一覧に戻る', tasks_path %>
+
+<table border="1">
+  <tr>
+    <%= render 'task_header' %>
+  </tr>
+  <tr>
+    <%= render @task %>
+  </tr>
+</table>
+
+<%= button_to '削除する', @task, method: :delete %>

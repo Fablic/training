@@ -1,0 +1,23 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>タスク一覧</h1>
+
+<%= link_to '新規作成する', new_task_path %>
+
+<div id="tasks">
+  <table border="1">
+    <tr>
+      <%= render 'task_header' %>
+      <th>詳細</th>
+    </tr>
+
+    <% @tasks.each do |task| %>
+      <div id="<%= dom_id task %>">
+        <tr>
+          <%= render task %>
+          <td><%= link_to '詳細を確認する', task %></td>
+        </tr>
+      </div>
+    <% end %>
+  </table>
+</div>
