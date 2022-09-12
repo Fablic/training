@@ -3,9 +3,9 @@
 require 'rails_helper'
 
 RSpec.feature '/task/:id/edit' do
-  let!(:task) { create(:task) }
-
   feature '#edit' do
+    let!(:task) { create(:task) }
+
     scenario 'redirects to #show' do
       visit edit_task_path(task)
       click_on '詳細を確認する'
