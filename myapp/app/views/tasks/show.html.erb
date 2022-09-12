@@ -10,11 +10,15 @@
     </div>
     <li>ステータス</li>
     <div>
-      <%= @task.status %>
+      <%= I18n.t("enums.task.status.#{@task.status}") %>
     </div>
     <li>ラベル</li>
     <div>
       <%= @task.label %>
+    </div>
+    <li>ユーザ</li>
+    <div>
+      <%= @task.user.name %>
     </div>
     <li>登録日時</li>
     <div>

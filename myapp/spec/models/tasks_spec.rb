@@ -3,6 +3,12 @@ require 'rails_helper'
 describe Task, type: :model do
   describe '#validation' do
     describe 'タイトル' do
+      context 'nil' do
+        subject(:task) { FactoryBot.build(:task, title: nil) }
+
+        it { is_expected.to be_invalid }
+      end
+
       context '0文字' do
         subject(:task) { FactoryBot.build(:task, title: '') }
 
@@ -29,6 +35,12 @@ describe Task, type: :model do
     end
 
     describe '説明' do
+      context 'nil' do
+        subject(:task) { FactoryBot.build(:task, description: nil) }
+
+        it { is_expected.to be_invalid }
+      end
+
       context '0文字' do
         subject(:task) { FactoryBot.build(:task, description: '') }
 

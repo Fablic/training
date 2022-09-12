@@ -23,8 +23,4 @@ module SessionsHelper
         @login_user ||= User.find_by(login_token: token)
       end
     end
-
-    def re_login
-      redirect_to(login_path) if !login?
-    end
   end

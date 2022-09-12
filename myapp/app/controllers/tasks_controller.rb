@@ -5,24 +5,16 @@ class TasksController < ApplicationController
 
   def index
     # タスク一覧オブジェクト取得
-    if params && (params[:title].present? || params[:status].present?)
-      @tasks = Task.where_user_id(login_user.id).where_title(params[:title]).where_status(params[:status]).order('tasks.created_at desc').page(params[:page])
-    else
-      @tasks = Task.where_user_id(login_user.id).order('tasks.created_at desc').page(params[:page])
-    end
+    @tasks = Task.where_user_id(login_user.id).where_title(params[:title]).where_status(params[:status]).order('tasks.created_at desc').page(params[:page])
   end
 
-  def show
-    @task = Task.find(params[:id])
-  end
+  def show; end
 
   def new
     @task = Task.new
   end
 
-  def edit
-    @task = Task.find(params[:id])
-  end
+  def edit; end
 
   def create
     @task = Task.new(task_params)

@@ -17,4 +17,4 @@
       status: '0',
       label: "ラベル#{i}"
     )
-  end
+end

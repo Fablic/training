@@ -37,7 +37,7 @@ ja:
     attributes:
       task:
         title: タイトル
-        content: 内容
+        description: 説明
         user_id: ユーザーID
         status: ステータス
         label: ラベル
@@ -46,7 +46,6 @@ ja:
         updated_at: 更新日
       user:
         name: 名前
-        email: メールアドレス
         deleted_at: 削除日
         crated_at: 作成日
         updated_at: 更新日
@@ -57,26 +56,21 @@ ja:
         in_progress: 着手中
         closed: 完了
   view_title:
-    login: ログイン画面
     index: タスク一覧画面
     new: タスク作成画面
     show: タスク詳細画面
     edit: タスク編集画面
   task:
     title: タイトル
-    content: 内容
+    description: 説明
     label: ラベル
     status: ステータス
     user: 担当者
     created_at: 作成日
-  user:
-    email: メールアドレス
-    password: パスワード
   button:
     create: 作成
     delete: 削除
     update: 更新
-    login: ログイン
   link:
     create: 作成
     detail: 詳細
@@ -85,7 +79,7 @@ ja:
     logout: ログアウト
   message:
     delete_confirm: 削除しますか?
-    login_failed: ログインに失敗しました
+    login_failed: ログインに失敗しました。
   time:
     formats:
       default: "%Y/%m/%d %H:%M:%S"
