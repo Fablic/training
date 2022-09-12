@@ -7,11 +7,11 @@ class ApplicationController < ActionController::Base
     raise ActionController::RoutingError, params[:path]
   end
 
-  unless Rails.env.production?
-    rescue_from Exception,                        with: :_render500
-    rescue_from ActiveRecord::RecordNotFound,     with: :_render404
-    rescue_from ActionController::RoutingError,   with: :_render404
-  end
+  # unless Rails.env.production?
+  #   rescue_from Exception,                        with: :_render500
+  #   rescue_from ActiveRecord::RecordNotFound,     with: :_render404
+  #   rescue_from ActionController::RoutingError,   with: :_render404
+  # end
 
   private
 

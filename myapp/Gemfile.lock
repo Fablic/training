@@ -61,6 +61,8 @@ GEM
     ast (2.4.2)
     bcrypt (3.1.18)
     bindex (0.8.1)
+    binding_of_caller (1.0.0)
+      debug_inspector (>= 0.0.1)
     bootsnap (1.13.0)
       msgpack (~> 1.2)
     builder (3.2.4)
@@ -86,6 +88,7 @@ GEM
       activerecord (>= 5.a)
       database_cleaner-core (~> 2.0.0)
     database_cleaner-core (2.0.1)
+    debug_inspector (1.1.0)
     diff-lcs (1.5.0)
     enum_help (0.0.19)
       activesupport (>= 3.0.0)
@@ -280,6 +283,7 @@ PLATFORMS
 
 DEPENDENCIES
   bcrypt (~> 3.1.7)
+  binding_of_caller
   bootsnap (>= 1.4.2)
   bullet
   byebug

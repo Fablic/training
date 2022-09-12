@@ -1,10 +1,2 @@
 <%= t '.title'%><br>
-<%= form_with model: @session, local: true do |f| %>
-  <%= flash[:denger] %><br>
-  <%= f.label :personal_id, t('.id') %><br>
-  <%= f.text_field :personal_id %><br>
-
-  <%= f.label :password, t('.pass') %><br>
-  <%= f.text_field :password %><br>
-  <%= f.submit t('.login') %><br>
-<% end %>
+<%= render partial: 'loginform', locals: {prefix: login_path,} %>

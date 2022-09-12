@@ -5,7 +5,9 @@ Rails.application.routes.draw do
     resources :users
   end
   get '/login', to: 'sessions#new'
+  get '/admin/login', to: 'sessions#new_admin'
   post '/login', to: 'sessions#create'
+  post '/admin/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
