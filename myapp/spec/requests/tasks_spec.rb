@@ -61,6 +61,30 @@ RSpec.describe '/tasks', type: :request do
       end
     end
 
+    context 'without end_date, priority, status, explanation' do
+      let(:params) do
+        { task: { name: 'new_task!' } }
+      end
+
+      it 'creates a new Task' do
+        expect do
+          post tasks_url, params:
+        end.to change(Task, :count).by(1)
+        expect(Task.last).to have_attributes({
+                                               'name' => 'new_task!',
+                                               'end_date' => nil,
+                                               'priority' => 'normal',
+                                               'status' => 'untouched',
+                                               'explanation' => nil
+                                             })
+      end
+
+      it 'redirects to the created task' do
+        post tasks_url, params: params
+        expect(response).to redirect_to(task_url(Task.last))
+      end
+    end
+
     context 'with invalid parameters' do
       let(:invalid_attributes) do
         { task: {
