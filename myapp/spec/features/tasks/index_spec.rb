@@ -20,7 +20,7 @@ RSpec.feature '/tasks or /' do
         end
       end
 
-      feature "with sorts 'id_desc' in search_params" do
+      feature "with 'sort: id_desc' in search_params" do
         scenario 'correctly displays tasks' do
           visit tasks_path
 
