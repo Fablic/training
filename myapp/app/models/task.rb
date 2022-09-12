@@ -5,6 +5,7 @@ class Task < ApplicationRecord
   validates :body,  presence: true
   validates :finish_at, presence: true
   validates :status, presence: true
+  belongs_to :user
 
   scope :desc, -> { order(created_at: :desc) }
   scope :finish_desc, -> { order(finish_at: :desc) }
