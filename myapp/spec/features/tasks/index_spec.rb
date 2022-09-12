@@ -42,6 +42,45 @@ RSpec.feature '/tasks or /' do
       end
     end
 
+    feature "with 'sort: end_date' in search_params" do
+      before { 2.times { create(:task, end_date: nil) } }
+      let!(:task_past_two_days) { create(:task, end_date: Time.current - 2.days) }
+      let!(:task_today) { create(:task, end_date: Time.current) }
+      given!(:tasks) { Task.all }
+
+      feature 'asc' do
+        scenario 'correctly displays tasks' do
+          visit tasks_path
+
+          expect(current_path).to eq '/tasks'
+
+          find("option[value='end_date_asc']").select_option
+          click_on '送信'
+
+          expect(page.all('.task')[0].find('.task_end_date').text).to eq ''
+          expect(page.all('.task')[1].find('.task_end_date').text).to eq ''
+          expect(page.all('.task')[2].find('.task_end_date').text).to eq I18n.l(task_past_two_days.end_date).to_s
+          expect(page.all('.task')[3].find('.task_end_date').text).to eq I18n.l(task_today.end_date).to_s
+        end
+      end
+
+      feature 'desc' do
+        scenario 'correctly displays tasks' do
+          visit tasks_path
+
+          expect(current_path).to eq '/tasks'
+
+          find("option[value='end_date_desc']").select_option
+          click_on '送信'
+
+          expect(page.all('.task')[0].find('.task_end_date').text).to eq I18n.l(task_today.end_date).to_s
+          expect(page.all('.task')[1].find('.task_end_date').text).to eq I18n.l(task_past_two_days.end_date).to_s
+          expect(page.all('.task')[2].find('.task_end_date').text).to eq ''
+          expect(page.all('.task')[3].find('.task_end_date').text).to eq ''
+        end
+      end
+    end
+
     feature 'clicks link buttons' do
       let!(:task) { create(:task) }
 

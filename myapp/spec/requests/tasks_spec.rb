@@ -13,14 +13,38 @@ RSpec.describe '/tasks', type: :request do
       end
     end
 
-    context 'exists sort in searc params' do
-      let(:params) do
-        { sort: 'id_desc' }
+    context 'exists sort in search_params' do
+      context 'id_desc' do
+        let(:params) do
+          { sort: 'id_desc' }
+        end
+
+        it 'renders a successful response' do
+          get tasks_url, params: params
+          expect(response).to have_http_status(200)
+        end
       end
 
-      it 'renders a successful response' do
-        get tasks_url, params: params
-        expect(response).to have_http_status(200)
+      context 'end_date_asc' do
+        let(:params) do
+          { sort: 'end_date_asc' }
+        end
+
+        it 'renders a successful response' do
+          get tasks_url, params: params
+          expect(response).to have_http_status(200)
+        end
+      end
+
+      context 'end_date_desc' do
+        let(:params) do
+          { sort: 'end_date_desc' }
+        end
+
+        it 'renders a successful response' do
+          get tasks_url, params: params
+          expect(response).to have_http_status(200)
+        end
       end
     end
   end
