@@ -12,7 +12,7 @@ RSpec.feature '/tasks or /' do
       expect(current_path).to eq '/'
       tasks.each do |task|
         expect(page).to have_content task.name.to_s
-        expect(page).to have_content time_zone(task.end_date).to_s
+        expect(page).to have_content I18n.l(task.end_date).to_s
         expect(page).to have_content Task.priorities_i18n[task.priority]
         expect(page).to have_content Task.statuses_i18n[task.status]
         expect(page).to have_content task.explanation.to_s
@@ -52,7 +52,7 @@ RSpec.feature '/tasks or /' do
 
       expect(current_path).to eq "/tasks/#{task.id}"
       expect(page).to have_content task.name.to_s
-      expect(page).to have_content time_zone(task.end_date).to_s
+      expect(page).to have_content I18n.l(task.end_date).to_s
       expect(page).to have_content Task.priorities_i18n[task.priority]
       expect(page).to have_content Task.statuses_i18n[task.status]
       expect(page).to have_content task.explanation.to_s
