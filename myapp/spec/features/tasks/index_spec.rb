@@ -19,23 +19,25 @@ RSpec.feature '/tasks or /' do
           expect(page).to have_content task.explanation.to_s
         end
       end
+    end
 
-      feature "with 'sort: id_desc' in search_params" do
-        scenario 'correctly displays tasks' do
-          visit tasks_path
+    feature "with 'sort: id_desc' in search_params" do
+      let!(:tasks) { create_list(:task, 11) }
 
-          expect(current_path).to eq '/tasks'
+      scenario 'correctly displays tasks' do
+        visit tasks_path
 
-          find("option[value='id_desc']").select_option
-          click_on '送信'
+        expect(current_path).to eq '/tasks'
 
-          tasks.reverse.each_with_index do |task, i|
-            expect(page.all('.task')[i].find('.task_name').text).to eq task.name.to_s
-            expect(page.all('.task')[i].find('.task_end_date').text).to eq I18n.l(task.end_date).to_s
-            expect(page.all('.task')[i].find('.task_priority').text).to eq Task.priorities_i18n[task.priority]
-            expect(page.all('.task')[i].find('.task_status').text).to eq Task.statuses_i18n[task.status]
-            expect(page.all('.task')[i].find('.task_explanation').text).to eq task.explanation.to_s
-          end
+        find("option[value='id_desc']").select_option
+        click_on '送信'
+
+        tasks.reverse.each_with_index do |task, i|
+          expect(page.all('.task')[i].find('.task_name').text).to eq task.name.to_s
+          expect(page.all('.task')[i].find('.task_end_date').text).to eq I18n.l(task.end_date).to_s
+          expect(page.all('.task')[i].find('.task_priority').text).to eq Task.priorities_i18n[task.priority]
+          expect(page.all('.task')[i].find('.task_status').text).to eq Task.statuses_i18n[task.status]
+          expect(page.all('.task')[i].find('.task_explanation').text).to eq task.explanation.to_s
         end
       end
     end
