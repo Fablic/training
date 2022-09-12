@@ -26,6 +26,8 @@ ja:
       sort:
         - ['ID昇順(デフォルト)', 'id_asc']
         - ['ID降順', 'id_desc']
+        - ['終了期限昇順', 'end_date_asc']
+        - ['終了期限降順', 'end_date_desc']
     task:
       priority:
         - ['低', 'low']

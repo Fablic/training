@@ -5,7 +5,9 @@ class Task < ApplicationRecord
   DEFAULT_STATUS_VALUE = 0
   SORT_TYPE = {
     'id_asc' => 'tasks.id ASC',
-    'id_desc' => 'tasks.id DESC'
+    'id_desc' => 'tasks.id DESC',
+    'end_date_asc' => 'tasks.end_date ASC',
+    'end_date_desc' => 'tasks.end_date DESC'
   }.freeze
 
   after_initialize :set_default_values
