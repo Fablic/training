@@ -29,7 +29,7 @@ RSpec.feature '/tasks or /' do
 
       tasks.reverse.each_with_index do |task, i|
         expect(page.all('.task')[i].find('.task_name').text).to eq task.name.to_s
-        expect(page.all('.task')[i].find('.task_end_date').text).to eq time_zone(task.end_date).to_s
+        expect(page.all('.task')[i].find('.task_end_date').text).to eq I18n.l(task.end_date).to_s
         expect(page.all('.task')[i].find('.task_priority').text).to eq Task.priorities_i18n[task.priority]
         expect(page.all('.task')[i].find('.task_status').text).to eq Task.statuses_i18n[task.status]
         expect(page.all('.task')[i].find('.task_explanation').text).to eq task.explanation.to_s
