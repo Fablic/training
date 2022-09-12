@@ -3,7 +3,8 @@
 class Task < ApplicationRecord
   # 結合キー
   belongs_to :user
-  has_many :labels, dependent: :destroy
+  has_many :task_labels
+  has_many :labels, through: :task_labels
 
   # バリデーション
   validates :title, length: { minimum: 1, maximum: 128 }
@@ -18,7 +19,7 @@ class Task < ApplicationRecord
 
   # スコープ
   scope :where_title, -> (title) { where('title like ?', "%#{title}%") if title.present? }
-  scope :where_label, -> (label) { where('labels.name like ?', "%#{label}%") if label.present? }
+  scope :where_label, -> (label) { where('labels.id = ?', "#{label}") if label.present? }
   scope :where_status, -> (status) { where(status: status) if status.present? }
 
   # ページ内要素数

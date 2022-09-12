@@ -7,4 +7,7 @@ Rails.application.routes.draw do
   # タスク関連
   resources :tasks
   root to: 'tasks#index'
+
+  # ラベル関連
+  resources :labels
 end

@@ -6,13 +6,16 @@
 </div>
 <div name='content'>
   <div name='create-task'>
-      <%= link_to(I18n.t('link.create'), new_task_path) %>
+    <%= link_to(I18n.t('link.manage_label'), labels_path) %>
+  </div>
+  <div name='create-label'>
+    <%= link_to(I18n.t('link.create'), new_task_path) %>
   </div>
   <div name='serch-task'>
   <p>検索</p>
   <%= form_with(url: root_path, local: true, method: :get) do |f| %>
     <p><%= I18n.t('task.title') %>：<%= f.text_field(:title) %></p>
-    <p><%= I18n.t('task.label') %>：<%= f.text_field(:label) %></p>
+    <p><%= I18n.t('task.label') %>：<%= f.collection_select(:label,  Label.all, :id, :name, { include_blank: true }) %></p>
     <p><%= I18n.t('task.status') %>：<%= f.select(:status, Task.statuses.keys.map { |k| [I18n.t("enums.task.status.#{k}"), k] }, include_blank: true) %></p>
     <%= f.submit('検索') %>
   <% end %>

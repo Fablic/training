@@ -3,8 +3,8 @@
 class TasksController < ApplicationController
   # タスク一覧画面
   def index
-    # bullet worningが発生するため"eager_load(:labels)"を記載
-    @tasks = login_user.tasks.eager_load(:labels).where_title(params[:title]).where_status(params[:status]).where_label(params[:label])
+    # bullet worningが発生するため"eager_load(:labels).includes(:task_labels)"を記載
+    @tasks = login_user.tasks.eager_load(:labels).includes(:task_labels).where_title(params[:title]).where_status(params[:status]).where_label(params[:label])
     @tasks = Task.where(id: @tasks.map { |t| t.id }).order('tasks.created_at desc').page(params[:page])
   end
 

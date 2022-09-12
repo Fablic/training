@@ -8,6 +8,14 @@ describe 'Tasks', type: :system do
   end
 
   describe '#index' do
+    describe 'ラベル管理エリア' do
+      it 'ラベル管理ボタンを押下することでラベル一覧画面へ遷移すること' do
+        visit root_path
+        click_on 'ラベル管理'
+        expect(page).to have_current_path labels_path
+      end
+    end
+
     describe '作成エリア' do
       it '作成ボタンを押下することでタスク作成画面へ遷移すること' do
         visit root_path
@@ -205,7 +213,8 @@ describe 'Tasks', type: :system do
     describe '一覧表示エリア' do
       context 'タスク1件' do
         before do
-          FactoryBot.create(:label, name: 'label', task_id: task_one.id)
+          label = FactoryBot.create(:label, name: 'label')
+          FactoryBot.create(:task_label, task_id: task_one.id, label_id: label.id)
         end
 
         let!(:task_one) { FactoryBot.create(:task, user_id: user.id) }
@@ -234,8 +243,10 @@ describe 'Tasks', type: :system do
 
       context 'タスク複数件' do
         before do
-          FactoryBot.create(:label, name: 'label', task_id: task_one.id)
-          FactoryBot.create(:label, name: 'second label', task_id: task_two.id)
+          label_one = FactoryBot.create(:label, name: 'label')
+          FactoryBot.create(:task_label, task_id: task_one.id, label_id: label_one.id)
+          label_two = FactoryBot.create(:label, name: 'second label')
+          FactoryBot.create(:task_label, task_id: task_two.id, label_id: label_two.id)
         end
 
         let!(:task_one) { FactoryBot.create(:task, user_id: user.id) }
@@ -390,12 +401,12 @@ describe 'Tasks', type: :system do
 
   describe '#new' do
     describe 'エラー表示エリア' do
+
       context '入力エラー（タイトル未入力）' do
         let(:input_values) {
           {
             title: '',
             content: 'content',
-            label1: 'label1',
           }
         }
 
@@ -403,7 +414,6 @@ describe 'Tasks', type: :system do
           visit new_task_path
           fill_in 'task_form[title]', with: input_values[:title]
           fill_in 'task_form[content]', with: input_values[:content]
-          fill_in 'task_form[label1]', with: input_values[:label1]
           click_on '作成'
           expect(Task.find_by(title: input_values[:title], content: input_values[:content])).to be_nil
         end
@@ -412,7 +422,6 @@ describe 'Tasks', type: :system do
           visit new_task_path
           fill_in 'task_form[title]', with: input_values[:title]
           fill_in 'task_form[content]', with: input_values[:content]
-          fill_in 'task_form[label1]', with: input_values[:label1]
           click_on '作成'
           expect(page).to have_content 'タイトルは1文字以上で入力してください'
         end
@@ -423,7 +432,6 @@ describe 'Tasks', type: :system do
           {
             title: '1' * 129,
             content: 'content',
-            label1: 'label1',
           }
         }
 
@@ -431,7 +439,6 @@ describe 'Tasks', type: :system do
           visit new_task_path
           fill_in 'task_form[title]', with: input_values[:title]
           fill_in 'task_form[content]', with: input_values[:content]
-          fill_in 'task_form[label1]', with: input_values[:label1]
           click_on '作成'
           expect(Task.find_by(title: input_values[:title], content: input_values[:content])).to be_nil
         end
@@ -440,7 +447,6 @@ describe 'Tasks', type: :system do
           visit new_task_path
           fill_in 'task_form[title]', with: input_values[:title]
           fill_in 'task_form[content]', with: input_values[:content]
-          fill_in 'task_form[label1]', with: input_values[:label1]
           click_on '作成'
           expect(page).to have_content 'タイトルは128文字以内で入力してください'
         end
@@ -451,7 +457,6 @@ describe 'Tasks', type: :system do
           {
             title: 'title',
             content: '',
-            label1: 'label1',
           }
         }
 
@@ -459,7 +464,6 @@ describe 'Tasks', type: :system do
           visit new_task_path
           fill_in 'task_form[title]', with: input_values[:title]
           fill_in 'task_form[content]', with: input_values[:content]
-          fill_in 'task_form[label1]', with: input_values[:label1]
           click_on '作成'
           expect(Task.find_by(title: input_values[:title], content: input_values[:content])).to be_nil
         end
@@ -468,7 +472,6 @@ describe 'Tasks', type: :system do
           visit new_task_path
           fill_in 'task_form[title]', with: input_values[:title]
           fill_in 'task_form[content]', with: input_values[:content]
-          fill_in 'task_form[label1]', with: input_values[:label1]
           click_on '作成'
           expect(page).to have_content '内容は1文字以上で入力してください'
         end
@@ -479,7 +482,6 @@ describe 'Tasks', type: :system do
           {
             title: 'title',
             content: '1' * 1025,
-            label1: 'label1',
           }
         }
 
@@ -487,7 +489,6 @@ describe 'Tasks', type: :system do
           visit new_task_path
           fill_in 'task_form[title]', with: input_values[:title]
           fill_in 'task_form[content]', with: input_values[:content]
-          fill_in 'task_form[label1]', with: input_values[:label1]
           click_on '作成'
           expect(Task.find_by(title: input_values[:title], content: input_values[:content])).to be_nil
         end
@@ -496,163 +497,27 @@ describe 'Tasks', type: :system do
           visit new_task_path
           fill_in 'task_form[title]', with: input_values[:title]
           fill_in 'task_form[content]', with: input_values[:content]
-          fill_in 'task_form[label1]', with: input_values[:label1]
           click_on '作成'
           expect(page).to have_content '内容は1024文字以内で入力してください'
-        end
-      end
-
-      context '入力エラー（ラベル1が65文字）' do
-        let(:input_values) {
-          {
-            title: 'title',
-            content: 'content',
-            label1: '1' * 65,
-          }
-        }
-
-        it 'データ登録されていないこと' do
-          visit new_task_path
-          fill_in 'task_form[title]', with: input_values[:title]
-          fill_in 'task_form[content]', with: input_values[:content]
-          fill_in 'task_form[label1]', with: input_values[:label1]
-          click_on '作成'
-          expect(Task.find_by(title: input_values[:title], content: input_values[:content])).to be_nil
-        end
-
-        it 'エラーメッセージが表示されること' do
-          visit new_task_path
-          fill_in 'task_form[title]', with: input_values[:title]
-          fill_in 'task_form[content]', with: input_values[:content]
-          fill_in 'task_form[label1]', with: input_values[:label1]
-          click_on '作成'
-          expect(page).to have_content 'ラベル名は64文字以内で入力してください'
-        end
-      end
-
-      context '入力エラー（ラベル1が65文字）' do
-        let(:input_values) {
-          {
-            title: 'title',
-            content: 'content',
-            label1: '1' * 65,
-          }
-        }
-
-        it 'データ登録されていないこと' do
-          visit new_task_path
-          fill_in 'task_form[title]', with: input_values[:title]
-          fill_in 'task_form[content]', with: input_values[:content]
-          fill_in 'task_form[label1]', with: input_values[:label1]
-          click_on '作成'
-          expect(Task.find_by(title: input_values[:title], content: input_values[:content])).to be_nil
-        end
-
-        it 'エラーメッセージが表示されること' do
-          visit new_task_path
-          fill_in 'task_form[title]', with: input_values[:title]
-          fill_in 'task_form[content]', with: input_values[:content]
-          fill_in 'task_form[label1]', with: input_values[:label1]
-          click_on '作成'
-          expect(page).to have_content 'ラベル名は64文字以内で入力してください'
-        end
-      end
-
-      context '入力エラー（ラベル1が65文字）' do
-        let(:input_values) {
-          {
-            title: 'title',
-            content: 'content',
-            label1: '1' * 65,
-          }
-        }
-
-        it 'データ登録されていないこと' do
-          visit new_task_path
-          fill_in 'task_form[title]', with: input_values[:title]
-          fill_in 'task_form[content]', with: input_values[:content]
-          fill_in 'task_form[label1]', with: input_values[:label1]
-          click_on '作成'
-          expect(Task.find_by(title: input_values[:title], content: input_values[:content])).to be_nil
-        end
-
-        it 'エラーメッセージが表示されること' do
-          visit new_task_path
-          fill_in 'task_form[title]', with: input_values[:title]
-          fill_in 'task_form[content]', with: input_values[:content]
-          fill_in 'task_form[label1]', with: input_values[:label1]
-          click_on '作成'
-          expect(page).to have_content 'ラベル名は64文字以内で入力してください'
-        end
-      end
-
-      context '入力エラー（ラベル1が65文字）' do
-        let(:input_values) {
-          {
-            title: 'title',
-            content: 'content',
-            label1: '1' * 65,
-          }
-        }
-
-        it 'データ登録されていないこと' do
-          visit new_task_path
-          fill_in 'task_form[title]', with: input_values[:title]
-          fill_in 'task_form[content]', with: input_values[:content]
-          fill_in 'task_form[label1]', with: input_values[:label1]
-          click_on '作成'
-          expect(Task.find_by(title: input_values[:title], content: input_values[:content])).to be_nil
-        end
-
-        it 'エラーメッセージが表示されること' do
-          visit new_task_path
-          fill_in 'task_form[title]', with: input_values[:title]
-          fill_in 'task_form[content]', with: input_values[:content]
-          fill_in 'task_form[label1]', with: input_values[:label1]
-          click_on '作成'
-          expect(page).to have_content 'ラベル名は64文字以内で入力してください'
-        end
-      end
-
-      context '入力エラー（ラベル1が65文字）' do
-        let(:input_values) {
-          {
-            title: 'title',
-            content: 'content',
-            label1: '1' * 65,
-          }
-        }
-
-        it 'データ登録されていないこと' do
-          visit new_task_path
-          fill_in 'task_form[title]', with: input_values[:title]
-          fill_in 'task_form[content]', with: input_values[:content]
-          fill_in 'task_form[label1]', with: input_values[:label1]
-          click_on '作成'
-          expect(Task.find_by(title: input_values[:title], content: input_values[:content])).to be_nil
-        end
-
-        it 'エラーメッセージが表示されること' do
-          visit new_task_path
-          fill_in 'task_form[title]', with: input_values[:title]
-          fill_in 'task_form[content]', with: input_values[:content]
-          fill_in 'task_form[label1]', with: input_values[:label1]
-          click_on '作成'
-          expect(page).to have_content 'ラベル名は64文字以内で入力してください'
         end
       end
     end
 
     describe '入力エリア' do
+      let!(:label_one) { FactoryBot.create(:label, name: '新規タスク 全項目入力 ラベル1') }
+      let!(:label_two) { FactoryBot.create(:label, name: '新規タスク 全項目入力 ラベル2') }
+      let!(:label_three) { FactoryBot.create(:label, name: '新規タスク 全項目入力 ラベル3') }
+      let!(:label_four) { FactoryBot.create(:label, name: '新規タスク 全項目入力 ラベル4') }
+      let!(:label_five) { FactoryBot.create(:label, name: '新規タスク 全項目入力 ラベル5') }
       let(:input_values) {
         {
           title: '新規タスク 全項目入力 タイトル',
           content: '新規タスク 全項目入力 内容',
-          label1: '新規タスク 全項目入力 ラベル1',
-          label2: '新規タスク 全項目入力 ラベル2',
-          label3: '新規タスク 全項目入力 ラベル3',
-          label4: '新規タスク 全項目入力 ラベル4',
-          label5: '新規タスク 全項目入力 ラベル5',
+          label1: label_one.name,
+          label2: label_two.name,
+          label3: label_three.name,
+          label4: label_four.name,
+          label5: label_five.name,
         }
       }
 
@@ -660,11 +525,11 @@ describe 'Tasks', type: :system do
         visit new_task_path
         fill_in 'task_form[title]', with: input_values[:title]
         fill_in 'task_form[content]', with: input_values[:content]
-        fill_in 'task_form[label1]', with: input_values[:label1]
-        fill_in 'task_form[label2]', with: input_values[:label2]
-        fill_in 'task_form[label3]', with: input_values[:label3]
-        fill_in 'task_form[label4]', with: input_values[:label4]
-        fill_in 'task_form[label5]', with: input_values[:label5]
+        select value = input_values[:label1], from: 'task_form[label1]'
+        select value = input_values[:label2], from: 'task_form[label2]'
+        select value = input_values[:label3], from: 'task_form[label3]'
+        select value = input_values[:label4], from: 'task_form[label4]'
+        select value = input_values[:label5], from: 'task_form[label5]'
         click_on '作成'
         expect(Task.find_by(title: input_values[:title], content: input_values[:content])).to be_present
       end
@@ -673,11 +538,11 @@ describe 'Tasks', type: :system do
         visit new_task_path
         fill_in 'task_form[title]', with: input_values[:title]
         fill_in 'task_form[content]', with: input_values[:content]
-        fill_in 'task_form[label1]', with: input_values[:label1]
-        fill_in 'task_form[label2]', with: input_values[:label2]
-        fill_in 'task_form[label3]', with: input_values[:label3]
-        fill_in 'task_form[label4]', with: input_values[:label4]
-        fill_in 'task_form[label5]', with: input_values[:label5]
+        select value = input_values[:label1], from: 'task_form[label1]'
+        select value = input_values[:label2], from: 'task_form[label2]'
+        select value = input_values[:label3], from: 'task_form[label3]'
+        select value = input_values[:label4], from: 'task_form[label4]'
+        select value = input_values[:label5], from: 'task_form[label5]'
         click_on '作成'
         expect(page).to have_current_path root_path
       end
@@ -686,20 +551,20 @@ describe 'Tasks', type: :system do
         visit new_task_path
         fill_in 'task_form[title]', with: input_values[:title]
         fill_in 'task_form[content]', with: input_values[:content]
-        fill_in 'task_form[label1]', with: input_values[:label1]
-        fill_in 'task_form[label2]', with: input_values[:label2]
-        fill_in 'task_form[label3]', with: input_values[:label3]
-        fill_in 'task_form[label4]', with: input_values[:label4]
-        fill_in 'task_form[label5]', with: input_values[:label5]
+        select value = input_values[:label1], from: 'task_form[label1]'
+        select value = input_values[:label2], from: 'task_form[label2]'
+        select value = input_values[:label3], from: 'task_form[label3]'
+        select value = input_values[:label4], from: 'task_form[label4]'
+        select value = input_values[:label5], from: 'task_form[label5]'
         click_on '作成'
         expect(page).to have_content 'タスク作成成功'
       end
     end
 
     describe 'フッターエリア' do
-      it '一覧へボタン押下でタスク一覧画面へ遷移すること' do
+      it 'タスク一覧へボタン押下でタスク一覧画面へ遷移すること' do
         visit new_task_path
-        click_on '一覧へ'
+        click_on 'タスク一覧へ'
         expect(page).to have_current_path root_path
       end
     end
@@ -707,13 +572,18 @@ describe 'Tasks', type: :system do
 
   describe '#show' do
     before do
-      FactoryBot.create(:label, name: 'label1', task_id: task_one.id)
-      FactoryBot.create(:label, name: 'label2', task_id: task_one.id)
-      FactoryBot.create(:label, name: 'label3', task_id: task_one.id)
-      FactoryBot.create(:label, name: 'label4', task_id: task_one.id)
-      FactoryBot.create(:label, name: 'label5', task_id: task_one.id)
+      FactoryBot.create(:task_label, task_id: task_one.id, label_id:label_one.id)
+      FactoryBot.create(:task_label, task_id: task_one.id, label_id:label_two.id)
+      FactoryBot.create(:task_label, task_id: task_one.id, label_id:label_three.id)
+      FactoryBot.create(:task_label, task_id: task_one.id, label_id:label_four.id)
+      FactoryBot.create(:task_label, task_id: task_one.id, label_id:label_five.id)
     end
 
+    let!(:label_one) { FactoryBot.create(:label, name: 'label1') }
+    let!(:label_two) { FactoryBot.create(:label, name: 'label2') }
+    let!(:label_three) { FactoryBot.create(:label, name: 'label3') }
+    let!(:label_four) { FactoryBot.create(:label, name: 'label4') }
+    let!(:label_five) { FactoryBot.create(:label, name: 'label5') }
     let!(:task_one) { FactoryBot.create(:task, user_id: user.id) }
 
     describe '表示エリア' do
@@ -783,15 +653,17 @@ describe 'Tasks', type: :system do
         expect(page).to have_content 'タスク削除成功'
       end
 
-      it '一覧へボタン押下でタスク一覧画面へ遷移すること' do
+      it 'タスク一覧へボタン押下でタスク一覧画面へ遷移すること' do
         visit task_path(task_one)
-        click_on '一覧へ'
+        click_on 'タスク一覧へ'
         expect(page).to have_current_path root_path
       end
     end
   end
 
   describe '#edit' do
+
+    let!(:label_one) { FactoryBot.create(:label, name: 'label1') }
     let(:task_one) { FactoryBot.create(:task, user_id: user.id) }
 
     describe 'エラー表示エリア' do
@@ -800,7 +672,7 @@ describe 'Tasks', type: :system do
           {
             title: '',
             content: 'こちらはテスト1の内容です。テストテストテストテストテストテストテスト',
-            label1: 'テスト',
+            label1: label_one.name,
           }
         }
 
@@ -808,7 +680,7 @@ describe 'Tasks', type: :system do
           visit edit_task_path(task_one)
           fill_in 'task_form[title]', with: update_task[:title]
           fill_in 'task_form[content]', with: update_task[:content]
-          fill_in 'task_form[label1]', with: update_task[:label1]
+          select value = update_task[:label1], from: 'task_form[label1]'
           click_on '更新'
           expect(Task.find_by(title: update_task[:title], content: update_task[:content])).to be_nil
         end
@@ -817,7 +689,7 @@ describe 'Tasks', type: :system do
           visit edit_task_path(task_one)
           fill_in 'task_form[title]', with: update_task[:title]
           fill_in 'task_form[content]', with: update_task[:content]
-          fill_in 'task_form[label1]', with: update_task[:label1]
+          select value = update_task[:label1], from: 'task_form[label1]'
           click_on '更新'
           expect(page).to have_content 'タイトルは1文字以上で入力してください'
         end
@@ -828,7 +700,7 @@ describe 'Tasks', type: :system do
           {
             title: '1' * 129,
             content: 'こちらはテスト1の内容です。テストテストテストテストテストテストテスト',
-            label1: 'テスト',
+            label1: label_one.name,
           }
         }
 
@@ -836,7 +708,7 @@ describe 'Tasks', type: :system do
           visit edit_task_path(task_one)
           fill_in 'task_form[title]', with: update_task[:title]
           fill_in 'task_form[content]', with: update_task[:content]
-          fill_in 'task_form[label1]', with: update_task[:label1]
+          select value = update_task[:label1], from: 'task_form[label1]'
           click_on '更新'
           expect(Task.find_by(title: update_task[:title], content: update_task[:content])).to be_nil
         end
@@ -845,7 +717,7 @@ describe 'Tasks', type: :system do
           visit edit_task_path(task_one)
           fill_in 'task_form[title]', with: update_task[:title]
           fill_in 'task_form[content]', with: update_task[:content]
-          fill_in 'task_form[label1]', with: update_task[:label1]
+          select value = update_task[:label1], from: 'task_form[label1]'
           click_on '更新'
           expect(page).to have_content 'タイトルは128文字以内で入力してください'
         end
@@ -856,7 +728,7 @@ describe 'Tasks', type: :system do
           {
             title: 'テスト1',
             content: '',
-            label1: 'テスト',
+            label1: label_one.name,
           }
         }
 
@@ -864,7 +736,7 @@ describe 'Tasks', type: :system do
           visit edit_task_path(task_one)
           fill_in 'task_form[title]', with: update_task[:title]
           fill_in 'task_form[content]', with: update_task[:content]
-          fill_in 'task_form[label1]', with: update_task[:label1]
+          select value = update_task[:label1], from: 'task_form[label1]'
           click_on '更新'
           expect(Task.find_by(title: update_task[:title], content: update_task[:content])).to be_nil
         end
@@ -873,7 +745,7 @@ describe 'Tasks', type: :system do
           visit edit_task_path(task_one)
           fill_in 'task_form[title]', with: update_task[:title]
           fill_in 'task_form[content]', with: update_task[:content]
-          fill_in 'task_form[label1]', with: update_task[:label1]
+          select value = update_task[:label1], from: 'task_form[label1]'
           click_on '更新'
           expect(page).to have_content '内容は1文字以上で入力してください'
         end
@@ -884,7 +756,7 @@ describe 'Tasks', type: :system do
           {
             title: 'テスト1',
             content: '1' * 1025,
-            label1: 'テスト',
+            label1: label_one.name,
           }
         }
 
@@ -892,7 +764,7 @@ describe 'Tasks', type: :system do
           visit edit_task_path(task_one)
           fill_in 'task_form[title]', with: update_task[:title]
           fill_in 'task_form[content]', with: update_task[:content]
-          fill_in 'task_form[label1]', with: update_task[:label1]
+          select value = update_task[:label1], from: 'task_form[label1]'
           click_on '更新'
           expect(Task.find_by(title: update_task[:title], content: update_task[:content])).to be_nil
         end
@@ -901,159 +773,32 @@ describe 'Tasks', type: :system do
           visit edit_task_path(task_one)
           fill_in 'task_form[title]', with: update_task[:title]
           fill_in 'task_form[content]', with: update_task[:content]
-          fill_in 'task_form[label1]', with: update_task[:label1]
+          select value = update_task[:label1], from: 'task_form[label1]'
           click_on '更新'
           expect(page).to have_content '内容は1024文字以内で入力してください'
-        end
-      end
-
-      context '入力エラー（ラベル1が65文字）' do
-        let(:update_task) {
-          {
-            title: 'テスト1',
-            content: 'こちらはテスト1の内容です。テストテストテストテストテストテストテスト',
-            label1: '1' * 65,
-          }
-        }
-
-        it 'データが更新されていないこと' do
-          visit edit_task_path(task_one)
-          fill_in 'task_form[title]', with: update_task[:title]
-          fill_in 'task_form[content]', with: update_task[:content]
-          fill_in 'task_form[label1]', with: update_task[:label1]
-          click_on '更新'
-          expect(Task.find_by(title: update_task[:title], content: update_task[:content])).to be_nil
-        end
-
-        it 'エラーメッセージが表示されること' do
-          visit edit_task_path(task_one)
-          fill_in 'task_form[title]', with: update_task[:title]
-          fill_in 'task_form[content]', with: update_task[:content]
-          fill_in 'task_form[label1]', with: update_task[:label1]
-          click_on '更新'
-          expect(page).to have_content 'ラベル名は64文字以内で入力してください'
-        end
-      end
-
-      context '入力エラー（ラベル2が65文字）' do
-        let(:update_task) {
-          {
-            title: 'テスト1',
-            content: 'こちらはテスト1の内容です。テストテストテストテストテストテストテスト',
-            label2: '1' * 65,
-          }
-        }
-
-        it 'データが更新されていないこと' do
-          visit edit_task_path(task_one)
-          fill_in 'task_form[title]', with: update_task[:title]
-          fill_in 'task_form[content]', with: update_task[:content]
-          fill_in 'task_form[label2]', with: update_task[:label2]
-          click_on '更新'
-          expect(Task.find_by(title: update_task[:title], content: update_task[:content])).to be_nil
-        end
-
-        it 'エラーメッセージが表示されること' do
-          visit edit_task_path(task_one)
-          fill_in 'task_form[title]', with: update_task[:title]
-          fill_in 'task_form[content]', with: update_task[:content]
-          fill_in 'task_form[label2]', with: update_task[:label2]
-          click_on '更新'
-          expect(page).to have_content 'ラベル名は64文字以内で入力してください'
-        end
-      end
-
-      context '入力エラー（ラベル3が65文字）' do
-        let(:update_task) {
-          {
-            title: 'テスト1',
-            content: 'こちらはテスト1の内容です。テストテストテストテストテストテストテスト',
-            label3: '1' * 65,
-          }
-        }
-
-        it 'データが更新されていないこと' do
-          visit edit_task_path(task_one)
-          fill_in 'task_form[title]', with: update_task[:title]
-          fill_in 'task_form[content]', with: update_task[:content]
-          fill_in 'task_form[label3]', with: update_task[:label3]
-          click_on '更新'
-          expect(Task.find_by(title: update_task[:title], content: update_task[:content])).to be_nil
-        end
-
-        it 'エラーメッセージが表示されること' do
-          visit edit_task_path(task_one)
-          fill_in 'task_form[title]', with: update_task[:title]
-          fill_in 'task_form[content]', with: update_task[:content]
-          fill_in 'task_form[label3]', with: update_task[:label3]
-          click_on '更新'
-          expect(page).to have_content 'ラベル名は64文字以内で入力してください'
-        end
-      end
-
-      context '入力エラー（ラベル4が65文字）' do
-        let(:update_task) {
-          {
-            title: 'テスト1',
-            content: 'こちらはテスト1の内容です。テストテストテストテストテストテストテスト',
-            label4: '1' * 65,
-          }
-        }
-
-        it 'データが更新されていないこと' do
-          visit edit_task_path(task_one)
-          fill_in 'task_form[title]', with: update_task[:title]
-          fill_in 'task_form[content]', with: update_task[:content]
-          fill_in 'task_form[label4]', with: update_task[:label4]
-          click_on '更新'
-          expect(Task.find_by(title: update_task[:title], content: update_task[:content])).to be_nil
-        end
-
-        it 'エラーメッセージが表示されること' do
-          visit edit_task_path(task_one)
-          fill_in 'task_form[title]', with: update_task[:title]
-          fill_in 'task_form[content]', with: update_task[:content]
-          fill_in 'task_form[label4]', with: update_task[:label4]
-          click_on '更新'
-          expect(page).to have_content 'ラベル名は64文字以内で入力してください'
-        end
-      end
-
-      context '入力エラー（ラベル5が65文字）' do
-        let(:update_task) {
-          {
-            title: 'テスト1',
-            content: 'こちらはテスト1の内容です。テストテストテストテストテストテストテスト',
-            label5: '1' * 65,
-          }
-        }
-
-        it 'データが更新されていないこと' do
-          visit edit_task_path(task_one)
-          fill_in 'task_form[title]', with: update_task[:title]
-          fill_in 'task_form[content]', with: update_task[:content]
-          fill_in 'task_form[label5]', with: update_task[:label5]
-          click_on '更新'
-          expect(Task.find_by(title: update_task[:title], content: update_task[:content])).to be_nil
-        end
-
-        it 'エラーメッセージが表示されること' do
-          visit edit_task_path(task_one)
-          fill_in 'task_form[title]', with: update_task[:title]
-          fill_in 'task_form[content]', with: update_task[:content]
-          fill_in 'task_form[label5]', with: update_task[:label5]
-          click_on '更新'
-          expect(page).to have_content 'ラベル名は64文字以内で入力してください'
         end
       end
     end
 
     describe '入力エリア' do
-      let!(:label_one) { FactoryBot.create(:label, name: 'label1',task_id: task_one.id) }
-      let!(:label_two) { FactoryBot.create(:label, name: 'label2',task_id: task_one.id) }
-      let!(:label_three) { FactoryBot.create(:label, name: 'label3',task_id: task_one.id) }
-      let!(:label_four) { FactoryBot.create(:label, name: 'label4',task_id: task_one.id) }
-      let!(:label_five) { FactoryBot.create(:label, name: 'label5',task_id: task_one.id) }
+      before do
+        FactoryBot.create(:task_label, task_id: task_one.id, label_id: label_one.id)
+        FactoryBot.create(:task_label, task_id: task_one.id, label_id: label_two.id)
+        FactoryBot.create(:task_label, task_id: task_one.id, label_id: label_three.id)
+        FactoryBot.create(:task_label, task_id: task_one.id, label_id: label_four.id)
+        FactoryBot.create(:task_label, task_id: task_one.id, label_id: label_five.id)
+      end
+
+      let!(:label_one) { FactoryBot.create(:label, name: 'label1') }
+      let!(:label_two) { FactoryBot.create(:label, name: 'label2') }
+      let!(:label_three) { FactoryBot.create(:label, name: 'label3') }
+      let!(:label_four) { FactoryBot.create(:label, name: 'label4') }
+      let!(:label_five) { FactoryBot.create(:label, name: 'label5') }
+      let!(:label_update_one) { FactoryBot.create(:label, name: 'update label1') }
+      let!(:label_update_two) { FactoryBot.create(:label, name: 'update label2') }
+      let!(:label_update_three) { FactoryBot.create(:label, name: 'update label3') }
+      let!(:label_update_four) { FactoryBot.create(:label, name: 'update label4') }
+      let!(:label_update_five) { FactoryBot.create(:label, name: 'update label5') }
 
       context '初期表示' do
         it 'タイトルが表示されていること' do
@@ -1068,27 +813,27 @@ describe 'Tasks', type: :system do
 
         it 'ラベル1が表示されていること' do
           visit edit_task_path(task_one)
-          expect(page).to have_field 'task_form[label1]', with: 'label1'
+          expect(page).to have_select 'task_form[label1]', selected: 'label1'
         end
 
         it 'ラベル2が表示されていること' do
           visit edit_task_path(task_one)
-          expect(page).to have_field 'task_form[label2]', with: 'label2'
+          expect(page).to have_select 'task_form[label2]', selected: 'label2'
         end
 
         it 'ラベル3が表示されていること' do
           visit edit_task_path(task_one)
-          expect(page).to have_field 'task_form[label3]', with: 'label3'
+          expect(page).to have_select 'task_form[label3]', selected: 'label3'
         end
 
         it 'ラベル4が表示されていること' do
           visit edit_task_path(task_one)
-          expect(page).to have_field 'task_form[label4]', with: 'label4'
+          expect(page).to have_select 'task_form[label4]', selected: 'label4'
         end
 
         it 'ラベル5が表示されていること' do
           visit edit_task_path(task_one)
-          expect(page).to have_field 'task_form[label5]', with: 'label5'
+          expect(page).to have_select 'task_form[label5]', selected: 'label5'
         end
 
         it 'ステータスが表示されていること' do
@@ -1115,11 +860,11 @@ describe 'Tasks', type: :system do
           visit edit_task_path(task_one)
           fill_in 'task_form[title]', with: update_task[:title]
           fill_in 'task_form[content]', with: update_task[:content]
-          fill_in 'task_form[label1]', with: update_task[:label1]
-          fill_in 'task_form[label2]', with: update_task[:label2]
-          fill_in 'task_form[label3]', with: update_task[:label3]
-          fill_in 'task_form[label4]', with: update_task[:label4]
-          fill_in 'task_form[label5]', with: update_task[:label5]
+          select value = update_task[:label1], from: 'task_form[label1]'
+          select value = update_task[:label2], from: 'task_form[label2]'
+          select value = update_task[:label3], from: 'task_form[label3]'
+          select value = update_task[:label4], from: 'task_form[label4]'
+          select value = update_task[:label5], from: 'task_form[label5]'
           select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task_form[status]'
           click_on '更新'
           expect(Task.find_by(title: update_task[:title], content: update_task[:content])).to be_present
@@ -1129,11 +874,11 @@ describe 'Tasks', type: :system do
           visit edit_task_path(task_one)
           fill_in 'task_form[title]', with: update_task[:title]
           fill_in 'task_form[content]', with: update_task[:content]
-          fill_in 'task_form[label1]', with: update_task[:label1]
-          fill_in 'task_form[label2]', with: update_task[:label2]
-          fill_in 'task_form[label3]', with: update_task[:label3]
-          fill_in 'task_form[label4]', with: update_task[:label4]
-          fill_in 'task_form[label5]', with: update_task[:label5]
+          select value = update_task[:label1], from: 'task_form[label1]'
+          select value = update_task[:label2], from: 'task_form[label2]'
+          select value = update_task[:label3], from: 'task_form[label3]'
+          select value = update_task[:label4], from: 'task_form[label4]'
+          select value = update_task[:label5], from: 'task_form[label5]'
           select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task_form[status]'
           click_on '更新'
           expect(Label.find_by(name: update_task[:label1])).to be_present
@@ -1143,11 +888,11 @@ describe 'Tasks', type: :system do
           visit edit_task_path(task_one)
           fill_in 'task_form[title]', with: update_task[:title]
           fill_in 'task_form[content]', with: update_task[:content]
-          fill_in 'task_form[label1]', with: update_task[:label1]
-          fill_in 'task_form[label2]', with: update_task[:label2]
-          fill_in 'task_form[label3]', with: update_task[:label3]
-          fill_in 'task_form[label4]', with: update_task[:label4]
-          fill_in 'task_form[label5]', with: update_task[:label5]
+          select value = update_task[:label1], from: 'task_form[label1]'
+          select value = update_task[:label2], from: 'task_form[label2]'
+          select value = update_task[:label3], from: 'task_form[label3]'
+          select value = update_task[:label4], from: 'task_form[label4]'
+          select value = update_task[:label5], from: 'task_form[label5]'
           select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task_form[status]'
           click_on '更新'
           expect(Label.find_by(name: update_task[:label2])).to be_present
@@ -1157,11 +902,11 @@ describe 'Tasks', type: :system do
           visit edit_task_path(task_one)
           fill_in 'task_form[title]', with: update_task[:title]
           fill_in 'task_form[content]', with: update_task[:content]
-          fill_in 'task_form[label1]', with: update_task[:label1]
-          fill_in 'task_form[label2]', with: update_task[:label2]
-          fill_in 'task_form[label3]', with: update_task[:label3]
-          fill_in 'task_form[label4]', with: update_task[:label4]
-          fill_in 'task_form[label5]', with: update_task[:label5]
+          select value = update_task[:label1], from: 'task_form[label1]'
+          select value = update_task[:label2], from: 'task_form[label2]'
+          select value = update_task[:label3], from: 'task_form[label3]'
+          select value = update_task[:label4], from: 'task_form[label4]'
+          select value = update_task[:label5], from: 'task_form[label5]'
           select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task_form[status]'
           click_on '更新'
           expect(Label.find_by(name: update_task[:label3])).to be_present
@@ -1171,11 +916,11 @@ describe 'Tasks', type: :system do
           visit edit_task_path(task_one)
           fill_in 'task_form[title]', with: update_task[:title]
           fill_in 'task_form[content]', with: update_task[:content]
-          fill_in 'task_form[label1]', with: update_task[:label1]
-          fill_in 'task_form[label2]', with: update_task[:label2]
-          fill_in 'task_form[label3]', with: update_task[:label3]
-          fill_in 'task_form[label4]', with: update_task[:label4]
-          fill_in 'task_form[label5]', with: update_task[:label5]
+          select value = update_task[:label1], from: 'task_form[label1]'
+          select value = update_task[:label2], from: 'task_form[label2]'
+          select value = update_task[:label3], from: 'task_form[label3]'
+          select value = update_task[:label4], from: 'task_form[label4]'
+          select value = update_task[:label5], from: 'task_form[label5]'
           select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task_form[status]'
           click_on '更新'
           expect(Label.find_by(name: update_task[:label4])).to be_present
@@ -1185,11 +930,11 @@ describe 'Tasks', type: :system do
           visit edit_task_path(task_one)
           fill_in 'task_form[title]', with: update_task[:title]
           fill_in 'task_form[content]', with: update_task[:content]
-          fill_in 'task_form[label1]', with: update_task[:label1]
-          fill_in 'task_form[label2]', with: update_task[:label2]
-          fill_in 'task_form[label3]', with: update_task[:label3]
-          fill_in 'task_form[label4]', with: update_task[:label4]
-          fill_in 'task_form[label5]', with: update_task[:label5]
+          select value = update_task[:label1], from: 'task_form[label1]'
+          select value = update_task[:label2], from: 'task_form[label2]'
+          select value = update_task[:label3], from: 'task_form[label3]'
+          select value = update_task[:label4], from: 'task_form[label4]'
+          select value = update_task[:label5], from: 'task_form[label5]'
           select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task_form[status]'
           click_on '更新'
           expect(Label.find_by(name: update_task[:label5])).to be_present
@@ -1199,11 +944,11 @@ describe 'Tasks', type: :system do
           visit edit_task_path(task_one)
           fill_in 'task_form[title]', with: update_task[:title]
           fill_in 'task_form[content]', with: update_task[:content]
-          fill_in 'task_form[label1]', with: update_task[:label1]
-          fill_in 'task_form[label2]', with: update_task[:label2]
-          fill_in 'task_form[label3]', with: update_task[:label3]
-          fill_in 'task_form[label4]', with: update_task[:label4]
-          fill_in 'task_form[label5]', with: update_task[:label5]
+          select value = update_task[:label1], from: 'task_form[label1]'
+          select value = update_task[:label2], from: 'task_form[label2]'
+          select value = update_task[:label3], from: 'task_form[label3]'
+          select value = update_task[:label4], from: 'task_form[label4]'
+          select value = update_task[:label5], from: 'task_form[label5]'
           select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task_form[status]'
           click_on '更新'
           expect(page).to have_current_path root_path
@@ -1213,11 +958,11 @@ describe 'Tasks', type: :system do
           visit edit_task_path(task_one)
           fill_in 'task_form[title]', with: update_task[:title]
           fill_in 'task_form[content]', with: update_task[:content]
-          fill_in 'task_form[label1]', with: update_task[:label1]
-          fill_in 'task_form[label2]', with: update_task[:label2]
-          fill_in 'task_form[label3]', with: update_task[:label3]
-          fill_in 'task_form[label4]', with: update_task[:label4]
-          fill_in 'task_form[label5]', with: update_task[:label5]
+          select value = update_task[:label1], from: 'task_form[label1]'
+          select value = update_task[:label2], from: 'task_form[label2]'
+          select value = update_task[:label3], from: 'task_form[label3]'
+          select value = update_task[:label4], from: 'task_form[label4]'
+          select value = update_task[:label5], from: 'task_form[label5]'
           select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task_form[status]'
           click_on '更新'
           expect(page).to have_content 'タスク更新成功'
@@ -1242,11 +987,11 @@ describe 'Tasks', type: :system do
           visit edit_task_path(task_one)
           fill_in 'task_form[title]', with: update_task[:title]
           fill_in 'task_form[content]', with: update_task[:content]
-          fill_in 'task_form[label1]', with: update_task[:label1]
-          fill_in 'task_form[label2]', with: update_task[:label2]
-          fill_in 'task_form[label3]', with: update_task[:label3]
-          fill_in 'task_form[label4]', with: update_task[:label4]
-          fill_in 'task_form[label5]', with: update_task[:label5]
+          select value = update_task[:label1], from: 'task_form[label1]'
+          select value = update_task[:label2], from: 'task_form[label2]'
+          select value = update_task[:label3], from: 'task_form[label3]'
+          select value = update_task[:label4], from: 'task_form[label4]'
+          select value = update_task[:label5], from: 'task_form[label5]'
           select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task_form[status]'
           click_on '更新'
           expect(Task.find_by(title: update_task[:title], content: update_task[:content])).to be_present
@@ -1271,11 +1016,11 @@ describe 'Tasks', type: :system do
           visit edit_task_path(task_one)
           fill_in 'task_form[title]', with: update_task[:title]
           fill_in 'task_form[content]', with: update_task[:content]
-          fill_in 'task_form[label1]', with: update_task[:label1]
-          fill_in 'task_form[label2]', with: update_task[:label2]
-          fill_in 'task_form[label3]', with: update_task[:label3]
-          fill_in 'task_form[label4]', with: update_task[:label4]
-          fill_in 'task_form[label5]', with: update_task[:label5]
+          select value = update_task[:label1], from: 'task_form[label1]'
+          select value = update_task[:label2], from: 'task_form[label2]'
+          select value = update_task[:label3], from: 'task_form[label3]'
+          select value = update_task[:label4], from: 'task_form[label4]'
+          select value = update_task[:label5], from: 'task_form[label5]'
          select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task_form[status]'
           click_on '更新'
           expect(Task.find_by(title: update_task[:title], content: update_task[:content])).to be_present
@@ -1287,7 +1032,7 @@ describe 'Tasks', type: :system do
           {
             title: task_one[:title],
             content: task_one[:content],
-            label1: 'update label1',
+            label1: label_update_one.name,
             label2: label_two.name,
             label3: label_three.name,
             label4: label_four.name,
@@ -1300,11 +1045,11 @@ describe 'Tasks', type: :system do
           visit edit_task_path(task_one)
           fill_in 'task_form[title]', with: update_task[:title]
           fill_in 'task_form[content]', with: update_task[:content]
-          fill_in 'task_form[label1]', with: update_task[:label1]
-          fill_in 'task_form[label2]', with: update_task[:label2]
-          fill_in 'task_form[label3]', with: update_task[:label3]
-          fill_in 'task_form[label4]', with: update_task[:label4]
-          fill_in 'task_form[label5]', with: update_task[:label5]
+          select value = update_task[:label1], from: 'task_form[label1]'
+          select value = update_task[:label2], from: 'task_form[label2]'
+          select value = update_task[:label3], from: 'task_form[label3]'
+          select value = update_task[:label4], from: 'task_form[label4]'
+          select value = update_task[:label5], from: 'task_form[label5]'
           select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task_form[status]'
           click_on '更新'
           expect(Label.find_by(name: update_task[:label1])).to be_present
@@ -1317,7 +1062,7 @@ describe 'Tasks', type: :system do
             title: task_one[:title],
             content: task_one[:content],
             label1: label_one.name,
-            label2: 'update label2',
+            label2: label_update_two.name,
             label3: label_three.name,
             label4: label_four.name,
             label5: label_five.name,
@@ -1329,11 +1074,11 @@ describe 'Tasks', type: :system do
           visit edit_task_path(task_one)
           fill_in 'task_form[title]', with: update_task[:title]
           fill_in 'task_form[content]', with: update_task[:content]
-          fill_in 'task_form[label1]', with: update_task[:label1]
-          fill_in 'task_form[label2]', with: update_task[:label2]
-          fill_in 'task_form[label3]', with: update_task[:label3]
-          fill_in 'task_form[label4]', with: update_task[:label4]
-          fill_in 'task_form[label5]', with: update_task[:label5]
+          select value = update_task[:label1], from: 'task_form[label1]'
+          select value = update_task[:label2], from: 'task_form[label2]'
+          select value = update_task[:label3], from: 'task_form[label3]'
+          select value = update_task[:label4], from: 'task_form[label4]'
+          select value = update_task[:label5], from: 'task_form[label5]'
           select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task_form[status]'
           click_on '更新'
           expect(Label.find_by(name: update_task[:label1])).to be_present
@@ -1347,7 +1092,7 @@ describe 'Tasks', type: :system do
             content: task_one[:content],
             label1: label_one.name,
             label2: label_two.name,
-            label3: 'update label3',
+            label3: label_update_three.name,
             label4: label_four.name,
             label5: label_five.name,
             status: task_one[:status],
@@ -1358,11 +1103,11 @@ describe 'Tasks', type: :system do
           visit edit_task_path(task_one)
           fill_in 'task_form[title]', with: update_task[:title]
           fill_in 'task_form[content]', with: update_task[:content]
-          fill_in 'task_form[label1]', with: update_task[:label1]
-          fill_in 'task_form[label2]', with: update_task[:label2]
-          fill_in 'task_form[label3]', with: update_task[:label3]
-          fill_in 'task_form[label4]', with: update_task[:label4]
-          fill_in 'task_form[label5]', with: update_task[:label5]
+          select value = update_task[:label1], from: 'task_form[label1]'
+          select value = update_task[:label2], from: 'task_form[label2]'
+          select value = update_task[:label3], from: 'task_form[label3]'
+          select value = update_task[:label4], from: 'task_form[label4]'
+          select value = update_task[:label5], from: 'task_form[label5]'
           select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task_form[status]'
           click_on '更新'
           expect(Label.find_by(name: update_task[:label1])).to be_present
@@ -1377,7 +1122,7 @@ describe 'Tasks', type: :system do
             label1: label_one.name,
             label2: label_two.name,
             label3: label_three.name,
-            label4: 'update label4',
+            label4: label_update_four.name,
             label5: label_five.name,
             status: task_one[:status],
           }
@@ -1387,11 +1132,11 @@ describe 'Tasks', type: :system do
           visit edit_task_path(task_one)
           fill_in 'task_form[title]', with: update_task[:title]
           fill_in 'task_form[content]', with: update_task[:content]
-          fill_in 'task_form[label1]', with: update_task[:label1]
-          fill_in 'task_form[label2]', with: update_task[:label2]
-          fill_in 'task_form[label3]', with: update_task[:label3]
-          fill_in 'task_form[label4]', with: update_task[:label4]
-          fill_in 'task_form[label5]', with: update_task[:label5]
+          select value = update_task[:label1], from: 'task_form[label1]'
+          select value = update_task[:label2], from: 'task_form[label2]'
+          select value = update_task[:label3], from: 'task_form[label3]'
+          select value = update_task[:label4], from: 'task_form[label4]'
+          select value = update_task[:label5], from: 'task_form[label5]'
           select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task_form[status]'
           click_on '更新'
           expect(Label.find_by(name: update_task[:label1])).to be_present
@@ -1407,7 +1152,7 @@ describe 'Tasks', type: :system do
             label2: label_two.name,
             label3: label_three.name,
             label4: label_four.name,
-            label5: 'update label5',
+            label5: label_update_five.name,
             status: task_one[:status],
           }
         }
@@ -1416,11 +1161,11 @@ describe 'Tasks', type: :system do
           visit edit_task_path(task_one)
           fill_in 'task_form[title]', with: update_task[:title]
           fill_in 'task_form[content]', with: update_task[:content]
-          fill_in 'task_form[label1]', with: update_task[:label1]
-          fill_in 'task_form[label2]', with: update_task[:label2]
-          fill_in 'task_form[label3]', with: update_task[:label3]
-          fill_in 'task_form[label4]', with: update_task[:label4]
-          fill_in 'task_form[label5]', with: update_task[:label5]
+          select value = update_task[:label1], from: 'task_form[label1]'
+          select value = update_task[:label2], from: 'task_form[label2]'
+          select value = update_task[:label3], from: 'task_form[label3]'
+          select value = update_task[:label4], from: 'task_form[label4]'
+          select value = update_task[:label5], from: 'task_form[label5]'
           select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task_form[status]'
           click_on '更新'
           expect(Label.find_by(name: update_task[:label1])).to be_present
@@ -1445,11 +1190,11 @@ describe 'Tasks', type: :system do
           visit edit_task_path(task_one)
           fill_in 'task_form[title]', with: update_task[:title]
           fill_in 'task_form[content]', with: update_task[:content]
-          fill_in 'task_form[label1]', with: update_task[:label1]
-          fill_in 'task_form[label2]', with: update_task[:label2]
-          fill_in 'task_form[label3]', with: update_task[:label3]
-          fill_in 'task_form[label4]', with: update_task[:label4]
-          fill_in 'task_form[label5]', with: update_task[:label5]
+          select value = update_task[:label1], from: 'task_form[label1]'
+          select value = update_task[:label2], from: 'task_form[label2]'
+          select value = update_task[:label3], from: 'task_form[label3]'
+          select value = update_task[:label4], from: 'task_form[label4]'
+          select value = update_task[:label5], from: 'task_form[label5]'
           select value = I18n.t("enums.task.status.#{update_task[:status]}"), from: 'task_form[status]'
           click_on '更新'
           expect(Task.find_by(title: update_task[:title], content: update_task[:content])).to be_present
@@ -1458,9 +1203,9 @@ describe 'Tasks', type: :system do
     end
 
     describe 'フッターエリア' do
-      it '一覧へボタン押下でタスク一覧画面へ遷移すること' do
+      it 'タスク一覧へボタン押下でタスク一覧画面へ遷移すること' do
         visit edit_task_path(task_one)
-        click_on '一覧へ'
+        click_on 'タスク一覧へ'
         expect(page).to have_current_path root_path
       end
     end

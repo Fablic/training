@@ -15,11 +15,11 @@
   <%= f.text_field(:content) %>
 
   <p><%= I18n.t('task.label') %></p>
-  <%= f.text_field(:label1) %>
-  <%= f.text_field(:label2) %>
-  <%= f.text_field(:label3) %>
-  <%= f.text_field(:label4) %>
-  <%= f.text_field(:label5) %>
+  <%= f.collection_select(:label1,  Label.all, :id, :name, { include_blank: '未設定' }) %>
+  <%= f.collection_select(:label2,  Label.all, :id, :name, { include_blank: '未設定' }) %>
+  <%= f.collection_select(:label3,  Label.all, :id, :name, { include_blank: '未設定' }) %>
+  <%= f.collection_select(:label4,  Label.all, :id, :name, { include_blank: '未設定' }) %>
+  <%= f.collection_select(:label5,  Label.all, :id, :name, { include_blank: '未設定' }) %>
 
   <% if is_status %>
     <p><%= I18n.t('task.status') %></p>
