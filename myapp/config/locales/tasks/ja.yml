@@ -22,6 +22,10 @@ ja:
         touched: 着手中
         completed: 完了
   select_form:
+    search_form:
+      sort:
+        - ['ID昇順(デフォルト)', 'id_asc']
+        - ['ID降順', 'id_desc']
     task:
       priority:
         - ['低', 'low']
