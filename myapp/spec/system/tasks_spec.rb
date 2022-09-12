@@ -1,13 +1,15 @@
 require 'rails_helper'
 
 describe 'タスク管理機能', type: :system do
+  let!(:maintenance) { FactoryBot.create(:maintenance) }
   let(:user) { FactoryBot.create(:user, password_digest: 'password') }
 
-  before do
-    login(user, 'password')
-  end
-
   describe '検索エリア' do
+
+    before do
+      login(user, 'password')
+    end
+
     context '条件なし検索' do
 
       let!(:task_A1) { FactoryBot.create(:task, title: 'titleA1', status: 'not_started', user_id: user.id) }
@@ -241,7 +243,12 @@ describe 'タスク管理機能', type: :system do
   describe '一覧表示機能' do
     subject(:visit_tasks) { visit tasks_path }
 
+    before do
+      login(user, 'password')
+    end
+
     describe '表示機能'do
+      let!(:maintenance) { FactoryBot.create(:maintenance) }
 
       context 'タスクが1件存在する場合' do
         let!(:task_1) { FactoryBot.create(:task, title: '最初のタスク', description: '最初のタスクを実施する', user_id: user.id, status: '1') }
@@ -297,6 +304,10 @@ describe 'タスク管理機能', type: :system do
   describe '詳細表示機能' do
     let!(:task_a) { FactoryBot.create(:task, title: '最初のタスク', description: '最初のタスクを実施する', user_id: user.id) }
     subject(:visit_task_a) { visit task_path(task_a) }
+
+    before do
+      login(user, 'password')
+    end
 
     describe '表示機能' do
       context 'タスクが存在する場合' do
@@ -369,6 +380,10 @@ describe 'タスク管理機能', type: :system do
   describe '新規登録機能' do
     subject(:visit_new_task){ visit new_task_path }
 
+    before do
+      login(user, 'password')
+    end
+
     describe '登録機能' do
       context 'タスクの内容を入力した場合' do
         let(:input_values) {
@@ -435,6 +450,10 @@ describe 'タスク管理機能', type: :system do
     let!(:task_a) { FactoryBot.create(:task, title: '最初のタスク', description: '最初のタスクを実施する', user_id: user.id, status: '1') }
     subject(:visit_task_a_edit){visit edit_task_path(task_a)}
 
+    before do
+      login(user, 'password')
+    end
+
     describe '表示機能' do
       context '画面を表示した場合' do
         it '編集前のタスク名が表示される' do
@@ -490,6 +509,133 @@ describe 'タスク管理機能', type: :system do
           visit_task_a_edit
           click_link '一覧に戻る'
           expect(page).to have_current_path tasks_path
+        end
+      end
+    end
+  end
+
+  describe 'メンテナンス機能' do
+    let!(:maintenance) { FactoryBot.create(:maintenance) }
+    let(:user) { FactoryBot.create(:user, password_digest: 'password') }
+
+    describe 'メンテナンス中の場合' do
+      let!(:maintenance) { FactoryBot.create(:maintenance, maintenance_flg: true) }
+
+      context 'ログイン画面の場合' do
+
+        it 'メンテナンス中画面が表示される' do
+          visit login_path
+          expect(page).to have_content 'メンテナンス中'
+        end
+      end
+
+      context '一覧画面の場合' do
+        subject(:visit_tasks) { visit tasks_path }
+
+        it 'メンテナンス中画面が表示される' do
+          visit visit_tasks
+          expect(page).to have_content 'メンテナンス中'
+        end
+      end
+
+      context '登録画面の場合' do
+        subject(:visit_new_task){ visit new_task_path }
+
+        it 'メンテナンス中画面が表示される' do
+          visit_new_task
+          expect(page).to have_content 'メンテナンス中'
+        end
+      end
+
+      context '編集画面の場合' do
+        let!(:task_a) { FactoryBot.create(:task, title: '最初のタスク', description: '最初のタスクを実施する', user_id: user.id, status: '1') }
+        subject(:visit_task_a_edit){visit edit_task_path(task_a)}
+
+        it 'メンテナンス中画面が表示される' do
+          visit_task_a_edit
+          expect(page).to have_content 'メンテナンス中'
+        end
+      end
+
+      context '詳細画面の場合' do
+        let!(:task_a) { FactoryBot.create(:task, title: '最初のタスク', description: '最初のタスクを実施する', user_id: user.id) }
+        subject(:visit_task_a) { visit task_path(task_a) }
+
+        it 'メンテナンス中画面が表示される' do
+          visit_task_a
+          expect(page).to have_content 'メンテナンス中'
+        end
+      end
+    end
+
+    describe 'メンテナンス中でない場合' do
+
+      before do
+        login(user, 'password')
+      end
+
+      context 'ログイン画面の場合' do
+
+        it  'ログイン画面が表示される' do
+          visit login_path
+          expect(page).to have_content 'ログイン'
+        end
+      end
+
+      context '一覧画面の場合' do
+
+        it  '一覧画面が表示される' do
+          visit login_path
+          fill_in 'session[email]', with: 'sample12345@example.com'
+          fill_in 'session[password]', with: 'password'
+          click_button 'ログイン'
+
+          tasks_path
+          expect(page).to have_content 'タスク一覧'
+        end
+      end
+
+      context '登録画面の場合' do
+        subject(:visit_new_task){ visit new_task_path }
+
+        it  '登録画面が表示される' do
+          visit login_path
+          fill_in 'session[email]', with: 'sample12345@example.com'
+          fill_in 'session[password]', with: 'password'
+          click_button 'ログイン'
+
+          visit_new_task
+          expect(page).to have_content 'タスク登録'
+        end
+      end
+
+      context '編集画面の場合' do
+        let!(:task_a) { FactoryBot.create(:task, title: '最初のタスク', description: '最初のタスクを実施する', user_id: user.id, status: '1') }
+        subject(:visit_task_a_edit){visit edit_task_path(task_a)}
+
+        it  '編集画面が表示される' do
+          visit login_path
+          fill_in 'session[email]', with: 'sample12345@example.com'
+          fill_in 'session[password]', with: 'password'
+          click_button 'ログイン'
+
+          visit_task_a_edit
+          expect(page).to have_content 'タスク編集'
+        end
+      end
+
+      context '詳細画面の場合' do
+        let!(:task_a) { FactoryBot.create(:task, title: '最初のタスク', description: '最初のタスクを実施する', user_id: user.id) }
+        subject(:visit_task_a) { visit task_path(task_a) }
+
+        it  '詳細画面が表示される' do
+          visit login_path
+          fill_in 'session[email]', with: 'sample12345@example.com'
+          fill_in 'session[password]', with: 'password'
+          click_button 'ログイン'
+
+          visit_task_a
+          expect(page).to have_content '最初のタスクの詳細'
         end
       end
     end
