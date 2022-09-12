@@ -22,6 +22,7 @@ ja:
         touched: 着手中
         completed: 完了
   select_form:
+    placeholder: タスク名または説明文からキーワード検索を行います
     search_form:
       sort:
         - ['ID昇順(デフォルト)', 'id_asc']

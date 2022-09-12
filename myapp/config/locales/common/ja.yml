@@ -2,6 +2,8 @@ ja:
   time:
     formats:
       default: "%Y/%m/%d %H:%M"
+  select_form:
+    include_blank: 選択してください
   transition_destination:
     index: 一覧に戻る
     create: 新規作成する

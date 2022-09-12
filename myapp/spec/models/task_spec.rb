@@ -52,5 +52,37 @@ RSpec.describe Task, type: :model do
         end
       end
     end
+
+    describe 'search_keyword' do
+      let!(:first_task) { create(:task, name: 'タスク', explanation: '説明文') }
+      let!(:second_task) { create(:task, name: 'ラスク', explanation: 'タスク') }
+      let!(:third_task) { create(:task, name: 'リスク', explanation: 'にゃんこ') }
+
+      subject { Task.search_keyword(keyword) }
+
+      context 'when exist search_keyword' do
+        let(:keyword) { 'タスク' }
+
+        it 'search from name or explanation' do
+          is_expected.to eq [first_task, second_task]
+        end
+      end
+    end
+
+    describe 'search_status' do
+      let!(:first_task) { create(:task, status: 'untouched') }
+      let!(:second_task) { create(:task, status: 'touched') }
+      let!(:third_task) { create(:task, status: 'untouched') }
+
+      subject { Task.search_status(status) }
+
+      context 'when exist search_status' do
+        let(:status) { 'untouched' }
+
+        it 'search from specified status' do
+          is_expected.to eq [first_task, third_task]
+        end
+      end
+    end
   end
 end
