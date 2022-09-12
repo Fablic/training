@@ -1,0 +1,29 @@
+<%= form_for(user, url: prefix) do |f| %>
+  <% if f.object.errors.any? %>
+    <div class="alert alert-warning">
+      <ul>
+        <% f.object.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div>
+    <%= f.label t('.name') %></br>
+    <%= f.text_field :name %>
+  </div>
+  <div>
+    <%= f.label t('.body') %></br>
+    <%= f.text_area :personal_id %>
+  </div>
+  <div>
+    <%= f.label t('.pass') %></br>
+    <%= f.text_field :password %>
+  </div>
+  <div>
+    <%= f.label t('.pass_second') %></br>
+    <%= f.text_field :password %>
+  </div>
+  <%= f.submit button %>
+<% end %>
+<%= link_to t('.index'), task_schedule_index_path %>
