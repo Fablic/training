@@ -14,7 +14,7 @@ RSpec.describe 'tasks/index', type: :view do
 
     tasks.each do |task|
       expect(rendered).to match(/#{task.name}/)
-      expect(rendered).to match(/#{time_zone(task.end_date)}/)
+      expect(rendered).to match(/#{I18n.l(task.end_date)}/)
       expect(rendered).to match(/#{Task.priorities_i18n[task.priority]}/)
       expect(rendered).to match(/#{Task.statuses_i18n[task.status]}/)
       expect(rendered).to match(/#{task.explanation}/)

@@ -21,18 +21,13 @@ ja:
         untouched: 未着手
         touched: 着手中
         completed: 完了
-  transition_destination:
-    index: 一覧に戻る
-    create: 新規作成する
-    show: 詳細を確認する
-    edit: 編集する
-    destroy: 削除する
-  helpers:
-    submit:
-      create: 登録する
-      update: 更新する
-      submit: 保存する
-  crud_messages:
-    create: "%{model_name}が正常に作成されました"
-    update: "%{model_name}が正常に更新されました"
-    destroy: "%{model_name}が正常に削除されました"
+  select_form:
+    task:
+      priority:
+        - ['低', 'low']
+        - ['普通', 'normal']
+        - ['高', 'high']
+      status:
+        - ['未着手', 'untouched']
+        - ['着手中', 'touched']
+        - ['完了', 'completed']

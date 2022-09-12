@@ -23,20 +23,12 @@
 
   <div>
     <%= form.label :priority, I18n.t('activerecord.attributes.task.priority'), style: "display: block" %>
-    <%= form.select :priority, [
-      [I18n.t('enums.task.priority.low'), 'low'],
-      [I18n.t('enums.task.priority.normal'), 'normal'],
-      [I18n.t('enums.task.priority.high'), 'high']
-    ] %>
+    <%= form.select :priority, I18n.t('select_form.task.priority') %>
   </div>
 
   <div>
     <%= form.label :status, I18n.t('activerecord.attributes.task.status'), style: "display: block" %>
-    <%= form.select :status, [
-      [I18n.t('enums.task.status.untouched'), 'untouched'],
-      [I18n.t('enums.task.status.touched'), 'touched'],
-      [I18n.t('enums.task.status.completed'), 'completed']
-    ] %>
+    <%= form.select :status, I18n.t('select_form.task.status') %>
   </div>
 
   <div>
