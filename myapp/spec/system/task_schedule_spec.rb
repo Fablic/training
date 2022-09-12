@@ -3,10 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe 'TaskSchedule', type: :system do
+
+  let!(:task) { create(:task, title: 'showタスク', body: 'showボディ', finish_at: 1.year.from_now) }
+  let!(:task2) { create(:task, title: 'secondタスク', body: 'secondボディ', created_at: 1.day.from_now, finish_at: 1.day.from_now) }
+  let!(:task3) { create(:task, title: 'thirdタスク', body: 'thirdボディ', created_at: 1.day.ago, finish_at: 1.week.from_now, status: 2) }
+
   before do
-    @task = create(:task, title: 'showタスク', body: 'showボディ', finish_at: 1.year.from_now)
-    create(:task, title: 'secondタスク', body: 'secondボディ', created_at: 1.day.from_now, finish_at: 1.day.from_now)
-    create(:task, title: 'thirdタスク', body: 'thirdボディ', created_at: 1.day.ago, finish_at: 1.week.from_now, status: 2)
     visit task_schedule_index_path
   end
 
@@ -73,7 +75,7 @@ RSpec.describe 'TaskSchedule', type: :system do
 
   context 'show systems check' do
     it 'complete show task' do
-      click_link('詳細', href: task_schedule_path(@task))
+      click_link('詳細', href: task_schedule_path(task))
       expect(page).to have_content 'タスク詳細画面'
       expect(page).to have_content 'showタスク'
       expect(page).to have_content 'showボディ'
@@ -87,7 +89,7 @@ RSpec.describe 'TaskSchedule', type: :system do
   context 'edit systems check' do
     it 'complete edit task' do
       create(:user, name: 'user 二郎')
-      click_link('編集', href: edit_task_schedule_path(@task))
+      click_link('編集', href: edit_task_schedule_path(task))
       expect(page).to have_content 'タスク編集画面'
 
       fill_in 'task[title]', with: 'editタスク'
@@ -106,7 +108,7 @@ RSpec.describe 'TaskSchedule', type: :system do
     end
 
     it 'failure edit task' do
-      click_link('編集', href: edit_task_schedule_path(@task))
+      click_link('編集', href: edit_task_schedule_path(task))
       expect(page).to have_content 'タスク編集画面'
 
       fill_in 'task[title]', with: ''
@@ -127,7 +129,7 @@ RSpec.describe 'TaskSchedule', type: :system do
 
   context 'delete systems check' do
     it 'complete delete task' do
-      click_link('削除', href: task_schedule_path(@task))
+      click_link('削除', href: task_schedule_path(task))
       expect do
         expect(page.accept_confirm).to eq '削除します。よろしいですか'
         exmect(page).to have_content 'タスクを削除しました'
@@ -154,7 +156,7 @@ RSpec.describe 'TaskSchedule', type: :system do
   end
 
   context 'paginate systems check' do
-    it 'complete paginate' do
+    it 'complete paginate for limit 5' do
       create(:task, title: 'タスク4', body: 'ボディ4', finish_at: 2.years.from_now)
       create(:task, title: 'タスク5', body: 'ボディ5', finish_at: 3.years.from_now)
       create(:task, title: 'タスク6', body: 'ボディ6', finish_at: 4.years.from_now)
