@@ -76,8 +76,8 @@ RSpec.describe 'TaskSchedule', type: :system do
 
     it 'complete new task create' do
       click_button 'タスク登録'
-      expect(page).to have_content 'タスク登録画面'
 
+      expect(page).to have_content 'タスク登録画面'
       fill_in 'task[title]', with: 'newタスク'
       fill_in 'task[body]', with: 'newボディ'
       fill_in 'task[finish_at]', with: '9999-01-01'
@@ -93,9 +93,10 @@ RSpec.describe 'TaskSchedule', type: :system do
     end
 
     it 'failure new task create' do
+      visit task_schedule_index_path
       click_button 'タスク登録'
-      expect(page).to have_content 'タスク登録画面'
 
+      expect(page).to have_content 'タスク登録画面'
       fill_in 'task[title]', with: ''
       fill_in 'task[body]', with: 'newボディ'
       click_button '登録する'
@@ -124,7 +125,6 @@ RSpec.describe 'TaskSchedule', type: :system do
       expect(page).to have_content 'showタスク'
       expect(page).to have_content 'showボディ'
       expect(page).to have_content 'MyName'
-
       select '着手中', from: 'task[status]'
       expect(page).to have_content '着手中'
     end
@@ -143,14 +143,15 @@ RSpec.describe 'TaskSchedule', type: :system do
       click_link('編集', href: edit_task_schedule_path(task))
       expect(page).to have_content 'タスク編集画面'
 
+      expect(page).to have_content 'タスク編集画面'
       fill_in 'task[title]', with: 'editタスク'
       fill_in 'task[body]', with: 'editボディ'
       fill_in 'task[finish_at]', with: '2112-09-03'
       click_button '編集する'
 
       expect(page).to have_content 'タスクの編集が完了しました'
-      expect(page).to have_no_content 'showタスク'
-      expect(page).to have_no_content 'showボディ'
+      expect(page).to have_no_content 'MyString'
+      expect(page).to have_no_content 'MyText'
       expect(page).to have_content 'editタスク'
       expect(page).to have_content 'editボディ'
       expect(page).to have_content '2112/09/03'
@@ -164,13 +165,12 @@ RSpec.describe 'TaskSchedule', type: :system do
       fill_in 'task[body]', with: ''
       fill_in 'task[finish_at]', with: ''
       click_button '編集する'
-
       expect(page).to have_content '編集に失敗しました'
       expect(page).to have_content 'タスク名を入力してください'
       expect(page).to have_content 'タスク本文を入力してください'
       expect(page).to have_content '終了期限を入力してください'
-
       click_link '一覧に戻る'
+
       expect(page).to have_content 'showタスク'
       expect(page).to have_content 'showボディ'
     end
@@ -251,7 +251,6 @@ RSpec.describe 'TaskSchedule', type: :system do
     end
 
     it 'complete paginate' do
-
       expect(page).to have_content 'タスク5'
       expect(page).to have_no_content 'タスク6'
       click_link '次'
