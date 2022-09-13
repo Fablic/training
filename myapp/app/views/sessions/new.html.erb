@@ -1,0 +1,9 @@
+<div class='error-area'><%= alert %></div>
+<h1>Login</h1>
+<%= form_for(:session, url: login_path) do |f| %>
+  <p><%= I18n.t('user.email') %></p>
+  <%= f.email_field :email %>
+  <p><%= I18n.t('user.password') %></p>
+  <%= f.password_field :password %>
+  <%= f.submit I18n.t('button.login') %>
+<% end %>

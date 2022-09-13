@@ -1,12 +1,12 @@
 class TasksController < ApplicationController
   # Task List
   def index
-    @tasks = Task.includes(:user).all.page(params[:page])
+    @tasks = current_user.tasks.all.page(params[:page])
   end
 
   # Show Task
   def show
-    @task =Task.includes(:user).find(params[:id])
+    @task = current_user.tasks.find(params[:id])
   end
 
   # New Task
@@ -17,7 +17,7 @@ class TasksController < ApplicationController
   # New Task → Create Task
   def create
     @task = Task.new(task_params)
-
+    @task.user_id = current_user.id
     if @task.save
       redirect_to(tasks_url, notice: 'Create Task Success!!')
     else
@@ -27,13 +27,12 @@ class TasksController < ApplicationController
 
   # Edit Task
   def edit
-    @task = Task.find(params[:id])
+    @task = current_user.tasks.find(params[:id])
   end
 
   # Edit Task → Update Task
   def update
-    @task = Task.find(params[:id])
-
+    @task = current_user.tasks.find(params[:id])
     if @task.update(task_params)
       redirect_to tasks_url, notice: 'Update Task Success!!'
     else
@@ -43,15 +42,14 @@ class TasksController < ApplicationController
 
   # Destroy Task
   def destroy
-    @task = Task.find(params[:id])
-
+    @task = current_user.tasks.find(params[:id])
     if @task.destroy
       redirect_to(tasks_url, notice: 'Destroy Task Success!!')
     end
   end
 
   def search
-    @tasks = Task.includes(:user).where_title(params[:title]).where_status(Task.statuses[params[:status]]).page(params[:page])
+    @tasks = current_user.tasks.where_title(params[:title]).where_status(Task.statuses[params[:status]]).page(params[:page])
     render :index
   end
 
@@ -59,6 +57,6 @@ class TasksController < ApplicationController
 
   # Get Task Parameter
   def task_params
-    task = params.require(:task).permit(:title, :description, :label, :status, :user_id)
+    task = params.require(:task).permit(:title, :description, :label, :status)
   end
 end

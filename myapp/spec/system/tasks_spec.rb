@@ -1,7 +1,14 @@
 require 'rails_helper'
 
 describe 'タスク管理機能', type: :system do
-  let!(:user) { FactoryBot.create(:user) }
+  before do
+    # login
+    visit login_path
+    fill_in 'session[email]', with: user.email
+    fill_in 'session[password]', with: user.password
+    click_on I18n.t('button.login')
+  end
+  let!(:user) { FactoryBot.create(:user, password: 'password') }
 
   describe '一覧表示機能' do
     subject(:visit_tasks) { visit tasks_path }
@@ -10,7 +17,7 @@ describe 'タスク管理機能', type: :system do
       # タスクが表示される期待動作を共通化
 
       context 'タスクが1件存在する場合' do
-        let!(:task_1) { FactoryBot.create(:task, title: '最初のタスク', description: '最初のタスクを実施する', user_id: user.id, status: '1', label: '1', user_id: user.id) }
+        let!(:task_1) { FactoryBot.create(:task, title: '最初のタスク', description: '最初のタスクを実施する', status: '1', label: '1', user_id: user.id) }
 
         let(:tds){ all('tbody tr')[0].all('td') }
         it 'タスク名が表示される' do
@@ -69,10 +76,10 @@ describe 'タスク管理機能', type: :system do
     end
 
     describe '検索機能' do
-      let!(:task_A1) { FactoryBot.create(:task, title: 'A1', status: Task.statuses[:not_started]) }
-      let!(:task_A2) { FactoryBot.create(:task, title: 'A2', status: Task.statuses[:in_progress]) }
-      let!(:task_B1) { FactoryBot.create(:task, title: 'B1', status: Task.statuses[:not_started]) }
-      let!(:task_B2) { FactoryBot.create(:task, title: 'B2', status: Task.statuses[:in_progress]) }
+      let!(:task_A1) { FactoryBot.create(:task, title: 'A1', status: Task.statuses[:not_started], user_id: user.id) }
+      let!(:task_A2) { FactoryBot.create(:task, title: 'A2', status: Task.statuses[:in_progress], user_id: user.id) }
+      let!(:task_B1) { FactoryBot.create(:task, title: 'B1', status: Task.statuses[:not_started], user_id: user.id) }
+      let!(:task_B2) { FactoryBot.create(:task, title: 'B2', status: Task.statuses[:in_progress], user_id: user.id) }
 
       context '条件なし' do
         let(:conditions) { { title: '', status: '' } }
@@ -284,17 +291,17 @@ describe 'タスク管理機能', type: :system do
 
       context 'タスク11件' do
         before do
-          FactoryBot.create(:task, title: 'title_one')
-          FactoryBot.create(:task, title: 'title_two')
-          FactoryBot.create(:task, title: 'title_three')
-          FactoryBot.create(:task, title: 'title_four')
-          FactoryBot.create(:task, title: 'title_five')
-          FactoryBot.create(:task, title: 'title_six')
-          FactoryBot.create(:task, title: 'title_seven')
-          FactoryBot.create(:task, title: 'title_eight')
-          FactoryBot.create(:task, title: 'title_nine')
-          FactoryBot.create(:task, title: 'title_ten')
-          FactoryBot.create(:task, title: 'title_eleven')
+          FactoryBot.create(:task, title: 'title_one', user_id: user.id)
+          FactoryBot.create(:task, title: 'title_two', user_id: user.id)
+          FactoryBot.create(:task, title: 'title_three', user_id: user.id)
+          FactoryBot.create(:task, title: 'title_four', user_id: user.id)
+          FactoryBot.create(:task, title: 'title_five', user_id: user.id)
+          FactoryBot.create(:task, title: 'title_six', user_id: user.id)
+          FactoryBot.create(:task, title: 'title_seven', user_id: user.id)
+          FactoryBot.create(:task, title: 'title_eight', user_id: user.id)
+          FactoryBot.create(:task, title: 'title_nine', user_id: user.id)
+          FactoryBot.create(:task, title: 'title_ten', user_id: user.id)
+          FactoryBot.create(:task, title: 'title_eleven', user_id: user.id)
         end
 
         it 'ページングが表示されること 1' do
@@ -351,7 +358,6 @@ describe 'タスク管理機能', type: :system do
       end
     end
   end
-
   describe '詳細表示機能' do
     let!(:task_a) { FactoryBot.create(:task, title: '0 title', description: '最初のタスクを実施する', user_id: user.id, status: '1', label: '0 label') }
     subject(:visit_task_a) { visit task_path(task_a) }
@@ -403,7 +409,6 @@ describe 'タスク管理機能', type: :system do
         # 登録処理
         fill_in 'textarea1', with: '新規作成のテスト2'
         fill_in 'textarea2', with: '新規作成のテストを書く2'
-        select value = user.name, from: 'task[user_id]'
         expect { click_button 'submit' }.to change(Task, :count).by(1)
       end
     end

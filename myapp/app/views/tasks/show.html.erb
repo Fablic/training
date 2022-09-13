@@ -5,8 +5,6 @@
 <p><%= @task[:description] %></p>
 <p><%= I18n.t('task.label') %></p>
 <p><%= @task[:label] %></p>
-<p><%= I18n.t('task.user') %></p>
-<p><%= @task.user.name %></p>
 <p><%= I18n.t('task.status') %></p>
 <p><%= I18n.t("enums.task.status.#{@task.status}") %></p>
 <%= link_to('一覧に戻る', tasks_url) %>
