@@ -10,7 +10,10 @@ ja:
         status: ステータス
         explanation: 説明文
     errors:
-      count_message: "%{count}件のエラーが発生しました。"
+      task:
+        count_message: "%{count}件のエラーが発生しました。"
+        name:
+          too_long: 'タスク名は255文字以内で入力してください'
   enums:
     task:
       priority:
