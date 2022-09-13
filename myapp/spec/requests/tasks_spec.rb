@@ -11,7 +11,7 @@ RSpec.describe '/tasks', type: :request do
 
       expect(response).to have_http_status(:ok)
       expect(response).to render_template(:index)
-      expect(tasks.all? { |task| response.body.include?(task.name.to_s) }).to be_truthy
+      tasks.each { |task| expect(response.body).to include task.name.to_s }
     end
   end
 
@@ -23,7 +23,7 @@ RSpec.describe '/tasks', type: :request do
 
       expect(response).to have_http_status(:ok)
       expect(response).to render_template(:show)
-      expect(response.body.include?(task.name.to_s)).to be_truthy
+      expect(response.body).to include task.name.to_s
     end
   end
 
@@ -117,7 +117,7 @@ RSpec.describe '/tasks', type: :request do
 
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response).to render_template(:new)
-        expect(response.body.include?('Name is too long (maximum is 255 characters)')).to be_truthy
+        expect(response.body).to include 'Name is too long (maximum is 255 characters)'
       end
     end
   end
@@ -169,7 +169,7 @@ RSpec.describe '/tasks', type: :request do
 
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response).to render_template(:edit)
-        expect(response.body.include?('Name is too long (maximum is 255 characters)')).to be_truthy
+        expect(response.body).to include 'Name is too long (maximum is 255 characters)'
       end
     end
   end
