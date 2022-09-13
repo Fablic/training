@@ -8,7 +8,7 @@
 User.create!(
   personal_id: '1234',
   name: 'Test 太郎',
-  password_digest: 'pass'
+  password: 'pass'
 )
 User.create!(
   personal_id: 'abcde',
