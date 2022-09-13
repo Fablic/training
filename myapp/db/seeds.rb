@@ -13,5 +13,5 @@ User.create!(
 User.create!(
   personal_id: 'abcde',
   name: 'Test 二郎',
-  password_digest: 'pass'
+  password: 'pass'
 )
