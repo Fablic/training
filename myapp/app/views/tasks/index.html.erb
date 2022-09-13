@@ -6,9 +6,9 @@
 <div>
 <%= form_with url: search_path, method: :get, local: true do |f| %>
   <p>検索</p>
-    <span>タスク名</span>
+    <span><% I18n.t("task.title") %></span>
     <%= f.text_field :title %>
-    <span>ステータス</span>
+    <span><% I18n.t("task.status") %></span>
     <%= f.select :status, Task.statuses.keys.map { |k| [I18n.t("enums.task.status.#{k}"), k]} , include_blank: true %>
   <br>
   <%= f.submit '検索' %>

@@ -17,7 +17,7 @@ describe 'タスク管理機能', type: :system do
       # タスクが表示される期待動作を共通化
 
       context 'タスクが1件存在する場合' do
-        let!(:task_1) { FactoryBot.create(:task, title: '最初のタスク', description: '最初のタスクを実施する', status: '1', label: '1', user_id: user.id) }
+        let!(:task_1) { FactoryBot.create(:task, title: '最初のタスク', description: '最初のタスクを実施する', user_id: user.id, status: '1', label: '1') }
 
         let(:tds){ all('tbody tr')[0].all('td') }
         it 'タスク名が表示される' do
@@ -385,7 +385,7 @@ describe 'タスク管理機能', type: :system do
       context '一覧へボタンをクリックした場合' do
         it '一覧画面へ遷移できる' do
           visit_task_a
-          click_link '一覧に戻る'
+          click_link I18n.t('link.back')
           expect(page).to have_current_path tasks_path
         end
       end
@@ -427,7 +427,7 @@ describe 'タスク管理機能', type: :system do
       context '一覧へボタンをクリックした場合' do
         it '一覧画面へ遷移できる' do
           visit_new_task
-          click_link '一覧に戻る'
+          click_link I18n.t('link.back')
           expect(page).to have_current_path tasks_path
         end
       end
@@ -472,7 +472,7 @@ describe 'タスク管理機能', type: :system do
         context '一覧へボタンをクリックした場合' do
           it '一覧画面へ遷移できる' do
             visit_task_a_edit
-            click_link '一覧に戻る'
+            click_link I18n.t('link.back')
             expect(page).to have_current_path tasks_path
           end
         end
