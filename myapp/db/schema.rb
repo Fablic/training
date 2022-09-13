@@ -20,10 +20,12 @@ ActiveRecord::Schema.define(version: 2022_09_12_014806) do
   end
 
   create_table "task_labels", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
-    t.integer "task_id", null: false
-    t.integer "label_id", null: false
+    t.bigint "task_id"
+    t.bigint "label_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["label_id"], name: "index_task_labels_on_label_id"
+    t.index ["task_id"], name: "index_task_labels_on_task_id"
   end
 
   create_table "tasks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
@@ -34,11 +36,6 @@ ActiveRecord::Schema.define(version: 2022_09_12_014806) do
     t.datetime "deleted_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "label_id_1"
-    t.integer "label_id_2"
-    t.integer "label_id_3"
-    t.integer "label_id_4"
-    t.integer "label_id_5"
     t.index ["status"], name: "index_tasks_on_status"
     t.index ["title"], name: "index_tasks_on_title"
   end

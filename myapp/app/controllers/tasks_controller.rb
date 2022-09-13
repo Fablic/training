@@ -3,9 +3,7 @@
 class TasksController < ApplicationController
   # タスク一覧画面
   def index
-    # bullet worningが発生するため"eager_load(:labels).includes(:task_labels)"を記載
-    @tasks = login_user.tasks.eager_load(:labels).includes(:task_labels).where_title(params[:title]).where_status(params[:status]).where_label(params[:label])
-    @tasks = Task.where(id: @tasks.map { |t| t.id }).order('tasks.created_at desc').page(params[:page])
+    @tasks = login_user.tasks.eager_load(:labels).eager_load(:task_labels).where(id: login_user.tasks.get_ids_by_user(params[:title], params[:label], params[:status])).order('tasks.created_at desc').page(params[:page])
   end
 
   # タスク作成画面
@@ -31,11 +29,12 @@ class TasksController < ApplicationController
   def show
     @task = login_user.tasks.find(params[:id])
     if @task.labels.present?
-      @label1 = @task.labels[0].name if @task.labels.size > 0
-      @label2 = @task.labels[1].name if @task.labels.size > 1
-      @label3 = @task.labels[2].name if @task.labels.size > 2
-      @label4 = @task.labels[3].name if @task.labels.size > 3
-      @label5 = @task.labels[4].name if @task.labels.size > 4
+      @label_names = []
+      @label_names.push(@task.labels[0].name) if @task.labels.size > 0
+      @label_names.push(@task.labels[1].name) if @task.labels.size > 1
+      @label_names.push(@task.labels[2].name) if @task.labels.size > 2
+      @label_names.push(@task.labels[3].name) if @task.labels.size > 3
+      @label_names.push(@task.labels[4].name) if @task.labels.size > 4
     end
   end
 

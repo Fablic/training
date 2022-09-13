@@ -17,7 +17,6 @@ tasks
 | content | varchar(1024) | | |
 | user_id | integer | | |
 | status | varchar(1) | not null | '1' |
-| label | varchar(64) | | |
 | deleted_at | datetime | | |
 | created_at | datetime | | |
 | updated_at | datetime | | |
@@ -26,7 +25,7 @@ tasks
 1:未着手、2:着手中、3:完了
 ※結合キー
 user_id:N　→ users.id:1
-id:1　→ labels.task_id:N
+id:1　→ task_labels.task_id:N
 <br>
 
 labels
@@ -34,13 +33,23 @@ labels
 | ---- | ---- | ---- | ---- |
 | id | integer(20) | not null | auto_increment |
 | name | varchar(64) | not null | '' |
-| task_id | integer | | |
 | deleted_at | datetime | | |
 | created_at | datetime | | |
 | updated_at | datetime | | |
 
 ※結合キー
-task_id:N　→ tasks.id:1
+id:1　→ task_labels.label_id:N
+<br>
+
+task_labels
+| column_name | type | null | default |
+| ---- | ---- | ---- | ---- |
+| id | integer(20) | not null | auto_increment |
+| task_id | integer(20) | not null | auto_increment |
+| label_id | integer(20) | not null | auto_increment |
+| deleted_at | datetime | | |
+| created_at | datetime | | |
+| updated_at | datetime | | |
 <br>
 
 users
@@ -70,6 +79,13 @@ URL:
 
 表示：
 
+ラベル管理エリア
+| item | layer | name | source | type | loop | others |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| button　| 1 | ラベル管理ボタン |  | ボタン | | ラベル一覧画面へ遷移 |
+
+<br>
+
 タスク作成エリア
 | item | layer | name | source | type | loop | others |
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
@@ -80,8 +96,9 @@ URL:
 検索エリア
 | item | layer | name | source | type | loop | others |
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
-| select | 1 | ラベル | tasks.label | 文字列 |  | tasks.label全て（重複除外）、五十音順 |
-| text | 1 | タイトル検索フォーム | | 文字列 | | 部分一致、128文字まで |
+| text | 1 | タイトル検索フォーム | title | 文字列 | | 部分一致、128文字まで |
+| select | 1 | 状況 | status | 文字列 |  | ステータス |
+| select | 1 | ラベル | label | 文字列 |  | ラベル |
 | button　| 1 | 検索ボタン |  | ボタン | | タスク一覧を条件に応じて絞り込み |
 
 <br>
@@ -90,10 +107,10 @@ URL:
 | item | layer | name | source | type | loop | others |
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
 | - | 1 | タスク | tasks + users | オブジェクト | ○ | tasksとusersを結合したオブジェクトリスト、作成日順 |
-| label | 2 | タイトル | tasks.title | 文字列 | | |
-| label | 2 | ラベル | labels.name | 文字列 | | 複数表示 |
-| label | 2 | 状況 | tasks.status | 文字列 | | コードを文字列へ変換して表示 1:'未着手'、2:'着手中'、3:'完了' |
-| button | 2 | 詳細ボタン |  | ボタン | | タスク詳細画面へ遷移 |
+| label | 1 | タイトル | tasks.title | 文字列 | | |
+| label | 1 | ラベル | labels.name | 文字列 | | 複数表示 |
+| label | 1 | 状況 | tasks.status | 文字列 | | コードを文字列へ変換して表示 1:'未着手'、2:'着手中'、3:'完了' |
+| button | 1 | 詳細ボタン |  | ボタン | | タスク詳細画面へ遷移 |
 
 <br>
 
@@ -108,7 +125,7 @@ URL:
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
 | text | 1 | タイトル | tasks.title | 文字列 | | 128文字まで |
 | text | 1 | 内容 | tasks.content | 文字列 | | 1024文字まで |
-| text | 1 | ラベル | labels.name | 文字列 | | 64文字まで 5件表示 |
+| select | 1 | ラベル | labels.name | 文字列 | | 64文字まで 5件表示 |
 | button | 1 | 作成ボタン |  | ボタン | | タスク作成 |
 | button | 1 | 一覧へボタン |  | ボタン | | タスク一覧画面へ遷移 |
 
@@ -149,6 +166,68 @@ URL:
 | select | 1 | 状況 | TaskStatus(Enum) | 文字列 | | TaskStatus(Enum)の全てを表示※未着手、着手中、完了の順 |
 | button | 1 | 更新ボタン |  | ボタン | | データを更新 |
 | button | 1 | 詳細へボタン |  | ボタン | | タスク詳細画面へ遷移 |
+
+<br>
+
+【ラベル一覧画面】
+URL:
+　/labels
+
+表示：
+
+ラベル一覧エリア
+| item | layer | name | source | type | loop | others |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| label | 1 | ラベル名 | labels.name | 文字列 | | |
+| button | 1 | 詳細ボタン |  | ボタン | | タスク詳細画面へ遷移 |
+
+<br>
+
+【ラベル作成画面】
+URL:
+　/label/create
+
+表示：
+
+ラベル作成
+| item | layer | name | source | type | loop | others |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| text | 1 | ラベル名 | labels.name | 文字列 | | 64文字まで |
+| button | 1 | 作成ボタン |  | ボタン | | ラベル作成 |
+| button | 1 | 一覧へボタン |  | ボタン | | ラベル一覧画面へ遷移 |
+
+<br>
+
+【ラベル詳細画面】
+URL:
+　/label/details/{label.id}
+
+表示：
+
+ラベル詳細
+| item | layer | name | source | type | loop | others |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| label | 1 | ラベル名 | labels.name | 文字列 | | |
+| label | 1 | 作成日 | labels.created_at | 文字列 | | |
+| label | 1 | 更新日 | labels.updated_at | 文字列 | | |
+| button | 1 | 編集ボタン |  | ボタン | | ラベル編集画面へ遷移 |
+| button | 1 | 削除ボタン |  | ボタン | | ラベル削除 |
+| button | 1 | 一覧へボタン |  | ボタン | | ラベル一覧画面へ遷移 |
+
+<br>
+
+【ラベル編集画面】
+URL:
+　/label/edit/{label.id}
+
+表示：
+
+ラベル編集
+| item | layer | name | source | type | loop | others |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| text | 1 | ラベル名 | labels.name | 文字列 | | 64文字まで |
+| button | 1 | 更新ボタン |  | ボタン | | データを更新 |
+| button | 1 | 一覧へボタン |  | ボタン | | ラベル一覧画面へ遷移 |
 
 <br>
 
