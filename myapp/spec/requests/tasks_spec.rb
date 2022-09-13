@@ -68,7 +68,6 @@ RSpec.describe '/tasks', type: :request do
 
         expect(response).to have_http_status(:found)
         expect(response).to redirect_to(task_url(Task.last))
-        expect(response.body.include?("/tasks/#{Task.last.id}")).to be_truthy
       end
     end
 
@@ -95,7 +94,6 @@ RSpec.describe '/tasks', type: :request do
 
         expect(response).to have_http_status(:found)
         expect(response).to redirect_to(task_url(Task.last))
-        expect(response.body.include?("/tasks/#{Task.last.id}")).to be_truthy
       end
     end
 
@@ -150,7 +148,6 @@ RSpec.describe '/tasks', type: :request do
 
         expect(response).to have_http_status(:found)
         expect(response).to redirect_to(task_url(task.reload))
-        expect(response.body.include?("/tasks/#{task.reload.id}")).to be_truthy
       end
     end
 
