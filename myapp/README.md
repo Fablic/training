@@ -34,13 +34,13 @@
 * ユーザログイン画面
 
 ## モデル（テーブル）
-### Tasks
+### tasks
 column_name | type    |
 --          | --      |
 id          | integer | 
 status      | integer |
 priority    | integer | 
-label       | string  |
+label_id    | integer |
 title       | string  |
 description | text    |
 created_by  | integer |
@@ -52,7 +52,9 @@ due_date    | datetime|
 
 ※ created_by:N → users.id:1 
 
-### Users
+※ label_id:N → labels.id:1 
+
+### users
 column_name     | type    |
 --              | --      |
 id              | integer |
@@ -60,4 +62,12 @@ name            | string  |
 email           | string  |
 password_digest | string  |
 
-※ id:1 → created_by:N
+※ id:1 → tasks.created_by:N
+
+### labels
+column_name     | type    |
+--              | --      |
+id              | integer |
+name            | string  |
+
+※ id:1 → tasks.label_id:N
