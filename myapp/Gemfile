@@ -21,6 +21,7 @@ group :development, :test do
   gem 'dotenv-rails', require: 'dotenv/rails-now'
   gem 'factory_bot_rails'
   gem 'pry-rails'
+  gem 'rails-controller-testing'
   gem 'rspec-rails', '~> 5.1.2'
   gem 'rubocop', require: false
   gem 'rubocop-rails', require: false
