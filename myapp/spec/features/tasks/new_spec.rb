@@ -48,7 +48,7 @@ RSpec.feature '/task/new' do
 
       expect { click_button I18n.t('helpers.submit.create') }.to change(Task, :count).by(0)
       expect(current_path).to eq '/tasks'
-      expect(page).to have_content I18n.t('activerecord.errors.count_message', count: 1)
+      expect(page).to have_content I18n.t('activerecord.errors.task.count_message', count: 1)
       expect(page).to have_content 'タスク名を入力してください'
     end
   end

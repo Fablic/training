@@ -116,7 +116,7 @@ RSpec.describe '/tasks', type: :request do
         post tasks_url, params: invalid_attributes
 
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.body).to include 'Name is too long (maximum is 255 characters)'
+        expect(response.body).to include I18n.t('activerecord.errors.task.name.too_long')
       end
     end
   end
@@ -167,7 +167,7 @@ RSpec.describe '/tasks', type: :request do
         put task_url(task), params: invalid_attributes
 
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.body).to include 'Name is too long (maximum is 255 characters)'
+        expect(response.body).to include I18n.t('activerecord.errors.task.name.too_long')
       end
     end
   end

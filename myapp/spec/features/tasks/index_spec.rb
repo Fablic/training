@@ -22,7 +22,7 @@ RSpec.feature '/tasks or /' do
     end
 
     feature 'clicks link buttons' do
-      given(:task) { tasks.first }
+      given!(:task) { create_list(:task, 2).first }
 
       scenario 'renders #new' do
         visit root_path
