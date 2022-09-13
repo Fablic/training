@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.feature '/tasks or /' do
   feature '#index' do
     feature 'tasks' do
-      let!(:tasks) { create_list(:task, 11) }
+      given!(:tasks) { create_list(:task, 11) }
 
       scenario 'correctly displays tasks' do
         visit root_path

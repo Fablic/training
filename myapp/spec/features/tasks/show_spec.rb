@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.feature '/task/:id' do
   feature '#show' do
-    let(:task) { create(:task) }
+    given(:task) { create(:task) }
 
     scenario 'correctly shows task' do
       visit task_path(task)
