@@ -25,6 +25,8 @@
 
 ## ビュー
 * タスク一覧画面
+ <img width="1000" alt="Screen Shot 2022-09-13 at 11 16 59" src="https://user-images.githubusercontent.com/97163413/189811102-88c1ec32-4cee-4a43-8a46-3c5e5ed0e820.png">
+
 * タスク新規作成画面
 * タスク編集画面
 * タスク詳細画面
@@ -36,7 +38,7 @@
 column_name | type    |
 --          | --      |
 id          | integer | 
-state       | integer |
+status      | integer |
 priority    | integer | 
 label       | string  |
 title       | string  |
@@ -44,35 +46,18 @@ description | text    |
 created_by  | integer |
 due_date    | datetime|
 
+※ status 1:未着手、2:着手中、3:完了
+
+※ priority 1:低、2:中、3:高
+
+※ created_by:N → users.id:1 
+
 ### Users
-column_name | type    |
---          | --      |
-id          | integer |
-name        | string  |
-email       | string  |
-password    | string  |
+column_name     | type    |
+--              | --      |
+id              | integer |
+name            | string  |
+email           | string  |
+password_digest | string  |
 
----
-
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+※ id:1 → created_by:N
