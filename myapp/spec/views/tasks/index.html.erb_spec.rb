@@ -3,11 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'tasks/index', type: :view do
-  let!(:tasks) { create_list(:task, 4) }
-
-  before(:each) do
-    assign(:tasks, tasks)
-  end
+  let!(:tasks) { assign(:tasks, create_list(:task, 4)) }
 
   it 'renders a list of tasks' do
     render

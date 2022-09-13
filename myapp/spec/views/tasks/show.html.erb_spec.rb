@@ -3,11 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'tasks/show', type: :view do
-  let!(:task) { create(:task) }
-
-  before(:each) do
-    @task = assign(:task, task)
-  end
+  let!(:task) { assign(:task, create(:task)) }
 
   it 'renders attributes in <p>' do
     render
