@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   has_many :tasks, dependent: :delete_all
   validates :name, presence: true
-  validates :personal_id, presence: true, uniqueness: true
+  validates :personal_id, presence: true, uniqueness: { case_sensitive: true }
   validates :password, presence: true
   has_secure_password
 end
