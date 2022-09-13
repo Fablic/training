@@ -10,7 +10,7 @@ RSpec.feature '/task/new' do
       expect(current_path).to eq '/tasks/new'
     end
 
-    scenario 'redirects to #index' do
+    scenario 'renders #index' do
       visit new_task_path
       click_on I18n.t('transition_destination.index')
 

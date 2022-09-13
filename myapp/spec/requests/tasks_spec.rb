@@ -3,37 +3,47 @@
 require 'rails_helper'
 
 RSpec.describe '/tasks', type: :request do
+  let(:task_input_columns) { %w[name end_date priority status explanation] }
+
   describe 'GET /index' do
     let!(:tasks) { create_list(:task, 11) }
 
     it 'renders a successful response' do
       get tasks_url
-      expect(response).to have_http_status(200)
+
+      expect(response).to have_http_status(:ok)
+      tasks.each { |task| expect(response.body).to include task.name.to_s }
     end
   end
 
   describe 'GET /show' do
-    let!(:task) { create(:task) }
+    let(:task) { create(:task) }
 
     it 'renders a successful response' do
       get task_url(task)
-      expect(response).to have_http_status(200)
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include task.name.to_s
     end
   end
 
   describe 'GET /new' do
     it 'renders a successful response' do
       get new_task_url
-      expect(response).to have_http_status(200)
+
+      expect(response).to have_http_status(:ok)
+      task_input_columns.each { |column| expect(response.body).to include "task[#{column}]" }
     end
   end
 
   describe 'GET /edit' do
-    let!(:task) { create(:task) }
+    let(:task) { create(:task) }
 
     it 'renders a successful response' do
       get edit_task_url(task)
-      expect(response).to have_http_status(200)
+
+      expect(response).to have_http_status(:ok)
+      task_input_columns.each { |column| expect(response.body).to include "task[#{column}]" }
     end
   end
 
@@ -50,13 +60,13 @@ RSpec.describe '/tasks', type: :request do
       end
 
       it 'creates a new Task' do
-        expect do
-          post tasks_url, params:
-        end.to change(Task, :count).by(1)
+        expect { post tasks_url, params: }.to change(Task, :count).by(1)
       end
 
       it 'redirects to the created task' do
         post tasks_url, params: params
+
+        expect(response).to have_http_status(:found)
         expect(response).to redirect_to(task_url(Task.last))
       end
     end
@@ -67,20 +77,22 @@ RSpec.describe '/tasks', type: :request do
       end
 
       it 'creates a new Task' do
-        expect do
-          post tasks_url, params:
-        end.to change(Task, :count).by(1)
-        expect(Task.last).to have_attributes({
-                                               'name' => 'new_task!',
-                                               'end_date' => nil,
-                                               'priority' => 'normal',
-                                               'status' => 'untouched',
-                                               'explanation' => nil
-                                             })
+        expect { post tasks_url, params: }.to change(Task, :count).by(1)
+        expect(Task.last).to have_attributes(
+          {
+            'name' => 'new_task!',
+            'end_date' => nil,
+            'priority' => 'normal',
+            'status' => 'untouched',
+            'explanation' => nil
+          }
+        )
       end
 
       it 'redirects to the created task' do
         post tasks_url, params: params
+
+        expect(response).to have_http_status(:found)
         expect(response).to redirect_to(task_url(Task.last))
       end
     end
@@ -97,21 +109,21 @@ RSpec.describe '/tasks', type: :request do
       end
 
       it 'does not create a new Task' do
-        expect do
-          post tasks_url, params: invalid_attributes
-        end.to change(Task, :count).by(0)
+        expect { post tasks_url, params: invalid_attributes }.to change(Task, :count).by(0)
       end
 
       it "renders a successful response (i.e. to display the 'new' template)" do
         post tasks_url, params: invalid_attributes
-        expect(response).to have_http_status(422)
+
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.body).to include 'Name is too long (maximum is 255 characters)'
       end
     end
   end
 
   describe 'PUT /update' do
     context 'with valid parameters' do
-      let!(:task) { create(:task) }
+      let(:task) { create(:task) }
 
       let(:new_attributes) do
         {
@@ -133,12 +145,13 @@ RSpec.describe '/tasks', type: :request do
       it 'redirects to the task' do
         put task_url(task), params: { task: new_attributes }
 
+        expect(response).to have_http_status(:found)
         expect(response).to redirect_to(task_url(task.reload))
       end
     end
 
     context 'with invalid parameters' do
-      let!(:task) { create(:task) }
+      let(:task) { create(:task) }
 
       let(:invalid_attributes) do
         { task: {
@@ -153,7 +166,8 @@ RSpec.describe '/tasks', type: :request do
       it "renders a successful response (i.e. to display the 'edit' template)" do
         put task_url(task), params: invalid_attributes
 
-        expect(response).to have_http_status(422)
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.body).to include 'Name is too long (maximum is 255 characters)'
       end
     end
   end
@@ -162,14 +176,13 @@ RSpec.describe '/tasks', type: :request do
     let!(:task) { create(:task) }
 
     it 'destroys the requested task' do
-      expect do
-        delete task_url(task)
-      end.to change(Task, :count).by(-1)
+      expect { delete task_url(task) }.to change(Task, :count).by(-1)
     end
 
     it 'redirects to the tasks list' do
       delete task_url(task)
 
+      expect(response).to have_http_status(:found)
       expect(response).to redirect_to(tasks_url)
     end
   end

@@ -4,9 +4,9 @@ require 'rails_helper'
 
 RSpec.feature '/task/:id/edit' do
   feature '#edit' do
-    let!(:task) { create(:task) }
+    let(:task) { create(:task) }
 
-    scenario 'redirects to #show' do
+    scenario 'renders #show' do
       visit edit_task_path(task)
       click_on I18n.t('transition_destination.show')
 
@@ -14,7 +14,7 @@ RSpec.feature '/task/:id/edit' do
       expect(page).to have_content task.name.to_s
     end
 
-    scenario 'redirects to #index' do
+    scenario 'renders #index' do
       visit edit_task_path(task)
       click_on I18n.t('transition_destination.index')
 
@@ -39,7 +39,7 @@ RSpec.feature '/task/:id/edit' do
       expect(page).to have_content I18n.t('crud_messages.update', model_name: I18n.t('activerecord.models.task'))
     end
 
-    scenario 'does not create no name task' do
+    scenario 'does not update with empty name' do
       visit edit_task_path(task)
 
       expect(current_path).to eq "/tasks/#{task.id}/edit"
