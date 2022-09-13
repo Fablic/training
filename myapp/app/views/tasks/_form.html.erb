@@ -1,4 +1,4 @@
-<% if @task_form.error_messages.present? %>
+<% if @task_form.error_messages.any? %>
   <div class='error-area'>
     <ul>
       <% @task_form.error_messages.each do |msg| %>
