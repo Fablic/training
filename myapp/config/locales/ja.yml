@@ -13,6 +13,11 @@ ja:
         body: 'タスク本文'
         finish_at: '終了期限'
         user: '作成者'
+      user:
+        name: 'ユーザ名'
+        personal_id: 'ユーザID'
+        password: 'パスワード'
+        password_confirmation: 'パスワード(確認)'
 
   task_schedule:
     index:
@@ -65,6 +70,55 @@ ja:
       success: "タスクを削除しました"
       danger: "削除に失敗しました"
 
+  users:
+    index:
+      title: 'ユーザ管理画面'
+      new: '新規登録'
+      name: 'ユーザ名'
+      id: 'ユーザID'
+      tasks: '作成したタスク'
+      edit: '編集'
+      show: '詳細'
+      delete: '削除'
+      delete_confirm: '削除します。よろしいですか(作成したタスクも一緒に削除されます)'
+      logout: 'ログアウト'
+
+    userform:
+      name: 'ユーザ名'
+      id: 'ユーザID'
+      pass: 'パスワード'
+      pass_second: 'パスワード(確認)'
+      index: '一覧に戻る'
+
+    new:
+      title: 'タスク登録画面'
+      create: '登録する'
+
+    show:
+      title: 'ユーザ詳細画面'
+      name: 'ユーザ名'
+      id: 'ユーザID'
+      list: '作成タスク一覧'
+      task_name: 'タスク名'
+      body: 'タスク本文'
+      finish: '終了期限'
+      status: 'ステータス'
+      index: '一覧に戻る'
+
+    edit:
+      title: 'ユーザ編集画面'
+      edit: '編集する'
+
+    update:
+      success: "タスクの編集が完了しました"
+      danger: "編集に失敗しました"
+    create:
+      success: "タスクの登録が完了しました"
+      danger: "登録に失敗しました"
+    destroy:
+      success: "タスクを削除しました"
+      danger: "削除に失敗しました"
+
   enums:
     task:
       status:
@@ -75,6 +129,11 @@ ja:
   sessions:
     new:
       title: 'ログイン画面'
+      change: '管理者ログインへ→'
+    new_admin:
+      title: 'ログイン画面(管理者)'
+      change: 'タスクログインへ→'
+    loginform:
       id: 'ログインID'
       pass: 'パスワード'
       login: 'ログイン'

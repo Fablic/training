@@ -2,5 +2,5 @@
 <% flash.each do |message_type, message| %>
   <%= message %>
 <% end %>
-<%= render partial: 'taskform', locals: {user: @user, prefix: users_path,
+<%= render partial: 'userform', locals: {user: @user, prefix: users_path,
   button: t('.create')} %>
