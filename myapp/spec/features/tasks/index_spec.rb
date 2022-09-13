@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.feature '/tasks or /' do
   feature '#index' do
     feature 'tasks' do
-      let!(:tasks) { create_list(:task, 11) }
+      given!(:tasks) { create_list(:task, 11) }
 
       scenario 'correctly displays tasks' do
         visit root_path
@@ -22,16 +22,16 @@ RSpec.feature '/tasks or /' do
     end
 
     feature 'clicks link buttons' do
-      let!(:task) { create(:task) }
+      given!(:task) { create_list(:task, 2).first }
 
-      scenario 'redirects to #new' do
+      scenario 'renders #new' do
         visit root_path
         click_on I18n.t('transition_destination.create')
         expect(current_path).to eq '/tasks/new'
         expect(page).to have_content 'タスクの新規作成'
       end
 
-      scenario 'redirects to #show' do
+      scenario 'renders #show' do
         visit root_path
         first(:link, I18n.t('transition_destination.show')).click
 

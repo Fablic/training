@@ -3,11 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'tasks/new', type: :view do
-  let!(:task) { build(:task) }
-
-  before(:each) do
-    assign(:task, task)
-  end
+  let!(:task) { assign(:task, build(:task)) }
 
   it 'renders new task form' do
     render
