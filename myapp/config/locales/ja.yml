@@ -33,7 +33,7 @@ ja:
   activerecord:
     models:
       task: タスク
-      task: ユーザー
+      user: ユーザー
     attributes:
       task:
         title: タイトル
