@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe '/tasks', type: :request do
+  let(:task_input_columns) { %w[name end_date priority status explanation] }
+
   describe 'GET /index' do
     let!(:tasks) { create_list(:task, 11) }
 
@@ -10,7 +12,6 @@ RSpec.describe '/tasks', type: :request do
       get tasks_url
 
       expect(response).to have_http_status(:ok)
-      expect(response).to render_template(:index)
       tasks.each { |task| expect(response.body).to include task.name.to_s }
     end
   end
@@ -22,7 +23,6 @@ RSpec.describe '/tasks', type: :request do
       get task_url(task)
 
       expect(response).to have_http_status(:ok)
-      expect(response).to render_template(:show)
       expect(response.body).to include task.name.to_s
     end
   end
@@ -32,7 +32,7 @@ RSpec.describe '/tasks', type: :request do
       get new_task_url
 
       expect(response).to have_http_status(:ok)
-      expect(response).to render_template(:new)
+      task_input_columns.each { |column| expect(response.body).to include "task[#{column}]" }
     end
   end
 
@@ -43,7 +43,7 @@ RSpec.describe '/tasks', type: :request do
       get edit_task_url(task)
 
       expect(response).to have_http_status(:ok)
-      expect(response).to render_template(:edit)
+      task_input_columns.each { |column| expect(response.body).to include "task[#{column}]" }
     end
   end
 
@@ -116,7 +116,6 @@ RSpec.describe '/tasks', type: :request do
         post tasks_url, params: invalid_attributes
 
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response).to render_template(:new)
         expect(response.body).to include 'Name is too long (maximum is 255 characters)'
       end
     end
@@ -168,7 +167,6 @@ RSpec.describe '/tasks', type: :request do
         put task_url(task), params: invalid_attributes
 
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response).to render_template(:edit)
         expect(response.body).to include 'Name is too long (maximum is 255 characters)'
       end
     end
