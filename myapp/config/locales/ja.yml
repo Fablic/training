@@ -91,7 +91,7 @@ ja:
       index: '一覧に戻る'
 
     new:
-      title: 'タスク登録画面'
+      title: 'ユーザ登録画面'
       create: '登録する'
 
     show:
@@ -110,13 +110,13 @@ ja:
       edit: '編集する'
 
     update:
-      success: "タスクの編集が完了しました"
+      success: "ユーザの編集が完了しました"
       danger: "編集に失敗しました"
     create:
-      success: "タスクの登録が完了しました"
+      success: "ユーザの登録が完了しました"
       danger: "登録に失敗しました"
     destroy:
-      success: "タスクを削除しました"
+      success: "ユーザを削除しました"
       danger: "削除に失敗しました"
 
   enums:

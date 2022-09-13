@@ -26,7 +26,7 @@ class SessionsController < ApplicationController
     if request.referer&.include?('/admin/')
       redirect_to admin_login_path
     else
-      render login_path
+      redirect_to login_path
     end
   end
 end
