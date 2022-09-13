@@ -1,20 +1,21 @@
 # README
 
 ## アプリケーション名
-タスク管理システム  
+タスク管理システム
 <br>
 
 ## 画面設計
-【タスク一覧画面】  
+【タスク一覧画面】
 
 URL
-http://localhost:3001  
+http://localhost:3001
 
 タスク一覧エリア
 | item | layer | name | source | type | loop | others |
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
 | - | 1 | タスク | tasks | オブジェクト | ○ | |
 | label | 2 | タスク名 | tasks.name | 文字列 | | |
+| label | 2 | ステータス | tasks.status | 文字列 | | コードを文字列へ変換して表示 1:'未着手'、2:'実施中'、3:'完了' |
 | button | 2 | 詳細 |  | ボタン | | タスク詳細画面へ遷移 |
 <br>
 
@@ -32,15 +33,16 @@ http://localhost:3001
 | button　| 1 | 検索ボタン | | ボタン | | タスク一覧を条件に応じて絞り込み |
 <br>
 
-【タスク詳細画面】  
+【タスク詳細画面】
 
 URL
-http://localhost:3001/tasks/{task.id}  
+http://localhost:3001/tasks/{task.id}
 
 | item | layer | name | source | type | loop | others |
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
 | label | 1 | タスク名 | tasks.title | 文字列 | | |
 | label | 1 | 詳細 | tasks.description | 文字列 | | |
+| label | 1 | ステータス | tasks.status | 文字列 | | コードを文字列へ変換して表示 1:'未着手'、2:'実施中'、3:'完了' |
 | label | 1 | 登録日時 | tasks.created_at | 文字列 | | |
 | label | 1 | 更新日時 | tasks.updated_at | 文字列 | | |
 | button | 1 | 編集 |  | ボタン | | タスク編集画面へ遷移 |
@@ -48,7 +50,7 @@ http://localhost:3001/tasks/{task.id}
 | button | 1 | 戻る |  | ボタン | | タスク一覧画面へ遷移 |
 <br>
 
-【タスク作成画面】  
+【タスク作成画面】
 
 URL
 http://localhost:3001/tasks/new
@@ -57,19 +59,22 @@ http://localhost:3001/tasks/new
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
 | text | 1 | タスク名 | | 文字列 | | |
 | text | 1 | 詳細 | | 文字列 | | |
+| select | 1 | ステータス | プルダウン | 文字列 | | 1:'未着手'、2:'実施中'、3:'完了' をリスト表示 |
+| select | 1 | 担当者 | users.name | プルダウン | | usersテーブルの全ユーザをリスト表示 |
 | button | 1 | タスクを作成 |  | ボタン | | タスク作成 |
 | button | 1 | 戻る |  | ボタン | | タスク一覧画面へ遷移 |
 <br>
 
-【タスク編集画面】  
+【タスク編集画面】
 
 URL
-http://localhost:3001/tasks/{task.id}/edit  
+http://localhost:3001/tasks/{task.id}/edit
 
 | item | layer | name | source | type | loop | others |
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
 | text | 1 | タスク名 | tasks.name | 文字列 | | |
 | text | 1 | 詳細 | tasks.description | 文字列 | | |
+| select | 1 | ステータス | プルダウン | 文字列 | | 1:'未着手'、2:'実施中'、3:'完了' をリスト表示 |
 | button | 1 | タスクを更新 |  | ボタン | | データを更新 |
 | button | 1 | 詳細へ |  | ボタン | | タスク詳細画面へ遷移 |
 <br>
@@ -82,6 +87,16 @@ column_name | type | null | default
 | id | integer | not null | auto increment |
 | name | varchar | | |
 | description | varchar | | |
+| status | integer | | |
+| created_at | datetime | | |
+| updated_at | datetime | | |
+<br>
+users
+column_name | type | null | default
+| ---- | ---- | ---- | ---- |
+| id | integer | not null | auto increment |
+| user_name | varchar | | |
+| password | varchar | | |
 | created_at | datetime | | |
 | updated_at | datetime | | |
 <br>

@@ -5,3 +5,16 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+
+# user = User.new
+# user.name = '一真'
+# user.save
+
+Task.delete_all
+User.delete_all
+
+3.times do |i|
+    user = User.create(name: "具志堅一真#{i + 1}")
+    taks = Task.create(name: "タスク番号#{i + 1}", description: '動作確認', status: 1, user_id: user.id)
+end
