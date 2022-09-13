@@ -7,4 +7,4 @@
 <p><%= @task[:label] %></p>
 <p><%= I18n.t('task.status') %></p>
 <p><%= I18n.t("enums.task.status.#{@task.status}") %></p>
-<%= link_to('一覧に戻る', tasks_url) %>
+<%= link_to(I18n.t('link.back'), tasks_url) %>

@@ -6,9 +6,9 @@
 <div>
 <%= form_with url: search_path, method: :get, local: true do |f| %>
   <p>検索</p>
-    <p>タスク名</p>
+    <span><% I18n.t("task.title") %></span>
     <%= f.text_field :title %>
-    <p>ステータス</p>
+    <span><% I18n.t("task.status") %></span>
     <%= f.select :status, Task.statuses.keys.map { |k| [I18n.t("enums.task.status.#{k}"), k]} , include_blank: true %>
   <br>
   <%= f.submit '検索' %>
@@ -32,11 +32,12 @@
           <td><span><%= task.title %></span></td>
           <td><span><%= task.label %></span></td>
           <td><span><%= I18n.t("enums.task.status.#{task.status}") %></span></td>
-          <td><%= link_to(I18n.t('button.detail'), task_path(task), {id: "show#{task.id}" ,class: 'btn_a'}) %></td>
-          <td><%= link_to(I18n.t('button.update'), edit_task_path(task), {id: "update#{task.id}" ,class: 'btn_a'}) %></td>
-          <td><%= link_to(I18n.t('button.delete'), task_path(task), method: :delete, id: "delete#{task.id}" ,class: 'btn_a') %></td>
+          <td><%= link_to(I18n.t('button.detail'), task_path(task), {id: "show#{task.id}", class: 'btn_a'}) %></td>
+          <td><%= link_to(I18n.t('button.update'), edit_task_path(task), {id: "update#{task.id}", class: 'btn_a'}) %></td>
+          <td><%= link_to(I18n.t('button.delete'), task_path(task), method: :delete, id: "delete#{task.id}", class: 'btn_a') %></td>
         </tr>
       <% end %>
     </tbody>
 </table>
 <div class='pagenation'><%= paginate(@tasks) %></div>
+<%= button_to(I18n.t('link.logout'), logout_path, method: :delete) %>

@@ -8,12 +8,5 @@
 
 # Task、User 初期データ
 10.times do |n|
-    user = User.create!(name: "name#{n}")
-    Task.create!(
-      title: "#{n} title",
-      description: "#{n} descriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescription",
-      user_id: user[:id],
-      status: '1',
-      label: "#{n} label"
-    )
+  user = User.create!(name: "ユーザ#{n + 1}", password: "test#{n + 1}", email: "email#{n + 1}@example.com")
 end

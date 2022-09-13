@@ -1,6 +1,14 @@
 require 'rails_helper'
 
 describe 'タスク管理機能', type: :system do
+  before do
+    # login
+    visit login_path
+    fill_in 'session[email]', with: user.email
+    fill_in 'session[password]', with: user.password
+    click_on I18n.t('button.login')
+  end
+  let!(:user) { FactoryBot.create(:user, password: 'password') }
 
   describe '一覧表示機能' do
     subject(:visit_tasks) { visit tasks_path }
@@ -9,7 +17,7 @@ describe 'タスク管理機能', type: :system do
       # タスクが表示される期待動作を共通化
 
       context 'タスクが1件存在する場合' do
-        let!(:task_1) { FactoryBot.create(:task, title: '最初のタスク', description: '最初のタスクを実施する', user_id: '1', status: '1', label: '1') }
+        let!(:task_1) { FactoryBot.create(:task, title: '最初のタスク', description: '最初のタスクを実施する', user_id: user.id, status: '1', label: '1') }
 
         let(:tds){ all('tbody tr')[0].all('td') }
         it 'タスク名が表示される' do
@@ -24,8 +32,8 @@ describe 'タスク管理機能', type: :system do
       end
 
       context 'タスクが2件(複数)存在する場合' do
-        let!(:task_1) { FactoryBot.create(:task, title: '0 title', description: '最初のタスクを実施する', user_id: '1', status: '1', label: '0 label') }
-        let!(:task_2) { FactoryBot.create(:task, title: '1 title', description: '２つ目のタスクを実施する', user_id: '1', status: '1', label: '1 label') }
+        let!(:task_1) { FactoryBot.create(:task, title: '0 title', description: '最初のタスクを実施する', user_id: user.id, status: '1', label: '0 label') }
+        let!(:task_2) { FactoryBot.create(:task, title: '1 title', description: '２つ目のタスクを実施する', user_id: user.id, status: '1', label: '1 label') }
 
         let(:tds){ all('tbody tr')[1].all('td') }
         it 'タスク名が表示される' do
@@ -40,7 +48,7 @@ describe 'タスク管理機能', type: :system do
       end
 
       describe '画面遷移機能' do
-        let!(:task_a) { FactoryBot.create(:task, title: '0 title', description: '最初のタスクを実施する', user_id: '1', status: '1', label: '0 label') }
+        let!(:task_a) { FactoryBot.create(:task, title: '0 title', description: '最初のタスクを実施する', user_id: user.id, status: '1', label: '0 label') }
         context '詳細ボタンをクリックした場合' do
           it '詳細画面へ遷移できる' do
             visit_tasks
@@ -68,10 +76,10 @@ describe 'タスク管理機能', type: :system do
     end
 
     describe '検索機能' do
-      let!(:task_A1) { FactoryBot.create(:task, title: 'A1', status: Task.statuses[:not_started]) }
-      let!(:task_A2) { FactoryBot.create(:task, title: 'A2', status: Task.statuses[:in_progress]) }
-      let!(:task_B1) { FactoryBot.create(:task, title: 'B1', status: Task.statuses[:not_started]) }
-      let!(:task_B2) { FactoryBot.create(:task, title: 'B2', status: Task.statuses[:in_progress]) }
+      let!(:task_A1) { FactoryBot.create(:task, title: 'A1', status: Task.statuses[:not_started], user_id: user.id) }
+      let!(:task_A2) { FactoryBot.create(:task, title: 'A2', status: Task.statuses[:in_progress], user_id: user.id) }
+      let!(:task_B1) { FactoryBot.create(:task, title: 'B1', status: Task.statuses[:not_started], user_id: user.id) }
+      let!(:task_B2) { FactoryBot.create(:task, title: 'B2', status: Task.statuses[:in_progress], user_id: user.id) }
 
       context '条件なし' do
         let(:conditions) { { title: '', status: '' } }
@@ -283,17 +291,17 @@ describe 'タスク管理機能', type: :system do
 
       context 'タスク11件' do
         before do
-          FactoryBot.create(:task, title: 'title_one')
-          FactoryBot.create(:task, title: 'title_two')
-          FactoryBot.create(:task, title: 'title_three')
-          FactoryBot.create(:task, title: 'title_four')
-          FactoryBot.create(:task, title: 'title_five')
-          FactoryBot.create(:task, title: 'title_six')
-          FactoryBot.create(:task, title: 'title_seven')
-          FactoryBot.create(:task, title: 'title_eight')
-          FactoryBot.create(:task, title: 'title_nine')
-          FactoryBot.create(:task, title: 'title_ten')
-          FactoryBot.create(:task, title: 'title_eleven')
+          FactoryBot.create(:task, title: 'title_one', user_id: user.id)
+          FactoryBot.create(:task, title: 'title_two', user_id: user.id)
+          FactoryBot.create(:task, title: 'title_three', user_id: user.id)
+          FactoryBot.create(:task, title: 'title_four', user_id: user.id)
+          FactoryBot.create(:task, title: 'title_five', user_id: user.id)
+          FactoryBot.create(:task, title: 'title_six', user_id: user.id)
+          FactoryBot.create(:task, title: 'title_seven', user_id: user.id)
+          FactoryBot.create(:task, title: 'title_eight', user_id: user.id)
+          FactoryBot.create(:task, title: 'title_nine', user_id: user.id)
+          FactoryBot.create(:task, title: 'title_ten', user_id: user.id)
+          FactoryBot.create(:task, title: 'title_eleven', user_id: user.id)
         end
 
         it 'ページングが表示されること 1' do
@@ -350,9 +358,8 @@ describe 'タスク管理機能', type: :system do
       end
     end
   end
-
   describe '詳細表示機能' do
-    let!(:task_a) { FactoryBot.create(:task, title: '0 title', description: '最初のタスクを実施する', user_id: '1', status: '1', label: '0 label') }
+    let!(:task_a) { FactoryBot.create(:task, title: '0 title', description: '最初のタスクを実施する', user_id: user.id, status: '1', label: '0 label') }
     subject(:visit_task_a) { visit task_path(task_a) }
 
     describe '表示機能' do
@@ -378,7 +385,7 @@ describe 'タスク管理機能', type: :system do
       context '一覧へボタンをクリックした場合' do
         it '一覧画面へ遷移できる' do
           visit_task_a
-          click_link '一覧に戻る'
+          click_link I18n.t('link.back')
           expect(page).to have_current_path tasks_path
         end
       end
@@ -393,7 +400,7 @@ describe 'タスク管理機能', type: :system do
         {
           title: '新規作成のテスト2',
           description: '新規作成のテストを書く2',
-          user_id: '1',
+          user_id: user.id,
         }
       }
 
@@ -407,7 +414,7 @@ describe 'タスク管理機能', type: :system do
     end
 
     describe '画面遷移機能' do
-      let!(:task_a) { FactoryBot.create(:task, title: '最初のタスク', description: '最初のタスクを実施する', user_id: '1', status: '1', label: '1') }
+      let!(:task_a) { FactoryBot.create(:task, title: '最初のタスク', description: '最初のタスクを実施する', user_id: user.id, status: '1', label: '1') }
 
       context '新規登録ボタンをクリックした場合' do
         it '一覧画面へ遷移できる' do
@@ -420,7 +427,7 @@ describe 'タスク管理機能', type: :system do
       context '一覧へボタンをクリックした場合' do
         it '一覧画面へ遷移できる' do
           visit_new_task
-          click_link '一覧に戻る'
+          click_link I18n.t('link.back')
           expect(page).to have_current_path tasks_path
         end
       end
@@ -428,7 +435,7 @@ describe 'タスク管理機能', type: :system do
   end
 
   describe '編集機能' do
-    let!(:task_a) { FactoryBot.create(:task, title: '最初のタスク', description: '最初のタスクを実施する', user_id: '1', status: '1', label: '1') }
+    let!(:task_a) { FactoryBot.create(:task, title: '最初のタスク', description: '最初のタスクを実施する', user_id: user.id, status: '1', label: '1') }
     subject(:visit_task_a_edit){visit edit_task_path(task_a)}
 
     describe '表示機能' do
@@ -447,7 +454,7 @@ describe 'タスク管理機能', type: :system do
           {
             title: '最初のタスク',
             description: '最初のタスクを実施する',
-            user_id: '1',
+            user_id: user.id,
           }
         }
 
@@ -465,7 +472,7 @@ describe 'タスク管理機能', type: :system do
         context '一覧へボタンをクリックした場合' do
           it '一覧画面へ遷移できる' do
             visit_task_a_edit
-            click_link '一覧に戻る'
+            click_link I18n.t('link.back')
             expect(page).to have_current_path tasks_path
           end
         end

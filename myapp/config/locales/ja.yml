@@ -33,6 +33,7 @@ ja:
   activerecord:
     models:
       task: タスク
+      user: ユーザー
     attributes:
       task:
         title: タイトル
@@ -43,26 +44,32 @@ ja:
         deleted_at: 削除日
         crated_at: 作成日
         updated_at: 更新日
+      user:
+        name: 名前
+        email: メールアドレス
+        deleted_at: 削除日
+        crated_at: 作成日
+        updated_at: 更新日
   enums:
     task:
       status:
         not_started: 未着手
         in_progress: 着手中
         closed: 完了
-  view_title:
-    index: 'タスク一覧画面'
-    new: 'タスク作成画面'
-    show: 'タスク詳細画面'
-    edit: 'タスク編集画面'
   task:
     title: 'タイトル'
     description: '内容'
     label: 'ラベル'
+    user: 'ユーザー'
     status: 'ステータス'
+  user:
+    email: メールアドレス
+    password: パスワード
   button:
     detail: 詳細
     delete: 削除
     update: 更新
+    login: ログイン
   message:
     delete_confirm: 削除しますか
   time:
@@ -70,3 +77,7 @@ ja:
       default: "%Y/%m/%d %H:%M:%S"
   link:
     create: 作成
+    back: 一覧に戻る
+    logout: ログアウト
+  message:
+    login_failed: ログインに失敗しました
