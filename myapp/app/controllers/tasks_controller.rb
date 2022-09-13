@@ -28,8 +28,8 @@ class TasksController < ApplicationController
   # タスク詳細画面
   def show
     @task = login_user.tasks.find(params[:id])
+    @label_names = []
     if @task.labels.present?
-      @label_names = []
       @label_names.push(@task.labels[0].name) if @task.labels.size > 0
       @label_names.push(@task.labels[1].name) if @task.labels.size > 1
       @label_names.push(@task.labels[2].name) if @task.labels.size > 2
