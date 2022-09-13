@@ -30,9 +30,28 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 ja:
+  page_titles:
+    tasks:
+      index: タスク一覧
+      show: タスク詳細
+      edit: タスク編集
+      new: タスク作成
+    sessions:
+      login: ログイン
+  buttons:
+    tasks:
+      index: 戻る
+      show: 詳細へ
+      new: 新規作成
+      edit: 編集
+      delete: 削除
+    sessions:
+      login: ログイン
+      logout: ログアウト
   activerecord:
     models:
       task: タスク
+      user: ユーザ
     attributes:
       task:
         id: ID
@@ -40,6 +59,9 @@ ja:
         description: 詳細
         status: ステータス
         user: 担当者
+      user:
+        email: メールアドレス
+        password: パスワード
   attributes:
     created_at: 登録日時
     updated_at: 更新日時

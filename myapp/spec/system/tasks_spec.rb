@@ -2,7 +2,15 @@ require 'rails_helper'
 
 describe 'タスク管理機能', type: :system do
   describe '一覧表示機能' do
+    let!(:user_a) { FactoryBot.create(:user) }
     subject(:visit_tasks){ visit tasks_path }
+
+    before do
+      visit login_path
+      fill_in 'session[email]', with: 'test@example.com'
+      fill_in 'session[password]', with: 'password'
+      click_button 'ログイン'
+    end
 
     describe '表示機能' do
       shared_examples_for '１つ目のタスクが表示される' do
@@ -31,14 +39,14 @@ describe 'タスク管理機能', type: :system do
       end
 
       context 'タスクが1件存在する場合' do
-        let!(:task_a) { FactoryBot.create(:task, name: 'タスク１', description: 'タスク１を実施する') }
+        let!(:task_a) { FactoryBot.create(:task, name: 'タスク１', description: 'タスク１を実施する', user_id: user_a.id) }
 
         it_behaves_like '１つ目のタスクが表示される'
       end
 
       context 'タスクが2件存在する場合' do
-        let!(:task_a) { FactoryBot.create(:task, name: 'タスク１', description: 'タスク１を実施する') }
-        let!(:task_b) { FactoryBot.create(:task, name: 'タスク２', description: 'タスク２を実施する', status: 2) }
+        let!(:task_a) { FactoryBot.create(:task, name: 'タスク１', description: 'タスク１を実施する', user_id: user_a.id) }
+        let!(:task_b) { FactoryBot.create(:task, name: 'タスク２', description: 'タスク２を実施する', status: 2, user_id: user_a.id) }
 
         it_behaves_like '１つ目のタスクが表示される'
         it_behaves_like '２つ目のタスクが表示される'
@@ -96,8 +104,8 @@ describe 'タスク管理機能', type: :system do
       end
 
       context '検索条件に一致するタスクが1件存在する場合' do
-        let!(:task_a) { FactoryBot.create(:task, name: '最初のタスク', description: '最初のタスクを実施する', status: 1) }
-        let!(:task_b) { FactoryBot.create(:task, name: '２つ目のタスク', description: '２つ目のタスクを実施する', status: 1) }
+        let!(:task_a) { FactoryBot.create(:task, name: '最初のタスク', description: '最初のタスクを実施する', status: 1, user_id: user_a.id) }
+        let!(:task_b) { FactoryBot.create(:task, name: '２つ目のタスク', description: '２つ目のタスクを実施する', status: 1, user_id: user_a.id) }
         let(:name) { '最初のタスク' }
         let(:status) { '未着手' }
 
@@ -105,8 +113,8 @@ describe 'タスク管理機能', type: :system do
       end
 
       context '検索条件に一致するタスクが2件存在する場合' do
-        let!(:task_a) { FactoryBot.create(:task, name: '最初のタスク', description: '最初のタスクを実施する', status: 1) }
-        let!(:task_b) { FactoryBot.create(:task, name: '２つ目のタスク', description: '２つ目のタスクを実施する', status: 1) }
+        let!(:task_a) { FactoryBot.create(:task, name: '最初のタスク', description: '最初のタスクを実施する', status: 1, user_id: user_a.id) }
+        let!(:task_b) { FactoryBot.create(:task, name: '２つ目のタスク', description: '２つ目のタスクを実施する', status: 1, user_id: user_a.id) }
         let(:name) { 'タスク' }
         let(:status) { '未着手' }
 
@@ -115,8 +123,8 @@ describe 'タスク管理機能', type: :system do
       end
 
       context '検索条件に一致するタスクが存在しない場合' do
-        let!(:task_a) { FactoryBot.create(:task, name: '最初のタスク', description: '最初のタスクを実施する', status: 1) }
-        let!(:task_b) { FactoryBot.create(:task, name: '２つ目のタスク', description: '２つ目のタスクを実施する', status: 1) }
+        let!(:task_a) { FactoryBot.create(:task, name: '最初のタスク', description: '最初のタスクを実施する', status: 1, user_id: user_a.id) }
+        let!(:task_b) { FactoryBot.create(:task, name: '２つ目のタスク', description: '２つ目のタスクを実施する', status: 1, user_id: user_a.id) }
         let(:name) { 'テスト' }
         let(:status) { '完了' }
 
@@ -131,7 +139,7 @@ describe 'タスク管理機能', type: :system do
     end
 
     describe '遷移機能' do
-      let!(:task_a) { FactoryBot.create(:task, name: 'タスク１', description: 'タスク１を実施する') }
+      let!(:task_a) { FactoryBot.create(:task, name: 'タスク１', description: 'タスク１を実施する', user_id: user_a.id) }
 
       context 'タスク一覧画面から詳細画面へ遷移' do
         it '詳細画面へ遷移できる' do
@@ -152,8 +160,16 @@ describe 'タスク管理機能', type: :system do
   end
 
   describe '詳細表示機能' do
-    let!(:task_a) { FactoryBot.create(:task, name: 'タスク１', description: 'タスク１を実施する') }
+    let!(:user_a) { FactoryBot.create(:user) }
+    let!(:task_a) { FactoryBot.create(:task, name: 'タスク１', description: 'タスク１を実施する', user_id: user_a.id) }
     subject(:visit_task_a){ visit task_path(task_a) }
+
+    before do
+      visit login_path
+      fill_in 'session[email]', with: 'test@example.com'
+      fill_in 'session[password]', with: 'password'
+      click_button 'ログイン'
+    end
 
     describe '表示機能' do
       context 'タスクが存在する場合' do
@@ -190,6 +206,15 @@ describe 'タスク管理機能', type: :system do
   end
 
   describe '新規登録機能' do
+    let!(:user_a) { FactoryBot.create(:user) }
+
+    before do
+      visit login_path
+      fill_in 'session[email]', with: 'test@example.com'
+      fill_in 'session[password]', with: 'password'
+      click_button 'ログイン'
+    end
+
     describe '登録機能' do
       context 'タスクの内容を入力した場合' do
         let!(:user_a) { FactoryBot.create(:user) }
@@ -204,7 +229,6 @@ describe 'タスク管理機能', type: :system do
           fill_in 'タスク名', with: name
           fill_in '詳細', with: description
           select(value = status, from: 'task[status]')
-          select(value = user_name, from: 'task[user_id]')
           # DBに登録されている
           click_button 'タスクを登録'
           # 画面で入力された内容でDBに登録されている
@@ -216,7 +240,6 @@ describe 'タスク管理機能', type: :system do
           fill_in 'タスク名', with: name
           fill_in '詳細', with: description
           select(value = status, from: 'task[status]')
-          select(value = user_name, from: 'task[user_id]')
           click_button 'タスクを登録'
           expect(page).to have_selector '.alert-success', text: 'タスク「新規作成テストタスク」を登録しました。'
         end
@@ -225,7 +248,6 @@ describe 'タスク管理機能', type: :system do
           visit_new_task
           fill_in 'タスク名', with: name
           fill_in '詳細', with: description
-          select(value = user_name, from: 'task[user_id]')
           click_button 'タスクを登録'
           expect(current_path).to eq tasks_path
         end
@@ -244,9 +266,16 @@ describe 'タスク管理機能', type: :system do
   end
 
   describe '編集機能' do
-    let!(:user_b) { FactoryBot.create(:user, name: 'テストユーザ２') }
-    let!(:task_a) { FactoryBot.create(:task, name: 'タスク１', description: 'タスク１を実施する') }
+    let!(:user_a) { FactoryBot.create(:user) }
+    let!(:task_a) { FactoryBot.create(:task, name: 'タスク１', description: 'タスク１を実施する', user_id: user_a.id) }
     subject(:visit_task_a_edit){ visit edit_task_path(task_a) }
+
+    before do
+      visit login_path
+      fill_in 'session[email]', with: 'test@example.com'
+      fill_in 'session[password]', with: 'password'
+      click_button 'ログイン'
+    end
 
     describe '表示機能' do
       context '画面を表示した場合' do
@@ -264,11 +293,6 @@ describe 'タスク管理機能', type: :system do
           visit_task_a_edit
           expect(page).to have_select('task[status]', selected: '未着手')
         end
-
-        it '編集前にユーザが表示される' do
-          visit_task_a_edit
-          expect(page).to have_select('task[user_id]', selected: 'テストユーザ')
-        end
       end
     end
 
@@ -285,10 +309,9 @@ describe 'タスク管理機能', type: :system do
           fill_in 'タスク名', with: name
           fill_in '詳細', with: description
           select(value = status, from: 'task[status]')
-          select(value = user_name, from: 'task[user_id]')
           click_button 'タスクを更新'
           # 画面で入力された内容でDBのデータが更新されている
-          expect(Task.find_by(name: '更新テストタスク１', description: '更新テストタスク１を実施する', status: 'doing', user_id: user_b.id)).not_to be_nil
+          expect(Task.find_by(name: '更新テストタスク１', description: '更新テストタスク１を実施する', status: 'doing', user_id: user_a.id)).not_to be_nil
         end
 
         it 'Flashメッセージが表示される' do
@@ -297,7 +320,6 @@ describe 'タスク管理機能', type: :system do
           fill_in 'タスク名', with: name
           fill_in '詳細', with: description
           select(value = status, from: 'task[status]')
-          select(value = user_name, from: 'task[user_id]')
           click_button 'タスクを更新'
           # Flashメッセージが表示される
           expect(page).to have_selector '.alert-success', text: 'タスク「更新テストタスク１」を更新しました。'
@@ -318,7 +340,15 @@ describe 'タスク管理機能', type: :system do
   end
 
   describe '削除機能' do
-    let!(:task_a) { FactoryBot.create(:task, name: 'タスク１', description: 'タスク１を実施する') }
+    let!(:user_a) { FactoryBot.create(:user) }
+    let!(:task_a) { FactoryBot.create(:task, name: 'タスク１', description: 'タスク１を実施する', user_id: user_a.id) }
+
+    before do
+      visit login_path
+      fill_in 'session[email]', with: 'test@example.com'
+      fill_in 'session[password]', with: 'password'
+      click_button 'ログイン'
+    end
 
     context 'タスクを削除した場合' do
       subject(:visit_task_a){ visit task_path(task_a) }
@@ -340,6 +370,81 @@ describe 'タスク管理機能', type: :system do
         click_on('削除')
         # Flashメッセージが表示される
         expect(page).to have_selector '.alert-success', text: 'タスク「タスク１」を削除しました。'
+      end
+    end
+  end
+
+  describe 'ログイン機能' do
+    let!(:user_a) { FactoryBot.create(:user) }
+    subject(:visit_login){ visit login_path }
+
+    context 'メールアドレスとパスワードが一致する場合' do
+      it 'タスク一覧画面が表示される' do
+        visit_login
+        fill_in 'session[email]', with: 'test@example.com'
+        fill_in 'session[password]', with: 'password'
+        click_button 'ログイン'
+        expect(page).to have_current_path root_path
+      end
+    end
+
+    context 'メールアドレスとパスワードが一致しない場合' do
+      it 'ログイン画面が表示される' do
+        visit_login
+        fill_in 'session[email]', with: 'aaa@example.com'
+        fill_in 'session[password]', with: 'aaa'
+        click_button 'ログイン'
+        expect(page).to have_content 'ログイン'
+      end
+    end
+
+    context 'メールアドレスが一致しない場合' do
+      it 'ログイン画面が表示される' do
+        visit_login
+        fill_in 'session[email]', with: 'aaa@example.com'
+        fill_in 'session[password]', with: 'password'
+        click_button 'ログイン'
+        expect(page).to have_content 'ログイン'
+      end
+    end
+
+    context 'パスワードが一致しない場合' do
+      it 'ログイン画面が表示される' do
+        visit_login
+        fill_in 'session[email]', with: 'test@example.com'
+        fill_in 'session[password]', with: 'aaa'
+        click_button 'ログイン'
+        expect(page).to have_content 'ログイン'
+      end
+    end
+
+    context 'メールアドレスが空の場合' do
+      it 'ログイン画面が表示される' do
+        visit_login
+        fill_in 'session[email]', with: ''
+        fill_in 'session[password]', with: 'password'
+        click_button 'ログイン'
+        expect(page).to have_content 'ログイン'
+      end
+    end
+
+    context 'パスワードが空の場合' do
+      it 'ログイン画面が表示される' do
+        visit_login
+        fill_in 'session[email]', with: 'test@example.com'
+        fill_in 'session[password]', with: ''
+        click_button 'ログイン'
+        expect(page).to have_content 'ログイン'
+      end
+    end
+
+    context 'メールアドレスとパスワード両方が空の場合' do
+      it 'ログイン画面が表示される' do
+        visit_login
+        fill_in 'session[email]', with: ''
+        fill_in 'session[password]', with: ''
+        click_button 'ログイン'
+        expect(page).to have_content 'ログイン'
       end
     end
   end
