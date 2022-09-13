@@ -20,7 +20,9 @@ RSpec.feature '/tasks or /' do
     end
 
     feature 'clicks link buttons' do
-      scenario 'redirects to #new' do
+      given(:task) { tasks.first }
+
+      scenario 'renders #new' do
         visit root_path
         click_on '新規作成する'
 
@@ -28,9 +30,7 @@ RSpec.feature '/tasks or /' do
         expect(page).to have_content 'タスクの新規作成'
       end
 
-      scenario 'redirects to #show' do
-        task = tasks.first
-
+      scenario 'renders #show' do
         visit root_path
         first(:link, '詳細を確認する').click
 
