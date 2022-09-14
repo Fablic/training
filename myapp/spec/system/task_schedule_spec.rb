@@ -133,7 +133,7 @@ RSpec.describe 'TaskSchedule', type: :system do
   context 'edit systems check' do
     let!(:task) { create(:task, title: 'showタスク', body: 'showボディ', user_id: user.id) }
     before do
-      create(:user, name: 'user 二郎')
+      create(:user, name: 'user 二郎', personal_id: 'editID')
       fill_in 'personal_id', with: 'MyUserID'
       fill_in 'password', with: 'pass'
       click_button 'ログイン'
