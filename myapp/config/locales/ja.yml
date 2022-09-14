@@ -125,6 +125,10 @@ ja:
         untouched: '未着手'
         in_progress: '着手中'
         completion: '完了'
+    user:
+      admin:
+        general: '一般'
+        admin: '管理者'
 
   sessions:
     new:
