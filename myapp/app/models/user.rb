@@ -4,4 +4,6 @@ class User < ApplicationRecord
   validates :personal_id, presence: true, uniqueness: { case_sensitive: true }
   validates :password, presence: true
   has_secure_password
+
+  enum admin: { general: false, admin: true }
 end
