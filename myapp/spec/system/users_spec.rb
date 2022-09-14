@@ -33,7 +33,7 @@ RSpec.describe 'Users', type: :system do
   end
 
   let!(:user) { create(:user) }
-  let!(:user2) { create(:user,name: 'MyName2', personal_id: 'MyUserID2') }
+  let!(:user2) { create(:user, name: 'MyName2', personal_id: 'MyUserID2') }
 
   context 'index systems check' do
     before do

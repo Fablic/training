@@ -17,7 +17,6 @@ class UsersController < ApplicationController
       flash.now[:danger] = t('.danger')
       render 'users/edit'
     end
-
   end
 
   def new
@@ -49,10 +48,9 @@ class UsersController < ApplicationController
     end
   end
 
-private
+  private
 
   def user_params
     params.require(:user).permit(:name, :personal_id, :password, :password_confirmation)
   end
-
 end

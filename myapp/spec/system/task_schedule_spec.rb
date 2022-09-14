@@ -216,7 +216,7 @@ RSpec.describe 'TaskSchedule', type: :system do
   context 'search systems check' do
     before do
       create(:task, title: 'secondタスク', user_id: user.id)
-      create(:task, title: 'thirdタスク',status: 2, user_id: user.id)
+      create(:task, title: 'thirdタスク', status: 2, user_id: user.id)
       fill_in 'personal_id', with: 'MyUserID'
       fill_in 'password', with: 'pass'
       click_button 'ログイン'
