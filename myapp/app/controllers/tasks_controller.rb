@@ -3,7 +3,7 @@ class TasksController < ApplicationController
   before_action :get_users, only: [:new, :edit]
 
   def index
-    @tasks = current_user.tasks.eager_load(:user).includes([:labels]).includes([:labellings]).all.page(params[:page])
+    @tasks = current_user.tasks.includes([:labellings, :labels]).all.page(params[:page])
   end
 
   def show
@@ -43,8 +43,8 @@ class TasksController < ApplicationController
   end
 
   def search
-    @tasks = current_user.tasks.eager_load(:user).includes([:labellings]).name_like(params[:name]).status_equal(Task.statuses[params[:status]]).page(params[:page])
-    @tasks = @tasks.joins(:labels).where(labels: { id: params[:label_id] }) if params[:label_id].present?
+    search_params = { 'name' => params[:name], 'status' => Task.statuses[params[:status]], 'label_id' => params[:label_id] }
+    @tasks = current_user.tasks.search(search_params).page(params[:page])
     render :index
   end
 
