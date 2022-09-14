@@ -3,7 +3,6 @@ FactoryBot.define do
     title { 'test title' }
     description { 'test description' }
     status { Task.statuses[:not_started] }
-    label { '1' }
 
     user
   end

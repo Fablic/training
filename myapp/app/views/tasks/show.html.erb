@@ -4,6 +4,9 @@
 <p><%= I18n.t('task.description') %></p>
 <p><%= @task[:description] %></p>
 <p><%= I18n.t('task.label') %></p>
+<% @task.labels.each do |label| %>
+  <li><%= label.name %></li>
+<% end %>
 <p><%= @task[:label] %></p>
 <p><%= I18n.t('task.status') %></p>
 <p><%= I18n.t("enums.task.status.#{@task.status}") %></p>

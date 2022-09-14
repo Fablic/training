@@ -1,7 +1,7 @@
 class TasksController < ApplicationController
   # Task List
   def index
-    @tasks = current_user.tasks.all.page(params[:page])
+    @tasks = current_user.tasks.includes([:labels]).includes([:tasks_labels]).all.page(params[:page])
   end
 
   # Show Task
@@ -49,7 +49,7 @@ class TasksController < ApplicationController
   end
 
   def search
-    @tasks = current_user.tasks.where_title(params[:title]).where_status(Task.statuses[params[:status]]).page(params[:page])
+    @tasks = current_user.tasks.search(params[:title], params[:status], params[:label]).page(params[:page])
     render :index
   end
 
@@ -57,6 +57,6 @@ class TasksController < ApplicationController
 
   # Get Task Parameter
   def task_params
-    task = params.require(:task).permit(:title, :description, :label, :status)
+    params.require(:task).permit(:title, :description, :status, { label_ids: [] })
   end
 end
