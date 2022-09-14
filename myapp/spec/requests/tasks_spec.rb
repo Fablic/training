@@ -6,9 +6,9 @@ RSpec.describe '/tasks', type: :request do
   let(:task_input_columns) { %w[name end_date priority status explanation] }
 
   describe 'GET /index' do
-    let!(:tasks) { create_list(:task, 11) }
-
     context 'does not exist search params' do
+      let!(:tasks) { create_list(:task, 11) }
+
       it 'renders a successful response' do
         get tasks_url
 
@@ -18,6 +18,8 @@ RSpec.describe '/tasks', type: :request do
     end
 
     context 'exists sort in search_params' do
+      let!(:tasks) { create_list(:task, 11) }
+
       context 'id_desc' do
         let(:params) do
           { sort: 'id_desc' }
@@ -25,7 +27,9 @@ RSpec.describe '/tasks', type: :request do
 
         it 'renders a successful response' do
           get tasks_url, params: params
-          expect(response).to have_http_status(200)
+
+          expect(response).to have_http_status(:ok)
+          tasks.each { |task| expect(response.body).to include task.name.to_s }
         end
       end
 
@@ -36,7 +40,9 @@ RSpec.describe '/tasks', type: :request do
 
         it 'renders a successful response' do
           get tasks_url, params: params
-          expect(response).to have_http_status(200)
+
+          expect(response).to have_http_status(:ok)
+          tasks.each { |task| expect(response.body).to include task.name.to_s }
         end
       end
 
@@ -47,7 +53,72 @@ RSpec.describe '/tasks', type: :request do
 
         it 'renders a successful response' do
           get tasks_url, params: params
-          expect(response).to have_http_status(200)
+
+          expect(response).to have_http_status(:ok)
+          tasks.each { |task| expect(response.body).to include task.name.to_s }
+        end
+      end
+    end
+
+    context 'exists keyword in search_params' do
+      let!(:task_aqua) { create(:task, name: 'アクア', explanation: 'アイコンはくま') }
+      let!(:task_kuma) { create(:task, name: 'くま', explanation: '毛が茶色い') }
+      let!(:task_nyanko) { create(:task, name: 'にゃんこ', explanation: '毛が白い') }
+
+      context 'keyword: くま' do
+        let(:params) do
+          { keyword: 'くま' }
+        end
+
+        it 'renders a successful response' do
+          get tasks_url, params: params
+
+          expect(response).to have_http_status(:ok)
+          expect(response.body).to include task_aqua.name.to_s
+          expect(response.body).to include task_kuma.name.to_s
+          expect(response.body).not_to include task_nyanko.name.to_s
+        end
+      end
+    end
+
+    context 'exists status in search_params' do
+      let!(:task_aqua) { create(:task, name: 'アクア', status: 'untouched') }
+      let!(:task_kuma) { create(:task, name: 'くま', status: 'touched') }
+      let!(:task_nyanko) { create(:task, name: 'にゃんこ', status: 'completed') }
+      let!(:task_piyo) { create(:task, name: 'ひよこ', status: 'untouched') }
+      let!(:task_usa) { create(:task, name: 'うさぎ', status: 'untouched') }
+
+      context 'status: untouched' do
+        let(:params) do
+          { status: 'untouched' }
+        end
+
+        it 'renders a successful response' do
+          get tasks_url, params: params
+
+          expect(response).to have_http_status(:ok)
+          expect(response.body).to include task_aqua.name.to_s
+          expect(response.body).not_to include task_kuma.name.to_s
+          expect(response.body).not_to include task_nyanko.name.to_s
+          expect(response.body).to include task_piyo.name.to_s
+          expect(response.body).to include task_usa.name.to_s
+        end
+      end
+
+      context 'status: completed' do
+        let(:params) do
+          { status: 'completed' }
+        end
+
+        it 'renders a successful response' do
+          get tasks_url, params: params
+
+          expect(response).to have_http_status(:ok)
+          expect(response.body).not_to include task_aqua.name.to_s
+          expect(response.body).not_to include task_kuma.name.to_s
+          expect(response.body).to include task_nyanko.name.to_s
+          expect(response.body).not_to include task_piyo.name.to_s
+          expect(response.body).not_to include task_usa.name.to_s
         end
       end
     end
