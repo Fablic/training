@@ -6,7 +6,8 @@ RSpec.describe '/errors', type: :request do
   describe '404' do
     it 'renders a successful response' do
       get '/aqua'
-      expect(response).to have_http_status(404)
+
+      expect(response).to have_http_status(:not_found)
     end
   end
 
@@ -17,7 +18,8 @@ RSpec.describe '/errors', type: :request do
 
     it 'renders a successful response' do
       get tasks_path
-      expect(response).to have_http_status(500)
+
+      expect(response).to have_http_status(:internal_server_error)
     end
   end
 end
