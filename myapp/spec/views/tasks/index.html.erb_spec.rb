@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'tasks/index', type: :view do
-  let!(:task_aqua) do
+  let(:task_aqua) do
     create(:task,
            name: 'aqua',
            end_date: '2022/09/14 17:25',
@@ -11,7 +11,7 @@ RSpec.describe 'tasks/index', type: :view do
            status: 'untouched',
            explanation: 'aqua hara')
   end
-  let!(:task_kuma) do
+  let(:task_kuma) do
     create(:task,
            name: 'kuma',
            end_date: '2022/09/13 18:25',
@@ -19,7 +19,7 @@ RSpec.describe 'tasks/index', type: :view do
            status: 'touched',
            explanation: 'brown kuma')
   end
-  let!(:tasks) { [task_aqua, task_kuma] }
+  let(:tasks) { [task_aqua, task_kuma] }
 
   before { assign(:tasks, tasks) }
 

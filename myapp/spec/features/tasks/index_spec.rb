@@ -19,7 +19,6 @@ RSpec.feature '/tasks or /' do
                status: 'touched',
                explanation: 'brown kuma')
       end
-      # given!(:tasks) { [task_aqua, task_kuma] }
 
       scenario 'correctly displays tasks' do
         visit root_path
