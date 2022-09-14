@@ -16,9 +16,9 @@ class Task < ApplicationRecord
     .label_equal(params['label_id'])
   end
 
-  scope :label_equal, -> (label_id){ where(labels: { id: label_id }).left_outer_joins(:labels) if label_id.present?}
   scope :name_like, -> (name) { where('name LIKE ?', "%#{name}%") if name.present? }
   scope :status_equal, -> (status) { where('status = ?', status) if status.present? }
+  scope :label_equal, -> (label_id){ where(labels: { id: label_id }).left_outer_joins(:labels) if label_id.present? }
 
   belongs_to :user
   has_many :labellings, dependent: :destroy
