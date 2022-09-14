@@ -116,7 +116,7 @@ RSpec.describe '/tasks', type: :request do
         post tasks_url, params: invalid_attributes
 
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.body).to include I18n.t('activerecord.errors.task.name.too_long')
+        expect(response.body).to include 'タスク名は255文字以内で入力してください'
       end
     end
   end
@@ -139,7 +139,7 @@ RSpec.describe '/tasks', type: :request do
         put task_url(task), params: { task: new_attributes }
 
         expect(task.reload).to have_attributes new_attributes.except(:end_date)
-        expect(I18n.l(task.end_date)).to eq I18n.l(new_attributes[:end_date])
+        expect(task.end_date.strftime('%Y/%m/%d %H:%M')).to eq new_attributes[:end_date].strftime('%Y/%m/%d %H:%M')
       end
 
       it 'redirects to the task' do
@@ -167,7 +167,7 @@ RSpec.describe '/tasks', type: :request do
         put task_url(task), params: invalid_attributes
 
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.body).to include I18n.t('activerecord.errors.task.name.too_long')
+        expect(response.body).to include 'タスク名は255文字以内で入力してください'
       end
     end
   end
