@@ -3,15 +3,25 @@
 require 'rails_helper'
 
 RSpec.describe 'tasks/show', type: :view do
-  let!(:task) { assign(:task, create(:task)) }
+  let(:task) do
+    create(:task,
+           name: 'aqua',
+           end_date: '2022/09/14 17:25',
+           priority: 'high',
+           status: 'untouched',
+           explanation: 'aqua hara')
+  end
+
+  before { assign(:task, task) }
 
   it 'renders a task attributes' do
     render
+    end_date = '2022/09/14 17:25'
 
-    expect(rendered).to match(/#{task.name}/)
-    expect(rendered).to match(/#{I18n.l(task.end_date)}/)
-    expect(rendered).to match(/#{Task.priorities_i18n[task.priority]}/)
-    expect(rendered).to match(/#{Task.statuses_i18n[task.status]}/)
-    expect(rendered).to match(/#{task.explanation}/)
+    expect(rendered).to match(/aqua/)
+    expect(rendered).to match(/#{end_date}/)
+    expect(rendered).to match(/高/)
+    expect(rendered).to match(/未着手/)
+    expect(rendered).to match(/aqua hara/)
   end
 end
