@@ -17,5 +17,4 @@ RSpec.describe User, type: :model do
     @user = build(:user, password: '')
     expect(@user.valid?).to eq false
   end
-
 end
