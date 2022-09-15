@@ -100,6 +100,7 @@ RSpec.describe 'Users', type: :system do
     end
 
     it 'complete show task' do
+      expect(page.text).to match(/1.*2/)
       click_link('詳細', href: user_path(user))
 
       expect(page).to have_content 'ユーザ詳細画面'
