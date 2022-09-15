@@ -7,8 +7,6 @@ ja:
       default: ! '%Y/%m/%d'
 
   activerecord:
-    users:
-      admin: ''
     attributes:
       task:
         title: 'タスク名'
