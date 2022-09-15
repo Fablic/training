@@ -8,6 +8,8 @@ RSpec.describe '/errors', type: :request do
       get '/aqua'
 
       expect(response).to have_http_status(:not_found)
+      expect(response.body).to include '404なので僕のせいじゃないっす'
+      expect(response.body).to include '多分アドレスとか違うっす'
     end
   end
 
@@ -20,6 +22,8 @@ RSpec.describe '/errors', type: :request do
       get tasks_path
 
       expect(response).to have_http_status(:internal_server_error)
+      expect(response.body).to include '500っす。僕が原因っす'
+      expect(response.body).to include 'ホントすんません'
     end
   end
 end

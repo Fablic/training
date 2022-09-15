@@ -7,8 +7,8 @@ RSpec.feature '404' do
     scenario 'correctly displays 404' do
       visit '/aqua'
 
-      expect(page).to have_content '404なので僕のせいじゃないっす。'
       expect(page.status_code).to eq 404
+      expect(page).to have_content '404なので僕のせいじゃないっす'
     end
   end
 end
