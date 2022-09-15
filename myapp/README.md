@@ -130,6 +130,23 @@ column_name | type | null | default
 | created_at | datetime | | |
 | updated_at | datetime | | |
 
+labels
+column_name | type | null | default
+| ---- | ---- | ---- | ---- |
+| id | integer | not null | auto increment |
+| label_name | varchar | | |
+| created_at | datetime | | |
+| updated_at | datetime | | |
+
+labellings
+column_name | type | null | default
+| ---- | ---- | ---- | ---- |
+| id | integer | not null | auto increment |
+| task_id | varchar | | |
+| label_id | varchar | | |
+| created_at | datetime | | |
+| updated_at | datetime | | |
+
 
 <br>
 <br>
