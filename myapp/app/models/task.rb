@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Task < ApplicationRecord
+  has_many :labellings, dependent: :destroy
+  has_many :labels, through: :labellings
   validates :title, presence: true
   validates :body,  presence: true
   validates :finish_at, presence: true
