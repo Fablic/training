@@ -20,7 +20,7 @@ ja:
         personal_id: 'ユーザID'
         password: 'パスワード'
         password_confirmation: 'パスワード(確認)'
-        danger: '最後の管理者権限ユーザです'
+        danger: '唯一の管理者権限ユーザです'
 
   task_schedule:
     index:
@@ -80,6 +80,7 @@ ja:
       name: 'ユーザ名'
       id: 'ユーザID'
       tasks: '作成したタスク'
+      authority: 'ユーザ権限'
       edit: '編集'
       show: '詳細'
       delete: '削除'
@@ -122,7 +123,7 @@ ja:
       danger: "登録に失敗しました"
     destroy:
       success: "ユーザを削除しました"
-      danger: "削除に失敗しました"
+      danger: "唯一の管理者ユーザです"
 
   enums:
     task:

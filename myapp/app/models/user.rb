@@ -10,13 +10,13 @@ class User < ApplicationRecord
 
   def user_admin_not_exist
     if admin_was == 'administ' && User.where(admin: true).count == 1 && admin_changed? == true
-      errors.add(:danger, '')
+      errors.add :danger, ''
     end
   end
 
   def user_admin_not_exist_destroy
     if admin == 'administ' && User.where(admin: true).count == 1
-      errors.add(:danger, '')
+      raise error
     end
   end
 end

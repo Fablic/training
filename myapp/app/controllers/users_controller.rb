@@ -10,7 +10,6 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    binding.pry
     if @user.update(user_params)
       flash[:success] = t('.success')
       redirect_to action: 'index'
@@ -40,12 +39,13 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    if User.find(params[:id]).destroy
+    begin
+      User.find(params[:id]).destroy
       flash[:success] = t('.success')
       redirect_to action: 'index'
-    else
-      flash.now[:danger] = t('.danger')
-      render 'users/index'
+    rescue => error
+      flash[:danger] = t('.danger')
+      redirect_to action: 'index'
     end
   end
 
