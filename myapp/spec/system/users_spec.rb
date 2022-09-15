@@ -168,13 +168,13 @@ RSpec.describe 'Users', type: :system do
     end
 
     it 'complete delete task' do
-      click_link('削除', href: user_path(user))
+      click_link('削除', href: user_path(user2))
       expect do
         expect(page.accept_confirm).to eq '削除します。よろしいですか(作成したタスクも一緒に削除されます)'
-        exmect(page).to have_content 'ユーザを削除しました'
-        expect(page).to have_no_content 'MyName'
-        expect(page).to have_no_content 'MyUserID'
       end
+      expect(page).to have_content 'ユーザを削除しました'
+      expect(page).to have_no_content 'MyName2'
+      expect(page).to have_no_content 'MyUserID2'
     end
   end
 end
