@@ -16,7 +16,7 @@ class User < ApplicationRecord
 
   def user_admin_not_exist_destroy
     if admin == 'administ' && User.where(admin: true).count == 1
-      raise error
+      raise e
     end
   end
 end

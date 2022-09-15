@@ -43,7 +43,7 @@ RSpec.describe 'Users', type: :system do
   end
 
   let!(:user) { create(:user, admin: true) }
-  let(:user2) { create(:user, name: 'MyName2', personal_id: 'MyUserID2' ) }
+  let(:user2) { create(:user, name: 'MyName2', personal_id: 'MyUserID2') }
 
   context 'index systems check' do
     before do
@@ -180,7 +180,7 @@ RSpec.describe 'Users', type: :system do
   end
 
   context 'delete systems check' do
-    let!(:user2) { create(:user, name: 'MyName2', personal_id: 'MyUserID2' ) }
+    let!(:user2) { create(:user, name: 'MyName2', personal_id: 'MyUserID2') }
     before do
       fill_in 'personal_id', with: 'MyUserID'
       fill_in 'password', with: 'pass'

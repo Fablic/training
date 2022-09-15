@@ -39,14 +39,12 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    begin
-      User.find(params[:id]).destroy
-      flash[:success] = t('.success')
-      redirect_to action: 'index'
-    rescue => error
-      flash[:danger] = t('.danger')
-      redirect_to action: 'index'
-    end
+    User.find(params[:id]).destroy
+    flash[:success] = t('.success')
+    redirect_to action: 'index'
+  rescue StandardError => e
+    flash[:danger] = t('.danger')
+    redirect_to action: 'index'
   end
 
   private
