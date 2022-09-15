@@ -15,7 +15,7 @@ class User < ApplicationRecord
   end
 
   def self.generate_salt
-     SecureRandom.hex(5)
+    SecureRandom.hex(5)
   end
 
   has_many :tasks, dependent: :destroy

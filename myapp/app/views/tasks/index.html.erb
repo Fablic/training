@@ -6,6 +6,7 @@
       <th><%= Task.human_attribute_name(:name) %></th>
       <th><%= Task.human_attribute_name(:status) %></th>
       <th><%= Task.human_attribute_name(:priority) %></th>
+      <th><%= Label.model_name.human %></th>
     </tr>
   </thead>
 
@@ -15,7 +16,12 @@
         <td><%= task.name %></td>
         <td><%= I18n.t("enums.task.status.#{task.status}") %></td>
         <td><%= I18n.t("enums.task.priority.#{task.priority}") %></td>
-        <td><%= link_to '詳細', task_path(task.id) %></td>
+        <td>
+          <% task.labels.each do |label| %>
+            <%= label.label_name %>
+          <% end %>
+        </td>
+        <td><%= link_to t('common.link.tasks.show'), task_path(task.id) %></td>
       </tr>
     <% end %>
   </tbody>
@@ -24,13 +30,16 @@
 <%= paginate @tasks %>
 
 <div>
-<%= form_with url: search_path, method: :get, local: true do |f| %>
+<%= form_with url: search_path, model: @task, method: :get, local: true do |f| %>
   <p>検索フォーム</p>
     <p style="display: inline"><%= Task.human_attribute_name(:name) %></p>
     <%= f.text_field :name %>
     <br>
     <p style="display: inline"><%= Task.human_attribute_name(:status) %></p>
     <%= f.select :status, Task.statuses.keys.map { |k| [I18n.t("enums.task.status.#{k}"), k] } , include_blank: true %>
+    <br>
+    <p style="display: inline"><%= t(Label.model_name.human) %></p>
+    <%= f.select :label_id, Label.pluck(:label_name, :id), { include_blank: true } %>
   <br>
   <%= f.submit t('common.button.search') %>
 <% end %>
