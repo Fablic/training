@@ -32,8 +32,9 @@ http://localhost:3001
 検索エリア
 | item | layer | name | source | type | loop | others |
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
-| select | 1 | 検索方法 | プルダウン | 文字列 |  | 1:'全て'、2:'タスク名'、3:'タスク詳細' |
-| text | 1 | 検索フォーム | | 文字列 | | 部分一致 |
+| text | 1 | タスク名 | | 文字列 | | 部分一致 |
+| select | 1 | ステータス | tasks.status | プルダウン |  | tasks.statusにenumとして設定されている値を全て表示 |
+| select | 1 | ラベル | labels.name | プルダウン |  | labelsに登録されているデータを全て表示 |
 | button　| 1 | 検索ボタン | | ボタン | | タスク一覧を条件に応じて絞り込み |
 <br>
 

@@ -10,10 +10,10 @@ class Task < ApplicationRecord
   paginates_per 5
 
   scope :search, -> (params) do
-    name_like(params['name'])
-    .status_equal(params['status'])
+    name_like(params[:name])
+    .status_equal(Task.statuses[params[:status]])
     .includes([:labellings, :labels])
-    .label_equal(params['label_id'])
+    .label_equal(params[:label_id])
   end
 
   scope :name_like, -> (name) { where('name LIKE ?', "%#{name}%") if name.present? }
