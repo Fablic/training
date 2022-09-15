@@ -26,17 +26,28 @@ RSpec.describe 'Users', type: :system do
       click_link 'ログアウト'
       expect(page).to have_content 'ログイン画面(管理者)'
     end
+
+    it 'not admin user login' do
+      create(:user, personal_id: 'MyUserID2')
+      fill_in 'personal_id', with: 'MyUserID2'
+      fill_in 'password', with: 'pass'
+      click_button 'ログイン'
+
+      expect(page).to have_content 'ログイン画面(管理者)'
+      expect(page).to have_content '一般ユーザはログインできません'
+    end
   end
 
   before do
     visit admin_login_path
   end
 
-  let!(:user) { create(:user) }
-  let!(:user2) { create(:user, name: 'MyName2', personal_id: 'MyUserID2') }
+  let!(:user) { create(:user, admin: true) }
+  let(:user2) { create(:user, name: 'MyName2', personal_id: 'MyUserID2' ) }
 
   context 'index systems check' do
     before do
+      create(:user, name: 'MyName2', personal_id: 'MyUserID2')
       fill_in 'personal_id', with: 'MyUserID'
       fill_in 'password', with: 'pass'
       click_button 'ログイン'
@@ -44,6 +55,10 @@ RSpec.describe 'Users', type: :system do
 
     it 'initial display (user_id asc)' do
       expect(page.text).to match(/MyName.*MyName2/)
+    end
+
+    it 'views authority' do
+      expect(page.text).to match(/管理者.*一般/)
     end
   end
 
@@ -55,9 +70,11 @@ RSpec.describe 'Users', type: :system do
     end
 
     it 'complete new user create' do
+      expect(page).to have_no_content '一般'
       click_button '新規登録'
       expect(page).to have_content 'ユーザ登録画面'
 
+      select '一般', from: 'user[admin]'
       fill_in 'user[name]', with: 'newUser'
       fill_in 'user[personal_id]', with: 'newID'
       fill_in 'user[password]', with: 'new_pass'
@@ -65,6 +82,7 @@ RSpec.describe 'Users', type: :system do
       click_button '登録する'
 
       expect(page).to have_content 'ユーザの登録が完了しました'
+      expect(page).to have_content '一般'
       expect(page).to have_content 'newUser'
       expect(page).to have_content 'newID'
     end
@@ -142,6 +160,7 @@ RSpec.describe 'Users', type: :system do
       click_link('編集', href: edit_user_path(user))
       expect(page).to have_content 'ユーザ編集画面'
 
+      select '一般', from: 'user[admin]'
       fill_in 'user[name]', with: ''
       fill_in 'user[personal_id]', with: ''
       fill_in 'user[password]', with: 'pass'
@@ -149,6 +168,7 @@ RSpec.describe 'Users', type: :system do
       click_button '編集する'
 
       expect(page).to have_content '編集に失敗しました'
+      expect(page).to have_content '唯一の管理者権限ユーザです'
       expect(page).to have_content 'ユーザ名を入力してください'
       expect(page).to have_content 'ユーザIDを入力してください'
       expect(page).to have_content 'パスワード(確認)とパスワードの入力が一致しません'
@@ -160,20 +180,45 @@ RSpec.describe 'Users', type: :system do
   end
 
   context 'delete systems check' do
+    let!(:user2) { create(:user, name: 'MyName2', personal_id: 'MyUserID2' ) }
     before do
       fill_in 'personal_id', with: 'MyUserID'
       fill_in 'password', with: 'pass'
       click_button 'ログイン'
     end
 
-    it 'complete delete task' do
+    it 'complete delete user' do
+      click_link('削除', href: user_path(user2))
+      expect do
+        expect(page.accept_confirm).to eq '削除します。よろしいですか(作成したタスクも一緒に削除されます)'
+      end
+      expect(page).to have_content 'ユーザを削除しました'
+      expect(page).to have_no_content 'MyName2'
+      expect(page).to have_no_content 'MyUserID2'
+    end
+
+    it 'destroy created task' do
+      create(:task, title: 'MyString2', user_id: user2.id)
+      create(:task, title: 'MyString3', user_id: user2.id)
+      click_link('削除', href: user_path(user2))
+      expect do
+        expect(page.accept_confirm).to eq '削除します。よろしいですか(作成したタスクも一緒に削除されます)'
+      end
+
+      visit task_schedule_index_path
+      expect(page).to have_content 'タスク一覧画面'
+      expect(page).to have_no_content 'MyString2'
+      expect(page).to have_no_content 'MyString3'
+    end
+
+    it 'failures delete for only admin' do
       click_link('削除', href: user_path(user))
       expect do
         expect(page.accept_confirm).to eq '削除します。よろしいですか(作成したタスクも一緒に削除されます)'
-        exmect(page).to have_content 'ユーザを削除しました'
-        expect(page).to have_no_content 'MyName'
-        expect(page).to have_no_content 'MyUserID'
       end
+      expect(page).to have_content '唯一の管理者ユーザです'
+      expect(page).to have_content 'MyName'
+      expect(page).to have_content 'MyUserID'
     end
   end
 end

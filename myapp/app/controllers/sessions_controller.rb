@@ -6,9 +6,8 @@ class SessionsController < ApplicationController
     user = User.find_by(personal_id: params[:personal_id].downcase)
     if user && user&.authenticate(params[:password])
       if request.referer&.include?('/admin/')
-        Rails.logger.debug(user.admin)
         if user.admin == 'general'
-          flash.now[:denger] = t('.general_cannot')
+          flash.now[:danger] = t('.general_cannot')
           render 'new_admin'
         else
           log_in(user)
@@ -21,7 +20,7 @@ class SessionsController < ApplicationController
       end
 
     else
-      flash.now[:denger] = t('.danger')
+      flash.now[:danger] = t('.danger')
       if request.referer&.include?('/admin/')
         render 'new_admin'
       else
