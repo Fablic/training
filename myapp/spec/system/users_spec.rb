@@ -16,7 +16,7 @@ RSpec.describe 'Users', type: :system do
       expect(page).to have_content '正しいログインIDとパスワードを入力してください'
     end
 
-    it 'success login &logout' do
+    it 'success login & logout' do
       fill_in 'personal_id', with: 'MyUserID'
       fill_in 'password', with: 'pass'
       click_button 'ログイン'
