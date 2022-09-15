@@ -64,7 +64,7 @@ class TaskScheduleController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:title, :body, :finish_at, :status, :user_id)
+    params.require(:task).permit(:title, :body, :finish_at, :status, :user_id, { label_ids: [] })
   end
 
   def task_search_params
