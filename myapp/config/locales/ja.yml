@@ -7,6 +7,8 @@ ja:
       default: ! '%Y/%m/%d'
 
   activerecord:
+    users:
+      admin: ''
     attributes:
       task:
         title: 'タスク名'
@@ -18,6 +20,7 @@ ja:
         personal_id: 'ユーザID'
         password: 'パスワード'
         password_confirmation: 'パスワード(確認)'
+        danger: '最後の管理者権限ユーザです'
 
   task_schedule:
     index:
@@ -84,6 +87,7 @@ ja:
       logout: 'ログアウト'
 
     userform:
+      authority: '権限'
       name: 'ユーザ名'
       id: 'ユーザID'
       pass: 'パスワード'
@@ -101,6 +105,7 @@ ja:
       list: '作成タスク一覧'
       task_name: 'タスク名'
       body: 'タスク本文'
+      created: '作成日時'
       finish: '終了期限'
       status: 'ステータス'
       index: '一覧に戻る'
@@ -128,7 +133,7 @@ ja:
     user:
       admin:
         general: '一般'
-        admin: '管理者'
+        administ: '管理者'
 
   sessions:
     new:

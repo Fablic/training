@@ -8,10 +8,11 @@
 User.create!(
   personal_id: '1234',
   name: 'Test 太郎',
-  password: 'pass'
+  password: 'pass',
+  admin: true
 )
 User.create!(
   personal_id: 'abcde',
   name: 'Test 二郎',
-  password: 'pass'
+  password: 'pass',
 )

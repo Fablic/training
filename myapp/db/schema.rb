@@ -26,7 +26,7 @@ ActiveRecord::Schema.define(version: 2022_09_14_004554) do
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name", null: false
-    t.boolean "admin", default: false
+    t.boolean "admin", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "personal_id", null: false

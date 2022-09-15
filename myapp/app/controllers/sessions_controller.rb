@@ -10,20 +10,21 @@ class SessionsController < ApplicationController
           log_in(user)
           redirect_to users_path
         else
-          flash[:denger] = t('.not_admin')
-          redirect_to admin_login_path
+          flash.now[:denger] = t('.not_admin')
+          render 'new_admin'
         end
 
       else
         log_in(user)
         redirect_to task_schedule_index_path
       end
+
     else
-      flash[:denger] = t('.danger')
+      flash.now[:denger] = t('.danger')
       if request.referer&.include?('/admin/')
-        redirect_to admin_login_path
+        render 'new_admin'
       else
-        redirect_to login_path
+        render 'new'
       end
     end
   end
