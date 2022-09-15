@@ -5,7 +5,7 @@ class TasksController < ApplicationController
 
   def index
     # タスク一覧オブジェクト取得
-    @tasks = Task.where_user_id(login_user.id).where_title(params[:title]).where_status(params[:status]).order('tasks.created_at desc').page(params[:page])
+    @tasks = login_user.tasks.where_title(params[:title]).where_status(params[:status]).order('tasks.created_at desc').page(params[:page])
   end
 
   def show; end
@@ -17,7 +17,7 @@ class TasksController < ApplicationController
   def edit; end
 
   def create
-    @task = Task.new(task_params)
+    @task = login_user.tasks.new(task_params)
 
     if @task.save
       redirect_to tasks_url, notice: "タスク「#{@task.title}」を登録しました。"
@@ -46,8 +46,6 @@ class TasksController < ApplicationController
 
   def task_params
     task_params = params.require(:task).permit(:title, :description, :label, :status)
-    task_params[:user_id] = login_user.id
-    task_params
   end
 
   def set_task
