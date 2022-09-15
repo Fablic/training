@@ -5,15 +5,15 @@ class TaskScheduleController < ApplicationController
   def index
     @search_params = task_search_params
     @tasks = if params[:desc]
-               Task.search(@search_params).desc.page(params[:page]).eager_load(:user).where(user_id: session[:user_id])
+               Task.search(@search_params).desc.page(params[:page]).eager_load(:user).preload(:labels).where(user_id: session[:user_id])
              elsif params[:asc]
-               Task.search(@search_params).asc.page(params[:page]).eager_load(:user).where(user_id: session[:user_id])
+               Task.search(@search_params).asc.page(params[:page]).eager_load(:user).preload(:labels).where(user_id: session[:user_id])
              elsif params[:finish_desc]
-               Task.search(@search_params).finish_desc.page(params[:page]).eager_load(:user).where(user_id: session[:user_id])
+               Task.search(@search_params).finish_desc.page(params[:page]).eager_load(:user).preload(:labels).where(user_id: session[:user_id])
              elsif params[:finish_asc]
-               Task.search(@search_params).finish_asc.page(params[:page]).eager_load(:user).where(user_id: session[:user_id])
+               Task.search(@search_params).finish_asc.page(params[:page]).eager_load(:user).preload(:labels).where(user_id: session[:user_id])
              else
-               Task.search(@search_params).finish_asc.page(params[:page]).eager_load(:user).where(user_id: session[:user_id])
+               Task.search(@search_params).finish_asc.page(params[:page]).eager_load(:user).preload(:labels).where(user_id: session[:user_id])
              end
   end
 
