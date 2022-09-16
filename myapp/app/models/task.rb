@@ -19,11 +19,11 @@ class Task < ApplicationRecord
 
     title_like(search_params[:title])
       .status_is(search_params[:status])
-#      .label_ids_is(search_params[:label_ids])
+      .label_ids_is(search_params[:label_ids])
   end
   scope :title_like, ->(title) { where('title LIKE ?', "%#{title}%") if title.present? }
   scope :status_is, ->(status) { where(status: status) if status.present? }
-#  scope :label_ids_is, ->(label) { joins(:labels).where(labels: label ) if label.present? }
+  scope :label_ids_is, ->(label) { joins(:labels).where(labels: label ) if label.present? }
 
   enum status: {
     untouched: 0,
