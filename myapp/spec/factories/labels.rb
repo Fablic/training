@@ -2,7 +2,11 @@
 
 FactoryBot.define do
     factory :label do
-      name { 'MyLabelName' }
+      trait :label_1 do
+        name { 'MyLabelName1' }
+      end
+      trait :label_2 do
+        name { 'MyLabelName2' }
+      end
     end
   end
-  

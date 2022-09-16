@@ -6,4 +6,3 @@ FactoryBot.define do
       label_id { 1 }
     end
   end
-  

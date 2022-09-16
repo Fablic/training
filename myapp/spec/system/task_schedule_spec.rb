@@ -3,9 +3,13 @@
 require 'rails_helper'
 
 RSpec.describe 'TaskSchedule', type: :system do
+  let(:user) { create(:user) }
+  let(:task) { create(:task, title: 'showタスク', body: 'showボディ', finish_at: 1.year.from_now, user_id: user.id) }
+  let(:label) { create(:label, :label_1) }
+  let!(:labelling) { create(:labelling, task_id: task.id, label_id: label.id) }
+
   context 'login systems check' do
     before do
-      create(:user)
       visit login_path
     end
 
@@ -18,7 +22,7 @@ RSpec.describe 'TaskSchedule', type: :system do
       expect(page).to have_content '正しいログインIDとパスワードを入力してください'
     end
 
-    it 'success login &logout' do
+    it 'success login & logout' do
       fill_in 'personal_id', with: 'MyUserID'
       fill_in 'password', with: 'pass'
       click_button 'ログイン'
@@ -34,11 +38,8 @@ RSpec.describe 'TaskSchedule', type: :system do
     visit login_path
   end
 
-  let(:user) { create(:user) }
-
   context 'order systems check' do
     before do
-      create(:task, title: 'showタスク', body: 'showボディ', finish_at: 1.year.from_now, user_id: user.id)
       create(:task, title: 'secondタスク', body: 'secondボディ', created_at: 1.day.from_now, finish_at: 1.day.from_now, user_id: user.id)
       create(:task, title: 'thirdタスク', body: 'thirdボディ', created_at: 1.day.ago, finish_at: 1.week.from_now, user_id: user.id)
       fill_in 'personal_id', with: 'MyUserID'
@@ -68,6 +69,7 @@ RSpec.describe 'TaskSchedule', type: :system do
 
   context 'create systems check' do
     before do
+      create(:label, :label_2)
       create(:user, personal_id: 'create', name: 'user 太郎')
       fill_in 'personal_id', with: 'create'
       fill_in 'password', with: 'pass'
@@ -82,6 +84,8 @@ RSpec.describe 'TaskSchedule', type: :system do
       fill_in 'task[body]', with: 'newボディ'
       fill_in 'task[finish_at]', with: '9999-01-01'
       select 'user 太郎', from: 'task[user_id]'
+      check 'task_label_ids_1'
+      check 'task_label_ids_2'
       click_button '登録する'
 
       expect(page).to have_content 'タスクの登録が完了しました'
@@ -90,6 +94,8 @@ RSpec.describe 'TaskSchedule', type: :system do
       expect(page).to have_content '9999/01/01'
       expect(page).to have_content '未着手'
       expect(page).to have_content 'user 太郎'
+      expect(page).to have_content 'MyLabelName1'
+      expect(page).to have_content 'MyLabelName2'
     end
 
     it 'failure new task create' do
@@ -112,7 +118,6 @@ RSpec.describe 'TaskSchedule', type: :system do
   end
 
   context 'show systems check' do
-    let!(:task) { create(:task, title: 'showタスク', body: 'showボディ', user_id: user.id) }
     before do
       fill_in 'personal_id', with: 'MyUserID'
       fill_in 'password', with: 'pass'
@@ -131,7 +136,6 @@ RSpec.describe 'TaskSchedule', type: :system do
   end
 
   context 'edit systems check' do
-    let!(:task) { create(:task, title: 'showタスク', body: 'showボディ', user_id: user.id) }
     before do
       create(:user, name: 'user 二郎', personal_id: 'editID')
       fill_in 'personal_id', with: 'MyUserID'
@@ -141,7 +145,6 @@ RSpec.describe 'TaskSchedule', type: :system do
 
     it 'complete edit task' do
       click_link('編集', href: edit_task_schedule_path(task))
-      expect(page).to have_content 'タスク編集画面'
 
       expect(page).to have_content 'タスク編集画面'
       fill_in 'task[title]', with: 'editタスク'
@@ -195,7 +198,6 @@ RSpec.describe 'TaskSchedule', type: :system do
   end
 
   context 'delete systems check' do
-    let!(:task) { create(:task, user_id: user.id) }
     before do
       fill_in 'personal_id', with: 'MyUserID'
       fill_in 'password', with: 'pass'
@@ -214,32 +216,39 @@ RSpec.describe 'TaskSchedule', type: :system do
   end
 
   context 'search systems check' do
+    let(:label2) { create(:label, :label_2) }
+    let(:task2) { create(:task, title: 'thirdタスク', status: 2, user_id: user.id) }
     before do
-      create(:task, title: 'secondタスク', user_id: user.id)
-      create(:task, title: 'thirdタスク', status: 2, user_id: user.id)
+      create(:labelling, task_id: task2.id, label_id: label2.id)
       fill_in 'personal_id', with: 'MyUserID'
       fill_in 'password', with: 'pass'
       click_button 'ログイン'
     end
 
     it 'complete title search' do
-      fill_in 'search[title]', with: 'con'
+      fill_in 'search[title]', with: 'how'
       click_button '検索'
-      expect(page).to have_content 'secondタスク'
+      expect(page).to have_content 'showタスク'
       expect(page).to have_no_content 'thirdタスク'
     end
 
     it 'complete status search' do
       select '完了', from: 'search[status]'
       click_button '検索'
+      expect(page).to have_no_content 'showタスク'
       expect(page).to have_content 'thirdタスク'
-      expect(page).to have_no_content 'secondタスク'
+    end
+
+    it 'complete labels search' do
+      check 'search_label_ids_1'
+      click_button '検索'
+      expect(page).to have_content 'showタスク'
+      expect(page).to have_no_content 'thirdタスク'
     end
   end
 
   context 'paginate systems check' do
     before do
-      create(:task, user_id: user.id)
       create(:task, finish_at: 1.day.from_now, user_id: user.id)
       create(:task, finish_at: 1.week.from_now, user_id: user.id)
       create(:task, finish_at: 2.years.from_now, user_id: user.id)
