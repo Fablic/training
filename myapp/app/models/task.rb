@@ -21,7 +21,7 @@ class Task < ApplicationRecord
   scope :where_title, -> (title) { where('title like ?', "%#{title}%") if title.present? }
   scope :where_label, -> (label) { where('labels.id = ?', "#{label}") if label.present? }
   scope :where_status, -> (status) { where(status: status) if status.present? }
-  scope :get_ids_by_user, -> (title, label, status) { eager_load(:labels).where_title(title).where_status(status).where_label(label).select('tasks.id') }
+  scope :get_ids, -> (title, label, status) { eager_load(:labels).where_title(title).where_status(status).where_label(label).select('tasks.id') }
 
   # ページ内要素数
   paginates_per 5
