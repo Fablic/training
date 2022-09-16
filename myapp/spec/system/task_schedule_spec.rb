@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe 'TaskSchedule', type: :system do
   let(:user) { create(:user) }
   let(:task) { create(:task, title: 'showタスク', body: 'showボディ', finish_at: 1.year.from_now, user_id: user.id) }
-  let(:label) { create(:label, :label_1) }
+  let(:label) { create(:label, :labels1) }
   let!(:labelling) { create(:labelling, task_id: task.id, label_id: label.id) }
 
   context 'login systems check' do
@@ -69,7 +69,7 @@ RSpec.describe 'TaskSchedule', type: :system do
 
   context 'create systems check' do
     before do
-      create(:label, :label_2)
+      create(:label, :labels2)
       create(:user, personal_id: 'create', name: 'user 太郎')
       fill_in 'personal_id', with: 'create'
       fill_in 'password', with: 'pass'
@@ -216,7 +216,7 @@ RSpec.describe 'TaskSchedule', type: :system do
   end
 
   context 'search systems check' do
-    let(:label2) { create(:label, :label_2) }
+    let(:label2) { create(:label, :labels2) }
     let(:task2) { create(:task, title: 'thirdタスク', status: 2, user_id: user.id) }
     before do
       create(:labelling, task_id: task2.id, label_id: label2.id)

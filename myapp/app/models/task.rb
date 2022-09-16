@@ -24,7 +24,7 @@ class Task < ApplicationRecord
 
   scope :title_like, ->(title) { where('title LIKE ?', "%#{title}%") if title.present? }
   scope :status_is, ->(status) { where(status: status) if status.present? }
-  scope :label_ids_is, ->(label) { joins(:labellings).where(labellings:{ label_id: label } ) if label != [""] }
+  scope :label_ids_is, ->(label) { joins(:labellings).where(labellings: { label_id: label }) if label != [''] }
 
   enum status: {
     untouched: 0,
