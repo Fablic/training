@@ -178,33 +178,33 @@ describe 'タスク管理機能', type: :system do
         context '1件目のタスクの場合' do
           it 'タスク名が表示される' do
             visit_tasks
-            fill_in 'name', with: name
-            select(value = status, from: 'status')
-            select(value = label, from: 'label_id')
+            fill_in 'task[name]', with: name
+            select(value = status, from: 'task[status]')
+            select(value = label, from: 'task[label_id]')
             click_button '検索'
             expect(tds[0]).to have_content '最初のタスク'
           end
           it 'ステータスが表示される' do
             visit_tasks
-            fill_in 'name', with: name
-            select(value = status, from: 'status')
-            select(value = label, from: 'label_id')
+            fill_in 'task[name]', with: name
+            select(value = status, from: 'task[status]')
+            select(value = label, from: 'task[label_id]')
             click_button '検索'
             expect(tds[1]).to have_content '未着手'
           end
           it '優先度が表示される' do
             visit_tasks
-            fill_in 'name', with: name
-            select(value = status, from: 'status')
-            select(value = label, from: 'label_id')
+            fill_in 'task[name]', with: name
+            select(value = status, from: 'task[status]')
+            select(value = label, from: 'task[label_id]')
             click_button '検索'
             expect(tds[2]).to have_content '低'
           end
           it 'ラベルが表示される' do
             visit_tasks
-            fill_in 'name', with: name
-            select(value = status, from: 'status')
-            select(value = label, from: 'label_id')
+            fill_in 'task[name]', with: name
+            select(value = status, from: 'task[status]')
+            select(value = label, from: 'task[label_id]')
             click_button '検索'
             expect(tds[3]).to have_content 'testLabel'
           end
@@ -216,33 +216,33 @@ describe 'タスク管理機能', type: :system do
         context '2件目のタスクの場合' do
           it 'タスク名が表示される' do
             visit_tasks
-            fill_in 'name', with: name
-            select(value = status, from: 'status')
-            select(value = label, from: 'label_id')
+            fill_in 'task[name]', with: name
+            select(value = status, from: 'task[status]')
+            select(value = label, from: 'task[label_id]')
             click_button '検索'
             expect(tds[0]).to have_content '２つ目のタスク'
           end
           it 'ステータスが表示される' do
             visit_tasks
-            fill_in 'name', with: name
-            select(value = status, from: 'status')
-            select(value = label, from: 'label_id')
+            fill_in 'task[name]', with: name
+            select(value = status, from: 'task[status]')
+            select(value = label, from: 'task[label_id]')
             click_button '検索'
             expect(tds[1]).to have_content '未着手'
           end
           it '優先度が表示される' do
             visit_tasks
-            fill_in 'name', with: name
-            select(value = status, from: 'status')
-            select(value = label, from: 'label_id')
+            fill_in 'task[name]', with: name
+            select(value = status, from: 'task[status]')
+            select(value = label, from: 'task[label_id]')
             click_button '検索'
             expect(tds[2]).to have_content '中'
           end
           it 'ラベルが表示される' do
             visit_tasks
-            fill_in 'name', with: name
-            select(value = status, from: 'status')
-            select(value = label, from: 'label_id')
+            fill_in 'task[name]', with: name
+            select(value = status, from: 'task[status]')
+            select(value = label, from: 'task[label_id]')
             click_button '検索'
             expect(tds[3]).to have_content 'testLabel'
           end
@@ -314,9 +314,9 @@ describe 'タスク管理機能', type: :system do
 
         it 'タスクが表示されない' do
           visit_tasks
-          fill_in 'name', with: name
-          select(value = status, from: 'status')
-          select(value = label, from: 'label_id')
+          fill_in 'task[name]', with: name
+          select(value = status, from: 'task[status]')
+          select(value = label, from: 'task[label_id]')
           click_button '検索'
           expect(page).not_to have_content 'のタスク'
         end
@@ -360,9 +360,9 @@ describe 'タスク管理機能', type: :system do
 
         it 'タスクが表示されない' do
           visit_tasks
-          fill_in 'name', with: name
-          select(value = status, from: 'status')
-          select(value = label, from: 'label_id')
+          fill_in 'task[name]', with: name
+          select(value = status, from: 'task[status]')
+          select(value = label, from: 'task[label_id]')
           click_button '検索'
           expect(page).not_to have_content '最初のタスク'
         end
@@ -490,6 +490,70 @@ describe 'タスク管理機能', type: :system do
             it 'ラベルが表示される' do
               visit_task_a
               expect(page).to have_content 'testLabel'
+            end
+          end
+
+          context 'ラベルが複数(2件)の場合' do
+            let!(:label_a) { FactoryBot.create(:label) }
+            let!(:label_b) { FactoryBot.create(:label, label_name: 'testLabel2') }
+            let!(:labelling_a) { FactoryBot.create(:labelling, task: task_a, label: label_a) }
+            let!(:labelling_b) { FactoryBot.create(:labelling, task: task_a, label: label_b) }
+
+            it 'タスク名が表示される' do
+              visit_task_a
+              expect(page).to have_content '最初のタスク'
+            end
+
+            it '詳細が表示される' do
+              visit_task_a
+              expect(page).to have_content '最初のタスクを実施する'
+            end
+
+            it 'ステータスが表示される' do
+              visit_task_a
+              expect(page).to have_content '未着手'
+            end
+
+            it '優先度が表示される' do
+              visit_task_a
+              expect(page).to have_content '低'
+            end
+
+            it '1つ目のラベルが表示される' do
+              visit_task_a
+              expect(page).to have_content 'testLabel'
+            end
+
+            it '2つ目のラベルが表示される' do
+              visit_task_a
+              expect(page).to have_content 'testLabel2'
+            end
+          end
+
+          context 'ラベルが設定されていない場合' do
+            it 'タスク名が表示される' do
+              visit_task_a
+              expect(page).to have_content '最初のタスク'
+            end
+
+            it '詳細が表示される' do
+              visit_task_a
+              expect(page).to have_content '最初のタスクを実施する'
+            end
+
+            it 'ステータスが表示される' do
+              visit_task_a
+              expect(page).to have_content '未着手'
+            end
+
+            it '優先度が表示される' do
+              visit_task_a
+              expect(page).to have_content '低'
+            end
+
+            it 'ラベルが表示されない' do
+              visit_task_a
+              expect(page).not_to have_content 'testLabel'
             end
           end
 

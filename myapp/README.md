@@ -5,6 +5,14 @@
 <br>
 
 ## 画面設計
+【各画面共通】
+
+ログアウトエリア
+| item | layer | name | source | type | loop | others |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| button　| 1 | ログアウト |  | ボタン | | ログイン画面へ遷移 |
+<br>
+
 【タスク一覧画面】
 
 URL
@@ -17,15 +25,16 @@ http://localhost:3001
 | label | 2 | タスク名 | tasks.name | 文字列 | | |
 | label | 2 | ステータス | tasks.status | 文字列 | | コードを文字列へ変換して表示 1:'未着手'、2:'着手中'、3:'完了' |
 | label | 2 | 優先度 | tasks.priority | 数値 | | |
-| label | 2 | 担当者 | users.user_name | 文字列 | | |
+| label | 2 | ラベル | labels.name | 文字列 | | タスクに紐づくラベルを全て表示 |
 | button | 2 | 詳細 |  | ボタン | | タスク詳細画面へ遷移 |
 <br>
 
 検索エリア
 | item | layer | name | source | type | loop | others |
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
-| select | 1 | 検索方法 | プルダウン | 文字列 |  | 1:'全て'、2:'タスク名'、3:'タスク詳細' |
-| text | 1 | 検索フォーム | | 文字列 | | 部分一致 |
+| text | 1 | タスク名 | | 文字列 | | 部分一致 |
+| select | 1 | ステータス | tasks.status | プルダウン |  | tasks.statusにenumとして設定されている値を全て表示 |
+| select | 1 | ラベル | labels.name | プルダウン |  | labelsに登録されているデータを全て表示 |
 | button　| 1 | 検索ボタン | | ボタン | | タスク一覧を条件に応じて絞り込み |
 <br>
 
@@ -33,12 +42,6 @@ http://localhost:3001
 | item | layer | name | source | type | loop | others |
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
 | button　| 1 | 新規登録 |  | ボタン | | タスク作成画面へ遷移 |
-<br>
-
-ログアウトエリア
-| item | layer | name | source | type | loop | others |
-| ---- | ---- | ---- | ---- | ---- | ---- | ---- |
-| button　| 1 | ログアウト |  | ボタン | | ログイン画面へ遷移 |
 <br>
 
 【タスク詳細画面】
@@ -52,7 +55,7 @@ http://localhost:3001/tasks/{task.id}
 | label | 1 | 詳細 | tasks.detail | 文字列 | | |
 | label | 1 | ステータス | tasks.status | 文字列 | | コードを文字列へ変換して表示 1:'未着手'、2:'着手中'、3:'完了' |
 | label | 1 | 優先度 | tasks.priority | 数値 | | |
-| label | 1 | 担当者 | users.user_name | 文字列 | | |
+| label | 1 | ラベル | labels.name | 文字列 | | タスクに紐づくラベルを全て表示 |
 | label | 1 | 登録日時 | tasks.created_at | 文字列 | | |
 | label | 1 | 更新日時 | tasks.updated_at | 文字列 | | |
 | button | 1 | 編集 |  | ボタン | | タスク編集画面へ遷移 |
@@ -71,7 +74,7 @@ http://localhost:3001/tasks/new
 | text | 1 | 詳細 | | 文字列 | | |
 | select | 1 | ステータス | | プルダウン | | 1:'未着手'、2:'着手中'、3:'完了' をリスト表示 |
 | select | 1 | 優先度 | | プルダウン | | 1:'低'、2:'中'、3:'高' をリスト表示 |
-| select | 1 | 担当者 | users.name | プルダウン | | usersテーブルの全ユーザをリスト表示 |
+| select | 1 | ラベル | labels.name | 文字列 | | ラベルを全て表示 |
 | button | 1 | 登録 |  | ボタン | | タスク作成 |
 | button | 1 | 一覧へ戻る |  | ボタン | | タスク一覧画面へ遷移 |
 <br>
@@ -87,7 +90,7 @@ http://localhost:3001/tasks/{task.id}/edit
 | text | 1 | 詳細 | tasks.detail | 文字列 | | |
 | select | 1 | ステータス | プルダウン | 文字列 | | 1:'未着手'、2:'着手中'、3:'完了' をリスト表示 |
 | select | 1 | 優先度 | | プルダウン | | 1:'低'、2:'中'、3:'高' をリスト表示 |
-| select | 1 | 担当者 | users.name | プルダウン | | usersテーブルの全ユーザをリスト表示 |
+| select | 1 | ラベル | labels.name | 文字列 | | ラベルを全て表示 |
 | button | 1 | 更新 |  | ボタン | | データを更新 |
 | button | 1 | 詳細へ戻る |  | ボタン | | タスク詳細画面へ遷移 |
 | button | 1 | 一覧へ戻る |  | ボタン | | タスク一覧画面へ遷移 |
@@ -125,6 +128,23 @@ column_name | type | null | default
 | password | varchar | | |
 | email | varchar | | |
 | salt | varchar | | |
+| created_at | datetime | | |
+| updated_at | datetime | | |
+
+labels
+column_name | type | null | default
+| ---- | ---- | ---- | ---- |
+| id | integer | not null | auto increment |
+| label_name | varchar | | |
+| created_at | datetime | | |
+| updated_at | datetime | | |
+
+labellings
+column_name | type | null | default
+| ---- | ---- | ---- | ---- |
+| id | integer | not null | auto increment |
+| task_id | varchar | | |
+| label_id | varchar | | |
 | created_at | datetime | | |
 | updated_at | datetime | | |
 

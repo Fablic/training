@@ -35,7 +35,7 @@
   </div>
 
   <div class='field'>
-    <%= f.label 'ラベル' %>
+    <%= t(Label.model_name.human) %>
     <br>
     <%= f.collection_check_boxes :label_ids, Label.all, :id, :label_name %>
   </div>
