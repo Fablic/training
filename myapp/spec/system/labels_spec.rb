@@ -265,7 +265,7 @@ describe 'Labels', type: :system do
       it '削除ボタン押下で項目が削除されること' do
         visit label_path(label)
         click_on '削除'
-        expect(Label.find_by(id: label.id)).to be_nil
+        expect{ label.reload }.to raise_error(ActiveRecord::RecordNotFound)
       end
 
       it '削除ボタン押下でラベル一覧画面へ遷移すること' do
@@ -299,7 +299,7 @@ describe 'Labels', type: :system do
           visit edit_label_path(label)
           fill_in 'label[name]', with: input_values[:name]
           click_on '更新'
-          expect(Label.find_by(name: input_values[:name])).to be_nil
+          expect(label.reload.name).not_to eq input_values[:name]
         end
 
         it 'エラーメッセージが表示されること' do
@@ -317,7 +317,7 @@ describe 'Labels', type: :system do
           visit edit_label_path(label)
           fill_in 'label[name]', with: input_values[:name]
           click_on '更新'
-          expect(Label.find_by(name: input_values[:name])).to be_nil
+          expect(label.reload.name).not_to eq input_values[:name]
         end
 
         it 'エラーメッセージが表示されること' do
@@ -346,7 +346,7 @@ describe 'Labels', type: :system do
           visit edit_label_path(label)
           fill_in 'label[name]', with: input_values[:name]
           click_on '更新'
-          expect(Label.find_by(name: input_values[:name])).to be_present
+          expect(label.reload.name).to eq input_values[:name]
         end
 
         it '更新ボタン押下でラベル一覧画面へ遷移すること' do
