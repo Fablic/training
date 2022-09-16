@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
       log_in(user)
       redirect_to task_schedule_index_path
     else
-      flash.now[:denger] = t('.danger')
+      flash.now[:danger] = t('.danger')
       render 'new'
     end
   end
