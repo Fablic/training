@@ -2,8 +2,8 @@ require 'rails_helper'
 
 describe 'タスク管理機能', type: :system do
   describe '一覧表示機能' do
-    subject(:visit_tasks){ visit tasks_path }
     let!(:user_a) { FactoryBot.create(:user) }
+    subject(:visit_tasks){ visit tasks_path }
 
     describe 'ログインしている場合' do
       before do
