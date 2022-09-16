@@ -8,18 +8,19 @@ RSpec.feature '/task/:id' do
       create(:task,
              id: 1,
              name: 'aqua',
-             end_date: '2022/09/14 17:25',
+             end_date:,
              priority: 'high',
              status: 'untouched',
              explanation: 'aqua hara')
     end
+    given(:end_date) { '2022/09/14 17:25' }
 
     scenario 'correctly shows task' do
       visit task_path(task)
 
       expect(current_path).to eq '/tasks/1'
       expect(page).to have_content 'aqua'
-      expect(page).to have_content '2022/09/14 17:25'
+      expect(page).to have_content end_date
       expect(page).to have_content '高'
       expect(page).to have_content '未着手'
       expect(page).to have_content 'aqua hara'
