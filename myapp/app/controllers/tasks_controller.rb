@@ -8,17 +8,16 @@ class TasksController < ApplicationController
 
   # タスク作成画面
   def new
-    @task_form = TaskForm.new
+    @task = Task.new
     @is_status = false
   end
 
   # タスク作成画面
   def create
-    create_params = task_params
-    create_params[:user_id] = login_user.id
-    @task_form = TaskForm.new(create_params)
+    @task = Task.new(task_params)
+    @task.user_id = login_user.id
 
-    if @task_form.save
+    if @task.save
       redirect_to(root_path, notice: 'タスク作成成功')
     else
       render(:new, status: :unprocessable_entity)
@@ -28,35 +27,21 @@ class TasksController < ApplicationController
   # タスク詳細画面
   def show
     @task = login_user.tasks.find(params[:id])
-    @label_names = []
-    if @task.labels.present?
-      @label_names.push(@task.labels[0].name) if @task.labels.size > 0
-      @label_names.push(@task.labels[1].name) if @task.labels.size > 1
-      @label_names.push(@task.labels[2].name) if @task.labels.size > 2
-      @label_names.push(@task.labels[3].name) if @task.labels.size > 3
-      @label_names.push(@task.labels[4].name) if @task.labels.size > 4
-    end
   end
 
   # タスク編集画面
   def edit
     @task = login_user.tasks.find(params[:id])
     @is_status = true
-    @task_form = TaskForm.new
-    @task_form.setting(@task.id)
   end
 
   # タスク更新
   def update
-    create_params = task_params
-    create_params[:user_id] = login_user.id
-    @task_form = TaskForm.new(create_params)
-    task = login_user.tasks.find(params[:id])
+    @task = login_user.tasks.find(params[:id])
 
-    if @task_form.update(task.id)
+    if @task.update(task_params)
       redirect_to(root_path, notice: 'タスク更新成功')
     else
-      @task = login_user.tasks.find(params[:id])
       render(:edit, status: :unprocessable_entity)
     end
   end
@@ -71,6 +56,6 @@ class TasksController < ApplicationController
 
   # Taskパラメータ
   def task_params
-    params.require(:task_form).permit(:title, :content, :label1, :label2, :label3, :label4, :label5, :user_id, :status)
+    params.require(:task).permit(:title, :content, :status, { label_ids: [] })
   end
 end

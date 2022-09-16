@@ -52,6 +52,4 @@ ActiveRecord::Schema.define(version: 2022_09_12_014806) do
     t.index ["password_digest"], name: "index_users_on_password_digest"
   end
 
-  add_foreign_key "task_labels", "labels"
-  add_foreign_key "task_labels", "tasks"
 end

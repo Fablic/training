@@ -9,8 +9,8 @@
   <p><%= @task.content %></p>
 
   <p><%= I18n.t('task.label') %></p>
-  <% @label_names.each do |label_name| %>
-    <p><%= label_name %></p>
+  <% @task.labels.each do |label| %>
+    <li><%= label.name %></li>
   <% end %>
 
   <p><%= I18n.t('task.status') %></p>

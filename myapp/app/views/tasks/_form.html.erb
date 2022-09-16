@@ -1,13 +1,13 @@
-<% if @task_form.error_messages.any? %>
+<% if @task.errors.any? %>
   <div class='error-area'>
     <ul>
-      <% @task_form.error_messages.each do |msg| %>
+      <% @task.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
     </ul>
   </div>
 <% end %>
-<%= form_with(model: @task_form, url: url, method: method, local: true) do |f| %>
+<%= form_with(model: @task, url: url, method: method, local: true) do |f| %>
   <p><%= I18n.t('task.title') %></p>
   <%= f.text_field(:title) %>
 
@@ -15,11 +15,7 @@
   <%= f.text_field(:content) %>
 
   <p><%= I18n.t('task.label') %></p>
-  <%= f.collection_select(:label1,  Label.all, :id, :name, { include_blank: '未設定' }) %>
-  <%= f.collection_select(:label2,  Label.all, :id, :name, { include_blank: '未設定' }) %>
-  <%= f.collection_select(:label3,  Label.all, :id, :name, { include_blank: '未設定' }) %>
-  <%= f.collection_select(:label4,  Label.all, :id, :name, { include_blank: '未設定' }) %>
-  <%= f.collection_select(:label5,  Label.all, :id, :name, { include_blank: '未設定' }) %>
+  <%= f.collection_select :label_ids, Label.all, :id, :name, { include_blank: '' }, { multiple: true } %>
 
   <% if is_status %>
     <p><%= I18n.t('task.status') %></p>
