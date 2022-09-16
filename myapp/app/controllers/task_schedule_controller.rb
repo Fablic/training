@@ -68,6 +68,6 @@ class TaskScheduleController < ApplicationController
   end
 
   def task_search_params
-    params.fetch(:search, {}).permit(:title, :status)
+    params.fetch(:search, {}).permit(:title, :status,  label_ids: [] )
   end
 end

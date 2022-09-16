@@ -9,6 +9,7 @@
       <%= f.label t('.name') %> <%= f.text_field :title, value: @search_params[:title] %>
       <%= f.label t('.status') %> <%= f.select :status, Task.statuses_i18n.invert, {include_blank: true, prompt: false, selected: @search_params[:status]},
     class:"form-control form-control-sm col-6" %>
+      <%= f.label t('.label') %><%= f.collection_check_boxes(:label_ids, Label.all, :id, :name) %>
       <%= f.submit t('.search') %>
     <% end %>
   </div>
