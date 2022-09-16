@@ -9,6 +9,7 @@ class SessionsController < ApplicationController
     user = User.find_by(email: session_params[:email])
 
     if user.blank?
+      flash[:alert] = 'ログインに失敗しました。ログイン情報を入力し直してください。'
       redirect_to login_path and return
     end
 
@@ -19,6 +20,7 @@ class SessionsController < ApplicationController
       session[:user_id] = user.id
       redirect_to root_url
     else
+      flash[:alert] = 'ログインに失敗しました。ログイン情報を入力し直してください。'
       redirect_to login_path
     end
   end
