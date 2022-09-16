@@ -6,7 +6,7 @@ RSpec.describe 'tasks/index', type: :view do
   let(:task_aqua) do
     create(:task,
            name: 'aqua',
-           end_date: '2022/09/14 17:25',
+           end_date: end_date_aqua,
            priority: 'high',
            status: 'untouched',
            explanation: 'aqua hara')
@@ -14,20 +14,19 @@ RSpec.describe 'tasks/index', type: :view do
   let(:task_kuma) do
     create(:task,
            name: 'kuma',
-           end_date: '2022/09/13 18:25',
+           end_date: end_date_kuma,
            priority: 'low',
            status: 'touched',
            explanation: 'brown kuma')
   end
+  let(:end_date_aqua) { '2022/09/14 17:25' }
+  let(:end_date_kuma) { '2022/09/13 18:25' }
   let(:tasks) { [task_aqua, task_kuma] }
 
   before { assign(:tasks, tasks) }
 
   it 'renders a list of tasks' do
     render
-
-    end_date_aqua = '2022/09/14 17:25'
-    end_date_kuma = '2022/09/13 18:25'
 
     expect(rendered).to match(/aqua/)
     expect(rendered).to match(/#{end_date_aqua}/)
