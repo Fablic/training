@@ -35,6 +35,7 @@ ja:
       finish: '終了期限'
       status: 'ステータス'
       editor: '作成者'
+      label: 'ラベル'
       up: '▲'
       down: '▼'
       delete_confirm: '削除します。よろしいですか'
@@ -45,6 +46,7 @@ ja:
       body: 'タスク本文'
       finish: '終了期限'
       editor: '作成者'
+      label: 'ラベル'
       index: '一覧に戻る'
     new:
       title: 'タスク登録画面'
