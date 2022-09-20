@@ -8,7 +8,7 @@ RSpec.describe '/tasks', type: :request do
   describe 'GET /index' do
     let!(:tasks) { create_list(:task, 11) }
 
-    context 'does not exist search params' do
+    context 'does not exist search_params' do
       it 'renders a successful response' do
         get tasks_url
 
@@ -17,7 +17,7 @@ RSpec.describe '/tasks', type: :request do
       end
     end
 
-    context 'exists sort in searc params' do
+    context 'exists sort in search_params' do
       let(:params) do
         { sort: 'id_desc' }
       end
