@@ -8,6 +8,7 @@ class TasksController < ApplicationController
     query = query.sort_by_keyword(search_params[:sort]) if search_params[:sort].present?
     query = query.search_keyword(search_params[:keyword]) if search_params[:keyword].present?
     query = query.search_status(search_params[:status]) if search_params[:status].present?
+    query = query.page(search_params[:page])
 
     @tasks = query
   end
@@ -57,6 +58,6 @@ class TasksController < ApplicationController
   end
 
   def search_params
-    params.permit(:keyword, :status, :sort)
+    params.permit(:page, :keyword, :status, :sort)
   end
 end

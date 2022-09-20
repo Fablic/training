@@ -42,44 +42,53 @@ RSpec.feature '/tasks or /' do
     end
 
     feature "with 'sort: id_asc' in search_params" do
-      let!(:tasks) { create_list(:task, 11) }
+      given(:tasks) { Kaminari.paginate_array(create_list(:task, 12)) }
 
-      scenario 'correctly displays tasks' do
-        visit tasks_path
+      feature 'page:1' do
+        background { tasks.page(1) }
 
-        expect(current_path).to eq '/tasks'
+        scenario 'correctly displays tasks' do
+          visit tasks_path
 
-        find("option[value='id_asc']").select_option
-        click_on '送信'
+          expect(current_path).to eq '/tasks'
 
-        tasks.each_with_index do |task, i|
-          expect(page.all('.task')[i].find('.task_name').text).to eq task.name.to_s
-          expect(page.all('.task')[i].find('.task_end_date').text).to eq I18n.l(task.end_date).to_s
-          expect(page.all('.task')[i].find('.task_priority').text).to eq Task.priorities_i18n[task.priority]
-          expect(page.all('.task')[i].find('.task_status').text).to eq Task.statuses_i18n[task.status]
-          expect(page.all('.task')[i].find('.task_explanation').text).to eq task.explanation.to_s
+          find("option[value='id_asc']").select_option
+          click_on '送信'
+
+          expect(page.all('.task').count).to eq 10
+          Task.all.slice(0..9).each_with_index do |task, i|
+            expect(page.all('.task')[i].find('.task_name').text).to eq task.name.to_s
+            expect(page.all('.task')[i].find('.task_end_date').text).to eq I18n.l(task.end_date).to_s
+            expect(page.all('.task')[i].find('.task_priority').text).to eq Task.priorities_i18n[task.priority]
+            expect(page.all('.task')[i].find('.task_status').text).to eq Task.statuses_i18n[task.status]
+            expect(page.all('.task')[i].find('.task_explanation').text).to eq task.explanation.to_s
+          end
         end
       end
     end
 
     feature "with 'sort: id_desc' in search_params" do
-      given!(:tasks) { create_list(:task, 11) }
+      given(:tasks) { Kaminari.paginate_array(create_list(:task, 11)) }
 
-      scenario 'correctly displays tasks' do
-        visit tasks_path
+      feature 'page:1' do
+        background { tasks.page(1) }
 
-        expect(current_path).to eq '/tasks'
+        scenario 'correctly displays tasks' do
+          visit tasks_path
 
-        find("option[value='id_desc']").select_option
-        click_on '送信'
+          expect(current_path).to eq '/tasks'
 
-        expect(page.all('.task').count).to eq 11
-        tasks.reverse.each_with_index do |task, i|
-          expect(page.all('.task')[i].find('.task_name').text).to eq task.name.to_s
-          expect(page.all('.task')[i].find('.task_end_date').text).to eq I18n.l(task.end_date).to_s
-          expect(page.all('.task')[i].find('.task_priority').text).to eq Task.priorities_i18n[task.priority]
-          expect(page.all('.task')[i].find('.task_status').text).to eq Task.statuses_i18n[task.status]
-          expect(page.all('.task')[i].find('.task_explanation').text).to eq task.explanation.to_s
+          find("option[value='id_desc']").select_option
+          click_on '送信'
+
+          expect(page.all('.task').count).to eq 10
+          Task.all.reverse.slice(0..9).each_with_index do |task, i|
+            expect(page.all('.task')[i].find('.task_name').text).to eq task.name.to_s
+            expect(page.all('.task')[i].find('.task_end_date').text).to eq I18n.l(task.end_date).to_s
+            expect(page.all('.task')[i].find('.task_priority').text).to eq Task.priorities_i18n[task.priority]
+            expect(page.all('.task')[i].find('.task_status').text).to eq Task.statuses_i18n[task.status]
+            expect(page.all('.task')[i].find('.task_explanation').text).to eq task.explanation.to_s
+          end
         end
       end
     end
@@ -154,7 +163,7 @@ RSpec.feature '/tasks or /' do
                status: 'untouched',
                explanation: 'aqua hara')
       end
-      background { create_list(:task, 3) }
+      background { Kaminari.paginate_array(create_list(:task, 11)).page(1) }
       given(:end_date_aqua) { '2022/09/14 17:25' }
 
       scenario 'renders #new' do

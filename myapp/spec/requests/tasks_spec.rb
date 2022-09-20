@@ -7,18 +7,18 @@ RSpec.describe '/tasks', type: :request do
 
   describe 'GET /index' do
     context 'does not exist search_params' do
-      let!(:tasks) { create_list(:task, 11) }
+      let!(:tasks) { Kaminari.paginate_array(create_list(:task, 11)).page(1) }
 
       it 'renders a successful response' do
         get tasks_url
 
         expect(response).to have_http_status(:ok)
-        tasks.each { |task| expect(response.body).to include task.name.to_s }
+        Task.all.slice(0..9).each { |task| expect(response.body).to include task.name.to_s }
       end
     end
 
     context 'exists sort in search_params' do
-      let!(:tasks) { create_list(:task, 11) }
+      let!(:tasks) { Kaminari.paginate_array(create_list(:task, 11)).page(1) }
 
       context 'id_desc' do
         let(:params) do
@@ -29,7 +29,7 @@ RSpec.describe '/tasks', type: :request do
           get tasks_url, params: params
 
           expect(response).to have_http_status(:ok)
-          tasks.each { |task| expect(response.body).to include task.name.to_s }
+          Task.all.reverse.slice(0..9).each { |task| expect(response.body).to include task.name.to_s }
         end
       end
 
@@ -42,7 +42,7 @@ RSpec.describe '/tasks', type: :request do
           get tasks_url, params: params
 
           expect(response).to have_http_status(:ok)
-          tasks.each { |task| expect(response.body).to include task.name.to_s }
+          Task.all.slice(0..9).each { |task| expect(response.body).to include task.name.to_s }
         end
       end
 
@@ -55,7 +55,7 @@ RSpec.describe '/tasks', type: :request do
           get tasks_url, params: params
 
           expect(response).to have_http_status(:ok)
-          tasks.each { |task| expect(response.body).to include task.name.to_s }
+          Task.all.reverse.slice(0..9).each { |task| expect(response.body).to include task.name.to_s }
         end
       end
     end

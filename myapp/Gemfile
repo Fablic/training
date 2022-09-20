@@ -9,6 +9,7 @@ gem 'bootsnap', require: false
 gem 'enum_help'
 gem 'importmap-rails'
 gem 'jbuilder'
+gem 'kaminari'
 gem 'mysql2', '~> 0.5'
 gem 'puma', '~> 5.0'
 gem 'rails', '~> 7.0.3', '>= 7.0.3.1'
