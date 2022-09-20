@@ -212,12 +212,7 @@ describe 'Tasks', type: :system do
 
     describe '一覧表示エリア' do
       context 'タスク1件' do
-        before do
-          label = FactoryBot.create(:label, name: 'label')
-          FactoryBot.create(:task_label, task_id: task_one.id, label_id: label.id)
-        end
-
-        let!(:task_one) { FactoryBot.create(:task, user_id: user.id) }
+        let!(:task_one) { FactoryBot.create(:task, :with_label, user_id: user.id, label_name: 'label') }
 
         it 'タイトルが一致すること' do
           visit root_path
@@ -242,15 +237,8 @@ describe 'Tasks', type: :system do
       end
 
       context 'タスク複数件' do
-        before do
-          label_one = FactoryBot.create(:label, name: 'label')
-          FactoryBot.create(:task_label, task_id: task_one.id, label_id: label_one.id)
-          label_two = FactoryBot.create(:label, name: 'second label')
-          FactoryBot.create(:task_label, task_id: task_two.id, label_id: label_two.id)
-        end
-
-        let!(:task_one) { FactoryBot.create(:task, user_id: user.id) }
-        let!(:task_two) { FactoryBot.create(:task, title: 'second title', content: 'second content', status: 'in_progress', user_id: user.id) }
+        let!(:task_one) { FactoryBot.create(:task, :with_label, user_id: user.id, title: 'title', label_name: 'label') }
+        let!(:task_two) { FactoryBot.create(:task, :with_label, user_id: user.id, title: 'second title', label_name: 'second label', content: 'second content', status: 'in_progress') }
         let(:tds_one){ all('tbody tr')[0].all('td') }
         let(:tds_two){ all('tbody tr')[1].all('td') }
 
@@ -555,20 +543,7 @@ describe 'Tasks', type: :system do
   end
 
   describe '#show' do
-    before do
-      FactoryBot.create(:task_label, task_id: task_one.id, label_id:label_one.id)
-      FactoryBot.create(:task_label, task_id: task_one.id, label_id:label_two.id)
-      FactoryBot.create(:task_label, task_id: task_one.id, label_id:label_three.id)
-      FactoryBot.create(:task_label, task_id: task_one.id, label_id:label_four.id)
-      FactoryBot.create(:task_label, task_id: task_one.id, label_id:label_five.id)
-    end
-
-    let!(:label_one) { FactoryBot.create(:label, name: 'label1') }
-    let!(:label_two) { FactoryBot.create(:label, name: 'label2') }
-    let!(:label_three) { FactoryBot.create(:label, name: 'label3') }
-    let!(:label_four) { FactoryBot.create(:label, name: 'label4') }
-    let!(:label_five) { FactoryBot.create(:label, name: 'label5') }
-    let!(:task_one) { FactoryBot.create(:task, user_id: user.id) }
+    let!(:task_one) { FactoryBot.create(:task, :with_labels, user_id: user.id, label_name: 'label') }
 
     describe '表示エリア' do
       it 'タイトルが一致すること' do
@@ -646,10 +621,7 @@ describe 'Tasks', type: :system do
   end
 
   describe '#edit' do
-
-    let!(:label_one) { FactoryBot.create(:label, name: 'label1') }
-    let!(:label_two) { FactoryBot.create(:label, name: 'label2') }
-    let(:task_one) { FactoryBot.create(:task, user_id: user.id) }
+    let(:task_one) { FactoryBot.create(:task, :with_label, user_id: user.id, label_name: 'label1') }
 
     describe 'エラー表示エリア' do
       context '入力エラー（タイトル未入力）' do
@@ -657,7 +629,7 @@ describe 'Tasks', type: :system do
           {
             title: '',
             content: 'こちらはテスト1の内容です。テストテストテストテストテストテストテスト',
-            label: label_one.name,
+            label: task_one.labels[0].name,
           }
         }
 
@@ -685,7 +657,7 @@ describe 'Tasks', type: :system do
           {
             title: '1' * 129,
             content: 'こちらはテスト1の内容です。テストテストテストテストテストテストテスト',
-            label: label_one.name,
+            label: task_one.labels[0].name,
           }
         }
 
@@ -713,7 +685,7 @@ describe 'Tasks', type: :system do
           {
             title: 'テスト1',
             content: '',
-            label: label_one.name,
+            label: task_one.labels[0].name,
           }
         }
 
@@ -741,7 +713,7 @@ describe 'Tasks', type: :system do
           {
             title: 'テスト1',
             content: '1' * 1025,
-            label: label_one.name,
+            label: task_one.labels[0].name,
           }
         }
 
@@ -766,11 +738,6 @@ describe 'Tasks', type: :system do
     end
 
     describe '入力エリア' do
-      before do
-        FactoryBot.create(:task_label, task_id: task_one.id, label_id: label_one.id)
-      end
-
-      let!(:label_one) { FactoryBot.create(:label, name: 'label1') }
       let!(:label_update_one) { FactoryBot.create(:label, name: 'update label1') }
 
       context '初期表示' do
@@ -851,7 +818,7 @@ describe 'Tasks', type: :system do
           {
             title: 'update title',
             content: task_one[:content],
-            label1: label_one.name,
+            label1: task_one.labels[0].name,
             status: 'in_progress',
           }
         }
@@ -872,7 +839,7 @@ describe 'Tasks', type: :system do
           {
             title: task_one[:title],
             content: 'update content',
-            label1: label_one.name,
+            label1: task_one.labels[0].name,
             status: task_one[:status],
           }
         }
@@ -893,7 +860,7 @@ describe 'Tasks', type: :system do
           {
             title: task_one[:title],
             content: task_one[:content],
-            label1: label_two.name,
+            label1: label_update_one.name,
             status: task_one[:status],
           }
         }
@@ -914,7 +881,7 @@ describe 'Tasks', type: :system do
           {
             title: task_one[:title],
             content: task_one[:content],
-            label1: label_one.name,
+            label1: task_one.labels[0].name,
             status: 'in_progress',
           }
         }
