@@ -50,22 +50,4 @@ RSpec.feature '/task/:id' do
       expect(page).to have_content 'タスクが正常に削除されました'
     end
   end
-
-  feature '#not_found' do
-    scenario 'correctly displays 404' do
-      visit '/aqua'
-
-      expect(page.status_code).to eq 404
-      expect(page).to have_content '404なので僕のせいじゃないっす'
-      expect(page).to have_content '多分アドレスとか違うっす'
-    end
-
-    scenario 'correctly displays 404' do
-      visit '/tasks/999999999'
-
-      expect(page.status_code).to eq 404
-      expect(page).to have_content '404なので僕のせいじゃないっす'
-      expect(page).to have_content '多分アドレスとか違うっす'
-    end
-  end
 end
