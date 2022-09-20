@@ -33,7 +33,8 @@ RSpec.feature '/task/:id/edit' do
       select '着手中', from: 'task[status]'
       fill_in '説明', with: 'update!!!!!タスク的な説明なやつ'
 
-      expect { click_button 'Update Task' }.to change { Task.exists?(name: 'うぷだてタスクやで') }.from(false).to(true)
+      expect { click_button '更新する' }.to \
+        change { Task.exists?(name: 'うぷだてタスクやで') }.from(false).to(true)
       expect(current_path).to eq "/tasks/#{Task.last.id}"
       expect(page).to have_content 'タスクが正常に更新されました'
     end
@@ -49,10 +50,10 @@ RSpec.feature '/task/:id/edit' do
       select '未着手', from: 'task[status]'
       fill_in '説明', with: 'タスク的な説明なやつ'
 
-      expect { click_button 'Update Task' }.to change(Task, :count).by(0)
+      expect { click_button '更新する' }.to change(Task, :count).by(0)
       expect(current_path).to eq "/tasks/#{task.id}"
-      expect(page).to have_content '1件のエラーが発生しました。'
-      expect(page).to have_content "Name can't be blank"
+      expect(page).to have_content '1件のエラーが発生しました'
+      expect(page).to have_content 'タスク名を入力してください'
     end
   end
 end
