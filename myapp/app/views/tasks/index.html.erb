@@ -10,14 +10,14 @@
 <div id="tasks">
   <table border="1">
     <tr>
-      <%= render 'task_header' %>
+      <%= render 'header' %>
       <th>詳細</th>
     </tr>
 
     <% @tasks.each do |task| %>
       <div class="task" id="<%= dom_id task %>">
         <tr>
-          <%= render task %>
+          <%= render 'attributes', task: %>
           <td><%= link_to I18n.t('transition_destination.show'), task %></td>
         </tr>
       </div>

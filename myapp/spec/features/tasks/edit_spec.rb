@@ -8,7 +8,7 @@ RSpec.feature '/task/:id/edit' do
 
     scenario 'renders #show' do
       visit edit_task_path(task)
-      click_on I18n.t('transition_destination.show')
+      click_on '詳細を確認する'
 
       expect(current_path).to eq "/tasks/#{task.id}"
       expect(page).to have_content task.name.to_s
@@ -16,7 +16,7 @@ RSpec.feature '/task/:id/edit' do
 
     scenario 'renders #index' do
       visit edit_task_path(task)
-      click_on I18n.t('transition_destination.index')
+      click_on '一覧に戻る'
 
       expect(current_path).to eq '/tasks'
       expect(page).to have_content 'タスク一覧'
@@ -33,10 +33,10 @@ RSpec.feature '/task/:id/edit' do
       select '着手中', from: 'task[status]'
       fill_in '説明', with: 'update!!!!!タスク的な説明なやつ'
 
-      expect { click_button I18n.t('helpers.submit.update') }.to \
+      expect { click_button '更新する' }.to \
         change { Task.exists?(name: 'うぷだてタスクやで') }.from(false).to(true)
       expect(current_path).to eq "/tasks/#{Task.last.id}"
-      expect(page).to have_content I18n.t('crud_messages.update', model_name: I18n.t('activerecord.models.task'))
+      expect(page).to have_content 'タスクが正常に更新されました'
     end
 
     scenario 'does not update with empty name' do
@@ -50,9 +50,9 @@ RSpec.feature '/task/:id/edit' do
       select '未着手', from: 'task[status]'
       fill_in '説明', with: 'タスク的な説明なやつ'
 
-      expect { click_button I18n.t('helpers.submit.update') }.to change(Task, :count).by(0)
+      expect { click_button '更新する' }.to change(Task, :count).by(0)
       expect(current_path).to eq "/tasks/#{task.id}"
-      expect(page).to have_content I18n.t('activerecord.errors.task.count_message', count: 1)
+      expect(page).to have_content '1件のエラーが発生しました'
       expect(page).to have_content 'タスク名を入力してください'
     end
   end
