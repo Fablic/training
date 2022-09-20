@@ -74,4 +74,14 @@ RSpec.feature '/tasks or /' do
       end
     end
   end
+
+  feature '#not_found' do
+    scenario 'correctly displays 404' do
+      visit '/taskssss'
+
+      expect(page.status_code).to eq 404
+      expect(page).to have_content '404なので僕のせいじゃないっす'
+      expect(page).to have_content '多分アドレスとか違うっす'
+    end
+  end
 end

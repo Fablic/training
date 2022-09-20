@@ -186,4 +186,22 @@ RSpec.describe '/tasks', type: :request do
       expect(response).to redirect_to(tasks_url)
     end
   end
+
+  describe '#not_found' do
+    it 'returns status 404' do
+      get '/aqua'
+
+      expect(response).to have_http_status :not_found
+      expect(response.body).to include '404なので僕のせいじゃないっす'
+      expect(response.body).to include '多分アドレスとか違うっす'
+    end
+
+    it 'returns status 404' do
+      get '/tasks/999999'
+
+      expect(response).to have_http_status :not_found
+      expect(response.body).to include '404なので僕のせいじゃないっす'
+      expect(response.body).to include '多分アドレスとか違うっす'
+    end
+  end
 end
