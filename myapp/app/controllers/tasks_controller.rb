@@ -3,7 +3,7 @@
 class TasksController < ApplicationController
   # タスク一覧画面
   def index
-    @tasks = login_user.tasks.eager_load(:labels).eager_load(:task_labels).where(id: login_user.tasks.get_ids(params[:title], params[:label], params[:status])).order('tasks.created_at desc').page(params[:page])
+    @tasks = login_user.tasks.preload(:labels).where(id: login_user.tasks.get_ids(params[:title], params[:label], params[:status])).order('tasks.created_at desc').page(params[:page])
   end
 
   # タスク作成画面
