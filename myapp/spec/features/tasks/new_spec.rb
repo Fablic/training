@@ -12,7 +12,7 @@ RSpec.feature '/task/new' do
 
     scenario 'renders #index' do
       visit new_task_path
-      click_on I18n.t('transition_destination.index')
+      click_on '一覧に戻る'
 
       expect(current_path).to eq '/tasks'
       expect(page).to have_content 'タスク一覧'
@@ -29,10 +29,10 @@ RSpec.feature '/task/new' do
       select '完了', from: 'task[status]'
       fill_in '説明', with: 'タスク的な説明なやつ'
 
-      expect { click_button I18n.t('helpers.submit.create') }.to change(Task, :count).by(1)
+      expect { click_button '登録する' }.to change(Task, :count).by(1)
       expect(Task.last.name).to eq 'タスク名ッダーン!!'
       expect(current_path).to eq "/tasks/#{Task.last.id}"
-      expect(page).to have_content I18n.t('crud_messages.create', model_name: I18n.t('activerecord.models.task'))
+      expect(page).to have_content 'タスクが正常に作成されました'
     end
 
     scenario 'does not create no name task' do
@@ -46,10 +46,20 @@ RSpec.feature '/task/new' do
       select '着手中', from: 'task[status]'
       fill_in '説明', with: 'タスク的な説明なやつ'
 
-      expect { click_button I18n.t('helpers.submit.create') }.to change(Task, :count).by(0)
+      expect { click_button '登録する' }.to change(Task, :count).by(0)
       expect(current_path).to eq '/tasks'
-      expect(page).to have_content I18n.t('activerecord.errors.task.count_message', count: 1)
+      expect(page).to have_content '1件のエラーが発生しました'
       expect(page).to have_content 'タスク名を入力してください'
+    end
+  end
+
+  feature '#not_found' do
+    scenario 'correctly displays 404' do
+      visit '/tasks/neww'
+
+      expect(page.status_code).to eq 404
+      expect(page).to have_content '404なので僕のせいじゃないっす'
+      expect(page).to have_content '多分アドレスとか違うっす'
     end
   end
 end
