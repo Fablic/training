@@ -20,9 +20,9 @@ RSpec.describe '/tasks', type: :request do
     context 'exists sort in search_params' do
       let!(:tasks) { Kaminari.paginate_array(create_list(:task, 11)).page(1) }
 
-      context 'id_desc' do
+      context 'created_at_desc' do
         let(:params) do
-          { sort: 'id_desc' }
+          { sort: 'created_at_desc' }
         end
 
         it 'renders a successful response' do
