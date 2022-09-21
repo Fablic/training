@@ -7,13 +7,28 @@ RSpec.describe '/tasks', type: :request do
 
   describe 'GET /index' do
     context 'does not exist search_params' do
-      let!(:tasks) { Kaminari.paginate_array(create_list(:task, 11)).page(1) }
+      let!(:tasks) { Kaminari.paginate_array(create_list(:task, 11)).page(page) }
 
-      it 'renders a successful response' do
-        get tasks_url
+      context 'page:1' do
+        let(:page) { 1 }
 
-        expect(response).to have_http_status(:ok)
-        Task.all.slice(0..9).each { |task| expect(response.body).to include task.name.to_s }
+        it 'renders a successful response' do
+          get tasks_url
+
+          expect(response).to have_http_status(:ok)
+          Task.all.page(page).each { |task| expect(response.body).to include task.name.to_s }
+        end
+      end
+
+      context 'page:2' do
+        let(:page) { 2 }
+
+        it 'renders a successful response' do
+          get tasks_url + "/?page=#{page}"
+
+          expect(response).to have_http_status(:ok)
+          Task.all.page(page).each { |task| expect(response.body).to include task.name.to_s }
+        end
       end
     end
 

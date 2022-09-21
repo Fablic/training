@@ -18,26 +18,66 @@ RSpec.feature '/tasks or /' do
                priority: 'low',
                status: 'touched',
                explanation: 'brown kuma')
+        7.times.map { create(:task) }
+        create(:task,
+               name: 'nyanko',
+               end_date: end_date_nyanko,
+               priority: 'normal',
+               status: 'completed',
+               explanation: 'white nyanko')
+        create(:task,
+               name: 'hiyoko',
+               end_date: end_date_hiyoko,
+               priority: 'normal',
+               status: 'completed',
+               explanation: 'yellow hiyoko')
       end
       given(:end_date_aqua) { '2022/09/14 17:25' }
       given(:end_date_kuma) { '2022/09/13 18:25' }
+      given(:end_date_nyanko) { '2022/09/13 19:25' }
+      given(:end_date_hiyoko) { '2022/09/13 20:25' }
 
-      scenario 'correctly displays tasks' do
-        visit root_path
+      feature 'page:1' do
+        scenario 'correctly displays tasks' do
+          visit root_path
 
-        expect(current_path).to eq '/'
+          expect(current_path).to eq '/'
+          expect(page.all('.task').count).to eq 10
 
-        expect(page).to have_content 'aqua'
-        expect(page).to have_content end_date_aqua
-        expect(page).to have_content '高'
-        expect(page).to have_content '未着手'
-        expect(page).to have_content 'aqua hara'
+          expect(page.all('.task')[0].find('.task_name').text).to eq 'aqua'
+          expect(page.all('.task')[0].find('.task_end_date').text).to eq '2022/09/14 17:25'
+          expect(page.all('.task')[0].find('.task_priority').text).to eq '高'
+          expect(page.all('.task')[0].find('.task_status').text).to eq '未着手'
+          expect(page.all('.task')[0].find('.task_explanation').text).to eq 'aqua hara'
 
-        expect(page).to have_content 'kuma'
-        expect(page).to have_content end_date_kuma
-        expect(page).to have_content '低'
-        expect(page).to have_content '着手中'
-        expect(page).to have_content 'brown kuma'
+          expect(page.all('.task')[1].find('.task_name').text).to eq 'kuma'
+          expect(page.all('.task')[1].find('.task_end_date').text).to eq '2022/09/13 18:25'
+          expect(page.all('.task')[1].find('.task_priority').text).to eq '低'
+          expect(page.all('.task')[1].find('.task_status').text).to eq '着手中'
+          expect(page.all('.task')[1].find('.task_explanation').text).to eq 'brown kuma'
+
+          expect(page.all('.task')[9].find('.task_name').text).to eq 'nyanko'
+          expect(page.all('.task')[9].find('.task_end_date').text).to eq '2022/09/13 19:25'
+          expect(page.all('.task')[9].find('.task_priority').text).to eq '普通'
+          expect(page.all('.task')[9].find('.task_status').text).to eq '完了'
+          expect(page.all('.task')[9].find('.task_explanation').text).to eq 'white nyanko'
+        end
+      end
+
+      feature 'page:2' do
+        scenario 'correctly displays tasks' do
+          visit root_path
+          click_on 'Next'
+
+          expect(current_path).to eq '/'
+          expect(page.all('.task').count).to eq 1
+
+          expect(page.all('.task')[0].find('.task_name').text).to eq 'hiyoko'
+          expect(page.all('.task')[0].find('.task_end_date').text).to eq '2022/09/13 20:25'
+          expect(page.all('.task')[0].find('.task_priority').text).to eq '普通'
+          expect(page.all('.task')[0].find('.task_status').text).to eq '完了'
+          expect(page.all('.task')[0].find('.task_explanation').text).to eq 'yellow hiyoko'
+        end
       end
     end
 
@@ -60,8 +100,6 @@ RSpec.feature '/tasks or /' do
       given(:end_date_kuma) { '2022/09/13 18:25' }
 
       feature 'page:1' do
-        background { tasks.page(1) }
-
         scenario 'correctly displays tasks' do
           visit tasks_path
 
@@ -192,7 +230,7 @@ RSpec.feature '/tasks or /' do
                status: 'untouched',
                explanation: 'aqua hara')
       end
-      background { Kaminari.paginate_array(create_list(:task, 11)).page(1) }
+      background { create_list(:task, 11) }
       given(:end_date_aqua) { '2022/09/14 17:25' }
 
       scenario 'renders #new' do
