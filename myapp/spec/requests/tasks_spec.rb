@@ -19,7 +19,7 @@ RSpec.describe '/tasks', type: :request do
 
     context 'exists sort in search_params' do
       let(:params) do
-        { sort: 'id_desc' }
+        { sort: 'created_at_desc' }
       end
 
       it 'renders a successful response' do
