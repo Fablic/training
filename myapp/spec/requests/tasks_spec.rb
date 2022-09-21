@@ -18,15 +18,15 @@ RSpec.describe '/tasks', type: :request do
     end
 
     context 'exists sort in search_params' do
-      context 'id_desc' do
+      context 'created_at_desc' do
         let(:params) do
-          { sort: 'id_desc' }
+          { sort: 'created_at_desc' }
         end
 
         it 'renders a successful response' do
           get tasks_url, params: params
 
-          expect(response).to have_http_status(200)
+          expect(response).to have_http_status(:ok)
           tasks.each { |task| expect(response.body).to include task.name.to_s }
         end
       end
@@ -39,7 +39,7 @@ RSpec.describe '/tasks', type: :request do
         it 'renders a successful response' do
           get tasks_url, params: params
 
-          expect(response).to have_http_status(200)
+          expect(response).to have_http_status(:ok)
           tasks.each { |task| expect(response.body).to include task.name.to_s }
         end
       end
@@ -52,7 +52,7 @@ RSpec.describe '/tasks', type: :request do
         it 'renders a successful response' do
           get tasks_url, params: params
 
-          expect(response).to have_http_status(200)
+          expect(response).to have_http_status(:ok)
           tasks.each { |task| expect(response.body).to include task.name.to_s }
         end
       end
