@@ -25,8 +25,8 @@ ja:
   select_form:
     search_form:
       sort:
-        - ['ID昇順(デフォルト)', 'id_asc']
-        - ['ID降順', 'id_desc']
+        - ['作成日時昇順(デフォルト)', 'created_at_asc']
+        - ['作成日時降順', 'created_at_desc']
     task:
       priority:
         - ['低', 'low']
