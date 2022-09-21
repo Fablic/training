@@ -10,10 +10,8 @@ ja:
         status: ステータス
         explanation: 説明文
     errors:
-      task:
-        count_message: "%{count}件のエラーが発生しました。"
-        name:
-          too_long: 'タスク名は255文字以内で入力してください'
+      messages:
+        count: "%{count}件のエラーが発生しました。"
   enums:
     task:
       priority:
@@ -27,8 +25,8 @@ ja:
   select_form:
     search_form:
       sort:
-        - ['ID昇順(デフォルト)', 'id_asc']
-        - ['ID降順', 'id_desc']
+        - ['作成日時昇順(デフォルト)', 'created_at_asc']
+        - ['作成日時降順', 'created_at_desc']
         - ['終了期限昇順', 'end_date_asc']
         - ['終了期限降順', 'end_date_desc']
     task:

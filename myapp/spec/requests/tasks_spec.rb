@@ -8,7 +8,7 @@ RSpec.describe '/tasks', type: :request do
   describe 'GET /index' do
     let!(:tasks) { create_list(:task, 11) }
 
-    context 'does not exist search params' do
+    context 'does not exist search_params' do
       it 'renders a successful response' do
         get tasks_url
 
@@ -25,7 +25,9 @@ RSpec.describe '/tasks', type: :request do
 
         it 'renders a successful response' do
           get tasks_url, params: params
+
           expect(response).to have_http_status(200)
+          tasks.each { |task| expect(response.body).to include task.name.to_s }
         end
       end
 
@@ -36,7 +38,9 @@ RSpec.describe '/tasks', type: :request do
 
         it 'renders a successful response' do
           get tasks_url, params: params
+
           expect(response).to have_http_status(200)
+          tasks.each { |task| expect(response.body).to include task.name.to_s }
         end
       end
 
@@ -47,7 +51,9 @@ RSpec.describe '/tasks', type: :request do
 
         it 'renders a successful response' do
           get tasks_url, params: params
+
           expect(response).to have_http_status(200)
+          tasks.each { |task| expect(response.body).to include task.name.to_s }
         end
       end
     end
@@ -153,7 +159,7 @@ RSpec.describe '/tasks', type: :request do
         post tasks_url, params: invalid_attributes
 
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.body).to include I18n.t('activerecord.errors.task.name.too_long')
+        expect(response.body).to include 'タスク名は255文字以内で入力してください'
       end
     end
   end
@@ -176,7 +182,7 @@ RSpec.describe '/tasks', type: :request do
         put task_url(task), params: { task: new_attributes }
 
         expect(task.reload).to have_attributes new_attributes.except(:end_date)
-        expect(I18n.l(task.end_date)).to eq I18n.l(new_attributes[:end_date])
+        expect(task.end_date.strftime('%Y/%m/%d %H:%M')).to eq new_attributes[:end_date].strftime('%Y/%m/%d %H:%M')
       end
 
       it 'redirects to the task' do
@@ -204,7 +210,7 @@ RSpec.describe '/tasks', type: :request do
         put task_url(task), params: invalid_attributes
 
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.body).to include I18n.t('activerecord.errors.task.name.too_long')
+        expect(response.body).to include 'タスク名は255文字以内で入力してください'
       end
     end
   end
@@ -221,6 +227,24 @@ RSpec.describe '/tasks', type: :request do
 
       expect(response).to have_http_status(:found)
       expect(response).to redirect_to(tasks_url)
+    end
+  end
+
+  describe '#not_found' do
+    it 'returns status 404' do
+      get '/aqua'
+
+      expect(response).to have_http_status :not_found
+      expect(response.body).to include '404なので僕のせいじゃないっす'
+      expect(response.body).to include '多分アドレスとか違うっす'
+    end
+
+    it 'returns status 404' do
+      get '/tasks/999999'
+
+      expect(response).to have_http_status :not_found
+      expect(response.body).to include '404なので僕のせいじゃないっす'
+      expect(response.body).to include '多分アドレスとか違うっす'
     end
   end
 end

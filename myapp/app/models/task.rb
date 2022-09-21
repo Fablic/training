@@ -4,10 +4,10 @@ class Task < ApplicationRecord
   DEFAULT_PRIORITY_VALUE = 1
   DEFAULT_STATUS_VALUE = 0
   SORT_TYPE = {
-    'id_asc' => 'tasks.id ASC',
-    'id_desc' => 'tasks.id DESC',
-    'end_date_asc' => 'tasks.end_date ASC',
-    'end_date_desc' => 'tasks.end_date DESC'
+    'created_at_asc' => 'created_at ASC',
+    'created_at_desc' => 'created_at DESC',
+    'end_date_asc' => 'end_date ASC',
+    'end_date_desc' => 'end_date DESC'
   }.freeze
 
   after_initialize :set_default_values
@@ -33,5 +33,11 @@ class Task < ApplicationRecord
   def set_default_values
     self.priority ||= DEFAULT_PRIORITY_VALUE
     self.status   ||= DEFAULT_STATUS_VALUE
+  end
+
+  class << self
+    def check_approved_sort_params(sort)
+      SORT_TYPE.keys.include?(sort) ? sort : 'created_at_asc'
+    end
   end
 end

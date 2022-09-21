@@ -5,40 +5,119 @@ require 'rails_helper'
 RSpec.feature '/tasks or /' do
   feature '#index' do
     feature 'tasks' do
-      given!(:tasks) { create_list(:task, 11) }
+      background do
+        create(:task,
+               name: 'aqua',
+               end_date: end_date_aqua,
+               priority: 'high',
+               status: 'untouched',
+               explanation: 'aqua hara')
+        create(:task,
+               name: 'kuma',
+               end_date: end_date_kuma,
+               priority: 'low',
+               status: 'touched',
+               explanation: 'brown kuma')
+      end
+      given(:end_date_aqua) { '2022/09/14 17:25' }
+      given(:end_date_kuma) { '2022/09/13 18:25' }
 
       scenario 'correctly displays tasks' do
         visit root_path
 
         expect(current_path).to eq '/'
-        tasks.each do |task|
-          expect(page).to have_content task.name.to_s
-          expect(page).to have_content I18n.l(task.end_date).to_s
-          expect(page).to have_content Task.priorities_i18n[task.priority]
-          expect(page).to have_content Task.statuses_i18n[task.status]
-          expect(page).to have_content task.explanation.to_s
-        end
+
+        expect(page).to have_content 'aqua'
+        expect(page).to have_content end_date_aqua
+        expect(page).to have_content '高'
+        expect(page).to have_content '未着手'
+        expect(page).to have_content 'aqua hara'
+
+        expect(page).to have_content 'kuma'
+        expect(page).to have_content end_date_kuma
+        expect(page).to have_content '低'
+        expect(page).to have_content '着手中'
+        expect(page).to have_content 'brown kuma'
       end
     end
 
-    feature "with 'sort: id_desc' in search_params" do
-      let!(:tasks) { create_list(:task, 11) }
+    feature "with 'sort: created_at_asc' in search_params" do
+      background do
+        create(:task,
+               name: 'aqua',
+               end_date: end_date_aqua,
+               priority: 'high',
+               status: 'untouched',
+               explanation: 'aqua hara')
+        create(:task,
+               name: 'kuma',
+               end_date: end_date_kuma,
+               priority: 'low',
+               status: 'touched',
+               explanation: 'brown kuma')
+      end
+      given(:end_date_aqua) { '2022/09/14 17:25' }
+      given(:end_date_kuma) { '2022/09/13 18:25' }
 
       scenario 'correctly displays tasks' do
         visit tasks_path
 
         expect(current_path).to eq '/tasks'
 
-        find("option[value='id_desc']").select_option
+        find("option[value='created_at_asc']").select_option
         click_on '送信'
 
-        tasks.reverse.each_with_index do |task, i|
-          expect(page.all('.task')[i].find('.task_name').text).to eq task.name.to_s
-          expect(page.all('.task')[i].find('.task_end_date').text).to eq I18n.l(task.end_date).to_s
-          expect(page.all('.task')[i].find('.task_priority').text).to eq Task.priorities_i18n[task.priority]
-          expect(page.all('.task')[i].find('.task_status').text).to eq Task.statuses_i18n[task.status]
-          expect(page.all('.task')[i].find('.task_explanation').text).to eq task.explanation.to_s
-        end
+        expect(page.all('.task')[0].find('.task_name').text).to eq 'aqua'
+        expect(page.all('.task')[0].find('.task_end_date').text).to eq '2022/09/14 17:25'
+        expect(page.all('.task')[0].find('.task_priority').text).to eq '高'
+        expect(page.all('.task')[0].find('.task_status').text).to eq '未着手'
+        expect(page.all('.task')[0].find('.task_explanation').text).to eq 'aqua hara'
+
+        expect(page.all('.task')[1].find('.task_name').text).to eq 'kuma'
+        expect(page.all('.task')[1].find('.task_end_date').text).to eq '2022/09/13 18:25'
+        expect(page.all('.task')[1].find('.task_priority').text).to eq '低'
+        expect(page.all('.task')[1].find('.task_status').text).to eq '着手中'
+        expect(page.all('.task')[1].find('.task_explanation').text).to eq 'brown kuma'
+      end
+    end
+
+    feature "with 'sort: created_at_desc' in search_params" do
+      background do
+        create(:task,
+               name: 'aqua',
+               end_date: end_date_aqua,
+               priority: 'high',
+               status: 'untouched',
+               explanation: 'aqua hara')
+        create(:task,
+               name: 'kuma',
+               end_date: end_date_kuma,
+               priority: 'low',
+               status: 'touched',
+               explanation: 'brown kuma')
+      end
+      given(:end_date_aqua) { '2022/09/14 17:25' }
+      given(:end_date_kuma) { '2022/09/13 18:25' }
+
+      scenario 'correctly displays tasks' do
+        visit tasks_path
+
+        expect(current_path).to eq '/tasks'
+
+        find("option[value='created_at_desc']").select_option
+        click_on '送信'
+
+        expect(page.all('.task')[0].find('.task_name').text).to eq 'kuma'
+        expect(page.all('.task')[0].find('.task_end_date').text).to eq '2022/09/13 18:25'
+        expect(page.all('.task')[0].find('.task_priority').text).to eq '低'
+        expect(page.all('.task')[0].find('.task_status').text).to eq '着手中'
+        expect(page.all('.task')[0].find('.task_explanation').text).to eq 'brown kuma'
+
+        expect(page.all('.task')[1].find('.task_name').text).to eq 'aqua'
+        expect(page.all('.task')[1].find('.task_end_date').text).to eq '2022/09/14 17:25'
+        expect(page.all('.task')[1].find('.task_priority').text).to eq '高'
+        expect(page.all('.task')[1].find('.task_status').text).to eq '未着手'
+        expect(page.all('.task')[1].find('.task_explanation').text).to eq 'aqua hara'
       end
     end
 
@@ -82,25 +161,35 @@ RSpec.feature '/tasks or /' do
     end
 
     feature 'clicks link buttons' do
-      given!(:task) { create_list(:task, 2).first }
+      background do
+        create(:task,
+               id: 1,
+               name: 'aqua',
+               end_date: end_date_aqua,
+               priority: 'high',
+               status: 'untouched',
+               explanation: 'aqua hara')
+      end
+      background { create_list(:task, 3) }
+      given(:end_date_aqua) { '2022/09/14 17:25' }
 
       scenario 'renders #new' do
         visit root_path
-        click_on I18n.t('transition_destination.create')
+        click_on '新規作成する'
+
         expect(current_path).to eq '/tasks/new'
         expect(page).to have_content 'タスクの新規作成'
       end
 
       scenario 'renders #show' do
         visit root_path
-        first(:link, I18n.t('transition_destination.show')).click
+        first(:link, '詳細を確認する').click
 
-        expect(current_path).to eq "/tasks/#{task.id}"
-        expect(page).to have_content task.name.to_s
-        expect(page).to have_content I18n.l(task.end_date).to_s
-        expect(page).to have_content Task.priorities_i18n[task.priority].to_s
-        expect(page).to have_content Task.statuses[task.status].to_s
-        expect(page).to have_content task.explanation.to_s
+        expect(page).to have_content 'aqua'
+        expect(page).to have_content end_date_aqua
+        expect(page).to have_content '高'
+        expect(page).to have_content '未着手'
+        expect(page).to have_content 'aqua hara'
       end
     end
   end
