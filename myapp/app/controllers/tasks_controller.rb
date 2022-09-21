@@ -58,6 +58,7 @@ class TasksController < ApplicationController
   end
 
   def search_params
+    params[:sort] = Task.check_approved_sort_params(params[:sort]) if params[:sort].present?
     params.permit(:page, :keyword, :status, :sort)
   end
 end
