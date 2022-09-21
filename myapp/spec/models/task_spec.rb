@@ -87,4 +87,24 @@ RSpec.describe Task, type: :model do
       end
     end
   end
+
+  describe '.check_approved_sort_params' do
+    subject { Task.check_approved_sort_params(sort) }
+
+    context 'sort type: name_asc' do
+      let(:sort) { 'name_asc' }
+
+      it 'returns a default sort type' do
+        is_expected.to eq 'created_at_asc'
+      end
+    end
+
+    context 'sort type: created_at_desc' do
+      let(:sort) { 'created_at_desc' }
+
+      it 'returns a specified sort type' do
+        is_expected.to eq 'created_at_desc'
+      end
+    end
+  end
 end
