@@ -64,20 +64,22 @@ RSpec.feature '/tasks or /' do
 
         scenario 'correctly displays tasks' do
           visit tasks_path
-        find("option[value='created_at_asc']").select_option
-        click_on '送信'
 
-        expect(page.all('.task')[0].find('.task_name').text).to eq 'aqua'
-        expect(page.all('.task')[0].find('.task_end_date').text).to eq '2022/09/14 17:25'
-        expect(page.all('.task')[0].find('.task_priority').text).to eq '高'
-        expect(page.all('.task')[0].find('.task_status').text).to eq '未着手'
-        expect(page.all('.task')[0].find('.task_explanation').text).to eq 'aqua hara'
+          find("option[value='created_at_asc']").select_option
+          click_on '送信'
 
-        expect(page.all('.task')[1].find('.task_name').text).to eq 'kuma'
-        expect(page.all('.task')[1].find('.task_end_date').text).to eq '2022/09/13 18:25'
-        expect(page.all('.task')[1].find('.task_priority').text).to eq '低'
-        expect(page.all('.task')[1].find('.task_status').text).to eq '着手中'
-        expect(page.all('.task')[1].find('.task_explanation').text).to eq 'brown kuma'
+          expect(page.all('.task')[0].find('.task_name').text).to eq 'aqua'
+          expect(page.all('.task')[0].find('.task_end_date').text).to eq '2022/09/14 17:25'
+          expect(page.all('.task')[0].find('.task_priority').text).to eq '高'
+          expect(page.all('.task')[0].find('.task_status').text).to eq '未着手'
+          expect(page.all('.task')[0].find('.task_explanation').text).to eq 'aqua hara'
+
+          expect(page.all('.task')[1].find('.task_name').text).to eq 'kuma'
+          expect(page.all('.task')[1].find('.task_end_date').text).to eq '2022/09/13 18:25'
+          expect(page.all('.task')[1].find('.task_priority').text).to eq '低'
+          expect(page.all('.task')[1].find('.task_status').text).to eq '着手中'
+          expect(page.all('.task')[1].find('.task_explanation').text).to eq 'brown kuma'
+        end
       end
     end
 
@@ -118,6 +120,66 @@ RSpec.feature '/tasks or /' do
         expect(page.all('.task')[1].find('.task_priority').text).to eq '高'
         expect(page.all('.task')[1].find('.task_status').text).to eq '未着手'
         expect(page.all('.task')[1].find('.task_explanation').text).to eq 'aqua hara'
+      end
+    end
+
+    feature "with 'sort: end_date' in search_params" do
+      background { 2.times { create(:task, end_date: nil) } }
+      given!(:task_past_two_days) { create(:task, end_date: Time.current - 2.days) }
+      given!(:task_today) { create(:task, end_date: Time.current) }
+      given!(:tasks) { Task.all }
+
+      feature 'asc' do
+        scenario 'correctly displays tasks' do
+          visit tasks_path
+
+          expect(current_path).to eq '/tasks'
+
+          find("option[value='end_date_asc']").select_option
+          click_on '送信'
+
+          expect(page.all('.task').count).to eq 4
+          expect(page.all('.task')[0].find('.task_end_date').text).to eq ''
+          expect(page.all('.task')[1].find('.task_end_date').text).to eq ''
+          expect(page.all('.task')[2].find('.task_end_date').text).to eq I18n.l(task_past_two_days.end_date).to_s
+          expect(page.all('.task')[3].find('.task_end_date').text).to eq I18n.l(task_today.end_date).to_s
+        end
+      end
+
+      feature 'desc' do
+        scenario 'correctly displays tasks' do
+          visit tasks_path
+
+          expect(current_path).to eq '/tasks'
+
+          find("option[value='end_date_desc']").select_option
+          click_on '送信'
+
+          expect(page.all('.task').count).to eq 4
+          expect(page.all('.task')[0].find('.task_end_date').text).to eq I18n.l(task_today.end_date).to_s
+          expect(page.all('.task')[1].find('.task_end_date').text).to eq I18n.l(task_past_two_days.end_date).to_s
+          expect(page.all('.task')[2].find('.task_end_date').text).to eq ''
+          expect(page.all('.task')[3].find('.task_end_date').text).to eq ''
+        end
+      end
+    end
+
+    feature "with 'keyword: くま' in search_params" do
+      given!(:task_aqua) { create(:task, name: 'アクア', explanation: 'アイコンはくま太郎') }
+      given!(:task_kuma) { create(:task, name: 'くま二郎', explanation: '毛が茶色い') }
+      given!(:task_nyanko) { create(:task, name: 'にゃんこ', explanation: '毛が白い') }
+
+      scenario 'correctly displays tasks' do
+        visit tasks_path
+
+        expect(current_path).to eq '/tasks'
+
+        fill_in 'キーワード検索', with: 'くま'
+        click_on '送信'
+
+        expect(page.all('.task').count).to eq 2
+        expect(page.all('.task')[0].find('.task_name').text).to eq 'アクア'
+        expect(page.all('.task')[1].find('.task_name').text).to eq 'くま二郎'
       end
     end
 
