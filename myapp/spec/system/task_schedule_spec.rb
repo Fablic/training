@@ -143,7 +143,6 @@ RSpec.describe 'TaskSchedule', type: :system do
       click_link('編集', href: edit_task_schedule_path(task))
       expect(page).to have_content 'タスク編集画面'
 
-      expect(page).to have_content 'タスク編集画面'
       fill_in 'task[title]', with: 'editタスク'
       fill_in 'task[body]', with: 'editボディ'
       fill_in 'task[finish_at]', with: '2112-09-03'
