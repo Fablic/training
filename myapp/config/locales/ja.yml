@@ -32,6 +32,7 @@ ja:
       up: '▲'
       down: '▼'
       delete_confirm: '削除します。よろしいですか'
+      logout: 'ログアウト'
 
     taskform:
       name: 'タスク名'
@@ -70,3 +71,12 @@ ja:
         untouched: '未着手'
         in_progress: '着手中'
         completion: '完了'
+
+  sessions:
+    new:
+      title: 'ログイン画面'
+      id: 'ログインID'
+      pass: 'パスワード'
+      login: 'ログイン'
+    create:
+      danger: '正しいログインIDとパスワードを入力してください'

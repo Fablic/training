@@ -1,18 +1,19 @@
 # frozen_string_literal: true
 
 class TaskScheduleController < ApplicationController
+  before_action :require_login
   def index
     @search_params = task_search_params
     @tasks = if params[:desc]
-               Task.eager_load(:user).search(@search_params).desc.page(params[:page])
+               Task.search(@search_params).desc.page(params[:page]).eager_load(:user).where(user_id: session[:user_id])
              elsif params[:asc]
-               Task.eager_load(:user).search(@search_params).asc.page(params[:page])
+               Task.search(@search_params).asc.page(params[:page]).eager_load(:user).where(user_id: session[:user_id])
              elsif params[:finish_desc]
-               Task.eager_load(:user).search(@search_params).finish_desc.page(params[:page])
+               Task.search(@search_params).finish_desc.page(params[:page]).eager_load(:user).where(user_id: session[:user_id])
              elsif params[:finish_asc]
-               Task.eager_load(:user).search(@search_params).finish_asc.page(params[:page])
+               Task.search(@search_params).finish_asc.page(params[:page]).eager_load(:user).where(user_id: session[:user_id])
              else
-               Task.eager_load(:user).search(@search_params).finish_asc.page(params[:page])
+               Task.search(@search_params).finish_asc.page(params[:page]).eager_load(:user).where(user_id: session[:user_id])
              end
   end
 

@@ -3,15 +3,51 @@
 require 'rails_helper'
 
 RSpec.describe 'TaskSchedule', type: :system do
+  context 'login systems check' do
+    before do
+      create(:user)
+      visit login_path
+    end
+
+    it 'failure login' do
+      fill_in 'personal_id', with: ''
+      fill_in 'password', with: ''
+      click_button 'ログイン'
+
+      expect(page).to have_content 'ログイン画面'
+      expect(page).to have_content '正しいログインIDとパスワードを入力してください'
+    end
+
+    it 'success login &logout' do
+      fill_in 'personal_id', with: 'MyUserID'
+      fill_in 'password', with: 'pass'
+      click_button 'ログイン'
+
+      expect(page).to have_content 'タスク一覧画面'
+      click_link 'ログアウト'
+
+      expect(page).to have_content 'ログイン画面'
+    end
+  end
+
+  before do
+    visit login_path
+  end
+
+  let(:user) { create(:user) }
+
   context 'order systems check' do
     before do
-      create(:task, title: 'showタスク', body: 'showボディ', finish_at: 1.year.from_now)
-      create(:task, title: 'secondタスク', body: 'secondボディ', created_at: 1.day.from_now, finish_at: 1.day.from_now)
-      create(:task, title: 'thirdタスク', body: 'thirdボディ', created_at: 1.day.ago, finish_at: 1.week.from_now, status: 2)
-      visit task_schedule_index_path
+      create(:task, title: 'showタスク', body: 'showボディ', finish_at: 1.year.from_now, user_id: user.id)
+      create(:task, title: 'secondタスク', body: 'secondボディ', created_at: 1.day.from_now, finish_at: 1.day.from_now, user_id: user.id)
+      create(:task, title: 'thirdタスク', body: 'thirdボディ', created_at: 1.day.ago, finish_at: 1.week.from_now, user_id: user.id)
+      fill_in 'personal_id', with: 'MyUserID'
+      fill_in 'password', with: 'pass'
+      click_button 'ログイン'
     end
 
     it 'initial display (finish_at asc)' do
+      expect(page).to have_content 'タスク一覧画面'
       expect(page.text).to match(/secondタスク.*thirdタスク.*showタスク/)
     end
 
@@ -31,9 +67,14 @@ RSpec.describe 'TaskSchedule', type: :system do
   end
 
   context 'create systems check' do
+    before do
+      create(:user, personal_id: 'create', name: 'user 太郎')
+      fill_in 'personal_id', with: 'create'
+      fill_in 'password', with: 'pass'
+      click_button 'ログイン'
+    end
+
     it 'complete new task create' do
-      create(:user, name: 'user 太郎')
-      visit task_schedule_index_path
       click_button 'タスク登録'
 
       expect(page).to have_content 'タスク登録画面'
@@ -71,11 +112,15 @@ RSpec.describe 'TaskSchedule', type: :system do
   end
 
   context 'show systems check' do
-    let!(:task) { create(:task, title: 'showタスク', body: 'showボディ') }
-    it 'complete show task' do
-      visit task_schedule_index_path
-      click_link('詳細', href: task_schedule_path(task))
+    let!(:task) { create(:task, title: 'showタスク', body: 'showボディ', user_id: user.id) }
+    before do
+      fill_in 'personal_id', with: 'MyUserID'
+      fill_in 'password', with: 'pass'
+      click_button 'ログイン'
+    end
 
+    it 'complete show task' do
+      click_link('詳細', href: task_schedule_path(task))
       expect(page).to have_content 'タスク詳細画面'
       expect(page).to have_content 'showタスク'
       expect(page).to have_content 'showボディ'
@@ -86,17 +131,21 @@ RSpec.describe 'TaskSchedule', type: :system do
   end
 
   context 'edit systems check' do
-    let!(:task) { create(:task, title: 'showタスク', body: 'showボディ') }
-    it 'complete edit task' do
+    let!(:task) { create(:task, title: 'showタスク', body: 'showボディ', user_id: user.id) }
+    before do
       create(:user, name: 'user 二郎')
-      visit task_schedule_index_path
-      click_link('編集', href: edit_task_schedule_path(task))
+      fill_in 'personal_id', with: 'MyUserID'
+      fill_in 'password', with: 'pass'
+      click_button 'ログイン'
+    end
 
+    it 'complete edit task' do
+      click_link('編集', href: edit_task_schedule_path(task))
       expect(page).to have_content 'タスク編集画面'
+
       fill_in 'task[title]', with: 'editタスク'
       fill_in 'task[body]', with: 'editボディ'
       fill_in 'task[finish_at]', with: '2112-09-03'
-      select 'user 二郎', from: 'task[user_id]'
       click_button '編集する'
 
       expect(page).to have_content 'タスクの編集が完了しました'
@@ -105,11 +154,9 @@ RSpec.describe 'TaskSchedule', type: :system do
       expect(page).to have_content 'editタスク'
       expect(page).to have_content 'editボディ'
       expect(page).to have_content '2112/09/03'
-      expect(page).to have_content 'user 二郎'
     end
 
     it 'failure edit task' do
-      visit task_schedule_index_path
       click_link('編集', href: edit_task_schedule_path(task))
       expect(page).to have_content 'タスク編集画面'
 
@@ -126,12 +173,35 @@ RSpec.describe 'TaskSchedule', type: :system do
       expect(page).to have_content 'showタスク'
       expect(page).to have_content 'showボディ'
     end
+
+    it 'create user change edit task' do
+      click_link('編集', href: edit_task_schedule_path(task))
+      expect(page).to have_content 'タスク編集画面'
+
+      fill_in 'task[title]', with: 'editタスク'
+      fill_in 'task[body]', with: 'editボディ'
+      fill_in 'task[finish_at]', with: '2112-09-03'
+      select 'user 二郎', from: 'task[user_id]'
+      click_button '編集する'
+
+      expect(page).to have_content 'タスクの編集が完了しました'
+      expect(page).to have_no_content 'showタスク'
+      expect(page).to have_no_content 'showボディ'
+      expect(page).to have_no_content 'editタスク'
+      expect(page).to have_no_content 'editボディ'
+      expect(page).to have_no_content 'user 二郎'
+    end
   end
 
   context 'delete systems check' do
-    let!(:task) { create(:task, title: 'showタスク', body: 'showボディ') }
+    let!(:task) { create(:task, user_id: user.id) }
+    before do
+      fill_in 'personal_id', with: 'MyUserID'
+      fill_in 'password', with: 'pass'
+      click_button 'ログイン'
+    end
+
     it 'complete delete task' do
-      visit task_schedule_index_path
       click_link('削除', href: task_schedule_path(task))
       expect do
         expect(page.accept_confirm).to eq '削除します。よろしいですか'
@@ -144,9 +214,11 @@ RSpec.describe 'TaskSchedule', type: :system do
 
   context 'search systems check' do
     before do
-      create(:task, title: 'secondタスク')
-      create(:task, title: 'thirdタスク', status: 2)
-      visit task_schedule_index_path
+      create(:task, title: 'secondタスク', user_id: user.id)
+      create(:task, title: 'thirdタスク',status: 2, user_id: user.id)
+      fill_in 'personal_id', with: 'MyUserID'
+      fill_in 'password', with: 'pass'
+      click_button 'ログイン'
     end
 
     it 'complete title search' do
@@ -165,15 +237,19 @@ RSpec.describe 'TaskSchedule', type: :system do
   end
 
   context 'paginate systems check' do
-    it 'complete paginate for limit 5' do
-      create(:task)
-      create(:task, finish_at: 1.day.from_now)
-      create(:task, finish_at: 1.week.from_now)
-      create(:task, finish_at: 2.years.from_now)
-      create(:task, title: 'タスク5', finish_at: 3.years.from_now)
-      create(:task, title: 'タスク6', finish_at: 4.years.from_now)
-      visit task_schedule_index_path
+    before do
+      create(:task, user_id: user.id)
+      create(:task, finish_at: 1.day.from_now, user_id: user.id)
+      create(:task, finish_at: 1.week.from_now, user_id: user.id)
+      create(:task, finish_at: 2.years.from_now, user_id: user.id)
+      create(:task, title: 'タスク5', finish_at: 3.years.from_now, user_id: user.id)
+      create(:task, title: 'タスク6', finish_at: 4.years.from_now, user_id: user.id)
+      fill_in 'personal_id', with: 'MyUserID'
+      fill_in 'password', with: 'pass'
+      click_button 'ログイン'
+    end
 
+    it 'complete paginate' do
       expect(page).to have_content 'タスク5'
       expect(page).to have_no_content 'タスク6'
       click_link '次'

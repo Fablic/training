@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  include SessionsHelper
+
   def routing_error
     raise ActionController::RoutingError, params[:path]
   end
