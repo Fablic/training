@@ -1,0 +1,6 @@
+<%= t '.title' %><br>
+<% flash.each do |message_type, message| %>
+  <%= message %>
+<% end %>
+<%= render partial: 'userform', locals: { user: @user, prefix: user_path(@user),
+  button: t('.edit') } %>

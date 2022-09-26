@@ -1,0 +1,23 @@
+<%= t '.title' %>
+<p><%= t '.name' %></p>
+<%=@user.name %><br>
+<p><%= t '.id' %></p>
+<%=@user.personal_id %><br>
+<p><%= t '.list' %></p>
+<table>
+  <tr>
+    <th><%= t '.task_name' %></th><th><%= t '.body' %></th><th><%= t '.created' %></th>
+      <th><%= t'.finish' %></th>
+      <th><%= t '.status' %></th>
+  </tr>
+  <% @user.tasks.finish_asc.each do |task| %>
+  <tr>
+    <td><%= truncate(task.title, length: 15) %></td>
+    <td><%= truncate(task.body,  length: 15) %></td>
+    <td><%= l(task.created_at, format: :'.default') %></td>
+    <td><%= l(task.finish_at, format: :'.default') %></td>
+    <td><%= task.status_i18n %></td>
+  </tr>
+  <% end %>
+</table>
+<%= link_to t('.index'), :back %>

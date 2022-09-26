@@ -6,15 +6,27 @@ class SessionsController < ApplicationController
     user = User.find_by(personal_id: params[:personal_id].downcase)
     if user && user&.authenticate(params[:password])
       log_in(user)
-      redirect_to task_schedule_index_path
+      if request.referer&.include?('/admin/')
+        redirect_to users_path
+      else
+        redirect_to task_schedule_index_path
+      end
     else
-      flash.now[:danger] = t('.danger')
-      render 'new'
+      flash[:denger] = t('.danger')
+      if request.referer&.include?('/admin/')
+        redirect_to admin_login_path
+      else
+        redirect_to login_path
+      end
     end
   end
 
   def destroy
     log_out
-    redirect_to login_path
+    if request.referer&.include?('/admin/')
+      redirect_to admin_login_path
+    else
+      redirect_to login_path
+    end
   end
 end

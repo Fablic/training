@@ -1,0 +1,24 @@
+<%= t '.title' %><br>
+<% flash.each do |message_type, message| %>
+  <%= message %>
+<% end %>
+<br>
+<%= button_to t('.new'), new_user_path, method: :get %>
+
+<table>
+  <tr>
+    <th><%= t '.name' %></th><th><%= t '.id' %></th><th><%= t '.tasks' %></th>
+  </tr>
+  <% @users.each do |user| %>
+  <tr>
+    <td><%= user.name %></td>
+    <td><%= user.personal_id %></td>
+    <td><%= user.tasks.count(:user_id) %></td>
+    <td><%= link_to t('.edit'), edit_user_path(user) %></td>
+    <td><%= link_to t('.show'), user_path(user), method: :get %></td>
+    <td><%= link_to t('.delete'), user_path(user), method: :delete,
+      data: {confirm: t('.delete_confirm')}, class: "btn btn-lg btn-primary" %></td>
+  </tr>
+  <% end %>
+</table>
+<%= link_to t('.logout'), logout_path, method: :delete %>

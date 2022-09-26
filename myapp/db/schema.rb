@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_09_044145) do
+ActiveRecord::Schema.define(version: 2022_09_13_003921) do
 
   create_table "tasks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "title", null: false
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 2022_09_09_044145) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "personal_id", null: false
     t.string "password_digest", null: false
+    t.index ["personal_id"], name: "index_users_on_personal_id", unique: true
   end
 
 end
