@@ -90,6 +90,10 @@ RSpec.configure do |config|
 
   config.before(:each) do
     DatabaseCleaner.start
+
+    session = defined?(rspec_session) ? rspec_session : {}
+    config.add_setting(:session, :default => session)
+    allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(session)
   end
 
   config.after(:each) do

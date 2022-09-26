@@ -16,7 +16,16 @@ RSpec.describe 'Users', type: :system do
       expect(page).to have_content '正しいログインIDとパスワードを入力してください'
     end
 
-    it 'success login & logout' do
+    it 'failure login for notUser' do
+      fill_in 'personal_id', with: 'hogehoge'
+      fill_in 'password', with: 'アイウエオ'
+      click_button 'ログイン'
+
+      expect(page).to have_content 'ログイン画面(管理者)'
+      expect(page).to have_content '正しいログインIDとパスワードを入力してください'
+    end
+
+    it 'success login &logout' do
       fill_in 'personal_id', with: 'MyUserID'
       fill_in 'password', with: 'pass'
       click_button 'ログイン'
@@ -77,8 +86,8 @@ RSpec.describe 'Users', type: :system do
       select '一般', from: 'user[admin]'
       fill_in 'user[name]', with: 'newUser'
       fill_in 'user[personal_id]', with: 'newID'
-      fill_in 'user[password]', with: 'new_pass'
-      fill_in 'user[password_confirmation]', with: 'new_pass'
+      fill_in 'user[password]', with: 'newPass'
+      fill_in 'user[password_confirmation]', with: 'newPass'
       click_button '登録する'
 
       expect(page).to have_content 'ユーザの登録が完了しました'
@@ -118,6 +127,7 @@ RSpec.describe 'Users', type: :system do
     end
 
     it 'complete show task' do
+      expect(page.text).to match(/1.*2/)
       click_link('詳細', href: user_path(user))
 
       expect(page).to have_content 'ユーザ詳細画面'
