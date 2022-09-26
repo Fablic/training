@@ -1,9 +1,11 @@
 require 'rails_helper'
 
 describe 'セッション管理機能', type: :system do
+  subject(:visit_login){ visit login_path }
+
   describe 'ログイン機能' do
+    let!(:maintenance) { FactoryBot.create(:maintenance) }
     let!(:user_a) { FactoryBot.create(:user) }
-    subject(:visit_login){ visit login_path }
 
     context 'メールアドレスとパスワードを入力した場合' do
       it 'タスク一覧画面が表示される' do
@@ -99,6 +101,27 @@ describe 'セッション管理機能', type: :system do
         fill_in 'session[email]', with: ''
         fill_in 'session[password]', with: ''
         click_button 'ログイン'
+        expect(page).to have_content 'ログイン画面'
+      end
+    end
+  end
+
+  describe 'メンテナンス機能' do
+    context 'メンテナンス中の場合' do
+      let!(:maintenance) { FactoryBot.create(:maintenance, maintenance_flg: true) }
+
+      it 'メンテナンス中画面が表示される' do
+        visit_login
+        expect(page).to have_content 'メンテナンス中'
+      end
+    end
+
+    context 'メンテナンス中でない場合' do
+      let!(:maintenance) { FactoryBot.create(:maintenance) }
+      let!(:user_a) { FactoryBot.create(:user) }
+
+      it 'ログイン画面が表示される' do
+        visit_login
         expect(page).to have_content 'ログイン画面'
       end
     end
