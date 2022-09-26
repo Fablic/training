@@ -7,28 +7,11 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 User.destroy_all
-Task.destroy_all
-Label.destroy_all
 Function.destroy_all
 
 5.times do |i|
   # Create Users
-  user = User.create!(name: "ユーザ#{i + 1}", password_digest: "test#{i + 1}", email: "email#{i + 1}@example.com")
-
-  # Create Tasks
-  10.times do |j|
-    task = Task.create!(
-      title: "タスク#{i + 1}-#{j + 1}",
-      content: "こちらはタスク#{i + 1}-#{j + 1}の内容です。",
-      user_id: user.id,
-      status: "#{(j % 3) + 1}",
-    )
-
-    # Create Labels
-    (j % 6).times do |k|
-      Label.create!(name: "ラベル#{i + 1}-#{j + 1}-#{k + 1}", task_id: task.id)
-    end
-  end
+  user = User.create!(name: "ユーザ#{i + 1}", password: "test#{i + 1}", email: "email#{i + 1}@example.com")
 end
 
 # Create Functions

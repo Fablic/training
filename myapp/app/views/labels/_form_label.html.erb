@@ -1,0 +1,15 @@
+<% if @label.errors.any? %>
+  <div class='error-area'>
+    <ul>
+      <% @label.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+<%= form_with(model: @label, url: url, method: method, local: true) do |f| %>
+  <p><%= I18n.t('label.name') %></p>
+  <%= f.text_field(:name) %>
+  <br><br>
+  <%= f.submit(button_name) %>
+<% end %>

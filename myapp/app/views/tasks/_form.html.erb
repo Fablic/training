@@ -1,13 +1,13 @@
-<% if @task_form.error_messages.present? && @task_form.error_messages.size > 0 %>
+<% if @task.errors.any? %>
   <div class='error-area'>
     <ul>
-      <% @task_form.error_messages.each do |msg| %>
+      <% @task.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
     </ul>
   </div>
 <% end %>
-<%= form_with(model: @task_form, url: url, method: method, local: true) do |f| %>
+<%= form_with(model: @task, url: url, method: method, local: true) do |f| %>
   <p><%= I18n.t('task.title') %></p>
   <%= f.text_field(:title) %>
 
@@ -15,11 +15,7 @@
   <%= f.text_field(:content) %>
 
   <p><%= I18n.t('task.label') %></p>
-  <%= f.text_field(:label1) %>
-  <%= f.text_field(:label2) %>
-  <%= f.text_field(:label3) %>
-  <%= f.text_field(:label4) %>
-  <%= f.text_field(:label5) %>
+  <%= f.collection_select :label_ids, Label.all, :id, :name, { include_blank: '' }, { multiple: true } %>
 
   <% if is_status %>
     <p><%= I18n.t('task.status') %></p>

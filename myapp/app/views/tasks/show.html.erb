@@ -9,11 +9,9 @@
   <p><%= @task.content %></p>
 
   <p><%= I18n.t('task.label') %></p>
-  <% if @label1.present? %><p><%= @label1 %></p><% end %>
-  <% if @label2.present? %><p><%= @label2 %></p><% end %>
-  <% if @label3.present? %><p><%= @label3 %></p><% end %>
-  <% if @label4.present? %><p><%= @label4 %></p><% end %>
-  <% if @label5.present? %><p><%= @label5 %></p><% end %>
+  <% @task.labels.each do |label| %>
+    <li><%= label.name %></li>
+  <% end %>
 
   <p><%= I18n.t('task.status') %></p>
   <p><%= I18n.t("enums.task.status.#{@task.status}") %></p>

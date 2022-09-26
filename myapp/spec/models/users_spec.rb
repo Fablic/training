@@ -16,23 +16,27 @@ describe User, type: :model do
       end
 
       context 'email重複登録' do
-        let!(:user) { FactoryBot.create(:user, email: 'test@example.com') }
+        before do
+          FactoryBot.create(:user, email: 'test@example.com')
+        end
 
-        it { expect { FactoryBot.create(:user, email: 'test@example.com') }.to raise_error(ActiveRecord::RecordInvalid) }
+        subject(:user) { FactoryBot.build(:user, email: 'test@example.com') }
+
+        it { is_expected.to be_invalid }
       end
     end
   end
 
   describe '#authenticate' do
     context 'パスワード一致' do
-      let!(:user) { FactoryBot.create(:user, password_digest: 'password') }
+      let!(:user) { FactoryBot.create(:user, password: 'password') }
       subject(:hash) { user.authenticate('password') }
 
       it { is_expected.to be(true) }
     end
 
     context 'パスワード不一致' do
-      let!(:user) { FactoryBot.create(:user, password_digest: 'password') }
+      let!(:user) { FactoryBot.create(:user, password: 'password') }
       subject(:hash) { user.authenticate('password_disagreement') }
 
       it { is_expected.to be(false) }

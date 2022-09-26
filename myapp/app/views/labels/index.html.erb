@@ -1,0 +1,35 @@
+<div name='header'>
+  <div name='message-area'>
+    <%= notice %>
+  </div>
+  <h1><%= I18n.t('view_title.label_index') %></h1>
+</div>
+<div name='content'>
+  <div name='create-task'>
+      <%= link_to(I18n.t('link.create'), new_label_path) %>
+  </div>
+  <div name='list-label'>
+    <table>
+      <thead>
+        <tr>
+          <th><%= I18n.t('label.name') %></th>
+          <th></th>
+        </tr>
+      <thead>
+      <tbody>
+        <% @labels.each do |label| %>
+          <tr>
+            <td><span><%= label.name %></span></td>
+            <td><%= link_to(I18n.t('link.detail'), label_path(label)) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <div class='pagenation-area'>
+      <%= paginate(@labels) %>
+    </div>
+  </div>
+</div>
+<div name='footer'>
+  <%= link_to(I18n.t('link.list_back'), root_path) %>
+</div>
