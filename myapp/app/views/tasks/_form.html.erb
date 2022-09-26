@@ -15,7 +15,7 @@
   <%= f.text_field(:content) %>
 
   <p><%= I18n.t('task.label') %></p>
-  <%= f.text_field(:label) %>
+  <%= f.collection_select :label_ids, Label.all, :id, :name, { include_blank: '' }, { multiple: true } %>
 
   <% if is_status %>
     <p><%= I18n.t('task.status') %></p>

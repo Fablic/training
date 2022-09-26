@@ -34,6 +34,7 @@ ja:
     models:
       task: タスク
       user: ユーザー
+      user: ラベル
     attributes:
       task:
         title: タイトル
@@ -50,6 +51,11 @@ ja:
         deleted_at: 削除日
         crated_at: 作成日
         updated_at: 更新日
+      label:
+        name: ラベル名
+        deleted_at: 削除日
+        crated_at: 作成日
+        updated_at: 更新日
   enums:
     task:
       status:
@@ -62,6 +68,10 @@ ja:
     new: タスク作成画面
     show: タスク詳細画面
     edit: タスク編集画面
+    label_index: ラベル一覧画面
+    label_new: ラベル作成画面
+    label_show: ラベル詳細画面
+    label_edit: ラベル編集画面
   task:
     title: タイトル
     content: 内容
@@ -72,6 +82,10 @@ ja:
   user:
     email: メールアドレス
     password: パスワード
+  label:
+    name: ラベル名
+    created_at: 作成日
+    updated_at: 更新日
   button:
     create: 作成
     delete: 削除
@@ -79,9 +93,11 @@ ja:
     login: ログイン
   link:
     create: 作成
+    manage_label: ラベル管理
     detail: 詳細
     edit: 編集
-    list_back: 一覧へ
+    list_back: タスク一覧へ
+    label_list_back: ラベル一覧へ
     logout: ログアウト
   message:
     delete_confirm: 削除しますか?

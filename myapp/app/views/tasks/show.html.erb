@@ -9,7 +9,9 @@
   <p><%= @task.content %></p>
 
   <p><%= I18n.t('task.label') %></p>
-  <p><%= @task.label %></p>
+  <% @task.labels.each do |label| %>
+    <li><%= label.name %></li>
+  <% end %>
 
   <p><%= I18n.t('task.status') %></p>
   <p><%= I18n.t("enums.task.status.#{@task.status}") %></p>

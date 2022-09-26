@@ -53,31 +53,5 @@ describe Task, type: :model do
         it { is_expected.to be_invalid }
       end
     end
-
-    describe 'label' do
-      context '0文字' do
-        subject(:task) { FactoryBot.build(:task, label: '') }
-
-        it { is_expected.to be_invalid }
-      end
-
-      context '1文字' do
-        subject(:task) { FactoryBot.build(:task, label: '1') }
-
-        it { is_expected.to be_valid }
-      end
-
-      context '64文字' do
-        subject(:task) { FactoryBot.build(:task, label: '1' * 64) }
-
-        it { is_expected.to be_valid }
-      end
-
-      context '65文字' do
-        subject(:task) { FactoryBot.build(:task, label: '1' * 65) }
-
-        it { is_expected.to be_invalid }
-      end
-    end
   end
 end

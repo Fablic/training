@@ -1,0 +1,16 @@
+<div name='header'>
+  <h1><%= I18n.t('view_title.label_show') %></h1>
+</div>
+<div name='content'>
+  <p><%= I18n.t('label.name') %></p>
+  <p><%= @label.name %></p>
+  <p><%= I18n.t('label.created_at') %></p>
+  <p><%= @label.created_at %></p>
+  <p><%= I18n.t('label.updated_at') %></p>
+  <p><%= @label.updated_at %></p>
+</div>
+<div name='footer'>
+  <%= link_to(I18n.t('link.edit'), edit_label_path(@label)) %>
+  <%= link_to(I18n.t('button.delete'), label_path(@label), method: :delete, data: { confirm: I18n.t('message.delete_confirm') }) %>
+  <%= link_to(I18n.t('link.label_list_back'), labels_path) %>
+</div>

@@ -3,7 +3,7 @@
 class TasksController < ApplicationController
   # タスク一覧画面
   def index
-    @tasks = login_user.tasks.where_title(params[:title]).where_status(params[:status]).order('tasks.created_at desc').page(params[:page])
+    @tasks = login_user.tasks.preload(:labels).where(id: login_user.tasks.get_ids(params[:title], params[:label], params[:status])).order('tasks.created_at desc').page(params[:page])
   end
 
   # タスク作成画面
@@ -14,7 +14,8 @@ class TasksController < ApplicationController
 
   # タスク作成画面
   def create
-    @task = login_user.tasks.new(task_params)
+    @task = Task.new(task_params)
+    @task.user_id = login_user.id
 
     if @task.save
       redirect_to(root_path, notice: 'タスク作成成功')
@@ -55,6 +56,6 @@ class TasksController < ApplicationController
 
   # Taskパラメータ
   def task_params
-    params.require(:task).permit(:title, :content, :label, :status)
+    params.require(:task).permit(:title, :content, :status, { label_ids: [] })
   end
 end
