@@ -5,6 +5,15 @@
 <br>
 
 ## 画面設計
+
+【共通部品】
+
+ログアウトエリア
+| item | layer | name | source | type | loop | others |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| button　| 1 | ログアウト |  | ボタン | | ログアウト処理を実施し、ログイン画面へ遷移 |
+<br>
+
 【タスク一覧画面】
 
 URL
@@ -60,7 +69,6 @@ http://localhost:3001/tasks/new
 | text | 1 | タスク名 | | 文字列 | | |
 | text | 1 | 詳細 | | 文字列 | | |
 | select | 1 | ステータス | プルダウン | 文字列 | | 1:'未着手'、2:'実施中'、3:'完了' をリスト表示 |
-| select | 1 | 担当者 | users.name | プルダウン | | usersテーブルの全ユーザをリスト表示 |
 | button | 1 | タスクを作成 |  | ボタン | | タスク作成 |
 | button | 1 | 戻る |  | ボタン | | タスク一覧画面へ遷移 |
 <br>
@@ -79,6 +87,17 @@ http://localhost:3001/tasks/{task.id}/edit
 | button | 1 | 詳細へ |  | ボタン | | タスク詳細画面へ遷移 |
 <br>
 
+【ログイン画面】
+
+URL
+http://localhost:3001/login
+
+| item | layer | name | source | type | loop | others |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| text | 1 | メールアドレス | | 文字列 | | |
+| text | 1 | パスワード | | 文字列 | | |
+| button | 1 | ログイン |  | ボタン | | ログイン認証を実施 |
+<br>
 
 ## モデル図
 tasks
@@ -97,6 +116,8 @@ column_name | type | null | default
 | id | integer | not null | auto increment |
 | user_name | varchar | | |
 | password | varchar | | |
+| email | varchar | | |
+| salt | varchar | | |
 | created_at | datetime | | |
 | updated_at | datetime | | |
 <br>
