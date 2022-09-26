@@ -30,11 +30,10 @@ ActiveRecord::Schema.define(version: 2022_09_12_054300) do
     t.datetime "deleted_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "password_digest", limit: 256, default: "", null: false
+    t.string "password", limit: 256, default: "", null: false
     t.string "salt", limit: 256, default: "", null: false
     t.string "email", limit: 254, default: "", null: false
     t.string "login_token"
-    t.index ["password_digest"], name: "index_users_on_password_digest"
   end
 
 end

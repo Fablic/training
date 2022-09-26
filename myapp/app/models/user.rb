@@ -1,22 +1,21 @@
 class User < ApplicationRecord
-  has_many :tasks, dependent: :destroy
+  before_create :encrypt_password
 
-  validates :email, presence: true, uniqueness: { case_sensitive: true }
+  require 'securerandom'
 
-  before_create :set_password_digest
-
-  attr_accessor :password
-
-  def authenticate(password)
-    self.password_digest == password ? true : false
+  def encrypt_password
+    salt_digest = Digest::MD5.hexdigest(User.generate_salt)
+    self.salt = salt_digest
+    self.password = User.password_digest(password, salt_digest)
   end
 
-  def self.create_salt
-    Digest::SHA256.hexdigest(SecureRandom.alphanumeric(5))
+  def self.password_digest(password, salt_digest)
+    pass_digest = Digest::MD5.hexdigest(password)
+    Digest::MD5.hexdigest(pass_digest + salt_digest)
   end
 
-  def self.hash(password, salt)
-    "#{Digest::SHA256.hexdigest("#{password}#{ENV['PEPPER']}")}#{salt}"
+  def self.generate_salt
+     SecureRandom.hex(5)
   end
 
   def self.create_login_token
@@ -27,10 +26,5 @@ class User < ApplicationRecord
     Digest::SHA256.hexdigest(token.to_s)
   end
 
-  private
-
-  def set_password_digest
-    self.salt = User.create_salt
-    self.password_digest = User.hash(self.password, self.salt)
-  end
+  has_many :tasks, dependent: :destroy
 end
