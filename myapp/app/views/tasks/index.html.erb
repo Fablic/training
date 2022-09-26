@@ -1,11 +1,11 @@
 <div class="alert alert-success" style="color: green"><%= notice %></div>
 
-<h1>タスク一覧</h1>
+<h1><%= I18n.t('page_titles.tasks.index') %></h1>
 <table>
   <thead>
     <tr>
-      <th>タスク名</th>
-      <th>ステータス</th>
+      <th><%= Task.human_attribute_name(:name) %></th>
+      <th><%= Task.human_attribute_name(:status) %></th>
     </tr>
   </thead>
 
@@ -14,7 +14,7 @@
       <tr>
         <td><%= task.name %></td>
         <td><%= I18n.t("enums.task.status.#{task.status}") %></td>
-        <td><%= link_to '詳細', task_path(task.id) %></td>
+        <td><%= link_to I18n.t('buttons.tasks.show'), task_path(task.id) %></td>
       </tr>
     <% end %>
   </tbody>
@@ -22,7 +22,7 @@
 <br>
 <%= paginate @tasks %>
 
-<%= link_to '新規作成', new_task_path %>
+<%= link_to I18n.t('buttons.tasks.new'), new_task_path %>
 
 <div>
 <%= form_with url: search_path, method: :get, local: true do |f| %>

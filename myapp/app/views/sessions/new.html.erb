@@ -1,0 +1,17 @@
+<div class="alert alert-failed"><%= alert %></div>
+
+<h1><%= I18n.t('page_titles.sessions.login') %></h1>
+<div>
+<%= form_with scope: :session, url: login_path, model: @user, method: :post, local: true do |f| %>
+  <div class='field'>
+    <%= f.label :email %>
+    <%= f.text_field :email, required: true %>
+  </div>
+  <div class='field'>
+    <%= f.label :password %>
+    <%= f.text_field :password, required: true %>
+  </div>
+  <br>
+  <%= f.submit t('buttons.sessions.login') %>
+<% end %>
+</div>

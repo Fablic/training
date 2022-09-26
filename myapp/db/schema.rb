@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_05_082040) do
+ActiveRecord::Schema.define(version: 2022_09_12_030837) do
 
   create_table "tasks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name", limit: 10, null: false
@@ -27,6 +27,9 @@ ActiveRecord::Schema.define(version: 2022_09_05_082040) do
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "email"
+    t.string "password"
+    t.string "salt"
   end
 
 end

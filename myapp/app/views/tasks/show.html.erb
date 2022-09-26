@@ -1,35 +1,35 @@
 <div class="alert alert-success" style="color: green"><%= notice %></div>
 
-<h1>タスク詳細</h1>
+<h1><%= I18n.t('page_titles.tasks.show') %></h1>
 
 <div>
   <p>
-    <strong>タスク名:</strong>
+    <strong><%= Task.human_attribute_name(:name) %>:</strong>
     <%= @task.name %>
   </p>
 
   <p>
-    <strong>詳細:</strong>
+    <strong><%= Task.human_attribute_name(:description) %>:</strong>
     <%= @task.description %>
   </p>
 
   <p>
-    <strong>ステータス:</strong>
+    <strong><%= Task.human_attribute_name(:status) %>:</strong>
     <%= I18n.t("enums.task.status.#{@task.status}") %>
   </p>
 
   <p>
-    <strong>登録日時:</strong>
+    <strong><%= Task.human_attribute_name(:created_at) %>:</strong>
     <%= @task.created_at %>
   </p>
 
   <p>
-    <strong>更新日時:</strong>
+    <strong><%= Task.human_attribute_name(:updated_at) %>:</strong>
     <%= @task.updated_at %>
   </p>
 </div>
 <br>
 
-<%= link_to '編集', edit_task_path(@task.id) %>
-<%= link_to '削除', task_path(@task.id), method: :delete, data: { confirm: "タスク「#{@task.name}」を削除します。よろしいですか？"} %>
-<%= link_to '戻る', tasks_path %>
+<%= link_to I18n.t('buttons.tasks.edit'), edit_task_path(@task.id) %>
+<%= link_to I18n.t('buttons.tasks.delete'), task_path(@task.id), method: :delete, data: { confirm: "タスク「#{@task.name}」を削除します。よろしいですか？"} %>
+<%= link_to I18n.t('buttons.tasks.index'), tasks_path %>
