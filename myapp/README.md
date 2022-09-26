@@ -3,6 +3,20 @@
 ## アプリケーション名
 タスク管理システム
 <br>
+<br>
+
+## メンテナンスモード
+【開始コマンド】
+
+docker-compose exec api rails runner Tasks::Maintenancer.start_maintenance
+
+
+【終了コマンド】
+
+docker-compose exec api rails runner Tasks::Maintenancer.end_maintenance
+<br>
+<br>
+
 
 ## 画面設計
 【各画面共通】
@@ -113,12 +127,12 @@ tasks
 column_name | type | null | default
 | ---- | ---- | ---- | ---- |
 | id | integer | not null | auto increment |
-| name | varchar | | |
-| detail | varchar | | |
+| name | varchar | not null | |
+| detail | varchar | not null | |
 | status | integer | | |
 | priority | integer | | |
-| created_at | datetime | | |
-| updated_at | datetime | | |
+| created_at | datetime | not null | |
+| updated_at | datetime | not null | |
 
 users
 column_name | type | null | default
@@ -128,34 +142,34 @@ column_name | type | null | default
 | password | varchar | | |
 | email | varchar | | |
 | salt | varchar | | |
-| created_at | datetime | | |
-| updated_at | datetime | | |
+| created_at | datetime | not null | |
+| updated_at | datetime | not null | |
 
 labels
 column_name | type | null | default
 | ---- | ---- | ---- | ---- |
 | id | integer | not null | auto increment |
 | label_name | varchar | | |
-| created_at | datetime | | |
-| updated_at | datetime | | |
+| created_at | datetime | not null | |
+| updated_at | datetime | not null | |
 
 labellings
 column_name | type | null | default
 | ---- | ---- | ---- | ---- |
 | id | integer | not null | auto increment |
-| task_id | varchar | | |
-| label_id | varchar | | |
-| created_at | datetime | | |
-| updated_at | datetime | | |
+| task_id | varchar | not null | |
+| label_id | varchar | not null | |
+| created_at | datetime | not null | |
+| updated_at | datetime | not null | |
 
 maintenances
 column_name | type | null | default
 | ---- | ---- | ---- | ---- |
 | id | integer | not null | auto increment |
-| content_id | integer | | |
-| maintenance_flg | integer | | |
-| created_at | datetime | | |
-| updated_at | datetime | | |
+| content_id | integer | not null | |
+| maintenance_flg | integer | | false |
+| created_at | datetime | not null | |
+| updated_at | datetime | not null | |
 
 <br>
 <br>

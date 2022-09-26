@@ -1,5 +1,7 @@
 # coding: utf-8
 
+Maintenance.create(content_id: '101', maintenance_flg: false)
+
 User.create(user_name: '草刈', password: 'kusakari', email: 'kusakari@example.com')
 User.create(user_name: '中村', password: 'nakamura', email: 'nakamura@example.com')
 

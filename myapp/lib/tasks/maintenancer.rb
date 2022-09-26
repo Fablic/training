@@ -1,5 +1,5 @@
 module Tasks
-  class Maintenaner
+  class Maintenancer
     def self.start_maintenance
       switch_maintenance(true, 'メンテナンス開始')
     end
