@@ -19,7 +19,7 @@
   </p>
 
   <p>
-    <strong><%= I18n.t(Label.model_name.human) %></strong>
+    <strong><%= t(Label.model_name.human) %></strong>
     <% @task.labels.each do |label| %>
       <%= label.name %>
     <% end %>
