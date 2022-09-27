@@ -15,9 +15,7 @@ describe 'タスク管理機能', type: :system do
 
     describe '表示機能' do
       context 'タスクが1件存在する場合' do
-        let!(:task_a) { FactoryBot.create(:task, title: '最初のタスク', description: '最初のタスクを実施する', user_id: user.id, status: Task.statuses[:not_started]) }
-        let!(:label_a) { FactoryBot.create(:label, name: 'label') }
-        let!(:task_label_a) { FactoryBot.create(:tasks_label, task_id: task_a.id, label_id: label_a.id) }
+        let!(:task_a) { FactoryBot.create(:task, :with_label, title: '最初のタスク', description: '最初のタスクを実施する', user_id: user.id, status: Task.statuses[:not_started], label_name: 'label') }
         let(:tds){ all('tbody tr')[0].all('td') }
 
         it 'タスク名が表示される' do
@@ -32,12 +30,8 @@ describe 'タスク管理機能', type: :system do
       end
 
       context 'タスクが2件(複数)存在する場合' do
-        let!(:task_a) { FactoryBot.create(:task, title: '0 title', description: '最初のタスクを実施する', user_id: user.id, status: Task.statuses[:not_started]) }
-        let!(:label_a) { FactoryBot.create(:label, name: '0 label') }
-        let!(:task_label_a) { FactoryBot.create(:tasks_label, task_id: task_a.id, label_id: label_a.id) }
-        let!(:task_b) { FactoryBot.create(:task, title: '1 title', description: '２つ目のタスクを実施する', user_id: user.id, status: Task.statuses[:not_started]) }
-        let!(:label_b) { FactoryBot.create(:label, name: '1 label') }
-        let!(:task_label_b) { FactoryBot.create(:tasks_label, task_id: task_b.id, label_id: label_b.id) }
+        let!(:task_a) { FactoryBot.create(:task, :with_label, title: '0 title', description: '最初のタスクを実施する', user_id: user.id, status: Task.statuses[:not_started], label_name: '0 label') }
+        let!(:task_b) { FactoryBot.create(:task, :with_label, title: '1 title', description: '２つ目のタスクを実施する', user_id: user.id, status: Task.statuses[:not_started], label_name: '1 label') }
         let(:tds){ all('tbody tr')[1].all('td') }
 
         it 'タスク名が表示される' do
@@ -82,11 +76,9 @@ describe 'タスク管理機能', type: :system do
     describe '検索機能' do
       let!(:task_A1) { FactoryBot.create(:task, title: 'A1', status: Task.statuses[:not_started], user_id: user.id) }
       let!(:task_A2) { FactoryBot.create(:task, title: 'A2', status: Task.statuses[:in_progress], user_id: user.id) }
-      let!(:task_A3) { FactoryBot.create(:task, title: 'A3', status: Task.statuses[:not_started], user_id: user.id) }
+      let!(:task_A3) { FactoryBot.create(:task, :with_label, title: 'A3', status: Task.statuses[:not_started], user_id: user.id, label_name: 'label') }
       let!(:task_B1) { FactoryBot.create(:task, title: 'B1', status: Task.statuses[:not_started], user_id: user.id) }
       let!(:task_B2) { FactoryBot.create(:task, title: 'B2', status: Task.statuses[:in_progress], user_id: user.id) }
-      let!(:label_A3) { FactoryBot.create(:label, name: 'label') }
-      let!(:task_label_A3) { FactoryBot.create(:tasks_label, task_id: task_A3.id, label_id: label_A3.id) }
 
       context '条件なし' do
         let(:conditions) { { title: '', status: '', label: '' } }
@@ -480,9 +472,7 @@ describe 'タスク管理機能', type: :system do
     end
   end
   describe '詳細表示機能' do
-    let!(:task_a) { FactoryBot.create(:task, title: '0 title', description: '最初のタスクを実施する', user_id: user.id, status: Task.statuses[:not_started]) }
-    let!(:label_a) { FactoryBot.create(:label, name: '0 label') }
-    let!(:task_label_a) { FactoryBot.create(:tasks_label, task_id: task_a.id, label_id: label_a.id) }
+    let!(:task_a) { FactoryBot.create(:task, :with_label, title: '0 title', description: '最初のタスクを実施する', user_id: user.id, status: Task.statuses[:not_started], label_name: '0 label') }
     subject(:visit_task_a) { visit task_path(task_a) }
 
     describe '表示機能' do
@@ -558,7 +548,7 @@ describe 'タスク管理機能', type: :system do
   end
 
   describe '編集機能' do
-    let!(:task_a) { FactoryBot.create(:task, title: '最初のタスク', description: '最初のタスクを実施する', user_id: user.id, status: Task.statuses[:not_started]) }
+    let!(:task_a) { FactoryBot.create(:task, :with_label, title: '最初のタスク', description: '最初のタスクを実施する', user_id: user.id, status: Task.statuses[:not_started], label_name: 'label') }
     let!(:label_a) { FactoryBot.create(:label, name: 'update label') }
     subject(:visit_task_a_edit){visit edit_task_path(task_a)}
 
