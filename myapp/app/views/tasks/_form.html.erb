@@ -15,6 +15,8 @@
   <%= f.text_field :description, id: 'textarea2' %>
   <p><%= I18n.t('task.status') %></p>
   <%= f.select :status, Task.statuses.keys.map { |k| [I18n.t("enums.task.status.#{k}"), k] } %>
+  <p><%= I18n.t('task.label') %></p>
+  <%= f.collection_select :label_ids, Label.all, :id, :name, { include_blank: '' }, { multiple: true } %>
   <br><br>
   <%= f.submit id: 'submit' %>
 <% end %>

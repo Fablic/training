@@ -14,12 +14,10 @@ describe 'タスク管理機能', type: :system do
     subject(:visit_tasks) { visit tasks_path }
 
     describe '表示機能' do
-      # タスクが表示される期待動作を共通化
-
       context 'タスクが1件存在する場合' do
-        let!(:task_1) { FactoryBot.create(:task, title: '最初のタスク', description: '最初のタスクを実施する', user_id: user.id, status: '1', label: '1') }
-
+        let!(:task_a) { FactoryBot.create(:task, :with_label, title: '最初のタスク', description: '最初のタスクを実施する', user_id: user.id, status: Task.statuses[:not_started], label_name: 'label') }
         let(:tds){ all('tbody tr')[0].all('td') }
+
         it 'タスク名が表示される' do
           visit_tasks
           expect(tds[0]).to have_content '最初のタスク'
@@ -27,15 +25,15 @@ describe 'タスク管理機能', type: :system do
 
         it 'ラベルが表示される' do
           visit_tasks
-          expect(tds[1]).to have_content '1'
+          expect(tds[1]).to have_content 'label'
         end
       end
 
       context 'タスクが2件(複数)存在する場合' do
-        let!(:task_1) { FactoryBot.create(:task, title: '0 title', description: '最初のタスクを実施する', user_id: user.id, status: '1', label: '0 label') }
-        let!(:task_2) { FactoryBot.create(:task, title: '1 title', description: '２つ目のタスクを実施する', user_id: user.id, status: '1', label: '1 label') }
-
+        let!(:task_a) { FactoryBot.create(:task, :with_label, title: '0 title', description: '最初のタスクを実施する', user_id: user.id, status: Task.statuses[:not_started], label_name: '0 label') }
+        let!(:task_b) { FactoryBot.create(:task, :with_label, title: '1 title', description: '２つ目のタスクを実施する', user_id: user.id, status: Task.statuses[:not_started], label_name: '1 label') }
         let(:tds){ all('tbody tr')[1].all('td') }
+
         it 'タスク名が表示される' do
           visit_tasks
           expect(tds[0]).to have_content '1 title'
@@ -48,7 +46,7 @@ describe 'タスク管理機能', type: :system do
       end
 
       describe '画面遷移機能' do
-        let!(:task_a) { FactoryBot.create(:task, title: '0 title', description: '最初のタスクを実施する', user_id: user.id, status: '1', label: '0 label') }
+        let!(:task_a) { FactoryBot.create(:task, title: '0 title', description: '最初のタスクを実施する', user_id: user.id, status: Task.statuses[:not_started]) }
         context '詳細ボタンをクリックした場合' do
           it '詳細画面へ遷移できる' do
             visit_tasks
@@ -78,24 +76,27 @@ describe 'タスク管理機能', type: :system do
     describe '検索機能' do
       let!(:task_A1) { FactoryBot.create(:task, title: 'A1', status: Task.statuses[:not_started], user_id: user.id) }
       let!(:task_A2) { FactoryBot.create(:task, title: 'A2', status: Task.statuses[:in_progress], user_id: user.id) }
+      let!(:task_A3) { FactoryBot.create(:task, :with_label, title: 'A3', status: Task.statuses[:not_started], user_id: user.id, label_name: 'label') }
       let!(:task_B1) { FactoryBot.create(:task, title: 'B1', status: Task.statuses[:not_started], user_id: user.id) }
       let!(:task_B2) { FactoryBot.create(:task, title: 'B2', status: Task.statuses[:in_progress], user_id: user.id) }
 
       context '条件なし' do
-        let(:conditions) { { title: '', status: '' } }
+        let(:conditions) { { title: '', status: '', label: '' } }
 
         it '検索結果の件数が一致すること' do
           visit root_path
           fill_in 'title', with: conditions[:title]
           select value = conditions[:status], from: 'status'
+          select value = conditions[:label], from: 'label'
           click_on '検索'
-          expect(all('tbody tr').size).to be(4)
+          expect(all('tbody tr').size).to be(5)
         end
 
         it 'A1が表示されること' do
           visit root_path
           fill_in 'title', with: conditions[:title]
           select value = conditions[:status], from: 'status'
+          select value = conditions[:label], from: 'label'
           click_on '検索'
           expect(page).to have_content 'A1'
         end
@@ -104,14 +105,25 @@ describe 'タスク管理機能', type: :system do
           visit root_path
           fill_in 'title', with: conditions[:title]
           select value = conditions[:status], from: 'status'
+          select value = conditions[:label], from: 'label'
           click_on '検索'
           expect(page).to have_content 'A2'
+        end
+
+        it 'A3が表示されること' do
+          visit root_path
+          fill_in 'title', with: conditions[:title]
+          select value = conditions[:status], from: 'status'
+          select value = conditions[:label], from: 'label'
+          click_on '検索'
+          expect(page).to have_content 'A3'
         end
 
         it 'B1が表示されること' do
           visit root_path
           fill_in 'title', with: conditions[:title]
           select value = conditions[:status], from: 'status'
+          select value = conditions[:label], from: 'label'
           click_on '検索'
           expect(page).to have_content 'B1'
         end
@@ -120,26 +132,29 @@ describe 'タスク管理機能', type: :system do
           visit root_path
           fill_in 'title', with: conditions[:title]
           select value = conditions[:status], from: 'status'
+          select value = conditions[:label], from: 'label'
           click_on '検索'
           expect(page).to have_content 'B2'
         end
       end
 
       context 'titleのみ指定して検索' do
-        let(:conditions) { { title: 'A', status: '' } }
+        let(:conditions) { { title: 'A', status: '', label: '' } }
 
         it '検索結果の件数が一致すること' do
           visit root_path
           fill_in 'title', with: conditions[:title]
           select value = conditions[:status], from: 'status'
+          select value = conditions[:label], from: 'label'
           click_on '検索'
-          expect(all('tbody tr').size).to be(2)
+          expect(all('tbody tr').size).to be(3)
         end
 
         it 'A1が表示されること' do
           visit root_path
           fill_in 'title', with: conditions[:title]
           select value = conditions[:status], from: 'status'
+          select value = conditions[:label], from: 'label'
           click_on '検索'
           expect(page).to have_content 'A1'
         end
@@ -148,14 +163,25 @@ describe 'タスク管理機能', type: :system do
           visit root_path
           fill_in 'title', with: conditions[:title]
           select value = conditions[:status], from: 'status'
+          select value = conditions[:label], from: 'label'
           click_on '検索'
           expect(page).to have_content 'A2'
+        end
+
+        it 'A3が表示されること' do
+          visit root_path
+          fill_in 'title', with: conditions[:title]
+          select value = conditions[:status], from: 'status'
+          select value = conditions[:label], from: 'label'
+          click_on '検索'
+          expect(page).to have_content 'A3'
         end
 
         it 'B1が表示されないこと' do
           visit root_path
           fill_in 'title', with: conditions[:title]
           select value = conditions[:status], from: 'status'
+          select value = conditions[:label], from: 'label'
           click_on '検索'
           expect(page).not_to have_content 'B1'
         end
@@ -164,26 +190,29 @@ describe 'タスク管理機能', type: :system do
           visit root_path
           fill_in 'title', with: conditions[:title]
           select value = conditions[:status], from: 'status'
+          select value = conditions[:label], from: 'label'
           click_on '検索'
           expect(page).not_to have_content 'B2'
         end
       end
 
       context 'statusのみ指定して検索' do
-        let(:conditions) { { title: '', status: '未着手' } }
+        let(:conditions) { { title: '', status: '未着手', label: '' } }
 
         it '検索結果の件数が一致すること' do
           visit root_path
           fill_in 'title', with: conditions[:title]
           select value = conditions[:status], from: 'status'
+          select value = conditions[:label], from: 'label'
           click_on '検索'
-          expect(all('tbody tr').size).to be(2)
+          expect(all('tbody tr').size).to be(3)
         end
 
         it 'A1が表示されること' do
           visit root_path
           fill_in 'title', with: conditions[:title]
           select value = conditions[:status], from: 'status'
+          select value = conditions[:label], from: 'label'
           click_on '検索'
           expect(page).to have_content 'A1'
         end
@@ -192,14 +221,25 @@ describe 'タスク管理機能', type: :system do
           visit root_path
           fill_in 'title', with: conditions[:title]
           select value = conditions[:status], from: 'status'
+          select value = conditions[:label], from: 'label'
           click_on '検索'
           expect(page).not_to have_content 'A2'
+        end
+
+        it 'A3が表示されること' do
+          visit root_path
+          fill_in 'title', with: conditions[:title]
+          select value = conditions[:status], from: 'status'
+          select value = conditions[:label], from: 'label'
+          click_on '検索'
+          expect(page).to have_content 'A3'
         end
 
         it 'B1が表示されること' do
           visit root_path
           fill_in 'title', with: conditions[:title]
           select value = conditions[:status], from: 'status'
+          select value = conditions[:label], from: 'label'
           click_on '検索'
           expect(page).to have_content 'B1'
         end
@@ -208,26 +248,29 @@ describe 'タスク管理機能', type: :system do
           visit root_path
           fill_in 'title', with: conditions[:title]
           select value = conditions[:status], from: 'status'
+          select value = conditions[:label], from: 'label'
           click_on '検索'
           expect(page).not_to have_content 'titleB2'
         end
       end
 
       context 'title、statusを指定して検索' do
-        let(:conditions) { { title: 'A', status: '未着手' } }
+        let(:conditions) { { title: 'A', status: '未着手', label: '' } }
 
         it '検索結果の件数が一致すること' do
           visit root_path
           fill_in 'title', with: conditions[:title]
           select value = conditions[:status], from: 'status'
+          select value = conditions[:label], from: 'label'
           click_on '検索'
-          expect(all('tbody tr').size).to be(1)
+          expect(all('tbody tr').size).to be(2)
         end
 
         it 'A1が表示されること' do
           visit root_path
           fill_in 'title', with: conditions[:title]
           select value = conditions[:status], from: 'status'
+          select value = conditions[:label], from: 'label'
           click_on '検索'
           expect(page).to have_content 'A1'
         end
@@ -236,14 +279,25 @@ describe 'タスク管理機能', type: :system do
           visit root_path
           fill_in 'title', with: conditions[:title]
           select value = conditions[:status], from: 'status'
+          select value = conditions[:label], from: 'label'
           click_on '検索'
           expect(page).not_to have_content 'A2'
+        end
+
+        it 'A3が表示されること' do
+          visit root_path
+          fill_in 'title', with: conditions[:title]
+          select value = conditions[:status], from: 'status'
+          select value = conditions[:label], from: 'label'
+          click_on '検索'
+          expect(page).to have_content 'A3'
         end
 
         it 'B1が表示されないこと' do
           visit root_path
           fill_in 'title', with: conditions[:title]
           select value = conditions[:status], from: 'status'
+          select value = conditions[:label], from: 'label'
           click_on '検索'
           expect(page).not_to have_content 'B1'
         end
@@ -252,6 +306,65 @@ describe 'タスク管理機能', type: :system do
           visit root_path
           fill_in 'title', with: conditions[:title]
           select value = conditions[:status], from: 'status'
+          select value = conditions[:label], from: 'label'
+          click_on '検索'
+          expect(page).not_to have_content 'B2'
+        end
+      end
+
+      context 'labelのみ指定して検索' do
+        let(:conditions) { { title: '', status: '', label: 'label' } }
+
+        it '検索結果の件数が一致すること' do
+          visit root_path
+          fill_in 'title', with: conditions[:title]
+          select value = conditions[:status], from: 'status'
+          select value = conditions[:label], from: 'label'
+          click_on '検索'
+          expect(all('tbody tr').size).to be(1)
+        end
+
+        it 'A1が表示されないこと' do
+          visit root_path
+          fill_in 'title', with: conditions[:title]
+          select value = conditions[:status], from: 'status'
+          select value = conditions[:label], from: 'label'
+          click_on '検索'
+          expect(page).not_to have_content 'A1'
+        end
+
+        it 'A2が表示されないこと' do
+          visit root_path
+          fill_in 'title', with: conditions[:title]
+          select value = conditions[:status], from: 'status'
+          select value = conditions[:label], from: 'label'
+          click_on '検索'
+          expect(page).not_to have_content 'A2'
+        end
+
+        it 'A3が表示されること' do
+          visit root_path
+          fill_in 'title', with: conditions[:title]
+          select value = conditions[:status], from: 'status'
+          select value = conditions[:label], from: 'label'
+          click_on '検索'
+          expect(page).to have_content 'A3'
+        end
+
+        it 'B1が表示されないこと' do
+          visit root_path
+          fill_in 'title', with: conditions[:title]
+          select value = conditions[:status], from: 'status'
+          select value = conditions[:label], from: 'label'
+          click_on '検索'
+          expect(page).not_to have_content 'B1'
+        end
+
+        it 'B2が表示されないこと' do
+          visit root_path
+          fill_in 'title', with: conditions[:title]
+          select value = conditions[:status], from: 'status'
+          select value = conditions[:label], from: 'label'
           click_on '検索'
           expect(page).not_to have_content 'B2'
         end
@@ -359,7 +472,7 @@ describe 'タスク管理機能', type: :system do
     end
   end
   describe '詳細表示機能' do
-    let!(:task_a) { FactoryBot.create(:task, title: '0 title', description: '最初のタスクを実施する', user_id: user.id, status: '1', label: '0 label') }
+    let!(:task_a) { FactoryBot.create(:task, :with_label, title: '0 title', description: '最初のタスクを実施する', user_id: user.id, status: Task.statuses[:not_started], label_name: '0 label') }
     subject(:visit_task_a) { visit task_path(task_a) }
 
     describe '表示機能' do
@@ -414,7 +527,7 @@ describe 'タスク管理機能', type: :system do
     end
 
     describe '画面遷移機能' do
-      let!(:task_a) { FactoryBot.create(:task, title: '最初のタスク', description: '最初のタスクを実施する', user_id: user.id, status: '1', label: '1') }
+      let!(:task_a) { FactoryBot.create(:task, title: '最初のタスク', description: '最初のタスクを実施する', user_id: user.id, status: Task.statuses[:not_started]) }
 
       context '新規登録ボタンをクリックした場合' do
         it '一覧画面へ遷移できる' do
@@ -435,7 +548,8 @@ describe 'タスク管理機能', type: :system do
   end
 
   describe '編集機能' do
-    let!(:task_a) { FactoryBot.create(:task, title: '最初のタスク', description: '最初のタスクを実施する', user_id: user.id, status: '1', label: '1') }
+    let!(:task_a) { FactoryBot.create(:task, :with_label, title: '最初のタスク', description: '最初のタスクを実施する', user_id: user.id, status: Task.statuses[:not_started], label_name: 'label') }
+    let!(:label_a) { FactoryBot.create(:label, name: 'update label') }
     subject(:visit_task_a_edit){visit edit_task_path(task_a)}
 
     describe '表示機能' do
@@ -444,27 +558,41 @@ describe 'タスク管理機能', type: :system do
           visit_task_a_edit
           expect(page).to have_field 'textarea1', with: '最初のタスク'
         end
+
         it '編集前の詳細が表示される' do
           visit_task_a_edit
           expect(page).to have_field 'textarea2', with: '最初のタスクを実施する'
         end
       end
+
       context 'タスクの各項目を更新した場合' do
         let(:input_values) {
           {
             title: '最初のタスク',
             description: '最初のタスクを実施する',
             user_id: user.id,
+            label: label_a.name,
           }
         }
 
         it 'タスクが正常に更新される' do
           visit_task_a_edit
           # 更新処理
-          fill_in 'textarea1', with: '最初のタスク'
-          fill_in 'textarea2', with: '最初のタスクを実施する'
+          fill_in 'textarea1', with: input_values[:title]
+          fill_in 'textarea2', with: input_values[:description]
+          select value = input_values[:label], from: 'task[label_ids][]'
           # 画面で入力された内容でDBのデータが更新されている
-          expect(Task.find_by(input_values)).to be_present
+          expect(Task.find_by(title: input_values[:title], description: input_values[:description])).to be_present
+        end
+
+        it 'タスクとラベルが正常に紐づく' do
+          visit_task_a_edit
+          # 更新処理
+          fill_in 'textarea1', with: input_values[:title]
+          fill_in 'textarea2', with: input_values[:description]
+          select value = input_values[:label], from: 'task[label_ids][]'
+          # 画面で入力された内容でDBのデータが更新されている
+          expect(Label.find_by(name: input_values[:label])).to be_present
         end
       end
 
