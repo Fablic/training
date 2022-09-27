@@ -1,0 +1,9 @@
+<div name='header'>
+  <h1><%= I18n.t('view_title.label_new') %></h1>
+</div>
+<div name='content'>
+  <%= render partial: 'form_label', locals: { url: labels_path, method: 'post', button_name: I18n.t('button.create') } %>
+</div>
+<div name='footer'>
+  <%= link_to(I18n.t('link.label_list_back'), labels_path) %>
+</div>

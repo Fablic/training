@@ -12,12 +12,10 @@
     <div>
       <%= I18n.t("enums.task.status.#{@task.status}") %>
     </div>
-    <li><%= I18n.t('task.label') %></li>
-      <% if @label1.present? %><%= @label1 %><br><% end %>
-      <% if @label2.present? %><%= @label2 %><br><% end %>
-      <% if @label3.present? %><%= @label3 %><br><% end %>
-      <% if @label4.present? %><%= @label4 %><br><% end %>
-      <% if @label5.present? %><%= @label5 %><br><% end %>
+    <li>ラベル</li>
+      <% @task.labels.each do |label| %>
+        <li><%= label.name %></li>
+      <% end %>
     <li>登録日時</li>
     <div>
       <%= @task.created_at %>
