@@ -1,0 +1,22 @@
+<h1>ログイン</h1>
+<div name='header'>
+  <div name='message-area' class='error-area'>
+    <%= alert %>
+  </div>
+<%= form_with scope: :session, local: true do |f| %>
+    <div>
+      <%= f.label :メールアドレス %>
+    </div>
+    <div>
+      <%= f.text_field :email %>
+    </div>
+    <div>
+      <%= f.label :password, 'パスワード' %>
+    </div>
+    <div>
+      <%= f.password_field :password %>
+    </div>
+    <div>
+      <%= f.submit 'ログインする', id: 'Login' %>
+    </div>
+<% end %>

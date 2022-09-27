@@ -4,11 +4,12 @@ class TasksController < ApplicationController
   before_action :set_task, only: %i[show edit update destroy]
 
   def index
-    @tasks = Task.where_title(params[:title]).where_status(params[:status]).order('tasks.created_at desc').page(params[:page])
+    # タスク一覧オブジェクト取得
+    @tasks = login_user.tasks.where_title(params[:title]).where_status(params[:status]).order('tasks.created_at desc').page(params[:page])
   end
 
   def show
-    @task = Task.includes(:user).find(params[:id])
+    @task = login_user.tasks.find(params[:id])
   end
 
   def new
@@ -46,7 +47,7 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:title, :description, :status, :user_id)
+    task_params = params.require(:task).permit(:title, :description, :status)
   end
 
   def set_task
