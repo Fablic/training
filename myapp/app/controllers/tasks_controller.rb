@@ -1,7 +1,7 @@
 class TasksController < ApplicationController
   # Task List
   def index
-    @tasks = current_user.tasks.includes([:labels]).includes([:tasks_labels]).all.page(params[:page])
+    @tasks = current_user.tasks.preload([:labels]).all.page(params[:page])
   end
 
   # Show Task
