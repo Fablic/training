@@ -4,12 +4,12 @@ class TasksController < ApplicationController
   before_action :set_task, only: %i[show edit update destroy]
 
   def index
-      @tasks = Task.where_user_id(login_user.id).where_title(params[:title]).where_label(params[:label]).where_status(params[:status])
-      @tasks = Task.where(id: @tasks.map { |t| t.id }).order('tasks.created_at desc').page(params[:page])
+    # タスク一覧オブジェクト取得
+    @tasks = login_user.tasks.where_title(params[:title]).where_status(params[:status]).order('tasks.created_at desc').page(params[:page])
   end
 
   def show
-    @task = Task.eager_load(:labels).find(params[:id])
+    @task = login_user.tasks.eager_load(:labels).find(params[:id])
     @label1 = @task.labels[0].name if @task.labels.size > 0
     @label2 = @task.labels[1].name if @task.labels.size > 1
     @label3 = @task.labels[2].name if @task.labels.size > 2
@@ -18,8 +18,7 @@ class TasksController < ApplicationController
   end
 
   def new
-    @task_form = TaskForm.new
-    @is_status = false
+    @task = Task.new
   end
 
   def edit

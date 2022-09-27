@@ -82,8 +82,16 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+    # bullet settings
+  if Bullet.enable?
+    config.before(:each) do
+      Bullet.start_request
+    end
 
-  Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
+    config.after(:each) do
+      Bullet.perform_out_of_channel_notifications if Bullet.notification? # Bulletによる通知をRSpecの結果に表示
+      Bullet.end_request
+    end
+  end
 
-  config.include LoginHelper
 end

@@ -4,7 +4,7 @@ describe 'Sessions', type: :system do
 
   describe '#new' do
     describe 'ログイン' do
-       let(:user) { FactoryBot.create(:user) }
+      let(:user) { FactoryBot.create(:user, password: 'password') }
       let(:task) { FactoryBot.create(:task, user_id: user.id) }
       context 'ログイン成功' do
         it 'ログインできること' do
