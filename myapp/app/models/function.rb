@@ -5,11 +5,7 @@ class Function < ApplicationRecord
   FUNC_ID_DELETE = 3
   FUNC_ID_SYSTEM = 9
 
-  def self.is_started?(id)
-    Function.find(id).status ? true : false
-  end
-
   def self.is_stopped?(id)
-    Function.find(id).status ? false : true
+    !Function.find(id).status
   end
 end

@@ -1,25 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Function, type: :model do
-  describe '#is_started' do
-    before do
-      FactoryBot.create(:function, id: Function::FUNC_ID_SYSTEM, status: true)
-      FactoryBot.create(:function, id: Function::FUNC_ID_CREATE, status: false)
-    end
-
-    context '開始状態の場合' do
-      subject(:is_started) { Function.is_started?(Function::FUNC_ID_SYSTEM) }
-
-      it { is_expected.to be(true) }
-    end
-
-    context '停止状態の場合' do
-      subject(:is_started) { Function.is_started?(Function::FUNC_ID_CREATE) }
-
-      it { is_expected.to be(false) }
-    end
-  end
-
   describe '#is_stopped' do
     before do
       FactoryBot.create(:function, id: Function::FUNC_ID_SYSTEM, status: true)
