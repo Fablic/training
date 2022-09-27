@@ -188,48 +188,49 @@ URL:
 システム開始
 
 ``` shell
-docker-compose exec api rails runner Maintenance::Functions::StartSystem.execute
+docker-compose exec api rake 'function:start[9]'
 ```
 
 システム停止
 
 ``` shell
-docker-compose exec api rails runner Maintenance::Functions::StopSystem.execute
+docker-compose exec api rake 'function:stop[9]'
 ```
 
 タスク作成機能開始
 
 ``` shell
-docker-compose exec api rails runner Maintenance::Functions::StartCreate.execute
+docker-compose exec api rake 'function:start[1]'
 ```
 
 タスク作成機能停止
 
 ``` shell
-docker-compose exec api rails runner Maintenance::Functions::StopCreate.execute
+docker-compose exec api rake 'function:stop[1]'
 ```
 
 タスク更新機能開始
 
 ``` shell
-docker-compose exec api rails runner Maintenance::Functions::StartUpdate.execute
+docker-compose exec api rake 'function:start[2]'
 ```
 
 タスク更新機能停止
 
 ``` shell
-docker-compose exec api rails runner Maintenance::Functions::StopUpdate.execute
+docker-compose exec api rake 'function:stop[2]'
 ```
 
 タスク削除機能開始
 
 ``` shell
-docker-compose exec api rails runner Maintenance::Functions::StartDelete.execute
+docker-compose exec api rake 'function:start[3]'
 ```
 
 タスク削除機能停止
 
 ``` shell
+docker-compose exec api rake 'function:stop[3]'
 docker-compose exec api rails runner Maintenance::Functions::StopDelete.execute
 ```
 
