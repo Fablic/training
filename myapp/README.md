@@ -25,6 +25,7 @@ http://localhost:3001
 | - | 1 | タスク | tasks | オブジェクト | ○ | |
 | label | 2 | タスク名 | tasks.name | 文字列 | | |
 | label | 2 | ステータス | tasks.status | 文字列 | | コードを文字列へ変換して表示 1:'未着手'、2:'実施中'、3:'完了' |
+| label | 2 | ラベル | labels.name | 文字列 | | |
 | button | 2 | 詳細 |  | ボタン | | タスク詳細画面へ遷移 |
 <br>
 
@@ -37,9 +38,10 @@ http://localhost:3001
 検索エリア
 | item | layer | name | source | type | loop | others |
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
-| select | 1 | 検索方法 | プルダウン | 文字列 |  | 1:'全て'、2:'タスク名'、3:'タスク詳細' |
-| text | 1 | 検索フォーム | | 文字列 | | 部分一致 |
-| button　| 1 | 検索ボタン | | ボタン | | タスク一覧を条件に応じて絞り込み |
+| text | 1 | タスク名 | | 文字列 | | 部分一致 |
+| select | 1 | ステータス | tasks.status.enum | プルダウン | | |
+| select | 1 | ラベル | labels.name | プルダウン | | |
+| button　| 1 | 検索ボタン | | ボタン | | 検索条件をもとにタスク一覧を絞り込む |
 <br>
 
 【タスク詳細画面】
@@ -52,6 +54,7 @@ http://localhost:3001/tasks/{task.id}
 | label | 1 | タスク名 | tasks.title | 文字列 | | |
 | label | 1 | 詳細 | tasks.description | 文字列 | | |
 | label | 1 | ステータス | tasks.status | 文字列 | | コードを文字列へ変換して表示 1:'未着手'、2:'実施中'、3:'完了' |
+| label | 1 | ラベル | labels.name | 文字列 | | |
 | label | 1 | 登録日時 | tasks.created_at | 文字列 | | |
 | label | 1 | 更新日時 | tasks.updated_at | 文字列 | | |
 | button | 1 | 編集 |  | ボタン | | タスク編集画面へ遷移 |
@@ -69,6 +72,7 @@ http://localhost:3001/tasks/new
 | text | 1 | タスク名 | | 文字列 | | |
 | text | 1 | 詳細 | | 文字列 | | |
 | select | 1 | ステータス | プルダウン | 文字列 | | 1:'未着手'、2:'実施中'、3:'完了' をリスト表示 |
+| select | 1 | ラベル | labels.name | 文字列 | | ラベルを全て表示 |
 | button | 1 | タスクを作成 |  | ボタン | | タスク作成 |
 | button | 1 | 戻る |  | ボタン | | タスク一覧画面へ遷移 |
 <br>
@@ -83,6 +87,7 @@ http://localhost:3001/tasks/{task.id}/edit
 | text | 1 | タスク名 | tasks.name | 文字列 | | |
 | text | 1 | 詳細 | tasks.description | 文字列 | | |
 | select | 1 | ステータス | プルダウン | 文字列 | | 1:'未着手'、2:'実施中'、3:'完了' をリスト表示 |
+| select | 1 | ラベル | labels.name | 文字列 | | ラベルを全て表示 |
 | button | 1 | タスクを更新 |  | ボタン | | データを更新 |
 | button | 1 | 詳細へ |  | ボタン | | タスク詳細画面へ遷移 |
 <br>
@@ -100,6 +105,25 @@ http://localhost:3001/login
 <br>
 
 ## モデル図
+labellings
+column_name | type | null | default
+| ---- | ---- | ---- | ---- |
+| id | integer | not null | auto increment |
+| task_id | varchar | | |
+| label_id | varchar | | |
+| created_at | datetime | | |
+| updated_at | datetime | | |
+<br>
+
+labels
+column_name | type | null | default
+| ---- | ---- | ---- | ---- |
+| id | integer | not null | auto increment |
+| name | varchar | | |
+| created_at | datetime | | |
+| updated_at | datetime | | |
+<br>
+
 tasks
 column_name | type | null | default
 | ---- | ---- | ---- | ---- |
@@ -110,6 +134,7 @@ column_name | type | null | default
 | created_at | datetime | | |
 | updated_at | datetime | | |
 <br>
+
 users
 column_name | type | null | default
 | ---- | ---- | ---- | ---- |

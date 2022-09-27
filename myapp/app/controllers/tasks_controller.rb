@@ -4,7 +4,7 @@ class TasksController < ApplicationController
   before_action :create_empty_task, only: [:index, :new, :search]
 
   def index
-    @tasks = current_user.tasks.includes([:labellings, :labels]).all.page(params[:page])
+    @tasks = current_user.tasks.includes(:labellings).includes(:labels).all.page(params[:page])
   end
 
   def show; end
