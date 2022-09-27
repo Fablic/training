@@ -6,11 +6,11 @@ module Maintenance
       end
 
       def start
-        Function.find(@id).update(status: Function.statuses[:started])
+        Function.find(@id).update(status: true)
       end
 
       def stop
-        Function.find(@id).update(status: Function.statuses[:stopped])
+        Function.find(@id).update(status: false)
       end
     end
   end

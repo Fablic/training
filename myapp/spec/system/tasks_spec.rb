@@ -15,7 +15,7 @@ describe 'Tasks', type: :system do
     describe '初期表示' do
       context 'システムが開始状態の場合'do
         before do
-          Function.find(Function::FUNC_ID_SYSTEM).update(status: Function.statuses[:started])
+          Function.find(Function::FUNC_ID_SYSTEM).update(status: true)
         end
 
         it 'タスク一覧画面への遷移で503エラーが表示されないこと' do
@@ -26,7 +26,7 @@ describe 'Tasks', type: :system do
 
       context 'システムが停止状態の場合'do
         before do
-          Function.find(Function::FUNC_ID_SYSTEM).update(status: Function.statuses[:stopped])
+          Function.find(Function::FUNC_ID_SYSTEM).update(status: false)
         end
 
         it 'タスク一覧画面への遷移で503エラーが表示されること' do
@@ -419,7 +419,7 @@ describe 'Tasks', type: :system do
     describe '初期表示' do
       context 'システムが開始状態の場合'do
         before do
-          Function.find(Function::FUNC_ID_SYSTEM).update(status: Function.statuses[:started])
+          Function.find(Function::FUNC_ID_SYSTEM).update(status: true)
         end
 
         it 'タスク作成画面への遷移で503エラーが表示されないこと' do
@@ -430,7 +430,7 @@ describe 'Tasks', type: :system do
 
       context 'システムが停止状態の場合'do
         before do
-          Function.find(Function::FUNC_ID_SYSTEM).update(status: Function.statuses[:stopped])
+          Function.find(Function::FUNC_ID_SYSTEM).update(status: false)
         end
 
         it 'タスク作成画面への遷移で503エラーが表示されること' do
@@ -441,7 +441,7 @@ describe 'Tasks', type: :system do
 
       context 'タスク作成機能が開始状態の場合'do
         before do
-          Function.find(Function::FUNC_ID_CREATE).update(status: Function.statuses[:started])
+          Function.find(Function::FUNC_ID_CREATE).update(status: true)
         end
 
         it 'タスク作成画面への遷移で503エラーが表示されないこと' do
@@ -452,7 +452,7 @@ describe 'Tasks', type: :system do
 
       context 'タスク作成機能が停止状態の場合'do
         before do
-          Function.find(Function::FUNC_ID_CREATE).update(status: Function.statuses[:stopped])
+          Function.find(Function::FUNC_ID_CREATE).update(status: false)
         end
 
         it 'タスク作成画面への遷移で503エラーが表示されること' do
@@ -622,7 +622,7 @@ describe 'Tasks', type: :system do
     describe '初期表示' do
       context 'システムが開始状態の場合'do
         before do
-          Function.find(Function::FUNC_ID_SYSTEM).update(status: Function.statuses[:started])
+          Function.find(Function::FUNC_ID_SYSTEM).update(status: true)
         end
 
         it 'タスク詳細画面への遷移で503エラーが表示されないこと' do
@@ -633,7 +633,7 @@ describe 'Tasks', type: :system do
 
       context 'システムが停止状態の場合'do
         before do
-          Function.find(Function::FUNC_ID_SYSTEM).update(status: Function.statuses[:stopped])
+          Function.find(Function::FUNC_ID_SYSTEM).update(status: false)
         end
 
         it 'タスク詳細画面への遷移で503エラーが表示されること' do
@@ -718,7 +718,7 @@ describe 'Tasks', type: :system do
 
       context 'タスク削除機能が停止状態の場合'do
         before do
-          Function.find(Function::FUNC_ID_DELETE).update(status: Function.statuses[:stopped])
+          Function.find(Function::FUNC_ID_DELETE).update(status: false)
         end
 
         it '削除ボタン押下で503エラーが表示されること' do
@@ -736,7 +736,7 @@ describe 'Tasks', type: :system do
     describe '初期表示' do
       context 'システムが開始状態の場合'do
         before do
-          Function.find(Function::FUNC_ID_SYSTEM).update(status: Function.statuses[:started])
+          Function.find(Function::FUNC_ID_SYSTEM).update(status: true)
         end
 
         it 'タスク編集画面への遷移で503エラーが表示されないこと' do
@@ -747,7 +747,7 @@ describe 'Tasks', type: :system do
 
       context 'システムが停止状態の場合'do
         before do
-          Function.find(Function::FUNC_ID_SYSTEM).update(status: Function.statuses[:stopped])
+          Function.find(Function::FUNC_ID_SYSTEM).update(status: false)
         end
 
         it 'タスク編集画面への遷移で503エラーが表示されること' do
@@ -758,7 +758,7 @@ describe 'Tasks', type: :system do
 
       context 'タスク編集機能が開始状態の場合'do
         before do
-          Function.find(Function::FUNC_ID_UPDATE).update(status: Function.statuses[:started])
+          Function.find(Function::FUNC_ID_UPDATE).update(status: true)
         end
 
         it 'タスク編集画面への遷移で503エラーが表示されないこと' do
@@ -769,7 +769,7 @@ describe 'Tasks', type: :system do
 
       context 'タスク編集機能が停止状態の場合'do
         before do
-          Function.find(Function::FUNC_ID_UPDATE).update(status: Function.statuses[:stopped])
+          Function.find(Function::FUNC_ID_UPDATE).update(status: false)
         end
 
         it 'タスク編集画面への遷移で503エラーが表示されること' do

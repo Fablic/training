@@ -15,8 +15,8 @@ Function.destroy_all
 end
 
 # Create Functions
-Function.create!(id: Function::FUNC_ID_SYSTEM, name: 'タスク管理システム', status: Function.statuses[:started])
-Function.create!(id: Function::FUNC_ID_CREATE, name: '作成機能', status: Function.statuses[:started])
-Function.create!(id: Function::FUNC_ID_UPDATE, name: '編集機能', status: Function.statuses[:started])
-Function.create!(id: Function::FUNC_ID_DELETE, name: '削除機能', status: Function.statuses[:started])
+Function.create!(id: Function::FUNC_ID_SYSTEM, name: 'タスク管理システム', status: true)
+Function.create!(id: Function::FUNC_ID_CREATE, name: '作成機能', status: true)
+Function.create!(id: Function::FUNC_ID_UPDATE, name: '編集機能', status: true)
+Function.create!(id: Function::FUNC_ID_DELETE, name: '削除機能', status: true)
 

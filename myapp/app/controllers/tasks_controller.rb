@@ -64,15 +64,15 @@ class TasksController < ApplicationController
   end
 
   def check_create_service
-    transition_503 if Function.is_stopped(Function::FUNC_ID_CREATE)
+    transition_503 if Function.is_stopped?(Function::FUNC_ID_CREATE)
   end
 
   def check_update_service
-    transition_503 if Function.is_stopped(Function::FUNC_ID_UPDATE)
+    transition_503 if Function.is_stopped?(Function::FUNC_ID_UPDATE)
   end
 
   def check_delete_service
-    transition_503 if Function.is_stopped(Function::FUNC_ID_DELETE)
+    transition_503 if Function.is_stopped?(Function::FUNC_ID_DELETE)
   end
 
   def transition_503
