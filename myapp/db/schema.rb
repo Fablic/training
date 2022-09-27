@@ -21,14 +21,14 @@ ActiveRecord::Schema.define(version: 2022_09_13_103138) do
   create_table "tasks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "title", limit: 128, default: "", null: false
     t.text "description"
-    t.bigint "user_id", null: false
+    t.bigint "user_id"
     t.string "status", limit: 1, default: "0", null: false
-    t.string "label", limit: 64
     t.datetime "deleted_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["status"], name: "index_tasks_on_status"
     t.index ["title"], name: "index_tasks_on_title"
+    t.index ["user_id"], name: "index_tasks_on_user_id"
   end
 
   create_table "tasks_labels", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
