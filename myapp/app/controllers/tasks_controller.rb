@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class TasksController < ApplicationController
+  before_action :set_task, only: %i[show edit update destroy]
 
   def index
     # タスク一覧オブジェクト取得
@@ -23,9 +24,9 @@ class TasksController < ApplicationController
     @task = login_user.tasks.new(task_params)
 
     if @task.save
-      redirect_to(root_path, notice: 'タスクを登録しました')
+      redirect_to tasks_url, notice: "タスク「#{@task.title}」を登録しました。"
     else
-      render(:new, status: :unprocessable_entity)
+      render :new
     end
   end
 
@@ -33,7 +34,7 @@ class TasksController < ApplicationController
     @task = login_user.tasks.find(params[:id])
 
     if @task.update(task_params)
-      redirect_to(root_path, notice: 'タスク更新成功')
+      redirect_to tasks_url, notice: "タスク「#{@task.title}」を更新しました。"
     else
       render(:edit, status: :unprocessable_entity)
     end
@@ -41,7 +42,7 @@ class TasksController < ApplicationController
 
   def destroy
     @task = login_user.tasks.find(params[:id])
-    redirect_to(root_path, notice: 'タスク削除成功') if @task.destroy
+    redirect_to(root_path, notice: "タスク「#{@task.title}」を削除しました。") if @task.destroy
   end
 
   private
