@@ -231,7 +231,6 @@ docker-compose exec api rake 'function:start[3]'
 
 ``` shell
 docker-compose exec api rake 'function:stop[3]'
-docker-compose exec api rails runner Maintenance::Functions::StopDelete.execute
 ```
 
 【ラベル一覧画面】
