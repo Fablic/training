@@ -1,6 +1,9 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>タスク一覧</h1>
+<h2>検索フォーム</h2>
+<%= render "search_form" %>
+
+<h2>タスク一覧</h2>
 
 <%= link_to I18n.t('transition_destination.create'), new_task_path %>
 
@@ -12,7 +15,7 @@
     </tr>
 
     <% @tasks.each do |task| %>
-      <div id="<%= dom_id task %>">
+      <div class="task" id="<%= dom_id task %>">
         <tr>
           <%= render 'attributes', task: %>
           <td><%= link_to I18n.t('transition_destination.show'), task %></td>

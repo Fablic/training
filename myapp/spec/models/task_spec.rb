@@ -27,4 +27,56 @@ RSpec.describe Task, type: :model do
       ).with_prefix
     }
   end
+
+  describe '.sort_by_keyword' do
+    let!(:first_task) { create(:task, name: 'ううう') }
+    let!(:second_task) { create(:task, name: 'あああ') }
+    let!(:third_task) { create(:task, name: 'いいい') }
+
+    subject { Task.sort_by_keyword(sort) }
+
+    context "When argument 'sort' is created_at_asc" do
+      let(:sort) { 'created_at_asc' }
+
+      it 'sort by specified sort type' do
+        is_expected.to eq [first_task, second_task, third_task]
+      end
+    end
+
+    context "When argument 'sort' is created_at_desc" do
+      let(:sort) { 'created_at_desc' }
+
+      it 'sort by specified sort type' do
+        is_expected.to eq [third_task, second_task, first_task]
+      end
+    end
+  end
+
+  describe '.check_approved_sort_params' do
+    subject { Task.check_approved_sort_params(sort) }
+
+    context "When argument 'sort' does NOT exist in Task::SORT_TYPE keys" do
+      let(:sort) { 'name_asc' }
+
+      it 'returns a default sort type' do
+        is_expected.to eq 'created_at_asc'
+      end
+    end
+
+    context "When argument 'sort' is created_at_asc" do
+      let(:sort) { 'created_at_asc' }
+
+      it 'returns a specified sort type' do
+        is_expected.to eq 'created_at_asc'
+      end
+    end
+
+    context "When argument 'sort' is created_at_desc" do
+      let(:sort) { 'created_at_desc' }
+
+      it 'returns a specified sort type' do
+        is_expected.to eq 'created_at_desc'
+      end
+    end
+  end
 end

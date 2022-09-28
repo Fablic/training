@@ -3,6 +3,10 @@
 class Task < ApplicationRecord
   DEFAULT_PRIORITY_VALUE = 1
   DEFAULT_STATUS_VALUE = 0
+  SORT_TYPE = {
+    'created_at_asc' => 'created_at ASC',
+    'created_at_desc' => 'created_at DESC'
+  }.freeze
 
   after_initialize :set_default_values
 
@@ -22,8 +26,16 @@ class Task < ApplicationRecord
     completed: 2  # 完了
   }, prefix: true
 
+  scope :sort_by_keyword, ->(sort) { order(SORT_TYPE[sort]) }
+
   def set_default_values
     self.priority ||= DEFAULT_PRIORITY_VALUE
     self.status   ||= DEFAULT_STATUS_VALUE
+  end
+
+  class << self
+    def check_approved_sort_params(sort)
+      SORT_TYPE.keys.include?(sort) ? sort : 'created_at_asc'
+    end
   end
 end

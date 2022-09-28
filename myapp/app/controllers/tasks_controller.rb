@@ -4,7 +4,10 @@ class TasksController < ApplicationController
   before_action :set_task, only: %i[show edit update destroy]
 
   def index
-    @tasks = Task.all
+    query = Task.all
+    query = query.sort_by_keyword(search_params[:sort]) if search_params[:sort].present?
+
+    @tasks = query
   end
 
   def show; end
@@ -49,5 +52,10 @@ class TasksController < ApplicationController
 
   def task_params
     params.require(:task).permit(:name, :end_date, :priority, :status, :explanation)
+  end
+
+  def search_params
+    params[:sort] = Task.check_approved_sort_params(params[:sort]) if params[:sort].present?
+    params.permit(:sort)
   end
 end

@@ -8,11 +8,26 @@ RSpec.describe '/tasks', type: :request do
   describe 'GET /index' do
     let!(:tasks) { create_list(:task, 11) }
 
-    it 'renders a successful response' do
-      get tasks_url
+    context 'does not exist search_params' do
+      it 'renders a successful response' do
+        get tasks_url
 
-      expect(response).to have_http_status(:ok)
-      tasks.each { |task| expect(response.body).to include task.name.to_s }
+        expect(response).to have_http_status(:ok)
+        tasks.each { |task| expect(response.body).to include task.name.to_s }
+      end
+    end
+
+    context "When argument 'sort' exists in search_params" do
+      let(:params) do
+        { sort: 'created_at_desc' }
+      end
+
+      it 'renders a successful response' do
+        get tasks_url, params: params
+
+        expect(response).to have_http_status(:ok)
+        tasks.each { |task| expect(response.body).to include task.name.to_s }
+      end
     end
   end
 

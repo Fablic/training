@@ -41,6 +41,86 @@ RSpec.feature '/tasks or /' do
       end
     end
 
+    feature 'When argument sort is created_at_asc' do
+      background do
+        create(:task,
+               name: 'aqua',
+               end_date: end_date_aqua,
+               priority: 'high',
+               status: 'untouched',
+               explanation: 'aqua hara')
+        create(:task,
+               name: 'kuma',
+               end_date: end_date_kuma,
+               priority: 'low',
+               status: 'touched',
+               explanation: 'brown kuma')
+      end
+      given(:end_date_aqua) { '2022/09/14 17:25' }
+      given(:end_date_kuma) { '2022/09/13 18:25' }
+
+      scenario 'correctly displays tasks' do
+        visit tasks_path
+
+        expect(current_path).to eq '/tasks'
+
+        find("option[value='created_at_asc']").select_option
+        click_on '送信'
+
+        expect(page.all('.task')[0].find('.task_name').text).to eq 'aqua'
+        expect(page.all('.task')[0].find('.task_end_date').text).to eq '2022/09/14 17:25'
+        expect(page.all('.task')[0].find('.task_priority').text).to eq '高'
+        expect(page.all('.task')[0].find('.task_status').text).to eq '未着手'
+        expect(page.all('.task')[0].find('.task_explanation').text).to eq 'aqua hara'
+
+        expect(page.all('.task')[1].find('.task_name').text).to eq 'kuma'
+        expect(page.all('.task')[1].find('.task_end_date').text).to eq '2022/09/13 18:25'
+        expect(page.all('.task')[1].find('.task_priority').text).to eq '低'
+        expect(page.all('.task')[1].find('.task_status').text).to eq '着手中'
+        expect(page.all('.task')[1].find('.task_explanation').text).to eq 'brown kuma'
+      end
+    end
+
+    feature 'When argument sort is created_at_desc' do
+      background do
+        create(:task,
+               name: 'aqua',
+               end_date: end_date_aqua,
+               priority: 'high',
+               status: 'untouched',
+               explanation: 'aqua hara')
+        create(:task,
+               name: 'kuma',
+               end_date: end_date_kuma,
+               priority: 'low',
+               status: 'touched',
+               explanation: 'brown kuma')
+      end
+      given(:end_date_aqua) { '2022/09/14 17:25' }
+      given(:end_date_kuma) { '2022/09/13 18:25' }
+
+      scenario 'correctly displays tasks' do
+        visit tasks_path
+
+        expect(current_path).to eq '/tasks'
+
+        find("option[value='created_at_desc']").select_option
+        click_on '送信'
+
+        expect(page.all('.task')[0].find('.task_name').text).to eq 'kuma'
+        expect(page.all('.task')[0].find('.task_end_date').text).to eq '2022/09/13 18:25'
+        expect(page.all('.task')[0].find('.task_priority').text).to eq '低'
+        expect(page.all('.task')[0].find('.task_status').text).to eq '着手中'
+        expect(page.all('.task')[0].find('.task_explanation').text).to eq 'brown kuma'
+
+        expect(page.all('.task')[1].find('.task_name').text).to eq 'aqua'
+        expect(page.all('.task')[1].find('.task_end_date').text).to eq '2022/09/14 17:25'
+        expect(page.all('.task')[1].find('.task_priority').text).to eq '高'
+        expect(page.all('.task')[1].find('.task_status').text).to eq '未着手'
+        expect(page.all('.task')[1].find('.task_explanation').text).to eq 'aqua hara'
+      end
+    end
+
     feature 'clicks link buttons' do
       background do
         create(:task,

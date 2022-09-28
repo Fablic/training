@@ -23,6 +23,10 @@ ja:
         touched: 着手中
         completed: 完了
   select_form:
+    search_form:
+      sort:
+        - ['作成日時昇順(デフォルト)', 'created_at_asc']
+        - ['作成日時降順', 'created_at_desc']
     task:
       priority:
         - ['低', 'low']
