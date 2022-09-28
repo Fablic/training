@@ -106,9 +106,9 @@ RSpec.describe '/tasks', type: :request do
           get tasks_url, params: params
 
           expect(response).to have_http_status(:ok)
-          expect(response.body).to include task_aqua.name.to_s
-          expect(response.body).to include task_kuma.name.to_s
-          expect(response.body).not_to include task_nyanko.name.to_s
+          expect(response.body).to include 'アクア'
+          expect(response.body).to include 'くま'
+          expect(response.body).not_to include 'にゃんこ'
         end
       end
     end
@@ -129,11 +129,11 @@ RSpec.describe '/tasks', type: :request do
           get tasks_url, params: params
 
           expect(response).to have_http_status(:ok)
-          expect(response.body).to include task_aqua.name.to_s
-          expect(response.body).not_to include task_kuma.name.to_s
-          expect(response.body).not_to include task_nyanko.name.to_s
-          expect(response.body).to include task_piyo.name.to_s
-          expect(response.body).to include task_usa.name.to_s
+          expect(response.body).to include 'アクア'
+          expect(response.body).not_to include 'くま'
+          expect(response.body).not_to include 'にゃんこ'
+          expect(response.body).to include 'ひよこ'
+          expect(response.body).to include 'うさぎ'
         end
       end
 
@@ -146,11 +146,11 @@ RSpec.describe '/tasks', type: :request do
           get tasks_url, params: params
 
           expect(response).to have_http_status(:ok)
-          expect(response.body).not_to include task_aqua.name.to_s
-          expect(response.body).not_to include task_kuma.name.to_s
-          expect(response.body).to include task_nyanko.name.to_s
-          expect(response.body).not_to include task_piyo.name.to_s
-          expect(response.body).not_to include task_usa.name.to_s
+          expect(response.body).not_to include 'アクア'
+          expect(response.body).not_to include 'くま'
+          expect(response.body).to include 'にゃんこ'
+          expect(response.body).not_to include 'ひよこ'
+          expect(response.body).not_to include 'うさぎ'
         end
       end
     end
