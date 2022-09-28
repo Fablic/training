@@ -4,19 +4,30 @@ class TasksController < ApplicationController
   before_action :set_task, only: %i[show edit update destroy]
 
   def index
+    maintenance = Maintenance.find_by(service_id: TASKS)
+    render 'maintenance/maintenance' if maintenance.maintenance_flg
     # タスク一覧オブジェクト取得
     @tasks = login_user.tasks.preload(:labels).where(id: login_user.tasks.get_ids(params[:title], params[:label], params[:status])).order('tasks.created_at desc').page(params[:page])
   end
 
   def show
+    maintenance = Maintenance.find_by(service_id: SHOW)
+    render 'maintenance/maintenance' if maintenance.maintenance_flg
+
     @task = login_user.tasks.find(params[:id])
   end
 
   def new
+    maintenance = Maintenance.find_by(service_id: CREATE)
+    render 'maintenance/maintenance' if maintenance.maintenance_flg
+
     @task = Task.new
   end
 
   def edit
+    maintenance = Maintenance.find_by(service_id: UPDATE)
+    render 'maintenance/maintenance' if maintenance.maintenance_flg
+
     @task = login_user.tasks.find(params[:id])
   end
 

@@ -3,6 +3,11 @@ class ApplicationController < ActionController::Base
     before_action :re_login
     before_action :check_maintenance
 
+    ALL = 101
+    CREATE = 102
+    UPDATE = 103
+    SHOW = 104
+    TASKS = 105
 
     def login(user)
       token = User.create_login_token
@@ -30,7 +35,7 @@ class ApplicationController < ActionController::Base
     end
 
     def check_maintenance
-      maintenance = Maintenance.find_by(service_id: TASK)
+      maintenance = Maintenance.find_by(service_id: ALL)
       render 'maintenance/maintenance' if maintenance.maintenance_flg
     end
   end

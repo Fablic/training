@@ -9,6 +9,10 @@
 User.destroy_all
 Maintenance.destroy_all
 Maintenance.create(service_id: '101', maintenance_flg: false)
+Maintenance.create(service_id: '102', maintenance_flg: false)
+Maintenance.create(service_id: '103', maintenance_flg: false)
+Maintenance.create(service_id: '104', maintenance_flg: false)
+Maintenance.create(service_id: '105', maintenance_flg: false)
 
 5.times do |i|
   # Create Users
