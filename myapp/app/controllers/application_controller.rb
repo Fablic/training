@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
     end
 
     def check_maintenance
-      maintenance = Maintenance.find_by(content_id: TASK)
+      maintenance = Maintenance.find_by(service_id: TASK)
       render 'maintenance/maintenance' if maintenance.maintenance_flg
     end
   end

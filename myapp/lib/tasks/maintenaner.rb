@@ -11,7 +11,7 @@ module Tasks
     private
 
     def self.switch_maintenance(maintenance_flg, type)
-      maintenance = Maintenance.find_by(content_id: TASK)
+      maintenance = Maintenance.find_by(service_id: TASK)
       if maintenance.present? && maintenance.update(maintenance_flg: maintenance_flg)
         # 動作確認のため出力
         puts "#{type}"

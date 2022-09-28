@@ -20,8 +20,8 @@ ActiveRecord::Schema.define(version: 2022_09_27_030833) do
   end
 
   create_table "maintenances", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
-    t.integer "content_id", default: 0
-    t.boolean "maintenance_flg"
+    t.integer "service_id"
+    t.boolean "maintenance_flg", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
