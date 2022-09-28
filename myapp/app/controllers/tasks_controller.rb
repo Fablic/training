@@ -50,4 +50,8 @@ class TasksController < ApplicationController
   def task_params
     params.require(:task).permit(:title, :description, :status, { label_ids: [] })
   end
+
+  def set_task
+    @task = login_user.tasks.find(params[:id])
+  end
 end

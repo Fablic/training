@@ -251,32 +251,42 @@ describe 'タスク管理機能', type: :system do
     describe '表示機能'do
 
       context 'タスクが1件存在する場合' do
-        let!(:task_1) { FactoryBot.create(:task, title: '最初のタスク', description: '最初のタスクを実施する', status: 'not_started', user_id: user.id) }
+        let!(:task_1) { FactoryBot.create(:task, :with_label, title: '最初のタスク', description: '最初のタスクを実施する', status: 'not_started', user_id: user.id, label_name: 'label1') }
 
-        let(:tds){ all('tbody tr')[0].all('td') }
         it 'タスク名が表示される' do
           visit_tasks
-          expect(tds[0]).to have_content task_1.title
+          expect(page).to have_content '最初のタスク'
         end
 
         it '説明が表示される' do
           visit_tasks
-          expect(tds[1]).to have_content task_1.description
+          expect(page).to have_content '最初のタスクを実施する'
         end
+
+        it 'ラベルが表示される' do
+          visit_tasks
+          expect(page).to have_content 'label1'
+        end
+
       end
 
       context 'タスクが2件(複数)存在する場合' do
-        let!(:task_1) { FactoryBot.create(:task, title: '最初のタスク', description: '最初のタスクを実施する', status: 'not_started', user_id: user.id) }
-        let!(:task_2) { FactoryBot.create(:task, title: '２つ目のタスク', description: '２つ目のタスクを実施する', status: 'not_started', user_id: user.id) }
+        let!(:task_1) { FactoryBot.create(:task, :with_labels, title: '最初のタスク', description: '最初のタスクを実施する', status: 'not_started', user_id: user.id, label_name: 'label1') }
+        let!(:task_2) { FactoryBot.create(:task, :with_labels, title: '2つ目のタスク', description: '2つ目のタスクを実施する', status: 'not_started', user_id: user.id, label_name: 'label2') }
 
         it 'タスク名が表示される' do
           visit_tasks
-          expect(page).to have_content task_2.title
+          expect(page).to have_content '2つ目のタスク'
         end
 
         it '説明が表示される' do
           visit_tasks
-          expect(page).to have_content task_2.description
+          expect(page).to have_content '2つ目のタスクを実施する'
+        end
+
+        it 'ラベルが表示される' do
+          visit_tasks
+          expect(page).to have_content 'label2'
         end
       end
     end
@@ -394,7 +404,7 @@ describe 'タスク管理機能', type: :system do
   end
 
   describe '詳細表示機能' do
-    let!(:task_a) { FactoryBot.create(:task, title: '最初のタスク', description: '最初のタスクを実施する', status: 'not_started', user_id: user.id) }
+    let!(:task_a) { FactoryBot.create(:task, :with_labels, title: '最初のタスク', description: '最初のタスクを実施する', status: 'not_started', user_id: user.id, label_name: 'label1') }
     subject(:visit_task_a) { visit task_path(task_a) }
 
     describe '表示機能' do
@@ -407,6 +417,11 @@ describe 'タスク管理機能', type: :system do
         it '詳細が表示される' do
           visit_task_a
           expect(page).to have_content '最初のタスクを実施する'
+        end
+
+        it 'ラベルが表示される' do
+          visit_task_a
+          expect(page).to have_content 'label1'
         end
 
         it 'ステータスが表示される' do
@@ -438,7 +453,7 @@ describe 'タスク管理機能', type: :system do
           visit_task_a
           click_on('削除')
           # Flashメッセージが表示される
-          expect(page).to have_selector '.alert-success', text: 'タスク削除成功'
+          expect(page).to have_selector '.alert-success', text: 'タスク「最初のタスク」を削除しました。'
         end
       end
 
@@ -446,7 +461,7 @@ describe 'タスク管理機能', type: :system do
         it '編集画面へ遷移できる' do
           visit_task_a
           click_on('削除')
-          expect(page).to have_current_path  root_path
+          expect(page).to have_current_path root_path
         end
       end
     end
@@ -473,8 +488,6 @@ describe 'タスク管理機能', type: :system do
   describe '新規登録機能' do
     subject(:visit_new_task){ visit new_task_path }
     subject(:visit_task_a) { visit task_path(task_a) }
-    let!(:user_1) { FactoryBot.create(:user, name: 'ユーザ1') }
-    let!(:user_2) { FactoryBot.create(:user, name: 'ユーザ2') }
     describe '登録機能' do
       context 'タスクの内容を入力した場合' do
         let(:input_values) {
@@ -510,7 +523,7 @@ describe 'タスク管理機能', type: :system do
           fill_in 'textarea2', with: input_values[:description]
           # Flashメッセージが表示される
           click_button 'submit'
-          expect(page).to have_selector '.alert-success', text: 'タスクを登録しました'
+          expect(page).to have_selector '.alert-success', text: 'タスク「新規作成のテスト2」を登録しました。'
         end
 
         it '一覧画面が表示される' do
@@ -519,7 +532,7 @@ describe 'タスク管理機能', type: :system do
           fill_in 'textarea1', with: input_values[:title]
           fill_in 'textarea2', with: input_values[:description]
           click_button 'submit'
-          expect(page).to have_current_path root_path
+          expect(page).to have_current_path tasks_path
         end
       end
     end
@@ -536,8 +549,6 @@ describe 'タスク管理機能', type: :system do
   end
 
   describe '編集機能' do
-    let!(:user_1) { FactoryBot.create(:user, name: 'ユーザ1') }
-    let!(:user_2) { FactoryBot.create(:user, name: 'ユーザ2') }
     let!(:task_a) { FactoryBot.create(:task, title: '最初のタスク', description: '最初のタスクを実施する', status: 'not_started', user_id: user.id) }
     subject(:visit_task_a_edit){ visit edit_task_path(task_a) }
 
@@ -578,7 +589,7 @@ describe 'タスク管理機能', type: :system do
           fill_in 'textarea2', with: description
           click_button 'submit'
           # Flashメッセージが表示される
-          expect(page).to have_selector '.alert-success', text: 'タスク更新成功'
+          expect(page).to have_selector '.alert-success', text: 'タスク「新規作成のテスト２」を更新しました。'
         end
       end
     end

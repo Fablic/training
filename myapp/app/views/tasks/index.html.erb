@@ -7,9 +7,9 @@
 <div name='serch-task'>
   <span>検索</span>
   <%= form_with(url: root_path, local: true, method: :get) do |f| %>
-    <%= I18n.t('task.title') %>: <%= f.text_field(:title) %><br>
-    <%= I18n.t('task.label') %>：<%= f.collection_select(:label,  Label.all, :id, :name, { include_blank: true }) %><br>
-    <%= I18n.t('task.status') %>: <%= f.select(:status, Task.statuses.keys.map { |k| [I18n.t("enums.task.status.#{k}"), k] }, include_blank: true) %><br>
+    <%= f.text_field(:title) %>
+    <%= f.collection_select(:label,  Label.all, :id, :name, { include_blank: true }) %><br>
+    <%= f.select(:status, Task.statuses.keys.map { |k| [I18n.t("enums.task.status.#{k}"), k] }, include_blank: true) %><br>
     <p><%= f.submit('検索') %></p>
   <% end %>
 </div>
@@ -51,9 +51,9 @@
   <div class='pagenation-area'>
     <%= paginate(@tasks) %>
   </div>
-    <div name='create-task'>
+    <div>
       <%= link_to '新規登録', new_task_path %>
-    <div name='create-label'>
+    <div>
       <%= link_to 'ラベル一覧', labels_path %>
     </div>
   </div>

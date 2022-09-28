@@ -93,6 +93,7 @@ RSpec.configure do |config|
       Bullet.end_request
     end
   end
+
   Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
   config.include LoginHelper
