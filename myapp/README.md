@@ -38,6 +38,12 @@ status -> 0:未着手, 1:着手 , 2:完了
 <br>
 
 
+## メンテナンスバッチ操作コマンド
+以下コマンドでメンテナンス機能開始
+docker-compose exec api rake 'maintenaner:start'
+
+以下コマンドでメンテナンス機能停止
+docker-compose exec api rake 'maintenaner:stop'
 * Ruby version
 
 * System dependencies

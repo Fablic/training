@@ -2,12 +2,13 @@ require 'rails_helper'
 
 describe 'タスク管理機能', type: :system do
   let(:user) { FactoryBot.create(:user, password: 'password') }
+  before do
+    FactoryBot.create(:maintenance, service_id: 101, maintenance_flg: false)
+    login(user, 'password')
+  end
 
   describe '検索エリア' do
-    let!(:maintenance) { FactoryBot.create(:maintenance, service_id: 101, maintenance_flg: false) }
-    before do
-      login(user, 'password')
-    end
+
 
     context '条件なし検索' do
       let!(:task_A1) { FactoryBot.create(:task, title: 'titleA1', status: 'not_started', user_id: user.id) }
@@ -239,12 +240,7 @@ describe 'タスク管理機能', type: :system do
   end
 
   describe '一覧表示機能' do
-    let!(:maintenance) { FactoryBot.create(:maintenance, service_id: 101, maintenance_flg: false) }
     subject(:visit_tasks) { visit tasks_path }
-
-    before do
-      login(user, 'password')
-    end
 
     describe '表示機能'do
     let!(:maintenance) { FactoryBot.create(:maintenance, service_id: 101, maintenance_flg: false) }
@@ -404,13 +400,8 @@ describe 'タスク管理機能', type: :system do
   end
 
   describe '詳細表示機能' do
-    let!(:maintenance) { FactoryBot.create(:maintenance, service_id: 101, maintenance_flg: false) }
     let!(:task_a) { FactoryBot.create(:task, :with_label, title: '最初のタスク', description: '最初のタスクを実施する', status: 'not_started', user_id: user.id, label_name: 'label1') }
     subject(:visit_task_a) { visit task_path(task_a) }
-
-    before do
-      login(user, 'password')
-    end
 
     describe '表示機能' do
       context 'タスクが存在する場合' do
@@ -491,10 +482,6 @@ describe 'タスク管理機能', type: :system do
   end
 
   describe '新規登録機能' do
-    let!(:maintenance) { FactoryBot.create(:maintenance, service_id: 101, maintenance_flg: false) }
-    before do
-      login(user, 'password')
-    end
 
     subject(:visit_new_task){ visit new_task_path }
     subject(:visit_task_a) { visit task_path(task_a) }
@@ -565,13 +552,8 @@ describe 'タスク管理機能', type: :system do
   end
 
   describe '編集機能' do
-    let!(:maintenance) { FactoryBot.create(:maintenance, service_id: 101, maintenance_flg: false) }
     let!(:task_a) { FactoryBot.create(:task, :with_label, title: '最初のタスク', description: '最初のタスクを実施する', status: 'not_started', user_id: user.id, label_name: 'label') }
     subject(:visit_task_a_edit){ visit edit_task_path(task_a) }
-
-    before do
-      login(user, 'password')
-    end
 
     describe '表示機能' do
       context '画面を表示した場合' do
@@ -648,10 +630,6 @@ describe 'タスク管理機能', type: :system do
   end
 
   describe 'バリデーション' do
-    let!(:maintenance) { FactoryBot.create(:maintenance, service_id: 101, maintenance_flg: false) }
-    before do
-      login(user, 'password')
-    end
 
     let!(:user) { FactoryBot.create(:user, name: 'ユーザ1') }
     subject(:visit_new_task){ visit new_task_path }
@@ -725,11 +703,12 @@ describe 'タスク管理機能', type: :system do
   end
 
   describe 'メンテナンス機能' do
-    let!(:maintenance) { FactoryBot.create(:maintenance, service_id: 101, maintenance_flg: false) }
     let(:user) { FactoryBot.create(:user, password: 'password') }
 
     describe 'メンテナンス中の場合' do
-      let!(:maintenance) { FactoryBot.create(:maintenance, service_id: 101, maintenance_flg: true) }
+      before do
+        Maintenance.find_by(service_id: 101).update(maintenance_flg: true)
+      end
 
       context 'ログイン画面の場合' do
 
@@ -779,11 +758,6 @@ describe 'タスク管理機能', type: :system do
     end
 
     describe 'メンテナンス中でない場合' do
-
-      before do
-        login(user, 'password')
-      end
-
       context 'ログイン画面の場合' do
 
         it  'ログイン画面が表示される' do
