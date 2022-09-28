@@ -17,7 +17,7 @@ RSpec.describe '/tasks', type: :request do
       end
     end
 
-    context 'exists sort in search_params' do
+    context "When argument 'sort' exists in search_params" do
       let(:params) do
         { sort: 'created_at_desc' }
       end
