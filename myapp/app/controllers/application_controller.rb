@@ -30,14 +30,7 @@ class ApplicationController < ActionController::Base
     end
 
     def check_maintenance
-      maintenance = Maintenance.find_by(content_id: ALL_MENTE)
-      if maintenance.maintenance_flg
-        render(
-          file: Rails.public_path.join("503.html"),
-          content_type: "text/html",
-          layout: false,
-          status: :service_unavailable,
-        )
-      end
+      maintenance = Maintenance.find_by(content_id: TASK)
+      render 'maintenance/maintenance' if maintenance.maintenance_flg
     end
   end

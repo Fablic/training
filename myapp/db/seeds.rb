@@ -7,6 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 User.destroy_all
+Maintenance.create(content_id: '101', maintenance_flg: false)
 
 5.times do |i|
   # Create Users
