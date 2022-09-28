@@ -1,52 +1,60 @@
-<div name='header'>
-  <h1>タスク一覧</h1>
-  <% if flash[:notice] %>
-    <p class="alert-success">
-      <%= flash[:notice] %>
-    </p>
-  <% end %>
-</div>
-<div name='content'>
-  <div name='serch-task'>
+<h1>タスク一覧</h1>
+<% if flash[:notice] %>
+  <p class="alert-success">
+    <%= flash[:notice] %>
+  </p>
+<% end %>
+<div name='serch-task'>
   <span>検索</span>
   <%= form_with(url: root_path, local: true, method: :get) do |f| %>
-    <%= I18n.t('task.title') %>: <%= f.text_field(:title) %><br>
-    <%= I18n.t('task.label') %>: <%= f.text_field(:label) %><br>
-    <%= I18n.t('task.status') %>: <%= f.select(:status, Task.statuses.keys.map { |k| [I18n.t("enums.task.status.#{k}"), k] }, include_blank: true) %><br>
+    <%= f.text_field(:title) %>
+    <%= f.collection_select(:label,  Label.all, :id, :name, { include_blank: true }) %><br>
+    <%= f.select(:status, Task.statuses.keys.map { |k| [I18n.t("enums.task.status.#{k}"), k] }, include_blank: true) %><br>
     <p><%= f.submit('検索') %></p>
   <% end %>
-  </div>
-  <%= link_to '新規登録', new_task_path %>
-  <table>
-    <thead>
+</div>
+<table>
+  <thead>
+    <tr>
+      <th scope="col">タスク</th>
+      <th scope="col">説明</th>
+      <th scope="col">編集</th>
+      <th scope="col">削除</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tasks.each do |task| %>
       <tr>
-        <th scope="col">タスク</th>
-        <th scope="col">説明</th>
-        <th scope="col">編集</th>
-        <th scope="col">削除</th>
+        <td>
+          <%= link_to task.title, task_path(task), id: '詳細' %>
+        </td>
+        <td>
+          <%= task.description %>
+        </td>
+        <td>
+          <ul>
+            <% task.labels.each do |label| %>
+              <li><%= label.name %></li>
+            <% end %>
+          </ul>
+        </td>
+        <td>
+          <%= link_to '編集', edit_task_path(task) %>
+        </td>
+        <td>
+          <%= link_to '削除', task_path(task), method: :delete,  data: {confirm: "削除しますか？"} %>
+        </td>
       </tr>
-    </thead>
-    <tbody>
-      <% @tasks.each do |task| %>
-        <tr>
-          <td>
-            <%= link_to task.title, task_path(task), id: '詳細' %>
-          </td>
-          <td>
-            <%= task.description %>
-          </td>
-          <td>
-            <%= link_to '編集', edit_task_path(task) %>
-          </td>
-          <td>
-            <%= link_to '削除', task_path(task), method: :delete,  data: {confirm: "削除しますか？"} %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-          <%= paginate(@tasks) %>
-</div>
-<div name='footer'>
-  <td><%= button_to(I18n.t('link.logout'), logout_path, method: :delete) %></td>
-</div>
+    <% end %>
+  </tbody>
+</table>
+  <div class='pagenation-area'>
+    <%= paginate(@tasks) %>
+  </div>
+    <div>
+      <%= link_to '新規登録', new_task_path %>
+    <div>
+      <%= link_to 'ラベル一覧', labels_path %>
+    </div>
+  </div>
+<td><%= button_to(I18n.t('link.logout'), logout_path, method: :delete) %></td>

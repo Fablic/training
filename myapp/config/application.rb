@@ -20,10 +20,6 @@ module Myapp
 
     config.i18n.default_locale = :ja
 
-    # ファイルパス設定
-    config.i18n.load_path += Dir[Rails.root.join('path/to')]
-    config.i18n.load_path += Dir[Rails.root.join('path/to', '**').to_s]
-
     # スクリプトのパス
     config.autoload_paths += %W(#{config.root}/lib)
 

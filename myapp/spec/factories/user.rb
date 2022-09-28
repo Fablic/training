@@ -2,7 +2,7 @@ FactoryBot.define do
     factory :user, class: User do
       name              { 'name' }
       salt              { 'salt' }
-      password_digest   { 'password' }
-      sequence(:email)  { 'sample12345@example.com' }
+      password          { 'password' }
+      sequence(:email)  { 'sample0@example.com' }
     end
   end

@@ -1,9 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Label, type: :model do
-  describe 'validation' do
+  describe '#validation' do
     describe 'name' do
       context '0文字' do
+        subject(:task) { FactoryBot.build(:task, title: 'test') }
         subject(:label) { FactoryBot.build(:label, name: '') }
 
         it { is_expected.to be_invalid }

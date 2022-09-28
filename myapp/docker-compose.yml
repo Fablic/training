@@ -36,6 +36,7 @@ services:
       DB_NAME: myapp
       DB_PASSWORD: password
       DB_HOST: db
+      PEPPER: 1FSkD6ctpe
 
   chrome:
     image: selenium/standalone-chrome:latest

@@ -10,11 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_09_065654) do
+ActiveRecord::Schema.define(version: 2022_09_27_030833) do
 
   create_table "labels", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
-    t.string "name", limit: 64, default: "not setting", null: false
-    t.integer "task_id", null: false
+    t.string "name", limit: 64, null: false
     t.datetime "deleted_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -25,6 +24,15 @@ ActiveRecord::Schema.define(version: 2022_09_09_065654) do
     t.boolean "maintenance_flg"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "task_labels", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.bigint "task_id"
+    t.bigint "label_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["label_id"], name: "index_task_labels_on_label_id"
+    t.index ["task_id"], name: "index_task_labels_on_task_id"
   end
 
   create_table "tasks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
@@ -44,10 +52,10 @@ ActiveRecord::Schema.define(version: 2022_09_09_065654) do
     t.datetime "deleted_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "email", limit: 128, null: false
-    t.string "password_digest", limit: 128, null: false
-    t.string "login_token"
+    t.string "password", limit: 256, default: "", null: false
     t.string "salt", limit: 256, default: "", null: false
+    t.string "email", limit: 254, default: "", null: false
+    t.string "login_token"
   end
 
 end
