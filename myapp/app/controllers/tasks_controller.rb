@@ -1,6 +1,16 @@
 # frozen_string_literal: true
 
 class TasksController < ApplicationController
+  before_action -> {
+    check_service_running(Function::FUNC_ID_CREATE)
+  }, only: [:new, :create]
+  before_action -> {
+    check_service_running(Function::FUNC_ID_UPDATE)
+  }, only: [:edit, :update]
+  before_action -> {
+    check_service_running(Function::FUNC_ID_DELETE)
+  }, only: [:destroy]
+
   # タスク一覧画面
   def index
     @tasks = login_user.tasks.preload(:labels).where(id: login_user.tasks.get_ids(params[:title], params[:label], params[:status])).order('tasks.created_at desc').page(params[:page])
@@ -57,5 +67,18 @@ class TasksController < ApplicationController
   # Taskパラメータ
   def task_params
     params.require(:task).permit(:title, :content, :status, { label_ids: [] })
+  end
+
+  def check_service_running(func_id)
+    transition_503 if Function.is_stopped?(func_id)
+  end
+
+  def transition_503
+    render(
+      file: Rails.public_path.join("503.html"),
+      content_type: "text/html",
+      layout: false,
+      status: :service_unavailable,
+    )
   end
 end

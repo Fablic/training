@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   before_action :login_user
   before_action :re_login
+  before_action :check_system_started
 
   def login(user)
     token = User.create_login_token
@@ -21,5 +22,16 @@ class ApplicationController < ActionController::Base
 
   def re_login
     redirect_to(login_path) if login_user.nil?
+  end
+
+  def check_system_started
+    if Function.is_stopped?(Function::FUNC_ID_SYSTEM)
+      render(
+        file: Rails.public_path.join("503.html"),
+        content_type: "text/html",
+        layout: false,
+        status: :service_unavailable,
+      )
+    end
   end
 end

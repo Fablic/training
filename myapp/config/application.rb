@@ -19,6 +19,7 @@ module Myapp
     # ファイルパス設定
     config.i18n.load_path += Dir[Rails.root.join('path/to')]
     config.i18n.load_path += Dir[Rails.root.join('path/to', '**').to_s]
+    config.autoload_paths += Dir["#{config.root}/lib"]
   end
 end
 
