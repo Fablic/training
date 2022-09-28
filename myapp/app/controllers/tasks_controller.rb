@@ -4,13 +4,16 @@ class TasksController < ApplicationController
   before_action :create_empty_task, only: [:index, :new, :search]
 
   def index
+    check_maintenance_status(TASK_INDEX)
     @tasks = current_user.tasks.includes([:labellings, :labels]).all.page(params[:page])
   end
 
   def show
+    check_maintenance_status(TASK_SHOW)
   end
 
   def new
+    check_maintenance_status(TASK_NEW)
   end
 
   def create
@@ -24,6 +27,7 @@ class TasksController < ApplicationController
   end
 
   def edit
+    check_maintenance_status(TASK_EDIT)
   end
 
   def update
@@ -68,4 +72,10 @@ class TasksController < ApplicationController
   def create_empty_task
     @task = Task.new
   end
+
+  def check_maintenance_status(content_id)
+    maintenance = Maintenance.find_by(content_id: content_id)
+    render 'maintenance/maintenance.html' if maintenance.maintenance_flg
+  end
+
 end

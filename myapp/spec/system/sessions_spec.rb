@@ -108,17 +108,22 @@ describe 'セッション管理機能', type: :system do
 
   describe 'メンテナンス機能' do
     context 'メンテナンス中の場合' do
-      let!(:maintenance) { FactoryBot.create(:maintenance, maintenance_flg: true) }
+      let!(:maintenance) { FactoryBot.create(:maintenance, content_id: 101, maintenance_flg: true) }
+      let!(:maintenance) { FactoryBot.create(:maintenance, content_id: 102, maintenance_flg: true) }
+      let!(:maintenance) { FactoryBot.create(:maintenance, content_id: 103, maintenance_flg: true) }
+      let!(:maintenance) { FactoryBot.create(:maintenance, content_id: 104, maintenance_flg: true) }
 
-      it 'メンテナンス中画面が表示される' do
+      it 'ログイン画面が表示される' do
         visit_login
-        expect(page).to have_content 'メンテナンス中'
+        expect(page).to have_content 'ログイン画面'
       end
     end
 
     context 'メンテナンス中でない場合' do
-      let!(:maintenance) { FactoryBot.create(:maintenance) }
-      let!(:user_a) { FactoryBot.create(:user) }
+      let!(:maintenance) { FactoryBot.create(:maintenance, content_id: 101, maintenance_flg: false) }
+      let!(:maintenance) { FactoryBot.create(:maintenance, content_id: 102, maintenance_flg: false) }
+      let!(:maintenance) { FactoryBot.create(:maintenance, content_id: 103, maintenance_flg: false) }
+      let!(:maintenance) { FactoryBot.create(:maintenance, content_id: 104, maintenance_flg: false) }
 
       it 'ログイン画面が表示される' do
         visit_login

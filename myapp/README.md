@@ -6,17 +6,48 @@
 <br>
 
 ## メンテナンスモード
-【開始コマンド】
+【タスク一覧画面】
 
-docker-compose exec api rails runner Tasks::Maintenancer.start_maintenance
+開始
 
+docker-compose exec api rails runner Tasks::Maintenancer.start_index_maintenance
 
-【終了コマンド】
+終了
 
-docker-compose exec api rails runner Tasks::Maintenancer.end_maintenance
+docker-compose exec api rails runner Tasks::Maintenancer.end_index_maintenance
+<br>
+
+【タスク詳細画面】
+
+開始
+
+docker-compose exec api rails runner Tasks::Maintenancer.start_show_maintenance
+
+終了
+
+docker-compose exec api rails runner Tasks::Maintenancer.end_show_maintenance
+<br>
+
+【タスク作成画面】
+開始
+
+docker-compose exec api rails runner Tasks::Maintenancer.start_new_maintenance
+
+終了
+
+docker-compose exec api rails runner Tasks::Maintenancer.end_new_maintenance
+<br>
+
+【タスク編集画面】
+開始
+
+docker-compose exec api rails runner Tasks::Maintenancer.start_edit_maintenance
+
+終了
+
+docker-compose exec api rails runner Tasks::Maintenancer.end_edit_maintenance
 <br>
 <br>
-
 
 ## 画面設計
 【各画面共通】

@@ -5,7 +5,7 @@ describe 'タスク管理機能', type: :system do
     subject(:visit_tasks) { visit tasks_path }
 
     describe '表示機能'do
-      let!(:maintenance) { FactoryBot.create(:maintenance) }
+      let!(:maintenance) { FactoryBot.create(:maintenance, content_id: 101, maintenance_flg: false) }
 
       context 'ログインしている場合' do
         # タスクが表示される期待動作を共通化
@@ -169,7 +169,7 @@ describe 'タスク管理機能', type: :system do
     end
 
     describe '検索機能' do
-      let!(:maintenance) { FactoryBot.create(:maintenance) }
+      let!(:maintenance) { FactoryBot.create(:maintenance, content_id: 101, maintenance_flg: false) }
 
       # タスクが表示される期待動作を共通化
       shared_examples_for 'タスク表示' do
@@ -370,7 +370,7 @@ describe 'タスク管理機能', type: :system do
     end
 
     describe 'ログアウト機能' do
-      let!(:maintenance) { FactoryBot.create(:maintenance) }
+      let!(:maintenance) { FactoryBot.create(:maintenance, content_id: 101, maintenance_flg: false) }
       let!(:user_a) { FactoryBot.create(:user) }
 
       before do
@@ -390,7 +390,7 @@ describe 'タスク管理機能', type: :system do
     end
 
     describe '画面遷移機能' do
-      let!(:maintenance) { FactoryBot.create(:maintenance) }
+      let!(:maintenance) { FactoryBot.create(:maintenance, content_id: 101, maintenance_flg: false) }
       let!(:task_a) { FactoryBot.create(:task, name: '最初のタスク', detail: '最初のタスクを実施する', status: 1, priority: 1) }
 
       before do
@@ -419,7 +419,14 @@ describe 'タスク管理機能', type: :system do
 
     describe 'メンテナンス機能' do
       context 'メンテナンス中の場合' do
-        let!(:maintenance) { FactoryBot.create(:maintenance, maintenance_flg: true) }
+        let!(:maintenance) { FactoryBot.create(:maintenance, content_id: 101, maintenance_flg: true) }
+        let!(:user_a) { FactoryBot.create(:user) }
+        before do
+          visit login_path
+          fill_in 'session[email]', with: 'testUser@example.com'
+          fill_in 'session[password]', with: 'testPassword'
+          click_button 'ログイン'
+        end
 
         it 'メンテナンス中画面が表示される' do
           visit_tasks
@@ -428,9 +435,8 @@ describe 'タスク管理機能', type: :system do
       end
 
       context 'メンテナンス中でない場合' do
-        let!(:maintenance) { FactoryBot.create(:maintenance) }
+        let!(:maintenance) { FactoryBot.create(:maintenance, content_id: 101, maintenance_flg: false) }
         let!(:user_a) { FactoryBot.create(:user) }
-
         before do
           visit login_path
           fill_in 'session[email]', with: 'testUser@example.com'
@@ -452,7 +458,7 @@ describe 'タスク管理機能', type: :system do
     subject(:visit_task_a) { visit task_path(task_a) }
 
     describe '表示機能' do
-      let!(:maintenance) { FactoryBot.create(:maintenance) }
+      let!(:maintenance) { FactoryBot.create(:maintenance, content_id: 102, maintenance_flg: false) }
 
       context 'ログインしている場合' do
         before do
@@ -642,7 +648,8 @@ describe 'タスク管理機能', type: :system do
     end
 
     describe '削除機能' do
-      let!(:maintenance) { FactoryBot.create(:maintenance) }
+      let!(:maintenance_a) { FactoryBot.create(:maintenance, content_id: 101, maintenance_flg: false) }
+      let!(:maintenance_b) { FactoryBot.create(:maintenance, content_id: 102, maintenance_flg: false) }
 
       before do
         visit login_path
@@ -674,7 +681,7 @@ describe 'タスク管理機能', type: :system do
     end
 
     describe '画面遷移機能' do
-      let!(:maintenance) { FactoryBot.create(:maintenance) }
+      let!(:maintenance) { FactoryBot.create(:maintenance, content_id: 102, maintenance_flg: false) }
 
       before do
         visit login_path
@@ -702,15 +709,22 @@ describe 'タスク管理機能', type: :system do
 
     describe 'メンテナンス機能' do
       context 'メンテナンス中の場合' do
-        let!(:maintenance) { FactoryBot.create(:maintenance, maintenance_flg: true) }
+        let!(:maintenance) { FactoryBot.create(:maintenance, content_id: 102, maintenance_flg: true) }
+        before do
+          visit login_path
+          fill_in 'session[email]', with: 'testUser@example.com'
+          fill_in 'session[password]', with: 'testPassword'
+          click_button 'ログイン'
+        end
+
         it 'メンテナンス中画面が表示される' do
           visit_task_a
           expect(page).to have_content 'メンテナンス中'
         end
       end
-      context 'メンテナンス中でない場合' do
-        let!(:maintenance) { FactoryBot.create(:maintenance) }
 
+      context 'メンテナンス中でない場合' do
+        let!(:maintenance) { FactoryBot.create(:maintenance, content_id: 102, maintenance_flg: false) }
         before do
           visit login_path
           fill_in 'session[email]', with: 'testUser@example.com'
@@ -733,7 +747,8 @@ describe 'タスク管理機能', type: :system do
     subject(:visit_new_task){ visit new_task_path }
 
     describe '登録機能' do
-      let!(:maintenance) { FactoryBot.create(:maintenance) }
+      let!(:maintenance_101) { FactoryBot.create(:maintenance, content_id: 101, maintenance_flg: false) }
+      let!(:maintenance_103) { FactoryBot.create(:maintenance, content_id: 103, maintenance_flg: false) }
 
       context 'ログインしている場合' do
         before do
@@ -933,7 +948,7 @@ describe 'タスク管理機能', type: :system do
     end
 
     describe '画面遷移機能' do
-      let!(:maintenance) { FactoryBot.create(:maintenance) }
+      let!(:maintenance) { FactoryBot.create(:maintenance, content_id: 103, maintenance_flg: false) }
 
       before do
         visit login_path
@@ -953,14 +968,28 @@ describe 'タスク管理機能', type: :system do
 
     describe 'メンテナンス機能' do
       context 'メンテナンス中の場合' do
-        let!(:maintenance) { FactoryBot.create(:maintenance, maintenance_flg: true) }
+        let!(:maintenance) { FactoryBot.create(:maintenance, content_id: 103, maintenance_flg: true) }
+        before do
+          visit login_path
+          fill_in 'session[email]', with: 'testUser@example.com'
+          fill_in 'session[password]', with: 'testPassword'
+          click_button 'ログイン'
+        end
+
         it 'メンテナンス中画面が表示される' do
           visit_new_task
           expect(page).to have_content 'メンテナンス中'
         end
       end
+
       context 'メンテナンス中でない場合' do
-        let!(:maintenance) { FactoryBot.create(:maintenance) }
+        let!(:maintenance) { FactoryBot.create(:maintenance, content_id: 103, maintenance_flg: false) }
+        before do
+          visit login_path
+          fill_in 'session[email]', with: 'testUser@example.com'
+          fill_in 'session[password]', with: 'testPassword'
+          click_button 'ログイン'
+        end
 
         before do
           visit login_path
@@ -985,7 +1014,7 @@ describe 'タスク管理機能', type: :system do
     subject(:visit_task_a_edit){ visit edit_task_path(task_a) }
 
     describe '表示機能' do
-      let!(:maintenance) { FactoryBot.create(:maintenance) }
+      let!(:maintenance) { FactoryBot.create(:maintenance, content_id: 104, maintenance_flg: false) }
 
       before do
         visit login_path
@@ -1029,7 +1058,8 @@ describe 'タスク管理機能', type: :system do
     end
 
     describe '更新機能' do
-      let!(:maintenance) { FactoryBot.create(:maintenance) }
+      let!(:maintenance_102) { FactoryBot.create(:maintenance, content_id: 102, maintenance_flg: false) }
+      let!(:maintenance_104) { FactoryBot.create(:maintenance, content_id: 104, maintenance_flg: false) }
 
       before do
         visit login_path
@@ -1077,7 +1107,7 @@ describe 'タスク管理機能', type: :system do
     end
 
     describe '画面遷移機能' do
-      let!(:maintenance) { FactoryBot.create(:maintenance) }
+      let!(:maintenance) { FactoryBot.create(:maintenance, content_id: 104, maintenance_flg: false) }
 
       before do
         visit login_path
@@ -1104,15 +1134,22 @@ describe 'タスク管理機能', type: :system do
     end
 
     describe 'メンテナンス機能' do
+      before do
+        visit login_path
+        fill_in 'session[email]', with: 'testUser@example.com'
+        fill_in 'session[password]', with: 'testPassword'
+        click_button 'ログイン'
+      end
+
       context 'メンテナンス中の場合' do
-        let!(:maintenance) { FactoryBot.create(:maintenance, maintenance_flg: true) }
+        let!(:maintenance) { FactoryBot.create(:maintenance, content_id: 104, maintenance_flg: true) }
         it 'メンテナンス中画面が表示される' do
           visit_task_a_edit
           expect(page).to have_content 'メンテナンス中'
         end
       end
       context 'メンテナンス中でない場合' do
-        let!(:maintenance) { FactoryBot.create(:maintenance) }
+        let!(:maintenance) { FactoryBot.create(:maintenance, content_id: 104, maintenance_flg: false) }
 
         before do
           visit login_path
