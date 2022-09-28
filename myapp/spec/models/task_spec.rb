@@ -35,7 +35,7 @@ RSpec.describe Task, type: :model do
 
     subject { Task.sort_by_keyword(sort) }
 
-    context 'sort type: created_at_asc' do
+    context "When argument 'sort' is created_at_asc" do
       let(:sort) { 'created_at_asc' }
 
       it 'sort by specified sort type' do
@@ -43,7 +43,7 @@ RSpec.describe Task, type: :model do
       end
     end
 
-    context 'sort type: created_at_desc' do
+    context "When argument 'sort' is created_at_desc" do
       let(:sort) { 'created_at_desc' }
 
       it 'sort by specified sort type' do
@@ -71,7 +71,7 @@ RSpec.describe Task, type: :model do
   describe '.check_approved_sort_params' do
     subject { Task.check_approved_sort_params(sort) }
 
-    context 'sort type: name_asc' do
+    context "When argument 'sort' does NOT exist in Task::SORT_TYPE keys" do
       let(:sort) { 'name_asc' }
 
       it 'returns a default sort type' do
@@ -79,7 +79,15 @@ RSpec.describe Task, type: :model do
       end
     end
 
-    context 'sort type: created_at_desc' do
+    context "When argument 'sort' is created_at_asc" do
+      let(:sort) { 'created_at_asc' }
+
+      it 'returns a specified sort type' do
+        is_expected.to eq 'created_at_asc'
+      end
+    end
+
+    context "When argument 'sort' is created_at_desc" do
       let(:sort) { 'created_at_desc' }
 
       it 'returns a specified sort type' do
