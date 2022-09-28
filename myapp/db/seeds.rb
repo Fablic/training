@@ -7,13 +7,8 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 User.destroy_all
-10.times do |i|
-    user = User.create!(name: "テストユーザ#{i}", email: "sample#{i}@example.com", password: 'password')
-    Task.create!(
-      title: "タスク#{i}",
-      description: "こちらはタスク#{i}の内容です。",
-      user_id: user.id,
-      status: '0',
-      label: "ラベル#{i}"
-    )
+
+5.times do |i|
+  # Create Users
+  user = User.create!(name: "ユーザ#{i}", password: "password", email: "email#{i}@example.com")
 end

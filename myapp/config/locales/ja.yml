@@ -49,6 +49,11 @@ ja:
         deleted_at: 削除日
         crated_at: 作成日
         updated_at: 更新日
+  label:
+    name: ラベル名
+    deleted_at: 削除日
+    created_at: 作成日
+    updated_at: 更新日
   enums:
     task:
       status:
@@ -60,6 +65,10 @@ ja:
     new: タスク作成画面
     show: タスク詳細画面
     edit: タスク編集画面
+    label_index: ラベル一覧画面
+    label_new: ラベル作成画面
+    label_show: ラベル詳細画面
+    label_edit: ラベル編集画面
   task:
     title: タイトル
     description: 説明
@@ -71,12 +80,14 @@ ja:
     create: 作成
     delete: 削除
     update: 更新
+    login: ログイン
   link:
     create: 作成
     detail: 詳細
     edit: 編集
     list_back: 一覧へ
     logout: ログアウト
+    label_list_back: ラベル一覧へ戻る
   message:
     delete_confirm: 削除しますか?
     login_failed: ログインに失敗しました。
@@ -97,6 +108,7 @@ ja:
       greater_than_or_equal_to: は%{count}以上の値にしてください
       inclusion: は一覧にありません
       invalid: は不正な値です
+      record_invalid: "バリデーションに失敗しました: %{errors}"
       less_than: は%{count}より小さい値にしてください
       less_than_or_equal_to: は%{count}以下の値にしてください
       model_invalid: 'バリデーションに失敗しました: %{errors}'

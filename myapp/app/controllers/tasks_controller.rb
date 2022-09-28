@@ -5,7 +5,7 @@ class TasksController < ApplicationController
 
   def index
     # タスク一覧オブジェクト取得
-    @tasks = login_user.tasks.where_title(params[:title]).where_status(params[:status]).order('tasks.created_at desc').page(params[:page])
+    @tasks = login_user.tasks.preload(:labels).where(id: login_user.tasks.get_ids(params[:title], params[:label], params[:status])).order('tasks.created_at desc').page(params[:page])
   end
 
   def show
@@ -16,10 +16,12 @@ class TasksController < ApplicationController
     @task = Task.new
   end
 
-  def edit; end
+  def edit
+    @task = login_user.tasks.find(params[:id])
+  end
 
   def create
-    @task = Task.new(task_params)
+    @task = login_user.tasks.new(task_params)
 
     if @task.save
       redirect_to tasks_url, notice: "タスク「#{@task.title}」を登録しました。"
@@ -29,28 +31,27 @@ class TasksController < ApplicationController
   end
 
   def update
+    @task = login_user.tasks.find(params[:id])
+
     if @task.update(task_params)
       redirect_to tasks_url, notice: "タスク「#{@task.title}」を更新しました。"
     else
-      render :new
+      render(:edit, status: :unprocessable_entity)
     end
   end
 
   def destroy
-    if @task.destroy
-      redirect_to tasks_url, notice: "タスク「#{@task.title}」を削除しました。"
-    else
-      render :show
-    end
+    @task = login_user.tasks.find(params[:id])
+    redirect_to(root_path, notice: "タスク「#{@task.title}」を削除しました。") if @task.destroy
   end
 
   private
 
   def task_params
-    task_params = params.require(:task).permit(:title, :description, :status)
+    params.require(:task).permit(:title, :description, :status, { label_ids: [] })
   end
 
   def set_task
-    @task = Task.find(params[:id])
+    @task = login_user.tasks.find(params[:id])
   end
 end

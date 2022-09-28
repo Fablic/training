@@ -7,35 +7,33 @@
     </ul>
   </div>
 <% end %>
-<%= form_for(@task) do |f| %>
-  <div>
-    <%= f.label :title %>
-  </div>
-  <div>
-    <%= f.text_field :title, id: 'textarea1' %>
-  </div>
-  <div>
-    <%= f.label :description %>
-  </div>
-  <div>
-    <%= f.text_area :description, id: 'textarea2' %>
-  </div>
-  <div>
-    <% if is_status %>
-      <div>
-        <%= f.label :status %>
-      </div>
-      <%= f.select(:status, Task.statuses.keys.map { |k| [I18n.t("enums.task.status.#{k}"), k] }) %>
-    <% end %>
-  </div>
-  <div>
-    <%= f.label :user %>
+<%= form_with(model: @task, url: url, method: method, local: true) do |f| %>
     <div>
-      <%= f.collection_select(:user_id, User.all, :id, :name) %>
+      <%= f.label :タイトル %>
     </div>
-  </div>
-  <br>
-  <div>
+    <div>
+      <%= f.text_field :title, id: 'textarea1' %>
+    </div>
+    <div>
+      <%= f.label :説明 %>
+    </div>
+    <div>
+      <%= f.text_area :description, id: 'textarea2' %>
+    </div>
+    <div>
+      <%= I18n.t('task.label') %>
+    </div>
+      <%= f.collection_select :label_ids, Label.all, :id, :name, { include_blank: '' }, { multiple: true } %>
+    <div>
+      <% if is_status %>
+        <div>
+          <%= f.label :ステータス %>
+        </div>
+        <%= f.select(:status, Task.statuses.keys.map { |k| [I18n.t("enums.task.status.#{k}"), k] }) %>
+      <% end %>
+    </div>
+    <br>
+    <div>
     <%= f.submit id: 'submit' %>
   </div>
 <% end %>

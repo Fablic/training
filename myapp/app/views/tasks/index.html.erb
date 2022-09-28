@@ -8,8 +8,9 @@
   <span>検索</span>
   <%= form_with(url: root_path, local: true, method: :get) do |f| %>
     <%= f.text_field(:title) %>
-    <%= f.select(:status, Task.statuses.keys.map { |k| [I18n.t("enums.task.status.#{k}"), k] }, include_blank: true) %>
-    <%= f.submit('検索') %>
+    <%= f.collection_select(:label,  Label.all, :id, :name, { include_blank: true }) %><br>
+    <%= f.select(:status, Task.statuses.keys.map { |k| [I18n.t("enums.task.status.#{k}"), k] }, include_blank: true) %><br>
+    <p><%= f.submit('検索') %></p>
   <% end %>
 </div>
 <table>
@@ -31,6 +32,13 @@
           <%= task.description %>
         </td>
         <td>
+          <ul>
+            <% task.labels.each do |label| %>
+              <li><%= label.name %></li>
+            <% end %>
+          </ul>
+        </td>
+        <td>
           <%= link_to '編集', edit_task_path(task) %>
         </td>
         <td>
@@ -43,5 +51,10 @@
   <div class='pagenation-area'>
     <%= paginate(@tasks) %>
   </div>
-<%= link_to '新規登録', new_task_path %>
+    <div>
+      <%= link_to '新規登録', new_task_path %>
+    <div>
+      <%= link_to 'ラベル一覧', labels_path %>
+    </div>
+  </div>
 <td><%= button_to(I18n.t('link.logout'), logout_path, method: :delete) %></td>

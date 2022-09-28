@@ -6,7 +6,6 @@ class ApplicationController < ActionController::Base
       token = User.create_login_token
       session[:login_token] = token
       user.update(login_token: User.encrypt_login_token(token))
-      @login_user = user
     end
 
     def logout

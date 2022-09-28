@@ -13,13 +13,9 @@
       <%= I18n.t("enums.task.status.#{@task.status}") %>
     </div>
     <li>ラベル</li>
-    <div>
-      <%= @task.label %>
-    </div>
-    <li>ユーザ</li>
-    <div>
-      <%= @task.user.name %>
-    </div>
+      <% @task.labels.each do |label| %>
+        <li><%= label.name %></li>
+      <% end %>
     <li>登録日時</li>
     <div>
       <%= @task.created_at %>
