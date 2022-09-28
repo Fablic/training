@@ -41,7 +41,7 @@ RSpec.feature '/tasks or /' do
       end
     end
 
-    feature "with 'sort: created_at_asc' in search_params" do
+    feature 'When argument sort is created_at_asc' do
       background do
         create(:task,
                name: 'aqua',
@@ -81,7 +81,7 @@ RSpec.feature '/tasks or /' do
       end
     end
 
-    feature "with 'sort: created_at_desc' in search_params" do
+    feature 'When argument sort is created_at_desc' do
       background do
         create(:task,
                name: 'aqua',
