@@ -18,6 +18,7 @@ ja:
         personal_id: 'ユーザID'
         password: 'パスワード'
         password_confirmation: 'パスワード(確認)'
+        danger: '唯一の管理者権限ユーザです'
 
   task_schedule:
     index:
@@ -77,6 +78,7 @@ ja:
       name: 'ユーザ名'
       id: 'ユーザID'
       tasks: '作成したタスク'
+      authority: 'ユーザ権限'
       edit: '編集'
       show: '詳細'
       delete: '削除'
@@ -84,6 +86,7 @@ ja:
       logout: 'ログアウト'
 
     userform:
+      authority: '権限'
       name: 'ユーザ名'
       id: 'ユーザID'
       pass: 'パスワード'
@@ -101,6 +104,7 @@ ja:
       list: '作成タスク一覧'
       task_name: 'タスク名'
       body: 'タスク本文'
+      created: '作成日時'
       finish: '終了期限'
       status: 'ステータス'
       index: '一覧に戻る'
@@ -117,7 +121,7 @@ ja:
       danger: "登録に失敗しました"
     destroy:
       success: "ユーザを削除しました"
-      danger: "削除に失敗しました"
+      danger: "唯一の管理者ユーザです"
 
   enums:
     task:
@@ -125,6 +129,10 @@ ja:
         untouched: '未着手'
         in_progress: '着手中'
         completion: '完了'
+    user:
+      admin:
+        general: '一般'
+        administ: '管理者'
 
   sessions:
     new:
@@ -139,3 +147,4 @@ ja:
       login: 'ログイン'
     create:
       danger: '正しいログインIDとパスワードを入力してください'
+      general_cannot_login: '一般ユーザはログインできません'

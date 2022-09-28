@@ -9,6 +9,10 @@
     </div>
   <% end %>
   <div>
+  <%= f.label t('.authority') %></br>
+  <%= f.select :admin, User.admins_i18n.invert %>
+  </div>
+  <div>
     <%= f.label t('.name') %></br>
     <%= f.text_field :name %>
   </div>
