@@ -3,7 +3,7 @@ namespace :function do
   task :start, ['id'] => :environment do |task, args|
     puts 'start-----------------'
     if args.id.nil?
-      puts 'args not setting'
+      puts 'args not setting : must be set 1(create) or 2(update) or 3(delete) or 9(system)'
       puts 'end-------------------'
       next
     end
@@ -17,7 +17,7 @@ namespace :function do
   task :stop, ['id'] => :environment do |task, args|
     puts 'start-----------------'
     if args.id.nil?
-      puts 'args not setting'
+      puts 'args not setting : must be set 1(create) or 2(update) or 3(delete) or 9(system)'
       puts 'end-------------------'
       next
     end
