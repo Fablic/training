@@ -9,7 +9,7 @@ namespace :function do
     end
     function = Function.find(args.id.to_i)
     function.update(status: true)
-    puts function.inspect
+    puts "function name: #{function.name}, status: #{function.status}"
     puts 'end-------------------'
   end
 
@@ -23,7 +23,7 @@ namespace :function do
     end
     function = Function.find(args.id.to_i)
     function.update(status: false)
-    puts function.inspect
+    puts "function name: #{function.name}, status: #{function.status}"
     puts 'end-------------------'
   end
 end
