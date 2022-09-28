@@ -488,12 +488,14 @@ describe 'タスク管理機能', type: :system do
   describe '新規登録機能' do
     subject(:visit_new_task){ visit new_task_path }
     subject(:visit_task_a) { visit task_path(task_a) }
+    let!(:label_a) { FactoryBot.create(:label, name: '新規タスク 全項目入力 ラベルA') }
     describe '登録機能' do
       context 'タスクの内容を入力した場合' do
         let(:input_values) {
           {
             title: '新規作成のテスト2',
-            description: '新規作成のテストを書く2'
+            description: '新規作成のテストを書く2',
+            label: label_a.name
           }
         }
 
@@ -502,6 +504,7 @@ describe 'タスク管理機能', type: :system do
           visit_new_task
           fill_in 'textarea1', with: input_values[:title]
           fill_in 'textarea2', with: input_values[:description]
+          select value = input_values[:label], from: 'task[label_ids][]'
           # DBに登録されている
           expect { click_button 'submit' }.to change(Task, :count).by(1)
         end
@@ -511,9 +514,10 @@ describe 'タスク管理機能', type: :system do
           visit_new_task
           fill_in 'textarea1', with: input_values[:title]
           fill_in 'textarea2', with: input_values[:description]
+          select value = input_values[:label], from: 'task[label_ids][]'
           click_button 'submit'
           # 画面で入力された内容でDBに登録されている
-          expect(Task.find_by(input_values)).to be_present
+          expect(Task.find_by(title: input_values[:title], description: input_values[:description])).to be_present
         end
 
         it 'Flashメッセージが表示される' do
@@ -521,6 +525,7 @@ describe 'タスク管理機能', type: :system do
           visit_new_task
           fill_in 'textarea1', with: input_values[:title]
           fill_in 'textarea2', with: input_values[:description]
+          select value = input_values[:label], from: 'task[label_ids][]'
           # Flashメッセージが表示される
           click_button 'submit'
           expect(page).to have_selector '.alert-success', text: 'タスク「新規作成のテスト2」を登録しました。'
@@ -531,6 +536,7 @@ describe 'タスク管理機能', type: :system do
           visit_new_task
           fill_in 'textarea1', with: input_values[:title]
           fill_in 'textarea2', with: input_values[:description]
+          select value = input_values[:label], from: 'task[label_ids][]'
           click_button 'submit'
           expect(page).to have_current_path tasks_path
         end
@@ -549,47 +555,60 @@ describe 'タスク管理機能', type: :system do
   end
 
   describe '編集機能' do
-    let!(:task_a) { FactoryBot.create(:task, title: '最初のタスク', description: '最初のタスクを実施する', status: 'not_started', user_id: user.id) }
+    let!(:task_a) { FactoryBot.create(:task, :with_label, title: '最初のタスク', description: '最初のタスクを実施する', status: 'not_started', user_id: user.id, label_name: 'label') }
     subject(:visit_task_a_edit){ visit edit_task_path(task_a) }
 
     describe '表示機能' do
       context '画面を表示した場合' do
         it '編集前のタスク名が表示される' do
           visit_task_a_edit
-          expect(page).to have_field 'textarea1', with: task_a.title
+          expect(page).to have_field 'textarea1', with: '最初のタスク'
         end
 
         it '編集前の詳細が表示される' do
           visit_task_a_edit
-          expect(page).to have_field 'textarea2', with: task_a.description
+          expect(page).to have_field 'textarea2', with: '最初のタスクを実施する'
+        end
+
+        it '編集前のラベルが表示される' do
+          visit_task_a_edit
+          expect(page).to have_select 'task[label_ids][]', selected: 'label'
         end
       end
     end
 
     describe '更新機能' do
+      let!(:label1) { FactoryBot.create(:label, name: 'new label') }
       context 'タスクの各項目を更新した場合' do
-        let(:title) { '新規作成のテスト２' }
-        let(:description) { '新規作成のテストを書く２' }
+        let(:update_task) {
+          {
+            title: 'new title',
+            description: 'new description',
+            label: label1.name
+          }
+        }
 
         it 'タスクが更新される' do
           visit_task_a_edit
           # 更新処理
-          fill_in 'textarea1', with: title
-          fill_in 'textarea2', with: description
+          fill_in 'task[title]', with: update_task[:title]
+          fill_in 'task[description]', with: update_task[:description]
+          select value = update_task[:label], from: 'task[label_ids][]'
           # ユーザ2に変更する
           click_button 'submit'
           # 画面で入力された内容でDBのデータが更新されている
-          expect(Task.find_by(title: title, description: description)).to be_present
+          expect(Task.find_by(title: update_task[:title], description: update_task[:description])).to be_present
         end
 
         it 'Flashメッセージが表示される' do
           visit_task_a_edit
           # 更新処理
-          fill_in 'textarea1', with: title
-          fill_in 'textarea2', with: description
+          fill_in 'textarea1', with: update_task[:title]
+          fill_in 'textarea2', with: update_task[:description]
+          select value = update_task[:label], from: 'task[label_ids][]'
           click_button 'submit'
           # Flashメッセージが表示される
-          expect(page).to have_selector '.alert-success', text: 'タスク「新規作成のテスト２」を更新しました。'
+          expect(page).to have_selector '.alert-success', text: 'タスク「new title」を更新しました。'
         end
       end
     end

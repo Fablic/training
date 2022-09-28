@@ -13,12 +13,11 @@ class Task < ApplicationRecord
     closed: '2',
   }
 
-    # スコープ
-    scope :where_title, -> (title) { where('title like ?', "%#{title}%") if title.present? }
-    scope :where_status, -> (status) { where(status: status) if status.present? }
-    scope :where_user_id, -> (user_id) { where(user_id: user_id) if user_id.present? }
-    scope :where_label, -> (label_id) { where(labels: { id: label_id }) if label_id.present? }
-    scope :get_ids, -> (title, label, status) { eager_load(:labels).where_title(title).where_status(status).where_label(label).select('tasks.id') }
+  # スコープ
+  scope :where_title, -> (title) { where('title like ?', "%#{title}%") if title.present? }
+  scope :where_status, -> (status) { where(status: status) if status.present? }
+  scope :where_label, -> (label_id) { where(labels: { id: label_id }) if label_id.present? }
+  scope :get_ids, -> (title, label, status) { eager_load(:labels).where_title(title).where_status(status).where_label(label).select('tasks.id') }
 
   # ページ内要素数
   paginates_per 5
