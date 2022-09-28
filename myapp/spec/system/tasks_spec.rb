@@ -404,7 +404,7 @@ describe 'タスク管理機能', type: :system do
   end
 
   describe '詳細表示機能' do
-    let!(:task_a) { FactoryBot.create(:task, :with_labels, title: '最初のタスク', description: '最初のタスクを実施する', status: 'not_started', user_id: user.id, label_name: 'label1') }
+    let!(:task_a) { FactoryBot.create(:task, :with_label, title: '最初のタスク', description: '最初のタスクを実施する', status: 'not_started', user_id: user.id, label_name: 'label1') }
     subject(:visit_task_a) { visit task_path(task_a) }
 
     describe '表示機能' do
