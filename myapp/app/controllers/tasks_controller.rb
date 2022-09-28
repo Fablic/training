@@ -1,9 +1,15 @@
 # frozen_string_literal: true
 
 class TasksController < ApplicationController
-  before_action :check_create_service, only: [:new, :create]
-  before_action :check_update_service, only: [:edit, :update]
-  before_action :check_delete_service, only: [:destroy]
+  before_action -> {
+    check_service_running(Function::FUNC_ID_CREATE)
+  }, only: [:new, :create]
+  before_action -> {
+    check_service_running(Function::FUNC_ID_UPDATE)
+  }, only: [:edit, :update]
+  before_action -> {
+    check_service_running(Function::FUNC_ID_DELETE)
+  }, only: [:destroy]
 
   # タスク一覧画面
   def index
@@ -63,16 +69,8 @@ class TasksController < ApplicationController
     params.require(:task).permit(:title, :content, :status, { label_ids: [] })
   end
 
-  def check_create_service
-    transition_503 if Function.is_stopped?(Function::FUNC_ID_CREATE)
-  end
-
-  def check_update_service
-    transition_503 if Function.is_stopped?(Function::FUNC_ID_UPDATE)
-  end
-
-  def check_delete_service
-    transition_503 if Function.is_stopped?(Function::FUNC_ID_DELETE)
+  def check_service_running(func_id)
+    transition_503 if Function.is_stopped?(func_id)
   end
 
   def transition_503
