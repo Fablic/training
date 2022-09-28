@@ -3,6 +3,9 @@
 require 'rails_helper'
 
 RSpec.describe 'Users', type: :system do
+  let!(:user) { create(:user, admin: true) }
+  let!(:user2) { create(:user, name: 'MyName2', personal_id: 'MyUserID2') }
+
   context 'login systems check' do
     before do
       visit admin_login_path
@@ -37,7 +40,6 @@ RSpec.describe 'Users', type: :system do
     end
 
     it 'not admin user login' do
-      create(:user, personal_id: 'MyUserID2')
       fill_in 'personal_id', with: 'MyUserID2'
       fill_in 'password', with: 'pass'
       click_button 'ログイン'
@@ -51,12 +53,8 @@ RSpec.describe 'Users', type: :system do
     visit admin_login_path
   end
 
-  let!(:user) { create(:user, admin: true) }
-  let(:user2) { create(:user, name: 'MyName2', personal_id: 'MyUserID2') }
-
   context 'index systems check' do
     before do
-      create(:user, name: 'MyName2', personal_id: 'MyUserID2')
       fill_in 'personal_id', with: 'MyUserID'
       fill_in 'password', with: 'pass'
       click_button 'ログイン'
@@ -79,7 +77,6 @@ RSpec.describe 'Users', type: :system do
     end
 
     it 'complete new user create' do
-      expect(page).to have_no_content '一般'
       click_button '新規登録'
       expect(page).to have_content 'ユーザ登録画面'
 
@@ -91,7 +88,7 @@ RSpec.describe 'Users', type: :system do
       click_button '登録する'
 
       expect(page).to have_content 'ユーザの登録が完了しました'
-      expect(page).to have_content '一般'
+      expect(page.text).to match(/管理者.*一般.*一般/)
       expect(page).to have_content 'newUser'
       expect(page).to have_content 'newID'
     end
@@ -190,7 +187,6 @@ RSpec.describe 'Users', type: :system do
   end
 
   context 'delete systems check' do
-    let!(:user2) { create(:user, name: 'MyName2', personal_id: 'MyUserID2') }
     before do
       fill_in 'personal_id', with: 'MyUserID'
       fill_in 'password', with: 'pass'

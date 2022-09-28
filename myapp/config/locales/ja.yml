@@ -149,4 +149,4 @@ ja:
       login: 'ログイン'
     create:
       danger: '正しいログインIDとパスワードを入力してください'
-      general_cannot: '一般ユーザはログインできません'
+      general_cannot_login: '一般ユーザはログインできません'
