@@ -19,6 +19,13 @@ ActiveRecord::Schema.define(version: 2022_09_27_030833) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "maintenances", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.integer "service_id"
+    t.boolean "maintenance_flg", default: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "task_labels", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.bigint "task_id"
     t.bigint "label_id"
