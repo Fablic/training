@@ -64,14 +64,14 @@ ja:
       edit: '編集する'
 
     update:
-      success: "タスクの編集が完了しました"
-      danger: "編集に失敗しました"
+      success: 'タスクの編集が完了しました'
+      danger: '編集に失敗しました'
     create:
-      success: "タスクの登録が完了しました"
-      danger: "登録に失敗しました"
+      success: 'タスクの登録が完了しました'
+      danger: '登録に失敗しました'
     destroy:
-      success: "タスクを削除しました"
-      danger: "削除に失敗しました"
+      success: 'タスクを削除しました'
+      danger: '削除に失敗しました'
 
   users:
     index:
@@ -116,14 +116,14 @@ ja:
       edit: '編集する'
 
     update:
-      success: "ユーザの編集が完了しました"
-      danger: "編集に失敗しました"
+      success: 'ユーザの編集が完了しました'
+      danger: '編集に失敗しました'
     create:
-      success: "ユーザの登録が完了しました"
-      danger: "登録に失敗しました"
+      success: 'ユーザの登録が完了しました'
+      danger: '登録に失敗しました'
     destroy:
-      success: "ユーザを削除しました"
-      danger: "唯一の管理者ユーザです"
+      success: 'ユーザを削除しました'
+      danger: '唯一の管理者ユーザです'
 
   enums:
     task:
