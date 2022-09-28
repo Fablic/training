@@ -1,9 +1,7 @@
-<h1>タスクの新規作成</h1>
+<h1 class="display-1">タスクの新規作成</h1>
 
 <%= render "form", task: @task %>
 
-<br>
-
-<div>
-  <%= link_to I18n.t('transition_destination.index'), tasks_path %>
+<div style="padding:10px;">
+  <%= link_to I18n.t('transition_destination.index'), tasks_path, { class: "btn btn-primary mx-1" } %>
 </div>

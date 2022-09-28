@@ -1,20 +1,28 @@
-<%= form_with(url: tasks_path, method: :get, local: true) do |form| %>
-  <div>
-    <%= form.label :keyword, 'キーワード検索', style: "display: block" %>
-    <%= form.text_field :keyword, placeholder: I18n.t('select_form.placeholder') %>
-  </div>
+<div class="container-sm border rounded-3" style="padding:10px;">
+  <%= form_with(url: tasks_path, method: :get, local: true) do |form| %>
+    <div class="row mb-3" style="padding:10px;">
+      <%= form.label :keyword, 'キーワード検索', class: "col-sm-2 col-form-label" %>
+      <div class="col-sm-10">
+        <%= form.text_field :keyword, placeholder: I18n.t('select_form.placeholder'), class: "form-control" %>
+      </div>
+    </div>
 
-  <div>
-    <%= form.label :status, 'ステータスで絞り込む', style: "display: block" %>
-    <%= form.select :status, I18n.t('select_form.task.status'), include_blank: I18n.t('select_form.include_blank') %>
-  </div>
+    <div class="row mb-3" style="padding:10px;">
+      <%= form.label :status, 'ステータスで絞り込む', class: "col-sm-2 col-form-label" %>
+      <div class="col-sm-10">
+        <%= form.select :status, I18n.t('select_form.task.status'), { include_blank: I18n.t('select_form.include_blank') }, class: "form-select" %>
+      </div>
+    </div>
 
-  <div>
-    <%= form.label :sort, 'ソート', style: "display: block" %>
-    <%= form.select :sort, I18n.t('select_form.search_form.sort')  %>
-  </div>
+    <div class="row mb-3" style="padding:10px;">
+      <%= form.label :sort, 'ソート', class: "col-sm-2 col-form-label" %>
+      <div class="col-sm-10">
+        <%= form.select :sort, I18n.t('select_form.search_form.sort'), {}, class: "form-select" %>
+      </div>
+    </div>
 
-  <div>
-    <%= form.submit '送信' %>
-  </div>
-<% end %>
+    <div style="padding:10px;">
+      <%= form.submit '送信', class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>
