@@ -12,6 +12,8 @@ class Task < ApplicationRecord
 
   after_initialize :set_default_values
 
+  belongs_to :user, optional: true
+
   validates :name, presence: true, length: { maximum: 255 }
   validates :priority, presence: true
   validates :status, presence: true

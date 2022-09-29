@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 20_220_929_003_326) do
+ActiveRecord::Schema[7.0].define(version: 20_220_929_071_420) do
   create_table 'tasks', charset: 'utf8mb4', comment: 'タスク', force: :cascade do |t|
     t.string 'name', null: false, comment: 'タスク名'
     t.datetime 'end_date', comment: '終了期限'
@@ -21,6 +21,19 @@ ActiveRecord::Schema[7.0].define(version: 20_220_929_003_326) do
     t.text 'explanation', comment: '説明文'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
-    t.index ['status'], name: 'index_tasks_on_status'
+    t.bigint 'user_id'
+    t.index %w[name status], name: 'index_tasks_on_name_and_status'
+    t.index ['user_id'], name: 'index_tasks_on_user_id'
   end
+
+  create_table 'users', charset: 'utf8mb4', force: :cascade do |t|
+    t.string 'name', null: false, comment: 'タスク名'
+    t.string 'email', null: false, comment: 'Eメール'
+    t.string 'password_digest', null: false, comment: '暗号化されたパスワード'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['email'], name: 'index_users_on_email', unique: true
+  end
+
+  add_foreign_key 'tasks', 'users'
 end
