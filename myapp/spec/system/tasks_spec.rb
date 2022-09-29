@@ -14,6 +14,8 @@ describe 'タスク管理機能', type: :system do
       end
 
       describe '表示機能' do
+        let!(:maintenance) { FactoryBot.create(:maintenance, function_id: 1, maintenance_flag: false) }
+
         shared_examples_for '１つ目のタスクが表示される' do
           context 'タスク名が表示される' do
             it 'タスク名が表示される' do
@@ -76,6 +78,8 @@ describe 'タスク管理機能', type: :system do
       end
 
       describe '検索機能' do
+        let!(:maintenance) { FactoryBot.create(:maintenance, function_id: 1, maintenance_flag: false) }
+
         # タスクが表示される期待動作を共通化
         shared_examples_for 'タスク表示' do
           let(:tds){ all('tbody tr')[0].all('td') }
@@ -188,6 +192,7 @@ describe 'タスク管理機能', type: :system do
       end
 
       describe '遷移機能' do
+        let!(:maintenance) { FactoryBot.create(:maintenance, function_id: 1, maintenance_flag: false) }
         let!(:task_a) { FactoryBot.create(:task, name: 'タスク１', description: 'タスク１を実施する', user_id: user_a.id) }
 
         context 'タスク一覧画面から詳細画面へ遷移' do
@@ -214,6 +219,17 @@ describe 'タスク管理機能', type: :system do
           end
         end
       end
+
+      describe 'メンテナンス機能' do
+        let!(:maintenance) { FactoryBot.create(:maintenance, function_id: 1, maintenance_flag: true) }
+
+        context 'タスク一覧画面がメンテナンス中の場合' do
+          it 'メンテナンス画面が表示される' do
+            visit_tasks
+            expect(page).to have_content 'メンテナンス'
+          end
+        end
+      end
     end
 
     describe 'ログインしていない場合' do
@@ -232,6 +248,7 @@ describe 'タスク管理機能', type: :system do
     subject(:visit_task_a){ visit task_path(task_a) }
 
     describe 'ログインしている場合' do
+      let!(:maintenance) { FactoryBot.create(:maintenance, function_id: 2, maintenance_flag: false) }
 
       before do
         visit login_path
@@ -241,6 +258,7 @@ describe 'タスク管理機能', type: :system do
       end
 
       describe '表示機能' do
+
         context 'タスクが存在する場合' do
           it 'タスク名が表示される' do
             visit_task_a
@@ -260,6 +278,7 @@ describe 'タスク管理機能', type: :system do
       end
 
       describe '遷移機能' do
+        let!(:maintenance) { FactoryBot.create(:maintenance, function_id: 2, maintenance_flag: false) }
 
         context '詳細画面からタスク一覧画面へ遷移' do
           it '一覧画面へ遷移できる' do
@@ -282,6 +301,17 @@ describe 'タスク管理機能', type: :system do
             visit_task_a
             click_link 'ログアウト'
             expect(page).to have_content 'ログイン'
+          end
+        end
+      end
+
+      describe 'メンテナンス機能' do
+        let!(:maintenance) { FactoryBot.create(:maintenance, function_id: 2, maintenance_flag: true) }
+
+        context 'タスク詳細画面がメンテナンス中の場合' do
+          it 'メンテナンス画面が表示される' do
+            visit_task_a
+            expect(page).to have_content 'メンテナンス'
           end
         end
       end
@@ -309,6 +339,9 @@ describe 'タスク管理機能', type: :system do
       end
 
       describe '登録機能' do
+        let!(:maintenance_new) { FactoryBot.create(:maintenance, function_id: 3, maintenance_flag: false) }
+        let!(:maintenance_index) { FactoryBot.create(:maintenance, function_id: 1, maintenance_flag: false) }
+
         context 'タスクの内容を入力した場合' do
           let!(:user_a) { FactoryBot.create(:user) }
           let(:name) { '新規作成テストタスク' }
@@ -352,6 +385,8 @@ describe 'タスク管理機能', type: :system do
       end
 
       describe '遷移機能' do
+        let!(:maintenance) { FactoryBot.create(:maintenance, function_id: 3, maintenance_flag: false) }
+
         context '新規登録画面からタスク一覧画面へ遷移' do
           it '一覧画面へ遷移できる' do
             visit new_task_path
@@ -364,6 +399,17 @@ describe 'タスク管理機能', type: :system do
             visit new_task_path
             click_link 'ログアウト'
             expect(page).to have_content 'ログイン'
+          end
+        end
+      end
+
+      describe 'メンテナンス機能' do
+        let!(:maintenance) { FactoryBot.create(:maintenance, function_id: 3, maintenance_flag: true) }
+
+        context 'タスク作成画面がメンテナンス中の場合' do
+          it 'メンテナンス画面が表示される' do
+            visit new_task_path
+            expect(page).to have_content 'メンテナンス'
           end
         end
       end
@@ -394,6 +440,9 @@ describe 'タスク管理機能', type: :system do
       end
 
       describe '表示機能' do
+        let!(:maintenance_edit) { FactoryBot.create(:maintenance, function_id: 4, maintenance_flag: false) }
+        let!(:maintenance_show) { FactoryBot.create(:maintenance, function_id: 2, maintenance_flag: false) }
+
         context '画面を表示した場合' do
           it '編集前にタスク名が表示される' do
             visit_task_a_edit
@@ -418,6 +467,9 @@ describe 'タスク管理機能', type: :system do
       end
 
       describe '更新機能' do
+        let!(:maintenance_edit) { FactoryBot.create(:maintenance, function_id: 4, maintenance_flag: false) }
+        let!(:maintenance_show) { FactoryBot.create(:maintenance, function_id: 2, maintenance_flag: false) }
+
         context 'タスクの各項目を更新した場合' do
           let(:name) { '更新テストタスク１' }
           let(:description) { '更新テストタスク１を実施する' }
@@ -452,6 +504,7 @@ describe 'タスク管理機能', type: :system do
       end
 
       describe '遷移機能' do
+        let!(:maintenance) { FactoryBot.create(:maintenance, function_id: 4, maintenance_flag: false) }
 
         context '編集画面から詳細画面へ遷移' do
           it '詳細画面へ遷移できる' do
@@ -469,6 +522,17 @@ describe 'タスク管理機能', type: :system do
           end
         end
       end
+
+      describe 'メンテナンス機能' do
+        let!(:maintenance) { FactoryBot.create(:maintenance, function_id: 4, maintenance_flag: true) }
+
+        context 'タスク編集画面がメンテナンス中の場合' do
+          it 'メンテナンス画面が表示される' do
+            visit_task_a_edit
+            expect(page).to have_content 'メンテナンス'
+          end
+        end
+      end
     end
 
     describe 'ログインしていない場合' do
@@ -480,6 +544,8 @@ describe 'タスク管理機能', type: :system do
   end
 
   describe '削除機能' do
+    let!(:maintenance_show) { FactoryBot.create(:maintenance, function_id: 2, maintenance_flag: false) }
+    let!(:maintenance_index) { FactoryBot.create(:maintenance, function_id: 1, maintenance_flag: false) }
     let!(:user_a) { FactoryBot.create(:user) }
     let!(:task_a) { FactoryBot.create(:task, name: 'タスク１', description: 'タスク１を実施する', user_id: user_a.id) }
 
