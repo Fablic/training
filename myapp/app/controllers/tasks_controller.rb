@@ -2,6 +2,10 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
   before_action :get_users, only: [:new, :edit]
   before_action :create_empty_task, only: [:index, :new, :search]
+  before_action ->{ check_maintenance_status(1) }, only: [:index]
+  before_action ->{ check_maintenance_status(2) }, only: [:show]
+  before_action ->{ check_maintenance_status(3) }, only: [:new]
+  before_action ->{ check_maintenance_status(4) }, only: [:edit]
 
   def index
     @tasks = current_user.tasks.includes([:labellings, :labels]).includes(:labels).all.page(params[:page])
@@ -63,5 +67,10 @@ class TasksController < ApplicationController
 
   def create_empty_task
     @task = Task.new
+  end
+
+  def check_maintenance_status(function_id)
+    maintenance = Maintenance.find_by(function_id: function_id)
+    render 'maintenance/maintenance.html' if maintenance.maintenance_flag
   end
 end

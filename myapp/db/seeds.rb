@@ -15,6 +15,12 @@ Task.delete_all
 User.delete_all
 Label.delete_all
 Labelling.delete_all
+Maintenance.delete_all
+
+Maintenance.create(function_id: 1, maintenance_flag: false)
+Maintenance.create(function_id: 2, maintenance_flag: false)
+Maintenance.create(function_id: 3, maintenance_flag: false)
+Maintenance.create(function_id: 4, maintenance_flag: false)
 
 3.times do |i|
     user = User.create(name: "具志堅一真#{i + 1}", password: "gushiken#{i + 1}", email: "gushiken#{i + 1}@example.com")

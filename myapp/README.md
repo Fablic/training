@@ -4,6 +4,52 @@
 タスク管理システム
 <br>
 
+
+## メンテナンスモード
+【タスク一覧画面】
+
+開始
+
+docker-compose exec api rails runner "Tasks::Maintenancer.start(1)"
+
+終了
+
+docker-compose exec api rails runner "Tasks::Maintenancer.end(1)"
+<br>
+
+【タスク詳細画面】
+
+開始
+
+docker-compose exec api rails runner "Tasks::Maintenancer.start(2)"
+
+終了
+
+docker-compose exec api rails runner "Tasks::Maintenancer.end(2)"
+<br>
+
+【タスク作成画面】
+
+開始
+
+docker-compose exec api rails runner "Tasks::Maintenancer.start(3)"
+
+終了
+
+docker-compose exec api rails runner "Tasks::Maintenancer.end(3)"
+<br>
+
+【タスク編集画面】
+開始
+
+docker-compose exec api rails runner "Tasks::Maintenancer.start(4)"
+
+終了
+
+docker-compose exec api rails runner "Tasks::Maintenancer.end(4)"
+<br>
+<br>
+
 ## 画面設計
 
 【共通部品】
