@@ -19,6 +19,13 @@
   </p>
 
   <p>
+    <strong><%= Label.model_name.human %></strong>
+    <% @task.labels.each do |label| %>
+      <%= label.name %>
+    <% end %>
+  </p>
+
+  <p>
     <strong><%= Task.human_attribute_name(:created_at) %>:</strong>
     <%= @task.created_at %>
   </p>

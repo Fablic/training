@@ -24,6 +24,10 @@ describe 'タスク管理機能', type: :system do
               visit_tasks
               expect(page).to have_content '未着手'
             end
+            it 'ラベルが表示される' do
+              visit_tasks
+              expect(page).to have_content 'ラベル１'
+            end
           end
         end
         shared_examples_for '２つ目のタスクが表示される' do
@@ -36,18 +40,28 @@ describe 'タスク管理機能', type: :system do
               visit_tasks
               expect(page).to have_content '実施中'
             end
+            it 'ラベルが表示される' do
+              visit_tasks
+              expect(page).to have_content 'ラベル２'
+            end
           end
         end
 
         context 'タスクが1件存在する場合' do
           let!(:task_a) { FactoryBot.create(:task, name: 'タスク１', description: 'タスク１を実施する', user_id: user_a.id) }
+          let!(:label_a) { FactoryBot.create(:label) }
+          let!(:labelling_a) { FactoryBot.create(:labelling, task: task_a, label: label_a) }
 
           it_behaves_like '１つ目のタスクが表示される'
         end
 
         context 'タスクが2件存在する場合' do
           let!(:task_a) { FactoryBot.create(:task, name: 'タスク１', description: 'タスク１を実施する', user_id: user_a.id) }
+          let!(:label_a) { FactoryBot.create(:label) }
+          let!(:labelling_a) { FactoryBot.create(:labelling, task: task_a, label: label_a) }
           let!(:task_b) { FactoryBot.create(:task, name: 'タスク２', description: 'タスク２を実施する', status: 2, user_id: user_a.id) }
+          let!(:label_b) { FactoryBot.create(:label, name: 'ラベル２') }
+          let!(:labelling_b) { FactoryBot.create(:labelling, task: task_b, label: label_b) }
 
           it_behaves_like '１つ目のタスクが表示される'
           it_behaves_like '２つ目のタスクが表示される'
@@ -69,17 +83,27 @@ describe 'タスク管理機能', type: :system do
           context '1件目のタスクの場合' do
             it 'タスク名が表示される' do
               visit_tasks
-              fill_in 'name', with: name
-              select(value = status, from: 'status')
+              fill_in 'task[name]', with: name
+              select(value = status, from: 'task[status]')
+              select(value = label, from: 'task[label_id]')
               click_button '検索'
               expect(tds[0]).to have_content '最初のタスク'
             end
             it 'ステータスが表示される' do
               visit_tasks
-              fill_in 'name', with: name
-              select(value = status, from: 'status')
+              fill_in 'task[name]', with: name
+              select(value = status, from: 'task[status]')
+              select(value = label, from: 'task[label_id]')
               click_button '検索'
               expect(tds[1]).to have_content '未着手'
+            end
+            it 'ラベルが表示される' do
+              visit_tasks
+              fill_in 'task[name]', with: name
+              select(value = status, from: 'task[status]')
+              select(value = label, from: 'task[label_id]')
+              click_button '検索'
+              expect(tds[2]).to have_content 'ラベル１'
             end
           end
         end
@@ -89,17 +113,27 @@ describe 'タスク管理機能', type: :system do
           context '2件目のタスクの場合' do
             it 'タスク名が表示される' do
               visit_tasks
-              fill_in 'name', with: name
-              select(value = status, from: 'status')
+              fill_in 'task[name]', with: name
+              select(value = status, from: 'task[status]')
+              select(value = label, from: 'task[label_id]')
               click_button '検索'
               expect(tds[0]).to have_content '２つ目のタスク'
             end
             it 'ステータスが表示される' do
               visit_tasks
-              fill_in 'name', with: name
-              select(value = status, from: 'status')
+              fill_in 'task[name]', with: name
+              select(value = status, from: 'task[status]')
+              select(value = label, from: 'task[label_id]')
               click_button '検索'
               expect(tds[1]).to have_content '未着手'
+            end
+            it 'ラベルが表示される' do
+              visit_tasks
+              fill_in 'task[name]', with: name
+              select(value = status, from: 'task[status]')
+              select(value = label, from: 'task[label_id]')
+              click_button '検索'
+              expect(tds[2]).to have_content 'ラベル１'
             end
           end
         end
@@ -107,17 +141,24 @@ describe 'タスク管理機能', type: :system do
         context '検索条件に一致するタスクが1件存在する場合' do
           let!(:task_a) { FactoryBot.create(:task, name: '最初のタスク', description: '最初のタスクを実施する', status: 1, user_id: user_a.id) }
           let!(:task_b) { FactoryBot.create(:task, name: '２つ目のタスク', description: '２つ目のタスクを実施する', status: 1, user_id: user_a.id) }
+          let!(:label_a) { FactoryBot.create(:label) }
+          let!(:labelling_a) { FactoryBot.create(:labelling, task: task_a, label: label_a) }
           let(:name) { '最初のタスク' }
           let(:status) { '未着手' }
+          let(:label) { 'ラベル１' }
 
           it_behaves_like 'タスク表示'
         end
 
         context '検索条件に一致するタスクが2件存在する場合' do
           let!(:task_a) { FactoryBot.create(:task, name: '最初のタスク', description: '最初のタスクを実施する', status: 1, user_id: user_a.id) }
+          let!(:label_a) { FactoryBot.create(:label) }
+          let!(:labelling_a) { FactoryBot.create(:labelling, task: task_a, label: label_a) }
           let!(:task_b) { FactoryBot.create(:task, name: '２つ目のタスク', description: '２つ目のタスクを実施する', status: 1, user_id: user_a.id) }
+          let!(:labelling_b) { FactoryBot.create(:labelling, task: task_b, label: label_a) }
           let(:name) { 'タスク' }
           let(:status) { '未着手' }
+          let(:label) { 'ラベル１' }
 
           it_behaves_like 'タスク表示'
           it_behaves_like '２件目のタスク表示'
@@ -125,14 +166,21 @@ describe 'タスク管理機能', type: :system do
 
         context '検索条件に一致するタスクが存在しない場合' do
           let!(:task_a) { FactoryBot.create(:task, name: '最初のタスク', description: '最初のタスクを実施する', status: 1, user_id: user_a.id) }
+          let!(:label_a) { FactoryBot.create(:label) }
+          let!(:labelling_a) { FactoryBot.create(:labelling, task: task_a, label: label_a) }
           let!(:task_b) { FactoryBot.create(:task, name: '２つ目のタスク', description: '２つ目のタスクを実施する', status: 1, user_id: user_a.id) }
+          let!(:label_b) { FactoryBot.create(:label, name: 'ラベル２') }
+          let!(:labelling_b) { FactoryBot.create(:labelling, task: task_b, label: label_b) }
+          let!(:label_c) { FactoryBot.create(:label, name: 'ラベル３') }
           let(:name) { 'テスト' }
           let(:status) { '完了' }
+          let(:label) { 'ラベル３' }
 
           it 'タスクが表示されない' do
             visit_tasks
-            fill_in 'name', with: name
-            select(value = status, from: 'status')
+            fill_in 'task[name]', with: name
+            select(value = status, from: 'task[status]')
+            select(value = label, from: 'task[label_id]')
             click_button '検索'
             expect(page).not_to have_content 'のタスク'
           end
@@ -179,6 +227,8 @@ describe 'タスク管理機能', type: :system do
   describe '詳細表示機能' do
     let!(:user_a) { FactoryBot.create(:user) }
     let!(:task_a) { FactoryBot.create(:task, name: 'タスク１', description: 'タスク１を実施する', user_id: user_a.id) }
+    let!(:label_a) { FactoryBot.create(:label) }
+    let!(:labelling_a) { FactoryBot.create(:labelling, task: task_a, label: label_a) }
     subject(:visit_task_a){ visit task_path(task_a) }
 
     describe 'ログインしている場合' do
@@ -200,6 +250,11 @@ describe 'タスク管理機能', type: :system do
           it '詳細が表示される' do
             visit_task_a
             expect(page).to have_content 'タスク１を実施する'
+          end
+
+          it 'ラベルが表示される' do
+            visit_task_a
+            expect(page).to have_content 'ラベル１'
           end
         end
       end
@@ -244,6 +299,7 @@ describe 'タスク管理機能', type: :system do
     let!(:user_a) { FactoryBot.create(:user) }
 
     describe 'ログインしている場合' do
+      let!(:label_a) { FactoryBot.create(:label) }
 
       before do
         visit login_path
@@ -258,6 +314,7 @@ describe 'タスク管理機能', type: :system do
           let(:name) { '新規作成テストタスク' }
           let(:description) { '新規作成テストタスクを実施する' }
           let(:status) { '実施中' }
+          let(:label) { 'ラベル１' }
           let(:user_name) { 'テストユーザ' }
           subject(:visit_new_task){ visit new_task_path }
 
@@ -266,10 +323,11 @@ describe 'タスク管理機能', type: :system do
             fill_in 'タスク名', with: name
             fill_in '詳細', with: description
             select(value = status, from: 'task[status]')
+            page.check label
             # DBに登録されている
             click_button 'タスクを登録'
             # 画面で入力された内容でDBに登録されている
-            expect(Task.find_by(name: '新規作成テストタスク', description: '新規作成テストタスクを実施する', status: 'doing', user_id: user_a.id)).not_to be_nil
+            expect(Task.eager_load(:labellings).where(name: '新規作成テストタスク', description: '新規作成テストタスクを実施する', status: 'doing', user_id: user_a.id, label_id: label_a.id)).not_to be_nil
           end
 
           it 'Flashメッセージが表示される' do
@@ -277,6 +335,7 @@ describe 'タスク管理機能', type: :system do
             fill_in 'タスク名', with: name
             fill_in '詳細', with: description
             select(value = status, from: 'task[status]')
+            page.check label
             click_button 'タスクを登録'
             expect(page).to have_selector '.alert-success', text: 'タスク「新規作成テストタスク」を登録しました。'
           end
@@ -285,6 +344,7 @@ describe 'タスク管理機能', type: :system do
             visit_new_task
             fill_in 'タスク名', with: name
             fill_in '詳細', with: description
+            page.check label
             click_button 'タスクを登録'
             expect(current_path).to eq tasks_path
           end
@@ -320,9 +380,12 @@ describe 'タスク管理機能', type: :system do
   describe '編集機能' do
     let!(:user_a) { FactoryBot.create(:user) }
     let!(:task_a) { FactoryBot.create(:task, name: 'タスク１', description: 'タスク１を実施する', user_id: user_a.id) }
+    let!(:label_a) { FactoryBot.create(:label) }
+    let!(:label_b) { FactoryBot.create(:label, name: 'ラベル２') }
+    let!(:labelling_a) { FactoryBot.create(:labelling, task: task_a, label: label_a) }
     subject(:visit_task_a_edit){ visit edit_task_path(task_a) }
 
-    describe '' do
+    describe 'ログインしている場合' do
       before do
         visit login_path
         fill_in 'session[email]', with: 'test@example.com'
@@ -346,6 +409,11 @@ describe 'タスク管理機能', type: :system do
             visit_task_a_edit
             expect(page).to have_select('task[status]', selected: '未着手')
           end
+
+          it '編集前にラベルが表示される' do
+            visit_task_a_edit
+            expect(page).to have_checked_field('ラベル１')
+          end
         end
       end
 
@@ -354,6 +422,7 @@ describe 'タスク管理機能', type: :system do
           let(:name) { '更新テストタスク１' }
           let(:description) { '更新テストタスク１を実施する' }
           let(:status) { '実施中' }
+          let(:label) { 'ラベル２' }
           let(:user_name) { 'テストユーザ２' }
 
           it 'タスクが更新される' do
@@ -362,9 +431,10 @@ describe 'タスク管理機能', type: :system do
             fill_in 'タスク名', with: name
             fill_in '詳細', with: description
             select(value = status, from: 'task[status]')
+            page.check label
             click_button 'タスクを更新'
             # 画面で入力された内容でDBのデータが更新されている
-            expect(Task.find_by(name: '更新テストタスク１', description: '更新テストタスク１を実施する', status: 'doing', user_id: user_a.id)).not_to be_nil
+            expect(Task.eager_load(:labellings).where(name: '更新テストタスク１', description: '更新テストタスク１を実施する', status: 'doing', user_id: user_a.id, label_id: label_b.id)).not_to be_nil
           end
 
           it 'Flashメッセージが表示される' do
@@ -373,6 +443,7 @@ describe 'タスク管理機能', type: :system do
             fill_in 'タスク名', with: name
             fill_in '詳細', with: description
             select(value = status, from: 'task[status]')
+            page.check label
             click_button 'タスクを更新'
             # Flashメッセージが表示される
             expect(page).to have_selector '.alert-success', text: 'タスク「更新テストタスク１」を更新しました。'

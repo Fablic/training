@@ -13,8 +13,12 @@
 
 Task.delete_all
 User.delete_all
+Label.delete_all
+Labelling.delete_all
 
 3.times do |i|
     user = User.create(name: "具志堅一真#{i + 1}", password: "gushiken#{i + 1}", email: "gushiken#{i + 1}@example.com")
-    taks = Task.create(name: "タスク番号#{i + 1}", description: '動作確認', status: 1, user_id: user.id)
+    task = Task.create(name: "タスク番号#{i + 1}", description: '動作確認', status: 1, user_id: user.id)
+    label = Label.create(name: "ラベル#{i + 1}")
+    labelling = Labelling.create(task: task, label: label)
 end
