@@ -29,7 +29,7 @@
     </div>
 
   <div class='field'>
-    <%= t(Label.model_name.human) %>
+    <%= Label.model_name.human %>
     <br>
     <%= f.collection_check_boxes :label_ids, Label.all, :id, :name %>
   </div>

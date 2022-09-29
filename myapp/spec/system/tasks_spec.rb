@@ -159,7 +159,6 @@ describe 'タスク管理機能', type: :system do
           let(:name) { 'タスク' }
           let(:status) { '未着手' }
           let(:label) { 'ラベル１' }
-          let(:label_2) { 'ラベル２' }
 
           it_behaves_like 'タスク表示'
           it_behaves_like '２件目のタスク表示'
@@ -298,9 +297,9 @@ describe 'タスク管理機能', type: :system do
 
   describe '新規登録機能' do
     let!(:user_a) { FactoryBot.create(:user) }
-    let!(:label_a) { FactoryBot.create(:label) }
 
     describe 'ログインしている場合' do
+      let!(:label_a) { FactoryBot.create(:label) }
 
       before do
         visit login_path
@@ -328,7 +327,7 @@ describe 'タスク管理機能', type: :system do
             # DBに登録されている
             click_button 'タスクを登録'
             # 画面で入力された内容でDBに登録されている
-            expect(Task.find_by(name: '新規作成テストタスク', description: '新規作成テストタスクを実施する', status: 'doing', user_id: user_a.id)).not_to be_nil
+            expect(Task.eager_load(:labellings).where(name: '新規作成テストタスク', description: '新規作成テストタスクを実施する', status: 'doing', user_id: user_a.id, label_id: label_a.id)).not_to be_nil
           end
 
           it 'Flashメッセージが表示される' do
@@ -435,7 +434,7 @@ describe 'タスク管理機能', type: :system do
             page.check label
             click_button 'タスクを更新'
             # 画面で入力された内容でDBのデータが更新されている
-            expect(Task.find_by(name: '更新テストタスク１', description: '更新テストタスク１を実施する', status: 'doing', user_id: user_a.id)).not_to be_nil
+            expect(Task.eager_load(:labellings).where(name: '更新テストタスク１', description: '更新テストタスク１を実施する', status: 'doing', user_id: user_a.id, label_id: label_b.id)).not_to be_nil
           end
 
           it 'Flashメッセージが表示される' do
