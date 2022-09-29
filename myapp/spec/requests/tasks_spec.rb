@@ -18,15 +18,43 @@ RSpec.describe '/tasks', type: :request do
     end
 
     context "When argument 'sort' exists in search_params" do
-      let(:params) do
-        { sort: 'created_at_desc' }
+      context 'created_at_desc' do
+        let(:params) do
+          { sort: 'created_at_desc' }
+        end
+
+        it 'renders a successful response' do
+          get tasks_url, params: params
+
+          expect(response).to have_http_status(:ok)
+          tasks.each { |task| expect(response.body).to include task.name.to_s }
+        end
       end
 
-      it 'renders a successful response' do
-        get tasks_url, params: params
+      context 'end_date_asc' do
+        let(:params) do
+          { sort: 'end_date_asc' }
+        end
 
-        expect(response).to have_http_status(:ok)
-        tasks.each { |task| expect(response.body).to include task.name.to_s }
+        it 'renders a successful response' do
+          get tasks_url, params: params
+
+          expect(response).to have_http_status(:ok)
+          tasks.each { |task| expect(response.body).to include task.name.to_s }
+        end
+      end
+
+      context 'end_date_desc' do
+        let(:params) do
+          { sort: 'end_date_desc' }
+        end
+
+        it 'renders a successful response' do
+          get tasks_url, params: params
+
+          expect(response).to have_http_status(:ok)
+          tasks.each { |task| expect(response.body).to include task.name.to_s }
+        end
       end
     end
   end

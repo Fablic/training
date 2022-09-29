@@ -29,9 +29,9 @@ RSpec.describe Task, type: :model do
   end
 
   describe '.sort_by_keyword' do
-    let!(:first_task) { create(:task, name: 'ううう') }
-    let!(:second_task) { create(:task, name: 'あああ') }
-    let!(:third_task) { create(:task, name: 'いいい') }
+    let!(:first_task) { create(:task, name: 'ううう', end_date: '2022/09/15 17:25') }
+    let!(:second_task) { create(:task, name: 'あああ', end_date: '2022/09/14 17:25') }
+    let!(:third_task) { create(:task, name: 'いいい', end_date: '2022/09/15 18:25') }
 
     subject { Task.sort_by_keyword(sort) }
 
@@ -48,6 +48,22 @@ RSpec.describe Task, type: :model do
 
       it 'sort by specified sort type' do
         is_expected.to eq [third_task, second_task, first_task]
+      end
+    end
+
+    context 'sort type: end_date_asc' do
+      let(:sort) { 'end_date_asc' }
+
+      it 'sort by specified sort type' do
+        is_expected.to eq [second_task, first_task, third_task]
+      end
+    end
+
+    context 'sort type: end_date_desc' do
+      let(:sort) { 'end_date_desc' }
+
+      it 'sort by specified sort type' do
+        is_expected.to eq [third_task, first_task, second_task]
       end
     end
   end

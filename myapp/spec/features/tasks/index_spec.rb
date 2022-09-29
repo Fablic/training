@@ -121,6 +121,45 @@ RSpec.feature '/tasks or /' do
       end
     end
 
+    feature "with 'sort: end_date' in search_params" do
+      background { 2.times { create(:task, end_date: nil) } }
+      background { create(:task, end_date: '2022/09/15 17:25') }
+      background { create(:task, end_date: '2022/09/13 17:25') }
+      given!(:tasks) { Task.all }
+
+      feature 'asc' do
+        scenario 'correctly displays tasks' do
+          visit tasks_path
+
+          expect(current_path).to eq '/tasks'
+
+          find("option[value='end_date_asc']").select_option
+          click_on '送信'
+
+          expect(page.all('.task')[0].find('.task_end_date').text).to eq ''
+          expect(page.all('.task')[1].find('.task_end_date').text).to eq ''
+          expect(page.all('.task')[2].find('.task_end_date').text).to eq '2022/09/13 17:25'
+          expect(page.all('.task')[3].find('.task_end_date').text).to eq '2022/09/15 17:25'
+        end
+      end
+
+      feature 'desc' do
+        scenario 'correctly displays tasks' do
+          visit tasks_path
+
+          expect(current_path).to eq '/tasks'
+
+          find("option[value='end_date_desc']").select_option
+          click_on '送信'
+
+          expect(page.all('.task')[0].find('.task_end_date').text).to eq '2022/09/15 17:25'
+          expect(page.all('.task')[1].find('.task_end_date').text).to eq '2022/09/13 17:25'
+          expect(page.all('.task')[2].find('.task_end_date').text).to eq ''
+          expect(page.all('.task')[3].find('.task_end_date').text).to eq ''
+        end
+      end
+    end
+
     feature 'clicks link buttons' do
       background do
         create(:task,
