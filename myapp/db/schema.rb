@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_08_002637) do
+ActiveRecord::Schema.define(version: 2022_09_29_051926) do
 
   create_table "labellings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.bigint "task_id", null: false
@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(version: 2022_09_08_002637) do
     t.boolean "maintenance_flg", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "name"
   end
 
   create_table "tasks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|

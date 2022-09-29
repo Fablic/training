@@ -1,9 +1,9 @@
 # coding: utf-8
 
-Maintenance.create(content_id: '101', maintenance_flg: false)
-Maintenance.create(content_id: '102', maintenance_flg: false)
-Maintenance.create(content_id: '103', maintenance_flg: false)
-Maintenance.create(content_id: '104', maintenance_flg: false)
+Maintenance.create(content_id: '101', name: 'タスク一覧', maintenance_flg: false)
+Maintenance.create(content_id: '102', name: 'タスク詳細', maintenance_flg: false)
+Maintenance.create(content_id: '103', name: 'タスク作成', maintenance_flg: false)
+Maintenance.create(content_id: '104', name: 'タスク編集', maintenance_flg: false)
 
 user = User.create(user_name: '草刈', password: 'kusakari', email: 'kusakari@example.com')
 user2 = User.create(user_name: '中村', password: 'nakamura', email: 'nakamura@example.com')

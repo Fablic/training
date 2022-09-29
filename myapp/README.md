@@ -10,42 +10,42 @@
 
 開始
 
-docker-compose exec api rails runner Tasks::Maintenancer.start_index_maintenance
+docker-compose exec api rails runner Tasks::Maintenancer.start_maintenance(101)
 
 終了
 
-docker-compose exec api rails runner Tasks::Maintenancer.end_index_maintenance
+docker-compose exec api rails runner Tasks::Maintenancer.end_maintenance(101)
 <br>
 
 【タスク詳細画面】
 
 開始
 
-docker-compose exec api rails runner Tasks::Maintenancer.start_show_maintenance
+docker-compose exec api rails runner Tasks::Maintenancer.start_maintenance(102)
 
 終了
 
-docker-compose exec api rails runner Tasks::Maintenancer.end_show_maintenance
+docker-compose exec api rails runner Tasks::Maintenancer.end_maintenance(102)
 <br>
 
 【タスク作成画面】
 開始
 
-docker-compose exec api rails runner Tasks::Maintenancer.start_new_maintenance
+docker-compose exec api rails runner Tasks::Maintenancer.start_maintenance(103)
 
 終了
 
-docker-compose exec api rails runner Tasks::Maintenancer.end_new_maintenance
+docker-compose exec api rails runner Tasks::Maintenancer.end_maintenance(103)
 <br>
 
 【タスク編集画面】
 開始
 
-docker-compose exec api rails runner Tasks::Maintenancer.start_edit_maintenance
+docker-compose exec api rails runner Tasks::Maintenancer.start_maintenance(104)
 
 終了
 
-docker-compose exec api rails runner Tasks::Maintenancer.end_edit_maintenance
+docker-compose exec api rails runner Tasks::Maintenancer.end_maintenance(104)
 <br>
 <br>
 
