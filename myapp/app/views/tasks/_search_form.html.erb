@@ -10,14 +10,14 @@
     <div class="row mb-3" style="padding:10px;">
       <%= form.label :status, 'ステータスで絞り込む', class: "col-sm-2 col-form-label" %>
       <div class="col-sm-10">
-        <%= form.select :status, I18n.t('select_form.task.status'), { include_blank: I18n.t('select_form.include_blank') }, class: "form-select", selected: params['status'] %>
+        <%= form.select :status, I18n.t('select_form.task.status'), { include_blank: I18n.t('select_form.include_blank'), selected: params['status'] }, class: "form-select" %>
       </div>
     </div>
 
     <div class="row mb-3" style="padding:10px;">
       <%= form.label :sort, 'ソート', class: "col-sm-2 col-form-label" %>
       <div class="col-sm-10">
-        <%= form.select :sort, I18n.t('select_form.search_form.sort'), {}, class: "form-select", selected: params['sort'] %>
+        <%= form.select :sort, I18n.t('select_form.search_form.sort'), { selected: params['sort'] }, class: "form-select" %>
       </div>
     </div>
 
