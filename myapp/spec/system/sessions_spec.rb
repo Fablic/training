@@ -4,7 +4,7 @@ describe 'セッション管理機能', type: :system do
   subject(:visit_login){ visit login_path }
 
   describe 'ログイン機能' do
-    let!(:maintenance) { FactoryBot.create(:maintenance) }
+    let!(:maintenance) { FactoryBot.create(:maintenance, content_id: 101, name: 'タスク一覧', maintenance_flg: false) }
     let!(:user_a) { FactoryBot.create(:user) }
 
     context 'メールアドレスとパスワードを入力した場合' do
@@ -108,10 +108,10 @@ describe 'セッション管理機能', type: :system do
 
   describe 'メンテナンス機能' do
     context 'メンテナンス中の場合' do
-      let!(:maintenance) { FactoryBot.create(:maintenance, content_id: 101, maintenance_flg: true) }
-      let!(:maintenance) { FactoryBot.create(:maintenance, content_id: 102, maintenance_flg: true) }
-      let!(:maintenance) { FactoryBot.create(:maintenance, content_id: 103, maintenance_flg: true) }
-      let!(:maintenance) { FactoryBot.create(:maintenance, content_id: 104, maintenance_flg: true) }
+      let!(:maintenance) { FactoryBot.create(:maintenance, content_id: 101, name: 'タスク一覧', maintenance_flg: true) }
+      let!(:maintenance) { FactoryBot.create(:maintenance, content_id: 102, name: 'タスク詳細', maintenance_flg: true) }
+      let!(:maintenance) { FactoryBot.create(:maintenance, content_id: 103, name: 'タスク作成', maintenance_flg: true) }
+      let!(:maintenance) { FactoryBot.create(:maintenance, content_id: 104, name: 'タスク編集', maintenance_flg: true) }
 
       it 'ログイン画面が表示される' do
         visit_login
@@ -120,10 +120,10 @@ describe 'セッション管理機能', type: :system do
     end
 
     context 'メンテナンス中でない場合' do
-      let!(:maintenance) { FactoryBot.create(:maintenance, content_id: 101, maintenance_flg: false) }
-      let!(:maintenance) { FactoryBot.create(:maintenance, content_id: 102, maintenance_flg: false) }
-      let!(:maintenance) { FactoryBot.create(:maintenance, content_id: 103, maintenance_flg: false) }
-      let!(:maintenance) { FactoryBot.create(:maintenance, content_id: 104, maintenance_flg: false) }
+      let!(:maintenance) { FactoryBot.create(:maintenance, content_id: 101, name: 'タスク一覧', maintenance_flg: false) }
+      let!(:maintenance) { FactoryBot.create(:maintenance, content_id: 102, name: 'タスク詳細', maintenance_flg: false) }
+      let!(:maintenance) { FactoryBot.create(:maintenance, content_id: 103, name: 'タスク作成', maintenance_flg: false) }
+      let!(:maintenance) { FactoryBot.create(:maintenance, content_id: 104, name: 'タスク編集', maintenance_flg: false) }
 
       it 'ログイン画面が表示される' do
         visit_login
