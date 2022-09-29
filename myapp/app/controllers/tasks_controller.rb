@@ -26,7 +26,7 @@ class TasksController < ApplicationController
 
     if @task.save
       redirect_to task_url(@task),
-                  notice: I18n.t('messages.create', model_name: I18n.t('activerecord.models.task'))
+                  flash: { success: I18n.t('messages.create', model_name: I18n.t('activerecord.models.task')) }
     else
       render :new, status: :unprocessable_entity
     end
@@ -35,7 +35,7 @@ class TasksController < ApplicationController
   def update
     if @task.update(task_params)
       redirect_to task_url(@task),
-                  notice: I18n.t('messages.update', model_name: I18n.t('activerecord.models.task'))
+                  flash: { success: I18n.t('messages.update', model_name: I18n.t('activerecord.models.task')) }
     else
       render :edit, status: :unprocessable_entity
     end
@@ -44,7 +44,8 @@ class TasksController < ApplicationController
   def destroy
     @task.destroy
 
-    redirect_to tasks_url, notice: I18n.t('messages.destroy', model_name: I18n.t('activerecord.models.task'))
+    redirect_to tasks_url,
+                flash: { success: I18n.t('messages.destroy', model_name: I18n.t('activerecord.models.task')) }
   end
 
   private
