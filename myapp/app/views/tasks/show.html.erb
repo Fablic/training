@@ -1,13 +1,12 @@
 <h1>Task Details</h1>
 <p><%= I18n.t('task.title') %></p>
-<p><%= @task[:title] %></p>
+<p><%= @task.title %></p>
 <p><%= I18n.t('task.description') %></p>
-<p><%= @task[:description] %></p>
+<p><%= @task.description %></p>
 <p><%= I18n.t('task.label') %></p>
 <% @task.labels.each do |label| %>
   <li><%= label.name %></li>
 <% end %>
-<p><%= @task[:label] %></p>
 <p><%= I18n.t('task.status') %></p>
 <p><%= I18n.t("enums.task.status.#{@task.status}") %></p>
 <%= link_to(I18n.t('link.back'), tasks_url) %>
