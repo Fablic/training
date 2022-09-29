@@ -2,8 +2,8 @@
 
 FactoryBot.define do
   factory :user do
-    name { 'MyString' }
-    email { 'MyString' }
-    password_digest { 'MyString' }
+    sequence(:name) { |i| "USER名_#{i}" }
+    sequence(:email) { |i| "Eメール_#{i}" }
+    password_digest { SecureRandom.alphanumeric }
   end
 end

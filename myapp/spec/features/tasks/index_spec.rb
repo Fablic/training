@@ -11,27 +11,32 @@ RSpec.feature '/tasks or /' do
                end_date: end_date_aqua,
                priority: 'high',
                status: 'untouched',
-               explanation: 'aqua hara')
+               explanation: 'aqua hara',
+               user_id: user.id)
         create(:task,
                name: 'kuma',
                end_date: end_date_kuma,
                priority: 'low',
                status: 'touched',
-               explanation: 'brown kuma')
+               explanation: 'brown kuma',
+               user_id: user.id)
         7.times.map { create(:task) }
         create(:task,
                name: 'nyanko',
                end_date: end_date_nyanko,
                priority: 'normal',
                status: 'completed',
-               explanation: 'white nyanko')
+               explanation: 'white nyanko',
+               user_id: user.id)
         create(:task,
                name: 'hiyoko',
                end_date: end_date_hiyoko,
                priority: 'normal',
                status: 'completed',
-               explanation: 'yellow hiyoko')
+               explanation: 'yellow hiyoko',
+               user_id: user.id)
       end
+      given(:user) { create(:user, name: 'kumaTaro') }
       given(:end_date_aqua) { '2022/09/14 17:25' }
       given(:end_date_kuma) { '2022/09/13 18:25' }
       given(:end_date_nyanko) { '2022/09/13 19:25' }
@@ -49,18 +54,21 @@ RSpec.feature '/tasks or /' do
           expect(page.all('.task')[0].find('.task_priority').text).to eq '高'
           expect(page.all('.task')[0].find('.task_status').text).to eq '未着手'
           expect(page.all('.task')[0].find('.task_explanation').text).to eq 'aqua hara'
+          expect(page.all('.task')[0].find('.task_user_name').text).to eq 'kumaTaro'
 
           expect(page.all('.task')[1].find('.task_name').text).to eq 'kuma'
           expect(page.all('.task')[1].find('.task_end_date').text).to eq '2022/09/13 18:25'
           expect(page.all('.task')[1].find('.task_priority').text).to eq '低'
           expect(page.all('.task')[1].find('.task_status').text).to eq '着手中'
           expect(page.all('.task')[1].find('.task_explanation').text).to eq 'brown kuma'
+          expect(page.all('.task')[1].find('.task_user_name').text).to eq 'kumaTaro'
 
           expect(page.all('.task')[9].find('.task_name').text).to eq 'nyanko'
           expect(page.all('.task')[9].find('.task_end_date').text).to eq '2022/09/13 19:25'
           expect(page.all('.task')[9].find('.task_priority').text).to eq '普通'
           expect(page.all('.task')[9].find('.task_status').text).to eq '完了'
           expect(page.all('.task')[9].find('.task_explanation').text).to eq 'white nyanko'
+          expect(page.all('.task')[9].find('.task_user_name').text).to eq 'kumaTaro'
         end
       end
 
@@ -77,6 +85,7 @@ RSpec.feature '/tasks or /' do
           expect(page.all('.task')[0].find('.task_priority').text).to eq '普通'
           expect(page.all('.task')[0].find('.task_status').text).to eq '完了'
           expect(page.all('.task')[0].find('.task_explanation').text).to eq 'yellow hiyoko'
+          expect(page.all('.task')[0].find('.task_user_name').text).to eq 'kumaTaro'
         end
       end
     end
@@ -88,14 +97,17 @@ RSpec.feature '/tasks or /' do
                end_date: end_date_aqua,
                priority: 'high',
                status: 'untouched',
-               explanation: 'aqua hara')
+               explanation: 'aqua hara',
+               user_id: user.id)
         create(:task,
                name: 'kuma',
                end_date: end_date_kuma,
                priority: 'low',
                status: 'touched',
-               explanation: 'brown kuma')
+               explanation: 'brown kuma',
+               user_id: user.id)
       end
+      given(:user) { create(:user, name: 'kumaTaro') }
       given(:end_date_aqua) { '2022/09/14 17:25' }
       given(:end_date_kuma) { '2022/09/13 18:25' }
 
@@ -111,12 +123,14 @@ RSpec.feature '/tasks or /' do
           expect(page.all('.task')[0].find('.task_priority').text).to eq '高'
           expect(page.all('.task')[0].find('.task_status').text).to eq '未着手'
           expect(page.all('.task')[0].find('.task_explanation').text).to eq 'aqua hara'
+          expect(page.all('.task')[0].find('.task_user_name').text).to eq 'kumaTaro'
 
           expect(page.all('.task')[1].find('.task_name').text).to eq 'kuma'
           expect(page.all('.task')[1].find('.task_end_date').text).to eq '2022/09/13 18:25'
           expect(page.all('.task')[1].find('.task_priority').text).to eq '低'
           expect(page.all('.task')[1].find('.task_status').text).to eq '着手中'
           expect(page.all('.task')[1].find('.task_explanation').text).to eq 'brown kuma'
+          expect(page.all('.task')[1].find('.task_user_name').text).to eq 'kumaTaro'
         end
       end
     end
@@ -128,14 +142,17 @@ RSpec.feature '/tasks or /' do
                end_date: end_date_aqua,
                priority: 'high',
                status: 'untouched',
-               explanation: 'aqua hara')
+               explanation: 'aqua hara',
+               user_id: user.id)
         create(:task,
                name: 'kuma',
                end_date: end_date_kuma,
                priority: 'low',
                status: 'touched',
-               explanation: 'brown kuma')
+               explanation: 'brown kuma',
+               user_id: user.id)
       end
+      given(:user) { create(:user, name: 'kumaTaro') }
       given(:end_date_aqua) { '2022/09/14 17:25' }
       given(:end_date_kuma) { '2022/09/13 18:25' }
 
@@ -152,12 +169,14 @@ RSpec.feature '/tasks or /' do
         expect(page.all('.task')[0].find('.task_priority').text).to eq '低'
         expect(page.all('.task')[0].find('.task_status').text).to eq '着手中'
         expect(page.all('.task')[0].find('.task_explanation').text).to eq 'brown kuma'
+        expect(page.all('.task')[0].find('.task_user_name').text).to eq 'kumaTaro'
 
         expect(page.all('.task')[1].find('.task_name').text).to eq 'aqua'
         expect(page.all('.task')[1].find('.task_end_date').text).to eq '2022/09/14 17:25'
         expect(page.all('.task')[1].find('.task_priority').text).to eq '高'
         expect(page.all('.task')[1].find('.task_status').text).to eq '未着手'
         expect(page.all('.task')[1].find('.task_explanation').text).to eq 'aqua hara'
+        expect(page.all('.task')[1].find('.task_user_name').text).to eq 'kumaTaro'
       end
     end
 

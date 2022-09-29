@@ -4,6 +4,7 @@ require 'rails_helper'
 
 RSpec.feature '/task/:id' do
   feature '#show' do
+    given(:user) { create(:user, name: 'kumaTaro') }
     given(:task) do
       create(:task,
              id: 1,
@@ -11,7 +12,8 @@ RSpec.feature '/task/:id' do
              end_date:,
              priority: 'high',
              status: 'untouched',
-             explanation: 'aqua hara')
+             explanation: 'aqua hara',
+             user_id: user.id)
     end
     given(:end_date) { '2022/09/14 17:25' }
 
@@ -24,6 +26,7 @@ RSpec.feature '/task/:id' do
       expect(page).to have_content '高'
       expect(page).to have_content '未着手'
       expect(page).to have_content 'aqua hara'
+      expect(page).to have_content 'kumaTaro'
     end
 
     scenario 'renders #edit' do

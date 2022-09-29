@@ -9,6 +9,7 @@ ja:
         priority: 優先順位
         status: ステータス
         explanation: 説明文
+        user_name: 作成者
     errors:
       messages:
         count: "%{count}件のエラーが発生しました。"
