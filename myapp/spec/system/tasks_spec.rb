@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'タスク管理機能', type: :system do
   before do
-    SystemMaintenance.create(key: SystemMaintenance::KEY_TASK_MANAGEMENT, status: SystemMaintenance.statuses[:started])
+    SystemMaintenance.create(key: SystemMaintenance::KEY_TASK_MANAGEMENT, maintenance_flg: false)
 
     # login
     visit login_path
@@ -474,9 +474,9 @@ describe 'タスク管理機能', type: :system do
     end
 
     describe 'メンテナンス機能' do
-      context 'システムが開始状態の場合'do
+      context 'メンテナンスが未開始状態の場合'do
         before do
-          SystemMaintenance.find_by(SystemMaintenance::KEY_TASK_MANAGEMENT).update(status: SystemMaintenance.statuses[:started])
+          SystemMaintenance.find_by(SystemMaintenance::KEY_TASK_MANAGEMENT).update(maintenance_flg: false)
         end
 
         it 'タスク一覧画面への遷移で503エラーが表示されないこと' do
@@ -485,9 +485,9 @@ describe 'タスク管理機能', type: :system do
         end
       end
 
-      context 'システムが停止状態の場合'do
+      context 'メンテナンスが開始状態の場合'do
         before do
-          SystemMaintenance.find_by(SystemMaintenance::KEY_TASK_MANAGEMENT).update(status: SystemMaintenance.statuses[:stopped])
+          SystemMaintenance.find_by(SystemMaintenance::KEY_TASK_MANAGEMENT).update(maintenance_flg: true)
         end
 
         it 'タスク一覧画面への遷移で503エラーが表示されること' do
@@ -532,9 +532,9 @@ describe 'タスク管理機能', type: :system do
     end
 
     describe 'メンテナンス機能' do
-      context 'システムが開始状態の場合'do
+      context 'メンテナンス未開始の場合'do
         before do
-          SystemMaintenance.find_by(SystemMaintenance::KEY_TASK_MANAGEMENT).update(status: SystemMaintenance.statuses[:started])
+          SystemMaintenance.find_by(SystemMaintenance::KEY_TASK_MANAGEMENT).update(maintenance_flg: false)
         end
 
         it 'タスク一覧画面への遷移で503エラーが表示されないこと' do
@@ -543,9 +543,9 @@ describe 'タスク管理機能', type: :system do
         end
       end
 
-      context 'システムが停止状態の場合'do
+      context 'メンテナンスが開始状態の場合'do
         before do
-          SystemMaintenance.find_by(SystemMaintenance::KEY_TASK_MANAGEMENT).update(status: SystemMaintenance.statuses[:stopped])
+          SystemMaintenance.find_by(SystemMaintenance::KEY_TASK_MANAGEMENT).update(maintenance_flg: true)
         end
 
         it 'タスク一覧画面への遷移で503エラーが表示されること' do
@@ -598,9 +598,9 @@ describe 'タスク管理機能', type: :system do
     end
 
     describe 'メンテナンス機能' do
-      context 'システムが開始状態の場合'do
+      context 'メンテナンス未開始の場合'do
         before do
-          SystemMaintenance.find_by(SystemMaintenance::KEY_TASK_MANAGEMENT).update(status: SystemMaintenance.statuses[:started])
+          SystemMaintenance.find_by(SystemMaintenance::KEY_TASK_MANAGEMENT).update(maintenance_flg: false)
         end
 
         it 'タスク一覧画面への遷移で503エラーが表示されないこと' do
@@ -609,9 +609,9 @@ describe 'タスク管理機能', type: :system do
         end
       end
 
-      context 'システムが停止状態の場合'do
+      context 'メンテナンス開始の場合'do
         before do
-          SystemMaintenance.find_by(SystemMaintenance::KEY_TASK_MANAGEMENT).update(status: SystemMaintenance.statuses[:stopped])
+          SystemMaintenance.find_by(SystemMaintenance::KEY_TASK_MANAGEMENT).update(maintenance_flg: true)
         end
 
         it 'タスク一覧画面への遷移で503エラーが表示されること' do
@@ -683,9 +683,9 @@ describe 'タスク管理機能', type: :system do
     end
 
     describe 'メンテナンス機能' do
-      context 'システムが開始状態の場合'do
+      context 'メンテナンス未開始の場合'do
         before do
-          SystemMaintenance.find_by(SystemMaintenance::KEY_TASK_MANAGEMENT).update(status: SystemMaintenance.statuses[:started])
+          SystemMaintenance.find_by(SystemMaintenance::KEY_TASK_MANAGEMENT).update(maintenance_flg: false)
         end
 
         it 'タスク一覧画面への遷移で503エラーが表示されないこと' do
@@ -696,7 +696,7 @@ describe 'タスク管理機能', type: :system do
 
       context 'システムが停止状態の場合'do
         before do
-          SystemMaintenance.find_by(SystemMaintenance::KEY_TASK_MANAGEMENT).update(status: SystemMaintenance.statuses[:stopped])
+          SystemMaintenance.find_by(SystemMaintenance::KEY_TASK_MANAGEMENT).update(maintenance_flg: true)
         end
 
         it 'タスク一覧画面への遷移で503エラーが表示されること' do

@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   before_action :current_user
   before_action :re_sign_in
-  before_action :is_system_started
+  before_action :is_maintenance
 
   def sign_in(user)
     session[:user_id] = user.id
@@ -21,8 +21,8 @@ class ApplicationController < ActionController::Base
     redirect_to(login_path) if current_user.nil?
   end
 
-  def is_system_started
-    if SystemMaintenance.is_stopped(SystemMaintenance::KEY_TASK_MANAGEMENT)
+  def is_maintenance
+    if SystemMaintenance.is_maintenance?(SystemMaintenance::KEY_TASK_MANAGEMENT)
       render(
         file: Rails.public_path.join("503.html"),
         content_type: "text/html",

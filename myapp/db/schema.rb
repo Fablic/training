@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 2022_09_14_090913) do
 
   create_table "system_maintenances", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "key"
-    t.string "status", limit: 1, default: "1", null: false
+    t.boolean "maintenance_flg", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

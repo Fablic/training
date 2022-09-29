@@ -21,4 +21,4 @@ end
 end
 
 # SystemMaintenance
-SystemMaintenance.create!(key: SystemMaintenance::KEY_TASK_MANAGEMENT, status: SystemMaintenance.statuses[:started])
+SystemMaintenance.create!(key: SystemMaintenance::KEY_TASK_MANAGEMENT, maintenance_flg: false)
