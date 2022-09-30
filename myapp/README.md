@@ -170,6 +170,16 @@ column_name | type | null | default
 | updated_at | datetime | | |
 <br>
 
+maintenances
+column_name | type | null | default
+| ---- | ---- | ---- | ---- |
+| id | integer | not null | auto increment |
+| content_id | integer | | |
+| maintenence_flag | boolean | | |
+| created_at | datetime | | |
+| updated_at | datetime | | |
+<br>
+
 tasks
 column_name | type | null | default
 | ---- | ---- | ---- | ---- |
