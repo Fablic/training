@@ -5,10 +5,6 @@ class ApplicationController < ActionController::Base
   before_action :render_503_except, if: :maintenance_mode?
   include SessionsHelper
 
-  def maintenance_mode?
-    File.exist?("lib/maintenance/maintenance.txt")
-  end
-
   def routing_error
     raise ActionController::RoutingError, params[:path]
   end
@@ -17,6 +13,10 @@ class ApplicationController < ActionController::Base
     rescue_from Exception,                        with: :_render500
     rescue_from ActiveRecord::RecordNotFound,     with: :_render404
     rescue_from ActionController::RoutingError,   with: :_render404
+  end
+
+  def maintenance_mode?
+    File.exist?("lib/maintenance/maintenance.txt")
   end
 
   def render_503_except
