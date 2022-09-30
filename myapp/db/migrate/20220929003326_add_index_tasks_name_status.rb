@@ -2,6 +2,6 @@
 
 class AddIndexTasksNameStatus < ActiveRecord::Migration[7.0]
   def change
-    add_index :tasks, [:name, :status]
+    add_index :tasks, %i[name status]
   end
 end
