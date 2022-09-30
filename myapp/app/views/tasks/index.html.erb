@@ -1,6 +1,9 @@
 <p style="color: green"><%= notice %></p>
 
 <h1 class="display-1">検索フォーム</h1>
+
+<%= link_to I18n.t('sessions.button.logout'), logout_path, method: :delete, class: "btn btn-primary mx-1" %>
+
 <%= render "search_form" %>
 
 <h1 class="display-1">タスク一覧</h1>

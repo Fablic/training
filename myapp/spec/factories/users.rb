@@ -4,6 +4,6 @@ FactoryBot.define do
   factory :user do
     sequence(:name) { |i| "USER名_#{i}" }
     sequence(:email) { |i| "Eメール_#{i}" }
-    password_digest { SecureRandom.alphanumeric }
+    password { 'password' }
   end
 end
