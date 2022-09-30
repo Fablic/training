@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Task < ApplicationRecord
+  has_many :labellings, dependent: :destroy
+  has_many :labels, through: :labellings
   validates :title, presence: true
   validates :body,  presence: true
   validates :finish_at, presence: true
@@ -17,9 +19,12 @@ class Task < ApplicationRecord
 
     title_like(search_params[:title])
       .status_is(search_params[:status])
+      .label_ids_is(search_params[:label_ids])
   end
+
   scope :title_like, ->(title) { where('title LIKE ?', "%#{title}%") if title.present? }
   scope :status_is, ->(status) { where(status: status) if status.present? }
+  scope :label_ids_is, ->(label) { joins(:labellings).where(labellings: { label_id: label }) if label != [''] }
 
   enum status: {
     untouched: 0,
