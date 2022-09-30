@@ -69,11 +69,9 @@ RSpec.describe Task, type: :model do
   end
 
   describe '.search_by_keyword' do
-    before do
-      create(:task, name: 'タスク', explanation: '説明文')
-      create(:task, name: 'ラスク', explanation: 'タスク')
-      create(:task, name: 'リスク', explanation: 'にゃんこ')
-    end
+    let!(:first_task) { create(:task, name: 'タスク', explanation: '説明文') }
+    let!(:second_task) { create(:task, name: 'ラスク', explanation: 'タスク') }
+    let!(:third_task) { create(:task, name: 'リスク', explanation: 'にゃんこ') }
 
     subject { Task.search_by_keyword(keyword) }
 
@@ -87,11 +85,9 @@ RSpec.describe Task, type: :model do
   end
 
   describe '.search_by_status' do
-    before do
-      create(:task, status: 'untouched')
-      create(:task, status: 'touched')
-      create(:task, status: 'untouched')
-    end
+    let!(:first_task) { create(:task, status: 'untouched') }
+    let!(:second_task) { create(:task, status: 'touched') }
+    let!(:third_task) { create(:task, status: 'untouched') }
 
     subject { Task.search_by_status(status) }
 
