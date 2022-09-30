@@ -136,6 +136,7 @@ RSpec.feature '/tasks or /' do
           find("option[value='end_date_asc']").select_option
           click_on '送信'
 
+          expect(page.all('.task').count).to eq 4
           expect(page.all('.task')[0].find('.task_end_date').text).to eq ''
           expect(page.all('.task')[1].find('.task_end_date').text).to eq ''
           expect(page.all('.task')[2].find('.task_end_date').text).to eq '2022/09/13 17:25'
@@ -157,6 +158,25 @@ RSpec.feature '/tasks or /' do
           expect(page.all('.task')[2].find('.task_end_date').text).to eq ''
           expect(page.all('.task')[3].find('.task_end_date').text).to eq ''
         end
+      end
+    end
+
+    feature "with 'keyword: くま' in search_params" do
+      given!(:task_aqua) { create(:task, name: 'アクア', explanation: 'アイコンはくま太郎') }
+      given!(:task_kuma) { create(:task, name: 'くま二郎', explanation: '毛が茶色い') }
+      given!(:task_nyanko) { create(:task, name: 'にゃんこ', explanation: '毛が白い') }
+
+      scenario 'correctly displays tasks' do
+        visit tasks_path
+
+        expect(current_path).to eq '/tasks'
+
+        fill_in 'キーワード検索', with: 'くま'
+        click_on '送信'
+
+        expect(page.all('.task').count).to eq 2
+        expect(page.all('.task')[0].find('.task_name').text).to eq 'アクア'
+        expect(page.all('.task')[1].find('.task_name').text).to eq 'くま二郎'
       end
     end
 

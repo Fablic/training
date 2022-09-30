@@ -29,6 +29,8 @@ class Task < ApplicationRecord
   }, prefix: true
 
   scope :sort_by_keyword, ->(sort) { order(SORT_TYPE[sort]) }
+  scope :search_by_keyword, ->(keyword) { where('CONCAT(name, explanation) LIKE ?', "%#{sanitize_sql_like(keyword)}%") }
+  scope :search_by_status, ->(status) { where(status:) }
 
   def set_default_values
     self.priority ||= DEFAULT_PRIORITY_VALUE
