@@ -1,0 +1,4 @@
+INDEX = 1
+SHOW = 2
+NEW = 3
+EDIT = 4
