@@ -68,14 +68,14 @@ RSpec.describe Task, type: :model do
     end
   end
 
-  describe '.search_keyword' do
+  describe '.search_by_keyword' do
     let!(:first_task) { create(:task, name: 'タスク', explanation: '説明文') }
     let!(:second_task) { create(:task, name: 'ラスク', explanation: 'タスク') }
     let!(:third_task) { create(:task, name: 'リスク', explanation: 'にゃんこ') }
 
-    subject { Task.search_keyword(keyword) }
+    subject { Task.search_by_keyword(keyword) }
 
-    context "when argument 'search_keyword' exists" do
+    context "when argument 'search_by_keyword' exists" do
       let(:keyword) { 'タスク' }
 
       it 'search from name or explanation' do
@@ -84,14 +84,14 @@ RSpec.describe Task, type: :model do
     end
   end
 
-  describe '.search_status' do
+  describe '.search_by_status' do
     let!(:first_task) { create(:task, status: 'untouched') }
     let!(:second_task) { create(:task, status: 'touched') }
     let!(:third_task) { create(:task, status: 'untouched') }
 
-    subject { Task.search_status(status) }
+    subject { Task.search_by_status(status) }
 
-    context "when argument 'search_status' exists" do
+    context "when argument 'search_by_status' exists" do
       let(:status) { 'untouched' }
 
       it 'search from specified status' do

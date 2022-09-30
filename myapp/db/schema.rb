@@ -21,6 +21,6 @@ ActiveRecord::Schema[7.0].define(version: 20_220_929_003_326) do
     t.text 'explanation', comment: '説明文'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
-    t.index ['status'], name: 'index_tasks_on_status'
+    t.index %w[name status], name: 'index_tasks_on_name_and_status'
   end
 end
