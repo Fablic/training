@@ -8,5 +8,6 @@
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+/lib/maintenance/maintenance.txt
 
 package.json
