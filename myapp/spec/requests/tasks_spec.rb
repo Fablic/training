@@ -6,19 +6,48 @@ RSpec.describe '/tasks', type: :request do
   let(:task_input_columns) { %w[name end_date priority status explanation] }
 
   describe 'GET /index' do
-    context 'does not exist search_params' do
-      let!(:tasks) { create_list(:task, 11) }
+    context 'does NOT exist search_params' do
+      let!(:tasks) { Kaminari.paginate_array(create_list(:task, 11)).page(page) }
 
-      it 'renders a successful response' do
-        get tasks_url
+      context 'page:1' do
+        let(:page) { 1 }
 
-        expect(response).to have_http_status(:ok)
-        tasks.each { |task| expect(response.body).to include task.name.to_s }
+        it 'renders a successful response' do
+          get tasks_url
+
+          expect(response).to have_http_status(:ok)
+          tasks.each { |task| expect(response.body).to include task.name.to_s }
+        end
+      end
+
+      context 'page:2' do
+        let(:page) { 2 }
+
+        it 'renders a successful response' do
+          get tasks_url + "/?page=#{page}"
+
+          expect(response).to have_http_status(:ok)
+          tasks.each { |task| expect(response.body).to include task.name.to_s }
+        end
       end
     end
 
     context "When argument 'sort' exists in search_params" do
       let!(:tasks) { create_list(:task, 11) }
+
+      context 'created_at_asc' do
+        let(:params) do
+          { sort: 'created_at_asc' }
+        end
+
+        it 'renders a successful response' do
+          get tasks_url, params: params
+
+          expect(response).to have_http_status(:ok)
+          Task.all.slice(0..9).each { |task| expect(response.body).to include task.name.to_s }
+          expect(response.body).not_to include Task.all.last.name.to_s
+        end
+      end
 
       context 'created_at_desc' do
         let(:params) do
@@ -29,7 +58,8 @@ RSpec.describe '/tasks', type: :request do
           get tasks_url, params: params
 
           expect(response).to have_http_status(:ok)
-          tasks.each { |task| expect(response.body).to include task.name.to_s }
+          Task.all.reverse.slice(0..9).each { |task| expect(response.body).to include task.name.to_s }
+          expect(response.body).not_to include Task.all.reverse.last.name.to_s
         end
       end
 
@@ -42,7 +72,8 @@ RSpec.describe '/tasks', type: :request do
           get tasks_url, params: params
 
           expect(response).to have_http_status(:ok)
-          tasks.each { |task| expect(response.body).to include task.name.to_s }
+          Task.all.slice(0..9).each { |task| expect(response.body).to include task.name.to_s }
+          expect(response.body).not_to include Task.all.last.name.to_s
         end
       end
 
@@ -55,7 +86,8 @@ RSpec.describe '/tasks', type: :request do
           get tasks_url, params: params
 
           expect(response).to have_http_status(:ok)
-          tasks.each { |task| expect(response.body).to include task.name.to_s }
+          Task.all.reverse.slice(0..9).each { |task| expect(response.body).to include task.name.to_s }
+          expect(response.body).not_to include Task.all.reverse.last.name.to_s
         end
       end
     end
