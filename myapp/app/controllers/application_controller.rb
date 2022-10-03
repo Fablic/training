@@ -3,12 +3,17 @@
 class ApplicationController < ActionController::Base
   add_flash_types :success, :info, :warning, :danger
   rescue_from Exception, with: :render_500
+  rescue_from ActionController::BadRequest, with: :render_400
   rescue_from ActiveRecord::RecordNotFound, with: :render_404
   rescue_from ActionController::RoutingError, with: :render_404
 
   helper_method :current_user
 
   before_action :login_required
+
+  def render_400
+    render file: 'public/400.html', layout: false, status: 400
+  end
 
   def render_404
     render file: 'public/404.html', layout: false, status: 404

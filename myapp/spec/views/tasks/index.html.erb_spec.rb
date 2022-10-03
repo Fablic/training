@@ -31,6 +31,8 @@ RSpec.describe 'tasks/index', type: :view do
   it 'renders a list of tasks' do
     render
 
+    expect(rendered).to match(/ログアウトする/)
+
     expect(rendered).to match(/aqua/)
     expect(rendered).to match(/#{end_date_aqua}/)
     expect(rendered).to match(/高/)

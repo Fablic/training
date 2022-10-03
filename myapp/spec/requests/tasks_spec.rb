@@ -12,7 +12,7 @@ RSpec.describe '/tasks', type: :request do
 
   describe 'GET /index' do
     context 'does NOT exist search_params' do
-      let!(:tasks) { Kaminari.paginate_array(create_list(:task, 11)).page(page) }
+      let!(:tasks) { Kaminari.paginate_array(11.times.map { create(:task, user_id: user.id) }).page(page) }
 
       context 'page:1' do
         let(:page) { 1 }
@@ -38,7 +38,7 @@ RSpec.describe '/tasks', type: :request do
     end
 
     context "When argument 'sort' exists in search_params" do
-      let!(:tasks) { create_list(:task, 11) }
+      let!(:tasks) { 11.times.map { create(:task, user_id: user.id) } }
 
       context 'created_at_asc' do
         let(:params) do
@@ -98,9 +98,9 @@ RSpec.describe '/tasks', type: :request do
     end
 
     context 'exists keyword in search_params' do
-      let!(:task_aqua) { create(:task, name: 'アクア', explanation: 'アイコンはくま') }
-      let!(:task_kuma) { create(:task, name: 'くま', explanation: '毛が茶色い') }
-      let!(:task_nyanko) { create(:task, name: 'にゃんこ', explanation: '毛が白い') }
+      let!(:task_aqua) { create(:task, name: 'アクア', explanation: 'アイコンはくま', user_id: user.id) }
+      let!(:task_kuma) { create(:task, name: 'くま', explanation: '毛が茶色い', user_id: user.id) }
+      let!(:task_nyanko) { create(:task, name: 'にゃんこ', explanation: '毛が白い', user_id: user.id) }
 
       context 'keyword: くま' do
         let(:params) do
@@ -119,11 +119,11 @@ RSpec.describe '/tasks', type: :request do
     end
 
     context 'exists status in search_params' do
-      let!(:task_aqua) { create(:task, name: 'アクア', status: 'untouched') }
-      let!(:task_kuma) { create(:task, name: 'くま', status: 'touched') }
-      let!(:task_nyanko) { create(:task, name: 'にゃんこ', status: 'completed') }
-      let!(:task_piyo) { create(:task, name: 'ひよこ', status: 'untouched') }
-      let!(:task_usa) { create(:task, name: 'うさぎ', status: 'untouched') }
+      let!(:task_aqua) { create(:task, name: 'アクア', status: 'untouched', user_id: user.id) }
+      let!(:task_kuma) { create(:task, name: 'くま', status: 'touched', user_id: user.id) }
+      let!(:task_nyanko) { create(:task, name: 'にゃんこ', status: 'completed', user_id: user.id) }
+      let!(:task_piyo) { create(:task, name: 'ひよこ', status: 'untouched', user_id: user.id) }
+      let!(:task_usa) { create(:task, name: 'うさぎ', status: 'untouched', user_id: user.id) }
 
       context 'status: untouched' do
         let(:params) do
@@ -162,7 +162,7 @@ RSpec.describe '/tasks', type: :request do
   end
 
   describe 'GET /show' do
-    let(:task) { create(:task) }
+    let(:task) { create(:task, user_id: user.id) }
 
     it 'renders a successful response' do
       get task_url(task)
@@ -182,7 +182,7 @@ RSpec.describe '/tasks', type: :request do
   end
 
   describe 'GET /edit' do
-    let(:task) { create(:task) }
+    let(:task) { create(:task, user_id: user.id) }
 
     it 'renders a successful response' do
       get edit_task_url(task)
@@ -268,7 +268,7 @@ RSpec.describe '/tasks', type: :request do
 
   describe 'PUT /update' do
     context 'with valid parameters' do
-      let(:task) { create(:task) }
+      let(:task) { create(:task, user_id: user.id) }
 
       let(:new_attributes) do
         {
@@ -296,7 +296,7 @@ RSpec.describe '/tasks', type: :request do
     end
 
     context 'with invalid parameters' do
-      let(:task) { create(:task) }
+      let(:task) { create(:task, user_id: user.id) }
 
       let(:invalid_attributes) do
         { task: {
@@ -318,7 +318,7 @@ RSpec.describe '/tasks', type: :request do
   end
 
   describe 'DELETE /destroy' do
-    let!(:task) { create(:task) }
+    let!(:task) { create(:task, user_id: user.id) }
 
     it 'destroys the requested task' do
       expect { delete task_url(task) }.to change(Task, :count).by(-1)
@@ -329,6 +329,36 @@ RSpec.describe '/tasks', type: :request do
 
       expect(response).to have_http_status(:found)
       expect(response).to redirect_to(tasks_url)
+    end
+  end
+
+  describe '#bad_request' do
+    let(:another_user) { create(:user) }
+    let(:task) { create(:task, user_id: another_user.id) }
+
+    shared_examples :returns_status400 do
+      it 'returns status 400' do
+        subject
+
+        expect(response).to have_http_status :bad_request
+        expect(response.body).to include '400なので念の為表示出来ないよ！'
+        expect(response.body).to include '不正なことしてない〜？？'
+      end
+    end
+
+    context '#show' do
+      subject { get task_url(task) }
+      it_behaves_like :returns_status400
+    end
+
+    context '#update' do
+      subject { put task_url(task) }
+      it_behaves_like :returns_status400
+    end
+
+    context '#destroy' do
+      subject { delete task_url(task) }
+      it_behaves_like :returns_status400
     end
   end
 

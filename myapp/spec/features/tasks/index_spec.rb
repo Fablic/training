@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.feature '/tasks or /' do
   feature '#index' do
-    feature 'tasks' do
+    feature 'tasks by all same users' do
       background do
         create(:task,
                name: 'aqua',
@@ -20,7 +20,7 @@ RSpec.feature '/tasks or /' do
                status: 'touched',
                explanation: 'brown kuma',
                user_id: user.id)
-        7.times.map { create(:task) }
+        7.times.map { create(:task, user_id: user.id) }
         create(:task,
                name: 'nyanko',
                end_date: end_date_nyanko,
@@ -45,11 +45,6 @@ RSpec.feature '/tasks or /' do
       feature 'page:1' do
         scenario 'correctly displays tasks' do
           login(user)
-
-          visit login_path
-          fill_in 'メールアドレス', with: user.email
-          fill_in 'パスワード', with: user.password
-          click_button 'ログインする'
 
           visit root_path
 
@@ -82,6 +77,111 @@ RSpec.feature '/tasks or /' do
       feature 'page:2' do
         scenario 'correctly displays tasks' do
           login(user)
+
+          visit root_path
+          click_on 'Next'
+
+          expect(current_path).to eq '/'
+          expect(page.all('.task').count).to eq 1
+
+          expect(page.all('.task')[0].find('.task_name').text).to eq 'hiyoko'
+          expect(page.all('.task')[0].find('.task_end_date').text).to eq '2022/09/13 20:25'
+          expect(page.all('.task')[0].find('.task_priority').text).to eq '普通'
+          expect(page.all('.task')[0].find('.task_status').text).to eq '完了'
+          expect(page.all('.task')[0].find('.task_explanation').text).to eq 'yellow hiyoko'
+          expect(page.all('.task')[0].find('.task_user_name').text).to eq 'kumaTaro'
+        end
+      end
+    end
+
+    feature 'tasks by different users' do
+      background do
+        create(:task,
+               name: 'aqua',
+               end_date: end_date_aqua,
+               priority: 'high',
+               status: 'untouched',
+               explanation: 'aqua hara',
+               user_id: user_kuma.id)
+        create(:task,
+               name: 'aqua2',
+               end_date: end_date_aqua,
+               priority: 'high',
+               status: 'untouched',
+               explanation: 'aqua hara',
+               user_id: user_nyanko.id)
+        create(:task,
+               name: 'kuma',
+               end_date: end_date_kuma,
+               priority: 'low',
+               status: 'touched',
+               explanation: 'brown kuma',
+               user_id: user_kuma.id)
+        7.times.map { create(:task, user_id: user_kuma.id) }
+        create(:task,
+               name: 'nyanko',
+               end_date: end_date_nyanko,
+               priority: 'normal',
+               status: 'completed',
+               explanation: 'white nyanko',
+               user_id: user_kuma.id)
+        create(:task,
+               name: 'nyanko2',
+               end_date: end_date_nyanko,
+               priority: 'normal',
+               status: 'completed',
+               explanation: 'white nyanko',
+               user_id: user_nyanko.id)
+        create(:task,
+               name: 'hiyoko',
+               end_date: end_date_hiyoko,
+               priority: 'normal',
+               status: 'completed',
+               explanation: 'yellow hiyoko',
+               user_id: user_kuma.id)
+      end
+      given(:user_kuma) { create(:user, name: 'kumaTaro') }
+      given(:user_nyanko) { create(:user, name: 'nyankoHanako') }
+      given(:end_date_aqua) { '2022/09/14 17:25' }
+      given(:end_date_kuma) { '2022/09/13 18:25' }
+      given(:end_date_nyanko) { '2022/09/13 19:25' }
+      given(:end_date_hiyoko) { '2022/09/13 20:25' }
+
+      feature 'page:1' do
+        scenario 'correctly displays tasks' do
+          login(user_kuma)
+
+          visit root_path
+
+          expect(current_path).to eq '/'
+          expect(page.all('.task').count).to eq 10
+
+          expect(page.all('.task')[0].find('.task_name').text).to eq 'aqua'
+          expect(page.all('.task')[0].find('.task_end_date').text).to eq '2022/09/14 17:25'
+          expect(page.all('.task')[0].find('.task_priority').text).to eq '高'
+          expect(page.all('.task')[0].find('.task_status').text).to eq '未着手'
+          expect(page.all('.task')[0].find('.task_explanation').text).to eq 'aqua hara'
+          expect(page.all('.task')[0].find('.task_user_name').text).to eq 'kumaTaro'
+
+          expect(page.all('.task')[1].find('.task_name').text).to eq 'kuma'
+          expect(page.all('.task')[1].find('.task_end_date').text).to eq '2022/09/13 18:25'
+          expect(page.all('.task')[1].find('.task_priority').text).to eq '低'
+          expect(page.all('.task')[1].find('.task_status').text).to eq '着手中'
+          expect(page.all('.task')[1].find('.task_explanation').text).to eq 'brown kuma'
+          expect(page.all('.task')[1].find('.task_user_name').text).to eq 'kumaTaro'
+
+          expect(page.all('.task')[9].find('.task_name').text).to eq 'nyanko'
+          expect(page.all('.task')[9].find('.task_end_date').text).to eq '2022/09/13 19:25'
+          expect(page.all('.task')[9].find('.task_priority').text).to eq '普通'
+          expect(page.all('.task')[9].find('.task_status').text).to eq '完了'
+          expect(page.all('.task')[9].find('.task_explanation').text).to eq 'white nyanko'
+          expect(page.all('.task')[9].find('.task_user_name').text).to eq 'kumaTaro'
+        end
+      end
+
+      feature 'page:2' do
+        scenario 'correctly displays tasks' do
+          login(user_kuma)
 
           visit root_path
           click_on 'Next'
@@ -194,9 +294,9 @@ RSpec.feature '/tasks or /' do
     end
 
     feature "with 'sort: end_date' in search_params" do
-      background { 2.times { create(:task, end_date: nil) } }
-      background { create(:task, end_date: '2022/09/15 17:25') }
-      background { create(:task, end_date: '2022/09/13 17:25') }
+      background { 2.times { create(:task, end_date: nil, user_id: user.id) } }
+      background { create(:task, end_date: '2022/09/15 17:25', user_id: user.id) }
+      background { create(:task, end_date: '2022/09/13 17:25', user_id: user.id) }
       given!(:tasks) { Task.all }
       given(:user) { create(:user) }
 
@@ -239,9 +339,9 @@ RSpec.feature '/tasks or /' do
     end
 
     feature "with 'keyword: くま' in search_params" do
-      given!(:task_aqua) { create(:task, name: 'アクア', explanation: 'アイコンはくま太郎') }
-      given!(:task_kuma) { create(:task, name: 'くま二郎', explanation: '毛が茶色い') }
-      given!(:task_nyanko) { create(:task, name: 'にゃんこ', explanation: '毛が白い') }
+      given!(:task_aqua) { create(:task, name: 'アクア', explanation: 'アイコンはくま太郎', user_id: user.id) }
+      given!(:task_kuma) { create(:task, name: 'くま二郎', explanation: '毛が茶色い', user_id: user.id) }
+      given!(:task_nyanko) { create(:task, name: 'にゃんこ', explanation: '毛が白い', user_id: user.id) }
       given(:user) { create(:user) }
 
       scenario 'correctly displays tasks' do
@@ -268,7 +368,8 @@ RSpec.feature '/tasks or /' do
                end_date: end_date_aqua,
                priority: 'high',
                status: 'untouched',
-               explanation: 'aqua hara')
+               explanation: 'aqua hara',
+               user_id: user.id)
       end
       background { create_list(:task, 11) }
       given(:end_date_aqua) { '2022/09/14 17:25' }
