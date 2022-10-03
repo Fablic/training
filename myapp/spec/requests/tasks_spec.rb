@@ -3,6 +3,11 @@
 require 'rails_helper'
 
 RSpec.describe '/tasks', type: :request do
+  let!(:user) { create(:user) }
+  before do
+    post '/login', params: { session: { email: user.email, password: user.password } }
+  end
+
   let(:task_input_columns) { %w[name end_date priority status explanation] }
 
   describe 'GET /index' do

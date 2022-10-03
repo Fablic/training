@@ -2,6 +2,13 @@
 
 require 'rails_helper'
 
-RSpec.describe 'sessions/new.html.erb', type: :view do
-  pending "add some examples to (or delete) #{__FILE__}"
+RSpec.describe 'sessions/new', type: :view do
+  it 'renders new user form' do
+    render
+
+    assert_select 'form[action=?][method=?]', '/login', 'post' do
+      assert_select 'input[name=?]', 'session[email]'
+      assert_select 'input[name=?]', 'session[password]'
+    end
+  end
 end

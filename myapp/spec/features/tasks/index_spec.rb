@@ -44,6 +44,13 @@ RSpec.feature '/tasks or /' do
 
       feature 'page:1' do
         scenario 'correctly displays tasks' do
+          login(user)
+
+          visit login_path
+          fill_in 'メールアドレス', with: user.email
+          fill_in 'パスワード', with: user.password
+          click_button 'ログインする'
+
           visit root_path
 
           expect(current_path).to eq '/'
@@ -74,6 +81,8 @@ RSpec.feature '/tasks or /' do
 
       feature 'page:2' do
         scenario 'correctly displays tasks' do
+          login(user)
+
           visit root_path
           click_on 'Next'
 
@@ -113,6 +122,8 @@ RSpec.feature '/tasks or /' do
 
       feature 'page:1' do
         scenario 'correctly displays tasks' do
+          login(user)
+
           visit tasks_path
 
           find("option[value='created_at_asc']").select_option
@@ -157,6 +168,8 @@ RSpec.feature '/tasks or /' do
       given(:end_date_kuma) { '2022/09/13 18:25' }
 
       scenario 'correctly displays tasks' do
+        login(user)
+
         visit tasks_path
 
         expect(current_path).to eq '/tasks'
@@ -185,9 +198,12 @@ RSpec.feature '/tasks or /' do
       background { create(:task, end_date: '2022/09/15 17:25') }
       background { create(:task, end_date: '2022/09/13 17:25') }
       given!(:tasks) { Task.all }
+      given(:user) { create(:user) }
 
       feature 'asc' do
         scenario 'correctly displays tasks' do
+          login(user)
+
           visit tasks_path
 
           expect(current_path).to eq '/tasks'
@@ -205,6 +221,8 @@ RSpec.feature '/tasks or /' do
 
       feature 'desc' do
         scenario 'correctly displays tasks' do
+          login(user)
+
           visit tasks_path
 
           expect(current_path).to eq '/tasks'
@@ -224,8 +242,11 @@ RSpec.feature '/tasks or /' do
       given!(:task_aqua) { create(:task, name: 'アクア', explanation: 'アイコンはくま太郎') }
       given!(:task_kuma) { create(:task, name: 'くま二郎', explanation: '毛が茶色い') }
       given!(:task_nyanko) { create(:task, name: 'にゃんこ', explanation: '毛が白い') }
+      given(:user) { create(:user) }
 
       scenario 'correctly displays tasks' do
+        login(user)
+
         visit tasks_path
 
         expect(current_path).to eq '/tasks'
@@ -251,8 +272,11 @@ RSpec.feature '/tasks or /' do
       end
       background { create_list(:task, 11) }
       given(:end_date_aqua) { '2022/09/14 17:25' }
+      given(:user) { create(:user) }
 
       scenario 'renders #new' do
+        login(user)
+
         visit root_path
         click_on '新規作成する'
 
@@ -261,6 +285,8 @@ RSpec.feature '/tasks or /' do
       end
 
       scenario 'renders #show' do
+        login(user)
+
         visit root_path
         first(:link, '詳細を確認する').click
 
@@ -269,6 +295,25 @@ RSpec.feature '/tasks or /' do
         expect(page).to have_content '高'
         expect(page).to have_content '未着手'
         expect(page).to have_content 'aqua hara'
+      end
+    end
+
+    feature 'clicks logout buttons' do
+      given(:user) { create(:user) }
+
+      scenario 'redirects to sessions#new' do
+        login(user)
+
+        visit root_path
+        expect(page).not_to have_content 'ログイン'
+
+        click_on 'ログアウトする'
+
+        expect(current_path).to eq '/logout'
+        expect { visit '/logout' }.to change {
+          current_path
+        }.from('/logout').to('/login')
+        expect(page).to have_content 'ログイン'
       end
     end
   end
