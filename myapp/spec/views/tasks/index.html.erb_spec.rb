@@ -21,7 +21,7 @@ RSpec.describe 'tasks/index', type: :view do
   end
   let(:end_date_aqua) { '2022/09/14 17:25' }
   let(:end_date_kuma) { '2022/09/13 18:25' }
-  let(:tasks) { [task_aqua, task_kuma] }
+  let(:tasks) { Kaminari.paginate_array([task_aqua, task_kuma]).page(1) }
 
   before { assign(:tasks, tasks) }
 
