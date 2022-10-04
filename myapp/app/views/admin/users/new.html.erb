@@ -1,0 +1,7 @@
+<h1 class="display-1">ユーザーの新規作成</h1>
+
+<%= render "form", user: @user %>
+
+<div style="padding:10px;">
+  <%= link_to I18n.t('transition_destination.index'), admin_users_path, { class: "btn btn-primary mx-1" } %>
+</div>
