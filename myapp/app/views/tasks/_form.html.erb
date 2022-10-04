@@ -1,42 +1,44 @@
-<%= form_with(model: task) do |form| %>
-  <% if task.errors.any? %>
-    <div style="color: red">
-      <h2><%= I18n.t('activerecord.errors.messages.count', count: task.errors.count) %></h2>
+<div class="container-sm border rounded-3" style="padding:10px;">
+  <%= form_with(model: task) do |form| %>
+    <% if task.errors.any? %>
+      <div class="alert alert-danger" role="alert">
+        <h2><%= I18n.t('activerecord.errors.messages.count', count: task.errors.count) %></h2>
 
-      <ul>
-        <% task.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+        <ul>
+          <% task.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="row mb-3" style="padding:10px;">
+      <%= form.label :name, I18n.t('activerecord.attributes.task.name'), class: "col-sm-2 col-form-label" %>
+      <%= form.text_field :name, class: "form-control" %>
+    </div>
+
+    <div class="row mb-3" style="padding:10px;">
+      <%= form.label :end_date, I18n.t('activerecord.attributes.task.end_date'), class: "col-sm-2 col-form-label" %>
+      <%= form.datetime_field :end_date, class: "form-control"%>
+    </div>
+
+    <div class="row mb-3" style="padding:10px;">
+      <%= form.label :priority, I18n.t('activerecord.attributes.task.priority'), class: "col-sm-2 col-form-label" %>
+      <%= form.select :priority, I18n.t('select_form.task.priority'), {}, class: "form-select" %>
+    </div>
+
+    <div class="row mb-3" style="padding:10px;">
+      <%= form.label :status, I18n.t('activerecord.attributes.task.status'), class: "col-sm-2 col-form-label" %>
+      <%= form.select :status, I18n.t('select_form.task.status'), {}, class: "form-select" %>
+    </div>
+
+    <div class="row mb-3" style="padding:10px;">
+      <%= form.label :explanation, I18n.t('activerecord.attributes.task.explanation'), class: "col-sm-2 col-form-label" %>
+      <%= form.text_area :explanation, class: "form-control" %>
+    </div>
+
+    <div style="padding:10px;">
+      <%= form.submit class: "btn btn-primary" %>
     </div>
   <% end %>
-
-  <div>
-    <%= form.label :name, I18n.t('activerecord.attributes.task.name'), style: "display: block" %>
-    <%= form.text_field :name %>
-  </div>
-
-  <div>
-    <%= form.label :end_date, I18n.t('activerecord.attributes.task.end_date'), style: "display: block" %>
-    <%= form.datetime_field :end_date %>
-  </div>
-
-  <div>
-    <%= form.label :priority, I18n.t('activerecord.attributes.task.priority'), style: "display: block" %>
-    <%= form.select :priority, I18n.t('select_form.task.priority') %>
-  </div>
-
-  <div>
-    <%= form.label :status, I18n.t('activerecord.attributes.task.status'), style: "display: block" %>
-    <%= form.select :status, I18n.t('select_form.task.status') %>
-  </div>
-
-  <div>
-    <%= form.label :explanation, I18n.t('activerecord.attributes.task.explanation'), style: "display: block" %>
-    <%= form.text_area :explanation %>
-  </div>
-
-  <div>
-    <%= form.submit %>
-  </div>
-<% end %>
+</div>

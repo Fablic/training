@@ -104,7 +104,7 @@ RSpec.feature '/tasks or /' do
           visit tasks_path
 
           find("option[value='created_at_asc']").select_option
-          click_on '送信'
+          click_on '検索する'
 
           expect(page.all('.task')[0].find('.task_name').text).to eq 'aqua'
           expect(page.all('.task')[0].find('.task_end_date').text).to eq '2022/09/14 17:25'
@@ -145,7 +145,7 @@ RSpec.feature '/tasks or /' do
         expect(current_path).to eq '/tasks'
 
         find("option[value='created_at_desc']").select_option
-        click_on '送信'
+        click_on '検索する'
 
         expect(page.all('.task')[0].find('.task_name').text).to eq 'kuma'
         expect(page.all('.task')[0].find('.task_end_date').text).to eq '2022/09/13 18:25'
@@ -174,7 +174,7 @@ RSpec.feature '/tasks or /' do
           expect(current_path).to eq '/tasks'
 
           find("option[value='end_date_asc']").select_option
-          click_on '送信'
+          click_on '検索する'
 
           expect(page.all('.task').count).to eq 4
           expect(page.all('.task')[0].find('.task_end_date').text).to eq ''
@@ -191,7 +191,7 @@ RSpec.feature '/tasks or /' do
           expect(current_path).to eq '/tasks'
 
           find("option[value='end_date_desc']").select_option
-          click_on '送信'
+          click_on '検索する'
 
           expect(page.all('.task')[0].find('.task_end_date').text).to eq '2022/09/15 17:25'
           expect(page.all('.task')[1].find('.task_end_date').text).to eq '2022/09/13 17:25'
@@ -212,7 +212,7 @@ RSpec.feature '/tasks or /' do
         expect(current_path).to eq '/tasks'
 
         fill_in 'キーワード検索', with: 'くま'
-        click_on '送信'
+        click_on '検索する'
 
         expect(page.all('.task').count).to eq 2
         expect(page.all('.task')[0].find('.task_name').text).to eq 'アクア'

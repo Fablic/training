@@ -1,17 +1,19 @@
 <p style="color: green"><%= notice %></p>
 
-<h2>検索フォーム</h2>
+<h1 class="display-1">検索フォーム</h1>
 <%= render "search_form" %>
 
-<h2>タスク一覧</h2>
+<h1 class="display-1">タスク一覧</h1>
 
-<%= link_to I18n.t('transition_destination.create'), new_task_path %>
+<div style="padding:10px;">
+  <%= link_to I18n.t('transition_destination.create'), new_task_path, { class: "btn btn-primary mx-1" } %>
+</div>
 
 <div id="tasks">
-  <table border="1">
+  <table class="table table-striped table-bordered">
     <tr>
       <%= render 'header' %>
-      <th>詳細</th>
+      <th scope="col">詳細</th>
     </tr>
 
     <% @tasks.each do |task| %>
