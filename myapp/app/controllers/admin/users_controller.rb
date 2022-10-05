@@ -11,9 +11,7 @@ module Admin
       @users = query
     end
 
-    def show
-      @user_tasks = @user.tasks
-    end
+    def show; end
 
     def new
       @user = User.new

@@ -1,13 +1,13 @@
 <h1 class="display-1"><%= @user.name %>さんのタスク一覧</h1>
 
-<% if @user_tasks.present? %>
+<% if @user.tasks.present? %>
 <div id="tasks">
   <table class="table table-striped table-bordered">
     <tr>
       <%= render 'tasks/header' %>
     </tr>
 
-    <% @user_tasks.each do |task| %>
+    <% @user.tasks.each do |task| %>
       <div class="task" id="<%= dom_id task %>">
         <tr>
           <%= render 'tasks/attributes', task: %>
