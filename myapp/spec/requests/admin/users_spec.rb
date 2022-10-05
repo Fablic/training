@@ -191,9 +191,14 @@ RSpec.describe 'Admin::Users', type: :request do
 
   describe 'DELETE /destroy' do
     let!(:user) { create(:user) }
+    before { 3.times.map { create(:task, user_id: user.id) } }
 
     it 'destroys the requested user' do
       expect { delete admin_user_url(user) }.to change(User, :count).by(-1)
+    end
+
+    it 'destroys tasks tied up with destroyed user' do
+      expect { delete admin_user_url(user) }.to change(Task, :count).by(-3)
     end
 
     it 'redirects to the users list' do
