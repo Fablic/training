@@ -5,7 +5,10 @@ module Admin
     before_action :set_user, only: %i[show edit update destroy]
 
     def index
-      @users = User.all
+      query = User.all
+      query = query.page(search_params[:page])
+
+      @users = query
     end
 
     def show
@@ -53,6 +56,10 @@ module Admin
 
     def user_params
       params.require(:user).permit(:name, :email, :password)
+    end
+
+    def search_params
+      params.permit(:page)
     end
   end
 end
