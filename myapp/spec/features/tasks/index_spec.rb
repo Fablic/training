@@ -40,7 +40,6 @@ RSpec.feature '/tasks or /' do
                explanation: 'yellow hiyoko',
                user_id: user.id)
       end
-      given(:user) { create(:user, name: 'kumaTaro') }
       given(:end_date_aqua) { '2022/09/14 17:25' }
       given(:end_date_kuma) { '2022/09/13 18:25' }
       given(:end_date_nyanko) { '2022/09/13 19:25' }
@@ -211,7 +210,6 @@ RSpec.feature '/tasks or /' do
                explanation: 'brown kuma',
                user_id: user.id)
       end
-      given(:user) { create(:user, name: 'kumaTaro') }
       given(:end_date_aqua) { '2022/09/14 17:25' }
       given(:end_date_kuma) { '2022/09/13 18:25' }
 
@@ -256,7 +254,6 @@ RSpec.feature '/tasks or /' do
                explanation: 'brown kuma',
                user_id: user.id)
       end
-      given(:user) { create(:user, name: 'kumaTaro') }
       given(:end_date_aqua) { '2022/09/14 17:25' }
       given(:end_date_kuma) { '2022/09/13 18:25' }
 
@@ -289,7 +286,6 @@ RSpec.feature '/tasks or /' do
       background { create(:task, end_date: '2022/09/15 17:25', user_id: user.id) }
       background { create(:task, end_date: '2022/09/13 17:25', user_id: user.id) }
       given!(:tasks) { Task.all }
-      given(:user) { create(:user) }
 
       feature 'asc' do
         scenario 'correctly displays tasks' do
@@ -329,7 +325,6 @@ RSpec.feature '/tasks or /' do
       given!(:task_aqua) { create(:task, name: 'アクア', explanation: 'アイコンはくま太郎', user_id: user.id) }
       given!(:task_kuma) { create(:task, name: 'くま二郎', explanation: '毛が茶色い', user_id: user.id) }
       given!(:task_nyanko) { create(:task, name: 'にゃんこ', explanation: '毛が白い', user_id: user.id) }
-      given(:user) { create(:user) }
 
       scenario 'correctly displays tasks' do
         visit tasks_path
@@ -358,7 +353,6 @@ RSpec.feature '/tasks or /' do
       end
       background { create_list(:task, 11) }
       given(:end_date_aqua) { '2022/09/14 17:25' }
-      given(:user) { create(:user) }
 
       scenario 'renders #new' do
         visit root_path
@@ -381,8 +375,6 @@ RSpec.feature '/tasks or /' do
     end
 
     feature 'clicks logout buttons' do
-      given(:user) { create(:user) }
-
       scenario 'redirects to sessions#new' do
         visit root_path
         expect(page).not_to have_content 'ログイン'
