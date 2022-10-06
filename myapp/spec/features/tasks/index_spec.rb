@@ -361,8 +361,6 @@ RSpec.feature '/tasks or /' do
       given(:user) { create(:user) }
 
       scenario 'renders #new' do
-        login(user)
-
         visit root_path
         click_on '新規作成する'
 
