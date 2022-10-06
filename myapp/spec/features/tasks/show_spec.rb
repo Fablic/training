@@ -4,6 +4,8 @@ require 'rails_helper'
 
 RSpec.feature '/task/:id' do
   feature '#show' do
+    before(:each) { login(user) }
+
     given(:user) { create(:user, name: 'kumaTaro') }
     given(:task) do
       create(:task,

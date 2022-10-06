@@ -4,7 +4,10 @@ require 'rails_helper'
 
 RSpec.feature '/task/:id/edit' do
   feature '#edit' do
-    given(:task) { create(:task) }
+    before(:each) { login(user) }
+
+    given(:task) { create(:task, user_id: user.id) }
+    given(:user) { create(:user) }
 
     scenario 'renders #show' do
       visit edit_task_path(task)

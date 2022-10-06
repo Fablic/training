@@ -24,6 +24,7 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
 
   config.include FactoryBot::Syntax::Methods
+  config.include LoginHelpers
 
   if Bullet.enable?
     config.before(:each) do

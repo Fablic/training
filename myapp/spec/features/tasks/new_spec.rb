@@ -4,6 +4,10 @@ require 'rails_helper'
 
 RSpec.feature '/task/new' do
   feature '#new' do
+    before(:each) { login(user) }
+
+    given(:user) { create(:user) }
+
     scenario 'correctly displays task new form' do
       visit new_task_path
 

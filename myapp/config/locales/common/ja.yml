@@ -2,6 +2,19 @@ ja:
   time:
     formats:
       default: "%Y/%m/%d %H:%M"
+  sessions:
+    form:
+      email: メールアドレス
+      password: パスワード
+    button:
+      login: ログインする
+      logout: ログアウトする
+    flash:
+      login:
+        success: ログインしました
+        fail: ログインに失敗しました
+      logout:
+        success: ログアウトしました
   select_form:
     include_blank: 選択してください
   transition_destination:

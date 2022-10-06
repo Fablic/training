@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
+  has_secure_password
+
   has_many :tasks, inverse_of: :user, dependent: :destroy
 
   validates :name, presence: true, length: { maximum: 255 }
