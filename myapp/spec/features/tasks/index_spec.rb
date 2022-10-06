@@ -4,6 +4,10 @@ require 'rails_helper'
 
 RSpec.feature '/tasks or /' do
   feature '#index' do
+    before(:each) { login(user) }
+
+    given(:user) { create(:user, name: 'kumaTaro') }
+
     feature 'tasks by all same users' do
       background do
         create(:task,
@@ -44,8 +48,6 @@ RSpec.feature '/tasks or /' do
 
       feature 'page:1' do
         scenario 'correctly displays tasks' do
-          login(user)
-
           visit root_path
 
           expect(current_path).to eq '/'
@@ -76,8 +78,6 @@ RSpec.feature '/tasks or /' do
 
       feature 'page:2' do
         scenario 'correctly displays tasks' do
-          login(user)
-
           visit root_path
           click_on 'Next'
 
@@ -102,46 +102,45 @@ RSpec.feature '/tasks or /' do
                priority: 'high',
                status: 'untouched',
                explanation: 'aqua hara',
-               user_id: user_kuma.id)
+               user_id: user.id)
         create(:task,
                name: 'aqua2',
                end_date: end_date_aqua,
                priority: 'high',
                status: 'untouched',
                explanation: 'aqua hara',
-               user_id: user_nyanko.id)
+               user_id: another_user.id)
         create(:task,
                name: 'kuma',
                end_date: end_date_kuma,
                priority: 'low',
                status: 'touched',
                explanation: 'brown kuma',
-               user_id: user_kuma.id)
-        7.times.map { create(:task, user_id: user_kuma.id) }
+               user_id: user.id)
+        7.times.map { create(:task, user_id: user.id) }
         create(:task,
                name: 'nyanko',
                end_date: end_date_nyanko,
                priority: 'normal',
                status: 'completed',
                explanation: 'white nyanko',
-               user_id: user_kuma.id)
+               user_id: user.id)
         create(:task,
                name: 'nyanko2',
                end_date: end_date_nyanko,
                priority: 'normal',
                status: 'completed',
                explanation: 'white nyanko',
-               user_id: user_nyanko.id)
+               user_id: another_user.id)
         create(:task,
                name: 'hiyoko',
                end_date: end_date_hiyoko,
                priority: 'normal',
                status: 'completed',
                explanation: 'yellow hiyoko',
-               user_id: user_kuma.id)
+               user_id: user.id)
       end
-      given(:user_kuma) { create(:user, name: 'kumaTaro') }
-      given(:user_nyanko) { create(:user, name: 'nyankoHanako') }
+      given(:another_user) { create(:user, name: 'nyankoHanako') }
       given(:end_date_aqua) { '2022/09/14 17:25' }
       given(:end_date_kuma) { '2022/09/13 18:25' }
       given(:end_date_nyanko) { '2022/09/13 19:25' }
@@ -149,8 +148,6 @@ RSpec.feature '/tasks or /' do
 
       feature 'page:1' do
         scenario 'correctly displays tasks' do
-          login(user_kuma)
-
           visit root_path
 
           expect(current_path).to eq '/'
@@ -181,8 +178,6 @@ RSpec.feature '/tasks or /' do
 
       feature 'page:2' do
         scenario 'correctly displays tasks' do
-          login(user_kuma)
-
           visit root_path
           click_on 'Next'
 
@@ -222,8 +217,6 @@ RSpec.feature '/tasks or /' do
 
       feature 'page:1' do
         scenario 'correctly displays tasks' do
-          login(user)
-
           visit tasks_path
 
           find("option[value='created_at_asc']").select_option
@@ -268,8 +261,6 @@ RSpec.feature '/tasks or /' do
       given(:end_date_kuma) { '2022/09/13 18:25' }
 
       scenario 'correctly displays tasks' do
-        login(user)
-
         visit tasks_path
 
         expect(current_path).to eq '/tasks'
@@ -302,8 +293,6 @@ RSpec.feature '/tasks or /' do
 
       feature 'asc' do
         scenario 'correctly displays tasks' do
-          login(user)
-
           visit tasks_path
 
           expect(current_path).to eq '/tasks'
@@ -321,8 +310,6 @@ RSpec.feature '/tasks or /' do
 
       feature 'desc' do
         scenario 'correctly displays tasks' do
-          login(user)
-
           visit tasks_path
 
           expect(current_path).to eq '/tasks'
@@ -345,8 +332,6 @@ RSpec.feature '/tasks or /' do
       given(:user) { create(:user) }
 
       scenario 'correctly displays tasks' do
-        login(user)
-
         visit tasks_path
 
         expect(current_path).to eq '/tasks'
@@ -386,8 +371,6 @@ RSpec.feature '/tasks or /' do
       end
 
       scenario 'renders #show' do
-        login(user)
-
         visit root_path
         first(:link, '詳細を確認する').click
 
@@ -403,8 +386,6 @@ RSpec.feature '/tasks or /' do
       given(:user) { create(:user) }
 
       scenario 'redirects to sessions#new' do
-        login(user)
-
         visit root_path
         expect(page).not_to have_content 'ログイン'
 

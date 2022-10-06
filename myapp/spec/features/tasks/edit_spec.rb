@@ -4,12 +4,12 @@ require 'rails_helper'
 
 RSpec.feature '/task/:id/edit' do
   feature '#edit' do
+    before(:each) { login(user) }
+
     given(:task) { create(:task, user_id: user.id) }
     given(:user) { create(:user) }
 
     scenario 'renders #show' do
-      login(user)
-
       visit edit_task_path(task)
       click_on '詳細を確認する'
 
@@ -18,8 +18,6 @@ RSpec.feature '/task/:id/edit' do
     end
 
     scenario 'renders #index' do
-      login(user)
-
       visit edit_task_path(task)
       click_on '一覧に戻る'
 
@@ -28,8 +26,6 @@ RSpec.feature '/task/:id/edit' do
     end
 
     scenario 'correctly updates edit task' do
-      login(user)
-
       visit edit_task_path(task)
 
       expect(current_path).to eq "/tasks/#{task.id}/edit"
@@ -47,8 +43,6 @@ RSpec.feature '/task/:id/edit' do
     end
 
     scenario 'does not update with empty name' do
-      login(user)
-
       visit edit_task_path(task)
 
       expect(current_path).to eq "/tasks/#{task.id}/edit"
