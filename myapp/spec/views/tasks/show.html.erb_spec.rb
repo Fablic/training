@@ -3,13 +3,15 @@
 require 'rails_helper'
 
 RSpec.describe 'tasks/show', type: :view do
+  let(:user) { create(:user, name: 'kumaTaro') }
   let(:task) do
     create(:task,
            name: 'aqua',
            end_date:,
            priority: 'high',
            status: 'untouched',
-           explanation: 'aqua hara')
+           explanation: 'aqua hara',
+           user_id: user.id)
   end
   let(:end_date) { '2022/09/14 17:25' }
 
@@ -23,5 +25,6 @@ RSpec.describe 'tasks/show', type: :view do
     expect(rendered).to match(/高/)
     expect(rendered).to match(/未着手/)
     expect(rendered).to match(/aqua hara/)
+    expect(rendered).to match(/kumaTaro/)
   end
 end
