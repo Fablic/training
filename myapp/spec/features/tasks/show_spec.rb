@@ -4,6 +4,8 @@ require 'rails_helper'
 
 RSpec.feature '/task/:id' do
   feature '#show' do
+    before(:each) { login(user) }
+
     given(:user) { create(:user, name: 'kumaTaro') }
     given(:task) do
       create(:task,
@@ -18,8 +20,6 @@ RSpec.feature '/task/:id' do
     given(:end_date) { '2022/09/14 17:25' }
 
     scenario 'correctly shows task' do
-      login(user)
-
       visit task_path(task)
 
       expect(current_path).to eq '/tasks/1'
@@ -32,8 +32,6 @@ RSpec.feature '/task/:id' do
     end
 
     scenario 'renders #edit' do
-      login(user)
-
       visit task_path(task)
       click_on '編集する'
 
@@ -42,8 +40,6 @@ RSpec.feature '/task/:id' do
     end
 
     scenario 'renders #index' do
-      login(user)
-
       visit task_path(task)
       click_on '一覧に戻る'
 
@@ -52,8 +48,6 @@ RSpec.feature '/task/:id' do
     end
 
     scenario 'correctly deletes task' do
-      login(user)
-
       visit task_path(task)
 
       expect { click_on '削除する' }.to change(Task, :count).by(-1)

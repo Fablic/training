@@ -4,19 +4,17 @@ require 'rails_helper'
 
 RSpec.feature '/task/new' do
   feature '#new' do
+    before(:each) { login(user) }
+
     given(:user) { create(:user) }
 
     scenario 'correctly displays task new form' do
-      login(user)
-
       visit new_task_path
 
       expect(current_path).to eq '/tasks/new'
     end
 
     scenario 'renders #index' do
-      login(user)
-
       visit new_task_path
       click_on '一覧に戻る'
 
@@ -25,8 +23,6 @@ RSpec.feature '/task/new' do
     end
 
     scenario 'creates new task' do
-      login(user)
-
       visit new_task_path
 
       expect(current_path).to eq '/tasks/new'
@@ -44,8 +40,6 @@ RSpec.feature '/task/new' do
     end
 
     scenario 'does not create no name task' do
-      login(user)
-
       visit new_task_path
 
       expect(current_path).to eq '/tasks/new'
