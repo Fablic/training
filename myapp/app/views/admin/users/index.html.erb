@@ -2,6 +2,7 @@
 
 <h1 class="display-1">管理者画面ッ!!</h1>
 
+<p>ログイン：<%= current_user.name %> san</p>
 <%= link_to I18n.t('sessions.button.logout'), logout_path, method: :delete, class: "btn btn-primary mx-1" %>
 
 <h1 class="display-1">ユーザ一覧</h1>

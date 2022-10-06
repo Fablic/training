@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 20_220_929_071_420) do
+ActiveRecord::Schema[7.0].define(version: 20_221_006_043_610) do
   create_table 'tasks', charset: 'utf8mb4', comment: 'タスク', force: :cascade do |t|
     t.string 'name', null: false, comment: 'タスク名'
     t.datetime 'end_date', comment: '終了期限'
@@ -32,6 +32,7 @@ ActiveRecord::Schema[7.0].define(version: 20_220_929_071_420) do
     t.string 'password_digest', null: false, comment: '暗号化されたパスワード'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
+    t.integer 'role', null: false, comment: '役割: 0:一般(ordinary), 1:管理者(admin)'
     t.index ['email'], name: 'index_users_on_email', unique: true
   end
 

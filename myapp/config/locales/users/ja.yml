@@ -7,14 +7,31 @@ ja:
         name: ユーザー名
         email: Eメール
         password: パスワード
+        role: 役割
     errors:
       messages:
         count: "%{count}件のエラーが発生しました。"
+  enums:
+    user:
+      role:
+        ordinary: 一般
+        admin: 管理者
+  admin_page:
+    index:
+      no_admin: 権限がないため管理者ページを開くことが出来ません
+    destroy:
+      no_one_admin: このユーザーを削除すると管理者権限を持つユーザーがいなくなります
   columns:
     user:
       name: ユーザー名
       email: Eメール
       task_count: 保持タスク数
+      role: 役割
       show_button: 保持タスク詳細
       edit_button: ユーザーを編集
       destroy_button: ユーザーを削除
+  select_form:
+    user:
+      role:
+        - ['一般', 'ordinary']
+        - ['管理者', 'admin']
