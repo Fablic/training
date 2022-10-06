@@ -6,7 +6,7 @@ RSpec.feature '/admin/user/:id/edit' do
   feature '#edit' do
     before(:each) { login(user) }
 
-    given(:user) { create(:user) }
+    given(:user) { create(:user, role: 'admin') }
 
     scenario 'renders #index' do
       visit edit_admin_user_path(user)

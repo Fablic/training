@@ -6,7 +6,7 @@ RSpec.feature '/admin/user/new' do
   feature '#new' do
     before(:each) { login(user) }
 
-    given(:user) { create(:user) }
+    given(:user) { create(:user, role: 'admin') }
 
     scenario 'correctly displays user new form' do
       visit new_admin_user_path

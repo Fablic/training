@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Admin::Users', type: :request do
-  let!(:logined_user) { create(:user) }
+  let!(:logined_user) { create(:user, role: 'admin') }
   before do
     post '/login', params: { session: { email: logined_user.email, password: logined_user.password } }
   end

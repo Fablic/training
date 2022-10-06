@@ -6,7 +6,7 @@ RSpec.feature '/admin/user/:id' do
   feature '#show' do
     before(:each) { login(user) }
 
-    given(:user) { create(:user, id: 1, name: 'kumaTaro') }
+    given(:user) { create(:user, id: 1, name: 'kumaTaro', role: 'admin') }
     before do
       create(:task,
              name: 'aqua',

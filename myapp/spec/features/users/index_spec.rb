@@ -7,7 +7,7 @@ RSpec.feature '/admin/users or /admin' do
     before(:each) { login(user) }
 
     feature 'users' do
-      given!(:user) { create(:user, name: 'user', email: 'user@u.com') }
+      given!(:user) { create(:user, name: 'user', email: 'user@u.com', role: 'admin') }
       given!(:kuma) { create(:user, name: 'kuma', email: 'kuma@k.com') }
       background { 7.times.map { create(:user) } }
       given!(:nyanko) { create(:user, name: 'nyanko', email: 'nyanko@n.com') }
@@ -57,7 +57,7 @@ RSpec.feature '/admin/users or /admin' do
     end
 
     feature 'clicks link buttons' do
-      given!(:user) { create(:user, name: 'user_aqua', email: 'user_aqua@u.com') }
+      given!(:user) { create(:user, name: 'user_aqua', email: 'user_aqua@u.com', role: 'admin') }
       background do
         create(:task, name: 'first_task_aqua', user_id: user.id)
         create(:task, name: 'second_task_aqua', user_id: user.id)
@@ -104,7 +104,7 @@ RSpec.feature '/admin/users or /admin' do
     end
 
     feature 'clicks logout buttons' do
-      given(:user) { create(:user) }
+      given(:user) { create(:user, role: 'admin') }
 
       scenario 'redirects to sessions#new' do
         visit admin_path
