@@ -4,19 +4,17 @@ require 'rails_helper'
 
 RSpec.feature '/admin/user/new' do
   feature '#new' do
+    before(:each) { login(user) }
+
     given(:user) { create(:user) }
 
     scenario 'correctly displays user new form' do
-      login(user)
-
       visit new_admin_user_path
 
       expect(current_path).to eq '/admin/users/new'
     end
 
     scenario 'renders #index' do
-      login(user)
-
       visit new_admin_user_path
       click_on '一覧に戻る'
 
@@ -26,8 +24,6 @@ RSpec.feature '/admin/user/new' do
     end
 
     scenario 'creates new user' do
-      login(user)
-
       visit new_admin_user_path
 
       expect(current_path).to eq '/admin/users/new'
@@ -43,8 +39,6 @@ RSpec.feature '/admin/user/new' do
     end
 
     scenario 'does NOT create without name email password' do
-      login(user)
-
       visit new_admin_user_path
 
       expect(current_path).to eq '/admin/users/new'

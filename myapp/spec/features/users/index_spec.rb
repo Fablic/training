@@ -4,6 +4,8 @@ require 'rails_helper'
 
 RSpec.feature '/admin/users or /admin' do
   feature '#index' do
+    before(:each) { login(user) }
+
     feature 'users' do
       given!(:user) { create(:user, name: 'user', email: 'user@u.com') }
       given!(:kuma) { create(:user, name: 'kuma', email: 'kuma@k.com') }
@@ -20,8 +22,6 @@ RSpec.feature '/admin/users or /admin' do
 
       feature 'page:1' do
         scenario 'correctly displays users' do
-          login(user)
-
           visit admin_path
 
           expect(current_path).to eq '/admin'
@@ -43,8 +43,6 @@ RSpec.feature '/admin/users or /admin' do
 
       feature 'page:2' do
         scenario 'correctly displays tasks' do
-          login(user)
-
           visit admin_path
           click_on 'Next'
 
@@ -68,8 +66,6 @@ RSpec.feature '/admin/users or /admin' do
       background { create_list(:user, 11) }
 
       scenario 'renders #new' do
-        login(user)
-
         visit admin_path
         click_on '新規作成する'
 
@@ -78,8 +74,6 @@ RSpec.feature '/admin/users or /admin' do
       end
 
       scenario 'renders #show' do
-        login(user)
-
         visit admin_path
         first(:link, '詳細を確認する').click
 
@@ -91,8 +85,6 @@ RSpec.feature '/admin/users or /admin' do
       end
 
       scenario 'renders #edit' do
-        login(user)
-
         visit admin_path
         first(:link, '編集する').click
 
@@ -103,8 +95,6 @@ RSpec.feature '/admin/users or /admin' do
       end
 
       scenario 'correctly deletes user' do
-        login(user)
-
         visit admin_path
 
         expect { page.all('button')[1].click }.to change(User, :count).by(-1)
@@ -117,8 +107,6 @@ RSpec.feature '/admin/users or /admin' do
       given(:user) { create(:user) }
 
       scenario 'redirects to sessions#new' do
-        login(user)
-
         visit admin_path
         expect(page).not_to have_content 'ログイン'
 

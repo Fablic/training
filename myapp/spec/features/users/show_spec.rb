@@ -4,6 +4,8 @@ require 'rails_helper'
 
 RSpec.feature '/admin/user/:id' do
   feature '#show' do
+    before(:each) { login(user) }
+
     given(:user) { create(:user, id: 1, name: 'kumaTaro') }
     before do
       create(:task,
@@ -23,8 +25,6 @@ RSpec.feature '/admin/user/:id' do
     end
 
     scenario 'correctly shows user' do
-      login(user)
-
       visit admin_user_path(user)
 
       expect(current_path).to eq '/admin/users/1'
@@ -43,8 +43,6 @@ RSpec.feature '/admin/user/:id' do
     end
 
     scenario 'renders #index' do
-      login(user)
-
       visit admin_user_path(user)
       click_on '一覧に戻る'
 

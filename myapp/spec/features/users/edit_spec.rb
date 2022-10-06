@@ -4,11 +4,11 @@ require 'rails_helper'
 
 RSpec.feature '/admin/user/:id/edit' do
   feature '#edit' do
+    before(:each) { login(user) }
+
     given(:user) { create(:user) }
 
     scenario 'renders #index' do
-      login(user)
-
       visit edit_admin_user_path(user)
       click_on '一覧に戻る'
 
@@ -17,8 +17,6 @@ RSpec.feature '/admin/user/:id/edit' do
     end
 
     scenario 'correctly updates edit user' do
-      login(user)
-
       visit edit_admin_user_path(user)
 
       expect(current_path).to eq "/admin/users/#{user.id}/edit"
@@ -33,8 +31,6 @@ RSpec.feature '/admin/user/:id/edit' do
     end
 
     scenario 'does NOT update with empty name, email' do
-      login(user)
-
       visit edit_admin_user_path(user)
 
       expect(current_path).to eq "/admin/users/#{user.id}/edit"
