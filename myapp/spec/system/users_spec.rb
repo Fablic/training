@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require 'rake_helper'
 
 RSpec.describe 'Users', type: :system do
   let!(:user) { create(:user, admin: true) }
   let!(:user2) { create(:user, name: 'MyName2', personal_id: 'MyUserID2') }
+  File.delete('tmp/maintenance.txt') if File.exist?('tmp/maintenance.txt')
 
   context 'login systems check' do
     before do
@@ -225,6 +227,27 @@ RSpec.describe 'Users', type: :system do
       expect(page).to have_content '唯一の管理者ユーザです'
       expect(page).to have_content 'MyName'
       expect(page).to have_content 'MyUserID'
+    end
+  end
+
+  context 'maintenance_mode_check' do
+    before do
+      File.new('tmp/maintenance.txt', "w") unless File.exist?('tmp/maintenance.txt')
+    end
+    after do
+      File.delete('tmp/maintenance.txt') if File.exist?('tmp/maintenance.txt')
+    end
+    it 'task_maintenance:start' do
+      visit admin_login_path
+      expect(page).to have_content '503'
+      visit users_path
+      expect(page).to have_content '503'
+      visit new_user_path
+      expect(page).to have_content '503'
+      visit user_path(user)
+      expect(page).to have_content '503'
+      visit edit_user_path(user)
+      expect(page).to have_content '503'
     end
   end
 end

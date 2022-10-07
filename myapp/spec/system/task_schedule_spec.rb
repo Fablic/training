@@ -1,12 +1,14 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require 'rake_helper'
 
 RSpec.describe 'TaskSchedule', type: :system do
   let(:user) { create(:user) }
   let(:task) { create(:task, title: 'showタスク', body: 'showボディ', finish_at: 1.year.from_now, user_id: user.id) }
   let(:label) { create(:label, :labels1) }
   let!(:labelling) { create(:labelling, task_id: task.id, label_id: label.id) }
+  File.delete('tmp/maintenance.txt') if File.exist?('tmp/maintenance.txt')
 
   context 'login systems check' do
     before do
@@ -265,6 +267,27 @@ RSpec.describe 'TaskSchedule', type: :system do
       click_link '次'
       expect(page).to have_content 'タスク6'
       expect(page).to have_no_content 'タスク5'
+    end
+  end
+
+  context 'maintenance_mode_check' do
+    before do
+      File.new('tmp/maintenance.txt', "w") unless File.exist?('tmp/maintenance.txt')
+    end
+    after do
+      File.delete('tmp/maintenance.txt') if File.exist?('tmp/maintenance.txt')
+    end
+    it 'task_maintenance:start' do
+      visit login_path
+      expect(page).to have_content '503'
+      visit task_schedule_index_path
+      expect(page).to have_content '503'
+      visit new_task_schedule_path
+      expect(page).to have_content '503'
+      visit task_schedule_path(task)
+      expect(page).to have_content '503'
+      visit edit_task_schedule_path(task)
+      expect(page).to have_content '503'
     end
   end
 end

@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
   end
 
   def maintenance_mode?
-    File.exist?("lib/maintenance/maintenance.txt")
+    File.exist?("tmp/maintenance.txt")
   end
 
   def render_503_except
