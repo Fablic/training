@@ -2,6 +2,7 @@
 
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :null_session
+  before_action :render_503_except, if: :maintenance_mode?
   include SessionsHelper
 
   def routing_error
@@ -12,6 +13,14 @@ class ApplicationController < ActionController::Base
     rescue_from Exception,                        with: :_render500
     rescue_from ActiveRecord::RecordNotFound,     with: :_render404
     rescue_from ActionController::RoutingError,   with: :_render404
+  end
+
+  def maintenance_mode?
+    File.exist?('tmp/maintenance.txt')
+  end
+
+  def render_503_except
+    render 'errors/503'
   end
 
   private
