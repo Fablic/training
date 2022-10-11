@@ -272,7 +272,7 @@ RSpec.describe 'TaskSchedule', type: :system do
 
   context 'maintenance_mode_check' do
     before do
-      File.new('tmp/maintenance.txt', "w") unless File.exist?('tmp/maintenance.txt')
+      File.new('tmp/maintenance.txt', 'w') unless File.exist?('tmp/maintenance.txt')
     end
 
     after do
