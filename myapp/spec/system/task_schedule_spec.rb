@@ -274,9 +274,11 @@ RSpec.describe 'TaskSchedule', type: :system do
     before do
       File.new('tmp/maintenance.txt', "w") unless File.exist?('tmp/maintenance.txt')
     end
+
     after do
       File.delete('tmp/maintenance.txt') if File.exist?('tmp/maintenance.txt')
     end
+
     it 'task_maintenance:start' do
       visit login_path
       expect(page).to have_content '503'
