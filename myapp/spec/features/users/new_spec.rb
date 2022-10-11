@@ -3,6 +3,11 @@
 require 'rails_helper'
 
 RSpec.feature '/admin/user/new' do
+  feature '/admin' do
+    before { login(create(:user, role: 'ordinary')) }
+    scenario { can_not_access_admin_page }
+  end
+
   feature '#new' do
     before(:each) { login(user) }
 

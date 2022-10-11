@@ -3,6 +3,11 @@
 require 'rails_helper'
 
 RSpec.feature '/admin/user/:id/edit' do
+  feature '/admin' do
+    before { login(create(:user, role: 'ordinary')) }
+    scenario { can_not_access_admin_page }
+  end
+
   feature '#edit' do
     before(:each) { login(user) }
 
