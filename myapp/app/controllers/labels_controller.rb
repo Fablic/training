@@ -43,7 +43,7 @@ class LabelsController < ApplicationController
   private
 
   def set_label
-    redirect_to labels_path, flash: { danger: I18n.t("no_admin.#{action_name}") } if current_user.ordinary?
+    redirect_to labels_path, flash: { danger: I18n.t("no_admin.#{action_name}") } if current_user.role_ordinary?
 
     @label = Label.find(params[:id])
   end
