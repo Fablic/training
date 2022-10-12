@@ -43,7 +43,7 @@ class LabelsController < ApplicationController
   private
 
   def set_label
-    raise ActionController::BadRequest if current_user.ordinary?
+    redirect_to labels_path, flash: { danger: I18n.t("no_admin.#{action_name}") } if current_user.ordinary?
 
     @label = Label.find(params[:id])
   end
