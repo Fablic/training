@@ -4,7 +4,7 @@ class LabelsController < ApplicationController
   before_action :set_label, only: %i[edit update destroy]
 
   def index
-    @labels = Label.all
+    @labels = Label.all.page(search_params[:page])
   end
 
   def new
@@ -50,5 +50,9 @@ class LabelsController < ApplicationController
 
   def label_params
     params.require(:label).permit(:name)
+  end
+
+  def search_params
+    params.permit(:page)
   end
 end
