@@ -6,8 +6,6 @@ class AdminsController < ApplicationController
   private
 
   def check_admin_user
-    return if current_user.admin?
-
-    redirect_to root_url, flash: { danger: I18n.t('admin_page.index.no_admin') }
+    raise ActionController::RoutingError, self if current_user.role_ordinary?
   end
 end

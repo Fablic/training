@@ -26,8 +26,9 @@ RSpec.describe 'Admin', type: :request do
       it 'returns http found' do
         get '/admin'
 
-        expect(response).to have_http_status(:found)
-        expect(response).to redirect_to root_path
+        expect(response).to have_http_status :not_found
+        expect(response.body).to include '404なので僕のせいじゃないっす'
+        expect(response.body).to include '多分アドレスとか違うっす'
       end
     end
   end

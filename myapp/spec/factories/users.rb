@@ -4,7 +4,7 @@ FactoryBot.define do
   factory :user do
     sequence(:name) { |i| "USER名_#{i}" }
     sequence(:email) { |i| "Eメール_#{i}" }
-    role { %w[ordinary admin].sample }
+    role { 'ordinary' }
     password { 'password' }
   end
 end

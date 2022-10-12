@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  DEFAULT_ROLE_VALUE = 0
+  DEFAULT_ROLE_VALUE = 'ordinary'
 
   has_secure_password
 
@@ -22,13 +22,5 @@ class User < ApplicationRecord
 
   def set_default_values
     self.role ||= DEFAULT_ROLE_VALUE
-  end
-
-  def admin?
-    self.role == 'admin'
-  end
-
-  def ordinary?
-    self.role == 'ordinary'
   end
 end
