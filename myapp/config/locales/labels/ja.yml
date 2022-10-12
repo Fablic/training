@@ -1,0 +1,15 @@
+ja:
+  activerecord:
+    models:
+      label: ラベル
+    attributes:
+      label:
+        name: ラベル名
+    errors:
+      messages:
+        count: "%{count}件のエラーが発生しました。"
+  columns:
+    label:
+      name: タスク名
+      edit_button: ラベルを編集
+      destroy_button: ラベルを削除

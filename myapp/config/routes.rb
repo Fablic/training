@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get '/logout', to: 'sessions#destroy'
 
   resources :tasks
+  resources :labels, except: %i[show]
 
   get '/admin' => 'admin/users#index'
   namespace :admin do

@@ -1,0 +1,24 @@
+<div class="container-sm border rounded-3" style="padding:10px;">
+  <%= form_with(model: label) do |form| %>
+    <% if label.errors.any? %>
+      <div class="alert alert-danger" role="alert">
+        <h2><%= I18n.t('activerecord.errors.messages.count', count: label.errors.count) %></h2>
+
+        <ul>
+          <% label.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="row mb-3" style="padding:10px;">
+      <%= form.label :name, I18n.t('activerecord.attributes.label.name'), class: "col-sm-2 col-form-label" %>
+      <%= form.text_field :name, class: "form-control" %>
+    </div>
+
+    <div style="padding:10px;">
+      <%= form.submit class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>

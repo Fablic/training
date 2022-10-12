@@ -12,7 +12,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 20_221_006_043_610) do
+ActiveRecord::Schema[7.0].define(version: 20_221_011_090_708) do
+  create_table 'labels', charset: 'utf8mb4', force: :cascade do |t|
+    t.string 'name', limit: 30, null: false, comment: 'ラベル名'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+  end
+
   create_table 'tasks', charset: 'utf8mb4', comment: 'タスク', force: :cascade do |t|
     t.string 'name', null: false, comment: 'タスク名'
     t.datetime 'end_date', comment: '終了期限'
