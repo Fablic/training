@@ -17,8 +17,8 @@ ja:
         ordinary: 一般
         admin: 管理者
   admin_page:
-    index:
-      no_admin: 権限がないため管理者ページを開くことが出来ません
+    update:
+      no_one_admin: このユーザーを一般ユーザーに変更すると管理者権限を持つユーザーがいなくなります
     destroy:
       no_one_admin: このユーザーを削除すると管理者権限を持つユーザーがいなくなります
   columns:

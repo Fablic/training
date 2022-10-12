@@ -30,9 +30,9 @@ ActiveRecord::Schema[7.0].define(version: 20_221_006_043_610) do
     t.string 'name', null: false, comment: 'タスク名'
     t.string 'email', null: false, comment: 'Eメール'
     t.string 'password_digest', null: false, comment: '暗号化されたパスワード'
+    t.integer 'role', default: 0, null: false, comment: '役割: 0:一般(ordinary), 1:管理者(admin)'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
-    t.integer 'role', null: false, comment: '役割: 0:一般(ordinary), 1:管理者(admin)'
     t.index ['email'], name: 'index_users_on_email', unique: true
   end
 
