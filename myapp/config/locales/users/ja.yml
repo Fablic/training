@@ -1,0 +1,20 @@
+ja:
+  activerecord:
+    models:
+      user: ユーザー
+    attributes:
+      user:
+        name: ユーザー名
+        email: Eメール
+        password: パスワード
+    errors:
+      messages:
+        count: "%{count}件のエラーが発生しました。"
+  columns:
+    user:
+      name: ユーザー名
+      email: Eメール
+      task_count: 保持タスク数
+      show_button: 保持タスク詳細
+      edit_button: ユーザーを編集
+      destroy_button: ユーザーを削除

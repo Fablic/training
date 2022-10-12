@@ -8,4 +8,9 @@ Rails.application.routes.draw do
   get '/logout', to: 'sessions#destroy'
 
   resources :tasks
+
+  get '/admin' => 'admin/users#index'
+  namespace :admin do
+    resources :users
+  end
 end

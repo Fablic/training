@@ -1,0 +1,11 @@
+<td class='user_name'><%= user.name %></td>
+<td class='user_email'><%= user.email %></td>
+<td class='user_task_count'><%= user.tasks.count %></td>
+<td class='user_show_button'><%= link_to I18n.t('transition_destination.show'), admin_user_path(user), { class: "btn btn-primary mx-1" } %></td>
+<td class='user_edit_button'><%= link_to I18n.t('transition_destination.edit'), edit_admin_user_path(user), { class: "btn btn-primary mx-1" } %></td>
+<td class='user_destroy_button'>
+  <%= button_to I18n.t('transition_destination.destroy'),
+    admin_user_path(user), method: :delete,
+    data: { turbo: false }, form: { onSubmit: I18n.t('confirm.destroy') },
+    class: "btn btn-danger mx-1" %>
+</td>

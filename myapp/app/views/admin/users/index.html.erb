@@ -1,0 +1,29 @@
+<p style="color: green"><%= notice %></p>
+
+<h1 class="display-1">管理者画面ッ!!</h1>
+
+<%= link_to I18n.t('sessions.button.logout'), logout_path, method: :delete, class: "btn btn-primary mx-1" %>
+
+<h1 class="display-1">ユーザ一覧</h1>
+
+<div style="padding:10px;">
+  <%= link_to I18n.t('transition_destination.create'), new_admin_user_path, { class: "btn btn-primary mx-1" } %>
+</div>
+
+<div id="tasks">
+  <table class="table table-striped table-bordered">
+    <tr>
+      <%= render 'header' %>
+    </tr>
+
+    <% @users.each do |user| %>
+      <div class="user" id="<%= dom_id user %>">
+        <tr>
+          <%= render 'attributes', user: %>
+        </tr>
+      </div>
+    <% end %>
+  </table>
+</div>
+
+<%= paginate @users %>
