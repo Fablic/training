@@ -13,6 +13,8 @@ class Task < ApplicationRecord
   after_initialize :set_default_values
 
   belongs_to :user, optional: true
+  has_many :task_labels, dependent: :delete_all
+  has_many :labels, through: :task_labels
 
   validates :name, presence: true, length: { maximum: 255 }
   validates :priority, presence: true

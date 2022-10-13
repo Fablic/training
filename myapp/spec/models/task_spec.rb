@@ -4,6 +4,8 @@ require 'rails_helper'
 
 RSpec.describe Task, type: :model do
   describe 'associations' do
+    it { is_expected.to have_many(:task_labels).dependent(:delete_all) }
+    it { is_expected.to have_many(:labels) }
     it { is_expected.to belong_to(:user).optional }
   end
 
