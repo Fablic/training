@@ -3,11 +3,16 @@
 require 'rails_helper'
 
 RSpec.feature '/admin/users or /admin' do
+  feature '/admin' do
+    before { login(create(:user, role: 'ordinary')) }
+    scenario { can_not_access_admin_page }
+  end
+
   feature '#index' do
     before(:each) { login(user) }
 
     feature 'users' do
-      given!(:user) { create(:user, name: 'user', email: 'user@u.com') }
+      given!(:user) { create(:user, name: 'user', email: 'user@u.com', role: 'admin') }
       given!(:kuma) { create(:user, name: 'kuma', email: 'kuma@k.com') }
       background { 7.times.map { create(:user) } }
       given!(:nyanko) { create(:user, name: 'nyanko', email: 'nyanko@n.com') }
@@ -57,13 +62,17 @@ RSpec.feature '/admin/users or /admin' do
     end
 
     feature 'clicks link buttons' do
-      given!(:user) { create(:user, name: 'user_aqua', email: 'user_aqua@u.com') }
+      given!(:user) { create(:user, name: 'user_aqua', email: 'user_aqua@u.com', role: 'admin') }
       background do
         create(:task, name: 'first_task_aqua', user_id: user.id)
         create(:task, name: 'second_task_aqua', user_id: user.id)
         create(:task, name: 'third_task_aqua', user_id: user.id)
       end
-      background { create_list(:user, 11) }
+      given!(:kuma) { create(:user, name: 'user_kuma') }
+      background do
+        create(:task, name: 'first_task_kuma', user_id: kuma.id)
+        create(:task, name: 'second_task_kuma', user_id: kuma.id)
+      end
 
       scenario 'renders #new' do
         visit admin_path
@@ -92,19 +101,42 @@ RSpec.feature '/admin/users or /admin' do
         expect(page).to have_content 'ユーザー編集'
         expect(page).to have_content 'ユーザー名'
         expect(page).to have_content 'Eメール'
+        expect(page).to have_content '役割'
       end
 
       scenario 'correctly deletes user' do
         visit admin_path
 
-        expect { page.all('button')[1].click }.to change(User, :count).by(-1)
+        expect { page.all('button')[1].click }.to change(User, :count).by(-1).and change(Task, :count).by(-2)
         expect(current_path).to eq '/admin/users'
         expect(page).to have_content 'ユーザーが正常に削除されました'
+      end
+
+      feature 'when exist one admin user in users' do
+        scenario 'can NOT delete only one admin user' do
+          visit admin_path
+          page.all('button')[0].click
+
+          expect(current_path).to eq '/admin/users'
+          expect(page).to have_content 'このユーザーを削除すると管理者権限を持つユーザーがいなくなります'
+        end
+      end
+
+      feature 'when exist two admin user over in users' do
+        given!(:nyanko) { create(:user, name: 'user_nyanko', role: 'admin') }
+
+        scenario 'correctly deletes user' do
+          visit admin_path
+
+          expect { page.all('button')[2].click }.to change(User, :count).by(-1)
+          expect(current_path).to eq '/admin/users'
+          expect(page).to have_content 'ユーザーが正常に削除されました'
+        end
       end
     end
 
     feature 'clicks logout buttons' do
-      given(:user) { create(:user) }
+      given(:user) { create(:user, role: 'admin') }
 
       scenario 'redirects to sessions#new' do
         visit admin_path

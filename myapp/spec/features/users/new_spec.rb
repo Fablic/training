@@ -3,10 +3,15 @@
 require 'rails_helper'
 
 RSpec.feature '/admin/user/new' do
+  feature '/admin' do
+    before { login(create(:user, role: 'ordinary')) }
+    scenario { can_not_access_admin_page }
+  end
+
   feature '#new' do
     before(:each) { login(user) }
 
-    given(:user) { create(:user) }
+    given(:user) { create(:user, role: 'admin') }
 
     scenario 'correctly displays user new form' do
       visit new_admin_user_path
@@ -31,6 +36,7 @@ RSpec.feature '/admin/user/new' do
       fill_in 'ユーザー名', with: 'aqua'
       fill_in 'Eメール', with: 'aqua@a.com'
       fill_in 'パスワード', with: 'akuaakua'
+      select '一般', from: 'user[role]'
 
       expect { click_button '登録する' }.to change(User, :count).by(1)
       expect(User.last.name).to eq 'aqua'
@@ -46,6 +52,7 @@ RSpec.feature '/admin/user/new' do
       fill_in 'ユーザー名', with: ''
       fill_in 'Eメール', with: ''
       fill_in 'パスワード', with: ''
+      select '一般', from: 'user[role]'
 
       expect { click_button '登録する' }.to change(User, :count).by(0)
       expect(current_path).to eq admin_users_path

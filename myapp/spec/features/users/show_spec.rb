@@ -3,10 +3,15 @@
 require 'rails_helper'
 
 RSpec.feature '/admin/user/:id' do
+  feature '/admin' do
+    before { login(create(:user, role: 'ordinary')) }
+    scenario { can_not_access_admin_page }
+  end
+
   feature '#show' do
     before(:each) { login(user) }
 
-    given(:user) { create(:user, id: 1, name: 'kumaTaro') }
+    given(:user) { create(:user, id: 1, name: 'kumaTaro', role: 'admin') }
     before do
       create(:task,
              name: 'aqua',

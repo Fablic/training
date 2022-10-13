@@ -17,4 +17,25 @@ RSpec.describe User, type: :model do
       it { is_expected.to validate_uniqueness_of(:email).ignoring_case_sensitivity }
     end
   end
+
+  describe 'enums' do
+    it {
+      is_expected.to define_enum_for(:role).with_values(
+        ordinary: 0, # 一般
+        admin: 1    # 管理者
+      ).with_prefix
+    }
+  end
+
+  describe '.find_list_by_admin' do
+    let!(:first_user) { create(:user, role: 'admin') }
+    let!(:second_user) { create(:user, role: 'ordinary') }
+    let!(:third_user) { create(:user, role: 'admin') }
+
+    subject { User.find_list_by_admin }
+
+    it 'search from admin role' do
+      is_expected.to eq [first_user, third_user]
+    end
+  end
 end

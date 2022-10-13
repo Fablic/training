@@ -25,6 +25,7 @@ RSpec.configure do |config|
 
   config.include FactoryBot::Syntax::Methods
   config.include LoginHelpers
+  config.include AdminHelpers
 
   if Bullet.enable?
     config.before(:each) do

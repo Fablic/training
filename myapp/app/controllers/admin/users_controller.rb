@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 module Admin
-  class UsersController < ApplicationController
+  class UsersController < AdminsController
     before_action :set_user, only: %i[show edit update destroy]
+    append_before_action :exist_other_admin_user?, only: %i[update destroy]
 
     def index
       query = User.all
@@ -53,11 +54,27 @@ module Admin
     end
 
     def user_params
-      params.require(:user).permit(:name, :email, :password)
+      params.require(:user).permit(:name, :email, :password, :role)
     end
 
     def search_params
       params.permit(:page)
+    end
+
+    def exist_other_admin_user?
+      return if @user.role_ordinary?
+      return if params['user'].present? && params['user']['role'] == 'admin'
+
+      admin_user_count = (User.find_list_by_admin - [@user]).count
+      return if admin_user_count >= 1
+
+      message = if action_name == 'update'
+                  I18n.t('admin_page.update.no_one_admin')
+                else
+                  I18n.t('admin_page.destroy.no_one_admin')
+                end
+
+      redirect_to admin_users_path, flash: { danger: message }
     end
   end
 end

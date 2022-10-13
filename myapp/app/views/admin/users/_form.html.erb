@@ -29,6 +29,11 @@
     </div>
     <% end %>
 
+    <div class="row mb-3" style="padding:10px;">
+      <%= form.label :role, I18n.t('activerecord.attributes.user.role'), class: "col-sm-2 col-form-label" %>
+      <%= form.select :role, I18n.t('select_form.user.role'), {}, class: "form-select" %>
+    </div>
+
     <div style="padding:10px;">
       <%= form.submit class: "btn btn-primary" %>
     </div>
