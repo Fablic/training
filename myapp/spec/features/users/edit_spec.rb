@@ -28,6 +28,7 @@ RSpec.feature '/admin/user/:id/edit' do
 
       fill_in 'ユーザー名', with: 'うぷだてユーザー名'
       fill_in 'Eメール', with: 'updateEmail@email.com'
+      select '管理者', from: 'user[role]'
 
       expect { click_button '更新する' }.to \
         change { User.exists?(name: 'うぷだてユーザー名', email: 'updateEmail@email.com') }.from(false).to(true)
@@ -42,12 +43,43 @@ RSpec.feature '/admin/user/:id/edit' do
 
       fill_in 'ユーザー名', with: ''
       fill_in 'Eメール', with: ''
+      select '管理者', from: 'user[role]'
 
       expect { click_button '更新する' }.to change(User, :count).by(0)
       expect(current_path).to eq "/admin/users/#{User.last.id}"
       expect(page).to have_content '2件のエラーが発生しました'
       expect(page).to have_content 'ユーザー名を入力してください'
       expect(page).to have_content 'Eメールを入力してください'
+    end
+
+    feature 'when exist one admin user in users' do
+      scenario 'does NOT update from admin to ordinary' do
+        visit edit_admin_user_path(user)
+
+        expect(current_path).to eq "/admin/users/#{user.id}/edit"
+
+        select '一般', from: 'user[role]'
+        click_button '更新する'
+
+        expect(current_path).to eq admin_users_path
+        expect(page).to have_content 'このユーザーを一般ユーザーに変更すると管理者権限を持つユーザーがいなくなります'
+      end
+    end
+
+    feature 'when exist two admin user over in users' do
+      given(:second_user) { create(:user, name: '第二ユーザー名', role: 'admin') }
+
+      scenario 'updates from admin to ordinary' do
+        visit edit_admin_user_path(second_user)
+
+        expect(current_path).to eq "/admin/users/#{second_user.id}/edit"
+
+        select '一般', from: 'user[role]'
+        click_button '更新する'
+
+        expect(current_path).to eq admin_users_path
+        expect(page).to have_content 'ユーザーが正常に更新されました'
+      end
     end
   end
 end
