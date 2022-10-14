@@ -39,6 +39,12 @@ RSpec.describe 'Admin::Users', type: :request do
 
     context 'when user has many tasks' do
       let!(:tasks) { 4.times.map { create(:task, user_id: user.id) } }
+      let!(:label_a) { create(:label, name: 'ラベルA') }
+      let!(:label_b) { create(:label, name: 'ラベルB') }
+      before do
+        create(:task_label, task_id: tasks.first.id, label_id: label_a.id)
+        create(:task_label, task_id: tasks.first.id, label_id: label_b.id)
+      end
 
       it 'renders a successful response' do
         get admin_user_url(user)
@@ -46,6 +52,8 @@ RSpec.describe 'Admin::Users', type: :request do
         expect(response).to have_http_status(:ok)
         expect(response.body).to include user.name.to_s
         tasks.each { |task| expect(response.body).to include task.name.to_s }
+        expect(response.body).to include label_a.name
+        expect(response.body).to include label_b.name
       end
     end
 
