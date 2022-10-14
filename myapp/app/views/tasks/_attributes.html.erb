@@ -3,4 +3,9 @@
 <td class='task_priority'><%= Task.priorities_i18n[task.priority] %></td>
 <td class='task_status'><%= Task.statuses_i18n[task.status] %></td>
 <td class='task_explanation'><%= task.explanation %></td>
+<td class='task_labels'>
+  <% task.labels.each do |label| %>
+		<span class="btn btn-secondary"><%= label.name %></span>
+	<% end %>
+</td>
 <td class='task_user_name'><%= task.user&.name %></td>

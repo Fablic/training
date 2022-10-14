@@ -21,6 +21,18 @@
       </div>
     </div>
 
+    <div class="row mb-3" style="padding:10px;">
+      <%= form.label :label, 'ラベルで検索', class: "col-sm-2 col-form-label" %>
+      <div class="col-sm-10">
+        <%= form.collection_check_boxes(:label_ids, labels, :id, :name, { checked: params[:label_ids]}) do |box| %>
+          <%= box.label do %>
+            <%= box.check_box %>
+            <%= box.text %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+
     <div style="padding:10px;">
       <%= form.submit '検索する', class: "btn btn-primary" %>
     </div>

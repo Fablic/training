@@ -35,6 +35,7 @@ class Task < ApplicationRecord
   scope :sort_by_keyword, ->(sort) { order(SORT_TYPE[sort]) }
   scope :search_by_keyword, ->(keyword) { where('CONCAT(name, explanation) LIKE ?', "%#{sanitize_sql_like(keyword)}%") }
   scope :search_by_status, ->(status) { where(status:) }
+  scope :match_any_of_label_ids, ->(label_ids) { joins(:task_labels).merge(TaskLabel.where(label_id: label_ids)) }
 
   def set_default_values
     self.priority ||= DEFAULT_PRIORITY_VALUE

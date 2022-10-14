@@ -1,0 +1,9 @@
+<h1 class="display-1">タスクとラベルの紐付けを行う</h1>
+
+<%=
+	render "form",
+  task_label: @task_label,
+	labels: @labels,
+	task_id: @task_id,
+	attached_label_ids: @attached_label_ids
+%>
