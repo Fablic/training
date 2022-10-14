@@ -4,7 +4,7 @@ class TasksController < ApplicationController
   before_action :set_task, only: %i[show edit update destroy]
 
   def index
-    query = Task.where(user_id: current_user.id).preload(:user, :task_labels, :labels)
+    query = Task.where(user_id: current_user.id).preload(:user, :labels)
     query = query.sort_by_keyword(search_params[:sort]) if search_params[:sort].present?
     query = query.search_by_keyword(search_params[:keyword]) if search_params[:keyword].present?
     query = query.search_by_status(search_params[:status]) if search_params[:status].present?

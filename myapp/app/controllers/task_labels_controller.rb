@@ -5,7 +5,7 @@ class TaskLabelsController < ApplicationController
     @labels = Label.all
     @task_label = TaskLabel.new
     @task_id = task_label_params[:task_id]
-    @attached_label_ids = Task.find(task_label_params['task_id']).labels.map(&:id)
+    @attached_label_ids = set_task.labels.map(&:id)
   end
 
   def attach_labels
@@ -20,9 +20,11 @@ class TaskLabelsController < ApplicationController
   private
 
   def laundering_labels
-    task = Task.includes([:labels]).find(task_label_params[:task_id])
-    labels = Label.where(id: task_label_params[:label_ids])
-    task.labels = labels
+    set_task.labels = Label.where(id: task_label_params[:label_ids])
+  end
+
+  def set_task
+    Task.preload([:labels]).find(task_label_params[:task_id])
   end
 
   def task_label_params
