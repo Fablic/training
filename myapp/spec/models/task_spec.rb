@@ -106,6 +106,35 @@ RSpec.describe Task, type: :model do
     end
   end
 
+  describe '.match_any_of_label_ids' do
+    let!(:task_aqua) { create(:task, name: 'アクア') }
+    let!(:task_kuma) { create(:task, name: 'くま') }
+    let!(:task_nyanko) { create(:task, name: 'にゃんこ') }
+    let!(:task_piyo) { create(:task, name: 'ひよこ') }
+    let!(:task_usa) { create(:task, name: 'うさぎ') }
+
+    let!(:label_a) { create(:label, name: 'ラベルA') }
+    let!(:label_b) { create(:label, name: 'ラベルB') }
+    let!(:label_c) { create(:label, name: 'ラベルC') }
+
+    before do
+      create(:task_label, task_id: task_kuma.id, label_id: label_a.id)
+      create(:task_label, task_id: task_kuma.id, label_id: label_b.id)
+      create(:task_label, task_id: task_piyo.id, label_id: label_a.id)
+      create(:task_label, task_id: task_usa.id, label_id: label_c.id)
+    end
+
+    subject { Task.match_any_of_label_ids(label_ids) }
+
+    context "when argument 'search_by_status' exists" do
+      let(:label_ids) { [label_a.id, label_c.id] }
+
+      it 'search from specified status' do
+        is_expected.to eq [task_kuma, task_piyo, task_usa]
+      end
+    end
+  end
+
   describe '.check_approved_sort_params' do
     subject { Task.check_approved_sort_params(sort) }
 

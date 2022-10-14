@@ -347,6 +347,38 @@ RSpec.feature '/tasks or /' do
       end
     end
 
+    feature 'with some label_ids in search_params' do
+      given!(:task_aqua) { create(:task, name: 'アクア', user_id: user.id) }
+      given!(:task_kuma) { create(:task, name: 'くま', user_id: user.id) }
+      given!(:task_nyanko) { create(:task, name: 'にゃんこ', user_id: user.id) }
+      given!(:task_piyo) { create(:task, name: 'ひよこ', user_id: user.id) }
+      given!(:task_usa) { create(:task, name: 'うさぎ', user_id: user.id) }
+
+      given!(:label_a) { create(:label, name: 'ラベルA') }
+      given!(:label_b) { create(:label, name: 'ラベルB') }
+      given!(:label_c) { create(:label, name: 'ラベルC') }
+
+      before do
+        create(:task_label, task_id: task_kuma.id, label_id: label_a.id)
+        create(:task_label, task_id: task_kuma.id, label_id: label_b.id)
+        create(:task_label, task_id: task_piyo.id, label_id: label_a.id)
+        create(:task_label, task_id: task_usa.id, label_id: label_c.id)
+      end
+
+      scenario 'correctly displays tasks' do
+        visit tasks_path
+
+        expect(current_path).to eq '/tasks'
+
+        find("#label_ids_#{label_a.id}").click
+        click_on '検索する'
+
+        expect(page.all('.task').count).to eq 2
+        expect(page.all('.task')[0].find('.task_name').text).to eq 'くま'
+        expect(page.all('.task')[1].find('.task_name').text).to eq 'ひよこ'
+      end
+    end
+
     feature 'clicks link buttons' do
       background do
         create(:task,

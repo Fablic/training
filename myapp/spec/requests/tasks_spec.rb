@@ -167,6 +167,42 @@ RSpec.describe '/tasks', type: :request do
         end
       end
     end
+
+    context 'exists label_ids in search_params' do
+      let!(:task_aqua) { create(:task, name: 'アクア', user_id: user.id) }
+      let!(:task_kuma) { create(:task, name: 'くま', user_id: user.id) }
+      let!(:task_nyanko) { create(:task, name: 'にゃんこ', user_id: user.id) }
+      let!(:task_piyo) { create(:task, name: 'ひよこ', user_id: user.id) }
+      let!(:task_usa) { create(:task, name: 'うさぎ', user_id: user.id) }
+
+      let!(:label_a) { create(:label, name: 'ラベルA') }
+      let!(:label_b) { create(:label, name: 'ラベルB') }
+      let!(:label_c) { create(:label, name: 'ラベルC') }
+
+      before do
+        create(:task_label, task_id: task_kuma.id, label_id: label_a.id)
+        create(:task_label, task_id: task_kuma.id, label_id: label_b.id)
+        create(:task_label, task_id: task_piyo.id, label_id: label_a.id)
+        create(:task_label, task_id: task_usa.id, label_id: label_c.id)
+      end
+
+      context 'status: untouched' do
+        let(:params) do
+          { label_ids: [label_a.id, label_c.id] }
+        end
+
+        it 'renders a successful response' do
+          get tasks_url, params: params
+
+          expect(response).to have_http_status(:ok)
+          expect(response.body).not_to include 'アクア'
+          expect(response.body).to include 'くま'
+          expect(response.body).not_to include 'にゃんこ'
+          expect(response.body).to include 'ひよこ'
+          expect(response.body).to include 'うさぎ'
+        end
+      end
+    end
   end
 
   describe 'GET /show' do
