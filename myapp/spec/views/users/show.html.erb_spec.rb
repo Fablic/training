@@ -25,7 +25,10 @@ RSpec.describe 'admin/users/show', type: :view do
   let(:end_date_aqua) { '2022/09/14 17:25' }
   let(:end_date_kuma) { '2022/09/13 18:25' }
 
-  before { assign(:user, user) }
+  before {
+    assign(:user, user)
+    assign(:user_tasks, [task_aqua, task_kuma])
+  }
 
   it 'renders a user detail with list of a user`s tasks' do
     render

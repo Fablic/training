@@ -25,8 +25,12 @@ RSpec.describe 'tasks/index', type: :view do
   let(:end_date_aqua) { '2022/09/14 17:25' }
   let(:end_date_kuma) { '2022/09/13 18:25' }
   let(:tasks) { Kaminari.paginate_array([task_aqua, task_kuma]).page(1) }
+  let(:labels) { create_list(:label, 10) }
 
-  before { assign(:tasks, tasks) }
+  before {
+    assign(:tasks, tasks)
+    assign(:labels, labels)
+  }
 
   it 'renders a list of tasks' do
     render

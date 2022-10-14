@@ -12,7 +12,9 @@ module Admin
       @users = query
     end
 
-    def show; end
+    def show
+      @user_tasks = @user.tasks.preload(:task_labels, :labels)
+    end
 
     def new
       @user = User.new
