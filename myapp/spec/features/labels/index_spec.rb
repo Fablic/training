@@ -92,6 +92,16 @@ RSpec.feature '/labels' do
       create_list(:label, 10)
     end
 
+    feature 'clicks new button' do
+      scenario 'redirects #index' do
+        visit labels_path
+        first(:link, '新規作成する').click
+
+        expect(current_path).to eq labels_path
+        expect(page).to have_content '権限がないため新規作成ページを開くことが出来ません'
+      end
+    end
+
     feature 'clicks edit button' do
       scenario 'redirects #index' do
         visit labels_path

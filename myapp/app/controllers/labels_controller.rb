@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class LabelsController < ApplicationController
+  before_action :write_permission?, except: %i[index]
   before_action :set_label, only: %i[edit update destroy]
 
   def index
@@ -43,9 +44,11 @@ class LabelsController < ApplicationController
   private
 
   def set_label
-    redirect_to labels_path, flash: { danger: I18n.t("no_admin.#{action_name}") } if current_user.role_ordinary?
-
     @label = Label.find(params[:id])
+  end
+
+  def write_permission?
+    redirect_to labels_path, flash: { danger: I18n.t("no_admin.#{action_name}") } if current_user.role_ordinary?
   end
 
   def label_params
