@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 class Task < ApplicationRecord
-  DEFAULT_PRIORITY_VALUE = 1
-  DEFAULT_STATUS_VALUE = 0
+  DEFAULT_PRIORITY_VALUE = 'normal'
+  DEFAULT_STATUS_VALUE = 'untouched'
+  DEFAULT_SORT_TYPE_VALUE = 'created_at_asc'
   SORT_TYPE = {
     'created_at_asc' => 'created_at ASC',
     'created_at_desc' => 'created_at DESC',
@@ -33,7 +34,9 @@ class Task < ApplicationRecord
   }, prefix: true
 
   scope :sort_by_keyword, ->(sort) { order(SORT_TYPE[sort]) }
-  scope :search_by_keyword, ->(keyword) { where('CONCAT(name, explanation) LIKE ?', "%#{sanitize_sql_like(keyword)}%") }
+  scope :search_by_keyword, lambda { |keyword|
+                              where(['name LIKE(?) OR explanation LIKE(?)', "%#{sanitize_sql_like(keyword)}%", "%#{sanitize_sql_like(keyword)}%"])
+                            }
   scope :search_by_status, ->(status) { where(status:) }
   scope :match_any_of_label_ids, ->(label_ids) { joins(:task_labels).merge(TaskLabel.where(label_id: label_ids)) }
 
@@ -44,7 +47,7 @@ class Task < ApplicationRecord
 
   class << self
     def check_approved_sort_params(sort)
-      SORT_TYPE.keys.include?(sort) ? sort : 'created_at_asc'
+      SORT_TYPE.keys.include?(sort) ? sort : DEFAULT_SORT_TYPE_VALUE
     end
   end
 end
