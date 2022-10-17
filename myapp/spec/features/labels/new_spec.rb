@@ -60,5 +60,17 @@ RSpec.feature '/admin/label/new' do
       expect(page).to have_content '1件のエラーが発生しました'
       expect(page).to have_content 'ラベル名は30文字以内で入力してください'
     end
+
+    feature '#edit without admin' do
+      before { login create(:user, role: 'ordinary') }
+      given(:label) { create(:label) }
+
+      scenario 'redirects #index' do
+        visit new_label_path(label)
+
+        expect(current_path).to eq labels_path
+        expect(page).to have_content '権限がないため新規作成ページを開くことが出来ません'
+      end
+    end
   end
 end
