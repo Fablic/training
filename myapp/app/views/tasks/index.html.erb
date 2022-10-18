@@ -2,7 +2,10 @@
 
 <h1 class="display-1">検索フォーム</h1>
 
-<%= link_to I18n.t('sessions.button.logout'), logout_path, method: :delete, class: "btn btn-primary mx-1" %>
+<div style="padding:10px;">
+  <%= link_to I18n.t('sessions.button.logout'), logout_path, method: :delete, class: "btn btn-primary mx-1" %> |
+  <%= link_to 'ラベル一覧を表示する', labels_path, { class: "btn btn-primary mx-1" } %>
+</div>
 
 <%= render "search_form" %>
 

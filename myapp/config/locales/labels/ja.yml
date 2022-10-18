@@ -1,0 +1,21 @@
+ja:
+  activerecord:
+    models:
+      label: ラベル
+    attributes:
+      label:
+        name: ラベル名
+    errors:
+      messages:
+        count: "%{count}件のエラーが発生しました。"
+  no_admin:
+    new: 権限がないため新規作成ページを開くことが出来ません
+    create: 権限がないため作成することが出来ません
+    edit: 権限がないため編集ページを開くことが出来ません
+    update: 権限がないため更新することが出来ません
+    destroy: 権限がないため削除することが出来ません
+  columns:
+    label:
+      name: タスク名
+      edit_button: ラベルを編集
+      destroy_button: ラベルを削除

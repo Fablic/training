@@ -1,0 +1,7 @@
+<h1 class="display-1">ラベルの新規作成</h1>
+
+<%= render "form", label: @label %>
+
+<div style="padding:10px;">
+  <%= link_to I18n.t('transition_destination.index'), labels_path, { class: "btn btn-primary mx-1" } %>
+</div>

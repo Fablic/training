@@ -1,0 +1,30 @@
+<p style="color: green"><%= notice %></p>
+
+<div style="padding:10px;">
+  <%= link_to I18n.t('sessions.button.logout'), logout_path, method: :delete, class: "btn btn-primary mx-1" %> |
+  <%= link_to 'タスク一覧を表示する', tasks_path, { class: "btn btn-primary mx-1" } %>
+</div>
+
+<h1 class="display-1">ラベル一覧</h1>
+
+<div style="padding:10px;">
+  <%= link_to I18n.t('transition_destination.create'), new_label_path, { class: "btn btn-primary mx-1" } %>
+</div>
+
+<div id="labels">
+  <table class="table table-striped table-bordered">
+    <tr>
+      <%= render 'header' %>
+    </tr>
+
+    <% @labels.each do |label| %>
+      <div class="label" id="<%= dom_id label %>">
+        <tr>
+          <%= render 'attributes', label: %>
+        </tr>
+      </div>
+    <% end %>
+  </table>
+</div>
+
+<%= paginate @labels %>
