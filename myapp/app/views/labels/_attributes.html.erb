@@ -1,8 +1,10 @@
 <td class='label_name'><%= label.name %></td>
 <td class='label_edit_button'><%= link_to I18n.t('transition_destination.edit'), edit_label_path(label), { class: "btn btn-primary mx-1" } %></td>
 <td class='label_destroy_button'>
-  <%= button_to I18n.t('transition_destination.destroy'),
+  <%=
+    button_to I18n.t('transition_destination.destroy'),
     label_path(label), method: :delete,
     data: { turbo: false }, form: { onSubmit: I18n.t('confirm.destroy') },
-    class: "btn btn-danger mx-1" %>
+    class: "btn btn-danger mx-1"
+  %>
 </td>
