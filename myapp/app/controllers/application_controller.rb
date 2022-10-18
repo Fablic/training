@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  before_action :render_503, if: :maintenance_mode?
+
   add_flash_types :success, :info, :warning, :danger
   rescue_from Exception, with: :render_500
   rescue_from ActionController::BadRequest, with: :render_400
@@ -23,7 +25,15 @@ class ApplicationController < ActionController::Base
     render file: 'public/500.html', layout: false, status: 500
   end
 
+  def render_503
+    render file: 'public/503.html', layout: false, status: 503
+  end
+
   private
+
+  def maintenance_mode?
+    File.exist?('/myapp/tmp/maintenance.txt')
+  end
 
   def current_user
     @current_user ||= User.find_by(id: session[:user_id]) if session[:user_id]
