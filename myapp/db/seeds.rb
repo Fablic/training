@@ -8,6 +8,7 @@
 
 User.destroy_all
 Label.destroy_all
+SystemMaintenance.destroy_all
 
 # User
 10.times do |n|
@@ -18,3 +19,6 @@ end
 5.times do |n|
   Label.create!(name: "ラベル#{n + 1}")
 end
+
+# SystemMaintenance
+SystemMaintenance.create!(key: SystemMaintenance::KEY_TASK_MANAGEMENT, maintenance_flg: false)

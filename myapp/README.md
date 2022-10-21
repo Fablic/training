@@ -33,6 +33,19 @@ Things you may want to cover:
 |  updated_at  |  DATETIME  |    |  yes  |  -  |
 <br>
 
+* Script
+
+メンテナンス開始
+
+``` shell
+docker-compose exec api rake 'system_maintenance:change_system_maintenance_status[1001, 1]'
+```
+
+メンテナンス終了
+
+``` shell
+docker-compose exec api rake 'system_maintenance:change_system_maintenance_status[1001, 0]'
+```
 
 * Ruby version
 

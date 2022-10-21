@@ -2,6 +2,8 @@ require 'rails_helper'
 
 describe 'タスク管理機能', type: :system do
   before do
+    SystemMaintenance.create(key: SystemMaintenance::KEY_TASK_MANAGEMENT, maintenance_flg: false)
+
     # login
     visit login_path
     fill_in 'session[email]', with: user.email
@@ -470,7 +472,32 @@ describe 'タスク管理機能', type: :system do
         end
       end
     end
+
+    describe 'メンテナンス機能' do
+      context 'メンテナンスが未開始状態の場合'do
+        before do
+          SystemMaintenance.find_by(SystemMaintenance::KEY_TASK_MANAGEMENT).update(maintenance_flg: false)
+        end
+
+        it 'タスク一覧画面への遷移で503エラーが表示されないこと' do
+          visit root_path
+          expect(page).not_to have_content '503 Service Unavailable'
+        end
+      end
+
+      context 'メンテナンスが開始状態の場合'do
+        before do
+          SystemMaintenance.find_by(SystemMaintenance::KEY_TASK_MANAGEMENT).update(maintenance_flg: true)
+        end
+
+        it 'タスク一覧画面への遷移で503エラーが表示されること' do
+          visit root_path
+          expect(page).to have_content '503 Service Unavailable'
+        end
+      end
+    end
   end
+
   describe '詳細表示機能' do
     let!(:task_a) { FactoryBot.create(:task, :with_label, title: '0 title', description: '最初のタスクを実施する', user_id: user.id, status: Task.statuses[:not_started], label_name: '0 label') }
     subject(:visit_task_a) { visit task_path(task_a) }
@@ -500,6 +527,30 @@ describe 'タスク管理機能', type: :system do
           visit_task_a
           click_link I18n.t('link.back')
           expect(page).to have_current_path tasks_path
+        end
+      end
+    end
+
+    describe 'メンテナンス機能' do
+      context 'メンテナンス未開始の場合'do
+        before do
+          SystemMaintenance.find_by(SystemMaintenance::KEY_TASK_MANAGEMENT).update(maintenance_flg: false)
+        end
+
+        it 'タスク一覧画面への遷移で503エラーが表示されないこと' do
+          visit_task_a
+          expect(page).not_to have_content '503 Service Unavailable'
+        end
+      end
+
+      context 'メンテナンスが開始状態の場合'do
+        before do
+          SystemMaintenance.find_by(SystemMaintenance::KEY_TASK_MANAGEMENT).update(maintenance_flg: true)
+        end
+
+        it 'タスク一覧画面への遷移で503エラーが表示されること' do
+          visit_task_a
+          expect(page).to have_content '503 Service Unavailable'
         end
       end
     end
@@ -542,6 +593,30 @@ describe 'タスク管理機能', type: :system do
           visit_new_task
           click_link I18n.t('link.back')
           expect(page).to have_current_path tasks_path
+        end
+      end
+    end
+
+    describe 'メンテナンス機能' do
+      context 'メンテナンス未開始の場合'do
+        before do
+          SystemMaintenance.find_by(SystemMaintenance::KEY_TASK_MANAGEMENT).update(maintenance_flg: false)
+        end
+
+        it 'タスク一覧画面への遷移で503エラーが表示されないこと' do
+          visit_new_task
+          expect(page).not_to have_content '503 Service Unavailable'
+        end
+      end
+
+      context 'メンテナンス開始の場合'do
+        before do
+          SystemMaintenance.find_by(SystemMaintenance::KEY_TASK_MANAGEMENT).update(maintenance_flg: true)
+        end
+
+        it 'タスク一覧画面への遷移で503エラーが表示されること' do
+          visit_new_task
+          expect(page).to have_content '503 Service Unavailable'
         end
       end
     end
@@ -603,6 +678,30 @@ describe 'タスク管理機能', type: :system do
             click_link I18n.t('link.back')
             expect(page).to have_current_path tasks_path
           end
+        end
+      end
+    end
+
+    describe 'メンテナンス機能' do
+      context 'メンテナンス未開始の場合'do
+        before do
+          SystemMaintenance.find_by(SystemMaintenance::KEY_TASK_MANAGEMENT).update(maintenance_flg: false)
+        end
+
+        it 'タスク一覧画面への遷移で503エラーが表示されないこと' do
+          visit_task_a_edit
+          expect(page).not_to have_content '503 Service Unavailable'
+        end
+      end
+
+      context 'システムが停止状態の場合'do
+        before do
+          SystemMaintenance.find_by(SystemMaintenance::KEY_TASK_MANAGEMENT).update(maintenance_flg: true)
+        end
+
+        it 'タスク一覧画面への遷移で503エラーが表示されること' do
+          visit_task_a_edit
+          expect(page).to have_content '503 Service Unavailable'
         end
       end
     end
