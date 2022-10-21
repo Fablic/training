@@ -3,6 +3,51 @@
 ## アプリケーション名
 タスク管理システム
 <br>
+<br>
+
+## メンテナンスモード
+【タスク一覧画面】
+
+開始
+
+docker-compose exec api rails runner Tasks::Maintenancer.start_maintenance(101)
+
+終了
+
+docker-compose exec api rails runner Tasks::Maintenancer.end_maintenance(101)
+<br>
+
+【タスク詳細画面】
+
+開始
+
+docker-compose exec api rails runner Tasks::Maintenancer.start_maintenance(102)
+
+終了
+
+docker-compose exec api rails runner Tasks::Maintenancer.end_maintenance(102)
+<br>
+
+【タスク作成画面】
+開始
+
+docker-compose exec api rails runner Tasks::Maintenancer.start_maintenance(103)
+
+終了
+
+docker-compose exec api rails runner Tasks::Maintenancer.end_maintenance(103)
+<br>
+
+【タスク編集画面】
+開始
+
+docker-compose exec api rails runner Tasks::Maintenancer.start_maintenance(104)
+
+終了
+
+docker-compose exec api rails runner Tasks::Maintenancer.end_maintenance(104)
+<br>
+<br>
 
 ## 画面設計
 【各画面共通】
@@ -113,12 +158,12 @@ tasks
 column_name | type | null | default
 | ---- | ---- | ---- | ---- |
 | id | integer | not null | auto increment |
-| name | varchar | | |
-| detail | varchar | | |
+| name | varchar | not null | |
+| detail | varchar | not null | |
 | status | integer | | |
 | priority | integer | | |
-| created_at | datetime | | |
-| updated_at | datetime | | |
+| created_at | datetime | not null | |
+| updated_at | datetime | not null | |
 
 users
 column_name | type | null | default
@@ -128,26 +173,34 @@ column_name | type | null | default
 | password | varchar | | |
 | email | varchar | | |
 | salt | varchar | | |
-| created_at | datetime | | |
-| updated_at | datetime | | |
+| created_at | datetime | not null | |
+| updated_at | datetime | not null | |
 
 labels
 column_name | type | null | default
 | ---- | ---- | ---- | ---- |
 | id | integer | not null | auto increment |
 | label_name | varchar | | |
-| created_at | datetime | | |
-| updated_at | datetime | | |
+| created_at | datetime | not null | |
+| updated_at | datetime | not null | |
 
 labellings
 column_name | type | null | default
 | ---- | ---- | ---- | ---- |
 | id | integer | not null | auto increment |
-| task_id | varchar | | |
-| label_id | varchar | | |
-| created_at | datetime | | |
-| updated_at | datetime | | |
+| task_id | varchar | not null | |
+| label_id | varchar | not null | |
+| created_at | datetime | not null | |
+| updated_at | datetime | not null | |
 
+maintenances
+column_name | type | null | default
+| ---- | ---- | ---- | ---- |
+| id | integer | not null | auto increment |
+| content_id | integer | not null | |
+| maintenance_flg | integer | | false |
+| created_at | datetime | not null | |
+| updated_at | datetime | not null | |
 
 <br>
 <br>
