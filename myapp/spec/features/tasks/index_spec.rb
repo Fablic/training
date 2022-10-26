@@ -9,7 +9,7 @@ RSpec.feature '/tasks or /' do
     given(:user) { create(:user, name: 'kumaTaro') }
 
     feature 'tasks by all same users' do
-      background do
+      given!(:task) do
         create(:task,
                name: 'aqua',
                end_date: end_date_aqua,
@@ -17,6 +17,10 @@ RSpec.feature '/tasks or /' do
                status: 'untouched',
                explanation: 'aqua hara',
                user_id: user.id)
+      end
+      given!(:label_kuma) { create(:label, name: 'くまラベル') }
+      given!(:label_nyanko) { create(:label, name: 'にゃんこラベル') }
+      background do
         create(:task,
                name: 'kuma',
                end_date: end_date_kuma,
@@ -39,6 +43,8 @@ RSpec.feature '/tasks or /' do
                status: 'completed',
                explanation: 'yellow hiyoko',
                user_id: user.id)
+        create(:task_label, task_id: task.id, label_id: label_kuma.id)
+        create(:task_label, task_id: task.id, label_id: label_nyanko.id)
       end
       given(:end_date_aqua) { '2022/09/14 17:25' }
       given(:end_date_kuma) { '2022/09/13 18:25' }
@@ -57,6 +63,7 @@ RSpec.feature '/tasks or /' do
           expect(page.all('.task')[0].find('.task_priority').text).to eq '高'
           expect(page.all('.task')[0].find('.task_status').text).to eq '未着手'
           expect(page.all('.task')[0].find('.task_explanation').text).to eq 'aqua hara'
+          expect(page.all('.task')[0].find('.task_label_names').text).to eq 'くまラベル にゃんこラベル'
           expect(page.all('.task')[0].find('.task_user_name').text).to eq 'kumaTaro'
 
           expect(page.all('.task')[1].find('.task_name').text).to eq 'kuma'
@@ -337,6 +344,38 @@ RSpec.feature '/tasks or /' do
         expect(page.all('.task').count).to eq 2
         expect(page.all('.task')[0].find('.task_name').text).to eq 'アクア'
         expect(page.all('.task')[1].find('.task_name').text).to eq 'くま二郎'
+      end
+    end
+
+    feature 'with some label_ids in search_params' do
+      given!(:task_aqua) { create(:task, name: 'アクア', user_id: user.id) }
+      given!(:task_kuma) { create(:task, name: 'くま', user_id: user.id) }
+      given!(:task_nyanko) { create(:task, name: 'にゃんこ', user_id: user.id) }
+      given!(:task_piyo) { create(:task, name: 'ひよこ', user_id: user.id) }
+      given!(:task_usa) { create(:task, name: 'うさぎ', user_id: user.id) }
+
+      given!(:label_a) { create(:label, name: 'ラベルA') }
+      given!(:label_b) { create(:label, name: 'ラベルB') }
+      given!(:label_c) { create(:label, name: 'ラベルC') }
+
+      before do
+        create(:task_label, task_id: task_kuma.id, label_id: label_a.id)
+        create(:task_label, task_id: task_kuma.id, label_id: label_b.id)
+        create(:task_label, task_id: task_piyo.id, label_id: label_a.id)
+        create(:task_label, task_id: task_usa.id, label_id: label_c.id)
+      end
+
+      scenario 'correctly displays tasks' do
+        visit tasks_path
+
+        expect(current_path).to eq '/tasks'
+
+        find("#label_ids_#{label_a.id}").click
+        click_on '検索する'
+
+        expect(page.all('.task').count).to eq 2
+        expect(page.all('.task')[0].find('.task_name').text).to eq 'くま'
+        expect(page.all('.task')[1].find('.task_name').text).to eq 'ひよこ'
       end
     end
 

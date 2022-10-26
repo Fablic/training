@@ -7,7 +7,7 @@
   <%= link_to 'ラベル一覧を表示する', labels_path, { class: "btn btn-primary mx-1" } %>
 </div>
 
-<%= render "search_form" %>
+<%= render "search_form", labels: @labels %>
 
 <h1 class="display-1">タスク一覧</h1>
 

@@ -4,13 +4,18 @@ class TasksController < ApplicationController
   before_action :set_task, only: %i[show edit update destroy]
 
   def index
-    query = Task.where(user_id: current_user.id).preload(:user)
+    query = Task.where(user_id: current_user.id).preload(:user, :labels)
     query = query.sort_by_keyword(search_params[:sort]) if search_params[:sort].present?
     query = query.search_by_keyword(search_params[:keyword]) if search_params[:keyword].present?
     query = query.search_by_status(search_params[:status]) if search_params[:status].present?
+    if search_params[:label_ids].present? && search_params[:label_ids] != ['']
+      query = query.match_any_of_label_ids(search_params[:label_ids]).distinct
+    end
     query = query.page(search_params[:page])
 
     @tasks = query
+
+    @labels = Label.all
   end
 
   def show; end
@@ -63,6 +68,6 @@ class TasksController < ApplicationController
 
   def search_params
     params[:sort] = Task.check_approved_sort_params(params[:sort]) if params[:sort].present?
-    params.permit(:page, :keyword, :status, :sort)
+    params.permit(:page, :keyword, :status, :sort, label_ids: [])
   end
 end

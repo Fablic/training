@@ -4,6 +4,19 @@
   User.create!(
     name: "くま太郎#{n + 1}",
     email: "kuma#{n + 1}@gmail.com",
-    password: 'password'
+    password: 'password',
+    role: 'ordinary'
+  )
+end
+
+5.times do |n|
+  Task.create!(
+    name: "くまタスク#{n + 1}"
+  )
+end
+
+5.times do |n|
+  Label.create!(
+    name: "くまラベル#{n + 1}"
   )
 end

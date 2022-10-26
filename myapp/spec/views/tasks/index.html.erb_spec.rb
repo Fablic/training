@@ -25,8 +25,17 @@ RSpec.describe 'tasks/index', type: :view do
   let(:end_date_aqua) { '2022/09/14 17:25' }
   let(:end_date_kuma) { '2022/09/13 18:25' }
   let(:tasks) { Kaminari.paginate_array([task_aqua, task_kuma]).page(1) }
+  let(:label_a) { create(:label, name: 'ラベルA') }
+  let(:label_b) { create(:label, name: 'ラベルB') }
+  before do
+    create(:task_label, task_id: task_aqua.id, label_id: label_a.id)
+    create(:task_label, task_id: task_aqua.id, label_id: label_b.id)
+  end
 
-  before { assign(:tasks, tasks) }
+  before do
+    assign(:tasks, tasks)
+    assign(:labels, [label_a, label_b])
+  end
 
   it 'renders a list of tasks' do
     render
@@ -38,6 +47,8 @@ RSpec.describe 'tasks/index', type: :view do
     expect(rendered).to match(/高/)
     expect(rendered).to match(/未着手/)
     expect(rendered).to match(/aqua hara/)
+    expect(rendered).to match(/ラベルA/)
+    expect(rendered).to match(/ラベルB/)
     expect(rendered).to match(/kumaTaro/)
 
     expect(rendered).to match(/kuma/)

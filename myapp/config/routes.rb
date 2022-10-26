@@ -9,6 +9,11 @@ Rails.application.routes.draw do
 
   resources :tasks
   resources :labels, except: %i[show]
+  resources :task_labels, only: %i[new] do
+    collection do
+      post :attach_labels
+    end
+  end
 
   get '/admin' => 'admin/users#index'
   namespace :admin do

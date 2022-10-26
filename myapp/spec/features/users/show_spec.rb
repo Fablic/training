@@ -12,7 +12,7 @@ RSpec.feature '/admin/user/:id' do
     before(:each) { login(user) }
 
     given(:user) { create(:user, id: 1, name: 'kumaTaro', role: 'admin') }
-    before do
+    given(:task) do
       create(:task,
              name: 'aqua',
              end_date: '2022/09/14 17:25',
@@ -20,6 +20,10 @@ RSpec.feature '/admin/user/:id' do
              status: 'untouched',
              explanation: 'aqua hara',
              user_id: user.id)
+    end
+    given!(:label_kuma) { create(:label, name: 'くまラベル') }
+    given!(:label_nyanko) { create(:label, name: 'にゃんこラベル') }
+    before do
       create(:task,
              name: 'kuma',
              end_date: '2022/09/16 19:24',
@@ -27,6 +31,8 @@ RSpec.feature '/admin/user/:id' do
              status: 'touched',
              explanation: 'kumaJiro',
              user_id: user.id)
+      create(:task_label, task_id: task.id, label_id: label_kuma.id)
+      create(:task_label, task_id: task.id, label_id: label_nyanko.id)
     end
 
     scenario 'correctly shows user' do
@@ -38,6 +44,7 @@ RSpec.feature '/admin/user/:id' do
       expect(page).to have_content '高'
       expect(page).to have_content '未着手'
       expect(page).to have_content 'aqua hara'
+      expect(page).to have_content 'くまラベル にゃんこラベル'
       expect(page).to have_content 'kumaTaro'
 
       expect(page).to have_content 'kuma'

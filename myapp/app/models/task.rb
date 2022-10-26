@@ -14,6 +14,8 @@ class Task < ApplicationRecord
   after_initialize :set_default_values
 
   belongs_to :user, optional: true
+  has_many :task_labels, dependent: :delete_all
+  has_many :labels, through: :task_labels
 
   validates :name, presence: true, length: { maximum: 255 }
   validates :priority, presence: true
@@ -36,6 +38,7 @@ class Task < ApplicationRecord
                               where(['name LIKE(?) OR explanation LIKE(?)', "%#{sanitize_sql_like(keyword)}%", "%#{sanitize_sql_like(keyword)}%"])
                             }
   scope :search_by_status, ->(status) { where(status:) }
+  scope :match_any_of_label_ids, ->(label_ids) { joins(:task_labels).merge(TaskLabel.where(label_id: label_ids)) }
 
   def set_default_values
     self.priority ||= DEFAULT_PRIORITY_VALUE

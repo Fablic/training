@@ -12,11 +12,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 20_221_011_090_708) do
+ActiveRecord::Schema[7.0].define(version: 20_221_013_022_333) do
   create_table 'labels', charset: 'utf8mb4', force: :cascade do |t|
     t.string 'name', limit: 30, null: false, comment: 'ラベル名'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
+  end
+
+  create_table 'task_labels', charset: 'utf8mb4', force: :cascade do |t|
+    t.bigint 'task_id', null: false
+    t.bigint 'label_id', null: false
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['label_id'], name: 'index_task_labels_on_label_id'
+    t.index ['task_id'], name: 'index_task_labels_on_task_id'
   end
 
   create_table 'tasks', charset: 'utf8mb4', comment: 'タスク', force: :cascade do |t|
@@ -42,5 +51,7 @@ ActiveRecord::Schema[7.0].define(version: 20_221_011_090_708) do
     t.index ['email'], name: 'index_users_on_email', unique: true
   end
 
+  add_foreign_key 'task_labels', 'labels'
+  add_foreign_key 'task_labels', 'tasks'
   add_foreign_key 'tasks', 'users'
 end

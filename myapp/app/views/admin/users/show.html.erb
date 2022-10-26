@@ -7,7 +7,7 @@
       <%= render 'tasks/header' %>
     </tr>
 
-    <% @user.tasks.each do |task| %>
+    <% @user_tasks.each do |task| %>
       <div class="task" id="<%= dom_id task %>">
         <tr>
           <%= render 'tasks/attributes', task: %>

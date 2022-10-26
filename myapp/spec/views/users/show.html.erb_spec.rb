@@ -24,8 +24,17 @@ RSpec.describe 'admin/users/show', type: :view do
   end
   let(:end_date_aqua) { '2022/09/14 17:25' }
   let(:end_date_kuma) { '2022/09/13 18:25' }
+  let(:label_a) { create(:label, name: 'ラベルA') }
+  let(:label_b) { create(:label, name: 'ラベルB') }
+  before do
+    create(:task_label, task_id: task_aqua.id, label_id: label_a.id)
+    create(:task_label, task_id: task_aqua.id, label_id: label_b.id)
+  end
 
-  before { assign(:user, user) }
+  before do
+    assign(:user, user)
+    assign(:user_tasks, [task_aqua, task_kuma])
+  end
 
   it 'renders a user detail with list of a user`s tasks' do
     render
@@ -38,6 +47,8 @@ RSpec.describe 'admin/users/show', type: :view do
     expect(rendered).to match(/高/)
     expect(rendered).to match(/未着手/)
     expect(rendered).to match(/aqua hara/)
+    expect(rendered).to match(/ラベルA/)
+    expect(rendered).to match(/ラベルB/)
     expect(rendered).to match(/kumaTaro/)
 
     expect(rendered).to match(/kuma/)
