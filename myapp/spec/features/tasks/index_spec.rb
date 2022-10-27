@@ -427,5 +427,14 @@ RSpec.feature '/tasks or /' do
         expect(page).to have_content 'ログイン'
       end
     end
+
+    feature 'when maintenance execute' do
+      given!(:temp) { Rails.root.join '/myapp/tmp/maintenance.txt' }
+
+      before { File.new temp, 'w' unless File.exist? temp }
+      after { File.delete temp if File.exist? temp }
+
+      scenario { display_503(root_path) }
+    end
   end
 end
