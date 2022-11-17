@@ -1,24 +1,25 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Rails研修です。参照してる資料はこちら
 
-Things you may want to cover:
+- [日本語](docs/steps_jp.md)
 
-* Ruby version
+テーブル
 
-* System dependencies
+tasks
+|  column  |  type  |
+| ---- | ---- |
+|  id  |  int  |
+|  title  |  string  |
+|  label  |  string  |
+|  status  |  int  |
+|  user_id  |  int  |
+|  discription  |  text  |
+|  create_date  |  datetime  |
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+users
+|  column  |  type  |
+| ---- | ---- |
+|  id  |  int  |
+|  name  |  string  |
+|  password  |  string  |
