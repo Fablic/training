@@ -5,6 +5,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: root
+    platform: linux/amd64
     ports:
       - "3316:3306"
     volumes:
