@@ -13,9 +13,12 @@ tasks
 |  title  |  string  |
 |  label  |  string  |
 |  status  |  int  |
+|  priority  |  int  |
 |  user_id  |  int  |
 |  discription  |  text  |
-|  create_date  |  datetime  |
+|  end_date  |  datetime  |
+|  create_at  |  datetime  |
+|  create_by  |  datetime  |
 
 users
 |  column  |  type  |
@@ -23,3 +26,5 @@ users
 |  id  |  int  |
 |  name  |  string  |
 |  password  |  string  |
+|  create_at  |  datetime  |
+|  create_by  |  datetime  |
