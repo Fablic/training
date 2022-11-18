@@ -18,7 +18,7 @@ tasks
 |  discription  |  text  |
 |  end_date  |  datetime  |
 |  create_at  |  datetime  |
-|  create_by  |  datetime  |
+|  updated_at  |  datetime  |
 
 users
 |  column  |  type  |
@@ -27,4 +27,4 @@ users
 |  name  |  string  |
 |  password  |  string  |
 |  create_at  |  datetime  |
-|  create_by  |  datetime  |
+|  updated_at  |  datetime  |
