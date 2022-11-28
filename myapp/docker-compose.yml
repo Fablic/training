@@ -26,6 +26,7 @@ services:
       - .:/myapp
       - bundle-install:/usr/local/bundle:delegated
       - node_modules:/myapp/node_modules:delegated
+    platform: linux/amd64
     ports:
       - "3001:3000"
     links:
