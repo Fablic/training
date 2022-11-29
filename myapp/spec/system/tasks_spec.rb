@@ -74,6 +74,7 @@ RSpec.describe 'Tasks', type: :system do
     click_link 'Destroy'
     expect do
       expect(page.accept_confirm).to eq "Are you sure?"
+      sleep 0.5
     end.to change(Task, :count).by(-1)
     is_expected.not_to have_content @task.title
   end
