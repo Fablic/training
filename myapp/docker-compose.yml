@@ -28,7 +28,7 @@ services:
       - node_modules:/myapp/node_modules:delegated
     platform: linux/amd64
     ports:
-      - "3001:3000"
+      - "3000:3000"
     links:
       - db
     depends_on:
@@ -40,7 +40,7 @@ services:
       DB_HOST: db
 
   chrome:
-    image: selenium/standalone-chrome:latest
+    image: seleniarm/standalone-chromium
     ports:
       - 4444:4444
 
