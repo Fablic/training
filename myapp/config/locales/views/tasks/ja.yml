@@ -1,0 +1,8 @@
+ja:
+  tasks:
+    common:
+      delete: "削除"
+      edit: "編集"
+      new_task: "タスク作成"
+    messages:
+      confirm_delete: "本当に削除しますか？"
