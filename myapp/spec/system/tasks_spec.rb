@@ -21,8 +21,8 @@ RSpec.describe 'Tasks', type: :system do
 
     # 新規画面が開いてること（titleが空白になってる）
     expect(page).to have_content 'New Task'
-    expect(find_field("task_title").text).to be_blank
-    expect(page).to have_field 'task_description', with: ""
+    expect(find_field('task_title').text).to be_blank
+    expect(page).to have_field 'task_description', with: ''
 
     # titleとdescriptionを入力
     fill_in 'task_title', with: 'Spec test new task'
@@ -69,11 +69,11 @@ RSpec.describe 'Tasks', type: :system do
     expect(page).to have_content 'Spec first task description'
   end
 
-  it "Delete works correctly", js: true do
+  it 'Delete works correctly', js: true do
     visit task_path(@task)
     click_link 'Destroy'
     expect do
-      expect(page.accept_confirm).to eq "Are you sure?"
+      expect(page.accept_confirm).to eq 'Are you sure?'
       sleep 0.5
     end.to change(Task, :count).by(-1)
     is_expected.not_to have_content @task.title
