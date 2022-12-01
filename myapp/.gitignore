@@ -53,20 +53,19 @@ config/master.key
 # Ignore Byebug command history file.
 # .byebug_history
 
-# Ignore node_modules
-# node_modules/
 
 # Ignore precompiled javascript packs
-/public/packs
-/public/packs-test
 /public/assets
 
-# Ignore yarn files
-/yarn-error.log
-yarn-debug.log*
-.yarn-integrity
 
 # Ignore uploaded files in development
 /storage/*
 !/storage/.keep
 /public/uploads
+
+/public/packs
+/public/packs-test
+/node_modules
+/yarn-error.log
+yarn-debug.log*
+.yarn-integrity
