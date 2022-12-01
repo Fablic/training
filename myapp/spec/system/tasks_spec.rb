@@ -1,11 +1,20 @@
 require 'rails_helper'
 
-RSpec.describe 'Tasks', type: :system do
-  before do
-    @task = Task.create!(title: 'Spec', description: 'test')
+RSpec.describe 'Task list page', type: :system do
+  it 'shows nothing when there is no task' do
+    # 一覧画面を開く
+    visit tasks_path
+
+    # 正しい情報が表示されていること
+    expect(page).to have_content 'Tasks'
+    expect(Task.count).to eq 0
   end
 
-  it 'Task list page works correctly' do
+
+  it 'shows correct result when there are multiple tasks' do
+    @task1 = Task.create!(title: 'Spec', description: 'test')
+    @task2 = Task.create!(title: 'Spec2', description: 'test2')
+
     # 一覧画面を開く
     visit tasks_path
 
@@ -13,9 +22,14 @@ RSpec.describe 'Tasks', type: :system do
     expect(page).to have_content 'Tasks'
     expect(page).to have_content 'Spec'
     expect(page).to have_content 'test'
+    expect(page).to have_content 'Spec2'
+    expect(page).to have_content 'test2'
+    expect(Task.count).to eq 2
   end
+end
 
-  it 'New task page works correctly' do
+RSpec.describe 'New task page', type: :system do
+  it 'works correctly' do
     # 新規画面を開く
     visit new_task_path
 
@@ -36,8 +50,13 @@ RSpec.describe 'Tasks', type: :system do
     expect(page).to have_content 'Spec test new task'
     expect(page).to have_content 'Spec test new task description'
   end
+end
 
-  it 'Task detail page works correctly' do
+RSpec.describe 'Task detail page', type: :system do
+  before do
+    @task = Task.create!(title: 'Spec', description: 'test')
+  end
+  it 'shows correct result' do
     # 詳細画面を開く
     visit task_path(@task)
 
@@ -46,8 +65,13 @@ RSpec.describe 'Tasks', type: :system do
     expect(page).to have_content 'Spec'
     expect(page).to have_content 'test'
   end
+end
 
-  it 'Edit task page works correctly' do
+RSpec.describe 'Edit task page', type: :system do
+  before do
+    @task = Task.create!(title: 'Spec', description: 'test')
+  end
+  it 'works correctly' do
     # タスク編集画面を開く
     visit edit_task_path(@task)
 
@@ -68,8 +92,13 @@ RSpec.describe 'Tasks', type: :system do
     expect(page).to have_content 'Spec first task'
     expect(page).to have_content 'Spec first task description'
   end
+end
 
-  it "Delete works correctly", js: true do
+RSpec.describe 'Delete task button', type: :system do
+  before do
+    @task = Task.create!(title: 'Spec', description: 'test')
+  end
+  it "works correctly", js: true do
     visit task_path(@task)
     click_link 'Destroy'
     expect do
@@ -77,5 +106,6 @@ RSpec.describe 'Tasks', type: :system do
       sleep 0.5
     end.to change(Task, :count).by(-1)
     is_expected.not_to have_content @task.title
+    is_expected.not_to have_content @task.description
   end
 end
