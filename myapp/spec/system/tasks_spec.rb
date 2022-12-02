@@ -101,9 +101,9 @@ RSpec.describe 'Test cases for Task', type: :system do
     end
     it 'works correctly', js: true do
       visit task_path(@task)
-      click_link I18n.translate('tasks.common.delete')
+      click_link I18n.translate('common.delete')
       expect do
-        expect(page.accept_confirm).to eq I18n.translate('tasks.messages.confirm_delete')
+        expect(page.accept_confirm).to eq I18n.translate('common.messages.confirm_delete')
         sleep 0.5
       end.to change(Task, :count).by(-1)
       is_expected.not_to have_content 'Spec'
