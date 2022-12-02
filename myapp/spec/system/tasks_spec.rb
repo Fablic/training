@@ -8,7 +8,7 @@ RSpec.describe 'Test cases for Task', type: :system do
       visit tasks_path
 
       # 正しい情報が表示されていること
-      expect(page).to have_content 'Tasks'
+      expect(page).to have_content I18n.translate('tasks.index.title')
       expect(Task.count).to eq 0
     end
 
@@ -20,7 +20,7 @@ RSpec.describe 'Test cases for Task', type: :system do
       visit tasks_path
 
       # 正しい情報が表示されていること
-      expect(page).to have_content 'Tasks'
+      expect(page).to have_content I18n.translate('tasks.index.title')
       expect(page).to have_content 'Spec'
       expect(page).to have_content 'test'
       expect(page).to have_content 'Spec2'
@@ -35,7 +35,7 @@ RSpec.describe 'Test cases for Task', type: :system do
       visit new_task_path
 
       # 新規画面が開いてること（titleが空白になってる）
-      expect(page).to have_content 'New Task'
+      expect(page).to have_content I18n.translate('tasks.new.title')
       expect(find_field('task_title').text).to be_blank
       expect(page).to have_field 'task_description', with: ''
 
@@ -44,10 +44,10 @@ RSpec.describe 'Test cases for Task', type: :system do
       fill_in 'task_description', with: 'Spec test new task description'
 
       # 登録
-      click_button 'Create Task'
+      click_button I18n.translate('helpers.submit.create', model: Task.model_name.human)
 
       # 正しく登録されていること
-      expect(page).to have_content 'Task Detail'
+      expect(page).to have_content I18n.translate('tasks.show.title')
       expect(page).to have_content 'Spec test new task'
       expect(page).to have_content 'Spec test new task description'
     end
@@ -62,7 +62,7 @@ RSpec.describe 'Test cases for Task', type: :system do
       visit task_path(@task)
 
       # 正しい情報が表示されていること
-      expect(page).to have_content 'Task Detail'
+      expect(page).to have_content I18n.translate('tasks.show.title')
       expect(page).to have_content 'Spec'
       expect(page).to have_content 'test'
     end
@@ -77,7 +77,7 @@ RSpec.describe 'Test cases for Task', type: :system do
       visit edit_task_path(@task)
 
       # titleとdescriptionが正しく表示されること
-      expect(page).to have_content 'Edit Task'
+      expect(page).to have_content I18n.translate('tasks.edit.title')
       expect(page).to have_field 'task_title', with: 'Spec'
       expect(page).to have_field 'task_description', with: 'test'
 
@@ -86,10 +86,10 @@ RSpec.describe 'Test cases for Task', type: :system do
       fill_in 'task_description', with: 'Spec first task description'
 
       # 更新実行
-      click_button 'Update Task'
+      click_button I18n.translate('helpers.submit.update', model: Task.model_name.human)
 
       # 正しく更新されていること
-      expect(page).to have_content 'Task Detail'
+      expect(page).to have_content I18n.translate('tasks.show.title')
       expect(page).to have_content 'Spec first task'
       expect(page).to have_content 'Spec first task description'
     end
@@ -101,9 +101,9 @@ RSpec.describe 'Test cases for Task', type: :system do
     end
     it 'works correctly', js: true do
       visit task_path(@task)
-      click_link 'Destroy'
+      click_link I18n.translate('tasks.common.delete')
       expect do
-        expect(page.accept_confirm).to eq 'Are you sure?'
+        expect(page.accept_confirm).to eq I18n.translate('tasks.messages.confirm_delete')
         sleep 0.5
       end.to change(Task, :count).by(-1)
       is_expected.not_to have_content 'Spec'
