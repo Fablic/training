@@ -1,3 +1,7 @@
+<% flash.each do |message_type, message| %>
+  <%= message %>
+<% end %>
+
 <h1><%= I18n.t 'tasks.index.title' %></h1>
 
 <table>

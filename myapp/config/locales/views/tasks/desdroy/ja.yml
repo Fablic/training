@@ -1,0 +1,6 @@
+ja:
+  tasks:
+    destroy:
+      messages:
+        success: '正常に削除しました。'
+        error: '削除失敗しました。'
