@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 RSpec.describe 'Test cases for Task', type: :system do
-  describe 'Task list page', type: :system do
+  describe 'Task list page' do
     it 'shows correct result when there is no task' do
       # 一覧画面を開く
       visit tasks_path
@@ -9,7 +11,6 @@ RSpec.describe 'Test cases for Task', type: :system do
       expect(page).to have_content 'Tasks'
       expect(Task.count).to eq 0
     end
-
 
     it 'shows correct result when there are multiple tasks' do
       @task1 = Task.create!(title: 'Spec', description: 'test')
@@ -28,15 +29,15 @@ RSpec.describe 'Test cases for Task', type: :system do
     end
   end
 
-  describe 'New task page', type: :system do
+  describe 'New task page' do
     it 'create task correctly' do
       # 新規画面を開く
       visit new_task_path
 
       # 新規画面が開いてること（titleが空白になってる）
       expect(page).to have_content 'New Task'
-      expect(find_field("task_title").text).to be_blank
-      expect(page).to have_field 'task_description', with: ""
+      expect(find_field('task_title').text).to be_blank
+      expect(page).to have_field 'task_description', with: ''
 
       # titleとdescriptionを入力
       fill_in 'task_title', with: 'Spec test new task'
@@ -52,7 +53,7 @@ RSpec.describe 'Test cases for Task', type: :system do
     end
   end
 
-  describe 'Task detail page', type: :system do
+  describe 'Task detail page' do
     before do
       @task = Task.create!(title: 'Spec', description: 'test')
     end
@@ -67,7 +68,7 @@ RSpec.describe 'Test cases for Task', type: :system do
     end
   end
 
-  describe 'Edit task page', type: :system do
+  describe 'Edit task page' do
     before do
       @task = Task.create!(title: 'Spec', description: 'test')
     end
@@ -94,15 +95,15 @@ RSpec.describe 'Test cases for Task', type: :system do
     end
   end
 
-  describe 'Delete task button', type: :system do
+  describe 'Delete task button' do
     before do
       @task = Task.create!(title: 'Spec', description: 'test')
     end
-    it "works correctly", js: true do
+    it 'works correctly', js: true do
       visit task_path(@task)
       click_link 'Destroy'
       expect do
-        expect(page.accept_confirm).to eq "Are you sure?"
+        expect(page.accept_confirm).to eq 'Are you sure?'
         sleep 0.5
       end.to change(Task, :count).by(-1)
       is_expected.not_to have_content 'Spec'
