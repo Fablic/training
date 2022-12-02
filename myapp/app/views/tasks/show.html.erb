@@ -1,11 +1,11 @@
-<h1>Task Detail</h1>
+<h1><%= I18n.t 'tasks.show.title' %></h1>
 
-<h2>Title: <%= @task.title %></h2>
-<p>Description: <%= @task.description %></p>
+<h2><%= @task.title %></h2>
+<p><%= "#{Task.human_attribute_name :description}: #{@task.description}" %></p>
 
-<%= link_to "Edit", edit_task_path(@task) %>
-<%= link_to 'Destroy', task_path(@task),
+<%= link_to (I18n.t 'tasks.common.edit'), edit_task_path(@task) %>
+<%= link_to (I18n.t 'tasks.common.delete'), task_path(@task),
     method: :delete,
-    data: { confirm: 'Are you sure?' }
+    data: { confirm: (I18n.t 'tasks.messages.confirm_delete') }
 %>
-<%= link_to "Task List", tasks_path %>
+<%= link_to (I18n.t 'tasks.index.title'), tasks_path %>
