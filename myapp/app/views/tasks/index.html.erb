@@ -9,14 +9,14 @@
     <th><%= Task.human_attribute_name :id %></th>
     <th><%= Task.human_attribute_name :title %></th>
     <th><%= Task.human_attribute_name :description %></th>
-    <th><%= I18n.t 'common.edit' %></th>
+    <th><%= I18n.t 'ops.edit' %></th>
   </tr>
   <% @tasks.each do |task| %>
     <tr>
       <td><%= task.id %></td>
       <td><%= link_to task.title, task %></td>
       <td><%= task.description %></td>
-      <td><%= link_to (I18n.t 'common.edit'), edit_task_path(task) %></td>
+      <td><%= link_to (I18n.t 'ops.edit'), edit_task_path(task) %></td>
     </tr>
   <% end %>
 </table>
