@@ -9,7 +9,10 @@
     <th><%= Task.human_attribute_name :id %></th>
     <th><%= Task.human_attribute_name :title %></th>
     <th><%= Task.human_attribute_name :description %></th>
-    <th><%= Task.human_attribute_name :created_at %></th>    
+    <th>
+      <span><%= Task.human_attribute_name :created_at %></span>
+      <small><%= link_to (I18n.t 'tasks.index.sort.latest'), tasks_path(latest: 'true') %></small>
+    </th>
     <th><%= I18n.t 'common.edit' %></th>
   </tr>
   <% @tasks.each do |task| %>
