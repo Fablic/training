@@ -1,31 +1,47 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-RSpec.describe 'Test cases for Task', type: :system do
-  describe 'Task list page' do
-    it 'shows correct result when there is no task' do
-      # 一覧画面を開く
-      visit tasks_path
-
-      # 正しい情報が表示されていること
-      expect(page).to have_content I18n.translate('tasks.index.title')
-      expect(Task.count).to eq 0
+RSpec.describe 'Test cases for Task :', type: :system do
+  describe 'In task list page' do
+    context 'when there is no task,' do
+      before do
+        # 一覧画面を開く
+        visit tasks_path
+      end
+      it 'does not show any task' do
+        # 正しい情報が表示されていること
+        expect(page).to have_content I18n.translate('tasks.index.title')
+        expect(Task.count).to eq 0
+      end
     end
 
-    it 'shows correct result when there are multiple tasks' do
-      @task1 = Task.create!(title: 'Spec', description: 'test')
-      @task2 = Task.create!(title: 'Spec2', description: 'test2')
+    context 'when there are tasks,' do
+      before do
+        @task1 = Task.create!(title: 'Spec', description: 'test')
+        @task2 = Task.create!(title: 'Spec2', description: 'test2')
+  
+        # 一覧画面を開く
+        visit tasks_path
+      end
 
-      # 一覧画面を開く
-      visit tasks_path
+      it 'shows correct result' do
+        # 正しい情報が表示されていること
+        expect(page).to have_content I18n.translate('tasks.index.title')
+        expect(page).to have_content 'Spec'
+        expect(page).to have_content 'test'
+        expect(page).to have_content 'Spec2'
+        expect(page).to have_content 'test2'
+        expect(Task.count).to eq 2
+      end
 
-      # 正しい情報が表示されていること
-      expect(page).to have_content I18n.translate('tasks.index.title')
-      expect(page).to have_content 'Spec'
-      expect(page).to have_content 'test'
-      expect(page).to have_content 'Spec2'
-      expect(page).to have_content 'test2'
-      expect(Task.count).to eq 2
+      it 'sorts correctly after push sort button: latest' do
+        click_link I18n.translate('tasks.index.sort.latest')
+
+        expect(page).to have_content I18n.translate('tasks.index.title')
+        # 正規表現で並び順をチェック
+        expect(page.text).to match(/Spec2.*Spec/)
+        expect(Task.count).to eq 2
+      end
     end
   end
 
