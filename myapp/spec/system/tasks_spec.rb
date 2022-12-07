@@ -34,9 +34,9 @@ RSpec.describe 'Test cases for Task :', type: :system do
       end
 
       it 'sorts correctly after push sort button: latest' do
-        click_link I18n.translate('tasks.index.sort.latest')
+        click_link '新しい順'
 
-        expect(page).to have_content I18n.translate('tasks.index.title')
+        expect(page).to have_content 'タスク一覧'
         # 正規表現で並び順をチェック
         expect(page.text).to match(/Spec2.*Spec/)
         expect(Task.count).to eq 2
