@@ -23,9 +23,10 @@ ja:
       long: "%Y年%m月%d日(%a) %H時%M分%S秒 %Z"
     am: "午前"
     pm: "午後"
-  common:
-    edit: "編集"
-    delete: "削除"
-    top_page: "トップページ"
-    messages:
-      confirm_delete: "本当に削除しますか？"
+  ops:
+    edit: '編集'
+    delete: '削除'
+  page_titles:
+    top_page: 'トップページ'
+  messages:
+    confirm_delete: '本当に削除しますか？'

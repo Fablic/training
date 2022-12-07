@@ -3,5 +3,5 @@ ja:
     edit:
       title: 'タスク編集'
       messages:
-        success: 'タスクを修正しました。'
+        success: 'タスクを更新しました。'
         error: '更新に失敗しました。'
