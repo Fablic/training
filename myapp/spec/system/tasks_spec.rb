@@ -40,6 +40,7 @@ RSpec.describe 'Test cases for Task :', type: :system do
         # 正規表現で並び順をチェック
         expect(page.text).to match(/Spec2.*Spec/)
         expect(Task.count).to eq 2
+      end
     end
 
     context 'when error,' do
