@@ -52,19 +52,19 @@ RSpec.describe 'Test cases for Task :', type: :system do
       it 'create task correctly' do
         # 新規画面を開く
         visit new_task_path
-  
+
         # 新規画面が開いてること（titleが空白になってる）
         expect(page).to have_content '新規登録'
         expect(find_field('task_title').text).to be_blank
         expect(page).to have_field 'task_description', with: ''
-  
+
         # titleとdescriptionを入力
         fill_in 'task_title', with: 'Spec test new task'
         fill_in 'task_description', with: 'Spec test new task description'
-  
+
         # 登録
         click_button 'タスクを登録する'
-  
+
         # 正しく登録されていること
         expect(page).to have_content 'タスクを作成しました'
         expect(page).to have_content 'タスク詳細'
@@ -79,19 +79,19 @@ RSpec.describe 'Test cases for Task :', type: :system do
       it 'shows error message' do
         # 新規画面を開く
         visit new_task_path
-  
+
         # 新規画面が開いてること（titleが空白になってる）
         expect(page).to have_content '新規登録'
         expect(find_field('task_title').text).to be_blank
         expect(page).to have_field 'task_description', with: ''
-  
+
         # titleとdescriptionを入力
         fill_in 'task_title', with: 'Spec test new task'
         fill_in 'task_description', with: 'Spec test new task description'
-  
+
         # 登録
         click_button 'タスクを登録する'
-  
+
         # 正しく登録されていること
         expect(page).to have_content '作成に失敗しました'
         expect(page).to have_content '新規登録'
@@ -104,19 +104,19 @@ RSpec.describe 'Test cases for Task :', type: :system do
       it 'shows error message' do
         # 新規画面を開く
         visit new_task_path
-  
+
         # 新規画面が開いてること（titleが空白になってる）
         expect(page).to have_content '新規登録'
         expect(find_field('task_title').text).to be_blank
         expect(page).to have_field 'task_description', with: ''
-  
+
         # titleとdescriptionを入力
         fill_in 'task_title', with: 'Spec test new task'
         fill_in 'task_description', with: 'Spec test new task description'
-  
+
         # 登録
         click_button 'タスクを登録する'
-  
+
         # 正しく登録されていること
         expect(page).to have_content '伍〇〇'
       end
@@ -155,7 +155,6 @@ RSpec.describe 'Test cases for Task :', type: :system do
         expect(page).to have_content '伍〇〇'
       end
     end
-
   end
 
   describe 'In edit task page:' do
