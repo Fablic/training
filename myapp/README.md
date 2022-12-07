@@ -26,30 +26,33 @@ Things you may want to cover:
 ### Task
 |Name|Type|NotNULL|Desc|
 | :--- | :--- | :--- | :--- |
-|TASK_NO|INTEGER|○|PK, タスク連番(自動採番)|
-|TASK_TITLE|VARCHAR(255)|○|タスク名|
-|TASK_CONTENT|TEXT|○|タスク内容|
-|USER_ID|VARCHAR(20)|○|外部キー, ユーザーID|
-|TAG_NO|VARCHAR(20)||外部キー, タグ|
-|DUE_DATE|DATE||終了期限|
-|PRIORITY|INTEGER|○|優先度|
-|STATUS|INTEGER|○|ステータス|
-|DETETED|INTEGER|○|削除フラグ|
-|CREATE_DATE|DATETIME|○|登録日時|
+|id|integer|○|PK, 自動連番|
+|task_title|varchar(255)|○|タスク名, indexを追加|
+|task_content|text|○|タスク内容, indexを追加|
+|user_id|integer|○|外部キー, ユーザーID|
+|tag_id|varchar(20)||外部キー, タグ|
+|due_date|date||終了期限|
+|priority|integer|○|優先度, low(0)/medium(1)/high(2)|
+|status|integer|○|ステータス, NotReady(0)/Todo(1)/InProgress(2)/Done(3)|
+|deleted|integer|○|削除フラグ|
+|create_date|datetime|○|登録日時|
+|update_date|datetime|○|更新日時|
 
 ### User
 |Name|Type|NotNULL|Desc|
 | :--- | :--- | :--- | :--- |
-|USER_NO|INTEGER|○|PK, ユーザー連番(自動採番)|
-|USER_ID|VARCHAR(20)|○|PK, ユーザーID|
-|PASSWORD|VARCHAR(15)|○|パスワード|
-|DELETED|INTEGER|○|削除フラグ|
-|CREATE_DATE|DATETIME|○|登録日時|
+|id|integer|○|PK, 自動採番|
+|user_name|varchar(20)|○|PK, ユーザー名|
+|password_digest|string|○|パスワード,Bcryptで暗号化|
+|deleted|integrer|○|削除フラグ|
+|create_date|datetime|○|登録日時|
+|update_date|datetime|○|更新日時|
 
 ### Tag
 |Name|Type|NotNULL|Desc|
 | :--- | :--- | :--- | :--- |
-|TAG_NO|INTEGER|○|PK, タグ連番(自動採番)|
-|TAG_NAME|VARCHAR(20)|○|タグ名|
-|DELETED|INTEGER|○|削除フラグ|
-|CREATE_DATE|DATETIME|○|登録日時|
+|id|integer|○|PK, 自動採番|
+|tag_name|varchar(20)|○|タグ名|
+|deleted|integer|○|削除フラグ|
+|create_date|datetime|○|登録日時|
+|update_date|datetime|○|更新日時|
