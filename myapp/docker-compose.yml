@@ -5,6 +5,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: root
+      TZ: Asia/Tokyo
     platform: linux/amd64
     ports:
       - "3316:3306"
@@ -38,11 +39,14 @@ services:
       DB_NAME: myapp
       DB_PASSWORD: password
       DB_HOST: db
+      TZ: Asia/Tokyo
 
   chrome:
     image: seleniarm/standalone-chromium
     ports:
       - 4444:4444
+    environment:
+      TZ: Asia/Tokyo
 
 volumes:
   db-data:

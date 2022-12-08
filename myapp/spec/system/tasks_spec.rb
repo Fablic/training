@@ -18,7 +18,7 @@ RSpec.describe 'Test cases for Task :', type: :system do
 
     context 'when there are tasks,' do
       let!(:task1) { FactoryBot.create(:task) }
-      let!(:task2) { FactoryBot.create(:task, title: 'Spec2', description: 'test2') }
+      let!(:task2) { FactoryBot.create(:task, title: 'Spec2', description: 'test2', end_date: Time.new(2023, 11, 1, 10, 30)) }
 
       before do
         # 一覧画面を開く
@@ -41,6 +41,15 @@ RSpec.describe 'Test cases for Task :', type: :system do
         expect(page).to have_content 'タスク一覧'
         # 正規表現で並び順をチェック
         expect(page.text).to match(/Spec2.*Spec/)
+        expect(Task.count).to eq 2
+      end
+
+      it 'sorts correctly after push sort button: expiring' do
+        click_link '終了期限が近い順'
+
+        expect(page).to have_content 'タスク一覧'
+        # 正規表現で並び順をチェック
+        expect(page.text).to match(/Spec.*Spec2/)
         expect(Task.count).to eq 2
       end
     end
@@ -72,6 +81,7 @@ RSpec.describe 'Test cases for Task :', type: :system do
         # titleとdescriptionを入力
         fill_in 'task_title', with: 'Spec test new task'
         fill_in 'task_description', with: 'Spec test new task description'
+        fill_in 'task_end_date', with: Time.new(2023, 11, 1, 10, 30)
 
         # 登録
         click_button 'タスクを登録する'
@@ -81,6 +91,7 @@ RSpec.describe 'Test cases for Task :', type: :system do
         expect(page).to have_content 'タスク詳細'
         expect(page).to have_content 'Spec test new task'
         expect(page).to have_content 'Spec test new task description'
+        expect(page).to have_content '2023年11月01日(水) 10時30分00秒'
       end
     end
 
@@ -224,6 +235,7 @@ RSpec.describe 'Test cases for Task :', type: :system do
         # titleとdescriptionを入力する
         fill_in 'task_title', with: 'Spec first task'
         fill_in 'task_description', with: 'Spec first task description'
+        fill_in 'task_end_date', with: Time.new(2023, 11, 1, 10, 30)
 
         # 更新実行
         click_button 'タスクを更新する'
@@ -233,6 +245,7 @@ RSpec.describe 'Test cases for Task :', type: :system do
         expect(page).to have_content 'タスク詳細'
         expect(page).to have_content 'Spec first task'
         expect(page).to have_content 'Spec first task description'
+        expect(page).to have_content '2023年11月01日(水) 10時30分00秒'
       end
     end
 
