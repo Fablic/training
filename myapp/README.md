@@ -21,8 +21,6 @@ Things you may want to cover:
 
 * Deployment instructions
 
-
-
 ## Table schema
 
 ### Task
@@ -58,3 +56,4 @@ Things you may want to cover:
 |deleted|integer|○|削除フラグ|
 |create_date|datetime|○|登録日時|
 |update_date|datetime|○|更新日時|
+
