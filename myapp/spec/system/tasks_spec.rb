@@ -8,6 +8,7 @@ RSpec.describe 'Test cases for Task :', type: :system do
         # 一覧画面を開く
         visit tasks_path
       end
+
       it 'does not show any task' do
         # 正しい情報が表示されていること
         expect(page).to have_content 'タスク一覧'
@@ -23,6 +24,7 @@ RSpec.describe 'Test cases for Task :', type: :system do
         # 一覧画面を開く
         visit tasks_path
       end
+
       it 'shows correct result when there are multiple tasks' do
         # 正しい情報が表示されていること
         expect(page).to have_content 'タスク一覧'
@@ -81,10 +83,12 @@ RSpec.describe 'Test cases for Task :', type: :system do
         expect(page).to have_content 'Spec test new task description'
       end
     end
+
     context 'when fail,' do
       before do
         allow_any_instance_of(Task).to receive(:save).and_return(false)
       end
+
       it 'shows error message' do
         # 新規画面を開く
         visit new_task_path
@@ -106,10 +110,48 @@ RSpec.describe 'Test cases for Task :', type: :system do
         expect(page).to have_content '新規登録'
       end
     end
-    context 'when error,' do
+
+    context 'when validation error,' do
+      before do
+        # 新規画面を開く
+        visit new_task_path
+
+        # 新規画面が開いてること（titleが空白になってる）
+        expect(page).to have_content '新規登録'
+        expect(find_field('task_title').text).to be_blank
+        expect(page).to have_field 'task_description', with: ''
+      end
+
+      it 'shows blank error' do
+        # 登録
+        click_button 'タスクを登録する'
+
+        # 正しく登録されていること
+        expect(page).to have_content '作成に失敗しました'
+        expect(page).to have_content 'タイトルを入力してください'
+        expect(page).to have_content '新規登録'
+      end
+
+      it 'shows length error' do
+        fill_in 'task_title', with: Faker::Lorem.characters(number: 41)
+        fill_in 'task_description', with: Faker::Lorem.characters(number: 501)
+
+        # 登録
+        click_button 'タスクを登録する'
+
+        # 正しく登録されていること
+        expect(page).to have_content '作成に失敗しました'
+        expect(page).to have_content 'タイトルは40文字以内で入力してください'
+        expect(page).to have_content '詳細は500文字以内で入力してください'
+        expect(page).to have_content '新規登録'
+      end
+    end
+
+    context 'when system error,' do
       before do
         allow_any_instance_of(Task).to receive(:save).and_raise(RuntimeError)
       end
+
       it 'shows error message' do
         # 新規画面を開く
         visit new_task_path
@@ -228,7 +270,48 @@ RSpec.describe 'Test cases for Task :', type: :system do
       end
     end
 
-    context 'when error,' do
+    context 'when validation error,' do
+      before do
+        # タスク編集画面を開く
+        visit edit_task_path(task)
+
+        # titleとdescriptionが正しく表示されること
+        expect(page).to have_content 'タスク編集'
+        expect(page).to have_field 'task_title', with: 'Spec'
+        expect(page).to have_field 'task_description', with: 'test'
+      end
+
+      it 'shows blank error' do
+        # titleとdescriptionを空にする
+        fill_in 'task_title', with: ''
+        fill_in 'task_description', with: ''
+
+        # 更新実行
+        click_button 'タスクを更新する'
+
+        # 正しく登録されていること
+        expect(page).to have_content '更新に失敗しました。'
+        expect(page).to have_content 'タイトルを入力してください'
+        expect(page).to have_content 'タスク編集'
+      end
+
+      it 'shows length error' do
+        # titleとdescriptionを文字数オーバーで入力する
+        fill_in 'task_title', with: Faker::Lorem.characters(number: 41)
+        fill_in 'task_description', with: Faker::Lorem.characters(number: 501)
+
+        # 更新実行
+        click_button 'タスクを更新する'
+
+        # 正しく登録されていること
+        expect(page).to have_content '更新に失敗しました。'
+        expect(page).to have_content 'タイトルは40文字以内で入力してください'
+        expect(page).to have_content '詳細は500文字以内で入力してください'
+        expect(page).to have_content 'タスク編集'
+      end
+    end
+
+    context 'when system error,' do
       before do
         allow(Task).to receive(:find).and_raise(RuntimeError)
       end
