@@ -5,4 +5,5 @@ class Task < ApplicationRecord
   validates :description, length: { maximum: 500 }
 
   scope :latest, -> { order(created_at: :desc) }
+  scope :expiring, -> { order(end_date: :asc) }
 end

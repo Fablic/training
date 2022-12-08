@@ -2,8 +2,11 @@
 
 class TasksController < ApplicationController
   def index
-    @tasks = if params[:latest]
+    @tasks = case params[:sort]
+             when 'latest'
                Task.latest
+             when 'expiring'
+               Task.expiring
              else
                Task.all
              end
@@ -60,6 +63,6 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:title, :description)
+    params.require(:task).permit(:title, :description, :end_date)
   end
 end

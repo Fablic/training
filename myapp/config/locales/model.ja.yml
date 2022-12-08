@@ -10,6 +10,7 @@ ja:
           # view側： User.human_attribute_name :name => "名前" /　t("activerecord.attributes.user.name")と同じ
           title: タイトル
           description: 詳細
+          end_date: 終了期限
 
   # 全てのmodelで共通して使用するattributesを定義
   attributes:
