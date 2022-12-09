@@ -25,11 +25,11 @@
     <th><%= Task.human_attribute_name :description %></th>
     <th>
       <span><%= Task.human_attribute_name :created_at %></span>
-      <small><%= link_to (I18n.t 'tasks.index.sort.latest'), tasks_path(sort: 'latest') %></small>
+      <small><%= link_to (I18n.t 'tasks.index.sort.latest'), tasks_path(sort_column: 'created_at', sort_direction: 'desc') %></small>
     </th>
     <th>
       <span><%= Task.human_attribute_name :end_date %></span>
-      <small><%= link_to (I18n.t 'tasks.index.sort.expiring'), tasks_path(sort: 'expiring') %></small>
+      <small><%= link_to (I18n.t 'tasks.index.sort.expiring'), tasks_path(sort_column: 'end_date', sort_direction: 'asc') %></small>
     </th>
     <th><%= I18n.t 'ops.edit' %></th>
   </tr>

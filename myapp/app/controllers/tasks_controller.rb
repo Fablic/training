@@ -3,14 +3,15 @@
 class TasksController < ApplicationController
   def index
     @conditions = params ? params : {}
-    @tasks = case params[:sort]
-             when 'latest'
-               Task.latest
-             when 'expiring'
-               Task.expiring
-             else
-               Task.all
-             end
+    # @tasks = case params[:sort]
+    #          when 'latest'
+    #            Task.latest
+    #          when 'expiring'
+    #            Task.expiring
+    #          else
+    #            Task.all
+    #          end
+    @tasks = Task.search(params)
   end
 
   def search

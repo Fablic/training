@@ -11,6 +11,8 @@ class Task < ApplicationRecord
     tasks = Task.where('title LIKE?',"%#{conditions[:keyword]}%")
     tasks = tasks.where('status=?', conditions[:status].to_i) if conditions[:status].present?
 
+    tasks = tasks.order("#{conditions['sort_column']} #{conditions['sort_direction']}")
+
     tasks.present? ? tasks : {}
   end
 end
