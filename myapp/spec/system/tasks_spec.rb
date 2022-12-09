@@ -32,8 +32,10 @@ RSpec.describe 'Test cases for Task :', type: :system do
         expect(page).to have_content 'タスク一覧'
         expect(page).to have_content 'Spec'
         expect(page).to have_content 'test'
+        expect(page).to have_content '2022年12月07日(水) 10時30分00秒'
         expect(page).to have_content 'Spec2'
         expect(page).to have_content 'test2'
+        expect(page).to have_content '2023年11月01日(水) 10時30分00秒'
         expect(Task.count).to eq 2
       end
 
