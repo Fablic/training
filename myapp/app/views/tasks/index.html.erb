@@ -7,6 +7,7 @@
 <table>
   <tr>
     <th><%= Task.human_attribute_name :id %></th>
+    <th><%= Task.human_attribute_name :status %></th>
     <th><%= Task.human_attribute_name :title %></th>
     <th><%= Task.human_attribute_name :description %></th>
     <th>
@@ -22,6 +23,7 @@
   <% @tasks.each do |task| %>
     <tr>
       <td><%= task.id %></td>
+      <td><%= I18n.t('enums.task.status')[task.status] %></td>
       <td><%= link_to task.title, task %></td>
       <td><%= task.description %></td>
       <td><%= I18n.l(task.created_at.to_date, format: :long) %></td>

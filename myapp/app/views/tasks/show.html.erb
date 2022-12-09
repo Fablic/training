@@ -5,6 +5,7 @@
 <h1><%= I18n.t 'tasks.show.title' %></h1>
 
 <h2><%= @task.title %></h2>
+<p><%= "#{Task.human_attribute_name :status}: #{I18n.t('enums.task.status')[@task.status]}" %></p>
 <p><%= "#{Task.human_attribute_name :description}: #{@task.description}" %></p>
 <p><%= "#{Task.human_attribute_name :end_date}: #{@task.end_date ? I18n.l(@task.end_date, format: :long) : '-'}" %></p>
 

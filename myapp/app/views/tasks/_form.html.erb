@@ -8,6 +8,11 @@
   </div>
 
   <div>
+    <%= form.label :status %>
+    <%= form.select :status, I18n.t('enums.task.status').invert %>
+  </div>
+
+  <div>
     <%= form.label :description %><br>
     <%= form.text_area :description %><br>
     <% task.errors.full_messages_for(:description).each do |message| %>

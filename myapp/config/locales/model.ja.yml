@@ -5,13 +5,19 @@ ja:
       task: タスク 
     # model毎に定義したいattributesを記述
     attributes:
-        task:
-          id: ID
-          # view側： User.human_attribute_name :name => "名前" /　t("activerecord.attributes.user.name")と同じ
-          title: タイトル
-          description: 詳細
-          end_date: 終了期限
-
+      task:
+        id: ID
+        # view側： User.human_attribute_name :name => "名前" /　t("activerecord.attributes.user.name")と同じ
+        title: タイトル
+        description: 詳細
+        end_date: 終了期限
+        status: ステータス
+  enums:
+    task:
+      status:
+        0: 未着手
+        1: 着手
+        2: 完了
   # 全てのmodelで共通して使用するattributesを定義
   attributes:
     created_at: 作成日
