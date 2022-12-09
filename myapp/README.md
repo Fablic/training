@@ -48,3 +48,4 @@ Things you may want to cover:
 | :--- | :--- | :--- | :--- |
 |id|integer|○|PK, 自動採番|
 |name|varchar(20)|○|タグ名|
+
