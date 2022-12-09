@@ -2,14 +2,7 @@
 
 class TasksController < ApplicationController
   def index
-    @tasks = case params[:sort]
-             when 'latest'
-               Task.latest
-             when 'expiring'
-               Task.expiring
-             else
-               Task.all
-             end
+    @tasks = Task.search(params)
   end
 
   def show
