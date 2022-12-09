@@ -35,6 +35,8 @@ Things you may want to cover:
 |priority|integer|○|優先度, low(0)/medium(1)/high(2)|
 |status|integer|○|ステータス, NotReady(0)/Todo(1)/InProgress(2)/Done(3)|
 |deleted|integer|○|削除フラグ|
+|created_at|datetime|○|登録日時|
+|updated_at|datetime|○|更新日時|
 
 ### User
 |Name|Type|NotNULL|Desc|
@@ -42,10 +44,13 @@ Things you may want to cover:
 |id|integer|○|PK, 自動採番|
 |name|varchar(20)|○|PK, ユーザー名|
 |password_digest|string|○|パスワード,Bcryptで暗号化|
+|created_at|datetime|○|登録日時|
+|updated_at|datetime|○|更新日時|
 
 ### Tag
 |Name|Type|NotNULL|Desc|
 | :--- | :--- | :--- | :--- |
 |id|integer|○|PK, 自動採番|
 |name|varchar(20)|○|タグ名|
-
+|created_at|datetime|○|登録日時|
+|updated_at|datetime|○|更新日時|
