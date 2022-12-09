@@ -19,7 +19,13 @@ RSpec.describe 'Test cases for Task :', type: :system do
     context 'when there are tasks,' do
       let!(:task1) { FactoryBot.create(:task) }
       let!(:task2) do
-        FactoryBot.create(:task, title: 'Spec2', description: 'test2', end_date: Time.new(2023, 11, 1, 10, 30))
+        FactoryBot.create(
+          :task,
+          title: 'Spec2',
+          description: 'test2',
+          end_date: Time.new(2023, 11, 1, 10, 30),
+          status: 2
+        )
       end
 
       before do
@@ -33,9 +39,11 @@ RSpec.describe 'Test cases for Task :', type: :system do
         expect(page).to have_content 'Spec'
         expect(page).to have_content 'test'
         expect(page).to have_content '2022年12月07日(水) 10時30分00秒'
+        expect(page).to have_content '着手中'
         expect(page).to have_content 'Spec2'
         expect(page).to have_content 'test2'
         expect(page).to have_content '2023年11月01日(水) 10時30分00秒'
+        expect(page).to have_content '完了'
         expect(Task.count).to eq 2
       end
 
@@ -86,6 +94,7 @@ RSpec.describe 'Test cases for Task :', type: :system do
         fill_in 'task_title', with: 'Spec test new task'
         fill_in 'task_description', with: 'Spec test new task description'
         fill_in 'task_end_date', with: Time.new(2023, 11, 1, 10, 30)
+        select '完了', from: 'task_status'
 
         # 登録
         click_button 'タスクを登録する'
@@ -96,6 +105,7 @@ RSpec.describe 'Test cases for Task :', type: :system do
         expect(page).to have_content 'Spec test new task'
         expect(page).to have_content 'Spec test new task description'
         expect(page).to have_content '2023年11月01日(水) 10時30分00秒'
+        expect(page).to have_content '完了'
       end
     end
 
@@ -201,6 +211,8 @@ RSpec.describe 'Test cases for Task :', type: :system do
         expect(page).to have_content 'タスク詳細'
         expect(page).to have_content 'Spec'
         expect(page).to have_content 'test'
+        expect(page).to have_content '2022年12月07日(水) 10時30分00秒'
+        expect(page).to have_content '着手中'
       end
     end
 
@@ -240,6 +252,7 @@ RSpec.describe 'Test cases for Task :', type: :system do
         fill_in 'task_title', with: 'Spec first task'
         fill_in 'task_description', with: 'Spec first task description'
         fill_in 'task_end_date', with: Time.new(2023, 11, 1, 10, 30)
+        select '完了', from: 'task_status'
 
         # 更新実行
         click_button 'タスクを更新する'
@@ -250,6 +263,7 @@ RSpec.describe 'Test cases for Task :', type: :system do
         expect(page).to have_content 'Spec first task'
         expect(page).to have_content 'Spec first task description'
         expect(page).to have_content '2023年11月01日(水) 10時30分00秒'
+        expect(page).to have_content '完了'
       end
     end
 

@@ -16,7 +16,7 @@ ja:
     task:
       status:
         0: 未着手
-        1: 着手
+        1: 着手中
         2: 完了
   # 全てのmodelで共通して使用するattributesを定義
   attributes:
