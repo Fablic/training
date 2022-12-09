@@ -6,4 +6,11 @@ class Task < ApplicationRecord
 
   scope :latest, -> { order(created_at: :desc) }
   scope :expiring, -> { order(end_date: :asc) }
+
+  def self.search(conditions)
+    tasks = Task.where('title LIKE?',"%#{conditions[:keyword]}%")
+    tasks = tasks.where('status=?', conditions[:status].to_i) if conditions[:status].present?
+
+    tasks.present? ? tasks : {}
+  end
 end

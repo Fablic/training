@@ -2,6 +2,7 @@
 
 class TasksController < ApplicationController
   def index
+    @conditions = params ? params : {}
     @tasks = case params[:sort]
              when 'latest'
                Task.latest
@@ -10,6 +11,13 @@ class TasksController < ApplicationController
              else
                Task.all
              end
+  end
+
+  def search
+    @conditions = params ? params : {}
+    @tasks = Task.search(@conditions)
+
+    render :index
   end
 
   def show

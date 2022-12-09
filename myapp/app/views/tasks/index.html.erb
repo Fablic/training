@@ -4,6 +4,19 @@
 
 <h1><%= I18n.t 'tasks.index.title' %></h1>
 
+<div class="search-form">
+  <%= form_with url: search_tasks_path, method: :get, local: true do |form| %>
+    <%= form.text_field :keyword, value: @conditions[:keyword] %>
+    <%= form.submit "検索" %><br>
+
+    <% I18n.t('enums.task.status').each do |k, v| %>
+    <%= form.radio_button :status, k, checked: @conditions[:status] == k.to_s %>
+    <%= form.label :status, v, {value: k} %>
+    <% end %>
+
+  <% end %>
+</div>
+
 <table>
   <tr>
     <th><%= Task.human_attribute_name :id %></th>
