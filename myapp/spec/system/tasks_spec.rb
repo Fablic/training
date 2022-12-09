@@ -17,10 +17,10 @@ RSpec.describe 'Test cases for Task :', type: :system do
     end
 
     context 'when there are tasks,' do
-      let!(:task1) { FactoryBot.create(:task) }
-      let!(:task2) { FactoryBot.create(:task, title: 'Spec2', description: 'test2', end_date: Time.new(2023, 11, 1, 10, 30)) }
-
       before do
+        FactoryBot.create(:task)
+        FactoryBot.create(:task, title: 'Spec2', description: 'test2', end_date: Time.new(2023, 11, 1, 10, 30))
+
         # 一覧画面を開く
         visit tasks_path
       end
