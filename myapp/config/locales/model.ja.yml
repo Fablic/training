@@ -15,3 +15,8 @@ ja:
   attributes:
     created_at: 作成日
     updated_at: 更新日
+  errors:
+    format: "%{attribute}%{message}"
+    messages:
+      blank: を入力してください
+      too_long: は%{count}文字以内で入力してください
