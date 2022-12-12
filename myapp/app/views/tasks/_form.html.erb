@@ -1,17 +1,12 @@
-<%= form_with(model: task, local: true) do |form| %>
-  <% if task.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(task.errors.count, "error") %> prohibited this task from being saved:</h2>
-
-      <ul>
-        <% task.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
+ <% if task.errors.any? %>
+  <% task.errors.full_messages.each do |message| %>
+      <%= message %>
   <% end %>
+<% end %>
 
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+<%= form_with model: task do |form| %>
+  Title: <%= form.text_field :title %> <br>
+  Description: <%= form.text_field :description %> <br>
+
+  <%= form.submit "送出" %>
 <% end %>
