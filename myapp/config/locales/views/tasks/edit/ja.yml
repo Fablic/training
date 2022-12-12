@@ -2,3 +2,6 @@ ja:
   tasks:
     edit:
       title: 'タスク編集'
+      messages:
+        success: 'タスクを更新しました。'
+        error: '更新に失敗しました。'

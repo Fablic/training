@@ -2,5 +2,3 @@ ja:
   tasks:
     index:
       title: 'タスク一覧'
-      edit_button: '編集'
-      new_task: 'タスク作成'

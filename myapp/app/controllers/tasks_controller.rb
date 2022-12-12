@@ -17,8 +17,10 @@ class TasksController < ApplicationController
     @task = Task.new(task_params)
 
     if @task.save
+      flash[:success] = I18n.t('tasks.new.messages.success')
       redirect_to @task
     else
+      flash.now[:danger] = I18n.t('tasks.new.messages.error')
       render :new
     end
   end
@@ -31,17 +33,24 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
 
     if @task.update(task_params)
+      flash[:success] = I18n.t('tasks.edit.messages.success')
       redirect_to @task
     else
+      flash.now[:danger] = I18n.t('tasks.edit.messages.error')
       render :edit
     end
   end
 
   def destroy
     @task = Task.find(params[:id])
-    @task.destroy
 
-    redirect_to root_path
+    if @task.destroy
+      flash[:success] = I18n.t('tasks.destroy.messages.success')
+      redirect_to root_path
+    else
+      flash[:danger] = I18n.t('tasks.destroy.messages.error')
+      redirect_to request.url
+    end
   end
 
   private

@@ -1,4 +1,4 @@
-<%= form_with model: task do |form| %>
+<%= form_with(model: task, local: true) do |form| %>
   <div>
     <%= form.label :title %><br>
     <%= form.text_field :title %>

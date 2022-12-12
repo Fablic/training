@@ -2,3 +2,6 @@ ja:
   tasks:
     new:
       title: '新規登録'
+      messages:
+        success: 'タスクを作成しました。'
+        error: '作成に失敗しました。'
