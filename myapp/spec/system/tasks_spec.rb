@@ -32,7 +32,6 @@ RSpec.describe 'Test cases for Task :', type: :system do
         expect(page).to have_content 'test'
         expect(page).to have_content 'Spec2'
         expect(page).to have_content 'test2'
-        expect(Task.count).to eq 2
       end
 
       it 'sorts correctly after push sort button: latest' do
@@ -41,7 +40,6 @@ RSpec.describe 'Test cases for Task :', type: :system do
         expect(page).to have_content 'タスク一覧'
         # 正規表現で並び順をチェック
         expect(page.text).to match(/Spec2.*Spec/)
-        expect(Task.count).to eq 2
       end
     end
 
