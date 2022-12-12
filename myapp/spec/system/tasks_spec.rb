@@ -72,10 +72,12 @@ RSpec.describe 'Test cases for Task :', type: :system do
         expect(page).to have_content 'Spec test new task description'
       end
     end
+
     context 'when fail,' do
       before do
         allow_any_instance_of(Task).to receive(:save).and_return(false)
       end
+
       it 'shows error message' do
         # 新規画面を開く
         visit new_task_path
@@ -97,10 +99,12 @@ RSpec.describe 'Test cases for Task :', type: :system do
         expect(page).to have_content '新規登録'
       end
     end
+
     context 'when error,' do
       before do
         allow_any_instance_of(Task).to receive(:save).and_raise(RuntimeError)
       end
+
       it 'shows error message' do
         # 新規画面を開く
         visit new_task_path
