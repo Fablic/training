@@ -2,7 +2,7 @@
 
 class TasksController < ApplicationController
   def index
-    @tasks = Task.search(params)
+    @tasks = Task.sort_tasks(params['sort_column'], params['sort_direction'])
   end
 
   def show
