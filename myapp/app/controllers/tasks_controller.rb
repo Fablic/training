@@ -2,7 +2,11 @@
 
 class TasksController < ApplicationController
   def index
-    @tasks = Task.all
+    @tasks = if params[:latest]
+               Task.latest
+             else
+               Task.all
+             end
   end
 
   def show

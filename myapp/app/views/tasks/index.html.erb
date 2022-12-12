@@ -9,6 +9,10 @@
     <th><%= Task.human_attribute_name :id %></th>
     <th><%= Task.human_attribute_name :title %></th>
     <th><%= Task.human_attribute_name :description %></th>
+    <th>
+      <span><%= Task.human_attribute_name :created_at %></span>
+      <small><%= link_to (I18n.t 'tasks.index.sort.latest'), tasks_path(latest: 'true') %></small>
+    </th>
     <th><%= I18n.t 'ops.edit' %></th>
   </tr>
   <% @tasks.each do |task| %>
@@ -16,6 +20,7 @@
       <td><%= task.id %></td>
       <td><%= link_to task.title, task %></td>
       <td><%= task.description %></td>
+      <td><%= I18n.l(task.created_at.to_date, format: :long) %></td>
       <td><%= link_to (I18n.t 'ops.edit'), edit_task_path(task) %></td>
     </tr>
   <% end %>

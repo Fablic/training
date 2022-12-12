@@ -2,3 +2,5 @@ ja:
   tasks:
     index:
       title: 'タスク一覧'
+      sort:
+        latest: '新しい順'
