@@ -6,6 +6,7 @@
 
 <h2><%= @task.title %></h2>
 <p><%= "#{Task.human_attribute_name :description}: #{@task.description}" %></p>
+<p><%= "#{Task.human_attribute_name :end_date}: #{@task.end_date ? I18n.l(@task.end_date, format: :long) : '-'}" %></p>
 
 <%= link_to (I18n.t 'ops.edit'), edit_task_path(@task) %>
 <%= link_to (I18n.t 'ops.delete'), task_path(@task),

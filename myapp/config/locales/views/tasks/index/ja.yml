@@ -4,3 +4,4 @@ ja:
       title: 'タスク一覧'
       sort:
         latest: '新しい順'
+        expiring: '終了期限が近い順'
