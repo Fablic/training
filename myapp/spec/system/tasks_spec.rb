@@ -45,7 +45,6 @@ RSpec.describe 'Test cases for Task :', type: :system do
         expect(page).to have_content 'タスク一覧'
         # 正規表現で並び順をチェック
         expect(page.text).to match(/Spec2.*Spec/)
-        expect(Task.count).to eq 2
       end
 
       it 'sorts correctly after push sort button: expiring' do
