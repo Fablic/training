@@ -2,7 +2,7 @@
 
 class TasksController < ApplicationController
   def index
-    @conditions = params ? params : {}
+    @conditions = params || {}
     @tasks = Task.search(@conditions)
   end
 
