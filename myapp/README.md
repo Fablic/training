@@ -21,8 +21,8 @@ Things you may want to cover:
     - id integer
     - name string
     - email string
-    - passward string
-    - is_damin boolean
+    - password_digest string
+    - is_admin boolean
     - created_at datetime
     - updated_at datetime
 
