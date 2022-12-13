@@ -39,21 +39,61 @@ RSpec.describe 'Test cases for Task :', type: :system do
         expect(Task.count).to eq 2
       end
 
-      it 'sorts correctly after push sort button: latest' do
-        click_link '新しい順'
+      context 'when sort,' do
+        it 'sorts correctly after push sort button: latest' do
+          click_link '新しい順'
 
-        expect(page).to have_content 'タスク一覧'
-        # 正規表現で並び順をチェック
-        expect(page.text).to match(/Spec2.*Spec/)
+          expect(page).to have_content 'タスク一覧'
+          # 正規表現で並び順をチェック
+          expect(page.text).to match(/Spec2.*Spec/)
+        end
+
+        it 'sorts correctly after push sort button: expiring' do
+          click_link '終了期限が近い順'
+
+          expect(page).to have_content 'タスク一覧'
+          # 正規表現で並び順をチェック
+          expect(page.text).to match(/Spec.*Spec2/)
+          expect(Task.count).to eq 2
+        end
       end
 
-      it 'sorts correctly after push sort button: expiring' do
-        click_link '終了期限が近い順'
+      context 'when search,' do
+        it 'shows correctly when search by title' do
+          fill_in 'keyword', with: 'Spec2'
 
-        expect(page).to have_content 'タスク一覧'
-        # 正規表現で並び順をチェック
-        expect(page.text).to match(/Spec.*Spec2/)
-        expect(Task.count).to eq 2
+          click_button '検索'
+
+          expect(page).to have_content 'Spec2'
+          # 一番目のタスクが存在しないこと
+          expect(page).not_to have_content '2022年12月07日(水) 10時30分00秒'
+        end
+
+        it 'shows correctly when search by status' do
+          choose '着手中'
+
+          click_button '検索'
+
+          expect(page).to have_content '2022年12月07日(水) 10時30分00秒'
+          expect(page).not_to have_content 'spec2'
+        end
+
+        it 'shows correctly when search by both title and status' do
+          fill_in 'keyword', with: 'Spec2'
+          choose '着手中'
+
+          click_button '検索'
+
+          expect(page).not_to have_content 'spec2'
+
+          fill_in 'keyword', with: 'Spec2'
+          choose '完了'
+
+          click_button '検索'
+
+          expect(page).to have_content 'Spec2'
+          expect(page).not_to have_content '2022年12月07日(水) 10時30分00秒'
+        end
       end
     end
 
