@@ -3,7 +3,7 @@
 class TasksController < ApplicationController
   def index
     @conditions = params || {}
-    @tasks = Task.search(@conditions).page(params[:page])
+    @tasks = Task.search(@conditions)
   end
 
   def show

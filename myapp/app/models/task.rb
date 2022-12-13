@@ -20,6 +20,7 @@ class Task < ApplicationRecord
     # ソート
     tasks = tasks.sort_tasks(conditions['sort_column'], conditions['sort_direction'])
 
-    tasks.present? ? tasks : {}
+    # ページネーション
+    tasks = tasks.page(conditions[:page])
   end
 end
