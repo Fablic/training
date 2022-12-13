@@ -37,7 +37,6 @@ RSpec.describe 'Test cases for Task :', type: :system do
         expect(page).to have_content 'test2'
         expect(page).to have_content '2023年11月01日(水) 10時30分00秒'
         expect(page).to have_content '完了'
-        expect(Task.count).to eq 2
       end
 
       context 'when sort,' do
@@ -55,7 +54,6 @@ RSpec.describe 'Test cases for Task :', type: :system do
           expect(page).to have_content 'タスク一覧'
           # 正規表現で並び順をチェック
           expect(page.text).to match(/Spec.*Spec2/)
-          expect(Task.count).to eq 2
         end
       end
 
@@ -94,6 +92,37 @@ RSpec.describe 'Test cases for Task :', type: :system do
 
           expect(page).to have_content 'Spec2'
           expect(page).not_to have_content '2022年12月07日(水) 10時30分00秒'
+        end
+      end
+
+      context 'test pagenation' do
+        before do
+          FactoryBot.create(:task, title: 'Spec3', status: 0)
+          FactoryBot.create(:task, title: 'Spec4', status: 0)
+          FactoryBot.create(:task, title: 'Spec5', status: 0)
+          FactoryBot.create(:task, title: 'Spec6', status: 0)
+          FactoryBot.create(:task, title: 'Spec7', status: 0)
+          FactoryBot.create(:task, title: 'Spec8', status: 0)
+          FactoryBot.create(:task, title: 'Spec9', status: 0)
+          FactoryBot.create(:task, title: 'Spec10', status: 0)
+          FactoryBot.create(:task, title: 'Spec11', status: 0)
+          FactoryBot.create(:task, title: 'Spec12', status: 0)
+          FactoryBot.create(:task, title: 'Spec13', status: 0)
+          FactoryBot.create(:task, title: 'Spec14', status: 0)
+          FactoryBot.create(:task, title: 'Spec15', status: 0)
+          FactoryBot.create(:task, title: 'Spec16', status: 1)
+          FactoryBot.create(:task, title: 'Spec17', status: 1)
+          FactoryBot.create(:task, title: 'Spec18', status: 1)
+          FactoryBot.create(:task, title: 'Spec19', status: 1)
+          FactoryBot.create(:task, title: 'Spec20', status: 2)
+          FactoryBot.create(:task, title: 'Spec21', status: 2)
+          FactoryBot.create(:task, title: 'Spec22', status: 2)
+          # 一覧画面を開く
+          visit tasks_path
+        end
+
+        it 'pagenation works' do
+          expect(page).to have_content '1 2 3 次 › 最後 »'
         end
       end
     end
