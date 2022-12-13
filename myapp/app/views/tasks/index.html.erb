@@ -9,11 +9,12 @@
     <%= form.text_field :keyword, value: @conditions[:keyword] %>
     <%= form.submit "検索" %><br>
 
-    <% I18n.t('enums.task.status').each do |k, v| %>
-    <%= form.radio_button :status, k, checked: @conditions[:status] == k.to_s %>
-    <%= form.label :status, v, {value: k} %>
+    <%= form.radio_button :status, nil, checked: true %>
+    <%= form.label :status, I18n.t('undefined') %>
+    <% Task.statuses.each do |k, v| %>
+      <%= form.radio_button :status, v, checked: @conditions[:status] == v.to_s %>
+      <%= form.label :status, I18n.t('enums.task.status')[k.to_sym], {value: v} %>
     <% end %>
-
   <% end %>
 </div>
 
@@ -36,7 +37,7 @@
   <% @tasks.each do |task| %>
     <tr>
       <td><%= task.id %></td>
-      <td><%= I18n.t('enums.task.status')[task.status] %></td>
+      <td><%= I18n.t('enums.task.status')[task.status.to_sym] %></td>
       <td><%= link_to task.title, task %></td>
       <td><%= task.description %></td>
       <td><%= I18n.l(task.created_at.to_date, format: :long) %></td>

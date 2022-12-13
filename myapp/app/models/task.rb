@@ -3,6 +3,8 @@
 class Task < ApplicationRecord
   SORT_COLUMN_ALLOWED = %w[created_at end_date].freeze
 
+  enum status: { not_started: 0, in_progress: 1, done: 2 }
+
   validates :title, presence: true, length: { maximum: 40 }
   validates :description, length: { maximum: 500 }
 

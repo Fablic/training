@@ -15,9 +15,9 @@ ja:
   enums:
     task:
       status:
-        0: 未着手
-        1: 着手中
-        2: 完了
+        not_started: 未着手
+        in_progress: 着手中
+        done: 完了
   # 全てのmodelで共通して使用するattributesを定義
   attributes:
     created_at: 作成日

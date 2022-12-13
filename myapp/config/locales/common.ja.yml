@@ -26,6 +26,7 @@ ja:
   ops:
     edit: '編集'
     delete: '削除'
+  undefined: '未指定'
   page_titles:
     top_page: 'トップページ'
   messages:
