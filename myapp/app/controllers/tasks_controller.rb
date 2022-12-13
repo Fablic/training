@@ -1,12 +1,13 @@
+# frozen_string_literal: true
+
 class TasksController < ::ApplicationController
-  before_action :set_task, only: [:show, :edit, :update, :destroy]
+  before_action :set_task, only: %i[show edit update destroy]
 
   def index
     @tasks = Task.all
   end
 
-  def show
-  end
+  def show; end
 
   def new
     @task = Task.new
@@ -17,21 +18,19 @@ class TasksController < ::ApplicationController
     if @task.save
       redirect_to tasks_path, notice: 'task created successfully'
     else
-      flash[:notice] = "task creation failed"
+      flash[:notice] = 'task creation failed'
       render :new
     end
-
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
     if @task.update(task_params)
       redirect_to tasks_path, notice: 'task updated successfully'
     else
       render :edit
-      flash[:notice] = "task update failed"
+      flash[:notice] = 'task update failed'
     end
   end
 
