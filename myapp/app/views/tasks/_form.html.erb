@@ -1,12 +1,14 @@
- <% if task.errors.any? %>
-  <% task.errors.full_messages.each do |message| %>
-      <%= message %>
+ <ul>
+  <% if task.errors.any? %>
+    <% task.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+    <% end %>
   <% end %>
-<% end %>
+</ul>
 
 <%= form_with model: task do |form| %>
   Title: <%= form.text_field :title %> <br>
   Description: <%= form.text_field :description %> <br>
 
-  <%= form.submit "送出" %>
+  <%= form.submit "Submit" %>
 <% end %>
