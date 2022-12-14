@@ -97,32 +97,23 @@ RSpec.describe 'Test cases for Task :', type: :system do
 
       context 'test pagenation' do
         before do
-          FactoryBot.create(:task, title: 'Spec3', status: 0)
-          FactoryBot.create(:task, title: 'Spec4', status: 0)
-          FactoryBot.create(:task, title: 'Spec5', status: 0)
-          FactoryBot.create(:task, title: 'Spec6', status: 0)
-          FactoryBot.create(:task, title: 'Spec7', status: 0)
-          FactoryBot.create(:task, title: 'Spec8', status: 0)
-          FactoryBot.create(:task, title: 'Spec9', status: 0)
-          FactoryBot.create(:task, title: 'Spec10', status: 0)
-          FactoryBot.create(:task, title: 'Spec11', status: 0)
-          FactoryBot.create(:task, title: 'Spec12', status: 0)
-          FactoryBot.create(:task, title: 'Spec13', status: 0)
-          FactoryBot.create(:task, title: 'Spec14', status: 0)
-          FactoryBot.create(:task, title: 'Spec15', status: 0)
-          FactoryBot.create(:task, title: 'Spec16', status: 1)
-          FactoryBot.create(:task, title: 'Spec17', status: 1)
-          FactoryBot.create(:task, title: 'Spec18', status: 1)
-          FactoryBot.create(:task, title: 'Spec19', status: 1)
-          FactoryBot.create(:task, title: 'Spec20', status: 2)
-          FactoryBot.create(:task, title: 'Spec21', status: 2)
-          FactoryBot.create(:task, title: 'Spec22', status: 2)
+          # status=0 のレコードを15個作成する
+          FactoryBot.create_list(:task, 15, status: 0) { |task, index| task.title = "Spec#{index}" }
+          # status=1 のレコードを10個作成する
+          FactoryBot.create_list(:task, 5, status: 1) { |task, index| task.title = "Spec#{index}" }
           # 一覧画面を開く
           visit tasks_path
         end
 
         it 'pagenation works' do
           expect(page).to have_content '1 2 3 次 › 最後 »'
+        end
+
+        it 'pagenation works after search' do
+          choose '未着手'
+          click_button '検索'
+
+          expect(page).to have_content '1 2 次 › 最後 »'
         end
       end
     end
