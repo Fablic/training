@@ -87,4 +87,6 @@ RSpec.configure do |config|
     Capybara.server_port = 3000
     Capybara.app_host = "https://#{Capybara.server_host}:#{Capybara.server_port}"
   end
+
+  config.include FactoryBot::Syntax::Methods
 end
