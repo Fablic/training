@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  content: MyText
+  user: one
+  tag: one
+  due_date: 2022-12-12 04:59:06
+  priority: 1
+  status: 1
+  deleted: 1
+
+two:
+  title: MyString
+  content: MyText
+  user: two
+  tag: two
+  due_date: 2022-12-12 04:59:06
+  priority: 1
+  status: 1
+  deleted: 1
