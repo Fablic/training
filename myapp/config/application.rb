@@ -18,5 +18,9 @@ module Myapp
     config.generators do |generator|
       generator.orm :active_record, primary_key_type: :unsigned_integer
     end
+
+    config.generators do |generator|
+      generator.fixture_replacement :factory_bot, suffix_factory: 'factory'
+    end
   end
 end
