@@ -10,5 +10,5 @@
   <%= I18n.t('activerecord.attributes.task.title') %>: <%= form.text_field :title %> <br>
   <%= I18n.t('activerecord.attributes.task.description') %>: <%= form.text_field :description %> <br>
 
-  <%= form.submit I18n.t('helpers.submit.submit', model: I18n.t('activerecord.models.task')) %>
+  <%= form.submit I18n.t('helpers.submit.submit', model: I18n.t('activerecord.models.task')).capitalize %>
 <% end %>
