@@ -26,5 +26,7 @@ module Myapp
     config.i18n.default_locale = :en # change to :en back later so no need to rewrite test
     # config.i18n.available_locales = [:en, :ja]
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}').to_s]
+
+    config.time_zone = 'Tokyo'
   end
 end
