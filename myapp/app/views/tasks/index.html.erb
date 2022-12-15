@@ -1,10 +1,10 @@
-<h1>Tasks</h1>
+<h1><%= I18n.t('activerecord.misc.task.plural').capitalize %> <%= I18n.t('helpers.list') %></h1>
 
 <table>
   <thead>
     <tr>
-      <td>Title</td>
-      <td>Description</td>
+      <td><%= I18n.t('activerecord.attributes.task.title') %></td>
+      <td><%= I18n.t('activerecord.attributes.task.description') %></td>
     </tr>
   </thead>
 
@@ -20,4 +20,4 @@
   </tbody>
 </table>
 
-<%= link_to 'New Task', new_task_path %>
+<%= link_to I18n.t('helpers.submit.create', model: I18n.t('activerecord.models.task')), new_task_path %>

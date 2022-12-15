@@ -1,0 +1,16 @@
+ja:
+  activerecord:
+    models:
+      task: タスク
+    attributes:
+      task:
+        title: タイトル
+        description: 内容
+    misc:
+      task:
+        zero: no タスク
+        one: 1 タスク
+        single: タスク
+        plural: タスク
+        count: '%{count} タスク'
+
