@@ -26,11 +26,13 @@
     <th><%= Task.human_attribute_name :description %></th>
     <th>
       <span><%= Task.human_attribute_name :created_at %></span>
-      <small><%= link_to (I18n.t 'tasks.index.sort.latest'), tasks_path(sort_column: 'created_at', sort_direction: 'desc') %></small>
+      <small><%= link_to (I18n.t 'tasks.index.sort.latest'), tasks_path(@conditions.merge(:sort_column => 'created_at', :sort_direction => 'desc')
+        .permit(:keyword, :status, :sort_column, :sort_direction)) %></small>
     </th>
     <th>
       <span><%= Task.human_attribute_name :end_date %></span>
-      <small><%= link_to (I18n.t 'tasks.index.sort.expiring'), tasks_path(sort_column: 'end_date', sort_direction: 'asc') %></small>
+      <small><%= link_to (I18n.t 'tasks.index.sort.expiring'), tasks_path(@conditions.merge(:sort_column => 'end_date', :sort_direction => 'asc')
+        .permit(:keyword, :status, :sort_column, :sort_direction)) %></small>
     </th>
     <th><%= I18n.t 'ops.edit' %></th>
   </tr>
