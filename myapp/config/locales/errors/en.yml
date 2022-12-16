@@ -1,0 +1,8 @@
+en:
+  errors:
+    404:
+      title: The page you were looking for doesn't exist.
+      content: You may have mistyped the address or the page may have moved.
+    500:
+      title: We're sorry, but something went wrong. QQ
+      content: Please try again later.
