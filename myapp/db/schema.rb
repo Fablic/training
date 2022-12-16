@@ -19,7 +19,6 @@ ActiveRecord::Schema.define(version: 2022_12_13_014011) do
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "end_date"
     t.integer "status", limit: 1, null: false
-    t.index ["status"], name: "index_tasks_on_status"
     t.index ["title"], name: "index_tasks_on_title"
   end
 

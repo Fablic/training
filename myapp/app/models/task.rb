@@ -15,7 +15,7 @@ class Task < ApplicationRecord
   def self.search(conditions)
     # 検索
     tasks = Task.where('title LIKE?', "%#{conditions[:keyword]}%")
-    tasks = tasks.where('status=?', conditions[:status]) if conditions[:status] =~ /^[0|1|2]$/
+    tasks = tasks.where('status=?', conditions[:status]) if conditions[:status].in? Task.statuses.values.map!{|v| v.to_s}
 
     # ソート
     tasks = tasks.sort_tasks(conditions['sort_column'], conditions['sort_direction'])
