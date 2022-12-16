@@ -2,7 +2,8 @@
 
 class TasksController < ApplicationController
   def index
-    @tasks = Task.sort_tasks(params['sort_column'], params['sort_direction'])
+    @conditions = params || {}
+    @tasks = Task.search(@conditions)
   end
 
   def show
@@ -56,6 +57,6 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:title, :description, :end_date)
+    params.require(:task).permit(:title, :description, :end_date, :status)
   end
 end

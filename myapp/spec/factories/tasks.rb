@@ -5,5 +5,6 @@ FactoryBot.define do
     title       { 'Spec' }
     description { 'test' }
     end_date    { Time.new(2022, 12, 7, 10, 30) }
+    status      { 1 }
   end
 end
