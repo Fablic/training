@@ -37,7 +37,6 @@ RSpec.describe 'Test cases for Task :', type: :system do
         expect(page).to have_content 'test2'
         expect(page).to have_content '2023年11月01日(水) 10時30分00秒'
         expect(page).to have_content '完了'
-        expect(Task.count).to eq 2
       end
 
       context 'when sort,' do
@@ -55,7 +54,6 @@ RSpec.describe 'Test cases for Task :', type: :system do
           expect(page).to have_content 'タスク一覧'
           # 正規表現で並び順をチェック
           expect(page.text).to match(/Spec.*Spec2/)
-          expect(Task.count).to eq 2
         end
       end
 
@@ -94,6 +92,28 @@ RSpec.describe 'Test cases for Task :', type: :system do
 
           expect(page).to have_content 'Spec2'
           expect(page).not_to have_content '2022年12月07日(水) 10時30分00秒'
+        end
+      end
+
+      context 'test pagenation' do
+        before do
+          # status=0 のレコードを15個作成する
+          FactoryBot.create_list(:task, 15, status: 0) { |task, index| task.title = "Spec#{index}" }
+          # status=1 のレコードを10個作成する
+          FactoryBot.create_list(:task, 5, status: 1) { |task, index| task.title = "Spec#{index}" }
+          # 一覧画面を開く
+          visit tasks_path
+        end
+
+        it 'pagenation works' do
+          expect(page).to have_content '1 2 3 次 › 最後 »'
+        end
+
+        it 'pagenation works after search' do
+          choose '未着手'
+          click_button '検索'
+
+          expect(page).to have_content '1 2 次 › 最後 »'
         end
       end
     end
