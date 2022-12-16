@@ -1,7 +1,17 @@
-<% flash.each do |message_type, message| %>
-  <%= message %>
-<% end %>
+<div class="task-edit">
+  <div class="row mb-4">
+    <% flash.each do |message_type, message| %>
+      <% if message_type == 'success' %>
+        <p class="col alert alert-success"><%= message %></p>
+      <% else %>
+        <p class="col alert alert-danger"><%= message %></p>
+      <% end %>
+    <% end %>
+  </div>
 
-<h1><%= I18n.t 'tasks.edit.title' %></h1>
+  <div class="row mb-4">
+    <h1 class="col"><%= I18n.t 'tasks.edit.title' %></h1>
+  </div>
 
-<%= render 'form', task: @task %>
+  <%= render 'form', task: @task %>
+</div>

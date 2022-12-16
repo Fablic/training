@@ -1,31 +1,33 @@
-<%= form_with(model: task, local: true) do |form| %>
-  <div>
-    <%= form.label :title %><br>
-    <%= form.text_field :title %>
-    <% task.errors.full_messages_for(:title).each do |message| %>
-      <div><%= message %></div>
-    <% end %>
-  </div>
+<div class="row mb-4">
+  <%= form_with(model: task, local: true, class: 'col-4') do |form| %>
+    <div class="form-group mb-4">
+      <%= form.label :title %>
+      <%= form.text_field :title, class: 'form-control' %>
+      <% task.errors.full_messages_for(:title).each do |message| %>
+        <div class="alert alert-danger mt-2"><%= message %></div>
+      <% end %>
+    </div>
 
-  <div>
-    <%= form.label :status %>
-    <%= form.select :status, I18n.t('enums.task.status').invert %>
-  </div>
+    <div class="form-row mx-0 mb-3">
+      <%= form.label :status, class: 'col-4' %>
+      <%= form.select :status, I18n.t('enums.task.status').invert, {}, class: 'form-control col-8' %>
+    </div>
 
-  <div>
-    <%= form.label :description %><br>
-    <%= form.text_area :description %><br>
-    <% task.errors.full_messages_for(:description).each do |message| %>
-      <div><%= message %></div>
-    <% end %>
-  </div>
+    <div class="form-group mb-4">
+      <%= form.label :description %>
+      <%= form.text_area :description, class: 'form-control' %>
+      <% task.errors.full_messages_for(:description).each do |message| %>
+        <div class="alert alert-danger mt-2"><%= message %></div>
+      <% end %>
+    </div>
 
-  <div>
-    <%= form.label :end_date %>
-    <%= form.datetime_field :end_date %>
-  </div>
+    <div class="form-row mx-0 mb-4">
+      <%= form.label :end_date, class: 'col-4' %>
+      <%= form.datetime_field :end_date, class: 'form-control col-8' %>
+    </div>
 
-  <div>
-    <%= form.submit %>
-  </div>
-<% end %>
+    <div class="form-group mb-4">
+      <%= form.submit class: 'btn btn-primary' %>
+    </div>
+  <% end %>
+</div>
