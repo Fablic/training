@@ -47,7 +47,7 @@ RSpec.describe 'Task', type: :system do
           fill_in 'task_title', with: new_task_title
           fill_in 'task_description', with: new_task_description
 
-          expect { click_button(submit_botton_text) }.to change(Task, :count).by(1)
+          expect { click_button(submit_button_text) }.to change(Task, :count).by(1)
 
           expect(page).to have_content new_task_title
           expect(page).to have_content new_task_description
@@ -62,7 +62,7 @@ RSpec.describe 'Task', type: :system do
           fill_in 'task_title', with: new_task_title
           fill_in 'task_description', with: new_task_description
 
-          expect { click_button(submit_botton_text) }.to change(Task, :count).by(0)
+          expect { click_button(submit_button_text) }.to change(Task, :count).by(0)
 
           error_message = "Title can't be blank"
           expect(page).to have_content error_message
@@ -117,7 +117,7 @@ RSpec.describe 'Task', type: :system do
           fill_in 'task_title', with: updated_task_title
           fill_in 'task_description', with: updated_task_description
 
-          click_button(submit_botton_text)
+          click_button(submit_button_text)
 
           expect(page).to have_content updated_task_title
           expect(page).to have_content updated_task_description
@@ -132,7 +132,7 @@ RSpec.describe 'Task', type: :system do
           fill_in 'task_title', with: updated_task_title
           fill_in 'task_description', with: updated_task_description
 
-          click_button(submit_botton_text)
+          click_button(submit_button_text)
 
           error_message = "Title can't be blank"
           expect(page).to have_content error_message
@@ -160,5 +160,4 @@ RSpec.describe 'Task', type: :system do
       server_error_msg = "We're sorry, but something went wrong."
       expect(page).to have_content(server_error_msg)
     end
-  end
 end
