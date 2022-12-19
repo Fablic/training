@@ -1,0 +1,16 @@
+en:
+  activerecord:
+    models:
+      task: Task
+    attributes:
+      task:
+        title: Title
+        description: Description
+    misc:
+      task:
+        zero: no tasks
+        one: 1 task
+        single: task
+        plural: tasks
+        count: '%{count} tasks'
+

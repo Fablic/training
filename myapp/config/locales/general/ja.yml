@@ -1,0 +1,10 @@
+ja:
+  helpers:
+    list: 一覧
+    show: 詳細
+    edit: 編集
+    back: 戻る
+    new: 新しい
+    delete: 削除する
+  submit:
+    edit: 編集する

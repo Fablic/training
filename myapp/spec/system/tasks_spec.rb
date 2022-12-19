@@ -3,11 +3,15 @@
 require 'rails_helper'
 
 RSpec.describe 'Task', type: :system do
+  let(:submit_button_text) { I18n.t('helpers.submit.submit', model: I18n.t('activerecord.models.task')).capitalize }
+
   describe '#index' do
     it 'displays a create task link' do
+      create_task_botton_text = I18n.t('helpers.submit.create', model: I18n.t('activerecord.models.task'))
+
       visit root_path
 
-      expect(page).to have_link 'New Task'
+      expect(page).to have_link(create_task_botton_text)
     end
 
     context 'when tasks already exist' do
@@ -43,7 +47,7 @@ RSpec.describe 'Task', type: :system do
         fill_in 'task_title', with: new_task_title
         fill_in 'task_description', with: new_task_description
 
-        expect { click_button 'Submit' }.to change(Task, :count).by(1)
+        expect { click_button(submit_button_text) }.to change(Task, :count).by(1)
 
         expect(page).to have_content new_task_title
         expect(page).to have_content new_task_description
@@ -58,7 +62,7 @@ RSpec.describe 'Task', type: :system do
         fill_in 'task_title', with: new_task_title
         fill_in 'task_description', with: new_task_description
 
-        expect { click_button 'Submit' }.to change(Task, :count).by(0)
+        expect { click_button(submit_button_text) }.to change(Task, :count).by(0)
 
         error_message = "Title can't be blank"
         expect(page).to have_content error_message
@@ -100,7 +104,7 @@ RSpec.describe 'Task', type: :system do
         fill_in 'task_title', with: updated_task_title
         fill_in 'task_description', with: updated_task_description
 
-        click_button 'Submit'
+        click_button(submit_button_text)
 
         expect(page).to have_content updated_task_title
         expect(page).to have_content updated_task_description
@@ -115,7 +119,7 @@ RSpec.describe 'Task', type: :system do
         fill_in 'task_title', with: updated_task_title
         fill_in 'task_description', with: updated_task_description
 
-        click_button 'Submit'
+        click_button(submit_button_text)
 
         error_message = "Title can't be blank"
         expect(page).to have_content error_message

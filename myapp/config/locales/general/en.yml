@@ -1,0 +1,10 @@
+en:
+  helpers:
+    list: List
+    show: Show
+    edit: Edit
+    back: Back
+    new: New
+    delete: Delete
+  submit:
+    edit: Edit

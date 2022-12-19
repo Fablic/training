@@ -1,5 +1,5 @@
-<h1>New Task</h1>
+<h1><%= I18n.t('helpers.new').capitalize %> <%= I18n.t('activerecord.models.task').capitalize %></h1>
 
 <%= render 'form', task: @task %>
 
-<%= link_to 'Back', tasks_path %>
+<%= link_to I18n.t('helpers.back'), tasks_path %>

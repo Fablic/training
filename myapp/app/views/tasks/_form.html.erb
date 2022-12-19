@@ -7,8 +7,8 @@
 </ul>
 
 <%= form_with model: task do |form| %>
-  Title: <%= form.text_field :title %> <br>
-  Description: <%= form.text_field :description %> <br>
+  <%= I18n.t('activerecord.attributes.task.title') %>: <%= form.text_field :title %> <br>
+  <%= I18n.t('activerecord.attributes.task.description') %>: <%= form.text_field :description %> <br>
 
-  <%= form.submit "Submit" %>
+  <%= form.submit I18n.t('helpers.submit.submit', model: I18n.t('activerecord.models.task')).capitalize %>
 <% end %>
