@@ -4,8 +4,14 @@ en:
       task: Task
     attributes:
       task:
+        id: ID
         title: Title
         description: Description
+        created_at: Created at
+    order_by:
+      task:
+        - [ID, id]
+        - [Created At (Desc), created_at_desc]
     misc:
       task:
         zero: no tasks

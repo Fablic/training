@@ -8,3 +8,6 @@ en:
     delete: Delete
   submit:
     edit: Edit
+    submit: Submit
+  form:
+    order_by: Order by
