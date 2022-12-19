@@ -1,10 +1,17 @@
 # frozen_string_literal: true
 
 class TasksController < ::ApplicationController
+  DEFAULT_SORT = 'id ASC'
+  ORDER_MAPPING = {
+    'id' => DEFAULT_SORT,
+    'created_at_desc' => 'created_at DESC'
+  }
+
   before_action :set_task, only: %i[show edit update destroy]
 
   def index
-    @tasks = Task.all
+    order = ORDER_MAPPING[params[:order_by]] || DEFAULT_SORT
+    @tasks = Task.all.reorder(order)
   end
 
   def show; end

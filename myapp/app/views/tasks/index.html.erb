@@ -15,12 +15,12 @@
   <tbody>
     <% @tasks.each do |task| %>
         <tr>
-          <td><%= task.id %></td>
-          <td>
+          <td class='task-id' ><%= task.id %></td>
+          <td class='task-title'>
           <%= link_to task.title, task_path(task) %>
           </td>
-          <td><%= task.description %></td>
-          <td><%= task.created_at.strftime('%F %T') %></td>
+          <td class='task-description' ><%= task.description %></td>
+          <td class='task-created_at' ><%= task.created_at.strftime('%F %T') %></td>
         </tr>
     <% end %>
   </tbody>
