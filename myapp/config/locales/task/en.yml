@@ -10,8 +10,8 @@ en:
         created_at: Created at
     order_by:
       task:
-        - [ID, id]
-        - [Created At (Desc), created_at_desc]
+        - [ID, id-asc]
+        - [Created At (Desc), created_at-desc]
     misc:
       task:
         zero: no tasks

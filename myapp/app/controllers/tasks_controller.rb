@@ -1,17 +1,13 @@
 # frozen_string_literal: true
 
 class TasksController < ::ApplicationController
-  DEFAULT_SORT = 'id ASC'
-  ORDER_MAPPING = {
-    'id' => DEFAULT_SORT,
-    'created_at_desc' => 'created_at DESC'
-  }
+  SORTABLE_FIELDS = %w(id created_at)
+  SORTABLE_ORDERS = %w(asc desc)
 
   before_action :set_task, only: %i[show edit update destroy]
 
   def index
-    order = ORDER_MAPPING[params[:order_by]] || DEFAULT_SORT
-    @tasks = Task.all.reorder(order)
+    @tasks = Task.all.order(sort_order)
   end
 
   def show; end
@@ -54,5 +50,13 @@ class TasksController < ::ApplicationController
 
   def set_task
     @task = Task.find(params[:id])
+  end
+
+  def sort_order
+    sort_column, sort_order = params[:order_by]&.split('-')
+    sort_column = SORTABLE_FIELDS.find {|field| field == sort_column } || 'id'
+    sort_order = SORTABLE_ORDERS.find {|field| field == sort_order } || 'asc'
+
+    "#{sort_column} #{sort_order.upcase}"
   end
 end

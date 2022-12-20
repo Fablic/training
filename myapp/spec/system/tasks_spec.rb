@@ -33,10 +33,18 @@ RSpec.describe 'Task', type: :system do
         let!(:task_2) { create(:task, title: 'Task 2', created_at: DateTime.now + 1) }
         let(:sorted_tasks_ids) { page.all('.task-id').map(&:text).map(&:to_i) }
 
+        context 'by default (no order_by params)' do
+          it 'displays tasks with ascending ids' do
+            visit root_path
+
+            expect(sorted_tasks_ids).to eq([task_1.id, task_2.id])
+          end
+        end
+
         context 'by ID' do
           it 'displays tasks with ascending ids' do
             visit root_path
-            page.find("#order_by option[value='id']").select_option
+            page.find("#order_by option[value='id-asc']").select_option
             click_on 'Submit'
 
             expect(sorted_tasks_ids).to eq([task_1.id, task_2.id])
@@ -46,7 +54,7 @@ RSpec.describe 'Task', type: :system do
         context 'by Created At (Desc)' do
           it 'displays tasks with desending created_at' do
             visit root_path
-            page.find("#order_by option[value='created_at_desc']").select_option
+            page.find("#order_by option[value='created_at-desc']").select_option
             click_on 'Submit'
 
             expect(sorted_tasks_ids).to eq([task_2.id, task_1.id])

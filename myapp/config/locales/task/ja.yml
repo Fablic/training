@@ -10,8 +10,8 @@ ja:
         created_at: 作成日時
     order_by:
       task:
-        - [番号, id]
-        - [作成日時 (降順), created_at_desc]
+        - [番号, id-asc]
+        - [作成日時 (降順), created_at-desc]
     misc:
       task:
         zero: no タスク
