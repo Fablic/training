@@ -1,0 +1,32 @@
+<h1>タスク詳細</h1>
+<table class="table table-striped">
+ <tr>
+  <th>id</th>
+  <td><%=@task.id %></td>
+ </tr>
+ <tr>
+  <th>タスク名</th>
+  <td><%=@task.title %></td>
+ </tr>
+ <tr>
+  <th>タスク内容</th>
+  <td><%=@task.content %></td>
+ </tr>
+ <tr>
+  <th>タグ</th>
+  <td><%=@task.tag_id %></td>
+ </tr>
+<tr>
+ <th>優先度</th>
+ <td><%=@task.priority %></td>
+</tr>
+<tr>
+ <th>ステータス</th>
+ <td><%=@task.status %></td>
+</tr>
+<tr>
+ <th>終了期限</th>
+ <td><%=@task.due_date %></td>
+</tr>
+<%= link_to "戻る", tasks_path, class: "btn btn-secondary" %>
+<%= link_to "削除", tasks_path, method: "delete", data: { confirm: '本当に削除しますか？'}, class: "btn btn-danger" %>
