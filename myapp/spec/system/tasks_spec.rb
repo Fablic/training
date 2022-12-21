@@ -2,6 +2,14 @@
 
 require 'rails_helper'
 RSpec.describe 'Test cases for Task :', type: :system do
+  before do
+    @testuser = FactoryBot.create(:user)
+
+    visit login_path
+    fill_in 'session_email', with: 'test@test.com'
+    fill_in 'session_password', with: 'password'
+    click_button 'ログイン'
+  end
   describe 'In task list page' do
     context 'when there is no task,' do
       before do
@@ -18,8 +26,8 @@ RSpec.describe 'Test cases for Task :', type: :system do
 
     context 'when there are tasks,' do
       before do
-        FactoryBot.create(:task)
-        FactoryBot.create(:task, title: 'Spec2', description: 'test2', end_date: Time.new(2023, 11, 1, 10, 30),
+        FactoryBot.create(:task, user: @testuser)
+        FactoryBot.create(:task, user: @testuser, title: 'Spec2', description: 'test2', end_date: Time.new(2023, 11, 1, 10, 30),
                                  status: 2)
 
         # 一覧画面を開く
@@ -98,9 +106,9 @@ RSpec.describe 'Test cases for Task :', type: :system do
       context 'test pagenation' do
         before do
           # status=0 のレコードを15個作成する
-          FactoryBot.create_list(:task, 15, status: 0) { |task, index| task.title = "Spec#{index}" }
+          FactoryBot.create_list(:task, 15, user: @testuser, status: 0) { |task, index| task.title = "Spec#{index}" }
           # status=1 のレコードを10個作成する
-          FactoryBot.create_list(:task, 5, status: 1) { |task, index| task.title = "Spec#{index}" }
+          FactoryBot.create_list(:task, 5, user: @testuser, status: 1) { |task, index| task.title = "Spec#{index}" }
           # 一覧画面を開く
           visit tasks_path
         end
@@ -120,7 +128,7 @@ RSpec.describe 'Test cases for Task :', type: :system do
 
     context 'when error,' do
       before do
-        allow(Task).to receive(:all).and_raise(RuntimeError)
+        allow(Task).to receive(:search).and_raise(RuntimeError)
         # 一覧画面を開く
         visit tasks_path
       end
@@ -245,14 +253,14 @@ RSpec.describe 'Test cases for Task :', type: :system do
         # 登録
         click_button 'タスクを登録する'
 
-        # 正しく登録されていること
+        # エラーページが表示されてること
         expect(page).to have_content '伍〇〇'
       end
     end
   end
 
   describe 'In task detail page' do
-    let!(:task) { FactoryBot.create(:task) }
+    let!(:task) { FactoryBot.create(:task, user: @testuser) }
 
     context 'when success,' do
       it 'shows result correctly' do
@@ -277,7 +285,7 @@ RSpec.describe 'Test cases for Task :', type: :system do
 
     context 'when error,' do
       before do
-        allow(Task).to receive(:find).and_raise(RuntimeError)
+        allow_any_instance_of(User).to receive(:tasks).and_raise(RuntimeError)
       end
 
       it 'shows 500 page' do
@@ -288,7 +296,7 @@ RSpec.describe 'Test cases for Task :', type: :system do
   end
 
   describe 'In edit task page:' do
-    let!(:task) { FactoryBot.create(:task) }
+    let!(:task) { FactoryBot.create(:task, user: @testuser) }
 
     context 'when success,' do
       it 'works correctly' do
@@ -396,7 +404,7 @@ RSpec.describe 'Test cases for Task :', type: :system do
 
     context 'when system error,' do
       before do
-        allow(Task).to receive(:find).and_raise(RuntimeError)
+        allow_any_instance_of(User).to receive(:tasks).and_raise(RuntimeError)
       end
 
       it 'shows 500 page' do
@@ -407,7 +415,7 @@ RSpec.describe 'Test cases for Task :', type: :system do
   end
 
   describe 'For delete task button,', js: true do
-    let!(:task) { FactoryBot.create(:task) }
+    let!(:task) { FactoryBot.create(:task, user: @testuser) }
 
     context 'when success,' do
       it 'works correctly' do
@@ -445,7 +453,7 @@ RSpec.describe 'Test cases for Task :', type: :system do
     context 'when not found,' do
       before do
         visit task_path(task)
-        allow(Task).to receive(:find).and_raise(ActiveRecord::RecordNotFound)
+        allow_any_instance_of(User).to receive(:tasks).and_raise(ActiveRecord::RecordNotFound)
       end
 
       it 'shows error message' do
