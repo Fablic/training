@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class TasksController < ::ApplicationController
-  SORTABLE_FIELDS = %w(id created_at)
+  SORTABLE_FIELDS = %w(id created_at due_date)
   SORTABLE_ORDERS = %w(asc desc)
 
   before_action :set_task, only: %i[show edit update destroy]
@@ -45,7 +45,7 @@ class TasksController < ::ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:title, :description)
+    params.require(:task).permit(:title, :description, :due_date)
   end
 
   def set_task

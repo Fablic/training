@@ -8,10 +8,13 @@ ja:
         title: タイトル
         description: 内容
         created_at: 作成日時
+        due_date: 終了期限
     order_by:
       task:
         - [番号, id-asc]
         - [作成日時 (降順), created_at-desc]
+        - [終了期限 (昇順), due_date-asc]
+        - [終了期限 (降順), due_date-desc]
     misc:
       task:
         zero: no タスク

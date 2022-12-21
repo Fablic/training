@@ -8,6 +8,7 @@
       <td><%= I18n.t('activerecord.attributes.task.id') %></td>
       <td><%= I18n.t('activerecord.attributes.task.title') %></td>
       <td><%= I18n.t('activerecord.attributes.task.description') %></td>
+      <td><%= I18n.t('activerecord.attributes.task.due_date') %></td>
       <td><%= I18n.t('activerecord.attributes.task.created_at') %></td>
     </tr>
   </thead>
@@ -20,6 +21,7 @@
           <%= link_to task.title, task_path(task) %>
           </td>
           <td class='task-description' ><%= task.description %></td>
+          <td class='task-due_date' ><%= task.due_date.strftime('%F') %></td>
           <td class='task-created_at' ><%= task.created_at.strftime('%F %T') %></td>
         </tr>
     <% end %>
