@@ -15,8 +15,9 @@ class TasksController < ApplicationController
     task_params = params.require(:task).permit(:title, :content, :tag, :priority, :status, :due_date)
     @task = Task.new(task_params)
     if @task.save
-      redirect_to tasks_path
+      redirect_to tasks_path, flash: {success: "登録が完了しました"}
     else
+      flash.now[:alert] = "必須項目を埋めてください"
       render :new
     end
   end
@@ -29,8 +30,9 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
     task_params = params.require(:task).permit(:title, :content, :tag, :priority, :status, :due_date)
     if @task.update(task_params)
-      redirect_to tasks_path
+      redirect_to tasks_path, flash: {success: "更新が完了しました"}
     else
+      flash.now[:alert] = "必須項目を埋めてください"
       render :edit
     end
   end
@@ -38,6 +40,6 @@ class TasksController < ApplicationController
   def destroy
     @task = Task.find(params[:id])
     @task.destroy
-    redirect_to tasks_path
+    redirect_to tasks_path, flash: {success: "タスクを削除しました"}
   end
 end
