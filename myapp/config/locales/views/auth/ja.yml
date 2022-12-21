@@ -1,0 +1,10 @@
+ja:
+  auth:
+    login: 'ログイン'
+    logout: 'ログアウト'
+    email: 'メールアドレス'
+    password: 'パスワード'
+    messages:
+      login_success: 'ログインしました'
+      login_fail: 'ログイン失敗しました、メールアドレスやパスワードをご確認ください'
+      logout_success: 'ログアウトしました'
