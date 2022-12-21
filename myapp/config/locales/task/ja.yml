@@ -4,8 +4,14 @@ ja:
       task: タスク
     attributes:
       task:
+        id: 番号
         title: タイトル
         description: 内容
+        created_at: 作成日時
+    order_by:
+      task:
+        - [番号, id-asc]
+        - [作成日時 (降順), created_at-desc]
     misc:
       task:
         zero: no タスク

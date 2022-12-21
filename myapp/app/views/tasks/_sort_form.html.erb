@@ -1,0 +1,8 @@
+<%= form_with(url: tasks_path, method: :get, local: true) do |form| %>
+  <div>
+    <%= form.label :order_by, I18n.t('form.order_by') %>
+    <%= form.select :order_by, I18n.t('activerecord.order_by.task')  %>
+    <%= form.submit I18n.t('submit.submit') %>
+  </div>
+<% end %>
+

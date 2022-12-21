@@ -1,20 +1,26 @@
 <h1><%= I18n.t('activerecord.misc.task.plural').capitalize %> <%= I18n.t('helpers.list') %></h1>
 
+<%= render 'sort_form' %>
+
 <table>
   <thead>
     <tr>
+      <td><%= I18n.t('activerecord.attributes.task.id') %></td>
       <td><%= I18n.t('activerecord.attributes.task.title') %></td>
       <td><%= I18n.t('activerecord.attributes.task.description') %></td>
+      <td><%= I18n.t('activerecord.attributes.task.created_at') %></td>
     </tr>
   </thead>
 
   <tbody>
     <% @tasks.each do |task| %>
         <tr>
-          <td>
+          <td class='task-id' ><%= task.id %></td>
+          <td class='task-title'>
           <%= link_to task.title, task_path(task) %>
           </td>
-          <td><%= task.description %></td>
+          <td class='task-description' ><%= task.description %></td>
+          <td class='task-created_at' ><%= task.created_at.strftime('%F %T') %></td>
         </tr>
     <% end %>
   </tbody>

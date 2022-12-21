@@ -8,3 +8,6 @@ ja:
     delete: 削除する
   submit:
     edit: 編集する
+    submit: 提出する
+  form:
+    order_by: 並び順番
