@@ -4,7 +4,7 @@
 #
 #  id          :bigint           not null, primary key
 #  description :string(255)      not null
-#  due_date    :datetime
+#  due_date    :datetime         not null
 #  priority    :integer
 #  status      :integer
 #  title       :string(255)      not null
