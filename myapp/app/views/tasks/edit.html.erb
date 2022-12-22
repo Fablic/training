@@ -2,10 +2,5 @@
 
 <%= render 'form', task: @task %>
 
-<p><%= 'Action:' %></p>
-<%= link_to I18n.t('activerecord.enums.task.status.mark_started'), start_task_path(@task) if @task.may_start? %>
-<%= link_to I18n.t('activerecord.enums.task.status.mark_completed'), complete_task_path(@task) if @task.may_complete? %>
-<br>
-
 <%= link_to I18n.t('helpers.show'), @task %> |
 <%= link_to I18n.t('helpers.back'), tasks_path %>

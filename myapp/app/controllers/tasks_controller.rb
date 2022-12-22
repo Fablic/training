@@ -4,7 +4,7 @@ class TasksController < ::ApplicationController
   SORTABLE_FIELDS = %w(id created_at due_date)
   SORTABLE_ORDERS = %w(asc desc)
 
-  before_action :set_task, only: %i[show edit update destroy]
+  before_action :set_task, only: %i[show edit update destroy start complete]
 
   def index
     @tasks = Task.all.order(sort_order)
@@ -40,6 +40,24 @@ class TasksController < ::ApplicationController
   def destroy
     @task.destroy
     redirect_to tasks_path, notice: 'delete successfully'
+  end
+
+  def start
+    if @task.start!
+      redirect_to tasks_path, notice: 'task status updated'
+    else
+      render :edit
+      flash[:notice] = 'task status update failed'
+    end
+  end
+
+  def complete
+    if @task.complete!
+      redirect_to tasks_path, notice: 'task status updated'
+    else
+      render :edit
+      flash[:notice] = 'task status update failed'
+    end
   end
 
   private

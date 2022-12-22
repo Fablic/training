@@ -7,6 +7,10 @@
 <%= I18n.t('activerecord.attributes.task.status') %>: <%= @task.status %> <br>
 <%= I18n.t('activerecord.attributes.task.created_at') %>: <%= @task.created_at.strftime('%F %T') %> <br>
 
+<%= link_to I18n.t('activerecord.enums.task.status.mark_started'), start_task_path(@task), method: 'patch' if @task.may_start? %>
+<%= link_to I18n.t('activerecord.enums.task.status.mark_completed'), complete_task_path(@task), method: 'patch' if @task.may_complete? %>
+<br>
+
 <%= link_to I18n.t('helpers.edit'), edit_task_path(@task) %> |
 <%= link_to I18n.t('helpers.delete'), task_path(@task), method: 'delete', data: { confirm: 'Are you sure you want to delete?'} %> |
 <%= link_to I18n.t('helpers.back'), tasks_path %>
