@@ -1,0 +1,73 @@
+<div class="user-show">
+  <div class="row mb-4">
+    <% flash.each do |message_type, message| %>
+      <% if message_type == 'success' %>
+        <p class="col alert alert-success"><%= message %></p>
+      <% else %>
+        <p class="col alert alert-danger"><%= message %></p>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="row mb-4">
+    <h1 class="col"><%= I18n.t 'users.show.title' %></h1>
+  </div>
+
+  <div class="row">
+    <table class="table col">
+      <tbody>
+        <tr>
+          <th><%= "#{User.human_attribute_name :name}:" %></th>
+          <td><%= @user.name %></td>
+          <th><%= "#{User.human_attribute_name :email}:" %></th>
+          <td><%= @user.email %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="row">
+    <%= link_to (I18n.t 'ops.edit'), edit_user_path(@user), class: 'col-1 mr-4' %>
+    <%= link_to (I18n.t 'ops.delete'), user_path(@user),
+      method: :delete,
+      data: { confirm: (I18n.t 'messages.confirm_delete') },
+      class: 'col-1 mr-4'
+    %>
+    <%= link_to (I18n.t 'users.index.title'), users_path, class: 'col-2' %>
+  </div>
+
+  <div class="row mt-4">
+    <h2 class="col"><%= I18n.t 'users.show.tasks_list' %></h2>
+  </div>
+
+  <div class="row">
+    <table class="col table tasks-table">
+      <thead>
+        <tr>
+          <th class="th-id"><%= Task.human_attribute_name :id %></th>
+          <th class="th-status"><%= Task.human_attribute_name :status %></th>
+          <th class="th-title"><%= Task.human_attribute_name :title %></th>
+          <th class="th-description"><%= Task.human_attribute_name :description %></th>
+          <th class="th-created-at">
+            <span><%= Task.human_attribute_name :created_at %></span>
+          </th>
+          <th class="th-end-date">
+            <span><%= Task.human_attribute_name :end_date %></span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @user.tasks.each do |task| %>
+          <tr>
+            <td><%= task.id %></td>
+            <td><%= I18n.t('enums.task.status')[task.status.to_sym] %></td>
+            <td class="text-truncate"><%= task.title %></td>
+            <td class="text-truncate"><%= task.description %></td>
+            <td><%= I18n.l(task.created_at.to_date, format: :long) %></td>
+            <td><%= task.end_date ? I18n.l(task.end_date, format: :long) : '-' %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

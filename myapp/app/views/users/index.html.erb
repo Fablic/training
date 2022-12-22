@@ -1,0 +1,47 @@
+<div class="user-index">
+  <div class="row mb-4">
+    <% flash.each do |message_type, message| %>
+      <% if message_type == 'success' %>
+        <p class="col alert alert-success"><%= message %></p>
+      <% else %>
+        <p class="col alert alert-danger"><%= message %></p>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="row mb-4">
+    <h1 class="col"><%= I18n.t 'users.index.title' %></h1>
+  </div>
+
+  <div class="row">
+    <table class="col table users-table">
+      <thead>
+        <tr>
+          <th class="th-id"><%= User.human_attribute_name :id %></th>
+          <th class="th-name"><%= User.human_attribute_name :name %></th>
+          <th class="th-email"><%= User.human_attribute_name :email %></th>
+          <th class="th-tasks-cnt"><%= "#{Task.model_name.human}#{I18n.t 'count'}" %></th>          
+          <th class="th-edit"><%= I18n.t 'ops.edit' %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @users.each do |user| %>
+          <tr>
+            <td><%= user.id %></td>
+            <td><%= link_to user.name, user %></td>
+            <td><%= user.email %></td>
+            <td><%= link_to user.tasks.count, user %></td>
+            <td><%= link_to (I18n.t 'ops.edit'), edit_user_path(user) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="row">
+    <div class="col-10">
+      <%= paginate @users, theme: 'twitter-bootstrap-4' %>
+    </div>
+    <%= link_to (I18n.t 'users.common.new_user'), new_user_path, class: 'col-2 btn btn-primary mb-4' %>
+  </div>
+</div>

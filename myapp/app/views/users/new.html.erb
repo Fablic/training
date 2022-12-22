@@ -1,0 +1,18 @@
+<div class="user-new">
+  <div class="row mb-4">
+    <% flash.each do |message_type, message| %>
+      <% if message_type == 'success' %>
+        <p class="col alert alert-success"><%= message %></p>
+      <% else %>
+        <p class="col alert alert-danger"><%= message %></p>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="row mb-4">
+    <h1 class="col"><%= I18n.t 'users.new.title' %></h1>
+  </div>
+
+
+  <%= render 'form', user: @user %>
+</div>

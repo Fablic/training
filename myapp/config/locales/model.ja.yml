@@ -3,15 +3,28 @@ ja:
     models:
       # view側： User.model_name.human => "ユーザ" / t("activerecord.models.user")と同じ
       task: タスク 
+      user: ユーザー
     # model毎に定義したいattributesを記述
     attributes:
       task:
-        id: ID
         # view側： User.human_attribute_name :name => "名前" /　t("activerecord.attributes.user.name")と同じ
         title: タイトル
         description: 詳細
         end_date: 終了期限
         status: ステータス
+      user:
+        # view側： User.human_attribute_name :name => "名前" /　t("activerecord.attributes.user.name")と同じ
+        name: 名前
+        email: メールアドレス
+        password: パスワード
+        password_confirmation: パスワード(確認)
+
+    errors:
+      models:
+        user:
+          attributes:
+            password_confirmation:
+              confirmation: 'が入力されたパスワードと一致ではない'
   enums:
     task:
       status:
@@ -20,6 +33,7 @@ ja:
         done: 完了
   # 全てのmodelで共通して使用するattributesを定義
   attributes:
+    id: ID
     created_at: 作成日
     updated_at: 更新日
   errors:
