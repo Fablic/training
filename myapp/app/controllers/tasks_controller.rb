@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
 class TasksController < ApplicationController
-  before_action :logged_in_user
+  before_action :check_login_status
 
   def index
     @conditions = params || {}
-    @tasks = @current_user.tasks.search(@conditions)
+    @tasks = current_user.tasks.search(@conditions)
   end
 
   def show
-    @task = @current_user.tasks.find(params[:id])
+    @task = current_user.tasks.find(params[:id])
   end
 
   def new
@@ -17,7 +17,7 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = @current_user.tasks.new(task_params)
+    @task = current_user.tasks.new(task_params)
 
     if @task.save
       flash[:success] = I18n.t('tasks.new.messages.success')
@@ -29,11 +29,11 @@ class TasksController < ApplicationController
   end
 
   def edit
-    @task = @current_user.tasks.find(params[:id])
+    @task = current_user.tasks.find(params[:id])
   end
 
   def update
-    @task = @current_user.tasks.find(params[:id])
+    @task = current_user.tasks.find(params[:id])
 
     if @task.update(task_params)
       flash[:success] = I18n.t('tasks.edit.messages.success')
@@ -45,7 +45,7 @@ class TasksController < ApplicationController
   end
 
   def destroy
-    @task = @current_user.tasks.find(params[:id])
+    @task = current_user.tasks.find(params[:id])
 
     if @task.destroy
       flash[:success] = I18n.t('tasks.destroy.messages.success')

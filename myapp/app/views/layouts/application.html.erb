@@ -14,7 +14,7 @@
       <ul class="nav nav-pills justify-content-end">
         <% if logged_in? %>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"><%= @current_user.email %></a>
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"><%= current_user.email %></a>
             <div class="dropdown-menu">
               <%= link_to I18n.t('auth.logout'), logout_path, method: :delete, class: 'dropdown-item' %>
             </div>
