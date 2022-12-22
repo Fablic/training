@@ -263,7 +263,7 @@ RSpec.describe 'Task', type: :system do
 
       context 'when update fails' do
         it 'does not update the task status' do
-          task.destroy
+          task.update(status: 'unstarted')
           click_link 'Mark Completed'
 
           expect(page).not_to have_content 'completed'
