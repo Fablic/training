@@ -1,15 +1,5 @@
 <div class="task-show">
   <div class="row mb-4">
-    <% flash.each do |message_type, message| %>
-      <% if message_type == 'success' %>
-        <p class="col alert alert-success"><%= message %></p>
-      <% else %>
-        <p class="col alert alert-danger"><%= message %></p>
-      <% end %>
-    <% end %>
-  </div>
-
-  <div class="row mb-4">
     <h1 class="col"><%= I18n.t 'tasks.show.title' %></h1>
   </div>
 
