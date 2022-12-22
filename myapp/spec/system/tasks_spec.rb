@@ -109,7 +109,7 @@ RSpec.describe 'Task', type: :system do
 
           fill_in 'task_title', with: new_task_title
           fill_in 'task_description', with: new_task_description
-          select_date due_date, from: 'task_due_date'
+          select_date(field: 'task_due_date', date: due_date)
 
           expect { click_button(submit_button_text) }.to change(Task, :count).by(1)
 
@@ -125,7 +125,7 @@ RSpec.describe 'Task', type: :system do
 
           fill_in 'task_title', with: new_task_title
           fill_in 'task_description', with: new_task_description
-          select_date due_date, from: 'task_due_date'
+          select_date(field: 'task_due_date', date: due_date)
 
           expect { click_button(submit_button_text) }.to change(Task, :count).by(0)
 
@@ -186,7 +186,7 @@ RSpec.describe 'Task', type: :system do
 
           fill_in 'task_title', with: updated_task_title
           fill_in 'task_description', with: updated_task_description
-          select_date updated_due_date, from: 'task_due_date'
+          select_date(field: 'task_due_date', date: updated_due_date)
 
           click_button(submit_button_text)
 

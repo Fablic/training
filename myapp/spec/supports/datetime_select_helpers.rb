@@ -1,8 +1,8 @@
 module DateTimeSelectHelpers
-  def select_date(date, options = {})
-    raise ArgumentError, 'from is a required option' if options[:from].blank?
+  def select_date(field:, date:)
+    raise ArgumentError, 'field is a required option' if field.blank?
 
-    field = options[:from].to_s
+    date = Date.parse(date) if date.instance_of?(String)
 
     select date.year, from: "#{field}_1i"
     select date.strftime('%B'), from: "#{field}_2i"
