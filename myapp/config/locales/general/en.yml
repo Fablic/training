@@ -11,3 +11,4 @@ en:
     submit: Submit
   form:
     order_by: Order by
+    filter_by: Filter by

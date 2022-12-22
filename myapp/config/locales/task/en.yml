@@ -9,12 +9,27 @@ en:
         description: Description
         created_at: Created at
         due_date: Due date
+        status: Status
+    enums:
+      task:
+        status:
+          unstarted: Unstarted
+          mark_started: Mark Started
+          started: Started
+          mark_completed: Mark Completed
+          completed: Completed
     order_by:
       task:
         - [ID, id-asc]
         - [Created At (Desc), created_at-desc]
         - [Due Date (Asc), due_date-asc]
         - [Due Date (Desc), due_date-desc]
+    filter_by:
+      task:
+        status:
+          - [Not started, unstarted]
+          - [Started, started]
+          - [Completed, completed]
     misc:
       task:
         zero: no tasks
