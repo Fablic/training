@@ -5,11 +5,11 @@
 # Table name: tasks
 #
 #  id          :bigint           not null, primary key
-#  title       :string(255)
-#  description :string(255)
+#  description :string(255)      not null
+#  due_date    :datetime
 #  priority    :integer
 #  status      :integer
-#  due_date    :datetime
+#  title       :string(255)      not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #
