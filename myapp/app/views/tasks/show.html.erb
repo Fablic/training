@@ -1,3 +1,5 @@
+<%= render 'errors', task: @task %>
+
 <h1><%= I18n.t('activerecord.models.task').capitalize %> <%= I18n.t('helpers.show').capitalize %></h1>
 
 <%= I18n.t('activerecord.attributes.task.id') %>: <%= @task.id %> <br>

@@ -46,7 +46,7 @@ class TasksController < ::ApplicationController
     if @task.start!
       redirect_to tasks_path, notice: 'task status updated'
     else
-      render :edit
+      render :show
       flash[:notice] = 'task status update failed'
     end
   end
@@ -55,7 +55,7 @@ class TasksController < ::ApplicationController
     if @task.complete!
       redirect_to tasks_path, notice: 'task status updated'
     else
-      render :edit
+      render :show
       flash[:notice] = 'task status update failed'
     end
   end
