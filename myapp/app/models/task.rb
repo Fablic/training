@@ -13,6 +13,10 @@
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #
+# Indexes
+#
+#  index_tasks_on_status  (status)
+#
 class Task < ApplicationRecord
   include AASM
 
