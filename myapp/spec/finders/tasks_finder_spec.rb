@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 describe TasksFinder do
-  let!(:task_1) { create(:task, title: 'task 1', description: 'task 1 description') }
-  let!(:task_2) { create(:task, :started, title: 'task 2', description: 'task 2 description') }
-  let!(:task_3) { create(:task, title: 'task 3 new', description: 'task 3 description') }
+  let!(:task_1) { create(:task, title: 'task 1') }
+  let!(:task_2) { create(:task, :started, title: 'task 2') }
+  let!(:task_3) { create(:task, title: 'task 3 new') }
   let(:params) { {} }
 
   subject { TasksFinder.new(params: params, tasks: Task.all) }

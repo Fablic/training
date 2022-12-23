@@ -7,11 +7,19 @@ RSpec.describe 'Task', type: :system do
 
     describe '#index' do
       it 'displays a create task link' do
-        create_task_botton_text = I18n.t('helpers.submit.create', model: I18n.t('activerecord.models.task'))
+        create_task_button_text = I18n.t('helpers.submit.create', model: I18n.t('activerecord.models.task'))
 
         visit root_path
 
-        expect(page).to have_link(create_task_botton_text)
+        expect(page).to have_link(create_task_button_text)
+      end
+
+      it 'displays a Search filter' do
+        filter_task_button_text = I18n.t('form.filter_by')
+
+        visit root_path
+
+        expect(page).to have_button(filter_task_button_text)
       end
 
       context 'when tasks already exist' do
@@ -85,6 +93,22 @@ RSpec.describe 'Task', type: :system do
               expect(sorted_tasks_ids).to eq([task_2.id, task_1.id, task_3.id])
             end
           end
+        end
+      end
+
+      context 'when filter tasks' do
+        let!(:task_1) { create(:task, :started, title: 'task 1') }
+        let!(:task_2) { create(:task, :started, title: 'task 2 new') }
+        let!(:task_3) { create(:task, title: 'task 3') }
+        let(:filtered_tasks_ids) { page.all('.task-id').map(&:text).map(&:to_i) }
+
+        it 'displays tasks with corresponding filter' do
+          visit root_path
+          fill_in 'search_title', with: 'new'
+          page.find("#status_filter option[value='started']").select_option
+          click_on 'Filter by'
+
+          expect(filtered_tasks_ids).to eq([task_2.id])
         end
       end
     end
