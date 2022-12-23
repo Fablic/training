@@ -8,10 +8,13 @@ en:
         title: Title
         description: Description
         created_at: Created at
+        due_date: Due date
     order_by:
       task:
         - [ID, id-asc]
         - [Created At (Desc), created_at-desc]
+        - [Due Date (Asc), due_date-asc]
+        - [Due Date (Desc), due_date-desc]
     misc:
       task:
         zero: no tasks

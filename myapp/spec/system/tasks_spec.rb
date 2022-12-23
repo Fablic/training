@@ -23,14 +23,16 @@ RSpec.describe 'Task', type: :system do
 
           expect(page).to have_content task_1.title
           expect(page).to have_content task_1.description
+          expect(page).to have_content task_1.due_date.strftime('%F')
           expect(page).to have_content task_2.title
           expect(page).to have_content task_2.description
+          expect(page).to have_content task_2.due_date.strftime('%F')
         end
       end
 
       context 'when sort tasks' do
-        let!(:task_1) { create(:task, title: 'Task 1') }
-        let!(:task_2) { create(:task, title: 'Task 2', created_at: DateTime.now + 1) }
+        let!(:task_1) { create(:task, title: 'Task 1', due_date: 3.days.from_now) }
+        let!(:task_2) { create(:task, title: 'Task 2', created_at: DateTime.now + 1, due_date: 2.days.from_now) }
         let(:sorted_tasks_ids) { page.all('.task-id').map(&:text).map(&:to_i) }
 
         context 'by default (no order_by params)' do
@@ -60,10 +62,37 @@ RSpec.describe 'Task', type: :system do
             expect(sorted_tasks_ids).to eq([task_2.id, task_1.id])
           end
         end
+
+        context 'by Due Date' do
+          let!(:task_3) { create(:task, title: 'Task 3', due_date: 10.days.from_now) }
+
+          describe 'sort DESC' do
+            it 'displays tasks with desending due_date' do
+              visit root_path
+              page.find("#order_by option[value='due_date-desc']").select_option
+              click_on 'Submit'
+
+              expect(sorted_tasks_ids).to eq([task_3.id, task_1.id, task_2.id])
+            end
+          end
+
+          describe 'sort ASC' do
+            it 'displays tasks with ascending due_date' do
+              visit root_path
+              page.find("#order_by option[value='due_date-asc']").select_option
+              click_on 'Submit'
+
+              expect(sorted_tasks_ids).to eq([task_2.id, task_1.id, task_3.id])
+            end
+          end
+        end
       end
     end
 
     describe '#new' do
+      let(:new_task_description) { 'New task description' }
+      let(:due_date) { Date.tomorrow }
+
       before { visit new_task_path }
 
       it 'displays form with fileds to be filled in' do
@@ -80,21 +109,23 @@ RSpec.describe 'Task', type: :system do
 
           fill_in 'task_title', with: new_task_title
           fill_in 'task_description', with: new_task_description
+          select_date(field: 'task_due_date', date: due_date)
 
           expect { click_button(submit_button_text) }.to change(Task, :count).by(1)
 
           expect(page).to have_content new_task_title
           expect(page).to have_content new_task_description
+          expect(page).to have_content due_date.strftime('%F')
         end
       end
 
       context 'when missing input necessary task column' do
         it 'does not create new task' do
           new_task_title = nil
-          new_task_description = 'New task description'
 
           fill_in 'task_title', with: new_task_title
           fill_in 'task_description', with: new_task_description
+          select_date(field: 'task_due_date', date: due_date)
 
           expect { click_button(submit_button_text) }.to change(Task, :count).by(0)
 
@@ -111,8 +142,11 @@ RSpec.describe 'Task', type: :system do
         before { visit task_path(task) }
 
         it 'display the details of the task' do
+          expect(page).to have_content task.id
           expect(page).to have_content task.title
           expect(page).to have_content task.description
+          expect(page).to have_content task.due_date.strftime('%F')
+          expect(page).to have_content task.created_at.strftime('%F %T')
         end
 
         it 'displays links to manipulate the task' do
@@ -136,6 +170,7 @@ RSpec.describe 'Task', type: :system do
 
     describe '#update' do
       let!(:task) { create(:task) }
+
       before { visit edit_task_path(task) }
 
       it 'display the details of the task' do
@@ -147,14 +182,17 @@ RSpec.describe 'Task', type: :system do
         it 'update task successfully' do
           updated_task_title = 'Updated task'
           updated_task_description = 'Updated task description'
+          updated_due_date = 5.days.from_now
 
           fill_in 'task_title', with: updated_task_title
           fill_in 'task_description', with: updated_task_description
+          select_date(field: 'task_due_date', date: updated_due_date)
 
           click_button(submit_button_text)
 
           expect(page).to have_content updated_task_title
           expect(page).to have_content updated_task_description
+          expect(page).to have_content updated_due_date.strftime('%F')
         end
       end
 
