@@ -5,11 +5,9 @@
 <table>
   <thead>
     <tr>
-      <td><%= I18n.t('activerecord.attributes.task.id') %></td>
-      <td><%= I18n.t('activerecord.attributes.task.title') %></td>
-      <td><%= I18n.t('activerecord.attributes.task.description') %></td>
-      <td><%= I18n.t('activerecord.attributes.task.due_date') %></td>
-      <td><%= I18n.t('activerecord.attributes.task.created_at') %></td>
+      <% %w(id title description due_date created_at).each do |field| %>
+        <td><%= I18n.t("activerecord.attributes.task.#{field}") %></td>
+      <% end %>
     </tr>
   </thead>
 
