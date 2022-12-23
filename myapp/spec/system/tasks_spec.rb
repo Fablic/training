@@ -171,7 +171,7 @@ RSpec.describe 'Test cases for Task :', type: :system do
       end
     end
 
-    context 'when fail,' do
+    context 'when DB insert fail,' do
       before do
         new_task_mock = Task.new
 
@@ -336,7 +336,7 @@ RSpec.describe 'Test cases for Task :', type: :system do
       end
     end
 
-    context 'when fail,' do
+    context 'when DB update fail,' do
       before do
         allow(User).to receive(:find_by).and_return(testuser)
         allow(testuser).to receive(:tasks).and_return(tasks_mock)
@@ -444,7 +444,7 @@ RSpec.describe 'Test cases for Task :', type: :system do
       end
     end
 
-    context 'when fail,' do
+    context 'when DB delete fail,' do
       before do
         visit task_path(task)
 
