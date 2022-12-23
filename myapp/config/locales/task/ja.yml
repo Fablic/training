@@ -9,12 +9,27 @@ ja:
         description: 内容
         created_at: 作成日時
         due_date: 終了期限
+        status: ステータス
+    enums:
+      task:
+        status:
+          unstarted: 未着手
+          mark_started: 着手中させる
+          started: 着手中
+          mark_completed: 完了させる
+          completed: 完了
     order_by:
       task:
         - [番号, id-asc]
         - [作成日時 (降順), created_at-desc]
         - [終了期限 (昇順), due_date-asc]
         - [終了期限 (降順), due_date-desc]
+    filter_by:
+      task:
+        status:
+          - [未着手, unstarted]
+          - [着手中, started]
+          - [完了, completed]
     misc:
       task:
         zero: no タスク

@@ -11,3 +11,4 @@ ja:
     submit: 提出する
   form:
     order_by: 並び順番
+    filter_by: 絞り込み

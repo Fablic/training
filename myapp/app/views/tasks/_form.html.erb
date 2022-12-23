@@ -1,10 +1,4 @@
- <ul>
-  <% if task.errors.any? %>
-    <% task.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-    <% end %>
-  <% end %>
-</ul>
+<%= render 'errors', task: task %>
 
 <%= form_with model: task do |form| %>
   <%= I18n.t('activerecord.attributes.task.title') %>: <%= form.text_field :title %> <br>

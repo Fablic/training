@@ -154,6 +154,21 @@ RSpec.describe 'Task', type: :system do
           expect(page).to have_link 'Delete'
           expect(page).to have_link 'Back'
         end
+
+        describe 'task status related links' do
+          context 'when task is unstarted' do
+            it 'displays Mark Started button' do
+              expect(page).to have_link 'Mark Started'
+            end
+          end
+
+          context 'when task is started' do
+            let!(:task) { create(:task, :started) }
+            it 'displays Mark Completed button' do
+              expect(page).to have_link 'Mark Completed'
+            end
+          end
+        end
       end
 
       context 'when task not presents'  do
@@ -208,6 +223,50 @@ RSpec.describe 'Task', type: :system do
 
           error_message = "Title can't be blank"
           expect(page).to have_content error_message
+        end
+      end
+    end
+
+    describe '#start' do
+      let!(:task) { create(:task) }
+      before { visit task_path(task) }
+
+      context 'when update successfully' do
+        it 'updates the task status to started' do
+          click_link 'Mark Started'
+
+          expect(page).to have_content 'started'
+        end
+      end
+
+      context 'when update fails' do
+        it 'does not update the task status' do
+          task.destroy
+          click_link 'Mark Started'
+
+          expect(page).not_to have_content 'started'
+        end
+      end
+    end
+
+    describe '#complete' do
+      let!(:task) { create(:task, :started) }
+      before { visit task_path(task) }
+
+      context 'when update successfully' do
+        it 'updates the task status to completed' do
+          click_link 'Mark Completed'
+
+          expect(page).to have_content 'completed'
+        end
+      end
+
+      context 'when update fails' do
+        it 'does not update the task status' do
+          task.update(status: 'unstarted')
+          click_link 'Mark Completed'
+
+          expect(page).not_to have_content 'completed'
         end
       end
     end

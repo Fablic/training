@@ -16,5 +16,13 @@ FactoryBot.define do
     title { 'Buy chair' }
     description { 'Buy a good desk chair to asap!' }
     due_date { DateTime.tomorrow }
+
+    trait :started do
+      status { 'started' }
+    end
+
+    trait :completed do
+      status { 'completed' }
+    end
   end
 end
