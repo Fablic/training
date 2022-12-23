@@ -20,6 +20,10 @@ class Task < ApplicationRecord
   validates :description, presence: true
   validates :due_date, presence: true
 
+  scope :by_title, lambda { |title|
+    where(Task.arel_table[:title].matches("%#{title}%"))
+  }
+
   enum status: {
     unstarted: 0,
     started: 1,

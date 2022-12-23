@@ -27,9 +27,10 @@ en:
     filter_by:
       task:
         status:
-          - [Not started, unstarted]
+          - [Unstarted, unstarted]
           - [Started, started]
           - [Completed, completed]
+        search_title: Search Title
     misc:
       task:
         zero: no tasks

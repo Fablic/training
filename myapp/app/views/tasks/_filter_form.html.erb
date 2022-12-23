@@ -1,0 +1,7 @@
+<%= form_tag(tasks_path, method: :get, local: true) do |form| %>
+  <%= label_tag I18n.t('activerecord.filter_by.task.search_title') %>
+  <%= text_field_tag :search_title %>
+  <%= label_tag I18n.t('activerecord.attributes.task.status') %>
+  <%= select_tag :status, options_for_select([nil] + I18n.t('activerecord.filter_by.task.status')) %>
+  <%= submit_tag I18n.t('submit.submit') %>
+<% end %>

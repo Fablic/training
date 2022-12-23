@@ -30,6 +30,7 @@ ja:
           - [未着手, unstarted]
           - [着手中, started]
           - [完了, completed]
+        search_title: タイトル検索
     misc:
       task:
         zero: no タスク
