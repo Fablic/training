@@ -2,14 +2,16 @@
 
 require 'rails_helper'
 RSpec.describe 'Test cases for Task :', type: :system do
-  before do
-    @testuser = FactoryBot.create(:user)
+  let!(:testuser) { FactoryBot.create(:user) }
+  let(:tasks_mock) { double('tasks mock') }
 
+  before do
     visit login_path
     fill_in 'session_email', with: 'test@test.com'
     fill_in 'session_password', with: 'password'
     click_button 'ログイン'
   end
+
   describe 'In task list page' do
     context 'when there is no task,' do
       before do
@@ -26,8 +28,8 @@ RSpec.describe 'Test cases for Task :', type: :system do
 
     context 'when there are tasks,' do
       before do
-        FactoryBot.create(:task, user: @testuser)
-        FactoryBot.create(:task, user: @testuser, title: 'Spec2', description: 'test2', end_date: Time.new(2023, 11, 1, 10, 30),
+        FactoryBot.create(:task, user: testuser)
+        FactoryBot.create(:task, user: testuser, title: 'Spec2', description: 'test2', end_date: Time.new(2023, 11, 1, 10, 30),
                                  status: 2)
 
         # 一覧画面を開く
@@ -106,9 +108,9 @@ RSpec.describe 'Test cases for Task :', type: :system do
       context 'test pagenation' do
         before do
           # status=0 のレコードを15個作成する
-          FactoryBot.create_list(:task, 15, user: @testuser, status: 0) { |task, index| task.title = "Spec#{index}" }
+          FactoryBot.create_list(:task, 15, user: testuser, status: 0) { |task, index| task.title = "Spec#{index}" }
           # status=1 のレコードを10個作成する
-          FactoryBot.create_list(:task, 5, user: @testuser, status: 1) { |task, index| task.title = "Spec#{index}" }
+          FactoryBot.create_list(:task, 5, user: testuser, status: 1) { |task, index| task.title = "Spec#{index}" }
           # 一覧画面を開く
           visit tasks_path
         end
@@ -169,9 +171,12 @@ RSpec.describe 'Test cases for Task :', type: :system do
       end
     end
 
-    context 'when fail,' do
+    context 'when DB insert fail,' do
       before do
-        allow_any_instance_of(Task).to receive(:save).and_return(false)
+        new_task_mock = Task.new
+
+        allow(Task).to receive(:new).and_return(new_task_mock)
+        allow(new_task_mock).to receive(:save).and_return(false)
       end
 
       it 'shows error message' do
@@ -234,7 +239,10 @@ RSpec.describe 'Test cases for Task :', type: :system do
 
     context 'when system error,' do
       before do
-        allow_any_instance_of(Task).to receive(:save).and_raise(RuntimeError)
+        new_task_mock = Task.new
+
+        allow(Task).to receive(:new).and_return(new_task_mock)
+        allow(new_task_mock).to receive(:save).and_raise(RuntimeError)
       end
 
       it 'shows error message' do
@@ -260,7 +268,7 @@ RSpec.describe 'Test cases for Task :', type: :system do
   end
 
   describe 'In task detail page' do
-    let!(:task) { FactoryBot.create(:task, user: @testuser) }
+    let!(:task) { FactoryBot.create(:task, user: testuser) }
 
     context 'when success,' do
       it 'shows result correctly' do
@@ -285,7 +293,8 @@ RSpec.describe 'Test cases for Task :', type: :system do
 
     context 'when error,' do
       before do
-        allow_any_instance_of(User).to receive(:tasks).and_raise(RuntimeError)
+        allow(User).to receive(:find_by).and_return(testuser)
+        allow(testuser).to receive(:tasks).and_raise(RuntimeError)
       end
 
       it 'shows 500 page' do
@@ -296,7 +305,7 @@ RSpec.describe 'Test cases for Task :', type: :system do
   end
 
   describe 'In edit task page:' do
-    let!(:task) { FactoryBot.create(:task, user: @testuser) }
+    let!(:task) { FactoryBot.create(:task, user: testuser) }
 
     context 'when success,' do
       it 'works correctly' do
@@ -327,9 +336,12 @@ RSpec.describe 'Test cases for Task :', type: :system do
       end
     end
 
-    context 'when fail,' do
+    context 'when DB update fail,' do
       before do
-        allow_any_instance_of(Task).to receive(:update).and_return(false)
+        allow(User).to receive(:find_by).and_return(testuser)
+        allow(testuser).to receive(:tasks).and_return(tasks_mock)
+        allow(tasks_mock).to receive(:find).and_return(task)
+        allow(task).to receive(:update).and_return(false)
       end
 
       it 'shows error message' do
@@ -404,7 +416,8 @@ RSpec.describe 'Test cases for Task :', type: :system do
 
     context 'when system error,' do
       before do
-        allow_any_instance_of(User).to receive(:tasks).and_raise(RuntimeError)
+        allow(User).to receive(:find_by).and_return(testuser)
+        allow(testuser).to receive(:tasks).and_raise(RuntimeError)
       end
 
       it 'shows 500 page' do
@@ -415,7 +428,7 @@ RSpec.describe 'Test cases for Task :', type: :system do
   end
 
   describe 'For delete task button,', js: true do
-    let!(:task) { FactoryBot.create(:task, user: @testuser) }
+    let!(:task) { FactoryBot.create(:task, user: testuser) }
 
     context 'when success,' do
       it 'works correctly' do
@@ -431,10 +444,14 @@ RSpec.describe 'Test cases for Task :', type: :system do
       end
     end
 
-    context 'when fail,' do
+    context 'when DB delete fail,' do
       before do
         visit task_path(task)
-        allow_any_instance_of(Task).to receive(:destroy).and_return(false)
+
+        allow(User).to receive(:find_by).and_return(testuser)
+        allow(testuser).to receive(:tasks).and_return(tasks_mock)
+        allow(tasks_mock).to receive(:find).and_return(task)
+        allow(task).to receive(:destroy).and_return(false)
       end
 
       it 'shows error message' do
@@ -453,7 +470,9 @@ RSpec.describe 'Test cases for Task :', type: :system do
     context 'when not found,' do
       before do
         visit task_path(task)
-        allow_any_instance_of(User).to receive(:tasks).and_raise(ActiveRecord::RecordNotFound)
+
+        allow(User).to receive(:find_by).and_return(testuser)
+        allow(testuser).to receive(:tasks).and_raise(ActiveRecord::RecordNotFound)
       end
 
       it 'shows error message' do
@@ -469,7 +488,11 @@ RSpec.describe 'Test cases for Task :', type: :system do
     context 'when error,' do
       before do
         visit task_path(task)
-        allow_any_instance_of(Task).to receive(:destroy).and_raise(RuntimeError)
+
+        allow(User).to receive(:find_by).and_return(testuser)
+        allow(testuser).to receive(:tasks).and_return(tasks_mock)
+        allow(tasks_mock).to receive(:find).and_return(task)
+        allow(task).to receive(:destroy).and_raise(RuntimeError)
       end
 
       it 'shows error message' do

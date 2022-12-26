@@ -20,6 +20,6 @@ class SessionsController < ApplicationController
     log_out if logged_in?
 
     flash[:success] = I18n.t('auth.messages.logout_success')
-    redirect_to root_path
+    redirect_to login_path
   end
 end

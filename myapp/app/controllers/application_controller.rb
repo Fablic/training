@@ -36,7 +36,7 @@ class ApplicationController < ActionController::Base
   end
 
   # ログイン済みユーザーかどうか確認
-  def logged_in_user
+  def check_login_status
     return if logged_in?
 
     redirect_to login_url
