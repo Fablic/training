@@ -1,52 +1,70 @@
-<% flash.each do |message_type, message| %>
-  <%= message %>
-<% end %>
+<div class="task-index">
+  <div class="row mb-4">
+    <h1 class="col"><%= I18n.t 'tasks.index.title' %></h1>
+  </div>
 
-<h1><%= I18n.t 'tasks.index.title' %></h1>
-
-<div class="search-form">
-  <%= form_with url: tasks_path, method: :get, local: true do |form| %>
-    <%= form.text_field :keyword, value: @conditions[:keyword] %>
-    <%= form.submit "検索" %><br>
-
-    <%= form.radio_button :status, nil, checked: true %>
-    <%= form.label :status, I18n.t('undefined') %>
-    <% Task.statuses.each do |k, v| %>
-      <%= form.radio_button :status, v, checked: @conditions[:status] == v.to_s %>
-      <%= form.label :status, I18n.t('enums.task.status')[k.to_sym], {value: v} %>
+  <div class="row mb-4">
+    <%= form_with url: tasks_path, method: :get, class: 'col', local: true do |form| %>
+      <div class="form-row mb-2">
+        <%= form.text_field :keyword, value: @conditions[:keyword], class: 'form-control col-4 mr-2' %>
+        <%= form.submit '検索', class: 'btn btn-primary col-2' %>
+      </div>
+      <div class="form-row ml-3">
+        <div class="form-check col-1">
+          <%= form.radio_button :status, nil, checked: true, class: 'form-check-input' %>
+          <%= form.label :status, I18n.t('undefined'), class: 'form-check-label' %>
+        </div>
+        <% Task.statuses.each do |k, v| %>
+          <div class="form-check col-1">
+            <%= form.radio_button :status, v, checked: @conditions[:status] == v.to_s, class: 'form-check-input' %>
+            <%= form.label :status, I18n.t('enums.task.status')[k.to_sym], {value: v, class: 'form-check-label'} %>
+          </div>
+        <% end %>
+      </div>
     <% end %>
-  <% end %>
+  </div>
+
+  <div class="row">
+    <table class="col table tasks-table">
+      <thead>
+        <tr>
+          <th class="th-id"><%= Task.human_attribute_name :id %></th>
+          <th class="th-status"><%= Task.human_attribute_name :status %></th>
+          <th class="th-title"><%= Task.human_attribute_name :title %></th>
+          <th class="th-description"><%= Task.human_attribute_name :description %></th>
+          <th class="th-created-at">
+            <span><%= Task.human_attribute_name :created_at %></span>
+            <small><%= link_to (I18n.t 'tasks.index.sort.latest'), tasks_path(@conditions.merge(:sort_column => 'created_at', :sort_direction => 'desc')
+              .permit(:keyword, :status, :sort_column, :sort_direction)) %></small>
+          </th>
+          <th class="th-end-date">
+            <span><%= Task.human_attribute_name :end_date %></span>
+            <small><%= link_to (I18n.t 'tasks.index.sort.expiring'), tasks_path(@conditions.merge(:sort_column => 'end', :sort_direction => 'asc')
+              .permit(:keyword, :status, :sort_column, :sort_direction)) %></small>
+          </th>
+          <th class="th-edit"><%= I18n.t 'ops.edit' %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @tasks.each do |task| %>
+          <tr>
+            <td><%= task.id %></td>
+            <td><%= I18n.t('enums.task.status')[task.status.to_sym] %></td>
+            <td class="text-truncate"><%= link_to task.title, task %></td>
+            <td class="text-truncate"><%= task.description %></td>
+            <td><%= I18n.l(task.created_at.to_date, format: :long) %></td>
+            <td><%= task.end_date ? I18n.l(task.end_date, format: :long) : '-' %></td>
+            <td><%= link_to (I18n.t 'ops.edit'), edit_task_path(task) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="row">
+    <div class="col-10">
+      <%= paginate @tasks, theme: 'twitter-bootstrap-4' %>
+    </div>
+    <%= link_to (I18n.t 'tasks.common.new_task'), new_task_path, class: 'col-2 btn btn-primary mb-4' %>
+  </div>
 </div>
-
-<table>
-  <tr>
-    <th><%= Task.human_attribute_name :id %></th>
-    <th><%= Task.human_attribute_name :status %></th>
-    <th><%= Task.human_attribute_name :title %></th>
-    <th><%= Task.human_attribute_name :description %></th>
-    <th>
-      <span><%= Task.human_attribute_name :created_at %></span>
-      <small><%= link_to (I18n.t 'tasks.index.sort.latest'), tasks_path(sort_column: 'created_at', sort_direction: 'desc') %></small>
-    </th>
-    <th>
-      <span><%= Task.human_attribute_name :end_date %></span>
-      <small><%= link_to (I18n.t 'tasks.index.sort.expiring'), tasks_path(sort_column: 'end_date', sort_direction: 'asc') %></small>
-    </th>
-    <th><%= I18n.t 'ops.edit' %></th>
-  </tr>
-  <% @tasks.each do |task| %>
-    <tr>
-      <td><%= task.id %></td>
-      <td><%= I18n.t('enums.task.status')[task.status.to_sym] %></td>
-      <td><%= link_to task.title, task %></td>
-      <td><%= task.description %></td>
-      <td><%= I18n.l(task.created_at.to_date, format: :long) %></td>
-      <td><%= task.end_date ? I18n.l(task.end_date, format: :long) : '-' %></td>
-      <td><%= link_to (I18n.t 'ops.edit'), edit_task_path(task) %></td>
-    </tr>
-  <% end %>
-</table>
-
-<%= link_to (I18n.t 'tasks.common.new_task'), new_task_path %>
-
-<%= paginate @tasks %>

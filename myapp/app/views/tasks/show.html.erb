@@ -1,17 +1,40 @@
-<% flash.each do |message_type, message| %>
-  <%= message %>
-<% end %>
+<div class="task-show">
+  <div class="row mb-4">
+    <h1 class="col"><%= I18n.t 'tasks.show.title' %></h1>
+  </div>
 
-<h1><%= I18n.t 'tasks.show.title' %></h1>
+  <div class="row mb-4">
+    <h2 class="col"><%= @task.title %></h2>
+  </div>
 
-<h2><%= @task.title %></h2>
-<p><%= "#{Task.human_attribute_name :status}: #{I18n.t('enums.task.status')[@task.status.to_sym]}" %></p>
-<p><%= "#{Task.human_attribute_name :description}: #{@task.description}" %></p>
-<p><%= "#{Task.human_attribute_name :end_date}: #{@task.end_date ? I18n.l(@task.end_date, format: :long) : '-'}" %></p>
+  <div class="row">
+    <table class="table col">
+      <tbody>
+        <tr>
+          <th class="border-top border-secondary"><%= "#{Task.human_attribute_name :status}:" %></th>
+          <td class="border-top border-secondary"><%= I18n.t('enums.task.status')[@task.status.to_sym] %></td>
+          <th class="border-top border-secondary"><%= "#{Task.human_attribute_name :end_date}:" %></th>
+          <td class="border-top border-secondary"><%= @task.end_date ? I18n.l(@task.end_date, format: :long) : '-' %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-<%= link_to (I18n.t 'ops.edit'), edit_task_path(@task) %>
-<%= link_to (I18n.t 'ops.delete'), task_path(@task),
-  method: :delete,
-  data: { confirm: (I18n.t 'messages.confirm_delete') }
-%>
-<%= link_to (I18n.t 'tasks.index.title'), tasks_path %>
+  <div class="row">
+    <p class="col font-weight-bold border-top border-secondary pt-2"><%= "#{Task.human_attribute_name :description}:" %></p>
+  </div>
+  <div class="row">
+    <p class="col-6 border border-secondary rounded text-break"><%= @task.description %></p>
+  </div>
+
+  <div class="row mt-4">
+    <%= link_to (I18n.t 'ops.edit'), edit_task_path(@task), class: 'col-1 mr-4' %>
+    <%= link_to (I18n.t 'ops.delete'), task_path(@task),
+      method: :delete,
+      data: { confirm: (I18n.t 'messages.confirm_delete') },
+      class: 'col-1 mr-4'
+    %>
+    <%= link_to (I18n.t 'tasks.index.title'), tasks_path, class: 'col-2' %>
+  </div>
+
+</div>

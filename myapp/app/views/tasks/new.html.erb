@@ -1,7 +1,8 @@
-<% flash.each do |message_type, message| %>
-  <%= message %>
-<% end %>
+<div class="task-new">
+  <div class="row mb-4">
+    <h1 class="col"><%= I18n.t 'tasks.new.title' %></h1>
+  </div>
 
-<h1><%= I18n.t 'tasks.new.title' %></h1>
 
-<%= render 'form', task: @task %>
+  <%= render 'form', task: @task %>
+</div>
