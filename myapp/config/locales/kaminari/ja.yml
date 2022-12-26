@@ -1,0 +1,17 @@
+en:
+  views:
+    pagination:
+      first: '&laquo; 最初'
+      last: '最後 &raquo;'
+      previous: '&lsaquo; 前'
+      next: '次 &rsaquo;'
+      truncate: '&hellip;'
+  helpers:
+    page_entries_info:
+      one_page:
+        display_entries:
+          zero: '%{entry_name}見つからない'
+          one: '<b>1</b>%{entry_name}を表示'
+          other: '<b>全て%{count}</b>%{entry_name}を表示'
+      more_pages:
+        display_entries: '<b>%{first}&nbsp;-&nbsp;%{last}</b> %{entry_name}を表示、全部 <b>%{total}</b>'
