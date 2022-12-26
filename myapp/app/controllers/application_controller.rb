@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  include SessionsHelper
+
   unless Rails.env.development?
     rescue_from Exception,                      with: :_render_500
     rescue_from ActiveRecord::RecordNotFound,   with: :_render_404
@@ -31,5 +33,12 @@ class ApplicationController < ActionController::Base
     else
       render 'errors/500.html', status: :internal_server_error
     end
+  end
+
+  # ログイン済みユーザーかどうか確認
+  def check_login_status
+    return if logged_in?
+
+    redirect_to login_url
   end
 end
