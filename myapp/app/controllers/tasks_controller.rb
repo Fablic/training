@@ -8,7 +8,7 @@ class TasksController < ::ApplicationController
 
   def index
     @tasks = TasksFinder.new(params: params, tasks: Task.all).process
-    @tasks = @tasks.order(sort_order)
+    @tasks = @tasks.order(sort_order).page(params[:page])
   end
 
   def show; end
