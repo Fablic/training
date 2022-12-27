@@ -41,4 +41,11 @@ class ApplicationController < ActionController::Base
 
     redirect_to login_url
   end
+
+  def check_user_role
+    return if current_user.admin?
+
+    flash[:danger] = I18n.t('auth.messages.admin_required')
+    redirect_to root_path
+  end
 end

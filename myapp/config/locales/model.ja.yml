@@ -18,6 +18,7 @@ ja:
         email: メールアドレス
         password: パスワード
         password_confirmation: パスワード(確認)
+        role: 権限
 
     errors:
       models:
@@ -31,6 +32,11 @@ ja:
         not_started: 未着手
         in_progress: 着手中
         done: 完了
+    user:
+      role:
+        normal: 一般ユーザ
+        admin: 管理ユーザ
+
   # 全てのmodelで共通して使用するattributesを定義
   attributes:
     id: ID
