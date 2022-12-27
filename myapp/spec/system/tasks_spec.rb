@@ -4,7 +4,7 @@ require 'rails_helper'
 RSpec.describe 'Test cases for Task :', type: :system do
   let!(:testuser) { FactoryBot.create(:user) }
   let(:tasks_mock) { double('tasks mock') }
-  let!(:labels) { FactoryBot.create_list(:label, 5) {|label, index| label.name = "Label#{index}"} } 
+  let!(:labels) { FactoryBot.create_list(:label, 5) { |label, index| label.name = "Label#{index}" } }
 
   before do
     visit login_path
@@ -30,7 +30,7 @@ RSpec.describe 'Test cases for Task :', type: :system do
     context 'when there are tasks,' do
       before do
         FactoryBot.create(:task, user: testuser)
-        FactoryBot.create(:task, user: testuser,labels: labels, title: 'Spec2', description: 'test2', end_date: Time.new(2023, 11, 1, 10, 30),
+        FactoryBot.create(:task, user: testuser, labels: labels, title: 'Spec2', description: 'test2', end_date: Time.new(2023, 11, 1, 10, 30),
                                  status: 2)
 
         # 一覧画面を開く
@@ -56,7 +56,7 @@ RSpec.describe 'Test cases for Task :', type: :system do
 
           expect(page).to have_content 'タスク一覧'
           # 正規表現で並び順をチェック
-          expect(page.text.to_s).to match %r{Spec2[\s\S]*Spec}
+          expect(page.text.to_s).to match(/Spec2[\s\S]*Spec/)
         end
 
         it 'sorts correctly after push sort button: expiring' do
@@ -64,7 +64,7 @@ RSpec.describe 'Test cases for Task :', type: :system do
 
           expect(page).to have_content 'タスク一覧'
           # 正規表現で並び順をチェック
-          expect(page.text).to match %r{Spec[\s\S]*Spec2}
+          expect(page.text).to match(/Spec[\s\S]*Spec2/)
         end
       end
 
