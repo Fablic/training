@@ -4,6 +4,7 @@ ja:
       # view側： User.model_name.human => "ユーザ" / t("activerecord.models.user")と同じ
       task: タスク 
       user: ユーザー
+      label: ラベル
     # model毎に定義したいattributesを記述
     attributes:
       task:
@@ -13,13 +14,13 @@ ja:
         end_date: 終了期限
         status: ステータス
       user:
-        # view側： User.human_attribute_name :name => "名前" /　t("activerecord.attributes.user.name")と同じ
         name: 名前
         email: メールアドレス
         password: パスワード
         password_confirmation: パスワード(確認)
         role: 権限
-
+      label:
+        name: ラベル名
     errors:
       models:
         user:

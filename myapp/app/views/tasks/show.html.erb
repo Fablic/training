@@ -10,11 +10,21 @@
   <div class="row">
     <table class="table col">
       <tbody>
-        <tr>
-          <th class="border-top border-secondary"><%= "#{Task.human_attribute_name :status}:" %></th>
-          <td class="border-top border-secondary"><%= I18n.t('enums.task.status')[@task.status.to_sym] %></td>
-          <th class="border-top border-secondary"><%= "#{Task.human_attribute_name :end_date}:" %></th>
-          <td class="border-top border-secondary"><%= @task.end_date ? I18n.l(@task.end_date, format: :long) : '-' %></td>
+        <tr class="row">
+          <th class="border-top border-secondary col-2"><%= "#{Task.human_attribute_name :status}:" %></th>
+          <td class="border-top border-secondary col-10"><%= I18n.t('enums.task.status')[@task.status.to_sym] %></td>
+        </tr>
+        <tr class="row">
+          <th class="border-top border-secondary col-2"><%= "#{Task.human_attribute_name :end_date}:" %></th>
+          <td class="border-top border-secondary col-10"><%= @task.end_date ? I18n.l(@task.end_date, format: :long) : '-' %></td>
+        </tr>
+        <tr class="row">
+          <th class="border-top border-secondary col-2"><%= "#{Label.model_name.human}:" %></th>
+          <td class="border-top border-secondary col-10">
+          <% @task.labels.each do |l| %>
+            <span class="badge badge-primary"><%= l.name %></span>
+          <% end %>
+          </td>
         </tr>
       </tbody>
     </table>
