@@ -18,7 +18,7 @@ FactoryBot.define do
   factory :user do
     name { Faker::Name.name }
     email { Faker::Internet.unique.email }
-    password_digest { "MySPassWord" }
+    password_digest { BCrypt::Password.create("my password") }
     is_admin { false }
   end
 end

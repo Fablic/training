@@ -19,4 +19,6 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: true, format: {with: /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/, message: 'is not a valid email format'}
 
   has_many :tasks, dependent: :destroy
+
+  has_secure_password
 end
