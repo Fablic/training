@@ -346,10 +346,9 @@ RSpec.describe 'Test cases for User :', type: :system do
   end
 
   describe 'Normal user test :' do
-    let!(:testuser) { FactoryBot.create(:user, role: 0) }
+    let!(:user) { FactoryBot.create(:user, role: 0) }
 
     before do
-      FactoryBot.create_list(:task, 15, user: testuser) { |task, index| task.title = "Spec#{index}" }
       visit login_path
       fill_in 'session_email', with: 'test@test.com'
       fill_in 'session_password', with: 'password'
@@ -361,16 +360,19 @@ RSpec.describe 'Test cases for User :', type: :system do
         visit users_path
 
         expect(page).to have_content '管理ユーザしか使えない機能です、管理者に連絡してください'
+        expect(page).to have_content 'タスク一覧'
       end
       it 'can not connect detail page' do
-        visit user_path(testuser)
+        visit user_path(user)
 
         expect(page).to have_content '管理ユーザしか使えない機能です、管理者に連絡してください'
+        expect(page).to have_content 'タスク一覧'
       end
       it 'can not connect edit page' do
-        visit edit_user_path(testuser)
+        visit edit_user_path(user)
 
         expect(page).to have_content '管理ユーザしか使えない機能です、管理者に連絡してください'
+        expect(page).to have_content 'タスク一覧'
       end
     end
   end
