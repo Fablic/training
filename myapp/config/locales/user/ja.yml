@@ -6,5 +6,5 @@ ja:
       user:
         id: 番号
         email: メール
-        name: 名前
+        name: ユーザ名前
         password: パスワード

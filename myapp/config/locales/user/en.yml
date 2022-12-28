@@ -6,5 +6,5 @@ en:
       user:
         id: ID
         email: e-mail
-        name: Name
+        name: User Name
         password: Password
