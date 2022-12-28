@@ -49,7 +49,7 @@ class UsersController < ApplicationController
 
     if @user.destroy
       flash[:success] = I18n.t('users.destroy.messages.success')
-      redirect_to root_path
+      redirect_to users_path
     else
       flash[:danger] = I18n.t('users.destroy.messages.error')
       redirect_to request.url
