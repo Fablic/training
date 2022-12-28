@@ -4,7 +4,8 @@ class TasksController < ApplicationController
   end
 
   def show
-    @task = Task.find(params[:id])
+    # @task = Task.find(params[:id])
+    @task = task_find(params[:id])
   end
 
   def new
@@ -12,8 +13,7 @@ class TasksController < ApplicationController
   end
 
   def create
-    task_params = params.require(:task).permit(:title, :content, :tag, :priority, :status, :due_date)
-    @task = Task.new(task_params)
+    @task = Task.new(get_task_params)
     if @task.save
       redirect_to tasks_path, flash: {success: "登録が完了しました"}
     else
@@ -23,13 +23,12 @@ class TasksController < ApplicationController
   end
 
   def edit
-    @task = Task.find(params[:id])
+    @task = task_find(params[:id])
   end
 
   def update
-    @task = Task.find(params[:id])
-    task_params = params.require(:task).permit(:title, :content, :tag, :priority, :status, :due_date)
-    if @task.update(task_params)
+    @task = task_find(params[:id])
+    if @task.update(get_task_params)
       redirect_to tasks_path, flash: {success: "更新が完了しました"}
     else
       flash.now[:alert] = "必須項目を埋めてください"
@@ -38,8 +37,23 @@ class TasksController < ApplicationController
   end
 
   def destroy
-    @task = Task.find(params[:id])
+    @task = task_find(params[:id])
     @task.destroy
     redirect_to tasks_path, flash: {success: "タスクを削除しました"}
   end
+
+  private
+
+  def task_find(task_id)
+    return Task.find(task_id)
+  end
+
+  def get_task_params
+    task_params = params.require(:task).permit(:title, :content, :priority, :status, :due_date)
+    # 後ほど外部参照で取得できるようにする
+    task_params["user_id"] = 1
+    task_params["tag_id"] = 1
+    return task_params
+  end
+
 end

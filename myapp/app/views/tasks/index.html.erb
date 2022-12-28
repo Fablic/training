@@ -2,29 +2,29 @@
 
 <%= link_to "+新規", new_task_path, class: "btn btn-success" %>
 <table class="table table-striped">
-    <tr>
-        <th>＃</th>
-        <th>タスク名</th>
-        <th>優先度</th>
-        <th>終了期限</th>
-        <th>ステータス</th>
-        <th>登録日</th>
-        <th>更新日</th>
-        <th></th>
-    </tr>
-    <% @tasks.each do |task| %>
-    <tr>
-        <td><%= task.id %></td>
-        <td><%= task.title %></td>
-        <td><%= task.priority %></td>
-        <td><%= task.due_date %></td>
-        <td><%= task.status %></td>
-        <td><%= task.created_at %></td>
-        <td><%= task.updated_at %></td>
-        <td>
-         <%= link_to "詳細", task_path(task), class: "btn btn-info" %>
-         <%= link_to "編集", edit_task_path(task), class: "btn btn-warning" %>
-        </td>
-    </tr>
-    <% end %>
+  <tr>
+    <th>＃</th>
+    <th>タスク名</th>
+    <th>優先度</th>
+    <th>終了期限</th>
+    <th>ステータス</th>
+    <th>登録日</th>
+    <th>更新日</th>
+    <th></th>
+  </tr>
+  <% @tasks.each do |task| %>
+  <tr>
+    <td><%= task.id %></td>
+    <td><%= task.title %></td>
+    <td><%= task.priority %></td>
+    <td><%= task.due_date %></td>
+    <td><%= task.status %></td>
+    <td><%= task.created_at %></td>
+    <td><%= task.updated_at %></td>
+    <td>
+      <%= link_to "詳細", task_path(task), class: "btn btn-info" %>
+      <%= link_to "編集", edit_task_path(task), class: "btn btn-warning" %>
+    </td>
+  </tr>
+  <% end %>
 </table>
