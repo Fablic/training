@@ -36,6 +36,10 @@
         <th><%= I18n.t('activerecord.attributes.task.created_at') %></th>
         <td><%= @task.created_at.strftime('%F %T') %></td>
       </tr>
+      <tr>
+        <th><%= I18n.t('activerecord.attributes.user.name') %></th>
+        <td><%= @task.user&.name %></td>
+      </tr>
     </tbody>
   </table>
 

@@ -3,9 +3,9 @@
 #
 puts 'Seed starting...'
 
-user = User.create(name: 'Rakuten Taro', email: 'rakuten.taro@rakuten.com', password: 'password')
+user = FactoryBot.create(:user)
 [*1..5].each do |n|
-  Task.create!(title: "Task #{n}", description: 'some description', due_date: n.days.from_now, user: user)
+  t = Task.create!(title: "Task #{n}", description: 'some description', due_date: n.days.from_now, user: user)
 end
 
 puts 'Seed finished'
