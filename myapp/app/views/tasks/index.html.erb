@@ -1,33 +1,36 @@
-<h1><%= I18n.t('activerecord.misc.task.plural').capitalize %> <%= I18n.t('helpers.list') %></h1>
+<div class='container-sm'>
+  <h1><%= I18n.t('activerecord.misc.task.plural').capitalize %> <%= I18n.t('helpers.list') %></h1>
 
-<%= render 'filter_form' %>
-<%= render 'sort_form' %>
+  <%= render 'filter_form' %>
+  <%= render 'sort_form' %>
 
-<table>
-  <thead>
-    <tr>
-      <% %w(id title description due_date status created_at).each do |field| %>
-        <td><%= I18n.t("activerecord.attributes.task.#{field}") %></td>
+  <table class="table">
+    <thead>
+      <tr>
+        <% %w(id title description due_date status created_at).each do |field| %>
+          <td><%= I18n.t("activerecord.attributes.task.#{field}") %></td>
+        <% end %>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @tasks.each do |task| %>
+          <tr>
+            <td class='task-id' ><%= task.id %></td>
+            <td class='task-title'>
+            <%= link_to task.title, task_path(task) %>
+            </td>
+            <td class='task-description' ><%= task.description %></td>
+            <td class='task-due_date' ><%= task.due_date.strftime('%F') %></td>
+            <td class='task-status' ><%= task.status %></td>
+            <td class='task-created_at' ><%= task.created_at.strftime('%F %T') %></td>
+          </tr>
       <% end %>
-    </tr>
-  </thead>
+    </tbody>
+  </table>
 
-  <tbody>
-    <% @tasks.each do |task| %>
-        <tr>
-          <td class='task-id' ><%= task.id %></td>
-          <td class='task-title'>
-          <%= link_to task.title, task_path(task) %>
-          </td>
-          <td class='task-description' ><%= task.description %></td>
-          <td class='task-due_date' ><%= task.due_date.strftime('%F') %></td>
-          <td class='task-status' ><%= task.status %></td>
-          <td class='task-created_at' ><%= task.created_at.strftime('%F %T') %></td>
-        </tr>
-    <% end %>
-  </tbody>
-</table>
+  <%= link_to I18n.t('helpers.submit.create', model: I18n.t('activerecord.models.task')), new_task_path, class: "btn btn-primary" %>
 
-<%= link_to I18n.t('helpers.submit.create', model: I18n.t('activerecord.models.task')), new_task_path %>
+  <%= paginate @tasks %>
 
-<%= paginate @tasks %>
+</div>

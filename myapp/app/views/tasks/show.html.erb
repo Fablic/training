@@ -1,18 +1,49 @@
 <%= render 'errors', task: @task %>
 
-<h1><%= I18n.t('activerecord.models.task').capitalize %> <%= I18n.t('helpers.show').capitalize %></h1>
+<div class='container-sm'>
+  <h1><%= I18n.t('activerecord.models.task').capitalize %> <%= I18n.t('helpers.show').capitalize %></h1>
 
-<%= I18n.t('activerecord.attributes.task.id') %>: <%= @task.id %> <br>
-<%= I18n.t('activerecord.attributes.task.title') %>: <%= @task.title %> <br>
-<%= I18n.t('activerecord.attributes.task.description') %>: <%= @task.description %> <br>
-<%= I18n.t('activerecord.attributes.task.due_date') %>: <%= @task.due_date.strftime('%F') %> <br>
-<%= I18n.t('activerecord.attributes.task.status') %>: <%= @task.status %> <br>
-<%= I18n.t('activerecord.attributes.task.created_at') %>: <%= @task.created_at.strftime('%F %T') %> <br>
+  <table class="table">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Info</th>
+      </tr>
+    </thead>
 
-<%= link_to I18n.t('activerecord.enums.task.status.mark_started'), start_task_path(@task), method: 'patch' if @task.may_start? %>
-<%= link_to I18n.t('activerecord.enums.task.status.mark_completed'), complete_task_path(@task), method: 'patch' if @task.may_complete? %>
-<br>
+    <tbody>
+      <tr>
+        <th><%= I18n.t('activerecord.attributes.task.id') %></th>
+        <td><%= @task.id %></td>
+      </tr>
+      <tr>
+        <th><%= I18n.t('activerecord.attributes.task.title') %></th>
+        <td><%= @task.title %></td>
+      </tr>
+      <tr>
+        <th><%= I18n.t('activerecord.attributes.task.description') %></th>
+        <td><%= @task.description %></td>
+      </tr>
+      <tr>
+        <th><%= I18n.t('activerecord.attributes.task.due_date') %></th>
+        <td><%= @task.due_date.strftime('%F') %></td>
+      </tr>
+      <tr>
+        <th><%= I18n.t('activerecord.attributes.task.status') %></th>
+        <td><%= @task.status %></td>
+      </tr>
+      <tr>
+        <th><%= I18n.t('activerecord.attributes.task.created_at') %></th>
+        <td><%= @task.created_at.strftime('%F %T') %></td>
+      </tr>
+    </tbody>
+  </table>
 
-<%= link_to I18n.t('helpers.edit'), edit_task_path(@task) %> |
-<%= link_to I18n.t('helpers.delete'), task_path(@task), method: 'delete', data: { confirm: 'Are you sure you want to delete?'} %> |
-<%= link_to I18n.t('helpers.back'), tasks_path %>
+  <%= link_to I18n.t('activerecord.enums.task.status.mark_started'), start_task_path(@task), method: 'patch' if @task.may_start? %>
+  <%= link_to I18n.t('activerecord.enums.task.status.mark_completed'), complete_task_path(@task), method: 'patch' if @task.may_complete? %>
+  <br>
+
+  <%= link_to I18n.t('helpers.edit'), edit_task_path(@task) %> |
+  <%= link_to I18n.t('helpers.delete'), task_path(@task), method: 'delete', data: { confirm: 'Are you sure you want to delete?'} %> |
+  <%= link_to I18n.t('helpers.back'), tasks_path %>
+</div>

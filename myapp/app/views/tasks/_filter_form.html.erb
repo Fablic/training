@@ -1,7 +1,7 @@
-<%= form_tag(tasks_path, method: :get, local: true) do |form| %>
+<%= form_tag(tasks_path, method: :get, local: true, style: 'padding-bottom:10px;') do |form| %>
   <%= label_tag I18n.t('activerecord.filter_by.task.search_title') %>
-  <%= text_field_tag :search_title %>
-  <%= label_tag I18n.t('activerecord.attributes.task.status') %>
-  <%= select_tag :status_filter, options_for_select([nil] + I18n.t('activerecord.filter_by.task.status')) %>
+  <%= text_field_tag :search_title, nil, {class: 'form-control-sm d-inline-block'} %>
+  <%= label_tag I18n.t('activerecord.attributes.task.status'), nil, {class: 'd-inline-block'} %>
+  <%= select_tag :status_filter, options_for_select([nil] + I18n.t('activerecord.filter_by.task.status')), {class: 'form-control-sm d-inline-block'} %>
   <%= submit_tag I18n.t('form.filter_by') %>
 <% end %>
