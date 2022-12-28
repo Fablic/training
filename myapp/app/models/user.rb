@@ -10,5 +10,11 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: { case_sensitive: false }
   validates :password_digest, presence: true
 
-  scope :admin_users, -> { where(role: User.roles[:admin]) }
+  scope :admin_users, -> { where(role: :admin) }
+
+  def last_admin?
+    return true if self.admin? && User.admin_users.count < 2
+
+    false
+  end
 end
