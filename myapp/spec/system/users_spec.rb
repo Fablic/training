@@ -273,9 +273,8 @@ RSpec.describe 'Test cases for User :', type: :system do
           click_link '削除'
           expect do
             expect(page.accept_confirm).to eq '本当に削除しますか？'
-            sleep 0.5
+            expect(page).to have_content '正常に削除しました'
           end.to change(User, :count).by(-1)
-          expect(page).to have_content '正常に削除しました'
           is_expected.not_to have_content 'deleteuser@spec.com'
         end
       end
@@ -286,9 +285,8 @@ RSpec.describe 'Test cases for User :', type: :system do
           click_link '削除'
           expect do
             expect(page.accept_confirm).to eq '本当に削除しますか？'
-            sleep 0.5
+            expect(page).to have_content '現在管理者一名しかいないため、削除、また一般ユーザへの変更はできないです。'
           end.to change(User, :count).by(0)
-          expect(page).to have_content '現在管理者一名しかいないため、削除、また一般ユーザへの変更はできないです。'
           expect(page).to have_content 'test@test.com'
         end
       end
@@ -306,9 +304,8 @@ RSpec.describe 'Test cases for User :', type: :system do
           click_link '削除'
           expect do
             expect(page.accept_confirm).to eq '本当に削除しますか？'
-            sleep 0.5
+            expect(page).to have_content '削除失敗しました。'
           end.to change(User, :count).by(0)
-          expect(page).to have_content '削除失敗しました。'
           expect(page).to have_content 'deleteuser@spec.com'
         end
       end
@@ -324,9 +321,8 @@ RSpec.describe 'Test cases for User :', type: :system do
           click_link '削除'
           expect do
             expect(page.accept_confirm).to eq '本当に削除しますか？'
-            sleep 0.5
+            expect(page).to have_content '肆〇肆'
           end.to change(Task, :count).by(0)
-          expect(page).to have_content '肆〇肆'
         end
       end
 
@@ -342,9 +338,8 @@ RSpec.describe 'Test cases for User :', type: :system do
           click_link '削除'
           expect do
             expect(page.accept_confirm).to eq '本当に削除しますか？'
-            sleep 0.5
+            expect(page).to have_content '伍〇〇'
           end.to change(Task, :count).by(0)
-          expect(page).to have_content '伍〇〇'
         end
       end
     end
