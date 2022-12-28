@@ -13,7 +13,7 @@ class User < ApplicationRecord
   scope :admin_users, -> { where(role: :admin) }
 
   def last_admin?
-    return true if self.admin? && User.admin_users.count < 2
+    return true if admin? && User.admin_users.count < 2
 
     false
   end
