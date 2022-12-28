@@ -16,9 +16,9 @@
 #
 FactoryBot.define do
   factory :user do
-    name { "MyString" }
-    email { "MyString" }
-    password_digest { "MyString" }
+    name { Faker::Name.name }
+    email { Faker::Internet.unique.email }
+    password_digest { "MySPassWord" }
     is_admin { false }
   end
 end

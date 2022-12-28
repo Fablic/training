@@ -17,5 +17,24 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe 'validations' do
+    it { should validate_presence_of(:name) }
+    it { should validate_presence_of(:email) }
+
+    it 'duplicated email is not allowed' do
+      user = create(:user)
+      duplicate_user = user.dup
+      expect(duplicate_user).to be_invalid
+    end
+
+    it 'unpermitted format of email is not allowed' do
+        invalid_email = 'haha'
+        user = build(:user, email: invalid_email)
+        expect(user).to be_invalid
+      end
+  end
+
+  describe 'has_many' do
+    it { should have_many(:tasks) }
+  end
 end
