@@ -11,6 +11,11 @@
 
   <body>
     <%= notice %>
+    <div class='container-sm'>
+      <div id='user_header' style='text-align: right;'>
+        <%= link_to 'Sing Up', new_user_path %>
+      </div>
+    </div>
     <%= yield %>
   </body>
 </html>
