@@ -13,8 +13,13 @@
     <%= notice %>
     <div class='container-sm'>
       <div id='user_header' style='text-align: right;'>
-        <%= link_to 'Sing Up', new_user_path %> or
-        <%= link_to 'Log In', new_session_path %>
+        <% if Current.user %>
+          Logged in as <%= Current.user.name %>.
+          <%= link_to 'Log Out', logout_path %>
+        <% else %>
+          <%= link_to 'Sign Up', signup_path %> or
+          <%= link_to 'Log In', login_path %>
+        <% end %>
       </div>
     </div>
     <%= yield %>
