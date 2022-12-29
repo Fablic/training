@@ -21,11 +21,7 @@ class Task < ApplicationRecord
     tasks = Task.includes(:labels).where('title LIKE?', "%#{conditions[:keyword]}%")
     tasks = tasks.where('status=?', conditions[:status]) if conditions[:status].in? Task.statuses.values.map!(&:to_s)
     tasks = tasks.where(labels: { id: conditions[:label_id] }) if conditions[:label_id].present?
-
-    # ソート
-    tasks = tasks.sort_tasks(conditions['sort_column'], conditions['sort_direction'])
-
-    # ページネーション
-    tasks = tasks.page(conditions[:page])
+    # ソート&ページネーション
+    tasks.sort_tasks(conditions['sort_column'], conditions['sort_direction']).page(conditions[:page])
   end
 end
