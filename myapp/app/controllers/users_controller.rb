@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  before_action :check_login_status
+  before_action :check_login_status, :check_user_role
 
   def index
     # @conditions = params || {}
@@ -35,7 +35,11 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
 
-    if @user.update(user_params)
+    # 権限を一般ユーザに編集してる場合最後の管理者かどうかをチェック
+    if user_params[:role] == 'normal' && @user.last_admin?
+      flash.now[:danger] = I18n.t('auth.messages.last_admin')
+      render :edit
+    elsif @user.update(user_params)
       flash[:success] = I18n.t('users.edit.messages.success')
       redirect_to @user
     else
@@ -47,7 +51,10 @@ class UsersController < ApplicationController
   def destroy
     @user = User.find(params[:id])
 
-    if @user.destroy
+    if @user.last_admin?
+      flash.now[:danger] = I18n.t('auth.messages.last_admin')
+      render :show
+    elsif @user.destroy
       flash[:success] = I18n.t('users.destroy.messages.success')
       redirect_to users_path
     else
@@ -59,6 +66,6 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation)
+    params.require(:user).permit(:name, :email, :password, :password_confirmation, :role)
   end
 end

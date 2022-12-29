@@ -11,7 +11,8 @@
 User.create!(
   email: 'admin@admin.com',
   name: 'admin',
-  password: 'admin'
+  password: 'admin',
+  role: 1
 )
 
 25.times do |n|

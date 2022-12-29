@@ -9,6 +9,7 @@
         <tr>
           <th class="th-id"><%= User.human_attribute_name :id %></th>
           <th class="th-name"><%= User.human_attribute_name :name %></th>
+          <th class="th-name"><%= User.human_attribute_name :role %></th>
           <th class="th-email"><%= User.human_attribute_name :email %></th>
           <th class="th-tasks-cnt"><%= "#{Task.model_name.human}#{I18n.t 'count'}" %></th>          
           <th class="th-edit"><%= I18n.t 'ops.edit' %></th>
@@ -19,6 +20,7 @@
           <tr>
             <td><%= user.id %></td>
             <td><%= link_to user.name, user %></td>
+            <td><%= I18n.t('enums.user.role')[user.role.to_sym] %></td>
             <td><%= user.email %></td>
             <td><%= link_to user.tasks.count, user %></td>
             <td><%= link_to (I18n.t 'ops.edit'), edit_user_path(user) %></td>
