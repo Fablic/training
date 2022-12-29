@@ -23,8 +23,8 @@ RSpec.describe User, type: :model do
 
     it 'duplicated email is not allowed' do
       user = create(:user)
-      duplicate_user = user.dup
-      expect(duplicate_user).to be_invalid
+      duplicated_email_user = build(:user, email: user.email)
+      expect(duplicated_email_user).to be_invalid
     end
 
     it 'unpermitted format of email is not allowed' do

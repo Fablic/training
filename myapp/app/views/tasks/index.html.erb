@@ -25,7 +25,7 @@
             <td class='task-due_date' ><%= task.due_date.strftime('%F') %></td>
             <td class='task-status' ><%= task.status %></td>
             <td class='task-created_at' ><%= task.created_at.strftime('%F %T') %></td>
-            <td class='task-created_at' ><%= task.user&.name %></td>
+            <td class='task-user-name' ><%= task.user&.name %></td>
           </tr>
       <% end %>
     </tbody>
