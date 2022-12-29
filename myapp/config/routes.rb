@@ -9,6 +9,11 @@ Rails.application.routes.draw do
   post '/login', to: 'sessions#auth'
   delete '/logout', to: 'sessions#logout'
 
+  get '/admin' => 'users#index'
+  scope :admin do
+    resources :users
+  end
+
   get '*not_found' => 'application#routing_error'
   post '*not_found' => 'application#routing_error'
 end

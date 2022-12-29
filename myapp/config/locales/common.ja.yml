@@ -27,6 +27,7 @@ ja:
     edit: '編集'
     delete: '削除'
   undefined: '未指定'
+  count: '数'
   page_titles:
     top_page: 'トップページ'
   messages:

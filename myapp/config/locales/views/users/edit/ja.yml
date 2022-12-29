@@ -1,0 +1,7 @@
+ja:
+  users:
+    edit:
+      title: 'ユーザ編集'
+      messages:
+        success: 'ユーザ情報を更新しました。'
+        error: '更新に失敗しました。'
