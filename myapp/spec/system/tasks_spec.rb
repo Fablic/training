@@ -4,6 +4,7 @@ require 'rails_helper'
 RSpec.describe 'Test cases for Task :', type: :system do
   let!(:testuser) { FactoryBot.create(:user) }
   let(:tasks_mock) { double('tasks mock') }
+  let!(:labels) { FactoryBot.create_list(:label, 5) { |label, index| label.name = "Label#{index}" } }
 
   before do
     visit login_path
@@ -29,7 +30,7 @@ RSpec.describe 'Test cases for Task :', type: :system do
     context 'when there are tasks,' do
       before do
         FactoryBot.create(:task, user: testuser)
-        FactoryBot.create(:task, user: testuser, title: 'Spec2', description: 'test2', end_date: Time.new(2023, 11, 1, 10, 30),
+        FactoryBot.create(:task, user: testuser, labels: labels, title: 'Spec2', description: 'test2', end_date: Time.new(2023, 11, 1, 10, 30),
                                  status: 2)
 
         # 一覧画面を開く
@@ -55,7 +56,7 @@ RSpec.describe 'Test cases for Task :', type: :system do
 
           expect(page).to have_content 'タスク一覧'
           # 正規表現で並び順をチェック
-          expect(page.text).to match(/Spec2.*Spec/)
+          expect(page.text.to_s).to match(/Spec2[\s\S]*Spec/)
         end
 
         it 'sorts correctly after push sort button: expiring' do
@@ -63,7 +64,7 @@ RSpec.describe 'Test cases for Task :', type: :system do
 
           expect(page).to have_content 'タスク一覧'
           # 正規表現で並び順をチェック
-          expect(page.text).to match(/Spec.*Spec2/)
+          expect(page.text).to match(/Spec[\s\S]*Spec2/)
         end
       end
 
@@ -87,9 +88,19 @@ RSpec.describe 'Test cases for Task :', type: :system do
           expect(page).not_to have_content 'spec2'
         end
 
+        it 'shows correctly when search by labels' do
+          select 'Label1', from: 'label_id'
+
+          click_button '検索'
+
+          expect(page).to have_content 'Spec2'
+          expect(page).not_to have_content '2022年12月07日(水) 10時30分00秒'
+        end
+
         it 'shows correctly when search by both title and status' do
           fill_in 'keyword', with: 'Spec2'
           choose '着手中'
+          select 'Label1', from: 'label_id'
 
           click_button '検索'
 

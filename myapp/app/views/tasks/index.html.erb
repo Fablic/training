@@ -9,7 +9,7 @@
         <%= form.text_field :keyword, value: @conditions[:keyword], class: 'form-control col-4 mr-2' %>
         <%= form.submit '検索', class: 'btn btn-primary col-2' %>
       </div>
-      <div class="form-row ml-3">
+      <div class="form-row ml-3 align-items-center">
         <div class="form-check col-1">
           <%= form.radio_button :status, nil, checked: true, class: 'form-check-input' %>
           <%= form.label :status, I18n.t('undefined'), class: 'form-check-label' %>
@@ -20,6 +20,8 @@
             <%= form.label :status, I18n.t('enums.task.status')[k.to_sym], {value: v, class: 'form-check-label'} %>
           </div>
         <% end %>
+        <%= form.label :label_id, Label.model_name.human, class: 'col-1 mt-2' %>
+        <%= form.select :label_id, Label.pluck(:name, :id), { include_blank: true, selected: @conditions[:label_id] }, class: 'form-control col-2' %>
       </div>
     <% end %>
   </div>
@@ -35,12 +37,12 @@
           <th class="th-created-at">
             <span><%= Task.human_attribute_name :created_at %></span>
             <small><%= link_to (I18n.t 'tasks.index.sort.latest'), tasks_path(@conditions.merge(:sort_column => 'created_at', :sort_direction => 'desc')
-              .permit(:keyword, :status, :sort_column, :sort_direction)) %></small>
+              .permit(:keyword, :status, :label_id, :sort_column, :sort_direction)) %></small>
           </th>
           <th class="th-end-date">
             <span><%= Task.human_attribute_name :end_date %></span>
             <small><%= link_to (I18n.t 'tasks.index.sort.expiring'), tasks_path(@conditions.merge(:sort_column => 'end', :sort_direction => 'asc')
-              .permit(:keyword, :status, :sort_column, :sort_direction)) %></small>
+              .permit(:keyword, :status, :label_id, :sort_column, :sort_direction)) %></small>
           </th>
           <th class="th-edit"><%= I18n.t 'ops.edit' %></th>
         </tr>
@@ -50,7 +52,12 @@
           <tr>
             <td><%= task.id %></td>
             <td><%= I18n.t('enums.task.status')[task.status.to_sym] %></td>
-            <td class="text-truncate"><%= link_to task.title, task %></td>
+            <td class="text-truncate">
+              <% task.labels.each do |l| %>
+                <span class="badge badge-primary"><%= l.name %></span>
+              <% end %>
+              <p><%= link_to task.title, task %></p>
+            </td>
             <td class="text-truncate"><%= task.description %></td>
             <td><%= I18n.l(task.created_at.to_date, format: :long) %></td>
             <td><%= task.end_date ? I18n.l(task.end_date, format: :long) : '-' %></td>

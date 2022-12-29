@@ -23,3 +23,9 @@ User.create!(
     user_id: 1
   )
 end
+
+%w[others rakuma e_learning training test].each do |name|
+  Label.create!(
+    { name: name }
+  )
+end
