@@ -63,6 +63,16 @@ RSpec.describe 'Task', type: :system do
           expect(page).to have_content task_2.due_date.strftime('%F')
           expect(page).to have_content task_2.user.name
         end
+
+        context 'when tasks created by other user(s) exist' do
+          let!(:task_created_by_others) { create(:task, title: 'Task created by other user') }
+
+          it 'does not display tasks of other users' do
+            visit root_path
+
+            expect(page).not_to have_content task_created_by_others.title
+          end
+        end
       end
 
       context 'when sort tasks' do
