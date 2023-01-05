@@ -13,12 +13,20 @@
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #
+# Indexes
+#
+#  index_tasks_on_status  (status)
+#
 class Task < ApplicationRecord
   include AASM
 
   validates :title, presence: true
   validates :description, presence: true
   validates :due_date, presence: true
+
+  scope :by_title, lambda { |title|
+    where(Task.arel_table[:title].matches("%#{title}%"))
+  }
 
   enum status: {
     unstarted: 0,

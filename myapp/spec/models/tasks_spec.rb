@@ -31,4 +31,18 @@ describe Task, type: :model do
       end
     end
   end
+
+  describe 'scopes' do
+    describe 'by_title' do
+      let(:key_word) { 'key' }
+
+      before do
+        create_list(:task, 2, title: 'copy the keys')
+        create(:task)
+      end
+      it 'returns records with passed in keywords in title' do
+        expect(Task.by_title(key_word).size).to eq(2)
+      end
+    end
+  end
 end

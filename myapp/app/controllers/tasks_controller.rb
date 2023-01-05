@@ -7,7 +7,8 @@ class TasksController < ::ApplicationController
   before_action :set_task, only: %i[show edit update destroy start complete]
 
   def index
-    @tasks = Task.all.order(sort_order)
+    @tasks = TasksFinder.new(params: params, tasks: Task.all).process
+    @tasks = @tasks.order(sort_order)
   end
 
   def show; end
