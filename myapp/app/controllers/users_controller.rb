@@ -7,7 +7,7 @@ class UsersController < ::ApplicationController
     @user = User.new(user_params)
     if @user.save
       session[:user_id] = @user.id
-      redirect_to root_url, notice: 'Thank you for signing up!'
+      redirect_to root_url, notice: I18n.t('activerecord.actions.user.sign_up.success_message')
     else
       render :new
     end

@@ -1,15 +1,15 @@
 <div class='container-sm'>
-  <h1>Log In</h1>
+  <h1><%=I18n.t('session.log_in.log_in')%></h1>
 
   <%= form_tag sessions_path do %>
     <div class='field'>
-      <%= label_tag :email %><br />
+      <%= label_tag :email, I18n.t('activerecord.attributes.user.email') %><br />
       <%= text_field_tag :email, params[:email] %>
     </div>
     <div class='field' style='margin-bottom:10px;'>
-      <%= label_tag :password %><br />
+      <%= label_tag :password, I18n.t('activerecord.attributes.user.password') %><br />
       <%= password_field_tag :password %>
     </div>
-    <div class='actions'><%= submit_tag 'Log In' %></div>
+    <div class='actions'><%= submit_tag I18n.t('session.log_in.log_in') %></div>
   <% end %>
 </div>

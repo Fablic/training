@@ -5,6 +5,12 @@ en:
     attributes:
       user:
         id: ID
-        email: e-mail
+        email: E-mail
         name: User Name
         password: Password
+        password_confirmation: Password confirmation
+    actions:
+      user:
+        sign_up:
+          sign_up: Sign Up
+          success_message: Thank you for signing up!

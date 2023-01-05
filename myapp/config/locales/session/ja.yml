@@ -1,0 +1,10 @@
+ja:
+  session:
+    log_in:
+      log_in: ログイン
+      success_message: ログインされた!
+      failed_message: メールかパスワードが間違っています
+      as: '%{user_name}としてログインした'
+    log_out:
+      log_out: ログアウト
+      success_message: ログアウトされた!

@@ -1,5 +1,5 @@
 <div class='container-sm'>
-  <h1>Sign Up</h1>
+  <h1><%=I18n.t('activerecord.actions.user.sign_up.sign_up')%></h1>
 
   <%= form_with(model: @user, local: true)do |f| %>
     <% if @user.errors.any? %>
@@ -14,21 +14,21 @@
     <% end %>
 
     <div class=''>
-      <%= f.label :name %><br />
+      <%= f.label :name, I18n.t('activerecord.attributes.user.name') %><br />
       <%= f.text_field :name %>
     </div>
     <div class='field'>
-      <%= f.label :email %><br />
+      <%= f.label :email, I18n.t('activerecord.attributes.user.email') %><br />
       <%= f.text_field :email %>
     </div>
     <div class='field'>
-      <%= f.label :password %><br />
+      <%= f.label :password, I18n.t('activerecord.attributes.user.password') %><br />
       <%= f.password_field :password %>
     </div>
     <div class='field'>
-      <%= f.label :password_confirmation %><br />
+      <%= f.label :password_confirmation, I18n.t('activerecord.attributes.user.password_confirmation') %><br />
       <%= f.password_field :password_confirmation %>
     </div>
-    <div class='actions'><%= f.submit 'Sign Up' %></div>
+    <div class='actions'><%= f.submit I18n.t('activerecord.actions.user.sign_up.sign_up') %></div>
   <% end %>
 </div>

@@ -6,9 +6,9 @@ class SessionsController < ::ApplicationController
     @user = User.find_by(email: params[:email])
     if @user && @user.authenticate(params[:password])
       session[:user_id] = @user.id
-      redirect_to root_url, notice: 'Logged in!'
+      redirect_to root_url, notice: I18n.t('session.log_in.success_message')
     else
-      flash[:notice] = 'Email or password is invalid'
+      flash[:notice] = I18n.t('session.log_in.failed_message')
       render :new
     end
   end
@@ -17,6 +17,6 @@ class SessionsController < ::ApplicationController
     session[:user_id] = nil
     Current.user = nil
 
-    redirect_to root_url, notice: 'Logged out!'
+    redirect_to root_url, notice: I18n.t('session.log_out.success_message')
   end
 end
