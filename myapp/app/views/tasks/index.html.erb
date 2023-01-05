@@ -29,3 +29,5 @@
 </table>
 
 <%= link_to I18n.t('helpers.submit.create', model: I18n.t('activerecord.models.task')), new_task_path %>
+
+<%= paginate @tasks %>

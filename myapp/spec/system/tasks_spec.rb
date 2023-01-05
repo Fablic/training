@@ -22,6 +22,28 @@ RSpec.describe 'Task', type: :system do
         expect(page).to have_button(filter_task_button_text)
       end
 
+      describe 'pagination' do
+        context 'when tasks displayed less than kaminari default_per_page' do
+          before { create(:task) }
+          let(:next_page_link) { 'Next' }
+
+          it 'does not have pagination rendered' do
+            visit root_path
+            expect(page).not_to have_link(next_page_link)
+          end
+        end
+
+        context 'when tasks displayed more than kaminari default_per_page' do
+          before { create_list(:task, 11) }
+          let(:next_page_link) { 'Next' }
+
+          it 'does not have pagination rendered' do
+            visit root_path
+            expect(page).to have_link(next_page_link)
+          end
+        end
+      end
+
       context 'when tasks already exist' do
         let!(:task_1) { create(:task) }
         let!(:task_2) { create(:task, title: 'Pick up mail', description: 'Go to postal office to pickup the arrived mails.') }
