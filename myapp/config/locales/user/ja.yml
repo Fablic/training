@@ -8,3 +8,9 @@ ja:
         email: メール
         name: ユーザ名前
         password: パスワード
+        password_confirmation: パスワードをもう一度入力
+    actions:
+      user:
+        sign_up:
+          sign_up: 登録
+          success_message: ご登録ありがとう!

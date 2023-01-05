@@ -1,0 +1,10 @@
+en:
+  session:
+    log_in:
+      log_in: Log In
+      success_message: Logged in!
+      failed_message: Email or password is invalid
+      as: Logged in as %{user_name}
+    log_out:
+      log_out: Log Out
+      success_message: Logged out!

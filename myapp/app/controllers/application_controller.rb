@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  include SetCurrentRequestDetails
+
   rescue_from Exception, with: :internal_server_error
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
 

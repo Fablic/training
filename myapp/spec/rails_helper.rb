@@ -110,4 +110,19 @@ RSpec.configure do |config|
       Bullet.end_request
     end
   end
+
+  # Defined session
+  config.before(:each) do
+    # can define custom session using let(:rspec_session) {}
+    session = defined?(rspec_session) ? rspec_session : {}
+
+    # prevent destroy method error raised
+    session.class_eval { def destroy; nil; end }
+
+    # Allow to get session, ref: https://rubydoc.info/github/rspec/rspec-core/RSpec%2FCore%2FConfiguration:add_setting
+    config.add_setting(:session, default: session)
+
+    # Overwrite RSpec.configuration.session to change session
+    allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(RSpec.configuration.session)
+  end
 end

@@ -11,6 +11,17 @@
 
   <body>
     <%= notice %>
+    <div class='container-sm'>
+      <div id='user_header' style='text-align: right;'>
+        <% if Current.user %>
+          <%= I18n.t('session.log_in.as', user_name: Current.user.name) %>.
+          <%= link_to I18n.t('session.log_out.log_out'), logout_path %>
+        <% else %>
+          <%= link_to I18n.t('activerecord.actions.user.sign_up.sign_up'), signup_path %> or
+          <%= link_to I18n.t('session.log_in.log_in'), login_path %>
+        <% end %>
+      </div>
+    </div>
     <%= yield %>
   </body>
 </html>

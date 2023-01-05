@@ -1,0 +1,34 @@
+<div class='container-sm'>
+  <h1><%=I18n.t('activerecord.actions.user.sign_up.sign_up')%></h1>
+
+  <%= form_with(model: @user, local: true)do |f| %>
+    <% if @user.errors.any? %>
+      <div class='error_messages'>
+        <h2>Form is invalid</h2>
+        <ul>
+          <% @user.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class=''>
+      <%= f.label :name, I18n.t('activerecord.attributes.user.name') %><br />
+      <%= f.text_field :name %>
+    </div>
+    <div class='field'>
+      <%= f.label :email, I18n.t('activerecord.attributes.user.email') %><br />
+      <%= f.text_field :email %>
+    </div>
+    <div class='field'>
+      <%= f.label :password, I18n.t('activerecord.attributes.user.password') %><br />
+      <%= f.password_field :password %>
+    </div>
+    <div class='field'>
+      <%= f.label :password_confirmation, I18n.t('activerecord.attributes.user.password_confirmation') %><br />
+      <%= f.password_field :password_confirmation %>
+    </div>
+    <div class='actions'><%= f.submit I18n.t('activerecord.actions.user.sign_up.sign_up') %></div>
+  <% end %>
+</div>
