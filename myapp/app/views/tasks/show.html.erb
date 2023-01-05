@@ -30,4 +30,4 @@
  <td><%=@task.due_date %></td>
 </tr>
 <%= link_to "戻る", tasks_path, class: "btn btn-secondary" %>
-<%= link_to "削除", tasks_path, method: "delete", data: { confirm: '本当に削除しますか？'}, class: "btn btn-danger" %>
+<%= link_to "削除", @task, method: "delete", data: { confirm: '本当に削除しますか？'}, class: "btn btn-danger" %>
