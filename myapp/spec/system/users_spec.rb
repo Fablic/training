@@ -30,7 +30,7 @@ RSpec.describe User, type: :system do
 
         expect { click_button 'Sign Up' }.to change(User, :count).by(0)
 
-        error_message = 'e-mail has already been taken'
+        error_message = 'E-mail has already been taken'
         expect(page).to have_content error_message
       end
     end
