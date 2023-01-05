@@ -1,4 +1,7 @@
 class TasksController < ApplicationController
+
+  #before_action :task_find
+
   def index
     @tasks = Task.all
   end
@@ -44,7 +47,7 @@ class TasksController < ApplicationController
   private
 
   def task_find(task_id)
-    return Task.find(task_id)
+    Task.find(task_id)
   end
 
   def get_task_params
