@@ -54,9 +54,11 @@ RSpec.describe 'Task', type: :system do
           expect(page).to have_content task_1.title
           expect(page).to have_content task_1.description
           expect(page).to have_content task_1.due_date.strftime('%F')
+          expect(page).to have_content task_1.user.name
           expect(page).to have_content task_2.title
           expect(page).to have_content task_2.description
           expect(page).to have_content task_2.due_date.strftime('%F')
+          expect(page).to have_content task_2.user.name
         end
       end
 
@@ -193,6 +195,7 @@ RSpec.describe 'Task', type: :system do
           expect(page).to have_content task.description
           expect(page).to have_content task.due_date.strftime('%F')
           expect(page).to have_content task.created_at.strftime('%F %T')
+          expect(page).to have_content task.user.name
         end
 
         it 'displays links to manipulate the task' do

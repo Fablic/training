@@ -12,10 +12,12 @@
 #  title       :string(255)      not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  user_id     :bigint
 #
 # Indexes
 #
-#  index_tasks_on_status  (status)
+#  index_tasks_on_status   (status)
+#  index_tasks_on_user_id  (user_id)
 #
 class Task < ApplicationRecord
   include AASM
@@ -23,6 +25,8 @@ class Task < ApplicationRecord
   validates :title, presence: true
   validates :description, presence: true
   validates :due_date, presence: true
+
+  belongs_to :user, optional: true
 
   scope :by_title, lambda { |title|
     where(Task.arel_table[:title].matches("%#{title}%"))

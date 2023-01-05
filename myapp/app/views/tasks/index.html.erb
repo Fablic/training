@@ -10,6 +10,7 @@
         <% %w(id title description due_date status created_at).each do |field| %>
           <td><%= I18n.t("activerecord.attributes.task.#{field}") %></td>
         <% end %>
+        <td><%= I18n.t('activerecord.attributes.user.name') %></td>
       </tr>
     </thead>
 
@@ -24,6 +25,7 @@
             <td class='task-due_date' ><%= task.due_date.strftime('%F') %></td>
             <td class='task-status' ><%= task.status %></td>
             <td class='task-created_at' ><%= task.created_at.strftime('%F %T') %></td>
+            <td class='task-user-name' ><%= task.user&.name %></td>
           </tr>
       <% end %>
     </tbody>
