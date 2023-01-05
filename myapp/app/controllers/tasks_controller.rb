@@ -4,11 +4,12 @@ class TasksController < ::ApplicationController
   SORTABLE_FIELDS = %w(id created_at due_date)
   SORTABLE_ORDERS = %w(asc desc)
 
+  before_action :authorize_user
   before_action :set_task, only: %i[show edit update destroy start complete]
 
   def index
-    @tasks = TasksFinder.new(params: params, tasks: Task.all).process
-    @tasks = @tasks.includes(:user).order(sort_order).page(params[:page])
+    @tasks = TasksFinder.new(params: params, tasks: Current.user.tasks).process
+    @tasks = @tasks.order(sort_order).page(params[:page])
   end
 
   def show; end
@@ -68,7 +69,8 @@ class TasksController < ::ApplicationController
   end
 
   def set_task
-    @task = Task.find(params[:id])
+    @task = Task.find_by(id: params[:id], user: Current.user)
+    raise ActiveRecord::RecordNotFound if @task.nil?
   end
 
   def sort_order

@@ -8,6 +8,10 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def authorize_user
+    redirect_to login_url if Current.user.nil?
+  end
+
   def not_found
     render 'errors/404.html', status: :not_found
   end
