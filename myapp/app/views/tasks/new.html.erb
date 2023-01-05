@@ -1,5 +1,9 @@
-<h1><%= I18n.t('helpers.new').capitalize %> <%= I18n.t('activerecord.models.task').capitalize %></h1>
+<div class='container-sm'>
+  <h1><%= I18n.t('helpers.new').capitalize %> <%= I18n.t('activerecord.models.task').capitalize %></h1>
+</div>
 
 <%= render 'form', task: @task %>
 
-<%= link_to I18n.t('helpers.back'), tasks_path %>
+<div class='container-sm'>
+  <%= link_to I18n.t('helpers.back'), tasks_path %>
+</div>

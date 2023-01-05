@@ -1,6 +1,8 @@
-<h1><%= I18n.t('activerecord.models.task') %><%= I18n.t('helpers.edit') %></h1>
+<div class='container-sm'>
+  <h1><%= I18n.t('activerecord.models.task') %><%= I18n.t('helpers.edit') %></h1>
 
-<%= render 'form', task: @task %>
+  <%= render 'form', task: @task %>
 
-<%= link_to I18n.t('helpers.show'), @task %> |
-<%= link_to I18n.t('helpers.back'), tasks_path %>
+  <%= link_to I18n.t('helpers.show'), @task %> |
+  <%= link_to I18n.t('helpers.back'), tasks_path %>
+</div>
