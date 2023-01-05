@@ -27,7 +27,6 @@ class TasksController < ApplicationController
   end
 
   def update
-    #@task = task_find(params[:id])
     if @task.update(get_task_params)
       redirect_to tasks_path, flash: {success: "更新が完了しました"}
     else
@@ -37,7 +36,6 @@ class TasksController < ApplicationController
   end
 
   def destroy
-    #@task = task_find(params[:id])
     @task.destroy
     redirect_to tasks_path, flash: {success: "タスクを削除しました"}
   end
