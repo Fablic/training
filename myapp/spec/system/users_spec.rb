@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :system do
-  describe 'new' do
+  describe '#new' do
     let(:user_email) { 'taro.takuten@mail.com' }
     before { visit new_user_path }
     context 'when user with same email not exist' do
