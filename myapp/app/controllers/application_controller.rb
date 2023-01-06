@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  before_action :render_service_temporarily_unavailable, if: :maintenance_mode?
   include SessionsHelper
 
   unless Rails.env.development?
@@ -35,6 +36,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def render_service_temporarily_unavailable
+    render 'errors/503.html', status: :service_unavailable
+  end
+
   # ログイン済みユーザーかどうか確認
   def check_login_status
     return if logged_in?
@@ -47,5 +52,9 @@ class ApplicationController < ActionController::Base
 
     flash[:danger] = I18n.t('auth.messages.admin_required')
     redirect_to root_path
+  end
+
+  def maintenance_mode?
+    File.exist?('/myapp/tmp/maintenance.txt')
   end
 end

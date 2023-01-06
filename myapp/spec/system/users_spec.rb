@@ -376,4 +376,28 @@ RSpec.describe 'Test cases for User :', type: :system do
       end
     end
   end
+
+  describe 'maintenance mode:' do
+    let(:mainte_flg) { Rails.root.join '/myapp/tmp/maintenance.txt' }
+    let!(:testuser) { FactoryBot.create(:user) }
+
+    before do
+      File.open(mainte_flg, 'w+') unless File.exist?(mainte_flg)
+    end
+
+    after do
+      File.delete mainte_flg if File.exist?(mainte_flg)
+    end
+
+    it 'turns to 503 page' do
+      visit users_path
+      expect(page).to have_content '伍〇弎'
+      visit edit_user_path(testuser)
+      expect(page).to have_content '伍〇弎'
+      visit user_path(testuser)
+      expect(page).to have_content '伍〇弎'
+      visit new_user_path
+      expect(page).to have_content '伍〇弎'
+    end
+  end
 end
