@@ -3,7 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe 'Task', type: :system do
-  let(:submit_button_text) { I18n.t('helpers.submit.submit', model: I18n.t('activerecord.models.task')).capitalize }
+  context 'when user logged in' do
+    let(:user) { create(:user) }
+    let(:rspec_session) { {user_id: user.id} }
+    let(:submit_button_text) { I18n.t('helpers.submit.submit', model: I18n.t('activerecord.models.task')).capitalize }
 
     describe '#index' do
       it 'displays a create task link' do
@@ -24,7 +27,7 @@ RSpec.describe 'Task', type: :system do
 
       describe 'pagination' do
         context 'when tasks displayed less than kaminari default_per_page' do
-          before { create(:task) }
+          before { create(:task, user: user) }
           let(:next_page_link) { 'Next' }
 
           it 'does not have pagination rendered' do
@@ -34,7 +37,7 @@ RSpec.describe 'Task', type: :system do
         end
 
         context 'when tasks displayed more than kaminari default_per_page' do
-          before { create_list(:task, 11) }
+          before { create_list(:task, 11, user: user) }
           let(:next_page_link) { 'Next' }
 
           it 'does not have pagination rendered' do
@@ -45,8 +48,8 @@ RSpec.describe 'Task', type: :system do
       end
 
       context 'when tasks already exist' do
-        let!(:task_1) { create(:task) }
-        let!(:task_2) { create(:task, title: 'Pick up mail', description: 'Go to postal office to pickup the arrived mails.') }
+        let!(:task_1) { create(:task, user: user) }
+        let!(:task_2) { create(:task, user: user, title: 'Pick up mail', description: 'Go to postal office to pickup the arrived mails.') }
 
         it 'displays tasks infos' do
           visit root_path
@@ -60,11 +63,21 @@ RSpec.describe 'Task', type: :system do
           expect(page).to have_content task_2.due_date.strftime('%F')
           expect(page).to have_content task_2.user.name
         end
+
+        context 'when tasks created by other user(s) exist' do
+          let!(:task_created_by_others) { create(:task, title: 'Task created by other user') }
+
+          it 'does not display tasks of other users' do
+            visit root_path
+
+            expect(page).not_to have_content task_created_by_others.title
+          end
+        end
       end
 
       context 'when sort tasks' do
-        let!(:task_1) { create(:task, title: 'Task 1', due_date: 3.days.from_now) }
-        let!(:task_2) { create(:task, title: 'Task 2', created_at: DateTime.now + 1, due_date: 2.days.from_now) }
+        let!(:task_1) { create(:task, user: user, title: 'Task 1', due_date: 3.days.from_now) }
+        let!(:task_2) { create(:task, user: user, title: 'Task 2', created_at: DateTime.now + 1, due_date: 2.days.from_now) }
         let(:sorted_tasks_ids) { page.all('.task-id').map(&:text).map(&:to_i) }
 
         context 'by default (no order_by params)' do
@@ -96,7 +109,7 @@ RSpec.describe 'Task', type: :system do
         end
 
         context 'by Due Date' do
-          let!(:task_3) { create(:task, title: 'Task 3', due_date: 10.days.from_now) }
+          let!(:task_3) { create(:task, user: user, title: 'Task 3', due_date: 10.days.from_now) }
 
           describe 'sort DESC' do
             it 'displays tasks with desending due_date' do
@@ -121,9 +134,9 @@ RSpec.describe 'Task', type: :system do
       end
 
       context 'when filter tasks' do
-        let!(:task_1) { create(:task, :started, title: 'task 1') }
-        let!(:task_2) { create(:task, :started, title: 'task 2 new') }
-        let!(:task_3) { create(:task, title: 'task 3') }
+        let!(:task_1) { create(:task, :started, user: user, title: 'task 1') }
+        let!(:task_2) { create(:task, :started, user: user, title: 'task 2 new') }
+        let!(:task_3) { create(:task, user: user, title: 'task 3') }
         let(:filtered_tasks_ids) { page.all('.task-id').map(&:text).map(&:to_i) }
 
         it 'displays tasks with corresponding filter' do
@@ -185,7 +198,7 @@ RSpec.describe 'Task', type: :system do
 
     describe '#show' do
       context 'when task presents' do
-        let!(:task) { create(:task) }
+        let!(:task) { create(:task, user: user) }
 
         before { visit task_path(task) }
 
@@ -212,7 +225,7 @@ RSpec.describe 'Task', type: :system do
           end
 
           context 'when task is started' do
-            let!(:task) { create(:task, :started) }
+            let!(:task) { create(:task, :started, user: user) }
             it 'displays Mark Completed button' do
               expect(page).to have_link 'Mark Completed'
             end
@@ -222,7 +235,7 @@ RSpec.describe 'Task', type: :system do
 
       context 'when task not presents'  do
         it 'displays record not found error message' do
-          task = create(:task)
+          task = create(:task, user: user)
           task.destroy!
           visit task_path(task)
 
@@ -233,7 +246,7 @@ RSpec.describe 'Task', type: :system do
     end
 
     describe '#update' do
-      let!(:task) { create(:task) }
+      let!(:task) { create(:task, user: user) }
 
       before { visit edit_task_path(task) }
 
@@ -277,7 +290,7 @@ RSpec.describe 'Task', type: :system do
     end
 
     describe '#start' do
-      let!(:task) { create(:task) }
+      let!(:task) { create(:task, user: user) }
       before { visit task_path(task) }
 
       context 'when update successfully' do
@@ -299,7 +312,7 @@ RSpec.describe 'Task', type: :system do
     end
 
     describe '#complete' do
-      let!(:task) { create(:task, :started) }
+      let!(:task) { create(:task, :started, user: user) }
       before { visit task_path(task) }
 
       context 'when update successfully' do
@@ -322,7 +335,7 @@ RSpec.describe 'Task', type: :system do
 
     describe '#destroy' do
       before do
-        task = create(:task)
+        task = create(:task, user: user)
         visit task_path(task)
       end
 
@@ -333,11 +346,22 @@ RSpec.describe 'Task', type: :system do
   end
 
   context 'when internal server error occurs' do
-    before { allow(Task).to receive(:all).and_raise(StandardError) }
+    let(:user) { create(:user) }
+    let(:rspec_session) { {user_id: user.id} }
+    before { allow(TasksFinder).to receive(:new).and_raise(StandardError) }
     it 'display 500 error page' do
       visit root_path
 
       server_error_msg = "We're sorry, but something went wrong."
       expect(page).to have_content(server_error_msg)
     end
+  end
+
+  context 'when user not logged in' do
+    it 'redirects to the login page' do
+      visit root_path
+
+      expect(page).to have_content('Sign Up or Log In')
+    end
+  end
 end

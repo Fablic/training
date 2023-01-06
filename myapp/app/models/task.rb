@@ -22,6 +22,8 @@
 class Task < ApplicationRecord
   include AASM
 
+  after_initialize :set_user
+
   validates :title, presence: true
   validates :description, presence: true
   validates :due_date, presence: true
@@ -49,5 +51,9 @@ class Task < ApplicationRecord
     event :complete do
       transitions from: :started, to: :completed
     end
+  end
+
+  def set_user
+    self.user ||= Current.user if self.new_record?
   end
 end
