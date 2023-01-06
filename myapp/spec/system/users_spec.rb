@@ -381,7 +381,7 @@ RSpec.describe 'Test cases for User :', type: :system do
   end
 
   describe 'maintenance mode:' do
-    let(:mainte_flg) { Rails.root.join '/myapp/tmp/maintenance_mode_on.txt' }
+    let(:mainte_flg) { Rails.root.join '/myapp/tmp/maintenance.txt' }
     let!(:testuser) { FactoryBot.create(:user) }
 
     before do

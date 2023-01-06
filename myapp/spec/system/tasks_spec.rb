@@ -518,7 +518,7 @@ RSpec.describe 'Test cases for Task :', type: :system do
   end
 
   describe 'maintenance mode:' do
-    let(:mainte_flg) { Rails.root.join '/myapp/tmp/maintenance_mode_on.txt' }
+    let(:mainte_flg) { Rails.root.join '/myapp/tmp/maintenance.txt' }
     let!(:task) { FactoryBot.create(:task, user: testuser) }
 
     before do

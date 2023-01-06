@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
-  before_action :render_503, if: :maintenance_mode?
+  before_action :render_service_temporarily_unavailable, if: :maintenance_mode?
   include SessionsHelper
 
   unless Rails.env.development?
@@ -36,7 +36,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def render_503
+  def render_service_temporarily_unavailable
     render 'errors/503.html', status: :service_unavailable
   end
 
@@ -55,6 +55,6 @@ class ApplicationController < ActionController::Base
   end
 
   def maintenance_mode?
-    File.exist?('/myapp/tmp/maintenance_mode_on.txt')
+    File.exist?('/myapp/tmp/maintenance.txt')
   end
 end

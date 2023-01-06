@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 namespace :maintenance do
-  desc 'Helloを表示するタスク'
+  desc 'メンテナンス開始'
   task start: :environment do
-    mainte_flg = Rails.root.join '/myapp/tmp/maintenance_mode_on.txt'
+    mainte_flg = Rails.root.join '/myapp/tmp/maintenance.txt'
 
     if File.exist? mainte_flg
       puts '既にメンテナンスモード起動中'
@@ -13,8 +13,9 @@ namespace :maintenance do
     end
   end
 
+  desc 'メンテナンス停止'
   task stop: :environment do
-    mainte_flg = Rails.root.join '/myapp/tmp/maintenance_mode_on.txt'
+    mainte_flg = Rails.root.join '/myapp/tmp/maintenance.txt'
     if File.exist? mainte_flg
       File.delete mainte_flg
       puts 'メンテナンスモード停止しました。'
