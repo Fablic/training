@@ -1,0 +1,11 @@
+<% if user.errors.any? %>
+  <% user.errors.full_messages.each do |message| %>
+      <%= message %>
+  <% end %>
+<% end %>
+<%= form_with(model: [:admin, user])do |form| %>
+  Name: <%= form.text_field :name %> <br>
+  E-mail: <%= form.text_field :email %> <br>
+
+  <%= form.submit 'Submit' %>
+<% end %>

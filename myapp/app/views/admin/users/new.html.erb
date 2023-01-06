@@ -1,0 +1,9 @@
+<div class='container-sm'>
+  <h1>New User</h1>
+</div>
+
+<%= render 'form', user: @user %>
+
+<div class='container-sm'>
+  <%= link_to I18n.t('helpers.back'), admin_users_path %>
+</div>

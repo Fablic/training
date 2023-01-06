@@ -17,4 +17,8 @@ Rails.application.routes.draw do
       patch :complete
     end
   end
+
+  namespace :admin do
+    resources :users, except: [:show]
+  end
 end
