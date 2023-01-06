@@ -36,7 +36,11 @@ module Admin
     end
 
     def destroy
-      @user.destroy
+      ActiveRecord::Base.transaction do
+        Task.where(user: @user).in_batches(of: 500) { |tasks| tasks.delete_all }
+        @user.destroy
+      end
+
       redirect_to admin_users_path, notice: I18n.t('activerecord.actions.admin.user.destroy.success_message')
     end
 
