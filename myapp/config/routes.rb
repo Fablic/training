@@ -20,6 +20,10 @@ Rails.application.routes.draw do
 
   get '/admin' => 'admin/users#index'
   namespace :admin do
-    resources :users, except: [:show]
+    resources :users, except: [:show] do
+      member do
+        resources :tasks, only: [:index]
+      end
+    end
   end
 end
