@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rake_helper'
+require 'support/rake_helper'
 
 describe 'maintenance:' do
   describe 'start' do
