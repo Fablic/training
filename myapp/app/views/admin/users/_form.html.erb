@@ -1,11 +1,19 @@
-<% if user.errors.any? %>
-  <% user.errors.full_messages.each do |message| %>
-      <%= message %>
-  <% end %>
-<% end %>
-<%= form_with(model: [:admin, user])do |form| %>
-  Name: <%= form.text_field :name %> <br>
-  E-mail: <%= form.text_field :email %> <br>
+<div class='container-sm'>
+  <ul>
+    <% if user.errors.any? %>
+      <% user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+      <% end %>
+    <% end %>
+  </ul>
+</div>
 
-  <%= form.submit 'Submit' %>
-<% end %>
+
+<div class='container-sm rounded-3' style='padding:10px;'>
+  <%= form_with(model: [:admin, user], local: true)do |form| %>
+     <%= I18n.t('activerecord.attributes.user.name') %>: <%= form.text_field :name, class: 'form-control' %> <br>
+     <%= I18n.t('activerecord.attributes.user.email') %>: <%= form.text_field :email, class: 'form-control' %> <br>
+
+    <%= form.submit I18n.t('helpers.submit.submit', model: I18n.t('activerecord.models.user')).capitalize, class: "btn btn-outline-secondary" %>
+  <% end %>
+</div>

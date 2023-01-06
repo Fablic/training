@@ -1,5 +1,5 @@
 <div class='container-sm'>
-  <h1>New User</h1>
+  <h1><%= I18n.t('helpers.new').capitalize %> <%= I18n.t('activerecord.models.user').capitalize %></h1>
 </div>
 
 <%= render 'form', user: @user %>

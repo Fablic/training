@@ -18,7 +18,7 @@ module Admin
       user_params.merge!('password' => INITIAL_PASSWORD, 'password_confirmation' => INITIAL_PASSWORD)
       @user = User.new(user_params)
       if @user.save
-        redirect_to admin_users_path, notice: I18n.t('activerecord.actions.user.sign_up.success_message')
+        redirect_to admin_users_path, notice: I18n.t('activerecord.actions.admin.user.create.success_message')
       else
         render :new
       end
@@ -28,16 +28,16 @@ module Admin
 
     def update
       if @user.update(user_params)
-        redirect_to admin_users_path, notice: 'user updated successfully'
+        redirect_to admin_users_path, notice: I18n.t('activerecord.actions.admin.user.update.success_message')
       else
         render :edit
-        flash[:notice] = 'user update failed'
+        flash[:notice] = I18n.t('activerecord.actions.admin.user.update.failed_message')
       end
     end
 
     def destroy
       @user.destroy
-      redirect_to admin_users_path, notice: 'delete successfully'
+      redirect_to admin_users_path, notice: I18n.t('activerecord.actions.admin.user.destroy.success_message')
     end
 
     private

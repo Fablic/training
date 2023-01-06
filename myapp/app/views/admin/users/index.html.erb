@@ -1,25 +1,28 @@
-<h1>Users</h1>
+<div class='container-sm'>
+  <h1><%= I18n.t('activerecord.misc.user.plural').capitalize %> <%= I18n.t('helpers.list') %></h1>
 
-<table>
-  <thead>
-    <tr>
-      <td>Name</td>
-      <td>E-mail</td>
-      <td>Is Admin?</td>
-    </tr>
-  </thead>
+  <table  class='table'>
+    <thead>
+      <tr>
+        <% %w(id name email is_admin).each do |field| %>
+          <td><%= I18n.t("activerecord.attributes.user.#{field}") %></td>
+        <% end %>
+      </tr>
+    </thead>
 
-  <tbody>
-    <% @users.each do |user| %>
-        <tr>
-          <td><%= user.name %></td>
-          <td><%= user.email %></td>
-          <td><%= user.is_admin %></td>
-          <td><%= link_to 'Edit', edit_admin_user_path(user) %></td>
-          <td><%= link_to 'Delete', admin_user_path(user), method: 'delete', data: { confirm: 'Are you sure you want to delete?'} %></td>
-        </tr>
-    <% end %>
-  </tbody>
-</table>
+    <tbody>
+      <% @users.each do |user| %>
+          <tr>
+            <td class='user-id' ><%= user.id %></td>
+            <td class='user-name' ><%= user.name %></td>
+            <td class='user-email' ><%= user.email %></td>
+            <td class='user-is_admin' ><%= user.is_admin %></td>
+            <td><%= link_to I18n.t('helpers.edit'), edit_admin_user_path(user) %></td>
+            <td><%= link_to I18n.t('helpers.delete'), admin_user_path(user), method: 'delete', data: { confirm: 'Are you sure you want to delete?'} %></td>
+          </tr>
+      <% end %>
+    </tbody>
+  </table>
 
-<%= link_to 'Create New User', new_admin_user_path %>
+  <%= link_to I18n.t('helpers.submit.create', model: I18n.t('activerecord.models.user')), new_admin_user_path, class: "btn btn-primary", style: 'margin-bottom:10px;' %>
+</div>
