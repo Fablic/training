@@ -24,5 +24,7 @@
     </tbody>
   </table>
 
+  <%= paginate @users %>
+
   <%= link_to I18n.t('helpers.submit.create', model: I18n.t('activerecord.models.user')), new_admin_user_path, class: "btn btn-primary", style: 'margin-bottom:10px;' %>
 </div>
