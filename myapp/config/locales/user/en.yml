@@ -10,6 +10,7 @@ en:
         is_admin: Is Admin
         password: Password
         password_confirmation: Password confirmation
+        tasks_count: Tasks Count
     misc:
       user:
         zero: no users

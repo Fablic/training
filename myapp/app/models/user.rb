@@ -7,6 +7,7 @@
 #  is_admin        :boolean          default(FALSE), not null
 #  name            :string(255)      not null
 #  password_digest :string(255)      not null
+#  tasks_count     :integer          default(0), not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #
