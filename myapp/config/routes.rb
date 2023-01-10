@@ -18,6 +18,7 @@ Rails.application.routes.draw do
     end
   end
 
+  get '/admin' => 'admin/users#index'
   namespace :admin do
     resources :users, except: [:show]
   end

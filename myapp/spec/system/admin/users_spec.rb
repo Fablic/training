@@ -16,7 +16,7 @@ RSpec.describe 'Admin::User', type: :system do
       let!(:user_1) { create(:user) }
       let!(:user_2) { create(:user) }
 
-      it 'displays tasks infos' do
+      it 'displays users infos' do
         visit admin_users_path
 
         expect(page).to have_content user_1.id
@@ -65,14 +65,14 @@ RSpec.describe 'Admin::User', type: :system do
 
     before { visit edit_admin_user_path(user) }
 
-    it 'display the details of the task' do
+    it 'display the details of the user' do
       expect(page).to have_field 'user_name', with: user.name
       expect(page).to have_field 'user_email', with: user.email
     end
 
     context 'when input necessary user columns' do
-      it 'update task successfully' do
-        updated_user_name = 'Updated task'
+      it 'update user successfully' do
+        updated_user_name = 'Updated user name'
         updated_user_email = 'new@mail.com'
 
         fill_in 'user_name', with: updated_user_name
@@ -85,8 +85,8 @@ RSpec.describe 'Admin::User', type: :system do
       end
     end
 
-    context 'when mis-input necessary task column' do
-      it 'does not update task' do
+    context 'when mis-input necessary user column' do
+      it 'does not update user' do
         updated_user_name = nil
 
         fill_in 'user_name', with: updated_user_name
