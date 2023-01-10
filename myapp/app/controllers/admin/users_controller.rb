@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Admin
-  class UsersController < ApplicationController
+  class UsersController < BaseController
     INITIAL_PASSWORD = '0000'
 
     before_action :set_user, only: %i[edit update destroy]
