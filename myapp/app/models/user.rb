@@ -27,14 +27,14 @@ class User < ApplicationRecord
 
   scope :admin, -> { where(is_admin: true) }
 
-  def the_last_admin?
+  def the_only_admin?
     return false unless is_admin
     return false if User.admin.unscope(:order).limit(2).count == 2
     User.admin.first.id == id
   end
 
   def stop_destroy
-    return unless the_last_admin?
+    return unless the_only_admin?
 
     errors.add(:base, 'Cannot delete the last admin role')
     throw :abort

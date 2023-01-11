@@ -39,18 +39,18 @@ RSpec.describe User, type: :model do
     it { should have_many(:tasks) }
   end
 
-  describe '#the_last_admin?' do
+  describe '#the_only_admin?' do
     let!(:admin_user) { create(:user, :admin) }
     context 'when is the only admin user' do
       it 'returns true' do
-        expect(admin_user.the_last_admin?).to be_truthy
+        expect(admin_user.the_only_admin?).to be_truthy
       end
     end
 
     context 'when other admin user exist' do
       before { create(:user, :admin) }
       it 'returns false' do
-        expect(admin_user.the_last_admin?).to be_falsy
+        expect(admin_user.the_only_admin?).to be_falsy
       end
     end
   end
