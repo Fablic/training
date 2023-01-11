@@ -21,5 +21,22 @@ class User < ApplicationRecord
 
   has_many :tasks, dependent: :delete_all
 
+  before_destroy :stop_destroy
+
   has_secure_password
+
+  scope :admin, -> { where(is_admin: true) }
+
+  def the_last_admin?
+    return false unless is_admin
+    return false if User.admin.unscope(:order).limit(2).count == 2
+    User.admin.first.id == id
+  end
+
+  def stop_destroy
+    return unless the_last_admin?
+
+    errors.add(:base, 'Cannot delete the last admin role')
+    throw :abort
+  end
 end

@@ -32,3 +32,4 @@ ja:
             failed_message: ユーザ更新失敗しました
           destroy:
             success_message: ユーザ削除しました
+            failed_message: ユーザ削除失敗しました
