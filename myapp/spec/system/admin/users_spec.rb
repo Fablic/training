@@ -30,12 +30,11 @@ RSpec.describe 'Admin::User', type: :system do
       end
 
       it 'display user tasks count' do
-        random_tasks_count = rand(1...10)
-        create_list(:task, random_tasks_count, user: user_1)
+        create_list(:task, 3, user: user_1)
 
         visit admin_users_path
 
-        expect(page).to have_content random_tasks_count
+        expect(page).to have_content 3
       end
     end
   end

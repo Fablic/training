@@ -19,7 +19,7 @@ class User < ApplicationRecord
   validates :name, presence: true
   validates :email, presence: true, uniqueness: { case_sensitive: true }, format: {with: /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/, message: 'is not a valid email format'}
 
-  has_many :tasks, dependent: :destroy
+  has_many :tasks, dependent: :delete_all
 
   has_secure_password
 end
