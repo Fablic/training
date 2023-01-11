@@ -21,5 +21,9 @@ FactoryBot.define do
     email { Faker::Internet.unique.email }
     password_digest { BCrypt::Password.create('my password') }
     is_admin { false }
+
+    trait :admin do
+      is_admin { true }
+    end
   end
 end
