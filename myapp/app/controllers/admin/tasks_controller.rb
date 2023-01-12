@@ -5,7 +5,7 @@ module Admin
     before_action :set_user
 
     def index
-      @tasks = Task.where(user: @user).includes(:user).page(params[:page])
+      @tasks = Task.where(user: @user).includes(:user, :limited_tags).page(params[:page])
     end
 
     private

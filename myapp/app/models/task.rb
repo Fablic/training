@@ -32,6 +32,7 @@ class Task < ApplicationRecord
 
   has_many :taggings
   has_many :tags, through: :taggings
+  has_many :limited_tags, -> { order(:name).limit(5) }, through: :taggings, class_name: 'Tag', source: :tag
 
   scope :by_title, lambda { |title|
     where(Task.arel_table[:title].matches("%#{title}%"))
