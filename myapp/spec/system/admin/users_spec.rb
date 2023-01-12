@@ -28,6 +28,14 @@ RSpec.describe 'Admin::User', type: :system do
         expect(page).to have_content user_2.email
         expect(page).to have_content user_2.is_admin
       end
+
+      it 'display user tasks count' do
+        create_list(:task, 3, user: user_1)
+
+        visit admin_users_path
+
+        expect(first('.user-tasks_count').text).to eq '3'
+      end
     end
   end
 
@@ -100,11 +108,20 @@ RSpec.describe 'Admin::User', type: :system do
   end
 
   describe '#destroy' do
-    before { create(:user) }
+    let!(:user) { create(:user) }
     it 'destroys user successfully' do
       visit admin_users_path
 
       expect { click_link 'Delete' }.to change(User, :count).by(-1)
+    end
+
+    context 'when user has tasks' do
+      before { create_list(:task, 2, user: user) }
+      it 'destroys tasks created by user' do
+        visit admin_users_path
+
+        expect { click_link 'Delete' }.to change(Task, :count).by(-2)
+      end
     end
   end
 end

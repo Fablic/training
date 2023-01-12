@@ -37,6 +37,7 @@ module Admin
 
     def destroy
       @user.destroy
+
       redirect_to admin_users_path, notice: I18n.t('activerecord.actions.admin.user.destroy.success_message')
     end
 

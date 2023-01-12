@@ -1,0 +1,17 @@
+# frozen_string_literal: true
+
+module Admin
+  class TasksController < ApplicationController
+    before_action :set_user
+
+    def index
+      @tasks = Task.where(user: @user).includes(:user).page(params[:page])
+    end
+
+    private
+
+    def set_user
+      @user = User.find(params[:id])
+    end
+  end
+end

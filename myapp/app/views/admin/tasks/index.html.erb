@@ -1,0 +1,8 @@
+<div class='container-sm'>
+  <h1><%= I18n.t('activerecord.misc.task.plural').capitalize %> <%= I18n.t('helpers.list') %></h1>
+
+  <%= render 'shared/tasks/list', tasks: @tasks %>
+
+  <%= paginate @tasks %>
+
+</div>

@@ -10,6 +10,7 @@ ja:
         is_admin: アドミン
         password: パスワード
         password_confirmation: パスワードをもう一度入力
+        tasks_count: ユーザ作ったタスク数
     misc:
       user:
         zero: no ユーザ

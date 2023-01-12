@@ -28,7 +28,7 @@ class Task < ApplicationRecord
   validates :description, presence: true
   validates :due_date, presence: true
 
-  belongs_to :user, optional: true
+  belongs_to :user, optional: true, counter_cache: true
 
   scope :by_title, lambda { |title|
     where(Task.arel_table[:title].matches("%#{title}%"))

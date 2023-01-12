@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_12_28_053154) do
+ActiveRecord::Schema.define(version: 2023_01_06_075124) do
 
   create_table "tasks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "title", null: false
@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(version: 2022_12_28_053154) do
     t.boolean "is_admin", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "tasks_count", default: 0, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
