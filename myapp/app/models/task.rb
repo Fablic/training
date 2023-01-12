@@ -72,6 +72,6 @@ class Task < ApplicationRecord
   end
 
   def self.tagged_with(name)
-    Tag.find_by!(name: name).tasks
+    Tag.find_by(name: name)&.tasks || Task.none
   end
 end

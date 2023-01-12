@@ -161,12 +161,15 @@ RSpec.describe 'Task', type: :system do
       context 'when filter tasks' do
         let!(:task_1) { create(:task, :started, user: user, title: 'task 1') }
         let!(:task_2) { create(:task, :started, user: user, title: 'task 2 new') }
-        let!(:task_3) { create(:task, user: user, title: 'task 3') }
+        let!(:task_3) { create(:task, user: user, title: 'task 3 new') }
         let(:filtered_tasks_ids) { page.all('.task-id').map(&:text).map(&:to_i) }
+
+        before { task_2.tag_list = 'tag1, tag2' }
 
         it 'displays tasks with corresponding filter' do
           visit root_path
           fill_in 'search_title', with: 'new'
+          fill_in 'tag_name', with: 'tag1'
           page.find("#status_filter option[value='started']").select_option
           click_on 'Filter by'
 

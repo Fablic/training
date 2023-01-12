@@ -70,6 +70,28 @@ describe TasksFinder do
         end
       end
     end
+
+    describe 'filter by tag_name' do
+      let(:params) { {tag_name: 'tag1'} }
+
+      context 'when corresponding record exists' do
+        before { task_1.tag_list = 'tag1, tag2' }
+        it 'returns correct tasks' do
+          result = subject.process
+
+          expect(result.size).to eq(1)
+          expect(result.first.title).to eq('task 1')
+        end
+      end
+
+      context 'when corresponding record not exists' do
+        it 'returns no task' do
+          result = subject.process
+
+          expect(result.size).to eq(0)
+        end
+      end
+    end
   end
 
   context 'search with multiple fileds' do
