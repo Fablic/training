@@ -34,7 +34,7 @@ RSpec.describe 'Admin::User', type: :system do
 
         visit admin_users_path
 
-        expect(page).to have_content 3
+        expect(first('.user-tasks_count').text).to eq '3'
       end
     end
   end
