@@ -30,6 +30,9 @@ class Task < ApplicationRecord
 
   belongs_to :user, optional: true, counter_cache: true
 
+  has_many :taggings
+  has_many :tags, through: :taggings
+
   scope :by_title, lambda { |title|
     where(Task.arel_table[:title].matches("%#{title}%"))
   }
