@@ -29,7 +29,7 @@ class User < ApplicationRecord
 
   def the_only_admin?
     return false unless is_admin
-    return false if User.admin.unscope(:order).limit(2).count == 2
+    return false if User.admin.limit(2).count == 2
     User.admin.first.id == id
   end
 
