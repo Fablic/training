@@ -70,4 +70,8 @@ class Task < ApplicationRecord
       Tag.where(name: name.strip).first_or_create!
     end
   end
+
+  def self.tagged_with(name)
+    Tag.find_by!(name: name).tasks
+  end
 end

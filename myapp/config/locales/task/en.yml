@@ -31,6 +31,7 @@ en:
           - [Started, started]
           - [Completed, completed]
         search_title: Search Title
+        tag_name: Tag Name
     misc:
       task:
         zero: no tasks
