@@ -13,6 +13,7 @@
   <%= form_with(model: [:admin, user], local: true)do |form| %>
      <%= I18n.t('activerecord.attributes.user.name') %>: <%= form.text_field :name, class: 'form-control' %> <br>
      <%= I18n.t('activerecord.attributes.user.email') %>: <%= form.text_field :email, class: 'form-control' %> <br>
+     <%= I18n.t('activerecord.attributes.user.is_admin') %>: <%= form.check_box :is_admin %> <br>
 
     <%= form.submit I18n.t('helpers.submit.submit', model: I18n.t('activerecord.models.user')).capitalize, class: "btn btn-outline-secondary" %>
   <% end %>

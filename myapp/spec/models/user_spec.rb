@@ -38,4 +38,40 @@ RSpec.describe User, type: :model do
   describe 'has_many' do
     it { should have_many(:tasks) }
   end
+
+  describe '#the_only_admin?' do
+    let!(:admin_user) { create(:user, :admin) }
+    context 'when is the only admin user' do
+      it 'returns true' do
+        expect(admin_user.the_only_admin?).to be_truthy
+      end
+    end
+
+    context 'when other admin user exist' do
+      before { create(:user, :admin) }
+      it 'returns false' do
+        expect(admin_user.the_only_admin?).to be_falsy
+      end
+    end
+  end
+
+  describe 'callbacks' do
+    describe 'stop_destroy' do
+      let!(:admin_user) { create(:user, :admin) }
+
+      context 'when deletable' do
+        before { create(:user, :admin) }
+        it 'destroy the user' do
+          expect { admin_user.destroy }.to change(User, :count).by(-1)
+        end
+      end
+
+      context 'when not deletable' do
+        it 'does not destroy the user' do
+          expect { admin_user.destroy }.to change(User, :count).by(0)
+          expect(admin_user.errors.messages[:base]).to eq(['Cannot delete the last admin role'])
+        end
+      end
+    end
+  end
 end

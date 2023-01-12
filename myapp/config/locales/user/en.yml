@@ -32,3 +32,4 @@ en:
             failed_message: User update failed
           destroy:
             success_message: User successfully deleted
+            failed_message: User deletion failed

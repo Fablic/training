@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Admin
-  class UsersController < ApplicationController
+  class UsersController < BaseController
     INITIAL_PASSWORD = '0000'
 
     before_action :set_user, only: %i[edit update destroy]
@@ -36,15 +36,17 @@ module Admin
     end
 
     def destroy
-      @user.destroy
-
-      redirect_to admin_users_path, notice: I18n.t('activerecord.actions.admin.user.destroy.success_message')
+      if @user.destroy
+        redirect_to admin_users_path, notice: I18n.t('activerecord.actions.admin.user.destroy.success_message')
+      else
+        redirect_to admin_users_path, notice: I18n.t('activerecord.actions.admin.user.destroy.failed_message')
+      end
     end
 
     private
 
     def user_params
-      @user_params ||= params.require(:user).permit(:name, :email)
+      @user_params ||= params.require(:user).permit(:name, :email, :is_admin)
     end
 
     def set_user

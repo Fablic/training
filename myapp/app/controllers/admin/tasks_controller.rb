@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Admin
-  class TasksController < ApplicationController
+  class TasksController < BaseController
     before_action :set_user
 
     def index
