@@ -7,10 +7,27 @@ en:
         id: ID
         email: E-mail
         name: User Name
+        is_admin: Is Admin
         password: Password
         password_confirmation: Password confirmation
+    misc:
+      user:
+        zero: no users
+        one: 1 user
+        single: user
+        plural: users
+        count: '%{count} users'
     actions:
       user:
         sign_up:
           sign_up: Sign Up
           success_message: Thank you for signing up!
+      admin:
+        user:
+          create:
+            success_message: User successfully created
+          update:
+            success_message: User successfully updated
+            failed_message: User update failed
+          destroy:
+            success_message: User successfully deleted

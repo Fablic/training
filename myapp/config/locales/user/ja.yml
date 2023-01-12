@@ -7,10 +7,27 @@ ja:
         id: 番号
         email: メール
         name: ユーザ名前
+        is_admin: アドミン
         password: パスワード
         password_confirmation: パスワードをもう一度入力
+    misc:
+      user:
+        zero: no ユーザ
+        one: 1 ユーザ
+        single: ユーザ
+        plural: ユーザ
+        count: '%{count} ユーザ'
     actions:
       user:
         sign_up:
           sign_up: 登録
           success_message: ご登録ありがとう!
+      admin:
+        user:
+          create:
+            success_message: ユーザ登録しました
+          update:
+            success_message: ユーザ更新しました
+            failed_message: ユーザ更新失敗しました
+          destroy:
+            success_message: ユーザ削除しました

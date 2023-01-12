@@ -1,0 +1,9 @@
+<div class='container-sm'>
+  <h1><%= I18n.t('helpers.new').capitalize %> <%= I18n.t('activerecord.models.user').capitalize %></h1>
+</div>
+
+<%= render 'form', user: @user %>
+
+<div class='container-sm'>
+  <%= link_to I18n.t('helpers.back'), admin_users_path %>
+</div>
