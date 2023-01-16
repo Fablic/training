@@ -6,3 +6,6 @@ en:
     500:
       title: We're sorry, but something went wrong. QQ
       content: Please try again later.
+    503:
+      title: We're sorry, the system is under maintenance.
+      content: Please visit later.
