@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
   end
 
   def maintenance_mode?
-    YAML.load_file('maintinance.yml')['mode'] == 'on'
+    YAML.load_file('maintinance.yml').with_indifferent_access['mode'] == 'on'
   end
 
   def render_server_unavaliable

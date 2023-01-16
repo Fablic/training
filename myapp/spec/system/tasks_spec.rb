@@ -423,6 +423,19 @@ RSpec.describe 'Task', type: :system do
     end
   end
 
+  context 'when maintinance mode on' do
+    before do
+      allow_any_instance_of(ApplicationController).to receive(:maintenance_mode?).and_return(true)
+   end
+
+    it 'display 503 error page' do
+      visit root_path
+
+      maintinance_msg = "We're sorry, the system is under maintenance."
+      expect(page).to have_content(maintinance_msg)
+    end
+  end
+
   context 'when user not logged in' do
     it 'redirects to the login page' do
       visit root_path

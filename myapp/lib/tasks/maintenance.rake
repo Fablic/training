@@ -14,7 +14,7 @@ namespace :maintenance do
   end
 
   task stops: :environment do
-    maintenance_mode = YAML.load_file('maintinance.yml')['mode']
+    maintenance_mode = YAML.load_file('maintinance.yml').with_indifferent_access['mode']
 
     if maintenance_mode == 'off'
       File.open('maintinance.yml', 'w') { |f| f.write 'mode: off' }
