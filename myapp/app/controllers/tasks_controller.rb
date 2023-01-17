@@ -15,6 +15,8 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(get_task_params)
+    Rails.logger.debug @task
+    Rails.logger.debug 'aihara_test'
     if @task.save
       redirect_to tasks_path, flash: {success: "登録が完了しました"}
     else
