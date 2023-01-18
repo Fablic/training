@@ -1,6 +1,6 @@
+
 require 'spec_helper'
 ENV['RAILS_ENV'] ||= 'test'
-#require_relative '../config/environment'
 require File.expand_path('../config/environment', __dir__)
 abort('The Rails environment is running in production mode!') if Rails.env.production?
 require 'rspec/rails'
@@ -30,4 +30,5 @@ RSpec.configure do |config|
     driven_by :selenium_chrome_headless
   config.include FactoryBot::Syntax::Methods
   end
+
 end
