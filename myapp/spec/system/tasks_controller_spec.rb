@@ -21,7 +21,6 @@ RSpec.describe Task, js: true, type: :system do
   describe '編集機能' do
 
     let(:task) { create(:task) }
-    let(:other_task) { create(:task) }
 
     context '全てのフォームの入力値が正常' do
       it 'タスクの編集が成功' do
@@ -41,7 +40,6 @@ RSpec.describe Task, js: true, type: :system do
   describe '削除機能' do
 
     let(:task) { create(:task) }
-    let(:other_task) { create(:task) }
 
     it 'taskの投稿が削除される' do
       visit task_path(task)
