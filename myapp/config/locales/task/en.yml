@@ -18,6 +18,9 @@ en:
           started: Started
           mark_completed: Mark Completed
           completed: Completed
+    associations:
+      task:
+        editable_users: Editable Users
     order_by:
       task:
         - [ID, id-asc]

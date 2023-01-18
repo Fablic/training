@@ -18,6 +18,9 @@ ja:
           started: 着手中
           mark_completed: 完了させる
           completed: 完了
+    associations:
+      task:
+        editable_users: 共有のユーザたち
     order_by:
       task:
         - [番号, id-asc]
