@@ -30,6 +30,9 @@ class Task < ApplicationRecord
 
   belongs_to :user, optional: true, counter_cache: true
 
+  has_many :editable_task_users
+  has_many :editable_users, through: :editable_task_users
+
   has_many :taggings
   has_many :tags, through: :taggings
   has_many :limited_tags, -> { order(:name).limit(5) }, through: :taggings, class_name: 'Tag', source: :tag
