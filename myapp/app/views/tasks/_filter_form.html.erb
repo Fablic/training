@@ -5,7 +5,7 @@
   <%= text_field_tag :tag_name, nil, {class: 'form-control-sm d-inline-block'} %>
   <%= label_tag I18n.t('activerecord.attributes.task.status'), nil, {class: 'd-inline-block'} %>
   <%= select_tag :status_filter, options_for_select([nil] + I18n.t('activerecord.filter_by.task.status')), {class: 'form-control-sm d-inline-block'} %>
-  <%= label_tag 'Task Owner', nil, {class: 'd-inline-block'} %>
-  <%= select_tag :owner_filter, options_for_select(['Mine', "Others"]), {class: 'form-control-sm d-inline-block'} %>
+  <%= label_tag I18n.t('activerecord.attributes.task.user'), nil, {class: 'd-inline-block'} %>
+  <%= select_tag :owner_filter, options_for_select(I18n.t('activerecord.filter_by.task.owner')), {class: 'form-control-sm d-inline-block'} %>
   <%= submit_tag I18n.t('form.filter_by') %>
 <% end %>

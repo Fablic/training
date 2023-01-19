@@ -184,7 +184,7 @@ RSpec.describe 'Task', type: :system do
           describe 'Mine filter' do
             it "does not display other users' tasks" do
               visit root_path
-              page.find("#owner_filter option[value='Mine']").select_option
+              page.find("#owner_filter option[value='mine']").select_option
               click_on 'Filter by'
 
               expect(filtered_tasks_ids).not_to include(others_task.id)
@@ -194,7 +194,7 @@ RSpec.describe 'Task', type: :system do
           describe 'Others filter' do
             it "only displays other users' tasks" do
               visit root_path
-              page.find("#owner_filter option[value='Others']").select_option
+              page.find("#owner_filter option[value='others']").select_option
               click_on 'Filter by'
 
               expect(filtered_tasks_ids).to eq([others_task.id])
@@ -286,27 +286,69 @@ RSpec.describe 'Task', type: :system do
     describe '#show' do
       context 'when task presents' do
         let!(:task) { create(:task, user: user) }
+        context 'when task is belongs to the user' do
+          it 'display the details of the task' do
+            visit task_path(task)
 
-        before { visit task_path(task) }
+            expect(page).to have_content task.id
+            expect(page).to have_content task.title
+            expect(page).to have_content task.description
+            expect(page).to have_content task.due_date.strftime('%F')
+            expect(page).to have_content task.created_at.strftime('%F %T')
+            expect(page).to have_content task.user.name
+          end
 
-        it 'display the details of the task' do
-          expect(page).to have_content task.id
-          expect(page).to have_content task.title
-          expect(page).to have_content task.description
-          expect(page).to have_content task.due_date.strftime('%F')
-          expect(page).to have_content task.created_at.strftime('%F %T')
-          expect(page).to have_content task.user.name
+          it 'displays links to manipulate the task' do
+            visit task_path(task)
+
+            expect(page).to have_link 'Edit'
+            expect(page).to have_link 'Delete'
+            expect(page).to have_link 'Back'
+          end
         end
 
-        it 'displays links to manipulate the task' do
-          expect(page).to have_link 'Edit'
-          expect(page).to have_link 'Delete'
-          expect(page).to have_link 'Back'
+        context 'when task is belongs to other user' do
+          let(:other_user) { create(:user) }
+          let(:rspec_session) { {user_id: other_user.id} }
+
+          context 'when accessible' do
+            before { task.editable_user_list = "#{other_user.email}" }
+
+            it 'display the details of the task' do
+              visit task_path(task)
+
+              expect(page).to have_content task.id
+              expect(page).to have_content task.title
+              expect(page).to have_content task.description
+              expect(page).to have_content task.due_date.strftime('%F')
+              expect(page).to have_content task.created_at.strftime('%F %T')
+              expect(page).to have_content task.user.name
+            end
+
+            it 'displays links to manipulate the task' do
+              visit task_path(task)
+
+              expect(page).to have_link 'Edit'
+              expect(page).to have_link 'Delete'
+              expect(page).to have_link 'Back'
+            end
+          end
+
+          context 'when not accessible' do
+            it 'displays record not found error message' do
+              visit task_path(task)
+
+              not_found_msg = "The page you were looking for doesn't exist."
+              expect(page).to have_content(not_found_msg)
+            end
+          end
         end
 
         describe 'task status related links' do
           context 'when task is unstarted' do
             it 'displays Mark Started button' do
+              visit task_path(task)
+
               expect(page).to have_link 'Mark Started'
             end
           end
@@ -314,6 +356,8 @@ RSpec.describe 'Task', type: :system do
           context 'when task is started' do
             let!(:task) { create(:task, :started, user: user) }
             it 'displays Mark Completed button' do
+              visit task_path(task)
+
               expect(page).to have_link 'Mark Completed'
             end
           end

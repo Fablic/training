@@ -8,7 +8,7 @@ class TasksController < ::ApplicationController
   before_action :set_task, only: %i[show edit update destroy start complete]
 
   def index
-    tasks = params[:owner_filter] == 'Others' ? Current.user.editable_tasks : Current.user.tasks
+    tasks = params[:owner_filter] == 'others' ? Current.user.editable_tasks : Current.user.tasks
     @tasks = TasksFinder.new(params: params, tasks: tasks).process
     @tasks = @tasks.includes(:limited_tags).order(sort_order).page(params[:page])
   end
@@ -71,6 +71,7 @@ class TasksController < ::ApplicationController
 
   def set_task
     @task = Task.find_by(id: params[:id])
+    raise ActiveRecord::RecordNotFound if @task.nil? || (@task.user_id != Current.user.id && !Current.user.id.in?(@task.editable_users.pluck(:id)))
   end
 
   def sort_order

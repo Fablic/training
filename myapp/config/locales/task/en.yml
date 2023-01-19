@@ -10,6 +10,7 @@ en:
         created_at: Created at
         due_date: Due date
         status: Status
+        user: Owner
     enums:
       task:
         status:
@@ -35,6 +36,9 @@ en:
           - [Completed, completed]
         search_title: Search Title
         tag_name: Tag Name
+        owner:
+          - [Mine, mine]
+          - [Others, others]
     misc:
       task:
         zero: no tasks
