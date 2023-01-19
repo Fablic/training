@@ -166,14 +166,46 @@ RSpec.describe 'Task', type: :system do
 
         before { task_2.tag_list = 'tag1, tag2' }
 
-        it 'displays tasks with corresponding filter' do
-          visit root_path
-          fill_in 'search_title', with: 'new'
-          fill_in 'tag_name', with: 'tag1'
-          page.find("#status_filter option[value='started']").select_option
-          click_on 'Filter by'
+        describe 'filter with status_filter' do
+          it 'displays tasks with corresponding filter' do
+            visit root_path
+            page.find("#status_filter option[value='unstarted']").select_option
+            click_on 'Filter by'
 
-          expect(filtered_tasks_ids).to eq([task_2.id])
+            expect(filtered_tasks_ids).to eq([task_3.id])
+          end
+        end
+
+        describe 'filter with search_title' do
+          it 'displays tasks with corresponding filter' do
+            visit root_path
+            fill_in 'search_title', with: 'new'
+            click_on 'Filter by'
+
+            expect(filtered_tasks_ids).to match_array([task_2.id, task_3.id])
+          end
+        end
+
+        describe 'filter with tag_name' do
+          it 'displays tasks with corresponding filter' do
+            visit root_path
+            fill_in 'tag_name', with: 'tag1'
+            click_on 'Filter by'
+
+            expect(filtered_tasks_ids).to eq([task_2.id])
+          end
+        end
+
+        describe 'filter with multiple filters' do
+          it 'displays tasks with corresponding filters' do
+            visit root_path
+            fill_in 'search_title', with: 'new'
+            fill_in 'tag_name', with: 'tag1'
+            page.find("#status_filter option[value='started']").select_option
+            click_on 'Filter by'
+
+            expect(filtered_tasks_ids).to eq([task_2.id])
+          end
         end
       end
     end

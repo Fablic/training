@@ -29,8 +29,8 @@ class TasksFinder
   end
 
   def by_status(collection)
-    return collection if @params[:status].blank?
-    status = @params[:status]
+    return collection if @params[:status_filter].blank?
+    status = @params[:status_filter]
 
     collection = collection.where(status: status)
     collection

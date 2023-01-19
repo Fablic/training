@@ -51,7 +51,7 @@ describe TasksFinder do
 
       context 'when status is present' do
         context 'when corresponding record exists' do
-          let(:params) { {status: 'started'} }
+          let(:params) { {status_filter: 'started'} }
           it 'returns correct tasks' do
             result = subject.process
 
@@ -61,7 +61,7 @@ describe TasksFinder do
         end
 
         context 'when corresponding record not exists' do
-          let(:params) { {status: 'completed'} }
+          let(:params) { {status_filter: 'completed'} }
           it 'returns no task' do
             result = subject.process
 
