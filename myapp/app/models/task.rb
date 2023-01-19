@@ -85,7 +85,7 @@ class Task < ApplicationRecord
   def editable_user_list=(emails)
     self.editable_users = emails.split(',').map do |email|
       user_id = User.find_by!(email: email.strip).id
-      editable_task_user = EditableTaskUser.where(user_id: user_id, task_id: id).first_or_create!
+      editable_task_user = EditableTaskUser.where(user_id: user_id, task_id: id).first_or_initialize
       editable_task_user.user
     end
   end

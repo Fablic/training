@@ -175,6 +175,32 @@ RSpec.describe 'Task', type: :system do
 
           expect(filtered_tasks_ids).to eq([task_2.id])
         end
+
+        describe 'filter with Task owner' do
+          let(:other_user) { create(:user) }
+          let!(:others_task) { create(:task, user: other_user) }
+          before { others_task.editable_user_list = "#{user.email}" }
+
+          describe 'Mine filter' do
+            it "does not display other users' tasks" do
+              visit root_path
+              page.find("#owner_filter option[value='Mine']").select_option
+              click_on 'Filter by'
+
+              expect(filtered_tasks_ids).not_to include(others_task.id)
+            end
+          end
+
+          describe 'Others filter' do
+            it "only displays other users' tasks" do
+              visit root_path
+              page.find("#owner_filter option[value='Others']").select_option
+              click_on 'Filter by'
+
+              expect(filtered_tasks_ids).to eq([others_task.id])
+            end
+          end
+        end
       end
     end
 
@@ -240,6 +266,18 @@ RSpec.describe 'Task', type: :system do
             expect { click_button(submit_button_text) }.to change(Tag, :count).by(2)
 
             expect(page).to have_content new_tags
+          end
+        end
+
+        describe 'editable_user_list' do
+          let!(:other_user_1) { create(:user) }
+          let!(:other_user_2) { create(:user) }
+
+          it 'saves the editable users association' do
+            editable_users = other_user_1.email + ', ' + other_user_2.email
+            fill_in 'task_editable_user_list', with: editable_users
+
+            expect { click_button(submit_button_text) }.to change(EditableTaskUser, :count).by(2)
           end
         end
       end
@@ -350,6 +388,19 @@ RSpec.describe 'Task', type: :system do
             click_button(submit_button_text)
 
             expect(page).to have_content new_tags
+          end
+        end
+
+        describe 'editable_user_list' do
+          let(:other_user_1) { create(:user) }
+          let(:other_user_2) { create(:user) }
+          before { task.editable_user_list = "#{other_user_1.email}" }
+
+          it 'update the editable_user_list' do
+            new_editable_user_list = other_user_1.email + ', ' + other_user_2.email
+            fill_in 'task_editable_user_list', with: new_editable_user_list
+
+            expect { click_button(submit_button_text) }.to change(EditableTaskUser, :count).by(1)
           end
         end
       end
