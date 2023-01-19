@@ -8,9 +8,6 @@ RSpec.describe Task, js: true, type: :system do
         visit new_task_path
         fill_in 'task[title]', with: 'testtitle1'
         fill_in 'task[content]', with: 'testcontent1'
-        find("#task_priority").find("option[value='1']").select_option
-        find("#task_status").find("option[value='1']").select_option
-        fill_in 'task[due_date]', with: '2022-01-06 18:00:00 +0900'
         click_button '登録'
         expect(current_path).to eq tasks_path
         expect(page).to have_content '登録が完了しました'
@@ -27,9 +24,6 @@ RSpec.describe Task, js: true, type: :system do
         visit edit_task_path(task)
         fill_in 'task[title]', with: 'testtitle2'
         fill_in 'task[content]', with: 'testcontent2'
-        find("#task_priority").find("option[value='2']").select_option
-        find("#task_status").find("option[value='1']").select_option
-        fill_in 'task[due_date]', with: '2022-01-11 18:00:00 +0900'
         click_button '登録'
         expect(current_path).to eq tasks_path
         expect(page).to have_content '更新が完了しました'
