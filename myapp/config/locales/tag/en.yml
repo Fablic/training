@@ -1,0 +1,15 @@
+en:
+  activerecord:
+    models:
+      tag: Tag
+    attributes:
+      tag:
+        id: ID
+        name: Name
+    misc:
+      tag:
+        zero: no tags
+        one: 1 tag
+        single: tag
+        plural: tags
+        count: '%{count} tags'

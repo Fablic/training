@@ -30,6 +30,10 @@ class Task < ApplicationRecord
 
   belongs_to :user, optional: true, counter_cache: true
 
+  has_many :taggings
+  has_many :tags, through: :taggings
+  has_many :limited_tags, -> { order(:name).limit(5) }, through: :taggings, class_name: 'Tag', source: :tag
+
   scope :by_title, lambda { |title|
     where(Task.arel_table[:title].matches("%#{title}%"))
   }
@@ -55,5 +59,15 @@ class Task < ApplicationRecord
 
   def set_user
     self.user ||= Current.user if self.new_record?
+  end
+
+  def tag_list
+    tags.map(&:name).join(', ')
+  end
+
+  def tag_list=(names)
+    self.tags = names.split(',').map do |name|
+      Tag.where(name: name.strip).first_or_create!
+    end
   end
 end

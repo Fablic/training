@@ -7,6 +7,32 @@ describe Task, type: :model do
     it { should validate_presence_of(:due_date) }
   end
 
+  describe 'associations' do
+    it { should have_many(:taggings) }
+    it { should have_many(:tags) }
+
+    describe '#limited_tags' do
+      let(:task) { create(:task) }
+
+      context 'when associated tags amount is within limit' do
+        before { task.tag_list = 'tag1, tag2, tag3, tag4, tag5' }
+
+        it 'return all tags' do
+          expect(task.limited_tags.count).to eq(5)
+        end
+      end
+
+      context 'when associated tags amount is over limit' do
+        before { task.tag_list = 'tag1, tag2, tag3, tag4, tag5, tag6' }
+
+        it 'return limited tags' do
+          expect(task.limited_tags.count).to eq(5)
+        end
+      end
+    end
+  end
+
+
   describe 'status' do
     describe 'default status' do
       it 'set default status be unstarted' do

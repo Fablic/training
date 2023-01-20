@@ -73,6 +73,31 @@ RSpec.describe 'Task', type: :system do
             expect(page).not_to have_content task_created_by_others.title
           end
         end
+
+        context 'when tags exist' do
+          before { task_1.tag_list = 'tag1, tag2, tag3, tag4, tag5' }
+
+          context 'when tags amount within display limit' do
+            it 'display the limited amount of tags' do
+              visit root_path
+
+              expect(first('.task-limited_tags').text.split(', ').count).to eq(5)
+            end
+          end
+
+          context 'when tags amount over display limit' do
+            before do
+              tag6 = create(:tag, name: 'tag6')
+              create(:tagging, task: task_1, tag: tag6)
+            end
+
+            it 'still displays 5 tags only' do
+              visit root_path
+
+              expect(first('.task-limited_tags').text.split(', ').count).to eq(5)
+            end
+          end
+        end
       end
 
       context 'when sort tasks' do
@@ -159,8 +184,10 @@ RSpec.describe 'Task', type: :system do
       it 'displays form with fileds to be filled in' do
         expect(page).to have_content 'Title'
         expect(page).to have_content 'Description'
+        expect(page).to have_content 'Tag'
         expect(find_field('task_title').text).to be_blank
         expect(find_field('task_description').text).to be_blank
+        expect(find_field('task_tag_list').text).to be_blank
       end
 
       context 'when input necessary task columns' do
@@ -192,6 +219,25 @@ RSpec.describe 'Task', type: :system do
 
           error_message = "Title can't be blank"
           expect(page).to have_content error_message
+        end
+      end
+
+      context 'when input optional columns' do
+        before do
+          fill_in 'task_title', with: 'New task'
+          fill_in 'task_description', with: 'New task description'
+          select_date(field: 'task_due_date', date: Date.tomorrow)
+        end
+
+        describe 'tag_list' do
+          it 'saves the tags' do
+            new_tags = 'tag1, tag2'
+            fill_in 'task_tag_list', with: new_tags
+
+            expect { click_button(submit_button_text) }.to change(Tag, :count).by(2)
+
+            expect(page).to have_content new_tags
+          end
         end
       end
     end
@@ -248,11 +294,15 @@ RSpec.describe 'Task', type: :system do
     describe '#update' do
       let!(:task) { create(:task, user: user) }
 
-      before { visit edit_task_path(task) }
+      before do
+        task.tag_list = 'tag1, tag2'
+        visit edit_task_path(task)
+      end
 
       it 'display the details of the task' do
         expect(page).to have_field 'task_title', with: task.title
         expect(page).to have_field 'task_description', with: task.description
+        expect(page).to have_field 'task_tag_list', with: task.tag_list
       end
 
       context 'when input necessary task columns' do
@@ -285,6 +335,19 @@ RSpec.describe 'Task', type: :system do
 
           error_message = "Title can't be blank"
           expect(page).to have_content error_message
+        end
+      end
+
+      context 'when input optional columns' do
+        describe 'tag_list' do
+          it 'update the tags' do
+            new_tags = 'tag1, tag3'
+            fill_in 'task_tag_list', with: new_tags
+
+            click_button(submit_button_text)
+
+            expect(page).to have_content new_tags
+          end
         end
       end
     end

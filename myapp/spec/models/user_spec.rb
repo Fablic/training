@@ -35,7 +35,7 @@ RSpec.describe User, type: :model do
       end
   end
 
-  describe 'has_many' do
+  describe 'associations' do
     it { should have_many(:tasks) }
   end
 

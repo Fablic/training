@@ -5,7 +5,9 @@
     <%= I18n.t('activerecord.attributes.task.title') %>: <%= form.text_field :title, class: 'form-control' %> <br>
     <%= I18n.t('activerecord.attributes.task.description') %>: <%= form.text_field :description, class: 'form-control' %> <br>
     <div class='col-xs-3 col-sm-3 col-md-3 col-lg-3'>
-    <%= I18n.t('activerecord.attributes.task.due_date') %>: <%= form.date_select :due_date, start_year: DateTime.now.year %> </div><br>
+      <%= I18n.t('activerecord.attributes.task.due_date') %>: <%= form.date_select :due_date, start_year: DateTime.now.year %>
+    </div><br>
+    <%= I18n.t('activerecord.models.tag') %>: <%= form.text_field :tag_list, class: 'form-control' %> <br>
 
     <%= form.submit I18n.t('helpers.submit.submit', model: I18n.t('activerecord.models.task')).capitalize, class: "btn btn-outline-secondary" %>
   <% end %>

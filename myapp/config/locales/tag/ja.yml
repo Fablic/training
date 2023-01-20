@@ -1,0 +1,15 @@
+ja:
+  activerecord:
+    models:
+      tag: タグ
+    attributes:
+      tag:
+        id: ID
+        name: タグ名
+    misc:
+      tag:
+        zero: 0 タグ
+        one: 1 タグ
+        single: タグ
+        plural: タグ
+        count: '%{count} タグ'
