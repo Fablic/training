@@ -16,6 +16,7 @@ class TasksFinder
   def filter_tasks(collection)
     collection = by_title(collection)
     collection = by_status(collection)
+    collection = by_tag_name(collection)
     collection
   end
 
@@ -28,10 +29,18 @@ class TasksFinder
   end
 
   def by_status(collection)
-    return collection if @params[:status].blank?
-    status = @params[:status]
+    return collection if @params[:status_filter].blank?
+    status = @params[:status_filter]
 
     collection = collection.where(status: status)
+    collection
+  end
+
+  def by_tag_name(collection)
+    return collection if @params[:tag_name].blank?
+    tag_name = @params[:tag_name]
+
+    collection = collection.tagged_with(tag_name)
     collection
   end
 end

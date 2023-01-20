@@ -32,6 +32,31 @@ describe Task, type: :model do
     end
   end
 
+  describe '.tagged_with' do
+    before do
+      task = create(:task)
+      task.tag_list = 'tag1, tag2'
+    end
+    context 'when tasks with tag name exists' do
+      let(:tag_name) { 'tag1' }
+
+      it 'returns correct tasks' do
+        result = Task.tagged_with(tag_name)
+
+        expect(result.count).to eq(1)
+      end
+    end
+
+    context 'when tasks with tag name does not exist' do
+      let(:tag_name) { 'tag3' }
+
+      it 'returns correct tasks' do
+        result = Task.tagged_with(tag_name)
+
+        expect(result.count).to eq(0)
+      end
+    end
+  end
 
   describe 'status' do
     describe 'default status' do

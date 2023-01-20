@@ -31,6 +31,7 @@ ja:
           - [着手中, started]
           - [完了, completed]
         search_title: タイトル検索
+        tag_name: タグ名
     misc:
       task:
         zero: no タスク

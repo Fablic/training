@@ -161,16 +161,51 @@ RSpec.describe 'Task', type: :system do
       context 'when filter tasks' do
         let!(:task_1) { create(:task, :started, user: user, title: 'task 1') }
         let!(:task_2) { create(:task, :started, user: user, title: 'task 2 new') }
-        let!(:task_3) { create(:task, user: user, title: 'task 3') }
+        let!(:task_3) { create(:task, user: user, title: 'task 3 new') }
         let(:filtered_tasks_ids) { page.all('.task-id').map(&:text).map(&:to_i) }
 
-        it 'displays tasks with corresponding filter' do
-          visit root_path
-          fill_in 'search_title', with: 'new'
-          page.find("#status_filter option[value='started']").select_option
-          click_on 'Filter by'
+        before { task_2.tag_list = 'tag1, tag2' }
 
-          expect(filtered_tasks_ids).to eq([task_2.id])
+        describe 'filter with status_filter' do
+          it 'displays tasks with corresponding filter' do
+            visit root_path
+            page.find("#status_filter option[value='unstarted']").select_option
+            click_on 'Filter by'
+
+            expect(filtered_tasks_ids).to eq([task_3.id])
+          end
+        end
+
+        describe 'filter with search_title' do
+          it 'displays tasks with corresponding filter' do
+            visit root_path
+            fill_in 'search_title', with: 'new'
+            click_on 'Filter by'
+
+            expect(filtered_tasks_ids).to match_array([task_2.id, task_3.id])
+          end
+        end
+
+        describe 'filter with tag_name' do
+          it 'displays tasks with corresponding filter' do
+            visit root_path
+            fill_in 'tag_name', with: 'tag1'
+            click_on 'Filter by'
+
+            expect(filtered_tasks_ids).to eq([task_2.id])
+          end
+        end
+
+        describe 'filter with multiple filters' do
+          it 'displays tasks with corresponding filters' do
+            visit root_path
+            fill_in 'search_title', with: 'new'
+            fill_in 'tag_name', with: 'tag1'
+            page.find("#status_filter option[value='started']").select_option
+            click_on 'Filter by'
+
+            expect(filtered_tasks_ids).to eq([task_2.id])
+          end
         end
       end
     end
