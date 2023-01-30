@@ -1,6 +1,6 @@
 # テーブル定義書
 
-## users
+## ・users
 has_many->tasks  
   
 ### table
@@ -10,12 +10,13 @@ has_many->tasks
 | name | 名前 | varchar | - | - | - | × | |
 | email | メールアドレス | varchar | - | - | - | × | |
 | encrypted_password | パスワード | varchar | - | - | - | × | hashed |
-| created_at | 作成時刻 | datetime | - | - | - | × |  |
-| updated_at | 更新時刻 | datetime | - | - | - | × |  |
 | authentication_token | 認証トークン | varchar | - | - | null | ○ |  |
 | last_sign_in_at | 最終ログイン時刻 | datetime | - | - | null | ○ |  |
 | reset_password_token | リセットパスワードトークン | varchar | - | - | null | ○ |  |
-| reset_password_sent_at | リセットパスワード送信時刻 | varchar | - | - | null | ○ |  |
+| reset_password_sent_at | リセットパスワード送信時刻 | datetime | - | - | null | ○ |  |
+| created_at | 作成時刻 | datetime | - | - | - | × |  |
+| updated_at | 更新時刻 | datetime | - | - | - | × |  |
+| deleted_at | 退会時刻 | datetime | - | - | null | ○ |  |
 
 ### index
 | インデックス名 | カラム | フィールド番号 
@@ -23,3 +24,66 @@ has_many->tasks
 | index_users_on_email | email | 1 |
 | index_users_on_authentication_token | authentication_token | 1 |
 | index_users_on_reset_password_token | reset_password_token | 1 |
+
+## ・tasks
+belongs_to->users  
+has_many->tasks_to_labels  
+  
+### table
+| 論理名 | 物理名 | type | PK | FK | default | not null | 備考 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| id |  ID  | int | ○ | - | AUTO_INC | × | |
+| owner_id | タスク登録ユーザID | int | - | users.id | - | × | |
+| status | ステータス | varchar | - | - | - | × | ["waiting", "doing", "completed"] | 
+| title | タスク名 | varchar | - | - | - | × | |
+| priority | タスク優先度 | tiny int | - | - | - | × | {1: "高", 2: "中", 3: "低"} |
+| description | タスクの説明文 | text | - | - | "" | × | |
+| expires_at | タスク終了時刻 | datetime | - | - | null | ○ |  |
+| created_at | 作成時刻 | datetime | - | - | - | × |  |
+| updated_at | 更新時刻 | datetime | - | - | - | × |  |
+| deleted_at | 削除時刻 | datetime | - | - | null | ○ |  |
+
+### index
+| インデックス名 | カラム | フィールド番号 
+| ---- | ---- | ---- |
+| index_tasks_on_owner_id | owner_id | 1 |
+| index_tasks_on_owner_id_and_status | owner_id | 1 |
+| index_tasks_on_owner_id_and_status | status | 2 |
+| index_tasks_on_owner_id_and_title | owner_id | 1 |
+| index_tasks_on_owner_id_and_title | title | 2 |
+| index_tasks_on_owner_id_and_description | owner_id | 1 |
+| index_tasks_on_owner_id_and_description | description | 2 |
+| index_tasks_on_owner_id_and_priority | owner_id | 1 |
+| index_tasks_on_owner_id_and_priority | priority | 2 |
+| index_tasks_on_owner_id_and_expires_at | owner_id | 1 |
+| index_tasks_on_owner_id_and_expires_at | expires_at | 2 |
+
+## ・labels
+has_many->tasks_to_labels  
+  
+### table
+| 論理名 | 物理名 | type | PK | FK | default | not null | 備考 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| id |  ID  | int | ○ | - | AUTO_INC | × | |
+| name | ラベル名 | varchar | - | - | - | × | |
+| created_at | 作成時刻 | datetime | - | - | - | × |  |
+| updated_at | 更新時刻 | datetime | - | - | - | × |  |
+| deleted_at | 削除時刻 | datetime | - | - | null | ○ |  |
+
+### index
+特になし
+
+## ・tasks_to_labels 
+belongs_to->tasks  
+belongs_to->labels
+  
+### table
+| 論理名 | 物理名 | type | PK | FK | default | not null | 備考 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| id |  ID  | int | ○ | - | AUTO_INC | × | |
+| task_id | タスクID | int | - | tasks.id | - | × | |
+| label_id | タスクID | int | - | labels.id | - | × | |
+| created_at | 作成時刻 | datetime | - | - | - | × |  |
+| updated_at | 更新時刻 | datetime | - | - | - | × |  |
+| deleted_at | 削除時刻 | datetime | - | - | null | ○ |  |
+
