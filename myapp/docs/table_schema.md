@@ -71,7 +71,9 @@ has_many->tasks_to_labels
 | deleted_at | 削除時刻 | datetime | - | - | null | ○ |  |
 
 ### index
-特になし
+| インデックス名 | カラム | フィールド番号 
+| ---- | ---- | ---- |
+| index_labels_on_name | name | 1 |
 
 ## ・tasks_to_labels 
 belongs_to->tasks  
@@ -82,8 +84,13 @@ belongs_to->labels
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
 | id |  ID  | int | ○ | - | AUTO_INC | × | |
 | task_id | タスクID | int | - | tasks.id | - | × | |
-| label_id | タスクID | int | - | labels.id | - | × | |
+| label_id | ラベルID | int | - | labels.id | - | × | |
 | created_at | 作成時刻 | datetime | - | - | - | × |  |
 | updated_at | 更新時刻 | datetime | - | - | - | × |  |
 | deleted_at | 削除時刻 | datetime | - | - | null | ○ |  |
 
+### index
+| インデックス名 | カラム | フィールド番号 
+| ---- | ---- | ---- |
+| index_tasks_to_labels_on_task_id | task_id | 1 |
+| index_tasks_to_labels_on_label_id | label_id | 1 |
