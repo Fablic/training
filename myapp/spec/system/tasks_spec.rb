@@ -273,11 +273,22 @@ RSpec.describe 'Task', type: :system do
           let!(:other_user_1) { create(:user) }
           let!(:other_user_2) { create(:user) }
 
-          it 'saves the editable users association' do
-            editable_users = other_user_1.email + ', ' + other_user_2.email
-            fill_in 'task_editable_user_list', with: editable_users
+          context 'when adding other users' do
+            it 'saves the editable users association' do
+              editable_users = other_user_1.email + ', ' + other_user_2.email
+              fill_in 'task_editable_user_list', with: editable_users
 
-            expect { click_button(submit_button_text) }.to change(EditableTaskUser, :count).by(2)
+              expect { click_button(submit_button_text) }.to change(EditableTaskUser, :count).by(2)
+            end
+          end
+
+          context 'when adding the author' do
+            it 'does not save the editable users association' do
+              editable_users = user.email
+              fill_in 'task_editable_user_list', with: editable_users
+
+              expect { click_button(submit_button_text) }.to change(EditableTaskUser, :count).by(0)
+            end
           end
         end
       end
