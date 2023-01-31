@@ -22,7 +22,7 @@ has_many->tasks
 
 ## ・tasks
 belongs_to->users  
-has_many->tasks_to_labels  
+has_many->tasks_labels  
   
 ### table
 | 論理名 | 物理名 | type | PK | FK | default | not null | 備考 |
@@ -60,7 +60,7 @@ has_many->tasks_to_labels
 | index_tasks_on_owner_id_and_status_and_priority | priority | 3 |
 
 ## ・labels
-has_many->tasks_to_labels  
+has_many->tasks_labels  
   
 ### table
 | 論理名 | 物理名 | type | PK | FK | default | not null | 備考 |
@@ -76,7 +76,7 @@ has_many->tasks_to_labels
 | ---- | ---- | ---- |
 | index_labels_on_name | name | 1 |
 
-## ・tasks_to_labels 
+## ・tasks_labels 
 belongs_to->tasks  
 belongs_to->labels
   
@@ -89,9 +89,8 @@ belongs_to->labels
 | created_at | 作成時刻 | datetime | - | - | - | × |  |
 | updated_at | 更新時刻 | datetime | - | - | - | × |  |
 
-
 ### index
 | インデックス名 | カラム | フィールド番号 
 | ---- | ---- | ---- |
-| index_tasks_to_labels_on_task_id | task_id | 1 |
-| index_tasks_to_labels_on_label_id | label_id | 1 |
+| index_tasks_labels_on_task_id | task_id | 1 |
+| index_tasks_labels_on_label_id | label_id | 1 |
