@@ -52,6 +52,12 @@ has_many->tasks_to_labels
 | index_tasks_on_owner_id_and_priority | priority | 2 |
 | index_tasks_on_owner_id_and_expires_at | owner_id | 1 |
 | index_tasks_on_owner_id_and_expires_at | expires_at | 2 |
+| index_tasks_on_owner_id_and_status_and_expire_at | owner_id | 1 |
+| index_tasks_on_owner_id_and_status_and_expire_at | status | 2 |
+| index_tasks_on_owner_id_and_status_and_expire_at | expires_at | 3 |
+| index_tasks_on_owner_id_and_status_and_priority | owner_id | 1 |
+| index_tasks_on_owner_id_and_status_and_priority | status | 2 |
+| index_tasks_on_owner_id_and_status_and_priority | priority | 3 |
 
 ## ・labels
 has_many->tasks_to_labels  
