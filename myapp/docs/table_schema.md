@@ -36,7 +36,7 @@ has_many->tasks_to_labels
 | owner_id | タスク登録ユーザID | int | - | users.id | - | × | |
 | status | ステータス | varchar | - | - | - | × | ["waiting", "doing", "completed"] | 
 | title | タスク名 | varchar | - | - | - | × | |
-| priority | タスク優先度 | tiny int | - | - | - | × | {1: "高", 2: "中", 3: "低"} |
+| priority | タスク優先度 | tiny int | - | - | - | × | {1: "high", 2: "middle", 3: "low"} |
 | description | タスクの説明文 | text | - | - | "" | × | |
 | expires_at | タスク終了時刻 | datetime | - | - | null | ○ |  |
 | created_at | 作成時刻 | datetime | - | - | - | × |  |
