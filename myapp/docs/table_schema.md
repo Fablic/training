@@ -17,9 +17,8 @@ has_many->tasks
 ### index
 | インデックス名 | カラム | フィールド番号 
 | ---- | ---- | ---- |
+| index_users_on_name | name | 1 |
 | index_users_on_email | email | 1 |
-| index_users_on_authentication_token | authentication_token | 1 |
-| index_users_on_reset_password_token | reset_password_token | 1 |
 
 ## ・tasks
 belongs_to->users  
