@@ -10,10 +10,6 @@ has_many->tasks
 | name | 名前 | varchar | - | - | - | × | |
 | email | メールアドレス | varchar | - | - | - | × | |
 | encrypted_password | パスワード | varchar | - | - | - | × | hashed |
-| authentication_token | 認証トークン | varchar | - | - | null | ○ |  |
-| last_sign_in_at | 最終ログイン時刻 | datetime | - | - | null | ○ |  |
-| reset_password_token | リセットパスワードトークン | varchar | - | - | null | ○ |  |
-| reset_password_sent_at | リセットパスワード送信時刻 | datetime | - | - | null | ○ |  |
 | created_at | 作成時刻 | datetime | - | - | - | × |  |
 | updated_at | 更新時刻 | datetime | - | - | - | × |  |
 | deleted_at | 退会時刻 | datetime | - | - | null | ○ |  |
@@ -87,7 +83,7 @@ belongs_to->labels
 | label_id | ラベルID | int | - | labels.id | - | × | |
 | created_at | 作成時刻 | datetime | - | - | - | × |  |
 | updated_at | 更新時刻 | datetime | - | - | - | × |  |
-| deleted_at | 削除時刻 | datetime | - | - | null | ○ |  |
+
 
 ### index
 | インデックス名 | カラム | フィールド番号 
