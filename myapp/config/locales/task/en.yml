@@ -10,6 +10,7 @@ en:
         created_at: Created at
         due_date: Due date
         status: Status
+        user: Owner
     enums:
       task:
         status:
@@ -18,6 +19,9 @@ en:
           started: Started
           mark_completed: Mark Completed
           completed: Completed
+    associations:
+      task:
+        editable_users: Editable Users
     order_by:
       task:
         - [ID, id-asc]
@@ -32,6 +36,9 @@ en:
           - [Completed, completed]
         search_title: Search Title
         tag_name: Tag Name
+        owner:
+          - [Mine, mine]
+          - [Others, others]
     misc:
       task:
         zero: no tasks

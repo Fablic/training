@@ -8,6 +8,7 @@
       <%= I18n.t('activerecord.attributes.task.due_date') %>: <%= form.date_select :due_date, start_year: DateTime.now.year %>
     </div><br>
     <%= I18n.t('activerecord.models.tag') %>: <%= form.text_field :tag_list, class: 'form-control' %> <br>
+    <%= I18n.t('activerecord.associations.task.editable_users') %>: <%= form.text_field :editable_user_list, class: 'form-control' %> <br>
 
     <%= form.submit I18n.t('helpers.submit.submit', model: I18n.t('activerecord.models.task')).capitalize, class: "btn btn-outline-secondary" %>
   <% end %>

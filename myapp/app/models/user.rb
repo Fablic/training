@@ -21,6 +21,9 @@ class User < ApplicationRecord
 
   has_many :tasks, dependent: :delete_all
 
+  has_many :editable_task_users
+  has_many :editable_tasks, through: :editable_task_users, source: :task
+
   before_destroy :stop_destroy
 
   has_secure_password

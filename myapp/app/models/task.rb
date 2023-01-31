@@ -30,6 +30,9 @@ class Task < ApplicationRecord
 
   belongs_to :user, optional: true, counter_cache: true
 
+  has_many :editable_task_users
+  has_many :editable_users, through: :editable_task_users, source: :user
+
   has_many :taggings
   has_many :tags, through: :taggings
   has_many :limited_tags, -> { order(:name).limit(5) }, through: :taggings, class_name: 'Tag', source: :tag
@@ -73,5 +76,18 @@ class Task < ApplicationRecord
 
   def self.tagged_with(name)
     Tag.find_by(name: name)&.tasks || Task.none
+  end
+
+  def editable_user_list
+    editable_users.map(&:email).join(', ')
+  end
+
+  def editable_user_list=(emails)
+    self.editable_users = emails.split(',').map do |email|
+      editable_user_id = User.find_by!(email: email.strip).id
+      next if editable_user_id == self.user_id || (self.new_record? && editable_user_id == Current.user.id) # not to add author in as editable user
+      editable_task_user = EditableTaskUser.where(user_id: editable_user_id, task_id: id).first_or_initialize
+      editable_task_user.user
+    end.compact
   end
 end

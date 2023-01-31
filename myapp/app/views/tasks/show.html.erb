@@ -44,6 +44,10 @@
         <th><%= I18n.t('activerecord.misc.tag.plural') %></th>
         <td><%= @task.tag_list %></td>
       </tr>
+      <tr>
+        <th><%= I18n.t('activerecord.associations.task.editable_users') %></th>
+        <td><%= @task.editable_user_list %></td>
+      </tr>
     </tbody>
   </table>
 

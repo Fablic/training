@@ -207,6 +207,32 @@ RSpec.describe 'Task', type: :system do
             expect(filtered_tasks_ids).to eq([task_2.id])
           end
         end
+
+        describe 'filter with Task owner' do
+          let(:other_user) { create(:user) }
+          let!(:others_task) { create(:task, user: other_user) }
+          before { others_task.editable_user_list = "#{user.email}" }
+
+          describe 'Mine filter' do
+            it "does not display other users' tasks" do
+              visit root_path
+              page.find("#owner_filter option[value='mine']").select_option
+              click_on 'Filter by'
+
+              expect(filtered_tasks_ids).not_to include(others_task.id)
+            end
+          end
+
+          describe 'Others filter' do
+            it "only displays other users' tasks" do
+              visit root_path
+              page.find("#owner_filter option[value='others']").select_option
+              click_on 'Filter by'
+
+              expect(filtered_tasks_ids).to eq([others_task.id])
+            end
+          end
+        end
       end
     end
 
@@ -274,33 +300,98 @@ RSpec.describe 'Task', type: :system do
             expect(page).to have_content new_tags
           end
         end
+
+        describe 'editable_user_list' do
+          let!(:other_user_1) { create(:user) }
+          let!(:other_user_2) { create(:user) }
+
+          context 'when adding other users' do
+            it 'saves the editable users association' do
+              editable_users = other_user_1.email + ', ' + other_user_2.email
+              fill_in 'task_editable_user_list', with: editable_users
+
+              expect { click_button(submit_button_text) }.to change(EditableTaskUser, :count).by(2)
+            end
+          end
+
+          context 'when adding the author' do
+            it 'does not save the editable users association' do
+              editable_users = user.email
+              fill_in 'task_editable_user_list', with: editable_users
+
+              expect { click_button(submit_button_text) }.to change(EditableTaskUser, :count).by(0)
+            end
+          end
+        end
       end
     end
 
     describe '#show' do
       context 'when task presents' do
         let!(:task) { create(:task, user: user) }
+        context 'when task is belongs to the user' do
+          it 'display the details of the task' do
+            visit task_path(task)
 
-        before { visit task_path(task) }
+            expect(page).to have_content task.id
+            expect(page).to have_content task.title
+            expect(page).to have_content task.description
+            expect(page).to have_content task.due_date.strftime('%F')
+            expect(page).to have_content task.created_at.strftime('%F %T')
+            expect(page).to have_content task.user.name
+          end
 
-        it 'display the details of the task' do
-          expect(page).to have_content task.id
-          expect(page).to have_content task.title
-          expect(page).to have_content task.description
-          expect(page).to have_content task.due_date.strftime('%F')
-          expect(page).to have_content task.created_at.strftime('%F %T')
-          expect(page).to have_content task.user.name
+          it 'displays links to manipulate the task' do
+            visit task_path(task)
+
+            expect(page).to have_link 'Edit'
+            expect(page).to have_link 'Delete'
+            expect(page).to have_link 'Back'
+          end
         end
 
-        it 'displays links to manipulate the task' do
-          expect(page).to have_link 'Edit'
-          expect(page).to have_link 'Delete'
-          expect(page).to have_link 'Back'
+        context 'when task is belongs to other user' do
+          let(:other_user) { create(:user) }
+          let(:rspec_session) { {user_id: other_user.id} }
+
+          context 'when accessible' do
+            before { task.editable_user_list = "#{other_user.email}" }
+
+            it 'display the details of the task' do
+              visit task_path(task)
+
+              expect(page).to have_content task.id
+              expect(page).to have_content task.title
+              expect(page).to have_content task.description
+              expect(page).to have_content task.due_date.strftime('%F')
+              expect(page).to have_content task.created_at.strftime('%F %T')
+              expect(page).to have_content task.user.name
+            end
+
+            it 'displays links to manipulate the task' do
+              visit task_path(task)
+
+              expect(page).to have_link 'Edit'
+              expect(page).to have_link 'Delete'
+              expect(page).to have_link 'Back'
+            end
+          end
+
+          context 'when not accessible' do
+            it 'displays record not found error message' do
+              visit task_path(task)
+
+              not_found_msg = "The page you were looking for doesn't exist."
+              expect(page).to have_content(not_found_msg)
+            end
+          end
         end
 
         describe 'task status related links' do
           context 'when task is unstarted' do
             it 'displays Mark Started button' do
+              visit task_path(task)
+
               expect(page).to have_link 'Mark Started'
             end
           end
@@ -308,6 +399,8 @@ RSpec.describe 'Task', type: :system do
           context 'when task is started' do
             let!(:task) { create(:task, :started, user: user) }
             it 'displays Mark Completed button' do
+              visit task_path(task)
+
               expect(page).to have_link 'Mark Completed'
             end
           end
@@ -382,6 +475,19 @@ RSpec.describe 'Task', type: :system do
             click_button(submit_button_text)
 
             expect(page).to have_content new_tags
+          end
+        end
+
+        describe 'editable_user_list' do
+          let(:other_user_1) { create(:user) }
+          let(:other_user_2) { create(:user) }
+          before { task.editable_user_list = "#{other_user_1.email}" }
+
+          it 'update the editable_user_list' do
+            new_editable_user_list = other_user_1.email + ', ' + other_user_2.email
+            fill_in 'task_editable_user_list', with: new_editable_user_list
+
+            expect { click_button(submit_button_text) }.to change(EditableTaskUser, :count).by(1)
           end
         end
       end

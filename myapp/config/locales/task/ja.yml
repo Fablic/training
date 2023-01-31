@@ -10,6 +10,7 @@ ja:
         created_at: 作成日時
         due_date: 終了期限
         status: ステータス
+        user: 作成者
     enums:
       task:
         status:
@@ -18,6 +19,9 @@ ja:
           started: 着手中
           mark_completed: 完了させる
           completed: 完了
+    associations:
+      task:
+        editable_users: 共有のユーザたち
     order_by:
       task:
         - [番号, id-asc]
@@ -32,6 +36,9 @@ ja:
           - [完了, completed]
         search_title: タイトル検索
         tag_name: タグ名
+        owner:
+          - [自分, mine]
+          - [他人, others]
     misc:
       task:
         zero: no タスク
