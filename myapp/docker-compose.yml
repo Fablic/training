@@ -37,11 +37,15 @@ services:
       DB_NAME: myapp
       DB_PASSWORD: password
       DB_HOST: db
+    platform: linux/amd64
 
   chrome:
-    image: selenium/standalone-chrome:latest
+    image: seleniarm/standalone-chromium
     ports:
       - 4444:4444
+    environment:
+      TZ: Asia/Tokyo
+    platform: linux/amd64
 
 volumes:
   db-data:
