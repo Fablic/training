@@ -19,7 +19,7 @@
 
 このカリキュラムは[クリエイティブ・コモンズ 表示 - 非営利 - 継承 4.0 国際 ライセンス](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ja)の下に提供されています。
 
-[![クリエイティブ・コモンズ・ライセンス](https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png)](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ja)  
+[![クリエイティブ・コモンズ・ライセンス](https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png)](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ja)
 
 ## 概要
 
@@ -104,11 +104,11 @@ chrome://extensions/ を開いて右上のDeveloper modeをオンにして、RKG
 - 公式サイトからDockerのアカウントを作ってログインし、DockerHubからダウンロードしてインストールしましょう
     - https://hub.docker.com/editions/community/docker-ce-desktop-mac
 - `docker-compose -v` コマンドでバージョンが表示されることを確認してください
-  - Mac M1チップの場合  
+  - Mac M1チップの場合
       ```sh
       docker-compose docker: 'compose' is not a docker command
       ```
-      が出る可能性があります。  
+      が出る可能性があります。
       解決策：
       ```sh
       mkdir -p /usr/local/lib/docker
@@ -146,11 +146,11 @@ chrome://extensions/ を開いて右上のDeveloper modeをオンにして、RKG
     ```sh
     docker-compose run api rails new . --force --database=mysql -G
     ```
-    - Mac M1チップの場合  
+    - Mac M1チップの場合
       - dockerコマンド実行したときチップによるエラーが幾つかあります。
         ```sh
         no matching manifest for linux/arm64/v8 in the manifest list entries
-        ```  
+        ```
         こういうエラーが出る場合、
         `docker-compose.yml`の`api:`と`db:`配下に
         ```yml
@@ -160,7 +160,7 @@ chrome://extensions/ を開いて右上のDeveloper modeをオンにして、RKG
         参考：[M1 MacによるDocker開発環境構築エラー](https://qiita.com/a-kym/items/10ecb57e0387a673b3a2)
       - ```sh
         executor failed running [/bin/sh -c apt-get install -y google-chrome-stable]: exit code: 100
-        ```  
+        ```
         こういうエラの場合、Dockerfileを弄って
         ```yml
         ENV DOCKER_DEFAULT_PLATFORM=linux/amd64
@@ -171,7 +171,7 @@ chrome://extensions/ を開いて右上のDeveloper modeをオンにして、RKG
         ```yml
         platform: linux/amd64
         ```
-        指定してもよい気がします。  
+        指定してもよい気がします。
       ここで出なくても今後のStepでこれが出る可能性がありますので、出たら上記の解決策を試しましょう。
 
 - `rails new` してできたプロジェクトのディレクトリ（アプリ名のディレクトリ）の直下に `docs` というディレクトリを作り、この文書ファイルをコミットしましょう
@@ -184,31 +184,31 @@ chrome://extensions/ を開いて右上のDeveloper modeをオンにして、RKG
       charset: utf8mb4 # ここを追加
       collation: utf8mb4_general_ci # ここを追加
       pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-      database: <%= ENV['DB_NAME'] %> # from docker-compose.yml 
-      username: <%= ENV['DB_USER'] %> # from docker-compose.yml 
-      password: <%= ENV['DB_PASSWORD'] %> # from docker-compose.yml 
-      host: <%= ENV['DB_HOST'] %> # from docker-compose.yml 
+      database: <%= ENV['DB_NAME'] %> # from docker-compose.yml
+      username: <%= ENV['DB_USER'] %> # from docker-compose.yml
+      password: <%= ENV['DB_PASSWORD'] %> # from docker-compose.yml
+      host: <%= ENV['DB_HOST'] %> # from docker-compose.yml
     ```
     - 他の部分はそのままで大丈夫です
 - 以下のコマンドでDockerをビルドしてアプリを立ち上げましょう
     ```sh
     docker-compose up --build
     ```
-    - Mac M1チップの場合： 
+    - Mac M1チップの場合：
       ```sh
       Webpacker::Manifest::MissingEntryError
-      ``` 
-      こういうエラーが出る場合、  
+      ```
+      こういうエラーが出る場合、
       `Gemfile`ファイル内のwebpackerを最新のものにする。
       ```yml
       gem 'webpacker', '~> 5.0'
       ```
       を指定して再実行してみてください。
       参考：[【Rails6】Webpacker::Manifest::MissingEntryErrorを解決する](https://qiita.com/ginger-yell/items/8584e9149496940ea144)
-        
+
       ```sh
       Function not implemented - Failed to initialize inotify (Errno::ENOSYS)
-      ``` 
+      ```
       の場合：
       `config/environments/development.rb`を編集してください。
       ```
@@ -220,7 +220,7 @@ chrome://extensions/ を開いて右上のDeveloper modeをオンにして、RKG
     - 以下のように表示されれば正常にアプリが立ち上がっています
       ```sh
       api_1  | => Booting Puma
-      api_1  | => Rails 6.0.0 application starting in development 
+      api_1  | => Rails 6.0.0 application starting in development
       api_1  | => Run `rails server --help` for more startup options
       api_1  | Puma starting in single mode...
       api_1  | * Version 3.12.1 (ruby 2.6.4-p104), codename: Llamas in Pajamas
@@ -309,10 +309,10 @@ chrome://extensions/ を開いて右上のDeveloper modeをオンにして、RKG
     gem 'selenium-webdriver'
   end
   ```
-  **Note**: Remove the `webdrivers` gem from your Gemfile. If `webdrivers` is present, it will attempt to  find Chrome in your application’s container. 
+  **Note**: Remove the `webdrivers` gem from your Gemfile. If `webdrivers` is present, it will attempt to  find Chrome in your application’s container.
   As Chrome isn’t installed  in the Dockerfile, the spec will fail.
-  
-- Before start testing we need to register a new driver with Capybara that is configured to use the Selenium container, add the below codes to 
+
+- Before start testing we need to register a new driver with Capybara that is configured to use the Selenium container, add the below codes to
   `spec/rails_helper.rb`
   ```
   Capybara.register_driver :remote_chrome do |app|
@@ -353,7 +353,7 @@ chrome://extensions/ を開いて右上のDeveloper modeをオンにして、RKG
             - 4444:4444
           environment:
             TZ: Asia/Tokyo
-        ```  
+        ```
 
   - feature specですと `database_cleaner` という gemは必要でしたが、 system specに変更することで `database_cleaner` の導入が要らなくなった
 - Circle CIなどのCIツールを導入して、Slackに通知するようにしましょう
