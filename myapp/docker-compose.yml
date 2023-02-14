@@ -10,6 +10,7 @@ services:
     volumes:
       - db-data:/var/lib/mysql
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    platform: linux/amd64
 
   api:
     build: .
@@ -36,6 +37,7 @@ services:
       DB_NAME: myapp
       DB_PASSWORD: password
       DB_HOST: db
+    platform: linux/amd64
 
   chrome:
     image: selenium/standalone-chrome:latest
