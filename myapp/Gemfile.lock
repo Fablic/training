@@ -229,20 +229,20 @@ DEPENDENCIES
   bootsnap (>= 1.4.2)
   byebug
   capybara (>= 2.15)
-  jbuilder
+  jbuilder (~> 2.11.5)
   listen (~> 3.2)
-  mysql2
-  puma
-  rails
-  sass-rails
+  mysql2 (~> 0.5.5)
+  puma (~> 6.1.0)
+  rails (~> 7.0.4.2)
+  sass-rails (~> 6.0.0)
   selenium-webdriver
   spring
   spring-watcher-listen (~> 2.0.0)
-  turbolinks
+  turbolinks (~> 5.2.1)
   tzinfo-data
   web-console (>= 3.3.0)
   webdrivers
-  webpacker
+  webpacker (~> 5.4.4)
 
 RUBY VERSION
    ruby 3.2.1p31
