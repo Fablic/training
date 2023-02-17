@@ -1,4 +1,7 @@
 class TasksController < ApplicationController
+
+  before_action :fetch_task_by_params_id, only: [:show, :edit, :update, :destroy]
+
   def index
     @tasks = Task.all
   end
@@ -19,7 +22,6 @@ class TasksController < ApplicationController
   end
 
   def show
-    @task = Task.find_by(id: params[:id])
   end
 
   def edit
@@ -32,6 +34,10 @@ class TasksController < ApplicationController
   end
 
   private
+
+  def fetch_task_by_params_id
+    @task = Task.find_by(id: params[:id])
+  end
 
   def task_params
     params.require(:task).permit(:name, :description, :deadline_at)
