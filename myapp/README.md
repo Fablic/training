@@ -8,8 +8,10 @@
 - タスクの CRUD ができること
 - 各タスクで以下のプロパティを持つこと
   - 名前
+  - 詳細
   - 終了期限
-  - ステータス(未着手,着手中,完了)
+  - ステータス(NEW,WIP,DONE)
+  - 優先順位(low, middle, high)
 - 以下でタスクの検索ができること
   - 名前
   - ステータス
@@ -69,11 +71,13 @@ https://user-images.githubusercontent.com/37566073/219284406-606ed7b7-7f2a-46ee-
 ### phase1 タスクの導入
 
 #### tasks table
+[WIP]優先度やステータスは後から追加します
 
 column | type | null | default | key | unique | description
 --- | --- | --- | ---  | ---  | ---  | ---
 id | integer | false | - | - | true | rails が自動で作成するカラム。サロゲートキー。
 name | string | false | - | - | - |
+description | string | true | - | - | - |
 deadline_at | datetime | true | - | - | - |
 created_at | datetime | false | - | - | - | rails が自動で作成するカラム
 updated_at | datetime | false | - | - | - | rails が自動で作成するカラム
