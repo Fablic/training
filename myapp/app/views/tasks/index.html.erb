@@ -3,19 +3,17 @@
 <table>
   <thead>
     <tr>
-      <th>id</th>
-      <th>name</th>
-      <th>description</th>
-      <th>deadline_at</th>
+      <% Task.column_names.each do |t| %>
+        <th><%= t %></th>
+      <% end %>
     </tr>
   </thead>
   <tbody>
-    <% Task.all.each do |t| %>
+    <% @tasks.each do |task| %>
       <tr>
-        <td><%= t.id %></td>
-        <td><%= t.name %></td>
-        <td><%= t.description %></td>
-        <td><%= t.deadline_at %></td>
+        <% task.attributes.values.each do |v| %>
+          <th><%= v %></th>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
