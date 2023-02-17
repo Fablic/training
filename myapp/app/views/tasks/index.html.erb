@@ -1,2 +1,20 @@
-<h1>Tasks#index</h1>
-<p>Find me in app/views/tasks/index.html.erb</p>
+<h1>Task list</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>name</th>
+      <th>deadline_at</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% Task.all.each do |t| %>
+      <tr>
+        <td><%= t.id %></td>
+        <td><%= t.name %></td>
+        <td><%= t.deadline_at %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
