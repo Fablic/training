@@ -6,6 +6,7 @@
       <% Task.column_names.each do |t| %>
         <th><%= t %></th>
       <% end %>
+      <th colspan="2"></th>
     </tr>
   </thead>
   <tbody>
@@ -14,6 +15,8 @@
         <% task.attributes.values.each do |v| %>
           <th><%= v %></th>
         <% end %>
+        <th><%= link_to "Edit", "/tasks/#{task.id}/edit" %></th>
+        <th><%= link_to "Delete", "/tasks/#{task.id}", data: { turbo_method: :delete } %></th>
       </tr>
     <% end %>
   </tbody>
