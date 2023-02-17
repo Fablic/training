@@ -12,8 +12,10 @@ class TasksController < ApplicationController
     task_params = params[:task]
     @task = Task.new(name: task_params[:name], description: task_params[:description], deadline_at: task_params[:deadline_at])
     if @task.save
+      flash[:success] = "Task successfully created"
       redirect_to @task
     else
+      flash[:error] = "Something went wrong"
       render 'new'
     end
   end
