@@ -71,6 +71,7 @@ https://user-images.githubusercontent.com/37566073/219284406-606ed7b7-7f2a-46ee-
 ### phase1 タスクの導入
 
 #### tasks table
+[WIP]優先度やステータスは後から追加します
 
 column | type | null | default | key | unique | description
 --- | --- | --- | ---  | ---  | ---  | ---
