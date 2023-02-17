@@ -10,3 +10,7 @@ Style/FrozenStringLiteralComment:
 AllCops:
   Exclude:
     - "bin/*"
+
+# 研修用の repogitory なので、アプリケーションが大きくならない想定なので、top-level documentation comment は不要そう
+Documentation:
+  Enabled: false
