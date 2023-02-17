@@ -4,9 +4,18 @@ class TasksController < ApplicationController
   end
 
   def new
+    @task = Task.new
   end
 
   def create
+    # TODO: use strong parameters
+    task_params = params[:task]
+    @task = Task.new(name: task_params[:name], description: task_params[:description], deadline_at: task_params[:deadline_at])
+    if @task.save
+      redirect_to @task
+    else
+      render 'new'
+    end
   end
 
   def show
