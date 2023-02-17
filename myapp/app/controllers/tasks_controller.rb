@@ -8,14 +8,12 @@ class TasksController < ApplicationController
   end
 
   def create
-    # TODO: use strong parameters
-    task_params = params[:task]
-    @task = Task.new(name: task_params[:name], description: task_params[:description], deadline_at: task_params[:deadline_at])
+    @task = Task.new(task_params)
     if @task.save
-      flash[:success] = "Task successfully created"
+      flash[:success] = 'Task successfully created'
       redirect_to @task
     else
-      flash[:error] = "Something went wrong"
+      flash[:error] = 'Something went wrong'
       render 'new'
     end
   end
@@ -31,5 +29,11 @@ class TasksController < ApplicationController
   end
 
   def destroy
+  end
+
+  private
+
+  def task_params
+    params.require(:task).permit(:name, :description, :deadline_at)
   end
 end
