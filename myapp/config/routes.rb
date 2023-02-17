@@ -1,4 +1,4 @@
 Rails.application.routes.draw do
   root to: 'tasks#index'
-  resource :tasks
+  resources :tasks
 end
