@@ -12,6 +12,7 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
+    # TODO: add validation to Task model
     if @task.save
       flash[:success] = 'Task successfully created'
       redirect_to @task
@@ -28,6 +29,13 @@ class TasksController < ApplicationController
   end
 
   def update
+    if @task.update(task_params)
+      flash[:success] = "Task was successfully updated"
+      redirect_to @task
+    else
+      flash[:error] = "Something went wrong"
+      render 'edit'
+    end
   end
 
   def destroy
