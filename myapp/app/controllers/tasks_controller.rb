@@ -1,5 +1,4 @@
 class TasksController < ApplicationController
-
   before_action :fetch_task_by_params_id, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -30,10 +29,10 @@ class TasksController < ApplicationController
 
   def update
     if @task.update(task_params)
-      flash[:success] = "Task was successfully updated"
+      flash[:success] = 'Task was successfully updated'
       redirect_to @task
     else
-      flash[:error] = "Something went wrong"
+      flash[:error] = 'Something went wrong'
       render 'edit'
     end
   end
@@ -41,11 +40,10 @@ class TasksController < ApplicationController
   def destroy
     if @task.destroy
       flash[:success] = 'Task was successfully deleted.'
-      redirect_to tasks_url
     else
       flash[:error] = 'Something went wrong'
-      redirect_to tasks_url
     end
+    redirect_to tasks_url
   end
 
   private
