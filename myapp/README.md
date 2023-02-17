@@ -8,8 +8,10 @@
 - タスクの CRUD ができること
 - 各タスクで以下のプロパティを持つこと
   - 名前
+  - 詳細
   - 終了期限
-  - ステータス(未着手,着手中,完了)
+  - ステータス(NEW,WIP,DONE)
+  - 優先順位(low, middle, high)
 - 以下でタスクの検索ができること
   - 名前
   - ステータス
@@ -74,6 +76,7 @@ column | type | null | default | key | unique | description
 --- | --- | --- | ---  | ---  | ---  | ---
 id | integer | false | - | - | true | rails が自動で作成するカラム。サロゲートキー。
 name | string | false | - | - | - |
+description | string | true | - | - | - |
 deadline_at | datetime | true | - | - | - |
 created_at | datetime | false | - | - | - | rails が自動で作成するカラム
 updated_at | datetime | false | - | - | - | rails が自動で作成するカラム
