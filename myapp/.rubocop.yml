@@ -1,0 +1,16 @@
+inherit_gem:
+  fablicop:
+    - "config/.base_rubocop.yml"
+
+# ruby 3 以降から string はデフォルトで immutable になったので。
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+# bin 配下は自動生成されたコードたちなので無視する
+AllCops:
+  Exclude:
+    - "bin/*"
+
+# 研修用の repogitory なので、アプリケーションが大きくならない想定なので、top-level documentation comment は不要そう
+Documentation:
+  Enabled: false

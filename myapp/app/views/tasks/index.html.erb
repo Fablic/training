@@ -1,0 +1,20 @@
+<h1>Task list</h1>
+
+<table>
+  <thead>
+    <tr>
+      <% Task.column_names.each do |t| %>
+        <th><%= t %></th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tasks.each do |task| %>
+      <tr>
+        <% task.attributes.values.each do |v| %>
+          <th><%= v %></th>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
