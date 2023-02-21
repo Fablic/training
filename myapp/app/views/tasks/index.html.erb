@@ -1,10 +1,10 @@
-<h1>Task list</h1>
+<h1><%= t('activerecord.models.task') %> <%= t('action.list') %></h1>
 
 <table>
   <thead>
     <tr>
-      <% Task.column_names.each do |t| %>
-        <th><%= t %></th>
+      <% Task.column_names.each do |column_name| %>
+        <th><%= t(column_name.to_sym, scope: [:activerecord, :attributes, :task]) %></th>
       <% end %>
       <th colspan="2"></th>
     </tr>
@@ -15,11 +15,11 @@
         <% task.attributes.values.each do |v| %>
           <th><%= v %></th>
         <% end %>
-        <th><%= link_to "Edit", "/tasks/#{task.id}/edit" %></th>
-        <th><%= link_to "Delete", "/tasks/#{task.id}", data: { turbo_method: :delete } %></th>
+        <th><%= link_to t('action.edit'), "/tasks/#{task.id}/edit" %></th>
+        <th><%= link_to t('action.delete'), "/tasks/#{task.id}", data: { turbo_method: :delete } %></th>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<%= link_to "Add", "/tasks/new" %>
+<%= link_to t('action.add'), "/tasks/new" %>

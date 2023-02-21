@@ -1,10 +1,10 @@
-<h1>Task</h1>
+<h1><%= t('activerecord.models.task') %> <%= t('action.show') %></h1>
 
 <table>
   <thead>
     <tr>
-      <% Task.column_names.each do |t| %>
-        <th><%= t %></th>
+      <% Task.column_names.each do |column_name| %>
+        <th><%= t(column_name.to_sym, scope: [:activerecord, :attributes, :task]) %></th>
       <% end %>
     </tr>
   </thead>
@@ -17,4 +17,4 @@
   </tbody>
 </table>
 
-<%= link_to "List", "/tasks", {style: "display: block;"} %>
+<%= link_to t('action.list'), "/tasks", {style: "display: block;"} %>

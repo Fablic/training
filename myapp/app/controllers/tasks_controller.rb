@@ -13,11 +13,11 @@ class TasksController < ApplicationController
     @task = Task.new(task_params)
     # TODO: add validation to Task model
     if @task.save
-      flash[:success] = 'Task successfully created'
+      flash[:success] = t('flash.task.create.success')
       return redirect_to @task
     end
 
-    flash[:error] = 'Something went wrong'
+    flash[:error] = t('flash.task.create.failure')
     render 'new'
   end
 
@@ -29,19 +29,19 @@ class TasksController < ApplicationController
 
   def update
     if @task.update(task_params)
-      flash[:success] = 'Task was successfully updated'
+      flash[:success] = t('flash.task.update.success')
       return redirect_to @task
     end
 
-    flash[:error] = 'Something went wrong'
+    flash[:error] = t('flash.task.update.failure')
     render 'edit'
   end
 
   def destroy
     if @task.destroy
-      flash[:success] = 'Task was successfully deleted.'
+      flash[:success] = t('flash.task.delete.success')
     else
-      flash[:error] = 'Something went wrong'
+      flash[:error] = t('flash.task.delete.failure')
     end
     redirect_to tasks_url
   end
