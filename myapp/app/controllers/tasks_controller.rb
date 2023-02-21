@@ -15,6 +15,7 @@ class TasksController < ApplicationController
     if @task.save
       flash[:success] = 'Task successfully created'
       redirect_to @task
+      return
     else
       flash[:error] = 'Something went wrong'
       render 'new'
@@ -31,6 +32,7 @@ class TasksController < ApplicationController
     if @task.update(task_params)
       flash[:success] = 'Task was successfully updated'
       redirect_to @task
+      return
     else
       flash[:error] = 'Something went wrong'
       render 'edit'
