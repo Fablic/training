@@ -21,15 +21,3 @@ ja:
       delete:
         success: 'タスクが正常に削除されました'
         failure: 'タスクの削除に失敗しました。'
-
-  activerecord:
-    models:
-      task: 'タスク'
-    attributes:
-      task:
-        id: 'id'
-        name: '名前'
-        description: '詳細'
-        deadline_at: '締め切り日時'
-        created_at: '作成日時'
-        updated_at: '更新日時'
