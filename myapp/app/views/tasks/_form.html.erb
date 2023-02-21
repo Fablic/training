@@ -1,5 +1,11 @@
-<%# commonly used for edit & new action %>
+<%= form_with model: @task do |form| %>
+  <p>name</p>
+  <%= form.text_field :name %>
+  <p>description</p>
+  <%= form.text_field :description %>
+  <p>deadline_at</p>
+  <%= form.datetime_field :deadline_at %>
 
-<p>partial file</p>
-<%= form_with do %>
+  <%= link_to "Cancel", "/tasks", {style: "display: block;"} %>
+  <%= form.submit %>
 <% end %>
