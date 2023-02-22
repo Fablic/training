@@ -15,11 +15,11 @@
         <% task.attributes.values.each do |v| %>
           <th><%= v %></th>
         <% end %>
-        <th><%= link_to t('action.edit'), "/tasks/#{task.id}/edit" %></th>
-        <th><%= link_to t('action.delete'), "/tasks/#{task.id}", data: { turbo_method: :delete } %></th>
+        <th><%= link_to t('action.edit'), edit_task_path(task) %></th>
+        <th><%= link_to t('action.delete'), task_path(task), data: { turbo_method: :delete } %></th>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<%= link_to t('action.add'), "/tasks/new" %>
+<%= link_to t('action.add'), new_task_path %>

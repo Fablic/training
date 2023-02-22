@@ -6,6 +6,6 @@
   <p><%= t(:deadline_at, scope: [:activerecord, :attributes, :task]) %></p>
   <%= form.datetime_field :deadline_at %>
 
-  <%= link_to t('action.cancel'), "/tasks", {style: "display: block;"} %>
+  <%= link_to t('action.cancel'), tasks_path, {style: "display: block;"} %>
   <%= form.submit %>
 <% end %>
