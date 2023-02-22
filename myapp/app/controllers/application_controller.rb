@@ -7,4 +7,9 @@ class ApplicationController < ActionController::Base
     I18n.with_locale(locale, &action)
   end
 
+  # see: https://guides.rubyonrails.org/i18n.html#setting-the-locale-from-url-params
+  def default_url_options
+    { locale: I18n.locale }
+  end
+
 end

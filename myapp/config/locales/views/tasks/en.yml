@@ -21,15 +21,3 @@ en:
       delete:
         success: 'The task was successfully deleted.'
         failure: 'Failed to delete the task'
-
-  activerecord:
-    models:
-      task: 'task'
-    attributes:
-      task:
-        id: 'id'
-        name: 'name'
-        description: 'description'
-        deadline_at: 'deadline_at'
-        created_at: 'created_at'
-        updated_at: 'updated_at'
