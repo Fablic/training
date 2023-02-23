@@ -28,6 +28,7 @@ services:
       DB_NAME: myapp
       DB_PASSWORD: password
       DB_HOST: db
+      TZ: Asia/Tokyo
     platform: linux/amd64
 
   chrome:
