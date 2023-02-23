@@ -1,11 +1,11 @@
 <%= form_with model: @task do |form| %>
-  <p>name</p>
+  <p><%= t(:name, scope: [:activerecord, :attributes, :task]) %></p>
   <%= form.text_field :name %>
-  <p>description</p>
+  <p><%= t(:description, scope: [:activerecord, :attributes, :task]) %></p>
   <%= form.text_field :description %>
-  <p>deadline_at</p>
+  <p><%= t(:deadline_at, scope: [:activerecord, :attributes, :task]) %></p>
   <%= form.datetime_field :deadline_at %>
 
-  <%= link_to "Cancel", "/tasks", {style: "display: block;"} %>
+  <%= link_to t('action.cancel'), tasks_path, {style: "display: block;"} %>
   <%= form.submit %>
 <% end %>

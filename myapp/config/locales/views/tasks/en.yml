@@ -1,0 +1,23 @@
+en:
+  action:
+    create: 'create'
+    edit: 'edit'
+    update: 'update'
+    delete: 'delete'
+    list: 'list'
+    cancel: 'cancel'
+    new: 'new'
+    add: 'add'
+    show: 'show'
+
+  flash:
+    task:
+      create:
+        success: 'The task was successfully created.'
+        failure: 'Failed to create the task.'
+      update:
+        success: 'The task was successfully updated.'
+        failure: 'Failed to update the task'
+      delete:
+        success: 'The task was successfully deleted.'
+        failure: 'Failed to delete the task'
