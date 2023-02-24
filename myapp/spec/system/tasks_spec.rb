@@ -5,13 +5,11 @@ RSpec.describe "Tasks", type: :system do
     driven_by(:remote_chrome)
   end
 
+  # TODO: バリデーションの実装は後で行うので、異常系のテストも後回し
   describe 'GET /' do
-    it 'renders a successful response', js: true do
+    it 'renders a successful response'do
       visit '/'
-      # binding.break
-      expect(response).to have_http_status(200)
-      expect(page).to have_content 'User was successfully created.'
-      # binding.break
+      expect(page).to have_content 'タスク 一覧'
     end
   end
 
