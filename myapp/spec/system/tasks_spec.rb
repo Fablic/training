@@ -6,7 +6,7 @@ RSpec.describe "Tasks", type: :system do
   end
 
   describe 'GET /' do
-    it 'renders a successful response' do
+    it 'renders a successful response', js: true do
       visit '/'
       # binding.break
       expect(response).to have_http_status(200)
