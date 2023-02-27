@@ -31,16 +31,9 @@ rescue ActiveRecord::PendingMigrationError => e
 end
 
 RSpec.configure do |config|
-  # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
-  # If you're not using ActiveRecord, or you'd prefer not to run each of your
-  # examples within a transaction, remove the following line or assign false
-  # instead of true.
   config.use_transactional_fixtures = true
-
-  # You can uncomment this line to turn off ActiveRecord support entirely.
-  # config.use_active_record = false
 
   # RSpec Rails can automatically mix in different behaviours to your tests
   # based on their file location, for example enabling you to call `get` and
@@ -68,26 +61,34 @@ RSpec.configure do |config|
     Capybara.server_port = 4444
     Capybara.app_host = "http://#{Capybara.server_host}:#{Capybara.server_port}"
   end
+
+  # FactoryBotの利用をON
+  config.include FactoryBot::Syntax::Methods
+
+  # DatabaseCleanerの設定
+  config.before(:suite) do
+    DatabaseCleaner.strategy = :truncation
+  end
+
+  config.before(:each) do
+    DatabaseCleaner.start
+  end
+
+  config.after(:each) do
+    DatabaseCleaner.clean
+  end
+
+  config.before(:all) do
+    DatabaseCleaner.start
+  end
+
+  config.after(:all) do
+    DatabaseCleaner.clean
+  end
 end
-
-# Capybara.register_driver :remote_chrome do |app|
-#   hub_url = 'https://chrome:4444/wd/hub'
-#   options = Selenium::WebDriver::Chrome::Options.new
-#   Capybara::Selenium::Driver.new(app, browser: :remote, url: hub_url, options: options)
-# end
-
-# Capybara.javascript_driver = :remote_chrome
-# Capybara.server_host = IPSocket.getaddress(Socket.gethostname)
-# Capybara.server_port = 3001
-# Capybara.app_host = "https://#{Capybara.server_host}:#{Capybara.server_port}"
 
 Capybara.register_driver :remote_chrome do |app|
   hub_url = 'http://chrome:4444/wd/hub'
-  # chrome_capabilities = ::Selenium::WebDriver::Remote::Capabilities.chrome(
-  #   'goog:chromeOptions' => {
-  #     'args' => %w[no-sandbox headless disable-gpu window-size=1680,1050],
-  #   },
-  # )
   options = Selenium::WebDriver::Chrome::Options.new
   options.add_argument('--headless')
   options.add_argument('--no-sandbox')

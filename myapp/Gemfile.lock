@@ -84,6 +84,12 @@ GEM
       xpath (~> 3.2)
     concurrent-ruby (1.2.0)
     crass (1.0.6)
+    database_cleaner (2.0.1)
+      database_cleaner-active_record (~> 2.0.0)
+    database_cleaner-active_record (2.0.1)
+      activerecord (>= 5.a)
+      database_cleaner-core (~> 2.0.0)
+    database_cleaner-core (2.0.1)
     date (3.3.3)
     debug (1.7.1)
       irb (>= 1.5.0)
@@ -264,6 +270,7 @@ PLATFORMS
 DEPENDENCIES
   bootsnap
   capybara (~> 3.38)
+  database_cleaner
   debug
   fablicop
   factory_bot_rails
@@ -272,8 +279,8 @@ DEPENDENCIES
   mysql2 (~> 0.5)
   puma (~> 5.0)
   rails (~> 7.0.4, >= 7.0.4.2)
-  rspec-rails
   rails-i18n
+  rspec-rails
   selenium-webdriver
   sprockets-rails
   stimulus-rails
