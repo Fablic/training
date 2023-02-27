@@ -74,7 +74,7 @@ RSpec.describe 'Tasks', type: :system do
       find('input[type="submit"]').click
       expect(page).to have_content 'タスクが正常に登録されました。'
       expect(page).to have_content 'タスク 詳細'
-      expect(page).to have_content 'sample_taask'
+      expect(page).to have_content 'sample_task'
       expect(Task.all.length).to eq 1
     end
   end
