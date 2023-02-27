@@ -1,7 +1,8 @@
 <h1><%= t('activerecord.models.task') %> <%= t('action.list') %></h1>
 
-<p><%= link_to "日本語", "/tasks" %></p>
-<p><%= link_to "English", "/tasks?locale=en" %></p>
+<p><%= link_to "日本語", tasks_path(locale: 'ja') %></p>
+<p><%= link_to "English", tasks_path(locale: 'en') %></p>
+<p><%= link_to t('sort.created_at'), tasks_path(sort_created_at: @sort_order) %></p>
 
 <table>
   <thead>

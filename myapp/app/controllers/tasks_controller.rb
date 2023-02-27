@@ -3,6 +3,12 @@ class TasksController < ApplicationController
 
   def index
     @tasks = Task.all
+    @sort_order = 'desc'
+
+    return @tasks = @tasks.order(created_at: :asc) if params[:sort_created_at] == "asc"
+
+    @tasks = @tasks.order(created_at: :desc) if params[:sort_created_at] == "desc"
+    @sort_order = 'asc'
   end
 
   def new
