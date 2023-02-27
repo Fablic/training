@@ -143,4 +143,29 @@ RSpec.describe 'Tasks', type: :system do
       end
     end
   end
+
+  describe 'Sorting by created_at' do
+    before do
+      @task1 = create(:task, name: 'hoge_task', created_at: Time.current.yesterday)
+      @task2 = create(:task, name: 'fuga_task', created_at: Time.current)
+    end
+
+    context 'Sorting asc => desc' do
+      it 'sorts successfully' do
+        visit '/tasks'
+        expect(page).to have_content %r{#{@task1.name}[\s\S]*#{@task2.name}}
+        click_link('作成日時で並び替え')
+        expect(page).to have_content %r{#{@task2.name}[\s\S]*#{@task1.name}}
+      end
+    end
+
+    context 'Sorting desc => asc' do
+      it 'sorts successfully' do
+        visit '/tasks?sort_created_at=desc'
+        expect(page).to have_content %r{#{@task2.name}[\s\S]*#{@task1.name}}
+        click_link('作成日時で並び替え')
+        expect(page).to have_content %r{#{@task1.name}[\s\S]*#{@task2.name}}
+      end
+    end
+  end
 end
