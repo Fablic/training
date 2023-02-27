@@ -10,6 +10,7 @@ RSpec.describe 'Tasks', type: :system do
     before do
       visit '/'
     end
+
     it 'renders tasks list page' do
       expect(page).to have_content 'タスク 一覧'
     end
@@ -20,6 +21,7 @@ RSpec.describe 'Tasks', type: :system do
       create(:task, name: 'sample_task')
       visit '/tasks'
     end
+
     it 'renders a successful response' do
       expect(page).to have_content 'タスク 一覧'
       expect(page).to have_content 'sample_task'
@@ -31,6 +33,7 @@ RSpec.describe 'Tasks', type: :system do
       @tasks = create(:task, name: 'sample_task')
       visit "/tasks/#{@tasks.id}"
     end
+
     it 'renders a successful response' do
       expect(page).to have_content 'タスク 詳細'
       expect(page).to have_content 'sample_task'
@@ -41,6 +44,7 @@ RSpec.describe 'Tasks', type: :system do
     before do
       visit '/tasks/new'
     end
+
     it 'renders tasks list page' do
       expect(page).to have_content 'タスク 新規'
     end
@@ -51,6 +55,7 @@ RSpec.describe 'Tasks', type: :system do
       @tasks = create(:task, name: 'sample_task')
       visit "/tasks/#{@tasks.id}/edit"
     end
+
     it 'renders a successful response' do
       expect(page).to have_content 'タスク 編集'
       expect(page).to have_selector 'input[value="sample_task"]'
@@ -59,9 +64,10 @@ RSpec.describe 'Tasks', type: :system do
 
   describe 'Creating a new task successfully' do
     before do
-      visit "/tasks"
+      visit '/tasks'
       click_link('追加')
     end
+
     it 'successfully create a task' do
       expect(Task.all.length).to eq 0
       fill_in 'task[name]', with: 'sample_task'
@@ -78,6 +84,7 @@ RSpec.describe 'Tasks', type: :system do
       @tasks = create(:task, name: 'sample_task')
       visit "/tasks/#{@tasks.id}/edit"
     end
+
     it 'successfully update a task' do
       fill_in 'task[name]', with: 'hoge_task'
       find('input[type="submit"]').click
@@ -91,8 +98,9 @@ RSpec.describe 'Tasks', type: :system do
   describe 'Deleting a task successfully' do
     before do
       @tasks = create(:task, name: 'sample_task')
-      visit "/tasks"
+      visit '/tasks'
     end
+
     it 'successfully update a task' do
       expect(Task.all.length).to eq 1
       click_link('削除')
