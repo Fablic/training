@@ -23,6 +23,7 @@ RSpec.describe 'Tasks', type: :system do
     end
 
     it 'renders a successful response' do
+      visit '/tasks'
       expect(page).to have_content 'タスク 一覧'
       expect(page).to have_content 'sample_task'
     end
@@ -93,6 +94,7 @@ RSpec.describe 'Tasks', type: :system do
     end
 
     it 'successfully update a task' do
+      visit '/tasks'
       expect(Task.all.length).to eq 1
       click_link('削除')
       expect(page).to have_content 'タスクが正常に削除されました。'
@@ -160,3 +162,4 @@ RSpec.describe 'Tasks', type: :system do
     end
   end
 end
+
