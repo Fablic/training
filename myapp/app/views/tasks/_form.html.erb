@@ -1,11 +1,11 @@
 <%= form_with model: @task do |form| %>
-  <p><%= t(:name, scope: [:activerecord, :attributes, :task]) %></p>
+  <p><%= I18n.t(:name, scope: [:activerecord, :attributes, :task]) %></p>
   <%= form.text_field :name %>
-  <p><%= t(:description, scope: [:activerecord, :attributes, :task]) %></p>
+  <p><%= I18n.t(:description, scope: [:activerecord, :attributes, :task]) %></p>
   <%= form.text_field :description %>
-  <p><%= t(:deadline_at, scope: [:activerecord, :attributes, :task]) %></p>
+  <p><%= I18n.t(:deadline_at, scope: [:activerecord, :attributes, :task]) %></p>
   <%= form.datetime_field :deadline_at %>
 
-  <%= link_to t('action.cancel'), tasks_path, {style: "display: block;"} %>
+  <%= link_to I18n.t('action.cancel'), tasks_path, {style: "display: block;"} %>
   <%= form.submit %>
 <% end %>
