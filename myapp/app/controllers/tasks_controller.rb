@@ -3,8 +3,12 @@ class TasksController < ApplicationController
 
   def index
     @tasks = Task.all
-    @sort_order = reversed_sort_direction
-    @tasks = @tasks.order(created_at: sort_direction.to_sym)
+    @reversed_sort_direction = reversed_sort_direction
+    @sort_key = params[:sort_key]
+
+    if params[:sort_key].present?
+      @tasks = @tasks.order("#{params[:sort_key]} #{sort_direction}")
+    end
   end
 
   def new
@@ -59,7 +63,7 @@ class TasksController < ApplicationController
   end
 
   def sort_direction
-    %w[asc desc].include?(params[:sort_created_at]) ? params[:sort_created_at] : 'asc'
+    %w[asc desc].include?(params[:sort_direction]) ? params[:sort_direction] : 'asc'
   end
 
   def reversed_sort_direction

@@ -143,18 +143,18 @@ RSpec.describe 'Tasks', type: :system do
 
     context 'Sorting asc => desc' do
       it 'sorts successfully' do
-        visit '/tasks'
+        visit '/tasks?sort_direction=asc&sort_key=created_at'
         expect(page).to have_content %r{#{@task1.name}[\s\S]*#{@task2.name}}
-        click_link('作成日時で並び替え')
+        click_link('作成日時')
         expect(page).to have_content %r{#{@task2.name}[\s\S]*#{@task1.name}}
       end
     end
 
     context 'Sorting desc => asc' do
       it 'sorts successfully' do
-        visit '/tasks?sort_created_at=desc'
+        visit '/tasks?sort_direction=desc&sort_key=created_at'
         expect(page).to have_content %r{#{@task2.name}[\s\S]*#{@task1.name}}
-        click_link('作成日時で並び替え')
+        click_link('作成日時')
         expect(page).to have_content %r{#{@task1.name}[\s\S]*#{@task2.name}}
       end
     end

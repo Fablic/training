@@ -2,13 +2,15 @@
 
 <p><%= link_to "日本語", tasks_path(locale: 'ja') %></p>
 <p><%= link_to "English", tasks_path(locale: 'en') %></p>
-<p><%= link_to t('sort.created_at'), tasks_path(sort_created_at: @sort_order) %></p>
 
 <table>
   <thead>
     <tr>
       <% Task.column_names.each do |column_name| %>
-        <th><%= t(column_name.to_sym, scope: [:activerecord, :attributes, :task]) %></th>
+        <th>
+          <%= link_to t(column_name.to_sym, scope: [:activerecord, :attributes, :task]),
+                tasks_path(sort_key: column_name, sort_direction: @sort_key == column_name ? @reversed_sort_direction : "asc") %>
+        </th>
       <% end %>
       <th colspan="2"></th>
     </tr>
