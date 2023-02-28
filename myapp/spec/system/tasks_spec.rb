@@ -17,46 +17,37 @@ RSpec.describe 'Tasks', type: :system do
   end
 
   describe 'GET /tasks' do
-    before do
-      create(:task, name: 'sample_task')
-      visit '/tasks'
-    end
+    let!(:task) { create(:task) }
 
     it 'renders a successful response' do
+      visit '/tasks'
       expect(page).to have_content 'タスク 一覧'
       expect(page).to have_content 'sample_task'
     end
   end
 
   describe 'GET /tasks/:id' do
-    before do
-      @tasks = create(:task, name: 'sample_task')
-      visit "/tasks/#{@tasks.id}"
-    end
+    let(:task) { create(:task) }
 
     it 'renders a successful response' do
+      visit "/tasks/#{task.id}"
       expect(page).to have_content 'タスク 詳細'
       expect(page).to have_content 'sample_task'
     end
   end
 
   describe 'GET /tasks/new' do
-    before do
-      visit '/tasks/new'
-    end
-
     it 'renders tasks list page' do
+      visit '/tasks/new'
       expect(page).to have_content 'タスク 新規'
     end
   end
 
   describe 'GET /tasks/:id/edit' do
-    before do
-      @tasks = create(:task, name: 'sample_task')
-      visit "/tasks/#{@tasks.id}/edit"
-    end
+    let(:task) { create(:task) }
 
     it 'renders a successful response' do
+      visit "/tasks/#{task.id}/edit"
       expect(page).to have_content 'タスク 編集'
       expect(page).to have_selector 'input[value="sample_task"]'
     end
@@ -80,12 +71,10 @@ RSpec.describe 'Tasks', type: :system do
   end
 
   describe 'Updating a task successfully' do
-    before do
-      @tasks = create(:task, name: 'sample_task')
-      visit "/tasks/#{@tasks.id}/edit"
-    end
+    let(:task) { create(:task) }
 
     it 'successfully update a task' do
+      visit "/tasks/#{task.id}/edit"
       fill_in 'task[name]', with: 'hoge_task'
       find('input[type="submit"]').click
       expect(page).to have_content 'タスクが正常に更新されました。'
@@ -96,12 +85,10 @@ RSpec.describe 'Tasks', type: :system do
   end
 
   describe 'Deleting a task successfully' do
-    before do
-      create(:task, name: 'sample_task')
-      visit '/tasks'
-    end
+    let!(:task) { create(:task) }
 
     it 'successfully update a task' do
+      visit '/tasks'
       expect(Task.all.length).to eq 1
       click_link('削除')
       expect(page).to have_content 'タスクが正常に削除されました。'
@@ -169,3 +156,4 @@ RSpec.describe 'Tasks', type: :system do
     end
   end
 end
+
