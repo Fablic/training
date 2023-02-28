@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :task do
-    name { 'name' }
+    name { 'sample_task' }
   end
 end
