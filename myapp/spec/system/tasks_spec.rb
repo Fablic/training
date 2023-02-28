@@ -97,7 +97,7 @@ RSpec.describe 'Tasks', type: :system do
 
   describe 'Deleting a task successfully' do
     before do
-      @tasks = create(:task, name: 'sample_task')
+      create(:task, name: 'sample_task')
       visit '/tasks'
     end
 
