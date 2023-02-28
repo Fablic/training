@@ -1,3 +1,6 @@
+# About rubocop configuration
+# see: https://github.com/rubocop/rubocop/blob/master/config/default.yml
+
 inherit_gem:
   fablicop:
     - "config/.base_rubocop.yml"
@@ -14,3 +17,8 @@ AllCops:
 # 研修用の repogitory なので、アプリケーションが大きくならない想定なので、top-level documentation comment は不要そう
 Documentation:
   Enabled: false
+
+# block 名を明記しないのがデフォルトになったらしいが、明記したほうがわかりやすいと個人的に感じるので明記するように設定を上書き
+# see: https://docs.rubocop.org/rubocop/cops_naming.html
+Naming/BlockForwarding:
+  EnforcedStyle: explicit

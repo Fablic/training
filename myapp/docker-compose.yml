@@ -22,6 +22,7 @@ services:
     ports:
       - "3000:3000"
     depends_on:
+      - chrome
       - db
     environment:
       DB_USER: root
@@ -30,3 +31,10 @@ services:
       DB_HOST: db
       TZ: Asia/Tokyo
     platform: linux/amd64
+
+  chrome:
+    image: seleniarm/standalone-chromium
+    ports:
+      - 4444:4444
+    environment:
+      TZ: Asia/Tokyo
