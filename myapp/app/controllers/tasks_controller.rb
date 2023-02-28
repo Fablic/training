@@ -3,13 +3,8 @@ class TasksController < ApplicationController
 
   def index
     @tasks = Task.all
-    @sort_order = 'asc'
-
-    return @tasks = @tasks.order(created_at: :desc) if params[:sort_created_at] == "desc"
-
-    @sort_order = 'desc'
-    return @tasks = @tasks.order(created_at: :asc) if params[:sort_created_at] == "asc"
-
+    @sort_order = reversed_sort_direction
+    @tasks = @tasks.order(created_at: sort_direction.to_sym)
   end
 
   def new
@@ -62,4 +57,13 @@ class TasksController < ApplicationController
   def task_params
     params.require(:task).permit(:name, :description, :deadline_at)
   end
+
+  def sort_direction
+    %w[asc desc].include?(params[:sort_created_at]) ? params[:sort_created_at] : 'asc'
+  end
+
+  def reversed_sort_direction
+    sort_direction == "asc" ? "desc" : "asc"
+  end
+
 end
