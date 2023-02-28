@@ -6,10 +6,10 @@
 <table>
   <thead>
     <tr>
-      <% Task.column_names.each do |column_name| %>
+      <% @task_columns_with_sorting_direction.each do |column| %>
         <th>
-          <%= link_to t(column_name.to_sym, scope: [:activerecord, :attributes, :task]),
-                tasks_path(sort_key: column_name, sort_direction: @sort_key == column_name ? @reversed_sort_direction : "asc") %>
+          <%= link_to t(column[:name].to_sym, scope: [:activerecord, :attributes, :task]),
+                tasks_path(sort_key: column[:name], sort_direction: column[:sort_direction]) %>
         </th>
       <% end %>
       <th colspan="2"></th>

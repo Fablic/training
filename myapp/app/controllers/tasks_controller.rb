@@ -3,12 +3,9 @@ class TasksController < ApplicationController
 
   def index
     @tasks = Task.all
-    @reversed_sort_direction = reversed_sort_direction
-    @sort_key = params[:sort_key]
+    @task_columns_with_sorting_direction = task_columns_with_sorting_direction
 
-    if params[:sort_key].present?
-      @tasks = @tasks.order("#{params[:sort_key]} #{sort_direction}")
-    end
+    @tasks = @tasks.order("#{params[:sort_key]} #{sort_direction}") if params[:sort_key].present?
   end
 
   def new
@@ -68,6 +65,15 @@ class TasksController < ApplicationController
 
   def reversed_sort_direction
     sort_direction == "asc" ? "desc" : "asc"
+  end
+
+  def task_columns_with_sorting_direction
+    Task.column_names.map do |column_name|
+      {
+        name: column_name,
+        sort_direction: params[:sort_key] == column_name ? reversed_sort_direction : "asc",
+      }
+    end
   end
 
 end
