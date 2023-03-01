@@ -64,14 +64,14 @@ class TasksController < ApplicationController
   end
 
   def reversed_sort_direction
-    sort_direction == "asc" ? "desc" : "asc"
+    sort_direction == 'asc' ? 'desc' : 'asc'
   end
 
   def task_columns_with_sorting_direction
     Task.column_names.map do |column_name|
       {
         name: column_name,
-        sort_direction: params[:sort_key] == column_name ? reversed_sort_direction : "asc",
+        sort_direction: params[:sort_key] == column_name ? reversed_sort_direction : 'asc',
       }
     end
   end
