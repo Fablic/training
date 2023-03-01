@@ -10,6 +10,9 @@ ja:
     add: '追加'
     show: '詳細'
 
+  sort:
+    created_at: '作成日時で並び替え'
+
   flash:
     task:
       create:

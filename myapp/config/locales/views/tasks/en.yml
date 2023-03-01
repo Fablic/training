@@ -10,6 +10,9 @@ en:
     add: 'add'
     show: 'show'
 
+  sort:
+    created_at: 'Sort by created_at'
+
   flash:
     task:
       create:

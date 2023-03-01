@@ -1,13 +1,16 @@
-<h1><%= t('activerecord.models.task') %> <%= t('action.list') %></h1>
+<h1><%= I18n.t('activerecord.models.task') %> <%= I18n.t('action.list') %></h1>
 
-<p><%= link_to "日本語", "/tasks" %></p>
-<p><%= link_to "English", "/tasks?locale=en" %></p>
+<p><%= link_to "日本語", tasks_path(locale: 'ja') %></p>
+<p><%= link_to "English", tasks_path(locale: 'en') %></p>
 
 <table>
   <thead>
     <tr>
-      <% Task.column_names.each do |column_name| %>
-        <th><%= t(column_name.to_sym, scope: [:activerecord, :attributes, :task]) %></th>
+      <% @task_columns_with_sorting_direction.each do |column| %>
+        <th>
+          <%= link_to I18n.t(column[:name].to_sym, scope: [:activerecord, :attributes, :task]),
+                tasks_path(sort_key: column[:name], sort_direction: column[:sort_direction]) %>
+        </th>
       <% end %>
       <th colspan="2"></th>
     </tr>
@@ -18,11 +21,11 @@
         <% task.attributes.values.each do |v| %>
           <th><%= v %></th>
         <% end %>
-        <th><%= link_to t('action.edit'), edit_task_path(task) %></th>
-        <th><%= link_to t('action.delete'), task_path(task), data: { turbo_method: :delete } %></th>
+        <th><%= link_to I18n.t('action.edit'), edit_task_path(task) %></th>
+        <th><%= link_to I18n.t('action.delete'), task_path(task), data: { turbo_method: :delete } %></th>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<%= link_to t('action.add'), new_task_path %>
+<%= link_to I18n.t('action.add'), new_task_path %>
