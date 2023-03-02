@@ -1,4 +1,6 @@
 <%= form_with model: @task do |form| %>
+  <%= render partial: "shared/error_messages", locals: { model: @task } %>
+
   <p><%= I18n.t(:name, scope: [:activerecord, :attributes, :task]) %></p>
   <%= form.text_field :name %>
   <p><%= I18n.t(:description, scope: [:activerecord, :attributes, :task]) %></p>

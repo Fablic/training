@@ -14,14 +14,13 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
-    # TODO: add validation to Task model
     if @task.save
       flash[:success] = I18n.t('flash.task.create.success')
       return redirect_to @task
     end
 
     flash[:error] = I18n.t('flash.task.create.failure')
-    render 'new'
+    render 'new', status: :unprocessable_entity
   end
 
   def show
@@ -37,7 +36,7 @@ class TasksController < ApplicationController
     end
 
     flash[:error] = I18n.t('flash.task.update.failure')
-    render 'edit'
+    render 'edit', status: :unprocessable_entity
   end
 
   def destroy
