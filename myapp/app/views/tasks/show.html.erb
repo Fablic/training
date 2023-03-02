@@ -1,21 +1,15 @@
 <h1><%= I18n.t('activerecord.models.task') %> <%= I18n.t('action.show') %></h1>
 
 <table>
-  <thead>
-    <tr>
-      <% Task.column_names.each do |column_name| %>
-        <th><%= I18n.t(column_name.to_sym, scope: [:activerecord, :attributes, :task]) %></th>
-      <% end %>
-    </tr>
-  </thead>
   <tbody>
-    <tr>
-      <% @task.attributes.values.each do |v| %>
-        <th><%= v %></th>
-      <% end %>
-    </tr>
+    <% Task.column_names.each do |column_name| %>
+      <tr>
+        <th><%= I18n.t(column_name.to_sym, scope: [:activerecord, :attributes, :task]) %></th>
+        <td><%= @task.send(column_name) %></td>
+      </tr>
+    <% end %>
   </tbody>
 </table>
 
-<%= link_to I18n.t('action.list'), tasks_path, {style: "display: block;"} %>
-<%= link_to I18n.t('action.edit'), edit_task_path(@task), {style: "display: block;"} %>
+<%= link_to I18n.t('action.list'), tasks_path %>
+<%= link_to I18n.t('action.edit'), edit_task_path(@task) %>
