@@ -6,6 +6,7 @@ RSpec.describe 'Task', type: :model do
       let(:task) {
         Task.new(name: 'sample_task',
                  description: 'hoge fuga',
+                 status: 'unstarted',
                  deadline_at: '2023-01-01T00:00')
       }
 
@@ -22,6 +23,7 @@ RSpec.describe 'Task', type: :model do
         let(:task) {
           Task.new(name: '',
                   description: 'hoge fuga',
+                  status: 'unstarted',
                   deadline_at: '2023-01-01T00:00')
         }
 
@@ -36,6 +38,7 @@ RSpec.describe 'Task', type: :model do
         let(:task) {
           Task.new(name: 'a',
                   description: 'hoge fuga',
+                  status: 'unstarted',
                   deadline_at: '2023-01-01T00:00')
         }
 
@@ -49,6 +52,7 @@ RSpec.describe 'Task', type: :model do
         let(:task) {
           Task.new(name: 'a' * 255,
                   description: 'hoge fuga',
+                  status: 'unstarted',
                   deadline_at: '2023-01-01T00:00')
         }
 
@@ -62,6 +66,7 @@ RSpec.describe 'Task', type: :model do
         let(:task) {
           Task.new(name: 'a' * 256,
                   description: 'hoge fuga',
+                  status: 'unstarted',
                   deadline_at: '2023-01-01T00:00')
         }
 
@@ -78,6 +83,7 @@ RSpec.describe 'Task', type: :model do
         let(:task) {
           Task.new(name: 'sample_task',
                   description: '',
+                  status: 'unstarted',
                   deadline_at: '2023-01-01T00:00')
         }
 
@@ -91,6 +97,7 @@ RSpec.describe 'Task', type: :model do
         let(:task) {
           Task.new(name: 'sample_task',
                   description: 'a'*5000,
+                  status: 'unstarted',
                   deadline_at: '2023-01-01T00:00')
         }
 
@@ -104,6 +111,7 @@ RSpec.describe 'Task', type: :model do
         let(:task) {
           Task.new(name: 'sample_task',
                   description: 'a'*5001,
+                  status: 'unstarted',
                   deadline_at: '2023-01-01T00:00')
         }
 
