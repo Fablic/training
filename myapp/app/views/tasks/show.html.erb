@@ -5,7 +5,7 @@
     <% Task.column_names.each do |column_name| %>
       <tr>
         <th><%= I18n.t(column_name.to_sym, scope: [:activerecord, :attributes, :task]) %></th>
-        <td><%= @task.send(column_name) %></td>
+        <td><%= value_with_i18n(@task, column_name) %></td>
       </tr>
     <% end %>
   </tbody>
