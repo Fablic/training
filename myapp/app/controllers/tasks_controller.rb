@@ -68,10 +68,11 @@ class TasksController < ApplicationController
 
   def task_columns_with_sorting_direction
     Task.column_names.map do |column_name|
+      next if column_name == 'description'
       {
         name: column_name,
         sort_direction: params[:sort_key] == column_name ? reversed_sort_direction : 'asc',
       }
-    end
+    end.compact
   end
 end
