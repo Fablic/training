@@ -5,6 +5,8 @@
   <%= form.text_field :name %>
   <p><%= I18n.t(:description, scope: [:activerecord, :attributes, :task]) %></p>
   <%= form.text_area :description %>
+  <p><%= I18n.t(:status, scope: [:activerecord, :attributes, :task]) %></p>
+  <%= form.select :status, options_for_select_of_statuses %>
   <p><%= I18n.t(:deadline_at, scope: [:activerecord, :attributes, :task]) %></p>
   <%= form.datetime_field :deadline_at %>
 

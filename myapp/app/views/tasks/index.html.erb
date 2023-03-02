@@ -18,9 +18,12 @@
   <tbody>
     <% @tasks.each do |task| %>
       <tr>
-        <% task.attributes.except("description").values.each do |v| %>
-          <th><%= v %></th>
-        <% end %>
+        <th><%= task.id %></th>
+        <th><%= task.name %></th>
+        <th><%= I18n.t(task.status, scope: [:activerecord, :enums, :task, :status]) %></th>
+        <th><%= task.deadline_at %></th>
+        <th><%= task.created_at %></th>
+        <th><%= task.updated_at %></th>
         <th><%= link_to I18n.t('action.show'), task_path(task) %></th>
         <th><%= link_to I18n.t('action.edit'), edit_task_path(task) %></th>
         <th><%= link_to I18n.t('action.delete'), task_path(task), data: { turbo_method: :delete } %></th>
