@@ -23,3 +23,8 @@ Documentation:
 # see: https://docs.rubocop.org/rubocop/cops_naming.html
 Naming/BlockForwarding:
   EnforcedStyle: explicit
+
+# hash の key と value の変数名が同じ場合、value の変数名を省略するのが default になったらしいが、慣れないので OFF にする。
+# see: https://koic.hatenablog.com/entry/rubocop-supports-ruby-3-1-syntax
+Style/HashSyntax:
+  EnforcedShorthandSyntax: never
