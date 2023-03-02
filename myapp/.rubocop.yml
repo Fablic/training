@@ -28,3 +28,9 @@ Naming/BlockForwarding:
 # see: https://koic.hatenablog.com/entry/rubocop-supports-ruby-3-1-syntax
 Style/HashSyntax:
   EnforcedShorthandSyntax: never
+
+RSpec/NestedGroups:
+  Max: 4
+
+RSpec/MultipleExpectations:
+  Max: 6
