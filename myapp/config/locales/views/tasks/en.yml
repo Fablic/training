@@ -9,6 +9,7 @@ en:
     new: 'new'
     add: 'add'
     show: 'show'
+    back: 'back'
 
   sort:
     created_at: 'Sort by created_at'
