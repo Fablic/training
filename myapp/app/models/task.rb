@@ -4,5 +4,5 @@ class Task < ApplicationRecord
   # DBにアクセスしてエラーを吐くまでにモデルでバリデーションが働くようにしたい意図。
   validates :description, length: { maximum: 5000 }
 
-  enum status: { unstarted: 0, wip: 1, done: 2}
+  enum status: { unstarted: 0, wip: 1, done: 2 }
 end

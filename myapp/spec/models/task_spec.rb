@@ -22,9 +22,9 @@ RSpec.describe 'Task', type: :model do
       context 'length is 0' do
         let(:task) {
           Task.new(name: '',
-                  description: 'hoge fuga',
-                  status: 'unstarted',
-                  deadline_at: '2023-01-01T00:00')
+                   description: 'hoge fuga',
+                   status: 'unstarted',
+                   deadline_at: '2023-01-01T00:00')
         }
 
         it 'has validation error' do
@@ -37,9 +37,9 @@ RSpec.describe 'Task', type: :model do
       context 'length is 1' do
         let(:task) {
           Task.new(name: 'a',
-                  description: 'hoge fuga',
-                  status: 'unstarted',
-                  deadline_at: '2023-01-01T00:00')
+                   description: 'hoge fuga',
+                   status: 'unstarted',
+                   deadline_at: '2023-01-01T00:00')
         }
 
         it 'has no error' do
@@ -51,9 +51,9 @@ RSpec.describe 'Task', type: :model do
       context 'length is 255' do
         let(:task) {
           Task.new(name: 'a' * 255,
-                  description: 'hoge fuga',
-                  status: 'unstarted',
-                  deadline_at: '2023-01-01T00:00')
+                   description: 'hoge fuga',
+                   status: 'unstarted',
+                   deadline_at: '2023-01-01T00:00')
         }
 
         it 'has no error' do
@@ -65,9 +65,9 @@ RSpec.describe 'Task', type: :model do
       context 'length is 256' do
         let(:task) {
           Task.new(name: 'a' * 256,
-                  description: 'hoge fuga',
-                  status: 'unstarted',
-                  deadline_at: '2023-01-01T00:00')
+                   description: 'hoge fuga',
+                   status: 'unstarted',
+                   deadline_at: '2023-01-01T00:00')
         }
 
         it 'has validation error' do
@@ -82,9 +82,9 @@ RSpec.describe 'Task', type: :model do
       context 'length is 0' do
         let(:task) {
           Task.new(name: 'sample_task',
-                  description: '',
-                  status: 'unstarted',
-                  deadline_at: '2023-01-01T00:00')
+                   description: '',
+                   status: 'unstarted',
+                   deadline_at: '2023-01-01T00:00')
         }
 
         it 'has no error' do
@@ -96,9 +96,9 @@ RSpec.describe 'Task', type: :model do
       context 'length is 5000' do
         let(:task) {
           Task.new(name: 'sample_task',
-                  description: 'a'*5000,
-                  status: 'unstarted',
-                  deadline_at: '2023-01-01T00:00')
+                   description: 'a' * 5000,
+                   status: 'unstarted',
+                   deadline_at: '2023-01-01T00:00')
         }
 
         it 'has no error' do
@@ -110,9 +110,9 @@ RSpec.describe 'Task', type: :model do
       context 'length is 5001' do
         let(:task) {
           Task.new(name: 'sample_task',
-                  description: 'a'*5001,
-                  status: 'unstarted',
-                  deadline_at: '2023-01-01T00:00')
+                   description: 'a' * 5001,
+                   status: 'unstarted',
+                   deadline_at: '2023-01-01T00:00')
         }
 
         it 'has validation error' do
