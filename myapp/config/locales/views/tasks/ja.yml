@@ -9,6 +9,7 @@ ja:
     new: '新規'
     add: '追加'
     show: '詳細'
+    back: '戻る'
 
   sort:
     created_at: '作成日時で並び替え'

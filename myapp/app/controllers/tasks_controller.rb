@@ -14,14 +14,13 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
-    # TODO: add validation to Task model
     if @task.save
       flash[:success] = I18n.t('flash.task.create.success')
       return redirect_to @task
     end
 
     flash[:error] = I18n.t('flash.task.create.failure')
-    render 'new'
+    render 'new', status: :unprocessable_entity
   end
 
   def show
@@ -37,7 +36,7 @@ class TasksController < ApplicationController
     end
 
     flash[:error] = I18n.t('flash.task.update.failure')
-    render 'edit'
+    render 'edit', status: :unprocessable_entity
   end
 
   def destroy
@@ -69,11 +68,11 @@ class TasksController < ApplicationController
 
   def task_columns_with_sorting_direction
     Task.column_names.map do |column_name|
+      next if column_name == 'description'
       {
         name: column_name,
         sort_direction: params[:sort_key] == column_name ? reversed_sort_direction : 'asc',
       }
-    end
+    end.compact
   end
-
 end

@@ -9,10 +9,11 @@ inherit_gem:
 Style/FrozenStringLiteralComment:
   Enabled: false
 
-# bin 配下は自動生成されたコードたちなので無視する
+# rails が自動生成したコードたちなので無視する
 AllCops:
   Exclude:
     - "bin/*"
+    - "db/schema.rb"
 
 # 研修用の repogitory なので、アプリケーションが大きくならない想定なので、top-level documentation comment は不要そう
 Documentation:
