@@ -77,10 +77,12 @@ RSpec.describe 'Tasks', type: :system do
   end
 
   describe 'Updating a task successfully' do
-    let(:task) { create(:task, name: 'sample_task',
-                               description: 'sample description',
-                               status: 'wip',
-                               deadline_at: '2023-02-03T12:34') }
+    let(:task) {
+      create(:task, name: 'sample_task',
+                    description: 'sample description',
+                    status: 'wip',
+                    deadline_at: '2023-02-03T12:34')
+    }
 
     before do
       visit "/tasks/#{task.id}/edit"
