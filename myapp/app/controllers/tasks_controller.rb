@@ -55,7 +55,7 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:name, :description, :deadline_at)
+    params.require(:task).permit(:name, :description, :status, :deadline_at)
   end
 
   def sort_direction
@@ -69,6 +69,7 @@ class TasksController < ApplicationController
   def task_columns_with_sorting_direction
     Task.column_names.map do |column_name|
       next if column_name == 'description'
+
       {
         name: column_name,
         sort_direction: params[:sort_key] == column_name ? reversed_sort_direction : 'asc',

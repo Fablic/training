@@ -7,6 +7,13 @@ ja:
         id: 'id'
         name: '名前'
         description: '詳細'
+        status: 'ステータス'
         deadline_at: '締め切り日時'
         created_at: '作成日時'
         updated_at: '更新日時'
+    enums:
+      task:
+        status:
+          unstarted: '開始前'
+          wip: '着手中'
+          done: '完了'
