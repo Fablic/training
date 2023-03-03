@@ -1,4 +1,4 @@
-module TaskHelper
+module TasksHelper
   def options_for_select_of_statuses
     Task.statuses.keys.map { |status| [I18n.t(status, scope: [:activerecord, :enums, :task, :status]), status] }
   end
