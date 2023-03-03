@@ -48,9 +48,9 @@ RSpec.describe 'Task', type: :model do
         end
       end
 
-      context 'length is 255' do
+      context 'length is 50' do
         let(:task) {
-          Task.new(name: 'a' * 255,
+          Task.new(name: 'a' * 50,
                    description: 'hoge fuga',
                    status: 'unstarted',
                    deadline_at: '2023-01-01T00:00')
@@ -62,9 +62,9 @@ RSpec.describe 'Task', type: :model do
         end
       end
 
-      context 'length is 256' do
+      context 'length is 51' do
         let(:task) {
-          Task.new(name: 'a' * 256,
+          Task.new(name: 'a' * 51,
                    description: 'hoge fuga',
                    status: 'unstarted',
                    deadline_at: '2023-01-01T00:00')
