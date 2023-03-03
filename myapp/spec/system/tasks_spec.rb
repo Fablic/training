@@ -59,30 +59,45 @@ RSpec.describe 'Tasks', type: :system do
     before do
       visit '/tasks'
       click_link('追加')
+      fill_in 'task[name]', with: 'sample_task'
+      fill_in 'task[description]', with: 'sample description'
+      select '完了', from: 'task_status'
+      fill_in 'task[deadline_at]', with: Time.zone.local(2023, 2, 3, 12, 34)
+      find('input[type="submit"]').click
     end
 
     it 'successfully create a task' do
-      expect(Task.all.length).to eq 0
-      fill_in 'task[name]', with: 'sample_task'
-      find('input[type="submit"]').click
       expect(page).to have_content 'タスクが正常に登録されました。'
       expect(page).to have_content 'タスク 詳細'
       expect(page).to have_content 'sample_task'
-      expect(Task.all.length).to eq 1
+      expect(page).to have_content 'sample description'
+      expect(page).to have_content '完了'
+      expect(page).to have_content '2023-02-03 12:34:00 +0900'
     end
   end
 
   describe 'Updating a task successfully' do
-    let(:task) { create(:task) }
+    let(:task) { create(:task, name: 'sample_task',
+                               description: 'sample description',
+                               status: 'wip',
+                               deadline_at: '2023-02-03T12:34') }
+
+    before do
+      visit "/tasks/#{task.id}/edit"
+      fill_in 'task[name]', with: 'sample_task_updated'
+      fill_in 'task[description]', with: 'sample description updated'
+      select '完了', from: 'task_status'
+      fill_in 'task[deadline_at]', with: Time.zone.local(2023, 3, 4, 13, 56)
+      find('input[type="submit"]').click
+    end
 
     it 'successfully update a task' do
-      visit "/tasks/#{task.id}/edit"
-      fill_in 'task[name]', with: 'hoge_task'
-      find('input[type="submit"]').click
       expect(page).to have_content 'タスクが正常に更新されました。'
       expect(page).to have_content 'タスク 詳細'
-      expect(page).to have_content 'hoge_task'
-      expect(Task.all.length).to eq 1
+      expect(page).to have_content 'sample_task_updated'
+      expect(page).to have_content 'sample description updated'
+      expect(page).to have_content '完了'
+      expect(page).to have_content '2023-03-04 13:56:00 +0900'
     end
   end
 
