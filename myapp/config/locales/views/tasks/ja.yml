@@ -11,8 +11,17 @@ ja:
     show: '詳細'
     back: '戻る'
 
+  form:
+    unselected: '--未選択--'
+
   sort:
     created_at: '作成日時で並び替え'
+
+  filter:
+    title: 'フィルタリング'
+    apply: '適用'
+    applying: '適用中'
+    show_all: '全て表示'
 
   flash:
     task:

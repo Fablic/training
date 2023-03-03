@@ -11,8 +11,17 @@ en:
     show: 'show'
     back: 'back'
 
+  form:
+    unselected: '--unselected--'
+
   sort:
     created_at: 'Sort by created_at'
+
+  filter:
+    title: 'filtering'
+    apply: 'apply'
+    applying: 'applying'
+    show_all: 'show_all'
 
   flash:
     task:

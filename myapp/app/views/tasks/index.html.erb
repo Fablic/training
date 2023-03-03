@@ -1,7 +1,26 @@
 <h1><%= I18n.t('activerecord.models.task') %> <%= I18n.t('action.list') %></h1>
 
-<p><%= link_to "日本語", tasks_path(locale: 'ja') %></p>
-<p><%= link_to "English", tasks_path(locale: 'en') %></p>
+<div>
+  <p><%= link_to "日本語", tasks_path(locale: 'ja') %></p>
+  <p><%= link_to "English", tasks_path(locale: 'en') %></p>
+</div>
+
+<%# TODO: fix design in STEP 15 %>
+
+<%# TODO: フィルター条件を引き継ぐ %>
+<div style='margin-bottom: 40px;'>
+  <h3><%= I18n.t('filter.title') %></h3>
+  <%= form_with url: tasks_path, method: :get do |form| %>
+    <span><%= I18n.t(:name, scope: [:activerecord, :attributes, :task]) %></span>
+    <%= form.text_field :name %>
+    <span><%= I18n.t(:status, scope: [:activerecord, :attributes, :task]) %></span>
+    <%= form.select :status, options_for_select_of_statuses_with_blank_option %>
+    <%# TODO: フィルターを適用中かどうか表示する %>
+    <%# TODO: フィルター解除ボタンを表示する %>
+    <%= form.submit I18n.t('filter.apply') %>
+    <p><%= I18n.t('filter.applying') if false %></p>
+  <% end %>
+</div>
 
 <table>
   <thead>

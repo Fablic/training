@@ -5,4 +5,6 @@ class Task < ApplicationRecord
   validates :description, length: { maximum: 5000 }
 
   enum status: { unstarted: 0, wip: 1, done: 2 }
+
+  scope :name_contain, ->(name){ where('name LIKE ?', "%#{sanitize_sql_like(name)}%") }
 end

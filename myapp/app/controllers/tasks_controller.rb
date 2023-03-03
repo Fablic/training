@@ -5,7 +5,14 @@ class TasksController < ApplicationController
     @tasks = Task.all
     @task_columns_with_sorting_direction = task_columns_with_sorting_direction
 
+    if params[:name].present? || params[:status].present?
+      filterer = TaskFilterer.new(name: params[:name], status: params[:status])
+      return @tasks unless filterer.valid? # フィルター条件が正しくない時はフィルターせずにreturn
+      @tasks = filterer.execute(@tasks)
+    end
+
     @tasks = @tasks.order("#{params[:sort_key]} #{sort_direction}") if params[:sort_key].present?
+    @tasks
   end
 
   def new
