@@ -9,7 +9,7 @@ class TaskFilterer
 
   def execute(tasks)
     tasks = tasks.send(status) if status.present?
-    tasks.name_contain(name) if name.present?
+    tasks = tasks.name_contain(name) if name.present?
     tasks
   end
 end
