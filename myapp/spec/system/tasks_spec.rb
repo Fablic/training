@@ -245,27 +245,27 @@ RSpec.describe 'Tasks', type: :system do
     end
   end
 
-  describe "Pagenation" do
-    context "the number of tasks is 10 or below" do
+  describe 'Pagenation' do
+    context 'the number of tasks is 10 or below' do
       before do
-        10.times {create(:task)}
+        create_list(:task, 10)
         visit '/tasks'
       end
 
-      it "shows expected view" do
+      it 'shows expected view' do
         expect(page).not_to have_content '次'
         expect(page).not_to have_content '最後'
         expect(page.all('table tbody tr').length).to eq 10
       end
     end
 
-    context "the number of tasks is 11" do
+    context 'the number of tasks is 11' do
       before do
-        11.times {create(:task)}
+        create_list(:task, 11)
         visit '/tasks'
       end
 
-      it "shows expected view" do
+      it 'shows expected view' do
         expect(page).to have_content '次'
         expect(page).to have_content '最後'
         expect(page.all('.pagination .page').length).to eq 2
@@ -280,14 +280,14 @@ RSpec.describe 'Tasks', type: :system do
       end
     end
 
-    context "Filtering & the number of tasks is 10 or below" do
+    context 'Filtering & the number of tasks is 10 or below' do
       before do
-        5.times {create(:task, status: 'unstarted')}
-        10.times {create(:task, status: 'wip')}
+        create_list(:task, 5, status: 'unstarted')
+        create_list(:task, 10, status: 'wip')
         visit '/tasks'
       end
 
-      it "shows expected view" do
+      it 'shows expected view' do
         expect(page).to have_content '次'
         expect(page).to have_content '最後'
         expect(page.all('.pagination .page').length).to eq 2
@@ -303,14 +303,14 @@ RSpec.describe 'Tasks', type: :system do
       end
     end
 
-    context "Filtering & the number of tasks is 11" do
+    context 'Filtering & the number of tasks is 11' do
       before do
-        10.times {create(:task, status: 'unstarted')}
-        11.times {create(:task, status: 'wip')}
+        create_list(:task, 10, status: 'unstarted')
+        create_list(:task, 11, status: 'wip')
         visit '/tasks'
       end
 
-      it "shows expected view" do
+      it 'shows expected view' do
         expect(page).to have_content '次'
         expect(page).to have_content '最後'
         expect(page.all('.pagination .page').length).to eq 3
@@ -332,5 +332,4 @@ RSpec.describe 'Tasks', type: :system do
       end
     end
   end
-
 end
