@@ -1,4 +1,5 @@
 ja:
+  title: 'タスク管理アプリ'
   action:
     create: '登録'
     edit: '編集'

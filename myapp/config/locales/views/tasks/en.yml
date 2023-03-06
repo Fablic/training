@@ -1,4 +1,5 @@
 en:
+  title: 'Task Management System'
   action:
     create: 'create'
     edit: 'edit'
