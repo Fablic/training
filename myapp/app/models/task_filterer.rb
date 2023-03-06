@@ -2,8 +2,7 @@ class TaskFilterer
   include ActiveModel::Model
 
   validates :name, length: { maximum: 50 }
-  # TODO: status list のベタ書きやめる
-  validates :status, inclusion: { in: %w(unstarted wip done) }, allow_blank: true
+  validates :status, inclusion: { in: Task.statuses.keys }, allow_blank: true
 
   attr_accessor :name, :status
 
