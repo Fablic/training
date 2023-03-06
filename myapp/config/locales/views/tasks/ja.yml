@@ -20,8 +20,7 @@ ja:
   filter:
     title: 'フィルタリング'
     apply: '適用'
-    applying: '適用中'
-    show_all: '全て表示'
+    remove: 'フィルター解除'
 
   flash:
     task:

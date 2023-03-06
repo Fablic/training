@@ -20,8 +20,8 @@ en:
   filter:
     title: 'filtering'
     apply: 'apply'
-    applying: 'applying'
-    show_all: 'show_all'
+    remove: 'remove filter'
+
 
   flash:
     task:
