@@ -18,11 +18,11 @@
     </div>
   </div>
 
-  <table>
+  <table class="table table-striped table-hover">
     <thead>
       <tr>
         <% @task_columns_with_sorting_direction.each do |column| %>
-          <th>
+          <th class="text-center">
             <%= link_to I18n.t(column[:name].to_sym, scope: [:activerecord, :attributes, :task]),
                   tasks_path(sort_key: column[:name], sort_direction: column[:sort_direction]) %>
           </th>
