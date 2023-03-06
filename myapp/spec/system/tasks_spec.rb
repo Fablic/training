@@ -5,7 +5,6 @@ RSpec.describe 'Tasks', type: :system do
     driven_by(:remote_chrome)
   end
 
-  # TODO: バリデーションの実装は後で行うので、異常系のテストも後回し
   describe 'GET /' do
     before do
       visit '/'
