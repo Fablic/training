@@ -1,3 +1,4 @@
+# This model is responsible for validating filter conditions and executing filtering.
 class TaskFilterer
   include ActiveModel::Model
 
