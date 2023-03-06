@@ -13,7 +13,7 @@
     <span><%= I18n.t(:name, scope: [:activerecord, :attributes, :task]) %></span>
     <%= form.text_field :name, { value: params[:name] } %>
     <span><%= I18n.t(:status, scope: [:activerecord, :attributes, :task]) %></span>
-    <%= form.select :status, options_for_select_of_statuses_with_blank_option, { selected: params[:status] } %>
+    <%= form.select :status, options_for_select_of_statuses, { include_blank: true, selected: params[:status] } %>
     <%= form.submit I18n.t('filter.apply') %>
     <p><%= link_to I18n.t('filter.remove'), tasks_path %></p>
   <% end %>

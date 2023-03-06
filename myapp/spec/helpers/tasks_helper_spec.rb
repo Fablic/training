@@ -7,12 +7,6 @@ RSpec.describe TasksHelper, type: :helper do
     end
   end
 
-  describe 'options_for_select_of_statuses_with_blank_option' do
-    it 'returns expectedly' do
-      expect(helper.options_for_select_of_statuses_with_blank_option).to eq([['--未選択--', ''], ['開始前', 'unstarted'], ['着手中', 'wip'], ['完了', 'done']])
-    end
-  end
-
   describe 'value_with_i18n' do
     let(:task) { create(:task, name: 'hoge_task', status: 'done') }
 

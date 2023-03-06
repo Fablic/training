@@ -3,10 +3,6 @@ module TasksHelper
     Task.statuses.keys.map { |status| [I18n.t(status, scope: [:activerecord, :enums, :task, :status]), status] }
   end
 
-  def options_for_select_of_statuses_with_blank_option
-    options_for_select_of_statuses.unshift([I18n.t('form.unselected'), ''])
-  end
-
   def value_with_i18n(task, column_name)
     return I18n.t(task.status, scope: [:activerecord, :enums, :task, :status]) if column_name == 'status'
 
