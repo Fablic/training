@@ -39,9 +39,9 @@
           <th><%= task.deadline_at %></th>
           <th><%= task.created_at %></th>
           <th><%= task.updated_at %></th>
-          <th><%= link_to I18n.t('action.show'), task_path(task) %></th>
-          <th><%= link_to I18n.t('action.edit'), edit_task_path(task) %></th>
-          <th><%= link_to I18n.t('action.delete'), task_path(task), data: { turbo_method: :delete } %></th>
+          <th><%= link_to I18n.t('action.show'), task_path(task), class:"btn btn-primary" %></th>
+          <th><%= link_to I18n.t('action.edit'), edit_task_path(task), class:"btn btn-primary" %></th>
+          <th><%= link_to I18n.t('action.delete'), task_path(task), class:"btn btn-danger", data: { turbo_method: :delete } %></th>
         </tr>
       <% end %>
     </tbody>
