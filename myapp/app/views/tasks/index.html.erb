@@ -1,18 +1,18 @@
 <div class="px-5">
   <h2><%= I18n.t('activerecord.models.task') %> <%= I18n.t('action.list') %></h2>
 
-  <div class='mb-4'>
+  <div class='mb-5'>
     <div class="d-flex justify-content-between align-items-center">
-      <div><%= link_to I18n.t('action.add'), new_task_path %></div>
+      <div><%= link_to I18n.t('action.add'), new_task_path, class:"btn btn-primary" %></div>
       <div>
         <span class="fw-bold me-3"><%= I18n.t('filter.title') %></span>
         <%= form_with url: tasks_path, method: :get, class:"d-inline" do |form| %>
           <span><%= I18n.t(:name, scope: [:activerecord, :attributes, :task]) %></span>
-          <%= form.text_field :name, { value: params[:name] } %>
+          <%= form.text_field :name, { value: params[:name], class:"form-control d-inline w-auto me-2" } %>
           <span><%= I18n.t(:status, scope: [:activerecord, :attributes, :task]) %></span>
-          <%= form.select :status, options_for_select_of_statuses, { include_blank: true, selected: params[:status] } %>
-          <%= form.submit I18n.t('filter.apply') %>
-          <span><%= link_to I18n.t('filter.remove'), tasks_path %></span>
+          <%= form.select :status, options_for_select_of_statuses, { include_blank: true, selected: params[:status] }, {class: 'form-select d-inline w-auto me-2'} %>
+          <%= form.submit I18n.t('filter.apply'), class:"btn btn-primary me-4" %>
+          <span><%= link_to I18n.t('filter.remove'), tasks_path, class:"btn btn-primary" %></span>
         <% end %>
       </div>
     </div>
