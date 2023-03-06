@@ -175,10 +175,12 @@ RSpec.describe 'Tasks', type: :system do
     end
 
     describe 'Filtering Function' do
-      let!(:task1) { create(:task, name: 'hoge_task', status: 'unstarted') }
-      let!(:task2) { create(:task, name: 'fuga_task', status: 'wip') }
-      let!(:task3) { create(:task, name: 'hoge_fuga_task', status: 'done') }
-      let!(:task4) { create(:task, name: 'xxx_task', status: 'done') }
+      before do
+        create(:task, name: 'hoge_task', status: 'unstarted')
+        create(:task, name: 'fuga_task', status: 'wip')
+        create(:task, name: 'hoge_fuga_task', status: 'done')
+        create(:task, name: 'xxx_task', status: 'done')
+      end
 
       context 'get /tasks page without querry parameters' do
         it 'does not take over the query parameter.' do
