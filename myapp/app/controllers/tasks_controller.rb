@@ -7,7 +7,7 @@ class TasksController < ApplicationController
 
     if params[:name].present? || params[:status].present?
       filterer = TaskFilterer.new(name: params[:name], status: params[:status])
-      return @tasks unless filterer.valid? # フィルター条件が正しくない時はフィルターせずにreturn
+      return @tasks unless filterer.valid? #early return if the filterer conditions is invalid
       @tasks = filterer.execute(@tasks)
     end
 
