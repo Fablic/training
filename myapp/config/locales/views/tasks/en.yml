@@ -22,7 +22,6 @@ en:
     apply: 'apply'
     remove: 'remove filter'
 
-
   flash:
     task:
       create:
