@@ -13,7 +13,8 @@ class TasksController < ApplicationController
     end
 
     @tasks = @tasks.order("#{params[:sort_key]} #{sort_direction}") if params[:sort_key].present?
-    @tasks
+
+    @tasks = @tasks.page(params[:page])
   end
 
   def new
