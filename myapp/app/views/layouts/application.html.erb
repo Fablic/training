@@ -16,12 +16,14 @@
 
   <body>
     <div class="px-5 mb-3 bg-primary">
-      <%= link_to tasks_path, class:"text-decoration-none" do %>
-        <h1 class="py-2 text-white"><%= I18n.t('title') %></h1>
-      <% end %>
-      <div>
-        <p><%= link_to "日本語", request.path_info + "?locale=ja", class:"text-white" %></p>
-        <p><%= link_to "English", request.path_info + "?locale=en", class:"text-white" %></p>
+      <div class="d-flex justify-content-between align-items-center">
+        <%= link_to tasks_path, class:"text-decoration-none" do %>
+          <h1 class="py-2 text-white"><%= I18n.t('title') %></h1>
+        <% end %>
+        <div>
+          <span class="me-2"><%= link_to "日本語", request.path_info + "?locale=ja", class:"text-white" %></span>
+          <span><%= link_to "English", request.path_info + "?locale=en", class:"text-white" %></span>
+        </div>
       </div>
     </div>
 
