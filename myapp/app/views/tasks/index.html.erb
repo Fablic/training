@@ -34,7 +34,7 @@
       <% @tasks.each do |task| %>
         <tr>
           <th class="text-center"><%= task.id %></th>
-          <th><%= task.name %></th>
+          <th class="w-25"><%= task.name %></th>
           <th class="text-center"><%= I18n.t(task.status, scope: [:activerecord, :enums, :task, :status]) %></th>
           <th class="text-center"><%= task.deadline_at&.strftime("%Y/%m/%d %H:%M")  %></th>
           <th class="text-center"><%= task.created_at.strftime("%Y/%m/%d %H:%M")  %></th>
