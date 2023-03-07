@@ -41,7 +41,7 @@
           <th class="text-center"><%= task.updated_at.strftime("%Y/%m/%d %H:%M")  %></th>
           <th class="text-center"><%= link_to I18n.t('action.show'), task_path(task), class:"btn btn-primary" %></th>
           <th class="text-center"><%= link_to I18n.t('action.edit'), edit_task_path(task), class:"btn btn-primary" %></th>
-          <th class="text-center"><%= link_to I18n.t('action.delete'), task_path(task), class:"btn btn-danger", data: { turbo_method: :delete } %></th>
+          <th class="text-center"><%= link_to I18n.t('action.delete'), task_path(task), class:"btn btn-danger", data: { turbo_method: :delete, turbo_confirm: I18n.t('confirm') } %></th>
         </tr>
       <% end %>
     </tbody>

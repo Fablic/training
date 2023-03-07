@@ -11,6 +11,7 @@ en:
     add: 'add'
     show: 'show'
     back: 'back'
+  confirm: 'Are you sure?'
 
   form:
     unselected: '--unselected--'
