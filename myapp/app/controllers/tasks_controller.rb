@@ -28,7 +28,7 @@ class TasksController < ApplicationController
       return redirect_to @task
     end
 
-    flash.now[:error] = I18n.t('flash.task.create.failure')
+    flash.now[:danger] = I18n.t('flash.task.create.failure')
     render 'new', status: :unprocessable_entity
   end
 
@@ -44,7 +44,7 @@ class TasksController < ApplicationController
       return redirect_to @task
     end
 
-    flash.now[:error] = I18n.t('flash.task.update.failure')
+    flash.now[:danger] = I18n.t('flash.task.update.failure')
     render 'edit', status: :unprocessable_entity
   end
 
@@ -52,7 +52,7 @@ class TasksController < ApplicationController
     if @task.destroy
       flash[:success] = I18n.t('flash.task.delete.success')
     else
-      flash.now[:error] = I18n.t('flash.task.delete.failure')
+      flash.now[:danger] = I18n.t('flash.task.delete.failure')
     end
     redirect_to tasks_url
   end
