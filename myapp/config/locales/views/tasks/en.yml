@@ -11,9 +11,6 @@ en:
     show: 'show'
     back: 'back'
 
-  form:
-    unselected: '--unselected--'
-
   sort:
     created_at: 'Sort by created_at'
 
