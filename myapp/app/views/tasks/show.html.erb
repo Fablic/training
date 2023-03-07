@@ -6,7 +6,7 @@
       <% Task.column_names.each do |column_name| %>
         <tr>
           <th class="w-25"><%= I18n.t(column_name.to_sym, scope: [:activerecord, :attributes, :task]) %></th>
-          <td class="w-75 text-break"><%= value_with_i18n(@task, column_name) %></td>
+          <td class="w-75"><%= value_with_i18n_line_break(@task, column_name) %></td>
         </tr>
       <% end %>
     </tbody>
