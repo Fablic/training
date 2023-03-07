@@ -22,4 +22,30 @@ RSpec.describe TasksHelper, type: :helper do
       end
     end
   end
+
+  describe 'badge_class' do
+    context 'status is unstarted' do
+      it 'returns expected value' do
+        expect(helper.badge_class('unstarted')).to eq('badge py-2 fs-6 bg-primary')
+      end
+    end
+
+    context 'status is wip' do
+      it 'returns expected value' do
+        expect(helper.badge_class('wip')).to eq('badge py-2 fs-6 bg-danger')
+      end
+    end
+
+    context 'status is done' do
+      it 'returns expected value' do
+        expect(helper.badge_class('done')).to eq('badge py-2 fs-6 bg-success')
+      end
+    end
+
+    context 'status is unknown' do
+      it 'returns expected value' do
+        expect(helper.badge_class('hoge')).to eq('badge py-2 fs-6 bg-secondary')
+      end
+    end
+  end
 end
