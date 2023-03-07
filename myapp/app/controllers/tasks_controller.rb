@@ -5,7 +5,15 @@ class TasksController < ApplicationController
     @tasks = Task.all
     @task_columns_with_sorting_direction = task_columns_with_sorting_direction
 
+    if params[:name].present? || params[:status].present?
+      filterer = TaskFilterer.new(name: params[:name], status: params[:status])
+      return @tasks unless filterer.valid? # early return if the filterer conditions is invalid
+
+      @tasks = filterer.execute(@tasks)
+    end
+
     @tasks = @tasks.order("#{params[:sort_key]} #{sort_direction}") if params[:sort_key].present?
+    @tasks
   end
 
   def new
@@ -19,7 +27,7 @@ class TasksController < ApplicationController
       return redirect_to @task
     end
 
-    flash[:error] = I18n.t('flash.task.create.failure')
+    flash.now[:error] = I18n.t('flash.task.create.failure')
     render 'new', status: :unprocessable_entity
   end
 
@@ -35,7 +43,7 @@ class TasksController < ApplicationController
       return redirect_to @task
     end
 
-    flash[:error] = I18n.t('flash.task.update.failure')
+    flash.now[:error] = I18n.t('flash.task.update.failure')
     render 'edit', status: :unprocessable_entity
   end
 
@@ -43,7 +51,7 @@ class TasksController < ApplicationController
     if @task.destroy
       flash[:success] = I18n.t('flash.task.delete.success')
     else
-      flash[:error] = I18n.t('flash.task.delete.failure')
+      flash.now[:error] = I18n.t('flash.task.delete.failure')
     end
     redirect_to tasks_url
   end

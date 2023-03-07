@@ -14,6 +14,11 @@ en:
   sort:
     created_at: 'Sort by created_at'
 
+  filter:
+    title: 'filtering'
+    apply: 'apply'
+    remove: 'remove filter'
+
   flash:
     task:
       create:

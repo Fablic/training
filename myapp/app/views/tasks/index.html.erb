@@ -1,7 +1,23 @@
 <h1><%= I18n.t('activerecord.models.task') %> <%= I18n.t('action.list') %></h1>
 
-<p><%= link_to "日本語", tasks_path(locale: 'ja') %></p>
-<p><%= link_to "English", tasks_path(locale: 'en') %></p>
+<div>
+  <p><%= link_to "日本語", tasks_path(locale: 'ja') %></p>
+  <p><%= link_to "English", tasks_path(locale: 'en') %></p>
+</div>
+
+<%# TODO: fix design in STEP 15 %>
+
+<div style='margin-bottom: 40px;'>
+  <h3><%= I18n.t('filter.title') %></h3>
+  <%= form_with url: tasks_path, method: :get do |form| %>
+    <span><%= I18n.t(:name, scope: [:activerecord, :attributes, :task]) %></span>
+    <%= form.text_field :name, { value: params[:name] } %>
+    <span><%= I18n.t(:status, scope: [:activerecord, :attributes, :task]) %></span>
+    <%= form.select :status, options_for_select_of_statuses, { include_blank: true, selected: params[:status] } %>
+    <%= form.submit I18n.t('filter.apply') %>
+    <p><%= link_to I18n.t('filter.remove'), tasks_path %></p>
+  <% end %>
+</div>
 
 <table>
   <thead>

@@ -174,4 +174,75 @@ RSpec.describe 'Tasks', type: :system do
       end
     end
   end
+
+  describe 'Filtering Function' do
+    before do
+      create(:task, name: 'hoge_task', status: 'unstarted')
+      create(:task, name: 'fuga_task', status: 'wip')
+      create(:task, name: 'hoge_fuga_task', status: 'done')
+      create(:task, name: 'fizz_task', status: 'done')
+      create(:task, name: 'buzz_task', status: 'done')
+    end
+
+    context 'get /tasks page without querry parameters' do
+      it 'does not take over the query parameter.' do
+        visit '/tasks'
+        expect(find('input[id="name"]').value).to eq ''
+        expect(find('select[id="status"]').value).to eq ''
+        expect(page.all('table tbody tr').length).to eq 5
+      end
+    end
+
+    context 'get /tasks page with querry parameters' do
+      it 'takes over the query parameter and filters tasks expectedly' do
+        visit '/tasks?name=fuga&status=done'
+        expect(find('input[id="name"]').value).to eq 'fuga'
+        expect(find('select[id="status"]').value).to eq 'done'
+        expect(page.all('table tbody tr').length).to eq 1
+      end
+    end
+
+    context 'filtering by name' do
+      before do
+        visit '/tasks'
+        fill_in 'name', with: 'hoge'
+        find('input[type="submit"]').click
+      end
+
+      it 'takes over the query parameter and filters tasks expectedly' do
+        expect(find('input[id="name"]').value).to eq 'hoge'
+        expect(find('select[id="status"]').value).to eq ''
+        expect(page.all('table tbody tr').length).to eq 2
+      end
+    end
+
+    context 'filtering by status' do
+      before do
+        visit '/tasks'
+        select '完了', from: 'status'
+        find('input[type="submit"]').click
+      end
+
+      it 'takes over the query parameter and filters tasks expectedly' do
+        expect(find('input[id="name"]').value).to eq ''
+        expect(find('select[id="status"]').value).to eq 'done'
+        expect(page.all('table tbody tr').length).to eq 3
+      end
+    end
+
+    context 'filtering by name & status' do
+      before do
+        visit '/tasks'
+        fill_in 'name', with: 'fuga'
+        select '完了', from: 'status'
+        find('input[type="submit"]').click
+      end
+
+      it 'takes over the query parameter and filters tasks expectedly' do
+        expect(find('input[id="name"]').value).to eq 'fuga'
+        expect(find('select[id="status"]').value).to eq 'done'
+        expect(page.all('table tbody tr').length).to eq 1
+      end
+    end
+  end
 end
