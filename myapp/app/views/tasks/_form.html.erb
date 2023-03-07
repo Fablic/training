@@ -1,15 +1,25 @@
 <%= form_with model: @task do |form| %>
   <%= render partial: "shared/error_messages", locals: { model: @task } %>
 
-  <p><%= I18n.t(:name, scope: [:activerecord, :attributes, :task]) %></p>
-  <%= form.text_field :name %>
-  <p><%= I18n.t(:description, scope: [:activerecord, :attributes, :task]) %></p>
-  <%= form.text_area :description %>
-  <p><%= I18n.t(:status, scope: [:activerecord, :attributes, :task]) %></p>
-  <%= form.select :status, options_for_select_of_statuses, {selected: @task.status} %>
-  <p><%= I18n.t(:deadline_at, scope: [:activerecord, :attributes, :task]) %></p>
-  <%= form.datetime_field :deadline_at %>
+  <div class="w-50">
+    <div class="d-flex mb-4">
+      <p class="w-25"><%= I18n.t(:name, scope: [:activerecord, :attributes, :task]) %></p>
+      <%= form.text_field :name, class:"form-control w-75" %>
+    </div>
+    <div class="d-flex mb-4">
+      <p class="w-25"><%= I18n.t(:description, scope: [:activerecord, :attributes, :task]) %></p>
+      <%= form.text_area :description, class:"form-control w-75", rows: 8 %>
+    </div>
+    <div class="d-flex mb-4">
+      <p class="w-25"><%= I18n.t(:status, scope: [:activerecord, :attributes, :task]) %></p>
+      <%= form.select :status, options_for_select_of_statuses, {selected: @task.status}, class:"form-select w-25" %>
+    </div>
+    <div class="d-flex mb-4">
+      <p class="w-25"><%= I18n.t(:deadline_at, scope: [:activerecord, :attributes, :task]) %></p>
+      <%= form.datetime_field :deadline_at, class:"form-control w-25" %>
+    </div>
 
-  <%= link_to I18n.t('action.back'), :back, {style: "display: block;"} %>
-  <%= form.submit %>
+    <%= link_to I18n.t('action.back'), :back, class:"btn btn-primary"  %>
+    <%= form.submit nil, class:"btn btn-primary me-4" %>
+  </div>
 <% end %>
