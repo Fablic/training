@@ -8,5 +8,6 @@ class Task < ApplicationRecord
 
   enum status: { unstarted: 0, wip: 1, done: 2 }
 
-  scope :name_contain, ->(name) { where('name LIKE ?', "%#{sanitize_sql_like(name)}%") }
+  scope :status, ->(status) { send(status) if status.present? }
+  scope :name_contain, -> (name) { where('name like ?', "%#{name}%") if name.present? }
 end
