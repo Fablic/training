@@ -1,7 +1,8 @@
 version: '3'
 services:
   db:
-    image: mysql:5.7
+    image: arm64v8/mysql
+    platform: linux/arm64
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: root
