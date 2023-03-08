@@ -5,6 +5,7 @@ en:
     attributes:
       task:
         id: 'id'
+        user_id: 'user_id'
         name: 'name'
         description: 'description'
         status: 'status'

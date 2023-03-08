@@ -64,7 +64,7 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:name, :description, :status, :deadline_at)
+    params.require(:task).permit(:name, :description, :status, :deadline_at, :user_id)
   end
 
   def sort_direction
@@ -77,7 +77,7 @@ class TasksController < ApplicationController
 
   def task_columns_with_sorting_direction
     Task.column_names.map do |column_name|
-      next if column_name == 'description'
+      next if ['user_id', 'description'].include?(column_name)
 
       {
         name: column_name,
