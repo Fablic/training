@@ -1,4 +1,6 @@
 class Task < ApplicationRecord
+  paginates_per 10
+
   validates :name, presence: true, length: { maximum: 50 }
   # description はDB上は65,535文字まで許容できるが、区切りよく決めで上限を設定する。
   # DBにアクセスしてエラーを吐くまでにモデルでバリデーションが働くようにしたい意図。
@@ -6,5 +8,6 @@ class Task < ApplicationRecord
 
   enum status: { unstarted: 0, wip: 1, done: 2 }
 
-  scope :name_contain, ->(name) { where('name LIKE ?', "%#{sanitize_sql_like(name)}%") }
+  scope :status, -> (status) { where(status: status) if status.present? }
+  scope :name_contain, -> (name) { where('name like ?', "%#{name}%") if name.present? }
 end

@@ -5,7 +5,6 @@ RSpec.describe 'Tasks', type: :system do
     driven_by(:remote_chrome)
   end
 
-  # TODO: バリデーションの実装は後で行うので、異常系のテストも後回し
   describe 'GET /' do
     before do
       visit '/'
@@ -241,6 +240,137 @@ RSpec.describe 'Tasks', type: :system do
       it 'takes over the query parameter and filters tasks expectedly' do
         expect(find('input[id="name"]').value).to eq 'fuga'
         expect(find('select[id="status"]').value).to eq 'done'
+        expect(page.all('table tbody tr').length).to eq 1
+      end
+    end
+  end
+
+  describe 'Pagenation' do
+    context 'using sorting' do
+      before do
+        create_list(:task, 10, name: 'a_sample_task')
+        create(:task, name: 'b_sample_task')
+        visit '/tasks'
+      end
+
+      it 'shows expected view' do
+        expect(page).to have_content '次'
+        expect(page).to have_content '最後'
+        expect(page).to have_content 'a_sample_task'
+        expect(page).not_to have_content 'b_sample_task'
+        expect(page.all('.pagination .page').length).to eq 2
+        expect(page.all('table tbody tr').length).to eq 10
+
+        click_link('2')
+
+        expect(page).to have_content '前'
+        expect(page).to have_content '最初'
+        expect(page.all('.pagination .page').length).to eq 2
+        expect(page.all('table tbody tr').length).to eq 1
+        expect(page).not_to have_content 'a_sample_task'
+        expect(page).to have_content 'b_sample_task'
+
+        click_link('名前') # 名前の昇順で並び替え
+
+        expect(page).to have_content '次'
+        expect(page).to have_content '最後'
+        expect(page).to have_content 'a_sample_task'
+        expect(page).not_to have_content 'b_sample_task'
+        expect(page.all('.pagination .page').length).to eq 2
+        expect(page.all('table tbody tr').length).to eq 10
+
+        click_link('名前') # 名前の降順で並び替え
+
+        expect(page).to have_content '次'
+        expect(page).to have_content '最後'
+        expect(page).to have_content(/b_sample_task[\s\S]*a_sample_task/)
+        expect(page.all('.pagination .page').length).to eq 2
+        expect(page.all('table tbody tr').length).to eq 10
+      end
+    end
+
+    context 'the number of tasks is 10 or below' do
+      before do
+        create_list(:task, 10)
+        visit '/tasks'
+      end
+
+      it 'shows expected view' do
+        expect(page).not_to have_content '次'
+        expect(page).not_to have_content '最後'
+        expect(page.all('table tbody tr').length).to eq 10
+      end
+    end
+
+    context 'the number of tasks is 11' do
+      before do
+        create_list(:task, 11)
+        visit '/tasks'
+      end
+
+      it 'shows expected view' do
+        expect(page).to have_content '次'
+        expect(page).to have_content '最後'
+        expect(page.all('.pagination .page').length).to eq 2
+        expect(page.all('table tbody tr').length).to eq 10
+
+        click_link('2')
+
+        expect(page).to have_content '前'
+        expect(page).to have_content '最初'
+        expect(page.all('.pagination .page').length).to eq 2
+        expect(page.all('table tbody tr').length).to eq 1
+      end
+    end
+
+    context 'Filtering & the number of tasks is 10 or below' do
+      before do
+        create_list(:task, 5, status: 'unstarted')
+        create_list(:task, 10, status: 'wip')
+        visit '/tasks'
+      end
+
+      it 'shows expected view' do
+        expect(page).to have_content '次'
+        expect(page).to have_content '最後'
+        expect(page.all('.pagination .page').length).to eq 2
+        expect(page.all('table tbody tr').length).to eq 10
+
+        select '着手中', from: 'status'
+        find('input[type="submit"]').click
+
+        expect(page).not_to have_content '次'
+        expect(page).not_to have_content '最後'
+        expect(page.all('.pagination .page').length).to eq 0
+        expect(page.all('table tbody tr').length).to eq 10
+      end
+    end
+
+    context 'Filtering & the number of tasks is 11' do
+      before do
+        create_list(:task, 10, status: 'unstarted')
+        create_list(:task, 11, status: 'wip')
+        visit '/tasks'
+      end
+
+      it 'shows expected view' do
+        expect(page).to have_content '次'
+        expect(page).to have_content '最後'
+        expect(page.all('.pagination .page').length).to eq 3
+        expect(page.all('table tbody tr').length).to eq 10
+
+        select '着手中', from: 'status'
+        find('input[type="submit"]').click
+
+        expect(page).to have_content '次'
+        expect(page).to have_content '最後'
+        expect(page.all('table tbody tr').length).to eq 10
+
+        click_link('2')
+
+        expect(page).to have_content '前'
+        expect(page).to have_content '最初'
+        expect(page.all('.pagination .page').length).to eq 2
         expect(page.all('table tbody tr').length).to eq 1
       end
     end

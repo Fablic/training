@@ -2,16 +2,9 @@ class TasksController < ApplicationController
   before_action :fetch_task_by_params_id, only: [:show, :edit, :update, :destroy]
 
   def index
-    @tasks = Task.all
     @task_columns_with_sorting_direction = task_columns_with_sorting_direction
 
-    if params[:name].present? || params[:status].present?
-      filterer = TaskFilterer.new(name: params[:name], status: params[:status])
-      return @tasks unless filterer.valid? # early return if the filterer conditions is invalid
-
-      @tasks = filterer.execute(@tasks)
-    end
-
+    @tasks = Task.status(params[:status]).name_contain(params[:name]).page(params[:page])
     @tasks = @tasks.order("#{params[:sort_key]} #{sort_direction}") if params[:sort_key].present?
     @tasks
   end
