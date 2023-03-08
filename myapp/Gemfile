@@ -49,6 +49,8 @@ gem 'rails-i18n'
 
 gem 'kaminari'
 
+gem 'bcrypt'
+
 # Use Sass to process CSS
 # gem "sassc-rails"
 
