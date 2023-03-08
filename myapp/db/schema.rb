@@ -10,8 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_08_062717) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_08_073543) do
   create_table "tasks", charset: "utf8mb4", force: :cascade do |t|
+    t.bigint "user_id", null: false
     t.string "name", null: false
     t.text "description"
     t.integer "status", default: 0, null: false
@@ -20,6 +21,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_08_062717) do
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_tasks_on_name"
     t.index ["status"], name: "index_tasks_on_status"
+    t.index ["user_id"], name: "index_tasks_on_user_id"
   end
 
   create_table "users", charset: "utf8mb4", force: :cascade do |t|
@@ -31,4 +33,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_08_062717) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "tasks", "users"
 end
