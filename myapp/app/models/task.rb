@@ -1,7 +1,6 @@
 class Task < ApplicationRecord
   belongs_to :user
 
-  validates :user_id, presence: true
   validates :name, presence: true, length: { maximum: 50 }
   # description はDB上は65,535文字まで許容できるが、区切りよく決めで上限を設定する。
   # DBにアクセスしてエラーを吐くまでにモデルでバリデーションが働くようにしたい意図。
