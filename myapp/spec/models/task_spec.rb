@@ -1,10 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe 'Task', type: :model do
+  let(:user) { create(:user) }
+
   describe 'normal case' do
     context 'all valid parameters' do
       let(:task) {
-        Task.new(name: 'sample_task',
+        Task.new(user: user,
+                 name: 'sample_task',
                  description: 'hoge fuga',
                  status: 'unstarted',
                  deadline_at: '2023-01-01T00:00')
@@ -21,7 +24,8 @@ RSpec.describe 'Task', type: :model do
     describe 'name' do
       context 'length is 0' do
         let(:task) {
-          Task.new(name: '',
+          Task.new(user: user,
+                   name: '',
                    description: 'hoge fuga',
                    status: 'unstarted',
                    deadline_at: '2023-01-01T00:00')
@@ -36,7 +40,8 @@ RSpec.describe 'Task', type: :model do
 
       context 'length is 1' do
         let(:task) {
-          Task.new(name: 'a',
+          Task.new(user: user,
+                   name: 'a',
                    description: 'hoge fuga',
                    status: 'unstarted',
                    deadline_at: '2023-01-01T00:00')
@@ -50,7 +55,8 @@ RSpec.describe 'Task', type: :model do
 
       context 'length is 50' do
         let(:task) {
-          Task.new(name: 'a' * 50,
+          Task.new(user: user,
+                   name: 'a' * 50,
                    description: 'hoge fuga',
                    status: 'unstarted',
                    deadline_at: '2023-01-01T00:00')
@@ -64,7 +70,8 @@ RSpec.describe 'Task', type: :model do
 
       context 'length is 51' do
         let(:task) {
-          Task.new(name: 'a' * 51,
+          Task.new(user: user,
+                   name: 'a' * 51,
                    description: 'hoge fuga',
                    status: 'unstarted',
                    deadline_at: '2023-01-01T00:00')
@@ -81,7 +88,8 @@ RSpec.describe 'Task', type: :model do
     describe 'description' do
       context 'length is 0' do
         let(:task) {
-          Task.new(name: 'sample_task',
+          Task.new(user: user,
+                   name: 'sample_task',
                    description: '',
                    status: 'unstarted',
                    deadline_at: '2023-01-01T00:00')
@@ -95,7 +103,8 @@ RSpec.describe 'Task', type: :model do
 
       context 'length is 5000' do
         let(:task) {
-          Task.new(name: 'sample_task',
+          Task.new(user: user,
+                   name: 'sample_task',
                    description: 'a' * 5000,
                    status: 'unstarted',
                    deadline_at: '2023-01-01T00:00')
@@ -109,7 +118,8 @@ RSpec.describe 'Task', type: :model do
 
       context 'length is 5001' do
         let(:task) {
-          Task.new(name: 'sample_task',
+          Task.new(user: user,
+                   name: 'sample_task',
                    description: 'a' * 5001,
                    status: 'unstarted',
                    deadline_at: '2023-01-01T00:00')
