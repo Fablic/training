@@ -12,4 +12,9 @@ RUN chmod +x /usr/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
 EXPOSE 3000
 
+# node install
+RUN curl -SL https://deb.nodesource.com/setup_12.x | bash - \
+    && apt-get -y remove nodejs-doc \
+    && apt-get install -y nodejs
+
 CMD ["rails", "server", "-b", "0.0.0.0"]
