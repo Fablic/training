@@ -9,7 +9,8 @@ class Task < ApplicationRecord
   enum status: { unstarted: 0, wip: 1, done: 2 }
 
   scope :status, -> (status) { where(status: status) if status.present? }
-  scope :name_contain, -> (name) { where('name like ?', "%#{name}%") if name.present? }
+  # see: https://api.rubyonrails.org/v7.0.4.2/classes/ActiveRecord/Sanitization/ClassMethods.html#method-i-sanitize_sql_like
+  scope :name_contain, -> (name) { where('name like ?', "%#{sanitize_sql_like(name)}%") if name.present? }
 
   paginates_per 10
 end

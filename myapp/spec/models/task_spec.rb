@@ -162,6 +162,12 @@ RSpec.describe 'Task', type: :model do
         expect(Task.name_contain('fuga').length).to eq 0
       end
     end
+
+    context 'argument contains wildcard %' do
+      it 'behaves expectedly since the sanitize_sql_like method works' do
+        expect(Task.name_contain('%').length).to eq 0
+      end
+    end
   end
 
   # if 分岐が期待通り動くかのテストをする
