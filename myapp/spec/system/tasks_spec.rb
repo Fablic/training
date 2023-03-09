@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Tasks', type: :system do
   before do
     driven_by(:remote_chrome)
+    create(:user)
   end
 
   describe 'GET /' do
@@ -110,7 +111,10 @@ RSpec.describe 'Tasks', type: :system do
 
     it 'successfully update a task' do
       expect(Task.all.length).to eq 1
-      click_link('削除')
+      # see: https://www.rubydoc.info/gems/capybara/Capybara%2FSession:accept_confirm
+      page.accept_confirm do
+        click_link('削除')
+      end
       expect(page).to have_content 'タスクが正常に削除されました。'
       expect(page).to have_content 'タスク 一覧'
       expect(page).not_to have_content 'hoge_task'
@@ -258,14 +262,14 @@ RSpec.describe 'Tasks', type: :system do
         expect(page).to have_content '最後'
         expect(page).to have_content 'a_sample_task'
         expect(page).not_to have_content 'b_sample_task'
-        expect(page.all('.pagination .page').length).to eq 2
+        expect(page.all('.pagination .page-item').length).to eq 4
         expect(page.all('table tbody tr').length).to eq 10
 
         click_link('2')
 
         expect(page).to have_content '前'
         expect(page).to have_content '最初'
-        expect(page.all('.pagination .page').length).to eq 2
+        expect(page.all('.pagination .page-item').length).to eq 4
         expect(page.all('table tbody tr').length).to eq 1
         expect(page).not_to have_content 'a_sample_task'
         expect(page).to have_content 'b_sample_task'
@@ -276,7 +280,7 @@ RSpec.describe 'Tasks', type: :system do
         expect(page).to have_content '最後'
         expect(page).to have_content 'a_sample_task'
         expect(page).not_to have_content 'b_sample_task'
-        expect(page.all('.pagination .page').length).to eq 2
+        expect(page.all('.pagination .page-item').length).to eq 4
         expect(page.all('table tbody tr').length).to eq 10
 
         click_link('名前') # 名前の降順で並び替え
@@ -284,7 +288,7 @@ RSpec.describe 'Tasks', type: :system do
         expect(page).to have_content '次'
         expect(page).to have_content '最後'
         expect(page).to have_content(/b_sample_task[\s\S]*a_sample_task/)
-        expect(page.all('.pagination .page').length).to eq 2
+        expect(page.all('.pagination .page-item').length).to eq 4
         expect(page.all('table tbody tr').length).to eq 10
       end
     end
@@ -311,14 +315,14 @@ RSpec.describe 'Tasks', type: :system do
       it 'shows expected view' do
         expect(page).to have_content '次'
         expect(page).to have_content '最後'
-        expect(page.all('.pagination .page').length).to eq 2
+        expect(page.all('.pagination .page-item').length).to eq 4
         expect(page.all('table tbody tr').length).to eq 10
 
         click_link('2')
 
         expect(page).to have_content '前'
         expect(page).to have_content '最初'
-        expect(page.all('.pagination .page').length).to eq 2
+        expect(page.all('.pagination .page-item').length).to eq 4
         expect(page.all('table tbody tr').length).to eq 1
       end
     end
@@ -333,7 +337,7 @@ RSpec.describe 'Tasks', type: :system do
       it 'shows expected view' do
         expect(page).to have_content '次'
         expect(page).to have_content '最後'
-        expect(page.all('.pagination .page').length).to eq 2
+        expect(page.all('.pagination .page-item').length).to eq 4
         expect(page.all('table tbody tr').length).to eq 10
 
         select '着手中', from: 'status'
@@ -341,7 +345,7 @@ RSpec.describe 'Tasks', type: :system do
 
         expect(page).not_to have_content '次'
         expect(page).not_to have_content '最後'
-        expect(page.all('.pagination .page').length).to eq 0
+        expect(page.all('.pagination .page-item').length).to eq 0
         expect(page.all('table tbody tr').length).to eq 10
       end
     end
@@ -356,7 +360,7 @@ RSpec.describe 'Tasks', type: :system do
       it 'shows expected view' do
         expect(page).to have_content '次'
         expect(page).to have_content '最後'
-        expect(page.all('.pagination .page').length).to eq 3
+        expect(page.all('.pagination .page-item').length).to eq 5
         expect(page.all('table tbody tr').length).to eq 10
 
         select '着手中', from: 'status'
@@ -370,7 +374,7 @@ RSpec.describe 'Tasks', type: :system do
 
         expect(page).to have_content '前'
         expect(page).to have_content '最初'
-        expect(page.all('.pagination .page').length).to eq 2
+        expect(page.all('.pagination .page-item').length).to eq 4
         expect(page.all('table tbody tr').length).to eq 1
       end
     end
