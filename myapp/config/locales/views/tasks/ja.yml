@@ -13,9 +13,6 @@ ja:
     back: '戻る'
   confirm: '本当によろしいですか？'
 
-  form:
-    unselected: '--未選択--'
-
   sort:
     created_at: '作成日時で並び替え'
 

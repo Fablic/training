@@ -13,9 +13,6 @@ en:
     back: 'back'
   confirm: 'Are you sure?'
 
-  form:
-    unselected: '--unselected--'
-
   sort:
     created_at: 'Sort by created_at'
 
