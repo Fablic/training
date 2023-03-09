@@ -57,4 +57,10 @@ Rails.application.configure do
 
   # Annotate rendered view with file names.
   # config.action_view.annotate_rendered_view_with_filenames = true
+
+  config.after_initialize do
+    Bullet.enable = true # Bulletを有効化する
+    Bullet.bullet_logger = true # log/bullet.logに出力
+    Bullet.raise = true # N+1クエリ発生時にエラーを起こし、テストをfailさせる
+  end
 end

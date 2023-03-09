@@ -85,6 +85,18 @@ RSpec.configure do |config|
   config.after(:all) do
     DatabaseCleaner.clean
   end
+
+  # see: https://fablic.qiita.com/craftscat/items/b181b67ddae0c7d0702a
+  if Bullet.enable?
+    config.before(:each) do
+      Bullet.start_request
+    end
+
+    config.after(:each) do
+      Bullet.perform_out_of_channel_notifications if Bullet.notification? # Bulletによる通知をRSpecの結果に表示
+      Bullet.end_request
+    end
+  end
 end
 
 Capybara.register_driver :remote_chrome do |app|
