@@ -28,6 +28,33 @@ require 'rails_helper'
 RSpec.describe Task, type: :model do
   let!(:user) { create(:user) }
 
+  describe 'associations' do
+    it { is_expected.to belong_to(:user).optional }
+  end
+
+  describe 'validation' do
+    context 'title' do
+      it { is_expected.to validate_presence_of(:title) }
+      it { is_expected.to validate_length_of(:title).is_at_most(255) }
+    end
+
+    context 'description' do
+      it { is_expected.to validate_presence_of(:description) }
+    end
+
+    context 'priority' do
+      it { is_expected.to validate_presence_of(:priority) }
+    end
+
+    context 'status' do
+      it { is_expected.to validate_presence_of(:status) }
+    end
+
+    context 'user_id' do
+      it { is_expected.to validate_presence_of(:user_id) }
+    end
+  end
+
   describe 'enums' do
     it {
       is_expected.to define_enum_for(:priority).with_values(
