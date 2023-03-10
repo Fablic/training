@@ -61,6 +61,17 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+
+  if Bullet.enable?
+    config.before(:each) do
+      Bullet.start_request
+    end
+
+    config.after(:each) do
+      Bullet.perform_out_of_channel_notifications if Bullet.notification? # Bulletによる通知をRSpecの結果に表示
+      Bullet.end_request
+    end
+  end
 end
 
 Shoulda::Matchers.configure do |config|
