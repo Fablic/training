@@ -32,3 +32,13 @@ en:
       delete:
         success: 'The task was successfully deleted.'
         failure: 'Failed to delete the task'
+    user:
+      create:
+        success: 'The user was successfully created.'
+        failure: 'Failed to create the user.'
+      update:
+        success: 'The user was successfully updated.'
+        failure: 'Failed to update the user'
+      delete:
+        success: 'The user was successfully deleted.'
+        failure: 'Failed to delete the user'

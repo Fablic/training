@@ -1,0 +1,31 @@
+<div class="px-5">
+  <h2><%= I18n.t('activerecord.models.user') %> <%= I18n.t('action.show') %></h2>
+
+  <table class="table">
+    <tbody>
+      <tr>
+        <th class="w-25"><%= I18n.t(:id, scope: [:activerecord, :attributes, :user]) %></th>
+        <td class="w-75"><%= @user.id %></td>
+      </tr>
+      <tr>
+        <th class="w-25"><%= I18n.t(:name, scope: [:activerecord, :attributes, :user]) %></th>
+        <td class="w-75"><%= @user.name %></td>
+      </tr>
+      <tr>
+        <th class="w-25"><%= I18n.t(:email, scope: [:activerecord, :attributes, :user]) %></th>
+        <td class="w-75"><%= @user.email %></td>
+      </tr>
+      <tr>
+        <th class="w-25"><%= I18n.t(:created_at, scope: [:activerecord, :attributes, :user]) %></th>
+        <td class="w-75"><%= @user.created_at %></td>
+      </tr>
+      <tr>
+        <th class="w-25"><%= I18n.t(:updated_at, scope: [:activerecord, :attributes, :user]) %></th>
+        <td class="w-75"><%= @user.updated_at %></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <%= link_to I18n.t('action.list'), users_path, class:"btn btn-primary" %>
+  <%= link_to I18n.t('action.edit'), edit_user_path(@user), class:"btn btn-primary" %>
+</div>

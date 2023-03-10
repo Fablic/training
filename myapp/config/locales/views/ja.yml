@@ -32,3 +32,13 @@ ja:
       delete:
         success: 'タスクが正常に削除されました。'
         failure: 'タスクの削除に失敗しました。'
+    user:
+      create:
+        success: 'ユーザが正常に登録されました。'
+        failure: 'ユーザの登録に失敗しました。'
+      update:
+        success: 'ユーザが正常に更新されました。'
+        failure: 'ユーザの更新に失敗しました。'
+      delete:
+        success: 'ユーザが正常に削除されました。'
+        failure: 'ユーザの削除に失敗しました。'
