@@ -19,9 +19,6 @@
       <%= form.datetime_field :deadline_at, class:"form-control w-25" %>
     </div>
 
-    <%# TODO: ユーザのログイン機能を作った後に、ログインしているユーザの user_id が動的に自動でセットされるように修正する %>
-    <%= form.hidden_field :user_id, value: "1" %>
-
     <%= link_to I18n.t('action.back'), :back, class:"btn btn-primary"  %>
     <%= form.submit nil, class:"btn btn-primary me-4" %>
   </div>
