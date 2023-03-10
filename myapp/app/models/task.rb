@@ -41,7 +41,6 @@ class Task < ApplicationRecord
   validates :description, presence: true
   validates :priority, presence: true
   validates :status, presence: true
-  validates :title, presence: true
   validates :user_id, presence: true
 
   scope :sort_by_keyword, ->(sort) { order(SORT_TYPE[sort]) }

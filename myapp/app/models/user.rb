@@ -20,7 +20,7 @@ class User < ApplicationRecord
   has_many :tasks, inverse_of: :user, dependent: :destroy
   validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }, uniqueness: true
   validates :encrypted_password, presence: true
-  validates :name, presence: true
+  validates :name, presence: true, length: { maximum: 255 }
 
   class << self
     def md5_converter(text)
