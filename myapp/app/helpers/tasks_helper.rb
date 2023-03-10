@@ -12,22 +12,21 @@ module TasksHelper
 
   # see: http://taustation.com/rails-reflecting-newline-code/
   def html_safe_with_line_break(str)
-    h(str).gsub(/\n|\r|\r\n/, "<br>").html_safe
+    h(str).gsub(/\n|\r|\r\n/, '<br>').html_safe
   end
 
   def badge_class(status)
     class_name = 'badge py-2 fs-6 '
-    case status
-    when 'unstarted'
-      class_name += 'bg-primary'
-    when 'wip'
-      class_name += 'bg-danger'
-    when 'done'
-      class_name += 'bg-success'
-    else
-      class_name += 'bg-secondary'
-    end
+    class_name += case status
+                  when 'unstarted'
+                    'bg-primary'
+                  when 'wip'
+                    'bg-danger'
+                  when 'done'
+                    'bg-success'
+                  else
+                    'bg-secondary'
+                  end
     class_name
   end
-
 end

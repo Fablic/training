@@ -1,5 +1,6 @@
 class TasksController < ApplicationController
   before_action :fetch_task_by_params_id, only: [:show, :edit, :update, :destroy]
+  before_action :fetch_user
 
   def index
     @task_columns_with_sorting_direction = task_columns_with_sorting_direction
@@ -10,11 +11,11 @@ class TasksController < ApplicationController
   end
 
   def new
-    @task = Task.new
+    @task = @user.tasks.new
   end
 
   def create
-    @task = Task.new(task_params)
+    @task = @user.tasks.new(task_params)
     if @task.save
       flash[:success] = I18n.t('flash.task.create.success')
       return redirect_to @task
@@ -51,6 +52,11 @@ class TasksController < ApplicationController
 
   private
 
+  def fetch_user
+    # TODO: session に応じて動的にするべし
+    @user = User.first
+  end
+
   def fetch_task_by_params_id
     @task = Task.find(params[:id])
   end
@@ -69,7 +75,7 @@ class TasksController < ApplicationController
 
   def task_columns_with_sorting_direction
     Task.column_names.map do |column_name|
-      next if column_name == 'description'
+      next if ['user_id', 'description'].include?(column_name)
 
       {
         name: column_name,

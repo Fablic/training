@@ -1,5 +1,5 @@
 class Task < ApplicationRecord
-  paginates_per 10
+  belongs_to :user
 
   validates :name, presence: true, length: { maximum: 50 }
   # description はDB上は65,535文字まで許容できるが、区切りよく決めで上限を設定する。
@@ -9,5 +9,8 @@ class Task < ApplicationRecord
   enum status: { unstarted: 0, wip: 1, done: 2 }
 
   scope :status, -> (status) { where(status: status) if status.present? }
-  scope :name_contain, -> (name) { where('name like ?', "%#{name}%") if name.present? }
+  # see: https://api.rubyonrails.org/v7.0.4.2/classes/ActiveRecord/Sanitization/ClassMethods.html#method-i-sanitize_sql_like
+  scope :name_contain, -> (name) { where('name like ?', "%#{sanitize_sql_like(name)}%") if name.present? }
+
+  paginates_per 10
 end

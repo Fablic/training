@@ -5,6 +5,7 @@ ja:
     attributes:
       task:
         id: 'id'
+        user_id: 'ユーザid'
         name: '名前'
         description: '詳細'
         status: 'ステータス'
