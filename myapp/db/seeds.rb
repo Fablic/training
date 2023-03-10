@@ -3,16 +3,16 @@ User.create!(
     {
       email: 'test_kun@rakuten.com',
       name: 'テストくん',
-      encrypted_password: User.md5_converter('123')
+      password: '123'
     },
     {
       email: 'test_san@rakuten.com',
       name: 'テストさん',
-      encrypted_password: User.md5_converter('abc')
+      password: 'abc'
     }
   ]
 )
-20.times do |n|
+30.times do |n|
   Task.create!(
         title: "task_#{n+1}",
         expires_at: n.day.since,
