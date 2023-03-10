@@ -9,7 +9,7 @@ has_many->tasks
 | id |  ID  | int | ○ | - | AUTO_INC | × | |
 | name | 名前 | varchar | - | - | - | × | |
 | email | メールアドレス | varchar | - | - | - | × | |
-| encrypted_password | パスワード | varchar | - | - | - | × | hashed |
+| password_digest | パスワード | varchar | - | - | - | × | hashed |
 | created_at | 作成時刻 | datetime | - | - | - | × |  |
 | updated_at | 更新時刻 | datetime | - | - | - | × |  |
 | deleted_at | 退会時刻 | datetime | - | - | null | ○ |  |

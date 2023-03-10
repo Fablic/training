@@ -5,5 +5,5 @@ ja:
     attributes:
       user:
         name: ユーザー名
-        encrypted_password: パスワード
+        password_digest: パスワード
         email: メールアドレス
