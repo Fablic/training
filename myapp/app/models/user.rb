@@ -21,4 +21,10 @@ class User < ApplicationRecord
   validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }, uniqueness: true
   validates :encrypted_password, presence: true
   validates :name, presence: true
+
+  class << self
+    def md5_converter(text)
+      Digest::MD5.hexdigest(text)
+    end
+  end
 end
