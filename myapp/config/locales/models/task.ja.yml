@@ -1,7 +1,7 @@
 ja:
   activerecord:
     models:
-      user: ユーザー
+      task: タスク
     attributes:
       task:
         title: タスク名
@@ -9,3 +9,25 @@ ja:
         status: ステータス
         description: 詳細
         expires_at: 期限日
+
+  enums:
+    task:
+      priority:
+        low: 低
+        middle: 中
+        high: 高
+      status:
+        waiting: 未着手
+        doing: 着手中
+        completed: 完了
+
+  select_form:
+    task:
+      priority:
+        - ['低', 'low']
+        - ['中', 'middle']
+        - ['高', 'high']
+      status:
+        - ['未着手', 'waiting']
+        - ['着手中', 'doing']
+        - ['完了', 'completed']
