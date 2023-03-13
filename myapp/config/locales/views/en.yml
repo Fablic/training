@@ -13,6 +13,7 @@ en:
     back: 'back'
     login: 'login'
   confirm: 'Are you sure?'
+  noaccount: "If you don't have your account or forget your login information, contact your administrator."
 
   sort:
     created_at: 'Sort by created_at'
@@ -43,3 +44,10 @@ en:
       delete:
         success: 'The user was successfully deleted.'
         failure: 'Failed to delete the user'
+    session:
+      login:
+        success: 'Logged in'
+        failure: 'Failed to login. Invalid combination of username and password'
+      logout:
+        success: 'Logged out'
+        failure: 'Failed to logout'

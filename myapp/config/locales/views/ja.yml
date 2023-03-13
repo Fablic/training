@@ -13,6 +13,7 @@ ja:
     back: '戻る'
     login: 'ログイン'
   confirm: '本当によろしいですか？'
+  noaccount: 'アカウントがない場合やログイン情報を忘れた場合は、管理者に問い合わせください。'
 
   sort:
     created_at: '作成日時で並び替え'
@@ -46,7 +47,7 @@ ja:
     session:
       login:
         success: 'ログインしました。'
-        failure: 'ログインに失敗しました。'
+        failure: 'ログインに失敗しました。メールアドレスとパスワードの組み合わせが不正です。'
       logout:
         success: 'ログアウトしました。'
         failure: 'ログアウトに失敗しました。'
