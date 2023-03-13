@@ -14,6 +14,7 @@ en:
     login: 'login'
   confirm: 'Are you sure?'
   noaccount: "If you don't have your account or forget your login information, contact your administrator."
+  need_login: 'You need to login.'
 
   sort:
     created_at: 'Sort by created_at'

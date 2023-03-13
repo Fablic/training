@@ -18,4 +18,11 @@ module SessionsHelper
     session[:user_id] = nil
     @current_user = nil
   end
+
+  def require_login
+    if !logged_in?
+      flash[:danger] = I18n.t('need_login')
+      return redirect_to login_path
+    end
+  end
 end

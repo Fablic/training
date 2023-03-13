@@ -1,4 +1,10 @@
 class TasksController < ApplicationController
+  before_action :require_login
+
+  # TODO: 自分のタスクしか操作できないように制御を入れる
+  # before_action :自分のタスクですか？, only: [:show, :edit, :update, :destroy]
+  # list ではあらかじめ絞り込んでから出す
+
   before_action :fetch_task_by_params_id, only: [:show, :edit, :update, :destroy]
   before_action :fetch_user
 
