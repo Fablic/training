@@ -17,10 +17,19 @@
           <h1 class="py-2 text-white"><%= I18n.t('title') %></h1>
         <% end %>
         <div>
+          <% if logged_in? %>
+            <span class="me-5 text-white"><%= @current_user.name %></span>
+            <span class="me-5"><%= link_to I18n.t('action.logout'), logout_path, class:"text-white", data: { turbo_method: :delete, turbo_confirm: I18n.t('confirm') } %></span>
+          <% else %>
+            <span class="me-5"><%= link_to I18n.t('action.login'), login_path, class:"text-white" %></span>
+          <% end %>
+
           <%# TODO: admin ユーザの時のみユーザ一覧へのリンクを表示する %>
+          <%# TODO: i18n 対応する %>
           <% if true %>
             <span class="me-5"><%= link_to "ユーザ一覧", users_path, class:"text-white" %></span>
           <% end %>
+
           <span class="me-2"><%= link_to "日本語", request.path_info + "?locale=ja", class:"text-white" %></span>
           <span><%= link_to "English", request.path_info + "?locale=en", class:"text-white" %></span>
         </div>
