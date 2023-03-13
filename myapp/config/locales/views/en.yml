@@ -11,6 +11,7 @@ en:
     add: 'add'
     show: 'show'
     back: 'back'
+    login: 'login'
   confirm: 'Are you sure?'
 
   sort:

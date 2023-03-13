@@ -1,0 +1,21 @@
+<div class="px-5">
+  <h2><%= I18n.t('action.login') %></h2>
+
+  <%= form_with url: login_path, method: :post, class:"d-inline" do |form| %>
+    <div class="w-50 mx-auto">
+      <div class="d-flex mb-4">
+        <p class="w-25"><%= I18n.t(:name, scope: [:activerecord, :attributes, :user]) %></p>
+        <%= form.text_field :name, class:"form-control w-75" %>
+      </div>
+      <div class="d-flex mb-4">
+        <p class="w-25"><%= I18n.t(:email, scope: [:activerecord, :attributes, :user]) %></p>
+        <%= form.text_field :email, class:"form-control w-75" %>
+      </div>
+      <div class="d-flex mb-4">
+        <p class="w-25"><%= I18n.t(:password, scope: [:activerecord, :attributes, :user]) %></p>
+        <%= form.password_field :password, class:"form-control w-75" %>
+      </div>
+      <%= form.submit I18n.t('action.login'), class:"d-block btn btn-primary mx-auto" %>
+    </div>
+  <% end %>
+</div>

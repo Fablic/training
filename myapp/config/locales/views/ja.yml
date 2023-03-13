@@ -11,6 +11,7 @@ ja:
     add: '追加'
     show: '詳細'
     back: '戻る'
+    login: 'ログイン'
   confirm: '本当によろしいですか？'
 
   sort:
@@ -42,3 +43,10 @@ ja:
       delete:
         success: 'ユーザが正常に削除されました。'
         failure: 'ユーザの削除に失敗しました。'
+    session:
+      login:
+        success: 'ログインしました。'
+        failure: 'ログインに失敗しました。'
+      logout:
+        success: 'ログアウトしました。'
+        failure: 'ログアウトに失敗しました。'
