@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   before_action :fetch_user_by_params_id, only: [:show, :edit, :update, :destroy]
 
   def index
-    @users = User.all
+    @users = User.all.includes(:tasks)
   end
 
   def new

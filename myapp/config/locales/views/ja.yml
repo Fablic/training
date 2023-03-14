@@ -17,6 +17,7 @@ ja:
   noaccount: 'アカウントがない場合やログイン情報を忘れた場合は、管理者に問い合わせください。'
   need_login: 'ログインが必要です。'
   need_admin_login: 'アドミンのログインが必要です。'
+  tasks_length: 'タスク数'
 
   sort:
     created_at: '作成日時で並び替え'
