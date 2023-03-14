@@ -22,6 +22,7 @@ class UsersController < ApplicationController
   end
 
   def show
+    @tasks = @user.tasks
   end
 
   def edit
@@ -53,7 +54,7 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation)
+    params.require(:user).permit(:name, :email, :password, :password_confirmation, :is_admin)
   end
 
 end
