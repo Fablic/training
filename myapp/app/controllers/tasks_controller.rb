@@ -1,12 +1,7 @@
 class TasksController < ApplicationController
   before_action :require_login
-
-  # TODO: 自分のタスクしか操作できないように制御を入れる
-  # before_action :自分のタスクですか？, only: [:show, :edit, :update, :destroy]
-  # list ではあらかじめ絞り込んでから出す
-
   before_action :fetch_task_by_params_id, only: [:show, :edit, :update, :destroy]
-  before_action :fetch_user
+  before_action :require_same_user, only: [:show, :edit, :update, :destroy]
 
   def index
     @task_columns_with_sorting_direction = task_columns_with_sorting_direction
@@ -17,11 +12,11 @@ class TasksController < ApplicationController
   end
 
   def new
-    @task = @user.tasks.new
+    @task = Task.new
   end
 
   def create
-    @task = @user.tasks.new(task_params)
+    @task = @current_user.tasks.new(task_params)
     if @task.save
       flash[:success] = I18n.t('flash.task.create.success')
       return redirect_to @task
@@ -58,11 +53,6 @@ class TasksController < ApplicationController
 
   private
 
-  def fetch_user
-    # TODO: session に応じて動的にするべし
-    @user = User.first
-  end
-
   def fetch_task_by_params_id
     @task = Task.find(params[:id])
   end
@@ -88,5 +78,10 @@ class TasksController < ApplicationController
         sort_direction: params[:sort_key] == column_name ? reversed_sort_direction : 'asc',
       }
     end.compact
+  end
+
+  def require_same_user
+    return if @current_user.id == @task.user_id
+    render_404
   end
 end
