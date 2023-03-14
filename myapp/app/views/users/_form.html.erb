@@ -18,6 +18,10 @@
       <p class="w-25"><%= I18n.t(:password_confirmation, scope: [:activerecord, :attributes, :user]) %></p>
       <%= form.password_field :password_confirmation, class:"form-control w-75" %>
     </div>
+    <div class="d-flex mb-4">
+      <p class="w-25"><%= I18n.t(:is_admin, scope: [:activerecord, :attributes, :user]) %></p>
+      <%= form.check_box :is_admin, class:"form-check-input", style:"width: 30px; height: 30px;" %>
+    </div>
 
     <%= link_to I18n.t('action.back'), :back, class:"btn btn-primary"  %>
     <%= form.submit nil, class:"btn btn-primary me-4" %>
