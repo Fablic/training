@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
-  # TODO: admin じゃないとアクセスを弾く実装を入れる
-  before_action :require_login
+  before_action :require_admin_login
   before_action :fetch_user_by_params_id, only: [:show, :edit, :update, :destroy]
 
   def index
