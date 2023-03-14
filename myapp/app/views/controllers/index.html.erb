@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Controllers</h1>
+
+<div id="controllers">
+  <% @controllers.each do |controller| %>
+    <%= render controller %>
+    <p>
+      <%= link_to "Show this controller", controller %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New controller", new_controller_path %>
