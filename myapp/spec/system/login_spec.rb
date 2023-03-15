@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Tasks', type: :system do
+RSpec.describe 'Login', type: :system do
   before do
     driven_by(:remote_chrome)
   end
