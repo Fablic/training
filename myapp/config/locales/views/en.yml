@@ -53,4 +53,3 @@ en:
         failure: 'Failed to login. Invalid combination of username and password'
       logout:
         success: 'Logged out'
-        failure: 'Failed to logout'
