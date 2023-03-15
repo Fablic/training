@@ -51,4 +51,32 @@ RSpec.describe 'Login', type: :system do
       expect(page).to have_content 'ログイン'
     end
   end
+
+  describe 'require_login' do
+    context 'visit tasks list page without login' do
+      before do
+        visit '/tasks'
+      end
+
+      it 'redirect to /login' do
+        expect(page).to have_content 'ログインが必要です。'
+        expect(page).to have_content 'ログイン'
+        expect(page).to have_content 'メールアドレス'
+        expect(page).to have_content 'パスワード'
+      end
+    end
+
+    context 'visit users list page without login' do
+      before do
+        visit '/admin/users'
+      end
+
+      it 'redirect to /login' do
+        expect(page).to have_content 'ログインが必要です。'
+        expect(page).to have_content 'ログイン'
+        expect(page).to have_content 'メールアドレス'
+        expect(page).to have_content 'パスワード'
+      end
+    end
+  end
 end
