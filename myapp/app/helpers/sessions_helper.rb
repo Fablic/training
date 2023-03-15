@@ -28,9 +28,9 @@ module SessionsHelper
   end
 
   def require_admin_login
-    if !admin_logged_in?
-      flash[:danger] = I18n.t('need_admin_login')
-      return redirect_to tasks_path
-    end
+    return if admin_logged_in?
+
+    flash[:danger] = I18n.t('need_admin_login')
+    redirect_to tasks_path
   end
 end
