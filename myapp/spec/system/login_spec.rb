@@ -1,8 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe 'Login', type: :system do
-  include LoginSupport
-
   before do
     driven_by(:remote_chrome)
   end

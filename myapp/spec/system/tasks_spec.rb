@@ -1,17 +1,23 @@
 require 'rails_helper'
 
 RSpec.describe 'Tasks', type: :system do
+  let!(:user) {
+    create(:user, name: 'taro',
+                  email: 'taro@hoge.hoge',
+                  password: 'password')
+  }
+
   before do
     driven_by(:remote_chrome)
-    create(:user)
+    login(user.email, user.password)
   end
 
   describe 'GET /' do
     before do
-      visit '/'
     end
 
     it 'renders tasks list page' do
+      visit '/'
       expect(page).to have_content 'タスク 一覧'
     end
   end
