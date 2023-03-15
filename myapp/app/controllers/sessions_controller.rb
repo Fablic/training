@@ -17,7 +17,8 @@ class SessionsController < ApplicationController
 
   def destroy
     logout
-    return redirect_to login_path
+    flash[:success] = I18n.t('flash.session.logout.success')
+    redirect_to login_path
   end
 
   private
