@@ -1,5 +1,5 @@
 FactoryBot.define do
-  sequence :name do |n|
+  sequence :user_name do |n|
     "taro#{n}"
   end
 
@@ -8,7 +8,7 @@ FactoryBot.define do
   end
 
   factory :user do
-    name { generate :name }
+    name { generate :user_name }
     email { generate :email }
     password { 'password' }
   end
