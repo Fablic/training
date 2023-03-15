@@ -4,7 +4,7 @@ module LoginSupport
     fill_in 'session[email]', with: email
     fill_in 'session[password]', with: password
     find('input[type="submit"]').click
-    find('.alert-success') # login 完了まで待つための処理
+    find('.alert') # login 処理完了まで待つための処理
   end
 end
 
