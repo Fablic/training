@@ -128,6 +128,40 @@ RSpec.describe 'Tasks', type: :system do
     end
   end
 
+  describe 'Other users operation control' do
+    let(:user2) {
+      create(:user, name: 'jiro',
+                    email: 'jiro@hoge.hoge',
+                    password: 'password')
+    }
+    let!(:task1) { create(:task, user: user, name: 'sample_task') }
+    let!(:task2) { create(:task, user: user2, name: 'sample_task_b') }
+
+    describe 'GET /tasks' do
+      it 'only shows tasks created by myself' do
+        visit '/tasks'
+        expect(page).to have_content 'タスク 一覧'
+        expect(page).to have_content 'sample_task'
+        expect(page).not_to have_content 'sample_task_b'
+        expect(page.all('table tbody tr').length).to eq 1
+      end
+    end
+
+    describe 'GET /tasks/:id' do
+      it 'blocks other users operation' do
+        visit "/tasks/#{task2.id}"
+        expect(page).to have_content '404'
+      end
+    end
+
+    describe 'GET /tasks/:id/edit' do
+      it 'blocks other users operation' do
+        visit "/tasks/#{task2.id}/edit"
+        expect(page).to have_content '404'
+      end
+    end
+  end
+
   describe 'I18n' do
     context 'Specify nothing' do
       it 'shows Default(Japanese) pages' do
