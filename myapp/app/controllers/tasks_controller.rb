@@ -82,6 +82,7 @@ class TasksController < ApplicationController
 
   def require_same_user
     return if @current_user.id == @task.user_id
+
     render_404
   end
 end

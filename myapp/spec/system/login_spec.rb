@@ -14,10 +14,7 @@ RSpec.describe 'Login', type: :system do
   describe 'login' do
     context 'valid input' do
       before do
-        visit '/login'
-        fill_in 'session[email]', with: user.email
-        fill_in 'session[password]', with: user.password
-        find('input[type="submit"]').click
+        login(user.email, user.password)
       end
 
       it 'successfully logged in' do
@@ -30,10 +27,7 @@ RSpec.describe 'Login', type: :system do
 
     context 'invalid input' do
       before do
-        visit '/login'
-        fill_in 'session[email]', with: user.email
-        fill_in 'session[password]', with: 'hoge'
-        find('input[type="submit"]').click
+        login(user.email, 'hoge')
       end
 
       it 'failed to log in' do
@@ -46,10 +40,7 @@ RSpec.describe 'Login', type: :system do
 
   describe 'logout' do
     before do
-      visit '/login'
-      fill_in 'session[email]', with: user.email
-      fill_in 'session[password]', with: user.password
-      find('input[type="submit"]').click
+      login(user.email, user.password)
       page.accept_confirm do
         click_link('ログアウト')
       end

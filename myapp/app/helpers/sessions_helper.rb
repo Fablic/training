@@ -4,9 +4,7 @@ module SessionsHelper
   end
 
   def current_user
-    if session[:user_id]
-      @current_user ||= User.find_by(id: session[:user_id])
-    end
+    @current_user ||= User.find_by(id: session[:user_id]) if session[:user_id]
   end
 
   def logged_in?
@@ -23,10 +21,10 @@ module SessionsHelper
   end
 
   def require_login
-    unless logged_in?
-      flash[:danger] = I18n.t('need_login')
-      redirect_to login_path
-    end
+    return if logged_in?
+
+    flash[:danger] = I18n.t('need_login')
+    redirect_to login_path
   end
 
   def require_admin_login
