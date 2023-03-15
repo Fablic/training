@@ -26,9 +26,10 @@ RSpec.describe 'Tasks', type: :system do
         visit '/tasks'
       end
 
-      it 'shows tasks only created by myself' do
+      it 'shows tasks list' do
         expect(page).to have_content 'タスク 一覧'
         expect(page).to have_content 'sample_task'
+        expect(page.all('table tbody tr').length).to eq 1
       end
     end
 
