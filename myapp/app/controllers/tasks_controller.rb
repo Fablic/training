@@ -11,7 +11,7 @@ class TasksController < ApplicationController
   def index
     @task_columns_with_sorting_direction = task_columns_with_sorting_direction
 
-    @tasks = Task.status(params[:status]).name_contain(params[:name]).page(params[:page])
+    @tasks = @current_user.tasks.status(params[:status]).name_contain(params[:name]).page(params[:page])
     @tasks = @tasks.order("#{params[:sort_key]} #{sort_direction}") if params[:sort_key].present?
     @tasks
   end
