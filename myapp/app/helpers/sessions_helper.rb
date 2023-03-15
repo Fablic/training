@@ -1,5 +1,4 @@
 module SessionsHelper
-
   def login(user)
     session[:user_id] = user.id
   end
@@ -20,9 +19,9 @@ module SessionsHelper
   end
 
   def require_login
-    if !logged_in?
+    unless logged_in?
       flash[:danger] = I18n.t('need_login')
-      return redirect_to login_path
+      redirect_to login_path
     end
   end
 end

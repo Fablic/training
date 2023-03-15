@@ -1,11 +1,10 @@
 class SessionsController < ApplicationController
-
   def new
   end
 
   def create
     user = User.find_by(email: session_params[:email])
-    if user && user.authenticate(session_params[:password])
+    if user&.authenticate(session_params[:password])
       login(user)
       flash[:success] = I18n.t('flash.session.login.success')
       return redirect_to tasks_path
