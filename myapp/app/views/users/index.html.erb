@@ -28,7 +28,9 @@
           <th class="text-center"><%= user.tasks.length %></th>
           <th class="text-center"><%= link_to I18n.t('action.show'), user_path(user), class:"btn btn-primary" %></th>
           <th class="text-center"><%= link_to I18n.t('action.edit'), edit_user_path(user), class:"btn btn-primary" %></th>
-          <th class="text-center"><%= link_to I18n.t('action.delete'), user_path(user), class:"btn btn-danger", data: { turbo_method: :delete, turbo_confirm: I18n.t('confirm') } %></th>
+          <% if user.id != @current_user.id %>
+            <th class="text-center"><%= link_to I18n.t('action.delete'), user_path(user), class:"btn btn-danger", data: { turbo_method: :delete, turbo_confirm: I18n.t('confirm') } %></th>
+          <% end %>
         </tr>
       <% end %>
     </tbody>
