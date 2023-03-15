@@ -129,12 +129,15 @@ RSpec.describe 'Tasks', type: :system do
   end
 
   describe 'Other users operation control' do
+    before do
+      create(:task, user: user, name: 'sample_task')
+    end
+
     let(:user2) {
       create(:user, name: 'jiro',
                     email: 'jiro@hoge.hoge',
                     password: 'password')
     }
-    let!(:task1) { create(:task, user: user, name: 'sample_task') }
     let!(:task2) { create(:task, user: user2, name: 'sample_task_b') }
 
     describe 'GET /tasks' do
