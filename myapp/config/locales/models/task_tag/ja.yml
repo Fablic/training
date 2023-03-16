@@ -1,0 +1,11 @@
+ja:
+  activerecord:
+    models:
+      task_tag: 'タスクタグ'
+    attributes:
+      task_tag:
+        id: 'id'
+        task_id: 'タスクid'
+        tag_id: 'タグid'
+        created_at: '作成日時'
+        updated_at: '更新日時'

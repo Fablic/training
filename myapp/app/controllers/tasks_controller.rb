@@ -5,7 +5,7 @@ class TasksController < ApplicationController
   def index
     @task_columns_with_sorting_direction = task_columns_with_sorting_direction
 
-    @tasks = @current_user.tasks.status(params[:status]).name_contain(params[:name]).page(params[:page])
+    @tasks = @current_user.tasks.includes(:tags).status(params[:status]).name_contain(params[:name]).page(params[:page])
     @tasks = @tasks.order("#{params[:sort_key]} #{sort_direction}") if params[:sort_key].present?
     @tasks
   end
@@ -70,7 +70,7 @@ class TasksController < ApplicationController
 
   def task_columns_with_sorting_direction
     Task.column_names.map do |column_name|
-      next if ['user_id', 'description'].include?(column_name)
+      next if ['user_id', 'description', 'created_at', 'updated_at'].include?(column_name)
 
       {
         name: column_name,

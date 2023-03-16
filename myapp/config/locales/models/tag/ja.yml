@@ -1,0 +1,10 @@
+ja:
+  activerecord:
+    models:
+      tag: 'タグ'
+    attributes:
+      tag:
+        id: 'id'
+        name: '名前'
+        created_at: '作成日時'
+        updated_at: '更新日時'

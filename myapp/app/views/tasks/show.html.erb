@@ -3,12 +3,46 @@
 
   <table class='table'>
     <tbody>
-      <% Task.column_names.each do |column_name| %>
-        <tr>
-          <th class="w-25"><%= I18n.t(column_name.to_sym, scope: [:activerecord, :attributes, :task]) %></th>
-          <td class="w-75"><%= value_with_i18n_line_break(@task, column_name) %></td>
-        </tr>
-      <% end %>
+      <tr>
+        <th class="w-25"><%= I18n.t(:id, scope: [:activerecord, :attributes, :task]) %></th>
+        <td class="w-75"><%= @task.id %></td>
+      </tr>
+      <tr>
+        <th class="w-25"><%= I18n.t(:user_id, scope: [:activerecord, :attributes, :task]) %></th>
+        <td class="w-75"><%= @task.user_id %></td>
+      </tr>
+      <tr>
+        <th class="w-25"><%= I18n.t(:name, scope: [:activerecord, :attributes, :task]) %></th>
+        <td class="w-75"><%= @task.name %></td>
+      </tr>
+      <tr>
+        <th class="w-25"><%= I18n.t(:description, scope: [:activerecord, :attributes, :task]) %></th>
+        <td class="w-75"><%= html_safe_with_line_break(@task.description) %></td>
+      </tr>
+      <tr>
+        <th class="w-25"><%= I18n.t(:status, scope: [:activerecord, :attributes, :task]) %></th>
+        <td class="w-75"><%= I18n.t(@task.status, scope: [:activerecord, :enums, :task, :status]) %></td>
+      </tr>
+      <tr>
+        <th class="w-25"><%= I18n.t(:deadline_at, scope: [:activerecord, :attributes, :task]) %></th>
+        <td class="w-75"><%= @task.deadline_at %></td>
+      </tr>
+      <tr>
+        <th class="w-25"><%= I18n.t('activerecord.models.tag') %></th>
+        <td class="w-75">
+          <% @task.tags.each do |tag| %>
+              <span class="badge py-2 fs-6 bg-secondary"><%= tag.name %></span>
+            <% end %>
+        </td>
+      </tr>
+      <tr>
+        <th class="w-25"><%= I18n.t(:created_at, scope: [:activerecord, :attributes, :task]) %></th>
+        <td class="w-75"><%= @task.created_at %></td>
+      </tr>
+      <tr>
+        <th class="w-25"><%= I18n.t(:updated_at, scope: [:activerecord, :attributes, :task]) %></th>
+        <td class="w-75"><%= @task.updated_at %></td>
+      </tr>
     </tbody>
   </table>
 
