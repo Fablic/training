@@ -7,7 +7,7 @@ en:
         id: 'id'
         name: 'name'
         email: 'email'
-        is_admin: 'is_admin'
+        admin: 'admin'
         password: 'password'
         password_confirmation: 'password_confirmation'
         created_at: 'created_at'

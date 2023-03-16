@@ -16,8 +16,8 @@
         <td class="w-75"><%= @user.email %></td>
       </tr>
       <tr>
-        <th class="w-25"><%= I18n.t(:is_admin, scope: [:activerecord, :attributes, :user]) %></th>
-        <td class="w-75"><%= @user.is_admin %></td>
+        <th class="w-25"><%= I18n.t(:admin, scope: [:activerecord, :attributes, :user]) %></th>
+        <td class="w-75"><%= @user.admin %></td>
       </tr>
       <tr>
         <th class="w-25"><%= I18n.t(:created_at, scope: [:activerecord, :attributes, :user]) %></th>

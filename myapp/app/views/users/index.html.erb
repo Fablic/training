@@ -9,7 +9,7 @@
         <th class="text-center"><%= I18n.t(:id, scope: [:activerecord, :attributes, :user]) %></th>
         <th class="text-center"><%= I18n.t(:name, scope: [:activerecord, :attributes, :user]) %></th>
         <th class="text-center"><%= I18n.t(:email, scope: [:activerecord, :attributes, :user]) %></th>
-        <th class="text-center"><%= I18n.t(:is_admin, scope: [:activerecord, :attributes, :user]) %></th>
+        <th class="text-center"><%= I18n.t(:admin, scope: [:activerecord, :attributes, :user]) %></th>
         <th class="text-center"><%= I18n.t(:created_at, scope: [:activerecord, :attributes, :user]) %></th>
         <th class="text-center"><%= I18n.t(:updated_at, scope: [:activerecord, :attributes, :user]) %></th>
         <th class="text-center"><%= I18n.t('tasks_length') %></th>
@@ -22,7 +22,7 @@
           <th class="text-center"><%= user.id %></th>
           <th class="w-25"><%= user.name %></th>
           <th class="w-25"><%= user.email %></th>
-          <th class="text-center"><%= user.is_admin? %></th>
+          <th class="text-center"><%= user.admin? %></th>
           <th class="text-center"><%= user.created_at.strftime("%Y/%m/%d %H:%M")  %></th>
           <th class="text-center"><%= user.updated_at.strftime("%Y/%m/%d %H:%M")  %></th>
           <th class="text-center"><%= user.tasks.length %></th>
