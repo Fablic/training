@@ -1,21 +1,21 @@
 class TasksController < ApplicationController
-  before_action :fetch_task_by_params_id, only: [:show, :edit, :update, :destroy]
-  before_action :fetch_user
+  before_action :require_login
+  before_action :fetch_task, only: [:show, :edit, :update, :destroy]
 
   def index
     @task_columns_with_sorting_direction = task_columns_with_sorting_direction
 
-    @tasks = Task.status(params[:status]).name_contain(params[:name]).page(params[:page])
+    @tasks = @current_user.tasks.status(params[:status]).name_contain(params[:name]).page(params[:page])
     @tasks = @tasks.order("#{params[:sort_key]} #{sort_direction}") if params[:sort_key].present?
     @tasks
   end
 
   def new
-    @task = @user.tasks.new
+    @task = Task.new
   end
 
   def create
-    @task = @user.tasks.new(task_params)
+    @task = @current_user.tasks.new(task_params)
     if @task.save
       flash[:success] = I18n.t('flash.task.create.success')
       return redirect_to @task
@@ -52,13 +52,8 @@ class TasksController < ApplicationController
 
   private
 
-  def fetch_user
-    # TODO: session に応じて動的にするべし
-    @user = User.first
-  end
-
-  def fetch_task_by_params_id
-    @task = Task.find(params[:id])
+  def fetch_task
+    @task = @current_user.tasks.find(params[:id])
   end
 
   def task_params

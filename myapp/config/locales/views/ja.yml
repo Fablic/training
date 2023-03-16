@@ -1,0 +1,54 @@
+ja:
+  title: 'タスク管理アプリ'
+  action:
+    create: '登録'
+    edit: '編集'
+    update: '更新'
+    delete: '削除'
+    list: '一覧'
+    cancel: 'キャンセル'
+    new: '新規'
+    add: '追加'
+    show: '詳細'
+    back: '戻る'
+    login: 'ログイン'
+    logout: 'ログアウト'
+  confirm: '本当によろしいですか？'
+  noaccount: 'アカウントがない場合やログイン情報を忘れた場合は、管理者に問い合わせください。'
+  need_login: 'ログインが必要です。'
+
+  sort:
+    created_at: '作成日時で並び替え'
+
+  filter:
+    title: 'フィルタリング'
+    apply: '適用'
+    remove: 'フィルター解除'
+
+  flash:
+    task:
+      create:
+        success: 'タスクが正常に登録されました。'
+        failure: 'タスクの登録に失敗しました。'
+      update:
+        success: 'タスクが正常に更新されました。'
+        failure: 'タスクの更新に失敗しました。'
+      delete:
+        success: 'タスクが正常に削除されました。'
+        failure: 'タスクの削除に失敗しました。'
+    user:
+      create:
+        success: 'ユーザが正常に登録されました。'
+        failure: 'ユーザの登録に失敗しました。'
+      update:
+        success: 'ユーザが正常に更新されました。'
+        failure: 'ユーザの更新に失敗しました。'
+      delete:
+        success: 'ユーザが正常に削除されました。'
+        failure: 'ユーザの削除に失敗しました。'
+    session:
+      login:
+        success: 'ログインしました。'
+        failure: 'ログインに失敗しました。メールアドレスとパスワードの組み合わせが不正です。'
+      logout:
+        success: 'ログアウトしました。'

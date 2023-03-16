@@ -1,124 +1,176 @@
 require 'rails_helper'
 
 RSpec.describe 'Tasks', type: :system do
+  let(:user) {
+    create(:user, name: 'taro',
+                  email: 'taro@hoge.hoge',
+                  password: 'password')
+  }
+
   before do
     driven_by(:remote_chrome)
-    create(:user)
+    login(user.email, user.password)
   end
 
-  describe 'GET /' do
-    before do
-      visit '/'
-    end
-
-    it 'renders tasks list page' do
-      expect(page).to have_content 'タスク 一覧'
-    end
-  end
-
-  describe 'GET /tasks' do
-    before do
-      create(:task)
-      visit '/tasks'
-    end
-
-    it 'renders a successful response' do
-      expect(page).to have_content 'タスク 一覧'
-      expect(page).to have_content 'sample_task'
-    end
-  end
-
-  describe 'GET /tasks/:id' do
-    let(:task) { create(:task) }
-
-    it 'renders a successful response' do
-      visit "/tasks/#{task.id}"
-      expect(page).to have_content 'タスク 詳細'
-      expect(page).to have_content 'sample_task'
-    end
-  end
-
-  describe 'GET /tasks/new' do
-    it 'renders tasks list page' do
-      visit '/tasks/new'
-      expect(page).to have_content 'タスク 新規'
-    end
-  end
-
-  describe 'GET /tasks/:id/edit' do
-    let(:task) { create(:task) }
-
-    it 'renders a successful response' do
-      visit "/tasks/#{task.id}/edit"
-      expect(page).to have_content 'タスク 編集'
-      expect(page).to have_selector 'input[value="sample_task"]'
-    end
-  end
-
-  describe 'Creating a new task successfully' do
-    before do
-      visit '/tasks'
-      click_link('追加')
-      fill_in 'task[name]', with: 'sample_task'
-      fill_in 'task[description]', with: 'sample description'
-      select '完了', from: 'task_status'
-      fill_in 'task[deadline_at]', with: Time.zone.local(2023, 2, 3, 12, 34)
-      find('input[type="submit"]').click
-    end
-
-    it 'successfully create a task' do
-      expect(page).to have_content 'タスクが正常に登録されました。'
-      expect(page).to have_content 'タスク 詳細'
-      expect(page).to have_content 'sample_task'
-      expect(page).to have_content 'sample description'
-      expect(page).to have_content '完了'
-      expect(page).to have_content '2023-02-03 12:34:00 +0900'
-    end
-  end
-
-  describe 'Updating a task successfully' do
-    let(:task) {
-      create(:task, name: 'sample_task',
-                    description: 'sample description',
-                    status: 'wip',
-                    deadline_at: '2023-02-03T12:34')
-    }
-
-    before do
-      visit "/tasks/#{task.id}/edit"
-      fill_in 'task[name]', with: 'sample_task_updated'
-      fill_in 'task[description]', with: 'sample description updated'
-      select '完了', from: 'task_status'
-      fill_in 'task[deadline_at]', with: Time.zone.local(2023, 3, 4, 13, 56)
-      find('input[type="submit"]').click
-    end
-
-    it 'successfully update a task' do
-      expect(page).to have_content 'タスクが正常に更新されました。'
-      expect(page).to have_content 'タスク 詳細'
-      expect(page).to have_content 'sample_task_updated'
-      expect(page).to have_content 'sample description updated'
-      expect(page).to have_content '完了'
-      expect(page).to have_content '2023-03-04 13:56:00 +0900'
-    end
-  end
-
-  describe 'Deleting a task successfully' do
-    before do
-      create(:task)
-      visit '/tasks'
-    end
-
-    it 'successfully update a task' do
-      expect(Task.all.length).to eq 1
-      # see: https://www.rubydoc.info/gems/capybara/Capybara%2FSession:accept_confirm
-      page.accept_confirm do
-        click_link('削除')
+  describe 'CRUD' do
+    describe 'GET /' do
+      it 'renders tasks list page' do
+        visit '/'
+        expect(page).to have_content 'タスク 一覧'
       end
-      expect(page).to have_content 'タスクが正常に削除されました。'
-      expect(page).to have_content 'タスク 一覧'
-      expect(page).not_to have_content 'hoge_task'
-      expect(Task.all.length).to eq 0
+    end
+
+    describe 'GET /tasks' do
+      before do
+        create(:task, user: user, name: 'sample_task')
+        visit '/tasks'
+      end
+
+      it 'shows tasks list' do
+        expect(page).to have_content 'タスク 一覧'
+        expect(page).to have_content 'sample_task'
+        expect(page.all('table tbody tr').length).to eq 1
+      end
+    end
+
+    describe 'GET /tasks/:id' do
+      let(:task) { create(:task, user: user, name: 'sample_task') }
+
+      it 'renders a successful response' do
+        visit "/tasks/#{task.id}"
+        expect(page).to have_content 'タスク 詳細'
+        expect(page).to have_content 'sample_task'
+      end
+    end
+
+    describe 'GET /tasks/new' do
+      it 'renders tasks list page' do
+        visit '/tasks/new'
+        expect(page).to have_content 'タスク 新規'
+      end
+    end
+
+    describe 'GET /tasks/:id/edit' do
+      let(:task) { create(:task, user: user, name: 'sample_task') }
+
+      it 'renders a successful response' do
+        visit "/tasks/#{task.id}/edit"
+        expect(page).to have_content 'タスク 編集'
+        expect(page).to have_selector 'input[value="sample_task"]'
+      end
+    end
+
+    describe 'Creating a new task' do
+      before do
+        visit '/tasks'
+        click_link('追加')
+        fill_in 'task[name]', with: 'sample_task'
+        fill_in 'task[description]', with: 'sample description'
+        select '完了', from: 'task_status'
+        fill_in 'task[deadline_at]', with: Time.zone.local(2023, 2, 3, 12, 34)
+        find('input[type="submit"]').click
+      end
+
+      it 'successfully create a task' do
+        expect(page).to have_content 'タスクが正常に登録されました。'
+        expect(page).to have_content 'タスク 詳細'
+        expect(page).to have_content 'sample_task'
+        expect(page).to have_content 'sample description'
+        expect(page).to have_content '完了'
+        expect(page).to have_content '2023-02-03 12:34:00 +0900'
+      end
+    end
+
+    describe 'Updating a task' do
+      let(:task) {
+        create(:task, user: user,
+                      name: 'sample_task',
+                      description: 'sample description',
+                      status: 'wip',
+                      deadline_at: '2023-02-03T12:34')
+      }
+
+      before do
+        visit "/tasks/#{task.id}/edit"
+        fill_in 'task[name]', with: 'sample_task_updated'
+        fill_in 'task[description]', with: 'sample description updated'
+        select '完了', from: 'task_status'
+        fill_in 'task[deadline_at]', with: Time.zone.local(2023, 3, 4, 13, 56)
+        find('input[type="submit"]').click
+      end
+
+      it 'successfully update a task' do
+        expect(page).to have_content 'タスクが正常に更新されました。'
+        expect(page).to have_content 'タスク 詳細'
+        expect(page).to have_content 'sample_task_updated'
+        expect(page).to have_content 'sample description updated'
+        expect(page).to have_content '完了'
+        expect(page).to have_content '2023-03-04 13:56:00 +0900'
+      end
+    end
+
+    describe 'Deleting a task' do
+      before do
+        create(:task, user: user)
+        visit '/tasks'
+      end
+
+      it 'successfully update a task' do
+        expect(Task.all.length).to eq 1
+        # see: https://www.rubydoc.info/gems/capybara/Capybara%2FSession:accept_confirm
+        page.accept_confirm do
+          click_link('削除')
+        end
+        expect(page).to have_content 'タスクが正常に削除されました。'
+        expect(page).to have_content 'タスク 一覧'
+        expect(page).not_to have_content 'hoge_task'
+        expect(Task.all.length).to eq 0
+      end
+    end
+  end
+
+  describe 'Other users operation control' do
+    before do
+      create(:task, user: user, name: 'sample_task')
+    end
+
+    # see: https://qiita.com/jnchito/items/37fcaf4486c4bdf78802
+    around do |example|
+      original = Capybara.raise_server_errors
+      Capybara.raise_server_errors = false
+      example.run
+      Capybara.raise_server_errors = original
+    end
+
+    let(:user2) {
+      create(:user, name: 'jiro',
+                    email: 'jiro@hoge.hoge',
+                    password: 'password')
+    }
+    let!(:task2) { create(:task, user: user2, name: 'sample_task_b') }
+
+    describe 'GET /tasks' do
+      it 'only shows tasks created by myself' do
+        visit '/tasks'
+        expect(page).to have_content 'タスク 一覧'
+        expect(page).to have_content 'sample_task'
+        expect(page).not_to have_content 'sample_task_b'
+        expect(page.all('table tbody tr').length).to eq 1
+      end
+    end
+
+    describe 'GET /tasks/:id' do
+      it 'blocks other users operation' do
+        visit "/tasks/#{task2.id}"
+        expect(page).to have_content 'ActiveRecord::RecordNotFound'
+      end
+    end
+
+    describe 'GET /tasks/:id/edit' do
+      it 'blocks other users operation' do
+        visit "/tasks/#{task2.id}/edit"
+        expect(page).to have_content 'ActiveRecord::RecordNotFound'
+      end
     end
   end
 
@@ -156,8 +208,8 @@ RSpec.describe 'Tasks', type: :system do
   end
 
   describe 'Sorting by created_at' do
-    let!(:task1) { create(:task, name: 'hoge_task', created_at: Time.current.yesterday) }
-    let!(:task2) { create(:task, name: 'fuga_task', created_at: Time.current) }
+    let!(:task1) { create(:task, user: user, name: 'hoge_task', created_at: Time.current.yesterday) }
+    let!(:task2) { create(:task, user: user, name: 'fuga_task', created_at: Time.current) }
 
     context 'Sorting asc => desc' do
       it 'sorts successfully' do
@@ -180,11 +232,11 @@ RSpec.describe 'Tasks', type: :system do
 
   describe 'Filtering Function' do
     before do
-      create(:task, name: 'hoge_task', status: 'unstarted')
-      create(:task, name: 'fuga_task', status: 'wip')
-      create(:task, name: 'hoge_fuga_task', status: 'done')
-      create(:task, name: 'fizz_task', status: 'done')
-      create(:task, name: 'buzz_task', status: 'done')
+      create(:task, user: user, name: 'hoge_task', status: 'unstarted')
+      create(:task, user: user, name: 'fuga_task', status: 'wip')
+      create(:task, user: user, name: 'hoge_fuga_task', status: 'done')
+      create(:task, user: user, name: 'fizz_task', status: 'done')
+      create(:task, user: user, name: 'buzz_task', status: 'done')
     end
 
     context 'get /tasks page without querry parameters' do
@@ -252,8 +304,8 @@ RSpec.describe 'Tasks', type: :system do
   describe 'Pagenation' do
     context 'using sorting' do
       before do
-        create_list(:task, 10, name: 'a_sample_task')
-        create(:task, name: 'b_sample_task')
+        create_list(:task, 10, user: user, name: 'a_sample_task')
+        create(:task, user: user, name: 'b_sample_task')
         visit '/tasks'
       end
 
@@ -295,7 +347,7 @@ RSpec.describe 'Tasks', type: :system do
 
     context 'the number of tasks is 10 or below' do
       before do
-        create_list(:task, 10)
+        create_list(:task, 10, user: user)
         visit '/tasks'
       end
 
@@ -308,7 +360,7 @@ RSpec.describe 'Tasks', type: :system do
 
     context 'the number of tasks is 11' do
       before do
-        create_list(:task, 11)
+        create_list(:task, 11, user: user)
         visit '/tasks'
       end
 
@@ -329,8 +381,8 @@ RSpec.describe 'Tasks', type: :system do
 
     context 'Filtering & the number of tasks is 10 or below' do
       before do
-        create_list(:task, 5, status: 'unstarted')
-        create_list(:task, 10, status: 'wip')
+        create_list(:task, 5, user: user, status: 'unstarted')
+        create_list(:task, 10, user: user, status: 'wip')
         visit '/tasks'
       end
 
@@ -352,8 +404,8 @@ RSpec.describe 'Tasks', type: :system do
 
     context 'Filtering & the number of tasks is 11' do
       before do
-        create_list(:task, 10, status: 'unstarted')
-        create_list(:task, 11, status: 'wip')
+        create_list(:task, 10, user: user, status: 'unstarted')
+        create_list(:task, 11, user: user, status: 'wip')
         visit '/tasks'
       end
 

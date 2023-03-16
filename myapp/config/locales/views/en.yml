@@ -11,7 +11,10 @@ en:
     add: 'add'
     show: 'show'
     back: 'back'
+    login: 'login'
   confirm: 'Are you sure?'
+  noaccount: "If you don't have your account or forget your login information, contact your administrator."
+  need_login: 'You need to login.'
 
   sort:
     created_at: 'Sort by created_at'
@@ -32,3 +35,19 @@ en:
       delete:
         success: 'The task was successfully deleted.'
         failure: 'Failed to delete the task'
+    user:
+      create:
+        success: 'The user was successfully created.'
+        failure: 'Failed to create the user.'
+      update:
+        success: 'The user was successfully updated.'
+        failure: 'Failed to update the user'
+      delete:
+        success: 'The user was successfully deleted.'
+        failure: 'Failed to delete the user'
+    session:
+      login:
+        success: 'Logged in'
+        failure: 'Failed to login. Invalid combination of username and password'
+      logout:
+        success: 'Logged out'
