@@ -94,11 +94,7 @@ RSpec.describe 'Users', type: :system do
     end
 
     describe 'Deleting a user' do
-      let(:user2) {
-        create(:user, name: 'jiro',
-                      email: 'jiro@hoge.hoge',
-                      password: 'password')
-      }
+      let(:user2) { create(:user) }
 
       before do
         create(:task, user: user2)
