@@ -2,6 +2,9 @@ require 'rails_helper'
 
 RSpec.describe 'Tasks', type: :request do
   let(:user) { create(:user) }
+  before do
+    post '/login', params: { session: { email: user.email, password: user.password } }
+  end
 
   describe 'GET /index' do
     let(:tasks) { create_list(:task, 10) }
