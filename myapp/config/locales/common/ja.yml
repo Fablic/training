@@ -7,3 +7,14 @@ ja:
     create: "%{model_name}が正常に作成されました"
     update: "%{model_name}が正常に更新されました"
     delete: "%{model_name}が正常に削除されました"
+
+  sessions:
+    form:
+      email: メールアドレス
+      password: パスワード
+    flash:
+      login:
+        success: ログインしました
+        fail: ログインに失敗しました
+      logout:
+        success: ログアウトしました
