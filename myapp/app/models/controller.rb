@@ -1,2 +1,0 @@
-class Controller < ApplicationRecord
-end
