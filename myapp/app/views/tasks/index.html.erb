@@ -5,7 +5,10 @@
   <%= link_to I18n.t('tasks.index.add_task'), new_task_path %>
 </div>
 
+  <%= link_to I18n.t('sessions.button.logout'), logout_path, method: :delete, class: "btn btn-primary mx-1" %>
   <%= render 'search_form', task: @task %>
+
+
 
 <div id="tasks" class="container-sm border rounded-2" style="padding:10px;">
   <table class="table">
