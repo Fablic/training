@@ -134,6 +134,14 @@ RSpec.describe 'Tasks', type: :system do
       create(:task, user: user, name: 'sample_task')
     end
 
+    # see: https://qiita.com/jnchito/items/37fcaf4486c4bdf78802
+    around do |example|
+      original = Capybara.raise_server_errors
+      Capybara.raise_server_errors = false
+      example.run
+      Capybara.raise_server_errors = original
+    end
+
     let(:user2) {
       create(:user, name: 'jiro',
                     email: 'jiro@hoge.hoge',
@@ -154,14 +162,14 @@ RSpec.describe 'Tasks', type: :system do
     describe 'GET /tasks/:id' do
       it 'blocks other users operation' do
         visit "/tasks/#{task2.id}"
-        expect(page).to have_content '404'
+        expect(page).to have_content 'ActiveRecord::RecordNotFound'
       end
     end
 
     describe 'GET /tasks/:id/edit' do
       it 'blocks other users operation' do
         visit "/tasks/#{task2.id}/edit"
-        expect(page).to have_content '404'
+        expect(page).to have_content 'ActiveRecord::RecordNotFound'
       end
     end
   end

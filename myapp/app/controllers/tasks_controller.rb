@@ -1,7 +1,6 @@
 class TasksController < ApplicationController
   before_action :require_login
-  before_action :fetch_task_by_params_id, only: [:show, :edit, :update, :destroy]
-  before_action :require_same_user, only: [:show, :edit, :update, :destroy]
+  before_action :fetch_task, only: [:show, :edit, :update, :destroy]
 
   def index
     @task_columns_with_sorting_direction = task_columns_with_sorting_direction
@@ -53,8 +52,8 @@ class TasksController < ApplicationController
 
   private
 
-  def fetch_task_by_params_id
-    @task = Task.find(params[:id])
+  def fetch_task
+    @task = @current_user.tasks.find(params[:id])
   end
 
   def task_params
@@ -78,11 +77,5 @@ class TasksController < ApplicationController
         sort_direction: params[:sort_key] == column_name ? reversed_sort_direction : 'asc',
       }
     end.compact
-  end
-
-  def require_same_user
-    return if @current_user.id == @task.user_id
-
-    render_404
   end
 end
