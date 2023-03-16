@@ -72,7 +72,10 @@ class TasksController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_task
-    @task = Task.find(params[:id])
+    task = Task.find(params[:id])
+    raise ActionController::BadRequest if current_user.id != task.user_id
+
+    @task = task
   end
 
   # Only allow a list of trusted parameters through.
