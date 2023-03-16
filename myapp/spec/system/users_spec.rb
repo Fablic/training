@@ -21,7 +21,7 @@ RSpec.describe 'Users', type: :system do
 
       it 'shows users list' do
         expect(page).to have_content 'ユーザ 一覧'
-        expect(page).to have_content 'taro@hoge.hoge'
+        expect(page).to have_content user.email
         expect(page.all('table tbody tr').length).to eq 1
       end
     end
@@ -30,7 +30,7 @@ RSpec.describe 'Users', type: :system do
       it 'renders a successful response' do
         visit "/admin/users/#{user.id}"
         expect(page).to have_content 'ユーザ 詳細'
-        expect(page).to have_content 'taro@hoge.hoge'
+        expect(page).to have_content user.email
         expect(page).not_to have_content 'パスワード' # パスワードは表示しない
       end
     end
@@ -46,7 +46,7 @@ RSpec.describe 'Users', type: :system do
       it 'renders a successful response' do
         visit "/admin/users/#{user.id}/edit"
         expect(page).to have_content 'ユーザ 編集'
-        expect(page).to have_selector 'input[value="taro@hoge.hoge"]'
+        expect(page).to have_selector "input[value=\"#{user.email}\"]"
       end
     end
 
@@ -95,7 +95,7 @@ RSpec.describe 'Users', type: :system do
     end
 
     describe 'Deleting a user' do
-      let(:user2) { create(:user) }
+      let(:user2) { create(:user, email: 'jiro@hoge.hoge') }
 
       before do
         create(:task, user: user2)
@@ -111,7 +111,7 @@ RSpec.describe 'Users', type: :system do
         end
         expect(page).to have_content 'ユーザが正常に削除されました。'
         expect(page).to have_content 'ユーザ 一覧'
-        expect(page).not_to have_content 'jiro@hoge.hoge'
+        expect(page).not_to have_content user2.email
         expect(User.all.length).to eq 1
         expect(Task.all.length).to eq 0 # 削除されたユーザに紐づくタスクも削除されることをテスト
       end
