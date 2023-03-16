@@ -12,6 +12,7 @@ en:
     show: 'show'
     back: 'back'
     login: 'login'
+    logout: 'logout'
   confirm: 'Are you sure?'
   noaccount: "If you don't have your account or forget your login information, contact your administrator."
   need_login: 'You need to login.'
