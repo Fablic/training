@@ -7,33 +7,6 @@ RSpec.describe TasksHelper, type: :helper do
     end
   end
 
-  describe 'value_with_i18n_line_break' do
-    let(:task) { create(:task, name: 'hoge_task', description: 'hoge', status: 'done') }
-
-    context 'attributes except for status' do
-      it 'returns as it is' do
-        expect(helper.value_with_i18n_line_break(task, 'name')).to eq('hoge_task')
-      end
-    end
-
-    context 'status attribute' do
-      it 'returns converted value by i18n' do
-        expect(helper.value_with_i18n_line_break(task, 'status')).to eq('完了')
-      end
-    end
-
-    context 'description attribute' do
-      before do
-        # Stub value_with_i18n_line_break because I want to confirm the method is called.
-        allow(helper).to receive(:html_safe_with_line_break).and_return('fuga')
-      end
-
-      it 'calls html_safe_with_line_break method' do
-        expect(helper.value_with_i18n_line_break(task, 'description')).to eq('fuga')
-      end
-    end
-  end
-
   describe 'html_safe_with_line_break' do
     context 'normal argument' do
       it 'behaves expectedly' do
