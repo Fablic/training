@@ -1,5 +1,7 @@
 class Task < ApplicationRecord
   belongs_to :user
+  has_many :task_tags
+  has_many :tags, through: :task_tags
 
   validates :name, presence: true, length: { maximum: 50 }
   # description はDB上は65,535文字まで許容できるが、区切りよく決めで上限を設定する。
