@@ -7,7 +7,7 @@ ja:
         id: 'id'
         name: '名前'
         email: 'メールアドレス'
-        is_admin: '管理者'
+        admin: '管理者'
         password: 'パスワード'
         password_confirmation: 'パスワード確認'
         created_at: '作成日時'

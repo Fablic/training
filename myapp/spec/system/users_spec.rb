@@ -5,7 +5,7 @@ RSpec.describe 'Users', type: :system do
     create(:user, name: 'taro',
                   email: 'taro@hoge.hoge',
                   password: 'password',
-                  is_admin: true)
+                  admin: true)
   }
 
   before do
@@ -120,7 +120,7 @@ RSpec.describe 'Users', type: :system do
     describe 'require_admin_login' do
       context 'login as normal user' do
         let(:normal_user) {
-          create(:user, is_admin: false)
+          create(:user, admin: false)
         }
 
         before do
@@ -135,7 +135,7 @@ RSpec.describe 'Users', type: :system do
 
       context 'login as admin user' do
         let(:admin_user) {
-          create(:user, is_admin: true)
+          create(:user, admin: true)
         }
 
         before do
@@ -167,10 +167,10 @@ RSpec.describe 'Users', type: :system do
         visit "/admin/users/#{user.id}/edit"
       end
 
-      it 'does not show checkbox for is_admin' do
+      it 'does not show checkbox for admin' do
         expect(page).to have_content 'ユーザ 編集'
         expect(page).to have_selector "input[value=\"#{user.email}\"]"
-        expect(page).not_to have_selector "input[name='user[is_admin]']"
+        expect(page).not_to have_selector "input[name='user[admin]']"
       end
     end
   end
