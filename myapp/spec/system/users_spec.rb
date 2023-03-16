@@ -148,5 +148,30 @@ RSpec.describe 'Users', type: :system do
         end
       end
     end
+
+    describe 'Cannot delete myself' do
+      before do
+        create(:user)
+        visit '/admin/users'
+      end
+
+      it 'shows only 1 delete button' do
+        expect(page.all('table tbody tr').length).to eq 2
+        # ユーザは自分含めて2人存在するが、自分を削除するボタンは表示されないので、削除ボタンは1つである
+        expect(page.all('a', text: '削除').length).to eq 1
+      end
+    end
+
+    describe 'Cannot change my role from admin' do
+      before do
+        visit "/admin/users/#{user.id}/edit"
+      end
+
+      it 'does not show checkbox for is_admin' do
+        expect(page).to have_content 'ユーザ 編集'
+        expect(page).to have_selector "input[value=\"#{user.email}\"]"
+        expect(page).not_to have_selector "input[name='user[is_admin]']"
+      end
+    end
   end
 end
