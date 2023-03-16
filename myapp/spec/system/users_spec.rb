@@ -4,7 +4,8 @@ RSpec.describe 'Users', type: :system do
   let(:user) {
     create(:user, name: 'taro',
                   email: 'taro@hoge.hoge',
-                  password: 'password')
+                  password: 'password',
+                  is_admin: true)
   }
 
   before do
@@ -113,6 +114,38 @@ RSpec.describe 'Users', type: :system do
         expect(page).not_to have_content 'jiro@hoge.hoge'
         expect(User.all.length).to eq 1
         expect(Task.all.length).to eq 0 # 削除されたユーザに紐づくタスクも削除されることをテスト
+      end
+    end
+
+    describe 'require_admin_login' do
+      context 'login as normal user' do
+        let(:normal_user) {
+          create(:user, is_admin: false)
+        }
+
+        before do
+          login(normal_user.email, normal_user.password)
+          visit '/admin/users'
+        end
+
+        it 'redirect to /tasks' do
+          expect(page).to have_content 'タスク 一覧'
+        end
+      end
+
+      context 'login as admin user' do
+        let(:admin_user) {
+          create(:user, is_admin: true)
+        }
+
+        before do
+          login(admin_user.email, admin_user.password)
+          visit '/admin/users'
+        end
+
+        it 'shows requested page' do
+          expect(page).to have_content 'タスク 一覧'
+        end
       end
     end
   end
