@@ -15,11 +15,8 @@ RSpec.describe 'Users', type: :system do
 
   describe 'CRUD' do
     describe 'GET /admin/users' do
-      before do
-        visit '/admin/users'
-      end
-
       it 'shows users list' do
+        visit '/admin/users'
         expect(page).to have_content 'ユーザ 一覧'
         expect(page).to have_content user.email
         expect(page.all('table tbody tr').length).to eq 1
@@ -123,10 +120,10 @@ RSpec.describe 'Users', type: :system do
 
         before do
           login(normal_user.email, normal_user.password)
-          visit '/admin/users'
         end
 
         it 'redirect to /tasks' do
+          visit '/admin/users'
           expect(page).to have_content 'タスク 一覧'
         end
       end
@@ -136,10 +133,10 @@ RSpec.describe 'Users', type: :system do
 
         before do
           login(admin_user.email, admin_user.password)
-          visit '/admin/users'
         end
 
         it 'shows requested page' do
+          visit '/admin/users'
           expect(page).to have_content 'タスク 一覧'
         end
       end
@@ -148,10 +145,10 @@ RSpec.describe 'Users', type: :system do
     describe 'Cannot delete myself' do
       before do
         create(:user)
-        visit '/admin/users'
       end
 
       it 'shows only 1 delete button' do
+        visit '/admin/users'
         expect(page.all('table tbody tr').length).to eq 2
         # ユーザは自分含めて2人存在するが、自分を削除するボタンは表示されないので、削除ボタンは1つである
         expect(page.all('a', text: '削除').length).to eq 1
@@ -159,11 +156,8 @@ RSpec.describe 'Users', type: :system do
     end
 
     describe 'Cannot change my role from admin' do
-      before do
-        visit "/admin/users/#{user.id}/edit"
-      end
-
       it 'does not show checkbox for admin' do
+        visit "/admin/users/#{user.id}/edit"
         expect(page).to have_content 'ユーザ 編集'
         expect(page).to have_selector "input[value=\"#{user.email}\"]"
         expect(page).not_to have_selector "input[name='user[admin]']"
