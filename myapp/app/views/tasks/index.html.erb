@@ -21,7 +21,7 @@
     <% @tasks.each do |task| %>
       <tr>
         <td>
-          <%= link_to "edit", edit_task_path(task) %>
+          <%= link_to "edit", edit_task_path(task), class: "btn btn-secondary" %>
         </td>
         <td>
           <%= link_to task.title, task %>

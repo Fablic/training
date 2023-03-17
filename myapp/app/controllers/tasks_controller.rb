@@ -26,7 +26,7 @@ class TasksController < ApplicationController
   # POST /tasks or /tasks.json
   def create
     @task = Task.new(task_params)
-    @task.user_id = 1 # TODO: ログイン機能実装後に修正する
+    @task.user_id = session[:user_id]
 
     respond_to do |format|
       if @task.save
