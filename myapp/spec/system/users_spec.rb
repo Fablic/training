@@ -124,7 +124,7 @@ RSpec.describe 'Users', type: :system do
 
         it 'redirect to /tasks' do
           visit '/admin/users'
-          expect(page).to have_content 'タスク 一覧'
+          expect(page).to have_content '404'
         end
       end
 
