@@ -22,6 +22,7 @@ class TagsController < ApplicationController
   end
 
   def show
+    @tasks = @tag.tasks.includes([:tags])
   end
 
   def edit
