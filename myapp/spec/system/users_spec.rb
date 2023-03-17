@@ -119,9 +119,7 @@ RSpec.describe 'Users', type: :system do
 
     describe 'require_admin_login' do
       context 'login as normal user' do
-        let(:normal_user) {
-          create(:user, admin: false)
-        }
+        let(:normal_user) { create(:user, admin: false) }
 
         before do
           login(normal_user.email, normal_user.password)
@@ -134,9 +132,7 @@ RSpec.describe 'Users', type: :system do
       end
 
       context 'login as admin user' do
-        let(:admin_user) {
-          create(:user, admin: true)
-        }
+        let(:admin_user) { create(:user, admin: true) }
 
         before do
           login(admin_user.email, admin_user.password)
