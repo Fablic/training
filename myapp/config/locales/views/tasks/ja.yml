@@ -3,7 +3,7 @@ ja:
 
     index:
       title: 'タスク一覧'
-      add_task: 'タスク追加'
+      add_task: '+タスク追加'
 
     new:
       title: '新規作成'

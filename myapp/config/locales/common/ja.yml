@@ -18,6 +18,5 @@ ja:
         fail: ログインに失敗しました
       logout:
         success: ログアウトしました
-    button:
-      login: ログイン
-      logout: ログアウト
+    login: ログイン
+    logout: ログアウト
