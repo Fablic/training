@@ -1,8 +1,5 @@
+<div class="container-sm rounded-2" style="padding:10px;">
 <h1>ログイン</h1>
-<%= form_for(:session, url: login_path) do |f| %>
-  <%= f.label :email %>
-  <%= f.email_field :email %>
-  <%= f.label :password %>
-  <%= f.password_field :password %>
-  <%= f.submit "Log in" %>
-<% end %>
+</div>
+
+<%= render 'login_form' %>

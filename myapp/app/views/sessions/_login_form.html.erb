@@ -1,0 +1,17 @@
+<div class="container-sm border rounded-2" style="padding:10px;">
+  <%= form_with(scope: :session, url: login_path) do |form| %>
+    <div class="row mb-3" style="padding:10px;">
+      <%= form.label :email, I18n.t('sessions.form.email'), class: "col-sm-2 col-form-label" %>
+      <%= form.email_field :email, class: "form-control", id: 'session_email' %>
+    </div>
+
+    <div class="row mb-3" style="padding:10px;">
+      <%= form.label :password, I18n.t('sessions.form.password'), class: "col-sm-2 col-form-label" %>
+      <%= form.password_field :password, class: "form-control", id: 'session_password' %>
+    </div>
+
+    <div style="padding:10px;">
+      <%= form.submit I18n.t('sessions.button.login'), class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>
