@@ -23,14 +23,12 @@ module SessionsHelper
   def require_login
     return if logged_in?
 
-    flash[:danger] = I18n.t('need_login')
     redirect_to login_path
   end
 
   def require_admin_login
     return if admin_logged_in?
 
-    flash[:danger] = I18n.t('need_admin_login')
-    redirect_to tasks_path
+    render_404
   end
 end
