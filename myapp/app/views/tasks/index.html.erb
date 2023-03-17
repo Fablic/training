@@ -1,9 +1,8 @@
-<%= render 'header' %>
+<%= render 'common/header' %>
 <p style="color: green"><%= notice %></p>
 <div class="container-sm rounded-2" style="padding:10px;">
   <h1><%= I18n.t('tasks.index.title') %></h1>
   <hr>
-  <%= link_to I18n.t('tasks.index.add_task'), new_task_path %>
 </div>
 
   <%= render 'search_form', task: @task %>
