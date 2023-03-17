@@ -21,14 +21,12 @@ RSpec.describe 'Tags', type: :system do
     end
 
     describe 'GET /tags' do
-      before do
-        create(:tag, user: user, name: 'sample_tag')
-        visit '/tags'
-      end
+      let!(:tag) { create(:tag, user: user, name: 'sample_tag') }
 
       it 'shows tags list' do
+        visit '/tags'
         expect(page).to have_content 'タグ 一覧'
-        expect(page).to have_content 'sample_tag'
+        expect(page).to have_content tag.name
         expect(page.all('table tbody tr').length).to eq 1
       end
     end
@@ -61,14 +59,11 @@ RSpec.describe 'Tags', type: :system do
     end
 
     describe 'Creating a new tag' do
-      before do
+      it 'successfully create a tag' do
         visit '/tags'
         click_link('追加')
         fill_in 'tag[name]', with: 'sample_tag'
         find('input[type="submit"]').click
-      end
-
-      it 'successfully create a tag' do
         expect(page).to have_content 'タグが正常に登録されました。'
         expect(page).to have_content 'タグ 詳細'
         expect(page).to have_content 'sample_tag'
@@ -76,18 +71,12 @@ RSpec.describe 'Tags', type: :system do
     end
 
     describe 'Updating a tag' do
-      let(:tag) {
-        create(:tag, user: user,
-                     name: 'sample_tag')
-      }
+      let(:tag) { create(:tag, user: user, name: 'sample_tag') }
 
-      before do
+      it 'successfully update a tag' do
         visit "/tags/#{tag.id}/edit"
         fill_in 'tag[name]', with: 'sample_tag_updated'
         find('input[type="submit"]').click
-      end
-
-      it 'successfully update a tag' do
         expect(page).to have_content 'タグが正常に更新されました。'
         expect(page).to have_content 'タグ 詳細'
         expect(page).to have_content 'sample_tag_updated'
@@ -95,12 +84,10 @@ RSpec.describe 'Tags', type: :system do
     end
 
     describe 'Deleting a tag' do
-      before do
-        create(:tag, user: user, name: 'hoge_tag')
-        visit '/tags'
-      end
+      let!(:tag) { create(:tag, user: user, name: 'sample_tag') }
 
       it 'successfully update a tag' do
+        visit '/tags'
         expect(Tag.all.length).to eq 1
         # see: https://www.rubydoc.info/gems/capybara/Capybara%2FSession:accept_confirm
         page.accept_confirm do
@@ -108,7 +95,7 @@ RSpec.describe 'Tags', type: :system do
         end
         expect(page).to have_content 'タグが正常に削除されました。'
         expect(page).to have_content 'タグ 一覧'
-        expect(page).not_to have_content 'hoge_tag'
+        expect(page).not_to have_content tag.name
         expect(Tag.all.length).to eq 0
       end
     end
@@ -196,10 +183,10 @@ RSpec.describe 'Tags', type: :system do
     context 'the number of tags is 10 or below' do
       before do
         create_list(:tag, 10, user: user)
-        visit '/tags'
       end
 
       it 'shows expected view' do
+        visit '/tags'
         expect(page).not_to have_content '次'
         expect(page).not_to have_content '最後'
         expect(page.all('table tbody tr').length).to eq 10
@@ -209,10 +196,10 @@ RSpec.describe 'Tags', type: :system do
     context 'the number of tags is 11' do
       before do
         create_list(:tag, 11, user: user)
-        visit '/tags'
       end
 
       it 'shows expected view' do
+        visit '/tags'
         expect(page).to have_content '次'
         expect(page).to have_content '最後'
         expect(page.all('.pagination .page-item').length).to eq 4
