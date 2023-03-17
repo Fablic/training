@@ -18,7 +18,7 @@
           <th class="w-25"><%= tag.name %></th>
           <th class="text-center"><%= link_to I18n.t('action.show'), tag_path(tag), class:"btn btn-primary" %></th>
           <th class="text-center"><%= link_to I18n.t('action.edit'), edit_tag_path(tag), class:"btn btn-primary" %></th>
-          <th class="text-center"><%= link_to I18n.t('action.delete'), tag_path(tag), class:"btn btn-danger", data: { turbo_method: :delete, turbo_confirm: I18n.t('confirm') } %></th>
+          <th class="text-center"><%= button_to I18n.t('action.delete'), tag_path(tag), class:"btn btn-danger", disabled: tag.tasks.present?, method: :delete, data: { turbo_confirm: I18n.t('confirm') } %></th>
         </tr>
       <% end %>
     </tbody>

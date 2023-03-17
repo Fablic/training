@@ -3,7 +3,7 @@ class TagsController < ApplicationController
   before_action :fetch_tag, only: [:show, :edit, :update, :destroy]
 
   def index
-    @tags = @current_user.tags.page(params[:page])
+    @tags = @current_user.tags.includes([:tasks]).page(params[:page])
   end
 
   def new
