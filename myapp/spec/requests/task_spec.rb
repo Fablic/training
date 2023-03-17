@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Tasks', type: :request do
-  let(:user) { create(:user) }
+  let(:user) { create(:user, id: 1) }
   before do
     post '/login', params: { session: { email: user.email, password: user.password } }
   end
@@ -177,7 +177,7 @@ RSpec.describe 'Tasks', type: :request do
       end
     end
     context "When there are over 10 tasks and using pagenation" do
-      let!(:tasks) { Kaminari.paginate_array(create_list(:task, 20)).page(page) }
+      let!(:tasks) { Kaminari.paginate_array(create_list(:task, 20, user_id: 1 )).page(page) }
 
       context 'page:1' do
         let(:page) { 1 }
@@ -267,7 +267,7 @@ RSpec.describe 'Tasks', type: :request do
 
     describe 'PUT /update' do
       context 'with valid parameters' do
-        let!(:task) { create(:task) }
+        let!(:task) { create(:task, user_id: 1) }
 
         let(:test_params) do
           {
@@ -302,7 +302,7 @@ RSpec.describe 'Tasks', type: :request do
       end
 
       context 'with invalid parameters' do
-        let!(:task) { create(:task) }
+        let!(:task) { create(:task, user_id: 1) }
         let(:invalid_params) do
           { task: {
             title: 'nagai' * 255,
