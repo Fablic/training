@@ -38,6 +38,16 @@ ja:
       delete:
         success: 'タスクが正常に削除されました。'
         failure: 'タスクの削除に失敗しました。'
+    tag:
+      create:
+        success: 'タグが正常に登録されました。'
+        failure: 'タグの登録に失敗しました。'
+      update:
+        success: 'タグが正常に更新されました。'
+        failure: 'タグの更新に失敗しました。'
+      delete:
+        success: 'タグが正常に削除されました。'
+        failure: 'タグの削除に失敗しました。'
     user:
       create:
         success: 'ユーザが正常に登録されました。'

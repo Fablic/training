@@ -1,0 +1,31 @@
+<div class="px-5">
+  <h2><%= I18n.t('activerecord.models.tag') %> <%= I18n.t('action.show') %></h2>
+
+  <table class='table'>
+    <tbody>
+      <tr>
+        <th class="w-25"><%= I18n.t(:id, scope: [:activerecord, :attributes, :tag]) %></th>
+        <td class="w-75"><%= @tag.id %></td>
+      </tr>
+      <tr>
+        <th class="w-25"><%= I18n.t(:user_id, scope: [:activerecord, :attributes, :tag]) %></th>
+        <td class="w-75"><%= @tag.user_id %></td>
+      </tr>
+      <tr>
+        <th class="w-25"><%= I18n.t(:name, scope: [:activerecord, :attributes, :tag]) %></th>
+        <td class="w-75"><%= @tag.name %></td>
+      </tr>
+      <tr>
+        <th class="w-25"><%= I18n.t(:created_at, scope: [:activerecord, :attributes, :tag]) %></th>
+        <td class="w-75"><%= @tag.created_at %></td>
+      </tr>
+      <tr>
+        <th class="w-25"><%= I18n.t(:updated_at, scope: [:activerecord, :attributes, :tag]) %></th>
+        <td class="w-75"><%= @tag.updated_at %></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <%= link_to I18n.t('action.list'), tags_path, class:"btn btn-primary" %>
+  <%= link_to I18n.t('action.edit'), edit_tag_path(@tag), class:"btn btn-primary" %>
+</div>

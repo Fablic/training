@@ -1,6 +1,6 @@
 class Task < ApplicationRecord
   belongs_to :user
-  has_many :task_tags
+  has_many :task_tags, dependent: :delete_all
   has_many :tags, through: :task_tags
 
   validates :name, presence: true, length: { maximum: 50 }

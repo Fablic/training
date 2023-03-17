@@ -1,0 +1,13 @@
+<%= form_with model: @tag do |form| %>
+  <%= render partial: "shared/error_messages", locals: { model: @tag } %>
+
+  <div class="w-50">
+    <div class="d-flex mb-4">
+      <p class="w-25"><%= I18n.t(:name, scope: [:activerecord, :attributes, :tag]) %></p>
+      <%= form.text_field :name, class:"form-control w-75" %>
+    </div>
+
+    <%= link_to I18n.t('action.back'), :back, class:"btn btn-primary"  %>
+    <%= form.submit nil, class:"btn btn-primary me-4" %>
+  </div>
+<% end %>

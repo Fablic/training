@@ -5,6 +5,7 @@ ja:
     attributes:
       tag:
         id: 'id'
+        user_id: 'ユーザid'
         name: '名前'
         created_at: '作成日時'
         updated_at: '更新日時'
