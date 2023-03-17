@@ -7,7 +7,7 @@ RSpec.describe 'Tag', type: :model do
     context 'all valid parameters' do
       let(:tag) {
         Tag.new(user: user,
-                 name: 'sample_tag')
+                name: 'sample_tag')
       }
 
       it 'has no error' do
@@ -22,7 +22,7 @@ RSpec.describe 'Tag', type: :model do
       context 'length is 0' do
         let(:tag) {
           Tag.new(user: user,
-                   name: '')
+                  name: '')
         }
 
         it 'has validation error' do
@@ -35,7 +35,7 @@ RSpec.describe 'Tag', type: :model do
       context 'length is 1' do
         let(:tag) {
           Tag.new(user: user,
-                   name: 'a')
+                  name: 'a')
         }
 
         it 'has no error' do
@@ -47,7 +47,7 @@ RSpec.describe 'Tag', type: :model do
       context 'length is 20' do
         let(:tag) {
           Tag.new(user: user,
-                   name: 'a' * 20)
+                  name: 'a' * 20)
         }
 
         it 'has no error' do
@@ -59,7 +59,7 @@ RSpec.describe 'Tag', type: :model do
       context 'length is 21' do
         let(:tag) {
           Tag.new(user: user,
-                   name: 'a' * 21)
+                  name: 'a' * 21)
         }
 
         it 'has validation error' do
