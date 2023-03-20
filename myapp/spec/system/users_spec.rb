@@ -94,23 +94,54 @@ RSpec.describe 'Users', type: :system do
     describe 'Deleting a user' do
       let(:user2) { create(:user, email: 'jiro@hoge.hoge') }
 
-      before do
-        create(:task, user: user2)
+      context 'without tags' do
+        before do
+          create(:task, user: user2)
+        end
+
+        it 'successfully update a user' do
+          expect(User.all.length).to eq 2
+          expect(Task.all.length).to eq 1
+          visit '/admin/users'
+          expect(page).to have_content user2.email
+          # see: https://www.rubydoc.info/gems/capybara/Capybara%2FSession:accept_confirm
+          page.accept_confirm do
+            click_link('削除')
+          end
+          expect(page).to have_content 'ユーザが正常に削除されました。'
+          expect(page).to have_content 'ユーザ 一覧'
+          expect(page).not_to have_content user2.email
+          expect(User.all.length).to eq 1
+          expect(Task.all.length).to eq 0 # 削除されたユーザに紐づくタスクも削除されることをテスト
+        end
       end
 
-      it 'successfully update a user' do
-        expect(User.all.length).to eq 2
-        expect(Task.all.length).to eq 1
-        visit '/admin/users'
-        # see: https://www.rubydoc.info/gems/capybara/Capybara%2FSession:accept_confirm
-        page.accept_confirm do
-          click_link('削除')
+      context 'with tags' do
+        let(:tag) { create(:tag, user: user2) }
+
+        before do
+          create(:task, user: user2, tags: [tag])
         end
-        expect(page).to have_content 'ユーザが正常に削除されました。'
-        expect(page).to have_content 'ユーザ 一覧'
-        expect(page).not_to have_content user2.email
-        expect(User.all.length).to eq 1
-        expect(Task.all.length).to eq 0 # 削除されたユーザに紐づくタスクも削除されることをテスト
+
+        it 'successfully update a user' do
+          expect(User.all.length).to eq 2
+          expect(Task.all.length).to eq 1
+          expect(Tag.all.length).to eq 1
+          expect(TaskTag.all.length).to eq 1
+          visit '/admin/users'
+          expect(page).to have_content user2.email
+          # see: https://www.rubydoc.info/gems/capybara/Capybara%2FSession:accept_confirm
+          page.accept_confirm do
+            click_link('削除')
+          end
+          expect(page).to have_content 'ユーザが正常に削除されました。'
+          expect(page).to have_content 'ユーザ 一覧'
+          expect(page).not_to have_content user2.email
+          expect(User.all.length).to eq 1
+          expect(Task.all.length).to eq 0 # 削除されたユーザに紐づくタスクも削除されることをテスト
+          expect(Tag.all.length).to eq 0 # 削除されたユーザに紐づくタグも削除されることをテスト
+          expect(TaskTag.all.length).to eq 0 # 削除されたユーザに紐づくタスクとタグの紐付けも削除されることをテスト
+        end
       end
     end
 
