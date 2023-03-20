@@ -11,6 +11,8 @@
           <%= form.text_field :name, { value: params[:name], class:"form-control d-inline w-auto me-2" } %>
           <span><%= I18n.t(:status, scope: [:activerecord, :attributes, :task]) %></span>
           <%= form.select :status, options_for_select_of_statuses, { include_blank: true, selected: params[:status] }, {class: 'form-select d-inline w-auto me-2'} %>
+          <span><%= I18n.t(:tag, scope: [:activerecord, :models]) %></span>
+          <%= form.select :tag_id, options_for_select_of_tag, { include_blank: true, selected: params[:tag_id] }, {class: 'form-select d-inline w-auto me-2'} %>
           <%= form.submit I18n.t('filter.apply'), class:"btn btn-primary me-4" %>
           <span><%= link_to I18n.t('filter.remove'), tasks_path, class:"btn btn-primary" %></span>
         <% end %>

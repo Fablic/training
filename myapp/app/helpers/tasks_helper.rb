@@ -3,6 +3,10 @@ module TasksHelper
     Task.statuses.keys.map { |status| [I18n.t(status, scope: [:activerecord, :enums, :task, :status]), status] }
   end
 
+  def options_for_select_of_tag
+    Tag.all.map { |tag| [tag.name, tag.id] }
+  end
+
   # see: http://taustation.com/rails-reflecting-newline-code/
   def html_safe_with_line_break(str)
     h(str).gsub(/\n|\r|\r\n/, '<br>').html_safe

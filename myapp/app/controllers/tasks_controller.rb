@@ -5,9 +5,11 @@ class TasksController < ApplicationController
   def index
     @task_columns_with_sorting_direction = task_columns_with_sorting_direction
 
-    @tasks = @current_user.tasks.includes(:tags).status(params[:status]).name_contain(params[:name]).page(params[:page])
+    @tasks = @current_user.tasks.status(params[:status]).name_contain(params[:name]).tag_contain(params[:tag_id])
     @tasks = @tasks.order("#{params[:sort_key]} #{sort_direction}") if params[:sort_key].present?
-    @tasks
+
+    # 特定のタグに紐づくタスクに絞り込んだ後、それぞれのタスクに紐づくタグをすべて表示したいので、再度 Task のクエリを実行する
+    @tasks = Task.where(id: @tasks.map{|t| t.id}).includes(:tags).page(params[:page])
   end
 
   def new
