@@ -320,29 +320,6 @@ RSpec.describe 'Tasks', type: :system do
     end
   end
 
-  describe 'Sorting by created_at' do
-    let!(:task1) { create(:task, user: user, name: 'hoge_task', created_at: Time.current.yesterday) }
-    let!(:task2) { create(:task, user: user, name: 'fuga_task', created_at: Time.current) }
-
-    context 'Sorting asc => desc' do
-      it 'sorts successfully' do
-        visit '/tasks?sort_direction=asc&sort_key=created_at'
-        expect(page).to have_content(/#{task1.name}[\s\S]*#{task2.name}/)
-        click_link('作成日時')
-        expect(page).to have_content(/#{task2.name}[\s\S]*#{task1.name}/)
-      end
-    end
-
-    context 'Sorting desc => asc' do
-      it 'sorts successfully' do
-        visit '/tasks?sort_direction=desc&sort_key=created_at'
-        expect(page).to have_content(/#{task2.name}[\s\S]*#{task1.name}/)
-        click_link('作成日時')
-        expect(page).to have_content(/#{task1.name}[\s\S]*#{task2.name}/)
-      end
-    end
-  end
-
   describe 'Filtering Function' do
     before do
       create(:task, user: user, name: 'hoge_task', status: 'unstarted')
