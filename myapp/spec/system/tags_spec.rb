@@ -22,12 +22,26 @@ RSpec.describe 'Tags', type: :system do
 
     describe 'GET /tags' do
       let!(:tag) { create(:tag, user: user, name: 'sample_tag') }
+      let!(:tag2) { create(:tag, user: user, name: 'sample_tag2') }
+
+      before do
+        create(:task, user: user, tags: [tag])
+      end
 
       it 'shows tags list' do
         visit '/tags'
         expect(page).to have_content 'タグ 一覧'
         expect(page).to have_content tag.name
-        expect(page.all('table tbody tr').length).to eq 1
+        expect(page.all('table tbody tr').length).to eq 2
+
+        # タスクに紐づくタグの削除ボタンは非活性なことをテスト
+        within first('table tbody tr') do
+          expect(page).to have_button '削除', disabled: true
+        end
+        # タスクに紐づかないタグの削除ボタンは活性なことをテスト
+        within page.all('table tbody tr')[1] do
+          expect(page).to have_button '削除'
+        end
       end
     end
 
