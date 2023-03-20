@@ -20,7 +20,7 @@
     </div>
     <div class="d-flex mb-4">
       <p class="w-25"><%= I18n.t('activerecord.models.tag') %></p>
-      <%= form.collection_check_boxes(:tag_ids, Tag.all, :id, :name) do |cb| %>
+      <%= form.collection_check_boxes(:tag_ids, @current_user.tags, :id, :name) do |cb| %>
           <div class="form-check form-check-inline">
             <%= cb.label class: 'form-check-label' do %>
               <%= cb.check_box(class: 'form-check-input') + cb.text %>
