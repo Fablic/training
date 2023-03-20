@@ -70,9 +70,13 @@ RSpec.describe 'Tasks', type: :system do
     end
 
     describe 'GET /tasks/new' do
+      let(:user2) { create(:user) }
+      let!(:tag_user2) { create(:tag, user: user2, name: 'tag_hoge') }
+
       it 'renders tasks list page' do
         visit '/tasks/new'
         expect(page).to have_content 'タスク 新規'
+        expect(page).not_to have_content tag_user2.name # 他人が作成したタグが選択肢に出てこないことをテスト
       end
     end
 
@@ -91,6 +95,9 @@ RSpec.describe 'Tasks', type: :system do
         let(:task) { create(:task, user: user, tags: [tag], name: 'sample_task') }
         let!(:tag2) { create(:tag, user: user, name: 'sample_tag2') }
 
+        let(:user2) { create(:user) }
+        let!(:tag_user2) { create(:tag, user: user2, name: 'tag_hoge') }
+
         it 'renders a successful response' do
           visit "/tasks/#{task.id}/edit"
           expect(page).to have_content 'タスク 編集'
@@ -99,6 +106,7 @@ RSpec.describe 'Tasks', type: :system do
           expect(page).to have_content tag2.name
           expect(page).to have_checked_field tag.name
           expect(page).to have_unchecked_field tag2.name
+          expect(page).not_to have_content tag_user2.name # 他人が作成したタグが選択肢に出てこないことをテスト
         end
       end
     end
