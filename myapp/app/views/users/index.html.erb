@@ -1,7 +1,7 @@
-<%= render 'common/header' %>
+<%= render 'header' %>
 <p style="color: green"><%= notice %></p>
 <div class="container-sm rounded-2" style="padding:10px;">
-  <h1><%= I18n.t('tasks.users.title') %></h1>
+  <h1><%= I18n.t('users.index.title') %></h1>
   <hr>
 </div>
 
@@ -9,6 +9,7 @@
   <table class="table">
     <tr>
     <th></th>
+      <th><%= I18n.t('activerecord.attributes.user.id') %></th>
       <th><%= I18n.t('activerecord.attributes.user.name') %></th>
       <th><%= I18n.t('activerecord.attributes.user.email') %></th>
     </tr>
@@ -17,6 +18,9 @@
       <tr>
         <td>
           <%= link_to "edit", edit_user_path(user), class: "btn btn-secondary" %>
+        </td>
+        <td>
+          <%= user.id %>
         </td>
         <td>
           <%= link_to user.name, user %>

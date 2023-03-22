@@ -1,0 +1,22 @@
+ja:
+  users:
+
+    index:
+      title: 'ユーザ一覧'
+      add_user: '＋ユーザ追加'
+
+    new:
+      title: '新規作成'
+
+    show:
+
+    edit:
+      title: '%{user_name}を編集'
+
+    common:
+      to_index: 'ユーザ一覧に戻る'
+      to_show: 'ユーザ詳細'
+      to_edit: 'このユーザを編集'
+      to_delete: 'このユーザを削除'
+
+    form:
