@@ -1,14 +1,34 @@
+<%= render 'common/header' %>
 <p style="color: green"><%= notice %></p>
-
-<h1>Users</h1>
-
-<div id="users">
-  <% @users.each do |user| %>
-    <%= render user %>
-    <p>
-      <%= link_to "Show this user", user %>
-    </p>
-  <% end %>
+<div class="container-sm rounded-2" style="padding:10px;">
+  <h1><%= I18n.t('tasks.users.title') %></h1>
+  <hr>
 </div>
 
-<%= link_to "New user", new_user_path %>
+<div id="users" class="container-sm border rounded-2" style="padding:10px;">
+  <table class="table">
+    <tr>
+    <th></th>
+      <th><%= I18n.t('activerecord.attributes.user.name') %></th>
+      <th><%= I18n.t('activerecord.attributes.user.email') %></th>
+    </tr>
+    
+    <% @users.each do |user| %>
+      <tr>
+        <td>
+          <%= link_to "edit", edit_user_path(user), class: "btn btn-secondary" %>
+        </td>
+        <td>
+          <%= link_to user.name, user %>
+        </td>
+        <td>
+          <%= user.email %>
+        </td>
+    </tr>
+    <% end %>
+  </table>
+</div>
+<div class="container-sm rounded-2 my-3">
+  <%= paginate @users, theme: 'twitter-bootstrap-4' %>
+</div> 
+
