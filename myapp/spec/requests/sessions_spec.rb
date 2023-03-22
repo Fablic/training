@@ -34,8 +34,8 @@ RSpec.describe 'Sessions', type: :request do
 
       it 'returns http fail' do
         subject
-
-        # expect(response).to be_a_new Session
+        
+        expect(response).to have_http_status(:success)
         expect(flash[:danger])
       end
     end
