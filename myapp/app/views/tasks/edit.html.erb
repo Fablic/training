@@ -1,11 +1,10 @@
-<h1><%= I18n.t('tasks.edit.title', task_name: @task.title) =%></h1>
-<hr>
+<div class="container-sm rounded-2" style="padding:10px;">
+  <h1><%= I18n.t('tasks.edit.title', task_name: @task.title) =%></h1>
+  <hr>
+</div>
 
 <%= render "form", task: @task %>
 
 <br>
 
-<div>
-  <%= link_to I18n.t('tasks.common.to_show'), @task %> |
-  <%= link_to I18n.t('tasks.common.to_index'), tasks_path %>
-</div>
+<%= render 'footer', task: @task %>

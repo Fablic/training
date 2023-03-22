@@ -1,8 +1,9 @@
-<div id="<%= dom_id task %>">
-
+<div id="<%= dom_id task %>" class="container-sm rounded-2" style="padding:10px;">
   <h1><%= task.title %></h1>
   <hr>
-  <table>
+</div>
+<div class="container-sm rounded-2" style="padding:10px;">
+  <table class="table">
     <tr>
       <td><%= I18n.t('activerecord.attributes.task.priority') %>: <td>
       <td><%= Task.priorities_i18n[task.priority] %></td>
