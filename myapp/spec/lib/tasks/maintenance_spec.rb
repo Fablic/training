@@ -19,7 +19,7 @@ describe 'maintenance' do
 
     context 'with maintenance.txt file' do
       before do
-        File.write('tmp/maintenance.txt', '')
+        File.write(file_path, '')
       end
 
       it 'just updates maintenance.txt and no error' do
@@ -41,7 +41,7 @@ describe 'maintenance' do
 
     context 'with maintenance.txt file' do
       before do
-        File.write('tmp/maintenance.txt', '')
+        File.write(file_path, '')
       end
 
       it 'deletes maintenance.txt' do
