@@ -1,0 +1,11 @@
+en:
+  activerecord:
+    models:
+      tag: 'tag'
+    attributes:
+      tag:
+        id: 'id'
+        user_id: 'user_id'
+        name: 'name'
+        created_at: 'created_at'
+        updated_at: 'updated_at'

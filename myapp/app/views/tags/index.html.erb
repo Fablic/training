@@ -1,0 +1,29 @@
+<div class="px-5">
+  <h2><%= I18n.t('activerecord.models.tag') %> <%= I18n.t('action.list') %></h2>
+
+  <div class='mb-3'><%= link_to I18n.t('action.add'), new_tag_path, class:"btn btn-primary" %></div>
+
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th class="text-center"><%= I18n.t(:id, scope: [:activerecord, :attributes, :user]) %></th>
+        <th class="text-center"><%= I18n.t(:name, scope: [:activerecord, :attributes, :user]) %></th>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @tags.each do |tag| %>
+        <tr>
+          <th class="text-center"><%= tag.id %></th>
+          <th class="w-25"><%= tag.name %></th>
+          <th class="text-center"><%= link_to I18n.t('action.show'), tag_path(tag), class:"btn btn-primary" %></th>
+          <th class="text-center"><%= link_to I18n.t('action.edit'), edit_tag_path(tag), class:"btn btn-primary" %></th>
+          <th class="text-center"><%= button_to I18n.t('action.delete'), tag_path(tag), class:"btn btn-danger", disabled: tag.tasks.present?, method: :delete, data: { turbo_confirm: I18n.t('confirm') } %></th>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= paginate @tags, theme: 'bootstrap-5', pagination_class: "flex-wrap justify-content-center"%>
+
+</div>

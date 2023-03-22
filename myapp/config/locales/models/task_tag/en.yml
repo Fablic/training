@@ -1,0 +1,11 @@
+en:
+  activerecord:
+    models:
+      task_tag: 'task_tag'
+    attributes:
+      task_tag:
+        id: 'id'
+        task_id: 'task_id'
+        tag_id: 'tag_id'
+        created_at: 'created_at'
+        updated_at: 'updated_at'

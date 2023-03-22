@@ -21,6 +21,7 @@
             <span class="me-5 text-white"><%= @current_user.name %></span>
             <span class="me-5"><%= link_to I18n.t('action.logout'), logout_path, class:"text-white", data: { turbo_method: :delete, turbo_confirm: I18n.t('confirm') } %></span>
             <span class="me-5"><%= link_to "#{I18n.t('activerecord.models.task')} #{I18n.t('action.list')}", tasks_path, class:"text-white" %></span>
+            <span class="me-5"><%= link_to "#{I18n.t('activerecord.models.tag')} #{I18n.t('action.list')}", tags_path, class:"text-white" %></span>
           <% end %>
 
           <% if admin_logged_in? %>

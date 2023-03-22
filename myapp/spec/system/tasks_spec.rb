@@ -6,6 +6,7 @@ RSpec.describe 'Tasks', type: :system do
                   email: 'taro@hoge.hoge',
                   password: 'password')
   }
+  let(:tag) { create(:tag, user: user, name: 'sample_tag') }
 
   before do
     driven_by(:remote_chrome)
@@ -21,102 +22,233 @@ RSpec.describe 'Tasks', type: :system do
     end
 
     describe 'GET /tasks' do
-      let!(:task) { create(:task, user: user, name: 'sample_task') }
+      context 'without tags' do
+        let!(:task) { create(:task, user: user, name: 'sample_task') }
 
-      it 'shows tasks list' do
-        visit '/tasks'
-        expect(page).to have_content 'タスク 一覧'
-        expect(page).to have_content task.name
-        expect(page.all('table tbody tr').length).to eq 1
+        it 'shows tasks list' do
+          visit '/tasks'
+          expect(page).to have_content 'タスク 一覧'
+          expect(page).to have_content task.name
+          expect(page.all('table tbody tr').length).to eq 1
+        end
+      end
+
+      context 'with tags' do
+        let!(:task) { create(:task, user: user, tags: [tag], name: 'sample_task') }
+
+        it 'shows tasks list' do
+          visit '/tasks'
+          expect(page).to have_content 'タスク 一覧'
+          expect(page).to have_content task.name
+          expect(page).to have_content tag.name
+          expect(page.all('table tbody tr').length).to eq 1
+        end
       end
     end
 
     describe 'GET /tasks/:id' do
-      let(:task) { create(:task, user: user, name: 'sample_task') }
+      context 'without tags' do
+        let(:task) { create(:task, user: user, name: 'sample_task') }
 
-      it 'renders a successful response' do
-        visit "/tasks/#{task.id}"
-        expect(page).to have_content 'タスク 詳細'
-        expect(page).to have_content 'sample_task'
+        it 'renders a successful response' do
+          visit "/tasks/#{task.id}"
+          expect(page).to have_content 'タスク 詳細'
+          expect(page).to have_content task.name
+        end
+      end
+
+      context 'with tags' do
+        let(:task) { create(:task, user: user, tags: [tag], name: 'sample_task') }
+
+        it 'renders a successful response' do
+          visit "/tasks/#{task.id}"
+          expect(page).to have_content 'タスク 詳細'
+          expect(page).to have_content task.name
+          expect(page).to have_content tag.name
+        end
       end
     end
 
     describe 'GET /tasks/new' do
+      let(:user2) { create(:user) }
+      let!(:tag_user2) { create(:tag, user: user2, name: 'tag_hoge') }
+
       it 'renders tasks list page' do
         visit '/tasks/new'
         expect(page).to have_content 'タスク 新規'
+        expect(page).not_to have_content tag_user2.name # 他人が作成したタグが選択肢に出てこないことをテスト
       end
     end
 
     describe 'GET /tasks/:id/edit' do
-      let(:task) { create(:task, user: user, name: 'sample_task') }
+      context 'without tags' do
+        let(:task) { create(:task, user: user, name: 'sample_task') }
 
-      it 'renders a successful response' do
-        visit "/tasks/#{task.id}/edit"
-        expect(page).to have_content 'タスク 編集'
-        expect(page).to have_selector 'input[value="sample_task"]'
+        it 'renders a successful response' do
+          visit "/tasks/#{task.id}/edit"
+          expect(page).to have_content 'タスク 編集'
+          expect(page).to have_selector 'input[value="sample_task"]'
+        end
+      end
+
+      context 'with tags' do
+        let(:task) { create(:task, user: user, tags: [tag], name: 'sample_task') }
+        let!(:tag2) { create(:tag, user: user, name: 'sample_tag2') }
+
+        let(:user2) { create(:user) }
+        let!(:tag_user2) { create(:tag, user: user2, name: 'tag_hoge') }
+
+        it 'renders a successful response' do
+          visit "/tasks/#{task.id}/edit"
+          expect(page).to have_content 'タスク 編集'
+          expect(page).to have_selector 'input[value="sample_task"]'
+          expect(page).to have_content tag.name
+          expect(page).to have_content tag2.name
+          expect(page).to have_checked_field tag.name
+          expect(page).to have_unchecked_field tag2.name
+          expect(page).not_to have_content tag_user2.name # 他人が作成したタグが選択肢に出てこないことをテスト
+        end
       end
     end
 
     describe 'Creating a new task' do
-      it 'successfully create a task' do
-        visit '/tasks'
-        click_link('追加')
-        fill_in 'task[name]', with: 'sample_task'
-        fill_in 'task[description]', with: 'sample description'
-        select '完了', from: 'task_status'
-        fill_in 'task[deadline_at]', with: Time.zone.local(2023, 2, 3, 12, 34)
-        find('input[type="submit"]').click
-        expect(page).to have_content 'タスクが正常に登録されました。'
-        expect(page).to have_content 'タスク 詳細'
-        expect(page).to have_content 'sample_task'
-        expect(page).to have_content 'sample description'
-        expect(page).to have_content '完了'
-        expect(page).to have_content '2023-02-03 12:34:00 +0900'
+      context 'without tags' do
+        it 'successfully create a task' do
+          visit '/tasks'
+          click_link('追加')
+          fill_in 'task[name]', with: 'sample_task'
+          fill_in 'task[description]', with: 'sample description'
+          select '完了', from: 'task_status'
+          fill_in 'task[deadline_at]', with: Time.zone.local(2023, 2, 3, 12, 34)
+          find('input[type="submit"]').click
+          expect(page).to have_content 'タスクが正常に登録されました。'
+          expect(page).to have_content 'タスク 詳細'
+          expect(page).to have_content 'sample_task'
+          expect(page).to have_content 'sample description'
+          expect(page).to have_content '完了'
+          expect(page).to have_content '2023-02-03 12:34:00 +0900'
+        end
+      end
+
+      context 'with tags' do
+        let!(:tag2) { create(:tag, user: user, name: 'sample_tag2') }
+
+        it 'successfully create a task' do
+          visit '/tasks'
+          click_link('追加')
+          fill_in 'task[name]', with: 'sample_task'
+          fill_in 'task[description]', with: 'sample description'
+          select '完了', from: 'task_status'
+          fill_in 'task[deadline_at]', with: Time.zone.local(2023, 2, 3, 12, 34)
+          check tag2.name
+          find('input[type="submit"]').click
+          expect(page).to have_content 'タスクが正常に登録されました。'
+          expect(page).to have_content 'タスク 詳細'
+          expect(page).to have_content 'sample_task'
+          expect(page).to have_content 'sample description'
+          expect(page).to have_content '完了'
+          expect(page).to have_content '2023-02-03 12:34:00 +0900'
+          expect(page).to have_content tag2.name
+        end
       end
     end
 
     describe 'Updating a task' do
-      let(:task) {
-        create(:task, user: user,
-                      name: 'sample_task',
-                      description: 'sample description',
-                      status: 'wip',
-                      deadline_at: '2023-02-03T12:34')
-      }
+      context 'without tags' do
+        let(:task) {
+          create(:task, user: user,
+                        name: 'sample_task',
+                        description: 'sample description',
+                        status: 'wip',
+                        deadline_at: '2023-02-03T12:34')
+        }
 
-      it 'successfully update a task' do
-        visit "/tasks/#{task.id}/edit"
-        fill_in 'task[name]', with: 'sample_task_updated'
-        fill_in 'task[description]', with: 'sample description updated'
-        select '完了', from: 'task_status'
-        fill_in 'task[deadline_at]', with: Time.zone.local(2023, 3, 4, 13, 56)
-        find('input[type="submit"]').click
-        expect(page).to have_content 'タスクが正常に更新されました。'
-        expect(page).to have_content 'タスク 詳細'
-        expect(page).to have_content 'sample_task_updated'
-        expect(page).to have_content 'sample description updated'
-        expect(page).to have_content '完了'
-        expect(page).to have_content '2023-03-04 13:56:00 +0900'
+        it 'successfully update a task' do
+          visit "/tasks/#{task.id}/edit"
+          fill_in 'task[name]', with: 'sample_task_updated'
+          fill_in 'task[description]', with: 'sample description updated'
+          select '完了', from: 'task_status'
+          fill_in 'task[deadline_at]', with: Time.zone.local(2023, 3, 4, 13, 56)
+          find('input[type="submit"]').click
+          expect(page).to have_content 'タスクが正常に更新されました。'
+          expect(page).to have_content 'タスク 詳細'
+          expect(page).to have_content 'sample_task_updated'
+          expect(page).to have_content 'sample description updated'
+          expect(page).to have_content '完了'
+          expect(page).to have_content '2023-03-04 13:56:00 +0900'
+        end
+      end
+
+      context 'with tags' do
+        let(:task) {
+          create(:task, user: user,
+                        tags: [tag],
+                        name: 'sample_task',
+                        description: 'sample description',
+                        status: 'wip',
+                        deadline_at: '2023-02-03T12:34')
+        }
+        let!(:tag2) { create(:tag, user: user, name: 'sample_tag2') }
+
+        it 'successfully update a task' do
+          visit "/tasks/#{task.id}/edit"
+          fill_in 'task[name]', with: 'sample_task_updated'
+          fill_in 'task[description]', with: 'sample description updated'
+          select '完了', from: 'task_status'
+          fill_in 'task[deadline_at]', with: Time.zone.local(2023, 3, 4, 13, 56)
+          check tag2.name
+          find('input[type="submit"]').click
+          expect(page).to have_content 'タスクが正常に更新されました。'
+          expect(page).to have_content 'タスク 詳細'
+          expect(page).to have_content 'sample_task_updated'
+          expect(page).to have_content 'sample description updated'
+          expect(page).to have_content '完了'
+          expect(page).to have_content '2023-03-04 13:56:00 +0900'
+          expect(page).to have_content tag.name
+          expect(page).to have_content tag2.name
+        end
       end
     end
 
     describe 'Deleting a task' do
-      before do
-        create(:task, user: user)
+      context 'without tags' do
+        before do
+          create(:task, user: user)
+        end
+
+        it 'successfully update a task' do
+          visit '/tasks'
+          expect(Task.all.length).to eq 1
+          # see: https://www.rubydoc.info/gems/capybara/Capybara%2FSession:accept_confirm
+          page.accept_confirm do
+            click_link('削除')
+          end
+          expect(page).to have_content 'タスクが正常に削除されました。'
+          expect(page).to have_content 'タスク 一覧'
+          expect(page).not_to have_content 'hoge_task'
+          expect(Task.all.length).to eq 0
+        end
       end
 
-      it 'successfully update a task' do
-        visit '/tasks'
-        expect(Task.all.length).to eq 1
-        # see: https://www.rubydoc.info/gems/capybara/Capybara%2FSession:accept_confirm
-        page.accept_confirm do
-          click_link('削除')
+      context 'with tags' do
+        before do
+          create(:task, user: user, tags: [tag])
         end
-        expect(page).to have_content 'タスクが正常に削除されました。'
-        expect(page).to have_content 'タスク 一覧'
-        expect(page).not_to have_content 'hoge_task'
-        expect(Task.all.length).to eq 0
+
+        it 'successfully update a task' do
+          visit '/tasks'
+          expect(Task.all.length).to eq 1
+          expect(Tag.all.length).to eq 1
+          # see: https://www.rubydoc.info/gems/capybara/Capybara%2FSession:accept_confirm
+          page.accept_confirm do
+            click_link('削除')
+          end
+          expect(page).to have_content 'タスクが正常に削除されました。'
+          expect(page).to have_content 'タスク 一覧'
+          expect(page).not_to have_content 'hoge_task'
+          expect(Task.all.length).to eq 0
+          expect(Tag.all.length).to eq 1 # タスクを消してもタグは消えていないことを確認
+        end
       end
     end
   end
@@ -192,29 +324,6 @@ RSpec.describe 'Tasks', type: :system do
         click_link('add')
         expect(current_url).to include 'locale=en'
         expect(page).to have_content 'task new'
-      end
-    end
-  end
-
-  describe 'Sorting by created_at' do
-    let!(:task1) { create(:task, user: user, name: 'hoge_task', created_at: Time.current.yesterday) }
-    let!(:task2) { create(:task, user: user, name: 'fuga_task', created_at: Time.current) }
-
-    context 'Sorting asc => desc' do
-      it 'sorts successfully' do
-        visit '/tasks?sort_direction=asc&sort_key=created_at'
-        expect(page).to have_content(/#{task1.name}[\s\S]*#{task2.name}/)
-        click_link('作成日時')
-        expect(page).to have_content(/#{task2.name}[\s\S]*#{task1.name}/)
-      end
-    end
-
-    context 'Sorting desc => asc' do
-      it 'sorts successfully' do
-        visit '/tasks?sort_direction=desc&sort_key=created_at'
-        expect(page).to have_content(/#{task2.name}[\s\S]*#{task1.name}/)
-        click_link('作成日時')
-        expect(page).to have_content(/#{task1.name}[\s\S]*#{task2.name}/)
       end
     end
   end

@@ -36,6 +36,16 @@ en:
       delete:
         success: 'The task was successfully deleted.'
         failure: 'Failed to delete the task'
+    tag:
+      create:
+        success: 'The tag was successfully created.'
+        failure: 'Failed to create the tag.'
+      update:
+        success: 'The tag was successfully updated.'
+        failure: 'Failed to update the tag'
+      delete:
+        success: 'The tag was successfully deleted.'
+        failure: 'Failed to delete the tag'
     user:
       create:
         success: 'The user was successfully created.'

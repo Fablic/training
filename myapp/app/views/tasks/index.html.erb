@@ -11,6 +11,8 @@
           <%= form.text_field :name, { value: params[:name], class:"form-control d-inline w-auto me-2" } %>
           <span><%= I18n.t(:status, scope: [:activerecord, :attributes, :task]) %></span>
           <%= form.select :status, options_for_select_of_statuses, { include_blank: true, selected: params[:status] }, {class: 'form-select d-inline w-auto me-2'} %>
+          <span><%= I18n.t(:tag, scope: [:activerecord, :models]) %></span>
+          <%= form.select :tag_id, options_for_select_of_tag, { include_blank: true, selected: params[:tag_id] }, {class: 'form-select d-inline w-auto me-2'} %>
           <%= form.submit I18n.t('filter.apply'), class:"btn btn-primary me-4" %>
           <span><%= link_to I18n.t('filter.remove'), tasks_path, class:"btn btn-primary" %></span>
         <% end %>
@@ -27,6 +29,7 @@
                   tasks_path(sort_key: column[:name], sort_direction: column[:sort_direction]) %>
           </th>
         <% end %>
+        <th class="text-center"><%= I18n.t('activerecord.models.tag') %></th>
         <th colspan="3"></th>
       </tr>
     </thead>
@@ -37,8 +40,11 @@
           <th class="w-25"><%= task.name %></th>
           <th class="text-center"><span class="<%= badge_class(task.status) %>"><%= I18n.t(task.status, scope: [:activerecord, :enums, :task, :status]) %></span></th>
           <th class="text-center"><%= task.deadline_at&.strftime("%Y/%m/%d %H:%M")  %></th>
-          <th class="text-center"><%= task.created_at.strftime("%Y/%m/%d %H:%M")  %></th>
-          <th class="text-center"><%= task.updated_at.strftime("%Y/%m/%d %H:%M")  %></th>
+          <th>
+            <% task.tags.each do |tag| %>
+              <span class="badge py-2 fs-6 bg-secondary"><%= tag.name %></span>
+            <% end %>
+          </th>
           <th class="text-center"><%= link_to I18n.t('action.show'), task_path(task), class:"btn btn-primary" %></th>
           <th class="text-center"><%= link_to I18n.t('action.edit'), edit_task_path(task), class:"btn btn-primary" %></th>
           <th class="text-center"><%= link_to I18n.t('action.delete'), task_path(task), class:"btn btn-danger", data: { turbo_method: :delete, turbo_confirm: I18n.t('confirm') } %></th>

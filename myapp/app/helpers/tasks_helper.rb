@@ -3,11 +3,8 @@ module TasksHelper
     Task.statuses.keys.map { |status| [I18n.t(status, scope: [:activerecord, :enums, :task, :status]), status] }
   end
 
-  def value_with_i18n_line_break(task, column_name)
-    return I18n.t(task.status, scope: [:activerecord, :enums, :task, :status]) if column_name == 'status'
-    return html_safe_with_line_break(task.description) if column_name == 'description'
-
-    task.send(column_name)
+  def options_for_select_of_tag
+    Tag.all.map { |tag| [tag.name, tag.id] }
   end
 
   # see: http://taustation.com/rails-reflecting-newline-code/

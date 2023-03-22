@@ -5,9 +5,11 @@ class TasksController < ApplicationController
   def index
     @task_columns_with_sorting_direction = task_columns_with_sorting_direction
 
-    @tasks = @current_user.tasks.status(params[:status]).name_contain(params[:name]).page(params[:page])
+    @tasks = @current_user.tasks.status(params[:status]).name_contain(params[:name]).tag_contain(params[:tag_id])
     @tasks = @tasks.order("#{params[:sort_key]} #{sort_direction}") if params[:sort_key].present?
-    @tasks
+
+    # 特定のタグに紐づくタスクに絞り込んだ後、それぞれのタスクに紐づくタグをすべて表示したいので、再度 Task のクエリを実行する
+    @tasks = Task.where(id: @tasks.map{|t| t.id}).includes(:tags).page(params[:page])
   end
 
   def new
@@ -57,7 +59,7 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:name, :description, :status, :deadline_at)
+    params.require(:task).permit(:name, :description, :status, :deadline_at, tag_ids: [])
   end
 
   def sort_direction
@@ -70,7 +72,7 @@ class TasksController < ApplicationController
 
   def task_columns_with_sorting_direction
     Task.column_names.map do |column_name|
-      next if ['user_id', 'description'].include?(column_name)
+      next if ['user_id', 'description', 'created_at', 'updated_at'].include?(column_name)
 
       {
         name: column_name,

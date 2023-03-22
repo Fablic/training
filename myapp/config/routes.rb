@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   root to: 'tasks#index'
   resources :tasks
+  resources :tags
   resources :users, path: '/admin/users'
 
   get '/login', to: 'sessions#new'
