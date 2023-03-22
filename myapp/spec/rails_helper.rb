@@ -97,6 +97,11 @@ RSpec.configure do |config|
       Bullet.end_request
     end
   end
+
+  # load rake tasks
+  config.before(:suite) do
+    Rails.application.load_tasks
+  end
 end
 
 Capybara.register_driver :remote_chrome do |app|
