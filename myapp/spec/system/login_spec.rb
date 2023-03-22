@@ -59,7 +59,6 @@ RSpec.describe 'Login', type: :system do
       end
 
       it 'redirect to /login' do
-        expect(page).to have_content 'ログインが必要です。'
         expect(page).to have_content 'ログイン'
         expect(page).to have_content 'メールアドレス'
         expect(page).to have_content 'パスワード'
@@ -72,10 +71,7 @@ RSpec.describe 'Login', type: :system do
       end
 
       it 'redirect to /login' do
-        expect(page).to have_content 'ログインが必要です。'
-        expect(page).to have_content 'ログイン'
-        expect(page).to have_content 'メールアドレス'
-        expect(page).to have_content 'パスワード'
+        expect(page).to have_content '404'
       end
     end
   end

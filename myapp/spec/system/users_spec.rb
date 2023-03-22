@@ -4,7 +4,8 @@ RSpec.describe 'Users', type: :system do
   let(:user) {
     create(:user, name: 'taro',
                   email: 'taro@hoge.hoge',
-                  password: 'password')
+                  password: 'password',
+                  admin: true)
   }
 
   before do
@@ -14,13 +15,10 @@ RSpec.describe 'Users', type: :system do
 
   describe 'CRUD' do
     describe 'GET /admin/users' do
-      before do
-        visit '/admin/users'
-      end
-
       it 'shows users list' do
+        visit '/admin/users'
         expect(page).to have_content 'ユーザ 一覧'
-        expect(page).to have_content 'taro@hoge.hoge'
+        expect(page).to have_content user.email
         expect(page.all('table tbody tr').length).to eq 1
       end
     end
@@ -29,7 +27,7 @@ RSpec.describe 'Users', type: :system do
       it 'renders a successful response' do
         visit "/admin/users/#{user.id}"
         expect(page).to have_content 'ユーザ 詳細'
-        expect(page).to have_content 'taro@hoge.hoge'
+        expect(page).to have_content user.email
         expect(page).not_to have_content 'パスワード' # パスワードは表示しない
       end
     end
@@ -45,7 +43,7 @@ RSpec.describe 'Users', type: :system do
       it 'renders a successful response' do
         visit "/admin/users/#{user.id}/edit"
         expect(page).to have_content 'ユーザ 編集'
-        expect(page).to have_selector 'input[value="taro@hoge.hoge"]'
+        expect(page).to have_selector "input[value=\"#{user.email}\"]"
       end
     end
 
@@ -94,7 +92,7 @@ RSpec.describe 'Users', type: :system do
     end
 
     describe 'Deleting a user' do
-      let(:user2) { create(:user) }
+      let(:user2) { create(:user, email: 'jiro@hoge.hoge') }
 
       before do
         create(:task, user: user2)
@@ -110,9 +108,59 @@ RSpec.describe 'Users', type: :system do
         end
         expect(page).to have_content 'ユーザが正常に削除されました。'
         expect(page).to have_content 'ユーザ 一覧'
-        expect(page).not_to have_content 'jiro@hoge.hoge'
+        expect(page).not_to have_content user2.email
         expect(User.all.length).to eq 1
         expect(Task.all.length).to eq 0 # 削除されたユーザに紐づくタスクも削除されることをテスト
+      end
+    end
+
+    describe 'require_admin_login' do
+      context 'login as normal user' do
+        let(:normal_user) { create(:user, admin: false) }
+
+        before do
+          login(normal_user.email, normal_user.password)
+        end
+
+        it 'redirect to /tasks' do
+          visit '/admin/users'
+          expect(page).to have_content '404'
+        end
+      end
+
+      context 'login as admin user' do
+        let(:admin_user) { create(:user, admin: true) }
+
+        before do
+          login(admin_user.email, admin_user.password)
+        end
+
+        it 'shows requested page' do
+          visit '/admin/users'
+          expect(page).to have_content 'タスク 一覧'
+        end
+      end
+    end
+
+    describe 'Cannot delete myself' do
+      before do
+        create(:user)
+      end
+
+      it 'shows only 1 delete button' do
+        visit '/admin/users'
+        expect(page.all('table tbody tr').length).to eq 2
+        # ユーザは自分含めて2人存在するが、自分を削除するボタンは表示されないので、削除ボタンは1つである
+        expect(page.all('a', text: '削除').length).to eq 1
+      end
+    end
+
+    describe 'Cannot change my role from admin' do
+      it 'does not show checkbox for admin' do
+        visit "/admin/users/#{user.id}/edit"
+        expect(page).to have_content 'ユーザ 編集'
+        expect(page).to have_selector "input[value=\"#{user.email}\"]"
+        expect(page).not_to have_selector "input[name='user[admin]']"
       end
     end
   end

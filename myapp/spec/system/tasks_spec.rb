@@ -21,14 +21,12 @@ RSpec.describe 'Tasks', type: :system do
     end
 
     describe 'GET /tasks' do
-      before do
-        create(:task, user: user, name: 'sample_task')
-        visit '/tasks'
-      end
+      let!(:task) { create(:task, user: user, name: 'sample_task') }
 
       it 'shows tasks list' do
+        visit '/tasks'
         expect(page).to have_content 'タスク 一覧'
-        expect(page).to have_content 'sample_task'
+        expect(page).to have_content task.name
         expect(page.all('table tbody tr').length).to eq 1
       end
     end
@@ -61,7 +59,7 @@ RSpec.describe 'Tasks', type: :system do
     end
 
     describe 'Creating a new task' do
-      before do
+      it 'successfully create a task' do
         visit '/tasks'
         click_link('追加')
         fill_in 'task[name]', with: 'sample_task'
@@ -69,9 +67,6 @@ RSpec.describe 'Tasks', type: :system do
         select '完了', from: 'task_status'
         fill_in 'task[deadline_at]', with: Time.zone.local(2023, 2, 3, 12, 34)
         find('input[type="submit"]').click
-      end
-
-      it 'successfully create a task' do
         expect(page).to have_content 'タスクが正常に登録されました。'
         expect(page).to have_content 'タスク 詳細'
         expect(page).to have_content 'sample_task'
@@ -90,16 +85,13 @@ RSpec.describe 'Tasks', type: :system do
                       deadline_at: '2023-02-03T12:34')
       }
 
-      before do
+      it 'successfully update a task' do
         visit "/tasks/#{task.id}/edit"
         fill_in 'task[name]', with: 'sample_task_updated'
         fill_in 'task[description]', with: 'sample description updated'
         select '完了', from: 'task_status'
         fill_in 'task[deadline_at]', with: Time.zone.local(2023, 3, 4, 13, 56)
         find('input[type="submit"]').click
-      end
-
-      it 'successfully update a task' do
         expect(page).to have_content 'タスクが正常に更新されました。'
         expect(page).to have_content 'タスク 詳細'
         expect(page).to have_content 'sample_task_updated'
@@ -112,10 +104,10 @@ RSpec.describe 'Tasks', type: :system do
     describe 'Deleting a task' do
       before do
         create(:task, user: user)
-        visit '/tasks'
       end
 
       it 'successfully update a task' do
+        visit '/tasks'
         expect(Task.all.length).to eq 1
         # see: https://www.rubydoc.info/gems/capybara/Capybara%2FSession:accept_confirm
         page.accept_confirm do
@@ -130,10 +122,6 @@ RSpec.describe 'Tasks', type: :system do
   end
 
   describe 'Other users operation control' do
-    before do
-      create(:task, user: user, name: 'sample_task')
-    end
-
     # see: https://qiita.com/jnchito/items/37fcaf4486c4bdf78802
     around do |example|
       original = Capybara.raise_server_errors
@@ -142,6 +130,7 @@ RSpec.describe 'Tasks', type: :system do
       Capybara.raise_server_errors = original
     end
 
+    let!(:task) { create(:task, user: user, name: 'sample_task') }
     let(:user2) {
       create(:user, name: 'jiro',
                     email: 'jiro@hoge.hoge',
@@ -153,8 +142,8 @@ RSpec.describe 'Tasks', type: :system do
       it 'only shows tasks created by myself' do
         visit '/tasks'
         expect(page).to have_content 'タスク 一覧'
-        expect(page).to have_content 'sample_task'
-        expect(page).not_to have_content 'sample_task_b'
+        expect(page).to have_content task.name
+        expect(page).not_to have_content task2.name
         expect(page.all('table tbody tr').length).to eq 1
       end
     end
@@ -306,10 +295,10 @@ RSpec.describe 'Tasks', type: :system do
       before do
         create_list(:task, 10, user: user, name: 'a_sample_task')
         create(:task, user: user, name: 'b_sample_task')
-        visit '/tasks'
       end
 
       it 'shows expected view' do
+        visit '/tasks'
         expect(page).to have_content '次'
         expect(page).to have_content '最後'
         expect(page).to have_content 'a_sample_task'
@@ -348,10 +337,10 @@ RSpec.describe 'Tasks', type: :system do
     context 'the number of tasks is 10 or below' do
       before do
         create_list(:task, 10, user: user)
-        visit '/tasks'
       end
 
       it 'shows expected view' do
+        visit '/tasks'
         expect(page).not_to have_content '次'
         expect(page).not_to have_content '最後'
         expect(page.all('table tbody tr').length).to eq 10
@@ -361,10 +350,10 @@ RSpec.describe 'Tasks', type: :system do
     context 'the number of tasks is 11' do
       before do
         create_list(:task, 11, user: user)
-        visit '/tasks'
       end
 
       it 'shows expected view' do
+        visit '/tasks'
         expect(page).to have_content '次'
         expect(page).to have_content '最後'
         expect(page.all('.pagination .page-item').length).to eq 4
@@ -383,10 +372,10 @@ RSpec.describe 'Tasks', type: :system do
       before do
         create_list(:task, 5, user: user, status: 'unstarted')
         create_list(:task, 10, user: user, status: 'wip')
-        visit '/tasks'
       end
 
       it 'shows expected view' do
+        visit '/tasks'
         expect(page).to have_content '次'
         expect(page).to have_content '最後'
         expect(page.all('.pagination .page-item').length).to eq 4
@@ -406,10 +395,10 @@ RSpec.describe 'Tasks', type: :system do
       before do
         create_list(:task, 10, user: user, status: 'unstarted')
         create_list(:task, 11, user: user, status: 'wip')
-        visit '/tasks'
       end
 
       it 'shows expected view' do
+        visit '/tasks'
         expect(page).to have_content '次'
         expect(page).to have_content '最後'
         expect(page.all('.pagination .page-item').length).to eq 5

@@ -11,4 +11,8 @@ class ApplicationController < ActionController::Base
   def default_url_options
     { locale: I18n.locale }
   end
+
+  def render_404
+    render file: Rails.public_path.join('404.html'), status: 404, layout: false, content_type: 'text/html'
+  end
 end

@@ -23,8 +23,7 @@
             <span class="me-5"><%= link_to "#{I18n.t('activerecord.models.task')} #{I18n.t('action.list')}", tasks_path, class:"text-white" %></span>
           <% end %>
 
-          <%# TODO: admin ユーザの時のみユーザ一覧へのリンクを表示する %>
-          <% if true %>
+          <% if admin_logged_in? %>
             <span class="me-5"><%= link_to "#{I18n.t('activerecord.models.user')} #{I18n.t('action.list')}", users_path, class:"text-white" %></span>
           <% end %>
 

@@ -11,6 +11,10 @@ module SessionsHelper
     current_user.present?
   end
 
+  def admin_logged_in?
+    logged_in? && current_user.admin?
+  end
+
   def logout
     session[:user_id] = nil
     @current_user = nil
@@ -19,7 +23,12 @@ module SessionsHelper
   def require_login
     return if logged_in?
 
-    flash[:danger] = I18n.t('need_login')
     redirect_to login_path
+  end
+
+  def require_admin_login
+    return if admin_logged_in?
+
+    render_404
   end
 end
