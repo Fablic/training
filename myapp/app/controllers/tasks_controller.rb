@@ -9,7 +9,7 @@ class TasksController < ApplicationController
     @tasks = @tasks.order("#{params[:sort_key]} #{sort_direction}") if params[:sort_key].present?
 
     # 特定のタグに紐づくタスクに絞り込んだ後、それぞれのタスクに紐づくタグをすべて表示したいので、再度 Task のクエリを実行する
-    @tasks = Task.where(id: @tasks.map{|t| t.id}).includes(:tags).page(params[:page])
+    @tasks = Task.where(id: @tasks.map { |t| t.id }).includes(:tags).page(params[:page])
   end
 
   def new
