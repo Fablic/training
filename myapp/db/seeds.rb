@@ -8,7 +8,7 @@ User.create!(
     {
       email: 'test_san@rakuten.com',
       name: 'テストさん',
-      password: 'abcdefg'
+      password: 'abcdefgh'
     }
   ]
 )
