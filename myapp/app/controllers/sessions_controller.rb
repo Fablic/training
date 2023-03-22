@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
       redirect_to root_path, flash: { success: I18n.t('sessions.flash.login.success') }
     else
       flash[:danger] = I18n.t('sessions.flash.login.fail')
-      render action :new
+      render :new
     end
   end
 
