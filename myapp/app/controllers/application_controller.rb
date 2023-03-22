@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
     if request.format.to_sym == :json
       render json: { error: '400 Bad Request' }, status: :not_found
     else
-      render file: 'public/400.html', status: 404, layout: false, content_type: 'text/html'
+      render file: 'public/400.html', status: 400, layout: false, content_type: 'text/html'
     end
   end
 
