@@ -12,7 +12,6 @@ RSpec.describe 'Tasks', type: :request do
     end
 
     context "When tasks and task.user_id data rendered" do
-      # let!(:task) { create(:task,user_id: user.id,) }
       let!(:task) do
         create(
           :task,
