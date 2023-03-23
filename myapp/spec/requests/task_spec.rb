@@ -1,15 +1,35 @@
 require 'rails_helper'
 
 RSpec.describe 'Tasks', type: :request do
-  let(:user) { create(:user) }
+  let(:user) { create(:user, name: 'test_kun') }
 
   describe 'GET /index' do
     let(:tasks) { create_list(:task, 10) }
-
     it 'renders a successful response' do
       get tasks_url
       expect(response).to have_http_status(:ok)
       expect(response.body).to include 'タスク一覧'
+    end
+
+    context "When tasks and task.user_id data rendered" do
+      # let!(:task) { create(:task,user_id: user.id,) }
+      let!(:task) do
+        create(
+          :task,
+          title: 'test_title',
+          description: 'this is test',
+          priority: 'low',
+          status: 'waiting',
+          user_id: user.id
+        )
+      end
+        it 'exist user name' do
+          get(tasks_url)
+          expect(response.body).to include 'test_title'
+          expect(response.body).to include '低'
+          expect(response.body).to include '未着手'
+          expect(response.body).to include 'test_kun'
+      end
     end
 
     context "When URL has argument 'sort'" do
