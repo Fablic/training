@@ -52,6 +52,7 @@ RSpec.describe User, type: :model do
       context 'password' do
         it { is_expected.to validate_presence_of(:password) }
         it { is_expected.to validate_length_of(:password).is_at_least(8) }
+        it { is_expected.not_to validate_length_of(:password).is_at_least(7) }
       end
 
     end
