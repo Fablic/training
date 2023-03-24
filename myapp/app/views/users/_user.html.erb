@@ -1,2 +1,16 @@
-<div id="<%= dom_id user %>">
+<div id="<%= dom_id user %>" class="container-sm rounded-2" style="padding:10px;">
+  <h1><%= user.name %></h1>
+  <hr>
+</div>
+<div class="container-sm rounded-2" style="padding:10px;">
+  <table class="table">
+    <tr>
+      <td><%= I18n.t('activerecord.attributes.user.id') %>: <td>
+      <td><%= user.id %></td>
+    </tr>
+    <tr>
+      <td><%= I18n.t('activerecord.attributes.user.email') %>: <td>
+      <td><%= user.email %></td>
+    </tr>
+  </table>
 </div>

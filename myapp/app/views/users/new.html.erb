@@ -1,9 +1,14 @@
-<h1>New user</h1>
-
-<%= render "form", user: @user %>
+<%= render 'header' %>
+<div class="container-sm rounded-2" style="padding:10px;">
+  <h1><%= I18n.t('users.new.title') =%></h1>
+  <hr>
+</div>
 
 <br>
-
-<div>
-  <%= link_to "Back to users", users_path %>
 </div>
+  <%= render 'form', user: @user %>
+</div>
+<br>
+<div class="container-sm rounded-2 text-center" style="padding:10px;">
+  <%= link_to I18n.t('users.common.to_index'), users_path %>
+<div>

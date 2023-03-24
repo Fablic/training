@@ -12,6 +12,7 @@
       <th><%= I18n.t('activerecord.attributes.user.id') %></th>
       <th><%= I18n.t('activerecord.attributes.user.name') %></th>
       <th><%= I18n.t('activerecord.attributes.user.email') %></th>
+      <th><%= I18n.t('activerecord.attributes.user.tasks_count') %></th>
     </tr>
     
     <% @users.each do |user| %>
@@ -27,6 +28,9 @@
         </td>
         <td>
           <%= user.email %>
+        </td>
+        <td>
+          <%= user.tasks.count %>
         </td>
     </tr>
     <% end %>

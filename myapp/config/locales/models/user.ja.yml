@@ -8,3 +8,4 @@ ja:
         name: ユーザ名
         password: パスワード
         email: メールアドレス
+        tasks_count: タスク数
