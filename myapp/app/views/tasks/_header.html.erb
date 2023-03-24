@@ -10,7 +10,10 @@
           </li>
     </ul>
       <ul class="navbar-nav ms-auto align-items-center">
-        <li>
+        <li class="mx-2 link-light text-decoration-none">
+          <%= I18n.t('sessions.login_message', user_name: current_user.name) %>
+        </li>
+        <li class="mx-2">
           <%= link_to I18n.t('sessions.logout'), logout_path, method: :delete, class: "link-secondary text-decoration-none" %>
         </li>
       </ul>
