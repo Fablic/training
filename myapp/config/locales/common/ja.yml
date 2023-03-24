@@ -20,3 +20,4 @@ ja:
         success: ログアウトしました
     login: ログイン
     logout: ログアウト
+    login_message: "%{user_name}としてログイン"
