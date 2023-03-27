@@ -18,6 +18,7 @@
 class User < ApplicationRecord
   acts_as_paranoid
   has_secure_password
+  validates_length_of :password, minimum: 8
   has_many :tasks, inverse_of: :user, dependent: :destroy
   validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }, uniqueness: true
   validates :name, presence: true, length: { maximum: 255 }

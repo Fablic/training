@@ -36,7 +36,7 @@
           <%= task.expires_at ? task.expires_at.strftime("%Y/%m/%d") : '' %>
         </td>
         <td>
-          <%= task.user&.name %>
+          <%= task.user.name %>
         </td>
     </tr>
     <% end %>

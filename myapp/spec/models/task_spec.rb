@@ -26,7 +26,7 @@
 require 'rails_helper'
 
 RSpec.describe Task, type: :model do
-  let!(:user) { create(:user) }
+  let(:user) { create(:user) }
 
   describe 'associations' do
     it { is_expected.to belong_to(:user).optional }
