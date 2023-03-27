@@ -9,9 +9,6 @@ ja:
         status: ステータス
         description: 詳細
         expires_at: 期限日
-    errors:
-      messages:
-        count: "%{count}件のエラーが発生しました。"
 
   enums:
     task:

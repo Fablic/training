@@ -3,7 +3,7 @@ class TasksController < ApplicationController
 
   # GET /tasks or /tasks.json
   def index
-    query = Task.all
+    query = Task.all.preload(:user)
     query = query.sort_by_keyword(search_params[:sort])
     query = query.search_by_status(search_params[:status]) if search_params[:status].present?
     query = query.search_by_keyword(search_params[:keyword]) if search_params[:keyword].present?

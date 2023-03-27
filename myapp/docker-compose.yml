@@ -21,3 +21,10 @@ services:
     depends_on:
       - db
     platform: linux/amd64
+
+  chrome:
+    image: seleniarm/standalone-chromium
+    ports:
+      - 4444:4444
+    environment:
+      TZ: Asia/Tokyo
