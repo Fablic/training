@@ -15,11 +15,11 @@ RSpec.describe "Tasks", type: :system do
         )
       end
       it 'exist user name' do
-        get(tasks_url)
-        expect(response.body).to include 'test_title'
-        expect(response.body).to include '低'
-        expect(response.body).to include '未着手'
-        expect(response.body).to include 'test_kun'
+        visit tasks_url
+        expect(page).to have_content('test_title')
+        expect(page).to have_content('低')
+        expect(page).to have_content('未着手')
+        expect(page).to have_content('test_kun')
       end
     end
   end
