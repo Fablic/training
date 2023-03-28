@@ -401,23 +401,23 @@ RSpec.describe 'Tasks', type: :request do
       end
     end
   end
-  describe 'bad_request' do
+  describe 'unauthorized operation' do
     let(:another_user) { create(:user, email: "another_user@rakuten.com") }
     let(:task) { create(:task, user_id: another_user.id) }
 
     it 'show url' do
       get task_url(task)
-      expect(response).to have_http_status :bad_request
+      expect(response).to have_http_status :forbidden
     end
 
     it 'update url' do
       put task_url(task)
-      expect(response).to have_http_status :bad_request
+      expect(response).to have_http_status :forbidden
     end
 
     it 'destroy url' do
       delete task_url(task)
-      expect(response).to have_http_status :bad_request
+      expect(response).to have_http_status :forbidden
     end
   end
 end

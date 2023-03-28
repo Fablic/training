@@ -1,22 +1,23 @@
 class ApplicationController < ActionController::Base
+  class Forbidden < ActionController::ActionControllerError; end
   private
   
   add_flash_types :success, :info, :warning, :danger
   rescue_from Exception, with: :render_500
-  rescue_from ActionController::BadRequest, with: :render_400
+  rescue_from Forbidden, with: :render_403
   rescue_from ActiveRecord::RecordNotFound, with: :render_404
   rescue_from ActionController::RoutingError, with: :render_404
 
   helper_method :current_user
   before_action :login_required
 
-  def render_400(e = nil)
-    logger.error "Rendering 400 with excaption: #{e.message}" if e
+  def render_403(e = nil)
+    logger.error "Rendering 403 with excaption: #{e.message}" if e
     
     if request.format.to_sym == :json
-      render json: { error: '400 Bad Request' }, status: :not_found
+      render json: { error: '403 Forbidden' }, status: :not_found
     else
-      render file: 'public/400.html', status: 400, layout: false, content_type: 'text/html'
+      render file: 'public/403.html', status: 403, layout: false, content_type: 'text/html'
     end
   end
 
