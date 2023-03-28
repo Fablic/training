@@ -1,15 +1,15 @@
 require 'rails_helper'
 
-RSpec.describe "Tasks", type: :system do
+RSpec.describe 'Tasks', type: :system do
   let(:user) { create(:user, name: 'test_kun') }
   before do
     visit login_path
-    fill_in "メールアドレス", with: user.email
-    fill_in "パスワード", with: user.password
+    fill_in 'メールアドレス', with: user.email
+    fill_in 'パスワード', with: user.password
     click_button 'ログイン'
   end
   describe 'GET /index' do
-    context "When tasks and task.user_id data rendered" do
+    context 'When tasks and task.user_id data rendered' do
       let!(:task) do
         create(
           :task,
