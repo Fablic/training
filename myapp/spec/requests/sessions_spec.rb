@@ -32,7 +32,7 @@ RSpec.describe 'Sessions', type: :request do
         { session: { email: 'no.user@rakuten.com', password: 'xxxx'} }
       end
 
-      it 'returns http fail' do
+      it 'returns http success with danger alert' do
         subject
         
         expect(response).to have_http_status(:success)
