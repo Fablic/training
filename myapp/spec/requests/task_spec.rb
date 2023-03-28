@@ -402,7 +402,7 @@ RSpec.describe 'Tasks', type: :request do
     end
   end
   describe 'unauthorized operation' do
-    let(:another_user) { create(:user, email: "another_user@rakuten.com") }
+    let(:another_user) { create(:user, email: 'another_user@rakuten.com') }
     let(:task) { create(:task, user_id: another_user.id) }
 
     it 'show url' do
