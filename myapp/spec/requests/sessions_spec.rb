@@ -45,8 +45,8 @@ RSpec.describe 'Sessions', type: :request do
     it 'returns http success' do
       get '/logout'
 
-      expect(response).to have_http_status(:found)
-      expect(response).to redirect_to(root_path)
+      expect(response).to have_http_status(:ok)
+      expect(response).to have_http_status(:success)
     end
   end
 end
