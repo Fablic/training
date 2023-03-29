@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Tasks', type: :request do
-  let(:user) { create(:user, id: 1,  name: 'test_kun') }
+  let(:user) { create(:user, name: 'test_kun') }
   before do
     post '/login', params: { session: { email: user.email, password: user.password } }
   end
@@ -234,7 +234,7 @@ RSpec.describe 'Tasks', type: :request do
       end
     end
     context "When there are over 10 tasks and using pagenation" do
-      let!(:tasks) { Kaminari.paginate_array(create_list(:task, 20, user_id: 1 )).page(page) }
+      let!(:tasks) { Kaminari.paginate_array(create_list(:task, 20, user_id: user.id )).page(page) }
 
       context 'page:1' do
         let(:page) { 1 }
@@ -267,7 +267,7 @@ RSpec.describe 'Tasks', type: :request do
   end
 
   describe 'GET /edit' do
-    let(:task) { create(:task) }
+    let(:task) { create(:task, user_id: user.id) }
 
     it 'renders a successful response' do
       get edit_task_url(task)
@@ -285,7 +285,7 @@ RSpec.describe 'Tasks', type: :request do
           status: 'doing',
           description: 'task desu',
           expires_at: 1.week.since,
-          user_id: 1
+          user_id: user.id
         } }
       end
       it 'creates a new Task' do
@@ -306,7 +306,7 @@ RSpec.describe 'Tasks', type: :request do
             status: 'doing',
             description: 'task desu!',
             expires_at: 1.week.since,
-            user_id: 1
+            user_id: user.id
           } }
         end
 
@@ -324,7 +324,7 @@ RSpec.describe 'Tasks', type: :request do
 
     describe 'PUT /update' do
       context 'with valid parameters' do
-        let!(:task) { create(:task, user_id: 1) }
+        let!(:task) { create(:task, user_id: user.id) }
 
         let(:test_params) do
           {
@@ -359,7 +359,7 @@ RSpec.describe 'Tasks', type: :request do
       end
 
       context 'with invalid parameters' do
-        let!(:task) { create(:task, user_id: 1) }
+        let!(:task) { create(:task, user_id: user.id) }
         let(:invalid_params) do
           { task: {
             title: 'nagai' * 255,
@@ -401,23 +401,23 @@ RSpec.describe 'Tasks', type: :request do
       end
     end
   end
-  describe 'bad_request' do
-    let(:another_user) { create(:user, email: "another_user@rakuten.com") }
+  describe 'unauthorized operation' do
+    let(:another_user) { create(:user, email: 'another_user@rakuten.com') }
     let(:task) { create(:task, user_id: another_user.id) }
 
-    it 'show url' do
+    it 'returns forbidden (show url)' do
       get task_url(task)
-      expect(response).to have_http_status :bad_request
+      expect(response).to have_http_status :forbidden
     end
 
-    it 'update url' do
+    it 'returns forbidden (update url)' do
       put task_url(task)
-      expect(response).to have_http_status :bad_request
+      expect(response).to have_http_status :forbidden
     end
 
-    it 'destroy url' do
+    it 'returns forbidden (destroy url)' do
       delete task_url(task)
-      expect(response).to have_http_status :bad_request
+      expect(response).to have_http_status :forbidden
     end
   end
 end

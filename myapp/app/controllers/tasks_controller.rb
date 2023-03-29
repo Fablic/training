@@ -3,13 +3,11 @@ class TasksController < ApplicationController
 
   # GET /tasks or /tasks.json
   def index
-    query = Task.where(user_id: current_user.id).preload(:user)
-    query = query.sort_by_keyword(search_params[:sort])
-    query = query.search_by_status(search_params[:status]) if search_params[:status].present?
-    query = query.search_by_keyword(search_params[:keyword]) if search_params[:keyword].present?
-    query = query.page(search_params[:page])
-
-    @tasks = query
+    @tasks = Task.where(user_id: current_user.id).preload(:user)
+    @tasks = @tasks.sort_by_keyword(search_params[:sort])
+    @tasks = @tasks.search_by_status(search_params[:status]) if search_params[:status].present?
+    @tasks = @tasks.search_by_keyword(search_params[:keyword]) if search_params[:keyword].present?
+    @tasks = @tasks.page(search_params[:page])
   end
 
   # GET /tasks/1 or /tasks/1.json
@@ -71,10 +69,8 @@ class TasksController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_task
-    task = Task.find(params[:id])
-    raise ActionController::BadRequest if current_user.id != task.user_id
-
-    @task = task
+    @task = Task.find(params[:id])
+    raise ApplicationController::Forbidden if current_user.id != @task.user_id
   end
 
   # Only allow a list of trusted parameters through.
