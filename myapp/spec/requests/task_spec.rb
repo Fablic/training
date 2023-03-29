@@ -1,14 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe 'Tasks', type: :request do
-  let(:user) { create(:user, id: 1) }
+  let(:user) { create(:user, id: 1,  name: 'test_kun') }
   before do
     post '/login', params: { session: { email: user.email, password: user.password } }
   end
 
   describe 'GET /index' do
     let(:tasks) { create_list(:task, 10) }
-
     it 'renders a successful response' do
       get tasks_url
       expect(response).to have_http_status(:ok)
@@ -17,12 +16,28 @@ RSpec.describe 'Tasks', type: :request do
 
     context "When URL has argument 'sort'" do
       let!(:first_task) do
-        create(:task, title: '1st', description: 'aaa', priority: 'low', status: 'waiting', user_id: user.id, 
-                      created_at: '2023/01/01 00:00', expires_at: '2023/02/02 00:00')
+        create(
+          :task,
+          title: '1st',
+          description: 'aaa',
+          priority: 'low',
+          status: 'waiting',
+          user_id: user.id,
+          created_at: '2023/01/01 00:00',
+          expires_at: '2023/02/02 00:00'
+          )
       end
       let!(:second_task) do
-        create(:task, title: '2nd', description: 'bbb', priority: 'middle', status: 'waiting', user_id: user.id,
-                      created_at: '2023/01/02 00:00', expires_at: '2023/02/01 00:00')
+        create(
+          :task,
+          title: '2nd',
+          description: 'bbb',
+          priority: 'middle',
+          status: 'waiting',
+          user_id: user.id,
+          created_at: '2023/01/02 00:00',
+          expires_at: '2023/02/01 00:00'
+          )
       end
       context 'created_at_asc' do
         let(:params) do
@@ -76,28 +91,70 @@ RSpec.describe 'Tasks', type: :request do
     end
     context "When URL has argument 'status'" do
       let!(:first_task) do
-        create(:task, title: 'test1', description: 'aaa', priority: 'low', status: 'waiting', user_id: user.id,
-                      expires_at: '2023/01/03 00:00')
+        create(
+          :task,
+          title: 'test1',
+          description: 'aaa',
+          priority: 'low',
+          status: 'waiting',
+          user_id: user.id,
+          expires_at: '2023/01/03 00:00'
+          )
       end
       let!(:second_task) do
-        create(:task, title: 'test2', description: 'bbb', priority: 'middle', status: 'waiting', user_id: user.id,
-                      expires_at: '2023/01/02 00:00')
+        create(
+          :task,
+          title: 'test2',
+          description: 'bbb',
+          priority: 'middle',
+          status: 'waiting',
+          user_id: user.id,
+          expires_at: '2023/01/02 00:00'
+          )
       end
       let!(:third_task) do
-        create(:task, title: 'test3', description: 'ccc', priority: 'high', status: 'doing', user_id: user.id,
-                      expires_at: '2023/01/01 00:00')
+        create(
+          :task,
+          title: 'test3',
+          description: 'ccc',
+          priority: 'high',
+          status: 'doing',
+          user_id: user.id,
+          expires_at: '2023/01/01 00:00'
+          )
       end
       let!(:fourth_task) do
-        create(:task, title: 'test4', description: 'ddd', priority: 'middle', status: 'completed', user_id: user.id,
-                      expires_at: '2023/01/04 00:00')
+        create(
+          :task,
+          title: 'test4',
+          description: 'ddd',
+          priority: 'middle',
+          status: 'completed',
+          user_id: user.id,
+          expires_at: '2023/01/04 00:00'
+          )
       end
       let!(:fifth_task) do
-        create(:task, title: 'test5', description: 'eee', priority: 'low', status: 'completed', user_id: user.id,
-                      expires_at: '2023/01/05 00:00')
+        create(
+          :task,
+          title: 'test5',
+          description: 'eee',
+          priority: 'low',
+          status: 'completed',
+          user_id: user.id,
+          expires_at: '2023/01/05 00:00'
+          )
       end
       let!(:sixth_task) do
-        create(:task, title: 'test6', description: 'fff', priority: 'high', status: 'completed', user_id: user.id,
-                      expires_at: '2023/01/06 00:00')
+        create(
+          :task,
+          title: 'test6',
+          description: 'fff',
+          priority: 'high',
+          status: 'completed',
+          user_id: user.id,
+          expires_at: '2023/01/06 00:00'
+          )
       end
 
       context 'status: waiting' do
