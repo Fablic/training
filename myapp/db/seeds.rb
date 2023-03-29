@@ -3,12 +3,14 @@ User.create!(
     {
       email: 'test_kun@rakuten.com',
       name: 'テストくん',
-      password: '12345678'
+      password: '12345678',
+      role: 'admin'
     },
     {
       email: 'test_san@rakuten.com',
       name: 'テストさん',
       password: 'abcdefgh'
+      role: 'ordinary'
     }
   ]
 )
