@@ -19,7 +19,7 @@ RSpec.describe 'Sessions', type: :request do
         { session: { email: user.email, password: user.password } }
       end
 
-      it 'returns http success' do
+      it 'returns http found' do
         subject
 
         expect(response).to have_http_status(:found)
