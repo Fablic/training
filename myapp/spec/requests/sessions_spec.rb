@@ -27,9 +27,22 @@ RSpec.describe 'Sessions', type: :request do
       end
     end
 
-    context 'invalid params' do
+    context 'invalid email' do
       let(:params) do 
-        { session: { email: 'no.user@rakuten.com', password: 'xxxx'} }
+        { session: { email: 'no.user@rakuten.com', password: user.password} }
+      end
+
+      it 'returns http success with danger alert' do
+        subject
+        
+        expect(response).to have_http_status(:success)
+        expect(flash[:danger])
+      end
+    end
+
+    context 'invalid password' do
+      let(:params) do 
+        { session: { email: user.email, password: 'xxxx'} }
       end
 
       it 'returns http success with danger alert' do
