@@ -55,11 +55,10 @@ RSpec.describe 'Sessions', type: :request do
   end
 
   describe 'GET /logout' do
-    it 'returns http success' do
+    it 'returns http ok' do
       get '/logout'
 
       expect(response).to have_http_status(:ok)
-      expect(response).to have_http_status(:success)
     end
   end
 end
