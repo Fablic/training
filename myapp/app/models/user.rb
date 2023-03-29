@@ -17,9 +17,16 @@
 #  index_users_on_name   (name)
 #
 class User < ApplicationRecord
+  DEFAULT_ROLE_VALUE = 'ordinary'
+
   acts_as_paranoid
   has_secure_password
   has_many :tasks, inverse_of: :user, dependent: :destroy
   validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }, uniqueness: true
   validates :name, presence: true, length: { maximum: 255 }
+  
+  enum :role, {
+    ordinary: 0, 
+    admin: 1
+  }, prefix: true
 end
