@@ -23,10 +23,6 @@ RSpec.describe User, type: :model do
   end
 
   describe 'validation' do
-    context 'name' do
-      it { is_expected.to validate_presence_of(:name) }
-      it { is_expected.to validate_length_of(:name).is_at_most(255) }
-    end
 
     context 'email' do
       let(:user) { FactoryBot.build(:user) }
@@ -46,6 +42,17 @@ RSpec.describe User, type: :model do
       it 'with invalid parameters(invalid space)' do
         user.email = 'test@ rakuten.com'
         expect(user).to be_invalid
+      end
+
+      context 'name' do
+        it { is_expected.to validate_presence_of(:name) }
+        it { is_expected.to validate_length_of(:name).is_at_most(255) }
+      end
+
+      context 'password' do
+        it { is_expected.to validate_presence_of(:password) }
+        it { is_expected.to validate_length_of(:password).is_at_least(8) }
+        it { is_expected.not_to validate_length_of(:password).is_at_least(7) }
       end
 
     end

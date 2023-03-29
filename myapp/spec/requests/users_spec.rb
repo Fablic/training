@@ -118,8 +118,9 @@ RSpec.describe "Users", type: :request do
         post users_url, params: invalid_params
 
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.body).to include '4 error'
+        expect(response.body).to include '5 error'
         expect(response.body).to include 'パスワードを入力してください'
+        expect(response.body).to include 'パスワードは8文字以上で入力してください'
         expect(response.body).to include 'メールアドレスを入力してください'
         expect(response.body).to include 'メールアドレスは不正な値です'
         expect(response.body).to include 'ユーザ名を入力してください'
@@ -129,12 +130,13 @@ RSpec.describe "Users", type: :request do
 
   describe 'PUT /update' do
     context 'with valid parameters' do
-      let(:user) { create(:user) }
+      let(:user) { create(:user, password: '12345678') }
 
       let(:update_params) do
         {
           name: 'updated!',
-          email: 'updated@rakuten.com'
+          email: 'updated@rakuten.com',
+          password: '12345678',
         }
       end
 
@@ -167,7 +169,8 @@ RSpec.describe "Users", type: :request do
         put user_url(user), params: invalid_params
 
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.body).to include '3 error'
+        expect(response.body).to include '4 error'
+        expect(response.body).to include 'パスワードは8文字以上で入力してください'
         expect(response.body).to include 'メールアドレスを入力してください'
         expect(response.body).to include 'メールアドレスは不正な値です'
         expect(response.body).to include 'ユーザ名を入力してください'

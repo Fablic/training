@@ -1,14 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe 'Tasks', type: :request do
-  let(:user) { create(:user, id: 1) }
+  let(:user) { create(:user, name: 'test_kun') }
   before do
     post '/login', params: { session: { email: user.email, password: user.password } }
   end
 
   describe 'GET /index' do
     let(:tasks) { create_list(:task, 10) }
-
     it 'renders a successful response' do
       get tasks_url
       expect(response).to have_http_status(:ok)
@@ -17,12 +16,28 @@ RSpec.describe 'Tasks', type: :request do
 
     context "When URL has argument 'sort'" do
       let!(:first_task) do
-        create(:task, title: '1st', description: 'aaa', priority: 'low', status: 'waiting', user_id: user.id, 
-                      created_at: '2023/01/01 00:00', expires_at: '2023/02/02 00:00')
+        create(
+          :task,
+          title: '1st',
+          description: 'aaa',
+          priority: 'low',
+          status: 'waiting',
+          user_id: user.id,
+          created_at: '2023/01/01 00:00',
+          expires_at: '2023/02/02 00:00'
+          )
       end
       let!(:second_task) do
-        create(:task, title: '2nd', description: 'bbb', priority: 'middle', status: 'waiting', user_id: user.id,
-                      created_at: '2023/01/02 00:00', expires_at: '2023/02/01 00:00')
+        create(
+          :task,
+          title: '2nd',
+          description: 'bbb',
+          priority: 'middle',
+          status: 'waiting',
+          user_id: user.id,
+          created_at: '2023/01/02 00:00',
+          expires_at: '2023/02/01 00:00'
+          )
       end
       context 'created_at_asc' do
         let(:params) do
@@ -76,28 +91,70 @@ RSpec.describe 'Tasks', type: :request do
     end
     context "When URL has argument 'status'" do
       let!(:first_task) do
-        create(:task, title: 'test1', description: 'aaa', priority: 'low', status: 'waiting', user_id: user.id,
-                      expires_at: '2023/01/03 00:00')
+        create(
+          :task,
+          title: 'test1',
+          description: 'aaa',
+          priority: 'low',
+          status: 'waiting',
+          user_id: user.id,
+          expires_at: '2023/01/03 00:00'
+          )
       end
       let!(:second_task) do
-        create(:task, title: 'test2', description: 'bbb', priority: 'middle', status: 'waiting', user_id: user.id,
-                      expires_at: '2023/01/02 00:00')
+        create(
+          :task,
+          title: 'test2',
+          description: 'bbb',
+          priority: 'middle',
+          status: 'waiting',
+          user_id: user.id,
+          expires_at: '2023/01/02 00:00'
+          )
       end
       let!(:third_task) do
-        create(:task, title: 'test3', description: 'ccc', priority: 'high', status: 'doing', user_id: user.id,
-                      expires_at: '2023/01/01 00:00')
+        create(
+          :task,
+          title: 'test3',
+          description: 'ccc',
+          priority: 'high',
+          status: 'doing',
+          user_id: user.id,
+          expires_at: '2023/01/01 00:00'
+          )
       end
       let!(:fourth_task) do
-        create(:task, title: 'test4', description: 'ddd', priority: 'middle', status: 'completed', user_id: user.id,
-                      expires_at: '2023/01/04 00:00')
+        create(
+          :task,
+          title: 'test4',
+          description: 'ddd',
+          priority: 'middle',
+          status: 'completed',
+          user_id: user.id,
+          expires_at: '2023/01/04 00:00'
+          )
       end
       let!(:fifth_task) do
-        create(:task, title: 'test5', description: 'eee', priority: 'low', status: 'completed', user_id: user.id,
-                      expires_at: '2023/01/05 00:00')
+        create(
+          :task,
+          title: 'test5',
+          description: 'eee',
+          priority: 'low',
+          status: 'completed',
+          user_id: user.id,
+          expires_at: '2023/01/05 00:00'
+          )
       end
       let!(:sixth_task) do
-        create(:task, title: 'test6', description: 'fff', priority: 'high', status: 'completed', user_id: user.id,
-                      expires_at: '2023/01/06 00:00')
+        create(
+          :task,
+          title: 'test6',
+          description: 'fff',
+          priority: 'high',
+          status: 'completed',
+          user_id: user.id,
+          expires_at: '2023/01/06 00:00'
+          )
       end
 
       context 'status: waiting' do
@@ -177,7 +234,7 @@ RSpec.describe 'Tasks', type: :request do
       end
     end
     context "When there are over 10 tasks and using pagenation" do
-      let!(:tasks) { Kaminari.paginate_array(create_list(:task, 20, user_id: 1 )).page(page) }
+      let!(:tasks) { Kaminari.paginate_array(create_list(:task, 20, user_id: user.id )).page(page) }
 
       context 'page:1' do
         let(:page) { 1 }
@@ -210,7 +267,7 @@ RSpec.describe 'Tasks', type: :request do
   end
 
   describe 'GET /edit' do
-    let(:task) { create(:task) }
+    let(:task) { create(:task, user_id: user.id) }
 
     it 'renders a successful response' do
       get edit_task_url(task)
@@ -228,7 +285,7 @@ RSpec.describe 'Tasks', type: :request do
           status: 'doing',
           description: 'task desu',
           expires_at: 1.week.since,
-          user_id: 1
+          user_id: user.id
         } }
       end
       it 'creates a new Task' do
@@ -249,7 +306,7 @@ RSpec.describe 'Tasks', type: :request do
             status: 'doing',
             description: 'task desu!',
             expires_at: 1.week.since,
-            user_id: 1
+            user_id: user.id
           } }
         end
 
@@ -267,7 +324,7 @@ RSpec.describe 'Tasks', type: :request do
 
     describe 'PUT /update' do
       context 'with valid parameters' do
-        let!(:task) { create(:task, user_id: 1) }
+        let!(:task) { create(:task, user_id: user.id) }
 
         let(:test_params) do
           {
@@ -302,7 +359,7 @@ RSpec.describe 'Tasks', type: :request do
       end
 
       context 'with invalid parameters' do
-        let!(:task) { create(:task, user_id: 1) }
+        let!(:task) { create(:task, user_id: user.id) }
         let(:invalid_params) do
           { task: {
             title: 'nagai' * 255,
@@ -344,23 +401,23 @@ RSpec.describe 'Tasks', type: :request do
       end
     end
   end
-  describe 'bad_request' do
-    let(:another_user) { create(:user, email: "another_user@rakuten.com") }
+  describe 'unauthorized operation' do
+    let(:another_user) { create(:user, email: 'another_user@rakuten.com') }
     let(:task) { create(:task, user_id: another_user.id) }
 
-    it 'show url' do
+    it 'returns forbidden (show url)' do
       get task_url(task)
-      expect(response).to have_http_status :bad_request
+      expect(response).to have_http_status :forbidden
     end
 
-    it 'update url' do
+    it 'returns forbidden (update url)' do
       put task_url(task)
-      expect(response).to have_http_status :bad_request
+      expect(response).to have_http_status :forbidden
     end
 
-    it 'destroy url' do
+    it 'returns forbidden (destroy url)' do
       delete task_url(task)
-      expect(response).to have_http_status :bad_request
+      expect(response).to have_http_status :forbidden
     end
   end
 end
