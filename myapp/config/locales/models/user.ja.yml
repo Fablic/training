@@ -8,4 +8,11 @@ ja:
         name: ユーザ名
         password: パスワード
         email: メールアドレス
+        role: 役割
         tasks_count: タスク数
+
+  enums:
+    user:
+      role:
+        ordinary: 一般
+        admin: 管理者

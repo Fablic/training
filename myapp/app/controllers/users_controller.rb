@@ -1,5 +1,6 @@
-class UsersController < ApplicationController
+class UsersController < AdminsController
   before_action :set_user, only: %i[show edit update destroy]
+  append_before_action :exist_other_admin_user?, only: %i[update destroy]
 
   # GET /users or /users.json
   def index
@@ -76,5 +77,23 @@ class UsersController < ApplicationController
 
   def search_params
     params.permit(:page)
+  end
+
+  def exist_other_admin_user?
+    return if @user.role_ordinary?
+    return if params['user'].present? && params['user']['role'] == 'admin'
+
+    admin_user_count = User.cnt_admin_user_except_current(@user.id)
+    return if admin_user_count >= 1
+
+    if action_name == 'update'
+      # message = 
+      flash[:danger] = I18n.t('users.admin.update.last_admin')
+    elsif action_name == 'destroy'
+      flash[:danger] = I18n.t('users.admin.destroy.last_admin')
+    else
+      flash[:danger] = ''
+    end
+    redirect_to users_path
   end
 end

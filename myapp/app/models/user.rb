@@ -21,8 +21,8 @@ class User < ApplicationRecord
 
   acts_as_paranoid
   has_secure_password
-  validates_length_of :password, minimum: 8
   has_many :tasks, inverse_of: :user, dependent: :destroy
+  validates_length_of :password, minimum: 8
   validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }, uniqueness: true
   validates :name, presence: true, length: { maximum: 255 }
   
@@ -30,4 +30,14 @@ class User < ApplicationRecord
     ordinary: 0, 
     admin: 1
   }, prefix: true
+
+  after_initialize do
+    self.role ||= DEFAULT_ROLE_VALUE
+  end
+
+  class << self
+    def cnt_admin_user_except_current(user_id)
+      where(role: 'admin').where.not(id: user_id).count
+    end
+  end
 end
