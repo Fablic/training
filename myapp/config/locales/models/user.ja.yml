@@ -16,3 +16,10 @@ ja:
       role:
         ordinary: 一般
         admin: 管理者
+
+  select_form:
+    user:
+      role:
+        - ['一般', 'ordinary']
+        - ['管理者', 'admin']
+

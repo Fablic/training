@@ -12,6 +12,7 @@
       <th><%= I18n.t('activerecord.attributes.user.id') %></th>
       <th><%= I18n.t('activerecord.attributes.user.name') %></th>
       <th><%= I18n.t('activerecord.attributes.user.email') %></th>
+      <th><%= I18n.t('activerecord.attributes.user.role') %></th>
       <th><%= I18n.t('activerecord.attributes.user.tasks_count') %></th>
     </tr>
     
@@ -28,6 +29,9 @@
         </td>
         <td>
           <%= user.email %>
+        </td>
+        <td>
+          <%= User.roles_i18n[user.role] %>
         </td>
         <td>
           <%= user.tasks.count %>
