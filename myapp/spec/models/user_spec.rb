@@ -58,4 +58,26 @@ RSpec.describe User, type: :model do
 
     end
   end
+
+  describe 'enums' do
+    it {
+      is_expected.to define_enum_for(:role).with_values(
+        ordinary: 0, # 一般
+        admin: 1    # 管理者
+      ).with_prefix
+    }
+  end
+
+  describe 'cnt_admin_user_except_current' do
+    let!(:first_user) { create(:user, role: 'admin') }
+    let!(:second_user) { create(:user, role: 'ordinary') }
+    let!(:third_user) { create(:user, role: 'admin') }
+    let!(:forth_user) { create(:user, role: 'admin') }
+
+    subject { User.cnt_admin_user_except_current(first_user.id) }
+
+    it "count admin's record except first user" do
+      is_expected.to eq 2
+    end
+  end
 end
