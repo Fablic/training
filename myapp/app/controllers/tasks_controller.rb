@@ -3,11 +3,14 @@ class TasksController < ApplicationController
 
   # GET /tasks or /tasks.json
   def index
-    @tasks = Task.where(user_id: current_user.id).preload(:user)
+    @tasks = Task.where(user_id: current_user.id).preload(:user, :labels)
     @tasks = @tasks.sort_by_keyword(search_params[:sort])
     @tasks = @tasks.search_by_status(search_params[:status]) if search_params[:status].present?
     @tasks = @tasks.search_by_keyword(search_params[:keyword]) if search_params[:keyword].present?
     @tasks = @tasks.page(search_params[:page])
+    if search_params[:label_ids].present? && search_params[:label_ids] != ['']
+      @tasks = @tasks.joined_search_by_label_ids(search_params[:label_ids]).distinct
+    end
   end
 
   # GET /tasks/1 or /tasks/1.json
@@ -80,6 +83,6 @@ class TasksController < ApplicationController
 
   def search_params
     params[:sort] = Task.sort_params_checker(params[:sort])
-    params.permit(:page, :keyword, :status, :sort)
+    params.permit(:page, :keyword, :status, :sort, label_ids: [])
   end
 end

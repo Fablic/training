@@ -26,6 +26,8 @@
 class Task < ApplicationRecord
   acts_as_paranoid
   belongs_to :user, optional: true
+  has_many :task_labels, dependent: :delete_all
+  has_many :labels, through: :task_labels
   enum priority: { high: 0, middle: 1, low: 2 }
   enum status: { waiting: 0, doing: 1, completed: 2 }
   PRIORITY_LIST = ["middle", "high", "low"]
@@ -62,7 +64,10 @@ class Task < ApplicationRecord
 
     def search_by_keyword(keyword)
       where('CONCAT(title, description) LIKE ?', "%#{Task.sanitize_sql_like(keyword)}%")
-    end 
+    end
 
+    def joined_search_by_label_ids(label_ids)
+      joins(:task_labels).merge(TaskLabel.where(label_id: label_ids))
+    end
   end
 end

@@ -14,4 +14,6 @@
 #  index_task_labels_on_task_id   (task_id)
 #
 class TaskLabel < ApplicationRecord
+  belongs_to :task
+  belongs_to :label
 end

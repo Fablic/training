@@ -5,11 +5,12 @@ class UsersController < AdminsController
   # GET /users or /users.json
   def index
     @users = User.all.page(search_params[:page])
-   
   end
 
   # GET /users/1 or /users/1.json
-  def show; end
+  def show
+    @user_tasks = @user.tasks.preload(:task_labels, :labels)
+  end
 
   # GET /users/new
   def new
