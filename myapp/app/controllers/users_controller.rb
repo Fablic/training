@@ -24,7 +24,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.save
         format.html do
-          redirect_to user_url(@user), flash: { success: I18n.t('messages.create', model_name: I18n.t('activerecord.models.user')) }
+          redirect_to user_url(@user), flash: { success: I18n.t('messages.create', model_name: @user.model_name.human) }
         end
         format.json { render :show, status: :created, location: @user }
       else
