@@ -39,7 +39,8 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.update(user_params)
         format.html do
-          redirect_to user_url(@user), flash: { success: I18n.t('messages.update', model_name: I18n.t('activerecord.models.user')) }
+          redirect_to user_url(@user),
+                      flash: { success: I18n.t('messages.update', model_name: I18n.t('activerecord.models.user')) }
         end
         format.json { render :show, status: :ok, location: @user }
       else
@@ -55,7 +56,8 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       format.html do
-        redirect_to users_url, flash: { success: I18n.t('messages.delete', model_name: I18n.t('activerecord.models.user')) }
+        redirect_to users_url,
+                    flash: { success: I18n.t('messages.delete', model_name: I18n.t('activerecord.models.user')) }
       end
       format.json { head :no_content }
     end

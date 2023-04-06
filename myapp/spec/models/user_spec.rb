@@ -23,10 +23,9 @@ RSpec.describe User, type: :model do
   end
 
   describe 'validation' do
-
     context 'email' do
       let(:user) { FactoryBot.build(:user) }
-  
+
       it { is_expected.to validate_presence_of(:email) }
 
       it 'with valid parameters' do
@@ -54,7 +53,6 @@ RSpec.describe User, type: :model do
         it { is_expected.to validate_length_of(:password).is_at_least(8) }
         it { is_expected.not_to validate_length_of(:password).is_at_least(7) }
       end
-
     end
   end
 end
