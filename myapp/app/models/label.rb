@@ -14,4 +14,5 @@
 #
 class Label < ApplicationRecord
   acts_as_paranoid
+  validates :name, presence: true, length: { maximum: 30 }
 end

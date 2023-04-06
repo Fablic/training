@@ -1,0 +1,25 @@
+ja:
+  labels:
+
+    index:
+      title: 'ラベル一覧'
+      add_label: '+ラベル追加'
+
+    new:
+      title: '新規作成'
+
+    show:
+
+    edit:
+      title: '%{label_name}を編集'
+
+    common:
+      to_index: 'ラベル一覧に戻る'
+      to_show: 'ラベル詳細'
+      to_edit: 'このラベルを編集'
+      to_delete: 'このラベルを削除'
+
+    form:
+      search_form:
+        placeholder: 'キーワード検索'
+        include_blank: 'すべてを選択'

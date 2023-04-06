@@ -1,0 +1,11 @@
+<%= render 'header' %>
+<div class="container-sm rounded-2" style="padding:10px;">
+  <h1><%= I18n.t('labels.edit.title', label_name: @label.name) =%></h1>
+  <hr>
+</div>
+
+<%= render "form", label: @label %>
+
+<br>
+
+<%= render 'footer', label: @label %>

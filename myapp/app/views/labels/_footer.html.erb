@@ -1,0 +1,12 @@
+<div id="footer">
+  <div class="container-sm rounded-2 text-center" style="padding:10px;">
+    <div>
+      <%= link_to I18n.t('labels.common.to_edit'), edit_label_path(@label) %> |
+      <%= link_to I18n.t('labels.common.to_index'), labels_path %>
+    </div>
+    <br>
+    <div>
+      <%= button_to I18n.t('labels.common.to_delete'), @label, method: :delete,  class: "btn btn-sm btn-danger" %>
+    </div>
+  </div>
+</div>
