@@ -1,0 +1,30 @@
+ja:
+  tasks:
+
+    index:
+      title: 'タスク一覧'
+      add_task: '+タスク追加'
+
+    new:
+      title: '新規作成'
+
+    show:
+
+    edit:
+      title: '%{task_name}を編集'
+
+    common:
+      to_index: 'タスク一覧に戻る'
+      to_show: 'タスク詳細'
+      to_edit: 'このタスクを編集'
+      to_delete: 'このタスクを削除'
+
+    form:
+      search_form:
+        placeholder: 'キーワード検索'
+        include_blank: 'すべてを選択'
+        sort:
+          - ['作成日時昇順', 'created_at_asc']
+          - ['作成日時降順', 'created_at_desc']
+          - ['期限日昇順', 'expires_at_asc']
+          - ['期限日降順', 'expires_at_desc']
