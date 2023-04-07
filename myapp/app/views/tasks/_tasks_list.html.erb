@@ -6,6 +6,7 @@
       <th><%= I18n.t('activerecord.attributes.task.priority') %></th>
       <th><%= I18n.t('activerecord.attributes.task.status') %></th>
       <th><%= I18n.t('activerecord.attributes.task.expires_at') %></th>
+      <th><%= I18n.t('activerecord.attributes.label.name') %></th>
       <th><%= I18n.t('activerecord.attributes.user.name') %></th>
     </tr>
     
@@ -25,6 +26,11 @@
         </td>
         <td>
           <%= task.expires_at ? task.expires_at.strftime("%Y/%m/%d") : '' %>
+        </td>
+        <td>
+          <% task.labels.sort.each do |label| %>
+            <span><%= link_to label.name, label_path(label), class: 'btn btn-dark' %></span>
+          <% end %>
         </td>
         <td>
           <%= task.user&.name %>
