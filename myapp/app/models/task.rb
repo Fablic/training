@@ -66,7 +66,7 @@ class Task < ApplicationRecord
       where('CONCAT(title, description) LIKE ?', "%#{Task.sanitize_sql_like(keyword)}%")
     end
 
-    def joined_search_by_label_ids(label_ids)
+    def search_join_with_label_ids(label_ids)
       joins(:task_labels).merge(TaskLabel.where(label_id: label_ids))
     end
   end
