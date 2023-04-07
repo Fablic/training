@@ -14,7 +14,7 @@
     <%= form.hidden_field :task_id, value: task_id %>
 
     <div class="row mb-3" style="padding:10px;">
-      <%= form.label :label, 'ラベルを付与する', class: "col-sm-2 col-form-label" %>
+      <%= form.label :label, I18n.t('task_labels.form.select_labels'), class: "col-sm-2 col-form-label" %>
       <div class="col-sm-10">
         <%= form.collection_check_boxes(:label_ids, labels, :id, :name, { checked: attached_label_ids }) do |box| %>
           <%= box.label do %>
@@ -26,9 +26,7 @@
     </div>
 
     <div style="padding:10px;">
-      <%= form.submit class: "btn btn-primary" %>
+      <%= form.submit 'submit', class: "btn btn-primary" %>
     </div>
   <% end %>
 </div>
-
-<%= link_to I18n.t('transition_destination.show'), task_path(task_id), { class: "btn btn-primary mx-1" } %>

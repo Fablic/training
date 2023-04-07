@@ -3,6 +3,7 @@ class TaskLabelsController < ApplicationController
     @labels = Label.all
     @task_label = TaskLabel.new
     @task_id = task_label_params[:task_id]
+    @task_title = Task.find(@task_id)[:title]
     @attached_label_ids = set_task.labels.map(&:id)
   end
 

@@ -1,4 +1,8 @@
-<h1 class="display-1">タスクとラベルの紐付けを行う</h1>
+<%= render 'header' %>
+<div class="container-sm rounded-2" style="padding:10px;">
+  <h1><%= I18n.t('task_labels.new.title', task_title: @task_title) =%></h1>
+  <hr>
+</div>
 
 <%=
   render "form",
@@ -7,3 +11,9 @@
   task_id: @task_id,
   attached_label_ids: @attached_label_ids
 %>
+
+<div id="footer">
+  <div class="container-sm rounded-2 text-center" style="padding:10px;">
+    <%= link_to I18n.t('tasks.common.to_show'), task_path(@task_id) %>
+  </div>
+</div>

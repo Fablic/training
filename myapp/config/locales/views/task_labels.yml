@@ -1,0 +1,6 @@
+ja:
+  task_labels:
+    new:
+      title: '%{task_title}のラベルを編集'
+    form:
+      select_labels: ラベルを選択する
