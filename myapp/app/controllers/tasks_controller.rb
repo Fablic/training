@@ -9,7 +9,7 @@ class TasksController < ApplicationController
     @tasks = @tasks.search_by_keyword(search_params[:keyword]) if search_params[:keyword].present?
     @tasks = @tasks.page(search_params[:page])
     if search_params[:label_ids].present? && search_params[:label_ids] != ['']
-      @tasks = @tasks.joined_search_by_label_ids(search_params[:label_ids]).distinct
+      @tasks = @tasks.search_join_with_label_ids(search_params[:label_ids]).distinct
     end
   end
 
