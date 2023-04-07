@@ -1,14 +1,20 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container">
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav ml-md-auto align-items-center list-group-horizontal">
+      <ul class="navbar-nav ml-md-auto align-items-center list-group-horizontal">
+        <li class="mx-2">
+          <%= link_to I18n.t('users.index.add_user'), new_user_path, method: :get, class: "link-primary text-decoration-none"%>
+        </li>
         <li class="mx-2">
           <%= link_to I18n.t('users.index.title'), users_path, method: :get, class: "link-light text-decoration-none" %>
         </li>
         <li class="mx-2">
-          <%= link_to I18n.t('users.index.add_user'), new_user_path, method: :get, class: "link-primary text-decoration-none"%>
-          </li>
-    </ul>
+          <%= link_to I18n.t('tasks.index.title'), tasks_path, method: :get, class: "link-light text-decoration-none" %>
+        </li>
+        <li class="mx-2">
+          <%= link_to I18n.t('labels.index.title'), labels_path, method: :get, class: "link-light text-decoration-none" %>
+        </li>
+      </ul>
       <ul class="navbar-nav ms-auto align-items-center">
         <li class="mx-2 link-light text-decoration-none">
           <%= I18n.t('sessions.login_message', user_name: current_user.name) %>
