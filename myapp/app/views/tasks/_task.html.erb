@@ -20,5 +20,13 @@
       <td><%= I18n.t('activerecord.attributes.task.description') %>: <td>
       <td><%= task.description %></td>
     </tr>
+    <tr>
+      <td><%= I18n.t('activerecord.attributes.label.name') %>: <td>
+      <td>
+      <% task.labels.sort.each do |label| %>
+        <span><%= link_to label.name, label_path(label), class: 'btn btn-dark' %></span>
+      <% end %>
+    </td>
+    </tr>
   </table>
 </div>
