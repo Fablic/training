@@ -32,13 +32,12 @@ end
         )
 end
 
-l = (1..30).to_a
-
 30.times do |n|
+  l = (1..30).to_a.shuffle
   5.times do |m|
     TaskLabel.create!(
-          task_id: n,
-          label_id: l.sample 
+          task_id: n+1,
+          label_id: l.pop
           )
   end
 end
