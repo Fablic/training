@@ -22,7 +22,11 @@ ja:
 
     form:
       search_form:
-        placeholder: 'キーワード検索'
+        sort_function: '並べ替え'
+        search_by_status: 'ステータス検索' 
+        search_by_keyword: 'キーワード検索'
+        search_by_labels: 'ラベル検索'
+        placeholder: '入力する'
         include_blank: 'すべてを選択'
         sort:
           - ['作成日時昇順', 'created_at_asc']
