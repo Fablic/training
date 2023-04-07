@@ -18,6 +18,7 @@ ja:
       to_show: 'タスク詳細'
       to_edit: 'このタスクを編集'
       to_delete: 'このタスクを削除'
+      to_edit_label: 'このタスクのラベルを編集'
 
     form:
       search_form:

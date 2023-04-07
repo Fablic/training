@@ -11,6 +11,7 @@ class TasksController < ApplicationController
     if search_params[:label_ids].present? && search_params[:label_ids] != ['']
       @tasks = @tasks.search_join_with_label_ids(search_params[:label_ids]).distinct
     end
+    @labels = Label.all
   end
 
   # GET /tasks/1 or /tasks/1.json
