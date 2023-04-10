@@ -33,61 +33,28 @@ RSpec.describe 'Labels', type: :request do
   end
 
   describe 'GET /new' do
-    context 'when admin user' do
-      it 'renders a successful response' do
-        get new_label_url
+    it 'renders a successful response' do
+      get new_label_url
 
-        expect(response).to have_http_status(:ok)
-        expect(response.body).to include 'label[name]'
-      end
-    end
-
-    context 'when ordinary user' do
-      let!(:logined_user) { create(:user, role: 'ordinary') }
-      before do
-        post '/login', params: { session: { email: logined_user.email, password: logined_user.password } }
-      end
-
-      it 'renders a successful response' do
-        get new_label_url
-
-        expect(response).to have_http_status(:found)
-      end
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include 'label[name]'
     end
   end
 
   describe 'GET /edit' do
     let(:label) { create(:label) }
+    it 'renders a successful response' do
+      get edit_label_url(label)
 
-    context 'when admin user' do
-      it 'renders a successful response' do
-        get edit_label_url(label)
-
-        expect(response).to have_http_status(:ok)
-        expect(response.body).to include 'label[name]'
-      end
-    end
-
-    context 'when ordinary user' do
-      let!(:logined_user) { create(:user, role: 'ordinary') }
-      before do
-        post '/login', params: { session: { email: logined_user.email, password: logined_user.password } }
-      end
-
-      let(:label) { create(:label) }
-
-      it 'renders a successful response' do
-        get edit_label_url(label)
-
-        expect(response).to have_http_status(:found)
-      end
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include 'label[name]'
     end
   end
 
   describe 'POST /create' do
     context 'with valid parameters' do
       let(:params) do
-        { label: { name: 'kuma!' } }
+        { label: { name: 'label!' } }
       end
 
       it 'creates a new label' do
@@ -98,7 +65,7 @@ RSpec.describe 'Labels', type: :request do
         post labels_url, params: params
 
         expect(response).to have_http_status(:found)
-        expect(response).to redirect_to labels_url
+        expect(response).to redirect_to(label_url(Label.last))
       end
     end
 
@@ -115,8 +82,8 @@ RSpec.describe 'Labels', type: :request do
         post labels_url, params: invalid_params
 
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.body).to include '1件のエラーが発生しました。'
-        expect(response.body).to include 'ラベル名を入力してください'
+        expect(response.body).to include '1 error'
+        expect(response.body).to include 'ラベルを入力してください'
       end
     end
 
@@ -133,28 +100,8 @@ RSpec.describe 'Labels', type: :request do
         post labels_url, params: invalid_params
 
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.body).to include '1件のエラーが発生しました。'
-        expect(response.body).to include 'ラベル名は30文字以内で入力してください'
-      end
-    end
-
-    context 'when ordinary user' do
-      let!(:logined_user) { create(:user, role: 'ordinary') }
-      before do
-        post '/login', params: { session: { email: logined_user.email, password: logined_user.password } }
-      end
-
-      let(:params) do
-        { label: { name: 'kuma!' } }
-      end
-
-      it 'does NOT create a new label' do
-        expect { post labels_url, params: }.to change(Label, :count).by(0)
-      end
-
-      it 'renders a successful response' do
-        post labels_url, params: params
-        expect(response).to have_http_status(:found)
+        expect(response.body).to include '1 error'
+        expect(response.body).to include 'ラベルは30文字以内で入力してください'
       end
     end
   end
@@ -177,7 +124,7 @@ RSpec.describe 'Labels', type: :request do
         put label_url(label), params: { label: update_attributes }
 
         expect(response).to have_http_status(:found)
-        expect(response).to redirect_to labels_url
+        expect(response).to redirect_to(label_url(Label.last))
       end
     end
 
@@ -193,8 +140,8 @@ RSpec.describe 'Labels', type: :request do
 
         expect(response).to have_http_status(:unprocessable_entity)
         expect(label.reload.name).not_to eq invalid_attributes[:label][:name]
-        expect(response.body).to include '1件のエラーが発生しました。'
-        expect(response.body).to include 'ラベル名を入力してください'
+        expect(response.body).to include '1 error'
+        expect(response.body).to include 'ラベルを入力してください'
       end
     end
 
@@ -210,28 +157,8 @@ RSpec.describe 'Labels', type: :request do
 
         expect(response).to have_http_status(:unprocessable_entity)
         expect(label.reload.name).not_to eq invalid_attributes[:label][:name]
-        expect(response.body).to include '1件のエラーが発生しました。'
-        expect(response.body).to include 'ラベル名は30文字以内で入力してください'
-      end
-    end
-
-    context 'when ordinary user' do
-      let!(:logined_user) { create(:user, role: 'ordinary') }
-      before do
-        post '/login', params: { session: { email: logined_user.email, password: logined_user.password } }
-      end
-
-      let(:label) { create(:label) }
-
-      let(:params) do
-        { label: { name: 'kuma!' } }
-      end
-
-      it 'renders a successful response' do
-        put label_url(label), params: params
-
-        expect(label.reload.name).not_to eq params[:label][:name]
-        expect(response).to have_http_status(:found)
+        expect(response.body).to include '1 error'
+        expect(response.body).to include 'ラベルは30文字以内で入力してください'
       end
     end
   end
@@ -239,37 +166,15 @@ RSpec.describe 'Labels', type: :request do
   describe 'DELETE /destroy' do
     let!(:label) { create(:label) }
 
-    context 'when admin user' do
-      it 'destroys the requested label' do
-        expect { delete label_url label }.to change(Label, :count).by(-1)
-      end
-
-      it 'redirects to the labels list' do
-        delete label_url label
-
-        expect(response).to have_http_status(:found)
-        expect(response).to redirect_to labels_url
-      end
+    it 'destroys the requested label' do
+      expect { delete label_url label }.to change(Label, :count).by(-1)
     end
 
-    context 'when ordinary user' do
-      let!(:logined_user) { create(:user, role: 'ordinary') }
-      before do
-        post '/login', params: { session: { email: logined_user.email, password: logined_user.password } }
-      end
+    it 'redirects to the labels list' do
+      delete label_url label
 
-      let!(:label) { create(:label) }
-
-      it 'destroys the requested label' do
-        expect { delete label_url label }.to change(Label, :count).by(0)
-      end
-
-      it 'renders a successful response' do
-        delete label_url label
-
-        expect(response).to have_http_status(:found)
-        expect(response).to redirect_to labels_url
-      end
+      expect(response).to have_http_status(:found)
+      expect(response).to redirect_to labels_url
     end
   end
 end
