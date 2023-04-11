@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   class Forbidden < ActionController::ActionControllerError; end
   private
-  
+
   before_action :render_503, if: :maintenance_mode?
   add_flash_types :success, :info, :warning, :danger
   rescue_from Exception, with: :render_500
@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
 
   def render_403(e = nil)
     logger.error "Rendering 403 with excaption: #{e.message}" if e
-    
+
     if request.format.to_sym == :json
       render json: { error: '403 Forbidden' }, status: :not_found
     else

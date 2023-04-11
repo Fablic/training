@@ -8,6 +8,7 @@ namespace :maintenance do
 
   task :finish do
     next unless File.exist?('tmp/maintenance.txt')
+
     File.delete('tmp/maintenance.txt')
     puts 'maintenance finished'
   end

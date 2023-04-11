@@ -25,7 +25,7 @@ RSpec.describe 'Tasks', type: :request do
           user_id: user.id,
           created_at: '2023/01/01 00:00',
           expires_at: '2023/02/02 00:00'
-          )
+        )
       end
       let!(:second_task) do
         create(
@@ -37,7 +37,7 @@ RSpec.describe 'Tasks', type: :request do
           user_id: user.id,
           created_at: '2023/01/02 00:00',
           expires_at: '2023/02/01 00:00'
-          )
+        )
       end
       context 'created_at_asc' do
         let(:params) do
@@ -99,7 +99,7 @@ RSpec.describe 'Tasks', type: :request do
           status: 'waiting',
           user_id: user.id,
           expires_at: '2023/01/03 00:00'
-          )
+        )
       end
       let!(:second_task) do
         create(
@@ -110,7 +110,7 @@ RSpec.describe 'Tasks', type: :request do
           status: 'waiting',
           user_id: user.id,
           expires_at: '2023/01/02 00:00'
-          )
+        )
       end
       let!(:third_task) do
         create(
@@ -121,7 +121,7 @@ RSpec.describe 'Tasks', type: :request do
           status: 'doing',
           user_id: user.id,
           expires_at: '2023/01/01 00:00'
-          )
+        )
       end
       let!(:fourth_task) do
         create(
@@ -132,7 +132,7 @@ RSpec.describe 'Tasks', type: :request do
           status: 'completed',
           user_id: user.id,
           expires_at: '2023/01/04 00:00'
-          )
+        )
       end
       let!(:fifth_task) do
         create(
@@ -143,7 +143,7 @@ RSpec.describe 'Tasks', type: :request do
           status: 'completed',
           user_id: user.id,
           expires_at: '2023/01/05 00:00'
-          )
+        )
       end
       let!(:sixth_task) do
         create(
@@ -154,7 +154,7 @@ RSpec.describe 'Tasks', type: :request do
           status: 'completed',
           user_id: user.id,
           expires_at: '2023/01/06 00:00'
-          )
+        )
       end
 
       context 'status: waiting' do
@@ -233,8 +233,8 @@ RSpec.describe 'Tasks', type: :request do
         end
       end
     end
-    context "When there are over 10 tasks and using pagenation" do
-      let!(:tasks) { Kaminari.paginate_array(create_list(:task, 20, user_id: user.id )).page(page) }
+    context 'When there are over 10 tasks and using pagenation' do
+      let!(:tasks) { Kaminari.paginate_array(create_list(:task, 20, user_id: user.id)).page(page) }
 
       context 'page:1' do
         let(:page) { 1 }
