@@ -9,9 +9,8 @@ class TaskLabelsController < ApplicationController
 
   def attach_labels
     if TaskLabel.transaction { attach_labels_exec }
-      format.html do
-        redirect_to task_url(task_label_params[:task_id]), flash: { success: I18n.t('messages.attach', model_name: @task_label.model_name.human) }
-      end
+      redirect_to task_url(task_label_params[:task_id]),
+      flash: { success: I18n.t('messages.attach', model_name: Label.model_name.human) }
     else
       format.html { render :new, status: :unprocessable_entity }
       format.json { render json: @task_label.errors, status: :unprocessable_entity }
@@ -29,6 +28,6 @@ class TaskLabelsController < ApplicationController
   end
 
   def task_label_params
-    params.permit(:task_id, label_ids: [])
+    params.permit(:task_id, :authenticity_token, :commit, label_ids: [])
   end
 end
