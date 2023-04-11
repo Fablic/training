@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   class Forbidden < ActionController::ActionControllerError; end
   private
   
+  before_action :render_503, if: :maintenance_mode?
   add_flash_types :success, :info, :warning, :danger
   rescue_from Exception, with: :render_500
   rescue_from Forbidden, with: :render_403
@@ -37,7 +38,15 @@ class ApplicationController < ActionController::Base
     if request.format.to_sym == :json
       render json: { error: '500 Internal Server Error' }, status: :internal_server_error
     else
-      render file: 'public/404.html', status: 404, layout: false, content_type: 'text/html'
+      render file: 'public/500.html', status: 500, layout: false, content_type: 'text/html'
+    end
+  end
+
+  def render_503
+    if request.format.to_sym == :json
+      render json: { error: '503 Service Unavailable' }, status: :not_found
+    else
+      render file: 'public/503.html', status: 503, layout: false, content_type: 'text/html'
     end
   end
 
@@ -47,5 +56,9 @@ class ApplicationController < ActionController::Base
 
   def login_required
     redirect_to login_url unless current_user
+  end
+
+  def maintenance_mode?
+    File.exist?('tmp/maintenance.txt')
   end
 end
