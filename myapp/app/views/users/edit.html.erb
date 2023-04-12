@@ -1,10 +1,10 @@
-<h1>Editing user</h1>
+<div class="container-sm rounded-2" style="padding:10px;">
+  <h1><%= I18n.t('users.edit.title', user_name: @user.name) =%></h1>
+  <hr>
+</div>
 
 <%= render "form", user: @user %>
 
 <br>
 
-<div>
-  <%= link_to "Show this user", @user %> |
-  <%= link_to "Back to users", users_path %>
-</div>
+<%= render 'footer', user: @user %>

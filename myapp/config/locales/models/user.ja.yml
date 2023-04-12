@@ -1,9 +1,11 @@
 ja:
   activerecord:
     models:
-      user: ユーザー
+      user: ユーザ
     attributes:
       user:
-        name: ユーザー名
-        password_digest: パスワード
+        id: ユーザID
+        name: ユーザ名
+        password: パスワード
         email: メールアドレス
+        tasks_count: タスク数

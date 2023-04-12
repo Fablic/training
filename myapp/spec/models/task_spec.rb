@@ -214,6 +214,5 @@ RSpec.describe Task, type: :model do
         is_expected.to eq [first_task, second_task, third_task]
       end
     end
-    
   end
 end

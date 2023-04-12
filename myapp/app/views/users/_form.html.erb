@@ -1,7 +1,7 @@
 <%= form_with(model: user) do |form| %>
   <% if user.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+    <div style="color: red" class="container-sm rounded-2">
+      <h2><%= pluralize(user.errors.count, "error") %></h2>
 
       <ul>
         <% user.errors.each do |error| %>
@@ -11,7 +11,23 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.submit %>
+  <div class="container-sm border rounded-2" style="padding:10px;">
+    <%= form_with model: @user do |form| %>
+      <table class="table table-striped table-bordered">
+        <tr>
+          <td><%= I18n.t('activerecord.attributes.user.name') %>:</td>
+          <td><%= form.text_field :name %></td>
+        </tr>
+        <tr>
+          <td><%= I18n.t('activerecord.attributes.user.email') %>:</td>
+          <td><%= form.text_field :email %></td>
+        </tr>
+        <tr>
+          <td><%= I18n.t('activerecord.attributes.user.password') %>:</td> 
+          <td><%= form.password_field :password %></td>
+        </tr>
+      </table>
+      <%= form.submit %>
+    <% end %>
   </div>
 <% end %>

@@ -1,49 +1,7 @@
-<%= render 'common/header' %>
 <p style="color: green"><%= notice %></p>
 <div class="container-sm rounded-2" style="padding:10px;">
   <h1><%= I18n.t('tasks.index.title') %></h1>
   <hr>
 </div>
 
-  <%= render 'search_form', task: @task %>
-
-<div id="tasks" class="container-sm border rounded-2" style="padding:10px;">
-  <table class="table">
-    <tr>
-      <th></th>
-      <th><%= I18n.t('activerecord.attributes.task.title') %></th>
-      <th><%= I18n.t('activerecord.attributes.task.priority') %></th>
-      <th><%= I18n.t('activerecord.attributes.task.status') %></th>
-      <th><%= I18n.t('activerecord.attributes.task.expires_at') %></th>
-      <th><%= I18n.t('activerecord.attributes.user.name') %></th>
-    </tr>
-    
-    <% @tasks.each do |task| %>
-      <tr>
-        <td>
-          <%= link_to "edit", edit_task_path(task), class: "btn btn-secondary" %>
-        </td>
-        <td>
-          <%= link_to task.title, task %>
-        </td>
-        <td>
-          <%= Task.priorities_i18n[task.priority] %>
-        </td>
-        <td>
-          <%= Task.statuses_i18n[task.status] %>
-        </td>
-        <td>
-          <%= task.expires_at ? task.expires_at.strftime("%Y/%m/%d") : '' %>
-        </td>
-        <td>
-          <%= task.user.name %>
-        </td>
-    </tr>
-    <% end %>
-  </table>
-</div>
-<div class="container-sm rounded-2 my-3">
-  <%= paginate @tasks, theme: 'twitter-bootstrap-4' %>
-</div>
-
-
+<%= render 'tasks_list', tasks: @tasks %>
