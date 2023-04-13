@@ -5,7 +5,7 @@ RSpec.describe "Users", type: :request do
   before do
     post '/login', params: { session: { email: logined_user.email, password: logined_user.password } }
   end
-  
+
   describe 'GET /index' do
     let!(:users) { Kaminari.paginate_array([logined_user] + 10.times.map { create(:user) }).page(page) }
 
@@ -136,7 +136,7 @@ RSpec.describe "Users", type: :request do
         {
           name: 'updated!',
           email: 'updated@rakuten.com',
-          password: '12345678',
+          password: '12345678'
         }
       end
 

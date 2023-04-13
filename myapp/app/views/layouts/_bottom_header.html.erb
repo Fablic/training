@@ -1,0 +1,21 @@
+        </li>
+        <li class="mx-2">
+          <%= link_to I18n.t('tasks.index.title'), tasks_path, method: :get, class: "link-light text-decoration-none" %>
+        </li>
+        <% if current_user.role == 'admin' %>
+          <li class="mx-2">
+            <%= link_to I18n.t('users.index.title'), admin_path, method: :get, class: "link-light text-decoration-none" %>
+          </li>
+        <% end %>
+      </ul>
+      <ul class="navbar-nav ms-auto align-items-center">
+        <li class="mx-2 link-light text-decoration-none">
+          <%= I18n.t('sessions.login_message', user_name: current_user.name) %>
+        </li>
+        <li class="mx-2">
+          <%= link_to I18n.t('sessions.logout'), logout_path, method: :delete, class: "link-secondary text-decoration-none" %>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
