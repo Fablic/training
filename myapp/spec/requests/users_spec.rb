@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Users", type: :request do
+RSpec.describe 'Users', type: :request do
   let(:logined_user) { create(:user, id: 1, email: 'testdesu@rakuten.com', role: 'admin' ) }
   before do
     post '/login', params: { session: { email: logined_user.email, password: logined_user.password } }
