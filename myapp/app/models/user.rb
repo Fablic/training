@@ -25,9 +25,9 @@ class User < ApplicationRecord
   validates_length_of :password, minimum: 8
   validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }, uniqueness: true
   validates :name, presence: true, length: { maximum: 255 }
-  
+
   enum :role, {
-    ordinary: 0, 
+    ordinary: 0,
     admin: 1
   }, prefix: true
 

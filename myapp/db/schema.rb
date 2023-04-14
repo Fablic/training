@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_29_020231) do
-  create_table "labels", charset: "utf8mb4", force: :cascade do |t|
-    t.string "name", null: false
-    t.datetime "deleted_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["name"], name: "index_labels_on_name"
+ActiveRecord::Schema[7.0].define(version: 20_230_329_020_231) do
+  create_table 'labels', charset: 'utf8mb4', force: :cascade do |t|
+    t.string 'name', null: false
+    t.datetime 'deleted_at'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['name'], name: 'index_labels_on_name'
   end
 
   create_table 'task_labels', charset: 'utf8mb4', force: :cascade do |t|
@@ -47,15 +47,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_29_020231) do
     t.index ['user_id'], name: 'index_tasks_on_user_id'
   end
 
-  create_table "users", charset: "utf8mb4", force: :cascade do |t|
-    t.string "name", null: false
-    t.string "email", null: false
-    t.string "password_digest", null: false
-    t.integer "role", default: 0, null: false, comment: "{0: \"ordinary\", 1: \"admin\"}"
-    t.datetime "deleted_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["name"], name: "index_users_on_name"
+  create_table 'users', charset: 'utf8mb4', force: :cascade do |t|
+    t.string 'name', null: false
+    t.string 'email', null: false
+    t.string 'password_digest', null: false
+    t.integer 'role', default: 0, null: false, comment: '{0: "ordinary", 1: "admin"}'
+    t.datetime 'deleted_at'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['email'], name: 'index_users_on_email', unique: true
+    t.index ['name'], name: 'index_users_on_name'
   end
 end
