@@ -31,7 +31,7 @@
 | Column             | Type    | Options     |
 |--------------------|---------|-------------|
 |  title             | string  | null: false |
-|  outline           | string  | null: false |
+|  content           | string  |             |
 |  task_limit        | data    | null: false |
 |  task_status_id    | integer | null: false |
 |  task_priority_id  | integer | null: false |
