@@ -21,6 +21,6 @@ FactoryBot.define do
     sequence(:name) { |i| "name_#{i}" }
     password { '12345678' }
     sequence(:email) { |i| "takasawa#{i}@rakuten.com" }
-    role { %w[ordinary admin].sample }
+    role { 'ordinary' }
   end
 end
