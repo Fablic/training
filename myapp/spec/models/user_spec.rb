@@ -58,12 +58,12 @@ RSpec.describe User, type: :model do
   end
 
   describe 'enums' do
-    it {
+    it 'role' do
       is_expected.to define_enum_for(:role).with_values(
         ordinary: 0, # 一般
         admin: 1    # 管理者
       ).with_prefix
-    }
+    end
   end
 
   describe 'cnt_admin_user_except_current' do
