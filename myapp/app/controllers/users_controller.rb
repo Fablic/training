@@ -86,15 +86,7 @@ class UsersController < AdminsController
 
     admin_user_count = User.cnt_admin_user_except_current(@user.id)
     return if admin_user_count >= 1
-
-    flash[:danger] = if action_name == 'update'
-                       # message =
-                       I18n.t('users.admin.update.last_admin')
-                     elsif action_name == 'destroy'
-                       I18n.t('users.admin.destroy.last_admin')
-                     else
-                       ''
-                     end
+    flash[:danger] = I18n.t("users.admin.#{action_name}.last_admin")
     redirect_to users_path
   end
 end
