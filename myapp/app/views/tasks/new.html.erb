@@ -1,0 +1,21 @@
+<div>
+   <h2>内容を入力</h2>
+   <%= form_with model: @task, local: true do |f| %>
+      <div clas="new-task">
+         <div>
+            タスク名
+         <span>必須</span>
+         </div>
+         <%= f.text_area :title, id:"taks-title", placeholder:"タスク名（必須）" %>
+         <div>
+            詳細
+         </div>
+         <%= f.text_area :title, id:"taks-content", placeholder:"タスク詳細" %>
+      </div>
+
+   <div class="submit-content">
+      <%= f.submit '登録する', class:"btn" %>
+      <%= link_to 'もどる', tasks_path, class:"back-btn" %>
+   </div>
+   <% end %>
+</div>
