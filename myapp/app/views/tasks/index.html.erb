@@ -6,18 +6,35 @@
    </head>
    <body>
       <%= link_to '新規登録', new_task_path %>
-      <table>
-         <tr>
-            <th>id</th>
-            <th>件名</th>
-            <th>内容</th>
-         </tr>
-         <tr>
-            <td>ダミー</td>
-            <td>ダミー</td>
-            <td>ダミー</td>
-         </tr>
-      </table>
+      <% if @task.present? %>
+         <table>
+            <tr>
+               <th>id</th>
+               <th>件名</th>
+               <th>内容</th>
+            </tr>
+            <% @task.each do |t| %>
+               <tr>
+                  <td><%= t.id %></td>
+                  <td><%= t.title %></td>
+                  <td><%= t.content %></td>
+               </tr>
+            <% end %>
+         </table>
+      <% else %>
+         <table>
+            <tr>
+               <th>id</th>
+               <th>件名</th>
+               <th>内容</th>
+            </tr>
+            <tr>
+               <td>ダミー</td>
+               <td>ダミー</td>
+               <td>ダミー</td>
+            </tr>
+         </table>
+      <% end %>
    </body>
 
 </html>
