@@ -21,4 +21,8 @@ ja:
       to_edit: 'このユーザを編集'
       to_delete: 'このユーザを削除'
 
-    form:
+    admin:
+      update:
+        last_admin: このユーザーを一般ユーザーに変更すると管理者権限を持つユーザーがいなくなります
+      destroy:
+        last_admin: このユーザーを削除すると管理者権限を持つユーザーがいなくなります

@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
+  before_action :admin_user_checker
   before_action :set_user, only: %i[show edit update destroy]
+  append_before_action :exist_other_admin_user?, only: %i[update destroy]
 
   # GET /users or /users.json
   def index
@@ -72,10 +74,23 @@ class UsersController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def user_params
-    params.require(:user).permit(:id, :name, :email, :password, :created_at, :updated_at)
+    params.require(:user).permit(:id, :name, :email, :password, :role, :created_at, :updated_at)
   end
 
   def search_params
     params.permit(:page)
+  end
+
+  def exist_other_admin_user?
+    return if @user.role_ordinary?
+    return if params['user'].present? && params['user']['role'] == 'admin'
+
+    admin_user_count = User.cnt_admin_user_except_current(@user.id)
+    return if admin_user_count >= 1
+    redirect_to users_path, flash: { danger: I18n.t("users.admin.#{action_name}.last_admin") }
+  end
+
+  def admin_user_checker
+    raise Forbidden, self if current_user.role_ordinary?
   end
 end

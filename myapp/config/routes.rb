@@ -7,8 +7,5 @@ Rails.application.routes.draw do
   get    '/logout',  to: 'sessions#destroy'
   root   'tasks#index'
 
-  get '/admin' => 'users#index'
-  scope :admin do
-    resources :users
-  end
+  get    '/admin' => 'users#index'
 end

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Users', type: :request do
-  let(:logined_user) { create(:user, id: 1, email: 'testdesu@rakuten.com') }
+  let(:logined_user) { create(:user, id: 1, email: 'testdesu@rakuten.com', role: 'admin') }
   before do
     post '/login', params: { session: { email: logined_user.email, password: logined_user.password } }
   end
@@ -210,22 +210,6 @@ RSpec.describe 'Users', type: :request do
 
       expect(response).to have_http_status(:found)
       expect(response).to redirect_to users_url
-    end
-  end
-
-  describe '#not_found' do
-    it 'returns status 404' do
-      get '/admin/users/test'
-
-      expect(response).to have_http_status :not_found
-      expect(response.body).to include '404'
-    end
-
-    it 'returns status 404' do
-      get '/admin/users/100'
-
-      expect(response).to have_http_status :not_found
-      expect(response.body).to include '404'
     end
   end
 end

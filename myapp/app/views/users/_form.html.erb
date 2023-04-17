@@ -26,6 +26,10 @@
           <td><%= I18n.t('activerecord.attributes.user.password') %>:</td> 
           <td><%= form.password_field :password %></td>
         </tr>
+        <tr>
+          <td><%= I18n.t('activerecord.attributes.user.role') %>:</td> 
+          <td><%= form.select :role, I18n.t('select_form.user.role'), {} %></td>
+        </tr>
       </table>
       <%= form.submit %>
     <% end %>

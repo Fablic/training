@@ -2,13 +2,14 @@
 #
 # Table name: users
 #
-#  id              :bigint           not null, primary key
-#  deleted_at      :datetime
-#  email           :string(255)      not null
-#  name            :string(255)      not null
-#  password_digest :string(255)      not null
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
+#  id                                :bigint           not null, primary key
+#  deleted_at                        :datetime
+#  email                             :string(255)      not null
+#  name                              :string(255)      not null
+#  password_digest                   :string(255)      not null
+#  role({0: "ordinary", 1: "admin"}) :integer          default(0), not null
+#  created_at                        :datetime         not null
+#  updated_at                        :datetime         not null
 #
 # Indexes
 #
@@ -53,6 +54,28 @@ RSpec.describe User, type: :model do
         it { is_expected.to validate_length_of(:password).is_at_least(8) }
         it { is_expected.not_to validate_length_of(:password).is_at_least(7) }
       end
+    end
+  end
+
+  describe 'enums' do
+    it 'role' do
+      is_expected.to define_enum_for(:role).with_values(
+        ordinary: 0, # 一般
+        admin: 1    # 管理者
+      ).with_prefix
+    end
+  end
+
+  describe 'cnt_admin_user_except_current' do
+    let!(:first_user) { create(:user, role: 'admin') }
+    let!(:second_user) { create(:user, role: 'ordinary') }
+    let!(:third_user) { create(:user, role: 'admin') }
+    let!(:forth_user) { create(:user, role: 'admin') }
+
+    subject { User.cnt_admin_user_except_current(first_user.id) }
+
+    it "count admin's record except first user" do
+      is_expected.to eq 2
     end
   end
 end
