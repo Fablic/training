@@ -1,21 +1,7 @@
-<div>
+<div class="text-content">
    <h2>内容を入力</h2>
-   <%= form_with model: @task, local: true do |f| %>
-      <div clas="new-task">
-         <div>
-            タスク名
-         <span>必須</span>
-         </div>
-         <%= f.text_area :title, id:"taks-title" %>
-         <div>
-            詳細
-         </div>
-         <%= f.text_area :content, id:"taks-content" %>
-      </div>
 
-   <div class="submit-content">
-      <%= f.submit '登録する', class:"btn" %>
-      <%= link_to 'もどる', tasks_path, class:"back-btn" %>
+   <div class="main">
+      <%= render partial: 'form' %>
    </div>
-   <% end %>
 </div>

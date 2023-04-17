@@ -18,6 +18,7 @@
                   <td><%= t.id %></td>
                   <td><%= t.title %></td>
                   <td><%= t.content %></td>
+                  <td><%= link_to '編集', edit_task_path(t.id), class:"btn" %></td>
                </tr>
             <% end %>
          </table>
