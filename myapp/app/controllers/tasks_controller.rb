@@ -12,8 +12,10 @@ class TasksController < ApplicationController
       @task = Task.new(task_params)
       if @task.valid?
          @task.save
+         flash[:notice] = "登録に成功しました。"
          redirect_to tasks_path
       else
+         flash[:alret] = "登録に失敗しました。"
          render :new
       end
    end
@@ -23,14 +25,17 @@ class TasksController < ApplicationController
 
    def update
       if @task.update(task_params)
+         flash[:notice] = "更新に成功しました。"
          redirect_to tasks_path
       else
+         flash[:alret] = "更新に失敗しました。"
          render :edit
       end
    end
 
    def destroy
       @task.destroy
+      flash[:notice] = "削除に成功しました。"
       redirect_to tasks_path
    end
 
