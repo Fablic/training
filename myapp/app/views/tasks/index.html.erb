@@ -1,11 +1,7 @@
-<!DOCTYPE html>
-<html>
-   <head>
-      <meta charset="UTF-8">
-      <title>ToDo List</title>
-   </head>
-   <body>
+<div>
+   <div>
       <%= link_to '新規登録', new_task_path %>
+      </div>
       <% if @task.present? %>
          <table>
             <tr>
@@ -15,7 +11,7 @@
             </tr>
             <% @task.each do |t| %>
                <tr>
-                  <td><%= t.id %></td>
+                  <td><%= link_to t.id, task_path(t.id) %></td>
                   <td><%= t.title %></td>
                   <td><%= t.content %></td>
                   <td><%= link_to '編集', edit_task_path(t.id), class:"btn" %></td>
@@ -37,6 +33,4 @@
             </tr>
          </table>
       <% end %>
-   </body>
-
-</html>
+</div>
