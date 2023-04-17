@@ -19,6 +19,7 @@
                   <td><%= t.title %></td>
                   <td><%= t.content %></td>
                   <td><%= link_to '編集', edit_task_path(t.id), class:"btn" %></td>
+                  <td><%= link_to '削除', task_path(t.id), class:"btn", method: :delete %></td>
                </tr>
             <% end %>
          </table>
