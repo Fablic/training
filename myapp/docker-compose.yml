@@ -13,6 +13,8 @@ services:
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
 
   api:
+    tty: true
+    stdin_open: true
     platform: linux/amd64
     build: .
     command: >
