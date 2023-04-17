@@ -30,8 +30,8 @@ class Task < ApplicationRecord
   has_many :labels, through: :task_labels
   enum priority: { high: 0, middle: 1, low: 2 }
   enum status: { waiting: 0, doing: 1, completed: 2 }
-  PRIORITY_LIST = ["middle", "high", "low"]
-  STATUS_LIST = ["waiting", "doing", "completed"]
+  PRIORITY_LIST = %w[middle high low]
+  STATUS_LIST = %w[waiting doing completed]
   SORT_TYPE = {
     created_at_asc: 'created_at ASC',
     created_at_desc: 'created_at DESC',
@@ -56,11 +56,11 @@ class Task < ApplicationRecord
 
     def sort_by_keyword(sort)
       order(SORT_TYPE[sort.to_sym])
-    end 
+    end
 
     def search_by_status(status)
       where(status:)
-    end 
+    end
 
     def search_by_keyword(keyword)
       where('CONCAT(title, description) LIKE ?', "%#{Task.sanitize_sql_like(keyword)}%")

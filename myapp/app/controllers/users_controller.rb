@@ -1,4 +1,5 @@
-class UsersController < AdminsController
+class UsersController < ApplicationController
+  before_action :admin_user_checker
   before_action :set_user, only: %i[show edit update destroy]
   append_before_action :exist_other_admin_user?, only: %i[update destroy]
 
@@ -86,15 +87,10 @@ class UsersController < AdminsController
 
     admin_user_count = User.cnt_admin_user_except_current(@user.id)
     return if admin_user_count >= 1
+    redirect_to users_path, flash: { danger: I18n.t("users.admin.#{action_name}.last_admin") }
+  end
 
-    if action_name == 'update'
-      # message = 
-      flash[:danger] = I18n.t('users.admin.update.last_admin')
-    elsif action_name == 'destroy'
-      flash[:danger] = I18n.t('users.admin.destroy.last_admin')
-    else
-      flash[:danger] = ''
-    end
-    redirect_to users_path
+  def admin_user_checker
+    raise Forbidden, self if current_user.role_ordinary?
   end
 end
