@@ -1,7 +1,7 @@
 class TasksController < ApplicationController
   before_action :set_task, only: %i[edit update destroy show]
   def index
-    @task = Task.all
+    @tasks = Task.all
   end
 
   def new
@@ -11,31 +11,28 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(task_params)
     if @task.valid?
-      @task.save
-      flash[:notice] = '登録に成功しました。'
-      redirect_to tasks_path
+      @task.save!
+      redirect_to tasks_path, flash: { notice: '登録に成功しました。' }
     else
       flash[:alret] = '登録に失敗しました。'
-      render :new
+      render :new, flash: { alret: '登録に失敗しました。' }
     end
   end
 
   def edit; end
 
   def update
-    if @task.update(task_params)
-      flash[:notice] = '更新に成功しました。'
-      redirect_to tasks_path
+    if @task.update!(task_params)
+      redirect_to tasks_path, flash: { notice: '更新に成功しました。' }
     else
-      flash[:alret] = '更新に失敗しました。'
-      render :edit
+      render :edit, flash: { alret: '更新に失敗しました。' }
     end
   end
 
   def destroy
     @task.destroy
-    flash[:notice] = '削除に成功しました。'
-    redirect_to tasks_path
+    redirect_to tasks_path, flash: { notice: '削除に成功しました。' }
+  else
   end
 
   def show; end

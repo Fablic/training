@@ -2,14 +2,14 @@
    <div>
       <%= link_to '新規登録', new_task_path %>
       </div>
-      <% if @task.present? %>
+      <% if @tasks.present? %>
          <table>
             <tr>
                <th>id</th>
                <th>件名</th>
                <th>内容</th>
             </tr>
-            <% @task.each do |t| %>
+            <% @tasks.each do |t| %>
                <tr>
                   <td><%= link_to t.id, task_path(t.id) %></td>
                   <td><%= t.title %></td>
