@@ -18,11 +18,16 @@ ja:
       to_show: 'タスク詳細'
       to_edit: 'このタスクを編集'
       to_delete: 'このタスクを削除'
+      to_edit_label: 'このタスクのラベルを編集'
 
     form:
       search_form:
-        placeholder: 'キーワード検索'
-        include_blank: "すべてを選択"
+        sort_function: '並べ替え'
+        search_by_status: 'ステータス検索' 
+        search_by_keyword: 'キーワード検索'
+        search_by_labels: 'ラベル検索'
+        placeholder: '入力する'
+        include_blank: 'すべてを選択'
         sort:
           - ['作成日時昇順', 'created_at_asc']
           - ['作成日時降順', 'created_at_desc']

@@ -3,11 +3,15 @@ class TasksController < ApplicationController
 
   # GET /tasks or /tasks.json
   def index
-    @tasks = Task.where(user_id: current_user.id).preload(:user)
+    @tasks = Task.where(user_id: current_user.id).preload(:user, :labels)
     @tasks = @tasks.sort_by_keyword(search_params[:sort])
     @tasks = @tasks.search_by_status(search_params[:status]) if search_params[:status].present?
     @tasks = @tasks.search_by_keyword(search_params[:keyword]) if search_params[:keyword].present?
     @tasks = @tasks.page(search_params[:page])
+    if search_params[:label_ids].present? && search_params[:label_ids] != ['']
+      @tasks = @tasks.search_join_with_label_ids(search_params[:label_ids]).distinct
+    end
+    @labels = Label.all
   end
 
   # GET /tasks/1 or /tasks/1.json
@@ -28,8 +32,7 @@ class TasksController < ApplicationController
     respond_to do |format|
       if @task.save
         format.html do
-          redirect_to task_url(@task),
-                      flash: { success: I18n.t('messages.create', model_name: I18n.t('activerecord.models.task')) }
+          redirect_to task_url(@task), flash: { success: I18n.t('messages.create', model_name: @task.model_name.human) }
         end
         format.json { render :show, status: :created, location: @task }
       else
@@ -44,8 +47,7 @@ class TasksController < ApplicationController
     respond_to do |format|
       if @task.update(task_params)
         format.html do
-          redirect_to task_url(@task),
-                      flash: { success: I18n.t('messages.update', model_name: I18n.t('activerecord.models.task')) }
+          redirect_to task_url(@task), flash: { success: I18n.t('messages.update', model_name: @task.model_name.human) }
         end
         format.json { render :show, status: :ok, location: @task }
       else
@@ -61,8 +63,7 @@ class TasksController < ApplicationController
 
     respond_to do |format|
       format.html do
-        redirect_to tasks_url,
-                    flash: { success: I18n.t('messages.delete', model_name: I18n.t('activerecord.models.task')) }
+        redirect_to tasks_url, flash: { success: I18n.t('messages.delete', model_name: @task.model_name.human) }
       end
       format.json { head :no_content }
     end
@@ -83,6 +84,6 @@ class TasksController < ApplicationController
 
   def search_params
     params[:sort] = Task.sort_params_checker(params[:sort])
-    params.permit(:page, :keyword, :status, :sort)
+    params.permit(:page, :keyword, :status, :sort, label_ids: [])
   end
 end

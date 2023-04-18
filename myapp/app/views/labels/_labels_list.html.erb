@@ -1,0 +1,22 @@
+<div id="labels" class="container-sm border rounded-2" style="padding:10px;">
+  <table class="table">
+    <tr>
+      <th></th>
+      <th><%= I18n.t('activerecord.attributes.label.name') %></th>
+    </tr>
+    
+    <% @labels.each do |label| %>
+      <tr>
+        <td>
+          <%= link_to "edit", edit_label_path(label), class: "btn btn-secondary" %>
+        </td>
+        <td>
+          <%= link_to label.name, label %>
+        </td>
+    </tr>
+    <% end %>
+  </table>
+</div>
+<div class="container-sm rounded-2 my-3">
+  <%= paginate @labels, theme: 'twitter-bootstrap-4' %>
+</div>

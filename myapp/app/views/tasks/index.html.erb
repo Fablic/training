@@ -3,5 +3,6 @@
   <h1><%= I18n.t('tasks.index.title') %></h1>
   <hr>
 </div>
+<%= render 'search_form', task: @task, labels: @labels %>
 
 <%= render 'tasks_list', tasks: @tasks %>

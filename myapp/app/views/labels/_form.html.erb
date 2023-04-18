@@ -1,0 +1,25 @@
+<%= form_with(model: label) do |form| %>
+  <% if label.errors.any? %>
+    <div style="color: red" class="container-sm rounded-2">
+      <h2><%= pluralize(label.errors.count, "error") %></h2>
+
+      <ul>
+        <% label.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="container-sm border rounded-2" style="padding:10px;">
+    <%= form_with model: @label do |form| %>
+      <table class="table table-striped table-bordered">
+        <tr>
+          <td><%= I18n.t('activerecord.attributes.label.name') %>:</td>
+          <td><%= form.text_field :name %></td>
+        </tr>
+      </table>
+      <%= form.submit %>
+    <% end %>
+  </div>
+<% end %>

@@ -9,7 +9,9 @@ class UsersController < ApplicationController
   end
 
   # GET /users/1 or /users/1.json
-  def show; end
+  def show
+    @user_tasks = @user.tasks.preload(:task_labels, :labels)
+  end
 
   # GET /users/new
   def new
@@ -41,8 +43,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.update(user_params)
         format.html do
-          redirect_to user_url(@user),
-                      flash: { success: I18n.t('messages.update', model_name: I18n.t('activerecord.models.user')) }
+          redirect_to user_url(@user), flash: { success: I18n.t('messages.update', model_name: @user.model_name.human) }
         end
         format.json { render :show, status: :ok, location: @user }
       else
@@ -58,8 +59,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       format.html do
-        redirect_to users_url,
-                    flash: { success: I18n.t('messages.delete', model_name: I18n.t('activerecord.models.user')) }
+        redirect_to users_url, flash: { success: I18n.t('messages.delete', model_name: @user.model_name.human) }
       end
       format.json { head :no_content }
     end

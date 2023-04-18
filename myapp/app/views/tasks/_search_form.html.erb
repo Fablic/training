@@ -1,22 +1,41 @@
-<div class="container-sm rounded-2" style="padding:10px;">
+<div class="container-sm border rounded-2" style="padding:10px;">
   <%= form_with(url: tasks_path, method: :get, local: true) do |form| %>
-    <div>
-      <%= form.label :keyword, 'キーワード検索', style: "display: block" %>
-      <%= form.text_field :keyword, placeholder: I18n.t('tasks.form.search_form.placeholder'), value: params['keyword'] %>
-    </div>
-    <div>
-      <%= form.label :status, 'ステータスで絞り込む', style: "display: block" %>
-      <%= form.select :status, I18n.t('select_form.task.status'), include_blank: I18n.t('tasks.form.search_form.include_blank'), selected: params['status'] %>
-    <div>
-      <%= form.label :sort, 'ソート', style: "display: block" %>
-      <%= form.select :sort, I18n.t('tasks.form.search_form.sort')  %>
-    </div>
-    <br>
 
-    <div>
+    <div class="row mb-3" style="padding:10px;">
+      <%= form.label :sort,  I18n.t('tasks.form.search_form.sort_function'), class: "col-sm-2 col-form-label" %>
+      <div class="col-sm-10">
+        <%= form.select :sort, I18n.t('tasks.form.search_form.sort'), { selected: params['sort'] }, class: "form-select" %>
+      </div>
+    </div>
+
+    <div class="row mb-3" style="padding:10px;">
+      <%= form.label :status, I18n.t('tasks.form.search_form.search_by_status'), class: "col-sm-2 col-form-label" %>
+      <div class="col-sm-10">
+        <%= form.select :status, I18n.t('select_form.task.status'), { include_blank: I18n.t('tasks.form.search_form.include_blank'), selected: params['status'] }, class: "form-select" %>
+      </div>
+    </div>
+
+    <div class="row mb-3" style="padding:10px;">
+      <%= form.label :keyword, I18n.t('tasks.form.search_form.search_by_keyword'), class: "col-sm-2 col-form-label" %>
+      <div class="col-sm-10">
+        <%= form.text_field :keyword, placeholder: I18n.t('tasks.form.search_form.placeholder'), class: "form-control", value: params['keyword'] %>
+      </div>
+    </div>
+
+    <div class="row mb-3" style="padding:10px;">
+      <%= form.label :label, I18n.t('tasks.form.search_form.search_by_labels'), class: "col-sm-2 col-form-label" %>
+      <div class="col-sm-10">
+        <%= form.collection_check_boxes(:label_ids, labels, :id, :name, { checked: params[:label_ids]}) do |box| %>
+          <%= box.label do %>
+            <%= box.check_box %>
+            <%= box.text %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+
+    <div style="padding:10px;">
       <%= form.submit 'submit', class: "btn btn-primary" %>
     </div>
   <% end %>
-  </div>
 </div>
-

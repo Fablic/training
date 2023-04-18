@@ -13,7 +13,11 @@
 #  index_task_labels_on_label_id  (label_id)
 #  index_task_labels_on_task_id   (task_id)
 #
-class TaskLabel < ApplicationRecord
-  belongs_to :task
-  belongs_to :label
+require 'rails_helper'
+
+RSpec.describe TaskLabel, type: :model do
+  describe 'associations' do
+    it { is_expected.to belong_to(:task) }
+    it { is_expected.to belong_to(:label) }
+  end
 end
