@@ -1,19 +1,10 @@
-<div>
-   <%= form_with model: @task, local: true do |f| %>
-      <div clas='new-task'>
-         <div>
-            <%= f.label 'タスク名(必須)', style: 'display: block' %>
-            <%= f.text_area :title %>
-         </div>
-         <div>
-            <%= f.label '詳細', style: 'display: block' %>
-            <%= f.text_area :content %>
-         </div>
-      </div>
-
-      <div class='submit-content'>
-         <%= f.submit '登録する' %>
-         <%= link_to 'もどる', tasks_path %>
-      </div>
-   <% end %>
+< clas='task-form'>
+  <div>
+    <%= f.label 'タスク名(必須)', style: 'display: block' %>
+    <%= f.text_area :title %>
+  </div>
+  <div>
+    <%= f.label '詳細', style: 'display: block' %>
+    <%= f.text_area :content %>
+  </div>
 </div>

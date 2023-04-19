@@ -1,40 +1,23 @@
 <div>
-   <div>
-      <%= link_to '新規登録', new_task_path %>
-      </div>
-      <% if @tasks.present? %>
-         <table>
-            <tr>
-               <th>id</th>
-               <th>件名</th>
-               <th>内容</th>
-               <th>その他</th>
-            </tr>
-            <% @tasks.each do |t| %>
-               <tr>
-                  <td><%= t.id %></td>
-                  <td><%= t.title %></td>
-                  <td><%= t.content %></td>
-                  <td>
-                     <%= link_to '詳細', task_path(t.id) %>
-                     <%= link_to '編集', edit_task_path(t.id) %>
-                     <%= link_to '削除', task_path(t.id), method: :delete %>
-                  </td>
-               </tr>
-            <% end %>
-         </table>
-      <% else %>
-         <table>
-            <tr>
-               <th>id</th>
-               <th>件名</th>
-               <th>内容</th>
-            </tr>
-            <tr>
-               <td>ダミー</td>
-               <td>ダミー</td>
-               <td>ダミー</td>
-            </tr>
-         </table>
+  <%= link_to '新規登録', new_task_path %>
+    <table>
+      <tr>
+        <th>id</th>
+        <th>件名</th>
+        <th>内容</th>
+        <th>その他</th>
+      </tr>
+      <% @tasks.each do |t| %>
+          <tr>
+          <td><%= t.id %></td>
+          <td><%= t.title %></td>
+          <td><%= t.content %></td>
+          <td>
+            <%= link_to '詳細', task_path(t.id) %>
+            <%= link_to '編集', edit_task_path(t.id) %>
+            <%= link_to '削除', task_path(t.id), method: :delete %>
+          </td>
+        </tr>
       <% end %>
+    </table>
 </div>
