@@ -1,0 +1,20 @@
+<div>
+   <%= form_with model: @task, url: task_path, local: true do |f| %>
+      <div clas="edit-task">
+         <div>
+            タスク名
+         <span class="indspensable">必須</span>
+         </div>
+         <%= f.text_area :title, id:"title" %>
+            <div>
+               詳細
+            </div>
+            <%= f.text_area :content, id:"content" %>
+         </div>
+
+      <div class="submit-content">
+         <%= f.submit '更新', class:"btn" %>
+         <%= link_to 'もどる', tasks_path, class:"back-btn" %>
+      </div>
+   <% end %>
+</div>
