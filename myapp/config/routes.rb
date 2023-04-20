@@ -15,7 +15,4 @@ Rails.application.routes.draw do
   root   'tasks#index'
 
   get    '/admin' => 'users#index'
-  scope :admin do
-    resources :users
-  end
 end

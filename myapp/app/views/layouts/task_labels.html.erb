@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TaskLabels</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body>
+    <%= render 'shared/flash_message' %>
+    <%= render 'layouts/top_header' %>
+    <%= link_to I18n.t("tasks.index.add_task"), new_task_path, method: :get, class: "link-primary text-decoration-none"%>
+    <%= render 'layouts/bottom_header' %>
+    <%= yield %>
+  </body>
+</html>
