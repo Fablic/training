@@ -32,9 +32,8 @@ class TasksController < ApplicationController
   end
 
   def destroy
-    if @task.destroy
-      redirect_to tasks_path, notice: 'タスクの削除に成功しました。'
-    end
+    @task.destroy
+    redirect_to tasks_path, notice: 'タスクの削除に成功しました。'
   end
 
   def show; end
