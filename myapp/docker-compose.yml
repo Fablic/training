@@ -43,9 +43,11 @@ services:
 
   chrome:
     platform: linux/amd64
-    image: selenium/standalone-chrome:latest
+    image: seleniarm/standalone-chromium
     ports:
       - 4444:4444
+    environment:
+      TZ: Asia/Toky
 
 volumes:
   db-data:
