@@ -1,14 +1,14 @@
 <div class='text-content'>
   <h2>内容を更新する</h2>
 
-	<div class='main'>
-		<%= form_with model: @task, url: task_path, local: true do |f| %>
-			<%= render partial: 'form' %>
+  <div class='main'>
+    <%= form_with model: @task, url: task_path, local: true do |f| %>
+      <%= render partial: 'form' %>
 
-			<div class="submit-content">
-				<%= f.submit '更新' %>
-				<%= link_to 'もどる', tasks_path %>
+      <div class="submit-content">
+        <%= f.submit '更新' %>
+        <%= link_to 'もどる', tasks_path %>
       </div>
-		<% end %>
-	</div>
+    <% end %>
+  </div>
 </div>
