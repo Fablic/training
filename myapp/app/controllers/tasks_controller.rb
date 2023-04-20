@@ -1,5 +1,7 @@
 class TasksController < ApplicationController
   before_action :set_task, only: %i[edit update destroy show]
+  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
+
   def index
     @tasks = Task.all
   end
@@ -11,9 +13,9 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(task_params)
     if @task.save
-      redirect_to tasks_path, notice: 'タスク登録に成功しました。'
+      redirect_to tasks_path, notice: 'タスクの登録に成功しました。'
     else
-      flash.now[:alert] = 'タスクの保存に失敗しました。'
+      flash.now[:alert] = 'タスクの登録に失敗しました。'
       render :new
     end
   end
@@ -22,16 +24,16 @@ class TasksController < ApplicationController
 
   def update
     if @task.update(task_params)
-      redirect_to tasks_path, flash: { notice: '更新に成功しました。' }
+      redirect_to tasks_path, notice: 'タスクの更新に成功しました。'
     else
-      flash.now[:alert] = '更新を保存できませんでした。'
+      flash.now[:alert] = 'タスクの更新に失敗しました。'
       render :edit
     end
   end
 
   def destroy
     @task.destroy
-    redirect_to tasks_path, notice: '削除に成功しました。'
+    redirect_to tasks_path, notice: 'タスクの削除に成功しました。'
   end
 
   def show; end
@@ -40,6 +42,10 @@ class TasksController < ApplicationController
 
   def set_task
     @task = Task.find(params[:id])
+  end
+
+  def record_not_found
+    redirect_to root_path, alert: '該当するタスクがありませんでした。'
   end
 
   def task_params

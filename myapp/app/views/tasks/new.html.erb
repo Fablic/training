@@ -2,12 +2,6 @@
   <h2>内容を入力</h2>
 
   <div class='main'>
-    <%= form_with model: @task, local: true do |f| %>
-      <%= render partial: 'form' %>
-        <div class='submit-content'>
-          <%= f.submit '登録する' %>
-          <%= link_to 'もどる', tasks_path %>
-        </div>
-    <% end %>
+    <%= render partial: 'form' %>
   </div>
 </div>
