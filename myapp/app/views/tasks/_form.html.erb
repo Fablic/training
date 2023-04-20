@@ -1,0 +1,17 @@
+<div class='task-form'>
+  <%= form_with model: @task, local: true do |form| %>
+    <div>
+      <%= form.label 'タスク名(必須)', style: 'display: block' %>
+      <%= form.text_field :title %>
+    </div>
+    <div>
+      <%= form.label '詳細', style: 'display: block' %>
+      <%= form.text_area :content %>
+    </div>
+
+    <div class="submit-content">
+      <%= form.submit '登録' %>
+      <%= link_to 'もどる', tasks_path %>
+    </div>
+  <% end %>
+</div>
