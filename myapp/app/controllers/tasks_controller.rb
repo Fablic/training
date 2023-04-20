@@ -23,7 +23,7 @@ class TasksController < ApplicationController
 
   def update
     if @task.update(task_params)
-      redirect_to tasks_path, flash: { notice: 'タスクの更新に成功しました。' }
+      redirect_to tasks_path, notice: 'タスクの更新に成功しました。'
     else
       flash.now[:alert] = 'タスクの更新に失敗しました。'
       render :edit
@@ -31,8 +31,12 @@ class TasksController < ApplicationController
   end
 
   def destroy
-    @task.destroy
-    redirect_to tasks_path, notice: 'タスクの削除に成功しました。'
+    if @task.destroy
+      redirect_to tasks_path, notice: 'タスクの削除に成功しました。'
+    else
+      flash.now[:alert] = 'タスクの削除に失敗しました。'
+      render :index
+    end
   end
 
   def show; end
