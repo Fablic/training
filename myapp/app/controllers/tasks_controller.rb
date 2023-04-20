@@ -1,5 +1,6 @@
 class TasksController < ApplicationController
   before_action :set_task, only: %i[edit update destroy show]
+  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
   def index
     @tasks = Task.all
@@ -33,9 +34,6 @@ class TasksController < ApplicationController
   def destroy
     if @task.destroy
       redirect_to tasks_path, notice: 'タスクの削除に成功しました。'
-    else
-      flash.now[:alert] = 'タスクの削除に失敗しました。'
-      render :index
     end
   end
 
@@ -45,6 +43,10 @@ class TasksController < ApplicationController
 
   def set_task
     @task = Task.find(params[:id])
+  end
+
+  def record_not_found
+    redirect_to root_path, alert: '該当するタスクがありませんでした。'
   end
 
   def task_params
