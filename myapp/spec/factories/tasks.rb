@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :task do
-    title {'rspecタスク'}
-    content {'rspec詳細'}
+    title { 'sample-title' }
+    content { 'sample-content' }
   end
 end
