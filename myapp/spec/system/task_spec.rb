@@ -48,7 +48,7 @@ RSpec.describe Task, type: :system do
         expect(page).to have_link 'もどる'
       end
 
-      it '詳細タスクがない場合、該当するタスクがないと表示に失敗' do
+      it '詳細タスクがない場合、該当するタスクがないと表示' do
         task.destroy
 
         visit task_path(task.id)
@@ -134,7 +134,7 @@ RSpec.describe Task, type: :system do
         expect(page).to have_link 'もどる'
       end
 
-      it '編集タスクがない場合、該当するタスクがないと表示に失敗' do
+      it '編集タスクがない場合、該当するタスクがないと表示' do
         task.destroy
 
         visit edit_task_path(task.id)
@@ -184,7 +184,7 @@ RSpec.describe Task, type: :system do
         expect(page).to have_content 'タスクの更新に失敗しました。'
       end
 
-      it '更新タスクがない場合、該当するタスクがないと表示に失敗' do
+      it '更新タスクがない場合、該当するタスクがないと表示' do
         visit edit_task_path(task.id)
 
         fill_in 'task[title]', with: 'update_test'
@@ -212,7 +212,7 @@ RSpec.describe Task, type: :system do
       expect(page).not_to have_content task.title
     end
 
-    it '削除タスクがない場合、該当するタスクがないと表示に失敗' do
+    it '削除タスクがない場合、該当するタスクがないと表示' do
       visit root_path
 
       task.destroy
