@@ -3,22 +3,13 @@ require 'rails_helper'
 RSpec.describe Task, type: :system do
   let(:task) { create(:task) }
 
-  describe 'ページ遷移確認' do
-    context 'タスクの詳細ページへのアクセス' do
-      it 'タスクの詳細ページへアクセスされる' do
-        visit root_path
-        visit task_path(task.id)
-        expect(page).to have_content task.title
-        expect(page).to have_content task.content
-        expect(page).to have_link 'もどる'
-        expect(current_path).to eq task_path(task.id)
-      end
-    end
-
-    context 'タスクの一覧ページへアクセス' do
-      it 'タスクの一覧ページへアクセスされる' do
+  describe 'タスク表示' do
+    context '一覧' do
+      it 'DBに保存されたデータがあれば一覧表示' do
         task_list = create_list(:task, 3)
         visit root_path
+
+        expect(current_path).to eq root_path
         expect(page).to have_content task_list[0].id
         expect(page).to have_content task_list[0].title
         expect(page).to have_content task_list[0].content
@@ -31,161 +22,204 @@ RSpec.describe Task, type: :system do
         expect(page).to have_link '詳細'
         expect(page).to have_link '編集'
         expect(page).to have_link '削除'
+      end
+
+      it 'DBに保存されたデータがなければ、新規登録ボタンのみ表示' do
+        visit root_path
+
         expect(current_path).to eq root_path
+        expect(page).to have_no_content task.id
+        expect(page).to have_no_content task.title
+        expect(page).to have_no_content task.content
+        expect(page).to have_no_link '詳細'
+        expect(page).to have_no_link '編集'
+        expect(page).to have_no_link '削除'
+        expect(page).to have_link '新規登録'
       end
     end
 
-    context 'タスクの新規登録ページへのアクセス' do
-      it 'タスクの新規登録ボタンを押すと新規登録ページにアクセスされる' do
-        visit tasks_path
-        click_on '新規登録'
-        expect(current_path).to eq new_task_path
+    context '詳細' do
+      it '詳細タスクがある場合、詳細ページの表示に成功' do
+        visit task_path(task.id)
+
+        expect(current_path).to eq task_path(task.id)
+        expect(page).to have_content task.title
+        expect(page).to have_content task.content
+        expect(page).to have_link 'もどる'
+      end
+
+      it '詳細タスクがない場合、該当するタスクがないと表示' do
+        task.destroy
+
+        visit task_path(task.id)
+
+        expect(current_path).to eq root_path
+        expect(page).to have_content '該当するタスクがありませんでした。'
       end
     end
   end
 
-  describe 'タスクの新規登録' do
-    context '入力内容が正常' do
-      it 'タスクの新規登録に成功する' do
-        visit root_path
-        click_on '新規登録'
-        fill_in 'task[title]', with: 'test'
+  describe 'タスク登録' do
+    it '新規登録ページ表示' do
+      visit root_path
+
+      expect(page).to have_link '新規登録'
+
+      click_on '新規登録'
+
+      expect(current_path).to eq new_task_path
+      expect(page).to have_field 'task[title]'
+      expect(page).to have_field 'task[content]'
+      expect(page).to have_button '登録'
+      expect(page).to have_link 'もどる'
+    end
+
+    context '登録成功' do
+      it '全て入力した場合、タスクの登録に成功' do
+        visit new_task_path
+
+        fill_in 'task[title]', with: 'test_title'
         fill_in 'task[content]', with: 'test_content'
         click_button '登録'
-        expect(page).to have_content 'test'
+
+        expect(current_path).to eq tasks_path
+        expect(page).to have_content 'test_title'
         expect(page).to have_content 'test_content'
         expect(page).to have_content 'タスクの登録に成功しました。'
-        expect(current_path).to eq tasks_path
       end
 
-      it 'タスクの新規登録は詳細の入力無しでも成功する' do
-        visit root_path
-        click_on '新規登録'
-        fill_in 'task[title]', with: 'test'
+      it '概要が未入力の場合、タスクの登録に成功' do
+        visit new_task_path
+
+        fill_in 'task[title]', with: 'test_title'
         fill_in 'task[content]', with: ''
         click_button '登録'
-        expect(page).to have_content 'test'
-        expect(page).to have_content ''
-        expect(page).to have_content 'タスクの登録に成功しました。'
+
         expect(current_path).to eq tasks_path
+        expect(page).to have_content 'test_title'
+        expect(page).to have_selector('td', text: '')
+        expect(page).to have_content 'タスクの登録に成功しました。'
       end
     end
 
-    context 'タスク名が未入力' do
-      it 'タスクの新規登録に失敗する' do
-        visit root_path
-        click_on '新規登録'
+    context '登録失敗' do
+      it 'タイトル名が未入力の場合、タスクの登録に失敗' do
+        visit new_task_path
+
         fill_in 'task[title]', with: ''
         fill_in 'task[content]', with: 'test_content'
         click_button '登録'
-        expect(page).to have_content 'タスクの登録に失敗しました。'
+
         expect(current_path).to eq tasks_path
+        expect(page).to have_content 'タスクの登録に失敗しました。'
       end
     end
   end
 
-  describe 'タスクの編集' do
+  describe 'タスク編集' do
     let!(:task) { create(:task) }
 
-    context '入力内容が正常' do
-      it 'タスクの編集更新に成功する' do
+    context '編集ページの表示' do
+      it '編集タスクがある場合、編集ページの表示に成功' do
         visit root_path
-        click_link '編集'
+
+        expect(page).to have_link '編集'
+
+        click_on '編集'
+
+        expect(current_path).to eq edit_task_path(task.id)
+        expect(page).to have_field 'task[title]'
+        expect(page).to have_field 'task[content]'
+        expect(page).to have_button '登録'
+        expect(page).to have_link 'もどる'
+      end
+
+      it '編集タスクがない場合、該当するタスクがないと表示' do
+        task.destroy
+
+        visit edit_task_path(task.id)
+
+        expect(current_path).to eq root_path
+        expect(page).to have_content '該当するタスクがありませんでした。'
+      end
+    end
+
+    context '編集成功' do
+      it '全て入力した場合、タスクの更新に成功' do
+        visit edit_task_path(task.id)
+
         fill_in 'task[title]', with: 'update_test'
         fill_in 'task[content]', with: 'update_content'
-        click_button '登録'
+        click_on '登録'
+
+        expect(current_path).to eq tasks_path
         expect(page).to have_content 'update_test'
         expect(page).to have_content 'update_content'
         expect(page).to have_content 'タスクの更新に成功しました。'
-        expect(current_path).to eq tasks_path
       end
 
-      it 'タスクの編集は詳細の入力無しでも成功する' do
-        visit root_path
-        click_link '編集'
+      it '概要が未入力の場合、タスクの更新に成功' do
+        visit edit_task_path(task.id)
+
         fill_in 'task[title]', with: 'update_test'
         fill_in 'task[content]', with: ''
         click_button '登録'
-        expect(page).to have_content 'update_test'
-        expect(page).to have_content ''
-        expect(page).to have_content 'タスクの更新に成功しました。'
+
         expect(current_path).to eq tasks_path
+        expect(page).to have_content 'update_test'
+        expect(page).to have_selector('td', text: '')
+        expect(page).to have_content 'タスクの更新に成功しました。'
       end
     end
 
-    context 'タスク名が未入力' do
-      it 'タスクの編集更新に失敗する' do
-        visit root_path
-        click_link '編集'
+    context '編集失敗' do
+      it 'タイトル名が未入力の場合、タスクの更新に失敗' do
+        visit edit_task_path(task.id)
+
         fill_in 'task[title]', with: ''
         fill_in 'task[content]', with: 'update_content'
         click_button '登録'
-        expect(page).to have_content 'タスクの更新に失敗しました。'
+
         expect(current_path).to eq task_path(task.id)
+        expect(page).to have_content 'タスクの更新に失敗しました。'
       end
-    end
-  end
 
-  describe 'タスクの削除' do
-    let!(:task) { create(:task) }
+      it '更新タスクがない場合、該当するタスクがないと表示' do
+        visit edit_task_path(task.id)
 
-    context '正常にタスクを削除できる'
-    it 'タスクの削除に成功する' do
-      visit root_path
-      click_link '削除'
-      expect(page).to have_content 'タスクの削除に成功しました。'
-      expect(current_path).to eq tasks_path
-      expect(page).not_to have_content task.title
-    end
-  end
-
-  describe '該当タスクが存在しなかった例外処理' do
-    let!(:task) { create(:task) }
-
-    context 'editメソッド呼び出しの時' do
-      it '編集するタスクが存在しなかった例外処理' do
-        visit root_path
-        task.destroy
-        expect { Task.find(task.id) }.to raise_error(ActiveRecord::RecordNotFound)
-        click_link '編集'
-        expect(current_path).to eq root_path
-        expect(page).to have_content '該当するタスクがありませんでした。'
-      end
-    end
-
-    context 'updateメソッド呼び出しの時' do
-      it '更新するタスクが存在しなかった例外処理' do
-        visit root_path
-        click_link '編集'
         fill_in 'task[title]', with: 'update_test'
         fill_in 'task[content]', with: 'update_content'
         task.destroy
-        expect { Task.find(task.id) }.to raise_error(ActiveRecord::RecordNotFound)
         click_button '登録'
+
         expect(current_path).to eq root_path
         expect(page).to have_content '該当するタスクがありませんでした。'
       end
+    end
+  end
+
+  describe 'タスク削除' do
+    let!(:task) { create(:task) }
+    it '削除タスクがある場合、タスクの削除に成功' do
+      visit root_path
+
+      expect(page).to have_link '削除'
+
+      click_on '削除'
+
+      expect(current_path).to eq tasks_path
+      expect(page).to have_content 'タスクの削除に成功しました。'
+      expect(page).not_to have_content task.title
     end
 
-    context 'destoryメソッド呼び出しの時' do
-      it '削除するタスクが存在しなかった例外処理' do
-        visit root_path
-        task.destroy
-        expect { Task.find(task.id) }.to raise_error(ActiveRecord::RecordNotFound)
-        click_link '削除'
-        expect(current_path).to eq root_path
-        expect(page).to have_content '該当するタスクがありませんでした。'
-      end
-    end
-    context 'showメソッドメソッド呼び出しの時' do
-      it '詳細を見れるタスクが存在しなかった例外処理' do
-        visit root_path
-        task.destroy
-        expect { Task.find(task.id) }.to raise_error(ActiveRecord::RecordNotFound)
-        visit task_path(task.id)
-        expect(current_path).to eq root_path
-        expect(page).to have_content '該当するタスクがありませんでした。'
-      end
+    it '削除タスクがない場合、該当するタスクがないと表示' do
+      visit root_path
+
+      task.destroy
+      click_on '削除'
+
+      expect(current_path).to eq root_path
+      expect(page).to have_content '該当するタスクがありませんでした。'
     end
   end
 end

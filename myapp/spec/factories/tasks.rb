@@ -1,6 +1,8 @@
+require 'faker'
+
 FactoryBot.define do
   factory :task do
-    title { 'sample-title' }
-    content { 'sample-content' }
+    title { Faker::Lorem.word }
+    content { Faker::Lorem.word }
   end
 end
