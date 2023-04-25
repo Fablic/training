@@ -1,0 +1,13 @@
+ja:
+  flash:
+    task:
+      create:
+        notice: 'タスクの登録に成功しました。'
+        alert: 'タスクの登録に失敗しました。'
+      update:
+        notice: 'タスクの更新に成功しました。'
+        alert: 'タスクの更新に失敗しました。'
+      delete:
+        notice: 'タスクの削除に成功しました。'
+      record_not_found:
+        alert: '該当するタスクがありませんでした。'
