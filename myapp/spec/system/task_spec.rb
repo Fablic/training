@@ -39,7 +39,7 @@ RSpec.describe Task, type: :system do
     end
 
     context '詳細' do
-      it '表示成功' do
+      it '詳細タスクがある場合、詳細ページの表示に成功' do
         visit task_path(task.id)
 
         expect(current_path).to eq task_path(task.id)
@@ -48,7 +48,7 @@ RSpec.describe Task, type: :system do
         expect(page).to have_link 'もどる'
       end
 
-      it '表示失敗' do
+      it '詳細タスクがない場合、該当するタスクがないと表示に失敗' do
         task.destroy
 
         visit task_path(task.id)
@@ -103,7 +103,7 @@ RSpec.describe Task, type: :system do
     end
 
     context '登録失敗' do
-      it 'タイトル名が未入力の場合、タスクの登録' do
+      it 'タイトル名が未入力の場合、タスクの登録に失敗' do
         visit new_task_path
 
         fill_in 'task[title]', with: ''
@@ -120,7 +120,7 @@ RSpec.describe Task, type: :system do
     let!(:task) { create(:task) }
 
     context '編集ページの表示' do
-      it '表示成功' do
+      it '編集タスクがある場合、編集ページの表示に成功' do
         visit root_path
 
         expect(page).to have_link '編集'
@@ -134,7 +134,7 @@ RSpec.describe Task, type: :system do
         expect(page).to have_link 'もどる'
       end
 
-      it '表示失敗' do
+      it '編集タスクがない場合、該当するタスクがないと表示に失敗' do
         task.destroy
 
         visit edit_task_path(task.id)
@@ -184,7 +184,7 @@ RSpec.describe Task, type: :system do
         expect(page).to have_content 'タスクの更新に失敗しました。'
       end
 
-      it '更新データない場合、該当するタスクがないと表示' do
+      it '更新タスクがない場合、該当するタスクがないと表示に失敗' do
         visit edit_task_path(task.id)
 
         fill_in 'task[title]', with: 'update_test'
@@ -200,7 +200,7 @@ RSpec.describe Task, type: :system do
 
   describe 'タスク削除' do
     let!(:task) { create(:task) }
-    it 'タスクの削除成功' do
+    it '削除タスクがある場合、タスクの削除に成功' do
       visit root_path
 
       expect(page).to have_link '削除'
@@ -212,7 +212,7 @@ RSpec.describe Task, type: :system do
       expect(page).not_to have_content task.title
     end
 
-    it 'タスクの削除失敗' do
+    it '削除タスクがない場合、該当するタスクがないと表示に失敗' do
       visit root_path
 
       task.destroy
