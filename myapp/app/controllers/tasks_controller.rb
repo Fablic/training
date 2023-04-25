@@ -24,7 +24,7 @@ class TasksController < ApplicationController
 
   def update
     if @task.update(task_params)
-      redirect_to tasks_path, notice:  t('flash.task.update.notice')
+      redirect_to tasks_path, notice: t('flash.task.update.notice')
     else
       flash.now[:alert] = t('flash.task.update.alert')
       render :edit
@@ -45,7 +45,7 @@ class TasksController < ApplicationController
   end
 
   def record_not_found
-    redirect_to root_path, alert:  t('flash.task.record_not_found.alert')
+    redirect_to root_path, alert: t('flash.task.record_not_found.alert')
   end
 
   def task_params
