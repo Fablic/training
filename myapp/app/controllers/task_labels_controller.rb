@@ -10,7 +10,7 @@ class TaskLabelsController < ApplicationController
   def attach_labels
     if TaskLabel.transaction { attach_labels_exec }
       redirect_to task_url(task_label_params[:task_id]),
-      flash: { success: I18n.t('messages.attach', model_name: Label.model_name.human) }
+                  flash: { success: I18n.t('messages.attach', model_name: Label.model_name.human) }
     else
       format.html { render :new, status: :unprocessable_entity }
       format.json { render json: @task_label.errors, status: :unprocessable_entity }

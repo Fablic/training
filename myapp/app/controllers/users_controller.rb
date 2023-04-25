@@ -87,6 +87,7 @@ class UsersController < ApplicationController
 
     admin_user_count = User.cnt_admin_user_except_current(@user.id)
     return if admin_user_count >= 1
+
     redirect_to users_path, flash: { danger: I18n.t("users.admin.#{action_name}.last_admin") }
   end
 
