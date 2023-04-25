@@ -78,12 +78,12 @@ RSpec.describe Task, type: :system do
       it '全て入力した場合、タスクの登録に成功' do
         visit new_task_path
 
-        fill_in 'task[title]', with: 'test'
+        fill_in 'task[title]', with: 'test_title'
         fill_in 'task[content]', with: 'test_content'
         click_button '登録'
 
         expect(current_path).to eq tasks_path
-        expect(page).to have_content 'test'
+        expect(page).to have_content 'test_title'
         expect(page).to have_content 'test_content'
         expect(page).to have_content 'タスクの登録に成功しました。'
       end
@@ -97,7 +97,7 @@ RSpec.describe Task, type: :system do
 
         expect(current_path).to eq tasks_path
         expect(page).to have_content 'test'
-        expect(page).to have_content ''
+        expect(page).to have_selector('td', text: '')
         expect(page).to have_content 'タスクの登録に成功しました。'
       end
     end
@@ -167,7 +167,7 @@ RSpec.describe Task, type: :system do
 
         expect(current_path).to eq tasks_path
         expect(page).to have_content 'update_test'
-        expect(page).to have_content ''
+        expect(page).to have_selector('td', text: '')
         expect(page).to have_content 'タスクの更新に成功しました。'
       end
     end
