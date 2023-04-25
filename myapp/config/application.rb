@@ -11,11 +11,6 @@ module Myapp
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.0
 
-    I18n.config.available_locales = :ja
-    I18n.config.default_locale = :ja
-
-    config.time_zone = 'Tokyo'
-
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
