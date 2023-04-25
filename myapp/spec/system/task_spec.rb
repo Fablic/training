@@ -91,12 +91,12 @@ RSpec.describe Task, type: :system do
       it '概要が未入力の場合、タスクの登録に成功' do
         visit new_task_path
 
-        fill_in 'task[title]', with: 'test'
+        fill_in 'task[title]', with: 'test_title'
         fill_in 'task[content]', with: ''
         click_button '登録'
 
         expect(current_path).to eq tasks_path
-        expect(page).to have_content 'test'
+        expect(page).to have_content 'test_title'
         expect(page).to have_selector('td', text: '')
         expect(page).to have_content 'タスクの登録に成功しました。'
       end
