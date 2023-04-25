@@ -8,6 +8,8 @@ RSpec.describe Task, type: :system do
       it 'DBに保存されたデータがあれば一覧表示' do
         task_list = create_list(:task, 3)
         visit root_path
+
+        expect(current_path).to eq root_path
         expect(page).to have_content task_list[0].id
         expect(page).to have_content task_list[0].title
         expect(page).to have_content task_list[0].content
@@ -20,11 +22,12 @@ RSpec.describe Task, type: :system do
         expect(page).to have_link '詳細'
         expect(page).to have_link '編集'
         expect(page).to have_link '削除'
-        expect(current_path).to eq root_path
       end
 
       it 'DBに保存されたデータがなければ、新規登録ボタンのみ表示' do
         visit root_path
+
+        expect(current_path).to eq root_path
         expect(page).to have_no_content task.id
         expect(page).to have_no_content task.title
         expect(page).to have_no_content task.content
@@ -32,23 +35,24 @@ RSpec.describe Task, type: :system do
         expect(page).to have_no_link '編集'
         expect(page).to have_no_link '削除'
         expect(page).to have_link '新規登録'
-        expect(current_path).to eq root_path
       end
     end
 
     context '詳細' do
-      it '詳細ページの表示成功' do
+      it '表示成功' do
         visit task_path(task.id)
+
+        expect(current_path).to eq task_path(task.id)
         expect(page).to have_content task.title
         expect(page).to have_content task.content
         expect(page).to have_link 'もどる'
-        expect(current_path).to eq task_path(task.id)
       end
 
-      it '詳細ページの表示失敗' do
+      it '表示失敗' do
         task.destroy
-        expect { Task.find(task.id) }.to raise_error(ActiveRecord::RecordNotFound)
+
         visit task_path(task.id)
+
         expect(current_path).to eq root_path
         expect(page).to have_content '該当するタスクがありませんでした。'
       end
@@ -58,42 +62,56 @@ RSpec.describe Task, type: :system do
   describe 'タスク登録' do
     it '新規登録ページ表示' do
       visit root_path
+
+      expect(page).to have_link '新規登録'
+
       click_on '新規登録'
+
       expect(current_path).to eq new_task_path
+      expect(page).to have_field 'task[title]'
+      expect(page).to have_field 'task[content]'
+      expect(page).to have_button '登録'
+      expect(page).to have_link 'もどる'
     end
 
     context '登録成功' do
-      it '入力値が正常' do
+      it '全て入力した場合、タスクの登録に成功' do
         visit new_task_path
+
         fill_in 'task[title]', with: 'test'
         fill_in 'task[content]', with: 'test_content'
         click_button '登録'
+
+        expect(current_path).to eq tasks_path
         expect(page).to have_content 'test'
         expect(page).to have_content 'test_content'
         expect(page).to have_content 'タスクの登録に成功しました。'
-        expect(current_path).to eq tasks_path
       end
 
-      it '概要が未入力' do
+      it '概要が未入力の場合、タスクの登録に成功' do
         visit new_task_path
+
         fill_in 'task[title]', with: 'test'
         fill_in 'task[content]', with: ''
         click_button '登録'
+
+        expect(current_path).to eq tasks_path
         expect(page).to have_content 'test'
         expect(page).to have_content ''
         expect(page).to have_content 'タスクの登録に成功しました。'
-        expect(current_path).to eq tasks_path
       end
     end
 
     context '登録失敗' do
-      it 'タイトル名が未入力' do
+      it 'タイトル名が未入力の場合、タスクの登録' do
         visit new_task_path
+
         fill_in 'task[title]', with: ''
         fill_in 'task[content]', with: 'test_content'
         click_button '登録'
-        expect(page).to have_content 'タスクの登録に失敗しました。'
+
         expect(current_path).to eq tasks_path
+        expect(page).to have_content 'タスクの登録に失敗しました。'
       end
     end
   end
@@ -104,60 +122,76 @@ RSpec.describe Task, type: :system do
     context '編集ページの表示' do
       it '表示成功' do
         visit root_path
+
+        expect(page).to have_link '編集'
+
         click_on '編集'
+
         expect(current_path).to eq edit_task_path(task.id)
+        expect(page).to have_field 'task[title]'
+        expect(page).to have_field 'task[content]'
+        expect(page).to have_button '登録'
+        expect(page).to have_link 'もどる'
       end
 
       it '表示失敗' do
         task.destroy
-        expect { Task.find(task.id) }.to raise_error(ActiveRecord::RecordNotFound)
+
         visit edit_task_path(task.id)
+
         expect(current_path).to eq root_path
         expect(page).to have_content '該当するタスクがありませんでした。'
       end
     end
 
     context '編集成功' do
-      it '入力値が正常' do
+      it '全て入力した場合、タスクの更新に成功' do
         visit edit_task_path(task.id)
+
         fill_in 'task[title]', with: 'update_test'
         fill_in 'task[content]', with: 'update_content'
         click_on '登録'
+
+        expect(current_path).to eq tasks_path
         expect(page).to have_content 'update_test'
         expect(page).to have_content 'update_content'
         expect(page).to have_content 'タスクの更新に成功しました。'
-        expect(current_path).to eq tasks_path
       end
 
-      it '概要が未入力' do
+      it '概要が未入力の場合、タスクの更新に成功' do
         visit edit_task_path(task.id)
+
         fill_in 'task[title]', with: 'update_test'
         fill_in 'task[content]', with: ''
         click_button '登録'
+
+        expect(current_path).to eq tasks_path
         expect(page).to have_content 'update_test'
         expect(page).to have_content ''
         expect(page).to have_content 'タスクの更新に成功しました。'
-        expect(current_path).to eq tasks_path
       end
     end
 
     context '編集失敗' do
-      it 'タイトル名が未入力' do
+      it 'タイトル名が未入力の場合、タスクの更新に失敗' do
         visit edit_task_path(task.id)
+
         fill_in 'task[title]', with: ''
         fill_in 'task[content]', with: 'update_content'
         click_button '登録'
-        expect(page).to have_content 'タスクの更新に失敗しました。'
+
         expect(current_path).to eq task_path(task.id)
+        expect(page).to have_content 'タスクの更新に失敗しました。'
       end
 
-      it '更新データがなかった' do
+      it '更新データない場合、該当するタスクがないと表示' do
         visit edit_task_path(task.id)
+
         fill_in 'task[title]', with: 'update_test'
         fill_in 'task[content]', with: 'update_content'
         task.destroy
-        expect { Task.find(task.id) }.to raise_error(ActiveRecord::RecordNotFound)
         click_button '登録'
+
         expect(current_path).to eq root_path
         expect(page).to have_content '該当するタスクがありませんでした。'
       end
@@ -168,17 +202,22 @@ RSpec.describe Task, type: :system do
     let!(:task) { create(:task) }
     it 'タスクの削除成功' do
       visit root_path
+
+      expect(page).to have_link '削除'
+
       click_on '削除'
-      expect(page).to have_content 'タスクの削除に成功しました。'
+
       expect(current_path).to eq tasks_path
+      expect(page).to have_content 'タスクの削除に成功しました。'
       expect(page).not_to have_content task.title
     end
 
     it 'タスクの削除失敗' do
       visit root_path
+
       task.destroy
-      expect { Task.find(task.id) }.to raise_error(ActiveRecord::RecordNotFound)
       click_on '削除'
+
       expect(current_path).to eq root_path
       expect(page).to have_content '該当するタスクがありませんでした。'
     end
