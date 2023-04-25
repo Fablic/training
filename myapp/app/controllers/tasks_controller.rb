@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   before_action :set_task, only: %i[edit update destroy show]
-  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
+  # rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
   def index
     @tasks = Task.all
@@ -44,9 +44,9 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
   end
 
-  def record_not_found
-    redirect_to root_path, alert: '該当するタスクがありませんでした。'
-  end
+  # def record_not_found
+  #   redirect_to root_path, alert: '該当するタスクがありませんでした。'
+  # end
 
   def task_params
     params.require(:task).permit(:title, :content)
