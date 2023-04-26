@@ -3,6 +3,8 @@ ENV NODE_VERSION 14
 
 ENV DOCKER_DEFAULT_PLATFORM=linux/amd64
 
+ENV TZ Asia/Tokyo
+
 ENV LANG C.UTF-8
 
 RUN apt-get update -qq && \
