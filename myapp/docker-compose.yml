@@ -47,7 +47,7 @@ services:
     ports:
       - 4444:4444
     environment:
-      TZ: Asia/Toky
+      TZ: Asia/Tokyo
 
 volumes:
   db-data:

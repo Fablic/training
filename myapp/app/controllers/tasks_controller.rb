@@ -13,9 +13,9 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(task_params)
     if @task.save
-      redirect_to tasks_path, notice: 'タスクの登録に成功しました。'
+      redirect_to tasks_path, notice: t('messages.create', model_name: t('activerecord.models.task'))
     else
-      flash.now[:alert] = 'タスクの登録に失敗しました。'
+      flash.now[:alert] = t('error.messages.create', model_name: t('activerecord.models.task'))
       render :new
     end
   end
@@ -24,16 +24,16 @@ class TasksController < ApplicationController
 
   def update
     if @task.update(task_params)
-      redirect_to tasks_path, notice: 'タスクの更新に成功しました。'
+      redirect_to tasks_path, notice: t('messages.update', model_name: t('activerecord.models.task'))
     else
-      flash.now[:alert] = 'タスクの更新に失敗しました。'
+      flash.now[:alert] = t('error.messages.update', model_name: t('activerecord.models.task'))
       render :edit
     end
   end
 
   def destroy
     @task.destroy
-    redirect_to tasks_path, notice: 'タスクの削除に成功しました。'
+    redirect_to tasks_path, notice: t('messages.delete', model_name: t('activerecord.models.task'))
   end
 
   def show; end
@@ -45,7 +45,7 @@ class TasksController < ApplicationController
   end
 
   def record_not_found
-    redirect_to root_path, alert: '該当するタスクがありませんでした。'
+    redirect_to root_path, alert: t('error.messages.record_not_found', model_name: t('activerecord.models.task'))
   end
 
   def task_params
