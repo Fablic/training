@@ -1,0 +1,10 @@
+ja:
+  messages:
+    created: '%{item}タスクの登録に成功しました。'
+    deleted: '%{item}タスクの削除に成功しました。'
+    changed: '%{item}タスクの更新に成功しました。'
+
+  error_messages:
+    created: '%{item}タスクの登録に失敗しました。'
+    changed: '%{item}タスクの更新に失敗しました。'
+    record_not_found: '該当するタスクがありませんでした。'

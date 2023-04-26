@@ -13,9 +13,9 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(task_params)
     if @task.save
-      redirect_to tasks_path, notice: t('flash.task.create.notice')
+      redirect_to tasks_path, notice: t('messages.created', item: @task.title)
     else
-      flash.now[:alert] = t('flash.task.create.alert')
+      flash.now[:alert] = t('error_messages.created', item: @task.title)
       render :new
     end
   end
@@ -24,16 +24,16 @@ class TasksController < ApplicationController
 
   def update
     if @task.update(task_params)
-      redirect_to tasks_path, notice: t('flash.task.update.notice')
+      redirect_to tasks_path, notice: t('messages.changed', item: @task.title)
     else
-      flash.now[:alert] = t('flash.task.update.alert')
+      flash.now[:alert] = t('error_messages.changed', item: @task.title)
       render :edit
     end
   end
 
   def destroy
     @task.destroy
-    redirect_to tasks_path, notice: t('flash.task.delete.notice')
+    redirect_to tasks_path, notice: t('messages.deleted', item: @task.title)
   end
 
   def show; end
@@ -45,7 +45,7 @@ class TasksController < ApplicationController
   end
 
   def record_not_found
-    redirect_to root_path, alert: t('flash.task.record_not_found.alert')
+    redirect_to root_path, alert: t('errors_message.record_not_found')
   end
 
   def task_params
