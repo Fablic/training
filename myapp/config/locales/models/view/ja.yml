@@ -16,6 +16,7 @@ ja:
         restrict_dependent_destroy:
           has_one: "%{record}が存在しているので削除できません"
           has_many: "%{record}が存在しているので削除できません"
+
   date:
     abbr_day_names:
     - 日
@@ -69,6 +70,7 @@ ja:
     - :year
     - :month
     - :day
+
   datetime:
     distance_in_words:
       about_x_hours: 約%{count}時間
@@ -178,11 +180,13 @@ ja:
     precision:
       format:
         delimiter: ''
+
   support:
     array:
       last_word_connector: "、"
       two_words_connector: "、"
       words_connector: "、"
+
   time:
     am: 午前
     formats:
