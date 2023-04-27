@@ -24,19 +24,6 @@ RSpec.describe Task, type: :system do
         expect(page).to have_link '削除'
       end
 
-      it 'DBに保存されたデータがなければ、新規登録ボタンのみ表示' do
-        visit root_path
-
-        expect(current_path).to eq root_path
-        expect(page).to have_no_content task.id
-        expect(page).to have_no_content task.title
-        expect(page).to have_no_content task.content
-        expect(page).to have_no_link '詳細'
-        expect(page).to have_no_link '編集'
-        expect(page).to have_no_link '削除'
-        expect(page).to have_link '新規登録'
-      end
-
       it 'タスクは日付降順で表示' do
         create(:task, title: 'task1', created_at: Time.current)
         create(:task, title: 'task2', created_at: Time.current - 1.hour)
@@ -47,6 +34,19 @@ RSpec.describe Task, type: :system do
           task_titles = all('.task-title').map(&:text)
           expect(task_titles).to eq %w[task3 task1 task2]
         end
+      end
+
+      it 'DBに保存されたデータがあれば、作成日の降順で一覧表示' do
+        visit root_path
+
+        expect(current_path).to eq root_path
+        expect(page).to have_no_content task.id
+        expect(page).to have_no_content task.title
+        expect(page).to have_no_content task.content
+        expect(page).to have_no_link '詳細'
+        expect(page).to have_no_link '編集'
+        expect(page).to have_no_link '削除'
+        expect(page).to have_link '新規登録'
       end
     end
 
