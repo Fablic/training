@@ -38,14 +38,14 @@ RSpec.describe Task, type: :system do
       end
 
       it 'タスクは日付降順で表示' do
-        create(:task, title: 'task1')
-        create(:task, title: 'task2')
-        create(:task, title: 'task3')
+        create(:task, title: 'task1', created_at: Time.current)
+        create(:task, title: 'task2', created_at: Time.current - 1.hour)
+        create(:task, title: 'task3', created_at: Time.current + 1.hour)
         visit root_path
 
         within '.tasks' do
           task_titles = all('.task-title').map(&:text)
-          expect(task_titles).to eq %w[task3 task2 task1]
+          expect(task_titles).to eq %w[task3 task1 task2]
         end
       end
     end
