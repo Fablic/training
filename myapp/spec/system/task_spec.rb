@@ -4,39 +4,42 @@ RSpec.describe Task, type: :system do
   let(:task) { create(:task) }
 
   describe 'タスク表示' do
-    context '一覧' do
-      it 'DBに保存されたデータがあれば一覧表示' do
-        task_list = create_list(:task, 3)
+    context 'DBに保存されたデータがある時' do
+      before do
+        create(:task, id: '1', title: 'task1', content: 'task_contetnt1', created_at: '2023/04/27 09:00')
+        create(:task, id: '2', title: 'task2', content: 'task_contetnt2', created_at: '2023/04/27 08:00')
+        create(:task, id: '3', title: 'task3', content: 'task_contetnt3', created_at: '2023/04/27 10:00')
         visit root_path
+      end
 
+      it 'タスクは作成日の降順で表示' do
         expect(current_path).to eq root_path
-        expect(page).to have_content task_list[0].id
-        expect(page).to have_content task_list[0].title
-        expect(page).to have_content task_list[0].content
-        expect(page).to have_content task_list[1].id
-        expect(page).to have_content task_list[1].title
-        expect(page).to have_content task_list[1].content
-        expect(page).to have_content task_list[2].id
-        expect(page).to have_content task_list[2].title
-        expect(page).to have_content task_list[2].content
+        expect(page).to have_content '1'
+        expect(page).to have_content 'task1'
+        expect(page).to have_content 'task_contetnt1'
+        expect(page).to have_content '2023/04/27 09:00'
+        expect(page).to have_content '2'
+        expect(page).to have_content 'task2'
+        expect(page).to have_content 'task_contetnt2'
+        expect(page).to have_content '2023/04/27 08:00'
+        expect(page).to have_content '3'
+        expect(page).to have_content 'task3'
+        expect(page).to have_content 'task_contetnt3'
+        expect(page).to have_content '2023/04/27 10:00'
+
         expect(page).to have_link '詳細'
         expect(page).to have_link '編集'
         expect(page).to have_link '削除'
-      end
-
-      it 'DBに保存されたデータがあれば、作成日の降順で一覧表示' do
-        create(:task, title: 'task1', created_at: Time.current)
-        create(:task, title: 'task2', created_at: Time.current - 1.hour)
-        create(:task, title: 'task3', created_at: Time.current + 1.hour)
-        visit root_path
 
         within '.tasks' do
           task_titles = all('.task-title').map(&:text)
           expect(task_titles).to eq %w[task3 task1 task2]
         end
       end
+    end
 
-      it 'DBに保存されたデータがなければ、新規登録ボタンのみ表示' do
+    context 'DBに保存されたデータがない時' do
+      it '新規登録ボタンのみ表示' do
         visit root_path
 
         expect(current_path).to eq root_path
