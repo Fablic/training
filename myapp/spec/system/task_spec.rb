@@ -54,7 +54,7 @@ RSpec.describe Task, type: :system do
         visit task_path(task.id)
 
         expect(current_path).to eq root_path
-        expect(page).to have_content '該当するタスクがありませんでした。'
+        expect(page).to have_content '該当するリソースがありませんでした。'
       end
     end
   end
@@ -140,7 +140,7 @@ RSpec.describe Task, type: :system do
         visit edit_task_path(task.id)
 
         expect(current_path).to eq root_path
-        expect(page).to have_content '該当するタスクがありませんでした。'
+        expect(page).to have_content '該当するリソースがありませんでした。'
       end
     end
 
@@ -193,7 +193,7 @@ RSpec.describe Task, type: :system do
         click_button '登録'
 
         expect(current_path).to eq root_path
-        expect(page).to have_content '該当するタスクがありませんでした。'
+        expect(page).to have_content '該当するリソースがありませんでした。'
       end
     end
   end
@@ -212,14 +212,14 @@ RSpec.describe Task, type: :system do
       expect(page).not_to have_content task.title
     end
 
-    it '削除タスクがない場合、該当するタスクがないと表示' do
+    it '削除タスクがない場合、該当するリソースがないと表示' do
       visit root_path
 
       task.destroy
       click_on '削除'
 
       expect(current_path).to eq root_path
-      expect(page).to have_content '該当するタスクがありませんでした。'
+      expect(page).to have_content '該当するリソースがありませんでした。'
     end
   end
 end
