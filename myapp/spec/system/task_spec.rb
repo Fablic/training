@@ -36,6 +36,18 @@ RSpec.describe Task, type: :system do
         expect(page).to have_no_link '削除'
         expect(page).to have_link '新規登録'
       end
+
+      it 'タスクは日付降順で表示' do
+        create(:task, title: 'task1')
+        create(:task, title: 'task2')
+        create(:task, title: 'task3')
+        visit root_path
+
+        within '.tasks' do
+          task_titles = all('.task-title').map(&:text)
+          expect(task_titles).to eq %w[task3 task2 task1]
+        end
+      end
     end
 
     context '詳細' do

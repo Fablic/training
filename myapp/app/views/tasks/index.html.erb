@@ -1,6 +1,6 @@
 <div>
   <p><%= link_to '新規登録', new_task_path %></p>
-  <table border="1">
+  <table class='tasks' border='1'>
     <tr>
       <th>id</th>
       <td>件名</td>
@@ -11,7 +11,7 @@
     <% @tasks.each do |task| %>
       <tr>
         <td><%= task.id %></td>
-        <td><%= task.title %></td>
+        <td class='task-title'><%= task.title %></td>
         <td><%= task.content %></td>
         <td><%= l task.created_at, format: :short %></td>
         <td>
