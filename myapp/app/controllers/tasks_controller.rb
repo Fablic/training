@@ -3,7 +3,7 @@ class TasksController < ApplicationController
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
   def index
-    @tasks = Task.all
+    @tasks = Task.all.order(created_at: "DESC")
   end
 
   def new
