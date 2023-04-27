@@ -1,8 +1,9 @@
 <% if object.errors.any? %>
-  <div class="alert alert-danger">
-    <ul class="mb-0">
-      <% object.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
+  <div class='alert alert-danger'>
+    <ul>
+      <%= object.errors.count %>件のエラーが発生しました
+      <% object.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
       <% end %>
     </ul>
   </div>
