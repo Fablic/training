@@ -12,7 +12,7 @@ RSpec.describe Task, type: :system do
         visit root_path
       end
 
-      it 'タスクは作成日の降順で表示' do
+      it '作成日降順で表示' do
         expect(current_path).to eq root_path
         expect(page).to have_content '1'
         expect(page).to have_content 'task1'
