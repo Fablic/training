@@ -9,3 +9,8 @@ ja:
       create: '%{model_name}の登録に失敗しました。'
       update: '%{model_name}の更新に失敗しました。'
       record_not_found: '該当するリソースがありませんでした。'
+
+  time:
+    formats:
+      default: '%Y/%m/%d %H:%M:%S'
+      short: '%Y/%m/%d %H:%M'
