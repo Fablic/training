@@ -24,7 +24,7 @@ RSpec.describe Task, type: :system do
         expect(page).to have_link '削除'
       end
 
-      it 'タスクは日付降順で表示' do
+      it 'DBに保存されたデータがあれば、作成日の降順で一覧表示' do
         create(:task, title: 'task1', created_at: Time.current)
         create(:task, title: 'task2', created_at: Time.current - 1.hour)
         create(:task, title: 'task3', created_at: Time.current + 1.hour)
@@ -36,7 +36,7 @@ RSpec.describe Task, type: :system do
         end
       end
 
-      it 'DBに保存されたデータがあれば、作成日の降順で一覧表示' do
+      it 'DBに保存されたデータがなければ、新規登録ボタンのみ表示' do
         visit root_path
 
         expect(current_path).to eq root_path
