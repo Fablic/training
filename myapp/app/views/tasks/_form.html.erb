@@ -5,8 +5,13 @@
       <%= form.text_field :title %>
     </div>
     <div>
-      <%= form.label '詳細', style: 'display: block' %>
+      <%= form.label '概要', style: 'display: block' %>
       <%= form.text_area :content %>
+    </div>
+
+    <div>
+      <%= form.label 'ステータス', style: 'display: block' %>
+      <%= form.collection_select(:task_status_id, TaskStatus.all, :id, :name ) %>
     </div>
 
     <div class="submit-content">

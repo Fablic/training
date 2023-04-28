@@ -1,25 +1,34 @@
 <div>
   <p><%= link_to '新規登録', new_task_path %></p>
+
+  <h1>タスク管理</h1>
+
   <table class='tasks' border='1'>
+    <thead>
     <tr>
       <th>id</th>
-      <td>件名</td>
-      <td>内容</td>
-      <td>作成日</td>
-      <td>その他</td>
+      <th>件名</th>
+      <th>概要</th>
+      <th>ステータス</th>
+      <th>作成日</th>
+      <th>その他</th>
     </tr>
-    <% @tasks.each do |task| %>
-      <tr>
-        <td><%= task.id %></td>
-        <td class='task-title'><%= task.title %></td>
-        <td><%= task.content %></td>
-        <td><%= l task.created_at, format: :short %></td>
-        <td>
-          <%= link_to '詳細', task_path(task.id) %>
-          <%= link_to '編集', edit_task_path(task.id) %>
-          <%= link_to '削除', task_path(task.id), method: :delete %>
-        </td>
-      </tr>
-    <% end %>
+    </thead>
+    <tbody>
+      <% @tasks.each do |task| %>
+        <tr>
+          <td><%= task.id %></td>
+          <td class='task-title'><%= task.title %></td>
+          <td><%= task.content %></td>
+          <td><%= task.task_status.name %></td>
+          <td><%= l task.created_at, format: :short %></td>
+          <td>
+            <%= link_to '詳細', task_path(task.id) %>
+            <%= link_to '編集', edit_task_path(task.id) %>
+            <%= link_to '削除', task_path(task.id), method: :delete %>
+          </td>
+        </tr>
+      <% end %>
+    <tbody>
   </table>
 </div>
