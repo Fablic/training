@@ -19,7 +19,6 @@ class TasksController < ApplicationController
     if @task.save
       redirect_to tasks_path, notice: t('messages.create', model_name: t('activerecord.models.task'))
     else
-      flash.now[:alert] = t('error.messages.create', model_name: t('activerecord.models.task'))
       render :new
     end
   end
@@ -30,7 +29,6 @@ class TasksController < ApplicationController
     if @task.update(task_params)
       redirect_to tasks_path, notice: t('messages.update', model_name: t('activerecord.models.task'))
     else
-      flash.now[:alert] = t('error.messages.update', model_name: t('activerecord.models.task'))
       render :edit
     end
   end
