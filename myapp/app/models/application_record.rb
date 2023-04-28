@@ -1,4 +1,4 @@
 class ApplicationRecord < ActiveRecord::Base
   self.abstract_class = true
-  scope :latest, -> {order(deadline: :desc)}
+  scope :latest, -> { order(deadline: :desc) }
 end
