@@ -9,6 +9,11 @@
       <%= form.text_area :content %>
     </div>
 
+    <div>
+      <%= form.label '終了期限', style: 'display: block' %>
+      <%= form.date_field :deadline %>
+    </div>
+
     <div class="submit-content">
       <%= form.submit '登録' %>
       <%= link_to 'もどる', tasks_path %>
