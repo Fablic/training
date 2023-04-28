@@ -2,3 +2,8 @@ ja:
   activerecord:
     models:
       task: タスク
+
+    attributes:
+      task:
+        title: タスク名
+        deadline: 終了期限
