@@ -3,16 +3,20 @@
   <table class='tasks' border='1'>
     <tr>
       <th>id</th>
-      <td>件名</td>
-      <td>内容</td>
-      <td>作成日</td>
-      <td>その他</td>
+      <th>件名</th>
+      <th>内容</th>
+      <th><%= link_to '終了期限', tasks_path(sort_deadline: 'true') %></th>
+      <th>作成日</th>
+      <th>その他</th>
     </tr>
     <% @tasks.each do |task| %>
       <tr>
         <td><%= task.id %></td>
-        <td class='task-title'><%= task.title %></td>
+        <td class='task-title'>
+          <%= task.title %>
+        </td>
         <td><%= task.content %></td>
+        <td><%= l task.deadline %></td>
         <td><%= l task.created_at, format: :short %></td>
         <td>
           <%= link_to '詳細', task_path(task.id) %>

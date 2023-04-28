@@ -3,7 +3,11 @@ class TasksController < ApplicationController
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
   def index
-    @tasks = Task.all.order(created_at: 'DESC')
+    if params[:sort_deadline]
+      @tasks = Task.latest
+    else
+      @tasks = Task.all.order(created_at: 'DESC')
+    end
   end
 
   def new
@@ -49,6 +53,6 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:title, :content)
+    params.require(:task).permit(:title, :content, :deadline)
   end
 end
