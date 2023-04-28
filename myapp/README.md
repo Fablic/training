@@ -32,7 +32,7 @@
 |--------------------|---------|-------------|
 |  title             | string  | null: false |
 |  content           | string  |             |
-|  task_limit        | data    | null: false |
+|  deadline          | data    | null: false |
 |  task_status_id    | integer | null: false |
 |  task_priority_id  | integer | null: false |
 
