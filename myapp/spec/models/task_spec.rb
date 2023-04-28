@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Task, type: :model do
   describe 'バリデーションのテスト' do
-    context 'タスク名と詳細が終了期限が入力されている時' do
+    context 'タスク名と詳細が終了期限が入力されている場合' do
       it 'タスクを登録できる' do
         task = build(:task)
 
@@ -10,7 +10,7 @@ RSpec.describe Task, type: :model do
       end
     end
 
-    context '終了期限が空欄の時' do
+    context '終了期限が空欄の場合' do
       it 'タスクを登録できず、終了期限を入力してくださいと表示' do
         task = build(:task, deadline: '')
 
