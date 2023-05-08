@@ -165,7 +165,7 @@ RSpec.describe Task, type: :system do
 
         visit edit_task_path(task.id)
 
-        expect(page).to have_current_path root_path, ignore_query: true
+        expect(current_path).to eq root_path
         expect(page).to have_content '該当するリソースがありませんでした。'
       end
     end
@@ -245,7 +245,7 @@ RSpec.describe Task, type: :system do
       task.destroy
       click_on '削除'
 
-      expect(page).to have_current_path root_path, ignore_query: true
+      expect(current_path).to eq root_path
       expect(page).to have_content '該当するリソースがありませんでした。'
     end
   end
