@@ -2,11 +2,11 @@
   <p><%= link_to '新規登録', new_task_path %></p>
   <table class='tasks' border='1'>
     <tr>
-      <th>id</th>
-      <td>件名</td>
-      <td>内容</td>
-      <td>作成日</td>
-      <td>その他</td>
+      <th><%= t('activerecord.attributes.task.id') %></th>
+      <td><%= t('activerecord.attributes.task.title') %></td>
+      <td><%= t('activerecord.attributes.task.content') %></td>
+      <td><%= t('activerecord.attributes.task.created_at') %></td>
+      <td><%= t('activerecord.attributes.task.another') %></td>
     </tr>
     <% @tasks.each do |task| %>
       <tr>
