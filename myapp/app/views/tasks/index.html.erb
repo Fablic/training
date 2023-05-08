@@ -2,12 +2,12 @@
   <p><%= link_to '新規登録', new_task_path %></p>
   <table class='tasks' border='1'>
     <tr>
-      <th>id</th>
-      <th>件名</th>
-      <th>内容</th>
-      <th><%= link_to '終了期限', tasks_path(sort_deadline: 'true') %></th>
-      <th>作成日</th>
-      <th>その他</th>
+      <th><%= t('activerecord.attributes.task.id') %></th>
+      <td><%= t('activerecord.attributes.task.title') %></td>
+      <td><%= t('activerecord.attributes.task.content') %></td>
+      <td><%= link_to t('activerecord.attributes.task.deadline'), tasks_path(sort_deadline: 'true') %></td>
+      <td><%= t('activerecord.attributes.task.created_at') %></td>
+      <td><%= t('activerecord.attributes.task.another') %></td>
     </tr>
     <% @tasks.each do |task| %>
       <tr>

@@ -37,7 +37,7 @@ RSpec.configure do |config|
     driven_by :rack_test
   end
 
-  config.before(:each, type: :system, js: true) do
+  config.before(:each, js: true, type: :system) do
     driven_by :remote_chrome
     Capybara.server_host = IPSocket.getaddress(Socket.gethostname)
     Capybara.server_port = 3000
@@ -45,7 +45,7 @@ RSpec.configure do |config|
   end
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
-  config.fixture_path = "#{::Rails.root}/spec/fixtures"
+  config.fixture_path = "#{Rails.root}/spec/fixtures"
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
@@ -78,10 +78,10 @@ end
 
 Capybara.register_driver :remote_chrome do |app|
   hub_url = 'https://chrome:4444/wd/hub'
-  chrome_capabilities = ::Selenium::WebDriver::Remote::Capabilities.chrome(
+  chrome_capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
     'goog:chromeOptions' => {
-      'args' => %w[no-sandbox headless disable-gpu window-size=1680,1050]
-    }
+      'args' => %w[no-sandbox headless disable-gpu window-size=1680,1050],
+    },
   )
   Capybara::Selenium::Driver.new(app, browser: :remote, url: hub_url, desired_capabilities: chrome_capabilities)
 end

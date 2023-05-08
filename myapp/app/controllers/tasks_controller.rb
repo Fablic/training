@@ -1,6 +1,5 @@
 class TasksController < ApplicationController
   before_action :set_task, only: %i[edit update destroy show]
-  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
   def index
     @tasks = if params[:sort_deadline]
@@ -10,9 +9,13 @@ class TasksController < ApplicationController
              end
   end
 
+  def show; end
+
   def new
     @task = Task.new
   end
+
+  def edit; end
 
   def create
     @task = Task.new(task_params)
@@ -23,8 +26,6 @@ class TasksController < ApplicationController
     end
   end
 
-  def edit; end
-
   def update
     if @task.update(task_params)
       redirect_to tasks_path, notice: t('messages.update', model_name: t('activerecord.models.task'))
@@ -34,20 +35,17 @@ class TasksController < ApplicationController
   end
 
   def destroy
-    @task.destroy
-    redirect_to tasks_path, notice: t('messages.delete', model_name: t('activerecord.models.task'))
+    if @task.destroy
+      redirect_to tasks_path, notice: t('messages.delete', model_name: t('activerecord.models.task'))
+    else
+      render :index
+    end
   end
-
-  def show; end
 
   private
 
   def set_task
     @task = Task.find(params[:id])
-  end
-
-  def record_not_found
-    redirect_to root_path, alert: t('error.messages.record_not_found', model_name: t('activerecord.models.task'))
   end
 
   def task_params
