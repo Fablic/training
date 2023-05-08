@@ -1,5 +1,6 @@
 <div class='task-form'>
   <%= form_with model: @task, local: true do |form| %>
+    <%= render 'shared/error_messages', object: form.object %>
     <div>
       <%= form.label 'タスク名(必須)', style: 'display: block' %>
       <%= form.text_field :title %>

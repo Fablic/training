@@ -2,3 +2,11 @@ ja:
   activerecord:
     models:
       task: タスク
+
+    attributes:
+      task:
+        id: ID
+        title: タスク名
+        content: 内容
+        created_at: 作成日
+        another: その他

@@ -80,6 +80,10 @@ GEM
     date (3.3.3)
     diff-lcs (1.5.0)
     erubi (1.12.0)
+    fablicop (1.10.1)
+      rubocop (>= 1.14, < 1.51)
+      rubocop-rails
+      rubocop-rspec (>= 1.15.1)
     factory_bot (6.2.1)
       activesupport (>= 5.0.0)
     factory_bot_rails (6.2.0)
@@ -212,10 +216,15 @@ GEM
       unicode-display_width (>= 2.4.0, < 3.0)
     rubocop-ast (1.28.0)
       parser (>= 3.2.1.0)
+    rubocop-capybara (2.18.0)
+      rubocop (~> 1.41)
     rubocop-rails (2.19.1)
       activesupport (>= 4.2.0)
       rack (>= 1.1)
       rubocop (>= 1.33.0, < 2.0)
+    rubocop-rspec (2.20.0)
+      rubocop (~> 1.33)
+      rubocop-capybara (~> 2.17)
     ruby-progressbar (1.13.0)
     rubyzip (2.3.2)
     sass-rails (6.0.0)
@@ -279,6 +288,7 @@ DEPENDENCIES
   bootsnap (>= 1.4.2)
   byebug
   capybara (>= 2.15)
+  fablicop
   factory_bot_rails
   faker
   jbuilder (~> 2.7)
