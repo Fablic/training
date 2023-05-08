@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
   def record_not_found(e = nil)
     if e
       logger.info "ActiveRecord::RecordNotFound!: #{e.message}"
