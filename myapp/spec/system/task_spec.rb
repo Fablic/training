@@ -13,7 +13,7 @@ RSpec.describe Task, type: :system do
       end
 
       it '作成日降順で表示' do
-        expect(current_path).to eq root_path
+        expect(page).to have_current_path root_path, ignore_query: true
         expect(page).to have_content '1'
         expect(page).to have_content 'task1'
         expect(page).to have_content 'task_contetnt1'
@@ -42,13 +42,13 @@ RSpec.describe Task, type: :system do
       it '新規登録ボタンのみ表示' do
         visit root_path
 
-        expect(current_path).to eq root_path
-        expect(page).to have_no_content task.id
-        expect(page).to have_no_content task.title
-        expect(page).to have_no_content task.content
-        expect(page).to have_no_link '詳細'
-        expect(page).to have_no_link '編集'
-        expect(page).to have_no_link '削除'
+        expect(page).to have_current_path root_path, ignore_query: true
+        expect(page).not_to have_content task.id
+        expect(page).not_to have_content task.title
+        expect(page).not_to have_content task.content
+        expect(page).not_to have_link '詳細'
+        expect(page).not_to have_link '編集'
+        expect(page).not_to have_link '削除'
         expect(page).to have_link '新規登録'
       end
     end
@@ -57,7 +57,7 @@ RSpec.describe Task, type: :system do
       it '詳細タスクがある場合、詳細ページの表示に成功' do
         visit task_path(task.id)
 
-        expect(current_path).to eq task_path(task.id)
+        expect(page).to have_current_path task_path(task.id), ignore_query: true
         expect(page).to have_content task.title
         expect(page).to have_content task.content
         expect(page).to have_link 'もどる'
@@ -68,7 +68,7 @@ RSpec.describe Task, type: :system do
 
         visit task_path(task.id)
 
-        expect(current_path).to eq root_path
+        expect(page).to have_current_path root_path, ignore_query: true
         expect(page).to have_content '該当するリソースがありませんでした。'
       end
     end
@@ -82,7 +82,7 @@ RSpec.describe Task, type: :system do
 
       click_on '新規登録'
 
-      expect(current_path).to eq new_task_path
+      expect(page).to have_current_path new_task_path, ignore_query: true
       expect(page).to have_field 'task[title]'
       expect(page).to have_field 'task[content]'
       expect(page).to have_button '登録'
@@ -97,7 +97,7 @@ RSpec.describe Task, type: :system do
         fill_in 'task[content]', with: 'test_content'
         click_button '登録'
 
-        expect(current_path).to eq tasks_path
+        expect(page).to have_current_path tasks_path, ignore_query: true
         expect(page).to have_content 'test_title'
         expect(page).to have_content 'test_content'
         expect(page).to have_content 'タスクの登録に成功しました。'
@@ -110,7 +110,7 @@ RSpec.describe Task, type: :system do
         fill_in 'task[content]', with: ''
         click_button '登録'
 
-        expect(current_path).to eq tasks_path
+        expect(page).to have_current_path tasks_path, ignore_query: true
         expect(page).to have_content 'test_title'
         expect(page).to have_selector('td', text: '')
         expect(page).to have_content 'タスクの登録に成功しました。'
@@ -125,8 +125,19 @@ RSpec.describe Task, type: :system do
         fill_in 'task[content]', with: 'test_content'
         click_button '登録'
 
-        expect(current_path).to eq tasks_path
-        expect(page).to have_content 'タスクの登録に失敗しました。'
+        expect(page).to have_current_path tasks_path, ignore_query: true
+        expect(page).to have_content 'タスク名を入力してください'
+      end
+
+      it 'タイトル名が31字以上の場合、タスクの登録に失敗' do
+        visit new_task_path
+
+        fill_in 'task[title]', with: 'a' * 31
+        fill_in 'task[content]', with: 'test_content'
+        click_button '登録'
+
+        expect(page).to have_current_path tasks_path, ignore_query: true
+        expect(page).to have_content 'タスク名は30文字以内で入力してください'
       end
     end
   end
@@ -142,7 +153,7 @@ RSpec.describe Task, type: :system do
 
         click_on '編集'
 
-        expect(current_path).to eq edit_task_path(task.id)
+        expect(page).to have_current_path edit_task_path(task.id), ignore_query: true
         expect(page).to have_field 'task[title]'
         expect(page).to have_field 'task[content]'
         expect(page).to have_button '登録'
@@ -154,7 +165,7 @@ RSpec.describe Task, type: :system do
 
         visit edit_task_path(task.id)
 
-        expect(current_path).to eq root_path
+        expect(page).to have_current_path root_path, ignore_query: true
         expect(page).to have_content '該当するリソースがありませんでした。'
       end
     end
@@ -167,7 +178,7 @@ RSpec.describe Task, type: :system do
         fill_in 'task[content]', with: 'update_content'
         click_on '登録'
 
-        expect(current_path).to eq tasks_path
+        expect(page).to have_current_path tasks_path, ignore_query: true
         expect(page).to have_content 'update_test'
         expect(page).to have_content 'update_content'
         expect(page).to have_content 'タスクの更新に成功しました。'
@@ -180,7 +191,7 @@ RSpec.describe Task, type: :system do
         fill_in 'task[content]', with: ''
         click_button '登録'
 
-        expect(current_path).to eq tasks_path
+        expect(page).to have_current_path tasks_path, ignore_query: true
         expect(page).to have_content 'update_test'
         expect(page).to have_selector('td', text: '')
         expect(page).to have_content 'タスクの更新に成功しました。'
@@ -195,8 +206,8 @@ RSpec.describe Task, type: :system do
         fill_in 'task[content]', with: 'update_content'
         click_button '登録'
 
-        expect(current_path).to eq task_path(task.id)
-        expect(page).to have_content 'タスクの更新に失敗しました。'
+        expect(page).to have_current_path task_path(task.id), ignore_query: true
+        expect(page).to have_content 'タスク名を入力してください'
       end
 
       it '更新タスクがない場合、該当するタスクがないと表示' do
@@ -207,7 +218,7 @@ RSpec.describe Task, type: :system do
         task.destroy
         click_button '登録'
 
-        expect(current_path).to eq root_path
+        expect(page).to have_current_path root_path, ignore_query: true
         expect(page).to have_content '該当するリソースがありませんでした。'
       end
     end
@@ -215,6 +226,7 @@ RSpec.describe Task, type: :system do
 
   describe 'タスク削除' do
     let!(:task) { create(:task) }
+
     it '削除タスクがある場合、タスクの削除に成功' do
       visit root_path
 
@@ -222,7 +234,7 @@ RSpec.describe Task, type: :system do
 
       click_on '削除'
 
-      expect(current_path).to eq tasks_path
+      expect(page).to have_current_path tasks_path, ignore_query: true
       expect(page).to have_content 'タスクの削除に成功しました。'
       expect(page).not_to have_content task.title
     end
@@ -233,7 +245,7 @@ RSpec.describe Task, type: :system do
       task.destroy
       click_on '削除'
 
-      expect(current_path).to eq root_path
+      expect(page).to have_current_path root_path, ignore_query: true
       expect(page).to have_content '該当するリソースがありませんでした。'
     end
   end
