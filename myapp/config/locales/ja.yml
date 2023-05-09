@@ -14,3 +14,8 @@ ja:
     formats:
       default: '%Y/%m/%d %H:%M:%S'
       short: '%Y/%m/%d %H:%M'
+
+  sort:
+    work:
+      created: 降順
+      updated: 昇順

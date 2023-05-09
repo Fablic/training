@@ -3,11 +3,16 @@
   <table class='tasks' border='1'>
     <tr>
       <th><%= t('activerecord.attributes.task.id') %></th>
-      <td><%= t('activerecord.attributes.task.title') %></td>
-      <td><%= t('activerecord.attributes.task.content') %></td>
-      <td><%= link_to t('activerecord.attributes.task.deadline'), tasks_path(sort_deadline: 'true') %></td>
-      <td><%= t('activerecord.attributes.task.created_at') %></td>
-      <td><%= t('activerecord.attributes.task.another') %></td>
+      <th><%= t('activerecord.attributes.task.title') %></th>
+      <th><%= t('activerecord.attributes.task.content') %></th>
+      <th>
+        <%= t('activerecord.attributes.task.deadline') %>/
+        <%= link_to t('sort.work.updated'), tasks_path(deadline_updated: 'true') %>
+        <%= link_to t('sort.work.created'), tasks_path(deadline_created: 'true') %>
+      </th>
+
+      <th><%= t('activerecord.attributes.task.created_at') %></th>
+      <th><%= t('activerecord.attributes.task.another') %></th>
     </tr>
     <% @tasks.each do |task| %>
       <tr>

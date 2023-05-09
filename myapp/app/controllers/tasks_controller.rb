@@ -2,8 +2,10 @@ class TasksController < ApplicationController
   before_action :set_task, only: %i[edit update destroy show]
 
   def index
-    @tasks = if params[:sort_deadline]
-               Task.latest
+    @tasks = if params[:deadline_updated]
+               Task.updated
+             elsif params[:deadline_created]
+               Task.created
              else
                Task.all.order(created_at: 'DESC')
              end
