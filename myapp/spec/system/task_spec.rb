@@ -126,7 +126,18 @@ RSpec.describe Task, type: :system do
         click_button '登録'
 
         expect(current_path).to eq tasks_path
-        expect(page).to have_content 'タスクの登録に失敗しました。'
+        expect(page).to have_content 'タスク名を入力してください'
+      end
+
+      it 'タイトル名が31字以上の場合、タスクの登録に失敗' do
+        visit new_task_path
+
+        fill_in 'task[title]', with: 'a' * 31
+        fill_in 'task[content]', with: 'test_content'
+        click_button '登録'
+
+        expect(current_path).to eq tasks_path
+        expect(page).to have_content 'タスク名は30文字以内で入力してください'
       end
     end
   end
@@ -196,7 +207,7 @@ RSpec.describe Task, type: :system do
         click_button '登録'
 
         expect(current_path).to eq task_path(task.id)
-        expect(page).to have_content 'タスクの更新に失敗しました。'
+        expect(page).to have_content 'タスク名を入力してください'
       end
 
       it '更新タスクがない場合、該当するタスクがないと表示' do
@@ -215,6 +226,7 @@ RSpec.describe Task, type: :system do
 
   describe 'タスク削除' do
     let!(:task) { create(:task) }
+
     it '削除タスクがある場合、タスクの削除に成功' do
       visit root_path
 

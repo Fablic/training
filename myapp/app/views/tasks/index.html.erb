@@ -6,12 +6,11 @@
   <table class='tasks' border='1'>
     <thead>
     <tr>
-      <th>id</th>
-      <th>件名</th>
-      <th>概要</th>
-      <th>ステータス</th>
-      <th>作成日</th>
-      <th>その他</th>
+      <th><%= t('activerecord.attributes.task.id') %></th>
+      <td><%= t('activerecord.attributes.task.title') %></td>
+      <td><%= t('activerecord.attributes.task.content') %></td>
+      <td><%= t('activerecord.attributes.task.created_at') %></td>
+      <td><%= t('activerecord.attributes.task.another') %></td>
     </tr>
     </thead>
     <tbody>
