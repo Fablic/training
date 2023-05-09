@@ -4,7 +4,7 @@ RSpec.describe Task, type: :system do
   let(:task) { create(:task) }
 
   describe 'タスク表示' do
-    context 'DBに保存されたデータがある場合' do
+    context 'DBに保存されたデータがある' do
       before do
         create(:task, id: '1', title: 'task1', content: 'task_contetnt1', deadline: '2023/04/27',
                       created_at: '2023/04/27 09:00')
@@ -45,7 +45,7 @@ RSpec.describe Task, type: :system do
       end
     end
 
-    context '一覧ページの終了期限並び替えボタンが押された場合' do
+    context '一覧ページの終了期限並び替えボタンが押された' do
       before do
         create(:task, id: '1', title: 'task1', content: 'task_contetnt1', deadline: '2023/04/29',
                       created_at: '2023/04/27 09:00')
@@ -67,7 +67,7 @@ RSpec.describe Task, type: :system do
       end
     end
 
-    context 'DBに保存されたデータがない場合' do
+    context 'DBに保存されたデータがない' do
       it '一覧ページに新規登録ボタンのみ表示' do
         visit root_path
 
@@ -83,7 +83,7 @@ RSpec.describe Task, type: :system do
       end
     end
 
-    context '詳細タスクがある場合' do
+    context '詳細タスクがある' do
       it '詳細ページの表示' do
         visit task_path(task.id)
 
@@ -94,7 +94,7 @@ RSpec.describe Task, type: :system do
       end
     end
 
-    context '詳細タスクがない場合' do
+    context '詳細タスクがない' do
       it '該当するリソースがないと表示' do
         task.destroy
 
@@ -122,7 +122,7 @@ RSpec.describe Task, type: :system do
       expect(page).to have_link 'もどる'
     end
 
-    context 'タスク名、概要、終了期限を入力した場合' do
+    context 'タスク名、概要、終了期限を入力' do
       it 'タスクの登録に成功' do
         visit new_task_path
 
@@ -139,7 +139,7 @@ RSpec.describe Task, type: :system do
       end
     end
 
-    context 'タスク名、終了期限を入力した場合' do
+    context '概要が未入力' do
       it 'タスクの登録に成功' do
         visit new_task_path
 
@@ -156,7 +156,7 @@ RSpec.describe Task, type: :system do
       end
     end
 
-    context '概要、終了期限を入力した場合' do
+    context 'タスク名が未入力' do
       it 'タスクの登録に失敗' do
         visit new_task_path
 
@@ -166,10 +166,25 @@ RSpec.describe Task, type: :system do
         click_button '登録'
 
         expect(current_path).to eq tasks_path
+        expect(page).to have_content 'タスク名を入力してください'
       end
     end
 
-    context 'タスク名、概要を入力した場合' do
+    context 'タスク名が31文字以上で入力' do
+      it 'タスクの登録に失敗' do
+        visit new_task_path
+
+        fill_in 'task[title]', with: 'a' * 31
+        fill_in 'task[content]', with: 'test_content'
+        fill_in 'task[deadline]', with: '2022/03/27'
+        click_button '登録'
+
+        expect(current_path).to eq tasks_path
+        expect(page).to have_content 'タスク名は30文字以内で入力してください'
+      end
+    end
+
+    context '終了期限が未入力' do
       it 'タスクの登録に失敗' do
         visit new_task_path
 
@@ -179,21 +194,7 @@ RSpec.describe Task, type: :system do
         click_button '登録'
 
         expect(current_path).to eq tasks_path
-<<<<<<< HEAD
-=======
-        expect(page).to have_content 'タスク名を入力してください'
-      end
-
-      it 'タイトル名が31字以上の場合、タスクの登録に失敗' do
-        visit new_task_path
-
-        fill_in 'task[title]', with: 'a' * 31
-        fill_in 'task[content]', with: 'test_content'
-        click_button '登録'
-
-        expect(current_path).to eq tasks_path
-        expect(page).to have_content 'タスク名は30文字以内で入力してください'
->>>>>>> coffee-stain-neko
+        expect(page).to have_content '終了期限を入力してください'
       end
     end
   end
@@ -201,7 +202,7 @@ RSpec.describe Task, type: :system do
   describe 'タスク編集' do
     let!(:task) { create(:task) }
 
-    context '編集タスクがある場合' do
+    context '編集タスクがある' do
       it '編集ページの表示に成功' do
         visit root_path
 
@@ -218,7 +219,7 @@ RSpec.describe Task, type: :system do
       end
     end
 
-    context '編集タスクがない場合' do
+    context '編集タスクがない' do
       it '該当するリソースがないと表示' do
         task.destroy
 
@@ -229,7 +230,7 @@ RSpec.describe Task, type: :system do
       end
     end
 
-    context 'タスク名、概要、終了期限を入力した場合' do
+    context 'タスク名、概要、終了期限を入力' do
       it 'タスクの更新に成功' do
         visit edit_task_path(task.id)
 
@@ -246,7 +247,7 @@ RSpec.describe Task, type: :system do
       end
     end
 
-    context 'タスク名、終了期限を入力した場合' do
+    context '概要が未入力' do
       it 'タスクの更新に成功' do
         visit edit_task_path(task.id)
 
@@ -263,7 +264,7 @@ RSpec.describe Task, type: :system do
       end
     end
 
-    context '概要、終了期限を入力した場合' do
+    context 'タスク名が未入力' do
       it 'タスクの更新に失敗' do
         visit edit_task_path(task.id)
 
@@ -273,14 +274,25 @@ RSpec.describe Task, type: :system do
         click_button '登録'
 
         expect(current_path).to eq task_path(task.id)
-<<<<<<< HEAD
-=======
         expect(page).to have_content 'タスク名を入力してください'
->>>>>>> coffee-stain-neko
       end
     end
 
-    context 'タスク名、概要を入力した場合' do
+    context 'タスク名が３１文字以上' do
+      it 'タスクの更新に失敗' do
+        visit edit_task_path(task.id)
+
+        fill_in 'task[title]', with: 'a' * 31
+        fill_in 'task[content]', with: 'update_content'
+        fill_in 'task[deadline]', with: '2022/03/27'
+        click_button '登録'
+
+        expect(current_path).to eq task_path(task.id)
+        expect(page).to have_content 'タスク名は30文字以内で入力してください'
+      end
+    end
+
+    context '終了期限を未入力' do
       it 'タスクの更新に失敗' do
         visit edit_task_path(task.id)
 
@@ -290,10 +302,11 @@ RSpec.describe Task, type: :system do
         click_button '登録'
 
         expect(current_path).to eq task_path(task.id)
+        expect(page).to have_content '終了期限を入力してください'
       end
     end
 
-    context '更新タスクがない場合' do
+    context '更新タスクがない' do
       it '該当するリソースがないと表示' do
         visit edit_task_path(task.id)
 
@@ -311,14 +324,8 @@ RSpec.describe Task, type: :system do
 
   describe 'タスク削除' do
     let!(:task) { create(:task) }
-<<<<<<< HEAD
-=======
 
-    it '削除タスクがある場合、タスクの削除に成功' do
-      visit root_path
->>>>>>> coffee-stain-neko
-
-    context '削除タスクがある場合' do
+    context '削除タスクがある' do
       it 'タスクの削除に成功' do
         visit root_path
 
@@ -332,7 +339,7 @@ RSpec.describe Task, type: :system do
       end
     end
 
-    context '削除タスクがない場合' do
+    context '削除タスクがない' do
       it '該当するリソースがないと表示' do
         visit root_path
 
