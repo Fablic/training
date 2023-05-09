@@ -36,7 +36,9 @@ RSpec.describe Task, type: :system do
         expect(page).to have_link '詳細'
         expect(page).to have_link '編集'
         expect(page).to have_link '削除'
-        expect(page).to have_link '終了期限', href: tasks_path(sort_deadline: 'true')
+        expect(page).to have_link '昇順', href: tasks_path(deadline_updated: 'true')
+        expect(page).to have_link '降順', href: tasks_path(deadline_created: 'true')
+
 
         within '.tasks' do
           task_titles = all('.task-title').map(&:text)
@@ -45,7 +47,7 @@ RSpec.describe Task, type: :system do
       end
     end
 
-    context '一覧ページの終了期限並び替えボタンが押された' do
+    context '一覧ページの終了期限の昇順ボタンが押された' do
       before do
         create(:task, id: '1', title: 'task1', content: 'task_contetnt1', deadline: '2023/04/29',
                       created_at: '2023/04/27 09:00')
@@ -56,8 +58,8 @@ RSpec.describe Task, type: :system do
         visit root_path
       end
 
-      it '終了期限の降順で表示' do
-        click_on '終了期限'
+      it '終了期限の昇順で表示' do
+        click_on '昇順'
 
         expect(current_path).to eq tasks_path
         within '.tasks' do
