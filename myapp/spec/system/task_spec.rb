@@ -36,8 +36,8 @@ RSpec.describe Task, type: :system do
         expect(page).to have_link '詳細'
         expect(page).to have_link '編集'
         expect(page).to have_link '削除'
-        expect(page).to have_link '昇順', href: tasks_path(deadline_updated: 'true')
-        expect(page).to have_link '降順', href: tasks_path(deadline_created: 'true')
+        expect(page).to have_link '昇順', href: tasks_path(deadline_asc: 'true')
+        expect(page).to have_link '降順', href: tasks_path(deadline_desc: 'true')
 
 
         within '.tasks' do
