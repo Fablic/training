@@ -1,6 +1,9 @@
 <div>
   <p><%= link_to '新規登録', new_task_path %></p>
-  <p><%= render partial: 'search' %></p>
+
+  <% if  @tasks.present? %>
+    <p><%= render partial: 'search' %></p>
+  <% end %>
 
   <h1>タスク管理</h1>
 
