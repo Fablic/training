@@ -12,7 +12,8 @@
 
     <div>
       <%= form.label 'ステータス', style: 'display: block' %>
-      <%= form.collection_select(:task_status_id, TaskStatus.all, :id, :name ) %>
+      <%= form.select :status, ['未着手', '着手中', '完了済'], {include_blank: '------'} %>
+
     </div>
 
     <div class="submit-content">
