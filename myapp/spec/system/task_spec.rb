@@ -350,21 +350,6 @@ RSpec.describe Task, type: :system do
       end
     end
 
-    context 'ステータスが未選択' do
-      it 'タスクの更新に失敗' do
-        visit edit_task_path(task.id)
-
-        fill_in 'task[title]', with: 'update_test'
-        fill_in 'task[content]', with: 'update_content'
-        fill_in 'task[deadline]', with: '2022/03/27'
-        select(value = '------', from: 'task[status]')
-        click_button '登録'
-
-        expect(current_path).to eq task_path(task.id)
-        expect(page).to have_content 'ステータスは一覧にありません'
-      end
-    end
-
     context '終了期限が未入力' do
       it 'タスクの更新に失敗' do
         visit edit_task_path(task.id)
@@ -377,6 +362,21 @@ RSpec.describe Task, type: :system do
 
         expect(current_path).to eq task_path(task.id)
         expect(page).to have_content '終了期限を入力してください'
+      end
+    end
+
+    context 'ステータスが未選択' do
+      it 'タスクの更新に失敗' do
+        visit edit_task_path(task.id)
+
+        fill_in 'task[title]', with: 'update_test'
+        fill_in 'task[content]', with: 'update_content'
+        fill_in 'task[deadline]', with: '2022/03/27'
+        select(value = '------', from: 'task[status]')
+        click_button '登録'
+
+        expect(current_path).to eq task_path(task.id)
+        expect(page).to have_content 'ステータスは一覧にありません'
       end
     end
 
