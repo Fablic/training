@@ -8,6 +8,10 @@ ja:
         id: ID
         title: タスク名
         content: 内容
+<<<<<<< HEAD
         status: ステータス
+=======
+        deadline: 終了期限
+>>>>>>> coffee-stain-neko
         created_at: 作成日
         another: その他

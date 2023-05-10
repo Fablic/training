@@ -1,5 +1,6 @@
 class Task < ApplicationRecord
   validates :title, presence: true, length: { maximum: 30 }
+  validates :deadline, presence: true
   validates :status, inclusion: { in: ['未着手', '着手中', '完了済'] }
 
   def self.looks(search, word)
@@ -13,4 +14,7 @@ class Task < ApplicationRecord
                Task.all
              end
   end
+
+  scope :deadline_asc, -> { order(deadline: :asc) }
+  scope :deadline_desc, -> { order(deadline: :desc) }
 end

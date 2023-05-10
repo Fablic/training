@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(version: 2023_05_09_042420) do
     t.string "content"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.date "deadline", null: false
     t.string "status", null: false
   end
 

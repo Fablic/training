@@ -13,7 +13,11 @@
     <div>
       <%= form.label 'ステータス', style: 'display: block' %>
       <%= form.select :status, ['未着手', '着手中', '完了済'], {include_blank: '------'} %>
+    </div>
 
+    <div>
+      <%= form.label '終了期限', style: 'display: block' %>
+      <%= form.date_field :deadline %>
     </div>
 
     <div class="submit-content">
