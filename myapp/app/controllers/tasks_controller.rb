@@ -3,9 +3,9 @@ class TasksController < ApplicationController
 
   def index
     @tasks = if params[:deadline_updated]
-               Task.updated
+               Task.deadleine_asc
              elsif params[:deadline_created]
-               Task.created
+               Task.deadline_desc
              else
                Task.all.order(created_at: 'DESC')
              end

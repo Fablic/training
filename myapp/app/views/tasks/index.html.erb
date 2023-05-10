@@ -7,8 +7,8 @@
       <th><%= t('activerecord.attributes.task.content') %></th>
       <th>
         <%= t('activerecord.attributes.task.deadline') %>/
-        <%= link_to t('sort.work.asc'), tasks_path(deadline_updated: 'true') %>
-        <%= link_to t('sort.work.desc'), tasks_path(deadline_created: 'true') %>
+        <%= link_to t('sort.work.asc'), tasks_path(deadline_asc: 'true') %>
+        <%= link_to t('sort.work.desc'), tasks_path(deadline_desc: 'true') %>
       </th>
 
       <th><%= t('activerecord.attributes.task.created_at') %></th>
