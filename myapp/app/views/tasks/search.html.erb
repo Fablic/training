@@ -1,0 +1,26 @@
+<h2>Results index</h2>
+<p><%= render partial: 'search' %></p>
+
+<table class='tasks' border='1'>
+  <thead>
+    <tr>
+      <th><%= t('activerecord.attributes.task.id') %></th>
+      <td><%= t('activerecord.attributes.task.title') %></td>
+      <td><%= t('activerecord.attributes.task.content') %></td>
+      <td><%= t('activerecord.attributes.task.status') %></td>
+      <td><%= t('activerecord.attributes.task.created_at') %></td>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tasks.each do |task| %>
+      <tr>
+        <td><%= task.id %></td>
+        <td><%= task.title %></td>
+        <td><%= task.content %></td>
+        <td><%= task.status %></td>
+        <td><%= l task.created_at, format: :short %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= link_to 'もどる', root_path %>
