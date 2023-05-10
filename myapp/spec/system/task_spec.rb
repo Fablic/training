@@ -6,9 +6,9 @@ RSpec.describe Task, type: :system do
   describe 'タスク表示' do
     context 'DBに保存されたデータがある時' do
       before do
-        create(:task, id: '1', title: 'task1', content: 'task_contetnt1', created_at: '2023/04/27 09:00')
-        create(:task, id: '2', title: 'task2', content: 'task_contetnt2', created_at: '2023/04/27 08:00')
-        create(:task, id: '3', title: 'task3', content: 'task_contetnt3', created_at: '2023/04/27 10:00')
+        create(:task, id: '1', title: 'task1', content: 'task_contetnt1', status: '未着手', created_at: '2023/04/27 09:00')
+        create(:task, id: '2', title: 'task2', content: 'task_contetnt2', status: '着手中', created_at: '2023/04/27 08:00')
+        create(:task, id: '3', title: 'task3', content: 'task_contetnt3', status: '完了済', created_at: '2023/04/27 10:00')
         visit root_path
       end
 
@@ -18,14 +18,17 @@ RSpec.describe Task, type: :system do
         expect(page).to have_content 'task1'
         expect(page).to have_content 'task_contetnt1'
         expect(page).to have_content '2023/04/27 09:00'
+        expect(page).to have_content '未着手'
         expect(page).to have_content '2'
         expect(page).to have_content 'task2'
         expect(page).to have_content 'task_contetnt2'
         expect(page).to have_content '2023/04/27 08:00'
+        expect(page).to have_content '着手中'
         expect(page).to have_content '3'
         expect(page).to have_content 'task3'
         expect(page).to have_content 'task_contetnt3'
         expect(page).to have_content '2023/04/27 10:00'
+        expect(page).to have_content '完了済'
 
         expect(page).to have_link '詳細'
         expect(page).to have_link '編集'
@@ -46,6 +49,7 @@ RSpec.describe Task, type: :system do
         expect(page).to have_no_content task.id
         expect(page).to have_no_content task.title
         expect(page).to have_no_content task.content
+        expect(page).to have_no_content task.status
         expect(page).to have_no_link '詳細'
         expect(page).to have_no_link '編集'
         expect(page).to have_no_link '削除'
@@ -85,6 +89,7 @@ RSpec.describe Task, type: :system do
       expect(current_path).to eq new_task_path
       expect(page).to have_field 'task[title]'
       expect(page).to have_field 'task[content]'
+      expect(page).to have_field 'task[status]'
       expect(page).to have_button '登録'
       expect(page).to have_link 'もどる'
     end
@@ -95,11 +100,13 @@ RSpec.describe Task, type: :system do
 
         fill_in 'task[title]', with: 'test_title'
         fill_in 'task[content]', with: 'test_content'
+        select(value = '着手中', from: 'task[status]')
         click_button '登録'
 
         expect(current_path).to eq tasks_path
         expect(page).to have_content 'test_title'
         expect(page).to have_content 'test_content'
+        expect(page).to have_content '着手中'
         expect(page).to have_content 'タスクの登録に成功しました。'
       end
 
@@ -108,11 +115,13 @@ RSpec.describe Task, type: :system do
 
         fill_in 'task[title]', with: 'test_title'
         fill_in 'task[content]', with: ''
+        select(value = '着手中', from: 'task[status]')
         click_button '登録'
 
         expect(current_path).to eq tasks_path
         expect(page).to have_content 'test_title'
         expect(page).to have_selector('td', text: '')
+        expect(page).to have_content '着手中'
         expect(page).to have_content 'タスクの登録に成功しました。'
       end
     end
@@ -123,6 +132,7 @@ RSpec.describe Task, type: :system do
 
         fill_in 'task[title]', with: ''
         fill_in 'task[content]', with: 'test_content'
+        select '未着手',from: 'task[status]'
         click_button '登録'
 
         expect(current_path).to eq tasks_path
@@ -134,10 +144,23 @@ RSpec.describe Task, type: :system do
 
         fill_in 'task[title]', with: 'a' * 31
         fill_in 'task[content]', with: 'test_content'
+        select '未着手',from: 'task[status]'
         click_button '登録'
 
         expect(current_path).to eq tasks_path
         expect(page).to have_content 'タスク名は30文字以内で入力してください'
+      end
+
+      it 'ステータスが未選択の場合、タスクの登録に失敗' do
+        visit new_task_path
+
+        fill_in 'task[title]', with: 'test_title'
+        fill_in 'task[content]', with: 'test_content'
+        select '------',from: 'task[status]'
+        click_button '登録'
+
+        expect(current_path).to eq tasks_path
+        expect(page).to have_content 'ステータスは一覧にありません'
       end
     end
   end
@@ -156,6 +179,7 @@ RSpec.describe Task, type: :system do
         expect(current_path).to eq edit_task_path(task.id)
         expect(page).to have_field 'task[title]'
         expect(page).to have_field 'task[content]'
+        expect(page).to have_field 'task[status]'
         expect(page).to have_button '登録'
         expect(page).to have_link 'もどる'
       end
@@ -176,11 +200,13 @@ RSpec.describe Task, type: :system do
 
         fill_in 'task[title]', with: 'update_test'
         fill_in 'task[content]', with: 'update_content'
+        select(value = '着手中', from: 'task[status]')
         click_on '登録'
 
         expect(current_path).to eq tasks_path
         expect(page).to have_content 'update_test'
         expect(page).to have_content 'update_content'
+        expect(page).to have_content '着手中'
         expect(page).to have_content 'タスクの更新に成功しました。'
       end
 
@@ -189,11 +215,13 @@ RSpec.describe Task, type: :system do
 
         fill_in 'task[title]', with: 'update_test'
         fill_in 'task[content]', with: ''
+        select(value = '未着手', from: 'task[status]')
         click_button '登録'
 
         expect(current_path).to eq tasks_path
         expect(page).to have_content 'update_test'
         expect(page).to have_selector('td', text: '')
+        expect(page).to have_content '未着手'
         expect(page).to have_content 'タスクの更新に成功しました。'
       end
     end
@@ -204,10 +232,35 @@ RSpec.describe Task, type: :system do
 
         fill_in 'task[title]', with: ''
         fill_in 'task[content]', with: 'update_content'
+        select(value = '未着手', from: 'task[status]')
         click_button '登録'
 
         expect(current_path).to eq task_path(task.id)
         expect(page).to have_content 'タスク名を入力してください'
+      end
+
+      it 'タスク名が３１文字以上の場合、タスクの更新に失敗' do
+        visit edit_task_path(task.id)
+
+        fill_in 'task[title]', with: 'a' * 31
+        fill_in 'task[content]', with: 'update_content'
+        select(value = '未着手', from: 'task[status]')
+        click_button '登録'
+
+        expect(current_path).to eq task_path(task.id)
+        expect(page).to have_content 'タスク名は30文字以内で入力してください'
+      end
+
+      it '終了期限が未選択の場合、タスクの更新に失敗' do
+        visit edit_task_path(task.id)
+
+        fill_in 'task[title]', with: 'update_test'
+        fill_in 'task[content]', with: 'update_content'
+        select '------',from: 'task[status]'
+        click_button '登録'
+
+        expect(current_path).to eq task_path(task.id)
+        expect(page).to have_content 'ステータスは一覧にありません'
       end
 
       it '更新タスクがない場合、該当するタスクがないと表示' do
@@ -215,6 +268,7 @@ RSpec.describe Task, type: :system do
 
         fill_in 'task[title]', with: 'update_test'
         fill_in 'task[content]', with: 'update_content'
+        select(value = '未着手', from: 'task[status]')
         task.destroy
         click_button '登録'
 
