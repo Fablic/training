@@ -101,8 +101,8 @@ RSpec.describe Task, type: :system do
         expect(current_path).to eq root_path
         expect(page).to have_no_content task.id
         expect(page).to have_no_content task.title
-        expect(page).to have_no_content task.deadline
         expect(page).to have_no_content task.content
+        expect(page).to have_no_content task.deadline
         expect(page).to have_no_content task.status
         expect(page).to have_no_link '詳細'
         expect(page).to have_no_link '編集'
@@ -282,7 +282,7 @@ RSpec.describe Task, type: :system do
       end
     end
 
-    context 'タスク名、概要、ステータス、終了期限を入力' do
+    context 'タスク名、概要、終了期限、ステータスを入力' do
       it 'タスクの更新に成功' do
         visit edit_task_path(task.id)
 
