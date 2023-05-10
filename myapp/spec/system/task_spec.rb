@@ -67,6 +67,18 @@ RSpec.describe Task, type: :system do
           expect(task_titles).to eq %w[task3 task2 task1]
         end
       end
+    end
+
+    context '一覧ページの終了期限の降順ボタンが押された' do
+      before do
+        create(:task, id: '1', title: 'task1', content: 'task_contetnt1', deadline: '2023/04/29',
+                      created_at: '2023/04/27 09:00')
+        create(:task, id: '2', title: 'task2', content: 'task_contetnt2', deadline: '2023/04/28',
+                      created_at: '2023/04/27 08:00')
+        create(:task, id: '3', title: 'task3', content: 'task_contetnt3', deadline: '2023/04/27',
+                      created_at: '2023/04/27 10:00')
+        visit root_path
+      end
 
       it '終了期限の降順で表示' do
         click_on '降順'
