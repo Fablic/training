@@ -44,21 +44,21 @@ RSpec.describe Task, type: :model do
       end
     end
 
-    context '終了期限を選択していない時' do
-      it 'タスクを登録できず、ステータスは一覧にありませんと表示' do
-        task = build(:task, status: '------')
-
-        expect(task).to be_invalid
-        expect(task.errors.full_messages).to include('ステータスは一覧にありません')
-      end
-    end
-
     context '終了期限が未入力' do
       it 'タスクを登録できず、終了期限を入力してくださいと表示' do
         task = build(:task, deadline: '')
 
         expect(task).to be_invalid
         expect(task.errors.full_messages).to include('終了期限を入力してください')
+      end
+    end
+
+    context 'ステータスを選択していない時' do
+      it 'タスクを登録できず、ステータスは一覧にありませんと表示' do
+        task = build(:task, status: '------')
+
+        expect(task).to be_invalid
+        expect(task.errors.full_messages).to include('ステータスは一覧にありません')
       end
     end
   end
