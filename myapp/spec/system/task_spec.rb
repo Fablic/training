@@ -64,6 +64,16 @@ RSpec.describe Task, type: :system do
         expect(current_path).to eq tasks_path
         within '.tasks' do
           task_titles = all('.task-title').map(&:text)
+          expect(task_titles).to eq %w[task3 task2 task1]
+        end
+      end
+
+      it '終了期限の降順で表示' do
+        click_on '降順'
+
+        expect(current_path).to eq tasks_path
+        within '.tasks' do
+          task_titles = all('.task-title').map(&:text)
           expect(task_titles).to eq %w[task1 task2 task3]
         end
       end
