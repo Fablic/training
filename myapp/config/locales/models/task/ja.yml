@@ -8,5 +8,6 @@ ja:
         id: ID
         title: タスク名
         content: 内容
+        deadline: 終了期限
         created_at: 作成日
         another: その他

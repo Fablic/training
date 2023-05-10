@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Task, type: :model do
   describe 'バリデーションのテスト' do
-    context 'タスク名と詳細が入力されている時' do
+    context 'タスク名、概要、終了期限が入力' do
       it 'タスクを登録できる' do
         task = build(:task)
 
@@ -10,7 +10,7 @@ RSpec.describe Task, type: :model do
       end
     end
 
-    context 'タスク名のみ入力されている時' do
+    context '概要が未入力' do
       it 'タスクを登録できる' do
         task = build(:task, content: '')
 
@@ -18,7 +18,7 @@ RSpec.describe Task, type: :model do
       end
     end
 
-    context 'タスク名が29文字入力されている時' do
+    context 'タスク名が30文字で入力' do
       it 'タスクを登録できる' do
         task = build(:task, title: 'a' * 30)
 
@@ -26,7 +26,7 @@ RSpec.describe Task, type: :model do
       end
     end
 
-    context 'タスク名が空欄の時' do
+    context 'タスク名が未入力' do
       it 'タスクを登録できず、タスク名を入力してくださいと表示' do
         task = build(:task, title: '')
 
@@ -35,12 +35,21 @@ RSpec.describe Task, type: :model do
       end
     end
 
-    context 'タスク名が30文字以上の場合' do
+    context 'タスク名が31文字以上の入力' do
       it 'タスクを登録できず、タスク名は30文字以内で入力してくださいと表示' do
         task = build(:task, title: 'a' * 31)
 
         expect(task).to be_invalid
         expect(task.errors.full_messages).to include('タスク名は30文字以内で入力してください')
+      end
+    end
+
+    context '終了期限が未入力' do
+      it 'タスクを登録できず、終了期限を入力してくださいと表示' do
+        task = build(:task, deadline: '')
+
+        expect(task).to be_invalid
+        expect(task.errors.full_messages).to include('終了期限を入力してください')
       end
     end
   end
