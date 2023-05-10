@@ -1,5 +1,6 @@
 <div>
   <p><%= link_to '新規登録', new_task_path %></p>
+  <p><%= render partial: 'search' %></p>
 
   <h1>タスク管理</h1>
 
@@ -9,6 +10,7 @@
       <th><%= t('activerecord.attributes.task.id') %></th>
       <td><%= t('activerecord.attributes.task.title') %></td>
       <td><%= t('activerecord.attributes.task.content') %></td>
+      <td><%= t('activerecord.attributes.task.status') %></td>
       <td><%= t('activerecord.attributes.task.created_at') %></td>
       <td><%= t('activerecord.attributes.task.another') %></td>
     </tr>
@@ -19,7 +21,7 @@
           <td><%= task.id %></td>
           <td class='task-title'><%= task.title %></td>
           <td><%= task.content %></td>
-          <td><%= task.task_status.name %></td>
+          <td><%= task.status %></td>
           <td><%= l task.created_at, format: :short %></td>
           <td>
             <%= link_to '詳細', task_path(task.id) %>
