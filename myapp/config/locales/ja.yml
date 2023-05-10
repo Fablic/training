@@ -17,5 +17,5 @@ ja:
 
   sort:
     work:
-      created: 降順
-      updated: 昇順
+      asc: 昇順
+      desc: 降順
