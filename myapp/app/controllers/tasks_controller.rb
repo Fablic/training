@@ -38,6 +38,10 @@ class TasksController < ApplicationController
     end
   end
 
+  def search
+    @tasks = Task.looks(params[:search], params[:word])
+  end
+
   private
 
   def set_task
@@ -45,6 +49,6 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:title, :content, :task_status_id)
+    params.require(:task).permit(:title, :content, :status)
   end
 end
