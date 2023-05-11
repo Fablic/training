@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 2023_05_11_010502) do
     t.datetime "updated_at", precision: 6, null: false
     t.date "deadline", null: false
     t.string "status", null: false
+    t.index ["status"], name: "index_tasks_on_status"
     t.index ["title"], name: "index_tasks_on_title"
   end
 
