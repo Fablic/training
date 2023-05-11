@@ -1,8 +1,8 @@
 <div class="search_form">
   <%= form_with url: search_tasks_path, local: true, method: :get do |form| %>
-    <%= form.text_field :word %>
-    <%= form.select :search, options_for_select([['未着手', 'not_started_task'], ['着手中', 'started_task'],  ['完了済', 'completed_task']]), { include_blank: '------'} %>
-    <%= form.submit "検索", class: "btn btn-primary" %>
+    <%= form.text_field :word, id: 'search_word' %>
+    <%= form.select :search, options_for_select([['未着手', 'not_started_task'], ['着手中', 'started_task'],  ['完了済', 'completed_task']]), { include_blank: '------'}, id: 'search_status' %>
+    <%= form.submit '検索', id: 'search_submit' %>
   <% end %>
   </div>
 </div>
