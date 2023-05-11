@@ -1,19 +1,11 @@
 class Task < ApplicationRecord
   validates :title, presence: true, length: { maximum: 30 }
   validates :deadline, presence: true
-  validates :status, inclusion: { in: ['未着手', '着手中', '完了済'] }
 
-  def self.looks(search, word)
-    @tasks = if search == 'not_started_task'
-               Task.where('title LIKE? AND status LIKE?', "%#{word}%", '未着手')
-             elsif search == 'started_task'
-               Task.where('title LIKE? AND status LIKE?', "%#{word}%", '着手中')
-             elsif search == 'completed_task'
-               Task.where('title LIKE? AND status LIKE?', "%#{word}%", '完了済')
-             else
-               Task.all
-             end
-  end
+  enum status: {not_started: '0', start: '1', completed: '2'}
+
+  scope :where_title, -> (title) { where('title like ?', "%#{title}%") if title.present? }
+  scope :where_status, -> (status) { where(status: status) if status.present? }
 
   scope :deadline_asc, -> { order(deadline: :asc) }
   scope :deadline_desc, -> { order(deadline: :desc) }
