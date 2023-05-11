@@ -47,6 +47,50 @@ RSpec.describe Task, type: :system do
       end
     end
 
+    context 'ページングが動作' do
+      before do
+        create(:task, id: '1', title: 'task1', content: 'task_contetnt1', deadline: '2023/05/01',
+                      created_at: '2023/04/26 01:00')
+        create(:task, id: '2', title: 'task2', content: 'task_contetnt2', deadline: '2023/04/30',
+                      created_at: '2023/04/27 02:00')
+        create(:task, id: '3', title: 'task3', content: 'task_contetnt3', deadline: '2023/04/29',
+                      created_at: '2023/04/28 03:00')
+        create(:task, id: '4', title: 'task4', content: 'task_contetnt4', deadline: '2023/04/28',
+                      created_at: '2023/04/29 04:00')
+        create(:task, id: '5', title: 'task5', content: 'task_contetnt5', deadline: '2023/04/27',
+                      created_at: '2023/04/30 05:00')
+        create(:task, id: '6', title: 'task6', content: 'task_contetnt6', deadline: '2023/04/26',
+                      created_at: '2023/05/01 06:00')
+        visit root_path
+      end
+
+      it '２ページ目のタスクが表示されている' do
+        expect(page).to have_link '2', href: '/?page=2'
+        expect(page).to have_link 'Next'
+        find_link('2').click
+
+        expect(page).to have_content '1'
+        expect(page).to have_content 'task1'
+        expect(page).to have_content 'task_contetnt1'
+        expect(page).to have_content '2023/05/01'
+        expect(page).to have_content '2023/04/26 01:00'
+        expect(page).to have_link '詳細'
+        expect(page).to have_link '編集'
+        expect(page).to have_link '削除'
+        expect(page).to have_link '昇順', href: tasks_path(deadline_asc: 'true')
+        expect(page).to have_link '降順', href: tasks_path(deadline_desc: 'true')
+        expect(page).to have_css '.first'
+        expect(page).to have_link 'First'
+        expect(page).to have_css '.prev'
+        expect(page).to have_link 'Previous'
+        expect(page).to have_link '1', href: '/'
+
+
+
+
+      end
+    end
+
     context '一覧ページの終了期限の昇順ボタンが押された' do
       before do
         create(:task, id: '1', title: 'task1', content: 'task_contetnt1', deadline: '2023/04/29',
