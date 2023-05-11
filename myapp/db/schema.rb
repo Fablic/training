@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_05_09_042420) do
+ActiveRecord::Schema.define(version: 2023_05_11_010502) do
 
   create_table "tasks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "title", limit: 30, null: false
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 2023_05_09_042420) do
     t.datetime "updated_at", precision: 6, null: false
     t.date "deadline", null: false
     t.string "status", null: false
+    t.index ["title"], name: "index_tasks_on_title"
   end
 
 end
