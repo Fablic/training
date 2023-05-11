@@ -41,6 +41,9 @@ RSpec.describe Task, type: :system do
         expect(page).to have_link '削除'
         expect(page).to have_link '昇順', href: tasks_path(deadline_asc: 'true')
         expect(page).to have_link '降順', href: tasks_path(deadline_desc: 'true')
+        expect(page).to have_field 'word'
+        expect(page).to have_select(options: ['------', '未着手', '着手中', '完了済'])
+        expect(page).to have_button '検索'
 
 
         within '.tasks' do
@@ -94,6 +97,83 @@ RSpec.describe Task, type: :system do
       end
     end
 
+    context 'タスク名、ステータスを入力して検索' do
+      before do
+        create(:task, id: '1', title: 'task1', content: 'task_contetnt1', deadline: '2023/04/29',
+                      status: '未着手', created_at: '2023/01/27 09:00')
+        create(:task, id: '2', title: 'task2', content: 'task_contetnt2', deadline: '2023/04/28',
+                      status: '着手中', created_at: '2023/03/27 08:00')
+        visit root_path
+      end
+
+      it '条件に合致するタスクが一覧に表示' do
+        fill_in 'search_word', with: 'task'
+        find('#search_status').find("option[value='not_started_task']").select_option
+        find('#search_submit').click
+
+        expect(current_path).to eq search_tasks_path
+        expect(page).to have_content '1'
+        expect(page).to have_selector('td', text: 'task1')
+        expect(page).to have_content 'task_contetnt1'
+        expect(page).to have_content '2023/04/29'
+        expect(page).to have_selector('td', text: '未着手')
+        expect(page).to have_content '2023/01/27 09:00'
+      end
+    end
+
+    context 'タスク名のみ入力して検索' do
+      before do
+        create(:task, id: '1', title: 'task1', content: 'task_contetnt1', deadline: '2023/04/29',
+                      status: '未着手', created_at: '2023/01/27 09:00')
+        create(:task, id: '2', title: 'task2', content: 'task_contetnt2', deadline: '2023/04/28',
+                      status: '着手中', created_at: '2023/03/27 08:00')
+        visit root_path
+      end
+
+      it '全てのタスクが一覧に表示' do
+        fill_in 'search_word', with: 'task'
+        find('#search_submit').click
+
+        expect(current_path).to eq search_tasks_path
+        expect(page).to have_content '1'
+        expect(page).to have_selector('td', text: 'task1')
+        expect(page).to have_content 'task_contetnt1'
+        expect(page).to have_content '2023/04/29'
+        expect(page).to have_selector('td', text: '未着手')
+        expect(page).to have_content '2023/01/27 09:00'
+        expect(page).to have_content '2'
+        expect(page).to have_selector('td', text: 'task2')
+        expect(page).to have_content 'task_contetnt2'
+        expect(page).to have_content '2023/04/28'
+        expect(page).to have_selector('td', text: '未着手')
+        expect(page).to have_content '2023/03/27 08:00'
+      end
+    end
+
+    context 'ステータスのみ入力して検索' do
+      before do
+        create(:task, id: '1', title: 'task1', content: 'task_contetnt1', deadline: '2023/04/29',
+                      status: '未着手', created_at: '2023/01/27 09:00')
+        create(:task, id: '2', title: 'task2', content: 'task_contetnt2', deadline: '2023/04/28',
+                      status: '着手中', created_at: '2023/03/27 08:00')
+        visit root_path
+      end
+
+      it '条件に合致するタスクを一覧に表示' do
+        fill_in 'search_word', with: 'task'
+        find('#search_status').find("option[value='started_task']").select_option
+        find('#search_submit').click
+
+        expect(current_path).to eq search_tasks_path
+        expect(page).to have_content '2'
+        expect(page).to have_selector('td', text: 'task2')
+        expect(page).to have_content 'task_contetnt2'
+        expect(page).to have_content '2023/04/28'
+        expect(page).to have_selector('td', text: '着手中')
+        expect(page).to have_content '2023/03/27 08:00'
+      end
+    end
+
     context 'DBに保存されたデータがない' do
       it '一覧ページに新規登録ボタンのみ表示' do
         visit root_path
@@ -107,6 +187,9 @@ RSpec.describe Task, type: :system do
         expect(page).to have_no_link '詳細'
         expect(page).to have_no_link '編集'
         expect(page).to have_no_link '削除'
+        expect(page).to have_no_field 'word'
+        expect(page).to have_no_select(options: ['------', '未着手', '着手中', '完了済'])
+        expect(page).to have_no_button '検索'
         expect(page).to have_link '新規登録'
       end
     end
