@@ -84,10 +84,6 @@ RSpec.describe Task, type: :system do
         expect(page).to have_css '.prev'
         expect(page).to have_link 'Previous'
         expect(page).to have_link '1', href: '/'
-
-
-
-
       end
     end
 
