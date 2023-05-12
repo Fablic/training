@@ -17,7 +17,7 @@
 
     <div>
       <%= form.label t('activerecord.attributes.task.status'), style: 'display: block' %>
-      <%= form.select :status, Task.statuses.keys.map { |k| [t("activerecord.enums.task.status.#{k}"), k] }, { default: :not_started } %>
+      <%= form.select :status, Task.statuses.keys.map { |k| [t("enums.task.status.#{k}"), k] }, { selected: 1 } %>
     </div>
 
     <div class='submit-content'>
