@@ -97,7 +97,7 @@ RSpec.describe Task, type: :system do
     end
 
     context 'DBに保存されたデータがない' do
-      it '一覧ページに新規登録ボタン、検索ファームが表示' do
+      it '一覧ページに新規登録ボタン、検索フォームが表示' do
         visit root_path
 
         expect(current_path).to eq root_path
