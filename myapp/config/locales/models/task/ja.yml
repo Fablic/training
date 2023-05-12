@@ -13,9 +13,9 @@ ja:
         created_at: 作成日
         another: その他
 
-    enums:
-      task:
-        status:
-          not_started: 未着手
-          start: 着手中
-          completed: 完了
+  enums:
+    task:
+      status:
+        not_started: 未着手
+        start: 着手中
+        completed: 完了
