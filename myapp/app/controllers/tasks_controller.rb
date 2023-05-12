@@ -7,7 +7,7 @@ class TasksController < ApplicationController
              elsif params[:deadline_desc]
                Task.deadline_desc
              else
-               Task.where_title(params[:title]).where_status(params[:status]).order(created_at: 'DESC')
+               Task.all.order(created_at: 'DESC')
              end
   end
 
@@ -42,6 +42,11 @@ class TasksController < ApplicationController
     else
       render :index
     end
+  end
+
+  def search
+    @tasks = Task.where_title(params[:title]).where_status(params[:status])
+    render :index
   end
 
   private
