@@ -7,35 +7,38 @@
 
   <table class='tasks' border='1'>
     <thead>
-    <tr>
-      <th><%= t('activerecord.attributes.task.id') %></th>
-      <th><%= t('activerecord.attributes.task.title') %></th>
-      <th><%= t('activerecord.attributes.task.content') %></th>
-      <th>
-        <%= t('activerecord.attributes.task.deadline') %>/
-        <%= link_to t('sort.work.asc'), tasks_path(deadline_asc: 'true') %>
-        <%= link_to t('sort.work.desc'), tasks_path(deadline_desc: 'true') %>
-      </th>
-      <th><%= t('activerecord.attributes.task.status') %></th>
-      <th><%= t('activerecord.attributes.task.created_at') %></th>
-      <th><%= t('activerecord.attributes.task.another') %></th>
-    </tr>
-    <% @tasks.each do |task| %>
       <tr>
-        <td><%= task.id %></td>
-        <td class='task-title'>
-          <%= task.title %>
-        </td>
-        <td><%= task.content %></td>
-        <td><%= l task.deadline %></td>
-        <td><%= t("enums.task.status.#{task.status}") %></td>
-        <td><%= l task.created_at, format: :short %></td>
-        <td>
-          <%= link_to '詳細', task_path(task.id) %>
-          <%= link_to '編集', edit_task_path(task.id) %>
-          <%= link_to '削除', task_path(task.id), method: :delete %>
-        </td>
+        <th><%= t('activerecord.attributes.task.id') %></th>
+        <th><%= t('activerecord.attributes.task.title') %></th>
+        <th><%= t('activerecord.attributes.task.content') %></th>
+        <th>
+          <%= t('activerecord.attributes.task.deadline') %>/
+          <%= link_to t('sort.work.asc'), tasks_path(deadline_asc: 'true') %>
+          <%= link_to t('sort.work.desc'), tasks_path(deadline_desc: 'true') %>
+        </th>
+        <th><%= t('activerecord.attributes.task.status') %></th>
+        <th><%= t('activerecord.attributes.task.created_at') %></th>
+        <th><%= t('activerecord.attributes.task.another') %></th>
       </tr>
-    <% end %>
+    </thead>
+    <tbody>
+      <% @tasks.each do |task| %>
+        <tr>
+          <td><%= task.id %></td>
+          <td class='task-title'>
+            <%= task.title %>
+          </td>
+          <td><%= task.content %></td>
+          <td><%= l task.deadline %></td>
+          <td><%= t("enums.task.status.#{task.status}") %></td>
+          <td><%= l task.created_at, format: :short %></td>
+          <td>
+            <%= link_to '詳細', task_path(task.id) %>
+            <%= link_to '編集', edit_task_path(task.id) %>
+            <%= link_to '削除', task_path(task.id), method: :delete %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
   </table>
 </div>
