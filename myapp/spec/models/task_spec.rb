@@ -61,13 +61,13 @@ RSpec.describe Task, type: :model do
 
     context '終了期限ソートが昇順のとき' do
       it '終了期限の新しい日付順に表示' do
-        expect(Task.deadline_asc).to eq [task3, task2, task1]
+        expect(Task.deadline_order('asc')).to eq [task3, task2, task1]
       end
     end
 
     context '終了期限ソートが降順のとき' do
       it '終了期限の古い日付順に表示' do
-        expect(Task.deadline_desc).to eq [task1, task2, task3]
+        expect(Task.deadline_order('desc')).to eq [task1, task2, task3]
       end
     end
   end
@@ -75,10 +75,10 @@ RSpec.describe Task, type: :model do
   describe '検索' do
     describe 'タスク名検索' do
       context 'タスク名が完全一致するとき' do
-        let!(:task) { create(:task, title: 'あいうえお', status: 1) }
+        let!(:task) { create(:task, title: 'あいうえお') }
 
         it 'データが取得できる' do
-          expect(Task.where_title('あいうえお').where_status(1).count).to eq 1
+          expect(Task.where_title('あいうえお').count).to eq 1
         end
       end
 
@@ -86,7 +86,7 @@ RSpec.describe Task, type: :model do
         let!(:task) { create(:task, title: 'あいうえお') }
 
         it 'データが取得できる' do
-          expect(Task.where_title('いうえ').where_status(1).count).to eq 1
+          expect(Task.where_title('いうえ').count).to eq 1
         end
       end
 
@@ -94,57 +94,57 @@ RSpec.describe Task, type: :model do
         let!(:task) { create(:task, title: 'あいうえお') }
 
         it 'データが取得できない' do
-          expect(Task.where_title('かきくけこ').where_status(1)).to be_empty
+          expect(Task.where_title('かきくけこ')).to be_empty
         end
       end
 
       context 'タスク名が空のとき' do
-        let!(:task) { create(:task, title: 'あいうえお', status: 1) }
+        let!(:task) { create(:task, title: 'あいうえお') }
 
         it 'データを取得できない' do
-          expect(Task.where_title('').where_status(1).count).to eq 1
+          expect(Task.where_title('').count).to eq 1
         end
       end
 
       context 'タスク名がnilのとき' do
-        let!(:task) { create(:task, title: 'あいうえお', status: 1) }
+        let!(:task) { create(:task, title: 'あいうえお') }
 
         it 'データを取得できない' do
-          expect(Task.where_title(nil).where_status(1).count).to eq 1
+          expect(Task.where_title(nil).count).to eq 1
         end
       end
     end
 
     describe 'ステータス検索' do
       context 'ステータスが一致するとき' do
-        let!(:task) { create(:task, title: 'あいうえお', status: 1) }
+        let!(:task) { create(:task, title: 'あいうえお') }
 
         it 'データを取得できる' do
-          expect(Task.where_title('あいうえお').where_status(1).count).to eq 1
+          expect(Task.where_title('あいうえお').count).to eq 1
         end
       end
 
       context 'ステータスが一致しないとき' do
-        let!(:task) { create(:task, title: 'あいうえお', status: 2) }
+        let!(:task) { create(:task, status: 2) }
 
         it 'データを取得できない' do
-          expect(Task.where_title('あいうえお').where_status(1)).to be_empty
+          expect(Task.where_status(1)).to be_empty
         end
       end
 
       context 'ステータスが空のとき' do
-        let!(:task) { create(:task, title: 'あいうえお', status: 1) }
+        let!(:task) { create(:task, status: 1) }
 
         it 'データを取得できる' do
-          expect(Task.where_title('あいうえお').where_status('').count).to eq 1
+          expect(Task.where_status('').count).to eq 1
         end
       end
 
       context 'ステータスがnilのとき' do
-        let!(:task) { create(:task, title: 'あいうえお', status: 1) }
+        let!(:task) { create(:task, status: 1) }
 
         it 'データを取得できる' do
-          expect(Task.where_title('あいうえお').where_status(nil).count).to eq 1
+          expect(Task.where_status(nil).count).to eq 1
         end
       end
     end
