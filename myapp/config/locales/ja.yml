@@ -19,3 +19,7 @@ ja:
     work:
       asc: 昇順
       desc: 降順
+
+  dictionary:
+    words:
+      clear: クリア
