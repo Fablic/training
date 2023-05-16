@@ -64,6 +64,12 @@ RSpec.describe Task, type: :system do
       end
 
       it '２ページ目のタスクが表示されている' do
+        expect(page).to have_selector('span', text: 'Next')
+        expect(page).to have_link 'Next'
+        expect(page).to have_selector('span', text: 'Last')
+        expect(page).to have_link 'Last'
+        expect(page).to have_selector('span', text: '2')
+        expect(page).to have_link '2'
         within '.tasks' do
           task_titles = all('.task-title').map(&:text)
           expect(task_titles).to eq %w[task6 task5 task4 task3 task2]
@@ -126,10 +132,11 @@ RSpec.describe Task, type: :system do
         expect(page).to have_link '削除'
         expect(page).to have_link '昇順', href: tasks_path(deadline_order: 'asc')
         expect(page).to have_link '降順', href: tasks_path(deadline_order: 'desc')
-        expect(page).to have_css '.first'
+        expect(page).to have_selector('span', text: 'First')
         expect(page).to have_link 'First'
-        expect(page).to have_css '.prev'
+        expect(page).to have_selector('span', text: 'Previous')
         expect(page).to have_link 'Previous'
+        expect(page).to have_selector('span', text: '1')
         expect(page).to have_link '1'
       end
     end
@@ -171,10 +178,11 @@ RSpec.describe Task, type: :system do
         expect(page).to have_link '削除'
         expect(page).to have_link '昇順', href: tasks_path(deadline_order: 'asc')
         expect(page).to have_link '降順', href: tasks_path(deadline_order: 'desc')
-        expect(page).to have_css '.first'
+        expect(page).to have_selector('span', text: 'First')
         expect(page).to have_link 'First'
-        expect(page).to have_css '.prev'
+        expect(page).to have_selector('span', text: 'Previous')
         expect(page).to have_link 'Previous'
+        expect(page).to have_selector('span', text: '1')
         expect(page).to have_link '1'
       end
     end
