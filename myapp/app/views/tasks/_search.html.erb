@@ -1,9 +1,9 @@
 <div class='search_form'>
   <%= form_with model: @task, url: search_tasks_path, local: true, method: :get do |form| %>
 
-    <%= form.text_field :title, id: 'search_word', :value => @title %>
-    <%= form.select :status, Task.statuses.keys.map { |k| [t("enums.task.status.#{k}"), k] }, :selected => @status %>
-    <%= form.hidden_field :deadline_order, :value => @deadline_order  %>
+    <%= form.text_field :title, id: 'search_word', value: @title %>
+    <%= form.select :status, Task.statuses.keys.map { |k| [t("enums.task.status.#{k}"), k] }, selected: @status %>
+    <%= form.hidden_field :deadline_order, value: @deadline_order  %>
     <%= form.submit '検索', id: 'search_submit' %>
     <%= link_to t('dictionary.words.clear'), tasks_path %>
   <% end %>
