@@ -53,4 +53,23 @@ RSpec.describe Task, type: :model do
       end
     end
   end
+
+  describe 'ソート' do
+    let!(:task1) { create(:task, id: '1', title: 'task1', deadline: '2023/04/29', created_at: '2023/04/27 09:00') }
+    let!(:task2) { create(:task, id: '2', title: 'task2', deadline: '2023/04/28', created_at: '2023/04/27 08:00') }
+    let!(:task3) { create(:task, id: '3', title: 'task3', deadline: '2023/04/27', created_at: '2023/04/27 07:00') }
+
+    context '終了期限ソートが昇順のとき' do
+      it '終了期限の新しい日付順に表示' do
+        expect(Task.deadline_order('asc')).to eq [task3, task2, task1]
+      end
+    end
+
+    context '終了期限ソートが降順のとき' do
+      it '終了期限の古い日付順に表示' do
+        expect(Task.deadline_order('desc')).to eq [task1, task2, task3]
+      end
+    end
+  end
+
 end
