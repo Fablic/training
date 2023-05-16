@@ -42,7 +42,7 @@ class TasksController < ApplicationController
     @tasks = if params.key?(:deadline_order) && !params[:deadline_order].nil? && !params[:deadline_order].empty?
                Task.where_title(params[:title]).where_status(params[:status]).deadline_order(params[:deadline_order])
              else
-               Task.where_title(params[:title]).where_status(params[:status])
+               Task.where_title(params[:title]).where_status(params[:status]).order(created_at: 'DESC')
              end
     @title = params[:title]
     @status = params[:status]
