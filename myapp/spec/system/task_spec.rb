@@ -16,7 +16,7 @@ RSpec.describe Task, type: :system do
       end
 
       it '一覧ページに作成日降順で表示' do
-        expect(current_path).to eq root_path
+        expect(current_path).to eq root_path # rubocop:disable Capybara/CurrentPathExpectation
         expect(page).to have_content '1'
         expect(page).to have_content 'task1'
         expect(page).to have_content 'task_contetnt1'
@@ -187,7 +187,6 @@ RSpec.describe Task, type: :system do
       end
     end
 
-
     context '一覧ページの終了期限の昇順ボタンが押された' do
       before do
         create(:task, id: '1', title: 'task1', content: 'task_contetnt1', deadline: '2023/04/29',
@@ -202,7 +201,7 @@ RSpec.describe Task, type: :system do
       it '終了期限の昇順で表示' do
         click_on '昇順'
 
-        expect(current_path).to eq tasks_path
+        expect(current_path).to eq tasks_path # rubocop:disable Capybara/CurrentPathExpectation
         within '.tasks' do
           task_titles = all('.task-title').map(&:text)
           expect(task_titles).to eq %w[task3 task2 task1]
@@ -224,7 +223,7 @@ RSpec.describe Task, type: :system do
       it '終了期限の降順で表示' do
         click_on '降順'
 
-        expect(current_path).to eq tasks_path
+        expect(current_path).to eq tasks_path # rubocop:disable Capybara/CurrentPathExpectation
         within '.tasks' do
           task_titles = all('.task-title').map(&:text)
           expect(task_titles).to eq %w[task1 task2 task3]
@@ -236,14 +235,14 @@ RSpec.describe Task, type: :system do
       it '一覧ページに新規登録ボタンのみ表示' do
         visit root_path
 
-        expect(current_path).to eq root_path
-        expect(page).to have_no_content task.id
-        expect(page).to have_no_content task.title
-        expect(page).to have_no_content task.content
-        expect(page).to have_no_content task.deadline
-        expect(page).to have_no_link '詳細'
-        expect(page).to have_no_link '編集'
-        expect(page).to have_no_link '削除'
+        expect(current_path).to eq root_path # rubocop:disable Capybara/CurrentPathExpectation
+        expect(page).not_to have_content task.id
+        expect(page).not_to have_content task.title
+        expect(page).not_to have_content task.content
+        expect(page).not_to have_content task.deadline
+        expect(page).not_to have_link '詳細'
+        expect(page).not_to have_link '編集'
+        expect(page).not_to have_link '削除'
         expect(page).to have_link '新規登録'
       end
     end
@@ -252,7 +251,7 @@ RSpec.describe Task, type: :system do
       it '詳細ページの表示' do
         visit task_path(task.id)
 
-        expect(current_path).to eq task_path(task.id)
+        expect(current_path).to eq task_path(task.id) # rubocop:disable Capybara/CurrentPathExpectation
         expect(page).to have_content task.title
         expect(page).to have_content task.content
         expect(page).to have_link 'もどる'
@@ -265,7 +264,7 @@ RSpec.describe Task, type: :system do
 
         visit task_path(task.id)
 
-        expect(current_path).to eq root_path
+        expect(current_path).to eq root_path # rubocop:disable Capybara/CurrentPathExpectation
         expect(page).to have_content '該当するリソースがありませんでした。'
       end
     end
@@ -279,7 +278,7 @@ RSpec.describe Task, type: :system do
 
       click_on '新規登録'
 
-      expect(current_path).to eq new_task_path
+      expect(current_path).to eq new_task_path # rubocop:disable Capybara/CurrentPathExpectation
       expect(page).to have_field 'task[title]'
       expect(page).to have_field 'task[content]'
       expect(page).to have_field 'task[deadline]'
@@ -296,7 +295,7 @@ RSpec.describe Task, type: :system do
         fill_in 'task[deadline]', with: '2022/03/27'
         click_button '登録'
 
-        expect(current_path).to eq tasks_path
+        expect(current_path).to eq tasks_path # rubocop:disable Capybara/CurrentPathExpectation
         expect(page).to have_content 'test_title'
         expect(page).to have_content 'test_content'
         expect(page).to have_content '2022/03/27'
@@ -313,7 +312,7 @@ RSpec.describe Task, type: :system do
         fill_in 'task[deadline]', with: '2022/03/27'
         click_button '登録'
 
-        expect(current_path).to eq tasks_path
+        expect(current_path).to eq tasks_path # rubocop:disable Capybara/CurrentPathExpectation
         expect(page).to have_content 'test_title'
         expect(page).to have_selector('td', text: '')
         expect(page).to have_content '2022/03/27'
@@ -330,7 +329,7 @@ RSpec.describe Task, type: :system do
         fill_in 'task[deadline]', with: '2022/03/27'
         click_button '登録'
 
-        expect(current_path).to eq tasks_path
+        expect(current_path).to eq tasks_path # rubocop:disable Capybara/CurrentPathExpectation
         expect(page).to have_content 'タスク名を入力してください'
       end
     end
@@ -344,7 +343,7 @@ RSpec.describe Task, type: :system do
         fill_in 'task[deadline]', with: '2022/03/27'
         click_button '登録'
 
-        expect(current_path).to eq tasks_path
+        expect(current_path).to eq tasks_path # rubocop:disable Capybara/CurrentPathExpectation
         expect(page).to have_content 'タスク名は30文字以内で入力してください'
       end
     end
@@ -358,7 +357,7 @@ RSpec.describe Task, type: :system do
         fill_in 'task[deadline]', with: ''
         click_button '登録'
 
-        expect(current_path).to eq tasks_path
+        expect(current_path).to eq tasks_path # rubocop:disable Capybara/CurrentPathExpectation
         expect(page).to have_content '終了期限を入力してください'
       end
     end
@@ -375,7 +374,7 @@ RSpec.describe Task, type: :system do
 
         click_on '編集'
 
-        expect(current_path).to eq edit_task_path(task.id)
+        expect(current_path).to eq edit_task_path(task.id) # rubocop:disable Capybara/CurrentPathExpectation
         expect(page).to have_field 'task[title]'
         expect(page).to have_field 'task[content]'
         expect(page).to have_field 'task[deadline]'
@@ -390,7 +389,7 @@ RSpec.describe Task, type: :system do
 
         visit edit_task_path(task.id)
 
-        expect(current_path).to eq root_path
+        expect(current_path).to eq root_path # rubocop:disable Capybara/CurrentPathExpectation
         expect(page).to have_content '該当するリソースがありませんでした。'
       end
     end
@@ -404,7 +403,7 @@ RSpec.describe Task, type: :system do
         fill_in 'task[deadline]', with: '2022/03/27'
         click_on '登録'
 
-        expect(current_path).to eq tasks_path
+        expect(current_path).to eq tasks_path # rubocop:disable Capybara/CurrentPathExpectation
         expect(page).to have_content 'update_test'
         expect(page).to have_content 'update_content'
         expect(page).to have_content '2022/03/27'
@@ -421,7 +420,7 @@ RSpec.describe Task, type: :system do
         fill_in 'task[deadline]', with: '2022/03/27'
         click_button '登録'
 
-        expect(current_path).to eq tasks_path
+        expect(current_path).to eq tasks_path # rubocop:disable Capybara/CurrentPathExpectation
         expect(page).to have_content 'update_test'
         expect(page).to have_selector('td', text: '')
         expect(page).to have_content '2022/03/27'
@@ -438,7 +437,7 @@ RSpec.describe Task, type: :system do
         fill_in 'task[deadline]', with: '2022/03/27'
         click_button '登録'
 
-        expect(current_path).to eq task_path(task.id)
+        expect(current_path).to eq task_path(task.id) # rubocop:disable Capybara/CurrentPathExpectation
         expect(page).to have_content 'タスク名を入力してください'
       end
     end
@@ -452,7 +451,7 @@ RSpec.describe Task, type: :system do
         fill_in 'task[deadline]', with: '2022/03/27'
         click_button '登録'
 
-        expect(current_path).to eq task_path(task.id)
+        expect(current_path).to eq task_path(task.id) # rubocop:disable Capybara/CurrentPathExpectation
         expect(page).to have_content 'タスク名は30文字以内で入力してください'
       end
     end
@@ -466,7 +465,7 @@ RSpec.describe Task, type: :system do
         fill_in 'task[deadline]', with: ''
         click_button '登録'
 
-        expect(current_path).to eq task_path(task.id)
+        expect(current_path).to eq task_path(task.id) # rubocop:disable Capybara/CurrentPathExpectation
         expect(page).to have_content '終了期限を入力してください'
       end
     end
@@ -481,7 +480,7 @@ RSpec.describe Task, type: :system do
         task.destroy
         click_button '登録'
 
-        expect(current_path).to eq root_path
+        expect(current_path).to eq root_path # rubocop:disable Capybara/CurrentPathExpectation
         expect(page).to have_content '該当するリソースがありませんでした。'
       end
     end
@@ -498,7 +497,7 @@ RSpec.describe Task, type: :system do
 
         click_on '削除'
 
-        expect(current_path).to eq tasks_path
+        expect(current_path).to eq tasks_path # rubocop:disable Capybara/CurrentPathExpectation
         expect(page).to have_content 'タスクの削除に成功しました。'
         expect(page).not_to have_content task.title
       end
@@ -511,7 +510,7 @@ RSpec.describe Task, type: :system do
         task.destroy
         click_on '削除'
 
-        expect(current_path).to eq root_path
+        expect(current_path).to eq root_path # rubocop:disable Capybara/CurrentPathExpectation
         expect(page).to have_content '該当するリソースがありませんでした。'
       end
     end
