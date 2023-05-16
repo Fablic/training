@@ -7,11 +7,11 @@ RSpec.describe Task, type: :system do
     context 'DBに保存されたデータがある' do
       before do
         create(:task, id: '1', title: 'task1', content: 'task_contetnt1', deadline: '2023/04/27',
-                      status: 0, created_at: '2023/04/27 09:00')
+                      status: :not_started, created_at: '2023/04/27 09:00')
         create(:task, id: '2', title: 'task2', content: 'task_contetnt2', deadline: '2023/04/26',
-                      status: 1, created_at: '2023/04/27 08:00')
+                      status: :start, created_at: '2023/04/27 08:00')
         create(:task, id: '3', title: 'task3', content: 'task_contetnt3', deadline: '2023/04/28',
-                      status: 2, created_at: '2023/04/27 10:00')
+                      status: :completed, created_at: '2023/04/27 10:00')
         visit root_path
       end
 
@@ -39,11 +39,12 @@ RSpec.describe Task, type: :system do
         expect(page).to have_link '詳細'
         expect(page).to have_link '編集'
         expect(page).to have_link '削除'
-        expect(page).to have_link '昇順', href: tasks_path(deadline_asc: 'true')
-        expect(page).to have_link '降順', href: tasks_path(deadline_desc: 'true')
+        expect(page).to have_link '昇順', href: search_tasks_path(deadline_order: 'asc')
+        expect(page).to have_link '降順', href: search_tasks_path(deadline_order: 'desc')
         expect(page).to have_field 'title'
         expect(page).to have_select(options: ['未着手', '着手中', '完了'])
         expect(page).to have_button '検索'
+        expect(page).to have_link 'クリア'
 
         within '.tasks' do
           task_titles = all('.task-title').map(&:text)
@@ -55,18 +56,18 @@ RSpec.describe Task, type: :system do
     context '一覧ページの終了期限の昇順ボタンが押された' do
       before do
         create(:task, id: '1', title: 'task1', content: 'task_contetnt1', deadline: '2023/04/29',
-                      status: 0, created_at: '2023/04/27 09:00')
+          status: :not_started, created_at: '2023/04/27 09:00')
         create(:task, id: '2', title: 'task2', content: 'task_contetnt2', deadline: '2023/04/28',
-                      status: 1, created_at: '2023/04/27 08:00')
+                      status: :start, created_at: '2023/04/27 08:00')
         create(:task, id: '3', title: 'task3', content: 'task_contetnt3', deadline: '2023/04/27',
-                      status: 2, created_at: '2023/04/27 10:00')
+                      status: :completed, created_at: '2023/04/27 10:00')
         visit root_path
       end
 
       it '終了期限の昇順で表示' do
         click_on '昇順'
 
-        expect(current_path).to eq tasks_path
+        expect(current_path).to eq search_tasks_path
         within '.tasks' do
           task_titles = all('.task-title').map(&:text)
           expect(task_titles).to eq %w[task3 task2 task1]
@@ -77,18 +78,18 @@ RSpec.describe Task, type: :system do
     context '一覧ページの終了期限の降順ボタンが押された' do
       before do
         create(:task, id: '1', title: 'task1', content: 'task_contetnt1', deadline: '2023/04/29',
-                      status: 0, created_at: '2023/04/27 09:00')
+                      status: :not_started, created_at: '2023/04/27 09:00')
         create(:task, id: '2', title: 'task2', content: 'task_contetnt2', deadline: '2023/04/28',
-                      status: 1, created_at: '2023/04/27 08:00')
+                      status: :start, created_at: '2023/04/27 08:00')
         create(:task, id: '3', title: 'task3', content: 'task_contetnt3', deadline: '2023/04/27',
-                      status: 2, created_at: '2023/04/27 10:00')
+                      status: :completed, created_at: '2023/04/27 10:00')
         visit root_path
       end
 
       it '終了期限の降順で表示' do
         click_on '降順'
 
-        expect(current_path).to eq tasks_path
+        expect(current_path).to eq search_tasks_path
         within '.tasks' do
           task_titles = all('.task-title').map(&:text)
           expect(task_titles).to eq %w[task1 task2 task3]
@@ -112,6 +113,7 @@ RSpec.describe Task, type: :system do
         expect(page).to have_field 'title'
         expect(page).to have_select(status, options: ['未着手', '着手中', '完了'])
         expect(page).to have_button '検索'
+        expect(page).to have_link 'クリア'
         expect(page).to have_link '新規登録'
       end
     end
@@ -141,10 +143,10 @@ RSpec.describe Task, type: :system do
 
   describe '検索エリア' do
     context 'statusのみ指定して検索' do
-      let!(:task_A1) { create(:task, title: 'titleA1', status: 'not_started') }
-      let!(:task_A2) { create(:task, title: 'titleA2', status: 'start') }
-      let!(:task_B1) { create(:task, title: 'titleB1', status: 'not_started') }
-      let!(:task_B2) { create(:task, title: 'titleB2', status: 'start') }
+      let!(:task_A1) { create(:task, title: 'titleA1', status: :not_started) }
+      let!(:task_A2) { create(:task, title: 'titleA2', status: :start) }
+      let!(:task_B1) { create(:task, title: 'titleB1', status: :not_started) }
+      let!(:task_B2) { create(:task, title: 'titleB2', status: :start) }
       let(:conditions) { { status: '未着手' } }
 
       it '検索結果の件数が一致すること' do
@@ -200,10 +202,10 @@ RSpec.describe Task, type: :system do
     end
 
     context 'title、statusを指定して検索' do
-      let!(:task_A1) { create(:task, title: 'titleA1', status: 'not_started') }
-      let!(:task_A2) { create(:task, title: 'titleA2', status: 'start') }
-      let!(:task_B1) { create(:task, title: 'titleB1', status: 'not_started') }
-      let!(:task_B2) { create(:task, title: 'titleB2', status: 'start') }
+      let!(:task_A1) { create(:task, title: 'titleA1', status: :not_started) }
+      let!(:task_A2) { create(:task, title: 'titleA2', status: :start) }
+      let!(:task_B1) { create(:task, title: 'titleB1', status: :not_started) }
+      let!(:task_B2) { create(:task, title: 'titleB2', status: :start) }
       let(:conditions) { { title: 'A', status: '未着手' } }
 
       it '検索結果の件数が一致すること' do
@@ -254,6 +256,52 @@ RSpec.describe Task, type: :system do
         click_on '検索'
 
         expect(page).not_to have_content 'titleB2'
+      end
+    end
+
+    context '終了期日の昇順のまま、検索できること' do
+      let!(:task_A1) { create(:task, title: 'titleA1', status: :not_started, deadline: '2023/04/27') }
+      let!(:task_A2) { create(:task, title: 'titleA2', status: :not_started, deadline: '2023/04/28') }
+      let!(:task_B1) { create(:task, title: 'titleB1', status: :not_started, deadline: '2023/04/29') }
+      let!(:task_B2) { create(:task, title: 'titleB2', status: :start, deadline: '2023/04/30') }
+      let(:conditions) { { status: '未着手' } }
+
+      it '検索結果の件数が一致すること' do
+        visit root_path
+        click_on '昇順'
+
+        fill_in 'title', with: conditions[:title]
+        select(value = conditions[:status], from: 'status')
+        click_on '検索'
+
+        within '.tasks' do
+          task_titles = all('.task-title').map(&:text)
+          expect(task_titles).to eq %w[titleA1 titleA2 titleB1]
+        end
+        expect(all('tbody tr').size).to be(3)
+      end
+    end
+
+    context '終了期日の降順のまま、検索できること' do
+      let!(:task_A1) { create(:task, title: 'titleA1', status: :not_started, deadline: '2023/04/27') }
+      let!(:task_A2) { create(:task, title: 'titleA2', status: :not_started, deadline: '2023/04/28') }
+      let!(:task_B1) { create(:task, title: 'titleB1', status: :not_started, deadline: '2023/04/29') }
+      let!(:task_B2) { create(:task, title: 'titleB2', status: :start, deadline: '2023/04/30') }
+      let(:conditions) { { status: '未着手' } }
+
+      it '検索結果の件数が一致すること' do
+        visit root_path
+        click_on '降順'
+
+        fill_in 'title', with: conditions[:title]
+        select(value = conditions[:status], from: 'status')
+        click_on '検索'
+
+        within '.tasks' do
+          task_titles = all('.task-title').map(&:text)
+          expect(task_titles).to eq %w[titleB1 titleA2 titleA1]
+        end
+        expect(all('tbody tr').size).to be(3)
       end
     end
   end
