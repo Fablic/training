@@ -259,14 +259,36 @@ RSpec.describe Task, type: :system do
       end
     end
 
-    context '終了期日の昇順のまま、検索できること' do
+    context '終了期日のソート条件が無いまま、検索できること' do
+      let!(:task_A1) { create(:task, title: 'titleA1', status: :not_started, deadline: '2023/04/27', created_at: '2023/01/30 09:00') }
+      let!(:task_A2) { create(:task, title: 'titleA2', status: :start, deadline: '2023/04/28', created_at: '2023/02/29 09:00') }
+      let!(:task_B1) { create(:task, title: 'titleB1', status: :not_started, deadline: '2023/04/29', created_at: '2023/03/28 09:00') }
+      let!(:task_B2) { create(:task, title: 'titleB2', status: :not_started, deadline: '2023/04/30', created_at: '2023/04/27 09:00') }
+      let(:conditions) { { status: '未着手' } }
+
+      it '検索結果の件数が一致すること' do
+        visit root_path
+
+        fill_in 'title', with: conditions[:title]
+        select(value = conditions[:status], from: 'status')
+        click_on '検索'
+
+        within '.tasks' do
+          task_titles = all('.task-title').map(&:text)
+          expect(task_titles).to eq %w[titleB2 titleB1 titleA1]
+        end
+        expect(all('tbody tr').size).to be(3)
+      end
+    end
+
+    context '終了期日の昇順ソートのまま、検索できること' do
       let!(:task_A1) { create(:task, title: 'titleA1', status: :not_started, deadline: '2023/04/27') }
       let!(:task_A2) { create(:task, title: 'titleA2', status: :not_started, deadline: '2023/04/28') }
       let!(:task_B1) { create(:task, title: 'titleB1', status: :not_started, deadline: '2023/04/29') }
       let!(:task_B2) { create(:task, title: 'titleB2', status: :start, deadline: '2023/04/30') }
       let(:conditions) { { status: '未着手' } }
 
-      it '検索結果の件数が一致すること' do
+      it '昇順ソートで検索結果の件数が一致すること' do
         visit root_path
         click_on '昇順'
 
@@ -282,14 +304,14 @@ RSpec.describe Task, type: :system do
       end
     end
 
-    context '終了期日の降順のまま、検索できること' do
-      let!(:task_A1) { create(:task, title: 'titleA1', status: :not_started, deadline: '2023/04/27') }
-      let!(:task_A2) { create(:task, title: 'titleA2', status: :not_started, deadline: '2023/04/28') }
-      let!(:task_B1) { create(:task, title: 'titleB1', status: :not_started, deadline: '2023/04/29') }
-      let!(:task_B2) { create(:task, title: 'titleB2', status: :start, deadline: '2023/04/30') }
+    context '終了期日の降順並びのまま、検索できること' do
+      let!(:task_A1) { create(:task, title: 'titleA1', status: :not_started, deadline: '2023/04/27', created_at: '2023/04/30 00:00') }
+      let!(:task_A2) { create(:task, title: 'titleA2', status: :not_started, deadline: '2023/04/28', created_at: '2023/04/29 00:00') }
+      let!(:task_B1) { create(:task, title: 'titleB1', status: :not_started, deadline: '2023/04/29', created_at: '2023/04/28 00:00') }
+      let!(:task_B2) { create(:task, title: 'titleB2', status: :start, deadline: '2023/04/30', created_at: '2023/04/27 00:00') }
       let(:conditions) { { status: '未着手' } }
 
-      it '検索結果の件数が一致すること' do
+      it '降順ソートで検索結果の件数が一致すること' do
         visit root_path
         click_on '降順'
 
