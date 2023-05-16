@@ -1,7 +1,7 @@
 <div>
   <p><%= link_to '新規登録', new_task_path %></p>
 
-  <p><%= render partial: 'search' %></p>
+  <%= render partial: 'search' %>
 
   <h1>タスク管理</h1>
 
@@ -13,8 +13,8 @@
         <th><%= t('activerecord.attributes.task.content') %></th>
         <th>
           <%= t('activerecord.attributes.task.deadline') %>/
-          <%= link_to t('sort.work.asc'), tasks_path(deadline_asc: 'true') %>
-          <%= link_to t('sort.work.desc'), tasks_path(deadline_desc: 'true') %>
+          <%= link_to t('sort.work.asc'), search_tasks_path(deadline_order: 'asc') %>
+          <%= link_to t('sort.work.desc'), search_tasks_path(deadline_order: 'desc') %>
         </th>
         <th><%= t('activerecord.attributes.task.status') %></th>
         <th><%= t('activerecord.attributes.task.created_at') %></th>
