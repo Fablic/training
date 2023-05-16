@@ -2,13 +2,7 @@ class TasksController < ApplicationController
   before_action :set_task, only: %i[edit update destroy show]
 
   def index
-    @tasks = if params[:deadline_asc]
-               Task.deadline_asc
-             elsif params[:deadline_desc]
-               Task.deadline_desc
-             else
-               Task.all.order(created_at: 'DESC')
-             end
+    @tasks = Task.all.order(created_at: 'DESC')
   end
 
   def show; end
@@ -45,7 +39,14 @@ class TasksController < ApplicationController
   end
 
   def search
-    @tasks = Task.where_title(params[:title]).where_status(params[:status])
+    @tasks = if params.key?(:deadline_order) && !params[:deadline_order].nil? && !params[:deadline_order].empty?
+                          Task.where_title(params[:title]).where_status(params[:status]).deadline_order(params[:deadline_order])
+                        else
+                          Task.where_title(params[:title]).where_status(params[:status])
+                        end
+    @title = params[:title]
+    @status = params[:status]
+    @deadline_order = params[:deadline_order]
     render :index
   end
 
