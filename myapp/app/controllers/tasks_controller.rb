@@ -2,7 +2,7 @@ class TasksController < ApplicationController
   before_action :set_task, only: %i[edit update destroy show]
 
   def index
-    @tasks = if params[:deadline_order]
+    @tasks = if params[:deadline_order] == 'asc' || params[:deadline_order] == 'desc'
                Task.deadline_order(params[:deadline_order]).page(params[:page]).per(5)
              else
                Task.all.order(created_at: 'DESC').page(params[:page]).per(5)
