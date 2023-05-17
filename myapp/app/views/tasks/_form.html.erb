@@ -1,27 +1,24 @@
 <div class='task-form align-items-center'>
   <%= form_with model: @task, local: true do |form| %>
     <%= render 'shared/error_messages', object: form.object %>
-    <div class='row mb-3'>
-      <%= form.label 'タスク名(必須)', class: 'col-sm-2 col-form-label' %>
-      <div class="col-sm-10">
-        <%= form.text_field :title, class: 'col-sm-2 col-form-label' %>
-      </div>
+    <div class='col-auto mb-3'>
+      <span class='badge bg-danger'>必須</span>
+      <%= form.label t('activerecord.attributes.task.title') , class: 'col-form-label' %><br>
+      <%= form.text_field :title, class: 'form-control' %>
     </div>
-    <div class='row mb-3'>
-      <%= form.label '詳細', class: 'col-sm-2 col-form-label' %>
-      <div class="col-sm-10">
-        <%= form.text_area :content, class: 'col-sm-2 col-form-label' %>
+    <div class='col-auto mb-3'>
+      <%= form.label t('activerecord.attributes.task.content') , class: 'col-form-label' %>
+      <%= form.text_area :content, class: 'form-control' %>
+    </div>
+
+    <div class='col-auto mb-3'>
+      <span class='badge bg-danger'>必須</span>
+      <%= form.label t('activerecord.attributes.task.deadline'), class: 'col-form-label' %>
+      <%= form.date_field :deadline, class: 'form-control' %>
       </div>
     </div>
 
-    <div class='row mb-3'>
-      <%= form.label '終了期限', class: 'col-sm-2 col-form-label' %>
-      <div class="col-sm-10">
-        <%= form.date_field :deadline %>
-      </div>
-    </div>
-
-    <%= form.submit '登録', class: 'btn btn-primary' %>
-    <%= link_to 'もどる', tasks_path, class: 'btn btn-link' %>
+    <%= form.submit t('commom.word.register'), class: 'btn btn-primary' %>
+    <%= link_to t('commom.word.back_page'), tasks_path, class: 'btn btn-link' %>
   <% end %>
 </div>

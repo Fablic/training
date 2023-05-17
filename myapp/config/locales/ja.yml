@@ -15,7 +15,16 @@ ja:
       default: '%Y/%m/%d %H:%M:%S'
       short: '%Y/%m/%d %H:%M'
 
-  sort:
-    work:
-      asc: 昇順
-      desc: 降順
+  commom:
+    word:
+      home: ホーム
+      new: 新規登録
+      show: 詳細
+      edit: 編集
+      delete: 削除
+      management: 管理
+      back_page: もどる
+      register: 登録
+      sort:
+        asc: 昇順
+        desc: 降順
