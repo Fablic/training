@@ -2,6 +2,10 @@ class Task < ApplicationRecord
   validates :title, presence: true, length: { maximum: 30 }
   validates :deadline, presence: true
 
-  scope :deadline_asc, -> { order(deadline: :asc) }
-  scope :deadline_desc, -> { order(deadline: :desc) }
+  enum status: { not_started: 0, start: 1, completed: 2 }
+
+  scope :where_title, -> (title) { where('title like ?', "%#{title}%") if title.present? }
+  scope :where_status, -> (status) { where(status: status) if status.present? }
+
+  scope :deadline_order, -> (v) { %w[asc desc].include?(v) ? order(deadline: v) : order(created_at: :DESC) }
 end

@@ -9,5 +9,13 @@ ja:
         title: タスク名
         content: 内容
         deadline: 終了期限
+        status: ステータス
         created_at: 作成日
         another: その他
+
+  enums:
+    task:
+      status:
+        not_started: 未着手
+        start: 着手中
+        completed: 完了
