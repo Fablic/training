@@ -2,20 +2,25 @@
   <%= form_with model: @task, local: true do |form| %>
     <%= render 'shared/error_messages', object: form.object %>
     <div>
-      <%= form.label 'タスク名(必須)', style: 'display: block' %>
+      <%= form.label t('activerecord.attributes.task.title'), style: 'display: block' %>
       <%= form.text_field :title %>
     </div>
     <div>
-      <%= form.label '詳細', style: 'display: block' %>
+      <%= form.label t('activerecord.attributes.task.content'), style: 'display: block' %>
       <%= form.text_area :content %>
     </div>
 
     <div>
-      <%= form.label '終了期限', style: 'display: block' %>
+      <%= form.label t('activerecord.attributes.task.deadline'), style: 'display: block' %>
       <%= form.date_field :deadline %>
     </div>
 
-    <div class="submit-content">
+    <div>
+      <%= form.label t('activerecord.attributes.task.status'), style: 'display: block' %>
+      <%= form.select :status, Task.statuses.keys.map { |k| [t("enums.task.status.#{k}"), k] }, { selected: 1 } %>
+    </div>
+
+    <div class='submit-content'>
       <%= form.submit '登録' %>
       <%= link_to 'もどる', tasks_path %>
     </div>

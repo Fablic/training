@@ -2,11 +2,15 @@ class TasksController < ApplicationController
   before_action :set_task, only: %i[edit update destroy show]
 
   def index
+<<<<<<< HEAD
     @tasks = if %w[asc desc].include?(params[:deadline_order])
                Task.deadline_order(params[:deadline_order]).page(params[:page]).per(5)
              else
                Task.all.order(created_at: 'DESC').page(params[:page]).per(5)
              end
+=======
+    @tasks = Task.all.order(created_at: 'DESC')
+>>>>>>> coffee-stain-neko
   end
 
   def show; end
@@ -42,6 +46,14 @@ class TasksController < ApplicationController
     end
   end
 
+  def search
+    @tasks = Task.where_title(params[:title]).where_status(params[:status]).deadline_order(params[:deadline_order])
+    @title = params[:title]
+    @status = params[:status]
+    @deadline_order = params[:deadline_order]
+    render :index
+  end
+
   private
 
   def set_task
@@ -49,6 +61,6 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:title, :content, :deadline)
+    params.require(:task).permit(:title, :content, :deadline, :status)
   end
 end
