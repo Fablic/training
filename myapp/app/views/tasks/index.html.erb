@@ -1,21 +1,28 @@
-<div>
-  <p><%= link_to '新規登録', new_task_path %></p>
-  <table class='tasks' border='1'>
+<div class='container rounded-2' style='padding:10px;'>
+    <h1><%= t('activerecord.models.task') + '管理' %></h1>
+    <hr>
+    <div class="d-flex flex-row-reverse bd-highlight">
+      <div class="p-2 bd-highlight">
+        <%= link_to '新規登録', new_task_path, class: 'btn btn-primary me-md-2' %>
+      </div>
+    </div>
+
+  <table class='tasks table table-bordered'>
     <tr>
-      <th><%= t('activerecord.attributes.task.id') %></th>
-      <th><%= t('activerecord.attributes.task.title') %></th>
-      <th><%= t('activerecord.attributes.task.content') %></th>
-      <th>
+      <th scope='col'><%= t('activerecord.attributes.task.id') %></th>
+      <th scope='col'><%= t('activerecord.attributes.task.title') %></th>
+      <th scope='col'><%= t('activerecord.attributes.task.content') %></th>
+      <th scope='col'>
         <%= t('activerecord.attributes.task.deadline') %>/
-        <%= link_to t('sort.work.asc'), tasks_path(deadline_asc: 'true') %>
-        <%= link_to t('sort.work.desc'), tasks_path(deadline_desc: 'true') %>
+        <%= link_to t('sort.work.asc'), tasks_path(deadline_order: 'asc') %>
+        <%= link_to t('sort.work.desc'), tasks_path(deadline_order: 'desc') %>
       </th>
 
-      <th><%= t('activerecord.attributes.task.created_at') %></th>
-      <th><%= t('activerecord.attributes.task.another') %></th>
+      <th scope='col'><%= t('activerecord.attributes.task.created_at') %></th>
+      <th scope='col'><%= t('activerecord.attributes.task.another') %></th>
     </tr>
     <% @tasks.each do |task| %>
-      <tr>
+      <tr scope='row'>
         <td><%= task.id %></td>
         <td class='task-title'>
           <%= task.title %>
@@ -24,9 +31,9 @@
         <td><%= l task.deadline %></td>
         <td><%= l task.created_at, format: :short %></td>
         <td>
-          <%= link_to '詳細', task_path(task.id) %>
-          <%= link_to '編集', edit_task_path(task.id) %>
-          <%= link_to '削除', task_path(task.id), method: :delete %>
+          <%= link_to '詳細', task_path(task.id), class: 'btn btn-secondary' %>
+          <%= link_to '編集', edit_task_path(task.id), class: 'btn btn-secondary' %>
+          <%= link_to '削除', task_path(task.id), method: :delete, class: 'btn btn-danger' %>
         </td>
       </tr>
     <% end %>
