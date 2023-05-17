@@ -7,5 +7,5 @@ class Task < ApplicationRecord
   scope :where_title, -> (title) { where('title like ?', "%#{title}%") if title.present? }
   scope :where_status, -> (status) { where(status: status) if status.present? }
 
-  scope :deadline_order, -> (v) { order(deadline: v) }
+  scope :deadline_order, -> (v) { %w[asc desc].include?(v) ? order(deadline: v) : order(created_at: :DESC) }
 end
