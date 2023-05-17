@@ -2,10 +2,8 @@ class TasksController < ApplicationController
   before_action :set_task, only: %i[edit update destroy show]
 
   def index
-    @tasks = if params[:deadline_asc]
-               Task.deadline_asc
-             elsif params[:deadline_desc]
-               Task.deadline_desc
+    @tasks = if %w[asc desc].include?(params[:deadline_order])
+              Task.deadline_order(params[:deadline_order])
              else
                Task.all.order(created_at: 'DESC')
              end
