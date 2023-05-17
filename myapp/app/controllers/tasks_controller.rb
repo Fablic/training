@@ -39,7 +39,7 @@ class TasksController < ApplicationController
   end
 
   def search
-    @tasks = if (params.key?(:deadline_order) && !params[:deadline_order].nil? && params[:deadline_order] == 'asc') || params[:deadline_order] == 'desc'
+    @tasks = if params.key?(:deadline_order) && !params[:deadline_order].nil? && %w[asc desc].include?(params[:deadline_order])
                Task.where_title(params[:title]).where_status(params[:status]).deadline_order(params[:deadline_order])
              else
                Task.where_title(params[:title]).where_status(params[:status]).order(created_at: 'DESC')
