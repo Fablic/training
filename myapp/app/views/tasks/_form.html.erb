@@ -18,6 +18,11 @@
       </div>
     </div>
 
+    <div>
+      <%= form.label t('activerecord.attributes.task.status'), style: 'display: block' class: 'col-form-label' %>
+      <%= form.select :status, Task.statuses.keys.map { |k| [t("enums.task.status.#{k}"), k] }, { selected: 1 }, class: 'form-control' %>
+    </div>
+
     <%= form.submit t('commom.word.register'), class: 'btn btn-primary' %>
     <%= link_to t('commom.word.back_page'), tasks_path, class: 'btn btn-link' %>
   <% end %>
