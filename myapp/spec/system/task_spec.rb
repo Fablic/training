@@ -16,7 +16,7 @@ RSpec.describe Task, type: :system do
       end
 
       it '一覧ページに作成日降順で表示' do
-        expect(current_path).to eq root_path
+        expect(page).to have_current_path root_path, ignore_query: true
         expect(page).to have_content '1'
         expect(page).to have_content 'task1'
         expect(page).to have_content 'task_contetnt1'
@@ -197,7 +197,7 @@ RSpec.describe Task, type: :system do
     context '一覧ページの終了期限の昇順ボタンが押された' do
       before do
         create(:task, id: '1', title: 'task1', content: 'task_contetnt1', deadline: '2023/04/29',
-          status: :not_started, created_at: '2023/04/27 09:00')
+                      status: :not_started, created_at: '2023/04/27 09:00')
         create(:task, id: '2', title: 'task2', content: 'task_contetnt2', deadline: '2023/04/28',
                       status: :start, created_at: '2023/04/27 08:00')
         create(:task, id: '3', title: 'task3', content: 'task_contetnt3', deadline: '2023/04/27',
@@ -208,7 +208,7 @@ RSpec.describe Task, type: :system do
       it '終了期限の昇順で表示' do
         click_on '昇順'
 
-        expect(current_path).to eq search_tasks_path
+        expect(page).to have_current_path search_tasks_path, ignore_query: true
         within '.tasks' do
           task_titles = all('.task-title').map(&:text)
           expect(task_titles).to eq %w[task3 task2 task1]
@@ -230,7 +230,7 @@ RSpec.describe Task, type: :system do
       it '終了期限の降順で表示' do
         click_on '降順'
 
-        expect(current_path).to eq search_tasks_path
+        expect(page).to have_current_path search_tasks_path, ignore_query: true
         within '.tasks' do
           task_titles = all('.task-title').map(&:text)
           expect(task_titles).to eq %w[task1 task2 task3]
@@ -242,7 +242,7 @@ RSpec.describe Task, type: :system do
       it '一覧ページに新規登録ボタン、検索フォームが表示' do
         visit root_path
 
-        expect(current_path).to eq root_path
+        expect(page).to have_current_path root_path, ignore_query: true
         expect(page).not_to have_content task.id
         expect(page).not_to have_content task.title
         expect(page).not_to have_content task.content
@@ -263,7 +263,7 @@ RSpec.describe Task, type: :system do
       it '詳細ページの表示' do
         visit task_path(task.id)
 
-        expect(current_path).to eq task_path(task.id)
+        expect(page).to have_current_path task_path(task.id), ignore_query: true
         expect(page).to have_content task.title
         expect(page).to have_content task.content
         expect(page).to have_link 'もどる'
@@ -276,7 +276,7 @@ RSpec.describe Task, type: :system do
 
         visit task_path(task.id)
 
-        expect(current_path).to eq root_path
+        expect(page).to have_current_path root_path, ignore_query: true
         expect(page).to have_content '該当するリソースがありませんでした。'
       end
     end
@@ -339,7 +339,6 @@ RSpec.describe Task, type: :system do
 
         expect(page).not_to have_content 'titleB2'
       end
-
     end
 
     context 'title、statusを指定して検索' do
@@ -477,7 +476,7 @@ RSpec.describe Task, type: :system do
 
       click_on '新規登録'
 
-      expect(current_path).to eq new_task_path
+      expect(page).to have_current_path new_task_path, ignore_query: true
       expect(page).to have_field 'task[title]'
       expect(page).to have_field 'task[content]'
       expect(page).to have_field 'task[deadline]'
@@ -496,7 +495,7 @@ RSpec.describe Task, type: :system do
         select(value = '着手中', from: 'task[status]')
         click_button '登録'
 
-        expect(current_path).to eq tasks_path
+        expect(page).to have_current_path tasks_path, ignore_query: true
         expect(page).to have_content 'test_title'
         expect(page).to have_content 'test_content'
         expect(page).to have_content '2022/03/27'
@@ -515,7 +514,7 @@ RSpec.describe Task, type: :system do
         select(value = '着手中', from: 'task[status]')
         click_button '登録'
 
-        expect(current_path).to eq tasks_path
+        expect(page).to have_current_path tasks_path, ignore_query: true
         expect(page).to have_content 'test_title'
         expect(page).to have_selector('td', text: '')
         expect(page).to have_content '2022/03/27'
@@ -534,7 +533,7 @@ RSpec.describe Task, type: :system do
         select(value = '着手中', from: 'task[status]')
         click_button '登録'
 
-        expect(current_path).to eq tasks_path
+        expect(page).to have_current_path tasks_path, ignore_query: true
         expect(page).to have_content 'タスク名を入力してください'
       end
     end
@@ -549,7 +548,7 @@ RSpec.describe Task, type: :system do
         select(value = '着手中', from: 'task[status]')
         click_button '登録'
 
-        expect(current_path).to eq tasks_path
+        expect(page).to have_current_path tasks_path, ignore_query: true
         expect(page).to have_content 'タスク名は30文字以内で入力してください'
       end
     end
@@ -564,7 +563,7 @@ RSpec.describe Task, type: :system do
         select(value = '着手中', from: 'task[status]')
         click_button '登録'
 
-        expect(current_path).to eq tasks_path
+        expect(page).to have_current_path tasks_path, ignore_query: true
         expect(page).to have_content '終了期限を入力してください'
       end
     end
@@ -581,7 +580,7 @@ RSpec.describe Task, type: :system do
 
         click_on '編集'
 
-        expect(current_path).to eq edit_task_path(task.id)
+        expect(page).to have_current_path edit_task_path(task.id), ignore_query: true
         expect(page).to have_field 'task[title]'
         expect(page).to have_field 'task[content]'
         expect(page).to have_field 'task[deadline]'
@@ -597,7 +596,7 @@ RSpec.describe Task, type: :system do
 
         visit edit_task_path(task.id)
 
-        expect(current_path).to eq root_path
+        expect(page).to have_current_path root_path, ignore_query: true
         expect(page).to have_content '該当するリソースがありませんでした。'
       end
     end
@@ -612,7 +611,7 @@ RSpec.describe Task, type: :system do
         select(value = '着手中', from: 'task[status]')
         click_on '登録'
 
-        expect(current_path).to eq tasks_path
+        expect(page).to have_current_path tasks_path, ignore_query: true
         expect(page).to have_content 'update_test'
         expect(page).to have_content 'update_content'
         expect(page).to have_content '2022/03/27'
@@ -631,7 +630,7 @@ RSpec.describe Task, type: :system do
         select(value = '着手中', from: 'task[status]')
         click_button '登録'
 
-        expect(current_path).to eq tasks_path
+        expect(page).to have_current_path tasks_path, ignore_query: true
         expect(page).to have_content 'update_test'
         expect(page).to have_selector('td', text: '')
         expect(page).to have_content '2022/03/27'
@@ -650,7 +649,7 @@ RSpec.describe Task, type: :system do
         select(value = '着手中', from: 'task[status]')
         click_button '登録'
 
-        expect(current_path).to eq task_path(task.id)
+        expect(page).to have_current_path task_path(task.id), ignore_query: true
         expect(page).to have_content 'タスク名を入力してください'
       end
     end
@@ -665,7 +664,7 @@ RSpec.describe Task, type: :system do
         select(value = '着手中', from: 'task[status]')
         click_button '登録'
 
-        expect(current_path).to eq task_path(task.id)
+        expect(page).to have_current_path task_path(task.id), ignore_query: true
         expect(page).to have_content 'タスク名は30文字以内で入力してください'
       end
     end
@@ -680,7 +679,7 @@ RSpec.describe Task, type: :system do
         select(value = '着手中', from: 'task[status]')
         click_button '登録'
 
-        expect(current_path).to eq task_path(task.id)
+        expect(page).to have_current_path task_path(task.id), ignore_query: true
         expect(page).to have_content '終了期限を入力してください'
       end
     end
@@ -696,7 +695,7 @@ RSpec.describe Task, type: :system do
         task.destroy
         click_button '登録'
 
-        expect(current_path).to eq root_path
+        expect(page).to have_current_path root_path, ignore_query: true
         expect(page).to have_content '該当するリソースがありませんでした。'
       end
     end
@@ -713,7 +712,7 @@ RSpec.describe Task, type: :system do
 
         click_on '削除'
 
-        expect(current_path).to eq tasks_path
+        expect(page).to have_current_path tasks_path, ignore_query: true
         expect(page).to have_content 'タスクの削除に成功しました。'
         expect(page).not_to have_content task.title
       end
@@ -726,7 +725,7 @@ RSpec.describe Task, type: :system do
         task.destroy
         click_on '削除'
 
-        expect(current_path).to eq root_path
+        expect(page).to have_current_path root_path, ignore_query: true
         expect(page).to have_content '該当するリソースがありませんでした。'
       end
     end
