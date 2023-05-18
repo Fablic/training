@@ -2,7 +2,7 @@ class TasksController < ApplicationController
   before_action :set_task, only: %i[edit update destroy show]
 
   def index
-    @tasks = Task.all.order(created_at: 'DESC')
+    @tasks = Task.all.order(created_at: 'DESC').page(params[:page]).per(5)
   end
 
   def show; end
@@ -39,7 +39,7 @@ class TasksController < ApplicationController
   end
 
   def search
-    @tasks = Task.where_title(params[:title]).where_status(params[:status]).deadline_order(params[:deadline_order])
+    @tasks = Task.where_title(params[:title]).where_status(params[:status]).deadline_order(params[:deadline_order]).page(params[:page]).per(5)
     @title = params[:title]
     @status = params[:status]
     @deadline_order = params[:deadline_order]
