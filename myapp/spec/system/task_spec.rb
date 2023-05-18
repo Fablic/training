@@ -92,8 +92,8 @@ RSpec.describe Task, type: :system do
         expect(page).to have_link '詳細'
         expect(page).to have_link '編集'
         expect(page).to have_link '削除'
-        expect(page).to have_link '昇順', href: tasks_path(deadline_order: 'asc')
-        expect(page).to have_link '降順', href: tasks_path(deadline_order: 'desc')
+        expect(page).to have_link '昇順', href: search_tasks_path(deadline_order: 'asc')
+        expect(page).to have_link '降順', href: search_tasks_path(deadline_order: 'desc')
         expect(page).to have_css '.first'
         expect(page).to have_link 'First'
         expect(page).to have_css '.prev'
@@ -137,8 +137,8 @@ RSpec.describe Task, type: :system do
         expect(page).to have_link '詳細'
         expect(page).to have_link '編集'
         expect(page).to have_link '削除'
-        expect(page).to have_link '昇順', href: tasks_path(deadline_order: 'asc')
-        expect(page).to have_link '降順', href: tasks_path(deadline_order: 'desc')
+        expect(page).to have_link '昇順', href: search_tasks_path(deadline_order: 'asc')
+        expect(page).to have_link '降順', href: search_tasks_path(deadline_order: 'desc')
         expect(page).to have_selector('span', text: 'First')
         expect(page).to have_link 'First'
         expect(page).to have_selector('span', text: 'Previous')
@@ -183,8 +183,8 @@ RSpec.describe Task, type: :system do
         expect(page).to have_link '詳細'
         expect(page).to have_link '編集'
         expect(page).to have_link '削除'
-        expect(page).to have_link '昇順', href: tasks_path(deadline_order: 'asc')
-        expect(page).to have_link '降順', href: tasks_path(deadline_order: 'desc')
+        expect(page).to have_link '昇順', href: search_tasks_path(deadline_order: 'asc')
+        expect(page).to have_link '降順', href: search_tasks_path(deadline_order: 'desc')
         expect(page).to have_selector('span', text: 'First')
         expect(page).to have_link 'First'
         expect(page).to have_selector('span', text: 'Previous')
