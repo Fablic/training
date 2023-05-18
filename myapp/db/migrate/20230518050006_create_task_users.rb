@@ -5,6 +5,7 @@ class CreateTaskUsers < ActiveRecord::Migration[6.0]
       t.references :user, null: false, foreign_key: true
 
       t.timestamps
+      t.index %i[user_id task_id]
     end
   end
 end
