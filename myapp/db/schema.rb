@@ -10,17 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_05_18_050006) do
-
-  create_table "task_users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
-    t.bigint "task_id", null: false
-    t.bigint "user_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["task_id"], name: "index_task_users_on_task_id"
-    t.index ["user_id", "task_id"], name: "index_task_users_on_user_id_and_task_id"
-    t.index ["user_id"], name: "index_task_users_on_user_id"
-  end
+ActiveRecord::Schema.define(version: 2023_05_19_011543) do
 
   create_table "tasks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "title", limit: 30, null: false
@@ -29,7 +19,9 @@ ActiveRecord::Schema.define(version: 2023_05_18_050006) do
     t.datetime "updated_at", precision: 6, null: false
     t.date "deadline", null: false
     t.integer "status"
+    t.bigint "user_id"
     t.index ["title", "status"], name: "index_tasks_on_title_and_status"
+    t.index ["user_id"], name: "index_tasks_on_user_id"
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
@@ -40,6 +32,5 @@ ActiveRecord::Schema.define(version: 2023_05_18_050006) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  add_foreign_key "task_users", "tasks"
-  add_foreign_key "task_users", "users"
+  add_foreign_key "tasks", "users"
 end
