@@ -4,6 +4,7 @@ RSpec.describe User, type: :model do
   let(:user_valid) {
     FactoryBot.build(:user, id: 1)
   }
+
   context 'emailのバリデーション' do
     it 'emailの長さが256文字以上だと無効' do
       user_valid.email = 'a' * 256
