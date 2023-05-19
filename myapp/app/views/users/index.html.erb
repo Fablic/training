@@ -1,0 +1,7 @@
+<% @users.each do |user| %>
+  <%= user.name %> |
+  <% user.tasks.each do |post| %>
+    <%= user.tasks.name %>
+  <% end %>
+  <br>
+<% end %>
