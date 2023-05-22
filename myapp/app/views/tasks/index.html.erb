@@ -1,45 +1,51 @@
-<div>
-  <p><%= link_to '新規登録', new_task_path %></p>
+<div class='container rounded-2' style='padding:10px;'>
+  <nav class='navbar navbar-expand-lg navbar-light bg-light mb-3'>
+    <div class='container-fluid'>
+      <div class='navbar-brand'>
+        <%= t('activerecord.models.task') + t('commom.word.management') %>
+      </div>
+      <div class='collapse navbar-collapse'>
+        <div class='navbar-nav'>
+          <%= link_to t('buttons.new'), new_task_path, class: 'nav-link' %>
+        </div>
+      </div>
+    </div>
+    <div class='container-fluid'>
+      <%= render partial: 'search' %>
+    </div>
+  </nav>
 
-  <%= render partial: 'search' %>
-
-  <h1>タスク管理</h1>
-
-  <table class='tasks' border='1'>
-    <thead>
-      <tr>
-        <th><%= t('activerecord.attributes.task.id') %></th>
-        <th><%= t('activerecord.attributes.task.title') %></th>
-        <th><%= t('activerecord.attributes.task.content') %></th>
-        <th>
-          <%= t('activerecord.attributes.task.deadline') %>/
-          <%= link_to t('sort.work.asc'), search_tasks_path(deadline_order: 'asc') %>
-          <%= link_to t('sort.work.desc'), search_tasks_path(deadline_order: 'desc') %>
-        </th>
-        <th><%= t('activerecord.attributes.task.status') %></th>
-        <th><%= t('activerecord.attributes.task.created_at') %></th>
-        <th><%= t('activerecord.attributes.task.another') %></th>
+  <table class='tasks table table-bordered'>
+    <tr>
+      <th scope='col'><%= t('activerecord.attributes.task.id') %></th>
+      <th scope='col'><%= t('activerecord.attributes.task.title') %></th>
+      <th scope='col'><%= t('activerecord.attributes.task.content') %></th>
+      <th scope='col'>
+        <%= t('activerecord.attributes.task.deadline') %>  /  
+          <%= link_to t('buttons.sort.asc'), search_tasks_path(deadline_order: 'asc') %>
+          <%= link_to t('buttons.sort.desc'), search_tasks_path(deadline_order: 'desc') %>
+      </th>
+      <th><%= t('activerecord.attributes.task.status') %></th>
+      <th scope='col'><%= t('activerecord.attributes.task.created_at') %></th>
+      <th scope='col'><%= t('activerecord.attributes.task.another') %></th>
+    </tr>
+    <% @tasks.each do |task| %>
+      <tr scope='row'>
+        <td><%= task.id %></td>
+        <td class='task-title'>
+          <%= task.title %>
+        </td>
+        <td><%= task.content %></td>
+        <td><%= l task.deadline %></td>
+        <td><%= t("enums.task.status.#{task.status}") %></td>
+        <td><%= l task.created_at, format: :short %></td>
+        <td>
+          <%= link_to t('buttons.show'), task_path(task.id), class: 'btn btn-secondary' %>
+          <%= link_to t('buttons.edit'), edit_task_path(task.id), class: 'btn btn-secondary' %>
+          <%= link_to t('buttons.delete'), task_path(task.id), method: :delete, class: 'btn btn-danger' %>
+        </td>
       </tr>
-    </thead>
-    <tbody>
-      <% @tasks.each do |task| %>
-        <tr>
-          <td><%= task.id %></td>
-          <td class='task-title'>
-            <%= task.title %>
-          </td>
-          <td><%= task.content %></td>
-          <td><%= l task.deadline %></td>
-          <td><%= t("enums.task.status.#{task.status}") %></td>
-          <td><%= l task.created_at, format: :short %></td>
-          <td>
-            <%= link_to '詳細', task_path(task.id) %>
-            <%= link_to '編集', edit_task_path(task.id) %>
-            <%= link_to '削除', task_path(task.id), method: :delete %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
+    <% end %>
   </table>
+  <%= paginate @tasks, theme: 'bootstrap-5'%>
 </div>
-<%= paginate @tasks %>

@@ -15,11 +15,19 @@ ja:
       default: '%Y/%m/%d %H:%M:%S'
       short: '%Y/%m/%d %H:%M'
 
-  sort:
-    work:
+  commom:
+    word:
+      management: 管理
+
+  buttons:
+    home: ホーム
+    new: 新規登録
+    show: 詳細
+    edit: 編集
+    delete: 削除
+    clear: クリア
+    back_page: もどる
+    register: 登録
+    sort:
       asc: 昇順
       desc: 降順
-
-  dictionary:
-    words:
-      clear: クリア
