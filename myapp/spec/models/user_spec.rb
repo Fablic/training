@@ -3,16 +3,32 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   describe 'バリデーションのテスト' do
     let(:user) {
-      build(:user, id: 1)
+      build(:user)
     }
+
     context '全て入力したとき' do
       it '正常に登録できる' do
-
         expect(user).to be_valid
       end
     end
 
+    context 'nameのバリデーション' do
+      it 'nameが空欄だと無効' do
+        user.name = ''
+
+        expect(user).not_to be_valid
+        expect(user.errors.full_messages).to include('Nameを入力してください')
+      end
+    end
+
     context 'emailのバリデーション' do
+      it 'emailが空欄だと無効' do
+        user.email = ''
+
+        expect(user).not_to be_valid
+        expect(user.errors.full_messages).to include('Emailを入力してください', 'Emailは不正な値です')
+      end
+
       it 'emailの長さが256文字以上だと無効' do
         text = 'a' * 256
         user.email = "#{text}" + '@example.com'
