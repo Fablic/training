@@ -313,12 +313,7 @@ PLATFORMS
 DEPENDENCIES
   bcrypt
   bootsnap (>= 1.4.2)
-<<<<<<< HEAD
   bullet
-=======
-  bootstrap (~> 5.2.3)
-  bootstrap5-kaminari-views
->>>>>>> coffee-stain-neko
   byebug
   capybara (>= 2.15)
   fablicop
