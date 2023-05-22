@@ -59,10 +59,22 @@ GEM
     addressable (2.8.4)
       public_suffix (>= 2.0.2, < 6.0)
     ast (2.4.2)
+<<<<<<< HEAD
     bcrypt (3.1.18)
+=======
+    autoprefixer-rails (10.4.13.0)
+      execjs (~> 2)
+>>>>>>> coffee-stain-neko
     bindex (0.8.1)
     bootsnap (1.16.0)
       msgpack (~> 1.2)
+    bootstrap (5.2.3)
+      autoprefixer-rails (>= 9.1.0)
+      popper_js (>= 2.11.6, < 3)
+      sassc-rails (>= 2.0.0)
+    bootstrap5-kaminari-views (0.0.1)
+      kaminari (>= 0.13)
+      rails (>= 3.1)
     builder (3.2.4)
     bullet (7.0.7)
       activesupport (>= 3.0.0)
@@ -84,6 +96,7 @@ GEM
     date (3.3.3)
     diff-lcs (1.5.0)
     erubi (1.12.0)
+    execjs (2.8.1)
     fablicop (1.10.1)
       rubocop (>= 1.14, < 1.51)
       rubocop-rails
@@ -153,6 +166,7 @@ GEM
     parallel (1.23.0)
     parser (3.2.2.1)
       ast (~> 2.4.1)
+    popper_js (2.11.7)
     pry (0.14.2)
       coderay (~> 1.1)
       method_source (~> 1.0)
@@ -304,7 +318,12 @@ PLATFORMS
 DEPENDENCIES
   bcrypt
   bootsnap (>= 1.4.2)
+<<<<<<< HEAD
   bullet
+=======
+  bootstrap (~> 5.2.3)
+  bootstrap5-kaminari-views
+>>>>>>> coffee-stain-neko
   byebug
   capybara (>= 2.15)
   fablicop
