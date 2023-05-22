@@ -2,9 +2,7 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   describe 'バリデーションのテスト' do
-    let(:user) {
-      build(:user)
-    }
+    let(:user) { build(:user) }
 
     context '全て入力したとき' do
       it '正常に登録できる' do
