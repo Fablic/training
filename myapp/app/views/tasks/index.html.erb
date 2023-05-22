@@ -6,7 +6,7 @@
       </div>
       <div class='collapse navbar-collapse'>
         <div class='navbar-nav'>
-          <%= link_to t('commom.word.new'), new_task_path, class: 'nav-link' %>
+          <%= link_to t('buttons.new'), new_task_path, class: 'nav-link' %>
         </div>
       </div>
     </div>
@@ -22,8 +22,8 @@
       <th scope='col'><%= t('activerecord.attributes.task.content') %></th>
       <th scope='col'>
         <%= t('activerecord.attributes.task.deadline') %>  /  
-          <%= link_to t('commom.word.sort.asc'), search_tasks_path(deadline_order: 'asc') %>
-          <%= link_to t('commom.word.sort.desc'), search_tasks_path(deadline_order: 'desc') %>
+          <%= link_to t('buttons.sort.asc'), search_tasks_path(deadline_order: 'asc') %>
+          <%= link_to t('buttons.sort.desc'), search_tasks_path(deadline_order: 'desc') %>
       </th>
       <th><%= t('activerecord.attributes.task.status') %></th>
       <th scope='col'><%= t('activerecord.attributes.task.created_at') %></th>
@@ -40,9 +40,9 @@
         <td><%= t("enums.task.status.#{task.status}") %></td>
         <td><%= l task.created_at, format: :short %></td>
         <td>
-          <%= link_to t('commom.word.show'), task_path(task.id), class: 'btn btn-secondary' %>
-          <%= link_to t('commom.word.edit'), edit_task_path(task.id), class: 'btn btn-secondary' %>
-          <%= link_to t('commom.word.delete'), task_path(task.id), method: :delete, class: 'btn btn-danger' %>
+          <%= link_to t('buttons.show'), task_path(task.id), class: 'btn btn-secondary' %>
+          <%= link_to t('buttons.edit'), edit_task_path(task.id), class: 'btn btn-secondary' %>
+          <%= link_to t('buttons.delete'), task_path(task.id), method: :delete, class: 'btn btn-danger' %>
         </td>
       </tr>
     <% end %>

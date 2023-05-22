@@ -17,15 +17,17 @@ ja:
 
   commom:
     word:
-      home: ホーム
-      new: 新規登録
-      show: 詳細
-      edit: 編集
-      delete: 削除
       management: 管理
-      clear: クリア
-      back_page: もどる
-      register: 登録
-      sort:
-        asc: 昇順
-        desc: 降順
+
+  buttons:
+    home: ホーム
+    new: 新規登録
+    show: 詳細
+    edit: 編集
+    delete: 削除
+    clear: クリア
+    back_page: もどる
+    register: 登録
+    sort:
+      asc: 昇順
+      desc: 降順
