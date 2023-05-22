@@ -1,4 +1,13 @@
 Rails.application.configure do
+  config.after_initialize do
+    Bullet.enable        = true # Bulletのgemを利用可能に
+    Bullet.alert         = true # ブラウザにJSのアラート
+    Bullet.bullet_logger = true # bulletのログファイル出力(Rails.root/log/bullet.log)
+    Bullet.console       = true # console.logに警告出力
+    Bullet.rails_logger  = true # railsのログに警告出力
+    Bullet.add_footer    = true # 画面左下にメッセージ出力
+  end
+
   # Settings specified here will take precedence over those in config/application.rb.
 
   # In the development environment your application's code is reloaded on
