@@ -26,8 +26,20 @@ ja:
     edit: 編集
     delete: 削除
     clear: クリア
+    search: 検索
     back_page: もどる
     register: 登録
+    login: ログイン
+    logout: ログアウト
+    signin: サインイン
     sort:
       asc: 昇順
       desc: 降順
+
+  session:
+    login:
+      success: 'ログインしました。'
+      failure: 'ログインに失敗しました。メールアドレスとパスワードの組み合わせが不正です。'
+    logout:
+      success: 'ログアウトしました。'
+    need_login: 'ログインが必要です。'
