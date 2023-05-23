@@ -18,6 +18,7 @@ module SessionsHelper
 
   def require_login
     return if logged_in?
+
     redirect_to login_path, danger: t('session.need_login')
   end
 end
