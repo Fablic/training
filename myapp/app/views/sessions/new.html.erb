@@ -1,0 +1,26 @@
+<div class='container' style='padding:10px;'>
+  <h2 class='text-center'>
+    <%= t('buttons.login') %>
+  </h2>
+
+  <%= form_with scope: :session, url: login_path, local: true do |form| %>
+
+      <div class='w-50 mx-auto'>
+        <div class='col-auto mb-3'>
+          <%= form.label :email, class: 'col-form-label' %>
+          <%= form.text_field :email, class: 'form-control' %>
+        </div>
+
+        <div class='col-auto mb-3'>
+          <%= form.label :password, class: 'col-form-label' %>
+          <%= form.password_field :password, class: 'form-control' %>
+        </div>
+
+        <div class='submit-content'>
+          <%= form.submit t('buttons.login'), class: 'btn btn-primary' %>
+          <%= link_to t('buttons.signin'), new_user_path, class: 'btn btn-link' %>
+        </div>
+      </div>
+    <% end %>
+</div>
+
