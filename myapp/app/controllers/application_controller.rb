@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
   around_action :switch_locale
+  add_flash_types :success, :danger
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
+  include SessionsHelper
 
   def switch_locale(&action)
     locale = params[:locale] || I18n.default_locale
