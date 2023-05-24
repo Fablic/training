@@ -8,4 +8,4 @@ ja:
         name: 氏名
         email: メールアドレス
         password: パスワード
-        password_confirmationt: パスワード確認
+        password_confirmation: パスワード確認
