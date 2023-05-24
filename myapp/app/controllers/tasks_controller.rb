@@ -25,7 +25,7 @@ class TasksController < ApplicationController
 
   def update
     if @task.update(task_params)
-      redirect_to tasks_path, succeces: t('messages.update', model_name: t('activerecord.models.task'))
+      redirect_to tasks_path, success: t('messages.update', model_name: t('activerecord.models.task'))
     else
       render :edit
     end
@@ -33,7 +33,7 @@ class TasksController < ApplicationController
 
   def destroy
     if @task.destroy
-      redirect_to tasks_path, succeces: t('messages.delete', model_name: t('activerecord.models.task'))
+      redirect_to tasks_path, success: t('messages.delete', model_name: t('activerecord.models.task'))
     else
       render :index
     end
