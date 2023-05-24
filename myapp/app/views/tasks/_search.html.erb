@@ -8,9 +8,9 @@
       <%= form.select :status, options_for_select(Task.statuses.keys.map  {|k| [t("enums.task.status.#{k}"), k]}), { selected: @status }, { class: 'form-select', 'data-style': 'form-control' } %>
     </div>
 
-    <% form.hidden_field :deadline_order, value: @deadline_order  %>
+    <%= form.hidden_field :deadline_order, value: @deadline_order  %>
 
-    <div class='btn-group'>
+    <div class='btn-group mx-3'>
       <%= form.submit t('buttons.search'), id: 'search_submit', class: 'btn btn-outline-success' %>
       <%= link_to t('buttons.clear'), tasks_path, class: 'btn btn-outline-dark' %>
     </div>
