@@ -9,3 +9,6 @@ ja:
         email: メールアドレス
         password: パスワード
         password_confirmation: パスワード確認
+        created_at: 作成日
+        updated_at: 更新日
+        another: その他
