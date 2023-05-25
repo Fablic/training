@@ -2,16 +2,21 @@ require 'rails_helper'
 
 RSpec.describe Task, type: :system do
   let(:task) { create(:task) }
+  let(:user) { create(:user, name: 'hogehoge', email: Faker::Internet.email, password: 'password') }
+
+  before do
+    login(user.email, user.password)
+  end
 
   describe 'タスク表示' do
     context 'DBに保存されたデータがある' do
       before do
-        create(:task, id: '1', title: 'task1', content: 'task_contetnt1', deadline: '2023/04/27',
-                      status: :not_started, created_at: '2023/04/27 09:00')
-        create(:task, id: '2', title: 'task2', content: 'task_contetnt2', deadline: '2023/04/26',
-                      status: :start, created_at: '2023/04/27 08:00')
-        create(:task, id: '3', title: 'task3', content: 'task_contetnt3', deadline: '2023/04/28',
-                      status: :completed, created_at: '2023/04/27 10:00')
+        create(:task, title: 'task1', content: 'task_contetnt1', deadline: '2023/04/27',
+                      status: :not_started, created_at: '2023/04/27 09:00', user_id: user.id)
+        create(:task, title: 'task2', content: 'task_contetnt2', deadline: '2023/04/26',
+                      status: :start, created_at: '2023/04/27 08:00', user_id: user.id)
+        create(:task, title: 'task3', content: 'task_contetnt3', deadline: '2023/04/28',
+                      status: :completed, created_at: '2023/04/27 10:00', user_id: user.id)
         visit root_path
       end
 
@@ -45,6 +50,8 @@ RSpec.describe Task, type: :system do
         expect(page).to have_select(options: ['未着手', '着手中', '完了'])
         expect(page).to have_button '検索'
         expect(page).to have_link 'クリア'
+        expect(page).to have_link 'ログアウト'
+        expect(page).to have_content user.name
 
         within '.tasks' do
           task_titles = all('.task-title').map(&:text)
@@ -55,27 +62,27 @@ RSpec.describe Task, type: :system do
 
     context '作成日順ソートでページングが動作' do
       before do
-        create(:task, id: '1', title: 'task1', content: 'task_contetnt1', deadline: '2023/05/01',
-                      created_at: '2023/04/26 01:00')
-        create(:task, id: '2', title: 'task2', content: 'task_contetnt2', deadline: '2023/04/30',
-                      created_at: '2023/04/27 02:00')
-        create(:task, id: '3', title: 'task3', content: 'task_contetnt3', deadline: '2023/04/29',
-                      created_at: '2023/04/28 03:00')
-        create(:task, id: '4', title: 'task4', content: 'task_contetnt4', deadline: '2023/04/28',
-                      created_at: '2023/04/29 04:00')
-        create(:task, id: '5', title: 'task5', content: 'task_contetnt5', deadline: '2023/04/27',
-                      created_at: '2023/04/30 05:00')
-        create(:task, id: '6', title: 'task6', content: 'task_contetnt6', deadline: '2023/04/26',
-                      created_at: '2023/05/01 06:00')
+        create(:task, title: 'task1', content: 'task_contetnt1', deadline: '2023/05/01',
+                      created_at: '2023/04/26 01:00', user_id: user.id)
+        create(:task, title: 'task2', content: 'task_contetnt2', deadline: '2023/04/30',
+                      created_at: '2023/04/27 02:00', user_id: user.id)
+        create(:task, title: 'task3', content: 'task_contetnt3', deadline: '2023/04/29',
+                      created_at: '2023/04/28 03:00', user_id: user.id)
+        create(:task, title: 'task4', content: 'task_contetnt4', deadline: '2023/04/28',
+                      created_at: '2023/04/29 04:00', user_id: user.id)
+        create(:task, title: 'task5', content: 'task_contetnt5', deadline: '2023/04/27',
+                      created_at: '2023/04/30 05:00', user_id: user.id)
+        create(:task, title: 'task6', content: 'task_contetnt6', deadline: '2023/04/26',
+                      created_at: '2023/05/01 06:00', user_id: user.id)
         visit root_path
       end
 
       it '２ページ目のタスクが表示されている' do
-        expect(page).to have_selector('span', text: 'Next')
+        expect(page).to have_selector('a', text: 'Next')
         expect(page).to have_link 'Next'
-        expect(page).to have_selector('span', text: 'Last')
+        expect(page).to have_selector('a', text: 'Last')
         expect(page).to have_link 'Last'
-        expect(page).to have_selector('span', text: '2')
+        expect(page).to have_selector('a', text: '2')
         expect(page).to have_link '2'
         within '.tasks' do
           task_titles = all('.task-title').map(&:text)
@@ -94,9 +101,7 @@ RSpec.describe Task, type: :system do
         expect(page).to have_link '削除'
         expect(page).to have_link '昇順', href: search_tasks_path(deadline_order: 'asc')
         expect(page).to have_link '降順', href: search_tasks_path(deadline_order: 'desc')
-        expect(page).to have_css '.first'
         expect(page).to have_link 'First'
-        expect(page).to have_css '.prev'
         expect(page).to have_link 'Previous'
         expect(page).to have_link '1'
       end
@@ -104,18 +109,18 @@ RSpec.describe Task, type: :system do
 
     context '終了期限の昇順ソートでページングが動作' do
       before do
-        create(:task, id: '1', title: 'task1', content: 'task_contetnt1', deadline: '2023/05/01',
-                      created_at: '2023/04/26 01:00')
-        create(:task, id: '2', title: 'task2', content: 'task_contetnt2', deadline: '2023/04/30',
-                      created_at: '2023/04/27 02:00')
-        create(:task, id: '3', title: 'task3', content: 'task_contetnt3', deadline: '2023/04/29',
-                      created_at: '2023/04/28 03:00')
-        create(:task, id: '4', title: 'task4', content: 'task_contetnt4', deadline: '2023/04/28',
-                      created_at: '2023/04/29 04:00')
-        create(:task, id: '5', title: 'task5', content: 'task_contetnt5', deadline: '2023/04/27',
-                      created_at: '2023/04/30 05:00')
-        create(:task, id: '6', title: 'task6', content: 'task_contetnt6', deadline: '2023/04/26',
-                      created_at: '2023/05/01 06:00')
+        create(:task, title: 'task1', content: 'task_contetnt1', deadline: '2023/05/01',
+                      created_at: '2023/04/26 01:00', user_id: user.id)
+        create(:task, title: 'task2', content: 'task_contetnt2', deadline: '2023/04/30',
+                      created_at: '2023/04/27 02:00', user_id: user.id)
+        create(:task, title: 'task3', content: 'task_contetnt3', deadline: '2023/04/29',
+                      created_at: '2023/04/28 03:00', user_id: user.id)
+        create(:task, title: 'task4', content: 'task_contetnt4', deadline: '2023/04/28',
+                      created_at: '2023/04/29 04:00', user_id: user.id)
+        create(:task, title: 'task5', content: 'task_contetnt5', deadline: '2023/04/27',
+                      created_at: '2023/04/30 05:00', user_id: user.id)
+        create(:task, title: 'task6', content: 'task_contetnt6', deadline: '2023/04/26',
+                      created_at: '2023/05/01 06:00', user_id: user.id)
         visit root_path
       end
 
@@ -139,29 +144,29 @@ RSpec.describe Task, type: :system do
         expect(page).to have_link '削除'
         expect(page).to have_link '昇順', href: search_tasks_path(deadline_order: 'asc')
         expect(page).to have_link '降順', href: search_tasks_path(deadline_order: 'desc')
-        expect(page).to have_selector('span', text: 'First')
+        expect(page).to have_selector('a', text: 'First')
         expect(page).to have_link 'First'
-        expect(page).to have_selector('span', text: 'Previous')
+        expect(page).to have_selector('a', text: 'Previous')
         expect(page).to have_link 'Previous'
-        expect(page).to have_selector('span', text: '1')
+        expect(page).to have_selector('a', text: '1')
         expect(page).to have_link '1'
       end
     end
 
     context '終了期限の降順ソートでページングが動作' do
       before do
-        create(:task, id: '1', title: 'task1', content: 'task_contetnt1', deadline: '2023/05/01',
-                      created_at: '2023/04/26 01:00')
-        create(:task, id: '2', title: 'task2', content: 'task_contetnt2', deadline: '2023/04/30',
-                      created_at: '2023/04/27 02:00')
-        create(:task, id: '3', title: 'task3', content: 'task_contetnt3', deadline: '2023/04/29',
-                      created_at: '2023/04/28 03:00')
-        create(:task, id: '4', title: 'task4', content: 'task_contetnt4', deadline: '2023/04/28',
-                      created_at: '2023/04/29 04:00')
-        create(:task, id: '5', title: 'task5', content: 'task_contetnt5', deadline: '2023/04/27',
-                      created_at: '2023/04/30 05:00')
-        create(:task, id: '6', title: 'task6', content: 'task_contetnt6', deadline: '2023/04/26',
-                      created_at: '2023/05/01 06:00')
+        create(:task, title: 'task1', content: 'task_contetnt1', deadline: '2023/05/01',
+                      created_at: '2023/04/26 01:00', user_id: user.id)
+        create(:task, title: 'task2', content: 'task_contetnt2', deadline: '2023/04/30',
+                      created_at: '2023/04/27 02:00', user_id: user.id)
+        create(:task, title: 'task3', content: 'task_contetnt3', deadline: '2023/04/29',
+                      created_at: '2023/04/28 03:00', user_id: user.id)
+        create(:task, title: 'task4', content: 'task_contetnt4', deadline: '2023/04/28',
+                      created_at: '2023/04/29 04:00', user_id: user.id)
+        create(:task, title: 'task5', content: 'task_contetnt5', deadline: '2023/04/27',
+                      created_at: '2023/04/30 05:00', user_id: user.id)
+        create(:task, title: 'task6', content: 'task_contetnt6', deadline: '2023/04/26',
+                      created_at: '2023/05/01 06:00', user_id: user.id)
         visit root_path
       end
 
@@ -185,23 +190,23 @@ RSpec.describe Task, type: :system do
         expect(page).to have_link '削除'
         expect(page).to have_link '昇順', href: search_tasks_path(deadline_order: 'asc')
         expect(page).to have_link '降順', href: search_tasks_path(deadline_order: 'desc')
-        expect(page).to have_selector('span', text: 'First')
+        expect(page).to have_selector('a', text: 'First')
         expect(page).to have_link 'First'
-        expect(page).to have_selector('span', text: 'Previous')
+        expect(page).to have_selector('a', text: 'Previous')
         expect(page).to have_link 'Previous'
-        expect(page).to have_selector('span', text: '1')
+        expect(page).to have_selector('a', text: '1')
         expect(page).to have_link '1'
       end
     end
 
     context '一覧ページの終了期限の昇順ボタンが押された' do
       before do
-        create(:task, id: '1', title: 'task1', content: 'task_contetnt1', deadline: '2023/04/29',
-                      status: :not_started, created_at: '2023/04/27 09:00')
-        create(:task, id: '2', title: 'task2', content: 'task_contetnt2', deadline: '2023/04/28',
-                      status: :start, created_at: '2023/04/27 08:00')
-        create(:task, id: '3', title: 'task3', content: 'task_contetnt3', deadline: '2023/04/27',
-                      status: :completed, created_at: '2023/04/27 10:00')
+        create(:task, title: 'task1', content: 'task_contetnt1', deadline: '2023/04/29',
+                      status: :not_started, created_at: '2023/04/27 09:00', user_id: user.id)
+        create(:task, title: 'task2', content: 'task_contetnt2', deadline: '2023/04/28',
+                      status: :start, created_at: '2023/04/27 08:00', user_id: user.id)
+        create(:task, title: 'task3', content: 'task_contetnt3', deadline: '2023/04/27',
+                      status: :completed, created_at: '2023/04/27 10:00', user_id: user.id)
         visit root_path
       end
 
@@ -218,12 +223,12 @@ RSpec.describe Task, type: :system do
 
     context '一覧ページの終了期限の降順ボタンが押された' do
       before do
-        create(:task, id: '1', title: 'task1', content: 'task_contetnt1', deadline: '2023/04/29',
-                      status: :not_started, created_at: '2023/04/27 09:00')
-        create(:task, id: '2', title: 'task2', content: 'task_contetnt2', deadline: '2023/04/28',
-                      status: :start, created_at: '2023/04/27 08:00')
-        create(:task, id: '3', title: 'task3', content: 'task_contetnt3', deadline: '2023/04/27',
-                      status: :completed, created_at: '2023/04/27 10:00')
+        create(:task, title: 'task1', content: 'task_contetnt1', deadline: '2023/04/29',
+                      status: :not_started, created_at: '2023/04/27 09:00', user_id: user.id)
+        create(:task, title: 'task2', content: 'task_contetnt2', deadline: '2023/04/28',
+                      status: :start, created_at: '2023/04/27 08:00', user_id: user.id)
+        create(:task, title: 'task3', content: 'task_contetnt3', deadline: '2023/04/27',
+                      status: :completed, created_at: '2023/04/27 10:00', user_id: user.id)
         visit root_path
       end
 
