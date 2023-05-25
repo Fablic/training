@@ -268,6 +268,8 @@ RSpec.describe Task, type: :system do
     end
 
     context '詳細タスクがある' do
+      let!(:task) { create(:task, user_id: user_taro.id) }
+
       it '詳細ページの表示' do
         visit task_path(task.id)
 
@@ -286,6 +288,17 @@ RSpec.describe Task, type: :system do
 
         expect(page).to have_current_path root_path, ignore_query: true
         expect(page).to have_content '該当するリソースがありませんでした。'
+      end
+    end
+
+    context '自分以外のタスクの詳細ページにアクセス' do
+      let!(:task) { create(:task, user_id: user_jiro.id) }
+
+      it 'アクセス権限がないと表示' do
+        visit task_path(task.id)
+
+        expect(page).to have_current_path root_path, ignore_query: true
+        expect(page).to have_content 'アクセスする権限がありません。'
       end
     end
   end
@@ -605,6 +618,17 @@ RSpec.describe Task, type: :system do
 
         expect(page).to have_current_path root_path, ignore_query: true
         expect(page).to have_content '該当するリソースがありませんでした。'
+      end
+    end
+
+    context '自分以外のタスクの編集ページにアクセス' do
+      let!(:task) { create(:task, user_id: user_jiro.id) }
+
+      it 'アクセス権限がないと表示' do
+        visit edit_task_path(task.id)
+
+        expect(page).to have_current_path root_path, ignore_query: true
+        expect(page).to have_content 'アクセスする権限がありません。'
       end
     end
 
