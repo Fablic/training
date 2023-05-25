@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   before_action :set_user_id, only: [:show, :edit, :update, :destroy]
 
   def index
-    @users = User.all.order(created_at: 'DESC').page(params[:page]).per(5)
+    @users = User.includes(:tasks).order(created_at: 'DESC').page(params[:page]).per(5)
   end
 
   def show; end
