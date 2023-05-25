@@ -6,7 +6,10 @@
       </div>
       <div class='collapse navbar-collapse'>
         <div class='navbar-nav'>
-          <%= link_to t('buttons.new'), new_task_path, class: 'nav-link' %>
+          <%= link_to t('activerecord.models.task') + t('buttons.new'), new_task_path, class: 'nav-link' %>
+        </div>
+        <div class='navbar-nav'>
+          <%= link_to t('activerecord.models.user') + t('buttons.list'), users_path, class: 'nav-link' %>
         </div>
       </div>
     </div>
