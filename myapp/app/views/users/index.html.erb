@@ -1,0 +1,53 @@
+<div class='container rounded-2' style='padding:10px;'>
+  <nav class='navbar navbar-expand-lg navbar-light bg-light mb-3'>
+    <div class='container-fluid'>
+      <div class='navbar-brand'>
+        <%= t('activerecord.models.task') + t('commom.word.management') %>
+      </div>
+      <div class='collapse navbar-collapse'>
+        <div class='navbar-nav'>
+          <%= link_to t('activerecord.models.user') + t('buttons.new'), new_user_path, class: 'nav-link' %>
+        </div>
+        <div class='navbar-nav'>
+          <%= link_to t('activerecord.models.task') + t('buttons.list'), tasks_path, class: 'nav-link' %>
+        </div>
+      </div>
+    </div>
+    <div class='container-sm justify-content-end'>
+        <% if logged_in? %>
+          <span class='d-flex align-items-center'><%= @current_user.name %></span>
+          <span class='d-flex align-items-center mx-2'><%= link_to t('buttons.logout'), logout_path, class: 'btn btn-danger', method: :delete %></span>
+        <% end %>
+      </div>
+  </nav>
+
+  <table class='tasks table table-bordered'>
+    <tr>
+      <th scope='col'><%= t('activerecord.attributes.user.id') %></th>
+      <th scope='col'><%= t('activerecord.attributes.user.name') %></th>
+      <th scope='col'><%= t('activerecord.attributes.task.email') %></th>
+      <th scope='col'><%= t('activerecord.attributes.user.created_at') %></th>
+      <th scope='col'><%= t('activerecord.attributes.user.updated_at') %></th>
+      <th scope='col'><%= t('activerecord.attributes.user.another') %></th>
+    </tr>
+    <tbody>
+      <% @users.each do |user| %>
+        <tr scope='row'>
+          <td><%= user.id %></td>
+          <td class='user-name'>
+            <%= user.name %>
+          </td>
+          <td><%= user.email %></td>
+          <td><%= l user.created_at, format: :short %></td>
+          <td><%= l user.updated_at, format: :short %></td>
+          <td>
+            <%= link_to t('buttons.show'), user_path(user.id), class: 'btn btn-secondary' %>
+            <%= link_to t('buttons.edit'), edit_user_path(user.id), class: 'btn btn-secondary' %>
+            <%= link_to t('buttons.delete'), user_path(user.id), method: :delete, class: 'btn btn-danger' %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= paginate @users, theme: 'bootstrap-5'%>
+</div>
