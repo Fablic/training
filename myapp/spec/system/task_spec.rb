@@ -49,6 +49,8 @@ RSpec.describe Task, type: :system do
         expect(page).to have_link '削除'
         expect(page).to have_link '昇順', href: search_tasks_path(deadline_order: 'asc')
         expect(page).to have_link '降順', href: search_tasks_path(deadline_order: 'desc')
+        expect(page).to have_link 'タスク新規登録'
+        expect(page).to have_link 'ユーザーリスト'
         expect(page).to have_field 'title'
         expect(page).to have_select(options: ['未着手', '着手中', '完了'])
         expect(page).to have_button '検索'
