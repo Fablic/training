@@ -16,6 +16,6 @@ class ApplicationController < ActionController::Base
       logger.info "ActiveRecord::RecordNotFound!: #{e.message}"
       logger.info e.backtrace.join("\n")
     end
-    redirect_to root_path, alert: t('error.messages.record_not_found')
+    redirect_to root_path, danger: t('error.messages.record_not_found')
   end
 end
