@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   before_action :require_login
   before_action :set_user_id, only: [:show, :edit, :update, :destroy]
+  before_action :user_admin
 
   def index
     @users = User.includes(:tasks).order(created_at: 'DESC').page(params[:page]).per(5)
@@ -45,7 +46,13 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
+  def user_admin
+    return unless @current_user.role? == true
+
+    redirect_to tasks_path, danger: t('error.messages.no_authority')
+  end
+
   def user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation)
+    params.require(:user).permit(:name, :email, :password, :password_confirmation, :role)
   end
 end

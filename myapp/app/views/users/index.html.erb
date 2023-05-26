@@ -27,6 +27,7 @@
       <th scope='col'><%= t('activerecord.attributes.user.name') %></th>
       <th scope='col'><%= t('activerecord.attributes.task.email') %></th>
       <th scope='col'><%= t('activerecord.attributes.user.user_task_count') %></th>
+      <th scope='col'><%= t('activerecord.attributes.user.role') %></th>
       <th scope='col'><%= t('activerecord.attributes.user.created_at') %></th>
       <th scope='col'><%= t('activerecord.attributes.user.updated_at') %></th>
       <th scope='col'><%= t('activerecord.attributes.user.another') %></th>
@@ -40,6 +41,7 @@
           </td>
           <td><%= user.email %></td>
           <td><%= user.tasks.length %></td>
+          <td><%= user.role %></td>
           <td><%= l user.created_at, format: :short %></td>
           <td><%= l user.updated_at, format: :short %></td>
           <td>
