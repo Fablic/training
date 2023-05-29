@@ -15,7 +15,7 @@ RSpec.describe User, type: :model do
         user.name = ''
 
         expect(user).not_to be_valid
-        expect(user.errors.full_messages).to include('Nameを入力してください')
+        expect(user.errors.full_messages).to include('氏名を入力してください')
       end
     end
 
@@ -24,7 +24,7 @@ RSpec.describe User, type: :model do
         user.email = ''
 
         expect(user).not_to be_valid
-        expect(user.errors.full_messages).to include('Emailを入力してください', 'Emailは不正な値です')
+        expect(user.errors.full_messages).to include('メールアドレスを入力してください', 'メールアドレスは不正な値です')
       end
 
       it 'emailの長さが256文字以上だと無効' do
@@ -32,7 +32,7 @@ RSpec.describe User, type: :model do
         user.email = "#{text}" + '@example.com'
 
         expect(user).not_to be_valid
-        expect(user.errors.full_messages).to include('Emailは255文字以内で入力してください')
+        expect(user.errors.full_messages).to include('メールアドレスは255文字以内で入力してください')
       end
 
       it '同じものが2つ以上あると無効' do
@@ -40,42 +40,60 @@ RSpec.describe User, type: :model do
         user.email = user_exist.email
 
         expect(user).not_to be_valid
-        expect(user.errors.full_messages).to include('Emailはすでに存在します')
+        expect(user.errors.full_messages).to include('メールアドレスはすでに存在します')
       end
 
       it '@から始まるものは無効' do
         user.email = '@example.com'
 
         expect(user).not_to be_valid
-        expect(user.errors.full_messages).to include('Emailは不正な値です')
+        expect(user.errors.full_messages).to include('メールアドレスは不正な値です')
       end
 
       it '@がないものは無効' do
         user.email = 'hugaexample.com'
 
         expect(user).not_to be_valid
-        expect(user.errors.full_messages).to include('Emailは不正な値です')
+        expect(user.errors.full_messages).to include('メールアドレスは不正な値です')
       end
 
       it '2次ドメインが入っていないものは無効' do
         user.email = 'huga@.com'
 
         expect(user).not_to be_valid
-        expect(user.errors.full_messages).to include('Emailは不正な値です')
+        expect(user.errors.full_messages).to include('メールアドレスは不正な値です')
       end
 
       it 'ドットがないものは無効' do
         user.email = 'huga@examplecom'
 
         expect(user).not_to be_valid
-        expect(user.errors.full_messages).to include('Emailは不正な値です')
+        expect(user.errors.full_messages).to include('メールアドレスは不正な値です')
       end
 
       it 'トップレベルドメインがないものは無効' do
         user.email = 'huga@example.'
 
         expect(user).not_to be_valid
-        expect(user.errors.full_messages).to include('Emailは不正な値です')
+        expect(user.errors.full_messages).to include('メールアドレスは不正な値です')
+      end
+    end
+
+    context 'passwordのバリデーション' do
+      it 'パスワードが空なら無効' do
+        user.password = ''
+        user.password_confirmation = ''
+
+        expect(user).not_to be_valid
+        expect(user.errors.full_messages).to include('パスワード確認とパスワードの入力が一致しません')
+      end
+
+      it 'パスワードが7文字以下なら無効' do
+        user.password = 'passwor'
+        user.password_confirmation = 'passwor'
+
+        expect(user).not_to be_valid
+        expect(user.errors.full_messages).to include('パスワードは8文字以上で入力してください')
       end
     end
   end

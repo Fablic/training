@@ -1,8 +1,9 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: %i[edit update destroy show]
+  before_action :require_login
+  before_action :ensure_correct_user, only: %i[edit update destroy show]
 
   def index
-    @tasks = Task.all.order(created_at: 'DESC').page(params[:page]).per(5)
+    @tasks = @current_user.tasks.order(created_at: 'DESC').page(params[:page]).per(5)
   end
 
   def show; end
@@ -14,9 +15,9 @@ class TasksController < ApplicationController
   def edit; end
 
   def create
-    @task = Task.new(task_params)
+    @task = @current_user.tasks.new(task_params)
     if @task.save
-      redirect_to tasks_path, notice: t('messages.create', model_name: t('activerecord.models.task'))
+      redirect_to tasks_path, success: t('messages.create', model_name: t('activerecord.models.task'))
     else
       render :new
     end
@@ -24,7 +25,7 @@ class TasksController < ApplicationController
 
   def update
     if @task.update(task_params)
-      redirect_to tasks_path, notice: t('messages.update', model_name: t('activerecord.models.task'))
+      redirect_to tasks_path, success: t('messages.update', model_name: t('activerecord.models.task'))
     else
       render :edit
     end
@@ -32,14 +33,14 @@ class TasksController < ApplicationController
 
   def destroy
     if @task.destroy
-      redirect_to tasks_path, notice: t('messages.delete', model_name: t('activerecord.models.task'))
+      redirect_to tasks_path, success: t('messages.delete', model_name: t('activerecord.models.task'))
     else
       render :index
     end
   end
 
   def search
-    @tasks = Task.where_title(params[:title]).where_status(params[:status]).deadline_order(params[:deadline_order]).page(params[:page]).per(5)
+    @tasks = @current_user.tasks.where_title(params[:title]).where_status(params[:status]).deadline_order(params[:deadline_order]).page(params[:page]).per(5)
     @title = params[:title]
     @status = params[:status]
     @deadline_order = params[:deadline_order]
@@ -48,11 +49,14 @@ class TasksController < ApplicationController
 
   private
 
-  def set_task
+  def ensure_correct_user
     @task = Task.find(params[:id])
+    return if @task.user == @current_user
+
+    redirect_to root_path, danger: t('error.messages.no_authority')
   end
 
   def task_params
-    params.require(:task).permit(:title, :content, :deadline, :status)
+    params.require(:task).permit(:title, :content, :deadline, :status).merge(user_id: current_user.id)
   end
 end

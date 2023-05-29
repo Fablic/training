@@ -6,5 +6,7 @@ FactoryBot.define do
     content { Faker::Lorem.word }
     status  { 1 }
     deadline { Faker::Date.backward }
+
+    association :user
   end
 end

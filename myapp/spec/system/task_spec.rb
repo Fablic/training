@@ -2,20 +2,28 @@ require 'rails_helper'
 
 RSpec.describe Task, type: :system do
   let(:task) { create(:task) }
+  let(:user_taro) { create(:user, name: 'hogehoge', email: Faker::Internet.email, password: 'password') }
+  let(:user_jiro) { create(:user, name: 'testest', email: Faker::Internet.email, password: 'password') }
+
+  before do
+    login(user_taro.email, user_taro.password)
+  end
 
   describe 'タスク表示' do
     context 'DBに保存されたデータがある' do
       before do
-        create(:task, id: '1', title: 'task1', content: 'task_contetnt1', deadline: '2023/04/27',
-                      status: :not_started, created_at: '2023/04/27 09:00')
-        create(:task, id: '2', title: 'task2', content: 'task_contetnt2', deadline: '2023/04/26',
-                      status: :start, created_at: '2023/04/27 08:00')
-        create(:task, id: '3', title: 'task3', content: 'task_contetnt3', deadline: '2023/04/28',
-                      status: :completed, created_at: '2023/04/27 10:00')
+        create(:task, title: 'task1', content: 'task_contetnt1', deadline: '2023/04/27',
+                      status: :not_started, created_at: '2023/04/27 09:00', user_id: user_taro.id)
+        create(:task, title: 'task2', content: 'task_contetnt2', deadline: '2023/04/26',
+                      status: :start, created_at: '2023/04/27 08:00', user_id: user_taro.id)
+        create(:task, title: 'task3', content: 'task_contetnt3', deadline: '2023/04/28',
+                      status: :completed, created_at: '2023/04/27 10:00', user_id: user_taro.id)
+        create(:task, title: 'task4', content: 'task_contetnt4', deadline: '2023/04/28',
+                      status: :completed, created_at: '2023/04/27 10:00', user_id: user_jiro.id)
         visit root_path
       end
 
-      it '一覧ページに作成日降順で表示' do
+      it '自分のタスクのみ一覧ページに作成日降順で表示' do
         expect(page).to have_current_path root_path, ignore_query: true
         expect(page).to have_content '1'
         expect(page).to have_content 'task1'
@@ -45,6 +53,8 @@ RSpec.describe Task, type: :system do
         expect(page).to have_select(options: ['未着手', '着手中', '完了'])
         expect(page).to have_button '検索'
         expect(page).to have_link 'クリア'
+        expect(page).to have_link 'ログアウト'
+        expect(page).to have_content user_taro.name
 
         within '.tasks' do
           task_titles = all('.task-title').map(&:text)
@@ -55,27 +65,27 @@ RSpec.describe Task, type: :system do
 
     context '作成日順ソートでページングが動作' do
       before do
-        create(:task, id: '1', title: 'task1', content: 'task_contetnt1', deadline: '2023/05/01',
-                      created_at: '2023/04/26 01:00')
-        create(:task, id: '2', title: 'task2', content: 'task_contetnt2', deadline: '2023/04/30',
-                      created_at: '2023/04/27 02:00')
-        create(:task, id: '3', title: 'task3', content: 'task_contetnt3', deadline: '2023/04/29',
-                      created_at: '2023/04/28 03:00')
-        create(:task, id: '4', title: 'task4', content: 'task_contetnt4', deadline: '2023/04/28',
-                      created_at: '2023/04/29 04:00')
-        create(:task, id: '5', title: 'task5', content: 'task_contetnt5', deadline: '2023/04/27',
-                      created_at: '2023/04/30 05:00')
-        create(:task, id: '6', title: 'task6', content: 'task_contetnt6', deadline: '2023/04/26',
-                      created_at: '2023/05/01 06:00')
+        create(:task, title: 'task1', content: 'task_contetnt1', deadline: '2023/05/01',
+                      created_at: '2023/04/26 01:00', user_id: user_taro.id)
+        create(:task, title: 'task2', content: 'task_contetnt2', deadline: '2023/04/30',
+                      created_at: '2023/04/27 02:00', user_id: user_taro.id)
+        create(:task, title: 'task3', content: 'task_contetnt3', deadline: '2023/04/29',
+                      created_at: '2023/04/28 03:00', user_id: user_taro.id)
+        create(:task, title: 'task4', content: 'task_contetnt4', deadline: '2023/04/28',
+                      created_at: '2023/04/29 04:00', user_id: user_taro.id)
+        create(:task, title: 'task5', content: 'task_contetnt5', deadline: '2023/04/27',
+                      created_at: '2023/04/30 05:00', user_id: user_taro.id)
+        create(:task, title: 'task6', content: 'task_contetnt6', deadline: '2023/04/26',
+                      created_at: '2023/05/01 06:00', user_id: user_taro.id)
         visit root_path
       end
 
       it '２ページ目のタスクが表示されている' do
-        expect(page).to have_selector('span', text: 'Next')
+        expect(page).to have_selector('a', text: 'Next')
         expect(page).to have_link 'Next'
-        expect(page).to have_selector('span', text: 'Last')
+        expect(page).to have_selector('a', text: 'Last')
         expect(page).to have_link 'Last'
-        expect(page).to have_selector('span', text: '2')
+        expect(page).to have_selector('a', text: '2')
         expect(page).to have_link '2'
         within '.tasks' do
           task_titles = all('.task-title').map(&:text)
@@ -94,9 +104,7 @@ RSpec.describe Task, type: :system do
         expect(page).to have_link '削除'
         expect(page).to have_link '昇順', href: search_tasks_path(deadline_order: 'asc')
         expect(page).to have_link '降順', href: search_tasks_path(deadline_order: 'desc')
-        expect(page).to have_css '.first'
         expect(page).to have_link 'First'
-        expect(page).to have_css '.prev'
         expect(page).to have_link 'Previous'
         expect(page).to have_link '1'
       end
@@ -104,18 +112,18 @@ RSpec.describe Task, type: :system do
 
     context '終了期限の昇順ソートでページングが動作' do
       before do
-        create(:task, id: '1', title: 'task1', content: 'task_contetnt1', deadline: '2023/05/01',
-                      created_at: '2023/04/26 01:00')
-        create(:task, id: '2', title: 'task2', content: 'task_contetnt2', deadline: '2023/04/30',
-                      created_at: '2023/04/27 02:00')
-        create(:task, id: '3', title: 'task3', content: 'task_contetnt3', deadline: '2023/04/29',
-                      created_at: '2023/04/28 03:00')
-        create(:task, id: '4', title: 'task4', content: 'task_contetnt4', deadline: '2023/04/28',
-                      created_at: '2023/04/29 04:00')
-        create(:task, id: '5', title: 'task5', content: 'task_contetnt5', deadline: '2023/04/27',
-                      created_at: '2023/04/30 05:00')
-        create(:task, id: '6', title: 'task6', content: 'task_contetnt6', deadline: '2023/04/26',
-                      created_at: '2023/05/01 06:00')
+        create(:task, title: 'task1', content: 'task_contetnt1', deadline: '2023/05/01',
+                      created_at: '2023/04/26 01:00', user_id: user_taro.id)
+        create(:task, title: 'task2', content: 'task_contetnt2', deadline: '2023/04/30',
+                      created_at: '2023/04/27 02:00', user_id: user_taro.id)
+        create(:task, title: 'task3', content: 'task_contetnt3', deadline: '2023/04/29',
+                      created_at: '2023/04/28 03:00', user_id: user_taro.id)
+        create(:task, title: 'task4', content: 'task_contetnt4', deadline: '2023/04/28',
+                      created_at: '2023/04/29 04:00', user_id: user_taro.id)
+        create(:task, title: 'task5', content: 'task_contetnt5', deadline: '2023/04/27',
+                      created_at: '2023/04/30 05:00', user_id: user_taro.id)
+        create(:task, title: 'task6', content: 'task_contetnt6', deadline: '2023/04/26',
+                      created_at: '2023/05/01 06:00', user_id: user_taro.id)
         visit root_path
       end
 
@@ -139,29 +147,29 @@ RSpec.describe Task, type: :system do
         expect(page).to have_link '削除'
         expect(page).to have_link '昇順', href: search_tasks_path(deadline_order: 'asc')
         expect(page).to have_link '降順', href: search_tasks_path(deadline_order: 'desc')
-        expect(page).to have_selector('span', text: 'First')
+        expect(page).to have_selector('a', text: 'First')
         expect(page).to have_link 'First'
-        expect(page).to have_selector('span', text: 'Previous')
+        expect(page).to have_selector('a', text: 'Previous')
         expect(page).to have_link 'Previous'
-        expect(page).to have_selector('span', text: '1')
+        expect(page).to have_selector('a', text: '1')
         expect(page).to have_link '1'
       end
     end
 
     context '終了期限の降順ソートでページングが動作' do
       before do
-        create(:task, id: '1', title: 'task1', content: 'task_contetnt1', deadline: '2023/05/01',
-                      created_at: '2023/04/26 01:00')
-        create(:task, id: '2', title: 'task2', content: 'task_contetnt2', deadline: '2023/04/30',
-                      created_at: '2023/04/27 02:00')
-        create(:task, id: '3', title: 'task3', content: 'task_contetnt3', deadline: '2023/04/29',
-                      created_at: '2023/04/28 03:00')
-        create(:task, id: '4', title: 'task4', content: 'task_contetnt4', deadline: '2023/04/28',
-                      created_at: '2023/04/29 04:00')
-        create(:task, id: '5', title: 'task5', content: 'task_contetnt5', deadline: '2023/04/27',
-                      created_at: '2023/04/30 05:00')
-        create(:task, id: '6', title: 'task6', content: 'task_contetnt6', deadline: '2023/04/26',
-                      created_at: '2023/05/01 06:00')
+        create(:task, title: 'task1', content: 'task_contetnt1', deadline: '2023/05/01',
+                      created_at: '2023/04/26 01:00', user_id: user_taro.id)
+        create(:task, title: 'task2', content: 'task_contetnt2', deadline: '2023/04/30',
+                      created_at: '2023/04/27 02:00', user_id: user_taro.id)
+        create(:task, title: 'task3', content: 'task_contetnt3', deadline: '2023/04/29',
+                      created_at: '2023/04/28 03:00', user_id: user_taro.id)
+        create(:task, title: 'task4', content: 'task_contetnt4', deadline: '2023/04/28',
+                      created_at: '2023/04/29 04:00', user_id: user_taro.id)
+        create(:task, title: 'task5', content: 'task_contetnt5', deadline: '2023/04/27',
+                      created_at: '2023/04/30 05:00', user_id: user_taro.id)
+        create(:task, title: 'task6', content: 'task_contetnt6', deadline: '2023/04/26',
+                      created_at: '2023/05/01 06:00', user_id: user_taro.id)
         visit root_path
       end
 
@@ -185,23 +193,23 @@ RSpec.describe Task, type: :system do
         expect(page).to have_link '削除'
         expect(page).to have_link '昇順', href: search_tasks_path(deadline_order: 'asc')
         expect(page).to have_link '降順', href: search_tasks_path(deadline_order: 'desc')
-        expect(page).to have_selector('span', text: 'First')
+        expect(page).to have_selector('a', text: 'First')
         expect(page).to have_link 'First'
-        expect(page).to have_selector('span', text: 'Previous')
+        expect(page).to have_selector('a', text: 'Previous')
         expect(page).to have_link 'Previous'
-        expect(page).to have_selector('span', text: '1')
+        expect(page).to have_selector('a', text: '1')
         expect(page).to have_link '1'
       end
     end
 
     context '一覧ページの終了期限の昇順ボタンが押された' do
       before do
-        create(:task, id: '1', title: 'task1', content: 'task_contetnt1', deadline: '2023/04/29',
-                      status: :not_started, created_at: '2023/04/27 09:00')
-        create(:task, id: '2', title: 'task2', content: 'task_contetnt2', deadline: '2023/04/28',
-                      status: :start, created_at: '2023/04/27 08:00')
-        create(:task, id: '3', title: 'task3', content: 'task_contetnt3', deadline: '2023/04/27',
-                      status: :completed, created_at: '2023/04/27 10:00')
+        create(:task, title: 'task1', content: 'task_contetnt1', deadline: '2023/04/29',
+                      status: :not_started, created_at: '2023/04/27 09:00', user_id: user_taro.id)
+        create(:task, title: 'task2', content: 'task_contetnt2', deadline: '2023/04/28',
+                      status: :start, created_at: '2023/04/27 08:00', user_id: user_taro.id)
+        create(:task, title: 'task3', content: 'task_contetnt3', deadline: '2023/04/27',
+                      status: :completed, created_at: '2023/04/27 10:00', user_id: user_taro.id)
         visit root_path
       end
 
@@ -218,12 +226,12 @@ RSpec.describe Task, type: :system do
 
     context '一覧ページの終了期限の降順ボタンが押された' do
       before do
-        create(:task, id: '1', title: 'task1', content: 'task_contetnt1', deadline: '2023/04/29',
-                      status: :not_started, created_at: '2023/04/27 09:00')
-        create(:task, id: '2', title: 'task2', content: 'task_contetnt2', deadline: '2023/04/28',
-                      status: :start, created_at: '2023/04/27 08:00')
-        create(:task, id: '3', title: 'task3', content: 'task_contetnt3', deadline: '2023/04/27',
-                      status: :completed, created_at: '2023/04/27 10:00')
+        create(:task, title: 'task1', content: 'task_contetnt1', deadline: '2023/04/29',
+                      status: :not_started, created_at: '2023/04/27 09:00', user_id: user_taro.id)
+        create(:task, title: 'task2', content: 'task_contetnt2', deadline: '2023/04/28',
+                      status: :start, created_at: '2023/04/27 08:00', user_id: user_taro.id)
+        create(:task, title: 'task3', content: 'task_contetnt3', deadline: '2023/04/27',
+                      status: :completed, created_at: '2023/04/27 10:00', user_id: user_taro.id)
         visit root_path
       end
 
@@ -260,6 +268,8 @@ RSpec.describe Task, type: :system do
     end
 
     context '詳細タスクがある' do
+      let!(:task) { create(:task, user_id: user_taro.id) }
+
       it '詳細ページの表示' do
         visit task_path(task.id)
 
@@ -280,14 +290,27 @@ RSpec.describe Task, type: :system do
         expect(page).to have_content '該当するリソースがありませんでした。'
       end
     end
+
+    context '自分以外のタスクの詳細ページにアクセス' do
+      let!(:task) { create(:task, user_id: user_jiro.id) }
+
+      it 'アクセス権限がないと表示' do
+        visit task_path(task.id)
+
+        expect(page).to have_current_path root_path, ignore_query: true
+        expect(page).to have_content 'アクセスする権限がありません。'
+      end
+    end
   end
 
   describe '検索エリア' do
+    let!(:task_A1) { create(:task, title: 'titleA1', status: :not_started, deadline: '2023/04/27', created_at: '2023/01/30 09:00', user_id: user_taro.id) }
+    let!(:task_A2) { create(:task, title: 'titleA2', status: :start, deadline: '2023/04/28', created_at: '2023/02/29 09:00', user_id: user_taro.id) }
+    let!(:task_B1) { create(:task, title: 'titleB1', status: :not_started, deadline: '2023/04/29', created_at: '2023/03/28 09:00', user_id: user_taro.id) }
+    let!(:task_B2) { create(:task, title: 'titleB2', status: :start, deadline: '2023/04/30', created_at: '2023/04/27 09:00', user_id: user_taro.id) }
+    let!(:task_C1) { create(:task, title: 'titleC1', status: :not_started, user_id: user_jiro.id) }
+
     context 'statusのみ指定して検索' do
-      let!(:task_A1) { create(:task, title: 'titleA1', status: :not_started) }
-      let!(:task_A2) { create(:task, title: 'titleA2', status: :start) }
-      let!(:task_B1) { create(:task, title: 'titleB1', status: :not_started) }
-      let!(:task_B2) { create(:task, title: 'titleB2', status: :start) }
       let(:conditions) { { status: '未着手' } }
 
       it '検索結果の件数が一致すること' do
@@ -339,13 +362,19 @@ RSpec.describe Task, type: :system do
 
         expect(page).not_to have_content 'titleB2'
       end
+
+      it 'titleC1が表示されないこと' do
+        visit root_path
+
+        fill_in 'title', with: ''
+        select(value = conditions[:status], from: 'status')
+        click_on '検索'
+
+        expect(page).not_to have_content 'titleC1'
+      end
     end
 
     context 'title、statusを指定して検索' do
-      let!(:task_A1) { create(:task, title: 'titleA1', status: :not_started) }
-      let!(:task_A2) { create(:task, title: 'titleA2', status: :start) }
-      let!(:task_B1) { create(:task, title: 'titleB1', status: :not_started) }
-      let!(:task_B2) { create(:task, title: 'titleB2', status: :start) }
       let(:conditions) { { title: 'A', status: '未着手' } }
 
       it '検索結果の件数が一致すること' do
@@ -400,10 +429,7 @@ RSpec.describe Task, type: :system do
     end
 
     context '終了期日のソート条件が無いまま、検索できること' do
-      let!(:task_A1) { create(:task, title: 'titleA1', status: :not_started, deadline: '2023/04/27', created_at: '2023/01/30 09:00') }
-      let!(:task_A2) { create(:task, title: 'titleA2', status: :start, deadline: '2023/04/28', created_at: '2023/02/29 09:00') }
-      let!(:task_B1) { create(:task, title: 'titleB1', status: :not_started, deadline: '2023/04/29', created_at: '2023/03/28 09:00') }
-      let!(:task_B2) { create(:task, title: 'titleB2', status: :not_started, deadline: '2023/04/30', created_at: '2023/04/27 09:00') }
+      let!(:task_A2) { create(:task, title: 'titleA2', status: :not_started, deadline: '2023/04/28', created_at: '2023/08/29 09:00', user_id: user_taro.id) }
       let(:conditions) { { status: '未着手' } }
 
       it '検索結果の件数が一致すること' do
@@ -415,17 +441,14 @@ RSpec.describe Task, type: :system do
 
         within '.tasks' do
           task_titles = all('.task-title').map(&:text)
-          expect(task_titles).to eq %w[titleB2 titleB1 titleA1]
+          expect(task_titles).to eq %w[titleA2 titleB1 titleA1]
         end
         expect(all('tbody tr').size).to be(3)
       end
     end
 
     context '終了期日の昇順ソートのまま、検索できること' do
-      let!(:task_A1) { create(:task, title: 'titleA1', status: :not_started, deadline: '2023/04/27') }
-      let!(:task_A2) { create(:task, title: 'titleA2', status: :not_started, deadline: '2023/04/28') }
-      let!(:task_B1) { create(:task, title: 'titleB1', status: :not_started, deadline: '2023/04/29') }
-      let!(:task_B2) { create(:task, title: 'titleB2', status: :start, deadline: '2023/04/30') }
+      let!(:task_A2) { create(:task, title: 'titleA2', status: :not_started, deadline: '2023/04/28', created_at: '2023/08/29 09:00', user_id: user_taro.id) }
       let(:conditions) { { status: '未着手' } }
 
       it '昇順ソートで検索結果の件数が一致すること' do
@@ -445,10 +468,7 @@ RSpec.describe Task, type: :system do
     end
 
     context '終了期日の降順並びのまま、検索できること' do
-      let!(:task_A1) { create(:task, title: 'titleA1', status: :not_started, deadline: '2023/04/27', created_at: '2023/04/30 00:00') }
-      let!(:task_A2) { create(:task, title: 'titleA2', status: :not_started, deadline: '2023/04/28', created_at: '2023/04/29 00:00') }
-      let!(:task_B1) { create(:task, title: 'titleB1', status: :not_started, deadline: '2023/04/29', created_at: '2023/04/28 00:00') }
-      let!(:task_B2) { create(:task, title: 'titleB2', status: :start, deadline: '2023/04/30', created_at: '2023/04/27 00:00') }
+      let!(:task_A2) { create(:task, title: 'titleA2', status: :not_started, deadline: '2023/04/28', created_at: '2023/08/29 09:00', user_id: user_taro.id) }
       let(:conditions) { { status: '未着手' } }
 
       it '降順ソートで検索結果の件数が一致すること' do
@@ -570,7 +590,7 @@ RSpec.describe Task, type: :system do
   end
 
   describe 'タスク編集' do
-    let!(:task) { create(:task) }
+    let!(:task) { create(:task, user_id: user_taro.id) }
 
     context '編集タスクがある' do
       it '編集ページの表示に成功' do
@@ -598,6 +618,17 @@ RSpec.describe Task, type: :system do
 
         expect(page).to have_current_path root_path, ignore_query: true
         expect(page).to have_content '該当するリソースがありませんでした。'
+      end
+    end
+
+    context '自分以外のタスクの編集ページにアクセス' do
+      let!(:task) { create(:task, user_id: user_jiro.id) }
+
+      it 'アクセス権限がないと表示' do
+        visit edit_task_path(task.id)
+
+        expect(page).to have_current_path root_path, ignore_query: true
+        expect(page).to have_content 'アクセスする権限がありません。'
       end
     end
 
@@ -702,7 +733,7 @@ RSpec.describe Task, type: :system do
   end
 
   describe 'タスク削除' do
-    let!(:task) { create(:task) }
+    let!(:task) { create(:task, user_id: user_taro.id) }
 
     context '削除タスクがある' do
       it 'タスクの削除に成功' do
