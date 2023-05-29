@@ -1,10 +1,10 @@
 class UsersController < ApplicationController
   before_action :require_login
   before_action :set_user_id, only: [:show, :edit, :update, :destroy]
-  before_action :user_admin
+  before_action :user_admin, only: [:index, :new]
 
-  def index
-    @users = User.includes(:tasks).order(created_at: 'DESC').page(params[:page]).per(5)
+  def index;
+    @users = @users.order(created_at: 'DESC').page(params[:page]).per(5)
   end
 
   def show
@@ -46,12 +46,16 @@ class UsersController < ApplicationController
 
   def set_user_id
     @user = User.find(params[:id])
+    if @current_user.admin? == false
+      redirect_to tasks_path, danger: t('error.messages.no_authority')
+    end
   end
 
   def user_admin
-    return unless @current_user.role? == true
-
-    redirect_to tasks_path, danger: t('error.messages.no_authority')
+    @users = User.includes(:tasks)
+    if @current_user.admin? == false
+      redirect_to tasks_path, danger: t('error.messages.no_authority')
+    end
   end
 
   def user_params
