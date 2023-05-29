@@ -90,6 +90,10 @@ RSpec.describe User, type: :system do
   end
 
   describe 'ユーザー詳細画面表示' do
+    let!(:task1) { create(:task, user_id: user_jiro.id) }
+    let!(:task2) { create(:task, user_id: user_taro.id) }
+    let!(:task3) { create(:task, user_id: user_taro.id) }
+
     before do
       visit user_path(user_taro.id)
     end
@@ -105,6 +109,21 @@ RSpec.describe User, type: :system do
         expect(page).to have_content user_taro.updated_at
         expect(page).to have_link '編集', href: "/admin/users/#{user_taro.id}/edit"
         expect(page).to have_link 'ユーザーリスト', href: '/admin/users'
+
+        expect(page).to have_content task2.id
+        expect(page).to have_content task2.title
+        expect(page).to have_content task2.content
+        expect(page).to have_content (I18n.l(task2.deadline, format: :short))
+        expect(page).to have_content (I18n.t("enums.task.status.#{task2.status}"))
+        expect(page).to have_content (I18n.l(task2.created_at, format: :short))
+        expect(page).to have_content (I18n.l(task2.updated_at, format: :short))
+        expect(page).to have_content task3.id
+        expect(page).to have_content task3.title
+        expect(page).to have_content task3.content
+        expect(page).to have_content (I18n.l(task3.deadline, format: :short))
+        expect(page).to have_content (I18n.t("enums.task.status.#{task2.status}"))
+        expect(page).to have_content (I18n.l(task3.created_at, format: :short))
+        expect(page).to have_content (I18n.l(task3.updated_at, format: :short))
       end
     end
 
