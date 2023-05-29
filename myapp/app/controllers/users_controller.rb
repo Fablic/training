@@ -6,7 +6,9 @@ class UsersController < ApplicationController
     @users = User.includes(:tasks).order(created_at: 'DESC').page(params[:page]).per(5)
   end
 
-  def show; end
+  def show
+    @tasks = @user.tasks
+  end
 
   def new
     @user = User.new
