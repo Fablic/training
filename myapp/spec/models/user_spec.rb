@@ -8,6 +8,11 @@ RSpec.describe User, type: :model do
       it '正常に登録できる' do
         expect(user).to be_valid
       end
+
+      it 'emailが255文字以下なら正常に登録できる' do
+        user.email = 'a' * 243 + '@example.com'
+        expect(user).to be_valid
+      end
     end
 
     context 'nameのバリデーション' do
@@ -28,8 +33,7 @@ RSpec.describe User, type: :model do
       end
 
       it 'emailの長さが256文字以上だと無効' do
-        text = 'a' * 256
-        user.email = "#{text}" + '@example.com'
+        user.email = 'a' * 244 + '@example.com'
 
         expect(user).not_to be_valid
         expect(user.errors.full_messages).to include('メールアドレスは255文字以内で入力してください')
