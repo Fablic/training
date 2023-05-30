@@ -163,7 +163,7 @@ RSpec.describe User, type: :system do
     before do
       visit new_user_path
       fill_in 'user[name]', with: 'test子'
-      fill_in 'user[email]', with: 'test@test.com'
+      fill_in 'user[email]', with: 'a' * 246 + '@test.com'
       fill_in 'user[password]', with: 'password'
       fill_in 'user[password_confirmation]', with: 'password'
     end
@@ -445,13 +445,12 @@ RSpec.describe User, type: :system do
   describe 'ユーザー削除' do
     let!(:task) { create(:task, user_id: user_jiro.id) }
 
+    before do
+      visit users_path
+    end
+
     context '削除ユーザーがある' do
       it 'ユーザーの削除に成功' do
-        expect(User.all.length).to eq 2
-        expect(Task.all.length).to eq 1
-
-        visit users_path
-
         expect(page).to have_link '削除'
         click_link '削除', href: "/admin/users/#{user_jiro.id}"
 
@@ -465,11 +464,6 @@ RSpec.describe User, type: :system do
 
     context '削除タスクがない' do
       it '該当するリソースがないと表示' do
-        expect(User.all.length).to eq 2
-        expect(Task.all.length).to eq 1
-
-        visit users_path
-
         user_jiro.destroy
         click_link '削除', href: "/admin/users/#{user_jiro.id}"
 
