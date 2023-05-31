@@ -8,7 +8,7 @@
         <div class='navbar-nav'>
           <%= link_to t('activerecord.models.task') + t('buttons.new'), new_task_path, class: 'nav-link' %>
         </div>
-        <% if current_user == @user || current_user.admin? %>
+        <% if current_user.admin? %>
           <div class='navbar-nav'>
             <%= link_to t('activerecord.models.user') + t('buttons.list'), users_path, class: 'nav-link' %>
           </div>
