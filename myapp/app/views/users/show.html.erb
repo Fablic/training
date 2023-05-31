@@ -1,0 +1,59 @@
+<div class='text-content container' style='padding:10px;'>
+  <h2><%= t('activerecord.models.user') + t('buttons.show') %></h2>
+
+  <table class='table'>
+    <tbody>
+      <tr>
+        <th class='w-25'><%= t('activerecord.attributes.user.id') %></th>
+        <td class='w-75'><%= @user.id %></td>
+      </tr>
+      <tr>
+        <th class='w-25'><%= t('activerecord.attributes.user.name') %></th>
+        <td class='w-75'><%= @user.name %></td>
+      </tr>
+      <tr>
+        <th class='w-25'><%= t('activerecord.attributes.user.email') %></th>
+        <td class='w-75'><%= @user.email %></td>
+      </tr>
+      <tr>
+        <th class='w-25'><%= t('activerecord.attributes.user.created_at') %></th>
+        <td class='w-75'><%= @user.created_at %></td>
+      </tr>
+      <tr>
+        <th class='w-25'><%= t('activerecord.attributes.user.updated_at') %></th>
+        <td class='w-75'><%= @user.updated_at %></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <%= link_to t('activerecord.models.user') + t('buttons.list'), users_path, class: 'btn btn-primary' %>
+  <%= link_to t('buttons.edit'), edit_user_path(@user), class: 'btn btn-primary' %>
+
+    <h4 class="mt-5"><%= @user.name %><%= I18n.t('activerecord.models.task') %><%= t('buttons.list') %></h4>
+    <table class='tasks table table-bordered'>
+    <tr>
+      <th scope='col'><%= t('activerecord.attributes.task.id') %></th>
+      <th scope='col'><%= t('activerecord.attributes.task.title') %></th>
+      <th scope='col'><%= t('activerecord.attributes.task.content') %></th>
+      <th scope='col'><%= t('activerecord.attributes.task.deadline') %></th>
+      <th scope='col'><%= t('activerecord.attributes.task.status') %></th>
+      <th scope='col'><%= t('activerecord.attributes.task.created_at') %></th>
+      <th scope='col'><%= t('activerecord.attributes.user.updated_at') %></th>
+    </tr>
+    <tbody>
+      <% @tasks.each do |task| %>
+        <tr scope='row'>
+          <td><%= task.id %></td>
+          <td class='task-title'>
+            <%= task.title %>
+          </td>
+          <td><%= task.content %></td>
+          <td><%= l task.deadline %></td>
+          <td><%= t("enums.task.status.#{task.status}") %></td>
+          <td><%= l task.created_at, format: :short %></td>
+          <td><%= l task.updated_at, format: :short %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

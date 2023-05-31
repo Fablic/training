@@ -33,6 +33,7 @@ ja:
     login: ログイン
     logout: ログアウト
     signin: サインイン
+    list: リスト
     sort:
       asc: 昇順
       desc: 降順

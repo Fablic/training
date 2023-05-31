@@ -6,7 +6,7 @@ USER_NUM.times do |i|
   user = User.create!(
     name: name,
     email: "test#{i}@gmail.com",
-    password_digest: 'password',
+    password: 'password',
   )
   TASK_NUM.times do |j|
     deadline = Faker::Date.backward
