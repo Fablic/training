@@ -3,7 +3,8 @@ class TasksController < ApplicationController
   before_action :ensure_correct_user, only: %i[edit update destroy show]
 
   def index
-    @tasks = @current_user.tasks.order(created_at: 'DESC').page(params[:page]).per(5)
+    @tasks = @current_user.tasks.includes(:labels).order(created_at: 'DESC').page(params[:page]).per(5)
+    @label_list = Label.all
   end
 
   def show; end
@@ -12,11 +13,15 @@ class TasksController < ApplicationController
     @task = Task.new
   end
 
-  def edit; end
+  def edit
+    @label_list = @task.labels.pluck(:name).join(',')
+  end
 
   def create
     @task = @current_user.tasks.new(task_params)
+    label_list = params[:task][:name].delete(' ').split(',')
     if @task.save
+      @task.save_label(label_list)
       redirect_to tasks_path, success: t('messages.create', model_name: t('activerecord.models.task'))
     else
       render :new
@@ -25,6 +30,8 @@ class TasksController < ApplicationController
 
   def update
     if @task.update(task_params)
+      label_list = params[:task][:name].delete(' ').split(',')
+      @task.save_label(label_list)
       redirect_to tasks_path, success: t('messages.update', model_name: t('activerecord.models.task'))
     else
       render :edit
@@ -40,10 +47,11 @@ class TasksController < ApplicationController
   end
 
   def search
-    @tasks = @current_user.tasks.where_title(params[:title]).where_status(params[:status]).deadline_order(params[:deadline_order]).page(params[:page]).per(5)
+    @tasks = @current_user.tasks.includes(:labels).where_title(params[:title]).where_status(params[:status]).deadline_order(params[:deadline_order]).where_label(params[:name]).page(params[:page]).per(5)
     @title = params[:title]
     @status = params[:status]
     @deadline_order = params[:deadline_order]
+    @label = params[:label_id]
     render :index
   end
 

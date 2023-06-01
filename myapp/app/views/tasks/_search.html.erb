@@ -1,11 +1,15 @@
 <div class='input-group'>
   <%= form_with model: @task, url: search_tasks_path, class: 'd-flex', local: true, method: :get do |form| %>
-    <div div class='col-4'>
+    <div class='col d-flex align-items-center'>
       <%= form.text_field :title, id: 'search_word', value: @title, class: 'form-control', placeholder: t('activerecord.attributes.task.title') %>
     </div>
 
-    <div class='col-3'>
+    <div class='col d-flex align-items-center'>
       <%= form.select :status, options_for_select(Task.statuses.keys.map  {|k| [t("enums.task.status.#{k}"), k]}), { selected: @status }, { class: 'form-select', 'data-style': 'form-control' } %>
+    </div>
+
+    <div class='col d-flex align-items-center'>
+      <%= select_tag :label, options_from_collection_for_select(@label_list, 'id', 'name'), { class: 'form-select', 'data-style': 'form-control' } %>
     </div>
 
     <%= form.hidden_field :deadline_order, value: @deadline_order  %>

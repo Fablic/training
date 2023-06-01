@@ -25,7 +25,17 @@
       <%= render partial: 'search' %>
     </div>
   </nav>
-
+  <div class='container my-3'>
+    <h4>Tag List</h4>
+    <ul class="list-group list-group-horizontal">
+      <% @label_list.each do |label| %>
+        <li class="list-group-item">
+          <%= link_to label.name, search_tasks_path(label_id: label.id) %>
+          <%= "(#{label.tasks.size })" %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
   <table class='tasks table table-bordered'>
     <tr>
       <th scope='col'><%= t('activerecord.attributes.task.id') %></th>
@@ -39,6 +49,7 @@
       <th scope='col'><%= t('activerecord.attributes.task.status') %></th>
       <th scope='col'><%= t('activerecord.attributes.task.created_at') %></th>
       <th scope='col'><%= t('activerecord.attributes.user.name') %></th>
+      <th scope='col'><%= t('activerecord.attributes.label.name') %></th>
       <th scope='col'><%= t('activerecord.attributes.task.another') %></th>
     </tr>
     <tbody>
@@ -53,6 +64,7 @@
           <td><%= t("enums.task.status.#{task.status}") %></td>
           <td><%= l task.created_at, format: :short %></td>
           <td><%= task.user.name %></td>
+          <td><%= task.labels.map(&:name).join(', ') %></td>
           <td>
             <%= link_to t('buttons.show'), task_path(task.id), class: 'btn btn-secondary' %>
             <%= link_to t('buttons.edit'), edit_task_path(task.id), class: 'btn btn-secondary' %>

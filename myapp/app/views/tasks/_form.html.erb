@@ -24,6 +24,11 @@
         <%= form.select :status, options_for_select(Task.statuses.keys.map  {|k| [t("enums.task.status.#{k}"), k]}), {}, { class: 'form-select', 'data-style': 'form-control' } %>
       </div>
 
+      <div class='col-auto mb-3'>
+        <%= form.label (t('activerecord.attributes.label.name') + t('information.label.name')) %>
+        <%= form.text_field :name, value: @label_list, class: "form-control" %>
+      </div>
+
     <div class='submit-content'>
       <%= form.submit t('buttons.register'), class: 'btn btn-primary' %>
       <%= link_to t('buttons.back_page'), tasks_path, class: 'btn btn-link' %>

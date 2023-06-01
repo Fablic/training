@@ -1,0 +1,12 @@
+ja:
+  activerecord:
+    models:
+      label: タスク
+
+    attributes:
+      label:
+        name: タグ
+
+  information:
+    label:
+      name: (,で区切ると複数タグ登録できます)
