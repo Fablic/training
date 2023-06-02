@@ -1,11 +1,11 @@
 ja:
   activerecord:
     models:
-      label: タスク
+      label: ラベル
 
     attributes:
       label:
-        name: タグ
+        name: ラベル
 
   information:
     label:
