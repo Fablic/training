@@ -47,7 +47,13 @@ class TasksController < ApplicationController
   end
 
   def search
-    @tasks = @current_user.tasks.includes(:labels).where_title(params[:title]).where_status(params[:status]).deadline_order(params[:deadline_order]).where_label(params[:name]).page(params[:page]).per(5)
+    @tasks = @current_user.tasks.includes(:labels)
+      .where_title(params[:title])
+      .where_status(params[:status])
+      .deadline_order(params[:deadline_order])
+      .search_label(params[:label_id])
+      .page(params[:page]).per(5)
+    @label_list = Label.all
     @title = params[:title]
     @status = params[:status]
     @deadline_order = params[:deadline_order]
