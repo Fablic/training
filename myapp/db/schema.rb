@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(version: 2023_06_01_001222) do
     t.string "name", null: false
     t.string "email", null: false
     t.string "password_digest", null: false
-    t.boolean "role", default: false, null: false
+    t.integer "role", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
