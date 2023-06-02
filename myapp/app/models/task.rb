@@ -12,7 +12,9 @@ class Task < ApplicationRecord
   scope :where_title, -> (title) { where('title like ?', "%#{title}%") if title.present? }
   scope :where_status, -> (status) { where(status: status) if status.present? }
 
-  scope :deadline_order, -> (v) { %w[asc desc].include?(v) ? order(deadline: v) : order(created_at: :DESC) }
+  scope :deadline_order, -> (sort) { %w[asc desc].include?(sort) ? order(deadline: sort) : order(created_at: :DESC) }
+
+  scope :search_label, -> (label) { joins(:labels).where(labels: { id: label }) if label.present? }
 
   def save_label(sent_labels)
     current_labels = self.labels.pluck(:name) unless self.labels.nil?
