@@ -25,17 +25,19 @@
       <%= render partial: 'search' %>
     </div>
   </nav>
+
   <div class='container my-3'>
     <h4>Tag List</h4>
     <ul class="list-group list-group-horizontal">
       <% @label_list.each do |label| %>
-        <li class="list-group-item">
-          <%= link_to label.name, search_tasks_path(label_id: label.id) %>
+        <li class='list-group-item small'>
+          <%= label.name %>
           <%= "(#{label.tasks.size })" %>
         </li>
       <% end %>
     </ul>
   </div>
+
   <table class='tasks table table-bordered'>
     <tr>
       <th scope='col'><%= t('activerecord.attributes.task.id') %></th>
