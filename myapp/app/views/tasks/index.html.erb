@@ -1,6 +1,6 @@
 <div class='container rounded-2' style='padding:10px;'>
   <nav class='navbar navbar-expand-lg navbar-light bg-light mb-3'>
-    <div class='container-fluid'>
+    <div class='container'>
       <div class='navbar-brand'>
         <%= t('activerecord.models.task') + t('commom.word.management') %>
       </div>
@@ -14,21 +14,21 @@
           </div>
         <% end %>
       </div>
-    </div>
-    <div class='container-sm justify-content-end'>
+      <div class='search_form'>
+        <%= render partial: 'search' %>
+      </div>
+      <div class='login_user_menu'>
         <% if logged_in? %>
-          <span class='d-flex align-items-center'><%= @current_user.name %></span>
-          <span class='d-flex align-items-center mx-2'><%= link_to t('buttons.logout'), logout_path, class: 'btn btn-danger', method: :delete %></span>
+          <%= @current_user.name %>
+          <%= link_to t('buttons.logout'), logout_path, class: 'btn btn-danger', method: :delete %>
         <% end %>
       </div>
-    <div class='container'>
-      <%= render partial: 'search' %>
     </div>
   </nav>
 
   <div class='container my-3'>
-    <h4>Tag List</h4>
-    <ul class="list-group list-group-horizontal">
+    <h6><%= t('activerecord.attributes.label.name') + t('buttons.list')%></h6>
+    <ul class='list-group list-group-horizontal'>
       <% @label_list.each do |label| %>
         <li class='list-group-item small'>
           <%= label.name %>
@@ -45,8 +45,8 @@
       <th scope='col'><%= t('activerecord.attributes.task.content') %></th>
       <th scope='col'>
         <%= t('activerecord.attributes.task.deadline') %>  /  
-          <%= link_to t('buttons.sort.asc'), search_tasks_path(deadline_order: 'asc') %>
-          <%= link_to t('buttons.sort.desc'), search_tasks_path(deadline_order: 'desc') %>
+        <%= link_to t('buttons.sort.asc'), search_tasks_path(deadline_order: 'asc') %>
+        <%= link_to t('buttons.sort.desc'), search_tasks_path(deadline_order: 'desc') %>
       </th>
       <th scope='col'><%= t('activerecord.attributes.task.status') %></th>
       <th scope='col'><%= t('activerecord.attributes.task.created_at') %></th>
