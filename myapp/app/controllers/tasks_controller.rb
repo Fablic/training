@@ -19,7 +19,7 @@ class TasksController < ApplicationController
 
   def create
     @task = @current_user.tasks.new(task_params)
-    label_list = params[:task][:name].delete(' ').split(',')
+    label_list = params[:task][:name].split(',')
     if @task.save
       @task.save_label(label_list)
       redirect_to tasks_path, success: t('messages.create', model_name: t('activerecord.models.task'))

@@ -22,7 +22,9 @@ class Task < ApplicationRecord
     new_labels = sent_labels - current_labels
 
     old_labels.each do |old|
-      self.labels.delete Label.find_by(name: old)
+      if old_labels.present?
+        self.labels.delete Label.find_by(name: old)
+      end
     end
 
     new_labels.each do |new|
