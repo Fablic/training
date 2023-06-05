@@ -8,6 +8,9 @@
         <div class='navbar-nav'>
           <%= link_to t('activerecord.models.task') + t('buttons.new'), new_task_path, class: 'nav-link' %>
         </div>
+        <div class='navbar-nav'>
+          <%= link_to t('activerecord.models.label') + t('buttons.list'), labels_path, class: 'nav-link' %>
+        </div>
         <% if current_user.admin? %>
           <div class='navbar-nav'>
             <%= link_to t('activerecord.models.user') + t('buttons.list'), users_path, class: 'nav-link' %>
@@ -20,23 +23,11 @@
       <div class='login_user_menu'>
         <% if logged_in? %>
           <%= @current_user.name %>
-          <%= link_to t('buttons.logout'), logout_path, class: 'btn btn-danger', method: :delete %>
+          <%= link_to t('buttons.logout'), logout_path, class: 'btn btn-danger ms-2', method: :delete %>
         <% end %>
       </div>
     </div>
   </nav>
-
-  <div class='container my-3'>
-    <h6><%= t('activerecord.attributes.label.name') + t('buttons.list')%></h6>
-    <ul class='list-group list-group-horizontal'>
-      <% @label_list.each do |label| %>
-        <li class='list-group-item small'>
-          <%= label.name %>
-          <%= "(#{label.tasks.size })" %>
-        </li>
-      <% end %>
-    </ul>
-  </div>
 
   <table class='tasks table table-bordered'>
     <tr>
@@ -66,15 +57,19 @@
           <td><%= t("enums.task.status.#{task.status}") %></td>
           <td><%= l task.created_at, format: :short %></td>
           <td><%= task.user.name %></td>
-          <td><%= task.labels.map(&:name).join(', ') %></td>
           <td>
-            <%= link_to t('buttons.show'), task_path(task.id), class: 'btn btn-secondary' %>
-            <%= link_to t('buttons.edit'), edit_task_path(task.id), class: 'btn btn-secondary' %>
-            <%= link_to t('buttons.delete'), task_path(task.id), method: :delete, class: 'btn btn-danger' %>
+            <% task.labels.each do |label| %>
+              <%= label.name %>
+            <% end %>
+          </td>
+          <td>
+            <%= link_to t('buttons.show'), task_path(task), class: 'btn btn-secondary' %>
+            <%= link_to t('buttons.edit'), edit_task_path(task), class: 'btn btn-primary' %>
+            <%= link_to t('buttons.delete'), task_path(task), method: :delete, class: 'btn btn-danger' %>
           </td>
         </tr>
       <% end %>
     </tbody>
   </table>
-  <%= paginate @tasks, theme: 'bootstrap-5'%>
+  <%= paginate @tasks, theme: 'bootstrap-5', class: 'flex-wrap justify-content-center' %>
 </div>
