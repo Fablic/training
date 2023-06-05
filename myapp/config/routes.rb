@@ -5,8 +5,7 @@ Rails.application.routes.draw do
     get :search, on: :collection
   end
   resources :users, path: '/admin/users'
-
-  get 'search_label', to: 'posts#search_tag'
+  resources :labels
 
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
