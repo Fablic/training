@@ -4,7 +4,6 @@ class TasksController < ApplicationController
 
   def index
     @tasks = @current_user.tasks.includes(:labels).order(created_at: 'DESC').page(params[:page]).per(5)
-    @label_list = Label.all
   end
 
   def show; end
@@ -19,9 +18,7 @@ class TasksController < ApplicationController
 
   def create
     @task = @current_user.tasks.new(task_params)
-    label_list = params[:task][:name].split(',')
     if @task.save
-      @task.save_label(label_list)
       redirect_to tasks_path, success: t('messages.create', model_name: t('activerecord.models.task'))
     else
       render :new
@@ -30,8 +27,6 @@ class TasksController < ApplicationController
 
   def update
     if @task.update(task_params)
-      label_list = params[:task][:name].delete(' ').split(',')
-      @task.save_label(label_list)
       redirect_to tasks_path, success: t('messages.update', model_name: t('activerecord.models.task'))
     else
       render :edit
@@ -71,6 +66,6 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:title, :content, :deadline, :status).merge(user_id: current_user.id)
+    params.require(:task).permit(:title, :content, :deadline, :status, label_ids: []).merge(user_id: current_user.id)
   end
 end
