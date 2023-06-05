@@ -1,0 +1,60 @@
+<div class='container rounded-2' style='padding:10px;'>
+  <nav class='navbar navbar-expand-lg navbar-light bg-light mb-3'>
+    <div class='container'>
+      <div class='navbar-brand'>
+        <%= t('activerecord.models.task') + t('commom.word.management') %>
+      </div>
+      <div class='collapse navbar-collapse'>
+        <div class='navbar-nav'>
+          <%= link_to t('activerecord.models.label') + t('buttons.new'), new_label_path, class: 'nav-link' %>
+        </div>
+        <div class='navbar-nav'>
+          <%= link_to t('activerecord.models.task') + t('buttons.list'), tasks_path, class: 'nav-link' %>
+        </div>
+        <% if current_user.admin? %>
+          <div class='navbar-nav'>
+            <%= link_to t('activerecord.models.user') + t('buttons.list'), users_path, class: 'nav-link' %>
+          </div>
+        <% end %>
+      </div>
+
+      <div class='login_user_menu'>
+        <% if logged_in? %>
+          <%= @current_user.name %>
+          <%= link_to t('buttons.logout'), logout_path, class: 'btn btn-danger ms-2', method: :delete %>
+        <% end %>
+      </div>
+    </div>
+  </nav>
+
+  <table class='labels table table-bordered'>
+    <tr>
+      <th scope='col'><%= t('activerecord.attributes.label.id') %></th>
+      <th scope='col'><%= t('activerecord.attributes.label.name') %></th>
+      <th scope='col'><%= t('activerecord.attributes.label.label_task_count') %></th>
+      <th scope='col'><%= t('activerecord.attributes.label.created_at') %></th>
+      <th scope='col'><%= t('activerecord.attributes.user.name') %></th>
+      <th scope='col'><%= t('activerecord.attributes.label.another') %></th>
+    </tr>
+    <tbody>
+      <% @labels.each do |label| %>
+        <tr scope='row'>
+          <td><%= label.id %></td>
+          <td class='label-name'><%= label.name %></td>
+          <td><%= label.tasks.length %></td>
+          <td><%= l label.created_at, format: :short %></td>
+          <td><%= label.user.name %></td>
+          <td>
+            <%= link_to t('buttons.show'), label_path(label), class: 'btn btn-secondary' %>
+
+            <% if label.user_id == @current_user.id %>
+              <%= link_to t('buttons.edit'), edit_label_path(label), class: 'btn btn-primary' %>
+              <%= link_to t('buttons.delete'), label_path(label), method: :delete, class: 'btn btn-danger' %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= paginate @labels, theme: 'bootstrap-5', class: 'flex-wrap justify-content-center' %>
+</div>
