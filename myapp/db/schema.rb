@@ -24,8 +24,10 @@ ActiveRecord::Schema.define(version: 2023_06_01_001222) do
 
   create_table "labels", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name", null: false
+    t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_labels_on_user_id"
   end
 
   create_table "tasks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
@@ -51,5 +53,6 @@ ActiveRecord::Schema.define(version: 2023_06_01_001222) do
 
   add_foreign_key "labellings", "labels"
   add_foreign_key "labellings", "tasks"
+  add_foreign_key "labels", "users"
   add_foreign_key "tasks", "users"
 end
