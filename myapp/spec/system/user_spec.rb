@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :system do
-  let!(:user_taro) { create(:user, name: 'hogehoge', email: 'hoge@hoge.com', password: 'password') }
-  let!(:user_jiro) { create(:user, name: 'testest', email: 'test@hoge.com', password: 'password') }
+  let!(:user_taro) { create(:user, name: 'hogehoge', email: 'hoge@hoge.com', password: 'password', role: :admin) }
+  let!(:user_jiro) { create(:user, name: 'testest', email: 'test@test.com', password: 'password', role: :general) }
 
   before do
     login(user_taro.email, user_taro.password)
@@ -13,7 +13,7 @@ RSpec.describe User, type: :system do
       visit users_path
     end
 
-    context 'ユーザー一覧ページにアクセスしたとき' do
+    context '管理者ユーザーが一覧ページにアクセスしたとき' do
       it 'ユーザー一覧の画面が表示される' do
         expect(page).to have_current_path users_path, ignore_query: true
         expect(page).to have_content user_taro.id
@@ -24,7 +24,7 @@ RSpec.describe User, type: :system do
         expect(page).to have_content (I18n.l(user_taro.updated_at, format: :short))
         expect(page).to have_link '詳細', href: "/admin/users/#{user_taro.id}"
         expect(page).to have_link '編集', href: "/admin/users/#{user_taro.id}/edit"
-        expect(page).to have_link '削除', href: "/admin/users/#{user_taro.id}"
+        expect(page).not_to have_link '削除', href: "/admin/users/#{user_taro.id}"
         expect(page).to have_content user_jiro.id
         expect(page).to have_content user_jiro.name
         expect(page).to have_content user_jiro.email
@@ -43,6 +43,17 @@ RSpec.describe User, type: :system do
           users_name = all('.user-name').map(&:text)
           expect(users_name).to eq %w[testest hogehoge]
         end
+      end
+    end
+
+    context '一般ユーザーが一覧ページにアクセスしたとき' do
+      before do
+        login(user_jiro.email, user_jiro.password)
+        visit users_path
+      end
+
+      it 'ユーザー管理機能にアクセスできない' do
+        expect(page).to have_current_path tasks_path, ignore_query: true
       end
     end
   end
@@ -81,7 +92,7 @@ RSpec.describe User, type: :system do
         expect(page).to have_content (I18n.l(user_taro.updated_at, format: :short))
         expect(page).to have_link '詳細', href: "/admin/users/#{user_taro.id}"
         expect(page).to have_link '編集', href: "/admin/users/#{user_taro.id}/edit"
-        expect(page).to have_link '削除', href: "/admin/users/#{user_taro.id}"
+        expect(page).not_to have_link '削除', href: "/admin/users/#{user_taro.id}"
         expect(page).to have_link 'First'
         expect(page).to have_link 'Previous'
         expect(page).to have_link '1'
@@ -139,6 +150,18 @@ RSpec.describe User, type: :system do
         expect(page).to have_content '該当するリソースがありませんでした。'
       end
     end
+
+    context '一般ユーザーがユーザー詳細ページにアクセスしたとき' do
+      before do
+        login(user_jiro.email, user_jiro.password)
+        visit user_path(user_jiro.id)
+      end
+
+      it 'ユーザー詳細機能にアクセスできない' do
+        expect(page).to have_current_path tasks_path, ignore_query: true
+        expect(page).to have_selector('.alert-danger', text: I18n.t('error.messages.no_authority'))
+      end
+    end
   end
 
   describe 'ユーザー新規登録画面表示' do
@@ -157,13 +180,25 @@ RSpec.describe User, type: :system do
         expect(page).to have_link 'もどる'
       end
     end
+
+    context '一般ユーザーがユーザー新規登録ページにアクセスしたとき' do
+      before do
+        login(user_jiro.email, user_jiro.password)
+        visit new_user_path
+      end
+
+      it 'ユーザー新規登録機能にアクセスできない' do
+        expect(page).to have_current_path tasks_path, ignore_query: true
+        expect(page).to have_selector('.alert-danger', text: I18n.t('error.messages.no_authority'))
+      end
+    end
   end
 
   describe 'ユーザー登録' do
     before do
       visit new_user_path
       fill_in 'user[name]', with: 'test子'
-      fill_in 'user[email]', with: 'a' * 246 + '@test.com'
+      fill_in 'user[email]', with: ('a' * 246) + '@test.com'
       fill_in 'user[password]', with: 'password'
       fill_in 'user[password_confirmation]', with: 'password'
     end
@@ -284,13 +319,31 @@ RSpec.describe User, type: :system do
       visit edit_user_path(user_jiro.id)
     end
 
-    context 'ユーザー編集ページにアクセスしたとき' do
+    context '管理ユーザーがユーザー編集ページにアクセスしたとき' do
       it 'ユーザー編集の画面が表示される' do
         expect(page).to have_current_path edit_user_path(user_jiro.id), ignore_query: true
         expect(page).to have_field 'user[name]'
         expect(page).to have_field 'user[email]'
         expect(page).to have_field 'user[password]'
         expect(page).to have_field 'user[password_confirmation]'
+        expect(page).to have_field 'user[role]'
+        expect(page).to have_button '登録'
+        expect(page).to have_link 'もどる'
+      end
+    end
+
+    context '管理ユーザーが自分のユーザー編集ページにアクセスしたとき' do
+      before do
+        visit edit_user_path(user_taro.id)
+      end
+
+      it '権限の入力項目が表示されない' do
+        expect(page).to have_current_path edit_user_path(user_taro.id), ignore_query: true
+        expect(page).to have_field 'user[name]'
+        expect(page).to have_field 'user[email]'
+        expect(page).to have_field 'user[password]'
+        expect(page).to have_field 'user[password_confirmation]'
+        expect(page).not_to have_field 'user[role]'
         expect(page).to have_button '登録'
         expect(page).to have_link 'もどる'
       end
@@ -306,6 +359,18 @@ RSpec.describe User, type: :system do
       it 'ユーザー情報の編集ページが表示されない' do
         expect(page).to have_current_path root_path, ignore_query: true
         expect(page).to have_content '該当するリソースがありませんでした。'
+      end
+    end
+
+    context '一般ユーザーがユーザー編集ページにアクセスしたとき' do
+      before do
+        login(user_jiro.email, user_jiro.password)
+        visit edit_user_path(user_jiro.id)
+      end
+
+      it 'ユーザー編集機能にアクセスできない' do
+        expect(page).to have_current_path tasks_path, ignore_query: true
+        expect(page).to have_selector('.alert-danger', text: I18n.t('error.messages.no_authority'))
       end
     end
   end
@@ -449,7 +514,7 @@ RSpec.describe User, type: :system do
       visit users_path
     end
 
-    context '削除ユーザーがある' do
+    context '管理者ユーザーがユーザー削除にアクセスしたとき' do
       it 'ユーザーの削除に成功' do
         expect(page).to have_link '削除'
         click_link '削除', href: "/admin/users/#{user_jiro.id}"

@@ -23,6 +23,13 @@
         <%= form.text_field :password_confirmation, class: 'form-control' %>
       </div>
 
+      <% if @user.id != @current_user.id %>
+        <div class='col-auto mb-3'>
+          <%= form.label :role, class: 'col-form-label' %>
+          <%= form.select :role, options_for_select(User.roles.keys.map  {|k| [t("enums.user.role.#{k}"), k]}), {}, { class: 'form-select', 'data-style': 'form-control' } %>
+        </div>
+      <% end %>
+
     <div class='submit-content'>
       <%= form.submit t('buttons.register'), class: 'btn btn-primary' %>
       <%= link_to t('buttons.back_page'), users_path, class: 'btn btn-link' %>

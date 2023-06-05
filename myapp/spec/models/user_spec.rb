@@ -10,7 +10,7 @@ RSpec.describe User, type: :model do
       end
 
       it 'emailが255文字以下なら正常に登録できる' do
-        user.email = 'a' * 243 + '@example.com'
+        user.email = ('a' * 243) + '@example.com'
         expect(user).to be_valid
       end
     end
@@ -33,7 +33,7 @@ RSpec.describe User, type: :model do
       end
 
       it 'emailの長さが256文字以上だと無効' do
-        user.email = 'a' * 244 + '@example.com'
+        user.email = ('a' * 244) + '@example.com'
 
         expect(user).not_to be_valid
         expect(user.errors.full_messages).to include('メールアドレスは255文字以内で入力してください')

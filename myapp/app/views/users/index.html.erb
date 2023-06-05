@@ -27,6 +27,7 @@
       <th scope='col'><%= t('activerecord.attributes.user.name') %></th>
       <th scope='col'><%= t('activerecord.attributes.task.email') %></th>
       <th scope='col'><%= t('activerecord.attributes.user.user_task_count') %></th>
+      <th scope='col'><%= t('activerecord.attributes.user.role') %></th>
       <th scope='col'><%= t('activerecord.attributes.user.created_at') %></th>
       <th scope='col'><%= t('activerecord.attributes.user.updated_at') %></th>
       <th scope='col'><%= t('activerecord.attributes.user.another') %></th>
@@ -40,12 +41,15 @@
           </td>
           <td><%= user.email %></td>
           <td><%= user.tasks.length %></td>
+          <td><%= user.role %></td>
           <td><%= l user.created_at, format: :short %></td>
           <td><%= l user.updated_at, format: :short %></td>
           <td>
             <%= link_to t('buttons.show'), user_path(user.id), class: 'btn btn-secondary' %>
             <%= link_to t('buttons.edit'), edit_user_path(user.id), class: 'btn btn-primary' %>
-            <%= link_to t('buttons.delete'), user_path(user.id), method: :delete, class: 'btn btn-danger' %>
+            <% if user.id != @current_user.id %>
+              <%= link_to t('buttons.delete'), user_path(user.id), method: :delete, class: 'btn btn-danger' %>
+            <% end %>
           </td>
         </tr>
       <% end %>
