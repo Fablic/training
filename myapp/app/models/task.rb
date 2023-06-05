@@ -16,20 +16,4 @@ class Task < ApplicationRecord
 
   scope :search_label, -> (label) { joins(:labels).where(labels: { id: label }) if label.present? }
 
-  def save_label(sent_labels)
-    current_labels = self.labels.pluck(:name) unless self.labels.nil?
-    old_labels = current_labels - sent_labels
-    new_labels = sent_labels - current_labels
-
-    old_labels.each do |old|
-      if old_labels.present?
-        self.labels.delete Label.find_by(name: old)
-      end
-    end
-
-    new_labels.each do |new|
-      add_labels = Label.find_or_create_by(name: new)
-      self.labels << add_labels
-    end
-  end
 end
