@@ -52,7 +52,7 @@ class TasksController < ApplicationController
     @title = params[:title]
     @status = params[:status]
     @deadline_order = params[:deadline_order]
-    @label_id = params[:label_id]
+    @label = params[:label]
     render :index
   end
 
