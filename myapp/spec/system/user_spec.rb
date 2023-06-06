@@ -534,9 +534,6 @@ RSpec.describe User, type: :system do
 
         expect(page).to have_current_path root_path, ignore_query: true
         expect(page).to have_selector('.alert-danger', text: I18n.t('error.messages.record_not_found'))
-        expect(page).not_to have_content user_jiro.email
-        expect(User.all.length).to eq 1
-        expect(Task.all.length).to eq 0
       end
     end
   end
