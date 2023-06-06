@@ -4,7 +4,10 @@ class LabelsController < ApplicationController
   before_action :ensure_correct_user, only: %i[edit update destroy]
 
   def index
-    @labels = Label.includes(:tasks).includes(:user).page(params[:page]).per(5)
+    @labels = Label.includes(:tasks)
+    .includes(:user)
+    .order(created_at: 'DESC')
+    .page(params[:page]).per(5)
   end
 
   def show
@@ -15,6 +18,8 @@ class LabelsController < ApplicationController
     @label = Label.new
   end
 
+  def edit; end
+
   def create
     @label = @current_user.labels.new(label_params)
     if @label.save
@@ -23,8 +28,6 @@ class LabelsController < ApplicationController
       render :new
     end
   end
-
-  def edit; end
 
   def update
     if @label.update(label_params)
@@ -54,7 +57,6 @@ class LabelsController < ApplicationController
 
     redirect_to labels_path, danger: t('error.messages.no_authority')
   end
-
 
   def label_params
     params.require(:label).permit(:name, :description, :status, :deadline_at)
