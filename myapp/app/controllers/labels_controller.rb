@@ -4,8 +4,7 @@ class LabelsController < ApplicationController
   before_action :ensure_correct_user, only: %i[edit update destroy]
 
   def index
-    @labels = Label.includes(:tasks)
-    .includes(:user)
+    @labels = @current_user.labels.includes(:tasks)
     .order(created_at: 'DESC')
     .page(params[:page]).per(5)
   end
