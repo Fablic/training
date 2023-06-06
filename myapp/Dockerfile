@@ -3,6 +3,8 @@ ENV NODE_VERSION 12
 
 ENV LANG C.UTF-8
 
+ENV DOCKER_DEFAULT_PLATFORM=linux/amd64
+
 RUN apt-get update -qq && \
     apt-get install -y \
       build-essential \
