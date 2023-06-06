@@ -527,7 +527,7 @@ RSpec.describe User, type: :system do
       end
     end
 
-    context '削除タスクがない' do
+    context '削除するユーザーがない' do
       it '該当するリソースがないと表示' do
         user_jiro.destroy
         click_link '削除', href: "/admin/users/#{user_jiro.id}"
