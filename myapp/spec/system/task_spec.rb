@@ -854,6 +854,7 @@ RSpec.describe Task, type: :system do
     before do
       visit root_path
     end
+
     context '削除タスクがある' do
       it 'タスクの削除に成功' do
         expect(page).to have_link '削除'
