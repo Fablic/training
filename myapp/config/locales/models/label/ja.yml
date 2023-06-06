@@ -5,8 +5,8 @@ ja:
 
     attributes:
       label:
+        id: ID
         name: ラベル
-
-  information:
-    label:
-      name: (,で区切ると複数タグ登録できます)
+        label_task_count: ラベル件数
+        created_at: 作成日
+        another: その他
