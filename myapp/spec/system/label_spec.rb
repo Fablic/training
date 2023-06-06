@@ -16,7 +16,7 @@ RSpec.describe 'Label', type: :system do
     end
 
     context 'ラベルのデータあるとき' do
-      it '降順で表示する' do
+      it '一覧で表示する' do
         expect(page).to have_current_path labels_path, ignore_query: true
         expect(page).to have_content taro_label.id
         expect(page).to have_content taro_label.name
@@ -26,24 +26,17 @@ RSpec.describe 'Label', type: :system do
         expect(page).to have_link '詳細', href: "/labels/#{taro_label.id}"
         expect(page).to have_link '編集', href: "/labels/#{taro_label.id}/edit"
         expect(page).to have_link '削除', href: "/labels/#{taro_label.id}"
-        expect(page).to have_content jiro_label.id
-        expect(page).to have_content jiro_label.name
-        expect(page).to have_content jiro_label.tasks.length
-        expect(page).to have_content (I18n.l(jiro_label.created_at, format: :short))
-        expect(page).to have_content jiro_label.user.name
-        expect(page).to have_link '詳細', href: "/labels/#{jiro_label.id}"
-        expect(page).not_to have_link '編集', href: "/labels/#{jiro_label.id}/edit"
-        expect(page).not_to have_link '削除', href: "/labels/#{jiro_label.id}"
+        expect(page).not_to have_content jiro_label
       end
     end
   end
 
   describe 'ページング機能' do
     before do
-      create(:label, name: 'label1', user_id: user_jiro.id)
-      create(:label, name: 'label2', user_id: user_jiro.id)
+      create(:label, name: 'label1', user_id: user_taro.id)
+      create(:label, name: 'label2', user_id: user_taro.id)
       create(:label, name: 'label3', user_id: user_taro.id)
-      create(:label, name: 'label4', user_id: user_jiro.id)
+      create(:label, name: 'label4', user_id: user_taro.id)
       create(:label, name: 'label5', user_id: user_taro.id)
       visit labels_path
     end
@@ -73,14 +66,6 @@ RSpec.describe 'Label', type: :system do
         expect(page).to have_link '詳細', href: "/labels/#{taro_label.id}"
         expect(page).to have_link '編集', href: "/labels/#{taro_label.id}/edit"
         expect(page).to have_link '削除', href: "/labels/#{taro_label.id}"
-        expect(page).to have_content jiro_label.id
-        expect(page).to have_content jiro_label.name
-        expect(page).to have_content jiro_label.tasks.length
-        expect(page).to have_content (I18n.l(jiro_label.created_at, format: :short))
-        expect(page).to have_content jiro_label.user.name
-        expect(page).to have_link '詳細', href: "/labels/#{jiro_label.id}"
-        expect(page).not_to have_link '編集', href: "/labels/#{jiro_label.id}/edit"
-        expect(page).not_to have_link '削除', href: "/labels/#{jiro_label.id}"
         expect(page).to have_link 'First'
         expect(page).to have_link 'Previous'
         expect(page).to have_link '1'
@@ -121,6 +106,7 @@ RSpec.describe 'Label', type: :system do
         expect(page).to have_content (I18n.t("enums.task.status.#{task2.status}"))
         expect(page).to have_content (I18n.l(task3.created_at, format: :short))
         expect(page).to have_content (I18n.l(task3.updated_at, format: :short))
+        expect(page).not_to have_content task1
       end
     end
 

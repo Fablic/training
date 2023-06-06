@@ -53,7 +53,7 @@ RSpec.describe Task, type: :system do
         expect(page).to have_link 'ユーザーリスト'
         expect(page).to have_field 'title'
         expect(page).to have_select(options: ['未着手', '着手中', '完了'])
-        expect(page).to have_select(options: ['選択してください', 'test', 'hoge'])
+        expect(page).to have_select(options: ['選択してください', 'test'])
         expect(page).to have_button '検索'
         expect(page).to have_link 'クリア'
         expect(page).to have_link 'ログアウト'
@@ -594,7 +594,7 @@ RSpec.describe Task, type: :system do
         fill_in 'task[content]', with: 'test_content'
         fill_in 'task[deadline]', with: '2022/03/27'
         select(value = '着手中', from: 'task[status]')
-        check 'hoge'
+        check 'test'
         click_button '登録'
 
         expect(page).to have_current_path tasks_path, ignore_query: true
@@ -615,6 +615,7 @@ RSpec.describe Task, type: :system do
         fill_in 'task[content]', with: ''
         fill_in 'task[deadline]', with: '2022/03/27'
         select(value = '着手中', from: 'task[status]')
+        check 'test'
         click_button '登録'
 
         expect(page).to have_current_path tasks_path, ignore_query: true
@@ -634,6 +635,7 @@ RSpec.describe Task, type: :system do
         fill_in 'task[content]', with: 'test_content'
         fill_in 'task[deadline]', with: '2022/03/27'
         select(value = '着手中', from: 'task[status]')
+        check 'test'
         click_button '登録'
 
         expect(page).to have_current_path tasks_path, ignore_query: true
@@ -653,6 +655,7 @@ RSpec.describe Task, type: :system do
         fill_in 'task[content]', with: 'test_content'
         fill_in 'task[deadline]', with: '2022/03/27'
         select(value = '着手中', from: 'task[status]')
+        check 'test'
         click_button '登録'
 
         expect(page).to have_current_path tasks_path, ignore_query: true
@@ -668,6 +671,7 @@ RSpec.describe Task, type: :system do
         fill_in 'task[content]', with: 'test_content'
         fill_in 'task[deadline]', with: '2022/03/27'
         select(value = '着手中', from: 'task[status]')
+        check 'test'
         click_button '登録'
 
         expect(page).to have_current_path tasks_path, ignore_query: true
@@ -683,6 +687,7 @@ RSpec.describe Task, type: :system do
         fill_in 'task[content]', with: 'test_content'
         fill_in 'task[deadline]', with: ''
         select(value = '着手中', from: 'task[status]')
+        check 'test'
         click_button '登録'
 
         expect(page).to have_current_path tasks_path, ignore_query: true
@@ -707,6 +712,7 @@ RSpec.describe Task, type: :system do
         expect(page).to have_field 'task[content]'
         expect(page).to have_field 'task[deadline]'
         expect(page).to have_field 'task[status]'
+        expect(page).to have_field 'task[label_ids][]'
         expect(page).to have_button '登録'
         expect(page).to have_link 'もどる'
       end
@@ -742,6 +748,7 @@ RSpec.describe Task, type: :system do
         fill_in 'task[content]', with: 'update_content'
         fill_in 'task[deadline]', with: '2022/03/27'
         select(value = '着手中', from: 'task[status]')
+        check 'test'
         click_on '登録'
 
         expect(page).to have_current_path tasks_path, ignore_query: true
@@ -761,6 +768,7 @@ RSpec.describe Task, type: :system do
         fill_in 'task[content]', with: ''
         fill_in 'task[deadline]', with: '2022/03/27'
         select(value = '着手中', from: 'task[status]')
+        check 'test'
         click_button '登録'
 
         expect(page).to have_current_path tasks_path, ignore_query: true
@@ -780,6 +788,7 @@ RSpec.describe Task, type: :system do
         fill_in 'task[content]', with: 'update_content'
         fill_in 'task[deadline]', with: '2022/03/27'
         select(value = '着手中', from: 'task[status]')
+        check 'test'
         click_button '登録'
 
         expect(page).to have_current_path task_path(task.id), ignore_query: true
@@ -795,6 +804,7 @@ RSpec.describe Task, type: :system do
         fill_in 'task[content]', with: 'update_content'
         fill_in 'task[deadline]', with: '2022/03/27'
         select(value = '着手中', from: 'task[status]')
+        check 'test'
         click_button '登録'
 
         expect(page).to have_current_path task_path(task.id), ignore_query: true
@@ -810,6 +820,7 @@ RSpec.describe Task, type: :system do
         fill_in 'task[content]', with: 'update_content'
         fill_in 'task[deadline]', with: ''
         select(value = '着手中', from: 'task[status]')
+        check 'test'
         click_button '登録'
 
         expect(page).to have_current_path task_path(task.id), ignore_query: true
@@ -818,14 +829,17 @@ RSpec.describe Task, type: :system do
     end
 
     context '更新タスクがない' do
-      it '該当するリソースがないと表示' do
+      before do
         visit edit_task_path(task.id)
+        task.destroy
+      end
 
+      it '該当するリソースがないと表示' do
         fill_in 'task[title]', with: 'update_test'
         fill_in 'task[content]', with: 'update_content'
         fill_in 'task[deadline]', with: '2022/03/27'
         select(value = '着手中', from: 'task[status]')
-        task.destroy
+        check 'test'
         click_button '登録'
 
         expect(page).to have_current_path root_path, ignore_query: true
@@ -837,10 +851,11 @@ RSpec.describe Task, type: :system do
   describe 'タスク削除' do
     let!(:task) { create(:task, user_id: user_taro.id) }
 
+    before do
+      visit root_path
+    end
     context '削除タスクがある' do
       it 'タスクの削除に成功' do
-        visit root_path
-
         expect(page).to have_link '削除'
 
         click_on '削除'
@@ -853,8 +868,6 @@ RSpec.describe Task, type: :system do
 
     context '削除タスクがない' do
       it '該当するリソースがないと表示' do
-        visit root_path
-
         task.destroy
         click_on '削除'
 
