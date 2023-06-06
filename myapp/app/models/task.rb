@@ -15,5 +15,4 @@ class Task < ApplicationRecord
   scope :deadline_order, -> (sort) { %w[asc desc].include?(sort) ? order(deadline: sort) : order(created_at: :DESC) }
 
   scope :search_label, -> (label) { joins(:labels).where(labels: { id: label }) if label.present? }
-
 end
