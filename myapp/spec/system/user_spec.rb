@@ -147,7 +147,7 @@ RSpec.describe User, type: :system do
 
       it 'ユーザー情報の詳細ページ表示されない' do
         expect(page).to have_current_path root_path, ignore_query: true
-        expect(page).to have_content '該当するリソースがありませんでした。'
+        expect(page).to have_selector('.alert-danger', text: I18n.t('error.messages.record_not_found'))
       end
     end
 
@@ -358,7 +358,7 @@ RSpec.describe User, type: :system do
 
       it 'ユーザー情報の編集ページが表示されない' do
         expect(page).to have_current_path root_path, ignore_query: true
-        expect(page).to have_content '該当するリソースがありませんでした。'
+        expect(page).to have_selector('.alert-danger', text: I18n.t('error.messages.record_not_found'))
       end
     end
 
@@ -502,7 +502,7 @@ RSpec.describe User, type: :system do
 
       it 'ユーザー情報の更新ができない' do
         expect(page).to have_current_path root_path, ignore_query: true
-        expect(page).to have_content '該当するリソースがありませんでした。'
+        expect(page).to have_selector('.alert-danger', text: I18n.t('error.messages.record_not_found'))
       end
     end
   end
