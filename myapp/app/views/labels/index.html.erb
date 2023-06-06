@@ -47,10 +47,8 @@
           <td>
             <%= link_to t('buttons.show'), label_path(label), class: 'btn btn-secondary' %>
 
-            <% if label.user_id == @current_user.id %>
-              <%= link_to t('buttons.edit'), edit_label_path(label), class: 'btn btn-primary' %>
-              <%= link_to t('buttons.delete'), label_path(label), method: :delete, class: 'btn btn-danger' %>
-            <% end %>
+            <%= link_to t('buttons.edit'), edit_label_path(label), class: 'btn btn-primary' %>
+            <%= link_to t('buttons.delete'), label_path(label), method: :delete, class: 'btn btn-danger' %>
           </td>
         </tr>
       <% end %>
