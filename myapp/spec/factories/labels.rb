@@ -1,5 +1,11 @@
 FactoryBot.define do
+  sequence :labels_name do |n|
+    "ごりら#{n}"
+  end
+
   factory :label do
-    name { Faker::Lorem.word }
+    name { generate :labels_name }
+
+    association :user
   end
 end
