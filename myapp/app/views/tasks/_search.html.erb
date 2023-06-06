@@ -9,7 +9,7 @@
     </div>
 
     <div class='d-flex align-items-center w-25'>
-      <%= form.collection_select :label, Label.all, :id, :name, { selected: @label, prompt: true}, {class: 'form-select', 'data-style': 'form-control' } %>
+      <%= form.collection_select :label, @current_user.labels, :id, :name, { selected: @label, prompt: true}, {class: 'form-select', 'data-style': 'form-control' } %>
     </div>
 
     <%= form.hidden_field :deadline_order, value: @deadline_order  %>

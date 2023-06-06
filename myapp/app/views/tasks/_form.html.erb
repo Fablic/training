@@ -27,7 +27,7 @@
 
       <div class='col-auto mb-3'>
         <p class="w-25"><%= t('activerecord.attributes.label.name') %></p>
-          <%= form.collection_check_boxes(:label_ids, Label.all, :id, :name) do |cb| %>
+          <%= form.collection_check_boxes(:label_ids, @current_user.labels, :id, :name) do |cb| %>
             <div class='form-check form-check-inline'>
               <%= cb.label class: 'form-check-label' do %>
               <%= cb.check_box(class: 'form-check-input') + cb.text %>
