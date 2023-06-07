@@ -45,3 +45,10 @@ ja:
     logout:
       success: 'ログアウトしました。'
     need_login: 'ログインが必要です。'
+
+  maintenance:
+    messages:
+      start_maintenance: 'メンテナンスモードを開始します'
+      already_maintained: '既にメンテ中です'
+      finished_maintenance: 'メンテナンスモードを終了します'
+      completed_maintenance: 'メンテナンスモードは既に終了しています'
