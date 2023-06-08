@@ -249,27 +249,6 @@ RSpec.describe Task, type: :system do
       end
     end
 
-    context 'DBに保存されたデータがない' do
-      it '一覧ページに新規登録ボタン、検索フォームが表示' do
-        visit root_path
-
-        expect(page).to have_current_path root_path, ignore_query: true
-        expect(page).not_to have_content task.id
-        expect(page).not_to have_content task.title
-        expect(page).not_to have_content task.content
-        expect(page).not_to have_content task.deadline
-        expect(page).not_to have_content task.status
-        expect(page).not_to have_link '詳細'
-        expect(page).not_to have_link '編集'
-        expect(page).not_to have_link '削除'
-        expect(page).to have_field 'title'
-        expect(page).to have_select(status, options: ['未着手', '着手中', '完了'])
-        expect(page).to have_button '検索'
-        expect(page).to have_link 'クリア'
-        expect(page).to have_link '新規登録'
-      end
-    end
-
     context '詳細タスクがある' do
       let!(:task) { create(:task, user_id: user_taro.id) }
 

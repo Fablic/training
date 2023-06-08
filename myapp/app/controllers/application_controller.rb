@@ -21,9 +21,9 @@ class ApplicationController < ActionController::Base
   end
 
   def maintenance_mode_on!
-    mainte_flg = Maintenance.find(1)
+    mainte_flg = Maintenance.exists?(status: 1)
 
-    return unless mainte_flg.status == 1
+    return unless mainte_flg == true
 
     redirect_to maintenance_path
   end

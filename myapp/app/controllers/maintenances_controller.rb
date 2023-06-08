@@ -8,9 +8,9 @@ class MaintenancesController < ApplicationController
   private
 
   def maintenance_mode_off!
-    mainte_flg = Maintenance.find(1)
+    mainte_flg = Maintenance.exists?(status: 1)
 
-    return unless mainte_flg.status.zero?
+    return unless mainte_flg == false
 
     redirect_to root_path
   end
