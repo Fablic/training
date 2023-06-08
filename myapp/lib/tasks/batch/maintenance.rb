@@ -1,26 +1,23 @@
 class Tasks::Batch::Maintenance
   def self.start
-    mainte = Maintenance.find(1)
+    mainte = Maintenance.find_by(status: 0)
 
-    if mainte.status.zero?
-      mainte.status = 1
-      mainte.save
-      puts I18n.t('maintenance.messages.start_maintenance')
-
+    if mainte.nil?
+      p I18n.t('maintenance.messages.already_maintained')
     else
-      puts I18n.t('maintenance.messages.already_maintained')
+      mainte.update(status: 1)
+      p I18n.t('maintenance.messages.start_maintenance')
     end
   end
 
   def self.end
-    mainte = Maintenance.find(1)
+    mainte = Maintenance.find_by(status: 1)
 
-    if mainte.status.zero?
+    if mainte.nil?
       puts I18n.t('maintenance.messages.completed_maintenance')
     else
-      mainte.status = 0
-      mainte.save
-      puts I18n.t('maintenance.messages.finished_maintenance')
+      mainte.update(status: 0)
+      p I18n.t('maintenance.messages.finished_maintenance')
     end
   end
 end
