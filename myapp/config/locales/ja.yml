@@ -52,3 +52,5 @@ ja:
       already_maintained: '既にメンテ中です'
       finished_maintenance: 'メンテナンスモードを終了します'
       completed_maintenance: 'メンテナンスモードは既に終了しています'
+      page_title: 'メンテナンス中'
+      page_detail: '現在、当サイトはメンテナンス中です。しばらく時間を空けてからお越しください。'
