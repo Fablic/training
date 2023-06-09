@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Task, type: :model do
-  describe 'バリデーションのテスト' do
+  describe 'バリデーションテスト' do
     context 'タスク名、概要、終了期限、ステータスを入力するとき' do
       it 'タスクを登録できる' do
         task = build(:task)
@@ -27,7 +27,7 @@ RSpec.describe Task, type: :model do
     end
 
     context 'タスク名が未入力のとき' do
-      it 'タスクを登録できず、タスク名を入力してくださいと表示' do
+      it 'タスクを登録できない' do
         task = build(:task, title: '')
 
         expect(task).to be_invalid
@@ -36,7 +36,7 @@ RSpec.describe Task, type: :model do
     end
 
     context 'タスク名が31文字以上の入力のとき' do
-      it 'タスクを登録できず、タスク名は30文字以内で入力してくださいと表示' do
+      it 'タスクを登録できない' do
         task = build(:task, title: 'a' * 31)
 
         expect(task).to be_invalid
@@ -45,7 +45,7 @@ RSpec.describe Task, type: :model do
     end
 
     context '終了期限が未入力のとき' do
-      it 'タスクを登録できず、終了期限を入力してくださいと表示' do
+      it 'タスクを登録できない' do
         task = build(:task, deadline: '')
 
         expect(task).to be_invalid
@@ -147,6 +147,40 @@ RSpec.describe Task, type: :model do
       end
 
       context 'ステータスがnilのとき' do
+        let!(:task) { create(:task, status: 1) }
+
+        it 'データを取得できる' do
+          expect(Task.where_status(nil).count).to eq 1
+        end
+      end
+    end
+
+    describe 'ラベル検索' do
+      context 'ラベルが一致するとき' do
+        let!(:task) { create(:task, title: 'あいうえお') }
+
+        it 'データを取得できる' do
+          expect(Task.where_title('あいうえお').count).to eq 1
+        end
+      end
+
+      context 'ラベルが一致しないとき' do
+        let!(:task) { create(:task, status: 2) }
+
+        it 'データを取得できない' do
+          expect(Task.where_status(1)).to be_empty
+        end
+      end
+
+      context 'ラベルが空のとき' do
+        let!(:task) { create(:task, label_id: 1) }
+
+        it 'データを取得できる' do
+          expect(Label.where_label('').count).to eq 1
+        end
+      end
+
+      context 'ラベルがnilのとき' do
         let!(:task) { create(:task, status: 1) }
 
         it 'データを取得できる' do

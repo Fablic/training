@@ -3,7 +3,7 @@ class TasksController < ApplicationController
   before_action :ensure_correct_user, only: %i[edit update destroy show]
 
   def index
-    @tasks = @current_user.tasks.order(created_at: 'DESC').page(params[:page]).per(5)
+    @tasks = @current_user.tasks.includes(:labels).order(created_at: 'DESC').page(params[:page]).per(5)
   end
 
   def show; end
@@ -40,10 +40,17 @@ class TasksController < ApplicationController
   end
 
   def search
-    @tasks = @current_user.tasks.where_title(params[:title]).where_status(params[:status]).deadline_order(params[:deadline_order]).page(params[:page]).per(5)
+    @tasks = @current_user.tasks.includes(:labels)
+      .where_title(params[:title])
+      .where_status(params[:status])
+      .deadline_order(params[:deadline_order])
+      .search_label(params[:label])
+      .page(params[:page]).per(5)
+    @label_list = Label.all
     @title = params[:title]
     @status = params[:status]
     @deadline_order = params[:deadline_order]
+    @label = params[:label]
     render :index
   end
 
@@ -57,6 +64,6 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:title, :content, :deadline, :status).merge(user_id: current_user.id)
+    params.require(:task).permit(:title, :content, :deadline, :status, label_ids: []).merge(user_id: current_user.id)
   end
 end

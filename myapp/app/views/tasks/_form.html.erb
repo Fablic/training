@@ -7,6 +7,7 @@
         <%= form.label t('activerecord.attributes.task.title') , class: 'col-form-label' %>
         <%= form.text_field :title, class: 'form-control' %>
       </div>
+
       <div class='col-auto mb-3'>
         <%= form.label t('activerecord.attributes.task.content') , class: 'col-form-label' %>
         <%= form.text_area :content, class: 'form-control' %>
@@ -24,9 +25,20 @@
         <%= form.select :status, options_for_select(Task.statuses.keys.map  {|k| [t("enums.task.status.#{k}"), k]}), {}, { class: 'form-select', 'data-style': 'form-control' } %>
       </div>
 
+      <div class='col-auto mb-3'>
+        <p class="w-25"><%= t('activerecord.attributes.label.name') %></p>
+          <%= form.collection_check_boxes(:label_ids, @current_user.labels, :id, :name) do |cb| %>
+            <div class='form-check form-check-inline'>
+              <%= cb.label class: 'form-check-label' do %>
+              <%= cb.check_box(class: 'form-check-input') + cb.text %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+
     <div class='submit-content'>
       <%= form.submit t('buttons.register'), class: 'btn btn-primary' %>
-      <%= link_to t('buttons.back_page'), tasks_path, class: 'btn btn-link' %>
+      <%= link_to t('buttons.back_page'), :back, class: 'btn btn-link' %>
     </div>
   <% end %>
 </div>

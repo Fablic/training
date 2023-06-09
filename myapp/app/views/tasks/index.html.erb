@@ -1,6 +1,6 @@
 <div class='container rounded-2' style='padding:10px;'>
   <nav class='navbar navbar-expand-lg navbar-light bg-light mb-3'>
-    <div class='container-fluid'>
+    <div class='container'>
       <div class='navbar-brand'>
         <%= t('activerecord.models.task') + t('commom.word.management') %>
       </div>
@@ -8,21 +8,24 @@
         <div class='navbar-nav'>
           <%= link_to t('activerecord.models.task') + t('buttons.new'), new_task_path, class: 'nav-link' %>
         </div>
+        <div class='navbar-nav'>
+          <%= link_to t('activerecord.models.label') + t('buttons.list'), labels_path, class: 'nav-link' %>
+        </div>
         <% if current_user.admin? %>
           <div class='navbar-nav'>
             <%= link_to t('activerecord.models.user') + t('buttons.list'), users_path, class: 'nav-link' %>
           </div>
         <% end %>
       </div>
-    </div>
-    <div class='container-sm justify-content-end'>
+      <div class='search_form'>
+        <%= render partial: 'search' %>
+      </div>
+      <div class='login_user_menu'>
         <% if logged_in? %>
-          <span class='d-flex align-items-center'><%= @current_user.name %></span>
-          <span class='d-flex align-items-center mx-2'><%= link_to t('buttons.logout'), logout_path, class: 'btn btn-danger', method: :delete %></span>
+          <%= @current_user.name %>
+          <%= link_to t('buttons.logout'), logout_path, class: 'btn btn-danger ms-2', method: :delete %>
         <% end %>
       </div>
-    <div class='container'>
-      <%= render partial: 'search' %>
     </div>
   </nav>
 
@@ -33,12 +36,13 @@
       <th scope='col'><%= t('activerecord.attributes.task.content') %></th>
       <th scope='col'>
         <%= t('activerecord.attributes.task.deadline') %>  /  
-          <%= link_to t('buttons.sort.asc'), search_tasks_path(deadline_order: 'asc') %>
-          <%= link_to t('buttons.sort.desc'), search_tasks_path(deadline_order: 'desc') %>
+        <%= link_to t('buttons.sort.asc'), search_tasks_path(deadline_order: 'asc') %>
+        <%= link_to t('buttons.sort.desc'), search_tasks_path(deadline_order: 'desc') %>
       </th>
       <th scope='col'><%= t('activerecord.attributes.task.status') %></th>
       <th scope='col'><%= t('activerecord.attributes.task.created_at') %></th>
       <th scope='col'><%= t('activerecord.attributes.user.name') %></th>
+      <th scope='col'><%= t('activerecord.attributes.label.name') %></th>
       <th scope='col'><%= t('activerecord.attributes.task.another') %></th>
     </tr>
     <tbody>
@@ -54,13 +58,18 @@
           <td><%= l task.created_at, format: :short %></td>
           <td><%= task.user.name %></td>
           <td>
-            <%= link_to t('buttons.show'), task_path(task.id), class: 'btn btn-secondary' %>
-            <%= link_to t('buttons.edit'), edit_task_path(task.id), class: 'btn btn-secondary' %>
-            <%= link_to t('buttons.delete'), task_path(task.id), method: :delete, class: 'btn btn-danger' %>
+            <% task.labels.each do |label| %>
+              <%= label.name %>
+            <% end %>
+          </td>
+          <td>
+            <%= link_to t('buttons.show'), task_path(task), class: 'btn btn-secondary' %>
+            <%= link_to t('buttons.edit'), edit_task_path(task), class: 'btn btn-primary' %>
+            <%= link_to t('buttons.delete'), task_path(task), method: :delete, class: 'btn btn-danger' %>
           </td>
         </tr>
       <% end %>
     </tbody>
   </table>
-  <%= paginate @tasks, theme: 'bootstrap-5'%>
+  <%= paginate @tasks, theme: 'bootstrap-5', class: 'flex-wrap justify-content-center' %>
 </div>
