@@ -1,4 +1,4 @@
-FROM ruby:2.6
+FROM ruby:3.2.2
 ENV NODE_VERSION 12
 
 ENV LANG C.UTF-8
@@ -32,7 +32,7 @@ RUN mkdir /$APP_ROOT
 WORKDIR /$APP_ROOT
 
 COPY Gemfile /$APP_ROOT/Gemfile
-COPY Gemfile.lock /$APP_ROOT/Gemfile.lock
+# COPY Gemfile.lock /$APP_ROOT/Gemfile.lock
 
 ENV BUNDLE_PATH=/usr/local/bundle
 RUN bundle install
