@@ -16,8 +16,6 @@ module Myapp
 
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}').to_s]
 
-    config.autoload_paths += Dir["#{config.root}/lib"]
-
     # タイムゾーンを日本に設定
     config.time_zone = 'Tokyo'
     # 取得した時間をローカルタイムとして扱う
