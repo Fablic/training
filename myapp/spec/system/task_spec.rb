@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Task, type: :system do
-  let(:mainte) { create(:maintenance, status: 0) }
   let(:task) { create(:task) }
   let(:user_taro) { create(:user, name: 'hogehoge', email: Faker::Internet.email, password: 'password', role: 1) }
   let(:user_jiro) { create(:user, name: 'testest', email: Faker::Internet.email, password: 'password') }
@@ -307,12 +306,39 @@ RSpec.describe Task, type: :system do
     end
   end
 
+  describe 'メンテナンス表示' do
+    before do
+      allow_any_instance_of(ApplicationController).to receive(:maintenance_mode?).and_return('true')
+      visit current_path
+    end
+
+    context 'メンテナンスモードがオンのとき' do
+      it 'メンテナンスページが表示される' do
+        expect(page).to have_content '現在、当サイトはメンテナンス中です。'
+        expect(page).to have_content 'しばらく時間を空けてからお越しください。'
+      end
+    end
+
+    context 'メンテナンスがオンからオフになったとき' do
+      after do
+        allow_any_instance_of(ApplicationController).to receive(:maintenance_mode?).and_return('false')
+        visit current_path
+      end
+
+      it 'タスクページが表示される' do
+        expect(page).to have_current_path tasks_path, ignore_query: true
+      end
+    end
+  end
+
   describe '検索エリア' do
-    let!(:task_A1) { create(:task, title: 'titleA1', status: :not_started, deadline: '2023/04/27', user_id: user_taro.id, labels: [label1]) }
-    let!(:task_A2) { create(:task, title: 'titleA2', status: :start, deadline: '2023/04/28', user_id: user_taro.id, labels: [label1]) }
-    let!(:task_B1) { create(:task, title: 'titleB1', status: :not_started, deadline: '2023/04/29', user_id: user_taro.id, labels: [label1, label2]) }
-    let!(:task_B2) { create(:task, title: 'titleB2', status: :start, deadline: '2023/04/30', user_id: user_taro.id, labels: [label2]) }
-    let!(:task_C1) { create(:task, title: 'titleC1', status: :not_started, deadline: '2023/04/30', user_id: user_jiro.id, labels: [label2]) }
+    before do
+      create(:task, title: 'titleA1', status: :not_started, deadline: '2023/04/27', user_id: user_taro.id, labels: [label1])
+      create(:task, title: 'titleA2', status: :start, deadline: '2023/04/28', user_id: user_taro.id, labels: [label1])
+      create(:task, title: 'titleB1', status: :not_started, deadline: '2023/04/29', user_id: user_taro.id, labels: [label1, label2])
+      create(:task, title: 'titleB2', status: :start, deadline: '2023/04/30', user_id: user_taro.id, labels: [label2])
+      create(:task, title: 'titleC1', status: :not_started, deadline: '2023/04/30', user_id: user_jiro.id, labels: [label2])
+    end
 
     context 'statusのみ指定して検索' do
       let(:conditions) { { status: '未着手' } }
@@ -321,7 +347,7 @@ RSpec.describe Task, type: :system do
         visit root_path
 
         fill_in 'title', with: ''
-        select(value = conditions[:status], from: 'status')
+        select(conditions[:status], from: 'status')
         click_on '検索'
 
         expect(all('tbody tr').size).to be(2)
@@ -331,7 +357,7 @@ RSpec.describe Task, type: :system do
         visit root_path
 
         fill_in 'title', with: ''
-        select(value = conditions[:status], from: 'status')
+        select(conditions[:status], from: 'status')
         click_on '検索'
 
         expect(page).to have_content 'titleA1'
@@ -341,7 +367,7 @@ RSpec.describe Task, type: :system do
         visit root_path
 
         fill_in 'title', with: ''
-        select(value = conditions[:status], from: 'status')
+        select(conditions[:status], from: 'status')
         click_on '検索'
 
         expect(page).not_to have_content 'titleA2'
@@ -351,7 +377,7 @@ RSpec.describe Task, type: :system do
         visit root_path
 
         fill_in 'title', with: ''
-        select(value = conditions[:status], from: 'status')
+        select(conditions[:status], from: 'status')
         click_on '検索'
 
         expect(page).to have_content 'titleB1'
@@ -361,7 +387,7 @@ RSpec.describe Task, type: :system do
         visit root_path
 
         fill_in 'title', with: ''
-        select(value = conditions[:status], from: 'status')
+        select(conditions[:status], from: 'status')
         click_on '検索'
 
         expect(page).not_to have_content 'titleB2'
@@ -371,7 +397,7 @@ RSpec.describe Task, type: :system do
         visit root_path
 
         fill_in 'title', with: ''
-        select(value = conditions[:status], from: 'status')
+        select(conditions[:status], from: 'status')
         click_on '検索'
 
         expect(page).not_to have_content 'titleC1'
@@ -385,8 +411,8 @@ RSpec.describe Task, type: :system do
         visit root_path
 
         fill_in 'title', with: ''
-        select(value = conditions[:status], from: 'status')
-        select(value = conditions[:label], from: 'label')
+        select(conditions[:status], from: 'status')
+        select(conditions[:label], from: 'label')
         click_on '検索'
 
         expect(all('tbody tr').size).to be(2)
@@ -396,8 +422,8 @@ RSpec.describe Task, type: :system do
         visit root_path
 
         fill_in 'title', with: ''
-        select(value = conditions[:status], from: 'status')
-        select(value = conditions[:label], from: 'label')
+        select(conditions[:status], from: 'status')
+        select(conditions[:label], from: 'label')
         click_on '検索'
 
         expect(page).to have_content 'titleA1'
@@ -407,8 +433,8 @@ RSpec.describe Task, type: :system do
         visit root_path
 
         fill_in 'title', with: ''
-        select(value = conditions[:status], from: 'status')
-        select(value = conditions[:label], from: 'label')
+        select(conditions[:status], from: 'status')
+        select(conditions[:label], from: 'label')
         click_on '検索'
 
         expect(page).not_to have_content 'titleA2'
@@ -418,8 +444,8 @@ RSpec.describe Task, type: :system do
         visit root_path
 
         fill_in 'title', with: ''
-        select(value = conditions[:status], from: 'status')
-        select(value = conditions[:label], from: 'label')
+        select(conditions[:status], from: 'status')
+        select(conditions[:label], from: 'label')
         click_on '検索'
 
         expect(page).to have_content 'titleB1'
@@ -429,8 +455,8 @@ RSpec.describe Task, type: :system do
         visit root_path
 
         fill_in 'title', with: ''
-        select(value = conditions[:status], from: 'status')
-        select(value = conditions[:label], from: 'label')
+        select(conditions[:status], from: 'status')
+        select(conditions[:label], from: 'label')
         click_on '検索'
 
         expect(page).not_to have_content 'titleB2'
@@ -440,8 +466,8 @@ RSpec.describe Task, type: :system do
         visit root_path
 
         fill_in 'title', with: ''
-        select(value = conditions[:status], from: 'status')
-        select(value = conditions[:label], from: 'label')
+        select(conditions[:status], from: 'status')
+        select(conditions[:label], from: 'label')
         click_on '検索'
 
         expect(page).not_to have_content 'titleC1'
@@ -455,8 +481,8 @@ RSpec.describe Task, type: :system do
         visit root_path
 
         fill_in 'title', with: conditions[:title]
-        select(value = conditions[:status], from: 'status')
-        select(value = conditions[:label], from: 'label')
+        select(conditions[:status], from: 'status')
+        select(conditions[:label], from: 'label')
         click_on '検索'
 
         expect(all('tbody tr').size).to be(1)
@@ -466,8 +492,8 @@ RSpec.describe Task, type: :system do
         visit root_path
 
         fill_in 'title', with: conditions[:title]
-        select(value = conditions[:status], from: 'status')
-        select(value = conditions[:label], from: 'label')
+        select(conditions[:status], from: 'status')
+        select(conditions[:label], from: 'label')
         click_on '検索'
 
         expect(page).to have_content 'titleA1'
@@ -477,8 +503,8 @@ RSpec.describe Task, type: :system do
         visit root_path
 
         fill_in 'title', with: conditions[:title]
-        select(value = conditions[:status], from: 'status')
-        select(value = conditions[:label], from: 'label')
+        select(conditions[:status], from: 'status')
+        select(conditions[:label], from: 'label')
         click_on '検索'
 
         expect(page).not_to have_content 'titleA2'
@@ -488,8 +514,8 @@ RSpec.describe Task, type: :system do
         visit root_path
 
         fill_in 'title', with: conditions[:title]
-        select(value = conditions[:status], from: 'status')
-        select(value = conditions[:label], from: 'label')
+        select(conditions[:status], from: 'status')
+        select(conditions[:label], from: 'label')
         click_on '検索'
 
         expect(page).not_to have_content 'titleB1'
@@ -499,8 +525,8 @@ RSpec.describe Task, type: :system do
         visit root_path
 
         fill_in 'title', with: conditions[:title]
-        select(value = conditions[:status], from: 'status')
-        select(value = conditions[:label], from: 'label')
+        select(conditions[:status], from: 'status')
+        select(conditions[:label], from: 'label')
         click_on '検索'
 
         expect(page).not_to have_content 'titleB2'
@@ -508,14 +534,17 @@ RSpec.describe Task, type: :system do
     end
 
     context '終了期日のソート条件が無いまま、検索できること' do
-      let!(:task_A2) { create(:task, title: 'titleA2', status: :not_started, deadline: '2023/04/28', created_at: '2023/08/29 09:00', user_id: user_taro.id) }
+      before do
+        create(:task, title: 'titleA2', status: :not_started, deadline: '2023/04/28', created_at: '2023/08/29 09:00', user_id: user_taro.id)
+      end
+
       let(:conditions) { { status: '未着手' } }
 
       it '検索結果の件数が一致すること' do
         visit root_path
 
         fill_in 'title', with: conditions[:title]
-        select(value = conditions[:status], from: 'status')
+        select(conditions[:status], from: 'status')
         click_on '検索'
 
         within '.tasks' do
@@ -527,7 +556,10 @@ RSpec.describe Task, type: :system do
     end
 
     context '終了期日の昇順ソートのまま、検索できること' do
-      let!(:task_A2) { create(:task, title: 'titleA2', status: :not_started, deadline: '2023/04/28', created_at: '2023/08/29 09:00', user_id: user_taro.id) }
+      before do
+        create(:task, title: 'titleA2', status: :not_started, deadline: '2023/04/28', created_at: '2023/08/29 09:00', user_id: user_taro.id)
+      end
+
       let(:conditions) { { status: '未着手' } }
 
       it '昇順ソートで検索結果の件数が一致すること' do
@@ -535,7 +567,7 @@ RSpec.describe Task, type: :system do
         click_on '昇順'
 
         fill_in 'title', with: conditions[:title]
-        select(value = conditions[:status], from: 'status')
+        select(conditions[:status], from: 'status')
         click_on '検索'
 
         within '.tasks' do
@@ -547,7 +579,10 @@ RSpec.describe Task, type: :system do
     end
 
     context '終了期日の降順並びのまま、検索できること' do
-      let!(:task_A2) { create(:task, title: 'titleA2', status: :not_started, deadline: '2023/04/28', created_at: '2023/08/29 09:00', user_id: user_taro.id) }
+      before do
+        create(:task, title: 'titleA2', status: :not_started, deadline: '2023/04/28', created_at: '2023/08/29 09:00', user_id: user_taro.id)
+      end
+
       let(:conditions) { { status: '未着手' } }
 
       it '降順ソートで検索結果の件数が一致すること' do
@@ -555,7 +590,7 @@ RSpec.describe Task, type: :system do
         click_on '降順'
 
         fill_in 'title', with: conditions[:title]
-        select(value = conditions[:status], from: 'status')
+        select(conditions[:status], from: 'status')
         click_on '検索'
 
         within '.tasks' do
@@ -594,7 +629,7 @@ RSpec.describe Task, type: :system do
         fill_in 'task[title]', with: 'test_title'
         fill_in 'task[content]', with: 'test_content'
         fill_in 'task[deadline]', with: '2022/03/27'
-        select(value = '着手中', from: 'task[status]')
+        select('着手中', from: 'task[status]')
         check 'test'
         click_button '登録'
 
@@ -615,7 +650,7 @@ RSpec.describe Task, type: :system do
         fill_in 'task[title]', with: 'test_title'
         fill_in 'task[content]', with: ''
         fill_in 'task[deadline]', with: '2022/03/27'
-        select(value = '着手中', from: 'task[status]')
+        select('着手中', from: 'task[status]')
         check 'test'
         click_button '登録'
 
@@ -635,7 +670,7 @@ RSpec.describe Task, type: :system do
         fill_in 'task[title]', with: 'test_title'
         fill_in 'task[content]', with: 'test_content'
         fill_in 'task[deadline]', with: '2022/03/27'
-        select(value = '着手中', from: 'task[status]')
+        select('着手中', from: 'task[status]')
         check 'test'
         click_button '登録'
 
@@ -655,7 +690,7 @@ RSpec.describe Task, type: :system do
         fill_in 'task[title]', with: ''
         fill_in 'task[content]', with: 'test_content'
         fill_in 'task[deadline]', with: '2022/03/27'
-        select(value = '着手中', from: 'task[status]')
+        select('着手中', from: 'task[status]')
         check 'test'
         click_button '登録'
 
@@ -671,7 +706,7 @@ RSpec.describe Task, type: :system do
         fill_in 'task[title]', with: 'a' * 31
         fill_in 'task[content]', with: 'test_content'
         fill_in 'task[deadline]', with: '2022/03/27'
-        select(value = '着手中', from: 'task[status]')
+        select('着手中', from: 'task[status]')
         check 'test'
         click_button '登録'
 
@@ -687,7 +722,7 @@ RSpec.describe Task, type: :system do
         fill_in 'task[title]', with: 'update_title'
         fill_in 'task[content]', with: 'test_content'
         fill_in 'task[deadline]', with: ''
-        select(value = '着手中', from: 'task[status]')
+        select('着手中', from: 'task[status]')
         check 'test'
         click_button '登録'
 
@@ -748,7 +783,7 @@ RSpec.describe Task, type: :system do
         fill_in 'task[title]', with: 'update_test'
         fill_in 'task[content]', with: 'update_content'
         fill_in 'task[deadline]', with: '2022/03/27'
-        select(value = '着手中', from: 'task[status]')
+        select('着手中', from: 'task[status]')
         check 'test'
         click_on '登録'
 
@@ -768,7 +803,7 @@ RSpec.describe Task, type: :system do
         fill_in 'task[title]', with: 'update_test'
         fill_in 'task[content]', with: ''
         fill_in 'task[deadline]', with: '2022/03/27'
-        select(value = '着手中', from: 'task[status]')
+        select('着手中', from: 'task[status]')
         check 'test'
         click_button '登録'
 
@@ -788,7 +823,7 @@ RSpec.describe Task, type: :system do
         fill_in 'task[title]', with: ''
         fill_in 'task[content]', with: 'update_content'
         fill_in 'task[deadline]', with: '2022/03/27'
-        select(value = '着手中', from: 'task[status]')
+        select('着手中', from: 'task[status]')
         check 'test'
         click_button '登録'
 
@@ -804,7 +839,7 @@ RSpec.describe Task, type: :system do
         fill_in 'task[title]', with: 'a' * 31
         fill_in 'task[content]', with: 'update_content'
         fill_in 'task[deadline]', with: '2022/03/27'
-        select(value = '着手中', from: 'task[status]')
+        select('着手中', from: 'task[status]')
         check 'test'
         click_button '登録'
 
@@ -820,7 +855,7 @@ RSpec.describe Task, type: :system do
         fill_in 'task[title]', with: 'update_test'
         fill_in 'task[content]', with: 'update_content'
         fill_in 'task[deadline]', with: ''
-        select(value = '着手中', from: 'task[status]')
+        select('着手中', from: 'task[status]')
         check 'test'
         click_button '登録'
 
@@ -839,7 +874,7 @@ RSpec.describe Task, type: :system do
         fill_in 'task[title]', with: 'update_test'
         fill_in 'task[content]', with: 'update_content'
         fill_in 'task[deadline]', with: '2022/03/27'
-        select(value = '着手中', from: 'task[status]')
+        select('着手中', from: 'task[status]')
         check 'test'
         click_button '登録'
 
