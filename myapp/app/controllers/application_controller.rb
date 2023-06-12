@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  before_action :maintenance_mode_on!
+  before_action :render_503_except, if: :maintenance_mode?
   around_action :switch_locale
   add_flash_types :success, :danger
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
@@ -20,11 +20,16 @@ class ApplicationController < ActionController::Base
     redirect_to root_path, danger: t('error.messages.record_not_found')
   end
 
-  def maintenance_mode_on!
-    mainte_flg = Maintenance.exists?(status: 1)
+  def maintenance_mode?
+    ENV['MAINTENANCE_MODE'] == 'false'
+  end
 
-    return unless mainte_flg == true
-
-    redirect_to maintenance_path
+  def render_503_except
+    render(
+      file: Rails.public_path.join('503.html'),
+      content_type: 'text/html',
+      layout: false,
+      status: :service_unavailable,
+    )
   end
 end
