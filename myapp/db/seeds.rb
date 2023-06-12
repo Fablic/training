@@ -20,8 +20,6 @@ USER_NUM.times do |i|
   end
 end
 
-Maintenance.create(status: 0)
-
 User.create!(
   name: 'admin',
   email: 'test@test.com',
