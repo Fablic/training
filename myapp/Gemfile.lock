@@ -226,6 +226,9 @@ GEM
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
     semantic_range (3.0.0)
+    simple_form (5.2.0)
+      actionpack (>= 5.2)
+      activemodel (>= 5.2)
     spring (4.1.1)
     spring-watcher-listen (2.1.0)
       listen (>= 2.7, < 4.0)
@@ -284,6 +287,7 @@ DEPENDENCIES
   rails (~> 7.0, >= 7.0.5)
   sass-rails (~> 6.0)
   selenium-webdriver
+  simple_form (~> 5.2)
   spring
   spring-watcher-listen (~> 2.1)
   turbolinks (~> 5.2, >= 5.2.1)
