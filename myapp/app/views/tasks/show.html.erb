@@ -1,0 +1,19 @@
+<main class="container">
+  <%= link_to sanitize("&larr; Back to tasks"), tasks_path %>
+  <div class="header">
+    <h2>
+      Task name:
+      <%= @task.name %>
+    </h2>
+    <div>
+      <h2>Description</h2>
+      <%= @task.description %>
+      <h2>Priority</h2>
+      <%= @task.priority %>
+      <h2>Expired date</h2>
+      <%= @task.expired_date %>
+      <h2>Status</h2>
+      <%= @task.status %>
+    </div>
+  </div>
+</main>
