@@ -1,0 +1,14 @@
+<%= simple_form_for task, html: { class: "task form" } do |f| %>
+  <% if task.errors.any? %>
+    <div class="error-message">
+      <%= task.errors.full_messages.to_sentence.capitalize %>
+    </div>
+  <% end %>
+
+  <%= f.input :name, input_html: { autofocus: true } %>
+  <%= f.input :description, input_html: { autofocus: true } %>
+  <%= f.input :priority, input_html: { autofocus: true } %>
+  <%= f.input :expired_date, input_html: { autofocus: true } %>
+  <%= f.input :status, input_html: { autofocus: true } %>
+  <%= f.submit class: "btn btn-primary" %>
+<% end %>

@@ -1,0 +1,12 @@
+<div class="task">
+  <%= link_to task.name, task_path(task) %>
+  <div class="task__actions">
+    <%= button_to "Delete",
+                  task_path(task),
+                  method: :delete,
+                  class: "btn btn-danger" %>
+    <%= link_to "Edit",
+                edit_task_path(task),
+                class: "btn btn-info" %>
+  </div>
+</div>

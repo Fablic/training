@@ -1,0 +1,9 @@
+<main class="container">
+  <%= link_to sanitize("&larr; Back to tasks"), tasks_path %>
+
+  <div class="header">
+    <h1>New task</h1>
+  </div>
+
+  <%= render "form", task: @task %>
+</main>
