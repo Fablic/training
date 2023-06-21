@@ -1,8 +1,10 @@
 <main class="container">
-  <%= link_to sanitize("&larr; Back to tasks"), tasks_path %>
+  <%= link_to sanitize("&larr; #{t('back')}"), tasks_path %>
 
   <div class="header">
-    <h1>New task</h1>
+    <h1>
+      <%= t('pages.create_tasks_page.title') %>
+    </h1>
   </div>
 
   <%= render "form", task: @task %>
