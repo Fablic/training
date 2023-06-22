@@ -1,10 +1,9 @@
 <main class="container">
   <%= link_to sanitize("&larr; Back to tasks"), tasks_path %>
   <div class="header">
-    <h2>
-      Task name:
-      <%= @task.name %>
-    </h2>
+    <h1>Task details</h1>
+    <h2>Task name</h2>
+    <%= @task.name %>
     <div>
       <h2>Description</h2>
       <%= @task.description %>
