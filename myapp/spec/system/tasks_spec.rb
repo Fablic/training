@@ -83,4 +83,118 @@ RSpec.describe "Tasks", type: :system do
       expect(Task.all.length).to eq 0
     end
   end
+
+  describe 'show tasks list ordered by specific column in ascending/descending order' do
+    before do
+      create(:task, name: "Task1", priority: 3, status: 2)
+      create(:task, name: "Task2", priority: 1, status: 3)
+      create(:task, name: "Task3", priority: 2, status: 1)
+    end
+
+    it 'by created_time asc' do
+      visit '/'
+      expect(Task.all.length).to eq 3
+      expect(page).to have_content 'Task1'
+      expect(page).to have_content 'Task2'
+      expect(page).to have_content 'Task3'
+      click_link('Sort by Created At ASC')
+      expect(page.body).to match /Task1.*Task2.*Task3.*/m
+      expect(Task.all.length).to eq 3
+    end
+
+    it 'by created_time desc' do
+      visit '/'
+      expect(Task.all.length).to eq 3
+      expect(page).to have_content 'Task1'
+      expect(page).to have_content 'Task2'
+      expect(page).to have_content 'Task3'
+      click_link('Sort by Created At DESC')
+      expect(page.body).to match /Task3.*Task2.*Task1/m
+      expect(Task.all.length).to eq 3
+    end
+
+    it 'by priority asc' do
+      visit '/?sort_direction=ASC&sort_column=priority'
+      expect(Task.all.length).to eq 3
+      expect(page).to have_content 'Task1'
+      expect(page).to have_content 'Task2'
+      expect(page).to have_content 'Task3'
+      expect(page.body).to match /Task2.*Task3.*Task1/m
+      expect(Task.all.length).to eq 3
+    end
+
+    it 'by priority desc' do
+      visit '/?sort_direction=DESC&sort_column=priority'
+      expect(Task.all.length).to eq 3
+      expect(page).to have_content 'Task1'
+      expect(page).to have_content 'Task2'
+      expect(page).to have_content 'Task3'
+      expect(page.body).to match /Task1.*Task3.*Task2/m
+      expect(Task.all.length).to eq 3
+    end
+
+    it 'by status asc' do
+      visit '/?sort_direction=ASC&sort_column=status'
+      expect(Task.all.length).to eq 3
+      expect(page).to have_content 'Task3'
+      expect(page).to have_content 'Task1'
+      expect(page).to have_content 'Task2'
+      expect(page.body).to match /Task3.*Task1.*Task2/m
+      expect(Task.all.length).to eq 3
+    end
+
+    it 'by status desc' do
+      visit '/?sort_direction=DESC&sort_column=status'
+      expect(Task.all.length).to eq 3
+      expect(page).to have_content 'Task3'
+      expect(page).to have_content 'Task1'
+      expect(page).to have_content 'Task2'
+      expect(page.body).to match /Task2.*Task1.*Task3/m
+      expect(Task.all.length).to eq 3
+    end
+  end
+
+  describe 'show tasks list with default order if params are not valid' do
+    before do
+      create(:task, name: "Task1", priority: 3, status: 2)
+      create(:task, name: "Task2", priority: 1, status: 3)
+      create(:task, name: "Task3", priority: 2, status: 1)
+    end
+
+    it 'invalid sort column' do
+      visit '/?sort_direction=ASC&sort_column=invalid'
+      expect(Task.all.length).to eq 3
+      expect(page).to have_content 'Task1'
+      expect(page).to have_content 'Task2'
+      expect(page).to have_content 'Task3'
+      expect(page.body).to match /Task1.*Task2.*Task3/m
+    end
+
+    it 'invalid sort direction' do
+      visit '/?sort_direction=xxx&sort_column=name'
+      expect(Task.all.length).to eq 3
+      expect(page).to have_content 'Task1'
+      expect(page).to have_content 'Task2'
+      expect(page).to have_content 'Task3'
+      expect(page.body).to match /Task1.*Task2.*Task3/m
+    end
+
+    it 'sort column missing' do
+      visit '/?sort_direction=ASC'
+      expect(Task.all.length).to eq 3
+      expect(page).to have_content 'Task1'
+      expect(page).to have_content 'Task2'
+      expect(page).to have_content 'Task3'
+      expect(page.body).to match /Task1.*Task2.*Task3/m
+    end
+
+    it 'sort direction missing' do
+      visit '/?sort_column=name'
+      expect(Task.all.length).to eq 3
+      expect(page).to have_content 'Task1'
+      expect(page).to have_content 'Task2'
+      expect(page).to have_content 'Task3'
+      expect(page.body).to match /Task1.*Task2.*Task3/m
+    end
+  end
 end
