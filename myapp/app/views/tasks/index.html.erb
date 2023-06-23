@@ -1,7 +1,9 @@
 <main class="container">
   <div class="header">
-    <h1>Tasks</h1>
-    <%= link_to "New task",
+    <h1>
+      <%= t('pages.task_list_page.title') %>
+    </h1>
+    <%= link_to t('pages.task_list_page.new_task'),
                 new_task_path,
                 class: "btn btn-primary" %>
   </div>

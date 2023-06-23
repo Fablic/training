@@ -1,17 +1,30 @@
 <main class="container">
-  <%= link_to sanitize("&larr; Back to tasks"), tasks_path %>
+  <%= link_to sanitize("&larr; #{t('back')}"), tasks_path %>
   <div class="header">
-    <h1>Task details</h1>
-    <h2>Task name</h2>
+    <h1>
+      <%= t('pages.task_detail_page.title') %>
+    </h1>
+    <h2>
+      <%= t('attributes.model.task.name') %>
+    </h2>
     <%= @task.name %>
     <div>
-      <h2>Description</h2>
+
+      <h2>
+        <%= t('attributes.model.task.description') %>
+      </h2>
       <%= @task.description %>
-      <h2>Priority</h2>
+      <h2>
+        <%= t('attributes.model.task.priority') %>
+      </h2>
       <%= @task.priority %>
-      <h2>Expired date</h2>
+      <h2>
+        <%= t('attributes.model.task.expired_date') %>
+      </h2>
       <%= @task.expired_date %>
-      <h2>Status</h2>
+      <h2>
+        <%= t('attributes.model.task.status') %>
+      </h2>
       <%= @task.status %>
     </div>
   </div>
