@@ -2,7 +2,9 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def index
-    @tasks = Task.all
+    sort_column = Task.column_names.include?(task_list_params[:sort_column]) ? task_list_params[:sort_column] : "name"
+    sort_direction = %w[ASC DESC].include?(task_list_params[:sort_direction]) ? task_list_params[:sort_direction] : "ASC"
+    @tasks = Task.all.order("#{sort_column} #{sort_direction}")
   end
 
   def show
@@ -45,5 +47,9 @@ class TasksController < ApplicationController
 
   def task_params
     params.require(:task).permit(:name, :description, :priority, :expired_date, :status)
+  end
+
+  def task_list_params
+    params.permit(:sort_column, :sort_direction)
   end
 end
