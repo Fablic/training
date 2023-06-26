@@ -2,7 +2,7 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def index
-    sort_column = Task.column_names.include?(task_list_params[:sort_column]) ? task_list_params[:sort_column] : "name"
+    sort_column = Task.column_names.include?(task_list_params[:sort_column]) ? task_list_params[:sort_column] : "created_at"
     sort_direction = %w[ASC DESC].include?(task_list_params[:sort_direction]) ? task_list_params[:sort_direction] : "ASC"
     @tasks = Task.all.order("#{sort_column} #{sort_direction}")
   end
