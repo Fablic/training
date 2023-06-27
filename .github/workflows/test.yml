@@ -1,56 +1,46 @@
-name: rpec test & rubocop lint check
-on: pull_request
+name: CI
 
+on: [ pull_request ]
 
 jobs:
-  rspec:
+  myapp-test:
     runs-on: ubuntu-latest
     env:
+      MYSQL_HOST: 127.0.0.1
       RAILS_ENV: test
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ROOT_PASSWORD: password
+        ports:
+          - 3306:3306
+      selenium:
+        image: selenium/standalone-chrome:90.0
+        ports:
+          - 4444:4444
+        volumes:
+          - /dev/shm:/dev/shm
+    defaults:
+      run:
+        working-directory: myapp
     steps:
       - uses: actions/checkout@v2
-
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '18'
+      - uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.2.2
-
-      - name: Install dependent libralies
-        run: sudo apt-get install libmysqlclient-dev
-        working-directory: myapp
-
-      - name: Setup bundler
-        run: gem install bundler
-        working-directory: myapp
-
-      - name: bundle install
-        run: |
-          BUNDLER_VERSION=2.4.10 bundle install
-          bundle install --jobs 4 --retry 3
-        working-directory: myapp
-
-      - name: Setup Database
-        run: |
-          cp config/database.yml.ci config/database.yml
-          sudo /etc/init.d/mysql start
-          bundle exec rake db:create
-          bundle exec rake db:migrate
-        working-directory: myapp
-        env:
-          RAILS_ENV: test
-
-      - name: install webpacker
-        run: |
-          rm -rf bin/webpack*
-          bundle exec rails webpacker:install
-          bundle exec rails webpacker:compile
-        working-directory: myapp
-
-      - name: Run RSpec
-        run: bundle exec rspec -f d
-        working-directory: myapp
-        env:
-          RAILS_ENV: test
+          bundler-cache: true
+          # NOTE: Currently, each action cannot honor `defaults.run.working-directory`.
+          #       See https://github.com/ruby/setup-ruby/issues/54 for more details.
+          working-directory: myapp
+      - run: yarn install
+      - run: bundle exec rails db:create db:migrate
+      - run: bundle exec rails assets:precompile
+      - run: bundle exec rails webpacker:compile
+      - run: bundle exec rspec
   rubocop:
     name: Rubocop
     runs-on: ubuntu-latest
