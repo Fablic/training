@@ -7,6 +7,12 @@
                 new_task_path,
                 class: "btn btn-primary" %>
   </div>
+  <div>
+    <%= link_to "Sort by Created At ASC", tasks_path(sort_column: "created_at", sort_direction: "ASC") %>
+  </div>
+  <div>
+    <%= link_to "Sort by Created At DESC", tasks_path(sort_column: "created_at", sort_direction: "DESC") %>
+  </div>
   <%= flash.now[:success] %>
   <%= render @tasks %>
 </main>

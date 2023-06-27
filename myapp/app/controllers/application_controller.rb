@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# some comments for application controller
 class ApplicationController < ActionController::Base
   around_action :switch_locale
 
