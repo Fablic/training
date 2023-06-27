@@ -38,6 +38,7 @@ jobs:
           bundle exec rake db:create
           bundle exec rake db:migrate
       - run: yarn install
+      - run: bundle exec rails webpacker:install
       - run: bundle exec rails db:create db:migrate
       - run: bundle exec rails assets:precompile
       - run: bundle exec rails webpacker:compile
