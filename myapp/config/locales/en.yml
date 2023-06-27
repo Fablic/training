@@ -40,6 +40,8 @@ en:
         status: Status
         priority: Priority
         expired_date: Expired date
+  err_msgs:
+    too_long: The length of the task name should less than 255 characters
   flash_msgs:
     create_ok: Task was successfully created.
     update_ok: Task was successfully updated.
