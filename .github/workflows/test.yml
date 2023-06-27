@@ -13,6 +13,7 @@ jobs:
         image: mysql:5.7
         env:
           MYSQL_ROOT_PASSWORD: password
+          BIND_ADDRESS: 0.0.0.0
         ports:
           - 3316:3306
         options: --name myapp-mysql
