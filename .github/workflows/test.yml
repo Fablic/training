@@ -5,6 +5,8 @@ on: [ pull_request ]
 jobs:
   myapp-test:
     runs-on: ubuntu-latest
+    env:
+      MYSQL_HOST: db
     services:
       mysql:
         image: mysql:5.7
@@ -34,7 +36,7 @@ jobs:
           #       See https://github.com/ruby/setup-ruby/issues/54 for more details.
           working-directory: myapp
       - run: yarn install
-      - run: bundle exec rails db:create db:migrate --trace
+      - run: bundle exec rails db:create db:migrate
       - run: bundle exec rails assets:precompile
       - run: bundle exec rails webpacker:compile
       - run: bundle exec rspec
