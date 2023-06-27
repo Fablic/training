@@ -6,7 +6,7 @@ jobs:
   myapp-test:
     runs-on: ubuntu-latest
     env:
-      MYSQL_HOST: db
+      MYSQL_HOST: 127.0.0.1
     services:
       mysql:
         image: mysql:5.7
