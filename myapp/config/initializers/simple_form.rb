@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 #
 # Uncomment this and change the path if necessary to include your own
 # components.
@@ -13,8 +14,8 @@ SimpleForm.setup do |config|
   # wrapper, change the order or even add your own to the
   # stack. The options given below are used to wrap the
   # whole input.
-  config.wrappers :default, class: "form__group", # class: :input,
-                  hint_class: :field_with_hint, error_class: :field_with_errors, valid_class: :field_without_errors do |b|
+  config.wrappers :default, class: 'form__group', # class: :input,
+                            hint_class: :field_with_hint, error_class: :field_with_errors, valid_class: :field_without_errors do |b|
     ## Extensions enabled by default
     # Any of these extensions can be disabled for a
     # given input by passing: `f.input EXTENSION_NAME => false`.
@@ -54,10 +55,10 @@ SimpleForm.setup do |config|
     ## Inputs
     # b.use :input, class: 'input', error_class: 'is-invalid', valid_class: 'is-valid'
     # b.use :label_input
-    b.use :label, class: "visually-hidden"
+    b.use :label, class: 'visually-hidden'
     # b.use :hint, wrap_with: { tag: :span, class: :hint }
     # b.use :error, wrap_with: { tag: :span, class: :error }
-    b.use :input, class: "form__input", error_class: "form__input--invalid"
+    b.use :input, class: 'form__input', error_class: 'form__input--invalid'
 
     ## full_messages_for
     # If you want to display the full error message for the attribute, you can
@@ -110,7 +111,7 @@ SimpleForm.setup do |config|
 
   # How the label text should be generated altogether with the required text.
   # config.label_text = lambda { |label, required, explicit_label| "#{required} #{label}" }
-  config.label_text = lambda { |label, _, _| label }
+  config.label_text = ->(label, _, _) { label }
 
   # You can define the class to use on all labels. Default is nil.
   # config.label_class = nil

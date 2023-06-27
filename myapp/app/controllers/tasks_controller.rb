@@ -1,9 +1,12 @@
+# frozen_string_literal: true
+
+# some comments here for task controller
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def index
-    sort_column = Task.column_names.include?(task_list_params[:sort_column]) ? task_list_params[:sort_column] : "created_at"
-    sort_direction = %w[ASC DESC].include?(task_list_params[:sort_direction]) ? task_list_params[:sort_direction] : "ASC"
+    sort_column = Task.column_names.include?(task_list_params[:sort_column]) ? task_list_params[:sort_column] : 'created_at'
+    sort_direction = %w[ASC DESC].include?(task_list_params[:sort_direction]) ? task_list_params[:sort_direction] : 'ASC'
     @tasks = Task.all.order("#{sort_column} #{sort_direction}")
   end
 
@@ -14,6 +17,9 @@ class TasksController < ApplicationController
     @task = Task.new
   end
 
+  def edit
+  end
+
   def create
     @task = Task.new(task_params)
     if @task.save
@@ -21,9 +27,6 @@ class TasksController < ApplicationController
     else
       render :new, status: :unprocessable_entity
     end
-  end
-
-  def edit
   end
 
   def update
