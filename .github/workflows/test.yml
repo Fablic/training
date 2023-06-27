@@ -35,8 +35,8 @@ jobs:
           # NOTE: Currently, each action cannot honor `defaults.run.working-directory`.
           #       See https://github.com/ruby/setup-ruby/issues/54 for more details.
           working-directory: myapp
+      - run: docker ps -a
       - run: yarn install
-      - run: mysql.service start
       - run: bundle exec rails db:create db:migrate
       - run: bundle exec rails assets:precompile
       - run: bundle exec rails webpacker:compile
