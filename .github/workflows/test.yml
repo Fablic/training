@@ -7,6 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       MYSQL_HOST: 127.0.0.1
+      RAILS_ENV: test
     services:
       mysql:
         image: mysql:5.7
@@ -14,6 +15,7 @@ jobs:
           MYSQL_ROOT_PASSWORD: password
         ports:
           - 3316:3306
+        options: --name myapp-mysql
       selenium:
         image: selenium/standalone-chrome:90.0
         ports:
