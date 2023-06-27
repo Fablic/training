@@ -9,14 +9,6 @@ jobs:
       MYSQL_HOST: 127.0.0.1
       RAILS_ENV: test
     services:
-      mysql:
-        image: mysql:5.7
-        env:
-          MYSQL_ROOT_PASSWORD: password
-          BIND_ADDRESS: 0.0.0.0
-        ports:
-          - 3316:3306
-        options: --name myapp-mysql
       selenium:
         image: selenium/standalone-chrome:90.0
         ports:
@@ -38,7 +30,13 @@ jobs:
           # NOTE: Currently, each action cannot honor `defaults.run.working-directory`.
           #       See https://github.com/ruby/setup-ruby/issues/54 for more details.
           working-directory: myapp
-      - run: docker ps -a
+      - name: Setup Database
+        run: |
+          sudo apt-get install libmysqlclient-dev
+          cp config/database.yml.ci config/database.yml
+          sudo /etc/init.d/mysql start
+          bundle exec rake db:create
+          bundle exec rake db:migrate
       - run: yarn install
       - run: bundle exec rails db:create db:migrate
       - run: bundle exec rails assets:precompile
