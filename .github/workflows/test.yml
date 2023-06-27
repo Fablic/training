@@ -40,8 +40,6 @@ jobs:
       - run: yarn install
       - run: bundle exec rails webpacker:install
       - run: bundle exec rails db:create db:migrate
-      - run: bundle exec rails assets:precompile
-      - run: bundle exec rails webpacker:compile
       - run: bundle exec rspec
   rubocop:
     name: Rubocop
