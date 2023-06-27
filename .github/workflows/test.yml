@@ -5,11 +5,11 @@ on: [ pull_request ]
 jobs:
   myapp-test:
     runs-on: ubuntu-latest
-    env:
-      MYSQL_HOST: 127.0.0.1
     services:
       mysql:
         image: mysql:5.7
+        env:
+          MYSQL_ROOT_PASSWORD: password
         ports:
           - 3316:3306
       selenium:
