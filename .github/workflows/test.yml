@@ -14,7 +14,7 @@ jobs:
         env:
           MYSQL_ROOT_PASSWORD: password
         ports:
-          - 3306:3306
+          - 3316:3306
       selenium:
         image: selenium/standalone-chrome:90.0
         ports:
@@ -37,7 +37,6 @@ jobs:
           #       See https://github.com/ruby/setup-ruby/issues/54 for more details.
           working-directory: myapp
       - run: yarn install
-      - run: sudo /etc/init.d/mysql start
       - run: bundle exec rails db:create db:migrate
       - run: bundle exec rails assets:precompile
       - run: bundle exec rails webpacker:compile
