@@ -45,8 +45,8 @@ RSpec.describe 'Tasks' do
       click_link('New task')
       fill_in 'task[name]', with: 'a_new_task'
       fill_in 'task[description]', with: 'new task description'
-      fill_in 'task[priority]', with: '1'
-      fill_in 'task[status]', with: '1'
+      select('Low', from: 'task[priority]')
+      select('Todo', from: 'task[status]')
       click_on 'Create task'
       expect(page).to have_link 'a_new_task'
     end
@@ -56,10 +56,21 @@ RSpec.describe 'Tasks' do
       click_link('New task')
       fill_in 'task[name]', with: 'a_new_task'
       fill_in 'task[description]', with: 'new task description'
-      fill_in 'task[priority]', with: '1'
-      fill_in 'task[status]', with: '1'
+      select('Low', from: 'task[priority]')
+      select('Todo', from: 'task[status]')
       click_on 'Create task'
       expect(page).to have_content 'Task was successfully created.'
+    end
+
+    it 'task failed to be created due to empty name' do
+      visit '/'
+      click_link('New task')
+      fill_in 'task[name]', with: ''
+      fill_in 'task[description]', with: 'new task description'
+      select('Low', from: 'task[priority]')
+      select('Todo', from: 'task[status]')
+      click_on 'Create task'
+      expect(page).to have_content 'Name can\'t be blank'
     end
   end
 
@@ -93,6 +104,14 @@ RSpec.describe 'Tasks' do
       fill_in 'task[description]', with: 'description after'
       click_on 'Update task'
       expect(page).to have_content 'Task was successfully updated.'
+    end
+
+    it 'task failed to be updated due to empty name' do
+      visit '/'
+      click_on('Edit')
+      fill_in 'task[name]', with: ''
+      click_on 'Update task'
+      expect(page).to have_content 'Name can\'t be blank'
     end
   end
 

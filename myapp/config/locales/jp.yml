@@ -1,4 +1,18 @@
 jp:
+  activerecord:
+    errors:
+      models:
+        task:
+          blank: を入れてください
+  errors:
+    messages:
+      too_long:
+        one: 最大1文字まで入れてください
+        other: 最大%{count}文字まで入れてください
+      wrong_length:
+        one: 文字数が誤っています（1文字である必要があります）
+        other: 文字数が誤っています（%{count}文字である必要があります）
+      not_a_number: 数字を入れてください
   models:
     task: タスク
   attributes:
@@ -79,3 +93,8 @@ jp:
       - :year
       - :month
       - :day
+  support:
+    array:
+      words_connector: ","
+      two_words_connector: " & "
+      last_word_connector: " & "
