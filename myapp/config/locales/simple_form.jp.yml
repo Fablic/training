@@ -14,15 +14,13 @@ jp:
       task:
         name: ここにタスクネームを入れてください
         description: ここに何か書いてください
-        status: ここにステータス(数字)を入れてください（以降様式を変えます）
-        priority: ここに優先度(数字)を入れてください（以降様式を変えます）
     labels:
       task:
         name: タスクネーム
         description: 詳細
         status: ステータス
         priority: 優先度
-        expired_date: 終了期限
+        expired_date: 終了期限 ( 年 / 月 / 日 )
   helpers:
     submit:
       task:
