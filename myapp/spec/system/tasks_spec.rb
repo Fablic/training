@@ -135,9 +135,9 @@ RSpec.describe 'Tasks' do
 
   describe 'show tasks list ordered by specific column in ascending/descending order' do
     before do
-      create(:task, name: 'Task1', priority: 3, status: 2)
-      create(:task, name: 'Task2', priority: 1, status: 3)
-      create(:task, name: 'Task3', priority: 2, status: 1)
+      create(:task, name: 'Task1', priority: 3, status: 2, expired_date: '2023-06-30')
+      create(:task, name: 'Task2', priority: 1, status: 3, expired_date: '2024-06-30')
+      create(:task, name: 'Task3', priority: 2, status: 1, expired_date: '2023-07-30')
     end
 
     it '3 tasks should be created' do
@@ -175,6 +175,16 @@ RSpec.describe 'Tasks' do
     it 'by status desc' do
       visit '/?sort_direction=DESC&sort_column=status'
       expect(page.body).to match(/Task2.*Task1.*Task3/m)
+    end
+
+    it 'by expired date asc' do
+      visit '/?sort_direction=ASC&sort_column=expired_date'
+      expect(page.body).to match(/Task1.*Task3.*Task2/m)
+    end
+
+    it 'by expired date desc' do
+      visit '/?sort_direction=DESC&sort_column=expired_date'
+      expect(page.body).to match(/Task2.*Task3.*Task1/m)
     end
   end
 
