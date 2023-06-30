@@ -3,16 +3,26 @@
     <h1>
       <%= t('pages.task_list_page.title') %>
     </h1>
-    <%= link_to t('pages.task_list_page.new_task'),
-                new_task_path,
-                class: "btn btn-primary" %>
   </div>
   <div>
-    <%= link_to "Sort by Created At ASC", tasks_path(sort_column: "created_at", sort_direction: "ASC") %>
+    <div style="display: inline-block">
+      <%= simple_form_for :search, url: '/tasks', method: "GET", html: { class: 'form-inline' } do |f| %>
+        <%= f.input :name, input_html: { value: "" } %>
+        <%= f.input :status, collection: Task.enums_i18n(:status_types).keys.zip(Task.status_types.values) %>
+        <%= f.submit class: "btn btn-primary" %>
+      <% end %>
+    </div>
+    <div style="display: inline-block; margin-left: 5%">
+      <%= simple_form_for :sort, url: '/tasks', method: "GET", html: { class: 'form-inline' } do |f| %>
+        <%= f.input :column, collection: Task.column_names, selected: "created_at" %>
+        <%= f.input :direction, collection: %w[ASC DESC], selected: "ASC" %>
+        <%= f.submit class: "btn btn-primary" %>
+      <% end %>
+    </div>
   </div>
-  <div>
-    <%= link_to "Sort by Created At DESC", tasks_path(sort_column: "created_at", sort_direction: "DESC") %>
-  </div>
+  <%= link_to t('pages.task_list_page.new_task'),
+              new_task_path,
+              class: "btn btn-primary" %>
   <%= flash.now[:success] %>
   <%= render @tasks %>
 </main>
