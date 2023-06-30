@@ -5,7 +5,9 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def index
-    @tasks = Task.all.order("#{task_list_params[:sort_column]} #{task_list_params[:sort_direction]}")
+    @tasks = Task.all.search_by_name(search_params[:search_name])
+                 .search_by_status(search_params[:search_status])
+                 .sort_by_column(sort_params[:sort_column], sort_params[:sort_direction])
   end
 
   def show
@@ -50,11 +52,34 @@ class TasksController < ApplicationController
     params.require(:task).permit(:name, :description, :priority, :expired_date, :status)
   end
 
-  def task_list_params
-    params.permit(:sort_column, :sort_direction)
-    {
-      sort_column: Task.column_names.include?(params[:sort_column]) ? params[:sort_column] : 'created_at',
-      sort_direction: %w[ASC DESC].include?(params[:sort_direction]) ? params[:sort_direction] : 'ASC',
-    }
+  def sort_params
+    params.permit(sort: [:column, :direction])
+    if params[:sort].present?
+      {
+        sort_column: Task.column_names.include?(params[:sort][:column]) ? params[:sort][:column] : 'created_at',
+        sort_direction: %w[ASC DESC].include?(params[:sort][:direction]) ? params[:sort][:direction] : 'ASC',
+      }
+    else
+      {
+        sort_column: 'created_at',
+        sort_direction: 'ASC',
+      }
+    end
+  end
+
+  def search_params
+    params.permit(search: [:name, :status])
+
+    if params[:search].present?
+      {
+        search_name: params[:search][:name],
+        search_status: params[:search][:status],
+      }
+    else
+      {
+        search_name: nil,
+        search_status: nil,
+      }
+    end
   end
 end
