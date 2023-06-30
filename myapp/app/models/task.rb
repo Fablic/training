@@ -17,4 +17,8 @@ class Task < ApplicationRecord
   validates :description, length: { maximum: 1000 }
   validates :priority, presence: true, numericality: { only_integer: true }
   validates :status, presence: true, numericality: { only_integer: true }
+
+  scope :search_by_name, -> (name) { where('name LIKE?', "%#{Task.sanitize_sql_like(name)}%") if name.present? }
+  scope :search_by_status, -> (status) { where(status: status) if status.present? }
+  scope :sort_by_column, -> (sort_column, sort_direction) { order("#{sort_column} #{sort_direction}") }
 end
