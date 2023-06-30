@@ -14,15 +14,13 @@ en:
       task:
         name: Task name here
         description: write something here...
-        status: integer here~(it will be changed later)
-        priority: integer here~(it will be changed later)
     labels:
       task:
         name: Task name
         description: Description
         status: Status
         priority: Priority
-        expired_date: Expired date
+        expired_date: Expired date( Day / Month / Year)
   helpers:
     submit:
       task:
