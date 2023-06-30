@@ -135,9 +135,9 @@ RSpec.describe 'Tasks' do
 
   describe 'show tasks list ordered by specific column in ascending/descending order' do
     before do
-      create(:task, name: 'Task1', priority: 3, status: 2, expired_date: '2023-06-30')
-      create(:task, name: 'Task2', priority: 1, status: 3, expired_date: '2024-06-30')
-      create(:task, name: 'Task3', priority: 2, status: 1, expired_date: '2023-07-30')
+      create(:task, name: 'Task1', priority: Task::priority_types[:High], status: Task::status_types[:Doing], expired_date: '2023-06-30')
+      create(:task, name: 'Task2', priority: Task::priority_types[:Low], status: Task::status_types[:Done], expired_date: '2024-06-30')
+      create(:task, name: 'Task3', priority: Task::priority_types[:Medium], status: Task::status_types[:Todo], expired_date: '2023-07-30')
     end
 
     it '3 tasks should be created' do
@@ -190,9 +190,9 @@ RSpec.describe 'Tasks' do
 
   describe 'show tasks list with default order if params are not valid' do
     before do
-      create(:task, name: 'Task1', priority: 3, status: 2)
-      create(:task, name: 'Task2', priority: 1, status: 3)
-      create(:task, name: 'Task3', priority: 2, status: 1)
+      create(:task, name: 'Task1', priority: Task::priority_types[:High], status: Task::status_types[:Doing])
+      create(:task, name: 'Task2', priority: Task::priority_types[:Low], status: Task::status_types[:Done])
+      create(:task, name: 'Task3', priority: Task::priority_types[:Medium], status: Task::status_types[:Todo])
     end
 
     it '3 tasks should be created' do
