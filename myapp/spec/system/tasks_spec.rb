@@ -147,43 +147,65 @@ RSpec.describe 'Tasks' do
 
     it 'by created_time asc' do
       visit '/'
-      click_link('Sort by Created At ASC')
+      select('created_at', from: 'sort[column]')
+      select('ASC', from: 'sort[direction]')
+      click_on 'Sort'
       expect(page.body).to match(/Task1.*Task2.*Task3.*/m)
     end
 
     it 'by created_time desc' do
       visit '/'
-      click_link('Sort by Created At DESC')
+      select('created_at', from: 'sort[column]')
+      select('DESC', from: 'sort[direction]')
+      click_on 'Sort'
       expect(page.body).to match(/Task3.*Task2.*Task1/m)
     end
 
     it 'by priority asc' do
-      visit '/?sort_direction=ASC&sort_column=priority'
+      visit '/'
+      select('priority', from: 'sort[column]')
+      select('ASC', from: 'sort[direction]')
+      click_on 'Sort'
       expect(page.body).to match(/Task2.*Task3.*Task1/m)
     end
 
     it 'by priority desc' do
-      visit '/?sort_direction=DESC&sort_column=priority'
+      visit '/'
+      select('priority', from: 'sort[column]')
+      select('DESC', from: 'sort[direction]')
+      click_on 'Sort'
       expect(page.body).to match(/Task1.*Task3.*Task2/m)
     end
 
     it 'by status asc' do
-      visit '/?sort_direction=ASC&sort_column=status'
+      visit '/'
+      select('status', from: 'sort[column]')
+      select('ASC', from: 'sort[direction]')
+      click_on 'Sort'
       expect(page.body).to match(/Task3.*Task1.*Task2/m)
     end
 
     it 'by status desc' do
-      visit '/?sort_direction=DESC&sort_column=status'
+      visit '/'
+      select('status', from: 'sort[column]')
+      select('DESC', from: 'sort[direction]')
+      click_on 'Sort'
       expect(page.body).to match(/Task2.*Task1.*Task3/m)
     end
 
     it 'by expired date asc' do
-      visit '/?sort_direction=ASC&sort_column=expired_date'
+      visit '/'
+      select('expired_date', from: 'sort[column]')
+      select('ASC', from: 'sort[direction]')
+      click_on 'Sort'
       expect(page.body).to match(/Task1.*Task3.*Task2/m)
     end
 
     it 'by expired date desc' do
-      visit '/?sort_direction=DESC&sort_column=expired_date'
+      visit '/'
+      select('expired_date', from: 'sort[column]')
+      select('DESC', from: 'sort[direction]')
+      click_on 'Sort'
       expect(page.body).to match(/Task2.*Task3.*Task1/m)
     end
   end
@@ -200,24 +222,73 @@ RSpec.describe 'Tasks' do
       expect(Task.all.length).to eq 3
     end
 
-    it 'invalid sort column' do
-      visit '/?sort_direction=ASC&sort_column=invalid'
+    it 'search by name' do
+      visit '/?task[direction]=ASC&task[column]=invalid'
       expect(page.body).to match(/Task1.*Task2.*Task3/m)
     end
 
     it 'invalid sort direction' do
-      visit '/?sort_direction=xxx&sort_column=name'
+      visit '/?task[direction]=xxx&task[column]=name'
       expect(page.body).to match(/Task1.*Task2.*Task3/m)
     end
 
     it 'sort column missing' do
-      visit '/?sort_direction=ASC'
+      visit '/?task[direction]=ASC'
       expect(page.body).to match(/Task1.*Task2.*Task3/m)
     end
 
     it 'sort direction missing' do
-      visit '/?sort_column=name'
+      visit '/?task[column]=name'
       expect(page.body).to match(/Task1.*Task2.*Task3/m)
+    end
+  end
+
+  describe 'get the correct tasks by search' do
+    before do
+      create(:task, name: 'Task1_y', priority: Task.priority_types[:High], status: Task.status_types[:Doing])
+      create(:task, name: 'Task2_x', priority: Task.priority_types[:Low], status: Task.status_types[:Done])
+      create(:task, name: 'Task3', priority: Task.priority_types[:Medium], status: Task.status_types[:Todo])
+      create(:task, name: 'Task4_x', priority: Task.priority_types[:Low], status: Task.status_types[:Todo])
+      create(:task, name: 'Task5_y', priority: Task.priority_types[:Low], status: Task.status_types[:Todo])
+    end
+
+    it '3 tasks should be created' do
+      visit '/'
+      expect(Task.all.length).to eq 5
+    end
+
+    it 'search by name', :aggregate_failures do
+      visit '/'
+      fill_in 'search[name]', with: '2'
+      click_on 'Search'
+      expect(page.body).to have_link 'Task2_x'
+      expect(page.body).not_to have_content 'Task1'
+      expect(page.body).not_to have_content 'Task3'
+      expect(page.body).not_to have_content 'Task4'
+      expect(page.body).not_to have_content 'Task5'
+    end
+
+    it 'search by status', :aggregate_failures do
+      visit '/'
+      select('Doing', from: 'search[status]')
+      click_on 'Search'
+      expect(page.body).to have_link 'Task1_y'
+      expect(page.body).not_to have_content 'Task2'
+      expect(page.body).not_to have_content 'Task3'
+      expect(page.body).not_to have_content 'Task4'
+      expect(page.body).not_to have_content 'Task5'
+    end
+
+    it 'search by name & status', :aggregate_failures do
+      visit '/'
+      fill_in 'search[name]', with: 'x'
+      select('Todo', from: 'search[status]')
+      click_on 'Search'
+      expect(page.body).to have_link 'Task4_x'
+      expect(page.body).not_to have_content 'Task1'
+      expect(page.body).not_to have_content 'Task2'
+      expect(page.body).not_to have_content 'Task3'
+      expect(page.body).not_to have_content 'Task5'
     end
   end
 end
