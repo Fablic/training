@@ -14,7 +14,7 @@
     </div>
     <div style="display: inline-block; margin-left: 5%">
       <%= simple_form_for :sort, url: '/tasks', method: "GET", html: { class: 'form-inline' } do |f| %>
-        <%= f.input :column, collection: Task.column_names, selected: "created_at" %>
+        <%= f.input :column, collection: Task.column_names.excluding("id"), selected: "created_at" %>
         <%= f.input :direction, collection: %w[ASC DESC], selected: "ASC" %>
         <%= f.submit class: "btn btn-primary" %>
       <% end %>
