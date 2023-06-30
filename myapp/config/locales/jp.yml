@@ -1,4 +1,14 @@
 jp:
+  enums:
+    task:
+      status_types:
+        Todo: 未着手
+        Doing: 着手中
+        Done: 完了
+      priority_types:
+        Low: 低
+        Medium: 中
+        High: 高
   activerecord:
     errors:
       models:

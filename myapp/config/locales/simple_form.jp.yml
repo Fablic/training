@@ -26,6 +26,10 @@ jp:
       task:
         create: タスク作成
         update: タスク更新
+      search:
+        submit: 検索
+      sort:
+        submit: ソート
     # Examples
     # labels:
     #   defaults:

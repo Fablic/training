@@ -26,6 +26,10 @@ en:
       task:
         create: Create task
         update: Update task
+      search:
+        submit: Search
+      sort:
+        submit: Sort
     # Examples
     # labels:
     #   defaults:
