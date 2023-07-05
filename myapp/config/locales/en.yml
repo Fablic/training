@@ -32,11 +32,11 @@
 en:
   enums:
     task:
-      status_types:
+      status:
         Todo: Todo
         Doing: Doing
         Done: Done
-      priority_types:
+      priority:
         Low: Low
         Medium: Medium
         High: High

@@ -8,7 +8,7 @@
     <div style="display: inline-block">
       <%= simple_form_for :search, url: '/tasks', method: "GET", html: { class: 'form-inline' } do |f| %>
         <%= f.input :name, input_html: { value: "" } %>
-        <%= f.input :status, collection: Task.enums_i18n(:status_types).keys.zip(Task.status_types.values) %>
+        <%= f.input :status, collection: Task.enums_i18n(:status).keys %>
         <%= f.submit class: "btn btn-primary" %>
       <% end %>
     </div>

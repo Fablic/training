@@ -17,7 +17,7 @@
       <h2>
         <%= t('attributes.model.task.priority') %>
       </h2>
-      <%= @task.priority %>
+      <%= @task.enum_i18n(:priority) %>
       <h2>
         <%= t('attributes.model.task.expired_date') %>
       </h2>
@@ -25,7 +25,7 @@
       <h2>
         <%= t('attributes.model.task.status') %>
       </h2>
-      <%= @task.status %>
+      <%= @task.enum_i18n(:status) %>
     </div>
   </div>
 </main>

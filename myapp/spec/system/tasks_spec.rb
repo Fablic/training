@@ -135,9 +135,9 @@ RSpec.describe 'Tasks' do
 
   describe 'show tasks list ordered by specific column in ascending/descending order' do
     before do
-      create(:task, name: 'Task1', priority: Task.priority_types[:High], status: Task.status_types[:Doing], expired_date: '2023-06-30')
-      create(:task, name: 'Task2', priority: Task.priority_types[:Low], status: Task.status_types[:Done], expired_date: '2024-06-30')
-      create(:task, name: 'Task3', priority: Task.priority_types[:Medium], status: Task.status_types[:Todo], expired_date: '2023-07-30')
+      create(:task, name: 'Task1', priority: Task.priorities[:High], status: Task.statuses[:Doing], expired_date: '2023-06-30')
+      create(:task, name: 'Task2', priority: Task.priorities[:Low], status: Task.statuses[:Done], expired_date: '2024-06-30')
+      create(:task, name: 'Task3', priority: Task.priorities[:Medium], status: Task.statuses[:Todo], expired_date: '2023-07-30')
     end
 
     it '3 tasks should be created' do
@@ -212,9 +212,9 @@ RSpec.describe 'Tasks' do
 
   describe 'show tasks list with default order if params are not valid' do
     before do
-      create(:task, name: 'Task1', priority: Task.priority_types[:High], status: Task.status_types[:Doing])
-      create(:task, name: 'Task2', priority: Task.priority_types[:Low], status: Task.status_types[:Done])
-      create(:task, name: 'Task3', priority: Task.priority_types[:Medium], status: Task.status_types[:Todo])
+      create(:task, name: 'Task1', priority: Task.priorities[:High], status: Task.statuses[:Doing])
+      create(:task, name: 'Task2', priority: Task.priorities[:Low], status: Task.statuses[:Done])
+      create(:task, name: 'Task3', priority: Task.priorities[:Medium], status: Task.statuses[:Todo])
     end
 
     it '3 tasks should be created' do
@@ -245,11 +245,11 @@ RSpec.describe 'Tasks' do
 
   describe 'get the correct tasks by search' do
     before do
-      create(:task, name: 'Task1_y', priority: Task.priority_types[:High], status: Task.status_types[:Doing])
-      create(:task, name: 'Task2_x', priority: Task.priority_types[:Low], status: Task.status_types[:Done])
-      create(:task, name: 'Task3', priority: Task.priority_types[:Medium], status: Task.status_types[:Todo])
-      create(:task, name: 'Task4_x', priority: Task.priority_types[:Low], status: Task.status_types[:Todo])
-      create(:task, name: 'Task5_y', priority: Task.priority_types[:Low], status: Task.status_types[:Todo])
+      create(:task, name: 'Task1_y', priority: Task.priorities[:High], status: Task.statuses[:Doing])
+      create(:task, name: 'Task2_x', priority: Task.priorities[:Low], status: Task.statuses[:Done])
+      create(:task, name: 'Task3', priority: Task.priorities[:Medium], status: Task.statuses[:Todo])
+      create(:task, name: 'Task4_x', priority: Task.priorities[:Low], status: Task.statuses[:Todo])
+      create(:task, name: 'Task5_y', priority: Task.priorities[:Low], status: Task.statuses[:Todo])
     end
 
     it '3 tasks should be created' do

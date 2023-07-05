@@ -1,11 +1,11 @@
 jp:
   enums:
     task:
-      status_types:
+      status:
         Todo: 未着手
         Doing: 着手中
         Done: 完了
-      priority_types:
+      priority:
         Low: 低
         Medium: 中
         High: 高

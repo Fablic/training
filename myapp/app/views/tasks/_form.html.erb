@@ -7,8 +7,8 @@
 
   <%= f.input :name, input_html: { autofocus: true } %>
   <%= f.input :description %>
-  <%= f.input :priority, collection: Task.enums_i18n(:priority_types).keys.zip(Task.priority_types.values), selected: f.object.priority || 1 %>
+  <%= f.input :priority, collection: Task.enums_i18n(:priority).keys, selected: f.object.priority || 1 %>
   <%= f.input :expired_date, include_blank: true %>
-  <%= f.input :status, collection: Task.enums_i18n(:status_types).keys.zip(Task.status_types.values), selected: f.object.status || 0 %>
+  <%= f.input :status, collection: Task.enums_i18n(:status).keys, selected: f.object.status || 0 %>
   <%= f.submit class: "btn btn-primary" %>
 <% end %>
