@@ -30,6 +30,16 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
+  enums:
+    task:
+      status:
+        todo: todo
+        doing: doing
+        done: done
+      priority:
+        low: low
+        medium: medium
+        high: high
   models:
     task: task
   attributes:

@@ -14,6 +14,8 @@ jp:
       task:
         name: ここにタスクネームを入れてください
         description: ここに何か書いてください
+      search:
+        name: タスクネームで検索〜
     labels:
       task:
         name: タスクネーム
@@ -21,11 +23,21 @@ jp:
         status: ステータス
         priority: 優先度
         expired_date: 終了期限 ( 年 / 月 / 日 )
+      search:
+        name: タスクネーム
+        status: ステータス
+      sort:
+        column: コラム
+        direction: 昇順/降順
   helpers:
     submit:
       task:
         create: タスク作成
         update: タスク更新
+      search:
+        submit: 検索
+      sort:
+        submit: ソート
     # Examples
     # labels:
     #   defaults:

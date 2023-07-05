@@ -3,9 +3,12 @@
 # some comments here for task controller
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
+  before_action :index_page_params, only: [:index]
 
   def index
-    @tasks = Task.all.order("#{task_list_params[:sort_column]} #{task_list_params[:sort_direction]}")
+    @tasks = Task.search_by_name(@search_name)
+                 .search_by_status(@search_status)
+                 .sort_by_column(@sort_column, @sort_direction)
   end
 
   def show
@@ -50,11 +53,18 @@ class TasksController < ApplicationController
     params.require(:task).permit(:name, :description, :priority, :expired_date, :status)
   end
 
-  def task_list_params
-    params.permit(:sort_column, :sort_direction)
-    {
-      sort_column: Task.column_names.include?(params[:sort_column]) ? params[:sort_column] : 'created_at',
-      sort_direction: %w[ASC DESC].include?(params[:sort_direction]) ? params[:sort_direction] : 'ASC',
-    }
+  def index_page_params
+    params.permit(search: [:name, :status, :column, :direction])
+    if params[:search].present?
+      @search_name = params[:search][:name]
+      @search_status = params[:search][:status]
+      @sort_column = params[:search][:column]
+      @sort_direction = params[:search][:direction]
+    else
+      @search_name = ''
+      @search_status = ''
+      @sort_column = 'created_at'
+      @sort_direction = 'ASC'
+    end
   end
 end

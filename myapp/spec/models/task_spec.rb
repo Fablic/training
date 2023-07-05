@@ -56,18 +56,13 @@ RSpec.describe Task do
     it 'show error messages if status is empty' do
       task = build(:task, status: nil)
       task.valid?
-      expect(task.errors[:status]).to eq ["can't be blank", 'is not a number']
+      expect(task.errors[:status]).to eq ["can't be blank"]
     end
 
-    it 'task cannot be created if status is not a number' do
-      task = build(:task, status: 'string')
-      expect(task).to be_invalid
-    end
-
-    it 'show error messages if status is not a number' do
-      task = build(:task, status: 'string')
-      task.valid?
-      expect(task.errors[:status]).to eq ['is not a number']
+    it 'task cannot be created if status is not included in the enum list' do
+      expect { build(:task, status: 'string') }
+        .to raise_error(ArgumentError)
+              .with_message(/is not a valid status/)
     end
 
     it 'task cannot be created without priority' do
@@ -78,18 +73,38 @@ RSpec.describe Task do
     it 'show error messages if priority is empty' do
       task = build(:task, priority: nil)
       task.valid?
-      expect(task.errors[:priority]).to eq ["can't be blank", 'is not a number']
+      expect(task.errors[:priority]).to eq ["can't be blank"]
     end
 
-    it 'task cannot be created if priority is not a number' do
-      task = build(:task, priority: 'string')
-      expect(task).to be_invalid
+    it 'task cannot be created if priority is not included in the enum list' do
+      expect { build(:task, priority: 'string') }
+        .to raise_error(ArgumentError)
+              .with_message(/is not a valid priority/)
+    end
+  end
+
+  describe 'check_scope' do
+    let!(:task_first) { create(:task, name: 'Task1', priority: :high, status: :doing, expired_date: '2023-06-30') }
+    let!(:task_second) { create(:task, name: 'Task2', priority: :low, status: :done, expired_date: '2024-06-30') }
+    let!(:task_third) { create(:task, name: 'Task3', priority: :medium, status: :todo, expired_date: '2023-07-30') }
+
+    it 'search by name successfully', :aggregate_failures do
+      tasks = Task.search_by_name('2')
+      expect(tasks).to include task_second
+      expect(tasks).not_to include task_first
+      expect(tasks).not_to include task_third
     end
 
-    it 'show error messages if priority is not a number' do
-      task = build(:task, priority: 'string')
-      task.valid?
-      expect(task.errors[:priority]).to eq ['is not a number']
+    it 'search by status successfully', :aggregate_failures do
+      tasks = Task.search_by_status(:doing)
+      expect(tasks).to include task_first
+      expect(tasks).not_to include task_second
+      expect(tasks).not_to include task_third
+    end
+
+    it 'get correct order by sorting' do
+      tasks = Task.sort_by_column('expired_date', 'DESC')
+      expect(tasks).to contain_exactly(task_second, task_third, task_first)
     end
   end
 end
