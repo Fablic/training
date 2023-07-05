@@ -3,7 +3,7 @@
 # some comments here for task controller
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
-  before_action :get_index_page_params, only: [:index]
+  before_action :index_page_params, only: [:index]
 
   def index
     @tasks = Task.search_by_name(@search_name)
@@ -53,7 +53,7 @@ class TasksController < ApplicationController
     params.require(:task).permit(:name, :description, :priority, :expired_date, :status)
   end
 
-  def get_index_page_params
+  def index_page_params
     params.permit(search: [:name, :status, :column, :direction])
     if params[:search].present?
       @search_name = params[:search][:name]
@@ -61,11 +61,10 @@ class TasksController < ApplicationController
       @sort_column = params[:search][:column]
       @sort_direction = params[:search][:direction]
     else
-      @search_name = ""
-      @search_status = ""
+      @search_name = ''
+      @search_status = ''
       @sort_column = 'created_at'
       @sort_direction = 'ASC'
     end
   end
-
 end
