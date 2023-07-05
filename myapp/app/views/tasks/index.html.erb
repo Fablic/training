@@ -7,10 +7,15 @@
   <div>
     <div style="display: inline-block">
       <%= simple_form_for :search, url: '/tasks', method: "GET", html: { class: 'form-inline' } do |f| %>
-        <%= f.input :name, input_html: { value: @search_name } %>
-        <%= f.input :status, collection: Task.enums_i18n(:status).keys, include_blank: true, selected: @search_status %>
-        <%= f.input :column, collection: Task.column_names.excluding("id"), selected: Task.column_names.include?(@sort_column) ? @sort_column : 'created_at' %>
-        <%= f.input :direction, collection: %w[ASC DESC], selected: @sort_direction || "ASC" %>
+        <%= f.input :name, input_html: { value: "" } %>
+        <%= f.input :status, collection: Task.enums_i18n(:status).keys %>
+        <%= f.submit class: "btn btn-primary" %>
+      <% end %>
+    </div>
+    <div style="display: inline-block; margin-left: 5%">
+      <%= simple_form_for :sort, url: '/tasks', method: "GET", html: { class: 'form-inline' } do |f| %>
+        <%= f.input :column, collection: Task.column_names.excluding("id"), selected: "created_at" %>
+        <%= f.input :direction, collection: %w[ASC DESC], selected: "ASC" %>
         <%= f.submit class: "btn btn-primary" %>
       <% end %>
     </div>
