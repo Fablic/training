@@ -20,5 +20,9 @@ class Task < ApplicationRecord
 
   scope :search_by_name, -> (name) { where('name LIKE?', "%#{Task.sanitize_sql_like(name)}%") if name.present? }
   scope :search_by_status, -> (status) { where(status: status) if status.present? }
-  scope :sort_by_column, -> (sort_column, sort_direction) { order("#{sort_column} #{sort_direction}") }
+  scope :sort_by_column, -> (sort_column, sort_direction) {
+    sc = Task.column_names.include?(sort_column) ? sort_column : 'created_at'
+    sd = %w[ASC DESC].include?(sort_direction) ? sort_direction : 'ASC'
+    order("#{sc} #{sd}")
+  }
 end
