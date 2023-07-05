@@ -147,65 +147,65 @@ RSpec.describe 'Tasks' do
 
     it 'by created_time asc' do
       visit '/'
-      select('created_at', from: 'sort[column]')
-      select('ASC', from: 'sort[direction]')
-      click_on 'Sort'
+      select('created_at', from: 'search[column]')
+      select('ASC', from: 'search[direction]')
+      click_on 'Search'
       expect(page.body).to match(/Task1.*Task2.*Task3.*/m)
     end
 
     it 'by created_time desc' do
       visit '/'
-      select('created_at', from: 'sort[column]')
-      select('DESC', from: 'sort[direction]')
-      click_on 'Sort'
+      select('created_at', from: 'search[column]')
+      select('DESC', from: 'search[direction]')
+      click_on 'Search'
       expect(page.body).to match(/Task3.*Task2.*Task1/m)
     end
 
     it 'by priority asc' do
       visit '/'
-      select('priority', from: 'sort[column]')
-      select('ASC', from: 'sort[direction]')
-      click_on 'Sort'
+      select('priority', from: 'search[column]')
+      select('ASC', from: 'search[direction]')
+      click_on 'Search'
       expect(page.body).to match(/Task2.*Task3.*Task1/m)
     end
 
     it 'by priority desc' do
       visit '/'
-      select('priority', from: 'sort[column]')
-      select('DESC', from: 'sort[direction]')
-      click_on 'Sort'
+      select('priority', from: 'search[column]')
+      select('DESC', from: 'search[direction]')
+      click_on 'Search'
       expect(page.body).to match(/Task1.*Task3.*Task2/m)
     end
 
     it 'by status asc' do
       visit '/'
-      select('status', from: 'sort[column]')
-      select('ASC', from: 'sort[direction]')
-      click_on 'Sort'
+      select('status', from: 'search[column]')
+      select('ASC', from: 'search[direction]')
+      click_on 'Search'
       expect(page.body).to match(/Task3.*Task1.*Task2/m)
     end
 
     it 'by status desc' do
       visit '/'
-      select('status', from: 'sort[column]')
-      select('DESC', from: 'sort[direction]')
-      click_on 'Sort'
+      select('status', from: 'search[column]')
+      select('DESC', from: 'search[direction]')
+      click_on 'Search'
       expect(page.body).to match(/Task2.*Task1.*Task3/m)
     end
 
     it 'by expired date asc' do
       visit '/'
-      select('expired_date', from: 'sort[column]')
-      select('ASC', from: 'sort[direction]')
-      click_on 'Sort'
+      select('expired_date', from: 'search[column]')
+      select('ASC', from: 'search[direction]')
+      click_on 'Search'
       expect(page.body).to match(/Task1.*Task3.*Task2/m)
     end
 
     it 'by expired date desc' do
       visit '/'
-      select('expired_date', from: 'sort[column]')
-      select('DESC', from: 'sort[direction]')
-      click_on 'Sort'
+      select('expired_date', from: 'search[column]')
+      select('DESC', from: 'search[direction]')
+      click_on 'Search'
       expect(page.body).to match(/Task2.*Task3.*Task1/m)
     end
   end
