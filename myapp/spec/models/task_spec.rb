@@ -56,7 +56,7 @@ RSpec.describe Task do
     it 'show error messages if status is empty' do
       task = build(:task, status: nil)
       task.valid?
-      expect(task.errors[:status]).to eq ["can't be blank", 'is not included in the list']
+      expect(task.errors[:status]).to eq ["can't be blank"]
     end
 
     it 'task cannot be created if status is not included in the enum list' do
@@ -73,7 +73,7 @@ RSpec.describe Task do
     it 'show error messages if priority is empty' do
       task = build(:task, priority: nil)
       task.valid?
-      expect(task.errors[:priority]).to eq ["can't be blank", 'is not included in the list']
+      expect(task.errors[:priority]).to eq ["can't be blank"]
     end
 
     it 'task cannot be created if priority is not included in the enum list' do
@@ -84,9 +84,9 @@ RSpec.describe Task do
   end
 
   describe 'check_scope' do
-    let!(:task_first) { create(:task, name: 'Task1', priority: Task.priorities[:High], status: Task.statuses[:Doing], expired_date: '2023-06-30') }
-    let!(:task_second) { create(:task, name: 'Task2', priority: Task.priorities[:Low], status: Task.statuses[:Done], expired_date: '2024-06-30') }
-    let!(:task_third) { create(:task, name: 'Task3', priority: Task.priorities[:Medium], status: Task.statuses[:Todo], expired_date: '2023-07-30') }
+    let!(:task_first) { create(:task, name: 'Task1', priority: :high, status: :doing, expired_date: '2023-06-30') }
+    let!(:task_second) { create(:task, name: 'Task2', priority: :low, status: :done, expired_date: '2024-06-30') }
+    let!(:task_third) { create(:task, name: 'Task3', priority: :medium, status: :todo, expired_date: '2023-07-30') }
 
     it 'search by name successfully', :aggregate_failures do
       tasks = Task.search_by_name('2')
@@ -96,7 +96,7 @@ RSpec.describe Task do
     end
 
     it 'search by status successfully', :aggregate_failures do
-      tasks = Task.search_by_status(Task.statuses[:Doing])
+      tasks = Task.search_by_status(:doing)
       expect(tasks).to include task_first
       expect(tasks).not_to include task_second
       expect(tasks).not_to include task_third

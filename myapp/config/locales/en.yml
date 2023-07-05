@@ -33,13 +33,13 @@ en:
   enums:
     task:
       status:
-        Todo: Todo
-        Doing: Doing
-        Done: Done
+        todo: todo
+        doing: doing
+        done: done
       priority:
-        Low: Low
-        Medium: Medium
-        High: High
+        low: low
+        medium: medium
+        high: high
   models:
     task: task
   attributes:

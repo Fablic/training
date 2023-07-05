@@ -45,8 +45,8 @@ RSpec.describe 'Tasks' do
       click_link('New task')
       fill_in 'task[name]', with: 'a_new_task'
       fill_in 'task[description]', with: 'new task description'
-      select('Low', from: 'task[priority]')
-      select('Todo', from: 'task[status]')
+      select('low', from: 'task[priority]')
+      select('todo', from: 'task[status]')
       click_on 'Create task'
       expect(page).to have_link 'a_new_task'
     end
@@ -56,8 +56,8 @@ RSpec.describe 'Tasks' do
       click_link('New task')
       fill_in 'task[name]', with: 'a_new_task'
       fill_in 'task[description]', with: 'new task description'
-      select('Low', from: 'task[priority]')
-      select('Todo', from: 'task[status]')
+      select('low', from: 'task[priority]')
+      select('todo', from: 'task[status]')
       click_on 'Create task'
       expect(page).to have_content 'Task was successfully created.'
     end
@@ -67,8 +67,8 @@ RSpec.describe 'Tasks' do
       click_link('New task')
       fill_in 'task[name]', with: ''
       fill_in 'task[description]', with: 'new task description'
-      select('Low', from: 'task[priority]')
-      select('Todo', from: 'task[status]')
+      select('low', from: 'task[priority]')
+      select('todo', from: 'task[status]')
       click_on 'Create task'
       expect(page).to have_content 'Name can\'t be blank'
     end
@@ -135,9 +135,9 @@ RSpec.describe 'Tasks' do
 
   describe 'show tasks list ordered by specific column in ascending/descending order' do
     before do
-      create(:task, name: 'Task1', priority: Task.priorities[:High], status: Task.statuses[:Doing], expired_date: '2023-06-30')
-      create(:task, name: 'Task2', priority: Task.priorities[:Low], status: Task.statuses[:Done], expired_date: '2024-06-30')
-      create(:task, name: 'Task3', priority: Task.priorities[:Medium], status: Task.statuses[:Todo], expired_date: '2023-07-30')
+      create(:task, name: 'Task1', priority: :high, status: :doing, expired_date: '2023-06-30')
+      create(:task, name: 'Task2', priority: :low, status: :done, expired_date: '2024-06-30')
+      create(:task, name: 'Task3', priority: :medium, status: :todo, expired_date: '2023-07-30')
     end
 
     it '3 tasks should be created' do
@@ -212,9 +212,9 @@ RSpec.describe 'Tasks' do
 
   describe 'show tasks list with default order if params are not valid' do
     before do
-      create(:task, name: 'Task1', priority: Task.priorities[:High], status: Task.statuses[:Doing])
-      create(:task, name: 'Task2', priority: Task.priorities[:Low], status: Task.statuses[:Done])
-      create(:task, name: 'Task3', priority: Task.priorities[:Medium], status: Task.statuses[:Todo])
+      create(:task, name: 'Task1', priority: :high, status: :doing)
+      create(:task, name: 'Task2', priority: :low, status: :done)
+      create(:task, name: 'Task3', priority: :medium, status: :todo)
     end
 
     it '3 tasks should be created' do
@@ -245,11 +245,11 @@ RSpec.describe 'Tasks' do
 
   describe 'get the correct tasks by search' do
     before do
-      create(:task, name: 'Task1_y', priority: Task.priorities[:High], status: Task.statuses[:Doing])
-      create(:task, name: 'Task2_x', priority: Task.priorities[:Low], status: Task.statuses[:Done])
-      create(:task, name: 'Task3', priority: Task.priorities[:Medium], status: Task.statuses[:Todo])
-      create(:task, name: 'Task4_x', priority: Task.priorities[:Low], status: Task.statuses[:Todo])
-      create(:task, name: 'Task5_y', priority: Task.priorities[:Low], status: Task.statuses[:Todo])
+      create(:task, name: 'Task1_y', priority: :high, status: :doing)
+      create(:task, name: 'Task2_x', priority: :low, status: :done)
+      create(:task, name: 'Task3', priority: :medium, status: :todo)
+      create(:task, name: 'Task4_x', priority: :low, status: :todo)
+      create(:task, name: 'Task5_y', priority: :low, status: :todo)
     end
 
     it '3 tasks should be created' do
@@ -270,7 +270,7 @@ RSpec.describe 'Tasks' do
 
     it 'search by status', :aggregate_failures do
       visit '/'
-      select('Doing', from: 'search[status]')
+      select('doing', from: 'search[status]')
       click_on 'Search'
       expect(page.body).to have_link 'Task1_y'
       expect(page.body).not_to have_content 'Task2'
@@ -282,7 +282,7 @@ RSpec.describe 'Tasks' do
     it 'search by name & status', :aggregate_failures do
       visit '/'
       fill_in 'search[name]', with: 'x'
-      select('Todo', from: 'search[status]')
+      select('todo', from: 'search[status]')
       click_on 'Search'
       expect(page.body).to have_link 'Task4_x'
       expect(page.body).not_to have_content 'Task1'
