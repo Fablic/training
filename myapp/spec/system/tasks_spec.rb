@@ -291,4 +291,22 @@ RSpec.describe 'Tasks' do
       expect(page.body).not_to have_content 'Task5'
     end
   end
+
+  describe 'pagination' do
+    before do
+      20.times do |i|
+        create(:task, name: "Task#{i + 1}", priority: :low, status: :todo)
+      end
+    end
+
+    it 'show 10 tasks in the 1st page', :aggregate_failures do
+      visit '/'
+      10.times do |i|
+        expect(page.body).to have_link "Task#{i + 1}"
+      end
+      10.times do |i|
+        expect(page.body).not_to have_link "Task#{i + 11}"
+      end
+    end
+  end
 end
