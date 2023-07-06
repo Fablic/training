@@ -313,6 +313,7 @@ DEPENDENCIES
   fablicop
   factory_bot_rails
   jbuilder (~> 2.11, >= 2.11.5)
+  kaminari
   listen (~> 3.8)
   mysql2 (>= 0.5.5)
   puma (~> 6.3)
