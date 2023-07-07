@@ -1,31 +1,77 @@
-<main class="container">
-  <%= link_to sanitize("&larr; #{t('back')}"), tasks_path %>
-  <div class="header">
-    <h1>
+<nav class="navbar navbar-expand-lg">
+  <div class="container-fluid">
+    <h1 class="navbar__title">
       <%= t('pages.task_detail_page.title') %>
     </h1>
-    <h2>
-      <%= t('attributes.model.task.name') %>
-    </h2>
-    <%= @task.name %>
-    <div>
-
-      <h2>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
+      <div class="d-flex navbar__login_btn">
+        <a class="nav-link active" aria-current="page" href="#">Login</a>
+      </div>
+      <div class="d-flex navbar__sign_up_btn">
+        <a class="nav-link active" aria-current="page" href="#">Sign up</a>
+      </div>
+    </div>
+  </div>
+</nav>
+<main class="container">
+  <%= link_to sanitize("&larr; #{t('back')}"), tasks_path %>
+  <div class="header"></div>
+  <%= flash.now[:success] %>
+  <div>
+    <div class="row task_details__item_row">
+      <div class="col-8">
+        <h2 class="task_details__task_name">
+          <%= @task.name %>
+        </h2>
+      </div>
+      <div class="col-4">
+        <%= link_to t('pages.task_list_page.edit_task'),
+                    edit_task_path(@task),
+                    class: "btn btn-warning btn-lg" %>
+      </div>
+    </div>
+    <div class="row task_details__item_row">
+      <div class="col-4">
+        <h3>
+          <%= t('attributes.model.task.priority') %>
+          <span class="badge bg-primary">
+            <%= @task.enum_i18n(:priority) %>
+          </span>
+        </h3>
+      </div>
+      <div class="col-4">
+        <h3>
+          <%= t('attributes.model.task.status') %>
+          <span class="badge bg-info">
+            <%= @task.enum_i18n(:status) %>
+          </span>
+        </h3>
+      </div>
+    </div>
+    <div class="row task_details__item_row">
+      <div class="col-2">
+        <h3>
+          <%= t('attributes.model.task.expired_date') %>
+        </h3>
+      </div>
+      <div class="col-2 task_details__expired_date">
+        <%= @task.expired_date %>
+      </div>
+    </div>
+    <div class="row task_details__item_row">
+      <h3>
         <%= t('attributes.model.task.description') %>
-      </h2>
-      <%= @task.description %>
-      <h2>
-        <%= t('attributes.model.task.priority') %>
-      </h2>
-      <%= @task.enum_i18n(:priority) %>
-      <h2>
-        <%= t('attributes.model.task.expired_date') %>
-      </h2>
-      <%= @task.expired_date %>
-      <h2>
-        <%= t('attributes.model.task.status') %>
-      </h2>
-      <%= @task.enum_i18n(:status) %>
+      </h3>
+    </div>
+    <div class="row task_details__item_row">
+      <div class="col-8">
+        <div class="card">
+          <div class="card-body task_details__description_wrapper">
+            <%= @task.description %>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </main>
