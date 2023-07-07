@@ -79,30 +79,32 @@ RSpec.describe 'Tasks' do
       create(:task, name: 'task_before_edit', description: 'description before')
     end
 
-    it 'task name updated successfully' do
+    it 'task name updated successfully from task lists page', :aggregate_failures do
       visit '/'
       click_on('Edit')
       fill_in 'task[name]', with: 'task_after_edit'
       click_on 'Update task'
-      expect(page).to have_link 'task_after_edit'
+      expect(page).to have_content 'task_after_edit'
+      expect(page).to have_content 'Task was successfully updated.'
     end
 
-    it 'task description updated successfully' do
+    it 'task name updated successfully from task details page', :aggregate_failures do
+      visit '/'
+      click_link('task_before_edit')
+      click_on('Edit')
+      fill_in 'task[name]', with: 'task_after_edit'
+      click_on 'Update task'
+      expect(page).to have_content 'task_after_edit'
+      expect(page).to have_content 'Task was successfully updated.'
+    end
+
+    it 'task description updated successfully', :aggregate_failures do
       visit '/'
       click_on('Edit')
       fill_in 'task[name]', with: 'task_after_edit'
       fill_in 'task[description]', with: 'description after'
       click_on 'Update task'
-      click_link('task_after_edit')
       expect(page).to have_content 'description after'
-    end
-
-    it 'show flash message when task updated' do
-      visit '/'
-      click_on('Edit')
-      fill_in 'task[name]', with: 'task_after_edit'
-      fill_in 'task[description]', with: 'description after'
-      click_on 'Update task'
       expect(page).to have_content 'Task was successfully updated.'
     end
 
