@@ -6,6 +6,7 @@
   <% end %>
 
   <%= f.input :name, input_html: { autofocus: true } %>
+  <%= f.input :user_id, input_html: { value: 1 }, disabled: true %>
   <%= f.input :description %>
   <%= f.input :priority, collection: Task.enums_i18n(:priority).keys, selected: f.object.priority || 1 %>
   <%= f.input :expired_date, include_blank: true %>
