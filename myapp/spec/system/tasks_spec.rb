@@ -40,7 +40,9 @@ RSpec.describe 'Tasks' do
   end
 
   describe 'task creation' do
-    let!(:user) { create(:user, id: 1, name: 'UserTest') }
+    before do
+      create(:user, id: 1, name: 'UserTest')
+    end
 
     it 'task created successfully & show flash message when task created', :aggregate_failures do
       visit '/'
@@ -69,7 +71,8 @@ RSpec.describe 'Tasks' do
 
   describe 'task update' do
     before do
-      create(:task, name: 'task_before_edit', description: 'description before')
+      create(:user, id: 1, name: 'UserTest')
+      create(:task, name: 'task_before_edit', description: 'description before', user_id: 1)
     end
 
     it 'task name updated successfully from task lists page', :aggregate_failures do
