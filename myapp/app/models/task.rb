@@ -2,6 +2,8 @@
 
 # some comments for task model
 class Task < ApplicationRecord
+  belongs_to :user
+
   enum priority: {
     low: 0,
     medium: 1,

@@ -1,0 +1,9 @@
+# frozen_string_literal: true
+
+# some comments for user model
+class User < ApplicationRecord
+  has_many :tasks, dependent: :destroy
+  validates :name, presence: true, length: { maximum: 255 }
+  validates :password, presence: true, length: { maximum: 255 }
+  validates :description, length: { maximum: 1000 }
+end
