@@ -1,12 +1,18 @@
-<div class="task">
-  <%= link_to task.name, task_path(task) %>
-  <div class="task__actions">
-    <%= button_to t('pages.task_list_page.delete_task'),
-                  task_path(task),
-                  method: :delete,
-                  class: "btn btn-danger" %>
-    <%= link_to t('pages.task_list_page.edit_task'),
-                edit_task_path(task),
-                class: "btn btn-info" %>
-  </div>
-</div>
+<tr class="task">
+  <th scope="row" class="task_list__task_row">
+    <%= link_to task.name, task_path(task), class: "task_list__task_name" %>
+  </th>
+  <td>
+    <div class="task__actions">
+      <%= link_to t('pages.task_list_page.edit_task'),
+                  edit_task_path(task),
+                  class: "btn btn-outline-info" %>
+    </div>
+    <div class="task__actions">
+      <%= button_to t('pages.task_list_page.delete_task'),
+                    task_path(task),
+                    method: :delete,
+                    class: "btn btn-outline-danger" %>
+    </div>
+  </td>
+</tr>

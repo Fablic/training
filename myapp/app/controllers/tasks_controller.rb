@@ -33,7 +33,7 @@ class TasksController < ApplicationController
 
   def update
     if @task.update(task_params)
-      redirect_to tasks_path, flash: { success: t('flash_msgs.update_ok') }
+      redirect_to task_path(@task), flash: { success: t('flash_msgs.update_ok') }
     else
       render :edit, status: :unprocessable_entity
     end

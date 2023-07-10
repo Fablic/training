@@ -13,6 +13,9 @@
  */
 @import "bootstrap";
 
-.form-inline div {
-  display: inline-block
-}
+// Components
+@import "components/pagination";
+@import "components/toolbar";
+@import "components/navbar";
+@import "components/task_details";
+@import "components/task_list";
