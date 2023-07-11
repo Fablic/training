@@ -40,25 +40,20 @@ RSpec.describe 'Tasks' do
   end
 
   describe 'task creation' do
-    it 'task created successfully' do
+    before do
+      create(:user, id: 1, name: 'UserTest')
+    end
+
+    it 'task created successfully & show flash message when task created', :aggregate_failures do
       visit '/'
       click_link('New task')
       fill_in 'task[name]', with: 'a_new_task'
+      fill_in 'task[user_id]', with: 1
       fill_in 'task[description]', with: 'new task description'
       select('low', from: 'task[priority]')
       select('todo', from: 'task[status]')
       click_on 'Create task'
       expect(page).to have_link 'a_new_task'
-    end
-
-    it 'show flash message when task created' do
-      visit '/'
-      click_link('New task')
-      fill_in 'task[name]', with: 'a_new_task'
-      fill_in 'task[description]', with: 'new task description'
-      select('low', from: 'task[priority]')
-      select('todo', from: 'task[status]')
-      click_on 'Create task'
       expect(page).to have_content 'Task was successfully created.'
     end
 
@@ -76,7 +71,8 @@ RSpec.describe 'Tasks' do
 
   describe 'task update' do
     before do
-      create(:task, name: 'task_before_edit', description: 'description before')
+      create(:user, id: 1, name: 'UserTest')
+      create(:task, name: 'task_before_edit', description: 'description before', user_id: 1)
     end
 
     it 'task name updated successfully from task lists page', :aggregate_failures do
@@ -122,15 +118,10 @@ RSpec.describe 'Tasks' do
       create(:task, name: 'task_should_be_deleted')
     end
 
-    it 'task deleted successfully' do
+    it 'task deleted successfully & show flash message when task deleted', :aggregate_failures do
       visit '/'
       click_on 'Delete'
       expect(page).not_to have_content 'task_should_be_deleted'
-    end
-
-    it 'show flash message when task deleted' do
-      visit '/'
-      click_on 'Delete'
       expect(page).to have_content 'Task was successfully destroyed.'
     end
   end

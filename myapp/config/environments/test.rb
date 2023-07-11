@@ -23,7 +23,7 @@ Rails.application.configure do
   }
 
   # Show full error reports and disable caching.
-  config.consider_all_requests_local       = true
+  config.consider_all_requests_local = true
   config.action_controller.perform_caching = false
   config.cache_store = :null_store
 
@@ -48,4 +48,10 @@ Rails.application.configure do
 
   # Raises error for missing translations.
   # config.action_view.raise_on_missing_translations = true
+
+  config.after_initialize do
+    Bullet.enable = true # Bulletを有効化する
+    Bullet.bullet_logger = true # log/bullet.logに出力
+    Bullet.raise = true # N+1クエリ発生時にエラーを起こし、テストをfailさせる
+  end
 end
