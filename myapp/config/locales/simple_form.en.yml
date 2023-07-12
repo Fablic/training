@@ -30,6 +30,8 @@ en:
         submit: Search
       sort:
         submit: Sort
+      session:
+        submit: Login
     # Examples
     # labels:
     #   defaults:

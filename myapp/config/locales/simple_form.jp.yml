@@ -29,6 +29,9 @@ jp:
       sort:
         column: コラム
         direction: 昇順/降順
+      session:
+        name: ユーザー名
+        password: パスワード
   helpers:
     submit:
       task:
@@ -38,6 +41,8 @@ jp:
         submit: 検索
       sort:
         submit: ソート
+      session:
+        submit: ログイン
     # Examples
     # labels:
     #   defaults:
