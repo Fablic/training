@@ -7,8 +7,11 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-User.create!(
-  name: 'test',
-  password: '123',
-  description: 'some texts',
-)
+
+2.times do |i|
+  User.create!(
+    name: "user#{i}",
+    password: '123',
+    description: 'some texts',
+  )
+end
