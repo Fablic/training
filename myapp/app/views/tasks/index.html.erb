@@ -5,51 +5,54 @@
     </h1>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
-      <div class="navbar__login_btn">
-        <a class="nav-link active" aria-current="page" href="#">Login</a>
-      </div>
-      <div class="navbar__sign_up_btn">
-        <a class="nav-link active" aria-current="page" href="#">Sign up</a>
+      <div class="navbar__log_out_btn">
+        <%= button_to t('pages.task_list_page.logout'), '/logout',
+                      method: :delete,
+                      class: 'nav-link active' %>
       </div>
     </div>
   </div>
 </nav>
-<main class="container">
-  <div class="header">
-    <%= flash.now[:success] %>
-  </div>
-  <div class="container">
-    <div class="row toolbar">
-      <div class="col-2 offset-1 toolbar__new_task_btn">
-        <div>
-          <%= link_to t('pages.task_list_page.new_task'),
-                      new_task_path,
-                      class: "btn btn-primary" %>
+<% if logged_in? %>
+  <main class="container">
+    <div class="header">
+      <%= flash.now[:success] %>
+    </div>
+    <div class="container">
+      <div class="row toolbar">
+        <div class="col-2 offset-1 toolbar__new_task_btn">
+          <div>
+            <%= link_to t('pages.task_list_page.new_task'),
+                        new_task_path,
+                        class: "btn btn-primary" %>
+          </div>
         </div>
-      </div>
-      <div class="col-8">
-        <div>
-          <%= simple_form_for :search, url: '/tasks', method: "GET", html: { class: 'form-inline' } do |f| %>
-            <%= f.input :name, input_html: { value: @search_name } %>
-            <%= f.input :status, collection: Task.enums_i18n(:status).keys, include_blank: true, selected: @search_status %>
-            <%= f.input :column, collection: Task.column_names.excluding("id"), selected: Task.column_names.include?(@sort_column) ? @sort_column : 'created_at' %>
-            <%= f.input :direction, collection: %w[ASC DESC], selected: @sort_direction || "ASC" %>
-            <%= f.submit class: "btn btn-primary" %>
-          <% end %>
+        <div class="col-8">
+          <div>
+            <%= simple_form_for :search, url: '/tasks', method: "GET", html: { class: 'form-inline' } do |f| %>
+              <%= f.input :name, input_html: { value: @search_name } %>
+              <%= f.input :status, collection: Task.enums_i18n(:status).keys, include_blank: true, selected: @search_status %>
+              <%= f.input :column, collection: Task.column_names.excluding("id"), selected: Task.column_names.include?(@sort_column) ? @sort_column : 'created_at' %>
+              <%= f.input :direction, collection: %w[ASC DESC], selected: @sort_direction || "ASC" %>
+              <%= f.submit class: "btn btn-primary" %>
+            <% end %>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <table class="table table-striped table-hover align-middle">
-    <thead>
-    <tr>
-      <th scope="col">Task name</th>
-      <th scope="col">Handle</th>
-    </tr>
-    </thead>
-    <tbody>
-    <%= render @tasks %>
-    </tbody>
-  </table>
-  <%= paginate @tasks %>
-</main>
+    <table class="table table-striped table-hover align-middle">
+      <thead>
+      <tr>
+        <th scope="col">Task name</th>
+        <th scope="col">Handle</th>
+      </tr>
+      </thead>
+      <tbody>
+      <%= render @tasks %>
+      </tbody>
+    </table>
+    <%= paginate @tasks %>
+  </main>
+<% else %>
+  <%= redirect_to '/login' %>
+<% end %>
