@@ -9,6 +9,7 @@ class TasksController < ApplicationController
   def index
     @tasks = Task.search_by_name(@search_name)
                  .search_by_status(@search_status)
+                 .get_own_tasks(@current_user.id)
                  .sort_by_column(@sort_column, @sort_direction)
                  .page(params[:page])
   end
