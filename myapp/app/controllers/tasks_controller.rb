@@ -51,7 +51,7 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:name, :description, :priority, :expired_date, :status, :user_id)
+    params.require(:task).permit(:name, :description, :priority, :expired_date, :status).merge(user_id: @current_user.id)
   end
 
   def index_page_params
