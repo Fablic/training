@@ -10,6 +10,6 @@
 ### Task list page
 ![task-list-page.png](docs/images/ui/task-list-page.png)
 ### Task detail page
-![task-detail-page.png](docs/images/ui/task-detail-page.png)
+![task-detail-page.png](docs/images/ui/task-detail-page-v2.png)
 ### New or edit page
 ![new-or-edit-page.png](docs/images/ui/new-or-edit-page.png)
