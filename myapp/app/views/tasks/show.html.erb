@@ -1,15 +1,14 @@
-<nav class="navbar navbar-expand-lg">
+<nav class="task_navbar navbar navbar-expand-lg">
   <div class="container-fluid">
-    <h1 class="navbar__title">
+    <h1 class="task_navbar__title">
       <%= t('pages.task_detail_page.title') %>
     </h1>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
-      <div class="d-flex navbar__login_btn">
-        <a class="nav-link active" aria-current="page" href="#">Login</a>
-      </div>
-      <div class="d-flex navbar__sign_up_btn">
-        <a class="nav-link active" aria-current="page" href="#">Sign up</a>
+      <div class="task_navbar__log_out_btn">
+        <%= button_to t('pages.navbar.logout'), '/logout',
+                      method: :delete,
+                      class: 'nav-link active' %>
       </div>
     </div>
   </div>
