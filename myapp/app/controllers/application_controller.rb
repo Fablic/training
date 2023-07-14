@@ -3,6 +3,7 @@
 # some comments for application controller
 class ApplicationController < ActionController::Base
   include SessionsHelper
+  before_action :logged_in_user
   around_action :switch_locale
 
   def switch_locale(&action)
