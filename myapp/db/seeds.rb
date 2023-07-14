@@ -8,10 +8,11 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+# add 2 initial test users here
 2.times do |i|
   User.create!(
     name: "user#{i}",
     password: '123',
-    description: 'some texts',
+    description: 'it is an initial test user! pw:123',
   )
 end
