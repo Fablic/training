@@ -63,18 +63,23 @@ en:
     create_ok: Task was successfully created.
     update_ok: Task was successfully updated.
     delete_ok: Task was successfully destroyed.
+    login_failed: Login failed. Please input correct user name & password.
+    no_login: Please login first!
   pages:
     task_list_page:
       title: Tasks
       new_task: New task
       edit_task: Edit
       delete_task: Delete
+      logout: Log out
     create_tasks_page:
       title: New task
     edit_tasks_page:
       title: Edit task
     task_detail_page:
       title: Task details
+    login_page:
+      title: Login
   back: Back to tasks
   date:
     order: [ "day", "month", "year" ]

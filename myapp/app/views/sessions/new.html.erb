@@ -1,0 +1,25 @@
+<body class="login__background">
+<div class="row login__form">
+  <div class="col-4 offset-4">
+    <div class="card text-center">
+      <div class="card-header login__title">
+        <b>
+          <%= t('pages.login_page.title') %>
+        </b>
+      </div>
+      <div class="card-body">
+        <div class="header">
+          <%= flash[:notice] %>
+        </div>
+        <%= simple_form_for :session, url: '/login', method: "POST", html: { class: "session form" } do |f| %>
+          <%= f.input :name, input_html: { autofocus: true } %>
+          <%= f.input :password %>
+          <%= f.submit class: "btn btn-primary" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+
+

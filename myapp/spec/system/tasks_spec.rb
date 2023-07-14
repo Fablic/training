@@ -2,8 +2,26 @@
 
 require 'rails_helper'
 
+def login
+  visit '/login'
+  fill_in 'session[name]', with: 'user'
+  fill_in 'session[password]', with: '123'
+  click_on 'Login'
+end
+
+def create_user
+  create(:user, name: 'user', password: '123')
+end
+
 RSpec.describe 'Tasks' do
   describe 'page rendering' do
+    before do
+      create_user
+      login
+    end
+
+    let!(:user) { User.last }
+
     it 'homepage should be the task list page' do
       visit '/'
       expect(page).to have_content 'Tasks'
@@ -16,7 +34,7 @@ RSpec.describe 'Tasks' do
     end
 
     it 'tasks should be listed in the task list page' do
-      create(:task, name: 'test_task')
+      create(:task, name: 'test_task', user: user)
       visit '/tasks'
       expect(page).to have_link 'test_task'
     end
@@ -41,14 +59,14 @@ RSpec.describe 'Tasks' do
 
   describe 'task creation' do
     before do
-      create(:user, id: 1, name: 'UserTest')
+      create_user
+      login
     end
 
     it 'task created successfully & show flash message when task created', :aggregate_failures do
       visit '/'
       click_link('New task')
       fill_in 'task[name]', with: 'a_new_task'
-      fill_in 'task[user_id]', with: 1
       fill_in 'task[description]', with: 'new task description'
       select('low', from: 'task[priority]')
       select('todo', from: 'task[status]')
@@ -71,8 +89,9 @@ RSpec.describe 'Tasks' do
 
   describe 'task update' do
     before do
-      create(:user, id: 1, name: 'UserTest')
-      create(:task, name: 'task_before_edit', description: 'description before', user_id: 1)
+      user = create_user
+      create(:task, name: 'task_before_edit', description: 'description before', user: user)
+      login
     end
 
     it 'task name updated successfully from task lists page', :aggregate_failures do
@@ -115,7 +134,9 @@ RSpec.describe 'Tasks' do
 
   describe 'task deletion' do
     before do
-      create(:task, name: 'task_should_be_deleted')
+      user = create_user
+      create(:task, name: 'task_should_be_deleted', user: user)
+      login
     end
 
     it 'task deleted successfully & show flash message when task deleted', :aggregate_failures do
@@ -128,9 +149,11 @@ RSpec.describe 'Tasks' do
 
   describe 'show tasks list ordered by specific column in ascending/descending order' do
     before do
-      create(:task, name: 'Task1', priority: :high, status: :doing, expired_date: '2023-06-30')
-      create(:task, name: 'Task2', priority: :low, status: :done, expired_date: '2024-06-30')
-      create(:task, name: 'Task3', priority: :medium, status: :todo, expired_date: '2023-07-30')
+      user = create_user
+      login
+      create(:task, name: 'Task1', priority: :high, status: :doing, expired_date: '2023-06-30', user: user)
+      create(:task, name: 'Task2', priority: :low, status: :done, expired_date: '2024-06-30', user: user)
+      create(:task, name: 'Task3', priority: :medium, status: :todo, expired_date: '2023-07-30', user: user)
     end
 
     it '3 tasks should be created' do
@@ -205,9 +228,11 @@ RSpec.describe 'Tasks' do
 
   describe 'show tasks list with default order if params are not valid' do
     before do
-      create(:task, name: 'Task1', priority: :high, status: :doing)
-      create(:task, name: 'Task2', priority: :low, status: :done)
-      create(:task, name: 'Task3', priority: :medium, status: :todo)
+      user = create_user
+      login
+      create(:task, name: 'Task1', priority: :high, status: :doing, user: user)
+      create(:task, name: 'Task2', priority: :low, status: :done, user: user)
+      create(:task, name: 'Task3', priority: :medium, status: :todo, user: user)
     end
 
     it '3 tasks should be created' do
@@ -238,11 +263,13 @@ RSpec.describe 'Tasks' do
 
   describe 'get the correct tasks by search' do
     before do
-      create(:task, name: 'Task1_y', priority: :high, status: :doing)
-      create(:task, name: 'Task2_x', priority: :low, status: :done)
-      create(:task, name: 'Task3', priority: :medium, status: :todo)
-      create(:task, name: 'Task4_x', priority: :low, status: :todo)
-      create(:task, name: 'Task5_y', priority: :low, status: :todo)
+      user = create_user
+      login
+      create(:task, name: 'Task1_y', priority: :high, status: :doing, user: user)
+      create(:task, name: 'Task2_x', priority: :low, status: :done, user: user)
+      create(:task, name: 'Task3', priority: :medium, status: :todo, user: user)
+      create(:task, name: 'Task4_x', priority: :low, status: :todo, user: user)
+      create(:task, name: 'Task5_y', priority: :low, status: :todo, user: user)
     end
 
     it '3 tasks should be created' do
@@ -287,8 +314,10 @@ RSpec.describe 'Tasks' do
 
   describe 'pagination' do
     before do
+      user = create_user
+      login
       20.times do |i|
-        create(:task, name: "Task#{i + 1}", priority: :low, status: :todo)
+        create(:task, name: "Task#{i + 1}", priority: :low, status: :todo, user: user)
       end
     end
 
@@ -300,6 +329,37 @@ RSpec.describe 'Tasks' do
       10.times do |i|
         expect(page.body).not_to have_link "Task#{i + 11}"
       end
+    end
+  end
+
+  describe 'login/logout' do
+    it 'login successfully' do
+      create_user
+      login
+      expect(page.body).to have_content 'Tasks'
+    end
+
+    it 'login failed', :aggregate_failures do
+      visit '/login'
+      fill_in 'session[name]', with: 'wrong_user'
+      fill_in 'session[password]', with: 'wrong_password'
+      click_on 'Login'
+      expect(page.body).to have_content 'Login'
+      expect(page.body).to have_content 'Login failed. Please input correct user name & password.'
+    end
+
+    it 'cannot access task list page without login', :aggregate_failures do
+      visit '/tasks'
+      expect(page.body).to have_content 'Login'
+      expect(page.body).to have_content 'Please login first!'
+    end
+
+    it 'logout successfully', :aggregate_failures do
+      create_user
+      login
+      expect(page.body).to have_content 'Tasks'
+      click_button 'Log out'
+      expect(page.body).to have_content 'Login'
     end
   end
 end

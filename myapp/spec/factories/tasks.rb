@@ -7,7 +7,6 @@ FactoryBot.define do
     expired_date { 1.week.from_now }
     created_at { Time.now }
     updated_at { Time.now }
-    user_id { 1 }
     association :user
   end
 end
