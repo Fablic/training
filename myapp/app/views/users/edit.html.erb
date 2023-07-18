@@ -1,0 +1,11 @@
+<main class="container">
+  <%= link_to sanitize("&larr; #{t('user_back')}"), users_path %>
+
+  <div class="header">
+    <h1>
+      <%= t('pages.edit_users_page.title') %>
+    </h1>
+  </div>
+
+  <%= render "edit_form", user: @user %>
+</main>

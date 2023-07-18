@@ -1,0 +1,11 @@
+<%= simple_form_for user, html: { class: "user form" } do |f| %>
+  <% if user.errors.any? %>
+    <div class="error-message">
+      <%= user.errors.full_messages.to_sentence.capitalize %>
+    </div>
+  <% end %>
+
+  <%= f.input :name, input_html: { autofocus: true } %>
+  <%= f.input :description %>
+  <%= f.submit class: "btn btn-primary" %>
+<% end %>

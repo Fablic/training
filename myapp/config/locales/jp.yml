@@ -21,6 +21,8 @@ jp:
       models:
         task:
           blank: を入れてください
+        user:
+          blank: を入れてください
   errors:
     messages:
       too_long:
@@ -32,6 +34,7 @@ jp:
       not_a_number: 数字を入れてください
   models:
     task: タスク
+    user: ユーザー
   attributes:
     model:
       task:
@@ -40,19 +43,31 @@ jp:
         status: ステータス
         priority: 優先度
         expired_date: 終了期限
+      user:
+        name: ユーザーネーム
+        description: ユーザー詳細
+        password: パスワード
   flash_msgs:
-    create_ok: タスクを作成しました。
-    update_ok: タスクを更新しました。
-    delete_ok: タスクを削除しました。
+    task:
+      create_ok: タスクを作成しました。
+      update_ok: タスクを更新しました。
+      delete_ok: タスクを削除しました。
+    user:
+      create_ok: ユーザーを作成しました。
+      update_ok: ユーザーを更新しました。
+      delete_ok: ユーザーを削除しました。
     login_failed: ログインが失敗しました。正しいユーザー名とパスワードをご入れください。
     no_login: ログインしてください！
   pages:
+    navbar:
+      admin: アドミン画面へ
+      tasks: タスク画面へ
+      logout: ログアウト
     task_list_page:
       title: タスク一覧
       new_task: 新タスク作成
       edit_task: 編集
       delete_task: 削除
-      logout: ログアウト
     create_tasks_page:
       title: 新タスク作成
     edit_tasks_page:
@@ -61,7 +76,19 @@ jp:
       title: タスク詳細
     login_page:
       title: ログイン
-  back: 戻る
+    user_list_page:
+      title: ユーザー一覧
+      new_user: 新ユーザー作成
+      edit_user: 編集
+      delete_user: 削除
+    create_users_page:
+      title: 新ユーザー作成
+    edit_users_page:
+      title: ユーザー編集
+    user_detail_page:
+      title: ユーザー詳細
+  task_back: 戻る
+  user_back: 戻る
   date:
     abbr_day_names:
       - 日

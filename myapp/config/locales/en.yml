@@ -49,6 +49,7 @@ en:
         high: high
   models:
     task: task
+    user: user
   attributes:
     model:
       task:
@@ -57,21 +58,33 @@ en:
         status: Status
         priority: Priority
         expired_date: Expired date
+      user:
+        name: User name
+        description: Description
+        password: Password
   err_msgs:
-    too_long: The length of the task name should less than 255 characters
+    too_long: The length should less than 255 characters
   flash_msgs:
-    create_ok: Task was successfully created.
-    update_ok: Task was successfully updated.
-    delete_ok: Task was successfully destroyed.
+    task:
+      create_ok: Task was successfully created.
+      update_ok: Task was successfully updated.
+      delete_ok: Task was successfully destroyed.
+    user:
+      create_ok: User was successfully created.
+      update_ok: User was successfully updated.
+      delete_ok: User was successfully destroyed.
     login_failed: Login failed. Please input correct user name & password.
     no_login: Please login first!
   pages:
+    navbar:
+      admin: Admin
+      tasks: Tasks
+      logout: Log out
     task_list_page:
       title: Tasks
       new_task: New task
       edit_task: Edit
       delete_task: Delete
-      logout: Log out
     create_tasks_page:
       title: New task
     edit_tasks_page:
@@ -80,6 +93,18 @@ en:
       title: Task details
     login_page:
       title: Login
-  back: Back to tasks
+    user_list_page:
+      title: Users
+      new_user: New user
+      edit_user: Edit
+      delete_user: Delete
+    create_users_page:
+      title: New user
+    edit_users_page:
+      title: Edit user
+    user_detail_page:
+      title: User details
+  task_back: Back to tasks
+  user_back: Back to users
   date:
     order: [ "day", "month", "year" ]
