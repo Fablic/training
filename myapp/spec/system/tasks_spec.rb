@@ -9,8 +9,6 @@ RSpec.describe 'Tasks' do
       login_with_normal_user
     end
 
-    let!(:user) { User.last }
-
     it 'homepage should be the task list page' do
       visit '/'
       expect(page).to have_content 'Tasks'
