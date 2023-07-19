@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
   end
 
   def admin_user?
-    return if admin?
+    return false if admin?
 
     redirect_to '/404'
   end

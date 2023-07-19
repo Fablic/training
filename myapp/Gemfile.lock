@@ -99,8 +99,8 @@ GEM
     diff-lcs (1.5.0)
     erubi (1.12.0)
     execjs (2.8.1)
-    fablicop (1.10.1)
-      rubocop (>= 1.14, < 1.51)
+    fablicop (1.10.3)
+      rubocop (>= 1.14, < 1.55)
       rubocop-rails
       rubocop-rspec (>= 1.15.1)
     factory_bot (6.2.1)
