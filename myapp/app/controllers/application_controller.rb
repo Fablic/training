@@ -22,4 +22,10 @@ class ApplicationController < ActionController::Base
 
     redirect_to '/login', flash: { notice: t('flash_msgs.no_login') }
   end
+
+  def admin_user?
+    return if admin?
+
+    redirect_to '/404'
+  end
 end

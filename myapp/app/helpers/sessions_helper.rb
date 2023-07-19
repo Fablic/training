@@ -19,4 +19,6 @@ module SessionsHelper
   def logged_in?
     !current_user.nil?
   end
+
+  delegate :admin?, to: :current_user
 end
