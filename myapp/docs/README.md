@@ -46,7 +46,7 @@ It is a Task Management app that does following key features
 |  created_at | datetime |
 |  updated_at | datetime |
 
-### task_labels
+### tasks_labels
 
 |  colum  |  type  |
 | ---- | ---- |
