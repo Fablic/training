@@ -47,6 +47,10 @@ en:
         low: low
         medium: medium
         high: high
+    user:
+      role:
+        admin: admin
+        normal: normal
   models:
     task: task
     user: user
@@ -62,6 +66,7 @@ en:
         name: User name
         description: Description
         password: Password
+        role: Role
   err_msgs:
     too_long: The length should less than 255 characters
   flash_msgs:

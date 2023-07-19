@@ -16,6 +16,10 @@ jp:
         low: 低
         medium: 中
         high: 高
+    user:
+      role:
+        admin: 管理ユーザー
+        normal: 一般ユーザー
   activerecord:
     errors:
       models:
@@ -47,6 +51,7 @@ jp:
         name: ユーザーネーム
         description: ユーザー詳細
         password: パスワード
+        role: ロール
   flash_msgs:
     task:
       create_ok: タスクを作成しました。
