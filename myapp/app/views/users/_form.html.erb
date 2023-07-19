@@ -7,6 +7,7 @@
 
   <%= f.input :name, input_html: { autofocus: true } %>
   <%= f.input :password %>
+  <%= f.input :role, collection: User.enums_i18n(:role).keys, selected: f.object.role || 0 %>
   <%= f.input :description %>
   <%= f.submit class: "btn btn-primary" %>
 <% end %>

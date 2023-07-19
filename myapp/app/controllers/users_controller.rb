@@ -49,11 +49,11 @@ class UsersController < ApplicationController
   end
 
   def user_create_params
-    params.require(:user).permit(:name, :password, :description)
+    params.require(:user).permit(:name, :password, :description, :role)
   end
 
   def user_update_params
-    params.require(:user).permit(:name, :description)
+    params.require(:user).permit(:name, :description, :role)
   end
 
   def username_not_duplicate?(params)
