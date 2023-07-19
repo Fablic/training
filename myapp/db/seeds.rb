@@ -11,8 +11,19 @@
 # add 2 initial test users here
 2.times do |i|
   User.create!(
-    name: "user#{i}",
+    name: "user#{i + 1}",
     password: '123',
     description: 'it is an initial test user! pw:123',
+    role: i.even? ? :admin : :normal,
+  )
+end
+
+user = User.find(1)
+12.times do |i|
+  Task.create!(
+    name: "task#{i + 1}",
+    status: :todo,
+    priority: :low,
+    user: user,
   )
 end
