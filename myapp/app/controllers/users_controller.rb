@@ -39,8 +39,11 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    @user.destroy
-    redirect_to users_path, flash: { success: t('flash_msgs.user.delete_ok') }
+    if @user.destroy
+      redirect_to users_path, flash: { success: t('flash_msgs.user.delete_ok') }
+    else
+      redirect_to users_path, flash: { success: t('flash_msgs.user.at_least_one_admin') }
+    end
   end
 
   private

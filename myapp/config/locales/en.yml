@@ -78,6 +78,7 @@ en:
       create_ok: User was successfully created.
       update_ok: User was successfully updated.
       delete_ok: User was successfully destroyed.
+      at_least_one_admin: At least 1 admin user should be remained!
     login_failed: Login failed. Please input correct user name & password.
     no_login: Please login first!
   pages:
