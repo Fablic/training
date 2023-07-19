@@ -1,24 +1,15 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Entity Relationship Diagram
+![erd.png](docs/images/erd.png)
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## UI Design
+![flow.png](docs/images/ui/flow.png)
+### Login page
+![login-page.png](docs/images/ui/login-page.png)
+### Task list page
+![task-list-page.png](docs/images/ui/task-list-page.png)
+### Task detail page
+![task-detail-page.png](docs/images/ui/task-detail-page-v2.png)
+### New or edit page
+![new-or-edit-page.png](docs/images/ui/new-or-edit-page.png)
