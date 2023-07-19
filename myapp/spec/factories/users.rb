@@ -3,5 +3,6 @@ FactoryBot.define do
     sequence(:name) { |n| "User#{n}" }
     password { "password" }
     description { "user description" }
+    role { 0 }
   end
 end
