@@ -31,6 +31,16 @@
       </div>
     </div>
     <div class="row user_details__item_row">
+      <div class="col-4">
+        <h3>
+          <%= t('attributes.model.user.role') %>
+          <span class="badge bg-primary">
+            <%= @user.enum_i18n(:role) %>
+          </span>
+        </h3>
+      </div>
+    </div>
+    <div class="row user_details__item_row">
       <h3>
         <%= t('attributes.model.user.description') %>
       </h3>

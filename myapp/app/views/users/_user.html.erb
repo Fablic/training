@@ -3,6 +3,9 @@
     <%= link_to user.name, user_path(user), class: "user_list__user_name" %>
   </th>
   <td>
+    <%= user.enum_i18n(:role) %>
+  </td>
+  <td>
     <%= Task.get_own_tasks(user).count %>
   </td>
   <td>
