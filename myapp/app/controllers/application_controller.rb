@@ -2,7 +2,7 @@
 
 # some comments for application controller
 class ApplicationController < ActionController::Base
-  include SessionsHelper
+  include Sessions
   before_action :logged_in_user
   around_action :switch_locale
 
