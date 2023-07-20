@@ -1,7 +1,4 @@
-# frozen_string_literal: true
-
-# some comments for sessions helper
-module SessionsHelper
+module Sessions
   def log_in(user)
     session[:user_id] = user.id
   end
