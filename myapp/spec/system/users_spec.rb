@@ -73,7 +73,7 @@ RSpec.describe 'Users' do
       logout
       login_with_normal_user
       visit '/admin/users/'
-      expect(page).to have_content '404'
+      expect(page).to have_content '403'
     end
   end
 
