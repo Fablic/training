@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
-# some comments for sessions helper
-module SessionsHelper
+# some comments for session concern module
+module Sessions
+  extend ActiveSupport::Concern
+
   def log_in(user)
     session[:user_id] = user.id
   end
@@ -19,4 +21,6 @@ module SessionsHelper
   def logged_in?
     !current_user.nil?
   end
+
+  delegate :admin?, to: :current_user
 end

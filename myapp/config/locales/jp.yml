@@ -16,6 +16,10 @@ jp:
         low: 低
         medium: 中
         high: 高
+    user:
+      role:
+        admin: 管理ユーザー
+        normal: 一般ユーザー
   activerecord:
     errors:
       models:
@@ -47,6 +51,7 @@ jp:
         name: ユーザーネーム
         description: ユーザー詳細
         password: パスワード
+        role: ロール
   flash_msgs:
     task:
       create_ok: タスクを作成しました。
@@ -56,6 +61,7 @@ jp:
       create_ok: ユーザーを作成しました。
       update_ok: ユーザーを更新しました。
       delete_ok: ユーザーを削除しました。
+      at_least_one_admin: 少なくとも一人の管理ユーザーが必要になります！最後の管理ユーザーは削除できません！
     login_failed: ログインが失敗しました。正しいユーザー名とパスワードをご入れください。
     no_login: ログインしてください！
   pages:

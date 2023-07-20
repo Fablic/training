@@ -5,11 +5,13 @@
     </h1>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
-      <div class="task_navbar__log_out_btn">
-        <%= link_to t('pages.navbar.admin'),
-                    users_path,
-                    class: 'nav-link active' %>
-      </div>
+      <% if logged_in? && admin? %>
+        <div class="task_navbar__log_out_btn">
+          <%= link_to t('pages.navbar.admin'),
+                      users_path,
+                      class: 'nav-link active' %>
+        </div>
+      <% end %>
       <div class="task_navbar__log_out_btn">
         <%= button_to t('pages.navbar.logout'), '/logout',
                       method: :delete,

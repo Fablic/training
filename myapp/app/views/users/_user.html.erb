@@ -3,6 +3,9 @@
     <%= link_to user.name, user_path(user), class: "user_list__user_name" %>
   </th>
   <td>
+    <%= user.enum_i18n(:role) %>
+  </td>
+  <td>
     <%= Task.get_own_tasks(user).count %>
   </td>
   <td>
@@ -11,11 +14,14 @@
                   edit_user_path(user),
                   class: "btn btn-outline-info" %>
     </div>
-    <div class="user__actions">
-      <%= button_to t('pages.user_list_page.delete_user'),
-                    user_path(user),
-                    method: :delete,
-                    class: "btn btn-outline-danger" %>
-    </div>
+    <% unless current_user?(user) %>
+      <div class="user__actions">
+        <%= button_to t('pages.user_list_page.delete_user'),
+                      user_path(user),
+                      method: :delete,
+                      class: "btn btn-outline-danger" %>
+      </div>
+    <% end %>
+
   </td>
 </tr>

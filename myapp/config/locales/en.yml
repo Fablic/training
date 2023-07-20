@@ -47,6 +47,10 @@ en:
         low: low
         medium: medium
         high: high
+    user:
+      role:
+        admin: admin
+        normal: normal
   models:
     task: task
     user: user
@@ -62,6 +66,7 @@ en:
         name: User name
         description: Description
         password: Password
+        role: Role
   err_msgs:
     too_long: The length should less than 255 characters
   flash_msgs:
@@ -73,6 +78,7 @@ en:
       create_ok: User was successfully created.
       update_ok: User was successfully updated.
       delete_ok: User was successfully destroyed.
+      at_least_one_admin: At least 1 admin user should be remained!
     login_failed: Login failed. Please input correct user name & password.
     no_login: Please login first!
   pages:

@@ -2,6 +2,7 @@
 
 # some comments here for user controller
 class UsersController < ApplicationController
+  before_action :admin_user?
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :user_tasks, only: [:show]
 
@@ -38,8 +39,11 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    @user.destroy
-    redirect_to users_path, flash: { success: t('flash_msgs.user.delete_ok') }
+    if @user.destroy
+      redirect_to users_path, flash: { success: t('flash_msgs.user.delete_ok') }
+    else
+      redirect_to users_path, flash: { success: t('flash_msgs.user.at_least_one_admin') }
+    end
   end
 
   private
@@ -49,11 +53,11 @@ class UsersController < ApplicationController
   end
 
   def user_create_params
-    params.require(:user).permit(:name, :password, :description)
+    params.require(:user).permit(:name, :password, :description, :role)
   end
 
   def user_update_params
-    params.require(:user).permit(:name, :description)
+    params.require(:user).permit(:name, :description, :role)
   end
 
   def username_not_duplicate?(params)

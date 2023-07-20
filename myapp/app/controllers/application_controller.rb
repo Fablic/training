@@ -2,7 +2,9 @@
 
 # some comments for application controller
 class ApplicationController < ActionController::Base
-  include SessionsHelper
+  include Sessions
+  helper_method :logged_in?, :current_user?, :admin?
+
   before_action :logged_in_user
   around_action :switch_locale
 
@@ -21,5 +23,11 @@ class ApplicationController < ActionController::Base
     return if logged_in?
 
     redirect_to '/login', flash: { notice: t('flash_msgs.no_login') }
+  end
+
+  def admin_user?
+    return true if admin?
+
+    redirect_to '/403'
   end
 end
