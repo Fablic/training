@@ -3,6 +3,8 @@
 # some comments for application controller
 class ApplicationController < ActionController::Base
   include Sessions
+  helper_method :logged_in?, :current_user?, :admin?
+
   before_action :logged_in_user
   around_action :switch_locale
 

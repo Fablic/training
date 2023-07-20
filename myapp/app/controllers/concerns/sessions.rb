@@ -1,4 +1,8 @@
+# frozen_string_literal: true
+
 module Sessions
+  extend ActiveSupport::Concern
+
   def log_in(user)
     session[:user_id] = user.id
   end
