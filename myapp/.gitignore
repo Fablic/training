@@ -76,3 +76,5 @@ yarn-debug.log*
 yarn-debug.log*
 .yarn-integrity
 /tmp
+
+.idea/
