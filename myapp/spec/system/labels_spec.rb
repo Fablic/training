@@ -9,8 +9,6 @@ RSpec.describe 'Labels' do
       login_with_admin_user
     end
 
-    let!(:label) { Label.last }
-
     it 'label list page should be shown' do
       visit '/labels'
       expect(page).to have_content 'Labels'
