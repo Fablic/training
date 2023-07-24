@@ -10,5 +10,6 @@
   <%= f.input :priority, collection: Task.enums_i18n(:priority).keys, selected: f.object.priority || 1 %>
   <%= f.input :expired_date, include_blank: true %>
   <%= f.input :status, collection: Task.enums_i18n(:status).keys, selected: f.object.status || 0 %>
+  <%= f.association :labels, collection: @current_user.labels, as: :check_boxes, include_hidden: false %>
   <%= f.submit class: "btn btn-primary" %>
 <% end %>
