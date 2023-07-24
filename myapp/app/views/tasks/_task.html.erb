@@ -1,8 +1,11 @@
 <tr class="task">
-  <th scope="row" class="task_list__task_row">
-    <%= link_to task.name, task_path(task), class: "task_list__task_name" %>
+  <th scope="row" class="task_list__task_row task_list__task_names">
+    <%= link_to task.name, task_path(task), class: "task_list__task_name_font" %>
   </th>
-  <td>
+  <td class="task_list__labels">
+    <%= render partial: "label_name_badge", collection: Task.get_task_labels(task).map { |a| a.name }, as: :label_name %>
+  </td>
+  <td class="task_list__handle">
     <div class="task__actions">
       <%= link_to t('pages.task_list_page.edit_task'),
                   edit_task_path(task),

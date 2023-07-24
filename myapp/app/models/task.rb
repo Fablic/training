@@ -28,6 +28,7 @@ class Task < ApplicationRecord
   }
   scope :search_by_status, -> (status) { where(status: status) if status.present? }
   scope :get_own_tasks, -> (user_id) { where(user_id: user_id) if user_id.present? }
+  scope :get_task_labels, -> (task_id) { select('labels.name').left_joins(:task_labels, :labels).where(id: task_id) if task_id.present? }
   scope :sort_by_column, lambda { |sort_column, sort_direction|
     sc = Task.column_names.include?(sort_column) ? sort_column : 'created_at'
     sd = %w[ASC DESC].include?(sort_direction) ? sort_direction : 'ASC'
