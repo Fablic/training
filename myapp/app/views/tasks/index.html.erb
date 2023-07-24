@@ -5,6 +5,11 @@
     </h1>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
+      <div class="task_navbar__log_out_btn">
+        <%= link_to t('pages.navbar.labels'),
+                    labels_path,
+                    class: 'nav-link active' %>
+      </div>
       <% if logged_in? && admin? %>
         <div class="task_navbar__log_out_btn">
           <%= link_to t('pages.navbar.admin'),
@@ -27,14 +32,19 @@
     </div>
     <div class="container">
       <div class="row toolbar">
-        <div class="col-2 offset-1 toolbar__new_task_btn">
-          <div>
+        <div class="col-3 toolbar__new_task_btn" style="display: inline-block">
+          <div style="float: left">
             <%= link_to t('pages.task_list_page.new_task'),
                         new_task_path,
                         class: "btn btn-primary" %>
           </div>
+          <div style="float: right">
+            <%= link_to t('pages.label_list_page.new_label'),
+                        new_label_path,
+                        class: "btn btn-primary" %>
+          </div>
         </div>
-        <div class="col-8">
+        <div class="col-9" style="text-align-last: right;">
           <div>
             <%= simple_form_for :search, url: '/tasks', method: "GET", html: { class: 'form-inline' } do |f| %>
               <%= f.input :name, input_html: { value: @search_name } %>
