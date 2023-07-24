@@ -7,6 +7,7 @@ class TasksController < ApplicationController
 
   def index
     @tasks = Task.search_by_name(@search_name)
+                 .search_by_label_name(@search_label)
                  .search_by_status(@search_status)
                  .get_own_tasks(@current_user.id)
                  .sort_by_column(@sort_column, @sort_direction)
@@ -52,18 +53,20 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:name, :description, :priority, :expired_date, :status).merge(user_id: @current_user.id)
+    params.require(:task).permit(:name, :description, :priority, :expired_date, :status, label_ids: []).merge(user_id: @current_user.id)
   end
 
   def index_page_params
-    params.permit(search: [:name, :status, :column, :direction])
+    params.permit(search: [:name, :status, :label, :column, :direction])
     if params[:search].present?
       @search_name = params[:search][:name]
+      @search_label = params[:search][:label]
       @search_status = params[:search][:status]
       @sort_column = params[:search][:column]
       @sort_direction = params[:search][:direction]
     else
       @search_name = ''
+      @search_label = ''
       @search_status = ''
       @sort_column = 'created_at'
       @sort_direction = 'ASC'

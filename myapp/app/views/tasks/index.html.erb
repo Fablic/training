@@ -48,6 +48,7 @@
           <div>
             <%= simple_form_for :search, url: '/tasks', method: "GET", html: { class: 'form-inline' } do |f| %>
               <%= f.input :name, input_html: { value: @search_name } %>
+              <%= f.input :label, input_html: { value: @search_label } %>
               <%= f.input :status, collection: Task.enums_i18n(:status).keys, include_blank: true, selected: @search_status %>
               <%= f.input :column, collection: Task.column_names.excluding("id"), selected: Task.column_names.include?(@sort_column) ? @sort_column : 'created_at' %>
               <%= f.input :direction, collection: %w[ASC DESC], selected: @sort_direction || "ASC" %>
