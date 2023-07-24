@@ -27,6 +27,8 @@ jp:
           blank: を入れてください
         user:
           blank: を入れてください
+        label:
+          blank: を入れてください
   errors:
     messages:
       too_long:
@@ -39,6 +41,7 @@ jp:
   models:
     task: タスク
     user: ユーザー
+    label: ラベル
   attributes:
     model:
       task:
@@ -52,6 +55,8 @@ jp:
         description: ユーザー詳細
         password: パスワード
         role: ロール
+      label:
+        name: ラベルネーム
   flash_msgs:
     task:
       create_ok: タスクを作成しました。
@@ -62,12 +67,18 @@ jp:
       update_ok: ユーザーを更新しました。
       delete_ok: ユーザーを削除しました。
       at_least_one_admin: 少なくとも一人の管理ユーザーが必要になります！最後の管理ユーザーは削除できません！
+    label:
+      create_ok: ラベルを作成しました。
+      update_ok: ラベルを更新しました。
+      delete_ok: ラベルを削除しました。
     login_failed: ログインが失敗しました。正しいユーザー名とパスワードをご入れください。
     no_login: ログインしてください！
+    duplicate_name: この名前は既に使われています。他の名前に変更してください。
   pages:
     navbar:
       admin: アドミン画面へ
       tasks: タスク画面へ
+      labels: ラベル一覧へ
       logout: ログアウト
     task_list_page:
       title: タスク一覧
@@ -93,6 +104,17 @@ jp:
       title: ユーザー編集
     user_detail_page:
       title: ユーザー詳細
+    label_list_page:
+      title: ラベル一覧
+      new_label: 新ラベル作成
+      edit_label: 編集
+      delete_label: 削除
+    create_labels_page:
+      title: 新ラベル作成
+    edit_labels_page:
+      title: ラベル編集
+    label_detail_page:
+      title: ラベル詳細
   task_back: 戻る
   user_back: 戻る
   date:

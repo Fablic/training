@@ -32,6 +32,8 @@ jp:
       session:
         name: ユーザー名
         password: パスワード
+      label:
+        name: ラベルネーム
   helpers:
     submit:
       task:
@@ -43,6 +45,9 @@ jp:
         submit: ソート
       session:
         submit: ログイン
+      label:
+        create: ラベル作成
+        update: ラベル更新
     # Examples
     # labels:
     #   defaults:
