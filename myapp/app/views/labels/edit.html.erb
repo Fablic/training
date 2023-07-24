@@ -1,0 +1,11 @@
+<main class="container">
+  <%= link_to sanitize("&larr; #{t('label_back')}"), labels_path %>
+
+  <div class="header">
+    <h1>
+      <%= t('pages.edit_labels_page.title') %>
+    </h1>
+  </div>
+
+  <%= render "form", label: @label %>
+</main>

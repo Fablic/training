@@ -1,0 +1,34 @@
+<nav class="label_navbar navbar navbar-expand-lg">
+  <div class="container-fluid">
+    <h1 class="label_navbar__title">
+      <%= t('pages.label_detail_page.title') %>
+    </h1>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
+      <div class="label_navbar__log_out_btn">
+        <%= button_to t('pages.navbar.logout'), '/logout',
+                      method: :delete,
+                      class: 'nav-link active' %>
+      </div>
+    </div>
+  </div>
+</nav>
+<main class="container">
+  <%= link_to sanitize("&larr; #{t('label_back')}"), labels_path %>
+  <div class="header"></div>
+  <%= flash.now[:success] %>
+  <div>
+    <div class="row label_details__item_row">
+      <div class="col-8">
+        <h2 class="label_details__label_name">
+          <%= @label.name %>
+        </h2>
+      </div>
+      <div class="col-4">
+        <%= link_to t('pages.label_list_page.edit_label'),
+                    edit_label_path(@label),
+                    class: "btn btn-warning btn-lg" %>
+      </div>
+    </div>
+  </div>
+</main>
