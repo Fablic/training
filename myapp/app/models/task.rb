@@ -3,6 +3,8 @@
 # some comments for task model
 class Task < ApplicationRecord
   belongs_to :user
+  has_many :task_labels, dependent: :destroy
+  has_many :labels, through: :task_labels
 
   enum priority: {
     low: 0,
