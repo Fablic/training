@@ -1,0 +1,27 @@
+<h1>Task Details</h1>
+
+<table>
+  <tr>
+    <th>Name:</th>
+    <td><%= @task.name %></td>
+  </tr>
+  <tr>
+    <th>Description:</th>
+    <td><%= @task.description %></td>
+  </tr>
+  <tr>
+    <th>Priority:</th>
+    <td><%= @task.priority %></td>
+  </tr>
+  <tr>
+    <th>Deadline:</th>
+    <td><%= @task.deadline %></td>
+  </tr>
+  <tr>
+    <th>Status:</th>
+    <td><%= @task.status %></td>
+  </tr>
+</table>
+
+<%= link_to 'Edit', edit_task_path(@task) %> |
+<%= link_to 'Back to Task List', tasks_path %>
