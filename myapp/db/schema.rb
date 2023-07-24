@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_07_19_030929) do
+ActiveRecord::Schema.define(version: 2023_07_21_080106) do
 
   create_table "labels", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name", default: "New Label", null: false
@@ -49,6 +49,6 @@ ActiveRecord::Schema.define(version: 2023_07_19_030929) do
   end
 
   add_foreign_key "task_labels", "labels"
-  add_foreign_key "task_labels", "tasks"
+  add_foreign_key "task_labels", "tasks", on_delete: :cascade
   add_foreign_key "tasks", "users"
 end
