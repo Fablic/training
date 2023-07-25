@@ -11,6 +11,7 @@ class User < ApplicationRecord
   }
 
   has_many :tasks, dependent: :destroy
+  has_many :labels, dependent: :destroy
   validates :name, presence: true, length: { maximum: 255 }
   validates :password, presence: true, length: { maximum: 255 }, on: :create
   validates :description, length: { maximum: 1000 }

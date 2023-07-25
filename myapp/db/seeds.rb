@@ -27,3 +27,10 @@ user = User.find(1)
     user: user,
   )
 end
+
+10.times do |i|
+  Label.create!(
+    name: "label#{i + 1}",
+    user: user,
+  )
+end

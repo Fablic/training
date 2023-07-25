@@ -67,6 +67,8 @@ en:
         description: Description
         password: Password
         role: Role
+      label:
+        name: Label name
   err_msgs:
     too_long: The length should less than 255 characters
   flash_msgs:
@@ -79,12 +81,18 @@ en:
       update_ok: User was successfully updated.
       delete_ok: User was successfully destroyed.
       at_least_one_admin: At least 1 admin user should be remained!
+    label:
+      create_ok: Label was successfully created.
+      update_ok: Label was successfully updated.
+      delete_ok: Label was successfully destroyed.
     login_failed: Login failed. Please input correct user name & password.
     no_login: Please login first!
+    duplicate_name: The name has already been used. Please change to another one.
   pages:
     navbar:
       admin: Admin
       tasks: Tasks
+      labels: Labels
       logout: Log out
     task_list_page:
       title: Tasks
@@ -110,7 +118,19 @@ en:
       title: Edit user
     user_detail_page:
       title: User details
+    label_list_page:
+      title: Labels
+      new_label: New label
+      edit_label: Edit
+      delete_label: Delete
+    create_labels_page:
+      title: New label
+    edit_labels_page:
+      title: Edit label
+    label_detail_page:
+      title: Label details
   task_back: Back to tasks
   user_back: Back to users
+  label_back: Back to labels
   date:
     order: [ "day", "month", "year" ]

@@ -1,0 +1,47 @@
+<nav class="label_navbar navbar navbar-expand-lg">
+  <div class="container-fluid">
+    <h1 class="label_navbar__title">
+      <%= t('pages.label_list_page.title') %>
+    </h1>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
+      <div class="label_navbar__log_out_btn">
+        <%= link_to t('pages.navbar.tasks'),
+                    tasks_path,
+                    class: 'nav-link active' %>
+      </div>
+      <div class="label_navbar__log_out_btn">
+        <%= button_to t('pages.navbar.logout'), '/logout',
+                      method: :delete,
+                      class: 'nav-link active' %>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<% if logged_in? %>
+  <main class="container">
+    <div class="header">
+      <%= flash.now[:success] %>
+      <div>
+        <%= link_to t('pages.label_list_page.new_label'),
+                    new_label_path,
+                    class: "btn btn-primary label_list__new_label_btn" %>
+      </div>
+    </div>
+    <table class="table table-striped table-hover align-middle">
+      <thead>
+      <tr>
+        <th scope="col">Label name</th>
+        <th scope="col">Handle</th>
+      </tr>
+      </thead>
+      <tbody>
+      <%= render @labels %>
+      </tbody>
+    </table>
+    <%= paginate @labels %>
+  </main>
+<% else %>
+  <%= redirect_to '/login' %>
+<% end %>

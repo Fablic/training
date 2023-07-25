@@ -32,6 +32,9 @@ en:
         submit: Sort
       session:
         submit: Login
+      label:
+        create: Create Label
+        update: Update Label
     # Examples
     # labels:
     #   defaults:

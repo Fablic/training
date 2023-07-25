@@ -1,0 +1,18 @@
+<tr class="label">
+  <th scope="row" class="label_list__label_row">
+    <%= link_to label.name, label_path(label), class: "label_list__label_name" %>
+  </th>
+  <td>
+    <div class="label__actions">
+      <%= link_to t('pages.label_list_page.edit_label'),
+                  edit_label_path(label),
+                  class: "btn btn-outline-info" %>
+    </div>
+    <div class="label__actions">
+      <%= button_to t('pages.label_list_page.delete_label'),
+                    label_path(label),
+                    method: :delete,
+                    class: "btn btn-outline-danger" %>
+    </div>
+  </td>
+</tr>
