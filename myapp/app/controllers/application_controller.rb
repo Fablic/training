@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   helper_method :logged_in?, :current_user?, :admin?
 
   before_action :logged_in_user
+  before_action :render_maintenance_page, if: :maintenance_mode?
   around_action :switch_locale
 
   def switch_locale(&action)
@@ -29,5 +30,18 @@ class ApplicationController < ActionController::Base
     return true if admin?
 
     redirect_to '/403'
+  end
+
+  def maintenance_mode?
+    File.exist?('tmp/maintenance.txt')
+  end
+
+  def render_maintenance_page
+    render(
+      file: Rails.public_path.join('503.html'),
+      content_type: 'text/html',
+      layout: false,
+      status: :service_unavailable,
+    )
   end
 end
