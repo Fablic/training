@@ -10,6 +10,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 2023_07_26_093219) do
 
+  create_table "tasks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.string "priority"
+    t.date "due_date"
+    t.string "status"
+    t.string "user_type", null: false
+    t.bigint "user_id", null: false
+    t.bigint "assigned_user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["assigned_user_id"], name: "fk_rails_190ed5bb66"
+    t.index ["user_type", "user_id"], name: "index_tasks_on_user_type_and_user_id"
+  end
+
+  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "first_name"
+    t.string "last_name"
+    t.string "email"
+    t.string "username"
+    t.string "password"
+    t.date "date_of_birth"
+    t.boolean "is_admin"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  add_foreign_key "tasks", "users", column: "assigned_user_id"
 end
