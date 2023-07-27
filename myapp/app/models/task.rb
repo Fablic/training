@@ -1,5 +1,5 @@
 class Task < ApplicationRecord
-  STATUSES = ["Not Started", "In Progress", "Completed"].freeze
+  STATUSES = ["Not Started", "In Progress", "Done"].freeze
   belongs_to :user
   has_many :task_labels
   has_many :labels, through: :task_labels

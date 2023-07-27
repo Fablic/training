@@ -1,0 +1,44 @@
+<h1>Task List</h1>
+
+<% if @tasks.any? %>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Priority</th>
+        <th>Deadline</th>
+        <th>Status</th>
+        <th>Labels</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @tasks.each do |task| %>
+        <tr>
+          <td><%= task.name %></td>
+          <td><%= task.description %></td>
+          <td><%= task.priority %></td>
+          <td><%= task.deadline %></td>
+          <td><%= task.status %></td>
+          <td>
+            <% task.labels.each do |label| %>
+              <%= label.name %>
+            <% end %>
+          </td>
+          <td>
+            <%= link_to 'Show', task_path(task) %>
+            <%= link_to 'Edit', edit_task_path(task) %>
+            <%= link_to 'Destroy', task_path(task), 
+              method: :delete,
+              data: { confirm: 'Are you sure you want to delete this task?' } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>No tasks found.</p>
+<% end %>
+
+<%= link_to 'New Task', new_task_path %>

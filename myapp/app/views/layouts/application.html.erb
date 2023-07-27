@@ -6,10 +6,12 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
+    <%= javascript_include_tag 'rails-ujs', 'data-turbolinks-track': 'reload' %>
+
+    </head>
 
   <body>
+    <%= render 'layouts/flash' %>
     <%= yield %>
   </body>
 </html>
