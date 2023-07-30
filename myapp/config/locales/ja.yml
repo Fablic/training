@@ -1,0 +1,11 @@
+ja:
+  hello: "こんにちは"
+  welcome: "ようこそ"
+  task:
+    created_success: "タスクが正常に作成されました。"
+    updated_success: "タスクが正常に更新されました。"
+    deleted_success: "タスクが正常に削除されました。"
+    confirm_delete_task: "このタスクを削除してもよろしいですか？"
+    no_tasks_found: "タスクが見つかりません。"
+    new_task_link: "新しいタスク"
+    edit_task_link: "タスクを編集"

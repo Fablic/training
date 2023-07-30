@@ -8,7 +8,11 @@ class ApplicationController < ActionController::Base
   rescue_from ActionController::RoutingError, with: :render_not_found
   rescue_from ActionController::UnknownFormat, with: :route_not_found
 
+  before_action :set_locale
 
+  def set_locale
+    I18n.locale = params[:locale] || I18n.default_locale
+  end
 
   def routing_error
     raise ActionController::RoutingError, params[:path]
@@ -26,4 +30,9 @@ class ApplicationController < ActionController::Base
     Rails.logger.error "500 Internal Server Error: #{exception.message}"
     render template: 'errors/500.html', status: :internal_server_error
   end
+
+  def set_locale
+    I18n.locale = params[:locale] || I18n.default_locale
+  end
+
 end

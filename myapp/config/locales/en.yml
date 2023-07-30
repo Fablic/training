@@ -31,3 +31,12 @@
 
 en:
   hello: "Hello world"
+  welcome: "Welcome"
+  task:
+    created_success: "Task was successfully created."
+    updated_success: "Task was successfully updated."
+    deleted_success: "Task was successfully deleted."
+    confirm_delete_task: "Are you sure you want to delete this task?"
+    no_tasks_found: "No tasks found."
+    new_task_link: "New Task"
+    edit_task_link: "Edit"
