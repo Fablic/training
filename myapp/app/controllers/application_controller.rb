@@ -31,8 +31,5 @@ class ApplicationController < ActionController::Base
     render template: 'errors/500.html', status: :internal_server_error
   end
 
-  def set_locale
-    I18n.locale = params[:locale] || I18n.default_locale
-  end
 
 end

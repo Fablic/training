@@ -11,9 +11,6 @@ class TasksController < ApplicationController
   def new
     @task = Task.new
     @labels = Label.all
-    @task_form_url = tasks_path
-    @task_form_method = :post
-    @task_submit_label = "Create Task"
   end
 
   def create
@@ -30,9 +27,6 @@ class TasksController < ApplicationController
   def edit
     @task = Task.find(params[:id])
     @labels = Label.all
-    @task_form_url = task_path(@task)
-    @task_form_method = :patch
-    @task_submit_label = "Update Task"
   end
 
   def update
