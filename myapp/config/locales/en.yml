@@ -51,6 +51,7 @@ en:
       status: "Status"
       labels: "Labels"
       actions: "Actions"
+      created_at: "Created At"
     submit_labels:
       update_task: "Update Task"
       create_task: "Create Task"

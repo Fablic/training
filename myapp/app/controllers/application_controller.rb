@@ -27,10 +27,8 @@ class ApplicationController < ActionController::Base
   # Custom method to render the 500 Internal Server Error page
   def render_internal_server_error(exception)
     # Log the exception for debugging purposes
-    byebug
     Rails.logger.error "500 Internal Server Error: #{exception.message}"
     render template: 'errors/500.html', status: :internal_server_error
   end
-
 
 end

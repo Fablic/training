@@ -1,6 +1,11 @@
 <h1><%= t('page_titles.tasks_index') %></h1>
 
 <% if @tasks.any? %>
+  <div class="sort-links">
+    <%= link_to "Sort by Newest", tasks_path(sort: 'newest'), class: 'btn btn-primary' %>
+    <%= link_to "Sort by Oldest", tasks_path(sort: 'oldest'), class: 'btn btn-primary' %>
+  </div>
+
   <table>
     <thead>
       <tr>
@@ -10,7 +15,8 @@
         <th><%= t("task.table_headers.deadline") %></th>
         <th><%= t("task.table_headers.status") %></th>
         <th><%= t("task.table_headers.labels") %></th>
-        <th><%= t("task.table_headers.actions") %>
+        <th><%= t("task.table_headers.created_at") %></th>
+        <th><%= t("task.table_headers.actions") %></th>
       </tr>
     </thead>
     <tbody>
@@ -26,6 +32,7 @@
               <%= label.name %>
             <% end %>
           </td>
+          <td><%= task.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
           <td>
             <%= link_to t('task.show_task_link'), task_path(task) %>
             <%= link_to t('task.edit_task_link'), edit_task_path(task) %>
