@@ -1,4 +1,4 @@
-<h1>Task Details</h1>
+<h1><%= t('page_titles.tasks_show') %></h1>
 
 <table>
   <tr>
@@ -23,5 +23,5 @@
   </tr>
 </table>
 
-<%= link_to 'Edit', edit_task_path(@task) %> |
-<%= link_to 'Back to Task List', tasks_path %>
+<%= link_to t('task.edit_task_link'), edit_task_path(@task) %> |
+<%= link_to t('task.back_to_tasks_link'), tasks_path %>

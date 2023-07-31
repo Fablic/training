@@ -40,3 +40,22 @@ en:
     no_tasks_found: "No tasks found."
     new_task_link: "New Task"
     edit_task_link: "Edit"
+    show_task_link: "Show"
+    destroy_task_link: "Destroy"
+    back_to_tasks_link: "Back to Tasks"
+    table_headers:
+      name: "Name"
+      description: "Description"
+      priority: "Priority"
+      deadline: "Deadline"
+      status: "Status"
+      labels: "Labels"
+      actions: "Actions"
+    submit_labels:
+      update_task: "Update Task"
+      create_task: "Create Task"
+  page_titles:
+    tasks_index: "Task List"
+    tasks_new: "New Task"
+    tasks_edit: "Edit Task"
+    tasks_show: "Task Details"

@@ -1,16 +1,16 @@
-<h1>Task List</h1>
+<h1><%= t('page_titles.tasks_index') %></h1>
 
 <% if @tasks.any? %>
   <table>
     <thead>
       <tr>
-        <th>Name</th>
-        <th>Description</th>
-        <th>Priority</th>
-        <th>Deadline</th>
-        <th>Status</th>
-        <th>Labels</th>
-        <th>Actions</th>
+        <th><%= t("task.table_headers.name") %></th>
+        <th><%= t("task.table_headers.description") %></th>
+        <th><%= t("task.table_headers.priority") %></th>
+        <th><%= t("task.table_headers.deadline") %></th>
+        <th><%= t("task.table_headers.status") %></th>
+        <th><%= t("task.table_headers.labels") %></th>
+        <th><%= t("task.table_headers.actions") %>
       </tr>
     </thead>
     <tbody>
@@ -27,9 +27,9 @@
             <% end %>
           </td>
           <td>
-            <%= link_to 'Show', task_path(task) %>
-            <%= link_to 'Edit', edit_task_path(task) %>
-            <%= link_to 'Destroy', task_path(task), 
+            <%= link_to t('task.show_task_link'), task_path(task) %>
+            <%= link_to t('task.edit_task_link'), edit_task_path(task) %>
+            <%= link_to t('task.destroy_task_link'), task_path(task), 
               method: :delete,
               data: { confirm: t('task.confirm_delete_task') } %>
           </td>
@@ -41,4 +41,4 @@
   <p><%= t('task.no_tasks_found') %></p>
 <% end %>
 
-<%= link_to 'New Task', new_task_path %>
+<%= link_to t('task.new_task_link'), new_task_path %>
