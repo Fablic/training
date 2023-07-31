@@ -20,14 +20,15 @@ class ApplicationController < ActionController::Base
   end
 
   # Custom method to render the 404 Not Found error page
-  def render_not_found
+  def render_not_found(exception)
+    # Log the exception for debugging purposes
+    ails.logger.error "404 Internal Server Error: #{exception.message}"
     render template: 'errors/404.html', status: :not_found
   end
 
   # Custom method to render the 500 Internal Server Error page
   def render_internal_server_error(exception)
     # Log the exception for debugging purposes
-    byebug
     Rails.logger.error "500 Internal Server Error: #{exception.message}"
     render template: 'errors/500.html', status: :internal_server_error
   end
