@@ -28,3 +28,6 @@ ja:
     tasks_new: "新しいタスク"
     tasks_edit: "タスクを編集"
     tasks_show: "タスクの詳細"
+  errors:
+    not_found: "ページが見つかりません"
+    internal_server_error: "サーバー内部エラー"
