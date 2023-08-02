@@ -1,13 +1,13 @@
 class Task < ApplicationRecord
 
-  STATUSES = ["Not Started", "In Progress", "Completed"].freeze
+  enum status: { not_started:0, in_progress: 1, completed: 2 }
+  enum priority: { low:0, medium: 1, high: 2 }
 
   belongs_to :user
-  belongs_to :user, :column :assigned_user_id
+  belongs_to :assigned_user, :class_name => 'User', :foreign_key => 'assigned_user_id', optional: true
 
+  has_many :tasks_labels
   has_many :labels, through: :tasks_labels
 
   validates :title, presence: true
-  validates :status, presence: true, inclusion: { in: STATUSES }
-  validates :priority, presence: true,
 end

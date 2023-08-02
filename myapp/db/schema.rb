@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_07_26_141922) do
+ActiveRecord::Schema.define(version: 2023_08_01_092903) do
 
   create_table "labels", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name"
@@ -22,15 +22,14 @@ ActiveRecord::Schema.define(version: 2023_07_26_141922) do
   create_table "tasks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "title"
     t.text "description"
-    t.string "priority"
+    t.integer "priority", default: 0
     t.date "due_date"
-    t.string "status"
+    t.integer "status", default: 0
     t.string "user_type", null: false
     t.bigint "user_id", null: false
     t.bigint "assigned_user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["assigned_user_id"], name: "fk_rails_190ed5bb66"
     t.index ["user_type", "user_id"], name: "index_tasks_on_user_type_and_user_id"
   end
 
@@ -55,7 +54,6 @@ ActiveRecord::Schema.define(version: 2023_07_26_141922) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  add_foreign_key "tasks", "users", column: "assigned_user_id"
   add_foreign_key "tasks_labels", "labels"
   add_foreign_key "tasks_labels", "tasks"
 end
