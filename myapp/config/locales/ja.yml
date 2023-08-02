@@ -20,6 +20,7 @@ ja:
       status: "ステータス"
       labels: "ラベル"
       actions: "操作"
+      created_at: "作成日時"
     submit_labels:
       update_task: "タスクを更新"
       create_task: "タスクを作成"

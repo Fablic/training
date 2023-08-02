@@ -14,7 +14,6 @@ class ApplicationController < ActionController::Base
     I18n.locale = params[:locale] || I18n.default_locale
   end
 
-
   def routing_error
     raise ActionController::RoutingError, params[:path]
   end
@@ -32,5 +31,4 @@ class ApplicationController < ActionController::Base
     Rails.logger.error "500 Internal Server Error: #{exception.message}"
     render template: 'errors/500.html', status: :internal_server_error
   end
-
 end
