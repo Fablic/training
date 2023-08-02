@@ -11,32 +11,32 @@
   <% end %>
 
   <div>
-    <%= form.label :name %>
+    <%= form.label :name, t('task.table_headers.name') %>
     <%= form.text_field :name %>
   </div>
 
   <div>
-    <%= form.label :description %>
+    <%= form.label :description, t('task.table_headers.description') %>
     <%= form.text_area :description %>
   </div>
 
   <div>
-    <%= form.label :priority %>
+    <%= form.label :priority, t('task.table_headers.priority') %>
     <%= form.number_field :priority %>
   </div>
 
   <div>
-    <%= form.label :deadline %>
+    <%= form.label :deadline, t('task.table_headers.deadline') %>
     <%= form.date_field :deadline %>
   </div>
 
   <div>
-    <%= form.label :status %>
+    <%= form.label :status, t('task.table_headers.status') %>
     <%= form.select :status, ["Not Started", "In Progress", "Done"] %>
   </div>
 
   <div class="field">
-    <%= form.label :label_ids, "Labels" %>
+    <%= form.label :label_ids, t('task.table_headers.labels') %>
     <%= form.collection_select :label_ids, @labels, :id, :name, {}, multiple: true %>
   </div>
 
@@ -45,4 +45,4 @@
   </div>
 <% end %>
 
-<%= link_to 'Back to Tasks', tasks_path %>
+<%= link_to t('task.back_to_tasks_link'), tasks_path %>

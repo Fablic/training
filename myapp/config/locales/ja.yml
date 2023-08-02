@@ -1,0 +1,33 @@
+ja:
+  hello: "こんにちは"
+  welcome: "ようこそ"
+  task:
+    created_success: "タスクが正常に作成されました。"
+    updated_success: "タスクが正常に更新されました。"
+    deleted_success: "タスクが正常に削除されました。"
+    confirm_delete_task: "このタスクを削除してもよろしいですか？"
+    no_tasks_found: "タスクが見つかりません。"
+    new_task_link: "新しいタスク"
+    edit_task_link: "編集"
+    show_task_link: "詳細"
+    destroy_task_link: "削除"
+    back_to_tasks_link: "タスク一覧に戻る"
+    table_headers:
+      name: "名前"
+      description: "説明"
+      priority: "優先度"
+      deadline: "期限"
+      status: "ステータス"
+      labels: "ラベル"
+      actions: "操作"
+    submit_labels:
+      update_task: "タスクを更新"
+      create_task: "タスクを作成"
+  page_titles:
+    tasks_index: "タスク一覧"
+    tasks_new: "新しいタスク"
+    tasks_edit: "タスクを編集"
+    tasks_show: "タスクの詳細"
+  errors:
+    not_found: "ページが見つかりません"
+    internal_server_error: "サーバー内部エラー"
