@@ -44,3 +44,9 @@ yarn-debug.log*
 !.vscode/launch.json
 !.vscode/extensions.json
 *.code-workspace
+/public/packs
+/public/packs-test
+/node_modules
+/yarn-error.log
+yarn-debug.log*
+.yarn-integrity
