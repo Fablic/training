@@ -22,12 +22,12 @@ class TaskController < ApplicationController
 
   def show
     @task = Task.find(params[:id])
-    # @labels = @task.labels
+    @labels = @task.labels
   end
 
   def edit
     @task = Task.find(params[:id])
-    # @labels = Label.all
+    @labels = Label.all
   end
 
   def update
@@ -47,8 +47,9 @@ class TaskController < ApplicationController
     redirect_to task_index_path, status: 303
   end
 
-  def task_params
-    params.require(:task).permit(:title, :description, :priority, :due_date, :status, :user_id, :assigned_user_id, )
-  end
+  private
+    def task_params
+      params.require(:task).permit(:title, :description, :priority, :due_date, :status, :user_id, :assigned_user_id, label_ids: [] )
+    end
 
 end
