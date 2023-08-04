@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Task, type: :model do
   before do
-    @user = create(:user)
+    create(:user)
   end
   describe "validations" do
     context "when valid" do

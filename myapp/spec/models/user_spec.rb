@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  describe "associations" do
+  describe "validations" do
     context "when valid" do
       it "is valid with valid attributes" do
         user = build(:user)
