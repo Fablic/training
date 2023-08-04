@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Label, type: :model do
-  describe "validations" do
+  context "validations" do
     it "is valid with valid attributes" do
       label = build(:label)
       expect(label).to be_valid
