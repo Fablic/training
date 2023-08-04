@@ -34,11 +34,8 @@
     <%= form.label :status, t('task.table_headers.status') %>
     <%= form.select :status, ["Not Started", "In Progress", "Done"] %>
   </div>
-
-  <div class="field">
-    <%= form.label :label_ids, t('task.table_headers.labels') %>
-    <%= form.collection_select :label_ids, @labels, :id, :name, {}, multiple: true %>
-  </div>
+  
+  <%# todo: add labels to tasks %>
 
   <div>
     <%= form.submit submit_label %>
