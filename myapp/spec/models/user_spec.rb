@@ -8,30 +8,22 @@ RSpec.describe User, type: :model do
         expect(user).to be_valid
       end
     end
+
     context "when invalid" do
-      it "is not valid without a username" do
-        user = build(:user, username: nil)
-        expect(user).not_to be_valid
-        expect(user.errors[:username]).to include("can't be blank")
+      shared_examples "an invalid user" do |attribute, error_message|
+        it "is not valid without #{attribute}" do
+          user[attribute] = nil
+          expect(user).not_to be_valid
+          expect(user.errors[attribute]).to include(error_message)
+        end
       end
 
-      it "is not valid without an email" do
-        user = build(:user, email: nil)
-        expect(user).not_to be_valid
-        expect(user.errors[:email]).to include("can't be blank")
-      end
+      let(:user) { build(:user) }
 
-      it "is not valid without a role" do
-        user = build(:user, role: nil)
-        expect(user).not_to be_valid
-        expect(user.errors[:role]).to include("can't be blank")
-      end
-
-      it "is not valid with an invalid role" do
-        user = build(:user, role: "super admin")
-        expect(user).not_to be_valid
-        expect(user.errors[:role]).to include("is not included in the list")
-      end
+      include_examples "an invalid user", :username, "can't be blank"
+      include_examples "an invalid user", :email, "can't be blank"
+      include_examples "an invalid user", :role, "can't be blank"
+      include_examples "an invalid user", :role, "is not included in the list", "super admin"
     end
   end
 end
