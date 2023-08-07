@@ -1,2 +1,6 @@
 
 myapp/tmp/
+
+myapp/log/
+
+.idea
