@@ -19,9 +19,9 @@
   </tr>
   <tr>
     <th>Status:</th>
-    <td><%= @task.status %></td>
+    <td><%= @task.status.humanize %></td>
   </tr>
 </table>
 
 <%= link_to 'Edit', edit_task_path(@task) %> |
-<%= link_to 'All Taskst', task_index_path %>
+<%= link_to 'All Tasks', task_index_path %>
