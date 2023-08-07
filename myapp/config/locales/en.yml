@@ -60,3 +60,7 @@ en:
     tasks_new: "New Task"
     tasks_edit: "Edit Task"
     tasks_show: "Task Details"
+  errors:
+    not_found: "Page not found"
+    internal_server_error: "Internal Server Error"
+  

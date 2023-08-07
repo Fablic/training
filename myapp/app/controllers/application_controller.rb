@@ -19,7 +19,9 @@ class ApplicationController < ActionController::Base
   end
 
   # Custom method to render the 404 Not Found error page
-  def render_not_found
+  def render_not_found(exception)
+    # Log the exception for debugging purposes
+    Rails.logger.error "404 Internal Server Error: #{exception.message}"
     render template: 'errors/404.html', status: :not_found
   end
 

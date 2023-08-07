@@ -8,6 +8,9 @@ RSpec.describe 'Task Sorting', type: :system do
     @task1 = create(:task, name: 'Task 1', created_at: Time.current - 3.days)
     @task2 = create(:task, name: 'Task 2', created_at: Time.current - 1.day)
     @task3 = create(:task, name: 'Task 3', created_at: Time.current - 2.days)
+    let!(:task1) { create(:task, name: 'Task 1', created_at: Time.current - 3.days, deadline: Date.today + 3.days) }
+    let!(:task2) { create(:task, name: 'Task 2', created_at: Time.current - 1.day, deadline: Date.today + 1.day) }
+    let!(:task3) { create(:task, name: 'Task 3', created_at: Time.current - 2.days, deadline: Date.today + 2.days) }
 
     # Visit the task list page
     visit tasks_path

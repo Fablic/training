@@ -2,8 +2,10 @@
 
 <% if @tasks.any? %>
   <div class="sort-links">
-    <%= link_to "Sort by Newest", tasks_path(sort: 'newest'), class: 'btn btn-primary' %>
-    <%= link_to "Sort by Oldest", tasks_path(sort: 'oldest'), class: 'btn btn-primary' %>
+    <%= link_to 'Sort by Newest', tasks_path(sort_by: 'created_at', sort_order: 'desc') %>
+    <%= link_to 'Sort by Oldest', tasks_path(sort_by: 'created_at', sort_order: 'asc') %>
+    <%= link_to 'Sort by Due Date (Newest)', tasks_path(sort_by: 'deadline', sort_order: 'desc') %>
+    <%= link_to 'Sort by Due Date (Oldest)', tasks_path(sort_by: 'deadline', sort_order: 'asc') %>
   </div>
 
   <table>

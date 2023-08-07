@@ -1,10 +1,12 @@
 class TasksController < ApplicationController
   def index
     @tasks = Task.all
-    if params[:sort] == 'newest'
-      @tasks = @tasks.order(created_at: :desc)
-    elsif params[:sort] == 'oldest'
-      @tasks = @tasks.order(created_at: :asc)
+    
+    case params[:sort_by]
+    when 'created_at'
+      @tasks = @tasks.order(created_at: params[:sort_order] || :desc)
+    when 'deadline'
+      @tasks = @tasks.order(deadline: params[:sort_order] || :desc)
     end
   end
 
