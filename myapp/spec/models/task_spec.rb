@@ -1,31 +1,28 @@
 require 'rails_helper'
 
 RSpec.describe Task, type: :model do
-  before do
-    @user = create(:user)
-  end
-  context "validations" do
-    it "is valid with valid attributes" do
-      task = build(:task)
-      expect(task).to be_valid
-    end
+  describe "validations" do
+    let(:user) { create(:user) }
 
-    it "is not valid without a name" do
-      task = build(:task, name: nil)
-      expect(task).not_to be_valid
-      expect(task.errors[:name]).to include("can't be blank")
+    context "when valid" do
+      it "is valid with valid attributes" do
+        task = build(:task, user: user)
+        expect(task).to be_valid
+      end
     end
+    
+    context "when invalid" do
+      shared_examples "invalid task" do |attribute|
+        it "is not valid without #{attribute}" do
+          task = build(:task, attribute => nil, user: user)
+          expect(task).not_to be_valid
+          expect(task.errors[attribute]).to include("can't be blank")
+        end
+      end
 
-    it "is not valid without a status" do
-      task = build(:task, status: nil)
-      expect(task).not_to be_valid
-      expect(task.errors[:status]).to include("can't be blank")
-    end
-
-    it "is not valid without a priority" do
-      task = build(:task, priority: nil)
-      expect(task).not_to be_valid
-      expect(task.errors[:priority]).to include("can't be blank")
+      include_examples "invalid task", :name
+      include_examples "invalid task", :status
+      include_examples "invalid task", :priority
     end
   end
 end
