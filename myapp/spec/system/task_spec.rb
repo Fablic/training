@@ -1,21 +1,20 @@
 require 'rails_helper'
 
 RSpec.describe 'Task', type: :system do
-  before do
-    @user = create(:user)
-    @task1 = create(:task, title: 'Test Task 1', status: 0)
-    @task2 = create(:task, title: 'Test Task 2', status: 1)
-    @task3 = create(:task, title: 'Test Task 3', status: 2)
-  end
 
   describe 'Task list page' do
     it 'displays a list of tasks' do
+
+      task1 = create(:task, title: 'Test Task 1', status: 0)
+      task2 = create(:task, title: 'Test Task 2', status: 1)
+      task3 = create(:task, title: 'Test Task 3', status: 2)
+
       visit task_index_path
 
       # check that the tasks are in the list
-      expect(page).to have_content('Test Task 1')
-      expect(page).to have_content('Test Task 2')
-      expect(page).to have_content('Test Task 3')
+      expect(page).to have_content(task1.title)
+      expect(page).to have_content(task2.title)
+      expect(page).to have_content(task3.title)
     end
   end
 
@@ -38,7 +37,10 @@ RSpec.describe 'Task', type: :system do
 
   describe 'Task update' do
     it 'updates a task with modified input' do
-      visit edit_task_path(@task1)
+
+      task = create(:task, title: 'Test Task 1', status: 0)
+
+      visit edit_task_path(task)
 
       fill_in 'Title', with: 'Updated Test Task 1'
 
@@ -58,11 +60,12 @@ RSpec.describe 'Task', type: :system do
 
   describe 'Task deletion' do
     it 'deletes a task' do
-      visit tasks_path
 
-      expect(page).to have_content('Test Task 1')
+      task = create(:task, title: 'Test Task 1', status: 0)
 
-      click_link 'Delete', href: task_path(@task1)
+      expect(page).to have_content(task.title)
+
+      click_link 'Delete', href: task_path(task)
 
       expect(page).to have_content('Task deleted.')
 
