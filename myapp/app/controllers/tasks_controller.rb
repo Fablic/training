@@ -1,14 +1,22 @@
 class TasksController < ApplicationController
   def index
     @tasks = Task.all
-    @tasks = Task.search_by_name_and_status(params[:name], params[:status]) if params[:name].present? || params[:status].present?
-    
+  
+    # Apply the search filters if they are present
+    if params[:name].present? || params[:status].present?
+      @tasks = @tasks.search_by_name_and_status(params[:name], params[:status])
+    end
+  
+    # Apply sorting based on sort_by and sort_order parameters
     case params[:sort_by]
     when 'created_at'
       @tasks = @tasks.order(created_at: params[:sort_order] || :desc)
     when 'deadline'
       @tasks = @tasks.order(deadline: params[:sort_order] || :desc)
     end
+  
+    # Paginate the results
+    @tasks = @tasks.page(params[:page])
   end
 
   def show
