@@ -69,7 +69,7 @@ RSpec.describe 'Task', type: :system do
 
       expect(page).to have_content('Task deleted.')
 
-      expect(page).not_to have_content('Test Task 1')
+      expect(page).not_to have_content(task.title)
     end
   end
 end
