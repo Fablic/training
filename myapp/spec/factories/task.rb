@@ -4,6 +4,7 @@ FactoryBot.define do
     status { 0 }
     priority { 0 }
     user_id { 1 }
+    user_type { 'Task' }
 
     trait :task do
       sequence(:title) { |n| "test#{n}" }

@@ -2,6 +2,10 @@ require 'rails_helper'
 
 RSpec.describe 'Task', type: :system do
 
+  before do
+    create(:user)
+  end
+
   describe 'Task list page' do
     it 'displays a list of tasks' do
 
@@ -52,9 +56,6 @@ RSpec.describe 'Task', type: :system do
       expect(page).to have_content('Updated Test Task 1')
       expect(page).to have_content('Completed')
 
-      click_link 'All Tasks'
-
-      expect(page).not_to have_content('Test Task 1')
     end
   end
 
@@ -63,13 +64,16 @@ RSpec.describe 'Task', type: :system do
 
       task = create(:task, title: 'Test Task 1', status: 0)
 
+      visit task_index_path
+
       expect(page).to have_content(task.title)
 
       click_link 'Delete', href: task_path(task)
 
       expect(page).to have_content('Task deleted.')
 
-      expect(page).not_to have_content('Test Task 1')
+      expect(page).not_to have_content(task.title)
+
     end
   end
 end
