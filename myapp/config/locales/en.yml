@@ -42,6 +42,7 @@ en:
         status: "Status"
         priority: "Priority"
         due_date: "Due Date"
+        created_at: "Created at"
         actions: "Actions"
       labels:
         title: "Title"
@@ -68,6 +69,9 @@ en:
       show: "Show Task"
       delete: "Delete Task"
       back_to_all: "All Tasks"
+      sort:
+        latest: "Sort by latest"
+        oldest: "Sort by oldest"
     submit:
       edit: "Update"
       create: "Create"
