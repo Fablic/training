@@ -11,27 +11,27 @@
   <% end %>
 
   <div>
-    <%= form.label :title %>
+    <%= t('task.labels.title') %>
     <%= form.text_field :title %>
   </div>
 
   <div>
-    <%= form.label :description %>
+    <%= t('task.labels.description') %>
     <%= form.text_area :description %>
   </div>
 
   <div>
-    <%= form.label :priority %>
+    <%= t('task.labels.priority') %>
     <%= form.select :priority, Task.priorities.keys.map { |k| [k.humanize, k] } %>
   </div>
 
   <div>
-    <%= form.label :due_date %>
+    <%= t('task.labels.due_date') %>
     <%= form.date_field :due_date %>
   </div>
 
   <div>
-    <%= form.label :status %>
+    <%= t('task.labels.status') %>
     <%= form.select :status, Task.statuses.keys.map { |k| [k.humanize, k] } %>
   </div>
 
