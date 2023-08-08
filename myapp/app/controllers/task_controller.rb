@@ -13,7 +13,7 @@ class TaskController < ApplicationController
     @task.user_id = 1
     @task.user_type = 'Task'
     if @task.save
-      flash[:success] = "Task was successfully created."
+      flash[:success] = "Task created."
       redirect_to task_index_path(@task)
     else
       render :new
