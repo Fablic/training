@@ -44,16 +44,16 @@ en:
         due_date: "Due Date"
         created_at: "Created at"
         actions: "Actions"
-      labels:
-        title: "Title"
-        description: "Description"
-        status: "Status"
-        priority: "Priority"
-        due_date: "Due Date"
       action_links:
         show: "Show"
         edit: "Update"
         delete: "Delete"
+    labels:
+      title: "Title"
+      description: "Description"
+      status: "Status"
+      priority: "Priority"
+      due_date: "Due Date"
     flashes:
       success:
         created: "Task created."

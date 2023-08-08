@@ -44,16 +44,16 @@ ja:
         due_date: "期限"
         created_at: "作成日時"
         actions: "アクション"
+      action_links:
+        show: "表示"
+        edit: "更新"
+        delete: "削除"
     labels:
       title: "タイトル"
       description: "説明"
       status: "ステータス"
       priority: "優先度"
       due_date: "期限"
-    action_links:
-      show: "表示"
-      edit: "更新"
-      delete: "削除"
     flashes:
       success:
         created: "タスクが作成されました"
