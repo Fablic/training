@@ -7,6 +7,11 @@ class ApplicationController < ActionController::Base
     I18n.with_locale(locale, &action)
   end
 
+  # keep locale in urls
+  def default_url_options
+    { locale: I18n.locale }
+  end
+
 
   # unless Rails.env.development?
     rescue_from Exception,                        with: :_render_500
