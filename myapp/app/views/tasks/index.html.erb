@@ -1,6 +1,19 @@
 <h1><%= t('page_titles.tasks_index') %></h1>
 
 <% if @tasks.any? %>
+  <%= form_tag tasks_path, method: :get do %>
+    <%= label_tag :name, "Name" %>
+    <%= text_field_tag :name, params[:name] %>
+    
+    <%= label_tag :status, "Status" %>
+    <%= select_tag :status, options_for_select([
+      "", 
+      t('task.status_options.not_started'), 
+      t('task.status_options.in_progress'), 
+      t('task.status_options.done')], params[:status]) %>
+    
+    <%= submit_tag "Search" %>
+  <% end %>
   <div class="sort-links">
     <%= link_to 'Sort by Newest', tasks_path(sort_by: 'created_at', sort_order: 'desc') %>
     <%= link_to 'Sort by Oldest', tasks_path(sort_by: 'created_at', sort_order: 'asc') %>
@@ -47,7 +60,7 @@
     </tbody>
   </table>
 <% else %>
-  <p><%= t('task.no_tasks_found') %></p>
+  <p><%= t('task.no_tasks_found') %> <%= link_to 'Back to home', tasks_path %> </p>
 <% end %>
 
 <%= link_to t('task.new_task_link'), new_task_path %>

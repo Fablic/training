@@ -8,4 +8,11 @@ class Task < ApplicationRecord
   belongs_to :user
   has_many :task_labels
   has_many :labels, through: :task_labels
+
+  scope :search_by_name_and_status, -> (name, status) { 
+    task = Task.all
+    task = task.where("name LIKE ?", "%#{name}%") if name.present?
+    task = task.where(status: status) if status.present?
+    task
+  }
 end
