@@ -1,14 +1,14 @@
-<h1>All Tasks</h1>
+<h1><%= t('task.titles.index') %></h1>
 <h4>
-  <%= link_to 'Add Task', new_task_path %>
+  <%= link_to t('task.links.create'), new_task_path %>
 </h4>
 <table border="1" cellpadding="5">
     <tr>
-        <th>Title</th>
-        <th>Status</th>
-        <th>Due Date</th>
-        <th>Priority</th>
-        <th>Actions</th>
+        <th><%= t('task.table.headers.title') %></th>
+        <th><%= t('task.table.headers.status') %></th>
+        <th><%= t('task.table.headers.due_date') %></th>
+        <th><%= t('task.table.headers.priority') %></th>
+        <th><%= t('task.table.headers.actions') %></th>
     </tr>
     <% @tasks.each do |task| %>
       <tr>
@@ -17,11 +17,11 @@
         <td><%= task.due_date %></td>
         <td><%= task.priority %></td>
         <td>
-          <%= link_to 'Show', task_path(task) %>
-          <%= link_to 'Update', edit_task_path(task) %>
-          <%= link_to 'Delete', task_path(task),
+          <%= link_to t('task.table.action_links.show'), task_path(task) %>
+          <%= link_to t('task.table.action_links.edit'), edit_task_path(task) %>
+          <%= link_to t('task.table.action_links.delete'), task_path(task),
                       method: :DELETE,
-                      data: { confirm: 'sure want to delete this task?' } %>
+                      data: { confirm: t('task.flashes.confirm_delete') } %>
         </td>
       </tr>
     <% end %>

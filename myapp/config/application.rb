@@ -11,6 +11,9 @@ module Myapp
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.0
 
+    I18n.available_locales = [:en, :ja]
+    I18n.default_locale = :en
+
     # time zone setting for Tokyo +9 GMT
     config.time_zone = 'Tokyo'
     config.active_record.default_timezone = :local

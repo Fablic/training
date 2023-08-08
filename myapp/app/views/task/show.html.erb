@@ -1,27 +1,27 @@
-<h1>Task Details</h1>
+<h1><%= t('task.titles.show') %></h1>
 
 <table>
   <tr>
-    <th>Title:</th>
+    <th><%= t('task.table.labels.title') %>:</th>
     <td><%= @task.title %></td>
   </tr>
   <tr>
-    <th>Description:</th>
+    <th><%= t('task.table.labels.description') %>:</th>
     <td><%= @task.description %></td>
   </tr>
   <tr>
-    <th>Priority:</th>
+    <th><%= t('task.table.labels.priority') %>:</th>
     <td><%= @task.priority %></td>
   </tr>
   <tr>
-    <th>Due Date:</th>
+    <th><%= t('task.table.labels.due_date') %>:</th>
     <td><%= @task.due_date %></td>
   </tr>
   <tr>
-    <th>Status:</th>
+    <th><%= t('task.table.labels.status') %>:</th>
     <td><%= @task.status.humanize %></td>
   </tr>
 </table>
 
-<%= link_to 'Edit', edit_task_path(@task) %> |
-<%= link_to 'All Tasks', task_index_path %>
+<%= link_to t('task.links.edit'), edit_task_path(@task) %> |
+<%= link_to t('task.links.index'), task_index_path %>
