@@ -1,8 +1,8 @@
 class TasksController < ApplicationController
   def index
     @tasks = Task.all
-    @tasks = Task.search_by_name_and_status(params[:name], params[:status]) if params[:name].present? || params[:status].present?
-    
+    @tasks = Task.dynamic_search(params || {})
+
     case params[:sort_by]
     when 'created_at'
       @tasks = @tasks.order(created_at: params[:sort_order] || :desc)
