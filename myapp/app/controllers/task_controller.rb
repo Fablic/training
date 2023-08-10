@@ -1,10 +1,21 @@
-class TaskController < ApplicationController
+# frozen_string_literal: true
+
+class TaskController < ApplicationController # rubocop:todo Style/Documentation
   def index
     @tasks = Task.all
   end
 
+  def show
+    @task = Task.find(params[:id])
+  end
+
   def new
     @task = Task.new
+    @labels = Label.all
+  end
+
+  def edit
+    @task = Task.find(params[:id])
     @labels = Label.all
   end
 
@@ -18,15 +29,6 @@ class TaskController < ApplicationController
     else
       render :new
     end
-  end
-
-  def show
-    @task = Task.find(params[:id])
-  end
-
-  def edit
-    @task = Task.find(params[:id])
-    @labels = Label.all
   end
 
   def update
@@ -47,8 +49,8 @@ class TaskController < ApplicationController
   end
 
   private
-    def task_params
-      params.require(:task).permit(:title, :description, :priority, :due_date, :status, :user_id, :assigned_user_id, label_ids: [] )
-    end
 
+  def task_params
+    params.require(:task).permit(:title, :description, :priority, :due_date, :status, :user_id, :assigned_user_id, label_ids: [])
+  end
 end

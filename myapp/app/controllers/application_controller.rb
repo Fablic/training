@@ -1,5 +1,6 @@
-class ApplicationController < ActionController::Base
+# frozen_string_literal: true
 
+class ApplicationController < ActionController::Base # rubocop:todo Style/Documentation
   around_action :switch_locale
 
   def switch_locale(&action)
@@ -12,11 +13,10 @@ class ApplicationController < ActionController::Base
     { locale: I18n.locale }
   end
 
-
   # unless Rails.env.development?
-    rescue_from Exception,                        with: :_render_500
-    rescue_from ActiveRecord::RecordNotFound,     with: :_render_404
-    rescue_from ActionController::RoutingError,   with: :_render_404
+  rescue_from Exception,                        with: :_render_500
+  rescue_from ActiveRecord::RecordNotFound,     with: :_render_404
+  rescue_from ActionController::RoutingError,   with: :_render_404
   # end
 
   def routing_error
@@ -24,15 +24,16 @@ class ApplicationController < ActionController::Base
   end
 
   private
-    def _render_404(e = nil)
-      Rails.logger.info "Rendering 404 with exception: #{e.message}" if e
 
-      render 'errors/404', status: :not_found
-    end
+  def _render_404(e = nil) # rubocop:todo Naming/MethodParameterName
+    Rails.logger.info "Rendering 404 with exception: #{e.message}" if e
 
-    def _render_500(e = nil)
-      Rails.logger.error "Rendering 500 with exception: #{e.message}" if e
+    render 'errors/404', status: :not_found
+  end
 
-      render 'errors/500', status: :internal_server_error
-    end
+  def _render_500(e = nil) # rubocop:todo Naming/MethodParameterName
+    Rails.logger.error "Rendering 500 with exception: #{e.message}" if e
+
+    render 'errors/500', status: :internal_server_error
+  end
 end
