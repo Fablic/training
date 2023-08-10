@@ -59,6 +59,8 @@
       <% end %>
     </tbody>
   </table>
+  
+  <%= paginate @tasks %>
 <% else %>
   <p><%= t('task.no_tasks_found') %> <%= link_to 'Back to home', tasks_path %> </p>
 <% end %>

@@ -7,6 +7,9 @@ class TasksController < ApplicationController
     when 'deadline'
       @tasks = @tasks.order(deadline: params[:sort_order] || :desc)
     end
+  
+    # Paginate the results
+    @tasks = @tasks.page(params[:page])
   end
 
   def show
