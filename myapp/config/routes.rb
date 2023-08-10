@@ -1,7 +1,9 @@
-Rails.application.routes.draw do
-  # get 'task/index'
+# frozen_string_literal: true
 
-  resources :task
+Rails.application.routes.draw do
+  # get 'tasks/index'
+
+  resources :tasks
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
   # Custom Error pages handling routes

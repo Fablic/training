@@ -1,4 +1,6 @@
-class TaskController < ApplicationController
+# frozen_string_literal: true
+
+class TasksController < ApplicationController # rubocop:todo Style/Documentation
   def index
     if params[:sort] == 'latest'
       @tasks = Task.all.order(created_at: :desc)
@@ -9,30 +11,30 @@ class TaskController < ApplicationController
     end
   end
 
+  def show
+    @task = Task.find(params[:id])
+  end
+
   def new
     @task = Task.new
     @labels = Label.all
   end
 
-  def create
-    @task = Task.new(task_params)
-    @task.user_id = 1
-    @task.user_type = 'Task'
-    if @task.save
-      flash[:success] = t('task.flashes.success.created')
-      redirect_to task_index_path(@task)
-    else
-      render :new
-    end
-  end
-
-  def show
-    @task = Task.find(params[:id])
-  end
-
   def edit
     @task = Task.find(params[:id])
     @labels = Label.all
+  end
+
+  def create
+    @task = Task.new(task_params)
+    @task.user_id = 1 # because user must exist
+    @task.user_type = 'Task'  # user_type is needed because of NOT NULL
+    if @task.save
+      flash[:success] = t('task.flashes.success.created')
+      redirect_to tasks_path(@task)
+    else
+      render :new
+    end
   end
 
   def update
@@ -49,12 +51,12 @@ class TaskController < ApplicationController
     @task = Task.find(params[:id])
     @task.destroy
     flash[:notice] = t('task.flashes.success.deleted')
-    redirect_to task_index_path, status: 303
+    redirect_to tasks_path, status: 303
   end
 
   private
-    def task_params
-      params.require(:task).permit(:title, :description, :priority, :due_date, :status, :user_id, :assigned_user_id, label_ids: [] )
-    end
 
+  def task_params
+    params.require(:task).permit(:title, :description, :priority, :due_date, :status, :user_id, :assigned_user_id, label_ids: [])
+  end
 end

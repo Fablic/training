@@ -1,19 +1,19 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe 'Task', type: :system do
-
+RSpec.describe 'Task' do
   before do
     create(:user)
   end
 
   describe 'Task list page' do
-    it 'displays a list of tasks' do
-
+    it 'displays a list of tasks' do # rubocop:todo RSpec/MultipleExpectations
       task1 = create(:task, title: 'Test Task 1', status: 0)
       task2 = create(:task, title: 'Test Task 2', status: 1)
       task3 = create(:task, title: 'Test Task 3', status: 2)
 
-      visit task_index_path
+      visit tasks_path
 
       # check that the tasks are in the list
       expect(page).to have_content(task1.title)
@@ -23,11 +23,11 @@ RSpec.describe 'Task', type: :system do
   end
 
   describe 'New Task creation' do
-    it 'creates a new task' do
+    it 'creates a new task' do # rubocop:todo RSpec/MultipleExpectations
       visit new_task_path
 
-      fill_in 'Title', with: 'New Task 1'
-      select 'Not started', from: 'Status'
+      fill_in 'task[title]', with: 'New Task 1'
+      select 'Not started', from: 'task[status]'
 
       click_button 'Create'
 
@@ -35,45 +35,40 @@ RSpec.describe 'Task', type: :system do
       expect(page).to have_content('Task created.')
       expect(page).to have_content('Add Task')
       expect(page).to have_content('Not started')
-
     end
   end
 
   describe 'Task update' do
-    it 'updates a task with modified input' do
-
+    it 'updates a task with modified input' do # rubocop:todo RSpec/MultipleExpectations
       task = create(:task, title: 'Test Task 1', status: 0)
 
       visit edit_task_path(task)
 
-      fill_in 'Title', with: 'Updated Test Task 1'
+      fill_in 'task[title]', with: 'Updated Test Task 1'
 
-      select 'Completed', from: 'Status'
+      select 'Completed', from: 'task[status]'
 
       click_button 'Update'
 
       expect(page).to have_content('Task updated.')
       expect(page).to have_content('Updated Test Task 1')
       expect(page).to have_content('Completed')
-
     end
   end
 
   describe 'Task deletion' do
-    it 'deletes a task' do
-
+    it 'deletes a task' do # rubocop:todo RSpec/MultipleExpectations
       task = create(:task, title: 'Test Task 1', status: 0)
 
-      visit task_index_path
+      visit tasks_path
 
       expect(page).to have_content(task.title)
 
-      click_link 'Delete', href: task_path(task)
+      click_link 'Delete', href: task_path(task, :locale => I18n.default_locale)
 
       expect(page).to have_content('Task deleted.')
 
       expect(page).not_to have_content(task.title)
-
     end
   end
 end
