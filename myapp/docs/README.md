@@ -1,21 +1,3 @@
-## Todos Application
-It is a Task Management app that does following key features
-
-## A USER 
-- can login/logout
-- can change task status
-- can see tasks assigned to him by admin
-
-## A USER (as Admin)
-- can Create/Update/Delete/List USERS or ADMIN
-- can Create/Update/Delete/List Tasks
-- can Set due date to task
-- Set status to task
-- Delete task
-- add labels
-- Assign/Unassign user to task
-
-
 ## Table Schema
 ### users
 

@@ -2,13 +2,18 @@
 <h4>
   <%= link_to t('task.links.create'), new_task_path %>
 </h4>
+<p>
+  <%= link_to t('task.links.sort.latest'), tasks_path(sort: 'latest') %> |
+  <%= link_to t('task.links.sort.oldest'), tasks_path(sort: 'oldest') %>
+</p>
 <table border="1" cellpadding="5">
     <tr>
         <th><%= t('task.table.headers.title') %></th>
         <th><%= t('task.table.headers.status') %></th>
         <th><%= t('task.table.headers.due_date') %></th>
-        <th><%= t('task.table.headers.priority') %></th>
-        <th><%= t('task.table.headers.actions') %></th>
+      <th><%= t('task.table.headers.priority') %></th>
+      <th><%= t('task.table.headers.created_at') %></th>
+      <th><%= t('task.table.headers.actions') %></th>
     </tr>
     <% @tasks.each do |task| %>
       <tr>
@@ -16,6 +21,7 @@
         <td><%= task.status.humanize %></td>
         <td><%= task.due_date %></td>
         <td><%= task.priority %></td>
+        <td><%= task.created_at.to_s(:long) %></td>
         <td>
           <%= link_to t('task.table.action_links.show'), task_path(task) %>
           <%= link_to t('task.table.action_links.edit'), edit_task_path(task) %>

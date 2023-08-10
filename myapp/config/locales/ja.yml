@@ -42,6 +42,7 @@ ja:
         status: "ステータス"
         priority: "優先度"
         due_date: "期限"
+        created_at: "作成日時"
         actions: "アクション"
       action_links:
         show: "表示"
@@ -68,6 +69,9 @@ ja:
       show: "タスクの表示"
       delete: "タスクの削除"
       back_to_all: "すべてのタスク"
+      sort:
+        latest: "新しい順"
+        oldest: "古い順"
     submit:
       edit: "更新"
       create: "作成"
