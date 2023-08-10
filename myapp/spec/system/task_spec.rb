@@ -64,7 +64,7 @@ RSpec.describe 'Task' do
 
       expect(page).to have_content(task.title)
 
-      click_link 'Delete', href: task_path(task, :locale => I18n.default_locale)
+      click_link 'Delete', href: task_path(task, locale: I18n.default_locale)
 
       expect(page).to have_content('Task deleted.')
       expect(page).not_to have_content(task.title)

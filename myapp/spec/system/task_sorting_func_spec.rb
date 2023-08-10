@@ -1,17 +1,18 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe 'Task Sorting', type: :system do
+RSpec.describe 'Task Sorting' do
   before do
     # Create a user because we have foreign key
     create(:user)
   end
 
   it 'check sort functionality by items as latest first' do
-
     # Tasks with different timestamps
-    task1 = create(:task, title: 'Test Task latest one', created_at: Time.current)
-    create(:task, title: 'Test Task first one', created_at: Time.current - 2.day)
-    create(:task, title: 'Test Task created on second', created_at: Time.current - 1.days)
+    create(:task, title: 'Test Task latest one', created_at: Time.current)
+    create(:task, title: 'Test Task first one', created_at: 2.days.ago)
+    create(:task, title: 'Test Task created on second', created_at: 1.day.ago)
 
     visit tasks_path
 
@@ -24,11 +25,10 @@ RSpec.describe 'Task Sorting', type: :system do
   end
 
   it 'check sort functionality by items as oldest first' do
-
     # Tasks with different timestamps
-    task1 = create(:task, title: 'Test Task latest one', created_at: Time.current)
-    create(:task, title: 'Test Task first one', created_at: Time.current - 2.day)
-    create(:task, title: 'Test Task created on second', created_at: Time.current - 1.days)
+    create(:task, title: 'Test Task latest one', created_at: Time.current)
+    create(:task, title: 'Test Task first one', created_at: 2.days.ago)
+    create(:task, title: 'Test Task created on second', created_at: 1.day.ago)
 
     visit tasks_path
 

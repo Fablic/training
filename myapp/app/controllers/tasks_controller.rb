@@ -3,9 +3,9 @@
 class TasksController < ApplicationController # rubocop:todo Style/Documentation
   def index
     @tasks = Task.order(created_at: :asc)
-    if params[:sort] == 'latest'
-      @tasks = Task.all.order(created_at: :desc)
-    end
+    return unless params[:sort] == 'latest'
+
+    @tasks = Task.all.order(created_at: :desc)
   end
 
   def show
@@ -25,7 +25,7 @@ class TasksController < ApplicationController # rubocop:todo Style/Documentation
   def create
     @task = Task.new(task_params)
     @task.user_id = 1 # because user must exist
-    @task.user_type = 'Task'  # user_type is needed because of NOT NULL
+    @task.user_type = 'Task' # user_type is needed because of NOT NULL
     if @task.save
       flash[:success] = t('task.flashes.success.created')
       redirect_to tasks_path(@task)
