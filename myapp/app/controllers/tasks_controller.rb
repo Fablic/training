@@ -1,13 +1,6 @@
 class TasksController < ApplicationController
   def index
-    @tasks = Task.all
-  
-    # Apply the search filters if they are present
-    if params[:name].present? || params[:status].present?
-      @tasks = @tasks.search_by_name_and_status(params[:name], params[:status])
-    end
-  
-    # Apply sorting based on sort_by and sort_order parameters
+    @tasks = Task.dynamic_search(params || {})
     case params[:sort_by]
     when 'created_at'
       @tasks = @tasks.order(created_at: params[:sort_order] || :desc)

@@ -9,10 +9,18 @@ class Task < ApplicationRecord
   has_many :task_labels
   has_many :labels, through: :task_labels
 
-  scope :search_by_name_and_status, -> (name, status) { 
-    task = Task.all
-    task = task.where("name LIKE ?", "%#{name}%") if name.present?
-    task = task.where(status: status) if status.present?
-    task
-  }
+  scope :dynamic_search, ->(search_params) do
+    query = all
+
+    search_params.each do |key, value|
+      case key
+      when 'name'
+        query = query.where('name LIKE ?', "%#{value}%") if value.present?
+      when 'status'
+        query = query.where(status: value) if value.present?
+      end
+    end
+
+    query
+  end
 end
