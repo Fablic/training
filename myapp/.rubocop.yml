@@ -4,4 +4,3 @@ inherit_gem:
 
 Layout/TrailingEmptyLines:
   Enabled: true
-  
