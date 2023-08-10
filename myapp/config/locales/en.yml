@@ -30,4 +30,48 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  task:
+    titles:
+      index: "All Tasks"
+      new: "Create Task"
+      edit: "Edit Task"
+      show: "Task Details"
+    table:
+      headers:
+        title: "Title"
+        status: "Status"
+        priority: "Priority"
+        due_date: "Due Date"
+        actions: "Actions"
+      action_links:
+        show: "Show"
+        edit: "Update"
+        delete: "Delete"
+    labels:
+      title: "Title"
+      description: "Description"
+      status: "Status"
+      priority: "Priority"
+      due_date: "Due Date"
+    flashes:
+      success:
+        created: "Task created."
+        updated: "Task updated."
+        deleted: "Task deleted."
+        confirm_delete: "sure want to delete this task?"
+      failed:
+        form_submit: "error prohibited this task from being saved."
+    links:
+      index: "All Tasks"
+      create: "Add Task"
+      edit: "Edit Task"
+      show: "Show Task"
+      delete: "Delete Task"
+      back_to_all: "All Tasks"
+    submit:
+      edit: "Update"
+      create: "Create"
+
+  errors:
+    404_not_found: "404! Page not found"
+    500_internal_server_error: "500 Internal Server Error"

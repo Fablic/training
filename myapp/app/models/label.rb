@@ -1,7 +1,7 @@
-class Label < ApplicationRecord
+# frozen_string_literal: true
 
-    has_many :tasks, through: :tasks_labels
+class Label < ApplicationRecord # rubocop:todo Style/Documentation
+  has_many :tasks, through: :tasks_labels
 
-    validates :name, presence: true
-
+  validates :name, presence: true
 end

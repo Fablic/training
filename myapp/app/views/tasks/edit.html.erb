@@ -1,0 +1,3 @@
+<h1><%= t('task.titles.edit') %></h1>
+
+<%= render 'form', task: @task, form_url: task_path(@task), form_method: :patch, submit_label: t('task.submit.edit') %>

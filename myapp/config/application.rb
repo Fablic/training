@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'boot'
 
 require 'rails/all'
@@ -7,9 +9,16 @@ require 'rails/all'
 Bundler.require(*Rails.groups)
 
 module Myapp
-  class Application < Rails::Application
+  class Application < Rails::Application # rubocop:todo Style/Documentation
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.0
+
+    I18n.available_locales = [:en, :ja]
+    I18n.default_locale = :en
+
+    # time zone setting for Tokyo +9 GMT
+    config.time_zone = 'Tokyo'
+    config.active_record.default_timezone = :local
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers

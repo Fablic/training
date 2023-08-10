@@ -1,0 +1,28 @@
+<h1><%= t('task.titles.index') %></h1>
+<h4>
+  <%= link_to t('task.links.create'), new_task_path %>
+</h4>
+<table border="1" cellpadding="5">
+    <tr>
+        <th><%= t('task.table.headers.title') %></th>
+        <th><%= t('task.table.headers.status') %></th>
+        <th><%= t('task.table.headers.due_date') %></th>
+        <th><%= t('task.table.headers.priority') %></th>
+        <th><%= t('task.table.headers.actions') %></th>
+    </tr>
+    <% @tasks.each do |task| %>
+      <tr>
+        <td><%= task.title %></td>
+        <td><%= task.status.humanize %></td>
+        <td><%= task.due_date %></td>
+        <td><%= task.priority %></td>
+        <td>
+          <%= link_to t('task.table.action_links.show'), task_path(task) %>
+          <%= link_to t('task.table.action_links.edit'), edit_task_path(task) %>
+          <%= link_to t('task.table.action_links.delete'), task_path(task),
+                      method: :DELETE,
+                      data: { confirm: t('task.flashes.confirm_delete') } %>
+        </td>
+      </tr>
+    <% end %>
+</table>
