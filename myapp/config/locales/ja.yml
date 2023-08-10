@@ -24,6 +24,10 @@ ja:
     submit_labels:
       update_task: "タスクを更新"
       create_task: "タスクを作成"
+    status_options:
+      not_started: "未着手"
+      in_progress: "着手中"
+      done: "完了"
   page_titles:
     tasks_index: "タスク一覧"
     tasks_new: "新しいタスク"

@@ -55,6 +55,10 @@ en:
     submit_labels:
       update_task: "Update Task"
       create_task: "Create Task"
+    status_options:
+      not_started: "Not Started"
+      in_progress: "In Progress"
+      done: "Done"
   page_titles:
     tasks_index: "Task List"
     tasks_new: "New Task"
