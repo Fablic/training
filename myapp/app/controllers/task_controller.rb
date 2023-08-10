@@ -21,8 +21,8 @@ class TaskController < ApplicationController # rubocop:todo Style/Documentation
 
   def create
     @task = Task.new(task_params)
-    @task.user_id = 1
-    @task.user_type = 'Task'
+    @task.user_id = 1 # because user must exist
+    @task.user_type = 'Task'  # user_type is needed because of NOT NULL
     if @task.save
       flash[:success] = t('task.flashes.success.created')
       redirect_to task_index_path(@task)
