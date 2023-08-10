@@ -5,7 +5,7 @@ class TasksController < ApplicationController # rubocop:todo Style/Documentation
     @tasks = Task.order(created_at: :asc)
     return unless params[:sort] == 'latest'
 
-    @tasks = Task.all.order(created_at: :desc)
+    @tasks = Task.order(created_at: :desc)
   end
 
   def show
@@ -14,12 +14,12 @@ class TasksController < ApplicationController # rubocop:todo Style/Documentation
 
   def new
     @task = Task.new
-    @labels = Label.all
+    @labels = Label.order(created_at: :asc)
   end
 
   def edit
     @task = Task.find(params[:id])
-    @labels = Label.all
+    @labels = Label.order(created_at: :asc)
   end
 
   def create
