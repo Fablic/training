@@ -26,8 +26,8 @@ RSpec.describe 'Task' do
     it 'creates a new task' do # rubocop:todo RSpec/MultipleExpectations
       visit new_task_path
 
-      fill_in 'Title', with: 'New Task 1'
-      select 'Not started', from: 'Status'
+      fill_in 'task[title]', with: 'New Task 1'
+      select 'Not started', from: 'task[status]'
 
       click_button 'Create'
 
@@ -44,9 +44,9 @@ RSpec.describe 'Task' do
 
       visit edit_task_path(task)
 
-      fill_in 'Title', with: 'Updated Test Task 1'
+      fill_in 'task[title]', with: 'Updated Test Task 1'
 
-      select 'Completed', from: 'Status'
+      select 'Completed', from: 'task[status]'
 
       click_button 'Update'
 
@@ -64,7 +64,7 @@ RSpec.describe 'Task' do
 
       expect(page).to have_content(task.title)
 
-      click_link 'Delete', href: task_path(task)
+      click_link 'Delete', href: task_path(task, :locale => I18n.default_locale)
 
       expect(page).to have_content('Task deleted.')
 
