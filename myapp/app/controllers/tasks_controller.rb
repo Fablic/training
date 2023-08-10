@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class TaskController < ApplicationController # rubocop:todo Style/Documentation
+class TasksController < ApplicationController # rubocop:todo Style/Documentation
   def index
     @tasks = Task.all
   end
@@ -25,7 +25,7 @@ class TaskController < ApplicationController # rubocop:todo Style/Documentation
     @task.user_type = 'Task'  # user_type is needed because of NOT NULL
     if @task.save
       flash[:success] = t('task.flashes.success.created')
-      redirect_to task_index_path(@task)
+      redirect_to tasks_path(@task)
     else
       render :new
     end
@@ -45,7 +45,7 @@ class TaskController < ApplicationController # rubocop:todo Style/Documentation
     @task = Task.find(params[:id])
     @task.destroy
     flash[:notice] = t('task.flashes.success.deleted')
-    redirect_to task_index_path, status: 303
+    redirect_to tasks_path, status: 303
   end
 
   private

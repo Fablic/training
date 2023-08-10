@@ -13,7 +13,7 @@ RSpec.describe 'Task' do
       task2 = create(:task, title: 'Test Task 2', status: 1)
       task3 = create(:task, title: 'Test Task 3', status: 2)
 
-      visit task_index_path
+      visit tasks_path
 
       # check that the tasks are in the list
       expect(page).to have_content(task1.title)
@@ -60,7 +60,7 @@ RSpec.describe 'Task' do
     it 'deletes a task' do # rubocop:todo RSpec/MultipleExpectations
       task = create(:task, title: 'Test Task 1', status: 0)
 
-      visit task_index_path
+      visit tasks_path
 
       expect(page).to have_content(task.title)
 

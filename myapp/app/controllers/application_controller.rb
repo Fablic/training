@@ -26,13 +26,13 @@ class ApplicationController < ActionController::Base # rubocop:todo Style/Docume
   private
 
   def _render_404(exception = nil)
-    Rails.logger.info "Rendering 404 with exception: #{exception.message}" if e
+    Rails.logger.info "Rendering 404 with exception: #{exception.message}" if exception
 
     render 'errors/404', status: :not_found
   end
 
   def _render_500(exception = nil)
-    Rails.logger.error "Rendering 500 with exception: #{exception.message}" if e
+    Rails.logger.error "Rendering 500 with exception: #{exception.message}" if exception
 
     render 'errors/500', status: :internal_server_error
   end
