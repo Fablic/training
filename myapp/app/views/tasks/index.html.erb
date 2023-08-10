@@ -3,8 +3,8 @@
   <%= link_to t('task.links.create'), new_task_path %>
 </h4>
 <p>
-  <%= link_to t('task.links.sort.latest'), task_index_path(sort: 'latest') %> |
-  <%= link_to t('task.links.sort.oldest'), task_index_path(sort: 'oldest') %>
+  <%= link_to t('task.links.sort.latest'), tasks_path(sort: 'latest') %> |
+  <%= link_to t('task.links.sort.oldest'), tasks_path(sort: 'oldest') %>
 </p>
 <table border="1" cellpadding="5">
     <tr>

@@ -2,12 +2,9 @@
 
 class TasksController < ApplicationController # rubocop:todo Style/Documentation
   def index
+    @tasks = Task.order(created_at: :asc)
     if params[:sort] == 'latest'
       @tasks = Task.all.order(created_at: :desc)
-    elsif params[:sort] == 'oldest'
-      @tasks = Task.all.order(created_at: :asc)
-    else
-      @tasks = Task.all
     end
   end
 
