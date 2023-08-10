@@ -25,14 +25,14 @@ class ApplicationController < ActionController::Base # rubocop:todo Style/Docume
 
   private
 
-  def _render_404(e = nil) # rubocop:todo Naming/MethodParameterName
-    Rails.logger.info "Rendering 404 with exception: #{e.message}" if e
+  def _render_404(exception = nil)
+    Rails.logger.info "Rendering 404 with exception: #{exception.message}" if e
 
     render 'errors/404', status: :not_found
   end
 
-  def _render_500(e = nil) # rubocop:todo Naming/MethodParameterName
-    Rails.logger.error "Rendering 500 with exception: #{e.message}" if e
+  def _render_500(exception = nil)
+    Rails.logger.error "Rendering 500 with exception: #{exception.message}" if e
 
     render 'errors/500', status: :internal_server_error
   end
