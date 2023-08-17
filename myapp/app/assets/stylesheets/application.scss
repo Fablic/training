@@ -32,42 +32,39 @@ thead th i {
     line-height: 50px;
     cursor: pointer;
   }
-  .search-form-container {
+.search-form-container {
     display: flex;
     justify-content: flex-end;
     margin-bottom: 20px;
-  }
+}
   
-  .input-group {
+.input-group {
     width: 100%;
     border: #007bff solid 1px;
     border-radius: 20px; 
     overflow: hidden; 
-  }
+}
   
-  .form-control {
+.form-control {
     border-radius: 0; /* Reset the input border radius */
-  }
+}
   
-  .btn-outline-secondary {
+.btn-outline-secondary {
     border-color: #ced4da; /* Set the border color */
-  }
+}
   
-  .title-column {
+.title-column {
     width: 120px; /* Adjust the width as needed */
-  }
+}
   
-  .mx-800 {
+.mx-800 {
     max-width: 800px;
     margin: 0 auto;
-  }
+}
   
-  .parent-container {
+.parent-container {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh; /* Adjust this as needed */
-  }
-  
-  
-  
+}
