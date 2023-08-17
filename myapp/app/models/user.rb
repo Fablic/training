@@ -8,5 +8,4 @@ class User < ApplicationRecord # rubocop:todo Style/Documentation
   validates :username, presence: true
   validates :email, presence: true
   validates :password, presence: true
-  validates :is_admin, presence: true
 end
