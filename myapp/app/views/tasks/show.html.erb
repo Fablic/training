@@ -1,27 +1,37 @@
-<h1><%= t('page_titles.tasks_show') %></h1>
-
-<table>
-  <tr>
-    <th>Name:</th>
-    <td><%= @task.name %></td>
-  </tr>
-  <tr>
-    <th>Description:</th>
-    <td><%= @task.description %></td>
-  </tr>
-  <tr>
-    <th>Priority:</th>
-    <td><%= @task.priority %></td>
-  </tr>
-  <tr>
-    <th>Deadline:</th>
-    <td><%= @task.deadline %></td>
-  </tr>
-  <tr>
-    <th>Status:</th>
-    <td><%= @task.status %></td>
-  </tr>
-</table>
-
-<%= link_to t('task.edit_task_link'), edit_task_path(@task) %> |
-<%= link_to t('task.back_to_tasks_link'), tasks_path %>
+<div class="container">
+  <h1 class="text-center"><%= t('page_titles.tasks_show') %></h1>
+  <div class="card shadow mx-800" >
+    <div class="card-body">
+      <table class="table table-bordered">
+        <tr>
+          <th class="title-column">Name:</th>
+          <td><%= @task.name %></td>
+        </tr>
+        <tr>
+          <th class="title-column">Description:</th>
+          <td><%= @task.description %></td>
+        </tr>
+        <tr>
+          <th class="title-column">Priority:</th>
+          <td><%= @task.priority %></td>
+        </tr>
+        <tr>
+          <th class="title-column">Deadline:</th>
+          <td><%= @task.deadline %></td>
+        </tr>
+        <tr>
+          <th class="title-column">Status:</th>
+          <td><%= @task.status %></td>
+        </tr>
+      </table>
+    </div>
+    <div class="card-footer text-right">
+      <%= link_to tasks_path do %>
+        <i class="fas fa-arrow-left"></i> <!-- Use Font Awesome icon here -->
+      <% end %>
+    </div>
+  </div>
+</div>
+<%= link_to edit_task_path(@task), class: 'floating-button' do %>
+    <i class="fas fa-edit"></i>
+<% end %>

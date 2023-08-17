@@ -59,6 +59,7 @@ en:
       not_started: "Not Started"
       in_progress: "In Progress"
       done: "Done"
+    status_placeholder: "Select a status"
   page_titles:
     tasks_index: "Task List"
     tasks_new: "New Task"

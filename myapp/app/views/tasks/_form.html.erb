@@ -1,45 +1,51 @@
-<%= form_with(model: @task, url: form_url, local: true, method: form_method) do |form| %>
-  <% if @task.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@task.errors.count, "error") %> prohibited this task from being saved:</h2>
-      <ul>
-        <% @task.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+<div class="card shadow mx-800">
+  <div class="card-header">Edit the task</div>
+  <div class="card-body">
+    <%= form_with(model: @task, url: form_url, local: true, method: form_method) do |form| %>
+      <% if @task.errors.any? %>
+        <div id="error_explanation" class="alert alert-danger">
+          <h2><%= pluralize(@task.errors.count, "error") %> prohibited this task from being saved:</h2>
+          <ul>
+            <% @task.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
 
-  <div>
-    <%= form.label :name, t('task.table_headers.name') %>
-    <%= form.text_field :name %>
+      <table class="table table-borderless">
+        <tbody>
+          <tr>
+            <td class="title-column"><%= form.label :name, t('task.table_headers.name') %></td>
+            <td><%= form.text_field :name, class: 'form-control' %></td>
+          </tr>
+          <tr>
+            <td class="title-column"><%= form.label :description, t('task.table_headers.description') %></td>
+            <td><%= form.text_area :description, class: 'form-control' %></td>
+          </tr>
+          <tr>
+            <td class="title-column"><%= form.label :priority, t('task.table_headers.priority') %></td>
+            <td><%= form.number_field :priority, class: 'form-control' %></td>
+          </tr>
+          <tr>
+            <td class="title-column"><%= form.label :deadline, t('task.table_headers.deadline') %></td>
+            <td><%= form.date_field :deadline, class: 'form-control' %></td>
+          </tr>
+          <tr>
+            <td class="title-column"><%= form.label :status, t('task.table_headers.status') %></td>
+            <td><%= form.select :status, ["Not Started", "In Progress", "Done"], {}, class: 'form-control' %></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="form-group text-center">
+        <%= form.submit submit_label, class: 'btn btn-primary' %>
+      </div>
+    <% end %>
   </div>
-
-  <div>
-    <%= form.label :description, t('task.table_headers.description') %>
-    <%= form.text_area :description %>
+  <div class="card-footer text-right"> 
+    <%= link_to tasks_path do %>
+      <i class="fas fa-arrow-left"></i>
+    <% end %>
   </div>
-
-  <div>
-    <%= form.label :priority, t('task.table_headers.priority') %>
-    <%= form.number_field :priority %>
-  </div>
-
-  <div>
-    <%= form.label :deadline, t('task.table_headers.deadline') %>
-    <%= form.date_field :deadline %>
-  </div>
-
-  <div>
-    <%= form.label :status, t('task.table_headers.status') %>
-    <%= form.select :status, ["Not Started", "In Progress", "Done"] %>
-  </div>
-  
-  <%# todo: add labels to tasks %>
-
-  <div>
-    <%= form.submit submit_label %>
-  </div>
-<% end %>
-
-<%= link_to t('task.back_to_tasks_link'), tasks_path %>
+</div>
