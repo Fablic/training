@@ -1,4 +1,4 @@
 <div class="container">
-  <h1 class="text-center">><%= t('page_titles.tasks_new') %></h1>
+  <h1 class="text-center"><%= t('page_titles.tasks_new') %></h1>
   <%= render 'form', task: @task, labels: @labels, form_url: tasks_path, form_method: :post, submit_label: t('task.submit_labels.create_task') %>
 </div>
