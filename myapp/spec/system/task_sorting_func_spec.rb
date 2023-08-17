@@ -16,7 +16,7 @@ RSpec.describe 'Task Sorting' do
 
     visit tasks_path
 
-    click_link 'Sort by latest'
+    click_link 'sort_latest'
 
     task_titles_only = all('table tr td:nth-child(1)').map(&:text)
 
@@ -32,10 +32,40 @@ RSpec.describe 'Task Sorting' do
 
     visit tasks_path
 
-    click_link 'Sort by oldest'
+    click_link 'sort_oldest'
     task_titles_only = all('table tr td:nth-child(1)').map(&:text)
 
     # check the oldest order
     expect(task_titles_only).to eq(['Test Task first one', 'Test Task created on second', 'Test Task latest one'])
+  end
+
+  it 'check sort functionality by items as closest due date' do
+    # Tasks with different due date
+    create(:task, title: 'Test Task medium priority', due_date: 2.days.from_now)
+    create(:task, title: 'Test Task low priority', due_date: 3.days.from_now)
+    create(:task, title: 'Test Task high priority', due_date: 1.day.from_now)
+
+    visit tasks_path
+
+    click_link 'closest_deadline'
+    task_titles_only = all('table tr td:nth-child(1)').map(&:text)
+
+    # check the oldest order
+    expect(task_titles_only).to eq(['Test Task high priority', 'Test Task medium priority', 'Test Task low priority'])
+  end
+
+  it 'check sort functionality by items as longest due date' do
+    # Tasks with different due date
+    create(:task, title: 'Test Task medium priority', due_date: 2.days.from_now)
+    create(:task, title: 'Test Task low priority', due_date: 3.days.from_now)
+    create(:task, title: 'Test Task high priority', due_date: 1.day.from_now)
+
+    visit tasks_path
+
+    click_link 'longest_deadline'
+    task_titles_only = all('table tr td:nth-child(1)').map(&:text)
+
+    # check the oldest order
+    expect(task_titles_only).to eq(['Test Task low priority', 'Test Task medium priority', 'Test Task high priority'])
   end
 end

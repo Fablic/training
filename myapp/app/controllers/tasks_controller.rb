@@ -2,10 +2,16 @@
 
 class TasksController < ApplicationController # rubocop:todo Style/Documentation
   def index
-    @tasks = Task.order(created_at: :asc)
-    return unless params[:sort] == 'latest'
-
-    @tasks = Task.order(created_at: :desc)
+    @tasks = case params[:sort]
+             when 'latest'
+               Task.order(created_at: :desc)
+             when 'closest-deadline'
+               Task.order(due_date: :asc)
+             when 'longest-deadline'
+               Task.order(due_date: :desc)
+             else
+               Task.order(created_at: :asc)
+             end
   end
 
   def show
