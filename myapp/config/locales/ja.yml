@@ -28,6 +28,7 @@ ja:
       not_started: "未着手"
       in_progress: "着手中"
       done: "完了"
+    status_placeholder: "ステータスを選択してください"
   page_titles:
     tasks_index: "タスク一覧"
     tasks_new: "新しいタスク"

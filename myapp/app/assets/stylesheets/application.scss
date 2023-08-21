@@ -1,0 +1,70 @@
+@import "bootstrap";
+@import "font-awesome";
+
+.pagination {
+    justify-content: right;
+    margin-right: 20px;
+}
+
+thead th i {
+    margin-left: 5px;
+    font-size: 12px;
+    vertical-align: middle;
+}
+
+.action-icons {
+    font-size: 12px;
+    margin-left: 5px;
+}
+
+.floating-button {
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
+    background-color: #007bff; /* Button color */
+    color: #ffffff; /* Text color */
+    border: none;
+    border-radius: 50%; /* To create a circle shape */
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    font-size: 24px;
+    line-height: 50px;
+    cursor: pointer;
+  }
+.search-form-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+}
+  
+.input-group {
+    width: 100%;
+    border: #007bff solid 1px;
+    border-radius: 20px; 
+    overflow: hidden; 
+}
+  
+.form-control {
+    border-radius: 0; /* Reset the input border radius */
+}
+  
+.btn-outline-secondary {
+    border-color: #ced4da; /* Set the border color */
+}
+  
+.title-column {
+    width: 120px; /* Adjust the width as needed */
+}
+  
+.mx-800 {
+    max-width: 800px;
+    margin: 0 auto;
+}
+  
+.parent-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Adjust this as needed */
+}

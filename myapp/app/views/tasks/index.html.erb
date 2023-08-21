@@ -1,68 +1,93 @@
-<h1><%= t('page_titles.tasks_index') %></h1>
 
-<% if @tasks.any? %>
-  <%= form_tag tasks_path, method: :get do %>
-    <%= label_tag :name, "Name" %>
-    <%= text_field_tag :name, params[:name] %>
-    
-    <%= label_tag :status, "Status" %>
-    <%= select_tag :status, options_for_select([
-      "", 
-      t('task.status_options.not_started'), 
-      t('task.status_options.in_progress'), 
-      t('task.status_options.done')], params[:status]) %>
-    
-    <%= submit_tag "Search" %>
-  <% end %>
-  <div class="sort-links">
-    <%= link_to 'Sort by Newest', tasks_path(sort_by: 'created_at', sort_order: 'desc') %>
-    <%= link_to 'Sort by Oldest', tasks_path(sort_by: 'created_at', sort_order: 'asc') %>
-    <%= link_to 'Sort by Due Date (Newest)', tasks_path(sort_by: 'deadline', sort_order: 'desc') %>
-    <%= link_to 'Sort by Due Date (Oldest)', tasks_path(sort_by: 'deadline', sort_order: 'asc') %>
-  </div>
-
-  <table>
-    <thead>
-      <tr>
-        <th><%= t("task.table_headers.name") %></th>
-        <th><%= t("task.table_headers.description") %></th>
-        <th><%= t("task.table_headers.priority") %></th>
-        <th><%= t("task.table_headers.deadline") %></th>
-        <th><%= t("task.table_headers.status") %></th>
-        <th><%= t("task.table_headers.labels") %></th>
-        <th><%= t("task.table_headers.created_at") %></th>
-        <th><%= t("task.table_headers.actions") %></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @tasks.each do |task| %>
-        <tr>
-          <td><%= task.name %></td>
-          <td><%= task.description %></td>
-          <td><%= task.priority %></td>
-          <td><%= task.deadline %></td>
-          <td><%= task.status %></td>
-          <td>
-            <% task.labels.each do |label| %>
-              <%= label.name %>
-            <% end %>
-          </td>
-          <td><%= task.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
-          <td>
-            <%= link_to t('task.show_task_link'), task_path(task) %>
-            <%= link_to t('task.edit_task_link'), edit_task_path(task) %>
-            <%= link_to t('task.destroy_task_link'), task_path(task), 
-              method: :delete,
-              data: { confirm: t('task.confirm_delete_task') } %>
-          </td>
-        </tr>
+<div class="container">
+  <h1 ><%= t('page_titles.tasks_index') %></h1>
+  <% if @tasks.any? %>
+    <div class="search-form-container">
+      <%= form_tag tasks_path, method: :get, class: 'search-form' do %>
+        <div class="input-group">
+          <%= text_field_tag :name, params[:name], class: 'form-control', placeholder: "task name..." %>
+          <%= select_tag :status, options_for_select([
+            [t('task.status_placeholder'), ''],
+            [t('task.status_options.not_started'), 'Not Started'],
+            [t('task.status_options.in_progress'), 'In Progress'],
+            [t('task.status_options.done'), 'Done']], params[:status]),
+            class: 'form-control' %>
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="submit">
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
+        </div>
       <% end %>
-    </tbody>
-  </table>
-  
-  <%= paginate @tasks %>
-<% else %>
-  <p><%= t('task.no_tasks_found') %> <%= link_to 'Back to home', tasks_path %> </p>
-<% end %>
+    </div>
 
-<%= link_to t('task.new_task_link'), new_task_path %>
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <th><%= t("task.table_headers.name") %></th>
+            <th><%= t("task.table_headers.description") %></th>
+            <th><%= t("task.table_headers.priority") %></th>
+            <th>
+              <%= link_to t("task.table_headers.deadline"), tasks_path(sort_by: 'deadline', sort_order: link_sort_order(params, 'deadline')) %>
+              <% if sort_order(params, 'deadline') == 'asc' %>
+                <i class="fas fa-caret-up"></i>
+              <% elsif sort_order(params, 'deadline') == 'desc' %>
+                <i class="fas fa-caret-down"></i>
+              <% end %>
+            </th>
+            <th><%= t("task.table_headers.status") %></th>
+            <th><%= t("task.table_headers.labels") %></th>
+            <th>
+              <%= link_to t("task.table_headers.created_at"), tasks_path(sort_by: 'created_at', sort_order: link_sort_order(params, 'created_at')) %>
+              <% if sort_order(params, 'created_at') == 'asc' %>
+                <i class="fas fa-caret-up"></i>
+              <% elsif sort_order(params, 'created_at') == 'desc' %>
+                <i class="fas fa-caret-down"></i>
+              <% end %>
+            </th>
+            <th><%= t("task.table_headers.actions") %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @tasks.each do |task| %>
+            <tr>
+              <td><%= task.name %></td>
+              <td><%= task.description %></td>
+              <td><%= task.priority %></td>
+              <td><%= task.deadline %></td>
+              <td><%= task.status %></td>
+              <td>
+                <% task.labels.each do |label| %>
+                  <%= label.name %>
+                <% end %>
+              </td>
+              <td><%= task.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
+              <td>
+                <%= link_to task_path(task) do %>
+                  <i class="fas fa-eye" style="color: blue; margin-right: 10px;"></i>
+                <% end %>
+                
+                <%= link_to edit_task_path(task) do %>
+                  <i class="fas fa-edit" style="color: green; margin-right: 10px; "></i>
+                <% end %>
+                
+                <%= link_to task_path(task), method: :delete, data: { confirm: t('task.confirm_delete_task') } do %>
+                  <i class="fas fa-trash" style="color: red; margin-right: 10px;"></i>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <div class="pagination">
+      <%= paginate @tasks %>
+    </div>
+  <% else %>
+    <p><%= t('task.no_tasks_found') %> <%= link_to 'Back to home', tasks_path %> </p>
+  <% end %>
+  <%= link_to new_task_path, class: 'floating-button' do %>
+    <i class="fas fa-plus"></i>
+  <% end %>
+</div>
