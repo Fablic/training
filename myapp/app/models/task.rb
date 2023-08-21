@@ -11,4 +11,17 @@ class Task < ApplicationRecord # rubocop:todo Style/Documentation
   has_many :labels, through: :tasks_labels
 
   validates :title, presence: true
+
+  scope :custom_order, lambda { |order_by|
+    case order_by
+    when 'latest'
+      order(created_at: :desc)
+    when 'closest-deadline'
+      order(due_date: :asc)
+    when 'far-deadline'
+      order(due_date: 'desc')
+    else
+      order(created_at: :asc)
+    end
+  }
 end
