@@ -73,7 +73,7 @@ en:
         latest: "Sort by latest"
         oldest: "Sort by oldest"
         closest_deadline: "Sort by nearest due date"
-        longest_deadline: "Sort by longest due date"
+        far_deadline: "Sort by longest due date"
     submit:
       edit: "Update"
       create: "Create"

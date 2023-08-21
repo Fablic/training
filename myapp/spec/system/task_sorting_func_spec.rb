@@ -62,7 +62,7 @@ RSpec.describe 'Task Sorting' do
 
     visit tasks_path
 
-    click_link 'longest_deadline'
+    click_link 'far_deadline'
     task_titles_only = all('table tr td:nth-child(1)').map(&:text)
 
     # check the oldest order

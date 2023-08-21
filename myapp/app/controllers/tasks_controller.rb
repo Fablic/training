@@ -7,7 +7,7 @@ class TasksController < ApplicationController # rubocop:todo Style/Documentation
                Task.order(created_at: :desc)
              when 'closest-deadline'
                Task.order(due_date: :asc)
-             when 'longest-deadline'
+             when 'far-deadline'
                Task.order(due_date: :desc)
              else
                Task.order(created_at: :asc)
