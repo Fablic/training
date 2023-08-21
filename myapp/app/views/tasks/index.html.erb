@@ -3,6 +3,9 @@
   <%= link_to t('task.links.create'), new_task_path %>
 </h4>
 <p>
+  <%= render 'search', q: @query, url: tasks_path %>
+</p>
+<p>
   <%= link_to t('task.links.sort.latest'), tasks_path(sort: 'latest'), id: "sort_latest" %> |
   <%= link_to t('task.links.sort.oldest'), tasks_path(sort: 'oldest'), id: "sort_oldest" %> |
   <%= link_to t('task.links.sort.closest_deadline'), tasks_path(sort: 'closest-deadline'), id: "closest_deadline" %>
