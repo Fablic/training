@@ -19,7 +19,7 @@ class Task < ApplicationRecord # rubocop:todo Style/Documentation
     when 'closest-deadline'
       order(due_date: :asc)
     when 'far-deadline'
-      order(due_date: 'desc')
+      order(due_date: :desc)
     else
       order(created_at: :asc)
     end
