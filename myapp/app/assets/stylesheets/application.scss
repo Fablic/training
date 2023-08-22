@@ -70,7 +70,7 @@ thead th i {
     height: 100vh; /* Adjust this as needed */
 }
 
-.signup-card {
+.sign-card {
     max-width: 600px;
     min-width: 350px;
     margin: 0 auto;
@@ -80,14 +80,23 @@ thead th i {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
-.signup-bg {
-    background-image: url('https://event.rakuten.co.jp/okaimonopanda/common/download/zoom_a01.jpg');
+.bg-container {
     background-size: cover;
     background-position: center;
     height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.signup-bg {
+    @extend .bg-container;
+    background-image: url('https://event.rakuten.co.jp/okaimonopanda/common/download/zoom_a01.jpg');
+}
+
+.signin-bg {
+    @extend .bg-container;
+    background-image: url('https://event.rakuten.co.jp/okaimonopanda/common/download/zoom_a02.jpg');
 }
 
 .form-group {

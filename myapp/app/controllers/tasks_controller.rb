@@ -1,6 +1,8 @@
 class TasksController < ApplicationController
+  before_action :require_login
+
   def index
-    @tasks = Task.dynamic_search(params || {})
+    @tasks = Task.dynamic_search(params || {}).where(user_id: current_user.id)
     case params[:sort_by]
     when 'created_at'
       @tasks = @tasks.order(created_at: params[:sort_order] || :desc)
@@ -24,7 +26,7 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
-    @task.user_id = 1
+    @task.user_id = current_user.id
     if @task.save
       flash[:success] = t('task.created_success')
       redirect_to task_path(@task)
@@ -57,5 +59,12 @@ class TasksController < ApplicationController
 
   def task_params
     params.require(:task).permit(:name, :description, :priority, :deadline, :status, :user_id, label_ids: [])
+  end
+  private
+
+  def require_login
+    unless current_user
+      redirect_to login_path
+    end
   end
 end
