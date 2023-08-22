@@ -4,7 +4,7 @@ class TasksController < ApplicationController # rubocop:todo Style/Documentation
   def index
     @query = Task.ransack(params[:q])
 
-    @tasks = @query.result(distinct: true).custom_order(params[:sort])
+    @tasks = @query.result.custom_order(params[:sort])
   end
 
   def show
