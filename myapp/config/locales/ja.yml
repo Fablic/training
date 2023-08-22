@@ -72,6 +72,8 @@ ja:
       sort:
         latest: "新しい順"
         oldest: "古い順"
+        closest_deadline: "期日の近い順"
+        far_deadline: "期限の遠い順"
     submit:
       edit: "更新"
       create: "作成"
