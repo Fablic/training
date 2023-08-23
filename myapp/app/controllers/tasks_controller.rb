@@ -64,7 +64,7 @@ class TasksController < ApplicationController
 
   def require_login
     unless current_user
-      redirect_to login_path
+      redirect_to login_path, alert: "Please login"
     end
   end
 end
