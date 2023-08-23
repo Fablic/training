@@ -54,6 +54,9 @@ en:
       status: "Status"
       priority: "Priority"
       due_date: "Due Date"
+      filter_by_status: "Filter by Status"
+    inputs:
+      search_placeholder: "search words..."
     flashes:
       success:
         created: "Task created."
@@ -69,6 +72,7 @@ en:
       show: "Show Task"
       delete: "Delete Task"
       back_to_all: "All Tasks"
+      reset: 'Reset'
       sort:
         latest: "Sort by latest"
         oldest: "Sort by oldest"
@@ -77,6 +81,7 @@ en:
     submit:
       edit: "Update"
       create: "Create"
+      search: "Search"
 
   errors:
     404_not_found: "404! Page not found"

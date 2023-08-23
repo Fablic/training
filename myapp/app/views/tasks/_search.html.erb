@@ -1,0 +1,8 @@
+<%= search_form_for @query, url: url do |f| %>
+  <%= t('task.labels.status') %>
+  <%= f.select :status_eq, options_for_select(Task.statuses.map { |k, v| [k.humanize, v]}, selected: params.dig(:q, :status_eq) || ''), include_blank: true %>
+  <%= t('task.labels.title') %>
+  <%= f.search_field :title_cont, class: 'form-control', placeholder: t('task.inputs.search_placeholder') %>
+  <%= f.submit t('task.submit.search'), class: 'btn btn-primary', id: 'search' %>
+  <%= link_to t('task.links.reset'), request.path %>
+<% end %>

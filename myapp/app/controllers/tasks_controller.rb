@@ -2,16 +2,9 @@
 
 class TasksController < ApplicationController # rubocop:todo Style/Documentation
   def index
-    @tasks = case params[:sort]
-             when 'latest'
-               Task.order(created_at: :desc)
-             when 'closest-deadline'
-               Task.order(due_date: :asc)
-             when 'far-deadline'
-               Task.order(due_date: :desc)
-             else
-               Task.order(created_at: :asc)
-             end
+    @query = Task.ransack(params[:q])
+
+    @tasks = @query.result.custom_order(params[:sort]).page(params[:page])
   end
 
   def show
