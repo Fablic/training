@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   # ...
   # Custom 500 Internal Server Error handling
-  rescue_from Exception, with: :render_internal_server_error
+  # rescue_from Exception, with: :render_internal_server_error
 
   # Custom 404 Not Found error handling
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found

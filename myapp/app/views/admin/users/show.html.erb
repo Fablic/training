@@ -1,28 +1,36 @@
-<h1><%= @user.username %>'s Tasks</h1>
-
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Description</th>
-    <th>Priority</th>
-    <th>Deadline</th>
-    <th>Status</th>
-    <th>Labels</th>
-  </tr>
-  <% @tasks.each do |task| %>
-    <tr>
-      <td><%= task.name %></td>
-      <td><%= task.description %></td>
-      <td><%= task.priority %></td>
-      <td><%= task.deadline %></td>
-      <td><%= task.status %></td>
-      <td>
-        <% task.labels.each do |label| %>
-          <%= label.name %>
-        <% end %>
-      </td>
-    </tr>
-  <% end %>
-</table>
-
-<%= link_to 'Back to User List', admin_users_path %>
+<div class="container mt-4">
+    <h1 class="mt-4"><%= @user.username %>'s Tasks</h1>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead class="thead-light">
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Priority</th>
+                    <th>Deadline</th>
+                    <th>Status</th>
+                    <th>Labels</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% @tasks.each do |task| %>
+                    <tr>
+                        <td><%= task.name %></td>
+                        <td><%= task.description %></td>
+                        <td><%= task.priority %></td>
+                        <td><%= task.deadline %></td>
+                        <td><%= task.status %></td>
+                        <td>
+                            <% task.labels.each do |label| %>
+                                <%= label.name %>
+                            <% end %>
+                        </td>
+                    </tr>
+                <% end %>
+            </tbody>
+        </table>
+    </div>
+    <div class="d-flex justify-content-end mb-4">
+        <%= link_to 'Back to User List', admin_users_path, class: 'btn btn-secondary mt-2' %>
+    </div>
+</div>

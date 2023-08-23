@@ -1,28 +1,32 @@
-<h1>User Management</h1>
-
-<table class="table">
-  <thead>
-    <tr>
-      <th>Username</th>
-      <th>Email</th>
-      <th>Number of Tasks</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @users.each do |user| %>
-      <tr>
-        <td><%= user.username %></td>
-        <td><%= user.email %></td>
-        <td><%= user.tasks.count %></td>
-        <td>
-          <%= link_to 'Show Tasks', admin_user_path(user), class: 'btn btn-primary' %>
-          <%= link_to 'Edit', edit_admin_user_path(user), class: 'btn btn-secondary' %>
-          <%= link_to 'Delete', admin_user_path(user), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<%= link_to 'New User', new_admin_user_path, class: 'btn btn-success' %>
+<div class="container mt-4">
+    <h1 class="mt-4 mb-4">User Management</h1>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead class="thead-light">
+            <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Number of Tasks</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% @users.each do |user| %>
+                <tr>
+                <td><%= user.username %></td>
+                <td><%= user.email %></td>
+                <td><%= user.tasks.count %></td>
+                <td>
+                    <%= link_to 'Tasks', admin_user_path(user), class: 'btn btn-info btn-sm' %>
+                    <%= link_to 'Edit', edit_admin_user_path(user), class: 'btn btn-primary btn-sm' %>
+                    <%= link_to 'Delete', admin_user_path(user), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm' %>
+                </td>
+                </tr>
+            <% end %>
+            </tbody>
+        </table>
+    </div>
+    <div class="d-flex justify-content-end mb-4">
+        <%= link_to 'New User', new_admin_user_path, class: 'btn btn-success' %>
+    </div>
+</div>
