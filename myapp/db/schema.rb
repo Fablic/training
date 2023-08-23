@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_08_04_072121) do
+ActiveRecord::Schema.define(version: 2023_08_23_024907) do
 
   create_table "labels", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name"
@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(version: 2023_08_04_072121) do
     t.string "last_name"
     t.string "email"
     t.string "username"
-    t.string "password"
+    t.string "password_digest"
     t.date "date_of_birth"
     t.boolean "is_admin"
     t.datetime "created_at", precision: 6, null: false
