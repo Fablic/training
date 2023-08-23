@@ -1,0 +1,28 @@
+<h1><%= @user.username %>'s Tasks</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Priority</th>
+    <th>Deadline</th>
+    <th>Status</th>
+    <th>Labels</th>
+  </tr>
+  <% @tasks.each do |task| %>
+    <tr>
+      <td><%= task.name %></td>
+      <td><%= task.description %></td>
+      <td><%= task.priority %></td>
+      <td><%= task.deadline %></td>
+      <td><%= task.status %></td>
+      <td>
+        <% task.labels.each do |label| %>
+          <%= label.name %>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+<%= link_to 'Back to User List', admin_users_path %>
