@@ -29,8 +29,11 @@
         </div>
         
         <% if current_user %>
-          <div class="navbar-nav ml-auto">
-            <%= link_to 'Log out', logout_path, method: :delete %>
+          <div class="navbar-text", style="margin-right:10px; font-weight: bold;">
+            <%= current_user.username %>
+          </div>
+          <div class="navbar-nav">
+            <%= link_to 'Log out', logout_path, method: :delete, class: 'btn btn-outline-danger' %>
           </div>
         <% end %>
       </div>
