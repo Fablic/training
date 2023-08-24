@@ -19,6 +19,11 @@
     <%= form.password_field :password_confirmation, class: 'form-control' %>
   </div>
 
+  <div class="form-group">
+    <%= form.label :role %>
+    <%= form.select :role, User::ROLES, {}, class: 'form-control' %>
+  </div>
+
   <div class="form-group text-center">
     <%= form.submit 'Save', class: 'btn btn-primary' %>
   </div>
