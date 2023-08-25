@@ -31,40 +31,69 @@ thead th i {
     font-size: 24px;
     line-height: 50px;
     cursor: pointer;
-  }
+}
+
 .search-form-container {
     display: flex;
     justify-content: flex-end;
     margin-bottom: 20px;
 }
-  
+
 .input-group {
     width: 100%;
     border: #007bff solid 1px;
     border-radius: 20px; 
     overflow: hidden; 
 }
-  
+
 .form-control {
     border-radius: 0; /* Reset the input border radius */
 }
-  
+
 .btn-outline-secondary {
     border-color: #ced4da; /* Set the border color */
 }
-  
+
 .title-column {
     width: 120px; /* Adjust the width as needed */
 }
-  
+
 .mx-800 {
     max-width: 800px;
     margin: 0 auto;
 }
-  
+
 .parent-container {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh; /* Adjust this as needed */
+}
+
+.signup-card {
+    max-width: 600px;
+    min-width: 350px;
+    margin: 0 auto;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.signup-bg {
+    background-image: url('https://event.rakuten.co.jp/okaimonopanda/common/download/zoom_a01.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.text-center {
+    text-align: center;
 }
