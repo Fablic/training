@@ -11,6 +11,11 @@
 
   <body>
     <%= render 'layouts/flash' %>
+    <% if current_user %>
+      <div>
+        <%= link_to 'Log out', logout_path, method: :delete %>
+      </div>
+    <% end %>
     <%= yield %>
   </body>
 </html>

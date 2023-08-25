@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class TasksController < ApplicationController # rubocop:todo Style/Documentation
+  before_action :check_authentication
   def index
     @query = Task.ransack(params[:q])
 
