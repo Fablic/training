@@ -4,9 +4,9 @@ class ApplicationController < ActionController::Base
   # rescue_from Exception, with: :render_internal_server_error
 
   # Custom 404 Not Found error handling
-  rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
-  rescue_from ActionController::RoutingError, with: :render_not_found
-  rescue_from ActionController::UnknownFormat, with: :route_not_found
+  # rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
+  # rescue_from ActionController::RoutingError, with: :render_not_found
+  # rescue_from ActionController::UnknownFormat, with: :route_not_found
 
   before_action :set_locale
 
