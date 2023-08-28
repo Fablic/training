@@ -17,9 +17,7 @@ class Task < ApplicationRecord
     else
       query = query.search_by_name(search_params[:search_text]) if search_params[:search_text].present?
     end
-
-    query = query.where(status: search_params[:status]) if search_params[:status].present?
-
+    
     query
   end
 
