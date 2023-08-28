@@ -4,7 +4,6 @@ class TasksController < ApplicationController # rubocop:todo Style/Documentation
   before_action :check_authentication
   def index
     @query = Task.ransack(params[:q])
-    puts(@current_user["id"])
     @tasks = @query.result.where(user_id: current_user['id']).custom_order(params[:sort]).page(params[:page])
   end
 
