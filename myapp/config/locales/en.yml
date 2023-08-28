@@ -60,6 +60,7 @@ en:
       in_progress: "In Progress"
       done: "Done"
     status_placeholder: "Select a status"
+    require_login: "Please log in"
   page_titles:
     tasks_index: "Task List"
     tasks_new: "New Task"
@@ -68,4 +69,9 @@ en:
   errors:
     not_found: "Page not found"
     internal_server_error: "Internal Server Error"
-  
+  sessions:
+    create:
+      success: "Logged in successfully!"
+      failure: "Invalid username or password"
+    destroy:
+      success: "Logged out successfully!"
