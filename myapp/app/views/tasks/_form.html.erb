@@ -38,10 +38,10 @@
           <tr>
             <td class="title-column"><%= t('task.table_headers.labels') %></td>
             <td>
-              <div class="labels-container">
+              <div class="form-group">
                 <% @labels.each do |label| %>
-                  <%= form.check_box :label_ids, { multiple: true }, label.id, id: label.id%>
-                  <%= form.label "label_#{label.id}", label.name, class: 'label-button' %>
+                  <%= check_box_tag "task[label_ids][]", label.id, @task.label_ids.include?(label.id) %>
+                  <%= label.name %><br>
                 <% end %>
               </div>
             </td>
@@ -68,8 +68,6 @@
           </div>
         </div>
       </div>
-      
-
       <div class="form-group text-center">
         <%= form.submit submit_label, class: 'btn btn-primary' %>
       </div>
