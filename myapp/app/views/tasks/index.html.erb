@@ -85,7 +85,7 @@
       <%= paginate @tasks %>
     </div>
   <% else %>
-    <p><%= t('task.no_tasks_found') %> <%= link_to 'Back to home', tasks_path %> </p>
+    <p><%= t('task.no_tasks_found') %></p>
   <% end %>
   <%= link_to new_task_path, class: 'floating-button' do %>
     <i class="fas fa-plus"></i>

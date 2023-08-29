@@ -31,4 +31,12 @@ class ApplicationController < ActionController::Base
     Rails.logger.error "500 Internal Server Error: #{exception.message}"
     render template: 'errors/500.html', status: :internal_server_error
   end
+  
+  helper_method :current_user
+
+  private
+
+  def current_user
+    @current_user ||= User.find_by(id: session[:user_id])
+  end
 end
