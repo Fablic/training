@@ -121,3 +121,13 @@ thead th i {
     background-color: #e2e8f0;
     cursor: pointer;
 }
+.maintenance-page {
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column; 
+    padding: 20px;
+    height: 100vh;
+    background-image: url('https://event.rakuten.co.jp/okaimonopanda/common/download/zoom_a05.jpg');
+}
