@@ -3,9 +3,9 @@ class SessionsController < ApplicationController
     user = User.find_by(username: params[:username])
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
-      redirect_to tasks_path, notice: 'Logged in successfully!'
+      redirect_to tasks_path, notice: t('sessions.create.success')
     else
-      flash.now[:alert] = 'Invalid username or password'
+      flash.now[:alert] = t('sessions.create.failure')
       render :new
     end
   end
@@ -13,6 +13,6 @@ class SessionsController < ApplicationController
   def destroy
     session[:user_id] = nil
     @current_user = nil
-    redirect_to login_path, notice: 'Logged out successfully!'
+    redirect_to login_path, notice: t('sessions.destroy.success')
   end
 end
