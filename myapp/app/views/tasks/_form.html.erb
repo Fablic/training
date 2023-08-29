@@ -39,10 +39,14 @@
             <td class="title-column"><%= t('task.table_headers.labels') %></td>
             <td>
               <div class="form-group">
-                <% @labels.each do |label| %>
-                  <%= check_box_tag "task[label_ids][]", label.id, @task.label_ids.include?(label.id) %>
-                  <%= label.name %><br>
-                <% end %>
+                <div id="labels-list">
+                  <% @labels.each do |label| %>
+                    <%= check_box_tag "task[label_ids][]", label.id, @task.label_ids.include?(label.id) %>
+                    <%= label.name %><br>
+                  <% end %>
+                </div>
+                <%= text_field_tag 'new_label_name', '', class: 'form-control', placeholder: 'New Label Name' %>
+                <%= button_tag 'Add New Label', type: 'button', class: 'btn btn-success mt-2', id: 'add-label-button' %>
               </div>
             </td>
           </tr>
@@ -59,3 +63,42 @@
     <% end %>
   </div>
 </div>
+
+<script>
+  $(document).ready(function() {
+    $('#add-label-button').on('click', function(e) {
+      e.preventDefault();
+      var newLabel = $('#new_label_name').val();
+      console.log(newLabel);
+      
+      if (newLabel.trim() !== '') {
+        $.ajax({
+          url: '/labels',
+          method: 'POST',
+          data: { label: { name: newLabel } },
+          beforeSend: function(xhr) {
+            xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+          },
+          dataType: 'json',
+          success: function(response) {
+            if (response.success) {
+              alert('Added label successfully.');
+              $('#labels-list').append(
+                '<label>' +
+                  '<input type="checkbox" name="task[label_ids][]" value="' + response.label_id + '" checked>' +
+                  newLabel +
+                '</label><br>'
+              );
+              $('#new_label_name').val('');
+            } else {
+              alert('Error creating label.');
+            }
+          },
+          error: function() {
+            alert('An error occurred.');
+          }
+        });
+      }
+    });
+  });
+</script>
