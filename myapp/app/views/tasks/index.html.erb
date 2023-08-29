@@ -21,7 +21,6 @@
       <% end %>
     </div>
 
-
     <div class="table-responsive">
       <table class="table table-striped table-bordered">
         <thead>
@@ -30,25 +29,21 @@
             <th><%= t("task.table_headers.description") %></th>
             <th><%= t("task.table_headers.priority") %></th>
             <th>
-              <%= link_to t("task.table_headers.deadline"), tasks_path(sort_by: 'deadline', sort_order: params[:sort_by] == 'deadline' && params[:sort_order] == 'asc' ? 'desc' : 'asc') %>
-              <% if params[:sort_by] == 'deadline' %>
-                <% if params[:sort_order] == 'asc' %>
-                  <i class="fas fa-caret-up"></i>
-                <% else %>
-                  <i class="fas fa-caret-down"></i>
-                <% end %>
+              <%= link_to t("task.table_headers.deadline"), tasks_path(sort_by: 'deadline', sort_order: link_sort_order(params, 'deadline')) %>
+              <% if sort_order(params, 'deadline') == 'asc' %>
+                <i class="fas fa-caret-up"></i>
+              <% elsif sort_order(params, 'deadline') == 'desc' %>
+                <i class="fas fa-caret-down"></i>
               <% end %>
             </th>
             <th><%= t("task.table_headers.status") %></th>
             <th><%= t("task.table_headers.labels") %></th>
             <th>
-              <%= link_to t("task.table_headers.created_at"), tasks_path(sort_by: 'created_at', sort_order: params[:sort_by] == 'created_at' && params[:sort_order] == 'asc' ? 'desc' : 'asc') %>
-              <% if params[:sort_by] == 'created_at' %>
-                <% if params[:sort_order] == 'asc' %>
-                  <i class="fas fa-caret-up"></i>
-                <% else %>
-                  <i class="fas fa-caret-down"></i>
-                <% end %>
+              <%= link_to t("task.table_headers.created_at"), tasks_path(sort_by: 'created_at', sort_order: link_sort_order(params, 'created_at')) %>
+              <% if sort_order(params, 'created_at') == 'asc' %>
+                <i class="fas fa-caret-up"></i>
+              <% elsif sort_order(params, 'created_at') == 'desc' %>
+                <i class="fas fa-caret-down"></i>
               <% end %>
             </th>
             <th><%= t("task.table_headers.actions") %></th>
