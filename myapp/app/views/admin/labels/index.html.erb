@@ -1,0 +1,24 @@
+<h1><%= t('label.titles.index') %></h1>
+<h4>
+  <%= link_to t('label.links.create'), new_admin_label_path %>
+</h4>
+
+<table border="1" cellpadding="5">
+    <tr>
+        <th><%= t('label.table.headers.name') %></th>
+        <th><%= t('label.table.headers.description') %></th>
+      <th><%= t('label.table.headers.actions') %></th>
+    </tr>
+    <% @labels.each do |label| %>
+      <tr>
+        <td><%= label.name %></td>
+        <td><%= label.description %></td>
+        <td>
+          <%= link_to t('label.table.action_links.edit'), edit_admin_label_path(label) %>
+          <%= link_to t('label.table.action_links.delete'), admin_label_path(label),
+                      method: :DELETE,
+                      data: { confirm: t('label.flashes.confirm_delete') } %>
+        </td>
+      </tr>
+    <% end %>
+</table>

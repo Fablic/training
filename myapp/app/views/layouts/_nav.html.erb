@@ -1,6 +1,7 @@
 <p>
   <%= link_to t('task.links.index'), tasks_path, id: "all_tasks" %> |
-  <%= link_to t('user.links.index'), admin_users_path, id: "all_admin_user" %>
+  <%= link_to t('user.links.index'), admin_users_path, id: "all_admin_user" %> |
+  <%= link_to t('label.links.index'), admin_labels_path, id: "all_admin_label" %>
 </p>
 <% if current_user %>
   <div>

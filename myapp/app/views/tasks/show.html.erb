@@ -21,6 +21,13 @@
     <th><%= t('task.labels.status') %>:</th>
     <td><%= @task.status.humanize %></td>
   </tr>
+  <tr>
+    <th><%= t('task.labels.labels') %>:</th>
+    <td><% @labels.each do |label| %>
+        <%= label.name %><br>
+      <% end %>
+    </td>
+  </tr>
 </table>
 
 <%= link_to t('task.links.edit'), edit_task_path(@task) %> |
