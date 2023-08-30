@@ -100,6 +100,59 @@ en:
       edit: "Update"
       create: "Create"
       search: "Search"
+  user:
+    titles:
+      index: "All Users"
+      new: "Create User"
+      edit: "Edit User"
+      show: "User Details"
+    table:
+      headers:
+        title: "Title"
+        status: "Status"
+        priority: "Priority"
+        due_date: "Due Date"
+        created_at: "Created at"
+        actions: "Actions"
+      action_links:
+        show: "Show"
+        edit: "Update"
+        delete: "Delete"
+    labels:
+      title: "Title"
+      description: "Description"
+      status: "Status"
+      priority: "Priority"
+      due_date: "Due Date"
+      filter_by_status: "Filter by Status"
+    inputs:
+      search_placeholder: "search words..."
+    flashes:
+      success:
+        created: "User created."
+        updated: "User updated."
+        deleted: "User deleted."
+        confirm_delete: "sure want to delete this User?"
+      failed:
+        form_submit: "error prohibited this User from being saved."
+    links:
+      index: "All Users"
+      create: "Add User"
+      edit: "Edit User"
+      show: "Show User"
+      delete: "Delete User"
+      back_to_all: "All Users"
+      reset: 'Reset'
+      sort:
+        latest: "Sort by latest"
+        oldest: "Sort by oldest"
+        closest_deadline: "Sort by nearest due date"
+        far_deadline: "Sort by longest due date"
+    submit:
+      edit: "Update"
+      create: "Create"
+      search: "Search"
+
 
   errors:
     404_not_found: "404! Page not found"

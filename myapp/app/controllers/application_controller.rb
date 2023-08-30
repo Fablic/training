@@ -29,6 +29,10 @@ class ApplicationController < ActionController::Base # rubocop:todo Style/Docume
     redirect_to login_path
   end
 
+  def check_admin_auth
+    redirect_to tasks_path unless current_user&.is_admin
+  end
+
   helper_method :current_user
 
   private
@@ -46,6 +50,10 @@ class ApplicationController < ActionController::Base # rubocop:todo Style/Docume
   end
 
   def current_user
-    @current_user ||= session[:user]
+    if session[:user]
+      return @current_user ||= User.find(session[:user]['id'])
+    end
+
+    nil
   end
 end

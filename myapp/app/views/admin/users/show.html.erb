@@ -1,0 +1,46 @@
+<h1><%= t('user.titles.show') %></h1>
+
+<table>
+  <tr>
+    <th><%= t('user.labels.first_name') %>:</th>
+    <td><%= @user.first_name %></td>
+  </tr>
+  <tr>
+    <th><%= t('user.labels.last_name') %>:</th>
+    <td><%= @user.last_name %></td>
+  </tr>
+  <tr>
+    <th><%= t('user.labels.username') %>:</th>
+    <td><%= @user.username %></td>
+  </tr>
+  <tr>
+    <th><%= t('user.labels.email') %>:</th>
+    <td><%= @user.email %></td>
+  </tr>
+  <tr>
+    <th><%= t('user.labels.date_of_birth') %>:</th>
+    <td><%= @user.date_of_birth %></td>
+  </tr>
+</table>
+<hr>
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Description</th>
+    <th>Priority</th>
+    <th>Due Date</th>
+    <th>Status</th>
+  </tr>
+  <% @user.tasks.each do |task| %>
+    <tr>
+      <td><%= task.title %></td>
+      <td><%= task.description %></td>
+      <td><%= task.priority %></td>
+      <td><%= task.due_date %></td>
+      <td><%= task.status.humanize %></td>
+    </tr>
+  <% end %>
+</table>
+
+
+<%= link_to t('user.links.edit'), edit_admin_user_path(@user) %>
