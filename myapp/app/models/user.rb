@@ -5,7 +5,7 @@ class User < ApplicationRecord # rubocop:todo Style/Documentation
 
   before_save :downcase_email
 
-  has_many :tasks # rubocop:todo Rails/HasManyOrHasOneDependent
+  has_many :tasks, dependent: :destroy
   has_many :assigned_tasks, class_name: 'Task', foreign_key: 'assigned_user_id' # rubocop:todo Rails/HasManyOrHasOneDependent
 
   validates :first_name, presence: true

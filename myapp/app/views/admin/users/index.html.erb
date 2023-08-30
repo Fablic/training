@@ -1,0 +1,35 @@
+<h1><%= t('user.titles.index') %></h1>
+<h4>
+  <%= link_to t('user.links.create'), new_admin_user_path %>
+</h4>
+
+<table border="1" cellpadding="5">
+    <tr>
+        <th><%= t('user.table.headers.first_name') %></th>
+        <th><%= t('user.table.headers.last_name') %></th>
+        <th><%= t('user.table.headers.date_of_birth') %></th>
+      <th><%= t('user.table.headers.email') %></th>
+      <th><%= t('user.table.headers.username') %></th>
+      <th><%= t('user.table.headers.role') %></th>
+      <th><%= t('user.table.headers.total_tasks') %></th>
+      <th><%= t('user.table.headers.actions') %></th>
+    </tr>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.first_name %></td>
+        <td><%= user.last_name %></td>
+        <td><%= user.date_of_birth %></td>
+        <td><%= user.email %></td>
+        <td><%= user.username %></td>
+        <td><%= user.is_admin? ? "Admin":"User" %></td>
+        <td><%= user.tasks.count %></td>
+        <td>
+          <%= link_to t('user.table.action_links.show_tasks'), admin_user_path(user) %>
+          <%= link_to t('user.table.action_links.edit'), edit_admin_user_path(user) %>
+          <%= link_to t('user.table.action_links.delete'), admin_user_path(user),
+                      method: :DELETE,
+                      data: { confirm: t('user.flashes.confirm_delete') } %>
+        </td>
+      </tr>
+    <% end %>
+</table>

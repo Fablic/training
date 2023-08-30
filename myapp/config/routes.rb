@@ -3,6 +3,10 @@
 Rails.application.routes.draw do
   # get 'tasks/index'
 
+  namespace :admin do
+    resources :users
+  end
+
   resources :tasks
 
   get 'login' => 'auth#login'

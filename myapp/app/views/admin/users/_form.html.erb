@@ -1,0 +1,52 @@
+<%= form_with model: @user, url: form_url, local: true do |form| %>
+
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, t('task.flashes.failed.form_submit')) %></h2>
+      <ul>
+        <% @user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= t('user.labels.first_name') %>
+    <%= form.text_field :first_name, id: 'first_name' %>
+  </div>
+
+  <div>
+    <%= t('user.labels.last_name') %>
+    <%= form.text_field :last_name, id: 'last_name' %>
+  </div>
+
+  <div>
+    <%= t('user.labels.username') %>
+    <%= form.text_field :username, id: 'username' %>
+  </div>
+
+  <div>
+    <%= t('user.labels.email') %>
+    <%= form.email_field :email, id: 'email' %>
+  </div>
+
+  <div>
+    <%= t('user.labels.password') %>
+    <%= form.password_field :password, id: 'password' %>
+  </div>
+
+  <div>
+    <%= t('user.labels.password_confirmation') %>
+    <%= form.password_field :password_confirmation, id: 'password_confirmation' %>
+  </div>
+
+  <div>
+    <%= t('user.labels.role') %>
+    <%= form.select :is_admin, { 'admin' => 1, 'user' => 0 }, {'admin' => 1}, id: 'is_admin' %>
+  </div>
+
+  <div>
+    <%= form.submit submit_label %>
+  </div>
+<% end %>

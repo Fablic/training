@@ -4,7 +4,11 @@ class TasksController < ApplicationController # rubocop:todo Style/Documentation
   before_action :check_authentication
   def index
     @query = Task.ransack(params[:q])
-    @tasks = @query.result.where(user_id: current_user['id']).custom_order(params[:sort]).page(params[:page])
+    @tasks = if current_user.is_admin
+               @query.result.custom_order(params[:sort]).page(params[:page])
+             else
+               @query.result.where(user_id: current_user['id']).custom_order(params[:sort]).page(params[:page])
+             end
   end
 
   def show
