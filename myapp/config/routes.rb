@@ -4,6 +4,10 @@ Rails.application.routes.draw do
   # get 'tasks/index'
 
   resources :tasks
+
+  get 'login' => 'auth#login'
+  post 'login' => 'auth#authenticate'
+  delete 'logout' => 'auth#logout'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
   # Custom Error pages handling routes

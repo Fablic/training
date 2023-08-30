@@ -23,6 +23,14 @@ class ApplicationController < ActionController::Base # rubocop:todo Style/Docume
     raise ActionController::RoutingError, params[:path]
   end
 
+  def check_authentication
+    return if current_user
+
+    redirect_to login_path
+  end
+
+  helper_method :current_user
+
   private
 
   def _render_404(exception = nil)
@@ -35,5 +43,9 @@ class ApplicationController < ActionController::Base # rubocop:todo Style/Docume
     Rails.logger.error "Rendering 500 with exception: #{exception.message}" if exception
 
     render 'errors/500', status: :internal_server_error
+  end
+
+  def current_user
+    @current_user ||= session[:user]
   end
 end

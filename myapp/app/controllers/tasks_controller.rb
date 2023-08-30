@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 class TasksController < ApplicationController # rubocop:todo Style/Documentation
+  before_action :check_authentication
   def index
     @query = Task.ransack(params[:q])
-
-    @tasks = @query.result.custom_order(params[:sort]).page(params[:page])
+    @tasks = @query.result.where(user_id: current_user['id']).custom_order(params[:sort]).page(params[:page])
   end
 
   def show
@@ -23,7 +23,7 @@ class TasksController < ApplicationController # rubocop:todo Style/Documentation
 
   def create
     @task = Task.new(task_params)
-    @task.user_id = 1 # because user must exist
+    @task.user_id = current_user['id']
     @task.user_type = 'Task' # user_type is needed because of NOT NULL
     if @task.save
       flash[:success] = t('task.flashes.success.created')

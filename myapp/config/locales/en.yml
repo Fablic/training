@@ -30,6 +30,24 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
+  login:
+    form:
+      titles:
+        login: "Login"
+      placeholders:
+        username: "Enter your username"
+        password: "Enter your password"
+      labels:
+        username: "Username"
+        password: "Password"
+      submit:
+        login: "Login"
+      flashes:
+        success:
+          login: "Logged in successfully!"
+          logout: "Logged out successfully!"
+        failed:
+          login: "Invalid username or password"
   task:
     titles:
       index: "All Tasks"
