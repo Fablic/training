@@ -30,7 +30,10 @@ class ApplicationController < ActionController::Base # rubocop:todo Style/Docume
   end
 
   def check_admin_auth
-    redirect_to tasks_path unless current_user&.is_admin
+    return if current_user&.is_admin
+
+    flash[:alert] = 'Unauthorized!'
+    redirect_to tasks_path
   end
 
   helper_method :current_user

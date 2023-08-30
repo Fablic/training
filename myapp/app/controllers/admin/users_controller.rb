@@ -39,9 +39,14 @@ class Admin::UsersController < ApplicationController
 
   def destroy
     @user = User.find(params[:id])
-    @user.tasks.destroy_all
-    @user.destroy
-    flash[:success] = t('user.flashes.success.deleted')
+    if @user.id != current_user.id
+      @user.tasks.destroy_all
+      @user.destroy
+      flash[:success] = t('user.flashes.success.deleted')
+    else
+      flash[:alert] = 'You can not remove yourself'
+    end
+
     redirect_to admin_users_path
   end
 
