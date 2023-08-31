@@ -33,7 +33,6 @@ class Admin::LabelsController < ApplicationController
 
   def destroy
     @label = Label.find(params[:id])
-    puts(@label.tasks)
     @label.tasks.destroy_all
     @label.destroy
     redirect_to admin_labels_path, flash: { success:  t('label.flashes.success.deleted')}
