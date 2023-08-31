@@ -4,6 +4,8 @@ require_relative 'boot'
 
 require 'rails/all'
 
+require_relative '../lib/maintenance_middleware'
+
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
@@ -19,6 +21,12 @@ module Myapp
     # time zone setting for Tokyo +9 GMT
     config.time_zone = 'Tokyo'
     config.active_record.default_timezone = :local
+
+    # set maintenance middleware to use
+    config.middleware.use MaintenanceMiddleware
+
+    # set maintenance mode
+    config.maintenance_mode = true
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers

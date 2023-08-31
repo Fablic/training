@@ -16,8 +16,7 @@ class Admin::LabelsController < ApplicationController
   def create
     @label = Label.new(label_params)
     if @label.save
-      flash[:success] = t('label.flashes.success.created')
-      redirect_to admin_labels_path
+      redirect_to admin_labels_path, flash: { success: t('label.flashes.success.created') }
     else
       render :new
     end
@@ -26,8 +25,7 @@ class Admin::LabelsController < ApplicationController
   def update
     @label = Label.find(params[:id])
     if @label.update(label_params)
-      flash[:notice] = t('label.flashes.success.updated')
-      redirect_to admin_labels_path
+      redirect_to admin_labels_path, flash: { notice: t('label.flashes.success.updated') }
     else
       render :edit
     end
@@ -35,12 +33,9 @@ class Admin::LabelsController < ApplicationController
 
   def destroy
     @label = Label.find(params[:id])
-    puts(@label.tasks)
     @label.tasks.destroy_all
     @label.destroy
-    flash[:success] = t('label.flashes.success.deleted')
-
-    redirect_to admin_labels_path
+    redirect_to admin_labels_path, flash: { success: t('label.flashes.success.deleted') }
   end
 
   private
