@@ -1,0 +1,27 @@
+<%= form_with model: @label, url: form_url, local: true do |form| %>
+
+  <% if @label.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@label.errors.count, t('label.flashes.failed.form_submit')) %></h2>
+      <ul>
+        <% @label.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= t('label.labels.name') %>
+    <%= form.text_field :name, id: 'name' %>
+  </div>
+
+  <div>
+    <%= t('label.labels.description') %>
+    <%= form.text_field :description, id: 'description' %>
+  </div>
+
+  <div>
+    <%= form.submit submit_label %>
+  </div>
+<% end %>

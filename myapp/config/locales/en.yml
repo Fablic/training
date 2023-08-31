@@ -152,7 +152,39 @@ en:
       edit: "Update"
       create: "Create"
       search: "Search"
-
+  label:
+    titles:
+      index: "All Labels"
+      new: "Create Label"
+      edit: "Edit Label"
+    table:
+      headers:
+        name: "Name"
+        description: "Description"
+        actions: "Actions"
+      action_links:
+        edit: "Update"
+        delete: "Delete"
+    labels:
+      name: "Name"
+      description: "Description"
+      status: "Status"
+    flashes:
+      success:
+        created: "Label created."
+        updated: "Label updated."
+        deleted: "Label deleted."
+        confirm_delete: "sure want to delete this Label?"
+      failed:
+        form_submit: "error prohibited this Label from being saved."
+    links:
+      index: "All Labels"
+      create: "Add Label"
+      edit: "Edit Label"
+      delete: "Delete Label"
+    submit:
+      edit: "Update"
+      create: "Create"
 
   errors:
     404_not_found: "404! Page not found"
