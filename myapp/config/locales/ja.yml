@@ -29,6 +29,7 @@ ja:
       in_progress: "着手中"
       done: "完了"
     status_placeholder: "ステータスを選択してください"
+    require_login: "ログインしてください"
   page_titles:
     tasks_index: "タスク一覧"
     tasks_new: "新しいタスク"
@@ -37,3 +38,9 @@ ja:
   errors:
     not_found: "ページが見つかりません"
     internal_server_error: "サーバー内部エラー"
+  sessions:
+    create:
+      success: "ログインしました！"
+      failure: "無効なユーザー名またはパスワードです"
+    destroy:
+      success: "ログアウトしました！"
