@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   # ...
   # Custom 500 Internal Server Error handling
-  rescue_from Exception, with: :render_internal_server_error
+  # rescue_from Exception, with: :render_internal_server_error
 
   # Custom 404 Not Found error handling
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
   rescue_from ActionController::UnknownFormat, with: :route_not_found
 
   before_action :set_locale
+  before_action :check_maintenance
 
   def set_locale
     I18n.locale = params[:locale] || I18n.default_locale
@@ -38,5 +39,11 @@ class ApplicationController < ActionController::Base
 
   def current_user
     @current_user ||= User.find_by(id: session[:user_id])
+  end
+
+  def check_maintenance
+    if Rails.application.config.maintenance_mode && request.path != maintenance_path
+      redirect_to maintenance_path
+    end
   end
 end
