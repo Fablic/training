@@ -38,8 +38,8 @@ class Admin::UsersController < ApplicationController
   end
 
   def destroy
-    if @user.admin? && User.where(role: "admin").count <= 1
-      flash[:alert] = "You cannot delete the only admin user."
+    if @user.admin? && User.where(role:'admin').count <= 1
+      flash[:alert] = 'You cannot delete the only admin user.'
       redirect_to admin_users_path
       return
     end
