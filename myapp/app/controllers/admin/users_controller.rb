@@ -13,7 +13,7 @@ class Admin::UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      flash[:notice] = "User created successfully."
+      flash[:notice] = 'User created successfully.'
       redirect_to admin_users_path
     else
       render :new
@@ -22,7 +22,7 @@ class Admin::UsersController < ApplicationController
 
   def update
     if @user.update(user_params)
-      flash[:notice] = "User updated successfully."
+      flash[:notice] = 'User updated successfully.'
       redirect_to admin_users_path
     else
       render :edit
@@ -60,7 +60,7 @@ class Admin::UsersController < ApplicationController
 
   def require_admin
     unless current_user && current_user.admin?
-      flash[:alert] = "You are not authorized to do that."
+      flash[:alert] = 'You are not authorized to do that.'
       redirect_to root_path
     end
   end
