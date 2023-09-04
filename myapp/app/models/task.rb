@@ -12,15 +12,20 @@ class Task < ApplicationRecord
   scope :dynamic_search, ->(search_params) do
     query = all
 
-    search_params.each do |key, value|
-      case key
-      when 'name'
-        query = query.where('name LIKE ?', "%#{value}%") if value.present?
-      when 'status'
-        query = query.where(status: value) if value.present?
-      end
+    if search_params[:search_by] == 'labels'
+      query = query.search_by_labels(search_params[:search_text]) if search_params[:search_text].present?
+    else
+      query = query.search_by_name(search_params[:search_text]) if search_params[:search_text].present?
     end
-
+    
     query
+  end
+
+  scope :search_by_name, ->(search_text) do
+    where('name LIKE ?', "%#{search_text}%")
+  end
+
+  scope :search_by_labels, ->(search_text) do
+    joins(:labels).where('labels.name LIKE ?', "%#{search_text}%")
   end
 end

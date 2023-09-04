@@ -2,15 +2,16 @@ class TasksController < ApplicationController
   before_action :require_login
 
   def index
-    @tasks = Task.dynamic_search(params || {}).where(user_id: current_user.id)
+    search_params = params.slice(:search_text, :search_by)
+    search_params[:search_by] ||= 'name'
+    @tasks = Task.dynamic_search(search_params || {}).where(user_id: current_user.id)
     case params[:sort_by]
     when 'created_at'
       @tasks = @tasks.order(created_at: params[:sort_order] || :desc)
     when 'deadline'
       @tasks = @tasks.order(deadline: params[:sort_order] || :desc)
     end
-  
-    # Paginate the results
+    
     @tasks = @tasks.page(params[:page])
   end
 
@@ -42,6 +43,9 @@ class TasksController < ApplicationController
 
   def update
     @task = Task.find(params[:id])
+    if params[:task][:label_ids].nil? || params[:task][:label_ids].empty?
+      @task.labels.destroy_all
+    end
     if @task.update(task_params)
       flash[:success] = t('task.updated_success')
       redirect_to task_path(@task)

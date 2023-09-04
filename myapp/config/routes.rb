@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   resources :tasks
   resources :users, only: [:new, :create]
+  resources :labels, only: [:create]
+
   root 'tasks#index'
 
   # Admin Routes

@@ -36,6 +36,7 @@ thead th i {
 .search-form-container {
     display: flex;
     justify-content: flex-end;
+    align-items: center;
     margin-bottom: 20px;
 }
 
@@ -105,4 +106,18 @@ thead th i {
 
 .text-center {
     text-align: center;
+}
+
+.labels-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+  
+.label-button {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    background-color: #e2e8f0;
+    cursor: pointer;
 }

@@ -23,6 +23,14 @@
           <th class="title-column">Status:</th>
           <td><%= @task.status %></td>
         </tr>
+        <tr>
+          <th class="title-column">Labels:</th>
+          <td>
+            <% @task.labels.each do |label| %>
+              <span class="label label-primary"><%= label.name %></span>
+            <% end %>
+          </td>
+        </tr>
       </table>
     </div>
     <div class="card-footer text-right">
