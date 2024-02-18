@@ -13,6 +13,7 @@ RUN apt-get update -qq && \
       git \
       curl \
       python3 \
+      python2 \
       less
 
 # node install
