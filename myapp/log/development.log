@@ -113,3 +113,96 @@ Migrating to CreateTasks (20240218150921)
   [1m[35m (1.1ms)[0m  [1m[35mBEGIN[0m
   [1m[36mTask Create (2.1ms)[0m  [1m[32mINSERT INTO `tasks` (`name`, `description`, `priority`, `status`, `duedate`, `created_at`, `updated_at`) VALUES ('Mobile Network', 'Use Rakuten Mobile!', 'High', 'In Progress', '2029-04-05 00:00:00', '2024-02-18 15:14:56.052972', '2024-02-18 15:14:56.052972')[0m
   [1m[35m (3.2ms)[0m  [1m[35mCOMMIT[0m
+Started GET "/" for 192.168.65.1 at 2024-02-19 01:13:52 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  
+SyntaxError (/myapp/config/routes.rb:3: syntax error, unexpected tSYMBEG, expecting do or '{' or '('
+  http://localhost:3000/
+                  ^
+/myapp/config/routes.rb:4: syntax error, unexpected tLABEL, expecting do or '{' or '('
+  root to: 'tasks#index'
+       ^~~):
+  
+config/routes.rb:3: syntax error, unexpected tSYMBEG, expecting do or '{' or '('
+config/routes.rb:4: syntax error, unexpected tLABEL, expecting do or '{' or '('
+config/routes.rb:3: syntax error, unexpected tSYMBEG, expecting do or '{' or '('
+config/routes.rb:4: syntax error, unexpected tLABEL, expecting do or '{' or '('
+Started GET "/" for 192.168.65.1 at 2024-02-19 01:13:53 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+  
+ActionController::RoutingError (No route matches [GET] "/"):
+  
+actionpack (6.0.6.1) lib/action_dispatch/middleware/debug_exceptions.rb:36:in `call'
+web-console (4.2.1) lib/web_console/middleware.rb:132:in `call_app'
+web-console (4.2.1) lib/web_console/middleware.rb:19:in `block in call'
+web-console (4.2.1) lib/web_console/middleware.rb:17:in `catch'
+web-console (4.2.1) lib/web_console/middleware.rb:17:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/show_exceptions.rb:33:in `call'
+railties (6.0.6.1) lib/rails/rack/logger.rb:37:in `call_app'
+railties (6.0.6.1) lib/rails/rack/logger.rb:26:in `block in call'
+activesupport (6.0.6.1) lib/active_support/tagged_logging.rb:80:in `block in tagged'
+activesupport (6.0.6.1) lib/active_support/tagged_logging.rb:28:in `tagged'
+activesupport (6.0.6.1) lib/active_support/tagged_logging.rb:80:in `tagged'
+railties (6.0.6.1) lib/rails/rack/logger.rb:26:in `call'
+sprockets-rails (3.4.2) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/remote_ip.rb:81:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/request_id.rb:27:in `call'
+rack (2.2.8) lib/rack/method_override.rb:24:in `call'
+rack (2.2.8) lib/rack/runtime.rb:22:in `call'
+activesupport (6.0.6.1) lib/active_support/cache/strategy/local_cache_middleware.rb:29:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/static.rb:126:in `call'
+rack (2.2.8) lib/rack/sendfile.rb:110:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/host_authorization.rb:103:in `call'
+webpacker (4.3.0) lib/webpacker/dev_server_proxy.rb:23:in `perform_request'
+rack-proxy (0.7.7) lib/rack/proxy.rb:87:in `call'
+railties (6.0.6.1) lib/rails/engine.rb:527:in `call'
+puma (4.3.12) lib/puma/configuration.rb:228:in `call'
+puma (4.3.12) lib/puma/server.rb:727:in `handle_request'
+puma (4.3.12) lib/puma/server.rb:476:in `process_client'
+puma (4.3.12) lib/puma/server.rb:332:in `block in run'
+puma (4.3.12) lib/puma/thread_pool.rb:134:in `block in spawn_thread'
+Started GET "/" for 192.168.65.1 at 2024-02-19 01:16:54 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /usr/local/bundle/gems/railties-6.0.6.1/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /usr/local/bundle/gems/railties-6.0.6.1/lib/rails/templates/rails/welcome/index.html.erb (Duration: 3.3ms | Allocations: 194)
+Completed 200 OK in 9ms (Views: 3.9ms | ActiveRecord: 0.0ms | Allocations: 1965)
+
+
+Started GET "/" for 192.168.65.1 at 2024-02-19 01:17:05 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  
+SyntaxError (/myapp/app/controllers/tasks_controller.rb:3: syntax error, unexpected '=', expecting ';' or '\n'
+    tasks = Task.all
+          ^
+/myapp/app/controllers/tasks_controller.rb:22: syntax error, unexpected end, expecting end-of-input):
+  
+app/controllers/tasks_controller.rb:3: syntax error, unexpected '=', expecting ';' or '\n'
+app/controllers/tasks_controller.rb:22: syntax error, unexpected end, expecting end-of-input
+app/controllers/tasks_controller.rb:3: syntax error, unexpected '=', expecting ';' or '\n'
+app/controllers/tasks_controller.rb:22: syntax error, unexpected end, expecting end-of-input
+Started GET "/" for 192.168.65.1 at 2024-02-19 01:41:47 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#index as HTML
+  Rendering tasks/index.html.erb within layouts/application
+  [1m[36mTask Load (1.5ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks`[0m
+  ↳ app/views/tasks/index.html.erb:13
+  Rendered tasks/index.html.erb within layouts/application (Duration: 12.4ms | Allocations: 8827)
+Completed 500 Internal Server Error in 19ms (ActiveRecord: 3.6ms | Allocations: 10348)
+
+
+  
+ActionView::Template::Error (Missing partial tasks/_task with {:locale=>[:en], :formats=>[:html], :variants=>[], :handlers=>[:raw, :erb, :html, :builder, :ruby, :jbuilder]}. Searched in:
+  * "/myapp/app/views"
+  * "/usr/local/bundle/gems/actiontext-6.0.6.1/app/views"
+  * "/usr/local/bundle/gems/actionmailbox-6.0.6.1/app/views"
+):
+    32:                 class: "btn btn-primary" %>
+    33:   </div>
+    34:   <%= flash.now[:success] %>
+    35:   <%= render @tasks %>
+    36: </main>
+  
+app/views/tasks/index.html.erb:35
