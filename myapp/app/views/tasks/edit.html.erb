@@ -3,4 +3,5 @@
 <%= render 'form', task: @task %>
 
 <%= link_to 'Show', @task %> |
+<%= link_to 'Update Task', task_path(@task), method: :patch %> |
 <%= link_to 'Back', tasks_path %>

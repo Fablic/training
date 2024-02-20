@@ -19,6 +19,6 @@ ActiveRecord::Schema.define(version: 2024_02_18_150921) do
     t.string "status"
     t.datetime "duedate"
     t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false 
   end
 end

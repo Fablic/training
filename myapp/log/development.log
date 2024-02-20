@@ -206,3 +206,1818 @@ ActionView::Template::Error (Missing partial tasks/_task with {:locale=>[:en], :
     36: </main>
   
 app/views/tasks/index.html.erb:35
+Started GET "/" for 192.168.65.1 at 2024-02-19 03:55:48 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#index as HTML
+  Rendering tasks/index.html.erb within layouts/application
+  [1m[36mTask Load (2.2ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks`[0m
+  ↳ app/views/tasks/index.html.erb:13
+  Rendered tasks/index.html.erb within layouts/application (Duration: 8.7ms | Allocations: 2154)
+Completed 500 Internal Server Error in 14ms (ActiveRecord: 2.2ms | Allocations: 2523)
+
+
+  
+ActionView::Template::Error (Missing partial tasks/_task with {:locale=>[:en], :formats=>[:html], :variants=>[], :handlers=>[:raw, :erb, :html, :builder, :ruby, :jbuilder]}. Searched in:
+  * "/myapp/app/views"
+  * "/usr/local/bundle/gems/actiontext-6.0.6.1/app/views"
+  * "/usr/local/bundle/gems/actionmailbox-6.0.6.1/app/views"
+):
+    32:                 class: "btn btn-primary" %>
+    33:   </div>
+    34:   <%= flash.now[:success] %>
+    35:   <%= render @tasks %>
+    36: </main>
+  
+app/views/tasks/index.html.erb:35
+Started GET "/" for 192.168.65.1 at 2024-02-19 04:03:58 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#index as HTML
+  Rendering tasks/index.html.erb within layouts/application
+  [1m[36mTask Load (2.0ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks`[0m
+  ↳ app/views/tasks/index.html.erb:13
+  Rendered tasks/index.html.erb within layouts/application (Duration: 9.8ms | Allocations: 2151)
+Completed 500 Internal Server Error in 15ms (ActiveRecord: 2.0ms | Allocations: 2517)
+
+
+  
+ActionView::Template::Error (Missing partial tasks/_task with {:locale=>[:en], :formats=>[:html], :variants=>[], :handlers=>[:raw, :erb, :html, :builder, :ruby, :jbuilder]}. Searched in:
+  * "/myapp/app/views"
+  * "/usr/local/bundle/gems/actiontext-6.0.6.1/app/views"
+  * "/usr/local/bundle/gems/actionmailbox-6.0.6.1/app/views"
+):
+    32:                 class: "btn btn-primary" %>
+    33:   </div>
+    34:   <%= flash.now[:success] %>
+    35:   <%= render @tasks %>
+    36: </main>
+  
+app/views/tasks/index.html.erb:35
+Started GET "/" for 192.168.65.1 at 2024-02-19 04:05:18 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#index as HTML
+  Rendering tasks/index.html.erb within layouts/application
+  [1m[36mTask Load (1.4ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks`[0m
+  ↳ app/views/tasks/index.html.erb:13
+  Rendered tasks/index.html.erb within layouts/application (Duration: 7.5ms | Allocations: 2148)
+Completed 500 Internal Server Error in 10ms (ActiveRecord: 1.4ms | Allocations: 2508)
+
+
+  
+ActionView::Template::Error (Missing partial tasks/_task with {:locale=>[:en], :formats=>[:html], :variants=>[], :handlers=>[:raw, :erb, :html, :builder, :ruby, :jbuilder]}. Searched in:
+  * "/myapp/app/views"
+  * "/usr/local/bundle/gems/actiontext-6.0.6.1/app/views"
+  * "/usr/local/bundle/gems/actionmailbox-6.0.6.1/app/views"
+):
+    32:                 class: "btn btn-primary" %>
+    33:   </div>
+    34:   <%= flash.now[:success] %>
+    35:   <%= render @tasks %>
+    36: </main>
+  
+app/views/tasks/index.html.erb:35
+Started GET "/" for 192.168.65.1 at 2024-02-19 04:13:08 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#index as HTML
+  Rendering tasks/index.html.erb within layouts/application
+  [1m[36mTask Load (2.2ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks`[0m
+  ↳ app/views/tasks/index.html.erb:13
+  Rendered tasks/index.html.erb within layouts/application (Duration: 9.5ms | Allocations: 2154)
+Completed 500 Internal Server Error in 15ms (ActiveRecord: 2.2ms | Allocations: 2522)
+
+
+  
+ActionView::Template::Error (Missing partial tasks/_task with {:locale=>[:en], :formats=>[:html], :variants=>[], :handlers=>[:raw, :erb, :html, :builder, :ruby, :jbuilder]}. Searched in:
+  * "/myapp/app/views"
+  * "/usr/local/bundle/gems/actiontext-6.0.6.1/app/views"
+  * "/usr/local/bundle/gems/actionmailbox-6.0.6.1/app/views"
+):
+    32:                 class: "btn btn-primary" %>
+    33:   </div>
+    34:   <%= flash.now[:success] %>
+    35:   <%= render @tasks %>
+    36: </main>
+  
+app/views/tasks/index.html.erb:35
+Started GET "/" for 192.168.65.1 at 2024-02-19 04:13:10 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#index as HTML
+  Rendering tasks/index.html.erb within layouts/application
+  [1m[36mTask Load (1.6ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks`[0m
+  ↳ app/views/tasks/index.html.erb:13
+  Rendered tasks/index.html.erb within layouts/application (Duration: 6.7ms | Allocations: 2148)
+Completed 500 Internal Server Error in 9ms (ActiveRecord: 1.6ms | Allocations: 2508)
+
+
+  
+ActionView::Template::Error (Missing partial tasks/_task with {:locale=>[:en], :formats=>[:html], :variants=>[], :handlers=>[:raw, :erb, :html, :builder, :ruby, :jbuilder]}. Searched in:
+  * "/myapp/app/views"
+  * "/usr/local/bundle/gems/actiontext-6.0.6.1/app/views"
+  * "/usr/local/bundle/gems/actionmailbox-6.0.6.1/app/views"
+):
+    32:                 class: "btn btn-primary" %>
+    33:   </div>
+    34:   <%= flash.now[:success] %>
+    35:   <%= render @tasks %>
+    36: </main>
+  
+app/views/tasks/index.html.erb:35
+Started GET "/" for 192.168.65.1 at 2024-02-19 06:18:59 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#index as HTML
+  Rendering tasks/index.html.erb within layouts/application
+  [1m[36mTask Load (1.3ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks`[0m
+  ↳ app/views/tasks/index.html.erb:13
+  Rendered tasks/index.html.erb within layouts/application (Duration: 6.0ms | Allocations: 7528)
+Completed 500 Internal Server Error in 19ms (ActiveRecord: 1.3ms | Allocations: 9702)
+
+
+  
+ActionView::Template::Error (Missing partial tasks/_task with {:locale=>[:en], :formats=>[:html], :variants=>[], :handlers=>[:raw, :erb, :html, :builder, :ruby, :jbuilder]}. Searched in:
+  * "/myapp/app/views"
+  * "/usr/local/bundle/gems/actiontext-6.0.6.1/app/views"
+  * "/usr/local/bundle/gems/actionmailbox-6.0.6.1/app/views"
+):
+    32:                 class: "btn btn-primary" %>
+    33:   </div>
+    34:   <%= flash.now[:success] %>
+    35:   <%= render @tasks %>
+    36: </main>
+  
+app/views/tasks/index.html.erb:35
+Started GET "/" for 192.168.65.1 at 2024-02-19 06:19:01 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#index as HTML
+  Rendering tasks/index.html.erb within layouts/application
+  [1m[36mTask Load (1.2ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks`[0m
+  ↳ app/views/tasks/index.html.erb:13
+  Rendered tasks/index.html.erb within layouts/application (Duration: 6.3ms | Allocations: 2148)
+Completed 500 Internal Server Error in 9ms (ActiveRecord: 1.2ms | Allocations: 2508)
+
+
+  
+ActionView::Template::Error (Missing partial tasks/_task with {:locale=>[:en], :formats=>[:html], :variants=>[], :handlers=>[:raw, :erb, :html, :builder, :ruby, :jbuilder]}. Searched in:
+  * "/myapp/app/views"
+  * "/usr/local/bundle/gems/actiontext-6.0.6.1/app/views"
+  * "/usr/local/bundle/gems/actionmailbox-6.0.6.1/app/views"
+):
+    32:                 class: "btn btn-primary" %>
+    33:   </div>
+    34:   <%= flash.now[:success] %>
+    35:   <%= render @tasks %>
+    36: </main>
+  
+app/views/tasks/index.html.erb:35
+Started GET "/" for 192.168.65.1 at 2024-02-19 06:19:02 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#index as HTML
+  Rendering tasks/index.html.erb within layouts/application
+  [1m[36mTask Load (1.3ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks`[0m
+  ↳ app/views/tasks/index.html.erb:13
+  Rendered tasks/index.html.erb within layouts/application (Duration: 15.9ms | Allocations: 2148)
+Completed 500 Internal Server Error in 19ms (ActiveRecord: 1.3ms | Allocations: 2510)
+
+
+  
+ActionView::Template::Error (Missing partial tasks/_task with {:locale=>[:en], :formats=>[:html], :variants=>[], :handlers=>[:raw, :erb, :html, :builder, :ruby, :jbuilder]}. Searched in:
+  * "/myapp/app/views"
+  * "/usr/local/bundle/gems/actiontext-6.0.6.1/app/views"
+  * "/usr/local/bundle/gems/actionmailbox-6.0.6.1/app/views"
+):
+    32:                 class: "btn btn-primary" %>
+    33:   </div>
+    34:   <%= flash.now[:success] %>
+    35:   <%= render @tasks %>
+    36: </main>
+  
+app/views/tasks/index.html.erb:35
+Started GET "/" for 192.168.65.1 at 2024-02-19 06:19:02 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#index as HTML
+  Rendering tasks/index.html.erb within layouts/application
+  [1m[36mTask Load (1.0ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks`[0m
+  ↳ app/views/tasks/index.html.erb:13
+  Rendered tasks/index.html.erb within layouts/application (Duration: 4.9ms | Allocations: 2148)
+Completed 500 Internal Server Error in 7ms (ActiveRecord: 1.0ms | Allocations: 2508)
+
+
+  
+ActionView::Template::Error (Missing partial tasks/_task with {:locale=>[:en], :formats=>[:html], :variants=>[], :handlers=>[:raw, :erb, :html, :builder, :ruby, :jbuilder]}. Searched in:
+  * "/myapp/app/views"
+  * "/usr/local/bundle/gems/actiontext-6.0.6.1/app/views"
+  * "/usr/local/bundle/gems/actionmailbox-6.0.6.1/app/views"
+):
+    32:                 class: "btn btn-primary" %>
+    33:   </div>
+    34:   <%= flash.now[:success] %>
+    35:   <%= render @tasks %>
+    36: </main>
+  
+app/views/tasks/index.html.erb:35
+Started GET "/" for 192.168.65.1 at 2024-02-19 06:20:07 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#index as HTML
+  Rendering tasks/index.html.erb within layouts/application
+  Rendered tasks/index.html.erb within layouts/application (Duration: 2.6ms | Allocations: 1198)
+Completed 500 Internal Server Error in 11ms (ActiveRecord: 0.0ms | Allocations: 2323)
+
+
+  
+ActionView::SyntaxErrorInTemplate (Encountered a syntax error while rendering template: check <p id="notice"><%= notice %></p>
+
+<h1>Tasks</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @tasks.each do |task| %>
+      <tr>
+        <td><%= link_to 'Show', task %></td>
+        <td><%= link_to 'Edit', edit_task_path(task) %></td>
+        <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Task', new_task_path %>
+
+# <main class="container">
+#   <div class="header">
+#     <h1>Tasks</h1>
+#     <%= link_to "New task",
+#                 new_task_path,
+#                 class: "btn btn-primary" %>
+#   </div>
+#   <%= flash.now[:success] %>
+#   <%= render @tasks %>
+# </main>
+):
+1:    <p id="notice"><%= notice %></p>
+2:    
+3:    <h1>Tasks</h1>
+4:    
+5:    <table>
+6:      <thead>
+7:        <tr>
+8:          <th colspan="3"></th>
+9:        </tr>
+10:      </thead>
+11:    
+12:      <tbody>
+13:        <% @tasks.each do |task| %>
+14:          <tr>
+15:            <td><%= link_to 'Show', task %></td>
+16:            <td><%= link_to 'Edit', edit_task_path(task) %></td>
+17:            <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+18:          </tr>
+19:        <% end %>
+20:      </tbody>
+21:    </table>
+22:    
+23:    <br>
+24:    
+25:    <%= link_to 'New Task', new_task_path %>
+26:    
+27:    # <main class="container">
+28:    #   <div class="header">
+29:    #     <h1>Tasks</h1>
+30:    #     <%= link_to "New task",
+31:    #                 new_task_path,
+32:    #                 class: "btn btn-primary" %>
+33:    #   </div>
+34:    #   <%= flash.now[:success] %>
+35:    #   <%= render @tasks %>
+36:    # </main>
+  
+app/views/tasks/index.html.erb:38: syntax error, unexpected end, expecting ')'
+app/views/tasks/index.html.erb:38: syntax error, unexpected end, expecting ')'
+app/views/tasks/index.html.erb:38: syntax error, unexpected end, expecting ')'
+app/views/tasks/index.html.erb:38: syntax error, unexpected end, expecting ')'
+Started GET "/" for 192.168.65.1 at 2024-02-19 06:21:45 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#index as HTML
+  Rendering tasks/index.html.erb within layouts/application
+  [1m[36mTask Load (1.5ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks`[0m
+  ↳ app/views/tasks/index.html.erb:13
+  Rendered tasks/index.html.erb within layouts/application (Duration: 6.8ms | Allocations: 1297)
+[Webpacker] Compiling...
+[Webpacker] Compiled all packs in /myapp/public/packs
+[Webpacker] Though the "loose" option was set to "false" in your @babel/preset-env config, it will not be used for @babel/plugin-transform-private-property-in-object since the "loose" mode option was set to "true" for @babel/plugin-transform-class-properties.
+The "loose" option must be the same for @babel/plugin-transform-class-properties, @babel/plugin-transform-private-methods and @babel/plugin-transform-private-property-in-object (when they are enabled): you can silence this warning by explicitly adding
+	["@babel/plugin-transform-private-property-in-object", { "loose": true }]
+to the "plugins" section of your Babel config.
+Though the "loose" option was set to "false" in your @babel/preset-env config, it will not be used for @babel/plugin-transform-private-methods since the "loose" mode option was set to "true" for @babel/plugin-transform-private-property-in-object.
+The "loose" option must be the same for @babel/plugin-transform-class-properties, @babel/plugin-transform-private-methods and @babel/plugin-transform-private-property-in-object (when they are enabled): you can silence this warning by explicitly adding
+	["@babel/plugin-transform-private-methods", { "loose": true }]
+to the "plugins" section of your Babel config.
+Though the "loose" option was set to "false" in your @babel/preset-env config, it will not be used for @babel/plugin-transform-private-property-in-object since the "loose" mode option was set to "true" for @babel/plugin-transform-class-properties.
+The "loose" option must be the same for @babel/plugin-transform-class-properties, @babel/plugin-transform-private-methods and @babel/plugin-transform-private-property-in-object (when they are enabled): you can silence this warning by explicitly adding
+	["@babel/plugin-transform-private-property-in-object", { "loose": true }]
+to the "plugins" section of your Babel config.
+Though the "loose" option was set to "false" in your @babel/preset-env config, it will not be used for @babel/plugin-transform-private-methods since the "loose" mode option was set to "true" for @babel/plugin-transform-private-property-in-object.
+The "loose" option must be the same for @babel/plugin-transform-class-properties, @babel/plugin-transform-private-methods and @babel/plugin-transform-private-property-in-object (when they are enabled): you can silence this warning by explicitly adding
+	["@babel/plugin-transform-private-methods", { "loose": true }]
+to the "plugins" section of your Babel config.
+
+[Webpacker] Hash: 666b4b17c239d77fe3e2
+Version: webpack 4.47.0
+Time: 546ms
+Built at: 02/19/2024 6:21:46 AM
+                                     Asset       Size       Chunks                         Chunk Names
+    js/application-82550c4e3b8b39cde23f.js    120 KiB  application  [emitted] [immutable]  application
+js/application-82550c4e3b8b39cde23f.js.map    133 KiB  application  [emitted] [dev]        application
+                             manifest.json  364 bytes               [emitted]              
+Entrypoint application = js/application-82550c4e3b8b39cde23f.js js/application-82550c4e3b8b39cde23f.js.map
+[./app/javascript/channels sync recursive _channel\.js$] ./app/javascript/channels sync _channel\.js$ 160 bytes {application} [built]
+[./app/javascript/channels/index.js] 211 bytes {application} [built]
+[./app/javascript/packs/application.js] 748 bytes {application} [built]
+    + 3 hidden modules
+
+Completed 200 OK in 1173ms (Views: 1169.2ms | ActiveRecord: 1.5ms | Allocations: 19162)
+
+
+Started GET "/tasks/1" for 192.168.65.1 at 2024-02-19 06:22:01 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mTask Load (4.3ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m
+  ↳ app/controllers/tasks_controller.rb:51:in `set_task'
+  [1m[36mCACHE Task Load (0.0ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/tasks_controller.rb:10:in `show'
+  Rendering tasks/show.html.erb within layouts/application
+  Rendered tasks/show.html.erb within layouts/application (Duration: 1.7ms | Allocations: 227)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 51ms (Views: 26.0ms | ActiveRecord: 4.3ms | Allocations: 9877)
+
+
+Started GET "/tasks/1/edit" for 192.168.65.1 at 2024-02-19 06:22:02 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mTask Load (1.4ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m
+  ↳ app/controllers/tasks_controller.rb:51:in `set_task'
+  [1m[36mCACHE Task Load (0.0ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/tasks_controller.rb:18:in `edit'
+  Rendering tasks/edit.html.erb within layouts/application
+  Rendered tasks/_form.html.erb (Duration: 31.6ms | Allocations: 3846)
+  Rendered tasks/edit.html.erb within layouts/application (Duration: 34.2ms | Allocations: 4269)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 52ms (Views: 44.2ms | ActiveRecord: 1.4ms | Allocations: 9453)
+
+
+Started PATCH "/tasks/1" for 192.168.65.1 at 2024-02-19 06:22:05 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#update as HTML
+  Parameters: {"authenticity_token"=>"AQmKIdXaeJjhHkTc3sx56P1rlTrnWrPckWJlgVQE7YMTrJjEgCYmSUP6TYWYC515rKzeGwVoDraHD79IeZIK/Q==", "commit"=>"Update Task", "id"=>"1"}
+  [1m[36mTask Load (0.7ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m
+  ↳ app/controllers/tasks_controller.rb:51:in `set_task'
+  [1m[36mCACHE Task Load (0.0ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/tasks_controller.rb:32:in `update'
+Completed 400 Bad Request in 5ms (ActiveRecord: 0.7ms | Allocations: 1819)
+
+
+  
+ActionController::ParameterMissing (param is missing or the value is empty: task):
+  
+app/controllers/tasks_controller.rb:55:in `task_params'
+app/controllers/tasks_controller.rb:33:in `update'
+Started PATCH "/tasks/1" for 192.168.65.1 at 2024-02-19 06:24:13 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#update as HTML
+  Parameters: {"authenticity_token"=>"AQmKIdXaeJjhHkTc3sx56P1rlTrnWrPckWJlgVQE7YMTrJjEgCYmSUP6TYWYC515rKzeGwVoDraHD79IeZIK/Q==", "commit"=>"Update Task", "id"=>"1"}
+  [1m[36mTask Load (0.3ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m
+  ↳ app/controllers/tasks_controller.rb:51:in `set_task'
+  [1m[36mCACHE Task Load (0.0ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/tasks_controller.rb:32:in `update'
+Completed 500 Internal Server Error in 45ms (ActiveRecord: 3.1ms | Allocations: 56310)
+
+
+  
+NameError (undefined local variable or method `task_params' for #<TasksController:0x0000ffff6d00d738>):
+  
+app/controllers/tasks_controller.rb:33:in `update'
+Started PATCH "/tasks/1" for 192.168.65.1 at 2024-02-19 06:24:39 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#update as HTML
+  Parameters: {"authenticity_token"=>"AQmKIdXaeJjhHkTc3sx56P1rlTrnWrPckWJlgVQE7YMTrJjEgCYmSUP6TYWYC515rKzeGwVoDraHD79IeZIK/Q==", "commit"=>"Update Task", "id"=>"1"}
+  [1m[36mTask Load (0.3ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m
+  ↳ app/controllers/tasks_controller.rb:51:in `set_task'
+  [1m[36mCACHE Task Load (0.0ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/tasks_controller.rb:32:in `update'
+Completed 400 Bad Request in 10ms (ActiveRecord: 2.4ms | Allocations: 8079)
+
+
+  
+ActionController::ParameterMissing (param is missing or the value is empty: task):
+  
+app/controllers/tasks_controller.rb:55:in `task_params'
+app/controllers/tasks_controller.rb:33:in `update'
+Started PATCH "/tasks/1" for 192.168.65.1 at 2024-02-19 06:28:36 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#update as HTML
+  Parameters: {"authenticity_token"=>"AQmKIdXaeJjhHkTc3sx56P1rlTrnWrPckWJlgVQE7YMTrJjEgCYmSUP6TYWYC515rKzeGwVoDraHD79IeZIK/Q==", "commit"=>"Update Task", "id"=>"1"}
+  [1m[36mTask Load (0.2ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m
+  ↳ app/controllers/tasks_controller.rb:51:in `set_task'
+  [1m[36mCACHE Task Load (0.0ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/tasks_controller.rb:32:in `update'
+Completed 400 Bad Request in 10ms (ActiveRecord: 2.1ms | Allocations: 8015)
+
+
+  
+ActionController::ParameterMissing (param is missing or the value is empty: task):
+  
+app/controllers/tasks_controller.rb:55:in `task_params'
+app/controllers/tasks_controller.rb:33:in `update'
+Started GET "/tasks/1" for 192.168.65.1 at 2024-02-19 06:28:50 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mTask Load (1.3ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m
+  ↳ app/controllers/tasks_controller.rb:51:in `set_task'
+  [1m[36mCACHE Task Load (0.0ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/tasks_controller.rb:10:in `show'
+  Rendering tasks/show.html.erb within layouts/application
+  Rendered tasks/show.html.erb within layouts/application (Duration: 0.7ms | Allocations: 102)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 31ms (Views: 24.3ms | ActiveRecord: 1.3ms | Allocations: 5299)
+
+
+Started GET "/" for 192.168.65.1 at 2024-02-19 06:28:51 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#index as HTML
+  Rendering tasks/index.html.erb within layouts/application
+  [1m[36mTask Load (1.2ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks`[0m
+  ↳ app/views/tasks/index.html.erb:13
+  Rendered tasks/index.html.erb within layouts/application (Duration: 5.5ms | Allocations: 1117)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 27ms (Views: 24.4ms | ActiveRecord: 1.2ms | Allocations: 5042)
+
+
+Started GET "/tasks/new" for 192.168.65.1 at 2024-02-19 06:28:56 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#new as HTML
+  Rendering tasks/new.html.erb within layouts/application
+  Rendered tasks/_form.html.erb (Duration: 1.4ms | Allocations: 425)
+  Rendered tasks/new.html.erb within layouts/application (Duration: 3.3ms | Allocations: 643)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 24ms (Views: 19.5ms | ActiveRecord: 0.0ms | Allocations: 4726)
+
+
+Started POST "/tasks" for 192.168.65.1 at 2024-02-19 06:28:58 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#create as HTML
+  Parameters: {"authenticity_token"=>"1h9j3OUcrPLXswL26yYGZG4HhXnYEMNn7wEWSLNnaCLOhxHFcq+CSDwtjj2QIJyc+PnKFLfwALCrR5ymLc2rsg==", "commit"=>"Create Task"}
+Completed 400 Bad Request in 2ms (ActiveRecord: 0.0ms | Allocations: 678)
+
+
+  
+ActionController::ParameterMissing (param is missing or the value is empty: task):
+  
+app/controllers/tasks_controller.rb:55:in `task_params'
+app/controllers/tasks_controller.rb:22:in `create'
+Started DELETE "/tasks/1" for 192.168.65.1 at 2024-02-19 06:36:03 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#destroy as HTML
+  Parameters: {"authenticity_token"=>"WAAe7EEwzt2vdjtp6VA7jfKHMgWTH96PBdOjzGMQUtrwJYIQWsoNuBUCxxRWQ0XiZ+d5BIz0CgiADjlhL1xeTg==", "id"=>"1"}
+  [1m[36mTask Load (2.2ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m
+  ↳ app/controllers/tasks_controller.rb:51:in `set_task'
+  [1m[36mCACHE Task Load (0.0ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/tasks_controller.rb:42:in `destroy'
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/tasks_controller.rb:43:in `destroy'
+  [1m[36mTask Destroy (10.7ms)[0m  [1m[31mDELETE FROM `tasks` WHERE `tasks`.`id` = 1[0m
+  ↳ app/controllers/tasks_controller.rb:43:in `destroy'
+  [1m[35m (1.6ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/tasks_controller.rb:43:in `destroy'
+Redirected to http://localhost:3001/tasks
+Completed 302 Found in 29ms (ActiveRecord: 14.7ms | Allocations: 3587)
+
+
+Started GET "/tasks" for 192.168.65.1 at 2024-02-19 06:36:04 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#index as HTML
+  Rendering tasks/index.html.erb within layouts/application
+  [1m[36mTask Load (0.4ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks`[0m
+  ↳ app/views/tasks/index.html.erb:13
+  Rendered tasks/index.html.erb within layouts/application (Duration: 2.1ms | Allocations: 899)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 13ms (Views: 12.4ms | ActiveRecord: 0.4ms | Allocations: 4826)
+
+
+Started GET "/tasks/new" for 192.168.65.1 at 2024-02-19 06:36:08 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#new as HTML
+  Rendering tasks/new.html.erb within layouts/application
+  Rendered tasks/_form.html.erb (Duration: 2.2ms | Allocations: 397)
+  Rendered tasks/new.html.erb within layouts/application (Duration: 3.0ms | Allocations: 499)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 22ms (Views: 20.6ms | ActiveRecord: 0.0ms | Allocations: 4420)
+
+
+Started POST "/tasks" for 192.168.65.1 at 2024-02-19 06:36:10 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#create as HTML
+  Parameters: {"authenticity_token"=>"A8ZLeVpx4gPJl//uH1rKyXx6bO/9DF/6SOlknamgzpEbXjlgzcLMuSIJcyVkXFAx6oQjgpLsnC0Mr+5zNwoNAQ==", "commit"=>"Create Task"}
+Completed 400 Bad Request in 3ms (ActiveRecord: 0.0ms | Allocations: 676)
+
+
+  
+ActionController::ParameterMissing (param is missing or the value is empty: task):
+  
+app/controllers/tasks_controller.rb:55:in `task_params'
+app/controllers/tasks_controller.rb:22:in `create'
+Started GET "/tasks/1" for 192.168.65.1 at 2024-02-19 06:40:14 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mTask Load (1.6ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m
+  ↳ app/controllers/tasks_controller.rb:51:in `set_task'
+Completed 404 Not Found in 5ms (ActiveRecord: 1.6ms | Allocations: 1208)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Task with 'id'=1):
+  
+app/controllers/tasks_controller.rb:51:in `set_task'
+Started GET "/tasks/1" for 192.168.65.1 at 2024-02-19 06:56:00 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mTask Load (0.5ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m
+  ↳ app/controllers/tasks_controller.rb:51:in `set_task'
+  [1m[36mCACHE Task Load (0.0ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/tasks_controller.rb:10:in `show'
+  Rendering tasks/show.html.erb within layouts/application
+  Rendered tasks/show.html.erb within layouts/application (Duration: 0.2ms | Allocations: 102)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 18ms (Views: 10.3ms | ActiveRecord: 0.5ms | Allocations: 11606)
+
+
+Started GET "/tasks/1/edit" for 192.168.65.1 at 2024-02-19 06:56:07 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mTask Load (1.1ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m
+  ↳ app/controllers/tasks_controller.rb:51:in `set_task'
+  [1m[36mCACHE Task Load (0.0ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/tasks_controller.rb:18:in `edit'
+  Rendering tasks/edit.html.erb within layouts/application
+  Rendered tasks/_form.html.erb (Duration: 2.5ms | Allocations: 505)
+  Rendered tasks/edit.html.erb within layouts/application (Duration: 3.4ms | Allocations: 647)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 29ms (Views: 23.0ms | ActiveRecord: 1.2ms | Allocations: 5690)
+
+
+Started GET "/tasks/1" for 192.168.65.1 at 2024-02-19 06:56:10 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mTask Load (1.0ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m
+  ↳ app/controllers/tasks_controller.rb:51:in `set_task'
+  [1m[36mCACHE Task Load (0.0ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/tasks_controller.rb:10:in `show'
+  Rendering tasks/show.html.erb within layouts/application
+  Rendered tasks/show.html.erb within layouts/application (Duration: 0.6ms | Allocations: 93)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 25ms (Views: 19.7ms | ActiveRecord: 1.0ms | Allocations: 5132)
+
+
+Started GET "/tasks/1/edit" for 192.168.65.1 at 2024-02-19 06:56:12 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mTask Load (1.2ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m
+  ↳ app/controllers/tasks_controller.rb:51:in `set_task'
+  [1m[36mCACHE Task Load (0.0ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/tasks_controller.rb:18:in `edit'
+  Rendering tasks/edit.html.erb within layouts/application
+  Rendered tasks/_form.html.erb (Duration: 1.3ms | Allocations: 453)
+  Rendered tasks/edit.html.erb within layouts/application (Duration: 2.0ms | Allocations: 594)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 23ms (Views: 17.9ms | ActiveRecord: 1.2ms | Allocations: 5633)
+
+
+Started GET "/tasks" for 192.168.65.1 at 2024-02-19 06:56:22 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#index as HTML
+  Rendering tasks/index.html.erb within layouts/application
+  [1m[36mTask Load (1.2ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks`[0m
+  ↳ app/views/tasks/index.html.erb:13
+  Rendered tasks/index.html.erb within layouts/application (Duration: 4.9ms | Allocations: 1065)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 27ms (Views: 24.0ms | ActiveRecord: 1.2ms | Allocations: 4980)
+
+
+Started GET "/tasks/new" for 192.168.65.1 at 2024-02-19 06:56:26 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#new as HTML
+  Rendering tasks/new.html.erb within layouts/application
+  Rendered tasks/_form.html.erb (Duration: 1.1ms | Allocations: 396)
+  Rendered tasks/new.html.erb within layouts/application (Duration: 2.1ms | Allocations: 498)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 21ms (Views: 19.8ms | ActiveRecord: 0.0ms | Allocations: 4417)
+
+
+Started POST "/tasks" for 192.168.65.1 at 2024-02-19 06:56:29 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#create as HTML
+  Parameters: {"authenticity_token"=>"rjBfMl1l83oXyTVgSJ1SOLCPDF3s4flKTyrtJulpEIa2qC0rytbdwPxXuaszm8jAJnFDMIMBOp0LbGfId8PTFg==", "commit"=>"Create Task"}
+Completed 400 Bad Request in 2ms (ActiveRecord: 0.0ms | Allocations: 668)
+
+
+  
+ActionController::ParameterMissing (param is missing or the value is empty: task):
+  
+app/controllers/tasks_controller.rb:55:in `task_params'
+app/controllers/tasks_controller.rb:22:in `create'
+Started GET "/tasks/1/edit" for 192.168.65.1 at 2024-02-19 07:03:28 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#edit as HTML
+  Parameters: {"id"=>"1"}
+Completed 500 Internal Server Error in 2ms (ActiveRecord: 0.0ms | Allocations: 954)
+
+
+  
+SyntaxError (/myapp/app/models/task.rb:6: syntax error, unexpected ':', expecting end
+  valisates: description, presence : true
+           ^
+/myapp/app/models/task.rb:6: syntax error, unexpected ':', expecting '='
+...isates: description, presence : true
+...                              ^):
+  
+app/models/task.rb:6: syntax error, unexpected ':', expecting end
+app/models/task.rb:6: syntax error, unexpected ':', expecting '='
+app/models/task.rb:6: syntax error, unexpected ':', expecting end
+app/models/task.rb:6: syntax error, unexpected ':', expecting '='
+app/controllers/tasks_controller.rb:51:in `set_task'
+Started GET "/tasks/1/edit" for 192.168.65.1 at 2024-02-19 07:03:49 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#edit as HTML
+  Parameters: {"id"=>"1"}
+Completed 500 Internal Server Error in 3ms (ActiveRecord: 0.0ms | Allocations: 997)
+
+
+  
+SyntaxError (/myapp/app/models/task.rb:6: syntax error, unexpected ':', expecting end
+  validates: description, presence : true
+           ^
+/myapp/app/models/task.rb:6: syntax error, unexpected ':', expecting '='
+...idates: description, presence : true
+...                              ^):
+  
+app/models/task.rb:6: syntax error, unexpected ':', expecting end
+app/models/task.rb:6: syntax error, unexpected ':', expecting '='
+app/models/task.rb:6: syntax error, unexpected ':', expecting end
+app/models/task.rb:6: syntax error, unexpected ':', expecting '='
+app/controllers/tasks_controller.rb:51:in `set_task'
+Started GET "/tasks/1/edit" for 192.168.65.1 at 2024-02-19 07:04:06 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mTask Load (0.5ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m
+  ↳ app/controllers/tasks_controller.rb:51:in `set_task'
+  [1m[36mCACHE Task Load (0.0ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/tasks_controller.rb:18:in `edit'
+  Rendering tasks/edit.html.erb within layouts/application
+  Rendered tasks/_form.html.erb (Duration: 0.5ms | Allocations: 512)
+  Rendered tasks/edit.html.erb within layouts/application (Duration: 0.7ms | Allocations: 656)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 27ms (Views: 8.9ms | ActiveRecord: 4.6ms | Allocations: 12530)
+
+
+Started PATCH "/tasks/1" for 192.168.65.1 at 2024-02-19 07:04:08 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#update as HTML
+  Parameters: {"authenticity_token"=>"ZXQtlSHNUnYBoRVpGmLYA6hm0wgNCMXTz3IKpPbjAmrNUbFpOjeRE7vV6RSlcaZsPQaYCRLjEVRKr5AJuq8O/g==", "commit"=>"Update Task", "id"=>"1"}
+  [1m[36mTask Load (1.8ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m
+  ↳ app/controllers/tasks_controller.rb:51:in `set_task'
+  [1m[36mCACHE Task Load (0.0ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/tasks_controller.rb:32:in `update'
+Completed 400 Bad Request in 8ms (ActiveRecord: 1.9ms | Allocations: 1791)
+
+
+  
+ActionController::ParameterMissing (param is missing or the value is empty: task):
+  
+app/controllers/tasks_controller.rb:55:in `task_params'
+app/controllers/tasks_controller.rb:33:in `update'
+Started GET "/tasks/1" for 192.168.65.1 at 2024-02-19 07:12:33 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mTask Load (2.2ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m
+  ↳ app/controllers/tasks_controller.rb:51:in `set_task'
+  [1m[36mCACHE Task Load (0.0ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/tasks_controller.rb:10:in `show'
+  Rendering tasks/show.html.erb within layouts/application
+  Rendered tasks/show.html.erb within layouts/application (Duration: 4.4ms | Allocations: 493)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 40ms (Views: 26.8ms | ActiveRecord: 2.2ms | Allocations: 6492)
+
+
+Started GET "/" for 192.168.65.1 at 2024-02-19 07:12:40 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#index as HTML
+  Rendering tasks/index.html.erb within layouts/application
+  [1m[36mTask Load (2.0ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks`[0m
+  ↳ app/views/tasks/index.html.erb:13
+  Rendered tasks/index.html.erb within layouts/application (Duration: 10.4ms | Allocations: 1292)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 36ms (Views: 29.6ms | ActiveRecord: 2.0ms | Allocations: 5360)
+
+
+Started GET "/tasks/new" for 192.168.65.1 at 2024-02-19 07:12:42 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#new as HTML
+  Rendering tasks/new.html.erb within layouts/application
+  Rendered tasks/_form.html.erb (Duration: 38.9ms | Allocations: 6932)
+  Rendered tasks/new.html.erb within layouts/application (Duration: 42.2ms | Allocations: 7291)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 58ms (Views: 53.8ms | ActiveRecord: 0.0ms | Allocations: 11260)
+
+
+Started GET "/tasks" for 192.168.65.1 at 2024-02-19 07:12:46 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#index as HTML
+  Rendering tasks/index.html.erb within layouts/application
+  [1m[36mTask Load (0.9ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks`[0m
+  ↳ app/views/tasks/index.html.erb:13
+  Rendered tasks/index.html.erb within layouts/application (Duration: 3.8ms | Allocations: 1070)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 45ms (Views: 42.7ms | ActiveRecord: 0.9ms | Allocations: 4994)
+
+
+Started GET "/tasks/1/edit" for 192.168.65.1 at 2024-02-19 07:12:50 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mTask Load (1.3ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m
+  ↳ app/controllers/tasks_controller.rb:51:in `set_task'
+  [1m[36mCACHE Task Load (0.0ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/tasks_controller.rb:18:in `edit'
+  Rendering tasks/edit.html.erb within layouts/application
+  Rendered tasks/_form.html.erb (Duration: 2.3ms | Allocations: 1135)
+  Rendered tasks/edit.html.erb within layouts/application (Duration: 4.6ms | Allocations: 1411)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 30ms (Views: 22.4ms | ActiveRecord: 1.3ms | Allocations: 6590)
+
+
+Started PATCH "/tasks/1" for 192.168.65.1 at 2024-02-19 07:12:52 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#update as JS
+  Parameters: {"authenticity_token"=>"WYina9YNqgKyxmXRA5obNvmN1CMrNQaSSVzUCD0nH8JLLbWOg/H00xAibIhFXf+nqEqfAskHu/hfMQ7BELH4vA==", "task"=>{"name"=>"Ruby", "description"=>"Use Rails Framework"}, "commit"=>"Update Task", "id"=>"1"}
+  [1m[36mTask Load (1.6ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m
+  ↳ app/controllers/tasks_controller.rb:51:in `set_task'
+  [1m[36mCACHE Task Load (0.0ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/tasks_controller.rb:32:in `update'
+  Rendering tasks/edit.html.erb within layouts/application
+  Rendered tasks/_form.html.erb (Duration: 2.2ms | Allocations: 1277)
+  Rendered tasks/edit.html.erb within layouts/application (Duration: 3.5ms | Allocations: 1580)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 422 Unprocessable Entity in 51ms (Views: 16.8ms | ActiveRecord: 1.7ms | Allocations: 11335)
+
+
+Started PATCH "/tasks/1" for 192.168.65.1 at 2024-02-19 07:12:54 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#update as JS
+  Parameters: {"authenticity_token"=>"WYina9YNqgKyxmXRA5obNvmN1CMrNQaSSVzUCD0nH8JLLbWOg/H00xAibIhFXf+nqEqfAskHu/hfMQ7BELH4vA==", "task"=>{"name"=>"Ruby", "description"=>"Use Rails Framework"}, "commit"=>"Update Task", "id"=>"1"}
+  [1m[36mTask Load (1.6ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m
+  ↳ app/controllers/tasks_controller.rb:51:in `set_task'
+  [1m[36mCACHE Task Load (0.0ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/tasks_controller.rb:32:in `update'
+  Rendering tasks/edit.html.erb within layouts/application
+  Rendered tasks/_form.html.erb (Duration: 1.9ms | Allocations: 1261)
+  Rendered tasks/edit.html.erb within layouts/application (Duration: 2.7ms | Allocations: 1406)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 422 Unprocessable Entity in 28ms (Views: 18.7ms | ActiveRecord: 1.6ms | Allocations: 7616)
+
+
+Started PATCH "/tasks/1" for 192.168.65.1 at 2024-02-19 07:12:54 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#update as JS
+  Parameters: {"authenticity_token"=>"WYina9YNqgKyxmXRA5obNvmN1CMrNQaSSVzUCD0nH8JLLbWOg/H00xAibIhFXf+nqEqfAskHu/hfMQ7BELH4vA==", "task"=>{"name"=>"Ruby", "description"=>"Use Rails Framework"}, "commit"=>"Update Task", "id"=>"1"}
+  [1m[36mTask Load (1.6ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m
+  ↳ app/controllers/tasks_controller.rb:51:in `set_task'
+  [1m[36mCACHE Task Load (0.0ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/tasks_controller.rb:32:in `update'
+  Rendering tasks/edit.html.erb within layouts/application
+  Rendered tasks/_form.html.erb (Duration: 3.1ms | Allocations: 1261)
+  Rendered tasks/edit.html.erb within layouts/application (Duration: 3.9ms | Allocations: 1406)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 422 Unprocessable Entity in 29ms (Views: 20.2ms | ActiveRecord: 1.6ms | Allocations: 7622)
+
+
+Started PATCH "/tasks/1" for 192.168.65.1 at 2024-02-19 07:12:59 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#update as HTML
+  Parameters: {"authenticity_token"=>"Werr6ArOKXTGPLvyPz+azu7tdc8uGdikdt+RddjoojFLT/kNXzJ3pWTYsqt5+H5fvyo+7swrZc5gsku89X5FTw==", "commit"=>"Update Task", "id"=>"1"}
+  [1m[36mTask Load (1.6ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m
+  ↳ app/controllers/tasks_controller.rb:51:in `set_task'
+  [1m[36mCACHE Task Load (0.0ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/tasks_controller.rb:32:in `update'
+Completed 400 Bad Request in 7ms (ActiveRecord: 1.6ms | Allocations: 1797)
+
+
+  
+ActionController::ParameterMissing (param is missing or the value is empty: task):
+  
+app/controllers/tasks_controller.rb:55:in `task_params'
+app/controllers/tasks_controller.rb:33:in `update'
+Started GET "/tasks/1/edit" for 192.168.65.1 at 2024-02-19 07:16:27 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mTask Load (1.4ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m
+  ↳ app/controllers/tasks_controller.rb:51:in `set_task'
+  [1m[36mCACHE Task Load (0.0ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/tasks_controller.rb:18:in `edit'
+  Rendering tasks/edit.html.erb within layouts/application
+  Rendered tasks/_form.html.erb (Duration: 2.2ms | Allocations: 1509)
+  Rendered tasks/edit.html.erb within layouts/application (Duration: 4.6ms | Allocations: 1859)
+Completed 500 Internal Server Error in 17ms (ActiveRecord: 1.4ms | Allocations: 4194)
+
+
+  
+ActionView::SyntaxErrorInTemplate (Encountered a syntax error while rendering template: check <%= form_with(model: task, local: true) do |form| %>
+  <% if task.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(task.errors.count, "error") %> prohibited this task from being saved:</h2>
+
+      <ul>
+        <% task.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
+
+
+<%= form_with model: task do |form| %>
+  <%= form.label :name, 'Task title' %>
+  <%= form.text_field :name %>
+  <%= form.label :description, 'Description' %>
+  <%= form.text_area :description %>
+  <%= form.label :priority, 'Priority' %>
+  <%= form.text_area :priority%>
+  <%= form.label :status, 'Status' %>
+  <%= form.text_area :status%>
+  <%= form.label :DueDate, 'DueDate %>
+  <%= form.text_area :DueDate %>
+  <%= form.submit %>
+<% end %>
+):
+1:    <%= form_with(model: task, local: true) do |form| %>
+2:      <% if task.errors.any? %>
+3:        <div id="error_explanation">
+4:          <h2><%= pluralize(task.errors.count, "error") %> prohibited this task from being saved:</h2>
+5:    
+6:          <ul>
+7:            <% task.errors.full_messages.each do |message| %>
+8:              <li><%= message %></li>
+9:            <% end %>
+10:          </ul>
+11:        </div>
+12:      <% end %>
+13:    
+14:      <div class="actions">
+15:        <%= form.submit %>
+16:      </div>
+17:    <% end %>
+18:    
+19:    
+20:    <%= form_with model: task do |form| %>
+21:      <%= form.label :name, 'Task title' %>
+22:      <%= form.text_field :name %>
+23:      <%= form.label :description, 'Description' %>
+24:      <%= form.text_area :description %>
+25:      <%= form.label :priority, 'Priority' %>
+26:      <%= form.text_area :priority%>
+27:      <%= form.label :status, 'Status' %>
+28:      <%= form.text_area :status%>
+29:      <%= form.label :DueDate, 'DueDate %>
+30:      <%= form.text_area :DueDate %>
+31:      <%= form.submit %>
+32:    <% end %>
+  
+app/views/tasks/_form.html.erb:34: unterminated string meets end of file
+app/views/tasks/_form.html.erb:34: syntax error, unexpected end-of-input, expecting ')'
+app/views/tasks/_form.html.erb:34: unterminated string meets end of file
+app/views/tasks/_form.html.erb:34: syntax error, unexpected end-of-input, expecting ')'
+app/views/tasks/_form.html.erb:34: unterminated string meets end of file
+app/views/tasks/_form.html.erb:34: syntax error, unexpected end-of-input, expecting ')'
+app/views/tasks/_form.html.erb:34: unterminated string meets end of file
+app/views/tasks/_form.html.erb:34: syntax error, unexpected end-of-input, expecting ')'
+app/views/tasks/edit.html.erb:3
+Started GET "/tasks/1/edit" for 192.168.65.1 at 2024-02-19 07:18:26 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mTask Load (3.6ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m
+  ↳ app/controllers/tasks_controller.rb:51:in `set_task'
+  [1m[36mCACHE Task Load (0.0ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/tasks_controller.rb:18:in `edit'
+  Rendering tasks/edit.html.erb within layouts/application
+  Rendered tasks/_form.html.erb (Duration: 6.5ms | Allocations: 2034)
+  Rendered tasks/edit.html.erb within layouts/application (Duration: 9.5ms | Allocations: 2449)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 58ms (Views: 44.5ms | ActiveRecord: 3.6ms | Allocations: 8429)
+
+
+Started PATCH "/tasks/1" for 192.168.65.1 at 2024-02-19 07:18:33 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#update as HTML
+  Parameters: {"authenticity_token"=>"yc5RSy2Ktrio98g2YgPNVxLXuehMXgQ+CVRr5pi4/f1h6823NnB13RKDNEvdELM4h7fy6VO10LmMifFL1PTxaQ==", "commit"=>"Update Task", "id"=>"1"}
+  [1m[36mTask Load (1.2ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m
+  ↳ app/controllers/tasks_controller.rb:51:in `set_task'
+  [1m[36mCACHE Task Load (0.0ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/tasks_controller.rb:32:in `update'
+Completed 400 Bad Request in 6ms (ActiveRecord: 1.2ms | Allocations: 1774)
+
+
+  
+ActionController::ParameterMissing (param is missing or the value is empty: task):
+  
+app/controllers/tasks_controller.rb:55:in `task_params'
+app/controllers/tasks_controller.rb:33:in `update'
+Started GET "/tasks" for 192.168.65.1 at 2024-02-19 07:21:24 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#index as HTML
+  Rendering tasks/index.html.erb within layouts/application
+  [1m[36mTask Load (0.9ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks`[0m
+  ↳ app/views/tasks/index.html.erb:15
+  Rendered tasks/index.html.erb within layouts/application (Duration: 5.5ms | Allocations: 1348)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 29ms (Views: 24.9ms | ActiveRecord: 0.9ms | Allocations: 6205)
+
+
+Started GET "/tasks" for 192.168.65.1 at 2024-02-19 07:21:27 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#index as HTML
+  Rendering tasks/index.html.erb within layouts/application
+  [1m[36mTask Load (1.3ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks`[0m
+  ↳ app/views/tasks/index.html.erb:15
+  Rendered tasks/index.html.erb within layouts/application (Duration: 4.6ms | Allocations: 1094)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 25ms (Views: 22.3ms | ActiveRecord: 1.3ms | Allocations: 5006)
+
+
+Started GET "/tasks" for 192.168.65.1 at 2024-02-19 07:21:30 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#index as HTML
+  Rendering tasks/index.html.erb within layouts/application
+  [1m[36mTask Load (1.7ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks`[0m
+  ↳ app/views/tasks/index.html.erb:15
+  Rendered tasks/index.html.erb within layouts/application (Duration: 5.2ms | Allocations: 1085)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 25ms (Views: 22.6ms | ActiveRecord: 1.7ms | Allocations: 5004)
+
+
+Started GET "/tasks" for 192.168.65.1 at 2024-02-19 07:26:34 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#index as HTML
+  Rendering tasks/index.html.erb within layouts/application
+  [1m[36mTask Load (2.5ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks`[0m
+  ↳ app/views/tasks/index.html.erb:21
+  Rendered tasks/index.html.erb within layouts/application (Duration: 11.5ms | Allocations: 2061)
+Completed 500 Internal Server Error in 22ms (ActiveRecord: 2.5ms | Allocations: 3276)
+
+
+  
+ActionView::Template::Error (undefined method `DueDate' for #<Task:0x0000ffff6d03c8a8>):
+    24:         <td><%= task.description %></td>
+    25:         <td><%= task.priority %></td>
+    26:         <td><%= task.status %></td>
+    27:         <td><%= task.DueDate %></td>
+    28:         <td><%= link_to 'Show', task %></td>
+    29:         <td><%= link_to 'Edit', edit_task_path(task) %></td>
+    30:         <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  
+app/views/tasks/index.html.erb:27
+app/views/tasks/index.html.erb:21
+Started GET "/tasks" for 192.168.65.1 at 2024-02-19 07:27:00 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#index as HTML
+  Rendering tasks/index.html.erb within layouts/application
+  [1m[36mTask Load (1.6ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks`[0m
+  ↳ app/views/tasks/index.html.erb:21
+  Rendered tasks/index.html.erb within layouts/application (Duration: 7.3ms | Allocations: 2206)
+Completed 500 Internal Server Error in 15ms (ActiveRecord: 1.6ms | Allocations: 3426)
+
+
+  
+ActionView::Template::Error (undefined method `DueDate' for #<Task:0x0000ffff6d0cc138>):
+    24:         <td><%= task.description %></td>
+    25:         <td><%= task.priority %></td>
+    26:         <td><%= task.status %></td>
+    27:         <td><%= task.DueDate %></td>
+    28:         <td><%= link_to 'Show', task %></td>
+    29:         <td><%= link_to 'Edit', edit_task_path(task) %></td>
+    30:         <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  
+app/views/tasks/index.html.erb:27
+app/views/tasks/index.html.erb:21
+Started GET "/tasks" for 192.168.65.1 at 2024-02-19 07:28:59 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#index as HTML
+  Rendering tasks/index.html.erb within layouts/application
+  [1m[36mTask Load (1.7ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks`[0m
+  ↳ app/views/tasks/index.html.erb:21
+  Rendered tasks/index.html.erb within layouts/application (Duration: 9.4ms | Allocations: 1964)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 38ms (Views: 33.9ms | ActiveRecord: 1.7ms | Allocations: 6825)
+
+
+Started GET "/tasks" for 192.168.65.1 at 2024-02-19 07:29:38 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  [1m[35m (1.5ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+Processing by TasksController#index as HTML
+  Rendering tasks/index.html.erb within layouts/application
+  [1m[36mTask Load (1.0ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks`[0m
+  ↳ app/views/tasks/index.html.erb:21
+  Rendered tasks/index.html.erb within layouts/application (Duration: 3.7ms | Allocations: 1495)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 23ms (Views: 20.7ms | ActiveRecord: 1.0ms | Allocations: 5417)
+
+
+Started GET "/tasks" for 192.168.65.1 at 2024-02-19 07:30:00 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#index as HTML
+  Rendering tasks/index.html.erb within layouts/application
+  [1m[36mTask Load (0.5ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks`[0m
+  ↳ app/views/tasks/index.html.erb:21
+  Rendered tasks/index.html.erb within layouts/application (Duration: 6.9ms | Allocations: 7234)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 19ms (Views: 12.9ms | ActiveRecord: 2.4ms | Allocations: 12139)
+
+
+Started GET "/tasks" for 192.168.65.1 at 2024-02-19 07:30:02 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#index as HTML
+  Rendering tasks/index.html.erb within layouts/application
+  [1m[36mTask Load (1.4ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks`[0m
+  ↳ app/views/tasks/index.html.erb:21
+  Rendered tasks/index.html.erb within layouts/application (Duration: 5.1ms | Allocations: 1487)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 34ms (Views: 30.7ms | ActiveRecord: 1.4ms | Allocations: 5417)
+
+
+Started GET "/tasks" for 192.168.65.1 at 2024-02-19 07:31:17 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+Processing by TasksController#index as HTML
+  Rendering tasks/index.html.erb within layouts/application
+  [1m[36mTask Load (0.4ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks`[0m
+  ↳ app/views/tasks/index.html.erb:21
+  Rendered tasks/index.html.erb within layouts/application (Duration: 7.4ms | Allocations: 6767)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 20ms (Views: 14.9ms | ActiveRecord: 1.6ms | Allocations: 12465)
+
+
+Started GET "/tasks/2" for 192.168.65.1 at 2024-02-19 07:31:21 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mTask Load (1.3ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 2 LIMIT 1[0m
+  ↳ app/controllers/tasks_controller.rb:51:in `set_task'
+  [1m[36mCACHE Task Load (0.0ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 2 LIMIT 1[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/tasks_controller.rb:10:in `show'
+  Rendering tasks/show.html.erb within layouts/application
+  Rendered tasks/show.html.erb within layouts/application (Duration: 2.2ms | Allocations: 490)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 27ms (Views: 18.4ms | ActiveRecord: 1.4ms | Allocations: 5800)
+
+
+Started GET "/tasks/2" for 192.168.65.1 at 2024-02-19 07:32:25 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mTask Load (0.4ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 2 LIMIT 1[0m
+  ↳ app/controllers/tasks_controller.rb:51:in `set_task'
+  [1m[36mCACHE Task Load (0.0ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 2 LIMIT 1[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/tasks_controller.rb:10:in `show'
+  Rendering tasks/show.html.erb within layouts/application
+  Rendered tasks/show.html.erb within layouts/application (Duration: 1.2ms | Allocations: 398)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 16ms (Views: 12.9ms | ActiveRecord: 0.4ms | Allocations: 6386)
+
+
+Started GET "/tasks/2/edit" for 192.168.65.1 at 2024-02-19 07:32:29 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#edit as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mTask Load (1.7ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 2 LIMIT 1[0m
+  ↳ app/controllers/tasks_controller.rb:51:in `set_task'
+  [1m[36mCACHE Task Load (0.0ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 2 LIMIT 1[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/tasks_controller.rb:18:in `edit'
+  Rendering tasks/edit.html.erb within layouts/application
+  Rendered tasks/_form.html.erb (Duration: 4.5ms | Allocations: 2019)
+  Rendered tasks/edit.html.erb within layouts/application (Duration: 7.3ms | Allocations: 2434)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 33ms (Views: 24.3ms | ActiveRecord: 1.7ms | Allocations: 7622)
+
+
+Started PATCH "/tasks/2" for 192.168.65.1 at 2024-02-19 07:32:47 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#update as JS
+  Parameters: {"authenticity_token"=>"OJHdPhjoPSbqIgYD5UPP2WuXMjGzHKWdpZPFJcNafFgCT3blS8+hhQc1v6ilqbLAaN4m1Z9QJEge40ie+10xIA==", "task"=>{"name"=>"Mobile Network", "description"=>"Use Rakuten Mobile!", "priority"=>"High", "status"=>"In Progress", "DueDate"=>"2024-09-2024"}, "commit"=>"Update Task", "id"=>"2"}
+  [1m[36mTask Load (1.5ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 2 LIMIT 1[0m
+  ↳ app/controllers/tasks_controller.rb:51:in `set_task'
+  [1m[36mCACHE Task Load (0.0ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 2 LIMIT 1[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/tasks_controller.rb:32:in `update'
+[31mUnpermitted parameter: :DueDate[0m
+  Rendering tasks/edit.html.erb within layouts/application
+  Rendered tasks/_form.html.erb (Duration: 2.5ms | Allocations: 1593)
+  Rendered tasks/edit.html.erb within layouts/application (Duration: 4.5ms | Allocations: 1896)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 422 Unprocessable Entity in 34ms (Views: 23.4ms | ActiveRecord: 1.5ms | Allocations: 9743)
+
+
+Started PATCH "/tasks/2" for 192.168.65.1 at 2024-02-19 07:32:50 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#update as HTML
+  Parameters: {"authenticity_token"=>"P/96DqNVSG3lik0uZaJvwVMo7DDKSuF4j5Toaq7RSM8FIdHV8HLUzgid9IUlSBLYUGH41OYGYK005GXRltYFtw==", "commit"=>"Update Task", "id"=>"2"}
+  [1m[36mTask Load (1.3ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 2 LIMIT 1[0m
+  ↳ app/controllers/tasks_controller.rb:51:in `set_task'
+  [1m[36mCACHE Task Load (0.0ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 2 LIMIT 1[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/tasks_controller.rb:32:in `update'
+Completed 400 Bad Request in 7ms (ActiveRecord: 1.3ms | Allocations: 1813)
+
+
+  
+ActionController::ParameterMissing (param is missing or the value is empty: task):
+  
+app/controllers/tasks_controller.rb:55:in `task_params'
+app/controllers/tasks_controller.rb:33:in `update'
+Started GET "/tasks/2/edit" for 192.168.65.1 at 2024-02-19 07:35:53 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#edit as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mTask Load (3.3ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 2 LIMIT 1[0m
+  ↳ app/controllers/tasks_controller.rb:51:in `set_task'
+  [1m[36mCACHE Task Load (0.0ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 2 LIMIT 1[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/tasks_controller.rb:18:in `edit'
+  Rendering tasks/edit.html.erb within layouts/application
+  Rendered tasks/_form.html.erb (Duration: 6.2ms | Allocations: 1913)
+  Rendered tasks/edit.html.erb within layouts/application (Duration: 9.4ms | Allocations: 2403)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 42ms (Views: 29.3ms | ActiveRecord: 3.3ms | Allocations: 8394)
+
+
+Started PATCH "/tasks/2" for 192.168.65.1 at 2024-02-19 07:35:55 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#update as HTML
+  Parameters: {"authenticity_token"=>"sdSYussu3Kl4ysMkTMQqxbcweOB+ZAnTihgjgEC55HMZ8QRG0NQfzMK+P1nz11SqIlAz4WGP3VQPxbktDPXo5w==", "id"=>"2"}
+  [1m[36mTask Load (1.5ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 2 LIMIT 1[0m
+  ↳ app/controllers/tasks_controller.rb:51:in `set_task'
+  [1m[36mCACHE Task Load (0.0ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 2 LIMIT 1[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/tasks_controller.rb:32:in `update'
+Completed 400 Bad Request in 9ms (ActiveRecord: 1.5ms | Allocations: 1782)
+
+
+  
+ActionController::ParameterMissing (param is missing or the value is empty: task):
+  
+app/controllers/tasks_controller.rb:55:in `task_params'
+app/controllers/tasks_controller.rb:33:in `update'
+Started GET "/tasks" for 192.168.65.1 at 2024-02-19 07:36:34 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#index as HTML
+  Rendering tasks/index.html.erb within layouts/application
+  [1m[36mTask Load (1.4ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks`[0m
+  ↳ app/views/tasks/index.html.erb:21
+  Rendered tasks/index.html.erb within layouts/application (Duration: 8.6ms | Allocations: 1450)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 30ms (Views: 25.1ms | ActiveRecord: 1.4ms | Allocations: 5518)
+
+
+Started GET "/tasks/new" for 192.168.65.1 at 2024-02-19 07:36:36 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#new as HTML
+  Rendering tasks/new.html.erb within layouts/application
+  Rendered tasks/_form.html.erb (Duration: 2.6ms | Allocations: 1336)
+  Rendered tasks/new.html.erb within layouts/application (Duration: 4.6ms | Allocations: 1554)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 25ms (Views: 22.4ms | ActiveRecord: 0.0ms | Allocations: 5630)
+
+
+Started POST "/tasks" for 192.168.65.1 at 2024-02-19 07:37:42 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#create as JS
+  Parameters: {"authenticity_token"=>"JyK9CHrtd1kFUnd8/bPHQp3OcotrzbTe9D+9lZyKnrs/us8R7V5Z4+7M+7eGtV26CzA95gQtdwmweTd7AiBdKw==", "task"=>{"name"=>"new", "description"=>"test the function", "priority"=>"medium", "status"=>"Not Started", "DueDate"=>"2024-02-19"}, "commit"=>"Create Task"}
+[31mUnpermitted parameter: :DueDate[0m
+Completed 500 Internal Server Error in 79ms (ActiveRecord: 0.0ms | Allocations: 50388)
+
+
+  
+NoMethodError (undefined method `ender' for #<TasksController:0x0000ffff6d164528>):
+  
+app/controllers/tasks_controller.rb:27:in `create'
+Started POST "/tasks" for 192.168.65.1 at 2024-02-19 07:37:46 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#create as JS
+  Parameters: {"authenticity_token"=>"JyK9CHrtd1kFUnd8/bPHQp3OcotrzbTe9D+9lZyKnrs/us8R7V5Z4+7M+7eGtV26CzA95gQtdwmweTd7AiBdKw==", "task"=>{"name"=>"new", "description"=>"test the function", "priority"=>"medium", "status"=>"Not Started", "DueDate"=>"2024-02-19"}, "commit"=>"Create Task"}
+[31mUnpermitted parameter: :DueDate[0m
+Completed 500 Internal Server Error in 71ms (ActiveRecord: 0.0ms | Allocations: 50308)
+
+
+  
+NoMethodError (undefined method `ender' for #<TasksController:0x0000aaaafdb92898>):
+  
+app/controllers/tasks_controller.rb:27:in `create'
+Started POST "/tasks" for 192.168.65.1 at 2024-02-19 07:37:54 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#create as JS
+  Parameters: {"authenticity_token"=>"JyK9CHrtd1kFUnd8/bPHQp3OcotrzbTe9D+9lZyKnrs/us8R7V5Z4+7M+7eGtV26CzA95gQtdwmweTd7AiBdKw==", "task"=>{"name"=>"new", "description"=>"test the function", "priority"=>"medium", "status"=>"Not Started", "DueDate"=>"2024-02-19"}, "commit"=>"Create Task"}
+[31mUnpermitted parameter: :DueDate[0m
+Completed 500 Internal Server Error in 71ms (ActiveRecord: 0.0ms | Allocations: 50308)
+
+
+  
+NoMethodError (undefined method `ender' for #<TasksController:0x0000aaaafda1aba0>):
+  
+app/controllers/tasks_controller.rb:27:in `create'
+Started GET "/tasks/new" for 192.168.65.1 at 2024-02-19 07:41:09 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#new as HTML
+  Rendering tasks/new.html.erb within layouts/application
+  Rendered tasks/_form.html.erb (Duration: 2.8ms | Allocations: 1500)
+  Rendered tasks/new.html.erb within layouts/application (Duration: 3.4ms | Allocations: 1603)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 38ms (Views: 20.5ms | ActiveRecord: 8.0ms | Allocations: 11750)
+
+
+Started POST "/tasks" for 192.168.65.1 at 2024-02-19 07:41:40 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#create as JS
+  Parameters: {"authenticity_token"=>"Zvo/TiVBTfgDMBTguXGetVPrpfDS+Sx3kq6dAG5A36vO36OyPruOnblE6J0GYuDaxovu8c0S+PAXcwetIgzTPw==", "task"=>{"name"=>"new", "description"=>"check the working", "priority"=>"medium", "status"=>"In Progress", "DueDate"=>"2024-02-19"}, "commit"=>"Create Task"}
+[31mUnpermitted parameter: :DueDate[0m
+  Rendering tasks/new.html.erb within layouts/application
+  Rendered tasks/_form.html.erb (Duration: 2.8ms | Allocations: 1599)
+  Rendered tasks/new.html.erb within layouts/application (Duration: 4.9ms | Allocations: 1863)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 422 Unprocessable Entity in 34ms (Views: 26.4ms | ActiveRecord: 0.0ms | Allocations: 8494)
+
+
+Started POST "/tasks" for 192.168.65.1 at 2024-02-19 07:41:42 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#create as HTML
+  Parameters: {"authenticity_token"=>"Zvo/TiVBTfgDMBTguXGetVPrpfDS+Sx3kq6dAG5A36vO36OyPruOnblE6J0GYuDaxovu8c0S+PAXcwetIgzTPw==", "commit"=>"Create Task"}
+Completed 400 Bad Request in 2ms (ActiveRecord: 0.0ms | Allocations: 644)
+
+
+  
+ActionController::ParameterMissing (param is missing or the value is empty: task):
+  
+app/controllers/tasks_controller.rb:55:in `task_params'
+app/controllers/tasks_controller.rb:22:in `create'
+Started POST "/tasks" for 192.168.65.1 at 2024-02-19 07:44:31 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#create as HTML
+  Parameters: {"authenticity_token"=>"Zvo/TiVBTfgDMBTguXGetVPrpfDS+Sx3kq6dAG5A36vO36OyPruOnblE6J0GYuDaxovu8c0S+PAXcwetIgzTPw==", "commit"=>"Create Task"}
+Completed 400 Bad Request in 2ms (ActiveRecord: 0.0ms | Allocations: 644)
+
+
+  
+ActionController::ParameterMissing (param is missing or the value is empty: task):
+  
+app/controllers/tasks_controller.rb:55:in `task_params'
+app/controllers/tasks_controller.rb:22:in `create'
+Started POST "/tasks" for 192.168.65.1 at 2024-02-19 07:44:35 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#create as HTML
+  Parameters: {"authenticity_token"=>"Zvo/TiVBTfgDMBTguXGetVPrpfDS+Sx3kq6dAG5A36vO36OyPruOnblE6J0GYuDaxovu8c0S+PAXcwetIgzTPw==", "commit"=>"Create Task"}
+Completed 400 Bad Request in 2ms (ActiveRecord: 0.0ms | Allocations: 644)
+
+
+  
+ActionController::ParameterMissing (param is missing or the value is empty: task):
+  
+app/controllers/tasks_controller.rb:55:in `task_params'
+app/controllers/tasks_controller.rb:22:in `create'
+Started POST "/tasks" for 192.168.65.1 at 2024-02-19 07:44:41 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#create as HTML
+  Parameters: {"authenticity_token"=>"Zvo/TiVBTfgDMBTguXGetVPrpfDS+Sx3kq6dAG5A36vO36OyPruOnblE6J0GYuDaxovu8c0S+PAXcwetIgzTPw==", "commit"=>"Create Task"}
+Completed 400 Bad Request in 2ms (ActiveRecord: 0.0ms | Allocations: 644)
+
+
+  
+ActionController::ParameterMissing (param is missing or the value is empty: task):
+  
+app/controllers/tasks_controller.rb:55:in `task_params'
+app/controllers/tasks_controller.rb:22:in `create'
+Started GET "/tasks/new" for 192.168.65.1 at 2024-02-19 07:46:45 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#new as HTML
+  Rendering tasks/new.html.erb within layouts/application
+  Rendered tasks/_form.html.erb (Duration: 5.6ms | Allocations: 1446)
+  Rendered tasks/new.html.erb within layouts/application (Duration: 6.7ms | Allocations: 1805)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 24ms (Views: 15.9ms | ActiveRecord: 1.5ms | Allocations: 12729)
+
+
+Started POST "/tasks" for 192.168.65.1 at 2024-02-19 07:47:26 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#create as HTML
+  Parameters: {"authenticity_token"=>"heNgdp3vZQX2SpFtM8niu9wnbnCi5/WEN43P2osGIZgtxvyKhhWmYEw+bRCM2pzUSUclcb0MIQOyUFV3x0otDA==", "task"=>{"name"=>"new", "description"=>"check the working", "priority"=>"Medium", "status"=>"Done", "duedate"=>"2024-02-19"}, "commit"=>"Create Task"}
+  Rendering tasks/new.html.erb within layouts/application
+  Rendered tasks/_form.html.erb (Duration: 3.2ms | Allocations: 1319)
+  Rendered tasks/new.html.erb within layouts/application (Duration: 3.8ms | Allocations: 1422)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 422 Unprocessable Entity in 24ms (Views: 19.5ms | ActiveRecord: 0.0ms | Allocations: 7917)
+
+
+Started POST "/tasks" for 192.168.65.1 at 2024-02-19 07:48:08 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#create as HTML
+  Parameters: {"authenticity_token"=>"i8EEx2NJ2J6MOUguRgAPI8aaZ9zLaBPLCbe3dOmFv1Ej5Jg7eLMb+zZNtFP5E3FMU/os3dSDx0yMai3ZpcmzxQ==", "task"=>{"name"=>"new", "description"=>"check the working", "priority"=>"Medium", "status"=>"Completed", "duedate"=>"2024-02-19"}, "commit"=>"Create Task"}
+  Rendering tasks/new.html.erb within layouts/application
+  Rendered tasks/_form.html.erb (Duration: 3.9ms | Allocations: 1160)
+  Rendered tasks/new.html.erb within layouts/application (Duration: 4.9ms | Allocations: 1262)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 422 Unprocessable Entity in 29ms (Views: 23.6ms | ActiveRecord: 0.0ms | Allocations: 6077)
+
+
+Started GET "/tasks/new" for 192.168.65.1 at 2024-02-19 07:48:20 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#new as HTML
+  Rendering tasks/new.html.erb within layouts/application
+  Rendered tasks/_form.html.erb (Duration: 2.1ms | Allocations: 959)
+  Rendered tasks/new.html.erb within layouts/application (Duration: 2.8ms | Allocations: 1061)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 24ms (Views: 22.3ms | ActiveRecord: 0.0ms | Allocations: 4990)
+
+
+Started GET "/tasks" for 192.168.65.1 at 2024-02-19 07:48:23 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#index as HTML
+  Rendering tasks/index.html.erb within layouts/application
+  [1m[36mTask Load (2.1ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks`[0m
+  ↳ app/views/tasks/index.html.erb:21
+  Rendered tasks/index.html.erb within layouts/application (Duration: 8.8ms | Allocations: 1462)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 29ms (Views: 23.7ms | ActiveRecord: 2.1ms | Allocations: 5559)
+
+
+Started GET "/tasks/1/edit" for 192.168.65.1 at 2024-02-19 07:48:25 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mTask Load (0.9ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m
+  ↳ app/controllers/tasks_controller.rb:51:in `set_task'
+  [1m[36mCACHE Task Load (0.0ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/tasks_controller.rb:18:in `edit'
+  Rendering tasks/edit.html.erb within layouts/application
+  Rendered tasks/_form.html.erb (Duration: 1.2ms | Allocations: 1081)
+  Rendered tasks/edit.html.erb within layouts/application (Duration: 2.5ms | Allocations: 1426)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 19ms (Views: 13.2ms | ActiveRecord: 0.9ms | Allocations: 6728)
+
+
+Started PATCH "/tasks/1" for 192.168.65.1 at 2024-02-19 07:48:42 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#update as HTML
+  Parameters: {"authenticity_token"=>"iMERsUS4Vj+WRMd13PB2+8znxz7LjrnVaDoZc1sPD36aZANUEUQI7jSgziyaN5JqnSCMHym8BL9+V8O6dpnoAA==", "task"=>{"name"=>"Ruby", "description"=>"Use Rails Framework", "priority"=>"High", "status"=>"Not Started", "duedate"=>"2024-04-01 00:00:00 UTC"}, "commit"=>"Update Task", "id"=>"1"}
+  [1m[36mTask Load (1.2ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m
+  ↳ app/controllers/tasks_controller.rb:51:in `set_task'
+  [1m[36mCACHE Task Load (0.0ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/tasks_controller.rb:32:in `update'
+  Rendering tasks/edit.html.erb within layouts/application
+  Rendered tasks/_form.html.erb (Duration: 2.3ms | Allocations: 1248)
+  Rendered tasks/edit.html.erb within layouts/application (Duration: 3.0ms | Allocations: 1448)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 422 Unprocessable Entity in 27ms (Views: 18.7ms | ActiveRecord: 1.2ms | Allocations: 7680)
+
+
+Started GET "/tasks/1" for 192.168.65.1 at 2024-02-19 07:49:57 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mTask Load (0.3ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m
+  ↳ app/controllers/tasks_controller.rb:51:in `set_task'
+  [1m[36mCACHE Task Load (0.0ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/tasks_controller.rb:10:in `show'
+  Rendering tasks/show.html.erb within layouts/application
+  Rendered tasks/show.html.erb within layouts/application (Duration: 0.9ms | Allocations: 460)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 23ms (Views: 7.9ms | ActiveRecord: 3.3ms | Allocations: 11840)
+
+
+Started GET "/tasks/1/edit" for 192.168.65.1 at 2024-02-19 07:50:03 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mTask Load (1.1ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m
+  ↳ app/controllers/tasks_controller.rb:51:in `set_task'
+  [1m[36mCACHE Task Load (0.0ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/tasks_controller.rb:18:in `edit'
+  Rendering tasks/edit.html.erb within layouts/application
+  Rendered tasks/_form.html.erb (Duration: 2.7ms | Allocations: 1083)
+  Rendered tasks/edit.html.erb within layouts/application (Duration: 3.4ms | Allocations: 1283)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 30ms (Views: 22.7ms | ActiveRecord: 1.1ms | Allocations: 6323)
+
+
+Started PATCH "/tasks/1" for 192.168.65.1 at 2024-02-19 07:50:13 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#update as HTML
+  Parameters: {"authenticity_token"=>"iieeXwBq8na186se+p6b19Mv/MaRX+G9QukeE/9G8JaYgoy6VZaspxcXoke8WX9Ggui353NtXNdUhMTa0tAX6A==", "task"=>{"name"=>"Ruby", "description"=>"Use Rails Framework", "priority"=>"High", "status"=>"Not Started", "duedate"=>"2024-04-01 00:00:00 UTC"}, "commit"=>"Update Task", "id"=>"1"}
+  [1m[36mTask Load (1.4ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m
+  ↳ app/controllers/tasks_controller.rb:51:in `set_task'
+  [1m[36mCACHE Task Load (0.0ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/tasks_controller.rb:32:in `update'
+  [1m[35m (0.5ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/tasks_controller.rb:33:in `update'
+  [1m[36mTask Update (10.2ms)[0m  [1m[33mUPDATE `tasks` SET `tasks`.`status` = 'Not Started', `tasks`.`updated_at` = '2024-02-19 07:50:13' WHERE `tasks`.`id` = 1[0m
+  ↳ app/controllers/tasks_controller.rb:33:in `update'
+  [1m[35m (2.0ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/tasks_controller.rb:33:in `update'
+Redirected to http://localhost:3001/tasks/1
+Completed 302 Found in 29ms (ActiveRecord: 14.2ms | Allocations: 4434)
+
+
+Started GET "/tasks/1" for 192.168.65.1 at 2024-02-19 07:50:13 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mTask Load (0.6ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m
+  ↳ app/controllers/tasks_controller.rb:51:in `set_task'
+  [1m[36mCACHE Task Load (0.0ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/tasks_controller.rb:10:in `show'
+  Rendering tasks/show.html.erb within layouts/application
+  Rendered tasks/show.html.erb within layouts/application (Duration: 0.4ms | Allocations: 185)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 22ms (Views: 19.4ms | ActiveRecord: 0.6ms | Allocations: 5249)
+
+
+Started GET "/tasks" for 192.168.65.1 at 2024-02-19 07:50:17 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#index as HTML
+  Rendering tasks/index.html.erb within layouts/application
+  [1m[36mTask Load (1.3ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks`[0m
+  ↳ app/views/tasks/index.html.erb:21
+  Rendered tasks/index.html.erb within layouts/application (Duration: 4.6ms | Allocations: 1127)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 29ms (Views: 26.8ms | ActiveRecord: 1.3ms | Allocations: 5049)
+
+
+Started GET "/tasks/new" for 192.168.65.1 at 2024-02-19 07:51:53 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#new as HTML
+  Rendering tasks/new.html.erb within layouts/application
+  Rendered tasks/_form.html.erb (Duration: 1.6ms | Allocations: 959)
+  Rendered tasks/new.html.erb within layouts/application (Duration: 2.4ms | Allocations: 1061)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 18ms (Views: 16.8ms | ActiveRecord: 0.0ms | Allocations: 4976)
+
+
+Started POST "/tasks" for 192.168.65.1 at 2024-02-19 07:53:18 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#create as HTML
+  Parameters: {"authenticity_token"=>"Q8W6HFFXr0SOrw5FfaT4NWinN3rayoU21t5YuZ6pPpZbXcgFxuSB/mUxgo4GomLN/ll4F7UqRuGSmNJXAAP9Bg==", "task"=>{"name"=>"New ", "description"=>"Check the working of the website", "priority"=>"Low", "status"=>"Done", "duedate"=>"2024-02-19"}, "commit"=>"Create Task"}
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/tasks_controller.rb:23:in `create'
+  [1m[36mTask Create (0.4ms)[0m  [1m[32mINSERT INTO `tasks` (`name`, `description`, `priority`, `status`, `duedate`, `created_at`, `updated_at`) VALUES ('New ', 'Check the working of the website', 'Low', 'Done', '2024-02-19 00:00:00', '2024-02-19 07:53:18', '2024-02-19 07:53:18')[0m
+  ↳ app/controllers/tasks_controller.rb:23:in `create'
+  [1m[35m (0.9ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/tasks_controller.rb:23:in `create'
+Redirected to http://localhost:3001/tasks/3
+Completed 302 Found in 24ms (ActiveRecord: 2.9ms | Allocations: 9006)
+
+
+Started GET "/tasks/3" for 192.168.65.1 at 2024-02-19 07:53:18 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#show as HTML
+  Parameters: {"id"=>"3"}
+  [1m[36mTask Load (0.5ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 3 LIMIT 1[0m
+  ↳ app/controllers/tasks_controller.rb:51:in `set_task'
+  [1m[36mCACHE Task Load (0.0ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 3 LIMIT 1[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/controllers/tasks_controller.rb:10:in `show'
+  Rendering tasks/show.html.erb within layouts/application
+  Rendered tasks/show.html.erb within layouts/application (Duration: 0.2ms | Allocations: 245)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 10ms (Views: 8.3ms | ActiveRecord: 0.5ms | Allocations: 5587)
+
+
+Started GET "/tasks" for 192.168.65.1 at 2024-02-19 07:53:26 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#index as HTML
+  Rendering tasks/index.html.erb within layouts/application
+  [1m[36mTask Load (1.0ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks`[0m
+  ↳ app/views/tasks/index.html.erb:21
+  Rendered tasks/index.html.erb within layouts/application (Duration: 5.2ms | Allocations: 1318)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 25ms (Views: 22.1ms | ActiveRecord: 1.0ms | Allocations: 5239)
+
+
+Started GET "/tasks/new" for 192.168.65.1 at 2024-02-19 07:53:40 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#new as HTML
+  Rendering tasks/new.html.erb within layouts/application
+  Rendered tasks/_form.html.erb (Duration: 2.1ms | Allocations: 966)
+  Rendered tasks/new.html.erb within layouts/application (Duration: 2.8ms | Allocations: 1068)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 23ms (Views: 22.2ms | ActiveRecord: 0.0ms | Allocations: 4989)
+
+
+Started GET "/tasks/new" for 192.168.65.1 at 2024-02-19 07:53:44 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#new as HTML
+  Rendering tasks/new.html.erb within layouts/application
+  Rendered tasks/_form.html.erb (Duration: 2.3ms | Allocations: 959)
+  Rendered tasks/new.html.erb within layouts/application (Duration: 2.9ms | Allocations: 1061)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 24ms (Views: 23.3ms | ActiveRecord: 0.0ms | Allocations: 4986)
+
+
+Started GET "/tasks/new" for 192.168.65.1 at 2024-02-19 07:53:47 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#new as HTML
+  Rendering tasks/new.html.erb within layouts/application
+  Rendered tasks/_form.html.erb (Duration: 4.0ms | Allocations: 959)
+  Rendered tasks/new.html.erb within layouts/application (Duration: 5.1ms | Allocations: 1061)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 28ms (Views: 25.8ms | ActiveRecord: 0.0ms | Allocations: 4986)
+
+
+Started GET "/tasks/new" for 192.168.65.1 at 2024-02-19 07:53:53 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#new as HTML
+  Rendering tasks/new.html.erb within layouts/application
+  Rendered tasks/_form.html.erb (Duration: 1.8ms | Allocations: 959)
+  Rendered tasks/new.html.erb within layouts/application (Duration: 2.5ms | Allocations: 1061)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 21ms (Views: 20.1ms | ActiveRecord: 0.0ms | Allocations: 4978)
+
+
+Started GET "/tasks/new" for 192.168.65.1 at 2024-02-19 07:53:57 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#new as HTML
+  Rendering tasks/new.html.erb within layouts/application
+  Rendered tasks/_form.html.erb (Duration: 2.1ms | Allocations: 959)
+  Rendered tasks/new.html.erb within layouts/application (Duration: 2.9ms | Allocations: 1061)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 24ms (Views: 21.6ms | ActiveRecord: 0.0ms | Allocations: 4990)
+
+
+Started GET "/tasks" for 192.168.65.1 at 2024-02-19 07:54:00 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#index as HTML
+  Rendering tasks/index.html.erb within layouts/application
+  [1m[36mTask Load (2.0ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks`[0m
+  ↳ app/views/tasks/index.html.erb:21
+  Rendered tasks/index.html.erb within layouts/application (Duration: 6.2ms | Allocations: 1315)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 26ms (Views: 22.6ms | ActiveRecord: 2.0ms | Allocations: 5232)
+
+
+Started GET "/tasks/1" for 192.168.65.1 at 2024-02-19 07:54:04 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mTask Load (1.4ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m
+  ↳ app/controllers/tasks_controller.rb:51:in `set_task'
+  [1m[36mCACHE Task Load (0.0ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/tasks_controller.rb:10:in `show'
+  Rendering tasks/show.html.erb within layouts/application
+  Rendered tasks/show.html.erb within layouts/application (Duration: 0.8ms | Allocations: 185)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 26ms (Views: 19.7ms | ActiveRecord: 1.4ms | Allocations: 5228)
+
+
+Started GET "/tasks" for 192.168.65.1 at 2024-02-19 07:54:08 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#index as HTML
+  Rendering tasks/index.html.erb within layouts/application
+  [1m[36mTask Load (1.1ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks`[0m
+  ↳ app/views/tasks/index.html.erb:21
+  Rendered tasks/index.html.erb within layouts/application (Duration: 4.8ms | Allocations: 1315)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 35ms (Views: 33.0ms | ActiveRecord: 1.1ms | Allocations: 5239)
+
+
+Started GET "/tasks/1/edit" for 192.168.65.1 at 2024-02-19 07:54:13 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mTask Load (1.4ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m
+  ↳ app/controllers/tasks_controller.rb:51:in `set_task'
+  [1m[36mCACHE Task Load (0.0ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/tasks_controller.rb:18:in `edit'
+  Rendering tasks/edit.html.erb within layouts/application
+  Rendered tasks/_form.html.erb (Duration: 2.7ms | Allocations: 1073)
+  Rendered tasks/edit.html.erb within layouts/application (Duration: 3.9ms | Allocations: 1273)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 29ms (Views: 22.8ms | ActiveRecord: 1.4ms | Allocations: 6309)
+
+
+Started PATCH "/tasks/1" for 192.168.65.1 at 2024-02-19 07:54:19 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#update as HTML
+  Parameters: {"authenticity_token"=>"/fLjD1NLhjHuWGHTEGgHLN90UVlrtF7C6MVuOSX3WUzvV/HqBrfY4Ey8aIpWr+O9jrMaeImG46j+qLTwCGG+Mg==", "task"=>{"name"=>"Ruby", "description"=>"Use Rails Frameworks", "priority"=>"High", "status"=>"Not Started", "duedate"=>"2024-04-01 00:00:00 UTC"}, "commit"=>"Update Task", "id"=>"1"}
+  [1m[36mTask Load (1.7ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m
+  ↳ app/controllers/tasks_controller.rb:51:in `set_task'
+  [1m[36mCACHE Task Load (0.0ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/tasks_controller.rb:32:in `update'
+  [1m[35m (0.5ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/tasks_controller.rb:33:in `update'
+  [1m[36mTask Update (1.8ms)[0m  [1m[33mUPDATE `tasks` SET `tasks`.`description` = 'Use Rails Frameworks', `tasks`.`updated_at` = '2024-02-19 07:54:19' WHERE `tasks`.`id` = 1[0m
+  ↳ app/controllers/tasks_controller.rb:33:in `update'
+  [1m[35m (1.5ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/tasks_controller.rb:33:in `update'
+Redirected to http://localhost:3001/tasks/1
+Completed 302 Found in 19ms (ActiveRecord: 5.5ms | Allocations: 4210)
+
+
+Started GET "/tasks/1" for 192.168.65.1 at 2024-02-19 07:54:19 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mTask Load (0.7ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m
+  ↳ app/controllers/tasks_controller.rb:51:in `set_task'
+  [1m[36mCACHE Task Load (0.0ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/tasks_controller.rb:10:in `show'
+  Rendering tasks/show.html.erb within layouts/application
+  Rendered tasks/show.html.erb within layouts/application (Duration: 0.5ms | Allocations: 185)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 19ms (Views: 15.0ms | ActiveRecord: 0.7ms | Allocations: 5245)
+
+
+Started GET "/tasks" for 192.168.65.1 at 2024-02-19 07:54:21 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#index as HTML
+  Rendering tasks/index.html.erb within layouts/application
+  [1m[36mTask Load (1.6ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks`[0m
+  ↳ app/views/tasks/index.html.erb:21
+  Rendered tasks/index.html.erb within layouts/application (Duration: 5.2ms | Allocations: 1315)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 27ms (Views: 24.6ms | ActiveRecord: 1.6ms | Allocations: 5218)
+
+
+Started DELETE "/tasks/3" for 192.168.65.1 at 2024-02-19 07:55:08 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#destroy as HTML
+  Parameters: {"authenticity_token"=>"TYd7hBOBKWUTWQDpLbsiab7kP2R9M/zr3/yxxsrGtSzloud4CHvqAKkt/JSSqFwGK4R0ZWLYKGxaIStrhoq5uA==", "id"=>"3"}
+  [1m[36mTask Load (1.9ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 3 LIMIT 1[0m
+  ↳ app/controllers/tasks_controller.rb:51:in `set_task'
+  [1m[36mCACHE Task Load (0.0ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 3 LIMIT 1[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/controllers/tasks_controller.rb:42:in `destroy'
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/tasks_controller.rb:43:in `destroy'
+  [1m[36mTask Destroy (1.3ms)[0m  [1m[31mDELETE FROM `tasks` WHERE `tasks`.`id` = 3[0m
+  ↳ app/controllers/tasks_controller.rb:43:in `destroy'
+  [1m[35m (1.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/tasks_controller.rb:43:in `destroy'
+Redirected to http://localhost:3001/tasks
+Completed 302 Found in 16ms (ActiveRecord: 5.4ms | Allocations: 3555)
+
+
+Started GET "/tasks" for 192.168.65.1 at 2024-02-19 07:55:08 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#index as HTML
+  Rendering tasks/index.html.erb within layouts/application
+  [1m[36mTask Load (0.8ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks`[0m
+  ↳ app/views/tasks/index.html.erb:21
+  Rendered tasks/index.html.erb within layouts/application (Duration: 3.1ms | Allocations: 1125)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 18ms (Views: 16.7ms | ActiveRecord: 0.8ms | Allocations: 5059)
+
+
+Started GET "/tasks" for 192.168.65.1 at 2024-02-19 07:58:48 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#index as HTML
+  Rendering tasks/index.html.erb within layouts/application
+  [1m[36mTask Load (1.9ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks`[0m
+  ↳ app/views/tasks/index.html.erb:21
+  Rendered tasks/index.html.erb within layouts/application (Duration: 9.2ms | Allocations: 1418)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 38ms (Views: 32.6ms | ActiveRecord: 1.9ms | Allocations: 6276)
+
+
+Started GET "/tasks/new" for 192.168.65.1 at 2024-02-19 07:58:57 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#new as HTML
+  Rendering tasks/new.html.erb within layouts/application
+  Rendered tasks/_form.html.erb (Duration: 4.4ms | Allocations: 1380)
+  Rendered tasks/new.html.erb within layouts/application (Duration: 8.2ms | Allocations: 1739)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 32ms (Views: 28.2ms | ActiveRecord: 0.0ms | Allocations: 5801)
+
+
+Started POST "/tasks" for 192.168.65.1 at 2024-02-19 07:59:02 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#create as HTML
+  Parameters: {"authenticity_token"=>"ExImmf8aEwGW8DkMP3Jm4wfx/flFoj6k9p6hZmg6q50LilSAaKk9u31utcdEdPwbkQ+ylCpC/XOy2CuI9pBoDQ==", "task"=>{"name"=>"", "description"=>"", "priority"=>"", "status"=>"", "duedate"=>""}, "commit"=>"Create Task"}
+  Rendering tasks/new.html.erb within layouts/application
+  Rendered tasks/_form.html.erb (Duration: 14.8ms | Allocations: 1626)
+  Rendered tasks/new.html.erb within layouts/application (Duration: 15.7ms | Allocations: 1728)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 422 Unprocessable Entity in 37ms (Views: 32.3ms | ActiveRecord: 0.0ms | Allocations: 7817)
+
+
+Started GET "/tasks" for 192.168.65.1 at 2024-02-19 08:03:57 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#index as HTML
+  Rendering tasks/index.html.erb within layouts/application
+  [1m[36mTask Load (2.8ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks`[0m
+  ↳ app/views/tasks/index.html.erb:21
+  Rendered tasks/index.html.erb within layouts/application (Duration: 11.3ms | Allocations: 1110)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 39ms (Views: 31.6ms | ActiveRecord: 2.8ms | Allocations: 5027)
+
+
+Started GET "/tasks" for 192.168.65.1 at 2024-02-19 08:03:59 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#index as HTML
+  Rendering tasks/index.html.erb within layouts/application
+  [1m[36mTask Load (0.9ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks`[0m
+  ↳ app/views/tasks/index.html.erb:21
+  Rendered tasks/index.html.erb within layouts/application (Duration: 4.2ms | Allocations: 1103)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 23ms (Views: 20.8ms | ActiveRecord: 0.9ms | Allocations: 5032)
+
+
+Started GET "/tasks/new" for 192.168.65.1 at 2024-02-19 08:04:01 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#new as HTML
+  Rendering tasks/new.html.erb within layouts/application
+  Rendered tasks/_form.html.erb (Duration: 4.5ms | Allocations: 959)
+  Rendered tasks/new.html.erb within layouts/application (Duration: 6.0ms | Allocations: 1061)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 25ms (Views: 23.9ms | ActiveRecord: 0.0ms | Allocations: 4998)
+
+
+Started GET "/tasks" for 192.168.65.1 at 2024-02-19 08:04:02 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#index as HTML
+  Rendering tasks/index.html.erb within layouts/application
+  [1m[36mTask Load (1.1ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks`[0m
+  ↳ app/views/tasks/index.html.erb:21
+  Rendered tasks/index.html.erb within layouts/application (Duration: 4.6ms | Allocations: 1103)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 26ms (Views: 23.1ms | ActiveRecord: 1.1ms | Allocations: 5016)
+
+
+Started GET "/tasks/1/edit" for 192.168.65.1 at 2024-02-19 08:04:04 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mTask Load (1.7ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m
+  ↳ app/controllers/tasks_controller.rb:51:in `set_task'
+  [1m[36mCACHE Task Load (0.0ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/tasks_controller.rb:18:in `edit'
+  Rendering tasks/edit.html.erb within layouts/application
+  Rendered tasks/_form.html.erb (Duration: 2.8ms | Allocations: 1081)
+  Rendered tasks/edit.html.erb within layouts/application (Duration: 6.1ms | Allocations: 1431)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 35ms (Views: 23.8ms | ActiveRecord: 1.7ms | Allocations: 6608)
+
+
+Started GET "/tasks/1/edit" for 192.168.65.1 at 2024-02-20 01:29:02 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mTask Load (2.1ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m
+  ↳ app/controllers/tasks_controller.rb:51:in `set_task'
+  [1m[36mCACHE Task Load (0.0ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks` WHERE `tasks`.`id` = 1 LIMIT 1[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/tasks_controller.rb:18:in `edit'
+  Rendering tasks/edit.html.erb within layouts/application
+  Rendered tasks/_form.html.erb (Duration: 5.4ms | Allocations: 1073)
+  Rendered tasks/edit.html.erb within layouts/application (Duration: 6.3ms | Allocations: 1273)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 68ms (Views: 56.3ms | ActiveRecord: 2.2ms | Allocations: 6320)
+
+
+Started GET "/tasks" for 192.168.65.1 at 2024-02-20 01:29:04 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#index as HTML
+  Rendering tasks/index.html.erb within layouts/application
+  [1m[36mTask Load (1.4ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks`[0m
+  ↳ app/views/tasks/index.html.erb:21
+  Rendered tasks/index.html.erb within layouts/application (Duration: 6.8ms | Allocations: 1106)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 29ms (Views: 26.3ms | ActiveRecord: 1.4ms | Allocations: 5018)
+
+
+Started GET "/tasks/new" for 192.168.65.1 at 2024-02-20 01:29:05 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#new as HTML
+  Rendering tasks/new.html.erb within layouts/application
+  Rendered tasks/_form.html.erb (Duration: 2.3ms | Allocations: 959)
+  Rendered tasks/new.html.erb within layouts/application (Duration: 3.0ms | Allocations: 1061)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 23ms (Views: 21.6ms | ActiveRecord: 0.0ms | Allocations: 4984)
+
+
