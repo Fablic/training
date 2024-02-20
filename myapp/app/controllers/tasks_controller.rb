@@ -24,7 +24,7 @@ class TasksController < ApplicationController
               flash[:success] = "Task created successfully."
               redirect_to task_path(@task)
             else
-             r ender :new, status: :unprocessable_entity
+             render :new, status: :unprocessable_entity
             end
         end
 
@@ -53,5 +53,5 @@ class TasksController < ApplicationController
 
         def task_params
             params.require(:task).permit(:name, :description, :priority, :status, :duedate)
-        end
+          end
 end
