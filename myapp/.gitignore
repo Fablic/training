@@ -120,5 +120,5 @@ yarn-debug.log*
 .yarn-integrity
 
 .DS_Store
-../.DS_Store\
+../.DS_Store
 *.DS_Store
