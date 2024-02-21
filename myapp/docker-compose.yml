@@ -1,6 +1,7 @@
 version: '3'
 services:
   db:
+    platform : linux/amd64
     image: mysql:5.7
     environment:
       MYSQL_ROOT_PASSWORD: password
@@ -15,6 +16,7 @@ services:
     build: .
     command: >
       bash -c "bundle install &&
+      yarn install --check-files &&
       yarn install &&
       bundle exec rails webpacker:install &&
       bundle exec rails db:create &&

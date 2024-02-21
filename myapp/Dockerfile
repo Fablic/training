@@ -1,5 +1,5 @@
 FROM ruby:2.6
-ENV NODE_VERSION 12
+ENV NODE_VERSION 20
 
 ENV LANG C.UTF-8
 
@@ -12,6 +12,8 @@ RUN apt-get update -qq && \
       jq \
       git \
       curl \
+      python2 \
+      python \
       python3 \
       less
 
