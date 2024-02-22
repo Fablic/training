@@ -1,0 +1,29 @@
+
+<% content_for(:page_title, 'Task detail') %>
+<h2>
+  <%= @task.name %>
+</h2>
+<p>
+  <%= @task.description %>
+</p>
+<p>
+  <%= @task.status %>
+</p>
+<p>
+  <%= @task.priority %>
+</p>
+<p>
+  <%= @task.duedate %>
+</p>
+
+
+
+<p id="notice"><%= notice %></p>
+
+
+
+<%= link_to "Edit", edit_task_path(@task) %>
+<%= link_to 'Back', tasks_path %>
+<%= link_to "Delete", @task, method: :delete, data: {confirm: "Do you want to delete #{@task.name}?"} %>
+
+
