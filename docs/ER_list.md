@@ -7,7 +7,7 @@
 
 Key         column         type
 
-PK           user_id        varchar
+PK           user_id        bigint
              name           varchar
              email          varchar
              password       varchar
@@ -17,22 +17,23 @@ PK           user_id        varchar
 
 Key           column        type
 
-PK            task_id       varchar
+PK            task_id       bigint
               task_name     varchar
               description   varchar
               priority      varchar
               status        varchar
               duedate       datetime
+              label         varchar
               created_at    datetime
               updated_at    datetime
-FK            user_id       varchar 
+FK            user_id       bigint
 
 
 ###  labels
 
 Key            column        type
 
-PK             label_id      varchar
+PK             label_id      bigint
                label_name    varchar
 
 
@@ -40,8 +41,8 @@ PK             label_id      varchar
 
 Key             column       type
 
-PK              id           varchar
-FK              task_id      varchar
-FK              label_id     varchar
+PK              id           bigint
+FK              task_id      bigint
+FK              label_id     bigint
 
 
