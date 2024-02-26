@@ -22,7 +22,7 @@
         <td><%= task.status %></td>
         <td><%= task.duedate %></td>
         <td><%= link_to 'Edit', edit_task_path(task) %></td>
-        <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to "Delete", task, method: :delete, data: {confirm: "Do you want to delete #{task.name}?", turbolinks: false} %></td>
       </tr>
     <% end %>
   </tbody>
