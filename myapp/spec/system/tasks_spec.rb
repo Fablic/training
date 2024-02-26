@@ -44,7 +44,7 @@ RSpec.describe "Tasks", type: :system do
         fill_in 'task[status]', with: 'Done'
         fill_in 'task[duedate]', with: '2024-08-08'
         click_on "Create task"
-        expect(page).to have_content "#{task.name}"
+        expect(page).to have_content "a_new_task"
         expect(page).to have_link 'a_new_task'
         expect(Task.all.length).to eq 1
       end
