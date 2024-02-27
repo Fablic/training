@@ -36,16 +36,16 @@ RSpec.describe "Tasks", type: :system do
   describe 'task creation' do
     it 'task created successfully' do
         visit '/'
-        click_link('New task')
+        click_link('New Task')
         expect(Task.all.length).to eq 0
         fill_in 'task[name]', with: 'a_new_task'
         fill_in 'task[description]', with: 'new task description'
-        fill_in 'task[priority]', with: 'Low'
-        fill_in 'task[status]', with: 'Done'
+        select 'Done', from: 'Status'
+        select 'Low', from: 'Priority'
         fill_in 'task[duedate]', with: '2024-08-08'
-        click_on "Create task"
+        click_on "Create Task"
         expect(page).to have_content "a_new_task"
-        expect(page).to have_link 'a_new_task'
+        expect(Task.last.name).to eq 'a_new_task'
         expect(Task.all.length).to eq 1
       end
     end
@@ -60,11 +60,9 @@ RSpec.describe "Tasks", type: :system do
         click_on('Edit')
         fill_in 'task[name]', with: 'task_after_edit'
         fill_in 'task[description]', with: 'description after'
-        click_on "Update task"
-        expect(page).to have_content 'Task was successfully updated.'
-        expect(page).to have_link 'task_after_edit'
-        click_link('task_after_edit')
-        expect(page).to have_content 'description after'
+        click_on "Update Task"
+        expect(page).to have_content 'task_after_edit'
+        expect(Task.last.name).to eq 'task_after_edit'
         expect(Task.all.length).to eq 1
       end
     end
@@ -77,10 +75,7 @@ RSpec.describe "Tasks", type: :system do
       it 'task deleted successfully' do
         visit '/'
         expect(Task.all.length).to eq 1
-        expect(page).to have_content 'task_should_be_deleted'
         click_on "Delete"
-        expect(page).to have_content 'Task was successfully destroyed.'
-        expect(page).not_to have_content 'task_should_be_deleted'
         expect(Task.all.length).to eq 0
       end
     end

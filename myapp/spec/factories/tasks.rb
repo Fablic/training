@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :task do
-    sequence(:name) { |n| "Testing#{n}" }
-    sequence(:description) { |n| "Testing of the app#{n}" }
+    sequence(:name) { |n| "Task#{n}" }
+    sequence(:description) { |n| "Description#{n}" }
     status { "In Progress" }
     priority { "High" }
     duedate { "2024-06-08" }

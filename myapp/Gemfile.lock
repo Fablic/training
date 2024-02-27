@@ -264,6 +264,10 @@ GEM
     thread_safe (0.3.6-java)
     tilt (2.3.0)
     timeout (0.4.1)
+    turbo-rails (2.0.4)
+      actionpack (>= 6.0.0)
+      activejob (>= 6.0.0)
+      railties (>= 6.0.0)
     turbolinks (5.2.1)
       turbolinks-source (~> 5.2)
     turbolinks-source (5.2.0)
@@ -314,6 +318,7 @@ DEPENDENCIES
   selenium-webdriver
   spring
   spring-watcher-listen (~> 2.0.0)
+  turbo-rails
   turbolinks (~> 5)
   tzinfo-data
   web-console (>= 3.3.0)
