@@ -22,18 +22,18 @@
   </div>
 
   <div class="field">
-    <%= form.label :priority, 'Priority' %>
-    <%= form.text_field :priority %>
-  </div>
+  <%= form.label :priority, 'Priority' %>
+  <%= form.select :priority, [["Low",'Low'],["Medium",'Medium'], ["High",'High']] %>
+</div>
 
   <div class="field">
     <%= form.label :status, 'Status' %>
-    <%= form.text_field :status %>
+    <%= form.select :status,  [["Not Started",'Not Started'],["In Progress","In Progress"], ["Done","Done"]] %>
   </div>
 
   <div class="field">
     <%= form.label :duedate, 'Due Date' %>
-    <%= form.text_field :duedate %>
+    <%= form.date_field :duedate %>
   </div>
 
   <div class="actions">
