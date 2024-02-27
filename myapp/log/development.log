@@ -4240,3 +4240,23 @@ Processing by TasksController#show as HTML
 Completed 200 OK in 13ms (Views: 8.3ms | ActiveRecord: 1.5ms | Allocations: 2864)
 
 
+Started GET "/tasks" for 192.168.65.1 at 2024-02-27 05:45:01 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#index as HTML
+  Rendering tasks/index.html.erb within layouts/application
+  [1m[36mTask Load (1.3ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks`[0m
+  ↳ app/views/tasks/index.html.erb:18
+  Rendered tasks/index.html.erb within layouts/application (Duration: 6.1ms | Allocations: 7233)
+Completed 200 OK in 13ms (Views: 9.6ms | ActiveRecord: 1.3ms | Allocations: 9973)
+
+
+Started GET "/tasks" for 192.168.65.1 at 2024-02-27 05:45:02 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by TasksController#index as HTML
+  Rendering tasks/index.html.erb within layouts/application
+  [1m[36mTask Load (1.4ms)[0m  [1m[34mSELECT `tasks`.* FROM `tasks`[0m
+  ↳ app/views/tasks/index.html.erb:18
+  Rendered tasks/index.html.erb within layouts/application (Duration: 5.7ms | Allocations: 1769)
+Completed 200 OK in 15ms (Views: 12.3ms | ActiveRecord: 1.4ms | Allocations: 3636)
+
+
