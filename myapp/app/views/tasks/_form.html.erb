@@ -23,12 +23,20 @@
 
   <div class="field">
   <%= form.label :priority, 'Priority' %>
-  <%= form.select :priority, [["Low",'Low'],["Medium",'Medium'], ["High",'High']] %>
+  <%= form.select :priority, options_for_select([
+    [t('form.priority.low'), 'Low'],
+    [t('form.priority.medium'), 'Medium'],
+    [t('form.priority.high'), 'High']])
+    %>
 </div>
 
   <div class="field">
     <%= form.label :status, 'Status' %>
-    <%= form.select :status,  [["Not Started",'Not Started'],["In Progress","In Progress"], ["Done","Done"]] %>
+    <%= form.select :status, options_for_select([
+    [t('form.status.not started'), 'Not Started'],
+    [t('form.status.in progress'), 'In Progress'],
+    [t('form.status.done'), 'Done']])
+    %>
   </div>
 
   <div class="field">

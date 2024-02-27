@@ -30,4 +30,42 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  models:
+    task: task
+  attributes:
+    model:
+      task:
+        name: Task name
+        description: Description
+        status: Status
+        priority: Priority
+        expired_date: Expired date
+  form:
+    priority:
+      low: "Low"
+      medium: "Medium"
+      high: "High"
+    status:
+      not started: "Not Started"
+      in progress: "In Progress"
+      done: "Done"
+
+  flash_msgs:
+    create_ok: Task was successfully created.
+    update_ok: Task was successfully updated.
+    delete_ok: Task was successfully destroyed.
+  pages:
+    task_list_page:
+      title: To-Do Tasks
+      new_task: New task
+      edit_task: Edit
+      delete_task: Delete
+    create_tasks_page:
+      title: Input New task
+    edit_tasks_page:
+      title: Edit task
+    task_detail_page:
+      title: Task details
+  back: Back
+  date:
+    order: [ "day", "month", "year" ]
