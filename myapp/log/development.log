@@ -100,3 +100,26 @@ Processing by Rails::WelcomeController#index as HTML
 Completed 200 OK in 26ms (Views: 6.4ms | ActiveRecord: 0.0ms | Allocations: 2608)
 
 
+  [1m[35m (2.1ms)[0m  [1m[35mCREATE DATABASE `myapp_development` DEFAULT COLLATE `utf8mb4_general_ci`[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE DATABASE `myapp_test` DEFAULT COLLATE `utf8mb4_general_ci`[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT GET_LOCK('7864839756650184315', 0)[0m
+  [1m[35m (1.5ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (2.4ms)[0m  [1m[34mSELECT `ar_internal_metadata`.* FROM `ar_internal_metadata` WHERE `ar_internal_metadata`.`key` = 'environment' LIMIT 1[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT RELEASE_LOCK('7864839756650184315')[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT GET_LOCK('7864839756650184315', 0)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+Migrating to CreateTasks (20240221035323)
+  [1m[35m (25.3ms)[0m  [1m[35mCREATE TABLE `tasks` (`id` bigint NOT NULL AUTO_INCREMENT PRIMARY KEY, `name` varchar(255) NOT NULL, `description` text, `priority` varchar(255) NOT NULL, `status` varchar(255) NOT NULL, `duedate` date, `created_at` datetime(6) NOT NULL, `updated_at` datetime(6) NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::SchemaMigration Create (2.9ms)[0m  [1m[32mINSERT INTO `schema_migrations` (`version`) VALUES ('20240221035323')[0m
+  [1m[35m (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT `ar_internal_metadata`.* FROM `ar_internal_metadata` WHERE `ar_internal_metadata`.`key` = 'environment' LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT RELEASE_LOCK('7864839756650184315')[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+  [1m[35m (0.7ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTask Create (3.4ms)[0m  [1m[32mINSERT INTO `tasks` (`name`, `description`, `priority`, `status`, `duedate`, `created_at`, `updated_at`) VALUES ('Ruby', 'Use the Rails Framework', 'High', 'In Progress', '2024-04-01', '2024-02-21 04:01:16.791367', '2024-02-21 04:01:16.791367')[0m
+  [1m[35m (2.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.8ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mTask Create (1.9ms)[0m  [1m[32mINSERT INTO `tasks` (`name`, `description`, `priority`, `status`, `duedate`, `created_at`, `updated_at`) VALUES ('Mobile Network', 'Use the Rakuten Mobile!', 'High', 'In Progress', '2024-03-02', '2024-02-21 04:02:06.009990', '2024-02-21 04:02:06.009990')[0m
+  [1m[35m (2.6ms)[0m  [1m[35mCOMMIT[0m
