@@ -9,6 +9,7 @@ ja:
         status: ステータス
         priority: 優先度
         duedate: 期日
+        created_at : 作成済み_at
   flash_msgs:
     create_ok: タスクを作成しました。
     update_ok: タスクを更新しました。
@@ -29,6 +30,7 @@ ja:
       edit_task: 編集
       delete_task: 削除
       update_task: アップデート
+      search: 検索
     create_tasks_page:
       title: 新タスク作成
     edit_tasks_page:
