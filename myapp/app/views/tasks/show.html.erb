@@ -22,8 +22,8 @@
 
 
 
-<%= link_to "Edit", edit_task_path(@task) %>
-<%= link_to 'Back', tasks_path %>
-<%= button_to "Delete", @task, method: :delete, data: {confirm: "Do you want to delete #{@task.name}?"} %>
+<%= link_to t('pages.task_list_page.edit_task'), edit_task_path(@task) %>
+<%= link_to t('back'), tasks_path %>
+<%= button_to t('pages.task_list_page.delete_task'), @task, method: :delete, data: {confirm: "Do you want to delete #{@task.name}?"} %>
 
 

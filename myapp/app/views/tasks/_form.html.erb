@@ -12,17 +12,17 @@
   <% end %>
 
 <div class="field">
-    <%= form.label :name, 'Task title' %>
+    <%= form.label :name, t('attributes.model.task.name') %>
     <%= form.text_field :name %>
   </div>
 
   <div class="field">
-    <%= form.label :description, 'Description' %>
+    <%= form.label :description, t('attributes.model.task.description') %>
     <%= form.text_area :description %>
   </div>
 
   <div class="field">
-  <%= form.label :priority, 'Priority' %>
+  <%= form.label :priority, t('attributes.model.task.priority') %>
   <%= form.select :priority, options_for_select([
     [t('form.priority.low'), 'Low'],
     [t('form.priority.medium'), 'Medium'],
@@ -31,7 +31,7 @@
 </div>
 
   <div class="field">
-    <%= form.label :status, 'Status' %>
+    <%= form.label :status, t('attributes.model.task.status') %>
     <%= form.select :status, options_for_select([
     [t('form.status.not started'), 'Not Started'],
     [t('form.status.in progress'), 'In Progress'],
@@ -40,11 +40,11 @@
   </div>
 
   <div class="field">
-    <%= form.label :duedate, 'Due Date' %>
+    <%= form.label :duedate, t('attributes.model.task.duedate') %>
     <%= form.date_field :duedate %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit t('pages.task_list_page.update_task') %>
   </div>
 <% end %>

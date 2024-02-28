@@ -8,7 +8,7 @@ ja:
         description: タスク詳細
         status: ステータス
         priority: 優先度
-        expired_date: 終了期限
+        duedate: 期日
   flash_msgs:
     create_ok: タスクを作成しました。
     update_ok: タスクを更新しました。
@@ -19,7 +19,7 @@ ja:
       medium: "中程度"
       high: "高い"
     status:
-      not done: "まだ完成してない"
+      not started: "始まっていない"
       in progress: "進行中"
       done: "終わり"
   pages:
@@ -28,6 +28,7 @@ ja:
       new_task: 新タスク作成
       edit_task: 編集
       delete_task: 削除
+      update_task: アップデート
     create_tasks_page:
       title: 新タスク作成
     edit_tasks_page:

@@ -39,7 +39,7 @@ en:
         description: Description
         status: Status
         priority: Priority
-        expired_date: Expired date
+        duedate: Duedate
   form:
     priority:
       low: "Low"
@@ -60,6 +60,7 @@ en:
       new_task: New task
       edit_task: Edit
       delete_task: Delete
+      update_task: Update
     create_tasks_page:
       title: Input New task
     edit_tasks_page:
