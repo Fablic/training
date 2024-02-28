@@ -36,9 +36,9 @@ class TasksController < ApplicationController
       end
 
       def destroy
-          @task.destroy
-          flash[:success] = "Task deleted successfully."
-          redirect_to tasks_path
+        @task.destroy
+        flash[:success] = "Task deleted successfully."
+        redirect_to tasks_path
       end
 
       private
