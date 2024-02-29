@@ -1,18 +1,18 @@
 <p id="notice"><%= notice %></p>
 
-<h1>To-Do Tasks</h1>
+<h1><%= t('pages.task_list_page.title') %></h1>
 
 <table>
-  <thead>
-    <tr>
-      <th>Task Name</th>
-      <th>Description</th>
-      <th>Priority</th>
-      <th>Status</th>
-      <th>Due Date</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<thead>
+<tr>
+  <th><%= t('attributes.model.task.name') %></th>
+  <th><%= t('attributes.model.task.description') %></th>
+  <th><%= t('attributes.model.task.priority') %></th>
+  <th><%= t('attributes.model.task.status') %></th>
+  <th><%= t('attributes.model.task.duedate') %></th>
+  <th colspan="3"></th>
+</tr>
+</thead>
 
   <tbody>
     <% @tasks.each do |task| %>
@@ -21,8 +21,8 @@
         <td><%= task.priority %></td>
         <td><%= task.status %></td>
         <td><%= task.duedate %></td>
-        <td><%= link_to 'Edit', edit_task_path(task) %></td>
-        <td><%= button_to "Delete", task, method: :delete, data: {confirm: "Do you want to delete #{task.name}?"}%></td>
+        <td><%= link_to t('pages.task_list_page.edit_task'), edit_task_path(task) %></td>
+        <td><%= button_to t('pages.task_list_page.delete_task'), task, method: :delete, data: {confirm: "Do you want to delete #{task.name}?"}%></td>
       </tr>
     <% end %>
   </tbody>
@@ -31,6 +31,6 @@
 <br>
 
 <div class="float-right">
-  <%= link_to 'New Task', new_task_path %>
+  <%= link_to t('pages.task_list_page.new_task'), new_task_path %>
 </div>
 
