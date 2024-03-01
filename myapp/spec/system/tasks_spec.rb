@@ -124,13 +124,13 @@ RSpec.describe "Tasks", type: :system do
       expect(page.body.index('Task2')).to be < page.body.index('Task1')
     end 
 
-      it 'by duedate asc' do
-        visit '/'
-        click_link('Duedate')
-        expect(page.body.index('Task1')).to be < page.body.index('Task3')
-        expect(page.body.index('Task3')).to be < page.body.index('Task2')
-        click_link('Duedate')
-        expect(page.body.index('Task2')).to be < page.body.index('Task3')
-        expect(page.body.index('Task3')).to be < page.body.index('Task1')
+    it 'by duedate asc' do
+      visit '/'
+      click_link('Duedate')
+      expect(page.body.index('Task1')).to be < page.body.index('Task3')
+      expect(page.body.index('Task3')).to be < page.body.index('Task2')
+      click_link('Duedate')
+      expect(page.body.index('Task2')).to be < page.body.index('Task3')
+      expect(page.body.index('Task3')).to be < page.body.index('Task1')
       end
   end
