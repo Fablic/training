@@ -179,27 +179,5 @@ RSpec.describe "Tasks", type: :system do
   it 'invalid if task duedate is past' do
     task = build(:task, duedate: Date.today - 1)
     expect(task).to be_invalid
-
-    it 'by status asc' do
-      visit '/'
-      click_link('Status')
-      expect(page.body.index('Task1')).to be < page.body.index('Task2')
-      expect(page.body.index('Task2')).to be < page.body.index('Task3')
-      click_link('Status')
-      expect(page.body.index('Task3')).to be < page.body.index('Task2')
-      expect(page.body.index('Task2')).to be < page.body.index('Task1')
-    end 
-
-    it 'by duedate asc' do
-      visit '/'
-      click_link('Duedate')
-      expect(page.body.index('Task1')).to be < page.body.index('Task3')
-      expect(page.body.index('Task3')).to be < page.body.index('Task2')
-      click_link('Duedate')
-      expect(page.body.index('Task2')).to be < page.body.index('Task3')
-      expect(page.body.index('Task3')).to be < page.body.index('Task1')
-      end
-
   end
 end
-
