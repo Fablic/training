@@ -102,6 +102,18 @@ GEM
       activesupport (>= 5.0.0)
     json (2.7.1)
     json (2.7.1-java)
+    kaminari (1.2.2)
+      activesupport (>= 4.1.0)
+      kaminari-actionview (= 1.2.2)
+      kaminari-activerecord (= 1.2.2)
+      kaminari-core (= 1.2.2)
+    kaminari-actionview (1.2.2)
+      actionview
+      kaminari-core (= 1.2.2)
+    kaminari-activerecord (1.2.2)
+      activerecord
+      kaminari-core (= 1.2.2)
+    kaminari-core (1.2.2)
     listen (3.8.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
@@ -315,6 +327,7 @@ DEPENDENCIES
   fablicop
   factory_bot_rails (= 6.1.0)
   jbuilder (~> 2.7)
+  kaminari
   listen (~> 3.2)
   mysql2 (>= 0.4.4)
   puma (~> 4.1)
