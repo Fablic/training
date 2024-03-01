@@ -8,12 +8,12 @@ class Task < ApplicationRecord
     validate :duedate_validate
     
     def duedate_validate
-        if duedate.present? && duedate < Date.today
-          errors.add(:base ,I18n.t('flash_msgs.timeover'))
-        end
+      if duedate.present? && duedate < Date.today
+        errors.add(:base ,I18n.t('flash_msgs.timeover'))
+      end
     end
 
     def self.ransackable_attributes(auth_object= nil)
-        ["name", "description", "status", "priority", "duedate"]
+      ["name", "description", "status", "priority", "duedate"]
     end    
 end

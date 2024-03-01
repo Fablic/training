@@ -171,7 +171,7 @@ RSpec.describe "Tasks", type: :system do
   end
 
   it 'valid if task duedate is future' do
-    task = build(:task, duedate: '2024-08-08')
+    task = build(:task, duedate: Time.zone.tomorrow)
     expect(task).to be_valid
   end
 
@@ -180,3 +180,4 @@ RSpec.describe "Tasks", type: :system do
     expect(task).to be_invalid
   end
 end
+
