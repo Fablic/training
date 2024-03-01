@@ -94,6 +94,7 @@ yarn-debug.log*
 
 /vendor/bundle
 /myapp/tmp/cache/bootsnap/load-path-cache
+log/*.log
 
 # Ignore pidfiles, but keep the directory.
 /tmp/pids/*
