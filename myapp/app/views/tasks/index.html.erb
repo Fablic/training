@@ -27,7 +27,7 @@
         <td><%= task.priority %></td>
         <td><%= task.status %></td>
         <td><%= task.duedate %></td>
-        <td><%=  %></td>
+        <td><%= "\t" %></td>
         <td><%= link_to t('pages.task_list_page.edit_task'), edit_task_path(task) %></td>
         <td><%= button_to t('pages.task_list_page.delete_task'), task, method: :delete, data: {confirm: "Do you want to delete #{task.name}?"}%></td>
       </tr>
