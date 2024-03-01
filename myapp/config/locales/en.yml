@@ -55,6 +55,7 @@ en:
     create_ok: Task was successfully created.
     update_ok: Task was successfully updated.
     delete_ok: Task was successfully destroyed.
+    timeover: Enter a Valid duedate
   pages:
     task_list_page:
       title: To-Do Tasks

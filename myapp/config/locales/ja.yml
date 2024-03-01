@@ -14,6 +14,7 @@ ja:
     create_ok: タスクを作成しました。
     update_ok: タスクを更新しました。
     delete_ok: タスクを削除しました。
+    timeover: 有効な期限を入力してください
   form:
     priority:
       low: "低い"
