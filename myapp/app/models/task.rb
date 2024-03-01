@@ -14,6 +14,6 @@ class Task < ApplicationRecord
     end
 
     def self.ransackable_attributes(auth_object= nil)
-        ["name", "description", "status", "priority", "duedate"]
+      ["name", "description", "status", "priority", "duedate"]
     end    
 end
