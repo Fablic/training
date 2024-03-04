@@ -1,10 +1,20 @@
 class TasksController < ApplicationController
-
+  
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
-     def index
-      @tasks = Task.all
-     end
+      def index
+        @q = Task.ransack(params[:q])
+        @tasks = @q.result(distinct: true)
+        if @q.sorts.present?
+          sort_criterion = @q.sorts.first
+          if sort_criterion.name == 'priority'
+            # Use a CASE statement to specify the order of priorities
+            @tasks = @tasks.reorder("CASE priority WHEN 'High' THEN 1 WHEN 'Medium' THEN 2 WHEN 'Low' THEN 3 END #{sort_criterion.dir}")
+          else
+            @tasks = @tasks.reorder("#{sort_criterion.name} #{sort_criterion.dir}")
+          end
+        end
+      end
 
       def show
       end
@@ -51,3 +61,4 @@ class TasksController < ApplicationController
           params.require(:task).permit(:name, :description, :priority, :status, :duedate)
         end
 end
+

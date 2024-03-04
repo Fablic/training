@@ -40,6 +40,7 @@ en:
         status: Status
         priority: Priority
         duedate: Duedate
+        created_at : created_at
   form:
     priority:
       low: "Low"
@@ -61,6 +62,7 @@ en:
       edit_task: Edit
       delete_task: Delete
       update_task: Update
+      search: Search
     create_tasks_page:
       title: Input New task
     edit_tasks_page:
