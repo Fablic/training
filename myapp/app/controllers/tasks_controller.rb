@@ -3,7 +3,7 @@ class TasksController < ApplicationController
 
   def index
     @q = Task.ransack(params[:q])
-    @tasks = @q.result(distinct: true).page(params[:page]).per_page(5)
+    @tasks = @q.result(distinct: true).page(params[:page])
     if @q.sorts.present?
       sort_criterion = @q.sorts.first
       if sort_criterion.name == 'priority'
