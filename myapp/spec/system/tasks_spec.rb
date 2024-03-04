@@ -79,6 +79,24 @@ RSpec.describe "Tasks", type: :system do
         # expect(Task.all.length).to eq 0
       end
     end
+  
+    describe 'pagination' do
+      before do
+        10.times do |i|
+          create(:task, name: "Task#{i + 1}", priority: :Low, status: :Done)
+        end
+      end
+  
+      it 'show 5 tasks in the 1st page', :aggregate_failures do
+        visit '/'
+        5.times do |i|
+          expect(page.body).to have_link "Task#{i + 1}"
+        end
+        5.times do |i|
+          expect(page.body).not_to have_link "Task#{i + 11}"
+        end
+      end
+    end
 
   # describe 'show tasks list ordered by specific column in ascending/descending order' do
   #   before do
