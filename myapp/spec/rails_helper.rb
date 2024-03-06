@@ -73,6 +73,17 @@ config.before(:each, type: :system, js: true) do
   Capybara.server_port = 3000
   Capybara.app_host = "https://#{Capybara.server_host}:#{Capybara.server_port}"
 end
+
+if Bullet.enable?
+  config.before(:each) do
+    Bullet.start_request
+  end
+
+  config.after(:each) do
+    Bullet.perform_out_of_channel_notifications if Bullet.notification?
+    Bullet.end_request
+  end
+end  
 end
 
 Capybara.register_driver :remote_chrome do |app|
