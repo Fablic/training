@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_03_01_014104) do
+ActiveRecord::Schema.define(version: 2024_03_06_021453) do
 
   create_table "tasks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name", limit: 30, null: false
@@ -20,6 +20,17 @@ ActiveRecord::Schema.define(version: 2024_03_01_014104) do
     t.date "duedate"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id"
+    t.index ["user_id"], name: "fk_rails_4d2a9e4d7e"
   end
 
+  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "username", null: false
+    t.string "password_digest", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["username"], name: "index_users_on_username", unique: true
+  end
+
+  add_foreign_key "tasks", "users"
 end
