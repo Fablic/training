@@ -34,10 +34,14 @@ RSpec.describe "Tasks", type: :system do
   end
 
   describe 'task creation' do
-    it 'task created successfully' do
+    before do
+      create(:user, id: 1, username: 'UserTest')
+    end  
+    it 'task created successfully & show flash message when task created', :aggregate_failure do
         visit '/'
         click_link('New task')
         # expect(Task.all.length).to eq 0
+        fill_in 'task[user_id]', with: 1
         fill_in 'task[name]', with: 'a_new_task'
         fill_in 'task[description]', with: 'new task description'
         select 'Done', from: 'Status'
@@ -45,6 +49,7 @@ RSpec.describe "Tasks", type: :system do
         fill_in 'task[duedate]', with: '2024-08-08'
         click_on "Update"
         expect(page).to have_content "a_new_task"
+        expect(page).to have_link href: /\/tasks\/\d+/
         expect(Task.last.name).to eq 'a_new_task'
         # expect(Task.all.length).to eq 1
       end
@@ -52,6 +57,7 @@ RSpec.describe "Tasks", type: :system do
   
     describe 'task update' do
       before do
+        create(:user, id: 1, username: 'UserTest')
         create(:task, name: "task_before_edit", description: "description before")
       end
   
@@ -72,11 +78,12 @@ RSpec.describe "Tasks", type: :system do
         create(:task, name: "task_should_be_deleted")
       end
   
-      it 'task deleted successfully' do
+      it 'task deleted successfully & show flash message when task deleted', :aggregate_failures do
         visit '/'
         # expect(Task.all.length).to eq 1
         click_on "Delete"
         # expect(Task.all.length).to eq 0
+        expect(page).to have_content 'Task deleted successfully'
       end
     end
   
