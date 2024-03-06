@@ -10,6 +10,9 @@ ja:
         priority: 優先度
         duedate: 期日
         created_at : 作成済み_at
+        user_id : ユーザーID
+        username : ユーザー名
+        password : パスワード
   flash_msgs:
     create_ok: タスクを作成しました。
     update_ok: タスクを更新しました。

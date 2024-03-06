@@ -41,6 +41,9 @@ en:
         priority: Priority
         duedate: Duedate
         created_at : created_at
+        user_id : UserID
+        username : Username
+        password : Password
   form:
     priority:
       low: "Low"
