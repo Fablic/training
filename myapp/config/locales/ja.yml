@@ -18,6 +18,7 @@ ja:
     update_ok: タスクを更新しました。
     delete_ok: タスクを削除しました。
     timeover: 有効な期限を入力してください
+    login_failed: ログインに失敗しました！
   form:
     priority:
       low: "低い"
@@ -26,7 +27,7 @@ ja:
     status:
       not started: "始まっていない"
       in progress: "進行中"
-      done: "終わり"
+      done: "終わり"     
   pages:
     task_list_page:
       title: タスク一覧
@@ -35,6 +36,9 @@ ja:
       delete_task: 削除
       update_task: アップデート
       search: 検索
+      logout: ログアウト
+    login_page:
+      login: ログイン 
     create_tasks_page:
       title: 新タスク作成
     edit_tasks_page:

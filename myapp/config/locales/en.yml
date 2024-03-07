@@ -53,12 +53,13 @@ en:
       not started: "Not Started"
       in progress: "In Progress"
       done: "Done"
-
+  
   flash_msgs:
     create_ok: Task was successfully created.
     update_ok: Task was successfully updated.
     delete_ok: Task was successfully destroyed.
     timeover: Enter a Valid duedate
+    login_failed: Login failed!
   pages:
     task_list_page:
       title: To-Do Tasks
@@ -67,6 +68,9 @@ en:
       delete_task: Delete
       update_task: Update
       search: Search
+      logout: Logout
+    login_page:
+      login: Login  
     create_tasks_page:
       title: Input New task
     edit_tasks_page:
