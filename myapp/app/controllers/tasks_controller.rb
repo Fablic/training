@@ -2,7 +2,7 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def index
-    @q = Task.ransack(params[:q])
+    @q = Task.get_own_tasks(current_user.id).ransack(params[:q])
     @tasks = @q.result(distinct: true).page(params[:page])
     if @q.sorts.present?
       sort_criterion = @q.sorts.first
@@ -57,6 +57,6 @@ class TasksController < ApplicationController
   
 
   def task_params
-    params.require(:task).permit(:name, :description, :priority, :status, :duedate, :user_id, :username)
+    params.require(:task).permit(:name, :description, :priority, :status, :duedate).merge(user_id: @current_user.id)
   end
 end

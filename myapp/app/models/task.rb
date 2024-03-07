@@ -7,6 +7,8 @@ class Task < ApplicationRecord
     validates :status, presence: true, inclusion: { in: STATUSES }
     validates :priority, presence: true, inclusion: { in: PRIORITY }
     validate :duedate_validate
+
+    scope :get_own_tasks, -> (user_id) { where(user_id: user_id) if user_id.present? }
     
     def duedate_validate
       if duedate.present? && duedate < Date.today
