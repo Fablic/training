@@ -57,6 +57,10 @@
 
   <% if params[:q].present? %>
     <%= link_to t('back'), tasks_path %>
-  <% end %>
+  
 
+<% end %>
+
+<% else %>
+  <%= redirect_to '/login' %>
 <% end %>

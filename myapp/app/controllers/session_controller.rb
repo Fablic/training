@@ -7,9 +7,9 @@ class SessionController < ApplicationController
 
   def create
     user = User.find_by(username: params[:username])
-    if user&.authenticate(params[:password_digest])
+    if user&.authenticate(params[:password])
       log_in user
-      redirect_to root_url
+      redirect_to tasks_path
     else
       flash.now[:notice] = t('flash_msgs.login_failed')
       render 'new'

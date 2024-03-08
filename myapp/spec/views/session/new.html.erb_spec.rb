@@ -1,4 +1,7 @@
-<body class="background">
+require 'rails_helper'
+
+RSpec.describe "session/new.html.erb", type: :view do
+  <body class="background">
   <div class="login-form-row">
     <div class="offset-column">
       <div class="login-card">
@@ -25,3 +28,5 @@
     </div>
   </div>
 </body>
+
+end
