@@ -2,27 +2,45 @@ require 'rails_helper'
 
 RSpec.describe "Tasks", type: :system do
 
+  def create_user(username, password)
+    User.create!(username: username, password: password)
+  end
+
+  def login(username, password)
+    fill_in 'username', with: username
+    fill_in 'password', with: password
+    click_on 'Login'
+  end
+
+  before :each do
+    @user = create_user('user', 'test')
+    visit '/login'
+    login('user', 'test')
+  end
+
   describe 'page rendering' do
+    # Removed before block because it's already defined at the top
+
     it 'homepage should be the task list page' do
       visit '/'
-      expect(page).to have_content 'Tasks'
+      expect(page).to have_content 'To-Do Tasks'
     end
 
     it 'task list page should be shown' do
-      create(:task, name: "test_task")
+      create(:task, name: "test_task" , user: @user)
       visit '/tasks'
       expect(page).to have_content 'Tasks'
       expect(page).to have_link 'test_task'
     end
 
     it 'task detail page should be shown' do
-      task = create(:task)
+      task = create(:task, user: user)
       visit "/tasks/#{task.id}"
       expect(page).to have_content "#{task.name}"
     end
 
     it 'task edit page should be shown' do
-      task = create(:task)
+      task = create(:task, user: user)
       visit "/tasks/#{task.id}/edit"
       expect(page).to have_content 'Edit task'
     end
@@ -35,13 +53,13 @@ RSpec.describe "Tasks", type: :system do
 
   describe 'task creation' do
     before do
-      create(:user, id: 1, username: 'UserTest')
+      @user = create_user
+      login
     end  
     it 'task created successfully & show flash message when task created', :aggregate_failure do
         visit '/'
         click_link('New task')
         # expect(Task.all.length).to eq 0
-        fill_in 'task[user_id]', with: 1
         fill_in 'task[name]', with: 'a_new_task'
         fill_in 'task[description]', with: 'new task description'
         select 'Done', from: 'Status'
@@ -57,8 +75,9 @@ RSpec.describe "Tasks", type: :system do
   
     describe 'task update' do
       before do
-        create(:user, id: 1, username: 'UserTest')
-        create(:task, name: "task_before_edit", description: "description before")
+        @user = create_user
+        create(:task, name: "task_before_edit", description: "description before", user: @user)
+        login
       end
   
       it 'task updated successfully' do
@@ -75,7 +94,9 @@ RSpec.describe "Tasks", type: :system do
   
     describe 'task deletion' do
       before do
-        create(:task, name: "task_should_be_deleted")
+        @user = create_user
+        create(:task, name: 'task_should_be_deleted', user: @user)
+        login
       end
   
       it 'task deleted successfully & show flash message when task deleted', :aggregate_failures do
@@ -89,8 +110,10 @@ RSpec.describe "Tasks", type: :system do
   
     describe 'pagination' do
       before do
+        @user = create_user
+        login
         10.times do |i|
-          create(:task, name: "Task#{i + 1}", priority: :Low, status: :Done)
+          create(:task, name: "Task#{i + 1}", priority: :Low, status: :Done, user: @user)
         end
       end
   
@@ -204,6 +227,37 @@ RSpec.describe "Tasks", type: :system do
   it 'invalid if task duedate is past' do
     task = build(:task, duedate: Date.today - 1)
     expect(task).to be_invalid
+  end
+
+  describe 'login/logout' do
+    it 'login successfully' do
+      visit login_path
+      login('user', 'test')
+      expect(page.body).to have_content 'To-Do Tasks'
+    end
+
+    it 'login failed', :aggregate_failures do
+      visit '/login'
+      fill_in 'username', with: 'wrong_user'
+      fill_in 'password', with: 'wrong_password'
+      click_on 'Login'
+      expect(page.body).to have_content 'Login'
+      expect(page.body).to have_content 'Login failed!'
+    end
+
+    it 'cannot access task list page without login', :aggregate_failures do
+      visit '/tasks'
+      expect(page.body).to have_content 'Login'
+      
+    end
+
+    it 'logout successfully', :aggregate_failures do
+      create_user('user', 'test')
+      login('user', 'test')
+      expect(page.body).to have_content 'To-Do Tasks'
+      click_button 'Logout'
+      expect(page.body).to have_content 'Login'
+    end
   end
 end
 

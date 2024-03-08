@@ -48,15 +48,15 @@ RSpec.describe User, type: :model do
       expect(user.errors[:username]).to include('has already been taken')
     end
 
-    it 'user cannot be created without password_digest' do
-      user = build(:user, password_digest: nil)
+    it 'user cannot be created without password' do
+      user = build(:user, password: nil)
       expect(user).to be_invalid
     end
 
-    it 'show error messages if password_digest is empty' do
-      user = build(:user, password_digest: nil)
+    it 'show error messages if password is empty' do
+      user = build(:user, password: nil)
       user.valid?
-      expect(user.errors[:password_digest]).to eq ["can't be blank"]
+      expect(user.errors[:password]).to eq ["can't be blank"]
     end
   end
 end
