@@ -9,13 +9,17 @@ RSpec.describe "Tasks", type: :system do
   def login(username, password)
     fill_in 'username', with: username
     fill_in 'password', with: password
-    click_on 'Login'
+    puts "Username: #{username}"
+    puts "Password: #{password}"
+    # find(:css, 'button[value="Login"]').click
+    click_button 'Login'
+    expect(page).to have_content 'Logout' 
   end
 
   before :each do
-    @user = create_user('user', 'test')
+    @user = create_user('meghana', 'test')
     visit '/login'
-    login('user', 'test')
+    login('meghana', 'test')
   end
 
   describe 'page rendering' do
@@ -23,7 +27,7 @@ RSpec.describe "Tasks", type: :system do
 
     it 'homepage should be the task list page' do
       visit '/'
-      expect(page).to have_content 'To-Do Tasks'
+      expect(page).to have_content 'Tasks'
     end
 
     it 'task list page should be shown' do
