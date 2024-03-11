@@ -13,6 +13,7 @@ ja:
         user_id : ユーザーID
         username : ユーザー名
         password : パスワード
+        labelname : レーベル名
   flash_msgs:
     create_ok: タスクを作成しました。
     update_ok: タスクを更新しました。
@@ -45,6 +46,15 @@ ja:
       title: タスク編集
     task_detail_page:
       title: タスク詳細
+    label_list_page:
+      title: ラベル
+      name: 名前
+      edit_label: 編集
+      delete_label: 消去
+      new_label: 新しいラベル
+    edit_label_page:
+      titlel: ラベルの編集
+      update_label: アップデート  
   back: 戻る
   date:
     abbr_day_names:

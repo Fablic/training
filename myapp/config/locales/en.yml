@@ -44,6 +44,7 @@ en:
         user_id : UserID
         username : Username
         password : Password
+        labelname : Label name
   form:
     priority:
       low: "Low"
@@ -60,6 +61,9 @@ en:
     delete_ok: Task was successfully destroyed.
     timeover: Enter a Valid duedate
     login_failed: Login failed!
+    label_created: Label was successfully created.
+    label_deleted: Label was successfully destroyed.
+    label_updated: Label was successfully updated.
   pages:
     task_list_page:
       title: To-Do Tasks
@@ -77,6 +81,15 @@ en:
       title: Edit task
     task_detail_page:
       title: Task details
+    label_list_page:
+      title: Labels
+      name: Name
+      edit_label: Edit
+      delete_label: Delete
+      new_label: New Label  
+    edit_label_page:
+      titlel: Edit Label
+      update_label: Update
   back: Back
   date:
     order: [ "day", "month", "year" ]
