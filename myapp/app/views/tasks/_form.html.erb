@@ -46,6 +46,14 @@
     <%= form.date_field :duedate %>
   </div>
 
+  <div class="field">
+    <%= form.label :label_ids, "Labels" %>
+    <%= form.collection_check_boxes :label_ids, @current_user.labels, :id, :name do |b| %>
+      <%= b.check_box %>
+      <%= b.label %>
+    <% end %>
+  </div>
+
   <div class="actions">
     <%= form.submit t('pages.task_list_page.update_task') %>
   </div>

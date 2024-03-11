@@ -1,5 +1,8 @@
 
 <% content_for(:page_title, 'Task detail') %>
+
+<h1> Task Detail Page </h1>
+
 <h2>
   <%= @task.name %>
 </h2>
@@ -15,7 +18,11 @@
 <p>
   <%= @task.duedate %>
 </p>
-
+<p>
+  <% @task.labels.each do |label| %>
+    <%= label.name %>
+  <% end %>
+</p>
 
 
 <p id="notice"><%= notice %></p>
