@@ -80,7 +80,10 @@ if Bullet.enable?
   end
 
   config.after(:each) do
-    Bullet.perform_out_of_channel_notifications if Bullet.notification?
+    if Bullet.notification?
+      Bullet.perform_out_of_channel_notifications
+    end
+  
     Bullet.end_request
   end
 end  

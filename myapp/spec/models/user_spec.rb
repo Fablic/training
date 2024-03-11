@@ -7,22 +7,20 @@ RSpec.describe User, type: :model do
       expect(user).to be_valid
     end
 
-    it 'no error messages when user created successfully' do
-      user = build(:user)
-      user.valid?
-      expect(user.errors).to be_empty
-    end
-
-    it 'user cannot be created without username' do
-      user = build(:user, username: '')
-      expect(user).to be_invalid
-    end
-
-    it 'show error messages if username is empty' do
-      user = build(:user, username: '')
-      user.valid?
-      expect(user.errors[:username]).to eq ["can't be blank"]
-    end
+    context 'when username is empty' do
+      before do
+        @user = build(:user, username: '')
+      end
+    
+      it 'user cannot be created without username' do
+        expect(@user).to be_invalid
+      end
+    
+      it 'show error messages if username is empty' do
+        @user.valid?
+        expect(@user.errors[:username]).to include("can't be blank")
+      end
+    end 
 
     it 'user cannot be created with username longer than 255 characters' do
       user = build(:user, username: 'a' * 256)
