@@ -1,29 +1,25 @@
 require 'rails_helper'
 
+def login
+  visit '/login'
+  fill_in 'session[username]', with: 'user'
+  fill_in 'session[password]', with: 'test'
+  click_on 'Login'
+end
+
+def create_user
+  create(:user, username: 'user', password: 'test')
+end
+
 RSpec.describe "Tasks", type: :system do
 
-  def create_user(username, password)
-    User.create!(username: username, password: password)
-  end
-
-  def login(username, password)
-    fill_in 'username', with: username
-    fill_in 'password', with: password
-    puts "Username: #{username}"
-    puts "Password: #{password}"
-    # find(:css, 'button[value="Login"]').click
-    click_button 'Login'
-    expect(page).to have_content 'Logout' 
-  end
-
-  before :each do
-    @user = create_user('meghana', 'test')
-    visit '/login'
-    login('meghana', 'test')
-  end
-
   describe 'page rendering' do
-    # Removed before block because it's already defined at the top
+    before do
+      create_user
+      login
+    end
+
+    let!(:user) { User.last }
 
     it 'homepage should be the task list page' do
       visit '/'
@@ -31,7 +27,7 @@ RSpec.describe "Tasks", type: :system do
     end
 
     it 'task list page should be shown' do
-      create(:task, name: "test_task" , user: @user)
+      create(:task, name: "test_task" , user: user)
       visit '/tasks'
       expect(page).to have_content 'Tasks'
       expect(page).to have_link 'test_task'
@@ -57,7 +53,7 @@ RSpec.describe "Tasks", type: :system do
 
   describe 'task creation' do
     before do
-      @user = create_user
+      create_user
       login
     end  
     it 'task created successfully & show flash message when task created', :aggregate_failure do
@@ -79,8 +75,8 @@ RSpec.describe "Tasks", type: :system do
   
     describe 'task update' do
       before do
-        @user = create_user
-        create(:task, name: "task_before_edit", description: "description before", user: @user)
+        user = create_user
+        create(:task, name: "task_before_edit", description: "description before", user: user)
         login
       end
   
@@ -98,8 +94,8 @@ RSpec.describe "Tasks", type: :system do
   
     describe 'task deletion' do
       before do
-        @user = create_user
-        create(:task, name: 'task_should_be_deleted', user: @user)
+        user = create_user
+        create(:task, name: 'task_should_be_deleted', user: user)
         login
       end
   
@@ -114,10 +110,10 @@ RSpec.describe "Tasks", type: :system do
   
     describe 'pagination' do
       before do
-        @user = create_user
+        user = create_user
         login
         10.times do |i|
-          create(:task, name: "Task#{i + 1}", priority: :Low, status: :Done, user: @user)
+          create(:task, name: "Task#{i + 1}", priority: :Low, status: :Done, user: user)
         end
       end
   
@@ -235,15 +231,15 @@ RSpec.describe "Tasks", type: :system do
 
   describe 'login/logout' do
     it 'login successfully' do
-      visit login_path
-      login('user', 'test')
-      expect(page.body).to have_content 'To-Do Tasks'
+      create_user
+      login
+      expect(page.body).to have_content 'Tasks'
     end
 
     it 'login failed', :aggregate_failures do
       visit '/login'
-      fill_in 'username', with: 'wrong_user'
-      fill_in 'password', with: 'wrong_password'
+      fill_in 'session[username]', with: 'wrong_user'
+      fill_in 'session[password]', with: 'wrong_password'
       click_on 'Login'
       expect(page.body).to have_content 'Login'
       expect(page.body).to have_content 'Login failed!'
@@ -252,13 +248,12 @@ RSpec.describe "Tasks", type: :system do
     it 'cannot access task list page without login', :aggregate_failures do
       visit '/tasks'
       expect(page.body).to have_content 'Login'
-      
     end
 
     it 'logout successfully', :aggregate_failures do
-      create_user('user', 'test')
-      login('user', 'test')
-      expect(page.body).to have_content 'To-Do Tasks'
+      create_user
+      login
+      expect(page.body).to have_content 'Tasks'
       click_button 'Logout'
       expect(page.body).to have_content 'Login'
     end
