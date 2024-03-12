@@ -8,5 +8,5 @@
 
 User.create!(
   username: 'testing',
-  password_digest: 'test', 
+  password_digest: 'test',
 )

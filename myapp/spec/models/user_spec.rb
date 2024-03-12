@@ -11,16 +11,16 @@ RSpec.describe User, type: :model do
       before do
         @user = build(:user, username: '')
       end
-    
+
       it 'does not create a user' do
         expect(@user).to be_invalid
       end
-    
+
       it 'shows error messages if username is empty' do
         @user.valid?
         expect(@user.errors[:username]).to include("can't be blank")
       end
-    end 
+    end
 
     context 'when username is longer than 255 characters' do
       it 'does not create a user' do
@@ -33,22 +33,22 @@ RSpec.describe User, type: :model do
         user.valid?
         expect(user.errors[:username]).to eq ['is too long (maximum is 255 characters)']
       end
-    end  
-    
-    context 'when username exists' do  
+    end
+
+    context 'when username exists' do
       it 'does not create a user' do
         create(:user, username: 'ExistingUser')
         user = build(:user, username: 'ExistingUser')
         expect(user).to be_invalid
       end
-      
+
       it 'shows error messages if username already exists' do
         create(:user, username: 'ExistingUser')
         user = build(:user, username: 'ExistingUser')
         user.valid?
         expect(user.errors[:username]).to include('has already been taken')
       end
-    end  
+    end
 
     context 'when password is empty' do
       it 'does not create a user' do
@@ -61,6 +61,6 @@ RSpec.describe User, type: :model do
         user.valid?
         expect(user.errors[:password_digest]).to eq ["can't be blank"]
       end
-    end  
+    end
   end
 end

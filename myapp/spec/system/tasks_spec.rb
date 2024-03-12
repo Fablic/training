@@ -1,7 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Tasks", type: :system do
-
+RSpec.describe 'Tasks', type: :system do
   describe 'page rendering' do
     it 'homepage should be the task list page' do
       visit '/'
@@ -9,7 +8,7 @@ RSpec.describe "Tasks", type: :system do
     end
 
     it 'task list page should be shown' do
-      create(:task, name: "test_task")
+      create(:task, name: 'test_task')
       visit '/tasks'
       expect(page).to have_content 'Tasks'
       expect(page).to have_link 'test_task'
@@ -28,7 +27,7 @@ RSpec.describe "Tasks", type: :system do
     end
 
     it 'task create page should be shown' do
-      visit "/tasks/new"
+      visit '/tasks/new'
       expect(page).to have_content 'Input New task'
     end
   end
@@ -36,74 +35,75 @@ RSpec.describe "Tasks", type: :system do
   describe 'task creation' do
     before do
       create(:user, id: 1, username: 'UserTest')
-    end  
+    end
+
     it 'task created successfully & show flash message when task created', :aggregate_failure do
-        visit '/'
-        click_link('New task')
-        # expect(Task.all.length).to eq 0
-        fill_in 'task[user_id]', with: 1
-        fill_in 'task[name]', with: 'a_new_task'
-        fill_in 'task[description]', with: 'new task description'
-        select 'Done', from: 'Status'
-        select 'Low', from: 'Priority'
-        fill_in 'task[duedate]', with: '2024-08-08'
-        click_on "Update"
-        expect(page).to have_content "a_new_task"
-        expect(page).to have_link href: /\/tasks\/\d+/
-        expect(Task.last.name).to eq 'a_new_task'
-        # expect(Task.all.length).to eq 1
+      visit '/'
+      click_link('New task')
+      # expect(Task.all.length).to eq 0
+      fill_in 'task[user_id]', with: 1
+      fill_in 'task[name]', with: 'a_new_task'
+      fill_in 'task[description]', with: 'new task description'
+      select 'Done', from: 'Status'
+      select 'Low', from: 'Priority'
+      fill_in 'task[duedate]', with: '2024-08-08'
+      click_on 'Update'
+      expect(page).to have_content 'a_new_task'
+      expect(page).to have_link href: %r{/tasks/\d+}
+      expect(Task.last.name).to eq 'a_new_task'
+      # expect(Task.all.length).to eq 1
+    end
+  end
+
+  describe 'task update' do
+    before do
+      create(:user, id: 1, username: 'UserTest')
+      create(:task, name: 'task_before_edit', description: 'description before')
+    end
+
+    it 'task updated successfully' do
+      visit '/'
+      click_on('Edit')
+      fill_in 'task[name]', with: 'task_after_edit'
+      fill_in 'task[description]', with: 'description after'
+      click_on 'Update'
+      expect(page).to have_content 'task_after_edit'
+      expect(Task.last.name).to eq 'task_after_edit'
+      # expect(Task.all.length).to eq 1
+    end
+  end
+
+  describe 'task deletion' do
+    before do
+      create(:task, name: 'task_should_be_deleted')
+    end
+
+    it 'task deleted successfully & show flash message when task deleted', :aggregate_failures do
+      visit '/'
+      # expect(Task.all.length).to eq 1
+      click_on 'Delete'
+      # expect(Task.all.length).to eq 0
+      expect(page).to have_content 'Task deleted successfully'
+    end
+  end
+
+  describe 'pagination' do
+    before do
+      10.times do |i|
+        create(:task, name: "Task#{i + 1}", priority: :Low, status: :Done)
       end
     end
-  
-    describe 'task update' do
-      before do
-        create(:user, id: 1, username: 'UserTest')
-        create(:task, name: "task_before_edit", description: "description before")
+
+    it 'show 5 tasks in the 1st page', :aggregate_failures do
+      visit '/'
+      5.times do |i|
+        expect(page.body).to have_link "Task#{i + 1}"
       end
-  
-      it 'task updated successfully' do
-        visit '/'
-        click_on('Edit')
-        fill_in 'task[name]', with: 'task_after_edit'
-        fill_in 'task[description]', with: 'description after'
-        click_on "Update"
-        expect(page).to have_content 'task_after_edit'
-        expect(Task.last.name).to eq 'task_after_edit'
-        # expect(Task.all.length).to eq 1
+      5.times do |i|
+        expect(page.body).not_to have_link "Task#{i + 11}"
       end
     end
-  
-    describe 'task deletion' do
-      before do
-        create(:task, name: "task_should_be_deleted")
-      end
-  
-      it 'task deleted successfully & show flash message when task deleted', :aggregate_failures do
-        visit '/'
-        # expect(Task.all.length).to eq 1
-        click_on "Delete"
-        # expect(Task.all.length).to eq 0
-        expect(page).to have_content 'Task deleted successfully'
-      end
-    end
-  
-    describe 'pagination' do
-      before do
-        10.times do |i|
-          create(:task, name: "Task#{i + 1}", priority: :Low, status: :Done)
-        end
-      end
-  
-      it 'show 5 tasks in the 1st page', :aggregate_failures do
-        visit '/'
-        5.times do |i|
-          expect(page.body).to have_link "Task#{i + 1}"
-        end
-        5.times do |i|
-          expect(page.body).not_to have_link "Task#{i + 11}"
-        end
-      end
-    end
+  end
 
   # describe 'show tasks list ordered by specific column in ascending/descending order' do
   #   before do
@@ -127,7 +127,6 @@ RSpec.describe "Tasks", type: :system do
   #     expect(page.body.index('Task2')).to be < page.body.index('Task3')
   #   end
 
-
   #   it 'by priority asc' do
   #     visit '/'
   #     click_link('Priority')
@@ -146,7 +145,7 @@ RSpec.describe "Tasks", type: :system do
   #     click_link('Status')
   #     expect(page.body.index('Task3')).to be < page.body.index('Task2')
   #     expect(page.body.index('Task2')).to be < page.body.index('Task1')
-  #   end 
+  #   end
 
   #     it 'by duedate asc' do
   #       visit '/'
@@ -170,31 +169,30 @@ RSpec.describe "Tasks", type: :system do
       description: '',
       priority: '',
       status: '',
-      duedate: '2024-08-08'
+      duedate: '2024-08-08',
     )
     expect(task).to be_invalid
   end
 
   it 'valid if name length is 30' do
-    task = build(:task, name: 'a'*30)
+    task = build(:task, name: 'a' * 30)
     expect(task).to be_valid
   end
 
   it 'invalid if name is too long' do
-    task = build(:task, name: 'a'*31)
+    task = build(:task, name: 'a' * 31)
     expect(task).to be_invalid
   end
 
   it 'valid if description length is 255' do
-    task = build(:task, description: 'a'*255)
+    task = build(:task, description: 'a' * 255)
     expect(task).to be_valid
   end
 
   it 'invalid if description is too long' do
-    task = build(:task, description: 'a'*256)
+    task = build(:task, description: 'a' * 256)
     expect(task).to be_invalid
   end
-
 
   it 'valid if task duedate is future' do
     task = build(:task, duedate: Time.zone.tomorrow)
@@ -206,6 +204,3 @@ RSpec.describe "Tasks", type: :system do
     expect(task).to be_invalid
   end
 end
-
-
-

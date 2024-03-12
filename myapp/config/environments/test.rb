@@ -17,7 +17,7 @@ Rails.application.configure do
   # Configure public file server for tests with Cache-Control for performance.
   config.public_file_server.enabled = true
   config.public_file_server.headers = {
-    'Cache-Control' => "public, max-age=#{1.hour.to_i}"
+    'Cache-Control' => "public, max-age=#{1.hour.to_i}",
   }
 
   # Show full error reports and disable caching.
@@ -48,8 +48,8 @@ Rails.application.configure do
   # config.action_view.raise_on_missing_translations = true
 
   config.after_initialize do
-    Bullet.enable = true 
-    Bullet.bullet_logger = true 
-    Bullet.raise = true # raise an error if N+1 errors occur 
+    Bullet.enable = true
+    Bullet.bullet_logger = true
+    Bullet.raise = true # raise an error if N+1 errors occur
   end
 end
