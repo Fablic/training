@@ -38,6 +38,7 @@ ja:
       update_task: アップデート
       search: 検索
       logout: ログアウト
+      label: ラベル
     login_page:
       login: ログイン 
     create_tasks_page:
@@ -54,7 +55,9 @@ ja:
       new_label: 新しいラベル
     edit_label_page:
       titlel: ラベルの編集
-      update_label: アップデート  
+      update_label: アップデート 
+    navbar:
+      labels: ラベル  
   back: 戻る
   date:
     abbr_day_names:

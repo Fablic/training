@@ -73,6 +73,7 @@ en:
       update_task: Update
       search: Search
       logout: Logout
+      label: Label
     login_page:
       login: Login  
     create_tasks_page:
@@ -90,6 +91,8 @@ en:
     edit_label_page:
       titlel: Edit Label
       update_label: Update
+    navbar:
+      labels: Labels  
   back: Back
   date:
     order: [ "day", "month", "year" ]
