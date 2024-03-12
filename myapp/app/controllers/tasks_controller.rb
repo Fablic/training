@@ -2,7 +2,7 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def index
-    @q = Task.get_own_tasks(current_user.id).ransack(params[:q])
+    @q = Task.get_own_tasks(session[:user_id]).ransack(params[:q])
     @tasks = @q.result(distinct: true).page(params[:page])
     if @q.sorts.present?
       sort_criterion = @q.sorts.first
