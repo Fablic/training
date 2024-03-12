@@ -2,11 +2,14 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   describe 'validaton' do
-    it 'create user successfully' do
-      user = build(:user)
-      expect(user).to be_valid
-    end
 
+    context 'when user is created' do
+      it 'create user successfully' do
+        user = build(:user)
+        expect(user).to be_valid
+      end
+    end
+    
     context 'when username is empty' do
       before do
         @user = build(:user, username: '')
