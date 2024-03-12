@@ -5,28 +5,41 @@
   <div class="navbar-brand" style="color: white;">
     <h1><%= t('pages.task_detail_page.title') %></h1>
   </div>
+  <div class="collapse navbar-collapse justify-content-end">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <%= link_to t('back'), tasks_path, class: 'nav-link btn btn-outline-secondary', role: 'button', style: 'color: white;' %>
+      </li>
+    </ul>
+  </div>
 </nav> 
 
 <div class="container" style="width: 90%; margin: 0 auto;">
   <div class="row">
     <div class="col-sm-12">
       <div class="form-group p-3 mb-2 bg-light text-dark border border-secondary">
-<h2>
-  <%= @task.name %>
-</h2>
 <p>
+  <%= t('attributes.model.task.name')  %>:
+    <%= @task.name %>
+</p>
+<p>
+<%= t('attributes.model.task.description')  %>:
   <%= @task.description %>
 </p>
 <p>
+<%= t('attributes.model.task.status')  %>:
   <%= @task.status %>
 </p>
 <p>
+<%= t('attributes.model.task.priority')  %>:
   <%= @task.priority %>
 </p>
 <p>
+<%= t('attributes.model.task.duedate')  %>:
   <%= @task.duedate %>
 </p>
 <p>
+<%= t('attributes.model.task.labelname')  %>:
   <% @task.labels.each do |label| %>
     <%= label.name %>
   <% end %>
@@ -40,9 +53,14 @@
 <p id="notice"><%= notice %></p>
 
 
+<div class="d-flex justify-content-center align-items-center">
+  <div style="margin-right: 10px;">
+    <%= link_to t('pages.task_list_page.edit_task'), edit_task_path(@task), class: "btn btn-primary" %>
+  </div>
 
-<%= link_to t('pages.task_list_page.edit_task'), edit_task_path(@task) %>
-<%= link_to t('back'), tasks_path %>
-<%= button_to t('pages.task_list_page.delete_task'), @task, method: :delete, data: {confirm: "Do you want to delete #{@task.name}?"} %>
+  <div style="margin-right: 10px;">
+  <%= button_to t('pages.task_list_page.delete_task'), @task, method: :delete,class: "btn btn-primary", data: {confirm: "Do you want to delete #{@task.name}?"} %>
+  </div>
+
 
 
