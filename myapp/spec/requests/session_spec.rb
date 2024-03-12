@@ -10,31 +10,34 @@ RSpec.describe "Sessions", type: :request do
 
   describe 'POST /login' do
     before do
-      @user = create(:user, username: 'testUser', password: 'password')
+      create(:user, username: 'testUser', password: 'password')
     end
 
+    let (:req_params) { { session: { username: 'testUser', password: 'password' } } }
+
     it 'returns http success', :aggregate_failures do
-      post '/login', params: { username: @user.username, password: @user.password }
+      post '/login', params: req_params
       expect(response).to have_http_status(:found)
       if I18n.locale.to_s == "en"
-        expect(response).to redirect_to('/?locale=en')
+        expect(response).to redirect_to('/tasks?locale=en')
       elsif I18n.locale.to_s == "ja"
-        expect(response).to redirect_to('/?locale=ja')
+        expect(response).to redirect_to('/tasks?locale=ja')
       end
     end
   end
 
   describe 'DELETE /logout' do
     before do
-      @user = create(:user, username: 'testUser', password: 'password')
+      create(:user, username: 'testUser', password: 'password')
     end
 
+    let (:req_params) { { session: { username: 'testUser', password: 'password' } } }
+
     it 'returns http success', :aggregate_failures do
-      post '/login', params: { username: @user.username, password: @user.password }
+      post '/login', params: req_params
       delete '/logout'
       expect(response).to have_http_status(:found)
       expect(response).to redirect_to '/login'
     end
   end  
-
 end

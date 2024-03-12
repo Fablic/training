@@ -6,4 +6,5 @@ Rails.application.routes.draw do
   resources :tasks
   resources :labels
   root "tasks#index"
+  root 'tasks#index'
 end

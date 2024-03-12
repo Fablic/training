@@ -1,27 +1,31 @@
-<body class="background">
-  <div class="login-form-row">
-    <div class="offset-column">
-      <div class="login-card">
-        <div class="login-title">
-          <b>
-            <%= t('pages.login_page.login') %>
-          </b>
-        </div>
-        <div class="login-card-body">
-          <%= form_with url: '/login', method: "POST", local: true do |f| %>
-              <%= f.label t('attributes.model.task.username') %>
-              <%= f.text_field :username, autofocus: true %>
+<body class="vh-100 gradient-custom">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+        <div class="card bg-dark text-white" style="border-radius: 1rem;">
+          <div class="card-body p-5 text-center">
+            <div class="mb-md-5 mt-md-4 pb-5">
+              <h2 class="fw-bold mb-2 text-uppercase">
+                <%= t('pages.login_page.login') %>
+              </h2>
+              <%= form_with url: '/login', method: "POST", local: true, scope: :session do |f| %>
+                <div class="form-outline form-white mb-4">
+                  <%= f.label t('attributes.model.task.username'), class: 'form-label' %>
+                  <%= f.text_field :username, autofocus: true, class: 'form-control form-control-lg' %>
+                </div>
+                <div class="form-outline form-white mb-4">
+                  <%= f.label t('attributes.model.task.password'), class: 'form-label' %>
+                  <%= f.password_field :password, class: 'form-control form-control-lg' %>
+                </div>
+                <div class="form-group">
+                  <%= f.submit "Login", class: "btn btn-outline-light btn-lg px-5" %>
+                </div>
+              <% end %>
             </div>
-            <div class="input-field">
-              <%= f.label t('attributes.model.task.password') %>
-              <%= f.password_field :password %>
-            </div>
-            <div class="submit-button">
-              <%= f.button "Login"  , class: "btn btn-primary" %>
-            </div>
-          <% end %>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </body>
+
