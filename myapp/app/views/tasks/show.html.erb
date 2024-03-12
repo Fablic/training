@@ -1,8 +1,16 @@
 
 <% content_for(:page_title, 'Task detail') %>
 
-<h1> Task Detail Page </h1>
+<nav class="navbar navbar-expand-lg navbar-light m-3" style="background-color: darkred;">
+  <div class="navbar-brand" style="color: white;">
+    <h1><%= t('pages.task_detail_page.title') %></h1>
+  </div>
+</nav> 
 
+<div class="container" style="width: 90%; margin: 0 auto;">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="form-group p-3 mb-2 bg-light text-dark border border-secondary">
 <h2>
   <%= @task.name %>
 </h2>
@@ -23,6 +31,10 @@
     <%= label.name %>
   <% end %>
 </p>
+</div>
+</div>
+</div>
+
 
 
 <p id="notice"><%= notice %></p>

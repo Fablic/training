@@ -1,5 +1,14 @@
-<h1><%= t('pages.edit_tasks_page.title') %></h1>
+<nav class="navbar navbar-expand-lg navbar-light m-3" style="background-color: darkred;">
+  <div class="navbar-brand" style="color: white;">
+    <h1><%= t('pages.edit_tasks_page.title') %></h1>
+  </div>
+  <div class="collapse navbar-collapse justify-content-end">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <%= link_to t('back'), tasks_path, class: 'nav-link btn btn-outline-secondary', role: 'button', style: 'color: white;' %>
+      </li>
+    </ul>
+  </div>
+</nav>
 
 <%= render 'form', task: @task %>
-
-<%= link_to t('back'), tasks_path %>

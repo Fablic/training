@@ -52,6 +52,7 @@ ja:
       edit_label: 編集
       delete_label: 消去
       new_label: 新しいラベル
+      labeldetail: ラベルの詳細 
     edit_label_page:
       titlel: ラベルの編集
       update_label: アップデート  

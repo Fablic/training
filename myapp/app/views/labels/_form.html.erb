@@ -11,12 +11,20 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :name, t('attributes.model.task.labelname') %>
-    <%= form.text_field :name, autofocus: true  %>
-  </div>
+  <div class="container" style="width: 80%; margin: 0 auto;">
+  <div class="row">
+    <div class="col-sm-12">
+  <div class="form-group p-3 mb-2 bg-light text-dark border border-secondary">
+      <%= form.label :name, t('attributes.model.task.labelname') %>
+      <%= form.text_field :name, class: 'form-control' %>
+    </div>
+    </div>
+    </div>
+    </div>  
 
-  <div class="actions">
-    <%= form.submit t('pages.task_list_page.update_task'), class: "btn btn-primary"%>
+  <div class="d-flex justify-content-center align-items-center">
+    <div style="margin-right: 10px;">
+      <%= form.submit t('pages.task_list_page.update_task'), class: "btn btn-primary" %>
+    </div>
   </div>
 <% end %>

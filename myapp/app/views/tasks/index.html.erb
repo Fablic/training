@@ -1,79 +1,112 @@
+
 <% if logged_in? %>
   
-
-  <div class="navbar__log_out_btn">
-    <%= button_to t('pages.task_list_page.logout'), '/logout', method: :delete, class: 'nav-link active' %>
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: darkred;">
+  <div class="navbar-brand" style="color: white;">
+    <h1><%= t('pages.task_list_page.title') %></h1>
   </div>
+  <div class="collapse navbar-collapse justify-content-end">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <%= link_to 'Labels', labels_path, class: 'nav-link btn btn-outline-secondary', role: 'button', style: 'color: white;' %>
+      </li>
+      <li class="nav-item">
+        <%= button_to 'Logout', logout_path, method: :delete, class: 'nav-link btn btn-outline-danger', role: 'button', style: 'color: white;' %>
+      </li>
+    </ul>
+  </div>
+</nav>
 
-  <%= link_to t('pages.navbar.labels'),labels_path,class: 'nav-link active' %>
+<%= search_form_for @q, html: { class: 'form-inline' } do |f| %>
+  <div class="container" style="width: 70%; margin: 20px auto;">
+    <div class="row">
+      <div class="col-sm-5">
+        <div class="input-group">
+          <%= f.label :name_or_description_or_priority_or_status_or_duedate_cont, 'Status / Priority / Name ', for: 'form1', style: 'margin-right: 10px;' %>
+          <%= f.search_field :name_or_description_or_priority_or_status_or_duedate_cont, id: 'form1', class: 'form-control form-control-sm' %>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="input-group">
+          <%= f.label :with_label_name, 'Label', for: 'form2', style: 'margin-right: 10px;' %>
+          <%= f.search_field :with_label_name, id: 'form2', class: 'form-control form-control-sm' %>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="input-group">
+          <%= f.submit t('pages.task_list_page.search'), class: 'btn btn-primary btn-sm', data: { mdb_ripple_init: true } %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
 
-  <h1><%= t('pages.task_list_page.title') %></h1>
-
-  <%= search_form_for @q do |f| %>
-    <%= f.search_field :name_or_description_or_priority_or_status_or_duedate_cont%>
-    <%= f.label :with_label_name, 'Label' %>
-    <%= f.search_field :with_label_name%>
-    <%= f.submit t('pages.task_list_page.search') %>
-  <% end %>
-
-  <table>
-    <thead>
-      <tr>
-        <th><%= sort_link(@q, :name, t('attributes.model.task.name') , default_order: :asc) %></th>
-        <th><%= sort_link(@q, :description,t('attributes.model.task.description') , default_order: :asc) %></th>
-        <th><%= sort_link(@q, :priority, t('attributes.model.task.priority') ,default_order: :asc) %></th>
-        <th><%= sort_link(@q, :status,t('attributes.model.task.status') , default_order: :asc) %></th>
-        <th><%= sort_link(@q, :duedate,t('attributes.model.task.duedate') , default_order: :asc) %></th>
-        <th><%= "Labels" %> </th>
-        <th><%= sort_link(@q, :created_at,t('attributes.model.task.created_at'), default_order: :desc) %></th>
-        <th colspan="3"></th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <% @tasks.each do |task| %>
-        <tr>
-          <td><%= link_to task.name, task %></td>
-          <td><%= task.description %></td>
-          <td><%= task.priority %></td>
-          <td><%= task.status %></td>
-          <td><%= task.duedate %></td>
-          <td>
-              <% task.labels.each do |label| %>
-                <%= label.name %>
-              <% end %>
-          </td>
-          <td><%= "\t" %></td>
-          <td><%= link_to t('pages.task_list_page.edit_task'), edit_task_path(task) %></td>
-          <td><%= button_to t('pages.task_list_page.delete_task'), task, method: :delete, data: {confirm: "Do you want to delete #{task.name}?"}%></td>
-        </tr>
+<div class="container" style="width: 90%; margin: 0 auto;">
+  <div class="row">
+    <div class="col-sm-12">
+      <table class="table table-borderless table-striped">
+        <thead>
+          <tr>
+            <th><%= sort_link(@q, :name, t('attributes.model.task.name') , default_order: :asc) %></th>
+            <th><%= sort_link(@q, :description,t('attributes.model.task.description') , default_order: :asc) %></th>
+            <th><%= sort_link(@q, :priority, t('attributes.model.task.priority') ,default_order: :asc) %></th>
+            <th><%= sort_link(@q, :status,t('attributes.model.task.status') , default_order: :asc) %></th>
+            <th><%= sort_link(@q, :duedate,t('attributes.model.task.duedate') , default_order: :asc) %></th>
+            <th><%= "Labels" %> </th>
+            <th><%= sort_link(@q, :created_at,t('attributes.model.task.created_at'), default_order: :desc) %></th>
+            <th colspan="3"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @tasks.each do |task| %>
+            <tr>
+              <td><%= link_to task.name, task %></td>
+              <td><%= task.description %></td>
+              <td><%= task.priority %></td>
+              <td><%= task.status %></td>
+              <td><%= task.duedate %></td>
+              <td>
+                  <% task.labels.each do |label| %>
+                    <%= label.name %>
+                  <% end %>
+              </td>
+              <td><%= "\t" %></td>
+              <td><%= link_to t('pages.task_list_page.edit_task'), edit_task_path(task), class: 'btn btn-primary' %></td>
+              <td><%= button_to t('pages.task_list_page.delete_task'), task, method: :delete,class: 'btn btn-primary', data: {confirm: "Do you want to delete #{task.name}?"}%></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <% if @tasks.none? %>
+        <p class="text-center">No results found</p>
       <% end %>
-    </tbody>
-  </table>
+    </div>
+  </div>
+</div>
+  
+  <br>
 
-  <% if @tasks.none? %>
-    <p>No results found</p>
-  <% end %>
+  <nav aria-label="Page navigation example" class="d-flex justify-content-end">
+    <%= paginate @tasks %>
+  </nav>
 
   <br>
 
-  <%= paginate @tasks %>
-
-  <br>
-
-  <div class="float-right">
-    <%= link_to t('pages.task_list_page.new_task'), new_task_path %>
+  <div class="d-flex justify-content-center align-items-center">
+  <div style="margin-right: 10px;">
+    <%= link_to t('pages.task_list_page.new_task'), new_task_path, class: "btn btn-primary" %>
   </div>
 
-  <div style="float-right">
+  <div style="margin-right: 10px;">
     <%= link_to t('pages.label_list_page.new_label'),new_label_path,class: "btn btn-primary" %>
   </div>
 
   <% if params[:q].present? %>
-    <%= link_to t('back'), tasks_path %>
-  
-
-<% end %>
+    <div>
+      <%= link_to t('back'), tasks_path, class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>
 
 <% else %>
   <%= redirect_to '/login' %>

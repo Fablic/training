@@ -2,10 +2,29 @@
 
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong><%= t('pages.label_list_page.name') %>:</strong>
-    <%= @label.name %>
-</p>
+<nav class="navbar navbar-expand-lg navbar-light m-3" style="background-color: darkred;">
+  <div class="navbar-brand" style="color: white;">
+    <h1><%= t('pages.label_list_page.labeldetail') %></h1>
+  </div>
+</nav>  
 
-<%= link_to t('pages.task_list_page.edit_task'), edit_label_path(@label) %> |
-<%= link_to t('back'), labels_path %>
+<div class="container" style="width: 90%; margin: 0 auto;">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="form-group p-3 mb-2 bg-light text-dark border border-secondary">
+        <strong><%= t('pages.label_list_page.name') %>:</strong>
+        <%= @label.name %>
+      </div>
+    </div>
+  </div>
+</div>  
+
+<div class="d-flex justify-content-center align-items-center">
+  <div style="margin-right: 10px;">
+    <%= link_to t('pages.task_list_page.edit_task'), edit_label_path(@label), class: "btn btn-primary" %>
+  </div>
+
+  <div style="margin-right: 10px;">
+    <%= link_to t('back'), labels_path,class: "btn btn-primary" %>
+  </div>
+
