@@ -10,6 +10,7 @@
 <table>
 <thead>
 <tr>
+  <th><%= t('attributes.model.task.user_id') %></th>
   <th><%= sort_link(@q, :name, t('attributes.model.task.name') , default_order: :asc) %></th>
   <th><%= sort_link(@q, :description,t('attributes.model.task.description') , default_order: :asc) %></th>
   <th><%= sort_link(@q, :priority, t('attributes.model.task.priority') ,default_order: :asc) %></th>
@@ -22,6 +23,7 @@
 
   <tbody>
     <% @tasks.each do |task| %>
+        <td><%= task.user_id %></td>
         <td><%= link_to task.name, task %></td>
         <td><%= task.description %></td>
         <td><%= task.priority %></td>

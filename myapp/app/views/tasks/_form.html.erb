@@ -11,7 +11,12 @@
     </div>
   <% end %>
 
-<div class="field">
+  <div class="field">
+    <%= form.label :user_id, t('attributes.model.task.user_id') %>
+    <%= form.number_field :user_id, input_html: { value: 1 } %>
+  </div>
+
+  <div class="field">
     <%= form.label :name, t('attributes.model.task.name') %>
     <%= form.text_field :name %>
   </div>
