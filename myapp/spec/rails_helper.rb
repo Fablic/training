@@ -3,7 +3,7 @@ require 'spec_helper'
 ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'
 # Prevent database truncation if the environment is production
-abort("The Rails environment is running in production mode!") if Rails.env.production?
+abort('The Rails environment is running in production mode!') if Rails.env.production?
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 
@@ -32,7 +32,7 @@ rescue ActiveRecord::PendingMigrationError => e
 end
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
-  config.fixture_path = "#{::Rails.root}/spec/fixtures"
+  config.fixture_path = "#{Rails.root}/spec/fixtures"
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
@@ -65,30 +65,33 @@ RSpec.configure do |config|
 
   config.before(:each, type: :system) do
     driven_by :rack_test
-end
-
-config.before(:each, type: :system, js: true) do
-  driven_by :remote_chrome
-  Capybara.server_host = IPSocket.getaddress(Socket.gethostname)
-  Capybara.server_port = 3000
-  Capybara.app_host = "https://#{Capybara.server_host}:#{Capybara.server_port}"
-end
-
-if Bullet.enable?
-  config.before(:each) do
-    Bullet.start_request
   end
 
-  config.after(:each) do
-    Bullet.perform_out_of_channel_notifications if Bullet.notification?
-    Bullet.end_request
+  config.before(:each, js: true, type: :system) do
+    driven_by :remote_chrome
+    Capybara.server_host = IPSocket.getaddress(Socket.gethostname)
+    Capybara.server_port = 3000
+    Capybara.app_host = "https://#{Capybara.server_host}:#{Capybara.server_port}"
   end
-end  
+
+  if Bullet.enable?
+    config.before do
+      Bullet.start_request
+    end
+
+    config.after do
+      if Bullet.notification?
+        Bullet.perform_out_of_channel_notifications
+      end
+
+      Bullet.end_request
+    end
+  end
 end
 
 Capybara.register_driver :remote_chrome do |app|
   hub_url = 'https://chrome:4444/wd/hub'
-  chrome_capabilities = ::Selenium::WebDriver::Remote::Capabilities.chrome(
+  chrome_capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
     'goog:chromeOptions' => {
       'args' => %w[no-sandbox headless disable-gpu window-size=1680,1050],
     },

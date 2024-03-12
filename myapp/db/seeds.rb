@@ -9,6 +9,9 @@
 User.create!(
   username: 'testing4',
   password: 'test', 
+  
+  username: 'testing',
+  password_digest: 'test',
 )
 
 User.create!(
