@@ -40,16 +40,6 @@
     </div>
   </div>
 
-  <%= link_to t('pages.navbar.labels'),labels_path,class: 'nav-link active' %>
-
-  <h1><%= t('pages.task_list_page.title') %></h1>
-
-  <%= search_form_for @q do |f| %>
-    <%= f.search_field :name_or_description_or_priority_or_status_or_duedate_cont%>
-    <%= f.label :with_label_name, t('pages.task_list_page.label') %>
-    <%= f.search_field :with_label_name%>
-    <%= f.submit t('pages.task_list_page.search') %>
-  <% end %>
 
 <div class="container" style="width: 90%; margin: 0 auto;">
   <div class="row">
