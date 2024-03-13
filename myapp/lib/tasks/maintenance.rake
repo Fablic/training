@@ -10,3 +10,4 @@ task 'maintenance_go:end' => :environment do
   FileUtils.rm_f('tmp/maintenance.txt')
   puts 'Maintenance mode ended!'
 end
+
