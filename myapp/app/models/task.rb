@@ -1,8 +1,8 @@
 class Task < ApplicationRecord
 
   belongs_to :user
-  STATUSES = ["Not Started", "In Progress", "Done"].freeze
-  PRIORITY = ["High" , "Medium", "Low"].freeze
+  STATUSES = ["Not Started","In Progress","Done"].freeze
+  PRIORITY = ["High", "Medium","Low"].freeze
   validates :name, presence: true ,length: {maximum: 30, length: { maximum: 30, long: I18n.t('flash_msgs.long') } }
   validates :description , length: {maximum: 255, length:{ maximum: 255, long: I18n.t('flash_msgs.long')} }
   validates :status, presence: true, inclusion: { in: STATUSES }
