@@ -8,7 +8,7 @@
 
 User.create!(
   username: 'testing4',
-  password: 'test', 
+  password: 'test',
 )
 
 User.create!(
