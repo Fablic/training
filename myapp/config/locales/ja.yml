@@ -27,7 +27,7 @@ ja:
     status:
       not started: "始まっていない"
       in progress: "進行中"
-      done: "終わり"     
+      done: "終わり"
   pages:
     task_list_page:
       title: タスク一覧
