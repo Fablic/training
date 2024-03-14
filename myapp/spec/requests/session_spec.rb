@@ -15,12 +15,26 @@ RSpec.describe "Sessions", type: :request do
 
     let (:req_params) { { session: { username: 'testUser', password: 'password' } } }
 
-    it 'returns http success', :aggregate_failures do
-      post '/login', params: req_params
-      expect(response).to have_http_status(:found)
-      if I18n.locale.to_s == "en"
+    context "when locale is en" do
+      before do
+        I18n.locale = :en
+      end
+
+      it 'returns http success and redirects to English tasks page', :aggregate_failures do
+        post '/login', params: req_params
+        expect(response).to have_http_status(:found)
         expect(response).to redirect_to('/tasks?locale=en')
-      elsif I18n.locale.to_s == "ja"
+      end
+    end
+
+    context "when locale is ja" do
+      before do
+        I18n.locale = :ja
+      end
+
+      it 'returns http success and redirects to Japanese tasks page', :aggregate_failures do
+        post '/login?locale=ja', params: req_params
+        expect(response).to have_http_status(:found)
         expect(response).to redirect_to('/tasks?locale=ja')
       end
     end
