@@ -10,8 +10,22 @@ class ApplicationController < ActionController::Base
     I18n.with_locale(locale, &action)
   end
 
+
   def default_url_options
     { locale: I18n.locale }
+  end
+
+  def maintenance_mode?
+    File.exist?('tmp/maintenance.txt')
+  end
+
+  def render_maintenance_page
+    render(
+      file: Rails.public_path.join('503.html'),
+      content_type: 'text/html',
+      layout: false,
+      status: :service_unavailable,
+    )
   end
 
   private
