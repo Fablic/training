@@ -38,6 +38,16 @@ RSpec.describe User, type: :model do
       end
     end
 
+    it 'user cannot be created without password' do
+      user = build(:user, password: nil)
+      expect(user).to be_invalid
+    end
+
+    it 'show error messages if password is empty' do
+      user = build(:user, password: nil)
+      user.valid?
+      expect(user.errors[:password]).to eq ["can't be blank"]
+      
     context 'when username exists' do
       it 'does not create a user' do
         create(:user, username: 'ExistingUser')

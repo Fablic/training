@@ -1,60 +1,68 @@
-<p id="notice"><%= notice %></p>
+<% if logged_in? %>
+  
 
-<h1><%= t('pages.task_list_page.title') %></h1>
+  <div class="navbar__log_out_btn">
+    <%= button_to t('pages.task_list_page.logout'), '/logout', method: :delete, class: 'nav-link active' %>
+  </div>
 
-<%= search_form_for @q do |f| %>
-  <%= f.search_field :name_or_description_or_priority_or_status_or_duedate_cont%>
-  <%= f.submit t('pages.task_list_page.search') %>
-<% end %>
+  <h1><%= t('pages.task_list_page.title') %></h1>
 
-<table>
-<thead>
-<tr>
-  <th><%= t('attributes.model.task.user_id') %></th>
-  <th><%= sort_link(@q, :name, t('attributes.model.task.name') , default_order: :asc) %></th>
-  <th><%= sort_link(@q, :description,t('attributes.model.task.description') , default_order: :asc) %></th>
-  <th><%= sort_link(@q, :priority, t('attributes.model.task.priority') ,default_order: :asc) %></th>
-  <th><%= sort_link(@q, :status,t('attributes.model.task.status') , default_order: :asc) %></th>
-  <th><%= sort_link(@q, :duedate,t('attributes.model.task.duedate') , default_order: :asc) %></th>
-  <th><%= sort_link(@q, :created_at,t('attributes.model.task.created_at'), default_order: :desc) %></th>
-  <th colspan="3"></th>
-</tr>
-</thead>
+  <%= search_form_for @q do |f| %>
+    <%= f.search_field :name_or_description_or_priority_or_status_or_duedate_cont%>
+    <%= f.submit t('pages.task_list_page.search') %>
+  <% end %>
 
-  <tbody>
-    <% @tasks.each do |task| %>
-        <td><%= task.user_id %></td>
-        <td><%= link_to task.name, task %></td>
-        <td><%= task.description %></td>
-        <td><%= task.priority %></td>
-        <td><%= task.status %></td>
-        <td><%= task.duedate %></td>
-        <td><%= "\t" %></td>
-        <td><%= link_to t('pages.task_list_page.edit_task'), edit_task_path(task) %></td>
-        <td><%= button_to t('pages.task_list_page.delete_task'), task, method: :delete, data: {confirm: "Do you want to delete #{task.name}?"}%></td>
+  <table>
+    <thead>
+      <tr>
+        <th><%= sort_link(@q, :name, t('attributes.model.task.name') , default_order: :asc) %></th>
+        <th><%= sort_link(@q, :description,t('attributes.model.task.description') , default_order: :asc) %></th>
+        <th><%= sort_link(@q, :priority, t('attributes.model.task.priority') ,default_order: :asc) %></th>
+        <th><%= sort_link(@q, :status,t('attributes.model.task.status') , default_order: :asc) %></th>
+        <th><%= sort_link(@q, :duedate,t('attributes.model.task.duedate') , default_order: :asc) %></th>
+        <th><%= sort_link(@q, :created_at,t('attributes.model.task.created_at'), default_order: :desc) %></th>
+        <th colspan="3"></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
 
-<% if @tasks.none? %>
-  <p>No results found</p>
+    <tbody>
+      <% @tasks.each do |task| %>
+        <tr>
+          <td><%= link_to task.name, task %></td>
+          <td><%= task.description %></td>
+          <td><%= task.priority %></td>
+          <td><%= task.status %></td>
+          <td><%= task.duedate %></td>
+          <td><%= "\t" %></td>
+          <td><%= link_to t('pages.task_list_page.edit_task'), edit_task_path(task) %></td>
+          <td><%= button_to t('pages.task_list_page.delete_task'), task, method: :delete, data: {confirm: "Do you want to delete #{task.name}?"}%></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <% if @tasks.none? %>
+    <p>No results found</p>
+  <% end %>
+
+  <br>
+
+  <%= paginate @tasks %>
+
+  <br>
+
+  <div class="float-right">
+    <%= link_to t('pages.task_list_page.new_task'), new_task_path %>
+  </div>
+
+  <% if params[:q].present? %>
+    <%= link_to t('back'), tasks_path %>
+  
+
 <% end %>
 
-<br>
 
-<%= paginate @tasks %>
 
-<br>
-
-<div class="float-right">
-  <%= link_to t('pages.task_list_page.new_task'), new_task_path %>
-</div>
-
-<% if params[:q].present? %>
-  <%= link_to t('back'), tasks_path %>
+<% else %>
+  <%= redirect_to '/login' %>
 <% end %>
-
-
-
-
