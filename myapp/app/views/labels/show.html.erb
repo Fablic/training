@@ -1,0 +1,11 @@
+<% content_for(:page_title, 'Label detail') %>
+
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong><%= t('pages.label_list_page.name') %>:</strong>
+    <%= @label.name %>
+</p>
+
+<%= link_to t('pages.task_list_page.edit_task'), edit_label_path(@label) %> |
+<%= link_to t('back'), labels_path %>

@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1><%= t('pages.label_list_page.title') %></h1>
+
+<table>
+  <thead>
+    <tr>
+      <th><%= t('pages.label_list_page.name') %></th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @labels.each do |label| %>
+      <tr>
+        <td><%= link_to label.name,label %></td>
+        <td><%= link_to t('pages.label_list_page.edit_label'), edit_label_path(label) %></td>
+        <td><%= button_to t('pages.label_list_page.delete_label'), label_path(label), method: :delete, data: {confirm: "Do you want to delete #{label.name}?"} %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to t('pages.label_list_page.new_label'), new_label_path %>
+<%= link_to t('back'), tasks_path %>

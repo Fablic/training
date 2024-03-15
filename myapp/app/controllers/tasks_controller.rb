@@ -4,6 +4,17 @@ class TasksController < ApplicationController
   def index
     @q = Task.get_own_tasks(session[:user_id]).ransack(params[:q])
     @tasks = @q.result(distinct: true).page(params[:page])
+    @tasks = @tasks.includes(:labels, :task_labels)
+    @tasks = @tasks.where(labels: { id: params[:label_id] }) if params[:label_id].present?
+    if @q.sorts.present?
+      sort_criterion = @q.sorts.first
+      if sort_criterion.name == 'priority'
+        @tasks = @tasks.reorder("CASE priority WHEN 'High' THEN 1 WHEN 'Medium' THEN 2 WHEN 'Low' THEN 3 END #{sort_criterion.dir}")
+      else
+        @tasks = @tasks.reorder("#{sort_criterion.name} #{sort_criterion.dir}")
+      end
+    end
+
     return unless @q.sorts.present?
 
     sort_criterion = @q.sorts.first
@@ -56,6 +67,6 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:name, :description, :priority, :status, :duedate).merge(user_id: @current_user.id)
+    params.require(:task).permit(:name, :description, :priority, :status, :duedate, label_ids: []).merge(user_id: @current_user.id)
   end
 end
