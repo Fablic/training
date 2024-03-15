@@ -11,50 +11,66 @@
     </div>
   <% end %>
 
+  <div class="container" style="width: 80%; margin: 0 auto;">
+    <div class="row">
+      <div class="col-sm-12">
 
+        <div class="form-group p-3 mb-2 bg-light text-dark border border-secondary">
+          <%= form.label :name, t('attributes.model.task.name') %>
+          <%= form.text_field :name, class: 'form-control' %>
+        </div>
 
-  <div class="field">
-    <%= form.label :name, t('attributes.model.task.name') %>
-    <%= form.text_field :name %>
+        <div class="form-group p-3 mb-2 bg-light text-dark border border-secondary">
+          <%= form.label :description, t('attributes.model.task.description') %>
+          <%= form.text_area :description, class: 'form-control' %>
+        </div>
+
+        <div class="form-group p-3 mb-2 bg-light text-dark border border-secondary">
+          <%= form.label :priority, t('attributes.model.task.priority') %>
+          <%= form.select :priority, options_for_select([
+            [t('form.priority.low'), 'Low'],
+            [t('form.priority.medium'), 'Medium'],
+            [t('form.priority.high'), 'High']]), class: 'form-control'
+          %>
+        </div>
+
+        <div class="form-group p-3 mb-2 bg-light text-dark border border-secondary">
+          <%= form.label :status, t('attributes.model.task.status') %>
+          <%= form.select :status, options_for_select([
+            [t('form.status.not started'), 'Not Started'],
+            [t('form.status.in progress'), 'In Progress'],
+            [t('form.status.done'), 'Done']]), class: 'form-control'
+          %>
+        </div>
+
+        <div class="form-group p-3 mb-2 bg-light text-dark border border-secondary">
+          <%= form.label :duedate, t('attributes.model.task.duedate') %>
+          <%= form.date_field :duedate, class: 'form-control' %>
+        </div>
+
+        <div class="form-group p-3 mb-2 bg-light text-dark border border-secondary">
+          <div>
+            <%= form.label :label_ids, "Labels" %>
+          </div>
+          <div class="d-flex mt-3">
+            <%= form.collection_check_boxes :label_ids, @current_user.labels, :id, :name do |b| %>
+              <div class="form-check mr-3">
+                <%= b.check_box class: 'form-check-input' %>
+                <%= b.label class: 'form-check-label' %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+
+      </div>
+    </div>
   </div>
 
-  <div class="field">
-    <%= form.label :description, t('attributes.model.task.description') %>
-    <%= form.text_area :description %>
+  <div class="d-flex justify-content-center align-items-center">
+    <div style="margin-right: 10px;">
+      <%= form.submit t('pages.task_list_page.update_task'), class: "btn btn-primary" %>
+    </div>
   </div>
 
-  <div class="field">
-  <%= form.label :priority, t('attributes.model.task.priority') %>
-  <%= form.select :priority, options_for_select([
-    [t('form.priority.low'), 'Low'],
-    [t('form.priority.medium'), 'Medium'],
-    [t('form.priority.high'), 'High']])
-    %>
-</div>
-
-  <div class="field">
-    <%= form.label :status, t('attributes.model.task.status') %>
-    <%= form.select :status, options_for_select([
-    [t('form.status.not started'), 'Not Started'],
-    [t('form.status.in progress'), 'In Progress'],
-    [t('form.status.done'), 'Done']])
-    %>
-  </div>
-
-  <div class="field">
-    <%= form.label :duedate, t('attributes.model.task.duedate') %>
-    <%= form.date_field :duedate %>
-  </div>
-
-  <div class="field">
-    <%= form.label :label_ids, "Labels" %>
-    <%= form.collection_check_boxes :label_ids, @current_user.labels, :id, :name do |b| %>
-      <%= b.check_box %>
-      <%= b.label %>
-    <% end %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit t('pages.task_list_page.update_task') %>
-  </div>
 <% end %>
+

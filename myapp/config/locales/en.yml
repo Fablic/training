@@ -86,7 +86,8 @@ en:
       name: Name
       edit_label: Edit
       delete_label: Delete
-      new_label: New Label  
+      new_label: New Label 
+      labeldetail: Label Detail 
     edit_label_page:
       titlel: Edit Label
       update_label: Update
