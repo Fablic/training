@@ -1,4 +1,4 @@
 # README
 
-* ER
+## ER
 ![plot](docs/ER.png)
