@@ -214,6 +214,37 @@ chrome://extensions/ を開いて右上のDeveloper modeをオンにして、RKG
 
 ※ 現時点で正解のモデル図を作成する必要はまだありません。現時点での想定として作ってみましょう（今後のステップで間違いと思ったら改修していくイメージです）
 
+#### Table Scheme (May 13)
+![alt text](./images/image.png)
+|Users|||
+|----|----|----|
+|id         |INT        |PRIMARY KEY|
+|username   |VARCHAR    |NOT NULL|
+|password   |VARCHAR    |NOT NULL|
+
+|Labels|||
+|----|----|----|
+|id         |INT        |PRIMARY KEY|
+|label_name |VARCHAR    |NOT NULL|
+
+|Tasks|||
+|----|----|----|
+|id         |INT        |PRIMARY KEY|
+|user_id    |INT        |NOT NULL, FOREIGN KEY|
+|title      |VARCHAR    |NOT NULL |
+|description|VARCHAR    |         |
+|due        |TIMESTAMP  |NOT NULL |
+|priority   |INT        |NOT NULL |
+|status     |INT        |NOT NULL |
+
+|Task_labels|||
+|----|----|----|
+|label_id   |INT        |NOT NULL, FOREIGN KEY|
+|task_id    |INT        |NOT NULL, FOREIGN KEY|
+
+#### Page Design
+![alt text](./images/schema.png)
+
 ### ステップ6: タスクモデルを作成しましょう
 
 タスクを管理するためのCRUDを作成します。
