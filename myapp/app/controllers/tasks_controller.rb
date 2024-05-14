@@ -32,7 +32,7 @@ class TasksController < ApplicationController
 
   def destroy
     @task.destroy
-    redirect_to task_url, notice: 'タスクが正常に削除されました。'
+    redirect_to tasks_path, notice: 'タスクが正常に削除されました。'
   end
 
   private
