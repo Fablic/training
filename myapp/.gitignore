@@ -5,3 +5,5 @@
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+tmp/
+log/*.log
