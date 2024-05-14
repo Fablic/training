@@ -215,7 +215,7 @@ chrome://extensions/ を開いて右上のDeveloper modeをオンにして、RKG
 ※ 現時点で正解のモデル図を作成する必要はまだありません。現時点での想定として作ってみましょう（今後のステップで間違いと思ったら改修していくイメージです）
 
 #### Table Scheme (May 13)
-![alt text](./images/image.png)
+![alt text](./images/schema.png)
 |Users|||
 |----|----|----|
 |id         |INT        |PRIMARY KEY|
@@ -243,7 +243,7 @@ chrome://extensions/ を開いて右上のDeveloper modeをオンにして、RKG
 |task_id    |INT        |NOT NULL, FOREIGN KEY|
 
 #### Page Design
-![alt text](./images/schema.png)
+![alt text](./images/page_design.png)
 
 ### ステップ6: タスクモデルを作成しましょう
 
