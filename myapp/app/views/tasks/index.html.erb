@@ -1,0 +1,18 @@
+<h1>タスクの一覧画面</h1>
+<table>
+  <thead>
+    <tr>
+      <th>タイトル</th>
+      <th>説明</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @tasks.each do |task| %>
+      <tr>
+        <td><%= task.title %></td>
+        <td><%= task.description %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
