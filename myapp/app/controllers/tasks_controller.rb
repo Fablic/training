@@ -10,11 +10,15 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.new(task_params)
-    if @task.save
-      redirect_to @task, notice: 'タスクが正常に作成されました。'
+    if not is_valid(task_params['title'])
+      redirect_to new_task_path, notice: 'Cannot create a task with empty title.'
     else
-      render :new
+      @task = Task.new(task_params)
+      if @task.save
+        redirect_to @task, notice: 'Task created.'
+      else
+        render :new
+      end
     end
   end
 
@@ -25,14 +29,18 @@ class TasksController < ApplicationController
   end
 
   def update
-    if @task.update(task_params)
-      redirect_to @task, notice: 'タスクが正常に更新されました。'
+    if not is_valid(@task['title'])
+      redirect_to edit_task_path(@task['id']), notice: 'Cannot create a task with empty title.'
+    else
+      if @task.update(task_params)
+        redirect_to @task, notice: 'Task updated.'
+      end
     end
   end
 
   def destroy
     @task.destroy
-    redirect_to tasks_path, notice: 'タスクが正常に削除されました。'
+    redirect_to tasks_path, notice: 'Task deleted.'
   end
 
   private
@@ -42,5 +50,10 @@ class TasksController < ApplicationController
 
     def task_params
       params.require(:task).permit(:title, :description)
+    end
+
+    def is_valid(text)
+      puts 'OOOOOOOOOOOOOOO      ' + text
+      return not(text == '' or text == nil)
     end
 end

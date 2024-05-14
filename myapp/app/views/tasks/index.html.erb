@@ -1,4 +1,7 @@
-<h1>タスクの一覧画面</h1>
+<h1>List of Tasks</h1>
+<% if flash[:notice] %>
+  <p><%= flash[:notice] %></p>
+<% end %>
 <table>
   <thead>
     <tr>
@@ -15,10 +18,11 @@
         <td><%= task.description %></td>
         <td><%= link_to 'show', task_path(task.id) %></td>
         <td><%= link_to 'edit', edit_task_path(task) %></td>
-        <td><%= button_to 'delete', task_path(task.id), method: :delete,form: { data: {turbo_confirm: "Are you sure?"}} %></td>
+        <td><%= button_to 'delete', task_path(task.id), method: :delete, form: {data: {confirm: 'Are you sure?'}} %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
+
 
 <p><%= link_to 'create', 'tasks/new' %></p>
