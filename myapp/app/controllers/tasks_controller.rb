@@ -10,31 +10,19 @@ class TasksController < ApplicationController
   end
 
   def create
-    if not is_valid(task_params['title'])
-      redirect_to new_task_path, notice: 'Cannot create a task with empty title.'
+    @task = Task.new(task_params)
+    if @task.save
+      redirect_to @task, notice: 'Task created.'
     else
-      @task = Task.new(task_params)
-      if @task.save
-        redirect_to @task, notice: 'Task created.'
-      else
-        render :new
-      end
+      render :new
     end
   end
 
-  def show
-  end
-
-  def edit
-  end
-
   def update
-    if not is_valid(@task['title'])
-      redirect_to edit_task_path(@task['id']), notice: 'Cannot create a task with empty title.'
+    if @task.update(task_params)
+      redirect_to @task, notice: 'Task updated.'
     else
-      if @task.update(task_params)
-        redirect_to @task, notice: 'Task updated.'
-      end
+      render :edit
     end
   end
 
@@ -50,10 +38,5 @@ class TasksController < ApplicationController
 
     def task_params
       params.require(:task).permit(:title, :description)
-    end
-
-    def is_valid(text)
-      puts 'OOOOOOOOOOOOOOO      ' + text
-      return not(text == '' or text == nil)
     end
 end
