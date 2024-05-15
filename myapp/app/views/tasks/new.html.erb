@@ -1,18 +1,18 @@
 <h1>Create a new task</h1>
 <%= form_with scope: :task, url: tasks_path, local: true, data: {turbo: false} do |form| %>
-    <p>
-        <%= form.label :title, required: true %>
-        <br>
-        <%= form.text_field :title, required: true %>   
-    </p>
+  <p>
+    <%= form.label :title, required: true %>
+    <br>
+    <%= form.text_field :title, required: true %>   
+  </p>
 
-    <p>
-        <%= form.label :description, required: true %>
-        <br>
-        <%= form.text_area :description, required: true %>
-    </p>
+  <p>
+    <%= form.label :description, required: true %>
+    <br>
+    <%= form.text_area :description, required: true %>
+  </p>
 
-    <p>
-        <%= form.submit %>
-    </p>
+  <p>
+    <%= form.submit %>
+  </p>
 <% end %>

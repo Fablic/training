@@ -3,14 +3,14 @@
 <%= flash[:success] %>
 <%= flash[:alert] %>
 <table>
-    <tbody>
-        <% @tasks.each do |task| %>
-            <tr>
-                <td><h3><%= task.title %></h3></td>
-                <td><%= button_to "Delete", task_path(task), method: :delete %></td>
-            </tr>
-        <% end %>
-    </tbody>
+  <tbody>
+    <% @tasks.each do |task| %>
+      <tr>
+        <td><h3><%= task.title %></h3></td>
+        <td><%= button_to "Delete", task_path(task), method: :delete %></td>
+      </tr>
+    <% end %>
+  </tbody>
 </table>
 
 
