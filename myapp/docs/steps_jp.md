@@ -2,18 +2,11 @@
 
 ## このカリキュラムについて
 
-この文書は、Fablicで必須とされるRuby on Railsとその周辺技術の基礎を習得するための新入社員教育用カリキュラムです。
-新入社員の能力によらず、必ず一通りのステップを実施していただきます。
-研修期間は特に定めておりません。
-すべてのステップを完了した時点で研修修了となります。
+Rakuma で働く上で必要な Ruby on Rails とその周辺技術の基礎を習得するための新入社員教育用カリキュラムです。
 
-本カリキュラムでは、以下の登場人物を想定しています。
-
-- 新入社員（メンティー） : 本カリキュラムの受講者です。
-- メンター : 新入社員の教育・指導・助言を行います。また、新入社員と相談して仕様を一緒に決めたりする役割も担います。
-  - レビューに関しては、メンター１人への負荷軽減・チームメンバーがメンティーのレベルを理解するよい機会になることから、チーム内で分担して行うことを推奨します。
-
-指導について、メンターがどの程度関与するかどうかはメンターの裁量に一任します。また、研修期間については、新入社員のスキルレベルや社内の案件状況を考慮して、メンターの方であらかじめ目安を設定する予定です。
+主に Rails 初学者向けのカリキュラムになっています。
+ご自身のこれまでの経験を考慮し、メンターと相談しながら実施可否も含めて検討して進めてください。
+Rails に触ったことがある方は特に実施不要です。
 
 ## ライセンス
 
@@ -21,9 +14,7 @@
 
 [![クリエイティブ・コモンズ・ライセンス](https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png)](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ja)
 
-## 概要
-
-### システムの要件
+## システムの要件
 
 本カリキュラムでは、課題としてタスク管理システムを開発していただきます。
 タスク管理システムでは、以下のことを行いたいと考えています。
@@ -34,26 +25,21 @@
 - ステータス（未着手・着手・完了）を管理したい
 - ステータスでタスクを絞り込みたい
 - タスク名・タスクの説明文でタスクを検索したい
-- タスクを一覧したい。一覧画面で（優先順位、終了期限などを元にして）ソートしたい
+- タスクを一覧化したい。
+- 一覧画面で（優先順位、終了期限などで）ソートしたい
 - タスクにラベルなどをつけて分類したい
 - ユーザ登録し、自分が登録したタスクだけを見られるようにしたい
-- メンテナンスを実施できるようにしたい
-
-また、上記の要件を満たすにあたって、次のような管理機能がほしいと考えています。
-
 - ユーザの管理機能
+- メンテナンスモードを実施できるようにしたい
 
-**※ ただし、メンターの判断で特定機能の実装をスキップしてもらう場合があります。**
-  **「★」のマークが付いているステップに関してはメンターの指示のもと、実装してください。**
-
-**（メンターは、メンティーの開発経験・各ステップの実装の質を元にスキップするかの判断を行ってください）**
+またメンターと相談の上、ところどころ機能の実装をスキップしていただいても構いません。
 
 
-### サポートブラウザ
+## サポートブラウザ
 
 - サポートブラウザはmacOS/Chrome各最新版を想定しています
 
-### アプリケーション（サーバ）の構成について
+## アプリケーション（サーバ）の構成について
 
 以下の言語・ミドルウェアを使って構築していただきたいです（いずれも最新の安定バージョン）。
 
@@ -65,7 +51,7 @@
 ※ 性能要求・セキュリティ要求は特に定めませんが、一般的な品質で作ってください。
   あまりにサイトのレスポンスが悪い場合は改善をしていただきます
 
-## 本カリキュラムの最終目標
+## 目標
 
 本カリキュラムの終了時点で、以下の項目を習得することを想定しています。
 
@@ -75,8 +61,12 @@
 - GitHubでPRをしてマージする一連の流れを習得すること。また、それに必要なGitのコマンドを習得すること
   - 適切な粒度でコミットができること
   - 適切にPRの説明文が書けること
-  - レビューに対する対応と修正が一通りできること
+  - レビュー
+  に対する対応と修正が一通りできること
 - 不明な点を適切なタイミングでチームメンバーや関係者に（今回はメンターになります）口頭やチャットなどで質問ができること
+
+
+---
 
 ## 課題ステップ
 
@@ -104,6 +94,17 @@ chrome://extensions/ を開いて右上のDeveloper modeをオンにして、RKG
 - 公式サイトからDockerのアカウントを作ってログインし、DockerHubからダウンロードしてインストールしましょう
     - https://hub.docker.com/editions/community/docker-ce-desktop-mac
 - `docker-compose -v` コマンドでバージョンが表示されることを確認してください
+  - Mac M1チップの場合
+      ```sh
+      docker-compose docker: 'compose' is not a docker command
+      ```
+      が出る可能性があります。
+      解決策：
+      ```sh
+      mkdir -p /usr/local/lib/docker
+      ln -s /Applications/Docker.app/Contents/Resources/cli-plugins /usr/local/lib/docker/cli-plugins
+      ```
+      参考：https://github.com/docker/for-mac/issues/6569#issuecomment-1312244210
 
 
 #### 1-2. Gitのインストール
@@ -135,6 +136,34 @@ chrome://extensions/ を開いて右上のDeveloper modeをオンにして、RKG
     ```sh
     docker-compose run api rails new . --force --database=mysql -G
     ```
+    - Mac M1チップの場合
+      - dockerコマンド実行したときチップによるエラーが幾つかあります。
+        ```sh
+        no matching manifest for linux/arm64/v8 in the manifest list entries
+        ```
+        こういうエラーが出る場合、
+        `docker-compose.yml`の`api:`と`db:`配下に
+        ```yml
+        platform: linux/amd64
+        ```
+        を指定して再実行してください。
+        参考：[M1 MacによるDocker開発環境構築エラー](https://qiita.com/a-kym/items/10ecb57e0387a673b3a2)
+      - ```sh
+        executor failed running [/bin/sh -c apt-get install -y google-chrome-stable]: exit code: 100
+        ```
+        こういうエラの場合、Dockerfileを弄って
+        ```yml
+        ENV DOCKER_DEFAULT_PLATFORM=linux/amd64
+        ```
+        を指定してください。
+        参考：[Unable to locate package google-chrome-stable](https://github.com/joyzoursky/docker-python-chromedriver/issues/30)
+        `docker-compose.yml`の`chrome:`配下に
+        ```yml
+        platform: linux/amd64
+        ```
+        指定してもよい気がします。
+      ここで出なくても今後のStepでこれが出る可能性がありますので、出たら上記の解決策を試しましょう。
+
 - `rails new` してできたプロジェクトのディレクトリ（アプリ名のディレクトリ）の直下に `docs` というディレクトリを作り、この文書ファイルをコミットしましょう
   - このアプリの仕様を管理下に置き、いつでも見られるようにするためです
 - `config/database.yml`を以下のように書き換えて、アプリから接続できるようにしましょう
@@ -155,20 +184,44 @@ chrome://extensions/ を開いて右上のDeveloper modeをオンにして、RKG
     ```sh
     docker-compose up --build
     ```
+    - Mac M1チップの場合：
+      ```sh
+      Webpacker::Manifest::MissingEntryError
+      ```
+      こういうエラーが出る場合、
+      `Gemfile`ファイル内のwebpackerを最新のものにする。
+      ```yml
+      gem 'webpacker', '~> 5.0'
+      ```
+      を指定して再実行してみてください。
+      参考：[【Rails6】Webpacker::Manifest::MissingEntryErrorを解決する](https://qiita.com/ginger-yell/items/8584e9149496940ea144)
+
+      ```sh
+      Function not implemented - Failed to initialize inotify (Errno::ENOSYS)
+      ```
+      の場合：
+      `config/environments/development.rb`を編集してください。
+      ```
+      - config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+      + config.file_watcher = ActiveSupport::FileUpdateChecker
+      ```
+    - `sassc 2.4.0`の場合`bundle install`ですごく時間かかる場合があります（1000s以上）基本的は待つと大丈夫です、気になったらこの記事を読んでください。
+      - [Rails: Why is bundle install frozen up by sassc 2.4.0](https://stackoverflow.com/questions/62720043/rails-why-is-bundle-install-frozen-up-by-sassc-2-4-0)
     - 以下のように表示されれば正常にアプリが立ち上がっています
-    ```sh
-    api_1  | => Booting Puma
-    api_1  | => Rails 6.0.0 application starting in development
-    api_1  | => Run `rails server --help` for more startup options
-    api_1  | Puma starting in single mode...
-    api_1  | * Version 3.12.1 (ruby 2.6.4-p104), codename: Llamas in Pajamas
-    api_1  | * Min threads: 5, max threads: 5
-    api_1  | * Environment: development
-    api_1  | * Listening on tcp://0.0.0.0:3000
-    api_1  | Use Ctrl-C to stop
-    ```
+      ```sh
+      api_1  | => Booting Puma
+      api_1  | => Rails 6.0.0 application starting in development
+      api_1  | => Run `rails server --help` for more startup options
+      api_1  | Puma starting in single mode...
+      api_1  | * Version 3.12.1 (ruby 2.6.4-p104), codename: Llamas in Pajamas
+      api_1  | * Min threads: 5, max threads: 5
+      api_1  | * Environment: development
+      api_1  | * Listening on tcp://0.0.0.0:3000
+      api_1  | Use Ctrl-C to stop
+      ```
     - `localhost:3001`にアクセスしてみましょう
 - 作成したアプリをGitHub上に作成したブランチにpushしましょう
+  - pushする前にgitignoreを設定したほうがおすすめ：[【Rails】.gitignoreの設定について](https://qiita.com/nozonozo/items/011308bf8f903977ac1a)
 
 ### ステップ4: Dockerに慣れましょう
 
@@ -281,6 +334,17 @@ chrome://extensions/ を開いて右上のDeveloper modeをオンにして、RKG
   - dockerを利用して研修を行う場合、以下の設定が必要です。
     1. [Dockerfile](https://qiita.com/ngron/items/f61b8635b4d67f666d75#failed-to-read-the-sessionstorage-property-from-window-storage-is-disabled-inside-data-urls)
     2. [spec/rails_helper.rb](https://commis.hatenablog.com/entry/2018/11/16/171608)
+    3. （Mac M1チップの方のみ）selenium/standalone-chromeはm1 macで動かないので、
+        `docker-compose.yml`ファイルの`chrome:`部分をこう書き換えてください。
+        ```yml
+        chrome:
+          image: seleniarm/standalone-chromium
+          ports:
+            - 4444:4444
+          environment:
+            TZ: Asia/Tokyo
+        ```
+
   - feature specですと `database_cleaner` という gemは必要でしたが、 system specに変更することで `database_cleaner` の導入が要らなくなった
 - Circle CIなどのCIツールを導入して、Slackに通知するようにしましょう
   - Fablic/training内でPRのやり取りをする場合、CIツールの導入は任意(optional)です。CircleCIのAdmin権限が無いので、`.circleci/config.yml`を設定しても実行できないです。
