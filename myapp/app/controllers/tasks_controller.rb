@@ -3,15 +3,14 @@ class TasksController < ApplicationController
     @tasks = Task.all
   end
 
-  def new
-  end
+  def new; end
 
   def create
     @new_task = Task.new(params.require(:task).permit(:title, :description))
     @new_task.save
-      
-    flash[:success] = "New task was created successfully!"
-    redirect_to action: "index"
+
+    flash[:success] = 'New task was created successfully!'
+    redirect_to action: 'index'
   end
 
   def show
@@ -26,15 +25,15 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
     @task.update(params.require(:task).permit(:title, :description))
 
-    flash[:notice] = "Edit task successfully!"
-    redirect_to action: "index"
+    flash[:notice] = 'Edit task successfully!'
+    redirect_to action: 'index'
   end
 
   def destroy
     @task = Task.find(params[:id])
     @task.destroy
 
-    flash[:alert] = "Deleted task successfully!"
-    redirect_to action: "index"
+    flash[:alert] = 'Deleted task successfully!'
+    redirect_to action: 'index'
   end
 end
