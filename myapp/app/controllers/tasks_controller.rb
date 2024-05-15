@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
@@ -18,7 +20,7 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(task_params)
     if @task.save
-      redirect_to @task, notice: 'Task created.'
+      redirect_to @task, notice: "Task created."
     else
       render :new
     end
@@ -26,7 +28,7 @@ class TasksController < ApplicationController
 
   def update
     if @task.update(task_params)
-      redirect_to @task, notice: 'Task updated.'
+      redirect_to @task, notice: "Task updated."
     else
       render :edit
     end
@@ -34,9 +36,9 @@ class TasksController < ApplicationController
 
   def destroy
     if @task.destroy
-      redirect_to tasks_path, notice: 'Task deleted.'
+      redirect_to tasks_path, notice: "Task deleted."
     else
-      redirect_to tasks_path, notice: 'Task cannot be deleted.'
+      redirect_to tasks_path, notice: "Task cannot be deleted."
     end
   end
 
