@@ -10,23 +10,23 @@ class TasksController < ApplicationController
     @new_task.save
 
     flash[:success] = 'New task was created successfully!'
-    redirect_to action: 'index'
+    redirect_to tasks_path
   end
 
   def show
-    @task = Task.find(params[:id])
+    @task = find_task(params[:id])
   end
 
   def edit
-    @task = Task.find(params[:id])
+    @task = find_task(params[:id])
   end
 
   def update
-    @task = Task.find(params[:id])
+    @task = find_task(params[:id])
     @task.update(params.require(:task).permit(:title, :description))
 
     flash[:notice] = 'Edit task successfully!'
-    redirect_to action: 'index'
+    redirect_to tasks_path
   end
 
   def destroy
@@ -34,6 +34,11 @@ class TasksController < ApplicationController
     @task.destroy
 
     flash[:alert] = 'Deleted task successfully!'
-    redirect_to action: 'index'
+    redirect_to tasks_path
+  end
+
+  private 
+  def find_task(id)
+    Task.find(id)
   end
 end
