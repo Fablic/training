@@ -1,0 +1,7 @@
+<h1>Task Detail</h1>
+<% if flash[:notice] %>
+  <p><%= flash[:notice] %></p>
+<% end %>
+<h2><%= @task.title %></h2>
+<p><%= @task.description %></p>
+<p><%= link_to 'All tasks', '/tasks' %></p>
