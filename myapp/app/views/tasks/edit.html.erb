@@ -1,0 +1,21 @@
+<h1>Edit the task</h1>
+<%= flash[:notice] %>
+<%= flash[:success] %>
+<%= flash[:danger] %>
+<%= form_with(model: @task, local: true, data: {turbo: false}) do |form| %>
+  <p>
+    <%= form.label :title, required: true %>
+    <br>
+    <%= form.text_field :title, required: true %>   
+  </p>
+
+  <p>
+    <%= form.label :description, required: true %>
+    <br>
+    <%= form.text_area :description, required: true %>
+  </p>
+
+  <p>
+    <%= form.submit %>
+  </p>
+<% end %>
