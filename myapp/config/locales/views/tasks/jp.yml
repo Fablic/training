@@ -1,0 +1,8 @@
+ja:
+  users:
+    index:
+      title: 'タスク一覧'
+    show:
+      title: '%{task_title}の情報'
+    edit:
+      title: '%{task_title}の情報を編集'
