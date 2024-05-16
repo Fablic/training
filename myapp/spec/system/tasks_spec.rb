@@ -53,18 +53,14 @@ RSpec.describe 'Tasks', type: :system do
     expect(page).to have_content 'test task description changed'
   end
 
-  it 'delete task', js: true do
+  it 'delete task' do
     # Task編集画面を開く
     visit tasks_path()
 
     # expect(button['data-confirm']).to eq 'Are you sure?'
 
-    # Delte task
+    # Nameに"いとう"が入力されていることを検証する
     all('tr')[1].click_button 'delete'
-    # accept_confirm('Are you sure?')
-    accept_confirm 'Are you sure?' do
-      click_link 'OK'
-    end    
 
     # 正しく更新されていること（＝画面の表示が正しいこと）を検証する
     expect(page).to_not have_content 'test task title'
