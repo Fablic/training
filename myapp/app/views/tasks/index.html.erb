@@ -18,7 +18,7 @@
         <td><%= task.description %></td>
         <td><%= link_to t('tasks.index.show'), task_path(task.id) %></td>
         <td><%= link_to t('tasks.index.edit'), edit_task_path(task) %></td>
-        <td><%= button_to t('tasks.index.delete'), task_path(task.id), method: :delete, form: {data: {confirm: 'Are you sure?'}} %></td>
+        <td><%= button_to t('tasks.index.delete'), task_path(task.id), method: :delete, form: {data: {confirm: t('tasks.index.delete_confirmation')}} %></td>
       </tr>
     <% end %>
   </tbody>

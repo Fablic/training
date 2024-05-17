@@ -6,6 +6,7 @@ ja:
       show: '詳細'
       edit: '編集'
       delete: '削除'
+      delete_confirmation: '本当に削除しますか？'
     show:
       title: '%{task_title}の情報'
     edit:

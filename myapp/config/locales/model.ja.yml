@@ -24,3 +24,9 @@ ja:
     delete:
       notice: 'タスクの削除に成功しました。'
       alert: 'タスクの削除ができません。'
+  errors:
+    error404:
+      message: 'お探しのページは見つかりません。'
+    error500:
+      message: 'サーバーでエラーが発生しました。'
+      message_next_action: '時間をおいて再度お試し下さい。'
