@@ -1,5 +1,5 @@
-<h1>Edit Task</h1>
+<h1><%= t('.title', task_title: @task.title) %></h1>
 
 <%= render 'form', task: @task %>
 
-<%= link_to 'back', tasks_path %>
+<%= link_to t('attributes.back'), tasks_path %>

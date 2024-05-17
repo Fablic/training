@@ -1,8 +1,14 @@
 ja:
-  users:
+  tasks:
     index:
       title: 'タスク一覧'
+      create: 'タスク作成'
+      show: '詳細'
+      edit: '編集'
+      delete: '削除'
     show:
       title: '%{task_title}の情報'
     edit:
       title: '%{task_title}の情報を編集'
+    new:
+      title: '新しいタスクを作成'

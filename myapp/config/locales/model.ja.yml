@@ -1,0 +1,26 @@
+# モデルは全て activerecord 以下に記述する。
+ja:
+  activerecord:
+    models:
+      task: 'タスク'
+    # model毎に定義したいattributesを記述
+    attributes:
+      task:
+        # view側： Task.human_attribute_name :title /　t("activerecord.attributes.user.name")と同じ
+        title: 'タイトル'
+        description: '説明'
+  # 全てのmodelで共通して使用するattributesを定義
+  attributes:
+    created_at: '作成日'
+    updated_at: '更新日'
+    back: '戻る'
+  tasks:
+    create:
+      notice: 'タスクの作成に成功しました。'
+      alert: 'タスクの作成ができません。'
+    update:
+      notice: 'タスクの更新に成功しました。'
+      alert: 'タスクの更新ができません。'
+    delete:
+      notice: 'タスクの削除に成功しました。'
+      alert: 'タスクの削除ができません。'
