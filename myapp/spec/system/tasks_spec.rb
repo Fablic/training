@@ -45,7 +45,7 @@ RSpec.describe "Tasks", type: :system do
   it "delete task" do
     visit tasks_path()
 
-    all("tr")[1].click_button "delete"
+      all("tr")[1].click_button "delete"
 
     expect(page).to_not have_content "test task title"
   end
