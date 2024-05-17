@@ -20,7 +20,7 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(task_params)
     if @task.save
-      redirect_to @task, notice: t('tasks.create.notice')
+      redirect_to @task, notice: t("tasks.create.notice")
     else
       render :new
     end
@@ -28,7 +28,7 @@ class TasksController < ApplicationController
 
   def update
     if @task.update(task_params)
-      redirect_to @task, notice: t('tasks.update.notice')
+      redirect_to @task, notice: t("tasks.update.notice")
     else
       render :edit
     end
@@ -36,9 +36,9 @@ class TasksController < ApplicationController
 
   def destroy
     if @task.destroy
-      redirect_to tasks_path, notice: t('tasks.delete.notice')
+      redirect_to tasks_path, notice: t("tasks.delete.notice")
     else
-      redirect_to tasks_path, notice: t('tasks.alert.notice')
+      redirect_to tasks_path, notice: t("tasks.alert.notice")
     end
   end
 
