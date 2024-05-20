@@ -43,7 +43,7 @@ RSpec.describe "Tasks", type: :system do
   end
 
   it "delete task" do
-    visit tasks_path()
+    visit tasks_path
 
       all("tr")[1].click_button "delete"
 
