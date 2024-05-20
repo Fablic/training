@@ -23,8 +23,8 @@ RSpec.describe "Tasks", type: :system do
   it "read task" do
     visit task_path(@task)
 
-    expect(page).to have_content "task title"
-    expect(page).to have_content "task description"
+    expect(page).to have_content "test task title"
+    expect(page).to have_content "test task description"
   end
 
   it "update task" do
