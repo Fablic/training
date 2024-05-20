@@ -2,6 +2,11 @@
 <% if flash[:notice] %>
   <p><%= flash[:notice] %></p>
 <% end %>
+<%= form_with url: tasks_path, local: true, method: :get do %>
+  <p>Search for tasks</p>
+  <%= text_field_tag(:search, params[:search]) %>
+  <%= submit_tag ("Search") %>
+<% end %>
 <table>
   <thead>
     <tr>
