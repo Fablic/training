@@ -39,9 +39,11 @@ services:
       DB_HOST: db
 
   chrome:
-    image: selenium/standalone-chrome:latest
+    image: seleniarm/standalone-chromium
     ports:
       - 4444:4444
+    environment:
+      TZ: Asia/Tokyo
 
 volumes:
   db-data:
