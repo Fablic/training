@@ -1,7 +1,7 @@
 version: '3'
 services:
   db:
-    platform: linux/x86_64
+    platform: linux/amd64
     image: mysql:5.7
     environment:
       MYSQL_ROOT_PASSWORD: password
@@ -13,6 +13,7 @@ services:
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
 
   api:
+    platform: linux/amd64
     build: .
     command: >
       bash -c "bundle install &&
@@ -39,9 +40,12 @@ services:
       DB_HOST: db
 
   chrome:
-    image: selenium/standalone-chrome:latest
+    platform: linux/amd64
+    image: seleniarm/standalone-chromium
     ports:
       - 4444:4444
+    environment:
+      TZ: Asia/Tokyo
 
 volumes:
   db-data:
