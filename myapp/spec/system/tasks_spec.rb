@@ -1,15 +1,14 @@
 # frozen_string_literal: true
 
 require "rails_helper"
-require 'pp'
 
 RSpec.describe "Tasks", type: :system do
   before do
     # Create dummy data
     @tasks = []
     for i in 1..9
-      @tasks.append({title: "test title #{i.to_s}", 
-                     description: "test description #{i.to_s}",
+      @tasks.append({ title: "test title #{i}",
+                     description: "test description #{i}",
                      created_at: i.days.ago })
     end
     @taskRecords = Task.create!(@tasks)
@@ -17,12 +16,12 @@ RSpec.describe "Tasks", type: :system do
   end
 
   it "check order by creation date" do
-    @tasks.sort { |a,b| b[:created_at] <=> a[:created_at] }
+    @tasks.sort { |a, b| b[:created_at] <=> a[:created_at] }
     visit tasks_path
 
     for i in 1..9
-      expect(page.all("tr")[i]).to have_content @tasks[i-1][:created_at].strftime("%F")
-    end    
+      expect(page.all("tr")[i]).to have_content @tasks[i - 1][:created_at].strftime("%F")
+    end
   end
 
   it "create task" do
