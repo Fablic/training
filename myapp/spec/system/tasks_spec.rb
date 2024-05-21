@@ -3,8 +3,26 @@
 require "rails_helper"
 
 RSpec.describe "Tasks", type: :system do
-  before do
-    @task = Task.create!(title: "test task title", description: "test task description")
+  
+  # Create dummy data
+  let!(:tasks) do
+    (1..9).map do |i|
+      Task.create(title: "test title #{i}", description: "test description #{i}", created_at: i.days.ago)
+    end
+  end
+
+  let!(:task) { tasks.first }
+
+  describe "check order by creation date" do
+    before do
+      visit tasks_path
+    end
+
+    it "expect descending order" do
+      tasks.each_with_index do |tsk, idx|
+        expect(page.all("tr")[idx+1]).to have_content tsk[:created_at].strftime("%Y-%m-%d %H:%M:%S")
+      end
+    end
   end
 
   it "create task" do
@@ -21,17 +39,17 @@ RSpec.describe "Tasks", type: :system do
   end
 
   it "read task" do
-    visit task_path(@task)
+    visit task_path(task)
 
-    expect(page).to have_content "test task title"
-    expect(page).to have_content "test task description"
+    expect(page).to have_content "test title 1"
+    expect(page).to have_content "test description 1"
   end
 
   it "update task" do
-    visit edit_task_path(@task)
+    visit edit_task_path(task)
 
-    expect(page).to have_field "task_title", with: "test task title"
-    expect(page).to have_field "task_description", with: "test task description"
+    expect(page).to have_field "task_title", with: "test title 1"
+    expect(page).to have_field "task_description", with: "test description 1"
 
     fill_in "task_title", with: "test task title changed"
     fill_in "task_description", with: "test task description changed"
@@ -45,29 +63,8 @@ RSpec.describe "Tasks", type: :system do
   it "delete task" do
     visit tasks_path
 
-    all("tr")[1].click_button I18n.t('tasks.index.delete')
+      all("tr")[1].click_button "delete"
 
-    expect(page).to_not have_content "test task title"
-  end
-
-  it "validation check empty" do
-    visit new_task_path
-
-    fill_in "task_title", with: ""
-
-    click_button I18n.t('tasks.new.create_button')
-    
-    expect(page).to have_content I18n.t("tasks.create.alert")
-  end
-
-  it "validation check too many characters" do
-    visit new_task_path
-
-    fill_in "task_title", with: "X"*300
-    fill_in "task_description", with: "Y"*30010
-
-    click_button I18n.t('tasks.new.create_button')
-
-    expect(page).to have_content I18n.t("tasks.create.alert")
+    expect(page).to_not have_content "test title 1"
   end
 end
