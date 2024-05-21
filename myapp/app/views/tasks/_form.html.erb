@@ -12,18 +12,24 @@
 <% if flash[:notice] %>
   <p><%= flash[:notice] %></p>
 <% end %>
-<%= form_with(model: task, local: true) do |form| %>
-  <div class="field">
+<%= form_with(model: task, local: true, class: 'form-margin') do |form| %>
+  <div class="form-group">
     <%= form.label :title %>
-    <%= form.text_field :title, id: :task_title, :required => 'required' %>
+    <%= form.text_field :title, id: :task_title, :class => 'form-control', :required => 'required' %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :description %>
-    <%= form.text_area :description, id: :task_description %>
+    <%= form.text_area :description, id: :task_description, :class => 'form-control' %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit class: 'btn btn-primary' %>
   </div>
 <% end %>
+
+<style>
+.form-margin {
+  margin: 20px
+}
+</style>

@@ -1,7 +1,13 @@
-<h1>Task Detail</h1>
-<% if flash[:notice] %>
-  <p><%= flash[:notice] %></p>
-<% end %>
-<h2><%= @task.title %></h2>
-<p><%= @task.description %></p>
-<p><%= link_to 'All tasks', '/tasks' %></p>
+
+<h1 class='text-center'>Task Detail</h1>
+<div class="container mt-5">
+  <div class="card">
+    <div class="card-header">
+      <%= @task.title %>
+    </div>
+    <div class="card-body">
+      <p class="card-text"><%= @task.description %></p>
+    </div>
+  </div>
+  <%= link_to 'Back to List', tasks_path, class: "btn btn-secondary" %>
+</div>

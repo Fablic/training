@@ -1,8 +1,8 @@
-<h1>List of Tasks</h1>
+<h1 class='text-center'>List of Tasks</h1>
 <% if flash[:notice] %>
   <p><%= flash[:notice] %></p>
 <% end %>
-<table>
+<table class='table'>
   <thead>
     <tr>
       <th>Title</th>
@@ -10,19 +10,23 @@
       <th colspan="3"></th>
     </tr>
   </thead>
-
   <tbody>
     <% @tasks.each do |task| %>
       <tr>
         <td><%= task.title %></td>
         <td><%= task.description %></td>
-        <td><%= link_to 'show', task_path(task.id) %></td>
-        <td><%= link_to 'edit', edit_task_path(task) %></td>
-        <td><%= button_to 'delete', task_path(task.id), method: :delete, form: {data: {confirm: 'Are you sure?'}} %></td>
+        <td class='button'><%= link_to 'show', task_path(task.id), class: "btn btn-info" %></td>
+        <td class='button'><%= link_to 'edit', edit_task_path(task), class: "btn btn-light" %></td>
+        <td class='button'><%= button_to 'delete', task_path(task.id), method: :delete, form: {data: {confirm: 'Are you sure?'}}, class: 'btn btn-danger' %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
+<p><%= link_to 'create', 'tasks/new', class: 'btn btn-primary' %></p>
 
-<p><%= link_to 'create', 'tasks/new' %></p>
+<style>
+.button {
+  width: 0;
+}
+</style>
