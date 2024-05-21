@@ -4,7 +4,7 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def index
-    @tasks = Task.all
+    @tasks = Task.all.order(created_at: :desc)
   end
 
   def new
@@ -35,7 +35,7 @@ class TasksController < ApplicationController
   end
 
   def destroy
-    if false
+    if @task.destroy
       redirect_to tasks_path, notice: t("tasks.delete.notice")
     else
       redirect_to tasks_path, alert: t("tasks.delete.alert")
