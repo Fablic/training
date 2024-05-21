@@ -50,7 +50,7 @@ RSpec.describe "Tasks", type: :system do
     expect(page).to_not have_content "test task title"
   end
 
-  it "validation check" do
+  it "validation check empty" do
     visit new_task_path
 
     fill_in "task_title", with: ""
@@ -58,6 +58,10 @@ RSpec.describe "Tasks", type: :system do
     click_button I18n.t('tasks.new.create_button')
     
     expect(page).to have_content I18n.t("tasks.create.alert")
+  end
+
+  it "validation check too many characters" do
+    visit new_task_path
 
     fill_in "task_title", with: "X"*300
     fill_in "task_description", with: "Y"*30010
