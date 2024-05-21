@@ -3,7 +3,6 @@
 require "rails_helper"
 
 RSpec.describe "Tasks", type: :system do
-  
   # Create dummy data
   let!(:tasks) do
     (1..9).map do |i|
@@ -20,7 +19,7 @@ RSpec.describe "Tasks", type: :system do
 
     it "expect descending order" do
       tasks.each_with_index do |tsk, idx|
-        expect(page.all("tr")[idx+1]).to have_content tsk[:created_at].strftime("%Y-%m-%d %H:%M:%S")
+        expect(page.all("tr")[idx + 1]).to have_content tsk[:created_at].strftime("%Y-%m-%d %H:%M:%S")
       end
     end
   end
@@ -35,13 +34,13 @@ RSpec.describe "Tasks", type: :system do
 
     # click_button I18n.t('tasks.new.create_button')
 
-    it 'expect creating a success' do
+    it "expect creating a success" do
       fill_in "task_title", with: "task title"
       fill_in "task_description", with: "task description"
 
-      click_button I18n.t('tasks.new.create_button')
+      click_button I18n.t("tasks.new.create_button")
 
-      expect(page).to have_content I18n.t('tasks.create.notice')
+      expect(page).to have_content I18n.t("tasks.create.notice")
       expect(page).to have_content "task title"
       expect(page).to have_content "task description"
     end
@@ -52,7 +51,7 @@ RSpec.describe "Tasks", type: :system do
       visit task_path(task)
     end
 
-    it 'expect reading the task' do
+    it "expect reading the task" do
       expect(page).to have_content "test title 1"
       expect(page).to have_content "test description 1"
     end
@@ -63,16 +62,16 @@ RSpec.describe "Tasks", type: :system do
       visit edit_task_path(task)
     end
 
-    it 'check the contents before update' do
+    it "check the contents before update" do
       expect(page).to have_field "task_title", with: "test title 1"
       expect(page).to have_field "task_description", with: "test description 1"
     end
 
-    it 'check the contents after update' do
+    it "check the contents after update" do
       fill_in "task_title", with: "test task title changed"
       fill_in "task_description", with: "test task description changed"
 
-      click_button I18n.t('tasks.edit.update_button')
+      click_button I18n.t("tasks.edit.update_button")
 
       expect(page).to have_content "test task title changed"
       expect(page).to have_content "test task description changed"
@@ -84,8 +83,8 @@ RSpec.describe "Tasks", type: :system do
       visit tasks_path
     end
 
-    it 'check if the task is deleted' do
-      all("tr")[1].click_button I18n.t('tasks.index.delete')
+    it "check if the task is deleted" do
+      all("tr")[1].click_button I18n.t("tasks.index.delete")
       expect(page).to_not have_content "test title 1"
     end
   end
@@ -94,12 +93,12 @@ RSpec.describe "Tasks", type: :system do
     before do
       visit new_task_path
     end
-    
-    it 'check the warning' do
+
+    it "check the warning" do
       fill_in "task_title", with: ""
 
-      click_button I18n.t('tasks.new.create_button')
-      expect(page).to have_content 'タイトルを入力してください'
+      click_button I18n.t("tasks.new.create_button")
+      expect(page).to have_content "タイトルを入力してください"
     end
   end
 
@@ -108,14 +107,14 @@ RSpec.describe "Tasks", type: :system do
       visit new_task_path
     end
 
-    it 'check the warnings' do
-      fill_in "task_title", with: "X"*300
-      fill_in "task_description", with: "Y"*30010
+    it "check the warnings" do
+      fill_in "task_title", with: "X" * 300
+      fill_in "task_description", with: "Y" * 30010
 
-      click_button I18n.t('tasks.new.create_button')
+      click_button I18n.t("tasks.new.create_button")
 
-      expect(page).to have_content 'タイトルは255文字以内で入力してください'
-      expect(page).to have_content '説明は30000文字以内で入力してください'
+      expect(page).to have_content "タイトルは255文字以内で入力してください"
+      expect(page).to have_content "説明は30000文字以内で入力してください"
     end
   end
 end
