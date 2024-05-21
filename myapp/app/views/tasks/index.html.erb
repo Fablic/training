@@ -17,7 +17,7 @@
       <tr>
         <td><%= task.title %></td>
         <td><%= task.description %></td>
-        <td><%= task.created_at.strftime("%F %T") %></td>
+        <td><%= task.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
         <td><%= link_to 'show', task_path(task.id) %></td>
         <td><%= link_to 'edit', edit_task_path(task) %></td>
         <td><%= button_to 'delete', task_path(task.id), method: :delete, form: {data: {confirm: 'Are you sure?'}} %></td>

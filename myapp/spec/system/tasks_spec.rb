@@ -6,6 +6,7 @@ RSpec.describe "Tasks", type: :system do
   before do
     # Create dummy data
     @tasks = []
+    # @tasks are sorted by descending order 
     for i in 1..9
       @tasks.append({ title: "test title #{i}",
                      description: "test description #{i}",
@@ -16,11 +17,10 @@ RSpec.describe "Tasks", type: :system do
   end
 
   it "check order by creation date" do
-    @tasks.sort { |a, b| b[:created_at] <=> a[:created_at] }
     visit tasks_path
 
     for i in 1..9
-      expect(page.all("tr")[i]).to have_content @tasks[i - 1][:created_at].strftime("%F")
+      expect(page.all("tr")[i]).to have_content @tasks[i - 1][:created_at].strftime("%Y-%m-%d %H:%M:%S")
     end
   end
 
