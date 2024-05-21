@@ -37,3 +37,11 @@ Processing by Rails::WelcomeController#index as HTML
 Completed 200 OK in 7ms (Views: 6.4ms | ActiveRecord: 0.0ms | Allocations: 330)
 
 
+Started GET "/" for 192.168.65.1 at 2024-05-21 06:04:52 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /usr/local/bundle/gems/railties-6.0.6.1/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /usr/local/bundle/gems/railties-6.0.6.1/lib/rails/templates/rails/welcome/index.html.erb (Duration: 10.7ms | Allocations: 312)
+Completed 200 OK in 25ms (Views: 13.7ms | ActiveRecord: 0.0ms | Allocations: 2690)
+
+
