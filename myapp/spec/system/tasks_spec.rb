@@ -49,4 +49,22 @@ RSpec.describe "Tasks", type: :system do
 
     expect(page).to_not have_content "test task title"
   end
+
+  it "validation check" do
+    visit new_task_path
+
+    fill_in "task_title", with: ""
+
+    click_button "Create Task"
+    
+    # expect(page).to have_content "WARNING MESSAGE"
+
+    fill_in "task_title", with: "X"*300
+    fill_in "task_description", with: "Y"*30010
+
+    click_button "Create Task"
+
+    # expect(page).to have_content "WARNING MESSAGE for title"
+    # expect(page).to have_content "WARNING MESSAGE for description"
+    
 end
