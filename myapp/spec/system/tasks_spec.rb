@@ -63,8 +63,31 @@ RSpec.describe "Tasks", type: :system do
   it "delete task" do
     visit tasks_path
 
-      all("tr")[1].click_button "delete"
+    all("tr")[1].click_button I18n.t('tasks.index.delete')
 
     expect(page).to_not have_content "test title 1"
+  end
+
+  it "validation check empty" do
+    visit new_task_path
+
+    fill_in "task_title", with: ""
+
+    click_button I18n.t('tasks.new.create_button')
+    
+    expect(page).to have_content 'タイトルを入力してください'
+  end
+
+  it "validation check too many characters" do
+    visit new_task_path
+
+    fill_in "task_title", with: "X"*300
+    fill_in "task_description", with: "Y"*30010
+
+    click_button I18n.t('tasks.new.create_button')
+
+    expect(page).to have_content 'タイトルは255文字以内で入力してください'
+    expect(page).to have_content '説明は30000文字以内で入力してください'
+
   end
 end
