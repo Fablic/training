@@ -22,7 +22,8 @@ class TasksController < ApplicationController
     if @task.save
       redirect_to @task, notice: t("tasks.create.notice")
     else
-      redirect_to new_task_path, alert: t("tasks.create.alert")
+      render :new, alert: t("tasks.create.alert")
+      # redirect_to new_task_path, alert: t("tasks.create.alert")
     end
   end
 

@@ -15,3 +15,6 @@ ja:
     new:
       title: '新しいタスクを作成'
       create_button: '作成'
+    form:
+      error:
+        cause: 'エラー原因は以下になります。'
