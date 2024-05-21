@@ -13,7 +13,7 @@ RSpec.describe "Tasks", type: :system do
                      created_at: i.days.ago })
     end
     @taskRecords = Task.create!(@tasks)
-    @task = @taskRecords[0]
+    @task = @taskRecords.first
   end
 
   it "check order by creation date" do
