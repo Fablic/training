@@ -1,7 +1,6 @@
-version: '3'
 services:
   db:
-    image: mysql:5.7
+    image: mysql:8.0.28
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: root
@@ -10,6 +9,7 @@ services:
     volumes:
       - db-data:/var/lib/mysql
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    platform: linux/amd64
 
   api:
     build: .
@@ -36,11 +36,13 @@ services:
       DB_NAME: myapp
       DB_PASSWORD: password
       DB_HOST: db
+    platform: linux/amd64
 
   chrome:
     image: selenium/standalone-chrome:latest
     ports:
       - 4444:4444
+    platform: linux/amd64
 
 volumes:
   db-data:
