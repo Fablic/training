@@ -14,6 +14,9 @@ module Myapp
     config.i18n.default_locale = :ja
 
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
+    
+    #Make Rails to use my own custom error page
+    config.exceptions_app = self.routes
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
