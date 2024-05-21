@@ -18,9 +18,9 @@ RSpec.describe "Tasks", type: :system do
       visit tasks_path
     end
 
-    it "expect return desceding order" do
-      for i in 1..9
-        expect(page.all("tr")[i]).to have_content tasks[i - 1][:created_at].strftime("%Y-%m-%d %H:%M:%S")
+    it "expect descending order" do
+      tasks.each_with_index do |tsk, idx|
+        expect(page.all("tr")[idx+1]).to have_content tsk[:created_at].strftime("%Y-%m-%d %H:%M:%S")
       end
     end
   end
