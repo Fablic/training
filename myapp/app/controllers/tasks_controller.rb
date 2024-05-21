@@ -23,7 +23,6 @@ class TasksController < ApplicationController
       redirect_to @task, notice: t("tasks.create.notice")
     else
       render :new, alert: t("tasks.create.alert")
-      # redirect_to new_task_path, alert: t("tasks.create.alert")
     end
   end
 
@@ -31,7 +30,7 @@ class TasksController < ApplicationController
     if @task.update(task_params)
       redirect_to @task, notice: t("tasks.update.notice")
     else
-      redirect_to edit_task_path,  alert: t("tasks.update.alert")
+      render :edit, alert: t("tasks.update.alert")
     end
   end
 
