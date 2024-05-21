@@ -35,7 +35,7 @@ class TasksController < ApplicationController
   end
 
   def destroy
-    if false
+    if @task.destroy
       redirect_to tasks_path, notice: t("tasks.delete.notice")
     else
       redirect_to tasks_path, alert: t("tasks.delete.alert")

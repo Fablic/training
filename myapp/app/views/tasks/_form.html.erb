@@ -15,7 +15,7 @@
 <%= form_with(model: task, local: true) do |form| %>
   <div class="field">
     <%= form.label :title %>
-    <%= form.text_field :title, id: :task_title, :required => 'required' %>
+    <%= form.text_field :title, id: :task_title %>
   </div>
 
   <div class="field">
@@ -24,6 +24,6 @@
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit submit_button %>
   </div>
 <% end %>
