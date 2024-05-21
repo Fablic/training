@@ -9,4 +9,4 @@ tmp/
 log/
 .byebug_history
 
-../.vscode/
+spec/views/
