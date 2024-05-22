@@ -4,17 +4,23 @@
 <%= flash[:danger] %>
 <%= form_with(model: @task, local: true, data: {turbo: false}) do |form| %>
   <p>
-    <%= form.label :title, required: true %>
+    <%= form.label :title %>
     <br>
     <%= form.text_field :title, required: true %>   
   </p>
 
   <p>
-    <%= form.label :description, required: true %>
+    <%= form.label :description %>
     <br>
     <%= form.text_area :description, required: true %>
   </p>
 
+  <p>
+    <%= form.label :due %>
+    <br>
+    <%= form.datetime_field :due, required: true %>
+  </p>
+  
   <p>
     <%= form.submit %>
   </p>

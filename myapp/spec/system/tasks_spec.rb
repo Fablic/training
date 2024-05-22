@@ -1,13 +1,10 @@
 require 'rails_helper'
 
-RSpec.describe 'Tasks', type: :system do
-  before do
-    @task1 = Task.create!(title: 'Test title 1', description: 'Test Description 1')
-    @task2 = Task.create!(title: 'Test title 2', description: 'Test Description 2')
-  end 
-
+RSpec.describe 'Tasks', type: :system do 
   describe 'index page' do 
     it 'show page title, list and delete buttons' do 
+      Task.create!(title: 'Test title 1', description: 'Test Description 1')
+      Task.create!(title: 'Test title 2', description: 'Test Description 2')
       visit tasks_path
 
       expect(page).to have_content('Task List')
@@ -20,13 +17,25 @@ RSpec.describe 'Tasks', type: :system do
 
     context 'delete a task' do
       it "delete the task with button" do 
+        task = Task.create!(title: 'Test title 1', description: 'Test Description 1')
+
         visit tasks_path
-        click_on @task1.id.to_s
+        click_on task.id.to_s
 
         expect(page).to have_no_content('Task Detail 1')
         expect(Task.all.length).to eq(1)
         expect(page).to have_content('Deleted task successfully!')
       end
+    end
+
+    it 'show tasks in due date order' do 
+      Task.create!(title: 'Test title 1', description: 'Test Description 1', due: '2024-04-01 20:00:00')
+      Task.create!(title: 'Test title 2', description: 'Test Description 2', due: '2024-04-02 20:00:00')
+      Task.create!(title: 'Test title 3', description: 'Test Description 3', due: '2024-04-03 20:00:00')
+      
+      visit tasks_path
+
+      expect(page.text).to match(/Test title 3.*\n.*Test title 2.*\n.*Test title 1/)
     end
   end
 
@@ -63,7 +72,9 @@ RSpec.describe 'Tasks', type: :system do
 
   describe 'detail page' do
     it 'show the detail of the task' do 
-      visit task_path(@task1)
+      task = Task.create!(title: 'Test title 1', description: 'Test Description 1')
+      
+      visit task_path(task)
 
       expect(page).to have_content('Task Detail')
 
@@ -77,7 +88,9 @@ RSpec.describe 'Tasks', type: :system do
 
   describe 'edit task page' do 
     it 'show page title' do 
-      visit edit_task_path(@task1)
+      task = Task.create!(title: 'Test title 1', description: 'Test Description 1')
+      
+      visit edit_task_path(task)
 
       expect(page).to have_content('Edit the task')
 
@@ -88,7 +101,9 @@ RSpec.describe 'Tasks', type: :system do
     end
 
     it 'redirect to index page after submit' do 
-      visit edit_task_path(@task1)
+      task = Task.create!(title: 'Test title 1', description: 'Test Description 1')
+
+      visit edit_task_path(task)
 
       fill_in 'Title', with: 'Edit Task Title'
       fill_in 'Description', with: 'Edit Task Description'
@@ -98,12 +113,10 @@ RSpec.describe 'Tasks', type: :system do
       expect(current_path).to eq(tasks_path)
       expect(page).to have_content('Edit task successfully!')
 
-      visit task_path(@task1)
+      visit task_path(task)
 
       expect(page).to have_content('Edit Task Title')
       expect(page).to have_content('Edit Task Description')
     end
   end
-
-  
 end
