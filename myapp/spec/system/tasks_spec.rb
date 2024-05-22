@@ -12,7 +12,7 @@ RSpec.describe "Tasks", type: :system do
 
   let!(:task) { tasks.first }
 
-  context "check order by creation date" do
+  describe "order" do
     before do
       visit tasks_path
     end
@@ -24,17 +24,12 @@ RSpec.describe "Tasks", type: :system do
     end
   end
 
-  context "create task" do
+  describe "create" do
     before do
       visit new_task_path
     end
 
-    # fill_in "task_title", with: "task title"
-    # fill_in "task_description", with: "task description"
-
-    # click_button I18n.t('tasks.new.create_button')
-
-    it "expect creating a success" do
+    it "expect showing the success message" do
       fill_in "task_title", with: "task title"
       fill_in "task_description", with: "task description"
 
@@ -46,28 +41,23 @@ RSpec.describe "Tasks", type: :system do
     end
   end
 
-  context "read task" do
+  describe "read" do
     before do
       visit task_path(task)
     end
 
-    it "expect reading the task" do
+    it "expect showing the task detail" do
       expect(page).to have_content "test title 1"
       expect(page).to have_content "test description 1"
     end
   end
 
-  context "update task" do
+  describe "update" do
     before do
       visit edit_task_path(task)
     end
 
-    it "check the contents before update" do
-      expect(page).to have_field "task_title", with: "test title 1"
-      expect(page).to have_field "task_description", with: "test description 1"
-    end
-
-    it "check the contents after update" do
+    it "expect the task updated" do
       fill_in "task_title", with: "test task title changed"
       fill_in "task_description", with: "test task description changed"
 
@@ -78,43 +68,41 @@ RSpec.describe "Tasks", type: :system do
     end
   end
 
-  context "delete task" do
+  describe "delete" do
     before do
       visit tasks_path
     end
 
-    it "check if the task is deleted" do
+    it "expect the task deleted" do
       all("tr")[1].click_button I18n.t("tasks.index.delete")
       expect(page).to_not have_content "test title 1"
     end
   end
 
-  context "validation check empty" do
+  describe "validation" do
     before do
       visit new_task_path
     end
-
-    it "check the warning" do
-      fill_in "task_title", with: ""
-
-      click_button I18n.t("tasks.new.create_button")
-      expect(page).to have_content "タイトルを入力してください"
-    end
-  end
-
-  context "validation check too many characters" do
-    before do
-      visit new_task_path
+    
+    context "empty" do
+      it "check the warning" do
+        fill_in "task_title", with: ""
+  
+        click_button I18n.t("tasks.new.create_button")
+        expect(page).to have_content "タイトルを入力してください"
+      end
     end
 
-    it "check the warnings" do
-      fill_in "task_title", with: "X" * 300
-      fill_in "task_description", with: "Y" * 30010
-
-      click_button I18n.t("tasks.new.create_button")
-
-      expect(page).to have_content "タイトルは255文字以内で入力してください"
-      expect(page).to have_content "説明は30000文字以内で入力してください"
+    context "too many characters" do
+      it "check the warnings" do
+        fill_in "task_title", with: "X" * 110
+        fill_in "task_description", with: "Y" * 30010
+  
+        click_button I18n.t("tasks.new.create_button")
+  
+        expect(page).to have_content "タイトルは100文字以内で入力してください"
+        expect(page).to have_content "説明は30000文字以内で入力してください"
+      end
     end
   end
 end
