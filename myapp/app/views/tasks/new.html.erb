@@ -1,17 +1,32 @@
 <h1>Create a new task</h1>
 <%= form_with scope: :task, url: tasks_path, local: true, data: {turbo: false} do |form| %>
+  <% if @new_task.errors.any? %>
+    <div>
+      <p>You have some invalid inputs!</p>
+      <ul>
+        <% @new_task.errors.full_messages.each do |error| %>
+        <li><%= error %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
   <p>
     <%= form.label :title %>
     <br>
-    <%# <%= form.text_field :title, required: true %>
     <%= form.text_field :title %>   
   </p>
 
   <p>
     <%= form.label :description %>
     <br>
-    <%# <%= form.text_area :description, required: true %>
     <%= form.text_area :description %>
+  </p>
+
+  <p>
+    <%= form.label :due %>
+    <br>
+    <%= form.datetime_local_field :due %>
   </p>
 
   <p>
