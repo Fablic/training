@@ -1,4 +1,4 @@
-<h1><%= t '.title' %></h1>
+<h1><%= t('.title') %></h1>
 <%= render 'flash' %>
 
 <table>
@@ -24,6 +24,5 @@
     <% end %>
   </tbody>
 </table>
-
 
 <p><%= link_to t('tasks.index.create'), new_task_path %></p>

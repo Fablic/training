@@ -11,5 +11,10 @@ ja:
       title: '%{task_title}の情報'
     edit:
       title: '%{task_title}の情報を編集'
+      update_button: '更新'
     new:
       title: '新しいタスクを作成'
+      create_button: '作成'
+    form:
+      error:
+        cause: 'エラー原因は以下になります。'
