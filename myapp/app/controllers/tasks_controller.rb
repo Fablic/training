@@ -13,6 +13,7 @@ class TasksController < ApplicationController
 
   def new
     @task = Task.new
+    # @statuses = Task.statuses.keys.map { |status| Task.human_attribute_name(status) }
   end
 
   def show
@@ -52,6 +53,6 @@ class TasksController < ApplicationController
     end
 
     def task_params
-      params.require(:task).permit(:title, :description)
+      params.require(:task).permit(:title, :description, :status)
     end
 end

@@ -12,6 +12,7 @@
       <th><%= Task.human_attribute_name :title %></th>
       <th><%= Task.human_attribute_name :description %></th>
       <th><%= Task.human_attribute_name :created_at %></th>
+      <th><%= Task.human_attribute_name :status %></th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -22,6 +23,7 @@
         <td><%= task.title %></td>
         <td><%= task.description %></td>
         <td><%= task.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
+        <td><%= task.status ? Task.human_attribute_name(task.status) : '' %></td>
         <td><%= link_to t('tasks.index.show'), task_path(task.id) %></td>
         <td><%= link_to t('tasks.index.edit'), edit_task_path(task) %></td>
         <td><%= button_to t('tasks.index.delete'), task_path(task.id), method: :delete, form: {data: {confirm: t('tasks.index.delete_confirmation')}} %></td>

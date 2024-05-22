@@ -23,6 +23,10 @@
     <%= form.text_area :description, id: :task_description %>
   </div>
 
+  <div class="field">
+    <%= form.select :status, Task.enum_options_for_select(:status), { include_blank: "#{Task.human_attribute_name :status}" } %>
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>

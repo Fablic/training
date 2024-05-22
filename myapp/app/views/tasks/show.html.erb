@@ -3,5 +3,6 @@
 
 <h2><%= @task.title %></h2>
 <p><%= @task.description %></p>
+<p><%= Task.human_attribute_name(@task.status) %></p>
 
 <p><%= link_to t('tasks.index.title'), tasks_path %></p>
