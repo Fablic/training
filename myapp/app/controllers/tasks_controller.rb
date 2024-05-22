@@ -38,8 +38,7 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
     @task.destroy
 
-    flash[:alert] = 'Deleted task successfully!'
-    redirect_to tasks_path
+    redirect_to tasks_path, alert: 'Deleted task successfully!'
   end
 
   private 

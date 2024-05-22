@@ -1,24 +1,33 @@
 <h1>Edit the task</h1>
-<%= flash[:notice] %>
-<%= flash[:success] %>
-<%= flash[:danger] %>
 <%= form_with(model: @task, local: true, data: {turbo: false}) do |form| %>
+
+  <% if @task.errors.any? %>
+    <div>
+      <p>You have some invalid inputs!</p>
+      <ul>
+        <% @task.errors.full_messages.each do |error| %>
+        <li><%= error %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
   <p>
     <%= form.label :title %>
     <br>
-    <%= form.text_field :title, required: true %>   
+    <%= form.text_field :title %>   
   </p>
 
   <p>
     <%= form.label :description %>
     <br>
-    <%= form.text_area :description, required: true %>
+    <%= form.text_area :description %>
   </p>
 
   <p>
     <%= form.label :due %>
     <br>
-    <%= form.datetime_field :due, required: true %>
+    <%= form.datetime_local_field :due %>
   </p>
   
   <p>
