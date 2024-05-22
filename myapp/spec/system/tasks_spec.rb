@@ -72,7 +72,9 @@ RSpec.describe 'Tasks', type: :system do
 
   describe 'detail page' do
     it 'show the detail of the task' do 
-      visit task_path(@task1)
+      task = Task.create!(title: 'Test title 1', description: 'Test Description 1')
+      
+      visit task_path(task)
 
       expect(page).to have_content('Task Detail')
 
@@ -86,7 +88,9 @@ RSpec.describe 'Tasks', type: :system do
 
   describe 'edit task page' do 
     it 'show page title' do 
-      visit edit_task_path(@task1)
+      task = Task.create!(title: 'Test title 1', description: 'Test Description 1')
+      
+      visit edit_task_path(task)
 
       expect(page).to have_content('Edit the task')
 
@@ -97,7 +101,9 @@ RSpec.describe 'Tasks', type: :system do
     end
 
     it 'redirect to index page after submit' do 
-      visit edit_task_path(@task1)
+      task = Task.create!(title: 'Test title 1', description: 'Test Description 1')
+
+      visit edit_task_path(task)
 
       fill_in 'Title', with: 'Edit Task Title'
       fill_in 'Description', with: 'Edit Task Description'
@@ -107,14 +113,10 @@ RSpec.describe 'Tasks', type: :system do
       expect(current_path).to eq(tasks_path)
       expect(page).to have_content('Edit task successfully!')
 
-      visit task_path(@task1)
+      visit task_path(task)
 
       expect(page).to have_content('Edit Task Title')
       expect(page).to have_content('Edit Task Description')
     end
   end
-
-
-
-  
 end
