@@ -10,7 +10,7 @@ class TasksController < ApplicationController
   def create
     @new_task = Task.new(params.require(:task).permit(:title, :description, :due))
     if @new_task.save
-      redirect_to tasks_path, success: 'New task was created successfully!'
+      redirect_to tasks_path, notice: 'New task was created successfully!'
     else
       render :new
     end
@@ -38,7 +38,7 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
     @task.destroy
 
-    redirect_to tasks_path, alert: 'Deleted task successfully!'
+    redirect_to tasks_path, notice: 'Deleted task successfully!'
   end
 
   private 

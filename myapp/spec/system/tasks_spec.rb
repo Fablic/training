@@ -3,8 +3,9 @@ require 'rails_helper'
 RSpec.describe 'Tasks', type: :system do 
   describe 'index page' do 
     it 'show page title, list and delete buttons' do 
-      Task.create!(title: 'Test title 1', description: 'Test Description 1')
-      Task.create!(title: 'Test title 2', description: 'Test Description 2')
+      Task.create!(title: 'Test title 1', description: 'Test Description 1', due: Time.now + 5)
+      Task.create!(title: 'Test title 2', description: 'Test Description 2', due: Time.now + 5)
+
       visit tasks_path
 
       expect(page).to have_content('Task List')
@@ -17,13 +18,13 @@ RSpec.describe 'Tasks', type: :system do
 
     context 'delete a task' do
       it "delete the task with button" do 
-        task = Task.create!(title: 'Test title 1', description: 'Test Description 1')
+        task = Task.create!(title: 'Test title 1', description: 'Test Description 1', due: Time.now + 5)
 
         visit tasks_path
         click_on task.id.to_s
 
         expect(page).to have_no_content('Task Detail 1')
-        expect(Task.all.length).to eq(1)
+        expect(Task.all.length).to eq(0)
         expect(page).to have_content('Deleted task successfully!')
       end
     end
@@ -47,8 +48,9 @@ RSpec.describe 'Tasks', type: :system do
 
       expect(page).to have_field('Title')
       expect(page).to have_field('Description')
+      expect(page).to have_field('Due')
 
-      expect(page).to have_selector("input[type='submit'][value='Save Task']")
+      expect(page).to have_selector("input[type='submit'][value='Submit Task']")
     end
 
     it 'create new task and show flash message' do 
@@ -56,17 +58,69 @@ RSpec.describe 'Tasks', type: :system do
 
       fill_in 'Title', with: 'New Task Title'
       fill_in 'Description', with: 'New Task Description'
+      fill_in 'Due', with: Time.now + 5
 
-      click_on 'Save Task'
+      click_on 'Submit Task'
 
       expect(current_path).to eq(tasks_path)
       expect(page).to have_content('New task was created successfully!')
-      expect(Task.all.length).to eq(3)
+      expect(Task.all.length).to eq(1)
 
       visit task_path(Task.last)
 
       expect(page).to have_content('New Task Title')
       expect(page).to have_content('New Task Description')
+    end
+
+    context 'input invalid value' do 
+      it 'should show error message for empty title' do 
+        visit new_task_path 
+
+        fill_in 'Description', with: 'New Task Description'
+        fill_in 'Due', with: Time.now + 5
+
+        click_on 'Submit Task'
+
+        expect(page).to have_content('You have some invalid inputs!')
+        expect(page).to have_content('Title must not be blank!')
+      end
+
+      it 'should show error message for empty description' do 
+        visit new_task_path 
+
+        fill_in 'Title', with: 'New Task Title'
+        fill_in 'Due', with: Time.now + 5
+
+        click_on 'Submit Task'
+
+        expect(page).to have_content('You have some invalid inputs!')
+        expect(page).to have_content('Description must not be blank!')
+      end
+
+      it 'should show error message for empty due date' do 
+        visit new_task_path 
+
+        fill_in 'Title', with: 'New Task Title'
+        fill_in 'Description', with: 'New Task Description'
+
+        click_on 'Submit Task'
+
+        expect(page).to have_content('You have some invalid inputs!')
+        expect(page).to have_content('Due must be specified!')
+      end
+
+      it 'should show error message for past due date' do 
+        visit new_task_path 
+
+        fill_in 'Title', with: 'New Task Title'
+        fill_in 'Description', with: 'New Task Description'
+        fill_in 'Due', with: Time.now - 5
+
+        click_on 'Submit Task'
+
+        expect(page).to have_content('You have some invalid inputs!')
+        expect(page).to have_content("Due can't be in the past")
+      end
     end
   end
 
