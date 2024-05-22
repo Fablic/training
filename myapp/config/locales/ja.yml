@@ -1,0 +1,6 @@
+ja:
+  hello: "こんにちは"
+  errors:
+    messages:
+      blank: "を入力してください"
+      invalid: "は無効です"

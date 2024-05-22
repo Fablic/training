@@ -8,3 +8,5 @@ yarn-debug.log*
 tmp/
 log/
 .byebug_history
+
+spec/views/
