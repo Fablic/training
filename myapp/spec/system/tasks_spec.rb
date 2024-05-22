@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe "Tasks", type: :system do
   describe "test with dummy data" do
     # Create dummy data
-    let(:tasks) do
+    let!(:tasks) do
       (1..9).map do |i|
         Task.create(title: "test title #{i}", description: "test description #{i}", created_at: i.days.ago)
       end
@@ -14,13 +14,6 @@ RSpec.describe "Tasks", type: :system do
     let!(:task) { tasks.first }
 
     describe "order" do
-      # Create dummy data
-      let!(:tasks) do
-        (1..9).map do |i|
-          Task.create(title: "test title #{i}", description: "test description #{i}", created_at: i.days.ago)
-        end
-      end
-  
       before do
         visit tasks_path
       end
