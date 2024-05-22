@@ -23,7 +23,7 @@
         <td><%= task.title %></td>
         <td><%= task.description %></td>
         <td><%= task.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
-        <td><%= task.status ? Task.human_attribute_name(task.status) : '' %></td>
+        <td><%= Task.human_enum_name('status', task.status) %></td>
         <td><%= link_to t('tasks.index.show'), task_path(task.id) %></td>
         <td><%= link_to t('tasks.index.edit'), edit_task_path(task) %></td>
         <td><%= button_to t('tasks.index.delete'), task_path(task.id), method: :delete, form: {data: {confirm: t('tasks.index.delete_confirmation')}} %></td>
