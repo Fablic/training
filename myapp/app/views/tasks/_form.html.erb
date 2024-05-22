@@ -24,7 +24,7 @@
   </div>
 
   <div class="field">
-    <%= form.select :status, Task.enum_options_for_select(:status), { include_blank: "#{Task.human_attribute_name :status}" } %>
+    <%= form.select :status, Task.enum_options_for_select, { include_blank: "#{Task.human_attribute_name :status}" } %>
   </div>
 
   <div class="actions">

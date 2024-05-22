@@ -5,6 +5,7 @@ class Task < ApplicationRecord
   validates :title, presence: true, length: { maximum: 255 }
   validates :description, length: { maximum: 30000 }
 
-  def enum_options_for_select(enum_name)
+  def self.enum_options_for_select
+    return self.statuses.map{ |status, i| self.human_attribute_name(status) }
   end
 end
