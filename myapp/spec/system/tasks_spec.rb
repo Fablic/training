@@ -29,9 +29,9 @@ RSpec.describe 'Tasks', type: :system do
     end
 
     it 'show tasks in due date order' do 
-      task1 = Task.create!(title: 'Test title 1', description: 'Test Description 1', due: '2024-04-01 20:00:00')
-      task2 = Task.create!(title: 'Test title 2', description: 'Test Description 2', due: '2024-04-02 20:00:00')
-      task3 = Task.create!(title: 'Test title 3', description: 'Test Description 3', due: '2024-04-03 20:00:00')
+      Task.create!(title: 'Test title 1', description: 'Test Description 1', due: '2024-04-01 20:00:00')
+      Task.create!(title: 'Test title 2', description: 'Test Description 2', due: '2024-04-02 20:00:00')
+      Task.create!(title: 'Test title 3', description: 'Test Description 3', due: '2024-04-03 20:00:00')
       
       visit tasks_path
 
