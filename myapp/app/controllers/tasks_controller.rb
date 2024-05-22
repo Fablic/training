@@ -5,7 +5,7 @@ class TasksController < ApplicationController
 
   def index
     session[:is_order_desc] = session[:is_order_desc].nil? ? true : !session[:is_order_desc]
-    sort_column = params[:sort].presence_in(Task.column_names) ? params[:sort] : 'created_at'
+    sort_column = params[:sort].presence_in(Task.column_names) ? params[:sort] : 'expiration_date'
     sort_direction = session[:is_order_desc] ? 'DESC' : 'ASC'
     @tasks = Task.order("#{sort_column} #{sort_direction}")
     @tasks
