@@ -5,7 +5,9 @@ class TasksController < ApplicationController
 
   def index
     if params[:search]
-      @tasks = Task.where("title LIKE ? OR description LIKE ?", "%#{params[:search]}%", "%#{params[:search]}%")
+      @tasks = Task.search_title(params[:search])
+    elsif params[:status] && Task.statuses.include?(params[:status])
+      @tasks = Task.filter_status(params[:status])
     else
       @tasks = Task.all
     end
@@ -13,7 +15,6 @@ class TasksController < ApplicationController
 
   def new
     @task = Task.new
-    # @statuses = Task.statuses.keys.map { |status| Task.human_attribute_name(status) }
   end
 
   def show
@@ -27,7 +28,7 @@ class TasksController < ApplicationController
     if @task.save
       redirect_to @task, notice: t("tasks.create.notice")
     else
-      redirect_to new_task_path, alert: t("tasks.create.alert")
+      render :new, alert: t("tasks.create.alert")
     end
   end
 
@@ -35,7 +36,7 @@ class TasksController < ApplicationController
     if @task.update(task_params)
       redirect_to @task, notice: t("tasks.update.notice")
     else
-      redirect_to edit_task_path,  alert: t("tasks.update.alert")
+      render :edit, alert: t("tasks.update.alert")
     end
   end
 

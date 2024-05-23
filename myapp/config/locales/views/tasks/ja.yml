@@ -6,10 +6,17 @@ ja:
       show: '詳細'
       edit: '編集'
       delete: '削除'
+      search: '検索'
+      filter: '絞り込み'
       delete_confirmation: '本当に削除しますか？'
     show:
-      title: '%{task_title}の情報'
+      title: '詳細'
     edit:
-      title: '%{task_title}の情報を編集'
+      title: '編集'
+      update_button: '更新'
     new:
       title: '新しいタスクを作成'
+      create_button: '作成'
+    form:
+      error:
+        cause: 'エラー原因は以下になります。'
