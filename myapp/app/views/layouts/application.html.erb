@@ -10,6 +10,23 @@
   </head>
 
   <body>
+    <% if flash[:notice] %>
+      <p><%= flash[:notice] %></p>
+    <% end %>
+    <% if flash[:alert] %>
+      <p><%= flash[:alert] %></p>
+    <% end %>
+    <% if current_user %>
+      <ul>
+        <li><%= current_user.name %></li>
+        <li><%= link_to "Log out", logout_path, method: "delete" %></li>
+      </ul>
+    <% else %>
+      <ul>
+        <li><%= link_to "Login", login_path %></a></li>
+        <li><%= link_to "Sign Up", signup_path %></a></li>
+      </ul>
+    <% end %>
     <%= yield %>
   </body>
 </html>

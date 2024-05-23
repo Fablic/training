@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
 class TasksController < ApplicationController
+  before_action :require_user
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def index
-    @tasks = Task.all.order(created_at: :desc)
+    @tasks = Task.where(user_id: session[:user_id]).order(created_at: :desc)
   end
 
   def new
