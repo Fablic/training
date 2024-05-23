@@ -4,10 +4,10 @@
 <table>
   <thead>
     <tr>
-      <th><%= Task.human_attribute_name :title %></th>
-      <th><%= Task.human_attribute_name :description %></th>
-      <th><%= Task.human_attribute_name :created_at %></th>
-      <th><%= link_to Task.human_attribute_name :expiration_date, :sort => "expiration_date" %></th>
+      <th><%= Task.human_attribute_name(:title) %></th>
+      <th><%= Task.human_attribute_name(:description) %></th>
+      <th><%= Task.human_attribute_name(:created_at) %></th>
+      <th><%= link_to Task.human_attribute_name(:expiration_date), tasks_path(sort: "expiration_date") %></th>
       <th colspan="3"></th>
     </tr>
   </thead>
