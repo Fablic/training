@@ -11,13 +11,13 @@ class Task < ApplicationRecord
 
   def due_cannot_be_in_the_past_on_create
     if due.present? && due < Time.zone.now.beginning_of_minute
-      errors.add(:due, "can't be in the past")
+      errors.add(:due, "can't be earlier than now!")
     end
   end
 
   def due_cannot_be_changed_to_past_on_update
     if due.present? && due_changed? && due < Time.zone.now.beginning_of_minute
-      errors.add(:due, "can't be in the past")
+      errors.add(:due, "can't be earlier than now!")
     end
   end
 end
