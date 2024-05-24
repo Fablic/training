@@ -6,9 +6,10 @@ ja:
     # model毎に定義したいattributesを記述
     attributes:
       task:
-        # view側： Task.human_attribute_name :title /　t("activerecord.attributes.user.name")と同じ
+        # view側： Task.human_attribute_name :title /　t("activerecord.attributes.task.title")と同じ
         title: 'タイトル'
         description: '説明'
+        expiration_date: '終了期限'
   # 全てのmodelで共通して使用するattributesを定義
   attributes:
     created_at: '作成日'

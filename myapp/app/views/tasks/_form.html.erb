@@ -23,6 +23,11 @@
     <%= form.text_area :description, id: :task_description %>
   </div>
 
+  <div class="field">
+    <%= form.label :expiration_date %>
+    <%= form.datetime_local_field :expiration_date, id: :task_expiration_date %>
+  </div>
+
   <div class="actions">
     <%= form.submit submit_button %>
   </div>
