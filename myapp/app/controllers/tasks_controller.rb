@@ -1,6 +1,8 @@
 class TasksController < ApplicationController
   def index
-    @tasks = Task.order(created_at: :desc)
+    sort_by = params[:sort_by] || 'created_at'
+    order = params[:order] || 'desc'
+    @tasks = Task.order("#{sort_by} #{order}")
   end
 
   def new; end
