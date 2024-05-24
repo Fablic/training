@@ -9,7 +9,7 @@ class UsersController < ApplicationController
       session[:user_id] = @user.id
       redirect_to tasks_path, notice: t("users.create.notice") # TODO: ユーザが作成されました
     else
-      render :new, alert: t("users.create.alert")　# TODO: ユーザが作成されませんでした。
+      render :new, alert: t("users.create.alert") # TODO: ユーザが作成されませんでした。
     end
   end
 
