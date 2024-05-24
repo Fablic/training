@@ -4,10 +4,17 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def index
+    if params[:search]
+      @tasks = Task.search_title(params[:search])
+    elsif params[:status] && Task.statuses.include?(params[:status])
+      @tasks = Task.filter_status(params[:status])
+    else
+      @tasks = Task.all
+    end
     session[:is_order_desc] = !session.fetch(:is_order_desc, false)
-    sort_column = params[:sort].presence_in(Task.column_names) ? params[:sort] : 'created_at'
-    sort_direction = session[:is_order_desc] ? 'DESC' : 'ASC'
-    @tasks = Task.order("#{sort_column} #{sort_direction}")
+    sort_column = params[:sort].presence_in(Task.column_names) ? params[:sort] : "created_at"
+    sort_direction = session[:is_order_desc] ? "DESC" : "ASC"
+    @tasks = @tasks.order("#{sort_column} #{sort_direction}")
     @tasks
   end
 
@@ -52,6 +59,6 @@ class TasksController < ApplicationController
     end
 
     def task_params
-      params.require(:task).permit(:title, :description, :expiration_date)
+      params.require(:task).permit(:title, :description, :expiration_date, :status)
     end
 end
