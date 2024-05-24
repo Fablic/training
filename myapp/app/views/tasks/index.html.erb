@@ -2,6 +2,22 @@
 <%= flash[:notice] %>
 <%= flash[:success] %>
 <%= flash[:alert] %>
+
+<%= form_with url: '#', method: :get, local: true do |form| %>
+  <%= form.label :sort_by %>
+  <%= form.select :sort_by, [['id', 'ID'], ['Create Date', 'CD'], ['Due Date', 'DD']], id: 'selected_sort_by' %>
+
+  <%= form.label :order %>
+  <%= form.select :order, ['asc', 'desc'], id: 'selected_order' %>
+
+  <%= form.submit 'Sort' %>
+
+<% end %>
+
+<script>
+
+</script>
+
 <table>
   <tbody>
     <% @tasks.each do |task| %>
