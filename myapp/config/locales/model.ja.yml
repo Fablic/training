@@ -14,6 +14,7 @@ ja:
           not_started: '未着手'
           in_progress: '着手中'
           completed: '完了'
+        expiration_date: '終了期限'
   # 全てのmodelで共通して使用するattributesを定義
   attributes:
     created_at: '作成日'

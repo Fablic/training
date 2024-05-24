@@ -3,6 +3,7 @@
 
 <h3><%= @task.title %></h3>
 <p><%= @task.description %></p>
+<p><%= @task.expiration_date.nil? ? '' : @task.expiration_date.strftime("%Y-%m-%d %H:%M:%S") %></p>
 <p><%= t("activerecord.attributes.task.statuses.#{@task.status}") %></p>
 
 <p><%= link_to t('tasks.index.title'), tasks_path %></p>

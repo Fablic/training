@@ -7,7 +7,11 @@ RSpec.describe "Tasks", type: :system do
     # Create dummy data
     let!(:tasks) do
       (1..9).map do |i|
-        Task.create(title: "test title #{i}", description: "test description #{i}", created_at: i.days.ago)
+        Task.create(title: "test title #{i}",
+                    description: "test description #{i}", 
+                    created_at: i.days.ago,
+                    expiration_date: Time.now.since(i.days)
+                    )
       end
     end
 
@@ -17,10 +21,17 @@ RSpec.describe "Tasks", type: :system do
       before do
         visit tasks_path
       end
-
-      it "expect descending order" do
+  
+      it "expect created_at descending order" do
         tasks.each_with_index do |tsk, idx|
           expect(page.all("tr")[idx + 1]).to have_content tsk[:created_at].strftime("%Y-%m-%d %H:%M:%S")
+        end
+      end
+
+      it "expect expiration_date descending order" do
+        click_link I18n.t("activerecord.attributes.task.expiration_date")
+        tasks.each_with_index do |tsk, idx|
+          expect(page.all("tr")[idx + 1]).to have_content tsk[:expiration_date].strftime("%Y-%m-%d %H:%M:%S")
         end
       end
     end
