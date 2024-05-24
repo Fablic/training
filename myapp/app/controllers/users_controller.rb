@@ -1,8 +1,20 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
+  before_action :set_task, only: [:show, :edit, :update, :destroy]
+  def index
+    @users = User.all
+  end
+
   def new
     @user = User.new
+  end
+  
+  # Show the list of tasks
+  def show
+  end
+
+  def edit
   end
 
   def create
@@ -12,6 +24,22 @@ class UsersController < ApplicationController
       redirect_to tasks_path, notice: t("users.create.notice") # TODO: ユーザが作成されました
     else
       render :new, alert: t("users.create.alert") # TODO: ユーザが作成されませんでした。
+    end
+  end
+
+  def update
+    if @user.update(task_params)
+      redirect_to @user, notice: t("users.update.notice")
+    else
+      render :edit, alert: t("users.update.alert")
+    end
+  end
+
+  def destroy
+    if @user.destroy
+      redirect_to users_path, notice: t("users.delete.notice")
+    else
+      redirect_to users_path, alert: t("users.delete.alert")
     end
   end
 

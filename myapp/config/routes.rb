@@ -2,8 +2,9 @@
 
 Rails.application.routes.draw do
   resources :tasks
-  # resources :users
-  get "/", to: "tasks#index"
+  resources :users
+  get "admin" => "users#index"
+  get "/" => "tasks#index"
   get "signup" => "users#new"
   post "signup" => "users#create"
   get "login" => "sessions#new"
