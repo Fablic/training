@@ -19,4 +19,4 @@ ja:
       create_button: '作成'
     form:
       error:
-        cause: 'エラー原因は以下になります。'
+        cause: '以下のエラーによりタスクが保存されませんでした'
