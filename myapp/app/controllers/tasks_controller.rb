@@ -4,7 +4,11 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   def index
-    @tasks = Task.page(params[:page]).per(5)
+    session[:is_order_desc] = !session.fetch(:is_order_desc, false)
+    sort_column = params[:sort].presence_in(Task.column_names) ? params[:sort] : 'created_at'
+    sort_direction = session[:is_order_desc] ? 'DESC' : 'ASC'
+    @tasks = Task.order("#{sort_column} #{sort_direction}")
+    @tasks
   end
 
   def new
@@ -20,25 +24,25 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(task_params)
     if @task.save
-      redirect_to @task, notice: "Task created."
+      redirect_to @task, notice: t("tasks.create.notice")
     else
-      render :new
+      render :new, alert: t("tasks.create.alert")
     end
   end
 
   def update
     if @task.update(task_params)
-      redirect_to @task, notice: "Task updated."
+      redirect_to @task, notice: t("tasks.update.notice")
     else
-      render :edit
+      render :edit, alert: t("tasks.update.alert")
     end
   end
 
   def destroy
     if @task.destroy
-      redirect_to tasks_path, notice: "Task deleted."
+      redirect_to tasks_path, notice: t("tasks.delete.notice")
     else
-      redirect_to tasks_path, notice: "Task cannot be deleted."
+      redirect_to tasks_path, alert: t("tasks.delete.alert")
     end
   end
 
@@ -48,6 +52,6 @@ class TasksController < ApplicationController
     end
 
     def task_params
-      params.require(:task).permit(:title, :description)
+      params.require(:task).permit(:title, :description, :expiration_date)
     end
 end

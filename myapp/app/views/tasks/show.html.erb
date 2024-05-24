@@ -1,7 +1,8 @@
-<h1>Task Detail</h1>
-<% if flash[:notice] %>
-  <p><%= flash[:notice] %></p>
-<% end %>
+<h1><%= t '.title', task_title: @task.title %></h1>
+<%= render 'flash' %>
+
 <h2><%= @task.title %></h2>
 <p><%= @task.description %></p>
-<p><%= link_to 'All tasks', '/tasks' %></p>
+<p><%= @task.expiration_date.nil? ? '' : @task.expiration_date.strftime("%Y-%m-%d %H:%M:%S") %></p>
+
+<p><%= link_to t('tasks.index.title'), tasks_path %></p>

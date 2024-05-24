@@ -1,6 +1,6 @@
 <% if @task.errors.any? %>
   <div id="error_explanation">
-    <h2><%= pluralize(@task.errors.count, "error") %> prohibited this task from being saved:</h2>
+    <h2><%= t('.error.cause') %></h2>
     <ul>
     <% @task.errors.full_messages.each do |message| %>
       <li><%= message %></li>
@@ -15,7 +15,7 @@
 <%= form_with(model: task, local: true) do |form| %>
   <div class="field">
     <%= form.label :title %>
-    <%= form.text_field :title, id: :task_title, :required => 'required' %>
+    <%= form.text_field :title, id: :task_title %>
   </div>
 
   <div class="field">
@@ -23,7 +23,12 @@
     <%= form.text_area :description, id: :task_description %>
   </div>
 
+  <div class="field">
+    <%= form.label :expiration_date %>
+    <%= form.datetime_local_field :expiration_date, id: :task_expiration_date %>
+  </div>
+
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit submit_button %>
   </div>
 <% end %>
