@@ -11,6 +11,10 @@ class ApplicationController < ActionController::Base
     redirect_to "/login" unless current_user
   end
 
+  def require_admin_user
+    redirect_to "/login" unless current_user[:role] == 0
+  end
+
   # 例外処理
   # rescue_from ActiveRecord::RecordNotFound, with: :render_404
   # rescue_from ActionController::RoutingError, with: :render_404

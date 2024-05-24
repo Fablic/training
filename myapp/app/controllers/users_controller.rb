@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
+  before_action :require_admin_user, only: [:index, :new, :show, :edit, :admin_create, :admin_update, :destroy]
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  
   def index
     @users = User.all
   end
@@ -20,18 +22,18 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       session[:user_id] = @user.id
-      redirect_to tasks_path, notice: t("users.create.notice") # TODO: ユーザが作成されました
+      redirect_to tasks_path, notice: t("users.create.notice")
     else
-      render :new, alert: t("users.create.alert") # TODO: ユーザが作成されませんでした。
+      render :new, alert: t("users.create.alert")
     end
   end
 
   def admin_create
     @user = User.new(user_params)
     if @user.save
-      redirect_to users_path, notice: t("users.create.notice") # TODO: ユーザが作成されました
+      redirect_to users_path, notice: t("users.create.notice")
     else
-      render :new, alert: t("users.create.alert") # TODO: ユーザが作成されませんでした。
+      render :new, alert: t("users.create.alert")
     end
   end
 

@@ -5,6 +5,7 @@ class User < ApplicationRecord
     self.password = EncryptionService.encrypt(self.password)
   end
 
+  enum role: [:admin, :normal]
   has_many :tasks, dependent: :destroy
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true
