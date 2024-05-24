@@ -1,10 +1,10 @@
+# frozen_string_literal: true
+
 class EncryptionService
   KEY = ActiveSupport::KeyGenerator.new(
     ENV.fetch("SECRET_KEY_BASE")
-    # "SECRET_KEY_BASE"
   ).generate_key(
     ENV.fetch("ENCRYPTION_SERVICE_SALT"),
-    # "ENCRYPTION_SERVICE_SALT",
     ActiveSupport::MessageEncryptor.key_len
   ).freeze
 
@@ -21,8 +21,7 @@ class EncryptionService
   end
 
   private
-
-  def encryptor
-    ActiveSupport::MessageEncryptor.new(KEY)
-  end
+    def encryptor
+      ActiveSupport::MessageEncryptor.new(KEY)
+    end
 end

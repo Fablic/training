@@ -5,7 +5,6 @@ require "rails_helper"
 RSpec.describe "Tasks", type: :model do
   describe "validation" do
     context "create a task" do
-
       context "maximum length" do
         let!(:task) { Task.create(title: "X" * 100, description: "Y" * 30000) }
         it "valid" do

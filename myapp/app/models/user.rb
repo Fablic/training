@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
   before_create do
     self.password = EncryptionService.encrypt(self.password)
