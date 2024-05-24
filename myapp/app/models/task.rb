@@ -11,12 +11,12 @@ class Task < ApplicationRecord
   end
 
   def self.search_title(search_query)
-    @tasks = Task.where("title LIKE ?", "%#{search_query}%")
-    @tasks
+    tasks = Task.where("title LIKE ?", "%#{search_query}%")
+    tasks
   end
 
   def self.filter_status(status)
-    @tasks = Task.where(status: "#{status}")
-    @tasks
+    tasks = Task.where(status: "#{status}")
+    tasks
   end
 end
