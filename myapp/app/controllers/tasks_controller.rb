@@ -12,8 +12,8 @@ class TasksController < ApplicationController
       @tasks = Task.all
     end
     session[:is_order_desc] = !session.fetch(:is_order_desc, false)
-    sort_column = params[:sort].presence_in(Task.column_names) ? params[:sort] : 'created_at'
-    sort_direction = session[:is_order_desc] ? 'DESC' : 'ASC'
+    sort_column = params[:sort].presence_in(Task.column_names) ? params[:sort] : "created_at"
+    sort_direction = session[:is_order_desc] ? "DESC" : "ASC"
     @tasks = @tasks.order("#{sort_column} #{sort_direction}")
     @tasks
   end
