@@ -229,7 +229,7 @@ RSpec.describe 'Tasks', type: :system do
         click_on 'Update Task'
 
         expect(page).to have_content('You have some invalid inputs!')
-        expect(page).to have_content("Due can't be earlier than now if you want to change!")
+        expect(page).to have_content("Due can't be earlier than now!")
       end
 
       it 'should NOT show error message if not change due date' do 
