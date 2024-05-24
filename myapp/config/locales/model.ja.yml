@@ -3,12 +3,17 @@ ja:
   activerecord:
     models:
       task: 'タスク'
+      user: 'ユーザ'
     # model毎に定義したいattributesを記述
     attributes:
       task:
         # view側： Task.human_attribute_name :title /　t("activerecord.attributes.user.name")と同じ
         title: 'タイトル'
         description: '説明'
+      user:
+        # view側： Task.human_attribute_name :title /　t("activerecord.attributes.user.name")と同じ
+        name: '名前'
+        email: 'Eメール'
   # 全てのmodelで共通して使用するattributesを定義
   attributes:
     created_at: '作成日'
@@ -24,6 +29,16 @@ ja:
     delete:
       notice: 'タスクの削除に成功しました。'
       alert: 'タスクの削除ができません。'
+  users:
+    create:
+      notice: 'ユーザの作成に成功しました。'
+      alert: 'ユーザの作成ができません。'
+    update:
+      notice: 'ユーザの更新に成功しました。'
+      alert: 'ユーザの更新ができません。'
+    delete:
+      notice: 'ユーザの削除に成功しました。'
+      alert: 'ユーザの削除ができません。'
   errors:
     error404:
       message: 'お探しのページは見つかりません。'

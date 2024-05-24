@@ -5,7 +5,7 @@ class User < ApplicationRecord
     self.password = EncryptionService.encrypt(self.password)
   end
 
-  has_many :tasks
+  has_many :tasks, dependent: :destroy
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true
   validates :password, presence: true

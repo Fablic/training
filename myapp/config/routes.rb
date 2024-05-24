@@ -2,8 +2,14 @@
 
 Rails.application.routes.draw do
   resources :tasks
-  resources :users
-  get "admin" => "users#index"
+  resources :users, path: '/admin/users'
+  post "admin_create" => "users#admin_create"
+  # get "admin/users" => "users#index"
+  # get "admin/users/new" => "users#new"
+  # get "admin/users//show" => "users#index"
+  # get "admin/users//edit" => "users#edit"
+
+
   get "/" => "tasks#index"
   get "signup" => "users#new"
   post "signup" => "users#create"

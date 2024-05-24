@@ -9,8 +9,7 @@ class UsersController < ApplicationController
   def new
     @user = User.new
   end
-  
-  # Show the list of tasks
+
   def show
   end
 
@@ -27,9 +26,26 @@ class UsersController < ApplicationController
     end
   end
 
+  def admin_create
+    @user = User.new(user_params)
+    if @user.save
+      redirect_to users_path, notice: t("users.create.notice") # TODO: ユーザが作成されました
+    else
+      render :new, alert: t("users.create.alert") # TODO: ユーザが作成されませんでした。
+    end
+  end
+
   def update
-    if @user.update(task_params)
+    if @user.update(user_params)
       redirect_to @user, notice: t("users.update.notice")
+    else
+      render :edit, alert: t("users.update.alert")
+    end
+  end
+
+  def admin_update
+    if @user.update(user_params)
+      redirect_to users_path, notice: t("users.update.notice")
     else
       render :edit, alert: t("users.update.alert")
     end

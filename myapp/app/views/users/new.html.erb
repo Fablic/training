@@ -2,7 +2,7 @@
   <div class="container">
     <div class="form">
     <h1>Sign up</h1>
-      <%= form_for(@user, url: signup_path, method: :post) do |f| %>
+      <%= form_for(@user, url: admin_create_path, method: :post) do |f| %>
         <%= f.text_field :name, :placeholder => "name" %>
         <%= f.email_field :email, :placeholder => "Email" %>
         <%= f.password_field :password, :placeholder => "Password" %>

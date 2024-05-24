@@ -1,19 +1,20 @@
 ja:
-  tasks:
+  users:
     index:
-      title: 'タスク一覧'
-      create: 'タスク作成'
+      title: 'ユーザ一覧'
+      create: 'ユーザ作成'
       show: '詳細'
       edit: '編集'
       delete: '削除'
+      num_of_tasks: 'タスク数'
       delete_confirmation: '本当に削除しますか？'
     show:
-      title: '%{task_title}の情報'
+      title: 'ユーザの情報'
     edit:
-      title: '%{task_title}の情報を編集'
+      title: 'ユーザの情報を編集'
       update_button: '更新'
     new:
-      title: '新しいタスクを作成'
+      title: '新規ユーザを作成'
       create_button: '作成'
     form:
       error:

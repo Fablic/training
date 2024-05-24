@@ -5,6 +5,7 @@
     <tr>
       <th><%= User.human_attribute_name :name %></th>
       <th><%= User.human_attribute_name :email %></th>
+      <th><%= t('.num_of_tasks') %></th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -14,6 +15,7 @@
       <tr>
         <td><%= user.name %></td>
         <td><%= user.email %></td>
+        <td><%= user.tasks.size %></td>
         <td><%= link_to t('users.index.show'), user_path(user.id) %></td>
         <td><%= link_to t('users.index.edit'), edit_user_path(user) %></td>
         <td><%= button_to t('users.index.delete'), user_path(user.id), method: :delete, form: {data: {confirm: t('users.index.delete_confirmation')}} %></td>
