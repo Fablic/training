@@ -75,7 +75,7 @@ RSpec.describe 'Tasks', type: :system do
     end
 
     context 'input invalid value' do 
-      it 'should show error message for empty title' do 
+      it 'should show error message for title less than 5 chars' do 
         visit new_task_path 
 
         fill_in 'Description', with: 'New Task Description'
@@ -84,10 +84,23 @@ RSpec.describe 'Tasks', type: :system do
         click_on 'Submit Task'
 
         expect(page).to have_content('You have some invalid inputs!')
-        expect(page).to have_content('Title must not be blank!')
+        expect(page).to have_content('please input more than 5 characters')
       end
 
-      it 'should show error message for empty description' do 
+      it 'should show error message for title more than 30 chars' do 
+        visit new_task_path 
+
+        fill_in 'Title', with: 't' * 31
+        fill_in 'Description', with: 'New Task Description'
+        fill_in 'Due', with: Time.zone.now + 5
+
+        click_on 'Submit Task'
+
+        expect(page).to have_content('You have some invalid inputs!')
+        expect(page).to have_content('30 characters is the maximum allowed')
+      end
+
+      it 'should show error message for description less than 10 chars' do 
         visit new_task_path 
 
         fill_in 'Title', with: 'New Task Title'
@@ -96,7 +109,20 @@ RSpec.describe 'Tasks', type: :system do
         click_on 'Submit Task'
 
         expect(page).to have_content('You have some invalid inputs!')
-        expect(page).to have_content('Description must not be blank!')
+        expect(page).to have_content('please input more than 10 characters')
+      end
+
+      it 'should show error message for description more than 300 chars' do 
+        visit new_task_path 
+
+        fill_in 'Title', with: 'New Task Title'
+        fill_in 'Description', with: 'd' * 301
+        fill_in 'Due', with: Time.zone.now + 5
+
+        click_on 'Submit Task'
+
+        expect(page).to have_content('You have some invalid inputs!')
+        expect(page).to have_content('300 characters is the maximum allowed')
       end
 
       it 'should show error message for empty due date' do 
@@ -180,7 +206,7 @@ RSpec.describe 'Tasks', type: :system do
     end
 
     context 'edit with invalid inputs' do 
-      it 'should show error message for empty title' do 
+      it 'should show error message for title less than 5 chars' do 
         task = Task.create!(title: 'Test title 1', description: 'Test Description 1', due: Time.zone.now + 5)
 
         visit edit_task_path(task)
@@ -190,10 +216,23 @@ RSpec.describe 'Tasks', type: :system do
         click_on 'Update Task'
 
         expect(page).to have_content('You have some invalid inputs!')
-        expect(page).to have_content('Title must not be blank!')
+        expect(page).to have_content('please input more than 5 characters')
       end
 
-      it 'should show error message for empty description' do 
+      it 'should show error message for title more than 30 chars' do 
+        task = Task.create!(title: 'Test title 1', description: 'Test Description 1', due: Time.zone.now + 5)
+
+        visit edit_task_path(task)
+
+        fill_in 'Title', with: 't' * 31
+
+        click_on 'Update Task'
+
+        expect(page).to have_content('You have some invalid inputs!')
+        expect(page).to have_content('30 characters is the maximum allowed')
+      end
+
+      it 'should show error message for description less than 10 chars' do 
         task = Task.create!(title: 'Test title 1', description: 'Test Description 1', due: Time.zone.now + 5)
 
         visit edit_task_path(task)
@@ -203,7 +242,20 @@ RSpec.describe 'Tasks', type: :system do
         click_on 'Update Task'
 
         expect(page).to have_content('You have some invalid inputs!')
-        expect(page).to have_content('Description must not be blank!')
+        expect(page).to have_content('please input more than 10 characters')
+      end
+
+      it 'should show error message for description more than 300 chars' do 
+        task = Task.create!(title: 'Test title 1', description: 'Test Description 1', due: Time.zone.now + 5)
+
+        visit edit_task_path(task)
+
+        fill_in 'Description', with: 'd' * 301
+
+        click_on 'Update Task'
+
+        expect(page).to have_content('You have some invalid inputs!')
+        expect(page).to have_content('300 characters is the maximum allowed')
       end
 
       it 'should show error message for empty due date' do 
