@@ -15,6 +15,7 @@ class TasksController < ApplicationController
     sort_column = params[:sort].presence_in(Task.column_names) ? params[:sort] : "created_at"
     sort_direction = session[:is_order_desc] ? "DESC" : "ASC"
     @tasks = @tasks.order("#{sort_column} #{sort_direction}")
+    @tasks = @tasks.page(params[:page]).per(5)
     @tasks
   end
 
