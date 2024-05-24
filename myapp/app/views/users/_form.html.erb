@@ -1,0 +1,34 @@
+<% if @user.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= t('.error.cause') %></h2>
+    <ul>
+    <% @user.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<% if flash[:notice] %>
+  <p><%= flash[:notice] %></p>
+<% end %>
+<%= form_with(model: user, local: true) do |form| %>
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name, id: :user_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :email %>
+    <%= form.text_area :email, id: :user_email %>
+  </div>
+
+  <div class="field">
+    <%= form.label :password %>
+    <%= form.text_area :password, id: :user_email %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit submit_button %>
+  </div>
+<% end %>
