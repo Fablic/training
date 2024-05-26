@@ -3,9 +3,6 @@
 
 <%= form_with url: tasks_path, local: true, method: :get do |form| %>
   <%= form.text_field(:search, value: params[:search]) %>
-  <%# <%= submit_tag (t'.search') %> 
-<%# <% end %> 
-<%# <%= form_with url: tasks_path, local: true, method: :get do |form| %> 
   <%= form.select(:status, 
                   Task.enum_options_for_select_status, 
                   { include_blank: "#{Task.human_attribute_name :status}",
