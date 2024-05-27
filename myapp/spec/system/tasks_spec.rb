@@ -29,15 +29,74 @@ RSpec.describe 'Tasks', type: :system do
       end
     end
 
-    it 'show tasks in due date order' do 
-      Task.create!(title: 'Test title 1', description: 'Test Description 1', due: Time.zone.now + 5)
-      Task.create!(title: 'Test title 2', description: 'Test Description 2', due: Time.zone.now + 10)
-      Task.create!(title: 'Test title 3', description: 'Test Description 3', due: Time.zone.now + 15)
-      
-      visit tasks_path
+    context 'show tasks in specified order' do
+      it 'show tasks in created date in desc order by default' do 
+        Task.create!(title: 'Test title 1', description: 'Test Description 1', due: Time.zone.now + 5)
+        Task.create!(title: 'Test title 2', description: 'Test Description 2', due: Time.zone.now + 5)
+        Task.create!(title: 'Test title 3', description: 'Test Description 3', due: Time.zone.now + 5)
 
-      expect(page.text).to match(/Test title 3.*\n.*Test title 2.*\n.*Test title 1/)
+        visit tasks_path 
+
+        titles = find('tbody').all('tr')
+
+        expect(titles[0]).to have_content('Test title 3')
+        expect(titles[1]).to have_content('Test title 2')
+        expect(titles[2]).to have_content('Test title 1')
+      end
+
+      it 'show tasks in created date in asc order when specified' do 
+        Task.create!(title: 'Test title 1', description: 'Test Description 1', due: Time.zone.now + 5)
+        Task.create!(title: 'Test title 2', description: 'Test Description 2', due: Time.zone.now + 5)
+        Task.create!(title: 'Test title 3', description: 'Test Description 3', due: Time.zone.now + 5)
+        
+        visit tasks_path
+
+        select 'Asc', from: 'Order'
+        click_on 'Sort'
+
+        titles = find('tbody').all('tr')
+
+        expect(titles[0]).to have_content('Test title 1')
+        expect(titles[1]).to have_content('Test title 2')
+        expect(titles[2]).to have_content('Test title 3')
+      end
+
+      it 'show tasks in due date in desc order when specified' do 
+        Task.create!(title: 'Test title 1', description: 'Test Description 1', due: Time.zone.now + 5)
+        Task.create!(title: 'Test title 2', description: 'Test Description 2', due: Time.zone.now + 10)
+        Task.create!(title: 'Test title 3', description: 'Test Description 3', due: Time.zone.now + 15)
+        
+        visit tasks_path
+
+        select 'Due Date', from: 'Sort by'
+        click_on 'Sort'
+
+        titles = find('tbody').all('tr')
+
+        expect(titles[0]).to have_content('Test title 3')
+        expect(titles[1]).to have_content('Test title 2')
+        expect(titles[2]).to have_content('Test title 1')
+      end
+
+      it 'show tasks in due date in asc order when specified' do 
+        Task.create!(title: 'Test title 1', description: 'Test Description 1', due: Time.zone.now + 5)
+        Task.create!(title: 'Test title 2', description: 'Test Description 2', due: Time.zone.now + 10)
+        Task.create!(title: 'Test title 3', description: 'Test Description 3', due: Time.zone.now + 15)
+        
+        visit tasks_path
+
+        select 'Due Date', from: 'Sort by'
+        select 'Asc', from: 'Order'
+        click_on 'Sort'
+
+        titles = find('tbody').all('tr')
+
+        expect(titles[0]).to have_content('Test title 1')
+        expect(titles[1]).to have_content('Test title 2')
+        expect(titles[2]).to have_content('Test title 3')
+      end 
     end
+
   end
 
   describe 'new page and create task' do 
