@@ -1,6 +1,6 @@
 <h1 class='text-center'><%= t('.title') %></h1>
 <%= render 'flash' %>
-
+<div><%= link_to t('tasks.index.create'), new_task_path, class: 'btn btn-primary' %></div>
 <%= form_with(url: tasks_path, local: true, method: :get, class: "d-flex justify-content-center") do |form| %>
   <%= form.text_field(:search, value: params[:search],) %>
   <%= form.select(:status, 
@@ -38,7 +38,6 @@
 </table>
 <%= paginate @tasks %>
 
-<p><%= link_to t('tasks.index.create'), new_task_path, class: 'btn btn-primary' %></p>
 
 <style>
 .button {
