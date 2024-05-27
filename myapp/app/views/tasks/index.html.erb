@@ -1,12 +1,23 @@
-<h1 class='text-center'>List of Tasks</h1>
-<% if flash[:notice] %>
-  <p><%= flash[:notice] %></p>
+<h1 class='text-center'><%= t('.title') %></h1>
+<%= render 'flash' %>
+
+<%= form_with url: tasks_path, local: true, method: :get do |form| %>
+  <%= form.text_field(:search, value: params[:search]) %>
+  <%= form.select(:status, 
+                  Task.enum_options_for_select_status, 
+                  { include_blank: "#{Task.human_attribute_name :status}",
+                    :selected => params[:status] }) %>
+  <%= submit_tag (t'.filter') %>
 <% end %>
 <table class='table'>
   <thead>
     <tr>
-      <th>Title</th>
-      <th>Description</th>
+      <th><%= Task.human_attribute_name(:title) %></th>
+      <th><%= Task.human_attribute_name(:description) %></th>
+      <th><%= Task.human_attribute_name(:created_at) %></th>
+      <th><%= link_to Task.human_attribute_name(:expiration_date), 
+              tasks_path(sort: "expiration_date", is_order_desc: params[:is_order_desc] == "true" ? "false" : "true") %></th>
+      <th><%= Task.human_attribute_name :status %></th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -15,15 +26,19 @@
       <tr>
         <td><%= task.title %></td>
         <td><%= task.description %></td>
-        <td class='button'><%= link_to 'show', task_path(task.id), class: "btn btn-info" %></td>
-        <td class='button'><%= link_to 'edit', edit_task_path(task), class: "btn btn-light" %></td>
-        <td class='button'><%= button_to 'delete', task_path(task.id), method: :delete, form: {data: {confirm: 'Are you sure?'}}, class: 'btn btn-danger' %></td>
+        <td><%= task.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
+        <td><%= task.expiration_date.nil? ? '' : task.expiration_date.strftime("%Y-%m-%d %H:%M:%S") %></td>
+        <td><%= Task.human_enum_name('status', task.status) %></td>
+        <td class='button'><%= link_to t('tasks.index.show'), task_path(task.id), class: "btn btn-info" %></td>
+        <td class='button'><%= link_to t('tasks.index.edit'), edit_task_path(task), class: "btn btn-light" %></td>
+        <td class='button'><%= button_to t('tasks.index.delete'), task_path(task.id), method: :delete, form: {data: {confirm: t('tasks.index.delete_confirmation')}}, class: 'btn btn-danger' %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
+<%= paginate @tasks %>
 
-<p><%= link_to 'create', 'tasks/new', class: 'btn btn-primary' %></p>
+<p><%= link_to t('tasks.index.create'), new_task_path, class: 'btn btn-primary' %></p>
 
 <style>
 .button {

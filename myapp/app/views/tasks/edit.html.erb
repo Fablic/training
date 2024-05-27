@@ -1,6 +1,9 @@
-<h1 class='text-center'>Edit Task</h1>
+<h1 class='text-center'><%= t('.title') %></h1>
+<%= render 'flash' %>
 
-<%= render 'form', task: @task %>
+<%= render 'form', task: @task, submit_button: t('tasks.edit.update_button') %>
+
+<%= link_to t('attributes.back'), tasks_path %>
 
 <%= link_to 'back', tasks_path, class: "btn btn-secondary margin-left" %>
 

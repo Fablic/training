@@ -1,0 +1,38 @@
+# モデルは全て activerecord 以下に記述する。
+ja:
+  activerecord:
+    models:
+      task: 'タスク'
+    # model毎に定義したいattributesを記述
+    attributes:
+      task:
+        # view側： Task.human_attribute_name :title /　t("activerecord.attributes.task.title")と同じ
+        title: 'タイトル'
+        description: '説明'
+        status: 'ステータス'
+        statuses:
+          not_started: '未着手'
+          in_progress: '着手中'
+          completed: '完了'
+        expiration_date: '終了期限'
+  # 全てのmodelで共通して使用するattributesを定義
+  attributes:
+    created_at: '作成日'
+    updated_at: '更新日'
+    back: '戻る'
+  tasks:
+    create:
+      notice: 'タスクの作成に成功しました。'
+      alert: 'タスクの作成ができません。'
+    update:
+      notice: 'タスクの更新に成功しました。'
+      alert: 'タスクの更新ができません。'
+    delete:
+      notice: 'タスクの削除に成功しました。'
+      alert: 'タスクの削除ができません。'
+  errors:
+    error404:
+      message: 'お探しのページは見つかりません。'
+    error500:
+      message: 'サーバーでエラーが発生しました。'
+      message_next_action: '時間をおいて再度お試し下さい。'

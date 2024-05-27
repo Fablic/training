@@ -1,0 +1,22 @@
+ja:
+  tasks:
+    index:
+      title: 'タスク一覧'
+      create: 'タスク作成'
+      show: '詳細'
+      edit: '編集'
+      delete: '削除'
+      search: '検索'
+      filter: '絞り込み'
+      delete_confirmation: '本当に削除しますか？'
+    show:
+      title: '詳細'
+    edit:
+      title: '編集'
+      update_button: '更新'
+    new:
+      title: '新しいタスクを作成'
+      create_button: '作成'
+    form:
+      error:
+        cause: '以下のエラーによりタスクが保存されませんでした'

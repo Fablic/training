@@ -1,5 +1,6 @@
 
-<h1 class='text-center'>Task Detail</h1>
+<h1 class='text-center'><%= t('.title') %></h1>
+<%= render 'flash' %>
 <div class="container mt-5">
   <div class="card">
     <div class="card-header">
@@ -7,6 +8,8 @@
     </div>
     <div class="card-body">
       <p class="card-text"><%= @task.description %></p>
+      <p><%= @task.expiration_date.nil? ? '' : @task.expiration_date.strftime("%Y-%m-%d %H:%M:%S") %></p>
+      <p><%= t("activerecord.attributes.task.statuses.#{@task.status}") %></p>
     </div>
   </div>
   <%= link_to 'Back to List', tasks_path, class: "btn btn-secondary" %>
