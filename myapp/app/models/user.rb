@@ -5,8 +5,8 @@ class User < ApplicationRecord
     self.password = EncryptionService.encrypt(self.password)
   end
 
-  before_destroy :ensure_at_least_one_admin_remains
-  before_update :ensure_at_least_one_admin_remains, if: :role_changed_to_general?
+  before_destroy :delete_ensure_at_least_one_admin_remains
+  before_update :update_ensure_at_least_one_admin_remains, if: :role_changed_to_general?
 
   enum role: [:admin, :general]
   has_many :tasks, dependent: :destroy
@@ -29,14 +29,16 @@ class User < ApplicationRecord
 
   private
 
-  def ensure_at_least_one_admin_remains
-    puts 'ensure_at_least_one_admin_remains called'
-    puts User.where(role: 'admin').count <= 1
-    puts self.role != 'admin'
-    puts 'ensure_at_least_one_admin_remains called END'
-    if self.role == 'general' && User.where(role: 'admin').count <= 1
-    # if role == 'admin' && User.where(role: 'admin').count <= 1
+  def delete_ensure_at_least_one_admin_remains
+    if self.role == 'admin' && User.where(role: 'admin').count <= 1
       errors.add(:base, "Cannot delete the last admin user.")
+      throw(:abort)
+    end
+  end
+
+  def update_ensure_at_least_one_admin_remains
+    if User.where(role: 'admin').count <= 1
+      errors.add(:base, "Cannot update the last admin user.")
       throw(:abort)
     end
   end
