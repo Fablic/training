@@ -6,26 +6,28 @@ class TasksController < ApplicationController
 
   def index
     # For search function
-    if params[:search] && !params[:status].blank?
-      @tasks = Task.filter_status(params[:status])
-      @tasks = @tasks.search_title(params[:search])
-    elsif params[:search] && params[:status].blank?
-      @tasks = Task.search_title(params[:search])
+    if params[:search]
+      if !params[:status].blank?
+        @tasks = Task.filter_status(params[:status]).search_title(params[:search])
+      else
+        @tasks = Task.search_title(params[:search])
+      end
     else
       @tasks = Task.all
     end
-    
+
     # For sorting function
     if params[:sort].presence_in(Task.column_names)
       puts params[:is_order_desc]
       sort_column = params[:sort]
-      sort_direction = params[:is_order_desc] == 'true' ? "DESC" : "ASC"
+      sort_direction = params[:is_order_desc] == "true" ? "DESC" : "ASC"
     else
       sort_column = "created_at"
       sort_direction = "DESC"
     end
     @tasks = @tasks.order("#{sort_column} #{sort_direction}")
 
+    # For pagination
     @tasks = @tasks.page(params[:page]).per(TASKS_PER_PAGE)
     @tasks
   end
