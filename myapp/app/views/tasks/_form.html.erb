@@ -29,17 +29,8 @@
   </div>
 
   <div class="field">
-    <%= form.label :description %>
-    <%= form.text_area :description, id: :task_description, :class => 'form-control' %>
-  </div>
-
-  <div class="field">
-    <%= form.label :expiration_date %>
-    <%= form.datetime_local_field :expiration_date, id: :task_expiration_date %>
-  </div>
-
-  <div class="field">
-    <%= form.select :status, Task.enum_options_for_select_status, { include_blank: "#{Task.human_attribute_name :status}" } %>
+    <%= form.label :status %>
+    <%= form.select :status, Task.enum_options_for_select_status, { include_blank: "#{Task.human_attribute_name :status}", :class => "form-select"} %>
   </div>
 
   <div class="actions">

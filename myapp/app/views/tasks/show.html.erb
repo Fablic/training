@@ -4,13 +4,15 @@
 <div class="container mt-5">
   <div class="card">
     <div class="card-header">
+      <%= Task.human_attribute_name(:title) %>: 
       <%= @task.title %>
     </div>
     <div class="card-body">
+      <p class="card-text"><%= Task.human_attribute_name(:description) %></p>
       <p class="card-text"><%= @task.description %></p>
       <p><%= @task.expiration_date.nil? ? '' : @task.expiration_date.strftime("%Y-%m-%d %H:%M:%S") %></p>
-      <p><%= t("activerecord.attributes.task.statuses.#{@task.status}") %></p>
+      <p><%= Task.human_attribute_name(:status) %>: <%= t("activerecord.attributes.task.statuses.#{@task.status}") %></p>
     </div>
   </div>
-  <%= link_to 'Back to List', tasks_path, class: "btn btn-secondary" %>
+  <%= link_to t('attributes.back'), tasks_path, class: "btn btn-secondary" %>
 </div>

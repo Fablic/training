@@ -1,13 +1,13 @@
 <h1 class='text-center'><%= t('.title') %></h1>
 <%= render 'flash' %>
 
-<%= form_with url: tasks_path, local: true, method: :get do |form| %>
-  <%= form.text_field(:search, value: params[:search]) %>
+<%= form_with(url: tasks_path, local: true, method: :get, class: "d-flex justify-content-center") do |form| %>
+  <%= form.text_field(:search, value: params[:search],) %>
   <%= form.select(:status, 
                   Task.enum_options_for_select_status, 
                   { include_blank: "#{Task.human_attribute_name :status}",
                     :selected => params[:status] }) %>
-  <%= submit_tag (t'.filter') %>
+  <%= submit_tag(t('.filter'), class: 'btn btn-light border') %>
 <% end %>
 <table class='table'>
   <thead>
@@ -42,6 +42,6 @@
 
 <style>
 .button {
-  width: 0;
+  width: 75px;
 }
 </style>
