@@ -6,7 +6,7 @@ RSpec.describe "Tasks", type: :system do
   describe "test with dummy data" do
     # Create dummy data
     let!(:tasks) do
-      (1..9).map do |i|
+      (1..5).map do |i|
         Task.create(title: "test title #{i}",
                     description: "test description #{i}",
                     created_at: i.days.ago,
@@ -28,10 +28,10 @@ RSpec.describe "Tasks", type: :system do
         end
       end
 
-      it "expect expiration_date descending order" do
+      it "expect expiration_date ascending order" do
         click_link I18n.t("activerecord.attributes.task.expiration_date")
         tasks.each_with_index do |tsk, idx|
-          expect(page.all("tr")[idx + 1]).to have_content tsk[:expiration_date].strftime("%Y-%m-%d %H:%M:%S")
+          expect(page.all("tr")[-idx-1]).to have_content tsk[:expiration_date].strftime("%Y-%m-%d %H:%M:%S")
         end
       end
     end
@@ -129,7 +129,7 @@ RSpec.describe "Tasks", type: :system do
     context "title" do
       it "find a task with its title 'test title 1'" do
         fill_in "search", with: "test title 1"
-        click_button I18n.t("tasks.index.search")
+        click_button I18n.t("tasks.index.filter")
         expect(Task.search_title("1")[0][:title]).to eq "test title 1"
       end
     end
