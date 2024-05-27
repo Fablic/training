@@ -2,7 +2,7 @@
 
 Rails.application.routes.draw do
   resources :tasks
-  resources :users, path: '/admin/users'
+  resources :users, path: "/admin/users"
   post "admin_create" => "users#admin_create"
   # get "admin/users" => "users#index"
   # get "admin/users/new" => "users#new"

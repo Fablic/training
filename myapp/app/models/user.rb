@@ -28,22 +28,21 @@ class User < ApplicationRecord
   end
 
   private
-
-  def delete_ensure_at_least_one_admin_remains
-    if self.role == 'admin' && User.where(role: 'admin').count <= 1
-      errors.add(:base, "Cannot delete the last admin user.")
-      throw(:abort)
+    def delete_ensure_at_least_one_admin_remains
+      if self.role == "admin" && User.where(role: "admin").count <= 1
+        errors.add(:base, "Cannot delete the last admin user.")
+        throw(:abort)
+      end
     end
-  end
 
-  def update_ensure_at_least_one_admin_remains
-    if User.where(role: 'admin').count <= 1
-      errors.add(:base, "Cannot update the last admin user.")
-      throw(:abort)
+    def update_ensure_at_least_one_admin_remains
+      if User.where(role: "admin").count <= 1
+        errors.add(:base, "Cannot update the last admin user.")
+        throw(:abort)
+      end
     end
-  end
 
-  def role_changed_to_general?
-    role_changed? && self.role == 'general'
-  end
+    def role_changed_to_general?
+      role_changed? && self.role == "general"
+    end
 end
