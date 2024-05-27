@@ -23,6 +23,10 @@
     <%= form.text_field :email, id: :user_email %>
   </div>
 
+  <div class="field">
+    <%= form.select :role, User.enum_options_for_select_role %>
+  </div>
+
   <div class="actions">
     <%= form.submit submit_button %>
   </div>

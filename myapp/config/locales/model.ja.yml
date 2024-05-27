@@ -14,6 +14,10 @@ ja:
         # view側： Task.human_attribute_name :title /　t("activerecord.attributes.user.name")と同じ
         name: '名前'
         email: 'Eメール'
+        role: 'ロール'
+        roles:
+          admin: '管理者'
+          general: '一般'
   # 全てのmodelで共通して使用するattributesを定義
   attributes:
     created_at: '作成日'
@@ -45,3 +49,4 @@ ja:
     error500:
       message: 'サーバーでエラーが発生しました。'
       message_next_action: '時間をおいて再度お試し下さい。'
+    need_admin: '管理ユーザでログインしてください。'

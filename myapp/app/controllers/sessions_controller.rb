@@ -8,7 +8,11 @@ class SessionsController < ApplicationController
     @user = User.authenticate(params[:session][:email], params[:session][:password])
     if @user
       session[:user_id] = @user.id
-      redirect_to tasks_path
+      if @user[:role] == 'admin'
+        redirect_to users_path
+      else
+        redirect_to tasks_path
+      end
     else
       redirect_to login_path
     end

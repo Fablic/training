@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  before_action :require_admin_user, only: [:index, :new, :show, :edit, :admin_create, :admin_update, :destroy]
+  before_action :require_admin_user, only: [:index, :show, :edit, :admin_create, :admin_update, :destroy]
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   
   def index
@@ -55,6 +55,9 @@ class UsersController < ApplicationController
 
   def destroy
     if @user.destroy
+      if @user.id == session[:user_id]
+        session.delete :user_id
+      end
       redirect_to users_path, notice: t("users.delete.notice")
     else
       redirect_to users_path, alert: t("users.delete.alert")
@@ -62,11 +65,11 @@ class UsersController < ApplicationController
   end
 
   private
-    def user_params
-      params.require(:user).permit(:name, :email, :password)
-    end
-    
-    def set_user
-      @user = User.find(params[:id])
-    end
+  def user_params
+    params.require(:user).permit(:name, :email, :password, :role)
+  end
+  
+  def set_user
+    @user = User.find(params[:id])
+  end
 end
