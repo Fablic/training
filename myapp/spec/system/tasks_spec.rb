@@ -153,7 +153,7 @@ RSpec.describe "Tasks", type: :system do
 
   describe "pagination" do
     let!(:tasks) do
-      (1..10).map do |i|
+      (1..20).map do |i|
         Task.create(title: "test title #{i}",
                     description: "test description #{i}")
       end
@@ -168,6 +168,17 @@ RSpec.describe "Tasks", type: :system do
         end
         click_link I18n.t("views.pagination.next").tr(' &rsaquo;', '')
         tasks[5..9].each_with_index do |tsk, idx|
+          expect(page.all("tr")[idx + 1]).to have_content tsk[:created_at].strftime("%Y-%m-%d %H:%M:%S")
+        end
+      end
+    end
+    context "last page" do
+      it "find tasks in the last page" do
+        tasks[0..4].each_with_index do |tsk, idx|
+          expect(page.all("tr")[idx + 1]).to have_content tsk[:created_at].strftime("%Y-%m-%d %H:%M:%S")
+        end
+        click_link I18n.t("views.pagination.next").tr(' &rsaquo;', '')
+        tasks[15..19].each_with_index do |tsk, idx|
           expect(page.all("tr")[idx + 1]).to have_content tsk[:created_at].strftime("%Y-%m-%d %H:%M:%S")
         end
       end
