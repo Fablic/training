@@ -1,11 +1,8 @@
 <h1><%= t('.title') %></h1>
 <%= render 'flash' %>
 
-<%= form_with url: tasks_path, local: true, method: :get do %>
-  <%= text_field_tag(:search, params[:search]) %>
-  <%= submit_tag (t'.search') %>
-<% end %>
 <%= form_with url: tasks_path, local: true, method: :get do |form| %>
+  <%= form.text_field(:search, value: params[:search]) %>
   <%= form.select(:status, 
                   Task.enum_options_for_select_status, 
                   { include_blank: "#{Task.human_attribute_name :status}",
@@ -18,7 +15,8 @@
       <th><%= Task.human_attribute_name(:title) %></th>
       <th><%= Task.human_attribute_name(:description) %></th>
       <th><%= Task.human_attribute_name(:created_at) %></th>
-      <th><%= link_to Task.human_attribute_name(:expiration_date), tasks_path(sort: "expiration_date") %></th>
+      <th><%= link_to Task.human_attribute_name(:expiration_date), 
+              tasks_path(sort: "expiration_date", is_order_desc: params[:is_order_desc] == "true" ? "false" : "true") %></th>
       <th><%= Task.human_attribute_name :status %></th>
       <th colspan="3"></th>
     </tr>
@@ -39,5 +37,6 @@
     <% end %>
   </tbody>
 </table>
+<%= paginate @tasks %>
 
 <p><%= link_to t('tasks.index.create'), new_task_path %></p>
