@@ -3,6 +3,11 @@
 
 <h3><%= @task.title %></h3>
 <p><%= @task.description %></p>
+<ul>
+<% @task.labels.each do |label| %>
+  <li><%= label.label %></li>
+<% end %>
+</ul>
 <p><%= @task.expiration_date.nil? ? '' : @task.expiration_date.strftime("%Y-%m-%d %H:%M:%S") %></p>
 <p><%= t("activerecord.attributes.task.statuses.#{@task.status}") %></p>
 
