@@ -31,7 +31,7 @@ RSpec.describe "Tasks", type: :system do
       it "expect expiration_date ascending order" do
         click_link I18n.t("activerecord.attributes.task.expiration_date")
         tasks.each_with_index do |tsk, idx|
-          expect(page.all("tr")[-idx-1]).to have_content tsk[:expiration_date].strftime("%Y-%m-%d %H:%M:%S")
+          expect(page.all("tr")[-idx - 1]).to have_content tsk[:expiration_date].strftime("%Y-%m-%d %H:%M:%S")
         end
       end
     end
@@ -150,4 +150,28 @@ RSpec.describe "Tasks", type: :system do
       end
     end
   end
+
+  describe "pagination" do
+    let!(:tasks) do
+      (1..10).map do |i|
+        Task.create(title: "test title #{i}",
+                    description: "test description #{i}")
+      end
+    end
+    before do
+      visit tasks_path
+    end
+    context "next page" do
+      it "find tasks in the page 2" do
+        tasks[0..4].each_with_index do |tsk, idx|
+          expect(page.all("tr")[idx + 1]).to have_content tsk[:created_at].strftime("%Y-%m-%d %H:%M:%S")
+        end
+        click_link I18n.t("views.pagination.next").tr(' &rsaquo;', '')
+        tasks[5..9].each_with_index do |tsk, idx|
+          expect(page.all("tr")[idx + 1]).to have_content tsk[:created_at].strftime("%Y-%m-%d %H:%M:%S")
+        end
+      end
+    end
+  end
+  
 end
