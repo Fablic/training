@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_05_27_043131) do
+ActiveRecord::Schema.define(version: 2024_05_27_071554) do
 
   create_table "labels", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci", force: :cascade do |t|
     t.string "label"
@@ -18,23 +18,21 @@ ActiveRecord::Schema.define(version: 2024_05_27_043131) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "labels_tasks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci", force: :cascade do |t|
+    t.bigint "task_id"
+    t.bigint "label_id"
+    t.index ["label_id"], name: "index_labels_tasks_on_label_id"
+    t.index ["task_id"], name: "index_labels_tasks_on_task_id"
+  end
+
   create_table "tasks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci", force: :cascade do |t|
     t.string "title", limit: 100, null: false
     t.text "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "user_id", null: false
-    t.index ["user_id"], name: "index_tasks_on_user_id"
+    t.datetime "expiration_date"
+    t.integer "status", default: 0, null: false
+    t.index ["title"], name: "index_tasks_on_title"
   end
 
-  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci", force: :cascade do |t|
-    t.string "name", null: false
-    t.string "email", null: false
-    t.string "password", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.integer "role", default: 1, null: false
-  end
-
-  add_foreign_key "tasks", "users"
 end

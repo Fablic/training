@@ -33,10 +33,7 @@
   </div>
 
   <div class="field">
-    <%# <%= form.selec_tag :labels, Label.enum_options_for_select_label, { include_blank: "#{Label.human_attribute_name :label}" } %>
-    <%# <%= form.collection_select(:labels, Label.all, :id, :label, {}, {:multiple => true}) %>
     <%= form.collection_check_boxes :label_ids, Label.all, :id, :label %>
-
   </div>
 
   <div class="actions">
