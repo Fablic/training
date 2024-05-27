@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Task < ApplicationRecord
+  has_and_belongs_to_many :labels
+
   enum status: [:not_started, :in_progress, :completed]
   validates :title, presence: true, length: { maximum: 100 }
   validates :description, length: { maximum: 30000 }

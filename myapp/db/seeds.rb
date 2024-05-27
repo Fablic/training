@@ -6,3 +6,8 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+Label.create(label: 'label 1')
+Label.create(label: 'label 2')
+Label.create(label: 'label 3')
+Label.create(label: 'label 4')

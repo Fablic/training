@@ -32,6 +32,13 @@
     <%= form.select :status, Task.enum_options_for_select_status, { include_blank: "#{Task.human_attribute_name :status}" } %>
   </div>
 
+  <div class="field">
+    <%# <%= form.selec_tag :labels, Label.enum_options_for_select_label, { include_blank: "#{Label.human_attribute_name :label}" } %>
+    <%# <%= form.collection_select(:labels, Label.all, :id, :label, {}, {:multiple => true}) %>
+    <%= form.collection_check_boxes :label_ids, Label.all, :id, :label %>
+
+  </div>
+
   <div class="actions">
     <%= form.submit submit_button %>
   </div>
