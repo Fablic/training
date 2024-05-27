@@ -5,10 +5,10 @@
 
 <%= form_with url: '#', method: :get, local: true do |form| %>
   <%= form.label :sort_by %>
-  <%= form.select :sort_by, [['id', 'id'], ['Create Date', 'created_at'], ['Due Date', 'due']], id: 'selected_sort_by' %>
+  <%= form.select :sort_by, [['Create Date', 'created_at'], ['Due Date', 'due']], id: 'selected_sort_by' %>
 
   <%= form.label :order %>
-  <%= form.select :order, ['asc', 'desc'], id: 'selected_order' %>
+  <%= form.select :order, ['Desc', 'Asc'], id: 'selected_order' %>
 
   <%= form.submit 'Sort' %>
 <% end %>
@@ -17,7 +17,7 @@
 
 <table>
   <thead>
-    <tr>
+    <tr style="text-align:center">
       <td><h2>Id</h2></td>
       <td><h2>Due Date</h2></td>
       <td><h2>Title</h3></td>
@@ -27,8 +27,8 @@
   <tbody>
     <% @tasks.each do |task| %>
       <tr>
-        <td><%= task.id %></td>
-        <td><%= task.due %></td>
+        <td><%= "##{task.id}" %></td>
+        <td><%= l task.due %></td>
         <td><h3><%= task.title %></h3></td>
         <td><%= button_to "Delete", task_path(task), method: :delete, id: task.id %></td>
       </tr>

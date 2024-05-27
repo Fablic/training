@@ -1,7 +1,7 @@
 class TasksController < ApplicationController
   def index
     sort_by = params[:sort_by] || 'created_at'
-    order = params[:order] || 'desc'
+    order = (params[:order] || 'desc').downcase
     @tasks = Task.order("#{sort_by} #{order}")
   end
 
