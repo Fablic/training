@@ -3,14 +3,17 @@ class TasksController < ApplicationController
     @tasks = Task.order(due: :desc)
   end
 
-  def new; end
+  def new 
+    @new_task = Task.new
+  end
 
   def create
-    @new_task = Task.new(params.require(:task).permit(:title, :description))
-    @new_task.save
-
-    flash[:success] = 'New task was created successfully!'
-    redirect_to tasks_path
+    @new_task = Task.new(task_params)
+    if @new_task.save
+      redirect_to tasks_path, notice: 'New task was created successfully!'
+    else
+      render :new
+    end
   end
 
   def show
@@ -23,22 +26,27 @@ class TasksController < ApplicationController
 
   def update
     @task = find_task(params[:id])
-    @task.update(params.require(:task).permit(:title, :description))
+    if @task.update(task_params)
+      redirect_to tasks_path, notice: 'Edit task successfully!'
+    else
+      render :edit
+    end
 
-    flash[:notice] = 'Edit task successfully!'
-    redirect_to tasks_path
   end
 
   def destroy
     @task = Task.find(params[:id])
     @task.destroy
 
-    flash[:alert] = 'Deleted task successfully!'
-    redirect_to tasks_path
+    redirect_to tasks_path, notice: 'Deleted task successfully!'
   end
 
   private 
   def find_task(id)
     Task.find(id)
+  end
+
+  def task_params
+    params.require(:task).permit(:title, :description, :due)
   end
 end

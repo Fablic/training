@@ -1,4 +1,8 @@
 ja:
+  time:
+    formats:
+      default: "%Y-%m-%d %H:%M:%S"
+      field: "%Y-%m-%dT%H:%M:%S"
   hello: "こんにちは"
   errors:
     messages:
