@@ -9,7 +9,6 @@
 
 
 ## テーブル設計
-\* はNOT NULL
 
 テーブルは以下の4種類
 - users
@@ -20,30 +19,43 @@
 ### users
 first_name, last_nameは削除しました。nameをlogin_nameに変更しました。
 
-| Name         | Index | Nullable | Default | Note            |
-| ------------ | ----- | -------- | ------- | --------------- |
-| id           |       | no       | | |
-| login_name   |   x   | no       | | |
-| password     |       | no       | | |
-| status       |       | no       | active | active, inactive|
-| created_at   |       | no       | | |
-| updated_at   |       | no       | | |
-| deleted_at   |       | yes      | NULL | |
+| Name         | Nullable | Default | Note            |
+| ------------ | -------- | ------- | --------------- |
+| id           | no       | | |
+| login_name   | no       | | |
+| password     | no       | | |
+| role         | no       | user | admin, standard|
+| status       | no       | active | active, inactive|
+| created_at   | no       | | |
+| updated_at   | no       | | |
+| deleted_at   | yes      | NULL | |
+
+#### index of users
+- idx_users_login_name (login_name)
+
 
 ### tasks
 
-| Name         | Index | Nullable | Default | Note               |
-| ------------ | ----- | -------- | ------- | ------------------ |
-| id           |       | no       | | |
-| user_id      |       | no       | | |
-| title        |       | no       | | |
-| description  |       | yes      | NULL | |
-| status       |   x   | no       | open | open, medium, closed|
-| due_date     |       | no       | | |
-| priority     |       | no       | high | high, medium, low   |
-| created_at   |       | no       | | |
-| updated_at   |       | no       | | |
-| deleted_at   |       | yes      | NULL | |
+| Name         | Nullable | Default | Note               |
+| ------------ | -------- | ------- | ------------------ |
+| id           | no       | | |
+| user_id      | no       | | |
+| title        | no       | | |
+| description  | yes      | NULL | |
+| status       | no       | open | open, medium, closed|
+| due_date     | no       | | |
+| priority     | no       | high | high, medium, low   |
+| created_at   | no       | | |
+| updated_at   | no       | | |
+| deleted_at   | yes      | NULL | |
+
+#### index of tasks
+- idx_tasks_on_priority (title)
+- idx_tasks_on_due_date (description)
+- idx_tasks_on_status (status)
+- idx_tasks_on_priority (priority)
+- idx_tasks_on_due_date (due_date)
+
 
 ### task_to_labels
 不要なnameカラムを削除しました。
