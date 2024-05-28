@@ -30,6 +30,8 @@
         <td><%= "##{task.id}" %></td>
         <td><%= l task.due %></td>
         <td><h3><%= task.title %></h3></td>
+        <td><%= status_label(task)%></td>
+
         <td><%= button_to "Delete", task_path(task), method: :delete, id: task.id %></td>
       </tr>
     <% end %>

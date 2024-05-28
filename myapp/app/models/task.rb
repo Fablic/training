@@ -1,7 +1,7 @@
 require 'time'
 
 class Task < ApplicationRecord
-  enum status: { pending: 0, in_progress: 1, done: 2 }
+  enum status: { pending: 0, in_progress: 1, completed: 2 }
 
   validates :title, length: { in: 5..30, too_short: 'please input more than %{count} characters', too_long: '%{count} characters is the maximum allowed' }
   validates :description, length: { in: 10..300, too_short: 'please input more than %{count} characters', too_long: '%{count} characters is the maximum allowed' }
