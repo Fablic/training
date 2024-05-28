@@ -19,4 +19,8 @@ class Task < ApplicationRecord
   def self.filter_status(status)
     Task.where(status: "#{status}")
   end
+
+  def self.filter_labels(label_ids)
+    Task.where(labels: "#{label_ids}")
+  end
 end

@@ -7,6 +7,7 @@
                   Task.enum_options_for_select_status, 
                   { include_blank: "#{Task.human_attribute_name :status}",
                     :selected => params[:status] }) %>
+  <%= form.collection_check_boxes :label_ids, Label.all, :id, :label %>
   <%= submit_tag (t'.filter') %>
 <% end %>
 <table>
@@ -21,7 +22,6 @@
       <th colspan="3"></th>
     </tr>
   </thead>
-
   <tbody>
     <% @tasks.each do |task| %>
       <tr>

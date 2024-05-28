@@ -8,6 +8,7 @@ class TasksController < ApplicationController
     @tasks = Task.all
     @tasks = @tasks.filter_status(params[:status]) if params[:status].present?
     @tasks = @tasks.search_title(params[:search]) if params[:search].present?
+    @tasks = @tasks.filter_labels(params[:label_ids]) if params[:label_ids].present?
 
     # For sorting function
     if params[:sort].presence_in(Task.column_names)
@@ -21,6 +22,7 @@ class TasksController < ApplicationController
 
     # For pagination
     @tasks = @tasks.page(params[:page]).per(TASKS_PER_PAGE)
+    puts @tasks
   end
 
   def new
