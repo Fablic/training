@@ -51,7 +51,6 @@ first_name, last_nameは削除しました。nameをlogin_nameに変更しまし
 
 #### index of tasks
 - idx_tasks_on_priority (title)
-- idx_tasks_on_due_date (description)
 - idx_tasks_on_status (status)
 - idx_tasks_on_priority (priority)
 - idx_tasks_on_due_date (due_date)
