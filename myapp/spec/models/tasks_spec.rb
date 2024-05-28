@@ -55,4 +55,26 @@ RSpec.describe "Tasks", type: :model do
       end
     end
   end
+
+  describe "search" do
+    context "title" do
+      let!(:task1) { Task.create(title: "test title 1") }
+      let!(:task2) { Task.create(title: "test title 2") }
+      let!(:task3) { Task.create(title: "test title 3") }
+      it "find a task with its title 'test title 1'" do
+        expect(Task.search_title("1")[0][:title]).to eq "test title 1"
+      end
+    end
+  end
+
+  describe "filter" do
+    context "status" do
+      let!(:task1) { Task.create(title: "test title 1", status: "not_started") }
+      let!(:task2) { Task.create(title: "test title 2", status: "in_progress") }
+      let!(:task3) { Task.create(title: "test title 3", status: "completed") }
+      it "find a task with its status 'in_progress'" do
+        expect(Task.filter_status("in_progress")[0][:status]).to eq "in_progress"
+      end
+    end
+  end
 end

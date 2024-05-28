@@ -12,18 +12,34 @@
 <% if flash[:notice] %>
   <p><%= flash[:notice] %></p>
 <% end %>
-<%= form_with(model: task, local: true) do |form| %>
-  <div class="field">
+<%= form_with(model: task, local: true, class: 'form-margin') do |form| %>
+  <div class="form-group">
     <%= form.label :title %>
-    <%= form.text_field :title, id: :task_title %>
+    <%= form.text_field :title, id: :task_title, :class => 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :description %>
+    <%= form.text_area :description, id: :task_description, :class => 'form-control' %>
   </div>
 
   <div class="field">
-    <%= form.label :description %>
-    <%= form.text_area :description, id: :task_description %>
+    <%= form.label :expiration_date %>
+    <%= form.datetime_local_field :expiration_date, id: :task_expiration_date %>
+  </div>
+
+  <div class="field">
+    <%= form.label :status %>
+    <%= form.select :status, Task.enum_options_for_select_status, { include_blank: "#{Task.human_attribute_name :status}", :class => "form-select"} %>
   </div>
 
   <div class="actions">
-    <%= form.submit submit_button %>
+    <%= form.submit submit_button, class: 'btn btn-primary' %>
   </div>
 <% end %>
+
+<style>
+.form-margin {
+  margin: 20px
+}
+</style>

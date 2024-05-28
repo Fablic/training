@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 2024_05_23_053524) do
     t.text "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.datetime "expiration_date"
     t.bigint "user_id", null: false
     t.index ["user_id"], name: "index_tasks_on_user_id"
   end
@@ -28,6 +29,9 @@ ActiveRecord::Schema.define(version: 2024_05_23_053524) do
     t.string "password", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.datetime "expiration_date"
+    t.integer "status", default: 0, null: false
+    t.index ["title"], name: "index_tasks_on_title"
   end
 
   add_foreign_key "tasks", "users"

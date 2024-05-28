@@ -1,7 +1,18 @@
-<h1><%= t '.title', task_title: @task.title %></h1>
+
+<h1 class='text-center'><%= t('.title') %></h1>
 <%= render 'flash' %>
-
-<h2><%= @task.title %></h2>
-<p><%= @task.description %></p>
-
-<p><%= link_to t('tasks.index.title'), tasks_path %></p>
+<div class="container mt-5">
+  <div class="card">
+    <div class="card-header">
+      <%= Task.human_attribute_name(:title) %>: 
+      <%= @task.title %>
+    </div>
+    <div class="card-body">
+      <p class="card-text"><%= Task.human_attribute_name(:description) %></p>
+      <p class="card-text"><%= @task.description %></p>
+      <p><%= @task.expiration_date.nil? ? '' : @task.expiration_date.strftime("%Y-%m-%d %H:%M:%S") %></p>
+      <p><%= Task.human_attribute_name(:status) %>: <%= t("activerecord.attributes.task.statuses.#{@task.status}") %></p>
+    </div>
+  </div>
+  <%= link_to t('attributes.back'), tasks_path, class: "btn btn-secondary" %>
+</div>
