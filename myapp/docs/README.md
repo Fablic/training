@@ -24,7 +24,7 @@ first_name, last_nameは削除しました。nameをlogin_nameに変更しまし
 | id           | no       | | |
 | login_name   | no       | | |
 | password     | no       | | |
-| role         | no       | user | admin, standard|
+| role         | no       | standard | admin, standard|
 | status       | no       | active | active, inactive|
 | created_at   | no       | | |
 | updated_at   | no       | | |
