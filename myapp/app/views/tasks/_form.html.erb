@@ -33,6 +33,11 @@
     <%= form.select :status, Task.enum_options_for_select_status, { include_blank: "#{Task.human_attribute_name :status}", :class => "form-select"} %>
   </div>
 
+  <div class="field">
+    <%= form.label :user %>
+    <%= form.select :user_id, User.all.map { |user| [user[:name], user[:id]] }, { include_blank: "#{User.human_attribute_name :user}", :class => "form-select"} %>
+  </div>
+
   <div class="actions">
     <%= form.submit submit_button, class: 'btn btn-primary' %>
   </div>
