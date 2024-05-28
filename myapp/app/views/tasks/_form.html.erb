@@ -35,7 +35,7 @@
 
   <div class="field">
     <%= form.label :user %>
-    <%= form.select :user_id, User.all.map { |user| [user[:name], user[:id]] }, { include_blank: "#{User.human_attribute_name :user}", :class => "form-select"} %>
+    <%= form.select :user_id, User.all.map { |user| [user[:name], user[:id]] }, { include_blank: "#{Task.human_attribute_name :user}", :class => "form-select"} %>
   </div>
 
   <div class="actions">

@@ -86,7 +86,7 @@ RSpec.describe "Tasks", type: :system do
     it "expect showing the success message" do
       fill_in "task_title", with: "task title"
       fill_in "task_description", with: "task description"
-      select 'user 1', from: 'task[user_id]'
+      select "user 1", from: "task[user_id]"
 
       click_button I18n.t("tasks.new.create_button")
 

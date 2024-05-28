@@ -75,4 +75,4 @@ gem "kaminari"
 
 gem "bootstrap", "~> 5.0.2"
 
-gem 'bullet'
+gem "bullet"
