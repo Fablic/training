@@ -1,0 +1,25 @@
+<div class="container mt-5">
+  <h1 class="mb-4">Tasks</h1>
+
+  <%= link_to 'New Task', new_task_path, class: 'btn btn-primary mb-3' %>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th colspan="2"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @tasks.each do |task| %>
+        <tr>
+          <td><%= link_to task.title, task %></td>
+          <td><%= task.description %></td>
+          <td><%= link_to 'Edit', edit_task_path(task), class: 'btn btn-warning btn-sm' %></td>
+          <td><%= button_to 'Delete', task, method: :delete, class: 'btn btn-danger btn-sm', data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
