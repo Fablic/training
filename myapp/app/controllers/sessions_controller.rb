@@ -8,9 +8,9 @@ class SessionsController < ApplicationController
     @user = User.authenticate(params[:session][:email], params[:session][:password])
     if @user
       session[:user_id] = @user.id
-      redirect_to tasks_path
+      redirect_to tasks_path, notice: t("sessions.create.notice")
     else
-      redirect_to login_path
+      redirect_to login_path, alert: t("sessions.create.alert")
     end
   end
 

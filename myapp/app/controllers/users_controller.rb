@@ -9,9 +9,9 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       session[:user_id] = @user.id
-      redirect_to tasks_path, notice: t("users.create.notice") # TODO: ユーザが作成されました
+      redirect_to tasks_path, notice: t("users.create.notice")
     else
-      render :new, alert: t("users.create.alert") # TODO: ユーザが作成されませんでした。
+      redirect_to signup_path, alert: t("users.create.alert")
     end
   end
 
