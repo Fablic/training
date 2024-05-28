@@ -6,7 +6,7 @@ RSpec.describe "Tasks", type: :system do
   describe "test with dummy data" do
     # Create dummy data
     let!(:tasks) do
-      (1..9).map do |i|
+      (1..5).map do |i|
         Task.create(title: "test title #{i}",
                     description: "test description #{i}",
                     created_at: i.days.ago,
@@ -28,10 +28,10 @@ RSpec.describe "Tasks", type: :system do
         end
       end
 
-      it "expect expiration_date descending order" do
+      it "expect expiration_date ascending order" do
         click_link I18n.t("activerecord.attributes.task.expiration_date")
         tasks.each_with_index do |tsk, idx|
-          expect(page.all("tr")[idx + 1]).to have_content tsk[:expiration_date].strftime("%Y-%m-%d %H:%M:%S")
+          expect(page.all("tr")[-idx - 1]).to have_content tsk[:expiration_date].strftime("%Y-%m-%d %H:%M:%S")
         end
       end
     end
@@ -129,7 +129,7 @@ RSpec.describe "Tasks", type: :system do
     context "title" do
       it "find a task with its title 'test title 1'" do
         fill_in "search", with: "test title 1"
-        click_button I18n.t("tasks.index.search")
+        click_button I18n.t("tasks.index.filter")
         expect(Task.search_title("1")[0][:title]).to eq "test title 1"
       end
     end
@@ -150,4 +150,39 @@ RSpec.describe "Tasks", type: :system do
       end
     end
   end
+
+  describe "pagination" do
+    let!(:tasks) do
+      (1..20).map do |i|
+        Task.create(title: "test title #{i}",
+                    description: "test description #{i}")
+      end
+    end
+    before do
+      visit tasks_path
+    end
+    context "next page" do
+      it "find tasks in the page 2" do
+        tasks[0..4].each_with_index do |tsk, idx|
+          expect(page.all("tr")[idx + 1]).to have_content tsk[:created_at].strftime("%Y-%m-%d %H:%M:%S")
+        end
+        click_link I18n.t("views.pagination.next").tr(' &rsaquo;', '')
+        tasks[5..9].each_with_index do |tsk, idx|
+          expect(page.all("tr")[idx + 1]).to have_content tsk[:created_at].strftime("%Y-%m-%d %H:%M:%S")
+        end
+      end
+    end
+    context "last page" do
+      it "find tasks in the last page" do
+        tasks[0..4].each_with_index do |tsk, idx|
+          expect(page.all("tr")[idx + 1]).to have_content tsk[:created_at].strftime("%Y-%m-%d %H:%M:%S")
+        end
+        click_link I18n.t("views.pagination.next").tr(' &rsaquo;', '')
+        tasks[15..19].each_with_index do |tsk, idx|
+          expect(page.all("tr")[idx + 1]).to have_content tsk[:created_at].strftime("%Y-%m-%d %H:%M:%S")
+        end
+      end
+    end
+  end
+  
 end

@@ -2,20 +2,25 @@
 
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
+  TASKS_PER_PAGE = 5
 
   def index
-    if params[:search]
-      @tasks = Task.search_title(params[:search])
-    elsif params[:status] && Task.statuses.include?(params[:status])
-      @tasks = Task.filter_status(params[:status])
+    @tasks = Task.all
+    @tasks = @tasks.filter_status(params[:status]) if params[:status].present?
+    @tasks = @tasks.search_title(params[:search]) if params[:search].present?
+
+    # For sorting function
+    if params[:sort].presence_in(Task.column_names)
+      sort_column = params[:sort]
+      sort_direction = params[:is_order_desc] == "true" ? "DESC" : "ASC"
     else
-      @tasks = Task.all
+      sort_column = "created_at"
+      sort_direction = "DESC"
     end
-    session[:is_order_desc] = !session.fetch(:is_order_desc, false)
-    sort_column = params[:sort].presence_in(Task.column_names) ? params[:sort] : "created_at"
-    sort_direction = session[:is_order_desc] ? "DESC" : "ASC"
     @tasks = @tasks.order("#{sort_column} #{sort_direction}")
-    @tasks
+
+    # For pagination
+    @tasks = @tasks.page(params[:page]).per(TASKS_PER_PAGE)
   end
 
   def new
