@@ -31,7 +31,7 @@ first_name, last_nameは削除しました。nameをlogin_nameに変更しまし
 | deleted_at   | yes      | NULL | |
 
 #### index of users
-- idx_users_login_name (login_name)
+- idx_users_on_login_name (login_name)
 
 
 ### tasks
