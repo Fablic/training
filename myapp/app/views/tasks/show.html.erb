@@ -1,5 +1,18 @@
-<h1><%= @task.title %></h1>
-<p><%= @task.description %></p>
-
-<%= link_to 'Edit', edit_task_path(@task) %>
-<%= link_to 'Back', tasks_path %>
+<div class="container mt-5">
+  <div class="card shadow-lg">
+    <div class="card-header bg-primary text-white">
+      <h1 class="card-title">Task Details</h1>
+    </div>
+    <div class="card-body">
+      <h3 class="card-subtitle mb-2 text-muted">Title: <%= @task.title %></h3>
+      <p class="card-text">Description: <%= @task.description %></p>
+    </div>
+    <div class="card-footer d-flex justify-content-between">
+      <%= link_to 'Edit', edit_task_path(@task), class: 'btn btn-warning' %>
+      <div>
+        <%= link_to 'Back', tasks_path, class: 'btn btn-secondary mr-2' %>
+        <%= link_to 'Delete', @task, method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure?' } %>
+      </div>
+    </div>
+  </div>
+</div>

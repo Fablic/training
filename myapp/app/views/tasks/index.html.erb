@@ -3,23 +3,20 @@
 
   <%= link_to 'New Task', new_task_path, class: 'btn btn-primary mb-3' %>
 
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>Title</th>
-        <th>Description</th>
-        <th colspan="2"></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @tasks.each do |task| %>
-        <tr>
-          <td><%= link_to task.title, task %></td>
-          <td><%= task.description %></td>
-          <td><%= link_to 'Edit', edit_task_path(task), class: 'btn btn-warning btn-sm' %></td>
-          <td><%= button_to 'Delete', task, method: :delete, class: 'btn btn-danger btn-sm', data: { confirm: 'Are you sure?' } %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+  <div class="row">
+    <% @tasks.each do |task| %>
+      <div class="col-md-3"> <!-- 调整列的宽度 -->
+        <div class="card mb-4" style="height: 250px;"> <!-- 调整卡片的高度 -->
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title">Title: <%= link_to task.title, task %></h5> <!-- 添加链接到 show 页面 -->
+            <p class="card-text" style="flex-grow: 1; max-height: 100px; overflow: hidden;">Description: <%= task.description %></p>
+            <div class="d-flex justify-content-between align-items-end mt-auto">
+              <%= link_to 'Edit', edit_task_path(task), class: 'btn btn-warning btn-sm' %>
+              <%= button_to 'Delete', task, method: :delete, class: 'btn btn-danger btn-sm' %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
 </div>
