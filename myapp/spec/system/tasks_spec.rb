@@ -166,7 +166,7 @@ RSpec.describe "Tasks", type: :system do
         tasks[0..4].each_with_index do |tsk, idx|
           expect(page.all("tr")[idx + 1]).to have_content tsk[:created_at].strftime("%Y-%m-%d %H:%M:%S")
         end
-        click_link I18n.t("views.pagination.next").tr(' &rsaquo;', '')
+        click_link I18n.t("views.pagination.next").tr(" &rsaquo;", "")
         tasks[5..9].each_with_index do |tsk, idx|
           expect(page.all("tr")[idx + 1]).to have_content tsk[:created_at].strftime("%Y-%m-%d %H:%M:%S")
         end
@@ -177,12 +177,11 @@ RSpec.describe "Tasks", type: :system do
         tasks[0..4].each_with_index do |tsk, idx|
           expect(page.all("tr")[idx + 1]).to have_content tsk[:created_at].strftime("%Y-%m-%d %H:%M:%S")
         end
-        click_link I18n.t("views.pagination.next").tr(' &rsaquo;', '')
+        click_link I18n.t("views.pagination.next").tr(" &rsaquo;", "")
         tasks[15..19].each_with_index do |tsk, idx|
           expect(page.all("tr")[idx + 1]).to have_content tsk[:created_at].strftime("%Y-%m-%d %H:%M:%S")
         end
       end
     end
   end
-  
 end
