@@ -5,7 +5,7 @@ class TasksController < ApplicationController
   TASKS_PER_PAGE = 5
 
   def index
-    @tasks = Task.all
+    @tasks = Task.all.includes([:user])
     @tasks = @tasks.filter_status(params[:status]) if params[:status].present?
     @tasks = @tasks.search_title(params[:search]) if params[:search].present?
 
@@ -64,6 +64,6 @@ class TasksController < ApplicationController
     end
 
     def task_params
-      params.require(:task).permit(:title, :description, :expiration_date, :status)
+      params.require(:task).permit(:title, :description, :expiration_date, :status, :user_id)
     end
 end

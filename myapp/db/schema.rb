@@ -20,6 +20,18 @@ ActiveRecord::Schema.define(version: 2024_05_24_044922) do
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "expiration_date"
     t.integer "status", default: 0, null: false
+    t.bigint "user_id", null: false
     t.index ["title"], name: "index_tasks_on_title"
+    t.index ["user_id"], name: "index_tasks_on_user_id"
   end
+
+  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "email", null: false
+    t.string "password", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  add_foreign_key "tasks", "users"
 end

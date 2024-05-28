@@ -74,3 +74,5 @@ gem "date", "3.3.4"
 gem "kaminari"
 
 gem "bootstrap", "~> 5.0.2"
+
+gem "bullet"
