@@ -30,6 +30,19 @@
   </p>
 
   <p>
+    <%= form.label :status, 'Select Status:' %>
+    <br>
+    <%= form.radio_button :status, 'pending' %>
+    <%= form.label :status_pending, 'Pending' %>
+    <br>
+    <%= form.radio_button :status, 'in_progress' %>
+    <%= form.label :status_in_progress, 'In Progress' %>
+    <br>
+    <%= form.radio_button :status, 'completed' %>
+    <%= form.label :status_completed, 'Completed' %>
+  </p>
+
+  <p>
     <%= form.submit %>
   </p>
 <% end %>
