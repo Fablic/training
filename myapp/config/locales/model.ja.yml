@@ -10,6 +10,7 @@ ja:
         # view側： Task.human_attribute_name :title /　t("activerecord.attributes.task.title")と同じ
         title: 'タイトル'
         description: '説明'
+        user: 'ユーザ'
         status: 'ステータス'
         statuses:
           not_started: '未着手'

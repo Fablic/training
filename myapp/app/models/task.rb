@@ -2,6 +2,7 @@
 
 class Task < ApplicationRecord
   enum status: [:not_started, :in_progress, :completed]
+  belongs_to :user, optional: false
   validates :title, presence: true, length: { maximum: 100 }
   validates :description, length: { maximum: 30000 }
   validates :status, presence: true
