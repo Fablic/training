@@ -40,8 +40,8 @@
         <td><%= status_label(task)%></td>
 
         <%# todo %>
-        <td><%= button_to "Edit", edit_task_path(task), method: :get, id: task.id %></td>
-        <td><%= button_to "Delete", task_path(task), method: :delete, id: task.id %></td>
+        <td><%= button_to "Edit", edit_task_path(task), method: :get, id: "Edit#{task.id}" %></td>
+        <td><%= button_to "Delete", task_path(task), method: :delete, id: "Delete#{task.id}" %></td>
       </tr>
     <% end %>
   </tbody>
