@@ -12,9 +12,9 @@ RSpec.describe "Users", type: :system do
         fill_in "user_name", with: "user 1"
         fill_in "user_email", with: "user@example.com"
         fill_in "user_password", with: "123"
-        
+
         click_button "Sign Up"
-  
+
         expect(page).to have_content "user 1"
         expect(page).to have_content I18n.t("users.create.notice")
       end
@@ -26,9 +26,9 @@ RSpec.describe "Users", type: :system do
         fill_in "user_name", with: "user 1"
         fill_in "user_email", with: "XXX"
         fill_in "user_password", with: "123"
-        
+
         click_button "Sign Up"
-  
+
         expect(page).to have_content I18n.t("users.create.alert")
       end
     end
@@ -43,9 +43,9 @@ RSpec.describe "Users", type: :system do
       it "valid" do
         fill_in "session_email", with: "user@example.com"
         fill_in "session_password", with: "123"
-        
+
         click_button "Login"
-  
+
         expect(page).to have_content "user 1"
         expect(page).to have_content I18n.t("sessions.create.notice")
       end
@@ -56,9 +56,9 @@ RSpec.describe "Users", type: :system do
       it "valid" do
         fill_in "session_email", with: "user@example.com"
         fill_in "session_password", with: "XXXXXX"
-        
+
         click_button "Login"
-  
+
         expect(page).to have_content I18n.t("sessions.create.alert")
       end
     end
