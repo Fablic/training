@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  get 'maintenance', to: 'static_pages#maintenance'
   resources :tasks
   get "/", to: "tasks#index"
   get "*path", controller: "application", action: "render_404"
