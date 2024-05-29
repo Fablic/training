@@ -3,9 +3,25 @@
 class TasksController < ApplicationController
   before_action :require_user
   before_action :set_task, only: [:show, :edit, :update, :destroy]
+  TASKS_PER_PAGE = 5
 
   def index
-    @tasks = Task.where(user_id: session[:user_id]).order(created_at: :desc)
+    @tasks = Task.all.includes([:user])
+    @tasks = @tasks.filter_status(params[:status]) if params[:status].present?
+    @tasks = @tasks.search_title(params[:search]) if params[:search].present?
+
+    # For sorting function
+    if params[:sort].presence_in(Task.column_names)
+      sort_column = params[:sort]
+      sort_direction = params[:is_order_desc] == "true" ? "DESC" : "ASC"
+    else
+      sort_column = "created_at"
+      sort_direction = "DESC"
+    end
+    @tasks = @tasks.order("#{sort_column} #{sort_direction}")
+
+    # For pagination
+    @tasks = @tasks.page(params[:page]).per(TASKS_PER_PAGE)
   end
 
   def new
@@ -49,6 +65,6 @@ class TasksController < ApplicationController
     end
 
     def task_params
-      params.require(:task).permit(:title, :description)
+      params.require(:task).permit(:title, :description, :expiration_date, :status, :user_id)
     end
 end

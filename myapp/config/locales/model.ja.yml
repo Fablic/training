@@ -7,9 +7,16 @@ ja:
     # model毎に定義したいattributesを記述
     attributes:
       task:
-        # view側： Task.human_attribute_name :title /　t("activerecord.attributes.user.name")と同じ
+        # view側： Task.human_attribute_name :title /　t("activerecord.attributes.task.title")と同じ
         title: 'タイトル'
         description: '説明'
+        user: 'ユーザ'
+        status: 'ステータス'
+        statuses:
+          not_started: '未着手'
+          in_progress: '着手中'
+          completed: '完了'
+        expiration_date: '終了期限'
       user:
         # view側： Task.human_attribute_name :title /　t("activerecord.attributes.user.name")と同じ
         name: '名前'
