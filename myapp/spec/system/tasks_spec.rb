@@ -5,6 +5,8 @@ require "rails_helper"
 RSpec.describe "Tasks", type: :system do
   describe "test with dummy data" do
     let!(:user1) { User.create(name: "user 1", email: "user1@example.com", password: "123") }
+    let!(:rspec_session) { { user_id: user1.id } }
+
     # Create dummy data
     let!(:tasks) do
       (1..5).map do |i|
@@ -79,6 +81,7 @@ RSpec.describe "Tasks", type: :system do
 
   describe "create" do
     let!(:user1) { User.create(name: "user 1", email: "user1@example.com", password: "123") }
+    let!(:rspec_session) { { user_id: user1.id } }
     before do
       visit new_task_path
     end
@@ -86,7 +89,6 @@ RSpec.describe "Tasks", type: :system do
     it "expect showing the success message" do
       fill_in "task_title", with: "task title"
       fill_in "task_description", with: "task description"
-      select "user 1", from: "task[user_id]"
 
       click_button I18n.t("tasks.new.create_button")
 
@@ -97,6 +99,8 @@ RSpec.describe "Tasks", type: :system do
   end
 
   describe "validation" do
+    let!(:user1) { User.create(name: "user 1", email: "user1@example.com", password: "123") }
+    let!(:rspec_session) { { user_id: user1.id } }
     before do
       visit new_task_path
     end
@@ -125,6 +129,7 @@ RSpec.describe "Tasks", type: :system do
 
   describe "search" do
     let!(:user1) { User.create(name: "user 1", email: "user1@example.com", password: "123") }
+    let!(:rspec_session) { { user_id: user1.id } }
     let!(:task1) { Task.create(title: "test title 1", user_id: user1.id) }
     let!(:task2) { Task.create(title: "test title 2", user_id: user1.id) }
     let!(:task3) { Task.create(title: "test title 3", user_id: user1.id) }
@@ -142,6 +147,7 @@ RSpec.describe "Tasks", type: :system do
 
   describe "filter" do
     let!(:user1) { User.create(name: "user 1", email: "user1@example.com", password: "123") }
+    let!(:rspec_session) { { user_id: user1.id } }
     let!(:task1) { Task.create(title: "test title 1", status: "not_started", user_id: user1.id) }
     let!(:task2) { Task.create(title: "test title 2", status: "in_progress", user_id: user1.id) }
     let!(:task3) { Task.create(title: "test title 3", status: "completed", user_id: user1.id) }
@@ -159,6 +165,7 @@ RSpec.describe "Tasks", type: :system do
 
   describe "pagination" do
     let!(:user1) { User.create(name: "user 1", email: "user1@example.com", password: "123") }
+    let!(:rspec_session) { { user_id: user1.id } }
     let!(:tasks) do
       (1..20).map do |i|
         Task.create(title: "test title #{i}",

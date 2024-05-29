@@ -30,7 +30,7 @@ RSpec.describe "Users", type: :model do
     context "Login with a wrong information" do
       let!(:user1) { User.create(name: "user 1", email: "user@example.com", password: "123") }
       it "not valid" do
-        expect(User.authenticate("user", "123")).to be_valid
+        expect(User.authenticate("user", "123")).to be_nil
       end
     end
   end
