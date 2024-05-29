@@ -1,6 +1,10 @@
 <h1>Edit the task</h1>
 <%= form_with(model: @task, local: true, data: {turbo: false}) do |form| %>
 
+  <button>
+    <%= link_to 'Back to home', tasks_path, method: :get %>
+  </button>
+
   <% if @task.errors.any? %>
     <div>
       <p>You have some invalid inputs!</p>
@@ -28,6 +32,19 @@
     <%= form.label :due %>
     <br>
     <%= form.datetime_local_field :due %>
+  </p>
+
+  <p>
+    <%= form.label :status, 'Select Status:' %>
+    <br>
+    <%= form.radio_button :status, 'pending' %>
+    <%= form.label :status_pending, 'Pending' %>
+    <br>
+    <%= form.radio_button :status, 'in_progress' %>
+    <%= form.label :status_in_progress, 'In Progress' %>
+    <br>
+    <%= form.radio_button :status, 'completed' %>
+    <%= form.label :status_completed, 'Completed' %>
   </p>
   
   <p>
