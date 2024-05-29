@@ -1,8 +1,17 @@
 class TasksController < ApplicationController
   def index
-    sort_by = params[:sort_by] || 'created_at'
-    order = (params[:order] || 'desc').downcase
-    @tasks = Task.order("#{sort_by} #{order}")
+    if !params.except(:controller, :action).empty?
+      Rails.logger.info(params.keys)
+      sort_by = params[:sort_by]
+      order = params[:order].downcase
+
+      query_title = params[:query_title] || ''
+      query_status = params[:query_status]
+    
+      @tasks = Task.search_with_sort(query_title, query_status, sort_by, order)
+    else
+      @tasks = Task.order(created_at: :desc)
+    end
   end
 
   def new 

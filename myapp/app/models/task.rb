@@ -10,6 +10,16 @@ class Task < ApplicationRecord
 
   validate :due_cannot_be_earlier_than_now, if: :due_changed?
 
+  def self.search_with_sort(query_title, query_status, sort_by, order)
+    if query_status.empty?
+      where('title LIKE ?', "%#{query_title}%").order("#{sort_by} #{order}")
+    else 
+      where('title LIKE ?', "%#{query_title}%").where(status: query_status).order("#{sort_by} #{order}")
+    end
+  end
+
+  private 
+
   def due_cannot_be_earlier_than_now
     if due.present? && due < Time.zone.now.beginning_of_minute
       errors.add(:due, "can't be earlier than now!")
