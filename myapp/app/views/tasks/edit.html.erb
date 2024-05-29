@@ -1,0 +1,31 @@
+<div class="container mt-5">
+  <h1><%= action_name == 'new' ? 'New Task' : 'Edit Task' %></h1>
+
+  <%= form_with(model: @task, local: true, class: 'form') do |form| %>
+    <% if @task.errors.any? %>
+      <div class="alert alert-danger">
+        <h2><%= pluralize(@task.errors.count, "error") %> prohibited this task from being saved:</h2>
+        <ul>
+          <% @task.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="form-group">
+      <%= form.label :title %>
+      <%= form.text_field :title, class: 'form-control' %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :description %>
+      <%= form.text_area :description, class: 'form-control', rows: 5 %>
+    </div>
+
+    <div class="form-group">
+      <%= form.submit action_name == 'new' ? 'Create Task' : 'Update Task', class: 'btn btn-primary' %>
+      <%= link_to 'Back', tasks_path, class: 'btn btn-secondary ml-2' %>
+    </div>
+  <% end %>
+</div>
