@@ -6,8 +6,8 @@ class UsersController < ApplicationController
   def index
     @users = User.
              left_joins(:tasks).
-             select("users.*", 'COUNT(tasks.id) AS tasks_count').
-             group('users.id')
+             select("users.*", "COUNT(tasks.id) AS tasks_count").
+             group("users.id")
   end
 
   def new
@@ -67,7 +67,7 @@ class UsersController < ApplicationController
     def user_params
       params.require(:user).permit(:name, :email, :password)
     end
-    
+
     def set_user
       @user = User.find(params[:id])
     end
