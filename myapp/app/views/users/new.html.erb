@@ -1,13 +1,11 @@
-<div class="login">
-  <div class="container">
-    <div class="form">
-    <h1>Sign up</h1>
-      <%= form_for(@user, url: admin_create_path, method: :post) do |f| %>
-        <%= f.text_field :name, :placeholder => "name" %>
-        <%= f.email_field :email, :placeholder => "Email" %>
-        <%= f.password_field :password, :placeholder => "Password" %>
-        <%= f.submit "Create an account", class: "btn-submit" %>
-      <% end %>
-    </div>
-  </div>
-</div>
+<h1>Sign up</h1>
+
+<%= render 'form', user: @user, submit_button: t('users.new.create_button'), new_account: true %>
+
+<%= link_to t('attributes.back'), users_path, class: "btn btn-secondary margin-left" %>
+
+<style>
+.margin-left {
+  margin-left: 20px;
+}
+</style>

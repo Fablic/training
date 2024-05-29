@@ -9,9 +9,6 @@
   </div>
 <% end %>
 
-<% if flash[:notice] %>
-  <p><%= flash[:notice] %></p>
-<% end %>
 <%= form_with(model: task, local: true, class: 'form-margin') do |form| %>
   <div class="form-group">
     <%= form.label :title %>

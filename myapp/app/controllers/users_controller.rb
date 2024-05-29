@@ -2,8 +2,12 @@
 
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  USERS_PER_PAGE = 5
   def index
-    @users = User.all
+    @users = User.
+             left_joins(:tasks).
+             select("users.*", 'COUNT(tasks.id) AS tasks_count').
+             group('users.id')
   end
 
   def new
