@@ -64,34 +64,4 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
 
-  Capybara.register_driver :remote_chrome do |app|
-    hub_url = "https://chrome:4444/wd/hub"
-    chrome_capabilities = ::Selenium::WebDriver::Remote::Capabilities.chrome(
-      "goog:chromeOptions" => {
-        "args" => %w[no-sandbox headless disable-gpu window-size=1680,1050],
-      },
-    )
-    Capybara::Selenium::Driver.new(app, browser: :remote, url: hub_url, desired_capabilities: chrome_capabilities)
-  end
-
-  config.before(:each, type: :system) do
-    driven_by :rack_test
-  end
-
-  config.before(:each, type: :system, js: true) do
-    driven_by :remote_chrome
-    Capybara.server_host = IPSocket.getaddress(Socket.gethostname)
-    Capybara.server_port = 3000
-    Capybara.app_host = "https://#{Capybara.server_host}:#{Capybara.server_port}"
-  end
-
-  # テストケース共通の事前処理
-  config.before(:each) do
-    # let(:rspec_session) で指定された値を セッションの初期値とします
-    session = defined?(rspec_session) ? rspec_session : {}
-    # destroyメソッドを実行してもエラーにならないようにします（必要であれば）
-    session.class_eval { def destroy; nil; end }
-    # sessionメソッドを上書き
-    allow_any_instance_of(ActionDispatch::Request).to receive(:session).and_return(session)
-  end
 end

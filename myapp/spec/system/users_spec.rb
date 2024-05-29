@@ -23,8 +23,8 @@ RSpec.describe "Users", type: :system do
         visit signup_path
       end
       it "not valid" do
-        fill_in "user_name", with: "user 1"
-        fill_in "user_email", with: "XXX"
+        fill_in "user_name", with: ""
+        fill_in "user_email", with: "user@example.com"
         fill_in "user_password", with: "123"
 
         click_button "Sign Up"
@@ -35,13 +35,13 @@ RSpec.describe "Users", type: :system do
   end
 
   describe "Login" do
-    let!(:user1) { User.create(name: "user 1", email: "user@example.com", password: "123") }
+    let!(:user1) { User.create(name: "user 1", email: "user1@example.com", password: "123") }
     context "login a user" do
       before do
         visit login_path
       end
       it "valid" do
-        fill_in "session_email", with: "user@example.com"
+        fill_in "session_email", with: "user1@example.com"
         fill_in "session_password", with: "123"
 
         click_button "Login"
@@ -53,8 +53,8 @@ RSpec.describe "Users", type: :system do
       before do
         visit login_path
       end
-      it "valid" do
-        fill_in "session_email", with: "user@example.com"
+      it "not valid" do
+        fill_in "session_email", with: "user1@example.com"
         fill_in "session_password", with: "XXXXXX"
 
         click_button "Login"
