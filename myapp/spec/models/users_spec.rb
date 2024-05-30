@@ -34,4 +34,21 @@ RSpec.describe "Users", type: :model do
       end
     end
   end
+
+  describe "delete" do
+    context "delete a user having 3 tasks" do
+      let!(:user1) { create(:user1) }
+      let!(:user2) { create(:user2) }
+      before do
+        create(:task1, user_id: user1.id)
+        create(:task2, user_id: user1.id)
+        create(:task3, user_id: user1.id)
+        create(:task4, user_id: user2.id)
+      end
+      it "tasks deleted" do
+        user1.destroy
+        expect(Task.count).to eq(1)
+      end
+    end
+  end
 end
