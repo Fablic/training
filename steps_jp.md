@@ -292,18 +292,18 @@ chrome://extensions/ を開いて右上のDeveloper modeをオンにして、RKG
   - 今後、PRが大きくなりそうだったらPRを2回以上に分けることを検討しましょう
 
 ### ステップ8: テスト(system spec)を書こう
-- First make sure that these gems are exist in Gemfile
+- 最初に以下のgemがGemfileがあることを確認しましょう
   ```
   group :test do
     gem 'capybara', '>= 2.15'
     gem 'selenium-webdriver'
   end
   ```
-  **Note**: Remove the `webdrivers` gem from your Gemfile. If `webdrivers` is present, it will attempt to  find Chrome in your application’s container.
-  As Chrome isn’t installed  in the Dockerfile, the spec will fail.
+  **Note**: Gemfile から webdrivers gem を削除しましょう。 もし、webdriversが存在するとアプリケーションのコンテナでChromeを探そうとします。
+  ChromeはDockerfileにインストールされていないのでspecは失敗します。
+  
 
-- If you are using Docker, before start testing we need to register a new driver with Capybara that is configured to use the Selenium container, add the below codes to
-  `spec/rails_helper.rb`
+- もしDockerを使用している場合はSeleniumコンテナを使うために設定された新しいドライバをCapybaraに登録する必要があります。以下のコードを`spec/rails_helper.rb`に追加しましょう。
   ```
   Capybara.register_driver :remote_chrome do |app|
     hub_url = 'https://chrome:4444/wd/hub'
