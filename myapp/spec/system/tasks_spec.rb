@@ -34,19 +34,17 @@ RSpec.describe "Tasks", type: :system do
         end
 
         it "expect expiration_date ascending order" do
-          begin
-            click_link I18n.t("activerecord.attributes.task.expiration_date")
-            # click_link I18n.t("activerecord.attributes.task.expiration_date")
+          click_link I18n.t("activerecord.attributes.task.expiration_date")
+          # click_link I18n.t("activerecord.attributes.task.expiration_date")
 
-            expect(page.all("tr")[1]).to have_content task1.expiration_date.strftime("%Y-%m-%d %H:%M:%S")
-            expect(page.all("tr")[2]).to have_content task2.expiration_date.strftime("%Y-%m-%d %H:%M:%S")
-            expect(page.all("tr")[3]).to have_content task3.expiration_date.strftime("%Y-%m-%d %H:%M:%S")
-            expect(page.all("tr")[4]).to have_content task4.expiration_date.strftime("%Y-%m-%d %H:%M:%S")
-            expect(page.all("tr")[5]).to have_content task5.expiration_date.strftime("%Y-%m-%d %H:%M:%S")
-          rescue Selenium::WebDriver::Error::StaleElementReferenceError
-            sleep 1
-            retry
-          end
+          expect(page.all("tr")[1]).to have_content task1.expiration_date.strftime("%Y-%m-%d %H:%M:%S")
+          expect(page.all("tr")[2]).to have_content task2.expiration_date.strftime("%Y-%m-%d %H:%M:%S")
+          expect(page.all("tr")[3]).to have_content task3.expiration_date.strftime("%Y-%m-%d %H:%M:%S")
+          expect(page.all("tr")[4]).to have_content task4.expiration_date.strftime("%Y-%m-%d %H:%M:%S")
+          expect(page.all("tr")[5]).to have_content task5.expiration_date.strftime("%Y-%m-%d %H:%M:%S")
+        rescue Selenium::WebDriver::Error::StaleElementReferenceError
+          sleep 1
+          retry
         end
       end
 

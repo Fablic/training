@@ -4,7 +4,6 @@ ja:
     models:
       task: 'タスク'
       user: 'ユーザ'
-      user: 'ユーザ'
     # model毎に定義したいattributesを記述
     attributes:
       task:

@@ -101,7 +101,6 @@ RSpec.describe "Users", type: :system do
         expect(page).to have_content task4.title
         expect(page).to have_content task5.title
       end
-
     end
   end
 end
