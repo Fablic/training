@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
+  before_action :require_user, except: [:new, :create]
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   USERS_PER_PAGE = 5
   def index
