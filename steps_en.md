@@ -175,7 +175,7 @@ Create CRUD to manage the tasks. First of all, let's make it with a simple struc
   **Note**: Remove the `webdrivers` gem from your Gemfile. If `webdrivers` is present, it will attempt to  find Chrome in your application’s container.
   As Chrome isn’t installed  in the Dockerfile, the spec will fail.
 
-- Before start testing we need to register a new driver with Capybara that is configured to use the Selenium container, add the below codes to
+- If you are using Docker, before start testing we need to register a new driver with Capybara that is configured to use the Selenium container, add the below codes to
   `spec/rails_helper.rb`
   ```
   Capybara.register_driver :remote_chrome do |app|
