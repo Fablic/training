@@ -3,6 +3,7 @@ ja:
   activerecord:
     models:
       task: 'タスク'
+      user: 'ユーザ'
     # model毎に定義したいattributesを記述
     attributes:
       task:
@@ -31,6 +32,20 @@ ja:
     delete:
       notice: 'タスクの削除に成功しました。'
       alert: 'タスクの削除ができません。'
+  users:
+    create:
+      notice: 'ユーザの作成に成功しました。'
+      alert: 'ユーザの作成ができません。'
+    update:
+      notice: 'ユーザの更新に成功しました。'
+      alert: 'ユーザの更新ができません。'
+    delete:
+      notice: 'ユーザの削除に成功しました。'
+      alert: 'ユーザの削除ができません。'
+  sessions:
+    create:
+      notice: 'ログインに成功しました。'
+      alert: 'ログインができません。'
   errors:
     error404:
       message: 'お探しのページは見つかりません。'
