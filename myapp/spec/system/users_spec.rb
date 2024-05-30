@@ -3,37 +3,6 @@
 require "rails_helper"
 
 RSpec.describe "Users", type: :system do
-  describe "Sign up" do
-    context "create a user" do
-      before do
-        visit signup_path
-      end
-      it "valid" do
-        fill_in "user_name", with: "user 1"
-        fill_in "user_email", with: "user@example.com"
-        fill_in "user_password", with: "123"
-
-        click_button I18n.t("users.new.create_button")
-
-        expect(page).to have_content "user 1"
-        expect(page).to have_content I18n.t("users.create.notice")
-      end
-
-      before do
-        visit signup_path
-      end
-      it "not valid" do
-        fill_in "user_name", with: ""
-        fill_in "user_email", with: "user@example.com"
-        fill_in "user_password", with: "123"
-
-        click_button I18n.t("users.new.create_button")
-
-        expect(page).to have_content I18n.t("users.create.alert")
-      end
-    end
-  end
-
   describe "Login" do
     let!(:user1) { create(:user1) }
     context "login a user" do
@@ -100,6 +69,52 @@ RSpec.describe "Users", type: :system do
         expect(page).to have_content task3.title
         expect(page).to have_content task4.title
         expect(page).to have_content task5.title
+      end
+    end
+
+    context "create a user" do
+      before do
+        visit new_user_path
+      end
+      it "valid" do
+        fill_in "user_name", with: "user1"
+        fill_in "user_email", with: "user1@aaa.com"
+        fill_in "user_password", with: "123"
+        click_button I18n.t("users.new.create_button")
+        expect(page).to have_content "user1"
+      end
+    end
+
+    context "read a user" do
+      before do
+        visit user_path(user1)
+      end
+      it "valid" do
+        expect(page).to have_content user1.name
+        expect(page).to have_content user1.email
+      end
+    end
+
+    context "edit a user" do
+      before do
+        visit edit_user_path(user1)
+      end
+      it "valid" do
+        fill_in "user_name", with: "user1 updated"
+        fill_in "user_email", with: "user1@aaa.com"
+        click_button I18n.t("users.edit.update_button")
+        expect(page).to have_content "user1 updated"
+      end
+    end
+
+    context "delete a user" do
+      before do
+        visit users_path
+      end
+      it "valid" do
+        all("tr")[2].click_button I18n.t("users.index.delete")
+        page.driver.browser.switch_to.alert.accept
+        expect(page.all("tr")).to_not have_content "user2"
       end
     end
   end

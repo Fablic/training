@@ -25,30 +25,13 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       session[:user_id] = @user.id
-      redirect_to tasks_path, notice: t("users.create.notice")
+      redirect_to users_path, notice: t("users.create.notice")
     else
-      redirect_to signup_path, alert: t("users.create.alert")
-    end
-  end
-
-  def admin_create
-    @user = User.new(user_params)
-    if @user.save
-      redirect_to users_path, notice: t("users.create.notice") # TODO: ユーザが作成されました
-    else
-      render :new, alert: t("users.create.alert") # TODO: ユーザが作成されませんでした。
+      redirect_to new_user_path, alert: t("users.create.alert")
     end
   end
 
   def update
-    if @user.update(user_params)
-      redirect_to @user, notice: t("users.update.notice")
-    else
-      render :edit, alert: t("users.update.alert")
-    end
-  end
-
-  def admin_update
     if @user.update(user_params)
       redirect_to users_path, notice: t("users.update.notice")
     else

@@ -3,7 +3,7 @@
 Rails.application.routes.draw do
   resources :tasks
   resources :users, path: "/admin/users"
-  post "admin_create" => "users#admin_create"
+  # post "admin_create" => "users#admin_create"
   # get "admin/users" => "users#index"
   # get "admin/users/new" => "users#new"
   # get "admin/users//show" => "users#index"
@@ -11,8 +11,8 @@ Rails.application.routes.draw do
 
 
   get "/" => "tasks#index"
-  get "signup" => "users#new"
-  post "signup" => "users#create"
+  # get "signup" => "users#new"
+  # post "signup" => "users#create"
   get "login" => "sessions#new"
   post "login" => "sessions#create"
   delete "logout" => "sessions#destroy"
