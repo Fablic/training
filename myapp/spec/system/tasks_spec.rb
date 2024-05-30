@@ -4,8 +4,7 @@ require "rails_helper"
 
 RSpec.describe "Tasks", type: :system do
   describe "login" do
-    let!(:user1) { User.create(name: "user 1", email: "user1@example.com", password: "123") }
-    # let!(:rspec_session) { { user_id: user1.id } }
+    let!(:user1) { create(:user) }
     before do
       visit login_path
       fill_in "session_email", with: "user1@example.com"
@@ -13,20 +12,13 @@ RSpec.describe "Tasks", type: :system do
       click_button "Login"
     end
     describe "test with dummy data" do
-
       # Create dummy data
-      let!(:tasks) do
-        (1..5).map do |i|
-          Task.create(title: "test title #{i}",
-                      description: "test description #{i}",
-                      created_at: i.days.ago,
-                      expiration_date: Time.now.since(i.days),
-                      user_id: user1.id
-                    )
-        end
-      end
-
-      let!(:task) { tasks.first }
+      let!(:task1) { create(:task1, user_id: user1.id) }
+      let!(:task2) { create(:task2, user_id: user1.id) }
+      let!(:task3) { create(:task3, user_id: user1.id) }
+      let!(:task4) { create(:task4, user_id: user1.id) }
+      let!(:task5) { create(:task5, user_id: user1.id) }
+      let!(:task) { task1 }
 
       describe "order" do
         before do
@@ -34,16 +26,21 @@ RSpec.describe "Tasks", type: :system do
         end
 
         it "expect created_at descending order" do
-          tasks.each_with_index do |tsk, idx|
-            expect(page.all("tr")[idx + 1]).to have_content tsk.created_at.strftime("%Y-%m-%d %H:%M:%S")
-          end
+          expect(page.all("tr")[1]).to have_content task5.created_at.strftime("%Y-%m-%d %H:%M:%S")
+          expect(page.all("tr")[2]).to have_content task4.created_at.strftime("%Y-%m-%d %H:%M:%S")
+          expect(page.all("tr")[3]).to have_content task3.created_at.strftime("%Y-%m-%d %H:%M:%S")
+          expect(page.all("tr")[4]).to have_content task2.created_at.strftime("%Y-%m-%d %H:%M:%S")
+          expect(page.all("tr")[5]).to have_content task1.created_at.strftime("%Y-%m-%d %H:%M:%S")
         end
 
         it "expect expiration_date ascending order" do
           click_link I18n.t("activerecord.attributes.task.expiration_date")
-          tasks.each_with_index do |tsk, idx|
-            expect(page.all("tr")[-idx - 1]).to have_content tsk.expiration_date.strftime("%Y-%m-%d %H:%M:%S")
-          end
+          click_link I18n.t("activerecord.attributes.task.expiration_date")
+          expect(page.all("tr")[1]).to have_content task1.expiration_date.strftime("%Y-%m-%d %H:%M:%S")
+          expect(page.all("tr")[2]).to have_content task2.expiration_date.strftime("%Y-%m-%d %H:%M:%S")
+          expect(page.all("tr")[3]).to have_content task3.expiration_date.strftime("%Y-%m-%d %H:%M:%S")
+          expect(page.all("tr")[4]).to have_content task4.expiration_date.strftime("%Y-%m-%d %H:%M:%S")
+          expect(page.all("tr")[5]).to have_content task5.expiration_date.strftime("%Y-%m-%d %H:%M:%S")
         end
       end
 
@@ -80,7 +77,7 @@ RSpec.describe "Tasks", type: :system do
         end
 
         it "expect the task deleted" do
-          all("tr")[1].click_button I18n.t("tasks.index.delete")
+          all("tr")[5].click_button I18n.t("tasks.index.delete")
           expect(page).to_not have_content "test title 1"
         end
       end
@@ -93,7 +90,6 @@ RSpec.describe "Tasks", type: :system do
         fill_in "session_password", with: "123"
         click_button "Login"
       end
-      # let!(:rspec_session) { { user_id: user1.id } }
       before do
         visit new_task_path
       end
@@ -138,9 +134,9 @@ RSpec.describe "Tasks", type: :system do
     end
 
     describe "search" do
-      let!(:task1) { Task.create(title: "test title 1", user_id: user1.id) }
-      let!(:task2) { Task.create(title: "test title 2", user_id: user1.id) }
-      let!(:task3) { Task.create(title: "test title 3", user_id: user1.id) }
+      let!(:task1) { create(:task1, user_id: user1.id) }
+      let!(:task2) { create(:task2, user_id: user1.id) }
+      let!(:task3) { create(:task3, user_id: user1.id) }
       before do
         visit tasks_path
       end
@@ -154,9 +150,9 @@ RSpec.describe "Tasks", type: :system do
     end
 
     describe "filter" do
-      let!(:task1) { Task.create(title: "test title 1", status: "not_started", user_id: user1.id) }
-      let!(:task2) { Task.create(title: "test title 2", status: "in_progress", user_id: user1.id) }
-      let!(:task3) { Task.create(title: "test title 3", status: "completed", user_id: user1.id) }
+      let!(:task1) { create(:task1, user_id: user1.id) }
+      let!(:task2) { create(:task2, user_id: user1.id) }
+      let!(:task3) { create(:task3, user_id: user1.id) }
       before do
         visit tasks_path
       end
@@ -170,36 +166,40 @@ RSpec.describe "Tasks", type: :system do
     end
 
     describe "pagination" do
-      let!(:tasks) do
-        (1..20).map do |i|
-          Task.create(title: "test title #{i}",
-                      description: "test description #{i}",
-                      user_id: user1.id)
-        end
-      end
+      let!(:task1) { create(:task1, user_id: user1.id) }
+      let!(:task2) { create(:task2, user_id: user1.id) }
+      let!(:task3) { create(:task3, user_id: user1.id) }
+      let!(:task4) { create(:task4, user_id: user1.id) }
+      let!(:task5) { create(:task5, user_id: user1.id) }
+      let!(:task6) { create(:task6, user_id: user1.id) }
+      let!(:task7) { create(:task7, user_id: user1.id) }
       before do
         visit tasks_path
       end
       context "next page" do
         it "find tasks in the page 2" do
-          tasks[0..4].each_with_index do |tsk, idx|
-            expect(page.all("tr")[idx + 1]).to have_content tsk.created_at.strftime("%Y-%m-%d %H:%M:%S")
-          end
+          expect(page.all("tr")[1]).to have_content task7.created_at.strftime("%Y-%m-%d %H:%M:%S")
+          expect(page.all("tr")[2]).to have_content task6.created_at.strftime("%Y-%m-%d %H:%M:%S")
+          expect(page.all("tr")[3]).to have_content task5.created_at.strftime("%Y-%m-%d %H:%M:%S")
+          expect(page.all("tr")[4]).to have_content task4.created_at.strftime("%Y-%m-%d %H:%M:%S")
+          expect(page.all("tr")[5]).to have_content task3.created_at.strftime("%Y-%m-%d %H:%M:%S")
+
           click_link I18n.t("views.pagination.next").tr(" &rsaquo;", "")
-          tasks[5..9].each_with_index do |tsk, idx|
-            expect(page.all("tr")[idx + 1]).to have_content tsk.created_at.strftime("%Y-%m-%d %H:%M:%S")
-          end
+          expect(page.all("tr")[1]).to have_content task2.created_at.strftime("%Y-%m-%d %H:%M:%S")
+          expect(page.all("tr")[2]).to have_content task1.created_at.strftime("%Y-%m-%d %H:%M:%S")
         end
       end
       context "last page" do
         it "find tasks in the last page" do
-          tasks[0..4].each_with_index do |tsk, idx|
-            expect(page.all("tr")[idx + 1]).to have_content tsk.created_at.strftime("%Y-%m-%d %H:%M:%S")
-          end
-          click_link I18n.t("views.pagination.next").tr(" &rsaquo;", "")
-          tasks[15..19].each_with_index do |tsk, idx|
-            expect(page.all("tr")[idx + 1]).to have_content tsk.created_at.strftime("%Y-%m-%d %H:%M:%S")
-          end
+          expect(page.all("tr")[1]).to have_content task7.created_at.strftime("%Y-%m-%d %H:%M:%S")
+          expect(page.all("tr")[2]).to have_content task6.created_at.strftime("%Y-%m-%d %H:%M:%S")
+          expect(page.all("tr")[3]).to have_content task5.created_at.strftime("%Y-%m-%d %H:%M:%S")
+          expect(page.all("tr")[4]).to have_content task4.created_at.strftime("%Y-%m-%d %H:%M:%S")
+          expect(page.all("tr")[5]).to have_content task3.created_at.strftime("%Y-%m-%d %H:%M:%S")
+
+          click_link I18n.t("views.pagination.last").tr(" &rsaquo;", "")
+          expect(page.all("tr")[1]).to have_content task2.created_at.strftime("%Y-%m-%d %H:%M:%S")
+          expect(page.all("tr")[2]).to have_content task1.created_at.strftime("%Y-%m-%d %H:%M:%S")
         end
       end
     end

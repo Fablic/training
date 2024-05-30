@@ -35,7 +35,7 @@ RSpec.describe "Users", type: :system do
   end
 
   describe "Login" do
-    let!(:user1) { User.create(name: "user 1", email: "user1@example.com", password: "123") }
+    let!(:user1) { create(:user) }
     context "login a user" do
       before do
         visit login_path
