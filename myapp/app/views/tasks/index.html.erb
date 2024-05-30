@@ -1,16 +1,23 @@
 <h1>Task List</h1>
 <%= flash[:notice] %>
-<%= flash[:success] %>
-<%= flash[:alert] %>
 
 <%= form_with url: '#', method: :get, local: true do |form| %>
+  <%= form.label :query_title, 'Search Title:' %>
+  <%= form.search_field :query_title, maxlength: 20 %>
+
+  <%= form.label :query_status, 'Search Status:' %>
+  <%= form.select :query_status, [['All', ''], ['Pending', 'pending'], ['In Progress', 'in_progress'], ['Completed', 'completed']] %>
+
+  <br>
+  <br>
+
   <%= form.label :sort_by %>
   <%= form.select :sort_by, [['Create Date', 'created_at'], ['Due Date', 'due']], id: 'selected_sort_by' %>
 
   <%= form.label :order %>
   <%= form.select :order, ['Desc', 'Asc'], id: 'selected_order' %>
 
-  <%= form.submit 'Sort' %>
+  <%= form.submit 'Filter' %>
 <% end %>
 
 <br>
@@ -30,7 +37,11 @@
         <td><%= "##{task.id}" %></td>
         <td><%= l task.due %></td>
         <td><h3><%= task.title %></h3></td>
-        <td><%= button_to "Delete", task_path(task), method: :delete, id: task.id %></td>
+        <td><%= status_label(task)%></td>
+
+        <%# todo %>
+        <td><%= button_to "Edit", edit_task_path(task), method: :get, id: "Edit#{task.id}" %></td>
+        <td><%= button_to "Delete", task_path(task), method: :delete, id: "Delete#{task.id}" %></td>
       </tr>
     <% end %>
   </tbody>

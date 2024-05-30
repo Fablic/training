@@ -1,3 +1,20 @@
 // Place all the styles related to the Task controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+.status-label {
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: white;
+}
+
+.status-label.pending {
+  background-color: orange;
+}
+
+.status-label.in-progress {
+  background-color: blue;
+}
+
+.status-label.completed {
+  background-color: green;
+}

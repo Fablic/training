@@ -7,7 +7,17 @@
 
 <h2>Description</h2>
 <h3><%= @task.description %></h3>
+<br>
 
 <h2>Due</h2>
 <h3><%= l @task.due %></h3>
+<br>
 
+<h2>Status</h2>
+<%= status_label(@task) %>
+
+<br>
+
+<p>
+  <%= button_to 'Edit', edit_task_path(@task), method: :get %>
+</p>

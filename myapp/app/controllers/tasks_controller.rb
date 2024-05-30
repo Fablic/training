@@ -1,8 +1,22 @@
 class TasksController < ApplicationController
   def index
-    sort_by = params[:sort_by] || 'created_at'
-    order = (params[:order] || 'desc').downcase
-    @tasks = Task.order("#{sort_by} #{order}")
+    if params.except(:controller, :action).present?
+      sort_by_whitelist = %w[due created_at]
+      order_whitelist = %w[desc asc]
+
+      sort_by = params[:sort_by]
+      order = params[:order].downcase
+
+      sort_by = sort_by_whitelist.include?(sort_by) ? sort_by : 'created_at'
+      order = order_whitelist.include?(order) ? order : 'desc'
+
+      query_title = params[:query_title] || ''
+      query_status = params[:query_status]
+    
+      @tasks = Task.search_with_sort(query_title, query_status, sort_by, order)
+    else
+      @tasks = Task.order(created_at: :desc)
+    end
   end
 
   def new 
@@ -49,6 +63,6 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:title, :description, :due)
+    params.require(:task).permit(:title, :description, :due, :status)
   end
 end
