@@ -4,6 +4,7 @@ ja:
     models:
       task: 'タスク'
       user: 'ユーザ'
+      user: 'ユーザ'
     # model毎に定義したいattributesを記述
     attributes:
       task:
@@ -46,6 +47,10 @@ ja:
     delete:
       notice: 'ユーザの削除に成功しました。'
       alert: 'ユーザの削除ができません。'
+  sessions:
+    create:
+      notice: 'ログインに成功しました。'
+      alert: 'ログインができません。'
   errors:
     error404:
       message: 'お探しのページは見つかりません。'

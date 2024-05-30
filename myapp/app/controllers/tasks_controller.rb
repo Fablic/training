@@ -6,7 +6,7 @@ class TasksController < ApplicationController
   TASKS_PER_PAGE = 5
 
   def index
-    @tasks = Task.all.includes([:user])
+    @tasks = current_user.tasks
     @tasks = @tasks.filter_status(params[:status]) if params[:status].present?
     @tasks = @tasks.search_title(params[:search]) if params[:search].present?
 
@@ -36,6 +36,7 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
+    @task.user_id = session[:user_id]
     if @task.save
       redirect_to @task, notice: t("tasks.create.notice")
     else
@@ -65,6 +66,6 @@ class TasksController < ApplicationController
     end
 
     def task_params
-      params.require(:task).permit(:title, :description, :expiration_date, :status, :user_id)
+      params.require(:task).permit(:title, :description, :expiration_date, :status)
     end
 end
