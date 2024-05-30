@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   def index
-    if !params.except(:controller, :action).empty?
+    if params.except(:controller, :action).present?
       Rails.logger.info(params.keys)
       sort_by = params[:sort_by]
       order = params[:order].downcase
