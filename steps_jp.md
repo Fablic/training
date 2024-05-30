@@ -292,7 +292,7 @@ chrome://extensions/ を開いて右上のDeveloper modeをオンにして、RKG
   - 今後、PRが大きくなりそうだったらPRを2回以上に分けることを検討しましょう
 
 ### ステップ8: テスト(system spec)を書こう
-- 最初に以下のgemがGemfileがあることを確認しましょう
+- 最初に以下のgemがGemfileがあることを確認しましょう。
   ```
   group :test do
     gem 'capybara', '>= 2.15'
