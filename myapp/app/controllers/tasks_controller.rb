@@ -1,16 +1,15 @@
 class TasksController < ApplicationController
   def index
-    if !params.except(:controller, :action).empty?
-      Rails.logger.info(params.keys)
+    if !params.except(:controller, :action, :page).empty?
       sort_by = params[:sort_by]
       order = params[:order].downcase
 
       query_title = params[:query_title] || ''
       query_status = params[:query_status]
     
-      @tasks = Task.search_with_sort(query_title, query_status, sort_by, order)
+      @tasks = Task.search_with_sort(query_title, query_status, sort_by, order).page(params[:page])
     else
-      @tasks = Task.order(created_at: :desc)
+      @tasks = Task.order(created_at: :desc).page(params[:page])
     end
   end
 

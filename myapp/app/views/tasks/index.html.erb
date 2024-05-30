@@ -39,7 +39,6 @@
         <td><h3><%= task.title %></h3></td>
         <td><%= status_label(task)%></td>
 
-        <%# todo %>
         <td><%= button_to "Edit", edit_task_path(task), method: :get, id: "Edit#{task.id}" %></td>
         <td><%= button_to "Delete", task_path(task), method: :delete, id: "Delete#{task.id}" %></td>
       </tr>
@@ -48,3 +47,4 @@
 </table>
 
 
+<%= paginate @tasks %>
