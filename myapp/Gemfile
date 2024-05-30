@@ -29,6 +29,7 @@ gem 'kaminari'
 # Use Bootstrap
 gem 'bootstrap', '~> 5.3.3'
 gem 'jquery-rails'
+gem 'bootstrap5-kaminari-views'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'

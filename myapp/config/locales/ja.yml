@@ -2,10 +2,15 @@ ja:
   views:
     pagination:
       truncate: "..."
+      first: "&laquo;"
+      last: "&raquo;"
+      previous: "&lsaquo;"
+      next: "&rsaquo;"
   time:
     formats:
       default: "%Y-%m-%d %H:%M:%S"
       field: "%Y-%m-%dT%H:%M:%S"
+      preview: "%Y/%m/%d"
   hello: "こんにちは"
   errors:
     messages:
