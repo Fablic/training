@@ -78,7 +78,6 @@ RSpec.describe 'Tasks', type: :system do
 
         click_link '2'
 
-        puts page.text
         expect(page).to have_content('Test title 1')
       end
     end
