@@ -1,8 +1,14 @@
 class TasksController < ApplicationController
   def index
-    if !params.except(:controller, :action, :page).empty?
+    if params.except(:controller, :action, :page).present?
+      sort_by_whitelist = %w[due created_at]
+      order_whitelist = %w[desc asc]
+      
       sort_by = params[:sort_by]
       order = params[:order].downcase
+
+      sort_by = sort_by_whitelist.include?(sort_by) ? sort_by : 'created_at'
+      order = order_whitelist.include?(order) ? order : 'desc'
 
       query_title = params[:query_title] || ''
       query_status = params[:query_status]
