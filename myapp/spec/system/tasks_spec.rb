@@ -2,32 +2,47 @@ require 'rails_helper'
 
 RSpec.describe 'Tasks', type: :system do 
   describe 'index page' do 
-    it 'show page title, list and delete buttons' do 
-      Task.create!(title: 'Test title 1', description: 'Test Description 1', due: Time.zone.now + 5, status: 'pending')
-      Task.create!(title: 'Test title 2', description: 'Test Description 2', due: Time.zone.now + 5, status: 'pending')
+    context 'render all components' do 
+      it 'show page title, list and delete buttons' do 
+        Task.create!(title: 'Test title 1', description: 'Test Description 1', due: Time.zone.now + 5, status: 'pending')
+        Task.create!(title: 'Test title 2', description: 'Test Description 2', due: Time.zone.now + 5, status: 'pending')
+  
+        visit tasks_path
+  
+        # page title
+        expect(page).to have_content('Task List')
+  
+        # filter field
+        ## search title
+        expect(page).to have_field('Search Title:')
+        ## search status
+        expect(page).to have_select('Search Status:')
+        ## sort by
+        expect(page).to have_select('Sort by')
+        ## sort order
+        expect(page).to have_select('Order')
+        ## filter button
+        expect(page).to have_button('Filter')
+  
+        # tasks' title
+        expect(page).to have_content('Test title 1')
+        expect(page).to have_content('Test title 2')
+  
+        expect(page).to have_button('Delete', count: 2)
+      end
 
-      visit tasks_path
+      it 'show pagination bar' do 
+        Task.create!(title: 'Test title 1', description: 'Test Description 1', due: Time.zone.now + 5, status: 'pending')
+        Task.create!(title: 'Test title 2', description: 'Test Description 2', due: Time.zone.now + 5, status: 'pending')
+        Task.create!(title: 'Test title 3', description: 'Test Description 3', due: Time.zone.now + 5, status: 'pending')
+        Task.create!(title: 'Test title 4', description: 'Test Description 4', due: Time.zone.now + 5, status: 'pending')
+        Task.create!(title: 'Test title 5', description: 'Test Description 5', due: Time.zone.now + 5, status: 'pending')
+        Task.create!(title: 'Test title 6', description: 'Test Description 6', due: Time.zone.now + 5, status: 'pending')
 
-      # page title
-      expect(page).to have_content('Task List')
+        visit tasks_path
 
-      # filter field
-      ## search title
-      expect(page).to have_field('Search Title:')
-      ## search status
-      expect(page).to have_select('Search Status:')
-      ## sort by
-      expect(page).to have_select('Sort by')
-      ## sort order
-      expect(page).to have_select('Order')
-      ## filter button
-      expect(page).to have_button('Filter')
-
-      # tasks' title
-      expect(page).to have_content('Test title 1')
-      expect(page).to have_content('Test title 2')
-
-      expect(page).to have_button('Delete', count: 2)
+        expect(page).to have_selector("nav[class='pagination']")
+      end
     end
 
     context 'interact with buttons' do
@@ -49,6 +64,22 @@ RSpec.describe 'Tasks', type: :system do
         click_on "Edit#{task.id}"
 
         expect(current_path).to eq(edit_task_path(task))
+      end
+
+      it 'show the specified page with tasks when page link clicked' do 
+        Task.create!(title: 'Test title 1', description: 'Test Description 1', due: Time.zone.now + 5, status: 'pending')
+        Task.create!(title: 'Test title 2', description: 'Test Description 2', due: Time.zone.now + 5, status: 'pending')
+        Task.create!(title: 'Test title 3', description: 'Test Description 3', due: Time.zone.now + 5, status: 'pending')
+        Task.create!(title: 'Test title 4', description: 'Test Description 4', due: Time.zone.now + 5, status: 'pending')
+        Task.create!(title: 'Test title 5', description: 'Test Description 5', due: Time.zone.now + 5, status: 'pending')
+        Task.create!(title: 'Test title 6', description: 'Test Description 6', due: Time.zone.now + 5, status: 'pending')
+
+        visit tasks_path
+
+        click_link '2'
+
+        puts page.text
+        expect(page).to have_content('Test title 1')
       end
     end
 
