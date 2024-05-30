@@ -6,7 +6,7 @@ class TasksController < ApplicationController
   TASKS_PER_PAGE = 5
 
   def index
-    @tasks = Task.where(user_id: session[:user_id])
+    @tasks = current_user.tasks
     @tasks = @tasks.filter_status(params[:status]) if params[:status].present?
     @tasks = @tasks.search_title(params[:search]) if params[:search].present?
 
