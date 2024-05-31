@@ -35,7 +35,6 @@ RSpec.describe "Tasks", type: :system do
 
         it "expect expiration_date ascending order" do
           click_link I18n.t("activerecord.attributes.task.expiration_date")
-          # click_link I18n.t("activerecord.attributes.task.expiration_date")
 
           expect(page.all("tr")[1]).to have_content task1.expiration_date.strftime("%Y-%m-%d %H:%M:%S")
           expect(page.all("tr")[2]).to have_content task2.expiration_date.strftime("%Y-%m-%d %H:%M:%S")

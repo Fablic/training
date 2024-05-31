@@ -5,6 +5,7 @@ require "rails_helper"
 RSpec.describe "Users", type: :system do
   describe "Login" do
     let!(:user1) { create(:user1) }
+    let!(:admin) { create(:admin) }
     context "login a user" do
       before do
         visit login_path
@@ -31,9 +32,37 @@ RSpec.describe "Users", type: :system do
         expect(page).to have_content I18n.t("sessions.create.alert")
       end
     end
+    context "access to an admin page" do
+      context "general user" do
+        before do
+          visit login_path
+          fill_in "session_email", with: "user1@example.com"
+          fill_in "session_password", with: "123"
+          click_button "Login"
+        end
+        it "redirect to the login page" do
+          get users_path
+          expect(response).to redirect_to login_path
+        end
+      end
+
+      context "admin user" do
+        before do
+          visit login_path
+          fill_in "session_email", with: "admin@example.com"
+          fill_in "session_password", with: "123"
+          click_button "Login"
+        end
+        it "see the user list page" do
+          get users_path
+          expect(page).to have_content I18n.t("users.index.title")
+        end
+      end
+    end
   end
 
   describe "Admin" do
+    let!(:admin) { create(:admin) }
     let!(:user1) { create(:user1) }
     let!(:user2) { create(:user2) }
     let!(:user3) { create(:user3) }
@@ -44,7 +73,7 @@ RSpec.describe "Users", type: :system do
     let!(:task5) { create(:task5, user_id: user1.id) }
     before do
       visit login_path
-      fill_in "session_email", with: "user1@example.com"
+      fill_in "session_email", with: "admin@example.com"
       fill_in "session_password", with: "123"
       click_button "Login"
     end
@@ -78,7 +107,7 @@ RSpec.describe "Users", type: :system do
       end
       it "valid" do
         fill_in "user_name", with: "user1"
-        fill_in "user_email", with: "user1@aaa.com"
+        fill_in "user_email", with: "user123@aaa.com"
         fill_in "user_password", with: "123"
         click_button I18n.t("users.new.create_button")
         expect(page).to have_content "user1"
@@ -96,25 +125,49 @@ RSpec.describe "Users", type: :system do
     end
 
     context "edit a user" do
-      before do
-        visit edit_user_path(user1)
+      context "general" do
+        before do
+          visit edit_user_path(user1)
+        end
+        it "valid" do
+          fill_in "user_name", with: "user1 updated"
+          fill_in "user_email", with: "user1updated@aaa.com"
+          click_button I18n.t("users.edit.update_button")
+          expect(page).to have_content "user1 updated"
+        end
       end
-      it "valid" do
-        fill_in "user_name", with: "user1 updated"
-        fill_in "user_email", with: "user1@aaa.com"
-        click_button I18n.t("users.edit.update_button")
-        expect(page).to have_content "user1 updated"
+      context "the last admin" do
+        before do
+          visit edit_user_path(admin)
+        end
+        it "not valid" do
+          find("option[value='general']").select_option
+          click_button I18n.t("users.edit.update_button")
+          expect(page).to have_content I18n.t("users.update.alert")
+        end
       end
     end
 
     context "delete a user" do
-      before do
-        visit users_path
+      context "general" do
+        before do
+          visit users_path
+        end
+        it "valid" do
+          all("tr")[2].click_button I18n.t("users.index.delete")
+          page.driver.browser.switch_to.alert.accept
+          expect(page.all("tr")).to_not have_content "user2"
+        end
       end
-      it "valid" do
-        all("tr")[2].click_button I18n.t("users.index.delete")
-        page.driver.browser.switch_to.alert.accept
-        expect(page.all("tr")).to_not have_content "user2"
+      context "the last admin" do
+        before do
+          visit users_path
+        end
+        it "not valid" do
+          all("tr")[1].click_button I18n.t("users.index.delete")
+          page.driver.browser.switch_to.alert.accept
+          expect(page).to have_content I18n.t("users.delete.alert")
+        end
       end
     end
   end

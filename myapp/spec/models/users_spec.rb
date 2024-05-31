@@ -50,5 +50,20 @@ RSpec.describe "Users", type: :model do
         expect(Task.count).to eq(1)
       end
     end
+    context "delete the last admin user" do
+      let!(:admin) { create(:admin) }
+      it "not valid" do
+        expect(admin.destroy).to eq false
+      end
+    end
+  end
+
+  describe "update" do
+    context "update the last admin user to general user" do
+      let!(:admin) { create(:admin) }
+      it "not valid" do
+        expect(admin.update({ role: "general" })).to eq false
+      end
+    end
   end
 end

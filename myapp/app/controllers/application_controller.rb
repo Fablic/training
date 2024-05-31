@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   end
 
   def require_admin_user
-    redirect_to "/login", alert: t("errors.need_admin") unless current_user[:role] == "admin"
+    redirect_to "/login", alert: t("errors.need_admin") unless current_user && current_user[:role] == "admin"
   end
 
   # 例外処理

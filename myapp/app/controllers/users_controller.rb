@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  before_action :require_admin_user, only: [:index, :show, :edit, :destroy]
+  before_action :require_admin_user, only: [:index, :new, :show, :edit, :update, :create, :destroy]
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -24,7 +24,6 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      session[:user_id] = @user.id
       redirect_to users_path, notice: t("users.create.notice")
     else
       redirect_to new_user_path, alert: t("users.create.alert")
@@ -35,7 +34,8 @@ class UsersController < ApplicationController
     if @user.update(user_params)
       redirect_to users_path, notice: t("users.update.notice")
     else
-      render :edit, alert: t("users.update.alert")
+      flash.now[:alert] = t("users.update.alert")
+      render :edit
     end
   end
 
@@ -54,7 +54,6 @@ class UsersController < ApplicationController
     def user_params
       params.require(:user).permit(:name, :email, :password, :role)
     end
-
 
     def set_user
       @user = User.find(params[:id])
