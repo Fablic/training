@@ -45,7 +45,7 @@ RSpec.describe 'Tasks', type: :system do
       end
     end
 
-    context 'interact with buttons' do
+    context 'when there are some tasks' do
       it 'delete the task when clicking Delete button' do 
         task = Task.create!(title: 'Test title 1', description: 'Test Description 1', due: Time.zone.now + 5, status: 'pending')
 
