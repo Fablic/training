@@ -11,7 +11,6 @@ class CreateTasks < ActiveRecord::Migration[6.0]
 
       t.timestamps
     end
-    add_index :tasks, :title
     add_index :tasks, :status
     add_index :tasks, :due_date
     add_index :tasks, :priority
