@@ -6,7 +6,12 @@
                   Task.enum_options_for_select_status, 
                   { include_blank: "#{Task.human_attribute_name :status}",
                     :selected => params[:status] }) %>
-  <%= form.collection_check_boxes :label_ids, Label.all, :id, :label, {checked: params[:label_ids], include_hidden: false} %>
+  <%= form.collection_check_boxes :label_ids, Label.all, :id, :label, {checked: params[:label_ids], include_hidden: false} do |b| %>
+    <%= b.label class:"form-check-label" do%>
+      <%= b.check_box %>
+      <span class="badge bg-secondary"><%= b.text %></span>
+    <%end%>
+  <% end %>
   <%= submit_tag(t('.filter'), class: 'btn btn-light border') %>
 <% end %>
 <table class='table'>
