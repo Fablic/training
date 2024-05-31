@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
 class TasksController < ApplicationController
+  before_action :require_user
   before_action :set_task, only: [:show, :edit, :update, :destroy]
   TASKS_PER_PAGE = 5
 
   def index
-    @tasks = Task.all
+    @tasks = current_user.tasks
     @tasks = @tasks.filter_status(params[:status]) if params[:status].present?
     @tasks = @tasks.search_title(params[:search]) if params[:search].present?
     @tasks = @tasks.filter_labels(params[:label_ids]) if params[:label_ids].present?
@@ -37,6 +38,7 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
+    @task.user_id = session[:user_id]
     if @task.save
       redirect_to @task, notice: t("tasks.create.notice")
     else
