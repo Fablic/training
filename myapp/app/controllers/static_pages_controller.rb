@@ -2,5 +2,6 @@
 
 class StaticPagesController < ApplicationController
   def maintenance
+    render :layout => false
   end
 end
