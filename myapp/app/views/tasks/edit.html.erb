@@ -4,19 +4,20 @@
 
 <div class='container'>
   <%= form_with(model: @task, local: true, data: {turbo: false}) do |form| %>
-
     <button class='mb-4 btn btn-outline-secondary'>
       <%= link_to 'Back to home', tasks_path, method: :get , class: 'link-without-underline link-secondary' %>
     </button>
 
     <% if @task.errors.any? %>
-      <div>
-        <p>You have some invalid inputs!</p>
-        <ul>
-          <% @task.errors.full_messages.each do |error| %>
-          <li><%= error %></li>
-          <% end %>
-        </ul>
+      <div class='mb-4 border border-danger rounded d-flex justify-content-center'>
+        <div class='container'>
+          <p>You have some invalid inputs!</p>
+          <ul>
+            <% @task.errors.full_messages.each do |error| %>
+            <li><%= error %></li>
+            <% end %>
+          </ul>
+        </div>
       </div>
     <% end %>
 

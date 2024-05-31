@@ -2,45 +2,48 @@
   <h1>Task List</h1>
 </div>
 
-<div class='mb-3 container'>
+<div class='mb-5 container'>
   <h4 class='fst-italic text-info', style='text-align:center'>
     <%= flash[:notice] %>
   </h3>
 </div>
 
-<div class='container'>
+<div class='mb-5 container'>
+  <div class='mb-4'>
+    <%= form_with url: '#', method: :get, local: true do |form| %>
+      <div class='mb-3 w-50'>
+        <%= form.label :query_title, 'Search Title:', class: 'form-label' %>
+        <%= form.search_field :query_title, maxlength: 20, class: 'form-control' %>
+      </div>
 
-  <%= form_with url: '#', method: :get, local: true do |form| %>
-    <div class='mb-3 w-50'>
-      <%= form.label :query_title, 'Search Title:', class: 'form-label' %>
-      <%= form.search_field :query_title, maxlength: 20, class: 'form-control' %>
-    </div>
+      <div class='mb-3 w-50'>
+        <%= form.label :query_status, 'Search Status:', class: 'form-label' %>
+        <%= form.select :query_status, [['All', ''], ['Pending', 'pending'], ['In Progress', 'in_progress'], ['Completed', 'completed']], {}, { class: 'form-select' } %>
+      </div>
 
-    <div class='mb-3 w-50'>
-      <%= form.label :query_status, 'Search Status:', class: 'form-label' %>
-      <%= form.select :query_status, [['All', ''], ['Pending', 'pending'], ['In Progress', 'in_progress'], ['Completed', 'completed']], {}, { class: 'form-select' } %>
-    </div>
+      <div class='row justify-content-start'>
+        <div class='col-4'>
+          <div class='mb-3'>
+            <%= form.label :sort_by, class: 'form-label' %>
+            <%= form.select :sort_by, [['Create Date', 'created_at'], ['Due Date', 'due']], {}, { class: 'form-select' } %>
+          </div>
+        </div>
 
-    <div class='row justify-content-start'>
-      <div class='col-4'>
-        <div class='mb-3'>
-          <%= form.label :sort_by, class: 'form-label' %>
-          <%= form.select :sort_by, [['Create Date', 'created_at'], ['Due Date', 'due']], {}, { class: 'form-select' } %>
+        <div class='col-4'>
+          <div class='mb-3'>
+            <%= form.label :order, class: 'form-label' %>
+            <%= form.select :order, ['Desc', 'Asc'], {}, { class: 'form-select' } %>
+          </div>
         </div>
       </div>
 
-      <div class='col-4'>
-        <div class='mb-3'>
-          <%= form.label :order, class: 'form-label' %>
-          <%= form.select :order, ['Desc', 'Asc'], {}, { class: 'form-select' } %>
-        </div>
-      </div>
-    </div>
+      <%= form.submit 'Filter', class: 'btn btn-outline-primary' %>
+    <% end %>
+  </div>
 
-    <%= form.submit 'Filter', class: 'btn btn-outline-primary' %>
-  <% end %>
-
-  <br>
+  <div class='d-flex justify-content-end'>
+    <%= button_to 'New Task', new_task_path, method: :get, class: 'btn btn-primary' %>
+  </div>
 
   <table class='table table-striped table-hover'>
     <thead>
@@ -66,8 +69,10 @@
       <% end %>
     </tbody>
   </table>
+</div>
 
-
-  <%= paginate @tasks, theme: 'bootstrap-5' %>
-
+<div class='container'>
+  <div class='d-flex justify-content-center'>
+    <%= paginate @tasks, theme: 'bootstrap-5' %>
+  </div>
 </div>
