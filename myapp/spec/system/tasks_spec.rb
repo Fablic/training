@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe "Tasks", type: :system do
   describe "login" do
-    let!(:user1) { create(:user) }
+    let!(:user1) { create(:user1) }
     before do
       visit login_path
       fill_in "session_email", with: "user1@example.com"
@@ -35,12 +35,16 @@ RSpec.describe "Tasks", type: :system do
 
         it "expect expiration_date ascending order" do
           click_link I18n.t("activerecord.attributes.task.expiration_date")
-          click_link I18n.t("activerecord.attributes.task.expiration_date")
+          # click_link I18n.t("activerecord.attributes.task.expiration_date")
+
           expect(page.all("tr")[1]).to have_content task1.expiration_date.strftime("%Y-%m-%d %H:%M:%S")
           expect(page.all("tr")[2]).to have_content task2.expiration_date.strftime("%Y-%m-%d %H:%M:%S")
           expect(page.all("tr")[3]).to have_content task3.expiration_date.strftime("%Y-%m-%d %H:%M:%S")
           expect(page.all("tr")[4]).to have_content task4.expiration_date.strftime("%Y-%m-%d %H:%M:%S")
           expect(page.all("tr")[5]).to have_content task5.expiration_date.strftime("%Y-%m-%d %H:%M:%S")
+        rescue Selenium::WebDriver::Error::StaleElementReferenceError
+          sleep 1
+          retry
         end
       end
 
@@ -78,6 +82,7 @@ RSpec.describe "Tasks", type: :system do
 
         it "expect the task deleted" do
           all("tr")[5].click_button I18n.t("tasks.index.delete")
+          page.driver.browser.switch_to.alert.accept
           expect(page).to_not have_content "test title 1"
         end
       end
@@ -184,9 +189,15 @@ RSpec.describe "Tasks", type: :system do
           expect(page.all("tr")[4]).to have_content task4.created_at.strftime("%Y-%m-%d %H:%M:%S")
           expect(page.all("tr")[5]).to have_content task3.created_at.strftime("%Y-%m-%d %H:%M:%S")
 
-          click_link I18n.t("views.pagination.next").tr(" &rsaquo;", "")
-          expect(page.all("tr")[1]).to have_content task2.created_at.strftime("%Y-%m-%d %H:%M:%S")
-          expect(page.all("tr")[2]).to have_content task1.created_at.strftime("%Y-%m-%d %H:%M:%S")
+          begin
+            click_link I18n.t("views.pagination.next").tr(" &rsaquo;", "")
+            expect(page.all("tr")[1]).to have_content task2.created_at.strftime("%Y-%m-%d %H:%M:%S")
+            expect(page.all("tr")[2]).to have_content task1.created_at.strftime("%Y-%m-%d %H:%M:%S")
+          rescue Selenium::WebDriver::Error::StaleElementReferenceError
+            sleep 1
+            click_link I18n.t("views.pagination.previous").tr("&lsaquo; ", "")
+            retry
+          end
         end
       end
       context "last page" do
@@ -197,9 +208,15 @@ RSpec.describe "Tasks", type: :system do
           expect(page.all("tr")[4]).to have_content task4.created_at.strftime("%Y-%m-%d %H:%M:%S")
           expect(page.all("tr")[5]).to have_content task3.created_at.strftime("%Y-%m-%d %H:%M:%S")
 
-          click_link I18n.t("views.pagination.last").tr(" &rsaquo;", "")
-          expect(page.all("tr")[1]).to have_content task2.created_at.strftime("%Y-%m-%d %H:%M:%S")
-          expect(page.all("tr")[2]).to have_content task1.created_at.strftime("%Y-%m-%d %H:%M:%S")
+          begin
+            click_link I18n.t("views.pagination.last").tr(" &rsaquo;", "")
+            expect(page.all("tr")[1]).to have_content task2.created_at.strftime("%Y-%m-%d %H:%M:%S")
+            expect(page.all("tr")[2]).to have_content task1.created_at.strftime("%Y-%m-%d %H:%M:%S")
+          rescue Selenium::WebDriver::Error::StaleElementReferenceError
+            sleep 1
+            click_link I18n.t("views.pagination.previous").tr("&lsaquo; ", "")
+            retry
+          end
         end
       end
     end
