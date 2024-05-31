@@ -30,14 +30,14 @@ class User < ApplicationRecord
   private
     def delete_ensure_at_least_one_admin_remains
       if self.role == "admin" && User.where(role: "admin").count <= 1
-        errors.add(:base, "Cannot delete the last admin user.")
+        errors.add(:base, I18n.t("users.delete.last_admin_alert"))
         throw(:abort)
       end
     end
 
     def update_ensure_at_least_one_admin_remains
       if User.where(role: "admin").count <= 1
-        errors.add(:base, "Cannot update the last admin user.")
+        errors.add(:base, I18n.t("users.update.last_admin_alert"))
         throw(:abort)
       end
     end

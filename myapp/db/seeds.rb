@@ -11,9 +11,9 @@ User.create(name: "admin", email: "admin@admin.com", password: "admin", role: 0)
 User.create(name: "user 1", email: "user1@example.com", password: "123")
 User.create(name: "user 2", email: "user2@example.com", password: "123")
 
-Task.create(title: "title 1", description: "description 1", user_id: 2)
-Task.create(title: "title 2", description: "description 2", user_id: 2)
-Task.create(title: "title 3", description: "description 3", user_id: 2)
+Task.create(title: "title 1", description: "description 1", user_id: 1)
+Task.create(title: "title 2", description: "description 2", user_id: 1)
+Task.create(title: "title 3", description: "description 3", user_id: 1)
 
 Task.create(title: "title 21", description: "description 21", user_id: 2)
 Task.create(title: "title 22", description: "description 22", user_id: 2)

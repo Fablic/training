@@ -2,8 +2,8 @@
 
 <h2><%= User.human_attribute_name(:name) %>: <%= @user.name %></h2>
 <p><%= User.human_attribute_name(:email) %>: <%= @user.email %></p>
+<p><%= User.human_attribute_name(:role) %>: <%= t("activerecord.attributes.user.roles.#{@user.role}") %></p>
 <h2><%= t('.task_list') %></h2>
-<p><%= t("activerecord.attributes.user.roles.#{@user.role}") %></p>
 
 <table class='table'>
   <thead>
