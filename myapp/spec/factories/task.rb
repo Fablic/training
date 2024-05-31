@@ -60,22 +60,9 @@ FactoryBot.define do
     expiration_date { Time.new(2000, 2, 8, 0, 0, 0) }
     user_id { :user_id }
   end
-  # factory :task_empty_title, class: Task do
-  #   title {""}
-  #   user_id { :user_id }
-  # end
-  # factory :task_too_long_title, class: Task do
-  #   title {"X" * 110}
-  #   user_id { :user_id }
-  # end
   factory :task_empty_description, class: Task do
     title { "X" }
     description { "" }
     user_id { :user_id }
   end
-  # factory :task_too_long_description, class: Task do
-  #   title {"X"}
-  #   description {"Y"*30100}
-  #   user_id { :user_id }
-  # end
 end

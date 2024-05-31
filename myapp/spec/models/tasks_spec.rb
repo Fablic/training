@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe "Tasks", type: :model do
   describe "validation" do
     context "create a task" do
-      let!(:user1) { create(:user) }
+      let!(:user1) { create(:user1) }
       context "maximum length" do
         let!(:task) { create(:task1, user_id: user1.id) }
         it "valid" do
@@ -51,7 +51,7 @@ RSpec.describe "Tasks", type: :model do
   end
 
   describe "search" do
-    let!(:user1) { create(:user) }
+    let!(:user1) { create(:user1) }
     context "title" do
       let!(:task1) { create(:task1, user_id: user1.id) }
       let!(:task2) { create(:task2, user_id: user1.id) }
@@ -63,7 +63,7 @@ RSpec.describe "Tasks", type: :model do
   end
 
   describe "filter" do
-    let!(:user1) { create(:user) }
+    let!(:user1) { create(:user1) }
     context "status" do
       let!(:task1) { create(:task1, user_id: user1.id) }
       let!(:task2) { create(:task2, user_id: user1.id) }
@@ -76,7 +76,7 @@ RSpec.describe "Tasks", type: :model do
 
   describe "user" do
     context "associated" do
-      let!(:user1) { create(:user) }
+      let!(:user1) { create(:user1) }
       let!(:task1) { create(:task1, user_id: user1.id) }
       it "find user 1" do
         expect(task1.user_id).to eq user1.id

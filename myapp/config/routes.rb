@@ -2,10 +2,9 @@
 
 Rails.application.routes.draw do
   resources :tasks
-  # resources :users
-  get "/", to: "tasks#index"
-  get "signup" => "users#new"
-  post "signup" => "users#create"
+  resources :users, path: "/admin/users"
+
+  get "/" => "tasks#index"
   get "login" => "sessions#new"
   post "login" => "sessions#create"
   delete "logout" => "sessions#destroy"
