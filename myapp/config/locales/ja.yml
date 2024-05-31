@@ -1,4 +1,7 @@
 ja:
+  views:
+    pagination:
+      truncate: "..."
   time:
     formats:
       default: "%Y-%m-%d %H:%M:%S"

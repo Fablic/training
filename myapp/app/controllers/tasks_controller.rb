@@ -1,9 +1,9 @@
 class TasksController < ApplicationController
   def index
-    if params.except(:controller, :action).present?
+    if params.except(:controller, :action, :page).present?
       sort_by_whitelist = %w[due created_at]
       order_whitelist = %w[desc asc]
-
+      
       sort_by = params[:sort_by]
       order = params[:order].downcase
 
@@ -13,9 +13,9 @@ class TasksController < ApplicationController
       query_title = params[:query_title] || ''
       query_status = params[:query_status]
     
-      @tasks = Task.search_with_sort(query_title, query_status, sort_by, order)
+      @tasks = Task.search_with_sort(query_title, query_status, sort_by, order).page(params[:page])
     else
-      @tasks = Task.order(created_at: :desc)
+      @tasks = Task.order(created_at: :desc).page(params[:page])
     end
   end
 
