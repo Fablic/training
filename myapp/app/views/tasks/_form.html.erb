@@ -9,9 +9,6 @@
   </div>
 <% end %>
 
-<% if flash[:notice] %>
-  <p><%= flash[:notice] %></p>
-<% end %>
 <%= form_with(model: task, local: true, class: 'form-margin') do |form| %>
   <div class="form-group">
     <%= form.label :title %>
@@ -31,11 +28,6 @@
   <div class="field">
     <%= form.label :status %>
     <%= form.select :status, Task.enum_options_for_select_status, { include_blank: "#{Task.human_attribute_name :status}", class: "form-select"} %>
-  </div>
-
-  <div class="field">
-    <%= form.label :user %>
-    <%= form.select :user_id, User.pluck(:name,:id), { include_blank: "#{Task.human_attribute_name :user}", class: "form-select"} %>
   </div>
 
   <div class="actions">

@@ -1,0 +1,22 @@
+<div class="login">
+  <div class="container">
+    <div class="form">
+    <h1>Sign Up</h1>
+      <%= form_for(@user, url: signup_path, method: :post) do |f| %>
+        <div class="form-group">
+          <%= f.label :name %>
+          <%= f.text_field :name, class: "form-control", :placeholder => "name" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :email %>
+         <%= f.email_field :email, class: "form-control", :placeholder => "Email" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :password %>
+          <%= f.password_field :password, class: "form-control", :placeholder => "Password" %>
+        </div>
+        <%= f.submit "Sign Up", class: "btn btn-primary" %>
+      <% end %>
+    </div>
+  </div>
+</div>

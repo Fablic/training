@@ -7,6 +7,9 @@ Rails.application.routes.draw do
     get "maintenance", to: "static_pages#maintenance"
     resources :tasks
     get "/", to: "tasks#index"
+    get "login" => "sessions#new"
+    post "login" => "sessions#create"
+    delete "logout" => "sessions#destroy"
     get "*path", controller: "application", action: "render_404"
     post "*path", controller: "application", action: "render_404"
   end
