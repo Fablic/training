@@ -6,7 +6,7 @@ class TasksController < ApplicationController
   TASKS_PER_PAGE = 5
 
   def index
-    @tasks = current_user.tasks
+    @tasks = current_user.tasks.includes(:labels)
     @tasks = @tasks.filter_status(params[:status]) if params[:status].present?
     @tasks = @tasks.search_title(params[:search]) if params[:search].present?
     @tasks = @tasks.filter_labels(params[:label_ids]) if params[:label_ids].present?
@@ -16,14 +16,13 @@ class TasksController < ApplicationController
       sort_column = params[:sort]
       sort_direction = params[:is_order_desc] == "true" ? "DESC" : "ASC"
     else
-      sort_column = "created_at"
+      sort_column = "tasks.created_at"
       sort_direction = "DESC"
     end
     @tasks = @tasks.order("#{sort_column} #{sort_direction}")
 
     # For pagination
     @tasks = @tasks.page(params[:page]).per(TASKS_PER_PAGE)
-    puts @tasks
   end
 
   def new

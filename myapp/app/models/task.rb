@@ -22,6 +22,9 @@ class Task < ApplicationRecord
   end
 
   def self.filter_labels(label_ids)
-    Task.where(labels: "#{label_ids}")
+    puts "============================================"
+    puts label_ids.to_s
+    puts "============================================"
+    Task.left_joins(:labels).where(labels: { id: label_ids })
   end
 end
