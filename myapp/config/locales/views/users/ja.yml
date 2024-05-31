@@ -10,6 +10,7 @@ ja:
       delete_confirmation: '本当に削除しますか？'
     show:
       title: 'ユーザの情報'
+      task_list: 'タスク一覧'
     edit:
       title: 'ユーザの情報を編集'
       update_button: '更新'

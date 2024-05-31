@@ -13,3 +13,17 @@
  *= require_tree .
  *= require_self
  */
+@import 'bootstrap';
+
+.button {
+  width: 75px;
+}
+.pagination {
+  justify-content: center;
+}
+.margin-left {
+  margin-left: 20px;
+}
+.form-margin {
+  margin: 20px
+}

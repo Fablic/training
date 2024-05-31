@@ -1,6 +1,6 @@
-<h1><%= t('.title') %></h1>
-
-<table>
+<h1  class='text-center'><%= t('.title') %></h1>
+<p><%= link_to t('users.index.create'), new_user_path, class: 'btn btn-primary' %></p>
+<table class='table'>
   <thead>
     <tr>
       <th><%= User.human_attribute_name :name %></th>
@@ -16,14 +16,12 @@
       <tr>
         <td><%= user.name %></td>
         <td><%= user.email %></td>
-        <td><%= user.tasks.size %></td>
+        <td><%= user.tasks_count %></td>
         <td><%= t("activerecord.attributes.user.roles.#{user.role}") %></td>
-        <td><%= link_to t('users.index.show'), user_path(user.id) %></td>
-        <td><%= link_to t('users.index.edit'), edit_user_path(user) %></td>
-        <td><%= button_to t('users.index.delete'), user_path(user.id), method: :delete, form: {data: {confirm: t('users.index.delete_confirmation')}} %></td>
+        <td class='button'><%= link_to t('users.index.show'), user_path(user.id), class: "btn btn-info" %></td>
+        <td class='button'><%= link_to t('users.index.edit'), edit_user_path(user), class: "btn btn-light" %></td>
+        <td class='button'><%= button_to t('users.index.delete'), user_path(user.id), method: :delete, form: {data: {confirm: t('users.index.delete_confirmation')}}, class: 'btn btn-danger' %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
-<p><%= link_to t('users.index.create'), new_user_path %></p>

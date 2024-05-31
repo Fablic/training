@@ -13,10 +13,10 @@ class SessionsController < ApplicationController
       if @user[:role] == "admin"
         redirect_to users_path
       else
-        redirect_to tasks_path
+        redirect_to tasks_path, notice: t("sessions.create.notice")
       end
     else
-      redirect_to login_path
+      redirect_to login_path, alert: t("sessions.create.alert")
     end
   end
 

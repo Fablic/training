@@ -1,15 +1,16 @@
-<h1><%= t '.title' %></h1>
+<h1><%= t('.title') %></h1>
 
-<h2><%= @user.name %></h2>
-<p><%= @user.email %></p>
+<h2><%= User.human_attribute_name(:name) %>: <%= @user.name %></h2>
+<p><%= User.human_attribute_name(:email) %>: <%= @user.email %></p>
+<h2><%= t('.task_list') %></h2>
 <p><%= t("activerecord.attributes.user.roles.#{@user.role}") %></p>
 
-<table>
+<table class='table'>
   <thead>
     <tr>
-      <th><%= Task.human_attribute_name :title %></th>
-      <th><%= Task.human_attribute_name :description %></th>
-      <th><%= Task.human_attribute_name :created_at %></th>
+      <th><%= Task.human_attribute_name(:title) %></th>
+      <th><%= Task.human_attribute_name(:description) %></th>
+      <th><%= Task.human_attribute_name(:created_at) %></th>
     </tr>
   </thead>
 
@@ -24,5 +25,4 @@
   </tbody>
 </table>
 
-
-<p><%= link_to t('users.index.title'), users_path %></p>
+<p><%= link_to t('users.index.title'), users_path, class: 'btn btn-info' %></p>

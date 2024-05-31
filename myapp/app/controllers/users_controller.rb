@@ -1,11 +1,14 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  before_action :require_admin_user, only: [:index, :show, :edit, :admin_create, :admin_update, :destroy]
+  before_action :require_admin_user, only: [:index, :show, :edit, :destroy]
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   def index
-    @users = User.all
+    @users = User.
+             left_joins(:tasks).
+             select("users.*", "COUNT(tasks.id) AS tasks_count").
+             group("users.id")
   end
 
   def new
@@ -22,30 +25,13 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       session[:user_id] = @user.id
-      redirect_to tasks_path, notice: t("users.create.notice")
-    else
-      render :new, alert: t("users.create.alert")
-    end
-  end
-
-  def admin_create
-    @user = User.new(user_params)
-    if @user.save
       redirect_to users_path, notice: t("users.create.notice")
     else
-      render :new, alert: t("users.create.alert")
+      redirect_to new_user_path, alert: t("users.create.alert")
     end
   end
 
   def update
-    if @user.update(user_params)
-      redirect_to @user, notice: t("users.update.notice")
-    else
-      render :edit, alert: t("users.update.alert")
-    end
-  end
-
-  def admin_update
     if @user.update(user_params)
       redirect_to users_path, notice: t("users.update.notice")
     else
@@ -68,6 +54,7 @@ class UsersController < ApplicationController
     def user_params
       params.require(:user).permit(:name, :email, :password, :role)
     end
+
 
     def set_user
       @user = User.find(params[:id])

@@ -1,5 +1,6 @@
 <h1><%= t('.title') %></h1>
 
-<%= render 'form', user: @user, submit_button: t('users.edit.update_button') %>
+<%= render 'form', user: @user, submit_button: t('users.edit.update_button'), new_account: false %>
 
-<%= link_to t('attributes.back'), users_path %>
+<%= link_to t('attributes.back'), users_path, class: "btn btn-secondary margin-left" %>
+
