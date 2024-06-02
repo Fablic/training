@@ -16,7 +16,7 @@ class TasksController < ApplicationController
       sort_column = params[:sort]
       sort_direction = params[:is_order_desc] == "true" ? "DESC" : "ASC"
     else
-      sort_column = "tasks.created_at"
+      sort_column = "created_at"
       sort_direction = "DESC"
     end
     @tasks = @tasks.order("#{sort_column} #{sort_direction}")
