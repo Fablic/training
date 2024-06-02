@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  before_action :require_admin_user, only: [:index, :new, :show, :edit, :update, :create, :destroy]
+  before_action :require_admin_user
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   def index
