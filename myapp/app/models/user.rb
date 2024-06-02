@@ -5,7 +5,11 @@ class User < ApplicationRecord
     self.password = EncryptionService.encrypt(self.password)
   end
 
-  has_many :tasks
+  before_destroy :delete_ensure_at_least_one_admin_remains
+  before_update :update_ensure_at_least_one_admin_remains, if: :role_changed_to_general?
+
+  enum role: [:admin, :general]
+  has_many :tasks, dependent: :destroy
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :password, presence: true
@@ -18,4 +22,27 @@ class User < ApplicationRecord
       nil
     end
   end
+
+  def self.enum_options_for_select_role
+    self.roles.map { |role, i| [I18n.t("activerecord.attributes.user.roles.#{role}"), role] }
+  end
+
+  private
+    def delete_ensure_at_least_one_admin_remains
+      if self.role == "admin" && User.where(role: "admin").count <= 1
+        errors.add(:base, I18n.t("users.delete.last_admin_alert"))
+        throw(:abort)
+      end
+    end
+
+    def update_ensure_at_least_one_admin_remains
+      if User.where(role: "admin").count <= 1
+        errors.add(:base, I18n.t("users.update.last_admin_alert"))
+        throw(:abort)
+      end
+    end
+
+    def role_changed_to_general?
+      role_changed? && self.role == "general"
+    end
 end

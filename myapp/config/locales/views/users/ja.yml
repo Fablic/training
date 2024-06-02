@@ -1,0 +1,22 @@
+ja:
+  users:
+    index:
+      title: 'ユーザ一覧'
+      create: 'ユーザ作成'
+      show: '詳細'
+      edit: '編集'
+      delete: '削除'
+      num_of_tasks: 'タスク数'
+      delete_confirmation: '本当に削除しますか？'
+    show:
+      title: 'ユーザの情報'
+      task_list: 'タスク一覧'
+    edit:
+      title: 'ユーザの情報を編集'
+      update_button: '更新'
+    new:
+      title: '新規ユーザを作成'
+      create_button: '作成'
+    form:
+      error:
+        cause: 'エラー原因は以下になります。'

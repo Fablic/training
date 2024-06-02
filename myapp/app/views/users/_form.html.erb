@@ -1,0 +1,38 @@
+<% if @user.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= t('.error.cause') %></h2>
+    <ul>
+    <% @user.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_with(model: user, local: true, class: 'form-margin') do |form| %>
+  <div class="form-group">
+    <%= form.label :name %>
+    <%= form.text_field :name, id: :user_name, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :email %>
+    <%= form.text_field :email, id: :user_email, class: 'form-control' %>
+  </div>
+  
+  <div class="field">
+    <%= form.label :role %>
+    <%= form.select :role, User.enum_options_for_select_role, { include_blank: "#{User.human_attribute_name :role}", class: "form-select"} %>
+  </div>
+
+  <% if new_account %>
+    <div class="form-group">
+      <%= form.label :password %>
+      <%= form.password_field :password, id: :user_password, class: 'form-control' %>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= form.submit submit_button, class: 'btn btn-primary' %>
+  </div>
+<% end %>
