@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  task: one
+  label: one
+  discarded_at: 2024-05-29 07:20:11
+
+two:
+  task: two
+  label: two
+  discarded_at: 2024-05-29 07:20:11

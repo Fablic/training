@@ -13,22 +13,25 @@
 テーブルは以下の4種類
 - users
 - tasks
-- task_to_labels
 - labels
+- task_label_relations
+
+ER図は以下
+<img src="er.png" width="640">
 
 ### users
-first_name, last_nameは削除しました。nameをlogin_nameに変更しました。
+first_name, last_nameは削除しました。
 
-| Name         | Nullable | Default | Note            |
-| ------------ | -------- | ------- | --------------- |
-| id           | no       | | |
-| login_name   | no       | | |
-| password     | no       | | |
-| role         | no       | standard | admin, standard|
-| status       | no       | active | active, inactive|
-| created_at   | no       | | |
-| updated_at   | no       | | |
-| deleted_at   | yes      | NULL | |
+| Name   | Nullable | Default | Note            |
+| ------ | -------- | ------- | --------------- |
+| id     | no       | | |
+| name   | no       | | |
+| password | no       | | |
+| role   | no       | standard | admin, standard|
+| status | no       | active | active, inactive|
+| created_at | no       | | |
+| updated_at | no       | | |
+| discarded_at | yes      | NULL | |
 
 #### index of users
 - idx_users_on_login_name (login_name)
@@ -47,26 +50,12 @@ first_name, last_nameは削除しました。nameをlogin_nameに変更しまし
 | priority     | no       | high | high, medium, low   |
 | created_at   | no       | | |
 | updated_at   | no       | | |
-| deleted_at   | yes      | NULL | |
+| discarded_at | yes      | NULL | |
 
 #### index of tasks
-- idx_tasks_on_priority (title)
 - idx_tasks_on_status (status)
 - idx_tasks_on_priority (priority)
 - idx_tasks_on_due_date (due_date)
-
-
-### task_to_labels
-不要なnameカラムを削除しました。
-
-| Name         | Nullable | Default | Note |
-| ------------ | -------- | ------- | ---- |
-| id           | no       | | |
-| task_id      | no       | | |
-| label_id     | no       | | |
-| created_at   | no       | | |
-| updated_at   | no       | | |
-| deleted_at   | yes      | NULL | |
 
 ### labels
 | Name         | Nullable | Default | Note |
@@ -75,4 +64,17 @@ first_name, last_nameは削除しました。nameをlogin_nameに変更しまし
 | name         | no       | | |
 | created_at   | no       | | |
 | updated_at   | no       | | |
-| deleted_at   | yes      | NULL | |
+| discarded_at | yes      | NULL | |
+
+### task_label_relations
+不要なnameカラムを削除しました。
+テーブル名をtask_to_labelsから変更しました。
+
+| Name         | Nullable | Default | Note |
+| ------------ | -------- | ------- | ---- |
+| id           | no       | | |
+| task_id      | no       | | |
+| label_id     | no       | | |
+| created_at   | no       | | |
+| updated_at   | no       | | |
+| discarded_at | yes      | NULL | |
