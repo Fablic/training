@@ -220,7 +220,7 @@ RSpec.describe 'Tasks', type: :system do
     end
   end
 
-  describe 'new page and create task' do 
+  describe 'new page and Create' do 
     it 'show page title and form' do 
       visit new_task_path
       
@@ -234,7 +234,7 @@ RSpec.describe 'Tasks', type: :system do
       expect(page).to have_selector("input[type='radio'][value='in_progress']")
       expect(page).to have_selector("input[type='radio'][value='completed']")
 
-      expect(page).to have_button('Create Task')
+      expect(page).to have_button('Create')
     end
 
     it 'create new task and show flash message' do 
@@ -246,7 +246,7 @@ RSpec.describe 'Tasks', type: :system do
       fill_in 'Due', with: new_time
       choose 'Pending'
 
-      click_on 'Create Task'
+      click_on 'Create'
 
       expect(current_path).to eq(tasks_path)
       expect(page).to have_content('New task was created successfully!')
@@ -268,7 +268,7 @@ RSpec.describe 'Tasks', type: :system do
         fill_in 'Due', with: Time.zone.now + 5
         choose 'Pending'
 
-        click_on 'Create Task'
+        click_on 'Create'
 
         expect(page).to have_content('You have some invalid inputs!')
         expect(page).to have_content('please input more than 5 characters')
@@ -282,7 +282,7 @@ RSpec.describe 'Tasks', type: :system do
         fill_in 'Due', with: Time.zone.now + 5
         choose 'Pending'
 
-        click_on 'Create Task'
+        click_on 'Create'
 
         expect(page).to have_content('You have some invalid inputs!')
         expect(page).to have_content('30 characters is the maximum allowed')
@@ -295,7 +295,7 @@ RSpec.describe 'Tasks', type: :system do
         fill_in 'Due', with: Time.zone.now + 5
         choose 'Pending'
 
-        click_on 'Create Task'
+        click_on 'Create'
 
         expect(page).to have_content('You have some invalid inputs!')
         expect(page).to have_content('please input more than 10 characters')
@@ -309,7 +309,7 @@ RSpec.describe 'Tasks', type: :system do
         fill_in 'Due', with: Time.zone.now + 5
         choose 'Pending'
 
-        click_on 'Create Task'
+        click_on 'Create'
 
         expect(page).to have_content('You have some invalid inputs!')
         expect(page).to have_content('300 characters is the maximum allowed')
@@ -322,7 +322,7 @@ RSpec.describe 'Tasks', type: :system do
         fill_in 'Description', with: 'New Task Description'
         choose 'Pending'
 
-        click_on 'Create Task'
+        click_on 'Create'
 
         expect(page).to have_content('You have some invalid inputs!')
         expect(page).to have_content('Due must be specified!')
@@ -336,7 +336,7 @@ RSpec.describe 'Tasks', type: :system do
         fill_in 'Due', with: Time.zone.now - 60
         choose 'Pending'
 
-        click_on 'Create Task'
+        click_on 'Create'
 
         expect(page).to have_content('You have some invalid inputs!')
         expect(page).to have_content("Due can't be earlier than now!")

@@ -28,6 +28,6 @@
   ```
 - To run rspec model tests
   ```sh
-  docker compose exec api bundle exec rspec spec/system/ -fd
+  docker compose exec api bundle exec rspec spec/models/ -fd
   ```
 
