@@ -219,5 +219,17 @@ RSpec.describe "Tasks", type: :system do
         end
       end
     end
+    describe "label" do
+      let!(:label1) { create(:label1) }
+      let!(:task_label) { create(:task_label, user_id: user1.id, label_ids: [label1.id]) }
+      before do
+        visit tasks_path
+      end
+      it "filter by label1, and find a task with it" do
+        check label1.label
+        click_button I18n.t("tasks.index.filter")
+        expect(page.all("tr")[1]).to have_content label1.label
+      end
+    end
   end
 end

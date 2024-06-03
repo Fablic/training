@@ -83,4 +83,15 @@ RSpec.describe "Tasks", type: :model do
       end
     end
   end
+
+  describe "task" do
+    context "associated" do
+      let!(:user1) { create(:user1) }
+      let!(:label1) { create(:label1) }
+      let!(:task_label) { create(:task_label, user_id: user1.id, label_ids: [label1.id]) }
+      it "find task_label with label1" do
+        expect(task_label.labels[0].label).to eq label1.label
+      end
+    end
+  end
 end
