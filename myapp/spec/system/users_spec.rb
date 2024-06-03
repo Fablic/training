@@ -6,10 +6,12 @@ RSpec.describe "Users", type: :system do
   describe "Login" do
     let!(:user1) { create(:user1) }
     let!(:admin) { create(:admin) }
+
     context "login a user" do
       before do
         visit login_path
       end
+
       it "valid" do
         fill_in "session_email", with: "user1@example.com"
         fill_in "session_password", with: "123"
@@ -23,6 +25,7 @@ RSpec.describe "Users", type: :system do
       before do
         visit login_path
       end
+
       it "not valid" do
         fill_in "session_email", with: "user1@example.com"
         fill_in "session_password", with: "XXXXXX"
@@ -40,6 +43,7 @@ RSpec.describe "Users", type: :system do
           fill_in "session_password", with: "123"
           click_button "Login"
         end
+
         it "redirect to the login page" do
           get users_path
           expect(response).to redirect_to login_path
@@ -71,16 +75,19 @@ RSpec.describe "Users", type: :system do
     let!(:task3) { create(:task3, user_id: user1.id) }
     let!(:task4) { create(:task4, user_id: user1.id) }
     let!(:task5) { create(:task5, user_id: user1.id) }
+
     before do
       visit login_path
       fill_in "session_email", with: "admin@example.com"
       fill_in "session_password", with: "123"
       click_button "Login"
     end
+
     context "go to the list of users page" do
       before do
         visit users_path
       end
+
       it "find 3 users" do
         expect(page).to have_content user1.name
         expect(page).to have_content user2.name
@@ -92,6 +99,7 @@ RSpec.describe "Users", type: :system do
       before do
         visit user_path(user1)
       end
+
       it "find the tasks" do
         expect(page).to have_content task1.title
         expect(page).to have_content task2.title
@@ -105,6 +113,7 @@ RSpec.describe "Users", type: :system do
       before do
         visit new_user_path
       end
+
       it "valid" do
         fill_in "user_name", with: "user1"
         fill_in "user_email", with: "user123@aaa.com"
@@ -118,6 +127,7 @@ RSpec.describe "Users", type: :system do
       before do
         visit user_path(user1)
       end
+
       it "valid" do
         expect(page).to have_content user1.name
         expect(page).to have_content user1.email
@@ -129,6 +139,7 @@ RSpec.describe "Users", type: :system do
         before do
           visit edit_user_path(user1)
         end
+
         it "valid" do
           fill_in "user_name", with: "user1 updated"
           fill_in "user_email", with: "user1updated@aaa.com"
@@ -140,6 +151,7 @@ RSpec.describe "Users", type: :system do
         before do
           visit edit_user_path(admin)
         end
+
         it "not valid" do
           find("option[value='general']").select_option
           click_button I18n.t("users.edit.update_button")
@@ -153,6 +165,7 @@ RSpec.describe "Users", type: :system do
         before do
           visit users_path
         end
+
         it "valid" do
           all("tr")[2].click_button I18n.t("users.index.delete")
           page.driver.browser.switch_to.alert.accept
@@ -163,6 +176,7 @@ RSpec.describe "Users", type: :system do
         before do
           visit users_path
         end
+
         it "not valid" do
           all("tr")[1].click_button I18n.t("users.index.delete")
           page.driver.browser.switch_to.alert.accept
