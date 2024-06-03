@@ -18,3 +18,8 @@ Task.create(title: "title 3", description: "description 3", user_id: 1)
 Task.create(title: "title 21", description: "description 21", user_id: 2)
 Task.create(title: "title 22", description: "description 22", user_id: 2)
 Task.create(title: "title 23", description: "description 23", user_id: 2)
+
+Label.create(label: "label 1")
+Label.create(label: "label 2")
+Label.create(label: "label 3")
+Label.create(label: "label 4")

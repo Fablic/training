@@ -6,6 +6,12 @@
                   Task.enum_options_for_select_status, 
                   { include_blank: "#{Task.human_attribute_name :status}",
                     :selected => params[:status] }) %>
+  <%= form.collection_check_boxes :label_ids, Label.all, :id, :label, {checked: params[:label_ids], include_hidden: false} do |b| %>
+    <%= b.label class:"form-check-label" do%>
+      <%= b.check_box %>
+      <span class="badge bg-secondary"><%= b.text %></span>
+    <%end%>
+  <% end %>
   <%= submit_tag(t('.filter'), class: 'btn btn-light border') %>
 <% end %>
 <table class='table'>
@@ -13,8 +19,9 @@
     <tr>
       <th><%= Task.human_attribute_name(:title) %></th>
       <th><%= Task.human_attribute_name(:description) %></th>
+      <th><%= Task.human_attribute_name(:label) %></th>
       <th><%= Task.human_attribute_name(:created_at) %></th>
-      <th><%= link_to Task.human_attribute_name(:expiration_date), 
+      <th><%= link_to Task.human_attribute_name(:expiration_date),
               tasks_path(sort: "expiration_date", is_order_desc: params[:is_order_desc] == "true" ? "false" : "true") %></th>
       <th><%= Task.human_attribute_name :status %></th>
       <th colspan="3"></th>
@@ -25,6 +32,11 @@
       <tr>
         <td><%= task.title %></td>
         <td><%= task.description %></td>
+        <td>
+          <% task.labels.each do |label| %>
+            <span class="badge bg-secondary"><%= label.label %></span>
+          <% end %>
+        </td>
         <td><%= task.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
         <td><%= task.expiration_date.nil? ? '' : task.expiration_date.strftime("%Y-%m-%d %H:%M:%S") %></td>
         <td><%= Task.human_enum_name('status', task.status) %></td>

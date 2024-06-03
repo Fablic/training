@@ -9,6 +9,11 @@
     <div class="card-body">
       <p class="card-text"><%= Task.human_attribute_name(:description) %></p>
       <p class="card-text"><%= @task.description %></p>
+      <ul>
+      <% @task.labels.each do |label| %>
+        <li><%= label.label %></li>
+      <% end %>
+      </ul>
       <p><%= @task.expiration_date.nil? ? '' : @task.expiration_date.strftime("%Y-%m-%d %H:%M:%S") %></p>
       <p><%= Task.human_attribute_name(:status) %>: <%= t("activerecord.attributes.task.statuses.#{@task.status}") %></p>
     </div>

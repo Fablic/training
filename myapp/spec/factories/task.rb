@@ -65,4 +65,10 @@ FactoryBot.define do
     description { "" }
     user_id { :user_id }
   end
+  factory :task_label, class: Task do
+    title { "X" }
+    description { "" }
+    user_id { :user_id }
+    label_ids { [:label_id] }
+  end
 end

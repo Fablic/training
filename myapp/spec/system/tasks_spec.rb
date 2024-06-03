@@ -5,14 +5,15 @@ require "rails_helper"
 RSpec.describe "Tasks", type: :system do
   describe "login" do
     let!(:user1) { create(:user1) }
+
     before do
       visit login_path
       fill_in "session_email", with: "user1@example.com"
       fill_in "session_password", with: "123"
       click_button "Login"
     end
+
     describe "test with dummy data" do
-      # Create dummy data
       let!(:task1) { create(:task1, user_id: user1.id) }
       let!(:task2) { create(:task2, user_id: user1.id) }
       let!(:task3) { create(:task3, user_id: user1.id) }
@@ -93,8 +94,6 @@ RSpec.describe "Tasks", type: :system do
         fill_in "session_email", with: "user1@example.com"
         fill_in "session_password", with: "123"
         click_button "Login"
-      end
-      before do
         visit new_task_path
       end
 
@@ -141,9 +140,11 @@ RSpec.describe "Tasks", type: :system do
       let!(:task1) { create(:task1, user_id: user1.id) }
       let!(:task2) { create(:task2, user_id: user1.id) }
       let!(:task3) { create(:task3, user_id: user1.id) }
+
       before do
         visit tasks_path
       end
+
       context "title" do
         it "find a task with its title 'test title 1'" do
           fill_in "search", with: "test title 1"
@@ -157,9 +158,11 @@ RSpec.describe "Tasks", type: :system do
       let!(:task1) { create(:task1, user_id: user1.id) }
       let!(:task2) { create(:task2, user_id: user1.id) }
       let!(:task3) { create(:task3, user_id: user1.id) }
+
       before do
         visit tasks_path
       end
+
       context "status" do
         it "find a task with its status 'in_progress'" do
           find("option[value='in_progress']").select_option
@@ -177,9 +180,11 @@ RSpec.describe "Tasks", type: :system do
       let!(:task5) { create(:task5, user_id: user1.id) }
       let!(:task6) { create(:task6, user_id: user1.id) }
       let!(:task7) { create(:task7, user_id: user1.id) }
+
       before do
         visit tasks_path
       end
+
       context "next page" do
         it "find tasks in the page 2" do
           expect(page.all("tr")[1]).to have_content task7.created_at.strftime("%Y-%m-%d %H:%M:%S")
@@ -217,6 +222,20 @@ RSpec.describe "Tasks", type: :system do
             retry
           end
         end
+      end
+    end
+    describe "label" do
+      let!(:label1) { create(:label1) }
+      let!(:task_label) { create(:task_label, user_id: user1.id, label_ids: [label1.id]) }
+
+      before do
+        visit tasks_path
+      end
+
+      it "filter by label1, and find a task with it" do
+        check label1.label
+        click_button I18n.t("tasks.index.filter")
+        expect(page.all("tr")[1]).to have_content label1.label
       end
     end
   end

@@ -30,6 +30,10 @@
     <%= form.select :status, Task.enum_options_for_select_status, { include_blank: "#{Task.human_attribute_name :status}", class: "form-select"} %>
   </div>
 
+  <div class="field">
+    <%= form.collection_check_boxes :label_ids, Label.all, :id, :label %>
+  </div>
+
   <div class="actions">
     <%= form.submit submit_button, class: 'btn btn-primary' %>
   </div>

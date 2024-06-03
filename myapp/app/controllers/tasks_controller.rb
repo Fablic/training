@@ -6,9 +6,10 @@ class TasksController < ApplicationController
   TASKS_PER_PAGE = 5
 
   def index
-    @tasks = current_user.tasks
+    @tasks = current_user.tasks.includes(:labels)
     @tasks = @tasks.filter_status(params[:status]) if params[:status].present?
     @tasks = @tasks.search_title(params[:search]) if params[:search].present?
+    @tasks = @tasks.filter_labels(params[:label_ids]) if params[:label_ids].present?
 
     # For sorting function
     if params[:sort].presence_in(Task.column_names)
@@ -66,6 +67,6 @@ class TasksController < ApplicationController
     end
 
     def task_params
-      params.require(:task).permit(:title, :description, :expiration_date, :status)
+      params.require(:task).permit(:title, :description, :expiration_date, :status, label_ids: [])
     end
 end
