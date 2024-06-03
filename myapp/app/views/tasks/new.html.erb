@@ -1,48 +1,62 @@
-<h1>Create a new task</h1>
-<%= form_with scope: :task, url: tasks_path, local: true, data: {turbo: false} do |form| %>
-  <% if @new_task.errors.any? %>
+<div class='mt-5 mb-5 container', style='text-align:center'>
+  <h1>Create a new task</h1>
+</div>  
+
+<div class='container'>
+  <%= form_with scope: :task, url: tasks_path, local: true, data: {turbo: false} do |form| %>
+    <button class='mb-4 btn btn-outline-secondary'>
+      <%= link_to 'Back to home', tasks_path, method: :get , class: 'link-without-underline link-secondary' %>
+    </button>
+    
+    <% if @new_task.errors.any? %>
+      <div class='mb-4 border border-danger rounded d-flex justify-content-center'>
+        <div class='container'>
+          <div>You have some invalid inputs!</div>
+          <ul>
+            <% @new_task.errors.full_messages.each do |error| %>
+            <li><%= error %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    <% end %>
+
+    <div class='mb-3 w-75'>
+      <%= form.label :title, class: 'form-label' %>
+      <%= form.text_field :title, class: 'form-control' %>   
+    </div>
+
+    <div class='mb-3 w-75'>
+      <%= form.label :description, class: 'form-label' %>
+      <%= form.text_area :description, class: 'form-control' %>
+    </div>
+
+    <div class='mb-3 w-75'>
+      <%= form.label :due, class: 'form-label' %>
+      <%= form.datetime_local_field :due, class: 'form-control' %>
+    </div>
+
+    <div class='mb-3'>
+      <%= form.label :status, 'Select Status:', class: 'form-label' %>
+
+      <div class='form-check'>
+        <%= form.radio_button :status, 'pending' %>
+        <%= form.label :status_pending, 'Pending', class: 'form-label' %>
+      </div>
+
+      <div class='form-check'>
+        <%= form.radio_button :status, 'in_progress' %>
+        <%= form.label :status_in_progress, 'In Progress', class: 'form-label' %>
+      </div>
+
+      <div class='form-check'>
+        <%= form.radio_button :status, 'completed' %>
+        <%= form.label :status_completed, 'Completed', class: 'form-label' %>
+      </div>
+    </div>
+
     <div>
-      <p>You have some invalid inputs!</p>
-      <ul>
-        <% @new_task.errors.full_messages.each do |error| %>
-        <li><%= error %></li>
-        <% end %>
-      </ul>
+      <%= form.submit 'Create Task', class: 'btn btn-primary' %>
     </div>
   <% end %>
-
-  <p>
-    <%= form.label :title %>
-    <br>
-    <%= form.text_field :title %>   
-  </p>
-
-  <p>
-    <%= form.label :description %>
-    <br>
-    <%= form.text_area :description %>
-  </p>
-
-  <p>
-    <%= form.label :due %>
-    <br>
-    <%= form.datetime_local_field :due %>
-  </p>
-
-  <p>
-    <%= form.label :status, 'Select Status:' %>
-    <br>
-    <%= form.radio_button :status, 'pending' %>
-    <%= form.label :status_pending, 'Pending' %>
-    <br>
-    <%= form.radio_button :status, 'in_progress' %>
-    <%= form.label :status_in_progress, 'In Progress' %>
-    <br>
-    <%= form.radio_button :status, 'completed' %>
-    <%= form.label :status_completed, 'Completed' %>
-  </p>
-
-  <p>
-    <%= form.submit %>
-  </p>
-<% end %>
+</div>

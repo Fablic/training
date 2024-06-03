@@ -1,23 +1,40 @@
-<h1>Task Detail</h1>
-<br>
+<div class='mt-5 mb-5 container', style='text-align:center'> 
+  <h1>Task Detail</h1>
+</div>
 
-<h2>Title</h2>
-<h3><%= @task.title %></h3>
-<br>
+<div class='container'>
+  <button class='mb-4 btn btn-outline-secondary'>
+    <%= link_to 'Back to home', tasks_path, method: :get , class: 'link-without-underline link-secondary' %>
+  </button>
 
-<h2>Description</h2>
-<h3><%= @task.description %></h3>
-<br>
+  <div class='mb-3 container border rounded'>
+    <h2>Title</h2>
+    <hr class='w-25 hr-style'>
+    <h3><%= @task.title %></h3>
+  </div>  
+  
+  <div class='mb-3 container border rounded'>
+    <h2>Description</h2>
+    <hr class='w-25 hr-style'>
+    <h3><%= @task.description %></h3>
+  </div>
 
-<h2>Due</h2>
-<h3><%= l @task.due %></h3>
-<br>
+  <div class='mb-3 container border rounded'>
+    <h2>Due</h2>
+    <hr class='w-25 hr-style'>
+    <h3 class='fst-italic'><%= l @task.due %></h3>
+  </div>
 
-<h2>Status</h2>
-<%= status_label(@task) %>
 
-<br>
+  <div class='mb-3 container border rounded'>
+    <h2>Status</h2>
+    <hr class='w-25 hr-style'>
+    <div class='mb-2'>
+      <%= status_label(@task) %>
+    </div>
+  </div>
 
-<p>
-  <%= button_to 'Edit', edit_task_path(@task), method: :get %>
-</p>
+  <p>
+    <%= button_to 'Edit', edit_task_path(@task), method: :get, class: 'btn btn-outline-success' %>
+  </p>
+</div>

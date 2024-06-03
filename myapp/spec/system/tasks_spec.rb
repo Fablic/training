@@ -41,7 +41,7 @@ RSpec.describe 'Tasks', type: :system do
 
         visit tasks_path
 
-        expect(page).to have_selector("nav[class='pagination']")
+        expect(page).to have_selector('ul.pagination')
       end
     end
 
@@ -179,7 +179,7 @@ RSpec.describe 'Tasks', type: :system do
 
         click_on 'Filter'
 
-        titles = titles = find('tbody').all('tr')
+        titles = find('tbody').all('tr')
 
         expect(titles[0]).to have_content('Task 2')
         expect(titles[1]).to have_content('Task 1')
@@ -213,14 +213,14 @@ RSpec.describe 'Tasks', type: :system do
 
         click_on 'Filter'
 
-        titles = titles = find('tbody').all('tr')
+        titles = find('tbody').all('tr')
 
         expect(titles[0]).to have_content('Task 1')
       end
     end
   end
 
-  describe 'new page and create task' do 
+  describe 'new page and Create' do 
     it 'show page title and form' do 
       visit new_task_path
       
@@ -234,7 +234,7 @@ RSpec.describe 'Tasks', type: :system do
       expect(page).to have_selector("input[type='radio'][value='in_progress']")
       expect(page).to have_selector("input[type='radio'][value='completed']")
 
-      expect(page).to have_button('Submit Task')
+      expect(page).to have_button('Create')
     end
 
     it 'create new task and show flash message' do 
@@ -246,7 +246,7 @@ RSpec.describe 'Tasks', type: :system do
       fill_in 'Due', with: new_time
       choose 'Pending'
 
-      click_on 'Submit Task'
+      click_on 'Create'
 
       expect(current_path).to eq(tasks_path)
       expect(page).to have_content('New task was created successfully!')
@@ -268,7 +268,7 @@ RSpec.describe 'Tasks', type: :system do
         fill_in 'Due', with: Time.zone.now + 5
         choose 'Pending'
 
-        click_on 'Submit Task'
+        click_on 'Create'
 
         expect(page).to have_content('You have some invalid inputs!')
         expect(page).to have_content('please input more than 5 characters')
@@ -282,7 +282,7 @@ RSpec.describe 'Tasks', type: :system do
         fill_in 'Due', with: Time.zone.now + 5
         choose 'Pending'
 
-        click_on 'Submit Task'
+        click_on 'Create'
 
         expect(page).to have_content('You have some invalid inputs!')
         expect(page).to have_content('30 characters is the maximum allowed')
@@ -295,7 +295,7 @@ RSpec.describe 'Tasks', type: :system do
         fill_in 'Due', with: Time.zone.now + 5
         choose 'Pending'
 
-        click_on 'Submit Task'
+        click_on 'Create'
 
         expect(page).to have_content('You have some invalid inputs!')
         expect(page).to have_content('please input more than 10 characters')
@@ -309,7 +309,7 @@ RSpec.describe 'Tasks', type: :system do
         fill_in 'Due', with: Time.zone.now + 5
         choose 'Pending'
 
-        click_on 'Submit Task'
+        click_on 'Create'
 
         expect(page).to have_content('You have some invalid inputs!')
         expect(page).to have_content('300 characters is the maximum allowed')
@@ -322,7 +322,7 @@ RSpec.describe 'Tasks', type: :system do
         fill_in 'Description', with: 'New Task Description'
         choose 'Pending'
 
-        click_on 'Submit Task'
+        click_on 'Create'
 
         expect(page).to have_content('You have some invalid inputs!')
         expect(page).to have_content('Due must be specified!')
@@ -336,7 +336,7 @@ RSpec.describe 'Tasks', type: :system do
         fill_in 'Due', with: Time.zone.now - 60
         choose 'Pending'
 
-        click_on 'Submit Task'
+        click_on 'Create'
 
         expect(page).to have_content('You have some invalid inputs!')
         expect(page).to have_content("Due can't be earlier than now!")
@@ -373,7 +373,7 @@ RSpec.describe 'Tasks', type: :system do
       expect(page).to have_field('Description', with: 'Test Description 1')
       expect(page).to have_field('Due', with: I18n.l(previous_time, format: :field))
 
-      expect(page).to have_selector("input[type='submit'][value='Update Task']")
+      expect(page).to have_selector("input[type='submit'][value='Update']")
     end
 
     it 'redirect to index page after submit' do 
@@ -387,7 +387,7 @@ RSpec.describe 'Tasks', type: :system do
       fill_in 'Due', with: edit_time
       choose 'In Progress'
 
-      click_on 'Update Task'
+      click_on 'Update'
 
       expect(current_path).to eq(tasks_path)
       expect(page).to have_content('Edit task successfully!')
@@ -408,7 +408,7 @@ RSpec.describe 'Tasks', type: :system do
 
         fill_in 'Title', with: ''
 
-        click_on 'Update Task'
+        click_on 'Update'
 
         expect(page).to have_content('You have some invalid inputs!')
         expect(page).to have_content('please input more than 5 characters')
@@ -421,7 +421,7 @@ RSpec.describe 'Tasks', type: :system do
 
         fill_in 'Title', with: 't' * 31
 
-        click_on 'Update Task'
+        click_on 'Update'
 
         expect(page).to have_content('You have some invalid inputs!')
         expect(page).to have_content('30 characters is the maximum allowed')
@@ -434,7 +434,7 @@ RSpec.describe 'Tasks', type: :system do
 
         fill_in 'Description', with: ''
 
-        click_on 'Update Task'
+        click_on 'Update'
 
         expect(page).to have_content('You have some invalid inputs!')
         expect(page).to have_content('please input more than 10 characters')
@@ -447,7 +447,7 @@ RSpec.describe 'Tasks', type: :system do
 
         fill_in 'Description', with: 'd' * 301
 
-        click_on 'Update Task'
+        click_on 'Update'
 
         expect(page).to have_content('You have some invalid inputs!')
         expect(page).to have_content('300 characters is the maximum allowed')
@@ -460,7 +460,7 @@ RSpec.describe 'Tasks', type: :system do
 
         fill_in 'Due', with: ''
 
-        click_on 'Update Task'
+        click_on 'Update'
 
         expect(page).to have_content('You have some invalid inputs!')
         expect(page).to have_content('Due must be specified!')
@@ -473,7 +473,7 @@ RSpec.describe 'Tasks', type: :system do
 
         fill_in 'Due', with: Time.zone.now.prev_day
 
-        click_on 'Update Task'
+        click_on 'Update'
 
         expect(page).to have_content('You have some invalid inputs!')
         expect(page).to have_content("Due can't be earlier than now!")
@@ -487,7 +487,7 @@ RSpec.describe 'Tasks', type: :system do
         fill_in 'Title', with: 'New Task Title'
         fill_in 'Description', with: 'New Task Description'
 
-        click_on 'Update Task'
+        click_on 'Update'
 
         expect(current_path).to eq(tasks_path)
       end
