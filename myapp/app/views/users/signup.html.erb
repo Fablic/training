@@ -1,2 +1,26 @@
-<h1>Users#signup</h1>
-<p>Find me in app/views/users/signup.html.erb</p>
+<div class='mt-5 mb-5 container', style='text-align:center'>
+  <h1>User Signup</h1>
+</div>
+
+<div class='container'>
+  <%= form_with scope: :user, url: users_create_path, local: true, data: {turbo: false} do |form| %>
+    <div class='mb-3 w-75'>
+      <%= form.label :username, class: 'form-label' %>
+      <%= form.text_field :username, class: 'form-control' %>
+    </div>  
+
+    <div class='mb-3 w-75'>
+      <%= form.label :password, class: 'form-label' %>
+      <%= form.password_field :password, class: 'form-control' %>
+    </div>
+
+    <div class='mb-3 w-75'>
+      <%= form.label :password_confirmation, class: 'form-label' %>
+      <%= form.password_field :password_confirmation, class: 'form-control' %>
+    </div> 
+
+    <div>
+      <%= form.submit 'Sign Up', class: 'btn btn-primary' %>
+    </div>
+  <% end %>
+</div>  
