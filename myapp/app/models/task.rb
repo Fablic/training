@@ -10,6 +10,8 @@ class Task < ApplicationRecord
 
   validate :due_cannot_be_earlier_than_now, if: :due_changed?
 
+  belongs_to :user
+
   def self.search_with_sort(query_title, query_status, sort_by, order)
     if query_status.empty?
       where('title LIKE ?', "%#{query_title}%").order("#{sort_by} #{order}")
