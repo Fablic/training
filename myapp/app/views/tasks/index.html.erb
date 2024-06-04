@@ -23,7 +23,7 @@
             <td>Labels</td>
             <td><%= link_to task.title, task_path(task) %></td>
             <td>Ryu</td>
-            <td>0000/00/00</td>
+            <td><%= task.due_date %></td>
             <td>Not started</td>
             <td>Low</td>
             <td><%= task.created_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
