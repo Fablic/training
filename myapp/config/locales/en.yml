@@ -1,33 +1,66 @@
-# Files in the config/locales directory are used for internationalization
-# and are automatically loaded by Rails. If you want to use locales other
-# than English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t "hello"
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t("hello") %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# The following keys must be escaped otherwise they will not be retrieved by
-# the default I18n backend:
-#
-# true, false, on, off, yes, no
-#
-# Instead, surround them with single quotes.
-#
-# en:
-#   "true": "foo"
-#
-# To learn more, please read the Rails Internationalization guide
-# available at https://guides.rubyonrails.org/i18n.html.
-
 en:
-  hello: "Hello world"
+  helpers:
+    label:
+      task:
+        title: "Title (Required)"
+        assignee: "Assignee"
+        label: "Label"
+        start_date: "Start Date"
+        due_date: "Due Date"
+        status: "Status"
+        priority: "Priority"
+        details: "Details"
+        status_not_started: "Not Started"
+        status_in_progress: "In Progress"
+        status_completed: "Completed"
+        priority_high: "High"
+        priority_middle: "Middle"
+        priority_low: "Low"
+        details_placeholder: "Summary"
+    submit:
+      create: "Create"
+      update: "Update"
+      destroy: "Delete"
+  activerecord:
+    models:
+      task: "Task"
+    attributes:
+      task:
+        title: "Title"
+        assignee: "Assignee"
+        label: "Label"
+        start_date: "Start Date"
+        due_date: "Due Date"
+        status: "Status"
+        priority: "Priority"
+        details: "Details"
+  views:
+    tasks:
+      index:
+        title: "Tasks"
+        no_tasks: "No tasks available."
+      show:
+        title: "Show"
+      new:
+        title: "New"
+      edit:
+        title: "Edit"
+    common:
+      cancel: "Cancel"
+      create: "Create"
+      add: "Add"
+      login: "Login"
+      search: "Search"
+      delete: "Delete"
+      edit: "Edit"
+      confirm: "Are you sure?"
+  flash:
+    common:
+      success: "%{model} was successful."
+      failure: "%{model} failed."
+  models:
+    task: "Task"
+  actions:
+    create: "Create"
+    update: "Update"
+    destroy: "Delete"

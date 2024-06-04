@@ -26,11 +26,11 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(task_params)
     if @task.save
-      flash[:notice] = "タスク登録に成功しました。"
+      flash[:notice] = I18n.t('flash.common.success', model: I18n.t('actions.create'))
       redirect_to tasks_url
     else
       @edit_mode = true
-      flash.now[:alert] = "タスク登録に失敗しました。"
+      flash.now[:alert] = I18n.t('flash.common.failure', model: I18n.t('actions.create'))
       render :new, status: :unprocessable_entity
     end
   end
@@ -38,11 +38,11 @@ class TasksController < ApplicationController
   # PATCH/PUT /tasks/1 or /tasks/1.json
   def update
     if @task.update(task_params)
-      flash[:notice] = "タスク更新に成功しました。"
+      flash[:notice] = I18n.t('flash.common.success', model: I18n.t('actions.update'))
       redirect_to tasks_url
     else
       @edit_mode = true
-      flash.now[:alert] = "タスク更新に失敗しました。"
+      flash.now[:alert] = I18n.t('flash.common.failure', model: I18n.t('actions.update'))
       render :edit, status: :unprocessable_entity
     end
   end
@@ -50,7 +50,7 @@ class TasksController < ApplicationController
   # DELETE /tasks/1 or /tasks/1.json
   def destroy
     @task.destroy
-    flash[:notice] = "タスク削除に成功しました。"
+    flash[:notice] = I18n.t('flash.common.success', model: I18n.t('actions.destroy'))
     redirect_to tasks_url
   end
 
