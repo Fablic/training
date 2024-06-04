@@ -1,1 +1,1 @@
-User.create(username: 'First User', password: '12345')
+User.create(username: 'first_user', password: '12345')
