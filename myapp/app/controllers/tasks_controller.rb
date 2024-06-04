@@ -15,9 +15,9 @@ class TasksController < ApplicationController
       query_title = params[:query_title] || ''
       query_status = params[:query_status]
     
-      @tasks = Task.search_with_sort(query_title, query_status, sort_by, order).page(params[:page])
+      @tasks = find_tasks_by_user.search_with_sort(query_title, query_status, sort_by, order).page(params[:page])
     else
-      @tasks = Task.order(created_at: :desc).page(params[:page])
+      @tasks = find_tasks_by_user.order(created_at: :desc).page(params[:page])
     end
   end
 
@@ -65,6 +65,12 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:title, :description, :due, :status)
+    result = params.require(:task).permit(:title, :description, :due, :status)
+    result[:user_id] = session[:user_id]
+    result
+  end
+
+  def find_tasks_by_user
+    User.find(session[:user_id]).tasks
   end
 end
