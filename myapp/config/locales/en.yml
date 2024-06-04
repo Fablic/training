@@ -17,6 +17,7 @@ en:
         priority_middle: "Middle"
         priority_low: "Low"
         details_placeholder: "Summary"
+        created_at: "Created At"
     submit:
       create: "Create"
       update: "Update"

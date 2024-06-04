@@ -17,6 +17,7 @@ ja:
         priority_middle: "中"
         priority_low: "低"
         details_placeholder: "概要"
+        created_at: "作成日時"
     submit:
       create: "登録"
       update: "更新"

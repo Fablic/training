@@ -32,10 +32,13 @@ RSpec.describe 'Tasks', type: :system do
       it_behaves_like 'Checking component'
       it 'displays Items in the correct order' do
         expect(page).to have_field(I18n.t('views.common.search'))
-        expect(page).to have_selector('tr>th', text: I18n.t('activerecord.attributes.task.title'))
-        expect(page).to have_link(@task3.title)
+        expect(page).to have_selector('tr>th', text: I18n.t('helpers.label.task.title'))
         expect(page).to have_link(@task1.title)
         expect(page).to have_link(@task2.title)
+        expect(page).to have_link(@task3.title)
+        expect(page).to have_selector('tr:nth-child(1)', text: @task3.created_at.strftime('%Y-%m-%d %H:%M:%S'))
+        expect(page).to have_selector('tr:nth-child(2)', text: @task1.created_at.strftime('%Y-%m-%d %H:%M:%S'))
+        expect(page).to have_selector('tr:nth-child(3)', text: @task2.created_at.strftime('%Y-%m-%d %H:%M:%S'))
       end
     end
   end
