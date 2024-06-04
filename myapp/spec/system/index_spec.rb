@@ -13,7 +13,8 @@ RSpec.describe 'Task management', type: :system do
 
     visit tasks_path
 
-    expect(page).to have_selector('h5.card-title', text: 'Title: Newer', order: :first)
-    expect(page).to have_selector('h5.card-title', text: 'Title: Older', order: :second)
+    titles = page.all('h5.card-title').map(&:text)
+
+    expect(titles).to eq(['Title: Newer', 'Title: Older'])
   end
 end
