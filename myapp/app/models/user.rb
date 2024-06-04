@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  has_secure_password
   validates :username, length: { in: 3..20, message: 'should be between 3 and 20 chars!' }
   validates :password, presence: true, confirmation: true
 

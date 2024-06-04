@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   # login
   post 'login', to: 'session#create'
   # logout
-  delete 'logout', to: 'session#logout'
+  delete 'logout', to: 'session#destroy'
   # index page
   root 'tasks#index'
   # signup page
