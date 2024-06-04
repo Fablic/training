@@ -2,6 +2,8 @@
   <h1>Edit the task</h1>
 </div>
 
+<%= render 'log_out' %>
+
 <div class='container'>
   <%= form_with(model: @task, local: true, data: {turbo: false}) do |form| %>
     <button class='mb-4 btn btn-outline-secondary'>

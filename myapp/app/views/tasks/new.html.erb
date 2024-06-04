@@ -2,6 +2,8 @@
   <h1>Create a new task</h1>
 </div>  
 
+<%= render 'log_out' %>
+
 <div class='container'>
   <%= form_with scope: :task, url: tasks_path, local: true, data: {turbo: false} do |form| %>
     <button class='mb-4 btn btn-outline-secondary'>

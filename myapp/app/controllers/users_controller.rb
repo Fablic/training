@@ -9,6 +9,7 @@ class UsersController < ApplicationController
     @user = User.new(user_data)
 
     if @user.save 
+      log_in(@user)
       redirect_to tasks_path, notice: 'Successfully signed up!' 
     else 
       render :new
