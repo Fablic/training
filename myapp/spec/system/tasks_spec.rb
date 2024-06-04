@@ -23,15 +23,17 @@ RSpec.describe 'Tasks', type: :system do
 
     context 'When any tasks exist' do
       before do
-        @task1 = Task.create!(title: 'ryu title1', details: 'ryu details1')
-        @task2 = Task.create!(title: 'ryu title2', details: 'ryu details2')
+        @task1 = Task.create!(title: 'ryu title1', details: 'ryu details1', created_at: 1.day.ago)
+        @task2 = Task.create!(title: 'ryu title2', details: 'ryu details2', created_at: 2.days.ago)
+        @task3 = Task.create!(title: 'ryu title3', details: 'ryu details3', created_at: Time.now)
         visit tasks_path
       end
 
       it_behaves_like 'Checking component'
-      it 'displays Items' do
+      it 'displays Items in the correct order' do
         expect(page).to have_field(I18n.t('views.common.search'))
         expect(page).to have_selector('tr>th', text: I18n.t('activerecord.attributes.task.title'))
+        expect(page).to have_link(@task3.title)
         expect(page).to have_link(@task1.title)
         expect(page).to have_link(@task2.title)
       end
