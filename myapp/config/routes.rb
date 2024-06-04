@@ -1,8 +1,15 @@
 Rails.application.routes.draw do
-  get 'users/signup'
-  get 'users/signin'
-  get 'users/signout'
-  post 'users/create'
+  # login page
+  get 'login', to: 'sessions#new'
+  # login
+  post 'login', to: 'session#create'
+  # logout
+  delete 'logout', to: 'session#logout'
+  # index page
   root 'tasks#index'
+  # signup page
+  get 'users/signup', to: 'users#new'
+  # use users#create only
+  resources :users, only: [:create]
   resources :tasks
 end

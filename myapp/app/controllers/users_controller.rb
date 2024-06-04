@@ -1,12 +1,6 @@
 class UsersController < ApplicationController
-  def signup
+  def new
     @user = User.new
-  end
-
-  def signin
-  end
-
-  def signout
   end
 
   def create
@@ -17,7 +11,7 @@ class UsersController < ApplicationController
     if @user.save 
       redirect_to tasks_path, notice: 'Successfully signed up!' 
     else 
-      render :signup
+      render :new
     end
   end
 end

@@ -3,7 +3,7 @@
 </div>
 
 <div class='container'>
-  <%= form_with scope: :user, url: users_create_path, local: true, data: {turbo: false} do |form| %>
+  <%= form_with scope: :user, url: users_path, local: true, data: {turbo: false} do |form| %>
     <% if @user.errors.any? %>
       <div class='mb-4 w-75 border border-danger rounded d-flex justify-content-center'>
         <div class='container'>
