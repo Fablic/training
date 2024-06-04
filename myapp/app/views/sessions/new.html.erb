@@ -9,7 +9,7 @@
 </div>
 
 <div class='container'>
-  <%= form_with url: users_path, local: true, data: {turbo: false} do |form| %>
+  <%= form_with url: login_path, local: true, data: {turbo: false} do |form| %>
     <div class='mb-3 w-75'>
       <%= form.label :username, class: 'form-label' %>
       <%= form.text_field :username, class: 'form-control' %>
