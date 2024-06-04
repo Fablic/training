@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
     user = User.find_by(username: params[:username])
     if user && user.authenticate(params[:password])
       log_in(user)
-      
+      redirect_to tasks_path
     else
       render :new 
     end

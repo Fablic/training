@@ -1,4 +1,6 @@
 class TasksController < ApplicationController
+  before_action :require_login
+  
   def index
     if params.except(:controller, :action, :page).present?
       sort_by_whitelist = %w[due created_at]
