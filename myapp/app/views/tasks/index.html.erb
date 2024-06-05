@@ -1,0 +1,56 @@
+<!-- Not implemented
+<h1>Search</h1>
+<form action="/search" method="get" accept-charset="UTF-8" >
+<%= form_with do |form| %>
+    <div><%= form.label :Title, "Title" %></div>
+    <div><%= form.text_field :title %></div>
+    <div><%= form.label :description, "Description" %></div>
+    <div><%= form.text_field :description %></div>
+    <div><%= form.label :status, "Status" %></div>
+
+
+    <div>
+    <%= form.check_box :status %>
+    <%= form.label :status, "open" %>
+    <%= form.check_box :status %>
+    <%= form.label :status, "closed" %>
+    </div>
+    <div><%= form.submit "Search" %></div>
+<% end %>
+-->
+
+<h1>Tasks</h1>
+<table>
+  <thead>
+  <tr>
+    <th>Title</th>
+    <th>Description</th>
+    <th>Priority</th>
+    <th>Label</th>
+    <th>DueDate</th>
+    <th>Status</th>
+    <th>-</th>
+    <th>-</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @tasks.each do |task| %>
+    <tr>
+      <td><%= link_to task.title, task %></td>
+      <td><%= task.description %></td>
+      <td><%= task.priority %></td>
+      <td>N/A</td>
+      <td><%= task.due_date %></td>
+      <td><%= task.status %></td>
+      <td><%= link_to "Edit", edit_task_path(task) %></td>
+      <td>
+        <%= button_to "Delete", task_path(task), method: :delete, form: { data: { turbo_confirm: "Really delete?" }}%>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<br>
+<%= link_to "Create task", "/tasks/new" %>

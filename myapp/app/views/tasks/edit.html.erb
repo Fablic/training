@@ -1,0 +1,13 @@
+<h2>Edit Task</h2>
+
+<%= form_for(@task) do |f| %>
+
+  <div><%= f.label :title, "Title" %><%= f.text_field :title %></div>
+  <div><%= f.label :description, "Description" %><%= f.text_field :description %></div>
+  <div><%= f.label :status,  "Status" %><%= f.select :status, Task.statuses.keys.to_a, {} %></div>
+  <div><%= f.label :priority, "Priority" %><%= f.select :priority, Task.priorities.keys.to_a, {} %></div>
+  <div><%= f.label :due_date, "Due date" %><%= f.text_field :due_date %></div>
+  <%= f.submit 'Update' %>
+<% end %>
+
+<%= link_to 'Back to top', tasks_path %>
