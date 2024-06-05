@@ -11,8 +11,10 @@ class CreateTasks < ActiveRecord::Migration[6.0]
 
       t.timestamps
     end
-    add_index :tasks, :status
-    add_index :tasks, :due_date
-    add_index :tasks, :priority
+    change_table :tasks, bulk: true do |t|
+      t.index :status
+      t.index :due_date
+      t.index :priority
+    end
   end
 end
