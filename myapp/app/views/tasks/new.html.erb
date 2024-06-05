@@ -10,18 +10,7 @@
       <%= link_to 'Back to home', tasks_path, method: :get , class: 'link-without-underline link-secondary' %>
     </button>
     
-    <% if @new_task.errors.any? %>
-      <div class='mb-4 border border-danger rounded d-flex justify-content-center'>
-        <div class='container'>
-          <div>You have some invalid inputs!</div>
-          <ul>
-            <% @new_task.errors.full_messages.each do |error| %>
-            <li><%= error %></li>
-            <% end %>
-          </ul>
-        </div>
-      </div>
-    <% end %>
+    <%= render partial: 'common_components/error_display', locals: { model: @new_task } %>
 
     <div class='mb-3 w-75'>
       <%= form.label :title, class: 'form-label' %>

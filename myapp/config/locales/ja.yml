@@ -16,3 +16,4 @@ ja:
     messages:
       blank: "を入力してください"
       invalid: "は無効です"
+      confirmation: "は同じパスワードを入力してください"

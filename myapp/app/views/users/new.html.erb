@@ -4,23 +4,13 @@
 
 <div class='container'>
   <%= form_with scope: :user, url: users_path, local: true, data: {turbo: false} do |form| %>
-    <% if @user.errors.any? %>
-      <div class='mb-4 w-75 border border-danger rounded d-flex justify-content-center'>
-        <div class='container'>
-          <div>You have some invalid inputs!</div>
-          <ul>
-            <% @user.errors.full_messages.each do |error| %>
-              <li><%= error %></li>
-            <% end %>
-          </ul>
-        </div>
-      </div>
-    <% end %>
+
+    <%= render partial: 'common_components/error_display', locals: { model: @user } %>
     
     <div class='mb-3 w-75'>
       <%= form.label :username, class: 'form-label' %>
       <%= form.text_field :username, class: 'form-control' %>
-    </div>  
+    </div> 
 
     <div class='mb-3 w-75'>
       <%= form.label :password, class: 'form-label' %>
