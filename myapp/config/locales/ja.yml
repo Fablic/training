@@ -1,0 +1,66 @@
+ja:
+  helpers:
+    label:
+      task:
+        title: "タイトル（必須）"
+        assignee: "担当者"
+        label: "ラベル"
+        start_date: "開始日"
+        due_date: "期限日"
+        status: "ステータス"
+        priority: "優先度"
+        details: "詳細"
+        status_not_started: "未開始"
+        status_in_progress: "進行中"
+        status_completed: "完了"
+        priority_high: "高"
+        priority_middle: "中"
+        priority_low: "低"
+        details_placeholder: "概要"
+    submit:
+      create: "登録"
+      update: "更新"
+      destroy: "削除"
+  activerecord:
+    models:
+      task: "タスク"
+    attributes:
+      task:
+        title: "タイトル"
+        assignee: "担当者"
+        label: "ラベル"
+        start_date: "開始日"
+        due_date: "期限日"
+        status: "ステータス"
+        priority: "優先度"
+        details: "詳細"
+  views:
+    tasks:
+      index:
+        title: "タスク一覧"
+        no_tasks: "タスクがありません。"
+      show:
+        title: "タスク詳細"
+      new:
+        title: "新規タスク"
+      edit:
+        title: "タスク編集"
+    common:
+      cancel: "キャンセル"
+      create: "作成"
+      add: "追加"
+      login: "ログイン"
+      search: "検索"
+      delete: "削除"
+      edit: "編集"
+      confirm: "本当ですか？"
+  flash:
+    common:
+      success: "%{model}に成功しました。"
+      failure: "%{model}に失敗しました。"
+  models:
+    task: "タスク"
+  actions:
+    create: "登録"
+    update: "更新"
+    destroy: "削除"

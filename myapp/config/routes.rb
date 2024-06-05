@@ -5,4 +5,6 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
+
+  match '*path', to: 'application#render404', via: :all
 end
