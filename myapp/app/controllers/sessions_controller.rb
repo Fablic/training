@@ -1,6 +1,5 @@
 class SessionsController < ApplicationController
   def new
-    @user = User.new
   end
 
   def create
@@ -9,7 +8,8 @@ class SessionsController < ApplicationController
       log_in(user)
       redirect_to tasks_path
     else
-      render :new 
+      flash.now[:notice] = 'Wrong username or password!'
+      render :new
     end
   end
 
