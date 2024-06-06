@@ -13,12 +13,12 @@ RSpec.describe Task, type: :model do
     expect(task).not_to be_valid
   end
 
-  it 'is valid with a long description up to 5000 characters' do
+  it 'is valid with a long description up to 500 characters' do
     task = Task.new(title: 'Valid Title', description: 'a' * 500)
     expect(task).to be_valid
   end
 
-  it 'is not valid with a description over 5000 characters' do
+  it 'is not valid with a description over 500 characters' do
     task = Task.new(title: 'Valid Title', description: 'a' * 501)
     expect(task).not_to be_valid
   end
