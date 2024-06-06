@@ -19,4 +19,12 @@ class UsersController < ApplicationController
   def admin
     @users_with_count = User.with_tasks_count
   end
+
+  def destroy 
+    user = User.find(params[:id])
+    username = user.username
+    user.destroy 
+
+    redirect_to users_admin_path, notice: "Successfully deleted user: #{username}"
+  end
 end
