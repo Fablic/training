@@ -1,2 +1,11 @@
 ja:
-  hello: "こんにちは"
+  activerecord:
+    errors:
+      models:
+        task:
+          attributes:
+            title:
+              blank: "タイトルを入力してください。"  # Title can't be blank
+              title_too_long: "タイトルは%{count}文字以内で入力してください。"  # Title is too long
+            description:
+              desc_too_long: "説明文は%{count}文字以内で入力してください。"  # Description is too long
