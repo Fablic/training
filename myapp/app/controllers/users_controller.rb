@@ -17,5 +17,6 @@ class UsersController < ApplicationController
   end
 
   def admin
+    @users_with_count = User.with_tasks_count
   end
 end

@@ -2,3 +2,24 @@
   <h1>Admin page</h1>
 </div>
 
+<div class='mb-5 container'>
+  <table class='table table-striped table-hover'>
+    <thead>
+      <tr style='text-align:center'>
+        <td><h3>User ID</h3></td>
+        <td><h3>Username</h3></td>
+        <td><h3>Number of Tasks</h3></td>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @users_with_count.each do |user| %>
+        <tr>
+          <td><%= "##{user.id}" %></td>
+          <td><%= user.username %></td>
+          <td><%= user.tasks_count %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

@@ -14,3 +14,21 @@
  *= require_self
  */
  @import "bootstrap";
+
+tr td {
+  vertical-align: middle;
+}
+
+tr {
+  text-align: center;
+}
+
+.hr-style {
+  height: 3px;
+  background-color: darkblue;
+  border-width: 0px;
+}
+
+.link-without-underline {
+  text-decoration: none;
+}
