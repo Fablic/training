@@ -10,7 +10,11 @@ Rails.application.routes.draw do
   # signup page
   get 'users/signup', to: 'users#new'
   # admin page
-  get 'users/admin', to: 'users#admin'
+  get 'admin', to: 'users#admin'
+  # admin create user
+  post 'admin', to: 'users#create_user'
+  # admin new user
+  get 'admin/new', to: 'users#new_user'
   # use users#create, #destroy only
   resources :users, only: [:create, :destroy]
   resources :tasks

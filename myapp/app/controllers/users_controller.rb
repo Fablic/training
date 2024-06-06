@@ -25,6 +25,24 @@ class UsersController < ApplicationController
     username = user.username
     user.destroy 
 
-    redirect_to users_admin_path, notice: "Successfully deleted user: #{username}"
+    redirect_to admin_path, notice: "Successfully deleted user: #{username}"
+  end
+
+  def new_user
+    @user = User.new
+  end
+
+  # TODO: Integrate to #create after role feature is added
+  def create_user
+    user_data = params.require(:user).permit(:username, :password, :password_confirmation)
+
+    @user = User.new(user_data)
+
+    if @user.save 
+      log_in(@user)
+      redirect_to admin_path, notice: 'Successfully signed up!' 
+    else 
+      render :new_user
+    end
   end
 end
