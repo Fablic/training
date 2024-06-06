@@ -59,6 +59,10 @@ class UsersController < ApplicationController
     end
   end
 
+  def user_tasks
+    @tasks = find_user_by_id.tasks
+  end
+
   private 
 
   def find_user_by_id

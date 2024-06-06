@@ -24,7 +24,7 @@
         <tr>
           <td><%= "##{user.id}" %></td>
           <td><%= link_to user.username, edit_user_path(user), class: 'btn link-without-underline' %></td>
-          <td><%= user.tasks_count %></td>
+          <td><%= link_to user.tasks_count, user_tasks_path(user), class: 'btn link-without-underline' %></td>
           <td><%= button_to 'Delete', user_path(user), method: :delete, class: 'btn btn-danger' %></td>
         </tr>
       <% end %>

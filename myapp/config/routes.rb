@@ -13,6 +13,8 @@ Rails.application.routes.draw do
   get 'admin', to: 'users#admin'
   # admin create user
   post 'admin', to: 'users#create_user'
+  # admin user tasks
+  get 'admin/:id/tasks', to: 'users#user_tasks', as: :user_tasks
   # admin new user
   get 'admin/new', to: 'users#new_user'
   # use users#create, #destroy only
