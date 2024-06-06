@@ -33,12 +33,12 @@ RSpec.describe 'Tasks', type: :system do
       it 'displays Items in the correct order' do
         expect(page).to have_field(I18n.t('views.common.search'))
         expect(page).to have_selector('tr>th', text: I18n.t('helpers.label.task.title'))
-        expect(page).to have_link(@task1.title)
-        expect(page).to have_link(@task2.title)
-        expect(page).to have_link(@task3.title)
-        expect(page).to have_selector('tr:nth-child(1)', text: @task3.created_at.strftime('%Y-%m-%d %H:%M:%S'))
-        expect(page).to have_selector('tr:nth-child(2)', text: @task1.created_at.strftime('%Y-%m-%d %H:%M:%S'))
-        expect(page).to have_selector('tr:nth-child(3)', text: @task2.created_at.strftime('%Y-%m-%d %H:%M:%S'))
+        expect(find('tbody tr:nth-child(1)')).to have_link(@task3.title)
+        expect(find('tbody tr:nth-child(2)')).to have_link(@task1.title)
+        expect(find('tbody tr:nth-child(3)')).to have_link(@task2.title)
+        expect(page).to have_selector('tbody tr:nth-child(1)', text: @task3.created_at.strftime('%Y/%m/%d %H:%M:%S'))
+        expect(page).to have_selector('tbody tr:nth-child(2)', text: @task1.created_at.strftime('%Y/%m/%d %H:%M:%S'))
+        expect(page).to have_selector('tbody tr:nth-child(3)', text: @task2.created_at.strftime('%Y/%m/%d %H:%M:%S'))
       end
     end
   end
@@ -71,17 +71,19 @@ RSpec.describe 'Tasks', type: :system do
     end
 
     context 'When the task is valid' do
+      let!(:valid_params) { { title: '全' * 100, details: '角' * 1000 } }
+
       before do
         visit new_task_path
-        fill_in I18n.t('helpers.label.task.title'), with: 'New ryu title1'
-        fill_in I18n.t('helpers.label.task.details'), with: 'New ryu Details1'
+        fill_in I18n.t('helpers.label.task.title'), with: valid_params[:title]
+        fill_in I18n.t('helpers.label.task.details'), with: valid_params[:details]
         click_button I18n.t('helpers.submit.create')
       end
 
       it 'shows a success message on the Tasks page' do
         expect(Task.count).to eq(1)
-        expect(Task.last.title).to eq('New ryu title1')
-        expect(Task.last.details).to eq('New ryu Details1')
+        expect(Task.last.title).to eq(valid_params[:title])
+        expect(Task.last.details).to eq(valid_params[:details])
         expect(page).to have_selector('h1', text: I18n.t('views.tasks.index.title'))
         expect(page).to have_content(I18n.t('flash.common.success', model: I18n.t('actions.create')))
       end
@@ -91,13 +93,15 @@ RSpec.describe 'Tasks', type: :system do
       before do
         visit new_task_path
         fill_in I18n.t('helpers.label.task.title'), with: '  '
-        fill_in I18n.t('helpers.label.task.details'), with: 'New ryu Details1'
+        fill_in I18n.t('helpers.label.task.details'), with: 'N' * 1001
         click_button I18n.t('helpers.submit.create')
       end
       it 'shows a error message on the New page' do
         expect(Task.count).to eq(0)
         expect(page).to have_selector('h1', text: I18n.t('views.tasks.new.title'))
         expect(page).to have_content(I18n.t('flash.common.failure', model: I18n.t('actions.create')))
+        expect(page).to have_content(I18n.t('activerecord.attributes.task.title') + I18n.t('activerecord.errors.messages.blank'))
+        expect(page).to have_content(I18n.t('activerecord.attributes.task.details') + I18n.t('activerecord.errors.messages.too_long', count: 1000))
       end
     end
   end
@@ -186,7 +190,7 @@ RSpec.describe 'Tasks', type: :system do
     end
 
     context 'When updating the Task with valid data' do
-      let!(:valid_params) { { title: 'Ok Ok Ok Title', details: 'Ok Ok Ok Details' } }
+      let!(:valid_params) { { title: '全' * 100, details: '角' * 1000 } }
       before do
         visit edit_task_path(task)
         fill_in I18n.t('helpers.label.task.title'), with: valid_params[:title]
@@ -206,7 +210,7 @@ RSpec.describe 'Tasks', type: :system do
     context 'When updating the Task with invalid data' do
       before do
         visit edit_task_path(task)
-        fill_in I18n.t('helpers.label.task.title'), with: ''
+        fill_in I18n.t('helpers.label.task.title'), with: 'A' * 101
         fill_in I18n.t('helpers.label.task.details'), with: 'NG Case'
         click_button I18n.t('helpers.submit.update')
       end
@@ -215,6 +219,7 @@ RSpec.describe 'Tasks', type: :system do
         expect(Task.count).to eq(1)
         expect(page).to have_selector('h1', text: I18n.t('views.tasks.edit.title'))
         expect(page).to have_content(I18n.t('flash.common.failure', model: I18n.t('actions.update')))
+        expect(page).to have_content(I18n.t('activerecord.attributes.task.title') + I18n.t('activerecord.errors.messages.too_long', count: 100))
       end
     end
   end

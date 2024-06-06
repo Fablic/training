@@ -10,12 +10,6 @@ en:
         status: "Status"
         priority: "Priority"
         details: "Details"
-        status_not_started: "Not Started"
-        status_in_progress: "In Progress"
-        status_completed: "Completed"
-        priority_high: "High"
-        priority_middle: "Middle"
-        priority_low: "Low"
         details_placeholder: "Summary"
         created_at: "Created At"
     submit:
@@ -35,6 +29,18 @@ en:
         status: "Status"
         priority: "Priority"
         details: "Details"
+        status:
+          not_started: "Not Started"
+          in_progress: "In Progress"
+          completed: "Completed"
+        priority:
+          high: "High"
+          middle: "Middle"
+          low: "Low"
+    errors:
+      messages:
+        blank: " - Required."
+        too_long: " - Maximum is %{count} characters."
   views:
     tasks:
       index:
