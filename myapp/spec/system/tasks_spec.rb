@@ -71,7 +71,7 @@ RSpec.describe 'Tasks', type: :system do
     end
 
     context 'When the task is valid' do
-      let!(:valid_params) { { title: '全' * 100, details: '角' * 1000 } }
+      let(:valid_params) { { title: '全' * 100, details: '角' * 1000 } }
 
       before do
         visit new_task_path
@@ -190,7 +190,7 @@ RSpec.describe 'Tasks', type: :system do
     end
 
     context 'When updating the Task with valid data' do
-      let!(:valid_params) { { title: '全' * 100, details: '角' * 1000 } }
+      let(:valid_params) { { title: '全' * 100, details: '角' * 1000 } }
       before do
         visit edit_task_path(task)
         fill_in I18n.t('helpers.label.task.title'), with: valid_params[:title]
