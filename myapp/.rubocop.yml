@@ -12,5 +12,3 @@ AllCops:
 Rails:
   Enabled: true
 
-Metrics/MethodLength:
-  Max: 20
