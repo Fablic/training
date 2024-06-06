@@ -12,11 +12,5 @@ AllCops:
 Rails:
   Enabled: true
 
-Style/FrozenStringLiteralComment:
-  Enabled: false
-
-Style/Documentation:
-  Enabled: false
-
 Metrics/MethodLength:
   Max: 20

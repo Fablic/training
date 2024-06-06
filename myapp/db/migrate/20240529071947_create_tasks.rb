@@ -1,4 +1,6 @@
-class CreateTasks < ActiveRecord::Migration[6.0]
+# frozen_string_literal: true
+
+class CreateTasks < ActiveRecord::Migration[6.0] # rubocop:disable Style/Documentation
   def change
     create_table :tasks do |t|
       t.references :user, null: false, foreign_key: true
@@ -7,14 +9,11 @@ class CreateTasks < ActiveRecord::Migration[6.0]
       t.integer :status, null: false, default: 0
       t.date :due_date, null: false
       t.integer :priority, null: false, default: 0
-      t.datetime :discarded_at
 
       t.timestamps
     end
     change_table :tasks, bulk: true do |t|
       t.index :status
-      t.index :due_date
-      t.index :priority
     end
   end
 end

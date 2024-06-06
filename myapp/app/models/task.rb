@@ -1,4 +1,6 @@
-class Task < ApplicationRecord
+# frozen_string_literal: true
+
+class Task < ApplicationRecord # rubocop:disable Style/Documentation
   belongs_to :user
   has_many :task_label_relations, dependent: :destroy
   has_many :labels, through: :task_label_relations

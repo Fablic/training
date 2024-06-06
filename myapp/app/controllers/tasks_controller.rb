@@ -1,4 +1,6 @@
-class TasksController < ApplicationController
+# frozen_string_literal: true
+
+class TasksController < ApplicationController # rubocop:disable Style/Documentation
   def index
     @tasks = Task.all
   end

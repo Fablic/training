@@ -39,18 +39,18 @@ first_name, last_nameは削除しました。
 
 ### tasks
 
-| Name         | Nullable | Default | Note               |
-| ------------ | -------- | ------- | ------------------ |
-| id           | no       | | |
-| user_id      | no       | | |
-| title        | no       | | |
-| description  | yes      | NULL | |
-| status       | no       | open | open, medium, closed|
-| due_date     | no       | | |
-| priority     | no       | high | high, medium, low   |
-| created_at   | no       | | |
-| updated_at   | no       | | |
-| discarded_at | yes      | NULL | |
+| Name         | Nullable | Default | Note                      |
+| ------------ | -------- | ------- |---------------------------|
+| id           | no       | |                           |
+| user_id      | no       | |                           |
+| title        | no       | |                           |
+| description  | yes      | NULL |                           |
+| status       | no       | open | open, in_progress, closed |
+| due_date     | no       | |                           |
+| priority     | no       | high | high, medium, low         |
+| created_at   | no       | |                           |
+| updated_at   | no       | |                           |
+| discarded_at | yes      | NULL |                           |
 
 #### index of tasks
 - idx_tasks_on_status (status)
