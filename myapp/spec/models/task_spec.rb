@@ -28,8 +28,18 @@ RSpec.describe Task, type: :model do
     expect(task).not_to be_valid
   end
 
+  it 'is not valid without a title' do
+    task = Task.new(title: '')
+    expect(task).not_to be_valid
+  end
+
   it 'is valid without a description' do
     task = Task.new(title: 'Valid Title', description: nil)
+    expect(task).to be_valid
+  end
+
+  it 'is valid without a description' do
+    task = Task.new(title: 'Valid Title', description: '')
     expect(task).to be_valid
   end
 end
