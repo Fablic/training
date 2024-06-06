@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_06_04_052229) do
+ActiveRecord::Schema.define(version: 2024_06_06_014336) do
 
   create_table "labels", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.text "label_name", null: false
@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(version: 2024_06_04_052229) do
     t.text "password_digest", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["username"], name: "index_users_on_username", unique: true, length: 20
   end
 
   add_foreign_key "tasks", "users"
