@@ -21,7 +21,7 @@ class UsersController < ApplicationController
   end
 
   def destroy 
-    user = User.find(params[:id])
+    user = find_user_by_id
     username = user.username
     user.destroy 
 
@@ -44,5 +44,28 @@ class UsersController < ApplicationController
     else 
       render :new_user
     end
+  end
+
+  def edit 
+    @user = find_user_by_id
+  end
+
+  def update
+    @user = find_user_by_id
+    if @user.update(user_params)
+      redirect_to admin_path, notice: "Successfully updated user #{@user.username}"
+    else 
+      render :edit
+    end
+  end
+
+  private 
+
+  def find_user_by_id
+    User.find(params[:id])
+  end
+
+  def user_params
+    params.require(:user).permit(:username, :password, :password_confirmation)
   end
 end

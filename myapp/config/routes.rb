@@ -16,6 +16,6 @@ Rails.application.routes.draw do
   # admin new user
   get 'admin/new', to: 'users#new_user'
   # use users#create, #destroy only
-  resources :users, only: [:create, :destroy]
+  resources :users, except: [:index, :new, :show]
   resources :tasks
 end
