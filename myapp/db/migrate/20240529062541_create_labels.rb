@@ -1,6 +1,4 @@
-# frozen_string_literal: true
-
-class CreateLabels < ActiveRecord::Migration[6.0] # rubocop:disable Style/Documentation
+class CreateLabels < ActiveRecord::Migration[6.0]
   def change
     create_table :labels do |t|
       t.string :name, null: false

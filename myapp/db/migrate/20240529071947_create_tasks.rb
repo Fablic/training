@@ -1,6 +1,4 @@
-# frozen_string_literal: true
-
-class CreateTasks < ActiveRecord::Migration[6.0] # rubocop:disable Style/Documentation
+class CreateTasks < ActiveRecord::Migration[6.0]
   def change # rubocop:disable Metrics/MethodLength
     create_table :tasks do |t|
       t.references :user, null: false, foreign_key: true

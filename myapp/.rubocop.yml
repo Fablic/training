@@ -8,7 +8,7 @@ AllCops:
     - 'bin/*'
     - 'node_modules/**/*'
     - 'vendor/**/*'
+    - 'db/**/*'
 
 Rails:
   Enabled: true
-
