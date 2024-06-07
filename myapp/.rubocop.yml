@@ -4,11 +4,10 @@ require:
 AllCops:
   TargetRubyVersion: 3.0
   Exclude:
-    - 'db/schema.rb'
+    - 'db/**/*'
     - 'bin/*'
     - 'node_modules/**/*'
     - 'vendor/**/*'
-    - 'db/**/*'
 
 Rails:
   Enabled: true
