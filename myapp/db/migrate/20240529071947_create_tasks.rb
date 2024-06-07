@@ -1,5 +1,5 @@
 class CreateTasks < ActiveRecord::Migration[6.0]
-  def change
+  def change # rubocop:disable Metrics/MethodLength
     create_table :tasks do |t|
       t.references :user, null: false, foreign_key: true
       t.string :title, null: false
@@ -7,12 +7,11 @@ class CreateTasks < ActiveRecord::Migration[6.0]
       t.integer :status, null: false, default: 0
       t.date :due_date, null: false
       t.integer :priority, null: false, default: 0
-      t.datetime :discarded_at
 
       t.timestamps
     end
-    add_index :tasks, :status
-    add_index :tasks, :due_date
-    add_index :tasks, :priority
+    change_table :tasks, bulk: true do |t|
+      t.index :status
+    end
   end
 end

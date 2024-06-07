@@ -5,7 +5,6 @@ class CreateUsers < ActiveRecord::Migration[6.0]
       t.string :password_digest, null: false
       t.integer :role, null: false, default: 0
       t.integer :status, null: false, default: 0
-      t.datetime :discarded_at
 
       t.timestamps
     end

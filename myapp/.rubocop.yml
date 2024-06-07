@@ -1,0 +1,13 @@
+require:
+  - rubocop-rails
+
+AllCops:
+  TargetRubyVersion: 3.0
+  Exclude:
+    - 'db/**/*'
+    - 'bin/*'
+    - 'node_modules/**/*'
+    - 'vendor/**/*'
+
+Rails:
+  Enabled: true
