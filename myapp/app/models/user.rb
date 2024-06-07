@@ -4,6 +4,7 @@ class User < ApplicationRecord
   validates :password, presence: true, confirmation: true
 
   has_many :tasks, dependent: :destroy
+  belongs_to :admin
   validates :username, format: { with: /\A[^\s]*\z/, message: 'should not contain space!' }
   validates :username, uniqueness: { message: 'duplicated. Please use another username!' }
 
