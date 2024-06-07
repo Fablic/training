@@ -1,7 +1,6 @@
 class ApplicationController < ActionController::Base # rubocop:disable Style/Documentation
   around_action :switch_locale
 
-  rescue_from StandardError, with: :render500
   rescue_from ActionController::BadRequest, with: :render400
   rescue_from ActiveRecord::RecordNotFound, with: :render404
   rescue_from ActionController::RoutingError, with: :render404

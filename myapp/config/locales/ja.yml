@@ -10,13 +10,8 @@ ja:
         status: "ステータス"
         priority: "優先度"
         details: "詳細"
-        status_not_started: "未開始"
-        status_in_progress: "進行中"
-        status_completed: "完了"
-        priority_high: "高"
-        priority_middle: "中"
-        priority_low: "低"
         details_placeholder: "概要"
+        created_at: "作成日時"
     submit:
       create: "登録"
       update: "更新"
@@ -34,6 +29,18 @@ ja:
         status: "ステータス"
         priority: "優先度"
         details: "詳細"
+        status:
+          not_started: "未開始"
+          in_progress: "進行中"
+          completed: "完了"
+        priority:
+          high: "高"
+          middle: "中"
+          low: "低"
+    errors:
+      messages:
+        blank: " - 必須です。"
+        too_long: " - %{count}文字以内で入力してください。"
   views:
     tasks:
       index:

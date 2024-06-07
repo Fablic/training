@@ -1,14 +1,24 @@
+<% if @task.errors.any? %>
+  <div>
+    <ul>
+      <% @task.errors.each do |error| %>
+        <li class="text-danger fw-bold"><%= error.full_message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
 <div class="mb-3">
   <%= form.label :title, class: "form-label" %>
-  <%= form.text_field :title, class: "form-control", readonly: !@edit_mode %>
+  <%= form.text_field :title, class: "form-control", readonly: !@edit_mode  %>
 </div>
 <div class="mb-3">
   <%= form.label :assignee, class: "form-label" %>
-  <%= form.text_field :assignee, class: "form-control", readonly: !@edit_mode %>
+  <%# <%= form.text_field :user_id, class: "form-control", readonly: !@edit_mode %>
+  <p>Ryu</p>
 </div>
 <div class="mb-3">
   <%= form.label :label, class: "form-label" %>
-  <%= form.text_field :label, class: "form-control", placeholder: "Label", readonly: !@edit_mode %>
+  <p>Labels</p>
 </div>
 <div class="mb-3">
   <%= form.label :start_date, class: "form-label" %>
@@ -20,30 +30,20 @@
 </div>
 <div class="mb-3">
   <%= form.label :status, class: "form-label" %>
-  <div class="btn-group d-flex">
-    <label class="btn btn-outline-primary">
-      <%= form.radio_button :status, id: "status_not_started", class: "btn-check", disabled: !@edit_mode %>Not Started
-    </label>
-    <label class="btn btn-outline-primary">
-      <%= form.radio_button :status, id: "status_in_progress", class: "btn-check", disabled: !@edit_mode %>In Progress
-    </label>
-    <label class="btn btn-outline-primary">
-      <%= form.radio_button :status, id: "status_completed", class: "btn-check", disabled: !@edit_mode %>Completed
-    </label>
+  <div class="btn-group d-flex"  role="group" aria-label="Basic radio toggle button group">
+    <% Task.statuses.keys.each do |status| %>
+      <%= form.radio_button :status, status, id: %(status_#{status}), class: "btn-check", autocomplete: "off",disabled: !@edit_mode %>
+      <%= form.label t(%(activerecord.attributes.task.status.#{status})) , class: "btn btn-outline-primary", for: %(status_#{status})%>
+    <% end %>
   </div>
 </div>
 <div class="mb-3">
   <%= form.label :priority, class: "form-label" %>
-  <div class="btn-group d-flex">
-    <label class="btn btn-outline-primary">
-      <%= form.radio_button :priority, id: "priority_high", class: "btn-check", disabled: !@edit_mode %>High
-    </label>
-    <label class="btn btn-outline-primary">
-      <%= form.radio_button :priority, id: "priority_middle", class: "btn-check", disabled: !@edit_mode %>Middle
-    </label>
-    <label class="btn btn-outline-primary">
-      <%= form.radio_button :priority, id: "priority_low", class: "btn-check", disabled: !@edit_mode %>Low
-    </label>
+  <div class="btn-group d-flex"  role="group" aria-label="Basic radio toggle button group">
+    <% Task.priorities.keys.each do |priority| %>
+      <%= form.radio_button :priority, priority, id: %(priority_#{priority}), class: "btn-check", autocomplete: "off", disabled: !@edit_mode %>
+      <%= form.label t(%(activerecord.attributes.task.priority.#{priority})) , class: "btn btn-outline-primary", for: %(priority_#{priority})%>
+    <% end %>
   </div>
 </div>
 <div class="mb-3">
