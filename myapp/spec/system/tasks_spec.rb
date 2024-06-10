@@ -7,6 +7,15 @@ RSpec.describe 'Tasks', type: :system do
         expect(page).to have_selector('h1', text: I18n.t('views.tasks.index.title'))
         expect(page).to have_link(I18n.t('views.common.add'))
         expect(page).to have_button(I18n.t('views.common.login'))
+        expect(page).to have_button(I18n.t('views.common.search'))
+        expect(page).to have_link(I18n.t('views.common.reset'))
+        expect(page).to have_field(I18n.t('activerecord.attributes.task.title'))
+        expect(page).to have_select('status', options: [
+                                      I18n.t('views.common.all_status'),
+                                      I18n.t('activerecord.attributes.task.status.not_started'),
+                                      I18n.t('activerecord.attributes.task.status.in_progress'),
+                                      I18n.t('activerecord.attributes.task.status.completed')
+                                    ])
       end
     end
 
@@ -31,7 +40,6 @@ RSpec.describe 'Tasks', type: :system do
 
       it_behaves_like 'Checking component'
       it 'displays Items in the correct order' do
-        expect(page).to have_field(I18n.t('views.common.search'))
         expect(page).to have_selector('tr>th', text: I18n.t('helpers.label.task.title'))
         expect(find('tbody tr:nth-child(1)')).to have_link(@task3.title)
         expect(find('tbody tr:nth-child(2)')).to have_link(@task1.title)
@@ -220,6 +228,87 @@ RSpec.describe 'Tasks', type: :system do
         expect(page).to have_selector('h1', text: I18n.t('views.tasks.edit.title'))
         expect(page).to have_content(I18n.t('flash.common.failure', model: I18n.t('actions.update')))
         expect(page).to have_content(I18n.t('activerecord.attributes.task.title') + I18n.t('activerecord.errors.messages.too_long', count: 100))
+      end
+    end
+  end
+
+  describe 'Test for Search' do
+    let!(:task1) { Task.create!(title: 'Task@1', status: :not_started) }
+    let!(:task2) { Task.create!(title: 'Task%2', status: :in_progress) }
+    let!(:task3) { Task.create!(title: 'Task-3', status: :completed) }
+
+    context 'Case Search button' do
+      it 'has the hitted tasks witg no condition ' do
+        visit tasks_path
+        click_button I18n.t('views.common.search')
+
+        expect(page).to have_content(task2.title)
+        expect(page).to have_content(task1.title)
+        expect(page).to have_content(task3.title)
+      end
+
+      it 'has the hitted tasks only with Status condition ' do
+        visit tasks_path
+        select I18n.t('activerecord.attributes.task.status.in_progress'), from: 'status'
+        click_button I18n.t('views.common.search')
+
+        expect(page).to have_content(task2.title)
+        expect(page).not_to have_content(task1.title)
+        expect(page).not_to have_content(task3.title)
+      end
+
+      it 'has the hitted tasks only with Title condition' do
+        visit tasks_path
+        fill_in 'title', with: '-3'
+        click_button I18n.t('views.common.search')
+
+        expect(page).to have_content(task3.title)
+        expect(page).not_to have_content(task1.title)
+        expect(page).not_to have_content(task2.title)
+      end
+
+      it 'has the hitted tasks with both' do
+        visit tasks_path
+        fill_in 'title', with: 'Task'
+        select I18n.t('activerecord.attributes.task.status.not_started'), from: 'status'
+        click_button I18n.t('views.common.search')
+
+        expect(page).to have_content(task1.title)
+        expect(page).not_to have_content(task2.title)
+        expect(page).not_to have_content(task3.title)
+      end
+
+      it 'has the hitted tasks with both' do
+        visit tasks_path
+        fill_in 'title', with: 'Task@'
+        select I18n.t('activerecord.attributes.task.status.not_started'), from: 'status'
+        click_button I18n.t('views.common.search')
+
+        expect(page).to have_content(task1.title)
+        expect(page).not_to have_content(task2.title)
+        expect(page).not_to have_content(task3.title)
+      end
+
+      it 'has no hitted' do
+        visit tasks_path
+        fill_in 'title', with: '-4'
+        select I18n.t('activerecord.attributes.task.status.completed'), from: 'status'
+        click_button I18n.t('views.common.search')
+
+        expect(page).to have_content(I18n.t('views.tasks.index.no_tasks'))
+      end
+    end
+
+    context 'Case Reset button' do
+      it 'shows all tasks list' do
+        visit tasks_path
+        fill_in 'title', with: 'k%'
+        select I18n.t('activerecord.attributes.task.status.in_progress'), from: 'status'
+        click_link I18n.t('views.common.reset')
+
+        expect(page).to have_content(task1.title)
+        expect(page).to have_content(task2.title)
+        expect(page).to have_content(task3.title)
       end
     end
   end
