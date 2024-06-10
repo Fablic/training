@@ -33,4 +33,52 @@ RSpec.describe Task, type: :model do
       end
     end
   end
+
+  describe 'Test for Search' do
+    before do
+      @task1 = Task.create!(title: 'ryu title1', details: 'ryu details1', status: :not_started, created_at: 1.day.ago)
+      @task2 = Task.create!(title: 'ryu title2', details: 'ryu details2', status: :in_progress, created_at: 2.days.ago)
+      @task3 = Task.create!(title: 'ryu title3', details: 'ryu details3', status: :completed, created_at: Time.now)
+    end
+
+    context 'title' do
+      it 'lists results by default order (create_at desc)' do
+        task_list = Task.default_order
+        expect(task_list.count).to eq 3
+        expect(task_list[0]).to eq @task3
+        expect(task_list[1]).to eq @task1
+        expect(task_list[2]).to eq @task2
+      end
+
+      it 'search title' do
+        task_list = Task.search_title('')
+        expect(task_list.count).to eq 3
+        expect(task_list[0]).to eq @task1
+        expect(task_list[1]).to eq @task2
+        expect(task_list[2]).to eq @task3
+
+        task_list = Task.search_title(@task3.title)
+        expect(task_list.count).to eq 1
+        expect(task_list[0]).to eq @task3
+
+        task_list = Task.search_title('Non title')
+        expect(task_list.count).to eq 0
+      end
+
+      it 'search status' do
+        task_list = Task.search_status(nil)
+        expect(task_list.count).to eq 3
+        expect(task_list[0]).to eq @task1
+        expect(task_list[1]).to eq @task2
+        expect(task_list[2]).to eq @task3
+
+        task_list = Task.search_status(@task3.status)
+        expect(task_list.count).to eq 1
+        expect(task_list[0]).to eq @task3
+
+        task_list = Task.search_status('Non status')
+        expect(task_list.count).to eq 0
+      end
+    end
+  end
 end

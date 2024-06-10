@@ -61,6 +61,8 @@ ja:
       delete: "削除"
       edit: "編集"
       confirm: "本当ですか？"
+      reset: "初期化"
+      all_status: "全てのステータス"
   flash:
     common:
       success: "%{model}に成功しました。"

@@ -61,6 +61,8 @@ en:
       delete: "Delete"
       edit: "Edit"
       confirm: "Are you sure?"
+      reset: "Reset"
+      all_status: "All status"
   flash:
     common:
       success: "%{model} was successful."
