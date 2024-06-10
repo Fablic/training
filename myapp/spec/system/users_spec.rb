@@ -19,7 +19,6 @@ RSpec.describe 'Users', type: :system do
 
         fill_in 'Password', with: '12345'
         fill_in 'Password confirmation', with: '12345'
-        # find("input[type='password']").set('12345')
         
         click_on 'Sign Up'
         
