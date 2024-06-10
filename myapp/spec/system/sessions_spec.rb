@@ -14,11 +14,11 @@ RSpec.describe 'Sessions', type: :system do
       # login button
       expect(page).to have_button('Log in')
       # signup text
-      expect(page).to have_content('New user? Click ')
+      expect(page).to have_content('New user? Click')
       # signup link
       expect(page).to have_link('here')
       # signup text
-      expect(page).to have_content(' to sign up.')
+      expect(page).to have_content('to sign up.')
     end
 
     it 'should jump to index page when log in' do 
