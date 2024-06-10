@@ -10,7 +10,7 @@
           <%= text_field_tag :title, params[:title], placeholder: t('activerecord.attributes.task.title'), class: "form-control" %>
         </div>
         <div class="col">
-          <%= select_tag :status, options_for_select([[t('views.common.all_status'), '']] + Task.statuses.keys.map { |status| [t(%(activerecord.attributes.task.status.#{status})), status] }, params[:status]), class: "form-select" %>
+          <%= select_tag :status, options_for_select(Task.statuses.keys.map { |status| [t(%(activerecord.attributes.task.status.#{status})), status] }, params[:status]), prompt: t('views.common.all_status'), class: "form-select" %>
         </div>
         <div class="col">
           <%= submit_tag t('views.common.search'), class: "btn btn-outline-primary" %>

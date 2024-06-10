@@ -10,6 +10,6 @@ class Task < ApplicationRecord
   validates :details, length: { maximum: 1000 }
 
   scope :default_order, -> { order(created_at: :desc) }
-  scope :search_title, ->(title = nil) { where('title LIKE ?', "%#{sanitize_sql_like(title)}%") if title.present? }
-  scope :search_status, ->(status = nil) { where(status:) if status.present? }
+  scope :search_title, ->(title) { where('title LIKE ?', "%#{sanitize_sql_like(title)}%") if title.present? }
+  scope :search_status, ->(status) { where(status:) if status.present? }
 end

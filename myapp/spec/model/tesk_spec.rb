@@ -51,7 +51,7 @@ RSpec.describe Task, type: :model do
       end
 
       it 'search title' do
-        task_list = Task.search_title
+        task_list = Task.search_title('')
         expect(task_list.count).to eq 3
         expect(task_list[0]).to eq @task1
         expect(task_list[1]).to eq @task2
@@ -66,7 +66,7 @@ RSpec.describe Task, type: :model do
       end
 
       it 'search status' do
-        task_list = Task.search_status
+        task_list = Task.search_status(nil)
         expect(task_list.count).to eq 3
         expect(task_list[0]).to eq @task1
         expect(task_list[1]).to eq @task2
