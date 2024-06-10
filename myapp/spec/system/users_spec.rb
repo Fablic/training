@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Users', type: :system do 
   describe 'signup page' do 
     it 'should correctly render components' do 
-      visit users_signup_path
+      visit signup_path
 
       expect(page).to have_content('User Signup')
       expect(page).to have_button('Back to login')
@@ -15,7 +15,7 @@ RSpec.describe 'Users', type: :system do
 
     context 'when input invalid value' do 
       it 'should show error message for username less than 3 chars' do 
-        visit users_signup_path 
+        visit signup_path 
 
         fill_in 'Password', with: '12345'
         fill_in 'Password confirmation', with: '12345'
@@ -27,7 +27,7 @@ RSpec.describe 'Users', type: :system do
       end
       
       it 'should show error message for username more than 20 chars' do 
-        visit users_signup_path 
+        visit signup_path 
         
         fill_in 'Username', with: 'a' * 21
         fill_in 'Password', with: '12345'
@@ -39,7 +39,7 @@ RSpec.describe 'Users', type: :system do
       end
 
       it 'should show error message for empty password' do 
-        visit users_signup_path 
+        visit signup_path 
 
         fill_in 'Username', with: 'username'
 
@@ -51,7 +51,7 @@ RSpec.describe 'Users', type: :system do
     end
 
     it 'should jump to index page when sign up' do 
-      visit users_signup_path
+      visit signup_path
 
       fill_in 'Username', with: 'new_user'
       fill_in 'Password', with: '12345'
@@ -63,7 +63,7 @@ RSpec.describe 'Users', type: :system do
     end
 
     it 'should jump back to login page when clicking back button' do 
-      visit users_signup_path
+      visit signup_path
 
       click_on 'Back to login'
 

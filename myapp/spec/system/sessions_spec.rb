@@ -48,7 +48,7 @@ RSpec.describe 'Sessions', type: :system do
 
       click_on 'here'
 
-      expect(current_path).to eq(users_signup_path)
+      expect(current_path).to eq(signup_path)
     end
   end
 

@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   # index page
   root 'tasks#index'
   # signup page
-  get 'users/signup', to: 'users#new'
+  get 'signup', to: 'users#new'
   # use users#create only
   resources :users, only: [:create]
   resources :tasks
