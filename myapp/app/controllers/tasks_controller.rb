@@ -3,7 +3,10 @@ class TasksController < ApplicationController
 
   # GET /tasks or /tasks.json
   def index
-      @tasks = Task.all.search_title(params[:title]).search_status(params[:status]).default_order
+    @tasks = Task.all
+                 .search_title(params[:title])
+                 .search_status(params[:status])
+                 .default_order
   end
 
   # GET /tasks/1 or /tasks/1.json
