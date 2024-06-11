@@ -19,7 +19,11 @@
 <% end %>
 -->
 
-<h1>Tasks</h1>
+<h2>Tasks</h2>
+<% if @tasks.empty? %>
+  <p>タスクがありません。</p>
+<% end %>
+
 <table>
   <thead>
   <tr>
@@ -33,7 +37,6 @@
     <th>-</th>
   </tr>
   </thead>
-
   <tbody>
   <% @tasks.each do |task| %>
     <tr>
@@ -48,8 +51,9 @@
         <%= button_to "Delete", task_path(task), method: :delete, form: { data: { turbo_confirm: "Really delete?" }}%>
       </td>
     </tr>
-  <% end %>
+
   </tbody>
+  <% end %>
 </table>
 
 <br>
