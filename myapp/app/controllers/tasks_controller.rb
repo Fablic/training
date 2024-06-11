@@ -3,8 +3,14 @@
 class TasksController < ApplicationController
   before_action :set_task, only: %i[show edit update destroy]
 
+  VALID_SORT_COLUMNS = %w[created_at deadline].freeze
+  VALID_SORT_DIRECTIONS = %w[asc desc].freeze
+
+  # GET /tasks
   def index
-    @tasks = Task.all.order(created_at: :desc)
+    @sort_by = VALID_SORT_COLUMNS.include?(params[:sort_by]) ? params[:sort_by] : 'created_at'
+    @sort_direction = VALID_SORT_DIRECTIONS.include?(params[:sort_direction]) ? params[:sort_direction] : 'asc'
+    @tasks = Task.order("#{@sort_by} #{@sort_direction}")
   end
 
   def show
@@ -47,7 +53,7 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:title, :description)
+    params.require(:task).permit(:title, :description, :deadline)
   end
 
   def set_task
