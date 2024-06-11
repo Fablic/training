@@ -45,6 +45,9 @@
           <% end %>
         </tbody>
       </table>
+      <div class="d-flex justify-content-center">
+        <%= paginate @tasks %>
+      </div>
     <% else %>
       <p class="text-center"><%= t('views.tasks.index.no_tasks') %></p>
     <% end %>

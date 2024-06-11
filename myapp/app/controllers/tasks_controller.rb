@@ -6,7 +6,7 @@ class TasksController < ApplicationController
     @tasks = Task
              .search_title(params[:title])
              .search_status(params[:status])
-             .default_order
+             .default_order.page(params[:page]).per(6)
   end
 
   # GET /tasks/1 or /tasks/1.json

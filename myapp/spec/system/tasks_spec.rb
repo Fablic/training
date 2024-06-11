@@ -312,4 +312,50 @@ RSpec.describe 'Tasks', type: :system do
       end
     end
   end
+
+  describe 'Pagination / 6 tasks per page' do
+    context 'If # of Task is less than # per page' do
+      before do
+        6.times do |i|
+          Task.create!(title: %(ryu title#{i}), details: %(ryu details#{i}), created_at: Time.now)
+        end
+        visit tasks_path
+      end
+      it 'has no page labels' do
+        expect(page).not_to have_selector("nav[class='pagination']")
+        6.times do |i|
+          expect(page).to have_content(%(ryu title#{i}))
+        end
+      end
+    end
+
+    context 'If # of Task is over # per page' do
+      before do
+        8.times do |i|
+          Task.create!(title: %(ryu title#{i}), details: %(ryu details#{i}), created_at: Time.now)
+        end
+        visit tasks_path
+      end
+
+      it 'shows the first page' do
+        (2..6).each do |i|
+          expect(page).to have_content(%(ryu title#{i}))
+        end
+        expect(find("nav[class='pagination']")).to have_content('1')
+        expect(find("nav[class='pagination']")).to have_link('2')
+        expect(find("nav[class='pagination']")).to have_link('›')
+        expect(find("nav[class='pagination']")).to have_link('»')
+      end
+
+      it 'shows the second page' do
+        click_link '2'
+        expect(page).to have_content('ryu title1')
+        expect(page).to have_content('ryu title0')
+        expect(find("nav[class='pagination']")).to have_link('«')
+        expect(find("nav[class='pagination']")).to have_link('‹')
+        expect(find("nav[class='pagination']")).to have_link('1')
+        expect(find("nav[class='pagination']")).to have_content('2')
+      end
+    end
+  end
 end
