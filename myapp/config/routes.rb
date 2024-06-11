@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  # signup page
+  get 'signup', to: 'sessions#signup_new'
+  # signup
+  post 'signup', to: 'sessions#signup_create'
   # login page
   get 'login', to: 'sessions#new'
   # login
@@ -7,9 +11,5 @@ Rails.application.routes.draw do
   delete 'logout', to: 'sessions#destroy'
   # index page
   root 'tasks#index'
-  # signup page
-  get 'signup', to: 'users#new'
-  # use users#create only
-  resources :users, only: [:create]
   resources :tasks
 end
