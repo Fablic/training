@@ -26,8 +26,7 @@ class SessionsController < ApplicationController
       log_in(user)
       redirect_to tasks_path
     else
-      flash.now[:notice] = 'Wrong username or password!'
-      render :new
+      redirect_to login_path, notice: 'Wrong username or password!'
     end
   end
 
