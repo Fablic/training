@@ -1,7 +1,7 @@
 <% if model.errors.any? %>
   <div class='mb-4 border border-danger rounded d-flex justify-content-center'>
     <div class='container'>
-      <p>You have some invalid inputs!</p>
+      <p><%= t 'invalid_input' %></p>
       <ul>
         <% model.errors.full_messages.each do |error| %>
         <li><%= error %></li>
