@@ -14,21 +14,19 @@
  *= require_self
  */
 @import "bootstrap";
-$pagenation_color: rgb(169, 169, 169);
 
-.page-item.active .page-link {
-    background-color: $pagenation_color;
-    border-color: $pagenation_color;
-}
+.pagination {
+    margin: 20px auto 0;
+    width: 50%;
+    display: flex;
+    justify-content: center;
 
-.a page-link {
-    color: $pagenation_color;
-}
+    span {
+        text-align: center;
+        width: 50px;
 
-.page-item a:hover {
-    color: $pagenation_color;
-}
-
-.page-item a {
-    color: $pagenation_color;
+        a {
+            display: block;
+        }
+    }
 }
