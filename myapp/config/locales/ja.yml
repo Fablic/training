@@ -75,6 +75,9 @@ ja:
             username:
               too_short: "は3から20文字を入力してください"
               too_long: "は3から20文字を入力してください"
+            password:
+              too_short: "は5から15文字を入力してください"
+              too_long: "は3から15文字を入力してください"
             password_confirmation: 
               confirmation: "は同じパスワードを入力してください"
           invalid: "にはスペースを入れないでください"
