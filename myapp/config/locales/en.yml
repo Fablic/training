@@ -63,6 +63,12 @@ en:
       confirm: "Are you sure?"
       reset: "Reset"
       all_status: "All status"
+    pagination:
+      first:      "&laquo;"
+      last:       "&raquo;"
+      previous:   "&lsaquo;"
+      next:       "&rsaquo;"
+      truncate:   "..."
   flash:
     common:
       success: "%{model} was successful."

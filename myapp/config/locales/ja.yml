@@ -63,6 +63,12 @@ ja:
       confirm: "本当ですか？"
       reset: "初期化"
       all_status: "全てのステータス"
+    pagination:
+      first:      "&laquo;"
+      last:       "&raquo;"
+      previous:   "&lsaquo;"
+      next:       "&rsaquo;"
+      truncate:   "..."
   flash:
     common:
       success: "%{model}に成功しました。"
