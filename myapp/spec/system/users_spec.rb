@@ -47,6 +47,18 @@ RSpec.describe 'Users', type: :system do
         expect(page).to have_content(I18n.t('activerecord.errors.messages.blank'))
         expect(page).to have_content(I18n.t('activerecord.errors.models.user.attributes.password_confirmation.confirmation'))
       end
+
+      it 'should show error message for duplicated username' do 
+        User.create!(username: 'username', password: '12345')
+
+        visit signup_path
+
+        fill_in I18n.t('views.labels.username'), with: 'username'
+
+        click_on I18n.t('views.buttons.signup')
+
+        expect(page).to have_content(I18n.t('activerecord.errors.models.user.attributes.username.taken'))
+      end
     end
 
     it 'should jump to index page when sign up' do 
