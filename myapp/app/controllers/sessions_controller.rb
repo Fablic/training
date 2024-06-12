@@ -13,7 +13,7 @@ class SessionsController < ApplicationController
       log_in(@user)
       redirect_to tasks_path, notice: 'Successfully signed up!' 
     else 
-      render :new
+      render :signup_new
     end
   end
   
