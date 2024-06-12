@@ -6,19 +6,19 @@ RSpec.describe 'Sessions', type: :system do
       visit login_path
 
       # page title
-      expect(page).to have_content('Log in')
+      expect(page).to have_content(I18n.t('views.titles.login'))
       # username field
-      expect(page).to have_field('Username')
+      expect(page).to have_field(I18n.t('views.labels.username'))
       # password field
-      expect(page).to have_field('Password')
+      expect(page).to have_field(I18n.t('views.labels.password'))
       # login button
-      expect(page).to have_button('Log in')
+      expect(page).to have_button(I18n.t('views.buttons.login'))
       # signup text
-      expect(page).to have_content('New user? Click ')
+      expect(page).to have_content(I18n.t('views.texts.to_signup_1'))
       # signup link
-      expect(page).to have_link('here')
+      expect(page).to have_link(I18n.t('views.texts.here'))
       # signup text
-      expect(page).to have_content(' to sign up.')
+      expect(page).to have_content(I18n.t('views.texts.to_signup_2'))
     end
 
     it 'should jump to index page when log in' do 
@@ -28,9 +28,9 @@ RSpec.describe 'Sessions', type: :system do
 
       visit login_path
 
-      fill_in 'Username', with: username
-      fill_in 'Password', with: password
-      click_on 'Log in'
+      fill_in I18n.t('views.labels.username'), with: username
+      fill_in I18n.t('views.labels.password'), with: password
+      click_on I18n.t('views.buttons.login')
 
       expect(current_path).to eq(tasks_path)
     end
@@ -38,7 +38,7 @@ RSpec.describe 'Sessions', type: :system do
     it 'should show error message when fail to log in' do 
       visit login_path
 
-      click_on 'Log in'
+      click_on I18n.t('views.buttons.login')
 
       expect(page).to have_content('Wrong username or password!')
     end
@@ -46,9 +46,9 @@ RSpec.describe 'Sessions', type: :system do
     it 'should jump to signup page when clicking here link' do 
       visit login_path
 
-      click_on 'here'
+      click_on I18n.t('views.texts.here')
 
-      expect(current_path).to eq(users_signup_path)
+      expect(current_path).to eq(signup_path)
     end
   end
 
@@ -60,13 +60,13 @@ RSpec.describe 'Sessions', type: :system do
 
       visit login_path
 
-      fill_in 'Username', with: username
-      fill_in 'Password', with: password
-      click_on 'Log in'
+      fill_in I18n.t('views.labels.username'), with: username
+      fill_in I18n.t('views.labels.password'), with: password
+      click_on I18n.t('views.buttons.login')
 
       expect(current_path).to eq(tasks_path)
 
-      click_on 'Log out'
+      click_on I18n.t('views.buttons.logout')
 
       expect(current_path).to eq(login_path)
     end

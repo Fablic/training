@@ -1,5 +1,5 @@
 <div class='mt-5 mb-5 container', style='text-align:center'>
-  <h1>Log in</h1>
+  <h1><%= t('views.titles.login') %></h1>
 </div>
 
 <div class='mb-5 container'>
@@ -11,23 +11,23 @@
 <div class='container'>
   <%= form_with url: login_path, local: true, data: {turbo: false} do |form| %>
     <div class='mb-3 w-75'>
-      <%= form.label :username, class: 'form-label' %>
+      <%= form.label :username, t('views.labels.username'), class: 'form-label' %>
       <%= form.text_field :username, class: 'form-control' %>
     </div> 
 
     <div class='mb-3 w-75'>
-      <%= form.label :password, class: 'form-label' %>
+      <%= form.label :password, t('views.labels.password'), class: 'form-label' %>
       <%= form.password_field :password, class: 'form-control' %>
     </div>
 
     <div class='mb-2'>
-      <%= form.submit 'Log in', class: 'btn btn-primary w-25' %>
+      <%= form.submit t('views.buttons.login'), class: 'btn btn-primary w-25' %>
     </div>
 
     <div>
-      New user? Click 
-      <%= link_to 'here', users_signup_path %>
-       to sign up.
+      <%= t('views.texts.to_signup_1') %>
+      <%= link_to t('views.texts.here'), signup_path %>
+      <%= t('views.texts.to_signup_2') %>
     </div>
   <% end %>
 </div>  

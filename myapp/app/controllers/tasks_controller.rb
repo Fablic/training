@@ -24,12 +24,12 @@ class TasksController < ApplicationController
   end
 
   def new 
-    @new_task = Task.new
+    @task = Task.new
   end
 
   def create
-    @new_task = Task.new(task_params)
-    if @new_task.save
+    @task = Task.new(task_params)
+    if @task.save
       redirect_to tasks_path, notice: 'New task was created successfully!'
     else
       render :new

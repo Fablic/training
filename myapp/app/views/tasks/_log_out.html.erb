@@ -1,6 +1,6 @@
 <div class='container d-flex justify-content-end'>
   <div>
     <div class='mb-2' style='text-align:center'><%= current_user.username %></div>
-    <div><%= button_to 'Log out', logout_path, method: :delete, class: 'btn btn-outline-danger' %></div>
+    <div><%= button_to t('views.buttons.logout'), logout_path, method: :delete, class: 'btn btn-outline-danger' %></div>
   </div>
 </div>
