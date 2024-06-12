@@ -13,7 +13,7 @@ RSpec.describe 'Tasks', type: :system do
         visit tasks_path
       end
       it 'Check the message' do
-        expect(page).to have_content('タスクがありません。')
+        expect(page).to have_content(I18n.t('tasks.no_tasks'))
       end
     end
 
@@ -24,7 +24,7 @@ RSpec.describe 'Tasks', type: :system do
         visit tasks_path
       end
       it 'Check the message and the content of the task' do
-        expect(page).not_to have_content('タスクがありません。')
+        expect(page).not_to have_content(I18n.t('tasks.no_tasks'))
         expect(page).to have_content('test1')
         expect(page).to have_content('test2')
       end
@@ -74,14 +74,14 @@ RSpec.describe 'Tasks', type: :system do
       @task1 = Task.create!(title: 'title', description: 'desc', due_date: '2024-01-01', user_id: 1)
       visit edit_task_path(@task1)
       fill_in 'task_title', with: 'title-modified'
-      fill_in 'task_desc', with: 'desc-modified'
+      fill_in 'task_description', with: 'desc-modified'
       click_button 'Update'
     end
 
     it 'Check the type of screen and the content of the task' do
       expect(page).to have_content('Details')
       expect(page).to have_content('title-modified')
-      expect(page).to have_content('decs-modified')
+      expect(page).to have_content('desc-modified')
     end
   end
 
@@ -98,7 +98,7 @@ RSpec.describe 'Tasks', type: :system do
     it 'Confirm that the task has been deleted' do
       click_button 'Delete'
       expect(page).not_to have_content('test1')
-      expect(page).to have_content('タスクがありません。')
+      expect(page).to have_content(I18n.t('tasks.no_tasks'))
     end
   end
 end

@@ -1,4 +1,9 @@
 <h2>Details</h2>
+
+<% flash.each do |key, message| %>
+  <div class="flash <%= key %>"><%= message %></div>
+<% end %>
+
 <table>
   <tbody>
   <tr><th>Title</th><td><%= @task.title %></td></tr>
@@ -7,7 +12,6 @@
   <tr><th>Priority</th><td><%= @task.priority %></td></tr>
   <tr><th>Label</th><td>dummy</td></tr>
   <tr><th>DueDate</th><td><%= @task.due_date %></td></tr>
-
   </tbody>
 </table>
 <%= link_to 'Back to top', tasks_path %>

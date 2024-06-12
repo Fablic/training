@@ -19,7 +19,13 @@
 <% end %>
 -->
 
+
+
 <h2>Tasks</h2>
+<% flash.each do |key, message| %>
+  <div class="flash <%= key %>"><%= message %></div>
+<% end %>
+
 <% if @tasks.empty? %>
   <p><%= t('tasks.no_tasks') %></p>
 <% end %>

@@ -32,7 +32,7 @@
 en:
   hello: "Hello world"
   tasks:
-    no_tasks: "There are no tasks."
+    no_tasks: "There are no tasks"
     create_success: "Task was successfully created."
     create_failure: "Failed to create the task."
     update_success: "Task was successfully updated."
