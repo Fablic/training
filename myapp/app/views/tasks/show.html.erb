@@ -10,8 +10,10 @@
   <tr><th>Description</th><td><%= @task.description %></td></tr>
   <tr><th>Status</th><td><%= @task.status %></td></tr>
   <tr><th>Priority</th><td><%= @task.priority %></td></tr>
-  <tr><th>Label</th><td>dummy</td></tr>
+  <tr><th>Labels</th><td>dummy</td></tr>
   <tr><th>DueDate</th><td><%= @task.due_date %></td></tr>
+  <tr><th>Created</th><td><%= @task.created_at %></td></tr>
+  <tr><th>Updated</th><td><%= @task.updated_at %></td></tr>
   </tbody>
 </table>
 <%= link_to 'Back to top', tasks_path %>

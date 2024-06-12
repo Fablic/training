@@ -18,15 +18,34 @@ RSpec.describe 'Tasks', type: :system do
     end
 
     context 'When a task exists' do
+      TD_IDX_TITLE = 0
       before do
-        @task1 = Task.create!(title: 'test1', description: 'desc1', due_date: '2024-01-01', user_id: 1)
-        @task2 = Task.create!(title: 'test2', description: 'desc2', due_date: '2024-02-01', user_id: 1)
+        @task1 = Task.create!(title: 'test1', description: 'desc1', due_date: '2024-01-01', user_id: 1, created_at: '2025-01-01')
+        @task2 = Task.create!(title: 'test2', description: 'desc2', due_date: '2024-02-01', user_id: 1, created_at: '2025-03-01')
+        @task3 = Task.create!(title: 'test3', description: 'desc3', due_date: '2024-03-01', user_id: 1, created_at: '2025-02-01')
         visit tasks_path
       end
       it 'Check the message and the content of the task' do
         expect(page).not_to have_content(I18n.t('tasks.no_tasks'))
         expect(page).to have_content('test1')
         expect(page).to have_content('test2')
+        expect(page).to have_content('test3')
+      end
+      it 'Check the order of tasks' do
+        within('table#result') do
+          first_row = all('tr')[1]
+          first_title = first_row.all('td')[TD_IDX_TITLE]
+          expect(first_title.text).to eq('test2')
+
+          second_row = all('tr')[2]
+          second_title = second_row.all('td')[TD_IDX_TITLE]
+          expect(second_title.text).to eq('test3')
+
+          third_row = all('tr')[3]
+          third_title = third_row.all('td')[TD_IDX_TITLE]
+          expect(third_title.text).to eq('test1')
+
+        end
       end
     end
   end

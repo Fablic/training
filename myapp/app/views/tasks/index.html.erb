@@ -30,15 +30,17 @@
   <p><%= t('tasks.no_tasks') %></p>
 <% end %>
 
-<table>
+<table id="result">
   <thead>
   <tr>
     <th>Title</th>
     <th>Description</th>
     <th>Priority</th>
-    <th>Label</th>
+    <th>Labels</th>
     <th>DueDate</th>
     <th>Status</th>
+    <th>Created</th>
+    <th>Updated</th>
     <th>-</th>
     <th>-</th>
   </tr>
@@ -52,6 +54,8 @@
       <td>N/A</td>
       <td><%= task.due_date %></td>
       <td><%= task.status %></td>
+      <td><%= task.created_at %></td>
+      <td><%= task.updated_at %></td>
       <td><%= link_to "Edit", edit_task_path(task) %></td>
       <td>
         <%= button_to "Delete", task_path(task), method: :delete, form: { data: { turbo_confirm: "Really delete?" }}%>

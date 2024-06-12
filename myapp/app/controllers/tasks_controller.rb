@@ -7,7 +7,7 @@ class TasksController < ApplicationController # rubocop:disable Style/Documentat
   before_action :set_task, only: %i[show edit update destroy]
 
   def index
-    @tasks = Task.all
+    @tasks = Task.order(created_at: :desc)
   end
 
   def new
