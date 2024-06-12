@@ -1,4 +1,6 @@
 class TasksController < ApplicationController
+  before_action :require_login
+  
   def index
     if params.except(:controller, :action, :page).present?
       sort_by_whitelist = %w[due created_at]
@@ -13,19 +15,19 @@ class TasksController < ApplicationController
       query_title = params[:query_title] || ''
       query_status = params[:query_status]
     
-      @tasks = Task.search_with_sort(query_title, query_status, sort_by, order).page(params[:page])
+      @tasks = find_tasks_by_user.search_with_sort(query_title, query_status, sort_by, order).page(params[:page])
     else
-      @tasks = Task.order(created_at: :desc).page(params[:page])
+      @tasks = find_tasks_by_user.order(created_at: :desc).page(params[:page])
     end
   end
 
   def new 
-    @new_task = Task.new
+    @task = Task.new
   end
 
   def create
-    @new_task = Task.new(task_params)
-    if @new_task.save
+    @task = Task.new(task_params)
+    if @task.save
       redirect_to tasks_path, notice: 'New task was created successfully!'
     else
       render :new
@@ -63,6 +65,12 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:title, :description, :due, :status)
+    result = params.require(:task).permit(:title, :description, :due, :status)
+    result[:user_id] = session[:user_id]
+    result
+  end
+
+  def find_tasks_by_user
+    User.find(session[:user_id]).tasks
   end
 end
