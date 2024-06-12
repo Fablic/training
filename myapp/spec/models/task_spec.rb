@@ -48,6 +48,12 @@ RSpec.describe Task, type: :model do
     expect(task).not_to be_valid
   end
 
+  it 'is not valid with a deadline in the past' do
+    task = Task.new(title: 'Valid Title', description: 'Valid Description', deadline: 1.day.ago)
+    expect(task).not_to be_valid
+    expect(task.errors[:deadline]).to include("は過去の日付に設定できません。")
+  end
+
   it 'is valid with valid attributes' do
     task = Task.new(title: 'Task 1', description: 'Description 1', deadline: 2.days.from_now)
     expect(task).to be_valid
