@@ -4,42 +4,52 @@ require 'rails_helper'
 
 RSpec.describe Task, type: :model do
   it 'is valid with a title up to 50 characters' do
-    task = Task.new(title: 'a' * 50, description: 'Valid Description')
+    task = Task.new(title: 'a' * 50, description: 'Valid Description', deadline: 2.days.from_now)
     expect(task).to be_valid
   end
 
   it 'is not valid with a title over 50 characters' do
-    task = Task.new(title: 'a' * 51)
+    task = Task.new(title: 'a' * 51, description: 'Valid Description', deadline: 2.days.from_now)
     expect(task).not_to be_valid
   end
 
   it 'is valid with a long description up to 500 characters' do
-    task = Task.new(title: 'Valid Title', description: 'a' * 500)
+    task = Task.new(title: 'Valid Title', description: 'a' * 500, deadline: 2.days.from_now)
     expect(task).to be_valid
   end
 
   it 'is not valid with a description over 500 characters' do
-    task = Task.new(title: 'Valid Title', description: 'a' * 501)
+    task = Task.new(title: 'Valid Title', description: 'a' * 501, deadline: 2.days.from_now)
     expect(task).not_to be_valid
   end
 
   it 'is not valid without a title' do
-    task = Task.new(title: nil)
+    task = Task.new(title: nil, description: 'Valid Description', deadline: 2.days.from_now)
     expect(task).not_to be_valid
   end
 
-  it 'is not valid without a title' do
-    task = Task.new(title: '')
+  it 'is not valid with an empty title' do
+    task = Task.new(title: '', description: 'Valid Description', deadline: 2.days.from_now)
     expect(task).not_to be_valid
   end
 
   it 'is valid without a description' do
-    task = Task.new(title: 'Valid Title', description: nil)
+    task = Task.new(title: 'Valid Title', description: nil, deadline: 2.days.from_now)
     expect(task).to be_valid
   end
 
-  it 'is valid without a description' do
-    task = Task.new(title: 'Valid Title', description: '')
+  it 'is valid with an empty description' do
+    task = Task.new(title: 'Valid Title', description: '', deadline: 2.days.from_now)
+    expect(task).to be_valid
+  end
+
+  it 'is not valid without a deadline' do
+    task = Task.new(title: 'Valid Title', description: 'Valid Description', deadline: nil)
+    expect(task).not_to be_valid
+  end
+
+  it 'is valid with valid attributes' do
+    task = Task.new(title: 'Task 1', description: 'Description 1', deadline: 2.days.from_now)
     expect(task).to be_valid
   end
 end
