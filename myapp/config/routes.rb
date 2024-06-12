@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  # signup page
+  get 'signup', to: 'sessions#signup_new'
+  # signup
+  post 'signup', to: 'sessions#signup_create'
   # login page
   get 'login', to: 'sessions#new'
   # login
@@ -7,8 +11,6 @@ Rails.application.routes.draw do
   delete 'logout', to: 'sessions#destroy'
   # index page
   root 'tasks#index'
-  # signup page
-  get 'users/signup', to: 'users#new'
   # admin page
   get 'admin', to: 'users#admin'
   # admin create user
@@ -17,7 +19,7 @@ Rails.application.routes.draw do
   get 'admin/:id/tasks', to: 'users#user_tasks', as: :user_tasks
   # admin new user
   get 'admin/new', to: 'users#new_user'
-  # use users#create, #destroy only
-  resources :users, except: [:index, :new, :show]
+  # use users #destroy only
+  resources :users, only: [:destroy]
   resources :tasks
 end

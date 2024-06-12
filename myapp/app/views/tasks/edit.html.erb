@@ -1,14 +1,15 @@
 <div class='mt-5 mb-5 container', style='text-align:center'>
-  <h1>Edit the task</h1>
+  <h1><%= t('views.titles.edit_task') %></h1>
 </div>
 
 <%= render 'log_out' %>
 
 <div class='container'>
+  <button class='mb-4 btn btn-outline-secondary'>
+    <%= link_to t('views.buttons.back_to_home'), tasks_path, method: :get , class: 'link-without-underline link-secondary' %>
+  </button>
+
   <%= form_with(model: @task, local: true, data: {turbo: false}) do |form| %>
-    <button class='mb-4 btn btn-outline-secondary'>
-      <%= link_to 'Back to home', tasks_path, method: :get , class: 'link-without-underline link-secondary' %>
-    </button>
 
     <%= render partial: 'common_components/error_display', locals: { model: @task } %>
 
@@ -28,26 +29,26 @@
     </div>
 
     <div class='mb-3'>
-      <%= form.label :status, 'Select Status:', class: 'form-label' %>
+      <%= form.label :status, t('views.labels.select_status'), class: 'form-label' %>
 
       <div class='form-check'>
         <%= form.radio_button :status, 'pending' %>
-        <%= form.label :status_pending, 'Pending', class: 'form-label' %>
+        <%= form.label :status_pending, t('views.selects.status_pending'), class: 'form-label' %>
       </div>
 
       <div class='form-check'>
         <%= form.radio_button :status, 'in_progress' %>
-        <%= form.label :status_in_progress, 'In Progress', class: 'form-label' %>
+        <%= form.label :status_in_progress, t('views.selects.status_in_progress'), class: 'form-label' %>
       </div>
 
       <div class='form-check'>
         <%= form.radio_button :status, 'completed' %>
-        <%= form.label :status_completed, 'Completed', class: 'form-label' %>
+        <%= form.label :status_completed, t('views.selects.status_completed'), class: 'form-label' %>
       </div>
     </div>
 
     <p>
-      <%= form.submit 'Update', class: 'btn btn-success' %>
+      <%= form.submit t('views.buttons.update'), class: 'btn btn-success' %>
     </p>
   <% end %>
 </div>
