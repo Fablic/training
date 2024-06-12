@@ -21,7 +21,7 @@
               <p class="card-text flex-grow-1" style="max-height: 100px; overflow: hidden;">Description: <%= task.description %></p>
               <p class="card-text"><small class="text-muted">Created at: <%= task.created_at.strftime("%Y-%m-%d %H:%M:%S") %></small></p>
               <% if task.deadline %>
-                <p><small class="text-muted">Deadline: <%= task.deadline.strftime("%Y-%m-%d %H:%M") %></small></p>
+                <p><small class="text-muted">Deadline: <%= task.deadline.strftime("%Y-%m-%d") %></small></p>
               <% else %>
                 <p><small class="text-muted">No deadline set</small></p>
               <% end %>

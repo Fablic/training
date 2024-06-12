@@ -1,8 +1,14 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe TasksController, type: :controller do
-  let!(:task1) { Task.create(title: 'Task 1', description: 'Description 1', created_at: 1.day.ago, deadline: 2.days.from_now) }
-  let!(:task2) { Task.create(title: 'Task 2', description: 'Description 2', created_at: 2.days.ago, deadline: 1.day.from_now) }
+  let!(:task1) do
+    Task.create(title: 'Task 1', description: 'Description 1', created_at: 1.day.ago, deadline: 2.days.from_now)
+  end
+  let!(:task2) do
+    Task.create(title: 'Task 2', description: 'Description 2', created_at: 2.days.ago, deadline: 1.day.from_now)
+  end
 
   describe 'GET #index' do
     context 'when sorting by created_at ascending' do

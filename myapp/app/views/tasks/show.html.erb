@@ -9,7 +9,7 @@
       <p class="card-text"><strong>Description:</strong> <%= @task.description %></p>
       <p class="card-text"><strong>Created at:</strong> <%= @task.created_at.strftime("%Y-%m-%d %H:%M:%S") %></p>
       <% if @task.deadline %>
-        <p class="card-text"><strong>Deadline:</strong> <%= @task.deadline.strftime("%Y-%m-%d %H:%M") %></p>
+        <p class="card-text"><strong>Deadline:</strong> <%= @task.deadline.strftime("%Y-%m-%d") %></p>
       <% else %>
         <p class="card-text"><strong>Deadline:</strong> No deadline set</p>
       <% end %>

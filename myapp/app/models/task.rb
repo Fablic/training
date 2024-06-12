@@ -9,16 +9,15 @@ class Task < ApplicationRecord
   private
 
   def deadline_cannot_be_in_the_past
-    if deadline < Time.now
-      errors.add(:deadline, :past_deadline)
-    end
+    return unless deadline <= DateTime.yesterday
+
+    errors.add(:deadline, :past_deadline)
   end
 
   def valid_date_format
     parsed_date = Date.strptime(deadline.to_s, '%Y-%m-%d')
-      unless parsed_date.year.between?(Date.today.year, Date.today.year + 10)
-        errors.add(:deadline, :out_of_range)
-      end
+    return if parsed_date.year.between?(Date.today.year, Date.today.year + 10)
+
+    errors.add(:deadline, :out_of_range)
   end
 end
-

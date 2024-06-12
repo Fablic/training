@@ -45,17 +45,44 @@ RSpec.describe Task, type: :model do
 
   it 'is not valid without a deadline' do
     task = Task.new(title: 'Valid Title', description: 'Valid Description', deadline: nil)
-    expect(task).not_to be_valid
+    expect(task).to be_valid
   end
 
   it 'is not valid with a deadline in the past' do
-    task = Task.new(title: 'Valid Title', description: 'Valid Description', deadline: 1.day.ago)
+    task = Task.new(title: 'Valid Title', description: 'Valid Description', deadline: Date.yesterday)
     expect(task).not_to be_valid
-    expect(task.errors[:deadline]).to include("は過去の日付に設定できません。")
+    expect(task.errors[:deadline]).to include('は過去の日付に設定できません。')
   end
 
   it 'is valid with valid attributes' do
     task = Task.new(title: 'Task 1', description: 'Description 1', deadline: 2.days.from_now)
     expect(task).to be_valid
+  end
+
+  it 'is not valid with a deadline out of the acceptable range' do
+    task = Task.new(title: 'Valid Title', description: 'Valid Description', deadline: '222222-01-30')
+    expect(task).not_to be_valid
+    expect(task.errors[:deadline]).to include('日付が範囲外です。')
+  end
+
+  it 'is valid with a deadline within the acceptable range' do
+    task = Task.new(title: 'Valid Title', description: 'Valid Description', deadline: Date.today + 5.years)
+    expect(task).to be_valid
+  end
+
+  it 'is valid with a deadline at the start of the acceptable range' do
+    task = Task.new(title: 'Valid Title', description: 'Valid Description', deadline: Date.today)
+    expect(task).to be_valid
+  end
+
+  it 'is valid with a deadline at the end of the acceptable range' do
+    task = Task.new(title: 'Valid Title', description: 'Valid Description', deadline: Date.today + 10.years)
+    expect(task).to be_valid
+  end
+
+  it 'is not valid with a deadline after the end of the acceptable range' do
+    task = Task.new(title: 'Valid Title', description: 'Valid Description', deadline: Date.today + 11.years)
+    expect(task).not_to be_valid
+    expect(task.errors[:deadline]).to include('日付が範囲外です。')
   end
 end
