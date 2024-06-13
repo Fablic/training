@@ -1,4 +1,5 @@
 class SessionsController < ApplicationController
+  before_action :redirect_if_logged_in, only: [:signup_new, :new]
   def signup_new
     @user = User.new
     render 'signup_new'

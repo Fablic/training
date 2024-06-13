@@ -1,6 +1,8 @@
 class TasksController < ApplicationController
   before_action :require_login
-  
+  before_action :authorize_task, only: [:show, :edit, :update]
+  rescue_from ActionController::InvalidAuthenticityToken, with: :handle_invalid_authenticity_token
+
   def index
     if params.except(:controller, :action, :page).present?
       sort_by_whitelist = %w[due created_at]
@@ -72,5 +74,15 @@ class TasksController < ApplicationController
 
   def find_tasks_by_user
     User.find(session[:user_id]).tasks
+  end
+
+  def authorize_task
+    if find_tasks_by_user.find_by(id: params[:id]).nil?
+      redirect_to tasks_path, notice: 'No task found!'
+    end
+  end
+
+  def handle_invalid_authenticity_token
+    redirect_to tasks_path, notice: 'Invalid updating request!'
   end
 end
