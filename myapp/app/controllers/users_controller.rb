@@ -5,6 +5,7 @@ class UsersController < ApplicationController
 
   def destroy 
     user = find_user_by_id
+    redirect_to admin_path, notice: 'User not found!' unless user 
     username = user.username
     user.destroy 
 
@@ -31,10 +32,12 @@ class UsersController < ApplicationController
 
   def edit 
     @user = find_user_by_id
+    redirect_to admin_path, notice: 'User not found!' unless @user 
   end
 
   def update
     @user = find_user_by_id
+    redirect_to admin_path, notice: 'User not found!' unless @user 
     if @user.update(user_params)
       redirect_to admin_path, notice: "Successfully updated user #{@user.username}"
     else 
@@ -43,13 +46,18 @@ class UsersController < ApplicationController
   end
 
   def user_tasks
-    @tasks = find_user_by_id.tasks
+    user = find_user_by_id
+    unless user 
+      redirect_to admin_path, notice: 'User not found!' unless user 
+      return
+    end
+    @tasks = user.tasks
   end
 
   private 
 
   def find_user_by_id
-    User.find(params[:id])
+    User.find_by(id: params[:id])
   end
 
   def user_params
