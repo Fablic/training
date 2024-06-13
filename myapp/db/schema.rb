@@ -10,12 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_06_07_030329) do
-
-  create_table "admins", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.index ["user_id"], name: "index_admins_on_user_id"
-  end
+ActiveRecord::Schema.define(version: 2024_06_06_014336) do
 
   create_table "labels", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.text "label_name", null: false
@@ -43,6 +38,5 @@ ActiveRecord::Schema.define(version: 2024_06_07_030329) do
     t.index ["username"], name: "index_users_on_username", unique: true, length: 20
   end
 
-  add_foreign_key "admins", "users"
   add_foreign_key "tasks", "users"
 end
