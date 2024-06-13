@@ -69,4 +69,13 @@ Rails.application.configure do
   # config.action_cable.disable_request_forgery_protection = true
   #
   config.web_console.permissions = ['192.168.0.0/16']
+
+  config.after_initialize do
+    Bullet.enable = true # Bulletを有効化する
+    Bullet.alert = true # JavaScriptのポップアップアラートを表示する
+    Bullet.bullet_logger = true # log/bullet.logに出力
+    Bullet.console = true # ブラウザのconsole.logに出力
+    Bullet.rails_logger = true # Railsのログに結果を出力
+    Bullet.add_footer = true # ページの左下に結果を表示
+  end
 end

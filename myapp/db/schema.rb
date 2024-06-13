@@ -35,9 +35,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_13_005827) do
     t.integer "status", default: 0, null: false
     t.integer "priority", default: 1, null: false
     t.text "details"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "user_id"
     t.index ["status"], name: "index_tasks_on_status"
     t.index ["title"], name: "index_tasks_on_title"
     t.index ["user_id"], name: "index_tasks_on_user_id"
