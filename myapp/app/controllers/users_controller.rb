@@ -1,4 +1,7 @@
 class UsersController < ApplicationController
+  include UsersHelper
+  before_action :redirect_if_not_admin
+
   def admin
     @users_with_count = User.with_tasks_count
   end
