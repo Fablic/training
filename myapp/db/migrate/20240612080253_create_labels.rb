@@ -5,5 +5,6 @@ class CreateLabels < ActiveRecord::Migration[7.0] # rubocop:disable Style/Docume
 
       t.timestamps
     end
+    add_index :labels, :name, unique: true
   end
 end

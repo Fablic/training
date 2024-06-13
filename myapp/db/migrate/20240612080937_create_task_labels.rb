@@ -6,5 +6,6 @@ class CreateTaskLabels < ActiveRecord::Migration[7.0] # rubocop:disable Style/Do
 
       t.timestamps
     end
+    add_index :task_labels, %i[task_id label_id], unique: true
   end
 end
