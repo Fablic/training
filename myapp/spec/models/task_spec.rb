@@ -43,7 +43,7 @@ RSpec.describe Task, type: :model do
     expect(task).to be_valid
   end
 
-  it 'is not valid without a deadline' do
+  it 'is valid without a deadline' do
     task = Task.new(title: 'Valid Title', description: 'Valid Description', deadline: nil)
     expect(task).to be_valid
   end
