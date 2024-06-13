@@ -8,8 +8,8 @@ RSpec.describe 'visit /tasks/:id/edit', type: :system do
   end
 
   it 'enables me to edit tasks' do
-    task = Task.create(title: 'Edit Me', description: 'Edit this task.')
-    visit "/tasks/#{task.id}/edit"
+    task = Task.create(title: 'Edit Me', description: 'Edit this task.', deadline: 2.days.from_now)
+    visit edit_task_path(task)
 
     fill_in 'Title', with: 'Edited Task'
     fill_in 'Description', with: 'This task has been edited.'
@@ -21,35 +21,35 @@ RSpec.describe 'visit /tasks/:id/edit', type: :system do
   end
 
   it 'shows an error message if task creation fails due to missing title' do
-    task = Task.create(title: 'Edit Me', description: 'Edit this task.')
-    visit "/tasks/#{task.id}/edit"
+    task = Task.create(title: 'Edit Me', description: 'Edit this task.', deadline: 2.days.from_now)
+    visit edit_task_path(task)
 
     fill_in 'Title', with: ''
     fill_in 'Description', with: 'This is a test task without a title.'
     click_on 'Update Task'
 
-    expect(page).to have_text("タイトルを入力してください。")
+    expect(page).to have_text('タイトルを入力してください。')
   end
 
   it 'shows an error message if the task title is too long' do
-    task = Task.create(title: 'Edit Me', description: 'Edit this task.')
-    visit "/tasks/#{task.id}/edit"
+    task = Task.create(title: 'Edit Me', description: 'Edit this task.', deadline: 2.days.from_now)
+    visit edit_task_path(task)
 
     fill_in 'Title', with: 'a' * 51
     fill_in 'Description', with: 'A valid description.'
     click_on 'Update Task'
 
-    expect(page).to have_text("タイトルは50文字以内で入力してください。")
+    expect(page).to have_text('タイトルは50文字以内で入力してください。')
   end
 
   it 'shows an error message if the task description is too long' do
-    task = Task.create(title: 'Edit Me', description: 'Edit this task.')
-    visit "/tasks/#{task.id}/edit"
+    task = Task.create(title: 'Edit Me', description: 'Edit this task.', deadline: 2.days.from_now)
+    visit edit_task_path(task)
 
     fill_in 'Title', with: 'My Task'
     fill_in 'Description', with: 'a' * 501
     click_on 'Update Task'
 
-    expect(page).to have_text("説明文は500文字以内で入力してください。")
+    expect(page).to have_text('説明文は500文字以内で入力してください。')
   end
 end

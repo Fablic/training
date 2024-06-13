@@ -9,3 +9,7 @@ ja:
               title_too_long: "タイトルは%{count}文字以内で入力してください。"  # Title is too long
             description:
               desc_too_long: "説明文は%{count}文字以内で入力してください。"  # Description is too long
+            deadline:
+              past_deadline: "は過去の日付に設定できません。"
+              out_of_range: "日付が範囲外です。"
+

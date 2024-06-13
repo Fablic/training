@@ -1,17 +1,28 @@
 <div class="container mt-5">
-  <div class="card shadow-lg">
-    <div class="card-header bg-primary text-white">
-      <h1 class="card-title">Task Details</h1>
+  <h1 class="mb-4">Task Details</h1>
+
+  <div class="card">
+    <div class="card-header">
+      <h5 class="card-title mb-0">Title: <%= @task.title %></h5>
     </div>
     <div class="card-body">
-      <h3 class="card-subtitle mb-2 text-muted">Title: <%= @task.title %></h3>
-      <p class="card-text">Description: <%= @task.description %></p>
+      <p class="card-text"><strong>Description:</strong> <%= @task.description %></p>
+      <p class="card-text"><strong>Created at:</strong> <%= @task.created_at.strftime("%Y-%m-%d %H:%M:%S") %></p>
+      <% if @task.deadline %>
+        <p class="card-text"><strong>Deadline:</strong> <%= @task.deadline.strftime("%Y-%m-%d") %></p>
+      <% else %>
+        <p class="card-text"><strong>Deadline:</strong> No deadline set</p>
+      <% end %>
     </div>
-    <div class="card-footer d-flex justify-content-between">
-      <%= link_to 'Edit', edit_task_path(@task), class: 'btn btn-warning' %>
-      <div>
-        <%= link_to 'Back', tasks_path, class: 'btn btn-secondary mr-2' %>
-        <%= button_to 'Delete', @task, method: :delete, class: 'btn btn-danger' %>
+    <div class="card-footer text-end">
+      <div class="d-inline-block me-2">
+        <%= link_to 'Edit', edit_task_path(@task), class: 'btn btn-warning' %>
+      </div>
+      <div class="d-inline-block me-2">
+        <%= link_to 'Back', tasks_path, class: 'btn btn-secondary' %>
+      </div>
+      <div class="d-inline-block">
+        <%= button_to 'Delete', @task, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
       </div>
     </div>
   </div>
