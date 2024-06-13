@@ -1,6 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe 'Tasks', type: :system do 
+  before do 
+    user1 = User.create!(username: 'username', password: 'password')
+    @user1_id = user1.id 
+
+    visit login_path 
+
+    fill_in 'username', with: 'username'
+    fill_in 'password', with: 'password'
+    click_on 'commit'
+  end
+
   describe 'index page' do 
     context 'render all components' do 
       it 'show page title, list and delete buttons' do 
@@ -358,6 +369,22 @@ RSpec.describe 'Tasks', type: :system do
       expect(page).to have_content(I18n.l(new_time))
       expect(page).to have_content('Pending')
     end
+
+    it 'should be redirected to index page when trying to access to other"s task' do 
+      user2 = User.create!(username: 'username2', password: 'password2')
+      task_for_user2 = Task.create(
+        title: 'Task for User2',
+        description: 'Description for Task',
+        due: Time.zone.now + 5,
+        status: 'pending',
+        user_id: user2.id 
+      )
+
+      visit task_path(task_for_user2) 
+
+      expect(current_path).to eq(tasks_path)
+      expect(page).to have_content('No task found!')
+    end
   end
 
   describe 'edit task page' do 
@@ -491,6 +518,22 @@ RSpec.describe 'Tasks', type: :system do
 
         expect(current_path).to eq(tasks_path)
       end
+    end
+
+    it 'should be redirected to index page when trying to access to other"s task edit page' do 
+      user2 = User.create!(username: 'username2', password: 'password2')
+      task_for_user2 = Task.create(
+        title: 'Task for User2',
+        description: 'Description for Task',
+        due: Time.zone.now + 5,
+        status: 'pending',
+        user_id: user2.id 
+      )
+
+      visit edit_task_path(task_for_user2) 
+
+      expect(current_path).to eq(tasks_path)
+      expect(page).to have_content('No task found!')
     end
   end
 end
