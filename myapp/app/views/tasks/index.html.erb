@@ -4,11 +4,7 @@
 
 <%= render 'log_out' %>
 
-<div class='mb-5 container'>
-  <h4 class='fst-italic text-info', style='text-align:center'>
-    <%= flash[:notice] %>
-  </h3>
-</div>
+<%= render 'common_components/notice_display' %>
 
 <div class='mb-5 container'>
   <div class='mb-4'>
@@ -58,7 +54,7 @@
 
     <tbody>
       <% @tasks.each do |task| %>
-        <tr>
+        <tr style="text-align:center">
           <td>
             <h3><%= link_to task.title, task_path(task), class: 'btn link-without-underline' %></h3>
           </td>
