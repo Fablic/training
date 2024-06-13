@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class Task < ApplicationRecord # rubocop:disable Style/Documentation
+  validates :title, presence: true
+  validates :due_date, presence: true
+
   belongs_to :user
   has_many :task_label_relations, dependent: :destroy
   has_many :labels, through: :task_label_relations

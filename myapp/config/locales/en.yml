@@ -40,4 +40,12 @@ en:
     delete_success: "Task was successfully deleted."
     delete_failure: "Failed to delete the task."
 
-
+  activerecord:
+    errors:
+      models:
+        task:
+          attributes:
+            title:
+              blank: "can't be blank"
+            due_date:
+              blank: "can't be blank"
