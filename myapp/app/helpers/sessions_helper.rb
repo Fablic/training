@@ -4,7 +4,7 @@ module SessionsHelper
   end
 
   def log_out
-    session.delete(session[:user_id])
+    session.delete(:user_id)
     @current_user = nil
   end
 
@@ -20,5 +20,9 @@ module SessionsHelper
     unless logged_in?
       redirect_to login_path, notice: 'You need to log in first!'
     end
+  end
+
+  def redirect_if_logged_in
+    redirect_to tasks_path, notice: 'Already logged in!' if logged_in?
   end
 end

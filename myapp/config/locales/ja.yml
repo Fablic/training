@@ -6,14 +6,89 @@ ja:
       last: "&raquo;"
       previous: "&lsaquo;"
       next: "&rsaquo;"
+    buttons:
+      login: "ログイン"
+      logout: "ログアウト"
+      signup: "登録"
+      back_to_login: "ログイン画面に戻る"
+      new_task: "新規作成"
+      edit: "編集"
+      delete: "削除"
+      filter: "検索 & 並べ替え"
+      back_to_home: "ホーム画面に戻る"
+      create: "新規作成"
+      update: "アップデート"
+    titles:
+      login: "ログイン"
+      signup: "ユーザー登録"
+      task_list: "タスクリスト"
+      new_task: "新規作成"
+      edit_task: "タスク編集"
+      show_task: "タスク詳細"
+    texts:
+      to_signup_1: "まだアカウントを持っていません？"
+      to_signup_2: "をクリックして登録してください。"
+      here: "ここ"
+      title: "タイトル"
+      due: "期限日"
+      status: "ステータス"
+    labels:
+      username: "ユーザー名"
+      password: "パスワード"
+      search_title: "タイトル"
+      search_status: "ステータス"
+      sort_by: "期限で並替"
+      order: "順番"
+      select_status: "ステータスを選択"
+    selects:
+      status_all: "全部"
+      status_pending: "保留中"
+      status_in_progress: "進行中"
+      status_completed: "完成"
+      sort_create_date: "作成日時"
+      sort_due_date: "期限日時"
+      order_asc: "昇順"
+      order_desc: "降順"
   time:
     formats:
       default: "%Y-%m-%d %H:%M:%S"
       field: "%Y-%m-%dT%H:%M:%S"
       preview: "%Y/%m/%d"
-  hello: "こんにちは"
-  errors:
-    messages:
-      blank: "を入力してください"
-      invalid: "は無効です"
-      confirmation: "は同じパスワードを入力してください"
+  invalid_input: "入力が正しくない項目があります："
+  activerecord:
+    attributes:
+      task:
+        title: "タイトル"
+        description: "詳細"
+        due: "期限日時"
+        status: "ステータス"
+      user:
+        username: "ユーザー名"
+        password: "パスワード"
+        password_confirmation: "パスワード（確認用）"
+    errors:
+      messages:
+        blank: "を入力してください"
+      models:
+        user:
+          attributes:
+            username:
+              too_short: "は3から20文字を入力してください"
+              too_long: "は3から20文字を入力してください"
+              taken: "同じユーザー名がすでに登録されています"
+            password:
+              too_short: "は5から15文字を入力してください"
+              too_long: "は3から15文字を入力してください"
+            password_confirmation: 
+              confirmation: "は同じパスワードを入力してください"
+          invalid: "にはスペースを入れないでください"
+        task:
+          attributes:
+            title:
+              too_short: "は5から30文字を入力してください"
+              too_long: "は5から30文字を入力してください"
+            description:
+              too_short: "は10から300文字を入力してください"
+              too_long: "は10から300文字を入力してください"
+            due:
+              invalid: "は現在より前に設定できません"

@@ -1,11 +1,11 @@
 <div class='mt-5 mb-5 container', style='text-align:center'>
-  <h1>User Signup</h1>
+  <h1><%= t('views.titles.signup') %></h1>
 </div>
 
 <div class='container'>
-  <%= button_to "Back to login", login_path, method: :get, class: 'mb-4 btn btn-outline-secondary' %>
+  <%= button_to t('views.buttons.back_to_login'), login_path, method: :get, class: 'mb-4 btn btn-outline-secondary' %>
 
-  <%= form_with scope: :user, url: users_path, local: true, data: {turbo: false} do |form| %>
+  <%= form_with scope: :user, url: signup_path, local: true, data: {turbo: false} do |form| %>
 
     <%= render partial: 'common_components/error_display', locals: { model: @user } %>
     
@@ -25,7 +25,7 @@
     </div> 
 
     <div>
-      <%= form.submit 'Sign Up', class: 'btn btn-primary' %>
+      <%= form.submit t('views.buttons.signup'), class: 'btn btn-primary' %>
     </div>
   <% end %>
 </div>  
