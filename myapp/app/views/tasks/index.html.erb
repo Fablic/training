@@ -10,14 +10,14 @@
     <%= link_to 'Sort by Deadline (Desc)', tasks_path(sort_by: 'deadline', sort_direction: 'desc'), class: 'btn btn-primary' %>
   </div>
 
-
+  
   <% if @tasks.present? %>
     <div class="row">
       <% @tasks.each do |task| %>
         <div class="col-md-3"> <!-- Adjusting the height of columns -->
           <div class="card mb-4" style="height: 250px;">
             <div class="card-body d-flex flex-column">
-              <h5 class="card-title">Title: <%= link_to task.title, task %></h5> <!-- Add a link to the show page -->
+            <h5 class="card-title">Title: <%= link_to task.title, task %></h5> <!-- Add a link to the show page -->
               <p class="card-text flex-grow-1" style="max-height: 100px; overflow: hidden;">Description: <%= task.description %></p>
               <p class="card-text"><small class="text-muted">Created at: <%= task.created_at.strftime("%Y-%m-%d %H:%M:%S") %></small></p>
               <% if task.deadline %>
@@ -25,6 +25,7 @@
               <% else %>
                 <p><small class="text-muted">No deadline set</small></p>
               <% end %>
+              <p class="card-text"><small class="text-muted">Status: <%= task.status %></small></p> <!-- Display status -->
               <div class="d-flex justify-content-between align-items-end mt-auto">
                 <%= link_to 'Edit', edit_task_path(task), class: 'btn btn-warning btn-sm' %>
                 <%= button_to 'Delete', task, method: :delete, class: 'btn btn-danger btn-sm' %>
