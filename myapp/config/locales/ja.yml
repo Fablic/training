@@ -51,6 +51,7 @@ ja:
       sort_by: "期限で並替"
       order: "順番"
       select_status: "ステータスを選択"
+      select_role: "ロールを選択"
     selects:
       status_all: "全部"
       status_pending: "保留中"
@@ -60,6 +61,8 @@ ja:
       sort_due_date: "期限日時"
       order_asc: "昇順"
       order_desc: "降順"
+      admin_false: "普通ユーザー"
+      admin_true: "管理者"
   time:
     formats:
       default: "%Y-%m-%d %H:%M:%S"
