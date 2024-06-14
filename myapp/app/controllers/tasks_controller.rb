@@ -12,13 +12,11 @@ class TasksController < ApplicationController
     sort_direction = VALID_SORT_DIRECTIONS.include?(params[:sort_direction]) ? params[:sort_direction] : 'asc'
     @tasks = Task.order("#{sort_by} #{sort_direction}")
 
-    if params[:title].present?
-      @tasks = @tasks.where("title LIKE ?", "%#{params[:title]}%")
-    end
-    
-    if params[:status].present?
-      @tasks = @tasks.where(status: params[:status])
-    end
+    @tasks = @tasks.where('title LIKE ?', "%#{params[:title]}%") if params[:title].present?
+
+    @tasks = @tasks.where(status: params[:status]) if params[:status].present?
+
+    @tasks = @tasks.page(params[:page]).per(12)
   end
 
   def show

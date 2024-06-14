@@ -64,4 +64,3 @@ RSpec.describe 'Task management', type: :system do
     expect(titles).to eq(['Title: Task 3', 'Title: Task 2', 'Title: Task 1'])
   end
 end
-

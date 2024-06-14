@@ -36,7 +36,7 @@
     <%= link_to 'Sort by Deadline (Desc)', tasks_path(sort_by: 'deadline', sort_direction: 'desc'), class: 'btn btn-primary' %>
   </div>
 
-  
+
   <% if @tasks.present? %>
     <div class="row">
       <% @tasks.each do |task| %>
@@ -60,6 +60,9 @@
           </div>
         </div>
       <% end %>
+    </div>
+    <div class="pagination-wrapper">
+      <%= paginate @tasks, class: 'pagination' %>
     </div>
   <% else %>
     <p>No tasks available.</p>
