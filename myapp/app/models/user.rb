@@ -6,7 +6,7 @@ class User < ApplicationRecord
   has_many :tasks, dependent: :destroy
 
   def self.with_tasks_count
-    left_joins(:tasks).select('users.id, users.username, COUNT(tasks.id) as tasks_count').group('users.id')
+    left_joins(:tasks).select('users.id, users.username, users.admin, COUNT(tasks.id) as tasks_count').group('users.id')
   end
 
   private 

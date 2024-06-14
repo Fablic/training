@@ -43,6 +43,7 @@ ja:
       user_id: "ID"
       username: "ユーザー名"
       number_tasks: "タスク数"
+      admin: "管理権限"
     labels:
       username: "ユーザー名"
       password: "パスワード"

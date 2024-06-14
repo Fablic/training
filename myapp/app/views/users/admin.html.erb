@@ -18,6 +18,7 @@
     <thead>
       <tr style='text-align:center'>
         <td><h3><%= t('views.texts.user_id') %></h3></td>
+        <td><h3><%= t('views.texts.admin') %></h3></td>
         <td><h3><%= t('views.texts.username') %></h3></td>
         <td><h3><%= t('views.texts.number_tasks') %></h3></td>
         <td><h3></h3><td>
@@ -28,6 +29,7 @@
       <% @users_with_count.each do |user| %>
         <tr>
           <td><%= "##{user.id}" %></td>
+          <td><% if user.admin %>◯<% end %></td>
           <td><%= link_to user.username, edit_user_path(user) %></td>
           <td><%= link_to user.tasks_count, user_tasks_path(user) %></td>
           <td><%= button_to t('views.buttons.delete'), user_path(user), method: :delete, class: 'btn btn-danger' %></td>
