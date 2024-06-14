@@ -3,9 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Tasks', type: :system do
-  before do
-    User.create(name: 'test', password: 'test', id: 1)
-  end
+  let(:user) {User.create(name: 'test', password: 'test')}
 
   describe 'Task list' do
     context 'When a task dose not exist' do
@@ -19,8 +17,8 @@ RSpec.describe 'Tasks', type: :system do
 
     context 'When a task exists' do
       before do
-        @task1 = Task.create!(title: 'test1', description: 'desc1', due_date: '2024-01-01', user_id: 1)
-        @task2 = Task.create!(title: 'test2', description: 'desc2', due_date: '2024-02-01', user_id: 1)
+        task1 = Task.create!(title: 'test1', description: 'desc1', due_date: '2024-01-01')
+        task２ = Task.create!(title: 'test2', description: 'desc2', due_date: '2024-02-01')
         visit tasks_path
       end
       it 'Check the message and the content of the task' do
@@ -44,7 +42,7 @@ RSpec.describe 'Tasks', type: :system do
 
     context 'Display the updating screen' do
       before do
-        @task1 = Task.create!(title: 'test1', description: 'desc1', due_date: '2024-01-01', user_id: 1)
+        task = Task.create!(title: 'test1', description: 'desc1', due_date: '2024-01-01')
         visit tasks_path
         click_link 'Edit'
       end
@@ -71,23 +69,23 @@ RSpec.describe 'Tasks', type: :system do
 
   describe 'Update a task' do
     before do
-      @task1 = Task.create!(title: 'title', description: 'desc', due_date: '2024-01-01', user_id: 1)
-      visit edit_task_path(@task1)
+      task = Task.create!(title: 'title', description: 'desc', due_date: '2024-01-01')
+      visit edit_task_path(task)
       fill_in 'task_title', with: 'title-modified'
-      fill_in 'task_desc', with: 'desc-modified'
+      fill_in 'task_description', with: 'desc-modified'
       click_button 'Update'
     end
 
     it 'Check the type of screen and the content of the task' do
       expect(page).to have_content('Details')
       expect(page).to have_content('title-modified')
-      expect(page).to have_content('decs-modified')
+      expect(page).to have_content('desc-modified')
     end
   end
 
   describe 'Delete a task' do
     before do
-      @task1 = Task.create!(title: 'test1', description: 'desc1', due_date: '2024-01-01', user_id: 1)
+      task = Task.create!(title: 'test1', description: 'desc1', due_date: '2024-01-01')
       visit tasks_path
     end
 
