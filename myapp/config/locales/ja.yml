@@ -18,7 +18,10 @@ ja:
       back_to_home: "ホーム画面に戻る"
       create: "新規作成"
       update: "アップデート"
-      admin: '管理画面'
+      admin: "管理画面"
+      back_to_index: "ホーム画面に戻る"
+      new_user: "ユーザー作成"
+      back_to_admin: "管理画面に戻る"
     titles:
       login: "ログイン"
       signup: "ユーザー登録"
@@ -26,6 +29,10 @@ ja:
       new_task: "新規作成"
       edit_task: "タスク編集"
       show_task: "タスク詳細"
+      admin: "管理画面"
+      edit_user: "ユーザー情報編集"
+      create_user: "ユーザー作成"
+      user_tasks: "ユーザータスク一覧"
     texts:
       to_signup_1: "まだアカウントを持っていません？"
       to_signup_2: "をクリックして登録してください。"
@@ -33,6 +40,9 @@ ja:
       title: "タイトル"
       due: "期限日"
       status: "ステータス"
+      user_id: "ID"
+      username: "ユーザー名"
+      number_tasks: "タスク数"
     labels:
       username: "ユーザー名"
       password: "パスワード"

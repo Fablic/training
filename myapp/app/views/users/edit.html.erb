@@ -1,11 +1,11 @@
 <div class='mt-5 mb-5 container', style='text-align:center'>
-  <h1>Edit the task</h1>
+  <h1><%= t('views.titles.edit_user') %></h1>
 </div>
 
 
 <div class='container'>
   <button class='mb-4 btn btn-outline-secondary'>
-    <%= link_to 'Back to admin page', admin_path, method: :get , class: 'link-without-underline link-secondary' %>
+    <%= link_to t('views.buttons.back_to_admin'), admin_path, method: :get , class: 'link-without-underline link-secondary' %>
   </button>
   
   <%= form_with model: @user, local: true, data: { turbo: false } do |form| %>
@@ -28,7 +28,7 @@
     </div> 
 
     <div>
-      <%= form.submit 'Update', class: 'btn btn-primary' %>
+      <%= form.submit t('views.buttons.update'), class: 'btn btn-primary' %>
     </div>
   <% end %>
 </div>
