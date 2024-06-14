@@ -85,4 +85,22 @@ RSpec.describe Task, type: :model do
     expect(task).not_to be_valid
     expect(task.errors[:deadline]).to include('日付が範囲外です。')
   end
+
+  describe 'scopes' do
+    before do
+      @task1 = Task.create!(title: 'Task 1', status: '未着手', created_at: 1.day.ago)
+      @task2 = Task.create!(title: 'Task 2', status: '着手中', created_at: 2.days.ago)
+      @task3 = Task.create!(title: 'Task 3', status: '完了', created_at: 3.days.ago)
+    end
+
+    it 'returns tasks with the specified status' do
+      expect(Task.未着手).to include(@task1)
+      expect(Task.未着手).not_to include(@task2, @task3)
+    end
+
+    it 'returns tasks with the specified title' do
+      expect(Task.where(title: 'Task 1')).to include(@task1)
+      expect(Task.where(title: 'Task 1')).not_to include(@task2, @task3)
+    end
+  end
 end

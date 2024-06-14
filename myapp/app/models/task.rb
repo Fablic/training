@@ -5,6 +5,7 @@ class Task < ApplicationRecord
   validates :description, length: { maximum: 500, too_long: :desc_too_long }, allow_blank: true
   validate :deadline_cannot_be_in_the_past, if: -> { deadline.present? }
   validate :valid_date_format, if: -> { deadline.present? }
+  enum status: { 未着手: 0, 着手中: 1, 完了: 2 }
 
   private
 

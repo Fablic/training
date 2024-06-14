@@ -3,6 +3,30 @@
 
   <%= link_to 'New Task', new_task_path, class: 'btn btn-primary mb-3' %>
 
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <%= form_tag(tasks_path, method: :get, class: "search-form") do %>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <%= label_tag :title, t('forms.title') %>
+              <%= text_field_tag :title, params[:title], class: "form-control" %>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <%= label_tag :status, t('forms.status') %>
+              <%= select_tag :status, options_for_select(Task.statuses.keys.map { |key| [t("statuses.#{key}"), key] }, selected: params[:status]), include_blank: true, class: "form-control" %>
+            </div>
+          </div>
+        </div>
+        <div class="form-group mt-2">
+        <%= submit_tag "Search", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
   <div class="mb-3">
     <%= link_to 'Sort by Created At (Asc)', tasks_path(sort_by: 'created_at', sort_direction: 'asc'), class: 'btn btn-primary me-2' %>
     <%= link_to 'Sort by Created At (Desc)', tasks_path(sort_by: 'created_at', sort_direction: 'desc'), class: 'btn btn-primary me-2' %>
@@ -10,14 +34,13 @@
     <%= link_to 'Sort by Deadline (Desc)', tasks_path(sort_by: 'deadline', sort_direction: 'desc'), class: 'btn btn-primary' %>
   </div>
 
-
   <% if @tasks.present? %>
     <div class="row">
       <% @tasks.each do |task| %>
         <div class="col-md-3"> <!-- Adjusting the height of columns -->
           <div class="card mb-4" style="height: 250px;">
             <div class="card-body d-flex flex-column">
-              <h5 class="card-title">Title: <%= link_to task.title, task %></h5> <!-- Add a link to the show page -->
+            <h5 class="card-title">Title: <%= link_to task.title, task %></h5> <!-- Add a link to the show page -->
               <p class="card-text flex-grow-1" style="max-height: 100px; overflow: hidden;">Description: <%= task.description %></p>
               <p class="card-text"><small class="text-muted">Created at: <%= task.created_at.strftime("%Y-%m-%d %H:%M:%S") %></small></p>
               <% if task.deadline %>
@@ -25,6 +48,7 @@
               <% else %>
                 <p><small class="text-muted">No deadline set</small></p>
               <% end %>
+              <p class="card-text"><small class="text-muted">Status: <%= task.status %></small></p> <!-- Display status -->
               <div class="d-flex justify-content-between align-items-end mt-auto">
                 <%= link_to 'Edit', edit_task_path(task), class: 'btn btn-warning btn-sm' %>
                 <%= button_to 'Delete', task, method: :delete, class: 'btn btn-danger btn-sm' %>
