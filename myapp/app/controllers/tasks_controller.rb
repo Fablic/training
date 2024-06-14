@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class TasksController < ApplicationController # rubocop:disable Style/Documentation
+  #　Added `rescue_from` here for the assignment, but it is planned to be removed
   rescue_from StandardError, with: :render_internal_server_error
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
 
@@ -24,7 +25,6 @@ class TasksController < ApplicationController # rubocop:disable Style/Documentat
 
   def create
     @task = Task.new(task_params)
-    @task.user_id = 1
     if @task.save
       flash[:info] = I18n.t('tasks.create_success')
       redirect_to @task

@@ -1,7 +1,6 @@
 class CreateTasks < ActiveRecord::Migration[6.0]
   def change # rubocop:disable Metrics/MethodLength
     create_table :tasks do |t|
-      t.references :user, null: false, foreign_key: false
       t.string :title, null: false
       t.text :description
       t.integer :status, null: false, default: 0
