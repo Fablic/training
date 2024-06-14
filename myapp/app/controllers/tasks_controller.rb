@@ -1,26 +1,20 @@
 # frozen_string_literal: true
 
 class TasksController < ApplicationController # rubocop:disable Style/Documentation
-  #　Added `rescue_from` here for the assignment, but it is planned to be removed
-  rescue_from StandardError, with: :render_internal_server_error
-  rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
-
   before_action :set_task, only: %i[show edit update destroy]
 
   def index
-    @tasks = Task.order(created_at: :desc)
-  end
-
-  def new
-    @task = Task.new
+    @tasks = Task.all
+    @tasks_empty = @tasks.empty?
+    @tasks = @tasks.order("#{sort_column}  #{sort_direction}")
   end
 
   def show
     ## show
   end
 
-  def edit
-    ## edit
+  def new
+    @task = Task.new
   end
 
   def create
@@ -32,6 +26,10 @@ class TasksController < ApplicationController # rubocop:disable Style/Documentat
       flash[:warn] = I18n.t('tasks.create_failure')
       render :new
     end
+  end
+
+  def edit
+    ## edit
   end
 
   def update
@@ -63,14 +61,11 @@ class TasksController < ApplicationController # rubocop:disable Style/Documentat
     params.require(:task).permit(:title, :description, :status, :priority, :due_date)
   end
 
-  def render_not_found
-    render file: Rails.root.join('public/404.html'), status: :not_found
+  def sort_column
+    Task.column_names.include?(params[:sort]) ? params[:sort] : 'created_at'
   end
 
-  def render_internal_server_error(exception)
-    logger.error(exception.message)
-    logger.error(exception.backtrace.join("\n"))
-
-    render file: Rails.root.join('public/500.html'), status: :internal_server_error
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : 'desc'
   end
 end

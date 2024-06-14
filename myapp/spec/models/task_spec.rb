@@ -10,31 +10,25 @@ RSpec.describe Task, type: :model do
   end
 
   describe 'Validation' do
-    before do
-      user = User.new
-      @task = Task.new
-      @task.user = user
-      @task.title = 'title'
-      @task.due_date = Date.today
-    end
+    let(:task) {Task.create(title: 'title', due_date: Date.today)}
 
     it 'All attributes are OK' do
-      expect(@task.valid?).to eq(true)
+      expect(task.valid?).to eq(true)
     end
 
     it 'title is empty' do
-      @task.title = ''
-      expect(@task.valid?).to eq(false)
+      task.title = ''
+      expect(task.valid?).to eq(false)
     end
 
     it 'description is empty' do
-      @task.description = ''
-      expect(@task.valid?).to eq(true)
+      task.description = ''
+      expect(task.valid?).to eq(true)
     end
 
     it 'due_date is empty' do
-      @task.due_date = nil
-      expect(@task.valid?).to eq(false)
+      task.due_date = nil
+      expect(task.valid?).to eq(false)
     end
   end
 end
