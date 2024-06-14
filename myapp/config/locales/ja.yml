@@ -18,6 +18,7 @@ ja:
       back_to_home: "ホーム画面に戻る"
       create: "新規作成"
       update: "アップデート"
+      admin: '管理画面'
     titles:
       login: "ログイン"
       signup: "ユーザー登録"
