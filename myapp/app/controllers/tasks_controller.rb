@@ -24,7 +24,6 @@ class TasksController < ApplicationController # rubocop:disable Style/Documentat
 
   def create
     @task = Task.new(task_params)
-    @task.user_id = 1
     if @task.save
       flash[:info] = I18n.t('tasks.create_success')
       redirect_to @task
