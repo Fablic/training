@@ -27,8 +27,6 @@
     </div>
   </div>
 
-  
-
   <div class="mb-3">
     <%= link_to 'Sort by Created At (Asc)', tasks_path(sort_by: 'created_at', sort_direction: 'asc'), class: 'btn btn-primary me-2' %>
     <%= link_to 'Sort by Created At (Desc)', tasks_path(sort_by: 'created_at', sort_direction: 'desc'), class: 'btn btn-primary me-2' %>
@@ -36,7 +34,6 @@
     <%= link_to 'Sort by Deadline (Desc)', tasks_path(sort_by: 'deadline', sort_direction: 'desc'), class: 'btn btn-primary' %>
   </div>
 
-  
   <% if @tasks.present? %>
     <div class="row">
       <% @tasks.each do |task| %>
