@@ -5,8 +5,13 @@
 <%= render 'common_components/notice_display' %>
 
 <div class='mb-5 container'>
-  <div class='mb-4 d-flex justify-content-end'>
-    <%= button_to 'New User', new_user_path, method: :get, class: 'btn btn-primary' %>
+  <div class='mb-4 row justify-content-between'>
+    <div class='col-4'>
+      <%= button_to 'Back to index page', tasks_path, method: :get , class: 'btn btn-outline-secondary' %>
+    </div>
+    <div class='col-4'>
+      <%= button_to 'New User', new_user_path, method: :get, class: 'btn btn-primary float-end' %>
+    </div>
   </div>
 
   <table class='table table-striped table-hover'>
@@ -23,8 +28,8 @@
       <% @users_with_count.each do |user| %>
         <tr>
           <td><%= "##{user.id}" %></td>
-          <td><%= link_to user.username, edit_user_path(user), class: 'btn link-without-underline' %></td>
-          <td><%= link_to user.tasks_count, user_tasks_path(user), class: 'btn link-without-underline' %></td>
+          <td><%= link_to user.username, edit_user_path(user) %></td>
+          <td><%= link_to user.tasks_count, user_tasks_path(user) %></td>
           <td><%= button_to 'Delete', user_path(user), method: :delete, class: 'btn btn-danger' %></td>
         </tr>
       <% end %>
