@@ -41,6 +41,7 @@ en:
       messages:
         blank: " - Required."
         too_long: " - Maximum is %{count} characters."
+        too_short: " - Minimum is %{count} characters."
   views:
     tasks:
       index:

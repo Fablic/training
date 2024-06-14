@@ -32,7 +32,8 @@ RSpec.describe 'Tasks', type: :system do
 
     context 'When any tasks exist' do
       before do
-        @task1 = Task.create!(title: 'ryu title1', details: 'ryu details1', created_at: 1.day.ago)
+        @user = User.create(username: 'User1', password_digest: 'password1')
+        @task1 = Task.create!(title: 'ryu title1', details: 'ryu details1', created_at: 1.day.ago, user: @user)
         @task2 = Task.create!(title: 'ryu title2', details: 'ryu details2', created_at: 2.days.ago)
         @task3 = Task.create!(title: 'ryu title3', details: 'ryu details3', created_at: Time.now)
         visit tasks_path
@@ -47,6 +48,9 @@ RSpec.describe 'Tasks', type: :system do
         expect(page).to have_selector('tbody tr:nth-child(1)', text: @task3.created_at.strftime('%Y/%m/%d %H:%M:%S'))
         expect(page).to have_selector('tbody tr:nth-child(2)', text: @task1.created_at.strftime('%Y/%m/%d %H:%M:%S'))
         expect(page).to have_selector('tbody tr:nth-child(3)', text: @task2.created_at.strftime('%Y/%m/%d %H:%M:%S'))
+        expect(page).to have_selector('tbody tr:nth-child(1)', text: 'No assigned')
+        expect(page).to have_selector('tbody tr:nth-child(2)', text: @user.username)
+        expect(page).to have_selector('tbody tr:nth-child(3)', text: 'No assigned')
       end
     end
   end

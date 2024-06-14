@@ -41,6 +41,7 @@ ja:
       messages:
         blank: " - 必須です。"
         too_long: " - %{count}文字以内で入力してください。"
+        too_short: " - %{count}文字以上で入力してください。"
   views:
     tasks:
       index:
