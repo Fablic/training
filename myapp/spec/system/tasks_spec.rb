@@ -85,6 +85,61 @@ RSpec.describe 'Tasks', type: :system do
         end
       end
     end
+
+    context 'Search function' do
+      TD_IDX_TITLE = 0
+      before do
+        Task.create!(title: 'title1', description: 'desc1', due_date: '2024-01-01', status: :open)
+        Task.create!(title: 'title12', description: 'desc2', due_date: '2024-03-01', status: :in_progress)
+        Task.create!(title: 'title3', description: 'desc3', due_date: '2024-02-01', status: :open)
+      end
+
+      it 'When searching by title, if results are found' do
+        visit tasks_path(title: 'title3')
+        within('table#result') do
+          row = all('tr')[1]
+          title = row.all('td')[TD_IDX_TITLE]
+          expect(title.text).to eq('title3')
+        end
+      end
+
+      it 'When searching by title, if results are not found' do
+        visit tasks_path(title: 'title4')
+        within('table#result') do
+          row = all('tr')[1]
+          expect(row).to be_nil
+        end
+      end
+
+      it 'When searching by status, if results are found' do
+        visit tasks_path(status: :in_progress)
+        within('table#result') do
+          row = all('tr')[1]
+          title = row.all('td')[TD_IDX_TITLE]
+          expect(title.text).to eq('title12')
+        end
+      end
+
+      it 'When searching by status, if results are not found' do
+        visit tasks_path(status: :closed)
+        within('table#result') do
+          row = all('tr')[1]
+          expect(row).to be_nil
+        end
+      end
+
+      it 'When searching by title and status, if results are not found' do
+        visit tasks_path(title: 'title1', status: :open)
+        within('table#result') do
+          row = all('tr')[1]
+          title = row.all('td')[TD_IDX_TITLE]
+          expect(title.text).to eq('title1')
+        end
+      end
+
+    end
+
+
   end
 
   describe 'Screen transition' do
