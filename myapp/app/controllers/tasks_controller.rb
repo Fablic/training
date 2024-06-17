@@ -17,9 +17,16 @@ class TasksController < ApplicationController
       query_title = params[:query_title] || ''
       query_status = params[:query_status]
     
-      @tasks = find_tasks_by_user.search_with_sort(query_title, query_status, sort_by, order).page(params[:page]).includes([:labels])
+      @tasks = find_tasks_by_user
+        .search_by_label(params[:label_id])
+        .search_with_sort(query_title, query_status, sort_by, order)
+        .page(params[:page])
+        .includes([:labels])
     else
-      @tasks = find_tasks_by_user.order(created_at: :desc).page(params[:page]).includes([:labels])
+      @tasks = find_tasks_by_user
+        .order(created_at: :desc)
+        .page(params[:page])
+        .includes([:labels])
     end
   end
 

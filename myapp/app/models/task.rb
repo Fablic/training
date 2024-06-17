@@ -14,9 +14,22 @@ class Task < ApplicationRecord
 
   def self.search_with_sort(query_title, query_status, sort_by, order)
     if query_status.empty?
-      where('title LIKE ?', "%#{query_title}%").order("#{sort_by} #{order}")
+      where('title LIKE ?', "%#{query_title}%")
+        .order("tasks.#{sort_by} #{order}")
     else 
-      where('title LIKE ?', "%#{query_title}%").where(status: query_status).order("#{sort_by} #{order}")
+      where('title LIKE ?', "%#{query_title}%")
+        .where(status: query_status)
+        .order("tasks.#{sort_by} #{order}")
+    end
+  end
+
+  def self.search_by_label(label_id)
+    if label_id.present?
+      joins(:labels)
+        .where(labels: { id: label_id} )
+        .distinct
+    else 
+      all
     end
   end
 
