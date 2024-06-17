@@ -44,6 +44,7 @@ ja:
       username: "ユーザー名"
       number_tasks: "タスク数"
       admin: "管理権限"
+      label: "ラベル"
     labels:
       username: "ユーザー名"
       password: "パスワード"

@@ -49,6 +49,7 @@
         <td><h2><%= t('views.texts.title') %></h3></td>
         <td><h2><%= t('views.texts.due') %></h2></td>
         <td><h2><%= t('views.texts.status') %></h3></td>
+        <td><h2><%= t('views.texts.label') %></h3></td>
       </tr>
     </head> 
 
@@ -60,6 +61,13 @@
           </td>
           <td><%= l task.due, format: :preview %></td>
           <td><%= status_label(task)%></td>
+          <td>
+            <% task.labels.each do |label| %>
+              <span class='me-2 btn btn-outline-secondary'>
+                <%= label.label_name %>
+              </span>
+            <% end %>
+          </td>
 
           <td><%= button_to t('views.buttons.edit'), edit_task_path(task), method: :get, id: "Edit#{task.id}", class: 'btn btn-outline-success' %></td>
           <td><%= button_to t('views.buttons.delete'), task_path(task), method: :delete, id: "Delete#{task.id}", class: 'btn btn-danger' %></td>
