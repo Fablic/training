@@ -58,6 +58,9 @@
         </div>
       <% end %>
     </div>
+    <div class="pagination-wrapper">
+      <%= paginate @tasks, class: 'pagination' %>
+    </div>
   <% else %>
     <p>No tasks available.</p>
   <% end %>

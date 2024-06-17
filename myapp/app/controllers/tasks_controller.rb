@@ -14,9 +14,9 @@ class TasksController < ApplicationController
 
     @tasks = @tasks.where('title LIKE ?', "%#{params[:title]}%") if params[:title].present?
 
-    return unless params[:status].present?
+    @tasks = @tasks.where(status: params[:status]) if params[:status].present?
 
-    @tasks = @tasks.where(status: params[:status])
+    @tasks = @tasks.page(params[:page]).per(12)
   end
 
   def show
