@@ -1,32 +1,26 @@
-<%= form_with(model: user) do |form| %>
-  <% if user.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
-
-      <ul>
-        <% user.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
+<% if @user.errors.any? %>
   <div>
-    <%= form.label :username, style: "display: block" %>
-    <%= form.text_field :username %>
-  </div>
-
-  <div>
-    <%= form.label :password_digest, style: "display: block" %>
-    <%= form.text_field :password_digest %>
-  </div>
-
-  <div>
-    <%= form.label :role, style: "display: block" %>
-    <%= form.number_field :role %>
-  </div>
-
-  <div>
-    <%= form.submit %>
+    <ul>
+      <% @user.errors.each do |error| %>
+        <li class="text-danger fw-bold"><%= error.full_message %></li>
+      <% end %>
+    </ul>
   </div>
 <% end %>
+<div class="mb-3">
+  <%= form.label :username, class: "form-label", disabled: !@edit_mode %>
+  <%= form.text_field :username, class: "form-control", readonly: !@edit_mode %>
+</div>
+<div class="mb-3">
+  <%= form.label :password_digest, class: "form-label", disabled: !@edit_mode %>
+  <%= form.text_field :password_digest, class: "form-control", readonly: !@edit_mode %>
+</div>
+<div class="mb-3">
+  <%= form.label :role, class: "form-label" %>
+  <div class="btn-group d-flex"  role="group" aria-label="Basic radio toggle button group">
+    <% User.roles.keys.each do |role| %>
+      <%= form.radio_button :role, role, id: %(role_#{role}), class: "btn-check", autocomplete: "off",disabled: !@edit_mode %>
+      <%= form.label t(%(activerecord.attributes.user.roles.#{role})) , class: "btn btn-outline-primary", for: %(role_#{role})%>
+    <% end %>
+  </div>
+</div>

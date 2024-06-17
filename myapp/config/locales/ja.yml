@@ -12,6 +12,10 @@ ja:
         details: "詳細"
         details_placeholder: "概要"
         created_at: "作成日時"
+      user:
+        username: "ユーザ名"
+        password_digest: "パスワード"
+        role: "権限"
     submit:
       create: "登録"
       update: "更新"
@@ -37,12 +41,29 @@ ja:
           high: "高"
           middle: "中"
           low: "低"
+      user:
+        username: "ユーザ名"
+        password_digest: "パスワード"
+        roles:
+          member: "メンバー"
+          admin: "管理者"
     errors:
       messages:
         blank: " - 必須です。"
         too_long: " - %{count}文字以内で入力してください。"
         too_short: " - %{count}文字以上で入力してください。"
+        taken: " - すでに存在しています。"
   views:
+    users:
+      index:
+        title: "ユーザ一覧"
+        no_users: "ユーザデータがありません。"
+      show:
+        title: "ユーザ詳細"
+      new:
+        title: "新規ユーザ"
+      edit:
+        title: "ユーザ編集"
     tasks:
       index:
         title: "タスク一覧"

@@ -46,6 +46,7 @@ RSpec.describe User, type: :model do
       it 'links the user to task model' do
         expect(@task).to be_valid
         expect(@task.user).to eq @user
+        expect(@user.tasks[0]).to eq @task
       end
 
       it 'sets nil to Task.user when user is destroyed' do

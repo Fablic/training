@@ -7,52 +7,52 @@ class UsersController < ApplicationController # rubocop:disable Style/Documentat
   end
 
   # GET /users/1 or /users/1.json
-  def show; end
+  def show
+    @edit_mode = false
+  end
 
   # GET /users/new
   def new
     @user = User.new
+    @edit_mode = true
   end
 
   # GET /users/1/edit
-  def edit; end
+  def edit
+    @edit_mode = true
+  end
 
   # POST /users or /users.json
   def create
     @user = User.new(user_params)
 
-    respond_to do |format|
-      if @user.save
-        format.html { redirect_to user_url(@user), notice: 'User was successfully created.' }
-        format.json { render :show, status: :created, location: @user }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    if @user.save
+      flash[:notice] = I18n.t('flash.common.success', model: I18n.t('actions.create'))
+      redirect_to users_url
+    else
+      @edit_mode = true
+      flash.now[:alert] = I18n.t('flash.common.failure', model: I18n.t('actions.create'))
+      render :new, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /users/1 or /users/1.json
   def update
-    respond_to do |format|
-      if @user.update(user_params)
-        format.html { redirect_to user_url(@user), notice: 'User was successfully updated.' }
-        format.json { render :show, status: :ok, location: @user }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    if @user.update(user_params)
+      flash[:notice] = I18n.t('flash.common.success', model: I18n.t('actions.update'))
+      redirect_to users_url
+    else
+      @edit_mode = true
+      flash.now[:alert] = I18n.t('flash.common.failure', model: I18n.t('actions.update'))
+      render :edit, status: :unprocessable_entity
     end
   end
 
   # DELETE /users/1 or /users/1.json
   def destroy
     @user.destroy
-
-    respond_to do |format|
-      format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    flash[:notice] = I18n.t('flash.common.success', model: I18n.t('actions.destroy'))
+    redirect_to users_url
   end
 
   private

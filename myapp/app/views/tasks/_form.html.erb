@@ -13,7 +13,7 @@
 </div>
 <div class="mb-3">
   <%= form.label :assignee, class: "form-label" %>
-  <%= form.text_field :username, value: @task.user&.username, class: "form-control", readonly: !@edit_mode, placeholder: 'No assigned' %>
+  <%= text_field_tag :username, params[:username], value: @task.user&.username, class: "form-control", readonly: !@edit_mode, placeholder: 'No assigned' %>
 </div>
 <div class="mb-3">
   <%= form.label :label, class: "form-label" %>

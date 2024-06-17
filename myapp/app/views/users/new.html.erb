@@ -1,9 +1,11 @@
-<h1>New user</h1>
-
-<%= render "form", user: @user %>
-
-<br>
-
-<div>
-  <%= link_to "Back to users", users_path %>
+  
+<div class="d-flex justify-content-between align-items-center">
+  <h1> <%= t('views.users.new.title') %></h1>
 </div>
+<%= form_with model: @user, local: true do |form| %>
+  <%= render "form", form: form %>
+  <div class="d-flex justify-content-between">
+    <%= link_to t('views.common.cancel'), users_path, class: "btn btn-secondary" %>
+    <%= form.submit class: "btn btn-primary" %>
+  </div>
+<% end %>
