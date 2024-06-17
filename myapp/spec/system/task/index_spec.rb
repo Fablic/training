@@ -63,4 +63,21 @@ RSpec.describe 'Task management', type: :system do
     titles = page.all('h5.card-title').map(&:text)
     expect(titles).to eq(['Title: Task 3', 'Title: Task 2', 'Title: Task 1'])
   end
+
+  it 'paginates the tasks index' do
+    driven_by(:rack_test)
+    30.times do |i|
+      Task.create!(title: "Task #{i + 1}", description: "Description #{i + 1}", status: '未着手', created_at: i.days.ago)
+    end
+
+    visit tasks_path(page: 1)
+    expect(page).to have_content("Task 30")
+    expect(page).to have_content("Task 19")
+    expect(page).not_to have_content("Task 18")
+
+    visit tasks_path(page: 2)
+    expect(page).to have_content("Task 18")
+    expect(page).to have_content("Task 7")
+    expect(page).not_to have_content("Task 6")
+  end
 end
