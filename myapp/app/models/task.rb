@@ -9,7 +9,7 @@ class Task < ApplicationRecord
   validate :due_cannot_be_earlier_than_now, if: :due_changed?
 
   belongs_to :user
-  has_many :tasks_labels
+  has_many :tasks_labels, dependent: :destroy
   has_many :labels, through: :tasks_labels
 
   def self.search_with_sort(query_title, query_status, sort_by, order)
