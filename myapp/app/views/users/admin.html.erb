@@ -1,20 +1,26 @@
 <div class='mt-5 mb-5 container', style='text-align:center'>
-  <h1>Admin page</h1>
+  <h1><%= t('views.titles.admin') %></h1>
 </div>
 
 <%= render 'common_components/notice_display' %>
 
 <div class='mb-5 container'>
-  <div class='mb-4 d-flex justify-content-end'>
-    <%= button_to 'New User', new_user_path, method: :get, class: 'btn btn-primary' %>
+  <div class='mb-4 row justify-content-between'>
+    <div class='col-4'>
+      <%= button_to t('views.buttons.back_to_index'), tasks_path, method: :get , class: 'btn btn-outline-secondary' %>
+    </div>
+    <div class='col-4'>
+      <%= button_to t('views.buttons.new_user'), new_user_path, method: :get, class: 'btn btn-primary float-end' %>
+    </div>
   </div>
 
   <table class='table table-striped table-hover'>
     <thead>
       <tr style='text-align:center'>
-        <td><h3>User ID</h3></td>
-        <td><h3>Username</h3></td>
-        <td><h3>Number of Tasks</h3></td>
+        <td><h3><%= t('views.texts.user_id') %></h3></td>
+        <td><h3><%= t('views.texts.admin') %></h3></td>
+        <td><h3><%= t('views.texts.username') %></h3></td>
+        <td><h3><%= t('views.texts.number_tasks') %></h3></td>
         <td><h3></h3><td>
       </tr>
     </thead>
@@ -23,9 +29,10 @@
       <% @users_with_count.each do |user| %>
         <tr>
           <td><%= "##{user.id}" %></td>
-          <td><%= link_to user.username, edit_user_path(user), class: 'btn link-without-underline' %></td>
-          <td><%= link_to user.tasks_count, user_tasks_path(user), class: 'btn link-without-underline' %></td>
-          <td><%= button_to 'Delete', user_path(user), method: :delete, class: 'btn btn-danger' %></td>
+          <td><% if user.admin %>◯<% end %></td>
+          <td><%= link_to user.username, edit_user_path(user) %></td>
+          <td><%= link_to user.tasks_count, user_tasks_path(user) %></td>
+          <td><%= button_to t('views.buttons.delete'), user_path(user), method: :delete, class: 'btn btn-danger' %></td>
         </tr>
       <% end %>
     </tbody>

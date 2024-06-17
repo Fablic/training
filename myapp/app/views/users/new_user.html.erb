@@ -1,9 +1,9 @@
 <div class='mt-5 mb-5 container', style='text-align:center'>
-  <h1>Admin page: Create User</h1>
+  <h1><%= t('views.titles.create_user') %></h1>
 </div>
 
 <div class='container'>
-  <%= button_to 'Back to admin page', admin_path, method: :get, class: 'mb-4 btn btn-outline-secondary' %>
+  <%= button_to t('views.buttons.back_to_admin'), admin_path, method: :get, class: 'mb-4 btn btn-outline-secondary' %>
 
   <%= form_with scope: :user, url: admin_path, local: true, data: { turbo: false } do |form| %>
     <%= render partial: 'common_components/error_display', locals: { model: @user } %>
@@ -24,7 +24,7 @@
     </div> 
 
     <div>
-      <%= form.submit 'Create', class: 'btn btn-primary' %>
+      <%= form.submit t('views.buttons.create'), class: 'btn btn-primary' %>
     </div>
   <% end %>
 </div>

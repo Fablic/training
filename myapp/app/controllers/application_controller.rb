@@ -1,3 +1,3 @@
 class ApplicationController < ActionController::Base
-  include SessionsHelper, TaskHelper
+  include SessionsHelper, TaskHelper, UsersHelper
 end

@@ -1,14 +1,14 @@
 <div class='mt-5 mb-5 container', style='text-align:center'>
-  <h1>Edit the task</h1>
+  <h1><%= t('views.titles.edit_user') %></h1>
 </div>
 
 
 <div class='container'>
-  <button class='mb-4 btn btn-outline-secondary'>
-    <%= link_to 'Back to admin page', admin_path, method: :get , class: 'link-without-underline link-secondary' %>
+  <button class='mb-5 btn btn-outline-secondary'>
+    <%= link_to t('views.buttons.back_to_admin'), admin_path, method: :get , class: 'link-without-underline link-secondary' %>
   </button>
   
-  <%= form_with model: @user, local: true, data: { turbo: false } do |form| %>
+  <%= form_with model: @user, url: user_info_path, local: true, data: { turbo: false } do |form| %>
 
     <%= render partial: 'common_components/error_display', locals: { model: @user } %>
 
@@ -17,18 +17,41 @@
       <%= form.text_field :username, class: 'form-control' %>
     </div> 
 
+    <div class='mb-4'>
+      <%= form.label :admin, t('views.labels.select_role'), class: 'form-label' %>
+
+      <div class='form-check'>
+        <%= form.radio_button :admin, false, disabled: @myself %>
+        <%= form.label :admin_false, t('views.selects.admin_false') %>
+      </div>
+
+      <div class='form-check'>
+        <%= form.radio_button :admin, true, disabled: @myself %>
+        <%= form.label :admin_true, t('views.selects.admin_true') %>
+      </div>
+    </div> 
+
+    <div class='mb-5'>
+      <%= form.submit t('views.buttons.update'), class: 'btn btn-primary' %>
+    </div>
+  <% end %>
+
+  <%= form_with model: @user, url: user_password_path, local: true, data: { turbo: false } do |form| %>
+
+    <%= render partial: 'common_components/error_display', locals: { model: @user } %>
+
     <div class='mb-3 w-75'>
       <%= form.label :password, class: 'form-label' %>
       <%= form.password_field :password, class: 'form-control' %>
     </div>
 
-    <div class='mb-3 w-75'>
+    <div class='mb-4 w-75'>
       <%= form.label :password_confirmation, class: 'form-label' %>
       <%= form.password_field :password_confirmation, class: 'form-control' %>
     </div> 
 
     <div>
-      <%= form.submit 'Update', class: 'btn btn-primary' %>
+      <%= form.submit t('views.buttons.update'), class: 'btn btn-primary' %>
     </div>
   <% end %>
 </div>

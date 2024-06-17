@@ -20,7 +20,11 @@ Rails.application.routes.draw do
     get ':id/tasks', to: 'users#user_tasks', as: :user_tasks
     # admin new user
     get 'new', to: 'users#new_user', as: :new_user
-    resources :users, only: [:edit, :update, :destroy]
+    # admin update user info
+    patch 'users/:id/info', to: 'users#update_info', as: :user_info
+    # admin update user password
+    patch 'users/:id/password', to: 'users#update_password', as: :user_password
+    resources :users, only: [:edit, :destroy]
   end
   resources :tasks
 end

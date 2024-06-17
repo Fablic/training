@@ -1,6 +1,9 @@
-<div class='container d-flex justify-content-end'>
+<div class='mb-5 container d-flex justify-content-end'>
   <div>
     <div class='mb-2' style='text-align:center'><%= current_user.username %></div>
-    <div><%= button_to t('views.buttons.logout'), logout_path, method: :delete, class: 'btn btn-outline-danger' %></div>
+    <div class='mb-2'><%= button_to t('views.buttons.logout'), logout_path, method: :delete, class: 'btn btn-outline-danger' %></div>
+    <% if admin_user? %>
+      <div><%= button_to t('views.buttons.admin'), admin_path, method: :get, class: 'btn btn-outline-dark' %></div>
+    <% end %>
   </div>
 </div>
