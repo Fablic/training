@@ -41,7 +41,12 @@ class UsersController < ApplicationController
   def update_info
     @user = find_user_by_id
     redirect_to admin_path, notice: 'User not found!' unless @user 
-    if @user.update(user_params_info)
+
+    info = user_params_info
+    # when resigning the last one admin user
+    if @user.admin && !info[:admin] && (admin_count == 1)
+      redirect_to admin_path, notice: "Should keep at least one admin user!"
+    elsif @user.update(info)
       redirect_to admin_path, notice: "Successfully updated user #{@user.username}"
     else 
       render :edit
@@ -79,5 +84,9 @@ class UsersController < ApplicationController
 
   def user_params_password
     params.require(:user).permit(:password, :password_confirmation)
+  end
+
+  def admin_count
+    User.where(admin: true).count
   end
 end
