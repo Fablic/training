@@ -67,7 +67,7 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    result = params.require(:task).permit(:title, :description, :due, :status)
+    result = params.require(:task).permit(:title, :description, :due, :status, label_ids: [])
     result[:user_id] = session[:user_id]
     result
   end

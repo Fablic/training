@@ -53,6 +53,7 @@ ja:
       order: "順番"
       select_status: "ステータスを選択"
       select_role: "ロールを選択"
+      select_labels: "ラベル"
     selects:
       status_all: "全部"
       status_pending: "保留中"
