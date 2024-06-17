@@ -30,5 +30,16 @@ RSpec.describe Task, type: :model do
       task.due_date = nil
       expect(task.valid?).to eq(false)
     end
+
+    it 'status is empty' do
+      task.status = nil
+      expect(task.valid?).to eq(false)
+    end
+
+    it 'priority is empty' do
+      task.priority = nil
+      expect(task.valid?).to eq(false)
+    end
+
   end
 end
