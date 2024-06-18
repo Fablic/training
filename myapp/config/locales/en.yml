@@ -30,7 +30,6 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
   tasks:
     no_tasks: "There are no tasks"
     create_success: "Task was successfully created."
@@ -39,5 +38,3 @@ en:
     update_failure: "Failed to update the task."
     delete_success: "Task was successfully deleted."
     delete_failure: "Failed to delete the task."
-
-
