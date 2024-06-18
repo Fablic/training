@@ -30,7 +30,6 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 ja:
-  hello: "Hello world"
   tasks:
     no_tasks: "タスクがありません。"
     create_success: "タスクの作成に成功しました。"
@@ -39,6 +38,7 @@ ja:
     update_failure: "タスクの更新に失敗しました。"
     delete_success: "タスクの削除に成功しました。"
     delete_failure: "タスクの削除に失敗しました。"
+<<<<<<< HEAD
   activerecord:
     errors:
       models:
@@ -49,3 +49,5 @@ ja:
             due_date:
               blank: "入力必須です。"
 
+=======
+>>>>>>> shinya-uchimaki
