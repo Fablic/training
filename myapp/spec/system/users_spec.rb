@@ -22,9 +22,9 @@ RSpec.describe 'Users', type: :system do
 
     context 'When any users exist' do
       before do
-        @user1 = User.create(username: 'User1', password_digest: 'password1')
-        @user2 = User.create(username: 'User2', password_digest: 'password2', role: :member)
-        @user3 = User.create(username: 'User3', password_digest: 'password3', role: :admin)
+        @user1 = create(:user, username: 'User1', password_digest: 'password1')
+        @user2 = create(:user, username: 'User2', password_digest: 'password2', role: :member)
+        @user3 = create(:user, username: 'User3', password_digest: 'password3', role: :admin)
 
         visit users_path
       end

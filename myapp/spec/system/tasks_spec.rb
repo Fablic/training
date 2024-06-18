@@ -32,10 +32,10 @@ RSpec.describe 'Tasks', type: :system do
 
     context 'When any tasks exist' do
       before do
-        @user = User.create(username: 'User1', password_digest: 'password1')
-        @task1 = Task.create!(title: 'ryu title1', details: 'ryu details1', created_at: 1.day.ago, user: @user)
-        @task2 = Task.create!(title: 'ryu title2', details: 'ryu details2', created_at: 2.days.ago)
-        @task3 = Task.create!(title: 'ryu title3', details: 'ryu details3', created_at: Time.now)
+        @user = create(:user, username: 'User1', password_digest: 'password1')
+        @task1 = create(:task, title: 'ryu title1', details: 'ryu details1', created_at: 1.day.ago, user: @user)
+        @task2 = create(:task, title: 'ryu title2', details: 'ryu details2', created_at: 2.days.ago)
+        @task3 = create(:task, title: 'ryu title3', details: 'ryu details3', created_at: Time.now)
         visit tasks_path
       end
 
@@ -119,7 +119,7 @@ RSpec.describe 'Tasks', type: :system do
   end
 
   describe 'Show task' do
-    let!(:task) { Task.create!(title: 'ryu title3', details: 'ryu details3') }
+    let!(:task) { create(:task, title: 'ryu title3', details: 'ryu details3') }
 
     context 'Initial display' do
       before do
@@ -161,7 +161,7 @@ RSpec.describe 'Tasks', type: :system do
   end
 
   describe 'Edit task' do
-    let!(:task) { Task.create!(title: 'ryu title3', details: 'ryu details3') }
+    let!(:task) { create(:task, title: 'ryu title3', details: 'ryu details3') }
 
     context 'Initial display' do
       before do
@@ -237,9 +237,9 @@ RSpec.describe 'Tasks', type: :system do
   end
 
   describe 'Test for Search' do
-    let!(:task1) { Task.create!(title: 'Task@1', status: :not_started) }
-    let!(:task2) { Task.create!(title: 'Task%2', status: :in_progress) }
-    let!(:task3) { Task.create!(title: 'Task-3', status: :completed) }
+    let!(:task1) { create(:task, title: 'Task@1', status: :not_started) }
+    let!(:task2) { create(:task, title: 'Task%2', status: :in_progress) }
+    let!(:task3) { create(:task, title: 'Task-3', status: :completed) }
 
     context 'Case Search button' do
       it 'has the hitted tasks witg no condition ' do
@@ -321,7 +321,7 @@ RSpec.describe 'Tasks', type: :system do
     context 'If # of Task is less than # per page' do
       before do
         6.times do |i|
-          Task.create!(title: %(ryu title#{i}), details: %(ryu details#{i}), created_at: Time.now)
+          create(:task, title: %(ryu title#{i}), details: %(ryu details#{i}), created_at: Time.now)
         end
         visit tasks_path
       end
@@ -336,7 +336,7 @@ RSpec.describe 'Tasks', type: :system do
     context 'If # of Task is over # per page' do
       before do
         8.times do |i|
-          Task.create!(title: %(ryu title#{i}), details: %(ryu details#{i}), created_at: Time.now)
+          create(:task, title: %(ryu title#{i}), details: %(ryu details#{i}), created_at: Time.now)
         end
         visit tasks_path
       end

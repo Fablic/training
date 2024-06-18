@@ -53,6 +53,7 @@ ja:
         too_long: " - %{count}文字以内で入力してください。"
         too_short: " - %{count}文字以上で入力してください。"
         taken: " - すでに存在しています。"
+        record_invalid: "バリデーションに失敗しました: %{errors}"
   views:
     users:
       index:

@@ -54,6 +54,7 @@ en:
         too_long: " - Maximum is %{count} characters."
         too_short: " - Minimum is %{count} characters."
         taken: " - has already been taken"
+        record_invalid: "バリデーションに失敗しました: %{errors}"
   views:
     tasks:
       index:
