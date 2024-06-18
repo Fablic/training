@@ -1,6 +1,10 @@
 # Taskモデルは、タスクのタイトルと詳細を管理します。
 # タイトルは必須であり、空であってはなりません。
 class Task < ApplicationRecord
+  belongs_to :user, optional: true
+  has_many :task_labels, dependent: :destroy
+  has_many :labels, through: :task_labels
+
   enum status: { not_started: 0, in_progress: 1, completed: 2 }, _default: :not_started
   enum priority: { high: 0, middle: 1, low: 2 }, _default: :middle
 

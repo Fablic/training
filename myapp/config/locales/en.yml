@@ -12,6 +12,11 @@ en:
         details: "Details"
         details_placeholder: "Summary"
         created_at: "Created At"
+        created_at: "作成日時"
+      user:
+        username: Username
+        password_digest: Password
+        role: "Role"
     submit:
       create: "Create"
       update: "Update"
@@ -37,10 +42,19 @@ en:
           high: "High"
           middle: "Middle"
           low: "Low"
+      user:
+        username: "Username"
+        password_digest: "Password"
+        roles:
+          member: "Member"
+          admin: "Admin"
     errors:
       messages:
         blank: " - Required."
         too_long: " - Maximum is %{count} characters."
+        too_short: " - Minimum is %{count} characters."
+        taken: " - has already been taken"
+        record_invalid: "バリデーションに失敗しました: %{errors}"
   views:
     tasks:
       index:

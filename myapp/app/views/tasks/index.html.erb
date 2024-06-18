@@ -35,7 +35,9 @@
           <% @tasks.each do |task| %>
             <tr>
               <td class="text-truncate" style="max-width: 200px;"><%= link_to task.title, task_path(task) %></td>
-              <td><%= task.user_id || 'Ryu Seungwoo | sam | ECID' %></td>
+              <td class="<%= task.user ? 'text-success' : 'text-warning' %>">
+                <%= task.user&.username || 'No assigned' %>
+              </td>
               <td></td>
               <td><%= task.due_date&.strftime('%Y/%m/%d')  %></td>
               <td><%= t(%(activerecord.attributes.task.status.#{task.status})) %></td>
