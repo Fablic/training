@@ -60,5 +60,6 @@
   </tbody>
 </table>
 
-<br>
+<%= paginate @tasks, params: { search:params[:search], status: params[:status]} %>
+
 <%= link_to "Create task", "/tasks/new" %>

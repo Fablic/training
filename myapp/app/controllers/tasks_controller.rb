@@ -4,7 +4,7 @@ class TasksController < ApplicationController # rubocop:disable Style/Documentat
   before_action :set_task, only: %i[show edit update destroy]
 
   def index
-    @tasks = Task.search(params[:title], params[:status]).order("#{sort_column}  #{sort_direction}")
+    @tasks = Task.search(params[:title], params[:status]).order("#{sort_column}  #{sort_direction}").page(params[:page]).per(5)
     @tasks_empty = @tasks.empty?
   end
 

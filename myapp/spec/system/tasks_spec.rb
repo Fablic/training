@@ -136,10 +136,7 @@ RSpec.describe 'Tasks', type: :system do
           expect(title.text).to eq('title1')
         end
       end
-
     end
-
-
   end
 
   describe 'Screen transition' do
