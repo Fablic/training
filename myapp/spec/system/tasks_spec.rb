@@ -458,7 +458,6 @@ RSpec.describe 'Tasks', type: :system do
 
     it 'redirect to index page after submit' do 
       task = Task.create!(title: 'Test title 1', description: 'Test Description 1', due: Time.zone.now + 5, status: 'pending', user_id: @user1_id)
-      p task.labels
       task.labels << @label1
 
       visit edit_task_path(task)
