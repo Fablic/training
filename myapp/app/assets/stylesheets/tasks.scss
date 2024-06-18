@@ -20,15 +20,31 @@ table td {
  width: 10%;
 }
 
-/* CSS */
 .center {
     width: fit-content;
     margin: auto;
 }
 
-/* ここから追記部分 */
+.flash {
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+.flash.notice {
+  background-color: #dff0d8;
+  color: #3c763d;
+}
+
+.flash.alert {
+  background-color: #f2dede;
+  color: #a94442;
+}
+
 label {
     display: inline-block;
     width: 150px;
     vertical-align: top;
 }
+
+
