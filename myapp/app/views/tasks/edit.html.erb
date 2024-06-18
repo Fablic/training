@@ -45,6 +45,11 @@
         <%= form.radio_button :status, 'completed' %>
         <%= form.label :status_completed, t('views.selects.status_completed'), class: 'form-label' %>
       </div>
+
+      <div class='mb-3 w-75'>
+        <%= form.label :label, t('views.labels.select_labels'), class: 'form-label' %>
+        <%= form.collection_select :label_ids, Label.all, :id, :label_name, {}, { multiple: true, class: 'form-select' } %>
+      </div>
     </div>
 
     <p>

@@ -5,6 +5,9 @@ RSpec.describe 'Tasks', type: :system do
     user1 = User.create!(username: 'username', password: 'password')
     @user1_id = user1.id 
 
+    @label1 = Label.create(label_name: 'Label 1')
+    @label2 = Label.create(label_name: 'Label 2')
+
     visit login_path 
 
     fill_in 'username', with: 'username'
@@ -53,6 +56,13 @@ RSpec.describe 'Tasks', type: :system do
         visit tasks_path
 
         expect(page).to have_selector('ul.pagination')
+      end
+
+      it 'Show labels for each task' do 
+        task = Task.create(title: 'Test Title 1', description: 'Description', due: Time.zone.now + 5, status: 'pending', user_id: @user1_id)
+        task.labels << @label1
+
+        expect(page).to have_content('Label 1')
       end
     end
 
@@ -161,7 +171,7 @@ RSpec.describe 'Tasks', type: :system do
       end 
     end
 
-    context 'search by title or status' do 
+    context 'search by title or status or label' do 
       it 'search title' do 
         Task.create!(
           title: 'Task 1',
@@ -228,6 +238,45 @@ RSpec.describe 'Tasks', type: :system do
 
         expect(titles[0]).to have_content('Task 1')
       end
+
+      it 'search label' do 
+        task1 = Task.create!(
+          title: 'Task 1',
+          description: 'Description 1',
+          due: Time.zone.now + 5,
+          status: 'pending',
+          user_id: @user1_id
+        )
+
+        task2 = Task.create!(
+          title: 'Task 2',
+          description: 'Description 2',
+          due: Time.zone.now + 5,
+          status: 'in_progress',
+          user_id: @user1_id
+        )
+
+        task3 = Task.create!(
+          title: 'No title',
+          description: 'Description 3',
+          due: Time.zone.now + 5,
+          status: 'completed',
+          user_id: @user1_id
+        )
+
+        task1.labels << @label1
+        task2.labels << @label2
+        task3.labels << @label1
+        task3.labels << @label2
+
+        select 'Label 1', from: 'label_id'
+
+        click_on I18n.t('views.buttons.filter')
+
+        expect(page).to have_content(task1.title)
+        expect(page).to have_content(task3.title)
+        expect(page).to_not have_content(task2.title)
+      end
     end
   end
 
@@ -235,29 +284,32 @@ RSpec.describe 'Tasks', type: :system do
     it 'show page title and form' do 
       visit new_task_path
       
-      expect(page).to have_content('Create a new task')
+      expect(page).to have_content(I18n.t('views.titles.new_task'))
 
-      expect(page).to have_field('Title')
-      expect(page).to have_field('Description')
-      expect(page).to have_field('Due')
+      expect(page).to have_field('task_title')
+      expect(page).to have_field('task_description')
+      expect(page).to have_field('task_due')
+      expect(page).to have_field('task_status_pending')
+      expect(page).to have_field('task_status_in_progress')
+      expect(page).to have_field('task_status_completed')
+      expect(page).to have_field('task_label_ids')
+      expect(page).to have_selector('option', text: 'Label 1')
+      expect(page).to have_selector('option', text: 'Label 2')
 
-      expect(page).to have_selector("input[type='radio'][value='pending']")
-      expect(page).to have_selector("input[type='radio'][value='in_progress']")
-      expect(page).to have_selector("input[type='radio'][value='completed']")
-
-      expect(page).to have_button('Create')
+      expect(page).to have_button('commit')
     end
 
     it 'create new task and show flash message' do 
       visit new_task_path
 
-      fill_in 'Title', with: 'New Task Title'
-      fill_in 'Description', with: 'New Task Description'
+      fill_in 'task_title', with: 'New Task Title'
+      fill_in 'task_description', with: 'New Task Description'
       new_time = Time.zone.now + 5
-      fill_in 'Due', with: new_time
-      choose 'Pending'
+      fill_in 'task_due', with: new_time
+      select 'Label 1', from: 'task_label_ids'
+      choose 'task_status_pending'
 
-      click_on 'Create'
+      click_on 'commit'
 
       expect(current_path).to eq(tasks_path)
       expect(page).to have_content('New task was created successfully!')
@@ -267,8 +319,9 @@ RSpec.describe 'Tasks', type: :system do
 
       expect(page).to have_content('New Task Title')
       expect(page).to have_content('New Task Description')
-      expect(page).to have_content(I18n.l new_time)
-      expect(page).to have_content('Pending')
+      expect(page).to have_content(I18n.l(new_time))
+      expect(page).to have_content(I18n.t('views.selects.status_pending'))
+      expect(page).to have_content('Label 1')
     end
 
     context 'input invalid value' do 
@@ -404,17 +457,19 @@ RSpec.describe 'Tasks', type: :system do
     end
 
     it 'redirect to index page after submit' do 
-      task = Task.create!(title: 'Test title 1', description: 'Test Description 1', due: Time.zone.now + 5, status: 'pending')
+      task = Task.create!(title: 'Test title 1', description: 'Test Description 1', due: Time.zone.now + 5, status: 'pending', user_id: @user1_id)
+      task.labels << @label1
 
       visit edit_task_path(task)
 
-      fill_in 'Title', with: 'Edit Task Title'
-      fill_in 'Description', with: 'Edit Task Description'
+      fill_in 'task_title', with: 'Edit Task Title'
+      fill_in 'task_description', with: 'Edit Task Description'
       edit_time = Time.zone.now + 5
-      fill_in 'Due', with: edit_time
-      choose 'In Progress'
+      fill_in 'task_due', with: edit_time
+      choose 'task_status_in_progress'
+      select 'Label 2', from: 'task_label_ids'
 
-      click_on 'Update'
+      click_on 'commit'
 
       expect(current_path).to eq(tasks_path)
       expect(page).to have_content('Edit task successfully!')
@@ -424,7 +479,8 @@ RSpec.describe 'Tasks', type: :system do
       expect(page).to have_content('Edit Task Title')
       expect(page).to have_content('Edit Task Description')
       expect(page).to have_content(I18n.l(edit_time))
-      expect(page).to have_content('In Progress')
+      expect(page).to have_content(I18n.t('views.selects.status_in_progress'))
+      expect(page).to have_content('Label 2')
     end
 
     context 'edit with invalid inputs' do 

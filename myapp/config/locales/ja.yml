@@ -44,6 +44,7 @@ ja:
       username: "ユーザー名"
       number_tasks: "タスク数"
       admin: "管理権限"
+      label: "ラベル"
     labels:
       username: "ユーザー名"
       password: "パスワード"
@@ -53,6 +54,7 @@ ja:
       order: "順番"
       select_status: "ステータスを選択"
       select_role: "ロールを選択"
+      select_labels: "ラベル"
     selects:
       status_all: "全部"
       status_pending: "保留中"

@@ -9,12 +9,22 @@ class Task < ApplicationRecord
   validate :due_cannot_be_earlier_than_now, if: :due_changed?
 
   belongs_to :user
+  has_many :tasks_labels, dependent: :destroy
+  has_many :labels, through: :tasks_labels
 
   def self.search_with_sort(query_title, query_status, sort_by, order)
-    if query_status.empty?
-      where('title LIKE ?', "%#{query_title}%").order("#{sort_by} #{order}")
+    tasks = where('title LIKE ?', "%#{query_title}%")
+    tasks = tasks..where(status: query_status) if query_status.present?
+    tasks.order("tasks.#{sort_by} #{order}")
+  end
+
+  def self.search_by_label(label_id)
+    if label_id.present?
+      joins(:labels)
+        .where(labels: { id: label_id} )
+        .distinct
     else 
-      where('title LIKE ?', "%#{query_title}%").where(status: query_status).order("#{sort_by} #{order}")
+      all
     end
   end
 

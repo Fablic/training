@@ -36,6 +36,18 @@
     </div>
   </div>
 
+  <div class='mb-3 container border rounded'>
+    <h2><%= t('views.texts.label') %></h2>
+    <hr class='w-25 hr-style'>
+    <div class='mb-2'>
+      <% @task.labels.each do |label| %>
+        <span class='me-2 btn btn-outline-secondary'>
+          <%= label.label_name %>
+        </span>
+      <% end %>
+    </div>
+  </div>
+
   <p>
     <%= button_to t('views.buttons.edit'), edit_task_path(@task), method: :get, class: 'btn btn-outline-success' %>
   </p>
