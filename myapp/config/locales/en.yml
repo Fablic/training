@@ -38,8 +38,6 @@ en:
     update_failure: "Failed to update the task."
     delete_success: "Task was successfully deleted."
     delete_failure: "Failed to delete the task."
-<<<<<<< HEAD
-
   activerecord:
     errors:
       models:
@@ -49,5 +47,3 @@ en:
               blank: "can't be blank"
             due_date:
               blank: "can't be blank"
-=======
->>>>>>> shinya-uchimaki
