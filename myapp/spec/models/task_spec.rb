@@ -21,7 +21,7 @@ RSpec.describe Task, type: :model do
       expect(task.valid?).to eq(false)
     end
 
-    it 'title is empty' do
+    it 'title is nil' do
       task.title = nil
       expect(task.valid?).to eq(false)
     end
