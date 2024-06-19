@@ -1,0 +1,34 @@
+  <% if @task.errors.any? %>
+    <div id="error_explanation">
+      <ul>
+        <% @task.errors.full_messages.each do |message| %>
+          <li><%= t(message) %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :title, "Title" %><%= form.text_field :title %>
+    <% if @task.errors[:title].any? %>
+      <div class="error-message"><%= t(@task.errors[:title].join(", ")) %></div>
+    <% end %>
+  </div>
+  <div class="form-group">
+    <%= form.label :description, "Description" %><%= form.text_field :description %>
+  </div>
+  <div class="form-group">
+    <%= form.label :status, "Status" %><%= form.select :status, Task.statuses.keys.to_a, {} %>
+  </div>
+  <div class="form-group">
+    <%= form.label :priority, "Priority" %><%= form.select :priority, Task.priorities.keys.to_a, {} %>
+  </div>
+  <div class="form-group">
+    <%= form.label :due_date, "Due date" %><%= form.text_field :due_date, placeholder: "2025-01-01" %>
+    <% if @task.errors[:due_date].any? %>
+      <div class="error-message"><%= t(@task.errors[:due_date].join(", ")) %></div>
+    <% end %>
+  </div>
+  <div class="form-actions">
+    <%= form.submit %>
+  </div>

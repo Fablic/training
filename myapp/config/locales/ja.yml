@@ -30,7 +30,6 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 ja:
-  hello: "Hello world"
   tasks:
     no_tasks: "タスクがありません。"
     create_success: "タスクの作成に成功しました。"
@@ -48,4 +47,3 @@ ja:
               blank: "入力必須です。"
             due_date:
               blank: "入力必須です。"
-
