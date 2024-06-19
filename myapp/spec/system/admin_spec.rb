@@ -91,4 +91,55 @@ RSpec.describe 'Users', type: :system do
       expect(page).to have_selector('input[id="user_admin_true"][disabled]')
     end
   end
+
+  describe 'mantenance feature' do 
+    before do 
+      Rails.application.load_tasks
+      @tmp_file_path = Rails.root.join('tmp', 'maintenance_tmp.txt')
+    end
+
+    it 'should create and delete a tmp file when start and end task executed' do
+      Rake::Task['maintenance:start'].invoke 
+      assert_equal(File.exist?(@tmp_file_path), true)
+      Rake::Task['maintenance:start'].reenable
+
+      Rake::Task['maintenance:end'].invoke 
+      assert_equal(File.exist?(@tmp_file_path), false)
+      Rake::Task['maintenance:start'].reenable
+    end
+
+    context 'when in maintenance mode' do 
+      it 'should be able to visit task page if is admin user' do 
+        Rake::Task['maintenance:start'].invoke 
+        Rake::Task['maintenance:start'].reenable
+  
+        visit current_path
+
+        expect(page).to have_content(I18n.t('views.titles.task_list'))
+
+        Rake::Task['maintenance:end'].invoke
+        Rake::Task['maintenance:start'].reenable
+      end
+  
+      it 'should render 503 page if is normal user' do 
+        click_on I18n.t('views.buttons.logout')
+  
+        fill_in 'username', with: 'normal_user'
+        fill_in 'password', with: 'password'
+        click_on 'commit'      
+  
+        Rake::Task['maintenance:start'].invoke 
+        Rake::Task['maintenance:start'].reenable
+  
+        visit current_path
+  
+        expect(page).to have_content('503')
+        expect(page).to have_content('Server is in maintenance now.')
+        expect(page).to have_content('Please wait until service turns to be available.')
+
+        Rake::Task['maintenance:end'].invoke
+        Rake::Task['maintenance:start'].reenable
+      end
+    end
+  end
 end
