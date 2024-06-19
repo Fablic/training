@@ -21,7 +21,7 @@
   <div class="flash <%= key %>"><%= message %></div>
 <% end %>
 
-<% if @tasks_empty %>
+<% if @tasks.empty? %>
   <p><%= t('tasks.no_tasks') %></p>
 <% end %>
 
@@ -32,7 +32,7 @@
     <th>Description</th>
     <th>Priority</th>
     <th>Labels</th>
-    <th><%= sortable "due_date", "DueDate" %></th>
+    <th><%= sortable "due_date", "DueDate" %></th></th>
     <th>Status</th>
     <th><%= sortable "created_at", "Created" %></th>
     <th><%= sortable "updated_at", "Updated" %></th>

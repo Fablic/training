@@ -5,15 +5,18 @@ class TasksController < ApplicationController # rubocop:disable Style/Documentat
 
   def index
     @tasks = Task.search(params[:title], params[:status]).order("#{sort_column}  #{sort_direction}")
-    @tasks_empty = @tasks.empty?
+  end
+
+  def new
+    @task = Task.new
   end
 
   def show
     ## show
   end
 
-  def new
-    @task = Task.new
+  def edit
+    ## edit
   end
 
   def create
@@ -25,10 +28,6 @@ class TasksController < ApplicationController # rubocop:disable Style/Documentat
       flash.now[:warn] = I18n.t('tasks.create_failure')
       render :new
     end
-  end
-
-  def edit
-    ## edit
   end
 
   def update

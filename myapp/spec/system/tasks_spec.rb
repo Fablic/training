@@ -51,7 +51,7 @@ RSpec.describe 'Tasks', type: :system do
         end
       end
 
-      it 'due_date_date asc' do
+      it 'due_date asc' do
         visit tasks_path(sort: "due_date", direction: "asc")
         within('table#result') do
           first_row = all('tr')[1]
@@ -68,7 +68,7 @@ RSpec.describe 'Tasks', type: :system do
         end
       end
 
-      it 'update_date_date asc' do
+      it 'update_date asc' do
         visit tasks_path(sort: "updated_at", direction: "asc")
         within('table#result') do
           first_row = all('tr')[1]

@@ -21,22 +21,32 @@ RSpec.describe Task, type: :model do
       expect(task.valid?).to eq(false)
     end
 
+    it 'title is nil' do
+      task.title = nil
+      expect(task.valid?).to eq(false)
+    end
+
     it 'description is empty' do
       task.description = ''
       expect(task.valid?).to eq(true)
     end
 
-    it 'due_date is empty' do
+    it 'description is nil' do
+      task.description = nil
+      expect(task.valid?).to eq(true)
+    end
+
+    it 'due_date is nil' do
       task.due_date = nil
       expect(task.valid?).to eq(false)
     end
 
-    it 'status is empty' do
+    it 'status is nil' do
       task.status = nil
       expect(task.valid?).to eq(false)
     end
 
-    it 'priority is empty' do
+    it 'priority is nil' do
       task.priority = nil
       expect(task.valid?).to eq(false)
     end
