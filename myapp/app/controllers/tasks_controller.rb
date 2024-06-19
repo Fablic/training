@@ -4,7 +4,8 @@ class TasksController < ApplicationController # rubocop:disable Style/Documentat
   before_action :set_task, only: %i[show edit update destroy]
 
   def index
-    @tasks = Task.order(created_at: :desc)
+    @tasks = Task.all
+    @tasks = @tasks.order("#{sort_column}  #{sort_direction}")
   end
 
   def new
@@ -57,5 +58,13 @@ class TasksController < ApplicationController # rubocop:disable Style/Documentat
 
   def task_params
     params.require(:task).permit(:title, :description, :status, :priority, :due_date)
+  end
+
+  def sort_column
+    Task.column_names.include?(params[:sort]) ? params[:sort] : 'created_at'
+  end
+
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : 'desc'
   end
 end

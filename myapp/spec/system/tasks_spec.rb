@@ -50,6 +50,40 @@ RSpec.describe 'Tasks', type: :system do
           expect(third_title.text).to eq('test1')
         end
       end
+
+      it 'due_date_date asc' do
+        visit tasks_path(sort: "due_date", direction: "asc")
+        within('table#result') do
+          first_row = all('tr')[1]
+          first_title = first_row.all('td')[TD_IDX_TITLE]
+          expect(first_title.text).to eq('test1')
+
+          second_row = all('tr')[2]
+          second_title = second_row.all('td')[TD_IDX_TITLE]
+          expect(second_title.text).to eq('test3')
+
+          third_row = all('tr')[3]
+          third_title = third_row.all('td')[TD_IDX_TITLE]
+          expect(third_title.text).to eq('test2')
+        end
+      end
+
+      it 'update_date_date asc' do
+        visit tasks_path(sort: "updated_at", direction: "asc")
+        within('table#result') do
+          first_row = all('tr')[1]
+          first_title = first_row.all('td')[TD_IDX_TITLE]
+          expect(first_title.text).to eq('test3')
+
+          second_row = all('tr')[2]
+          second_title = second_row.all('td')[TD_IDX_TITLE]
+          expect(second_title.text).to eq('test2')
+
+          third_row = all('tr')[3]
+          third_title = third_row.all('td')[TD_IDX_TITLE]
+          expect(third_title.text).to eq('test1')
+        end
+      end
     end
   end
 
