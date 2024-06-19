@@ -25,7 +25,7 @@ class TasksController < ApplicationController # rubocop:disable Style/Documentat
       flash[:info] = I18n.t('tasks.create_success')
       redirect_to @task
     else
-      flash[:warn] = I18n.t('tasks.create_failure')
+      flash.now[:warn] = I18n.t('tasks.create_failure')
       render :new
     end
   end
@@ -35,7 +35,7 @@ class TasksController < ApplicationController # rubocop:disable Style/Documentat
       flash[:info] = I18n.t('tasks.update_success')
       redirect_to @task
     else
-      flash[:warn] = I18n.t('tasks.update_failure')
+      flash.now[:warn] = I18n.t('tasks.update_failure')
       render :edit
     end
   end
