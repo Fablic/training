@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   def check_maintenance_mode
     tmp_file_path = Rails.root.join('tmp', 'maintenance_tmp.txt')
     if File.exist?(tmp_file_path)
-      if request.path != maintenance_path || (current_user && !current_user.admin)
+      if current_user && !current_user.admin
         render file: Rails.public_path.join('503.html'), status: :service_unavailable
       end
     end
