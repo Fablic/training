@@ -44,6 +44,14 @@ RSpec.describe 'Logins', type: :system do
         expect(page).to have_content(I18n.t('flash.common.failure', model: I18n.t('views.common.login')))
       end
     end
+
+    context 'when not logged in' do
+      it 'ログインしていない場合は、タスク管理のページに遷移できない' do
+        visit tasks_path
+        expect(page).to have_current_path(login_path)
+        expect(page).to have_content(I18n.t('views.common.login'))
+      end
+    end
   end
 
   describe 'Logout process' do
