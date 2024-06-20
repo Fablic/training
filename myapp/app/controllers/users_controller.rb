@@ -64,6 +64,6 @@ class UsersController < ApplicationController # rubocop:disable Style/Documentat
 
   # Only allow a list of trusted parameters through.
   def user_params
-    params.require(:user).permit(:username, :password_digest, :role)
+    params.require(:user).permit(:username, :password, :role)
   end
 end

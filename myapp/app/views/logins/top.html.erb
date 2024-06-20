@@ -1,0 +1,23 @@
+<div class="container w-50 p-5">
+  <% if current_user %>
+    <div class="alert alert-info">
+      <p>すでにログイン中です。</p>
+      <%= link_to 'タスク一覧へ', tasks_path, class: "btn btn-primary" %>
+    </div>
+  <% else %>
+    <h2><%= t('views.common.login') %></h2>
+    <%= form_with url: login_path, local: true do |form| %>
+      <div class="mb-3">
+        <%= form.label :username, t('helpers.label.login.username'), class: "form-label" %>
+        <%= form.text_field :username, class: "form-control" %>
+      </div>
+      <div class="mb-3">
+        <%= form.label :password, t('helpers.label.login.password'), class: "form-label" %>
+        <%= form.password_field :password, class: "form-control" %>
+      </div>
+      <div class="mb-3">
+        <%= form.submit t('views.common.login'), class: "btn btn-primary" %>
+      </div>
+    <% end %>
+  <% end %>
+</div>

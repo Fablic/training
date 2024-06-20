@@ -14,8 +14,11 @@ ja:
         created_at: "作成日時"
       user:
         username: "ユーザ名"
-        password_digest: "パスワード"
+        password: "パスワード"
         role: "権限"
+      login:
+        username: "ユーザ名"
+        password: "パスワード"
     submit:
       create: "登録"
       update: "更新"
@@ -43,7 +46,7 @@ ja:
           low: "低"
       user:
         username: "ユーザ名"
-        password_digest: "パスワード"
+        password: "パスワード"
         roles:
           member: "メンバー"
           admin: "管理者"
@@ -80,12 +83,14 @@ ja:
       create: "作成"
       add: "追加"
       login: "ログイン"
+      logout: "ログアウト"
       search: "検索"
       delete: "削除"
       edit: "編集"
       confirm: "本当ですか？"
       reset: "初期化"
       all_status: "全てのステータス"
+      welcome: "ようこそ %{username}さん"
     pagination:
       first:      "&laquo;"
       last:       "&raquo;"

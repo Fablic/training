@@ -12,8 +12,8 @@
   <%= form.text_field :username, class: "form-control", readonly: !@edit_mode %>
 </div>
 <div class="mb-3">
-  <%= form.label :password_digest, class: "form-label", disabled: !@edit_mode %>
-  <%= form.text_field :password_digest, class: "form-control", readonly: !@edit_mode %>
+  <%= form.label :password, class: "form-label", disabled: !@edit_mode %>
+  <%= form.password_field :password, class: "form-control", readonly: !@edit_mode %>
 </div>
 <div class="mb-3">
   <%= form.label :role, class: "form-label" %>

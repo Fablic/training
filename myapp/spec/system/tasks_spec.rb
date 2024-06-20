@@ -1,12 +1,19 @@
 require 'rails_helper'
 
-RSpec.describe 'Tasks', type: :system do
+RSpec.describe 'Tasks', type: :system do # rubocop:disable Metrics/BlockLength
+  before do
+    @user = create(:user, username: 'User1', password: 'password1')
+    visit login_path
+    fill_in I18n.t('helpers.label.user.username'), with: 'User1'
+    fill_in I18n.t('helpers.label.user.password'), with: 'password1'
+    click_button I18n.t('views.common.login')
+  end
   describe 'Tasklist' do
     shared_examples 'Checking component' do
       it 'displays common components' do
         expect(page).to have_selector('h1', text: I18n.t('views.tasks.index.title'))
         expect(page).to have_link(I18n.t('views.common.add'))
-        expect(page).to have_button(I18n.t('views.common.login'))
+        expect(page).to have_button(I18n.t('views.common.logout'))
         expect(page).to have_button(I18n.t('views.common.search'))
         expect(page).to have_link(I18n.t('views.common.reset'))
         expect(page).to have_field(I18n.t('activerecord.attributes.task.title'))
@@ -32,10 +39,9 @@ RSpec.describe 'Tasks', type: :system do
 
     context 'When any tasks exist' do
       before do
-        @user = create(:user, username: 'User1', password_digest: 'password1')
         @task1 = create(:task, title: 'ryu title1', details: 'ryu details1', created_at: 1.day.ago, user: @user)
-        @task2 = create(:task, title: 'ryu title2', details: 'ryu details2', created_at: 2.days.ago)
-        @task3 = create(:task, title: 'ryu title3', details: 'ryu details3', created_at: Time.now)
+        @task2 = create(:task, title: 'ryu title2', details: 'ryu details2', created_at: 2.days.ago, user: @user)
+        @task3 = create(:task, title: 'ryu title3', details: 'ryu details3', created_at: Time.now, user: @user)
         visit tasks_path
       end
 
@@ -48,9 +54,9 @@ RSpec.describe 'Tasks', type: :system do
         expect(page).to have_selector('tbody tr:nth-child(1)', text: @task3.created_at.strftime('%Y/%m/%d %H:%M:%S'))
         expect(page).to have_selector('tbody tr:nth-child(2)', text: @task1.created_at.strftime('%Y/%m/%d %H:%M:%S'))
         expect(page).to have_selector('tbody tr:nth-child(3)', text: @task2.created_at.strftime('%Y/%m/%d %H:%M:%S'))
-        expect(page).to have_selector('tbody tr:nth-child(1)', text: 'No assigned')
+        expect(page).to have_selector('tbody tr:nth-child(1)', text: @user.username)
         expect(page).to have_selector('tbody tr:nth-child(2)', text: @user.username)
-        expect(page).to have_selector('tbody tr:nth-child(3)', text: 'No assigned')
+        expect(page).to have_selector('tbody tr:nth-child(3)', text: @user.username)
       end
     end
   end
@@ -119,7 +125,7 @@ RSpec.describe 'Tasks', type: :system do
   end
 
   describe 'Show task' do
-    let!(:task) { create(:task, title: 'ryu title3', details: 'ryu details3') }
+    let!(:task) { create(:task, title: 'ryu title3', details: 'ryu details3', user: @user) }
 
     context 'Initial display' do
       before do
@@ -161,7 +167,7 @@ RSpec.describe 'Tasks', type: :system do
   end
 
   describe 'Edit task' do
-    let!(:task) { create(:task, title: 'ryu title3', details: 'ryu details3') }
+    let!(:task) { create(:task, title: 'ryu title3', details: 'ryu details3', user: @user) }
 
     context 'Initial display' do
       before do
@@ -237,9 +243,9 @@ RSpec.describe 'Tasks', type: :system do
   end
 
   describe 'Test for Search' do
-    let!(:task1) { create(:task, title: 'Task@1', status: :not_started) }
-    let!(:task2) { create(:task, title: 'Task%2', status: :in_progress) }
-    let!(:task3) { create(:task, title: 'Task-3', status: :completed) }
+    let!(:task1) { create(:task, title: 'Task@1', status: :not_started, user: @user) }
+    let!(:task2) { create(:task, title: 'Task%2', status: :in_progress, user: @user) }
+    let!(:task3) { create(:task, title: 'Task-3', status: :completed, user: @user) }
 
     context 'Case Search button' do
       it 'has the hitted tasks witg no condition ' do
@@ -321,7 +327,7 @@ RSpec.describe 'Tasks', type: :system do
     context 'If # of Task is less than # per page' do
       before do
         6.times do |i|
-          create(:task, title: %(ryu title#{i}), details: %(ryu details#{i}), created_at: Time.now)
+          create(:task, title: %(ryu title#{i}), details: %(ryu details#{i}), created_at: Time.now, user: @user)
         end
         visit tasks_path
       end
@@ -336,7 +342,7 @@ RSpec.describe 'Tasks', type: :system do
     context 'If # of Task is over # per page' do
       before do
         8.times do |i|
-          create(:task, title: %(ryu title#{i}), details: %(ryu details#{i}), created_at: Time.now)
+          create(:task, title: %(ryu title#{i}), details: %(ryu details#{i}), created_at: Time.now, user: @user)
         end
         visit tasks_path
       end
