@@ -81,6 +81,7 @@ en:
       confirm: "Are you sure?"
       reset: "Reset"
       all_status: "All status"
+      all_labels: "All labels"
       welcome: "Welcome! %{username} san"
     pagination:
       first:      "&laquo;"

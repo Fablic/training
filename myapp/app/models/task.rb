@@ -16,4 +16,5 @@ class Task < ApplicationRecord
   scope :default_order, -> { order(created_at: :desc) }
   scope :search_title, ->(title) { where('title LIKE ?', "%#{sanitize_sql_like(title)}%") if title.present? }
   scope :search_status, ->(status) { where(status:) if status.present? }
+  scope :search_label, ->(label_id) { joins(:labels).where(labels: { id: label_id }) if label_id.present? }
 end

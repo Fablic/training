@@ -17,7 +17,12 @@
 </div>
 <div class="mb-3">
   <%= form.label :label, class: "form-label" %>
-  <p>Labels</p>
+  <div class="btn-group d-flex"  role="group" aria-label="Basic radio toggle button group">
+    <%= form.collection_check_boxes :label_ids, @labels, :id, :name do | items| %>
+      <%= items.check_box class: "btn-check", disabled: !@edit_mode %>
+      <%= items.label class: "btn btn-outline-primary" %>
+    <% end %>
+  </div>
 </div>
 <div class="mb-3">
   <%= form.label :start_date, class: "form-label" %>

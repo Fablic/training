@@ -13,6 +13,9 @@
           <%= select_tag :status, options_for_select(Task.statuses.keys.map { |status| [t(%(activerecord.attributes.task.status.#{status})), status] }, params[:status]), prompt: t('views.common.all_status'), class: "form-select" %>
         </div>
         <div class="col">
+          <%= select_tag :label_id, options_from_collection_for_select(Label.all, :id, :name, params[:label_id]), prompt: t('views.common.all_labels'), class: "form-select"  %>
+        </div>
+        <div class="col">
           <%= submit_tag t('views.common.search'), class: "btn btn-outline-primary" %>
           <%= link_to t('views.common.reset'), tasks_path, class: "btn btn-outline-secondary" %>
         </div>

@@ -7,6 +7,7 @@ class TasksController < ApplicationController
     @tasks = current_user.tasks
                          .search_title(params[:title])
                          .search_status(params[:status])
+                         .search_label(params[:label_id])
                          .default_order
                          .page(params[:page])
                          .per(6)
@@ -15,17 +16,20 @@ class TasksController < ApplicationController
   # GET /tasks/1 or /tasks/1.json
   def show
     @edit_mode = false
+    @labels = Label.all
   end
 
   # GET /tasks/new
   def new
     @task = Task.new
     @edit_mode = true
+    @labels = Label.all
   end
 
   # GET /tasks/1/edit
   def edit
     @edit_mode = true
+    @labels = Label.all
   end
 
   # POST /tasks or /tasks.json
@@ -36,6 +40,7 @@ class TasksController < ApplicationController
       redirect_to tasks_url
     else
       @edit_mode = true
+      @labels = Label.all
       flash.now[:alert] = I18n.t('flash.common.failure', model: I18n.t('actions.create'))
       render :new, status: :unprocessable_entity
     end
@@ -48,6 +53,7 @@ class TasksController < ApplicationController
       redirect_to tasks_url
     else
       @edit_mode = true
+      @labels = Label.all
       flash.now[:alert] = I18n.t('flash.common.failure', model: I18n.t('actions.update'))
       render :edit, status: :unprocessable_entity
     end
@@ -75,7 +81,8 @@ class TasksController < ApplicationController
         :due_date,
         :priority,
         :status,
-        :details
+        :details,
+        label_ids: []
       )
     end
 end
