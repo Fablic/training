@@ -4,7 +4,7 @@ class TasksController < ApplicationController
 
   # GET /tasks or /tasks.json
   def index
-    @tasks = current_user.tasks
+    @tasks = current_user.tasks.includes([:labels])
                          .search_title(params[:title])
                          .search_status(params[:status])
                          .search_label(params[:label_id])

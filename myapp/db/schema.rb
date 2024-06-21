@@ -24,7 +24,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_13_005827) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["label_id"], name: "index_task_labels_on_label_id"
-    t.index ["task_id", "label_id"], name: "index_task_labels_on_task_id_and_label_id", unique: true
+    t.index %w[task_id label_id], name: "index_task_labels_on_task_id_and_label_id", unique: true
     t.index ["task_id"], name: "index_task_labels_on_task_id"
   end
 
