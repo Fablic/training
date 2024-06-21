@@ -55,10 +55,10 @@ RSpec.describe Task, type: :model do
 
   describe 'Search' do
     before do
-      @task1 = Task.create!(title: 'test1', description: 'desc1', due_date: '2024-01-01', updated_at: '2024-03-01', status: :open)
-      @task2 = Task.create!(title: 'test2', description: 'desc2', due_date: '2024-03-01', updated_at: '2024-02-01', status: :in_progress)
-      @task3 = Task.create!(title: 'test3', description: 'desc3', due_date: '2024-02-01', updated_at: '2024-01-01', status: :in_progress)
-      @task4 = Task.create!(title: 'test11', description: 'desc3', due_date: '2024-02-01', updated_at: '2024-01-01',status: :in_progress)
+      Task.create!(title: 'test1', description: 'desc1', due_date: '2024-01-01', updated_at: '2024-03-01', status: :open)
+      Task.create!(title: 'test2', description: 'desc2', due_date: '2024-03-01', updated_at: '2024-02-01', status: :in_progress)
+      Task.create!(title: 'test3', description: 'desc3', due_date: '2024-02-01', updated_at: '2024-01-01', status: :in_progress)
+      Task.create!(title: 'test11', description: 'desc3', due_date: '2024-02-01', updated_at: '2024-01-01',status: :in_progress)
     end
 
     it 'search title, result is not empty' do
