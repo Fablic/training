@@ -4,10 +4,13 @@ class TasksController < ApplicationController
 
   # GET /tasks or /tasks.json
   def index
-    @tasks = current_user.tasks.includes([:labels])
+    @tasks = current_user.tasks
+                         .includes(:labels)
                          .search_title(params[:title])
                          .search_status(params[:status])
                          .search_label(params[:label_id])
+                         .left_joins(:labels)
+                         .distinct
                          .default_order
                          .page(params[:page])
                          .per(6)

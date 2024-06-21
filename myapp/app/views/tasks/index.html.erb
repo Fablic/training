@@ -42,10 +42,12 @@
                 <%= task.user&.username || 'No assigned' %>
               </td>
               <td>
-                <label class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-html="true" data-bs-placement="right" data-bs-custom-class="bg-secondary"
+                <% if task.labels.present? %>
+                  <label class="badge text-bg-info" data-bs-toggle="tooltip" data-bs-html="true" data-bs-placement="right"
                   data-bs-title="<%= task.labels.map { |label| %(<span class='badge bg-secondary'>#{label.name}</span>) }.join(' ') %>">
-                  ^
-                </label>
+                    ^
+                  </label>
+                <% end %>
               </td>
               <td><%= task.due_date&.strftime('%Y/%m/%d')  %></td>
               <td><%= t(%(activerecord.attributes.task.status.#{task.status})) %></td>
