@@ -31,11 +31,9 @@ first_name, last_nameは削除しました。
 | status | no       | active | active, inactive|
 | created_at | no       | | |
 | updated_at | no       | | |
-| discarded_at | yes      | NULL | |
 
 #### index of users
 - idx_users_on_login_name (login_name)
-
 
 ### tasks
 
@@ -50,12 +48,9 @@ first_name, last_nameは削除しました。
 | priority     | no       | high | high, medium, low         |
 | created_at   | no       | |                           |
 | updated_at   | no       | |                           |
-| discarded_at | yes      | NULL |                           |
 
 #### index of tasks
 - idx_tasks_on_status (status)
-- idx_tasks_on_priority (priority)
-- idx_tasks_on_due_date (due_date)
 
 ### labels
 | Name         | Nullable | Default | Note |
@@ -64,11 +59,8 @@ first_name, last_nameは削除しました。
 | name         | no       | | |
 | created_at   | no       | | |
 | updated_at   | no       | | |
-| discarded_at | yes      | NULL | |
 
 ### task_label_relations
-不要なnameカラムを削除しました。
-テーブル名をtask_to_labelsから変更しました。
 
 | Name         | Nullable | Default | Note |
 | ------------ | -------- | ------- | ---- |
@@ -77,4 +69,7 @@ first_name, last_nameは削除しました。
 | label_id     | no       | | |
 | created_at   | no       | | |
 | updated_at   | no       | | |
-| discarded_at | yes      | NULL | |
+
+
+## Validaton
+title 空はきんし

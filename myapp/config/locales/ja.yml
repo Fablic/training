@@ -38,3 +38,12 @@ ja:
     update_failure: "タスクの更新に失敗しました。"
     delete_success: "タスクの削除に成功しました。"
     delete_failure: "タスクの削除に失敗しました。"
+  activerecord:
+    errors:
+      models:
+        task:
+          attributes:
+            title:
+              blank: "入力必須です。"
+            due_date:
+              blank: "入力必須です。"

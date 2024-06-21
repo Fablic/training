@@ -1,5 +1,5 @@
 // Place all the styles related to the Tasks controller here.
-// They will automatically be included in application.css.
+// They will automatically be included in application.scss.
 // You can use Sass (SCSS) here: https://sass-lang.com/
 
 table {
@@ -46,5 +46,34 @@ label {
     width: 150px;
     vertical-align: top;
 }
+.form-group {
+  margin-bottom: 15px;
+}
 
+.form-label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
 
+.form-control {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+.form-actions {
+  margin-top: 20px;
+}
+
+.btn {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+}
