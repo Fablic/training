@@ -84,4 +84,10 @@ RSpec.configure do |config|
     Capybara.server_port = 3000
     Capybara.app_host = "https://#{Capybara.server_host}:#{Capybara.server_port}"
   end
+
+  if defined?(Bullet)
+    Bullet.enable = true
+    Bullet.bullet_logger = true
+    Bullet.raise = true # raise an error if n+1 query occurs
+  end
 end
