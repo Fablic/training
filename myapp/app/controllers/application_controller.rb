@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base # rubocop:disable Style/Documentation
-  #　Added `rescue_from` here for the assignment, but it is planned to be removed
+  # Added `rescue_from` here for the assignment, but it is planned to be removed
   rescue_from StandardError, with: :render_internal_server_error
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
 
