@@ -15,8 +15,11 @@ en:
         created_at: "作成日時"
       user:
         username: Username
-        password_digest: Password
+        password: Password
         role: "Role"
+      login:
+        username: Username
+        password: Password
     submit:
       create: "Create"
       update: "Update"
@@ -44,7 +47,7 @@ en:
           low: "Low"
       user:
         username: "Username"
-        password_digest: "Password"
+        password: "Password"
         roles:
           member: "Member"
           admin: "Admin"
@@ -71,12 +74,14 @@ en:
       create: "Create"
       add: "Add"
       login: "Login"
+      logout: "Logout"
       search: "Search"
       delete: "Delete"
       edit: "Edit"
       confirm: "Are you sure?"
       reset: "Reset"
       all_status: "All status"
+      welcome: "Welcome! %{username} san"
     pagination:
       first:      "&laquo;"
       last:       "&raquo;"

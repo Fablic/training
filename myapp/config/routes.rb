@@ -1,12 +1,15 @@
 Rails.application.routes.draw do
   root 'tasks#index'
 
-  resources :users
-  resources :tasks
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  get '/login', to: 'logins#top'
+  post '/login', to: 'logins#login'
+  delete 'logout', to: 'logins#logout'
 
-  # Defines the root path route ("/")
-  # root "articles#index"
+  scope :admin do
+    resources :users
+    get '/', to: 'users#index'
+  end
+  resources :tasks
 
   match '*path', to: 'application#render404', via: :all
 end

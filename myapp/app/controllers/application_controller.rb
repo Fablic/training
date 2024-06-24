@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base # rubocop:disable Style/Documentation
   around_action :switch_locale
+  helper_method :current_user
 
   rescue_from ActionController::BadRequest, with: :render400
   rescue_from ActiveRecord::RecordNotFound, with: :render404
@@ -18,5 +19,13 @@ class ApplicationController < ActionController::Base # rubocop:disable Style/Doc
 
   def render_error(status, template)
     render template: %(errors/#{template}), status:, layout: true
+  end
+
+  def require_login
+    redirect_to login_path if current_user.nil?
+  end
+
+  def current_user
+    @current_user ||= User.find_by_id(session[:user_id])
   end
 end

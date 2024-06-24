@@ -1,12 +1,15 @@
 class TasksController < ApplicationController
+  before_action :require_login
   before_action :set_task, only: %i[ show edit update destroy ]
 
   # GET /tasks or /tasks.json
   def index
-    @tasks = Task.includes(:user)
-                 .search_title(params[:title])
-                 .search_status(params[:status])
-                 .default_order.page(params[:page]).per(6)
+    @tasks = current_user.tasks
+                         .search_title(params[:title])
+                         .search_status(params[:status])
+                         .default_order
+                         .page(params[:page])
+                         .per(6)
   end
 
   # GET /tasks/1 or /tasks/1.json
@@ -27,7 +30,7 @@ class TasksController < ApplicationController
 
   # POST /tasks or /tasks.json
   def create
-    @task = Task.new(task_params)
+    @task = current_user.tasks.new(task_params)
     if @task.save
       flash[:notice] = I18n.t('flash.common.success', model: I18n.t('actions.create'))
       redirect_to tasks_url
@@ -60,7 +63,7 @@ class TasksController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_task
-      @task = Task.find(params[:id])
+      @task = current_user.tasks.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
