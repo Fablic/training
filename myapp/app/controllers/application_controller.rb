@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
 
     return if logged_in?
 
-    redirect_to login_url, alert: 'ログインしてください。'
+    redirect_to login_url, alert: t('alerts.login_required')
   end
 
   def logged_in?

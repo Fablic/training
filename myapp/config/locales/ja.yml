@@ -12,4 +12,6 @@ ja:
             deadline:
               past_deadline: "は過去の日付に設定できません。"
               out_of_range: "日付が範囲外です。"
+  alerts:
+    login_required: "ログインしてください。"
 
