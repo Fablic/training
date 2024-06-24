@@ -2,8 +2,10 @@
 
 require 'rails_helper'
 
+TD_IDX_TITLE = 0
+
 RSpec.describe 'Tasks', type: :system do
-  let(:user) {User.create(name: 'test', password: 'test')}
+  let(:user) { User.create(name: 'test', password: 'test') }
 
   describe 'Task list' do
     context 'When a task dose not exist' do
@@ -17,7 +19,7 @@ RSpec.describe 'Tasks', type: :system do
 
     context 'When a task exists' do
       before do
-        task1 = Task.create!(title: 'test1', description: 'desc1', due_date: '2024-01-01')
+        Task.create!(title: 'test1', description: 'desc1', due_date: '2024-01-01')
         visit tasks_path
       end
       it 'Check the message and the content of the task' do
@@ -27,7 +29,6 @@ RSpec.describe 'Tasks', type: :system do
     end
 
     context 'Check the order of tasks' do
-      TD_IDX_TITLE = 0
       before do
         Task.create!(title: 'test1', description: 'desc1', due_date: '2024-01-01', updated_at: '2024-03-01')
         Task.create!(title: 'test2', description: 'desc2', due_date: '2024-03-01', updated_at: '2024-02-01')
@@ -52,7 +53,7 @@ RSpec.describe 'Tasks', type: :system do
       end
 
       it 'due_date asc' do
-        visit tasks_path(sort: "due_date", direction: "asc")
+        visit tasks_path(sort: 'due_date', direction: 'asc')
         within('table#result') do
           first_row = all('tr')[1]
           first_title = first_row.all('td')[TD_IDX_TITLE]
@@ -69,7 +70,7 @@ RSpec.describe 'Tasks', type: :system do
       end
 
       it 'update_date asc' do
-        visit tasks_path(sort: "updated_at", direction: "asc")
+        visit tasks_path(sort: 'updated_at', direction: 'asc')
         within('table#result') do
           first_row = all('tr')[1]
           first_title = first_row.all('td')[TD_IDX_TITLE]
@@ -87,7 +88,6 @@ RSpec.describe 'Tasks', type: :system do
     end
 
     context 'Search function' do
-      TD_IDX_TITLE = 0
       before do
         Task.create!(title: 'title1', description: 'desc1', due_date: '2024-01-01', status: :open)
         Task.create!(title: 'title12', description: 'desc2', due_date: '2024-03-01', status: :in_progress)
@@ -152,7 +152,7 @@ RSpec.describe 'Tasks', type: :system do
 
     context 'Display the updating screen' do
       before do
-        task = Task.create!(title: 'test1', description: 'desc1', due_date: '2024-01-01')
+        Task.create!(title: 'test1', description: 'desc1', due_date: '2024-01-01')
         visit tasks_path
         click_link 'Edit'
       end
@@ -195,7 +195,7 @@ RSpec.describe 'Tasks', type: :system do
 
   describe 'Delete a task' do
     before do
-      task = Task.create!(title: 'test1', description: 'desc1', due_date: '2024-01-01')
+      Task.create!(title: 'test1', description: 'desc1', due_date: '2024-01-01')
       visit tasks_path
     end
 
