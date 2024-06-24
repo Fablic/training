@@ -21,5 +21,4 @@ class Task < ApplicationRecord # rubocop:disable Style/Documentation
     tasks = tasks.where(status: status) if status.present?
     tasks
   end
-
 end
