@@ -4,13 +4,15 @@ require 'rails_helper'
 
 RSpec.describe Task, type: :model do
   it 'Confirm default value' do
-    task = Task.new
+    user = User.create(name: 'test', password: 'test')
+    task = Task.create(user_id: user.id)
     expect(task.status).to eq(:open.to_s)
     expect(task.priority).to eq(:low.to_s)
   end
 
   describe 'Validation' do
-    let(:task) {Task.create(title: 'title', due_date: Date.today)}
+    let(:user) {User.create(name: 'test', password: 'test')}
+    let(:task) {Task.create(title: 'title', due_date: Date.today, user_id: user.id)}
 
     it 'All attributes are OK' do
       expect(task.valid?).to eq(true)
@@ -54,11 +56,13 @@ RSpec.describe Task, type: :model do
   end
 
   describe 'Search' do
+    let(:user) {User.create(name: 'test', password: 'test')}
+
     before do
-      Task.create!(title: 'test1', description: 'desc1', due_date: '2024-01-01', updated_at: '2024-03-01', status: :open)
-      Task.create!(title: 'test2', description: 'desc2', due_date: '2024-03-01', updated_at: '2024-02-01', status: :in_progress)
-      Task.create!(title: 'test3', description: 'desc3', due_date: '2024-02-01', updated_at: '2024-01-01', status: :in_progress)
-      Task.create!(title: 'test11', description: 'desc3', due_date: '2024-02-01', updated_at: '2024-01-01',status: :in_progress)
+      Task.create!(title: 'test1', description: 'desc1', due_date: '2024-01-01', updated_at: '2024-03-01', status: :open, user_id: user.id)
+      Task.create!(title: 'test2', description: 'desc2', due_date: '2024-03-01', updated_at: '2024-02-01', status: :in_progress, user_id: user.id)
+      Task.create!(title: 'test3', description: 'desc3', due_date: '2024-02-01', updated_at: '2024-01-01', status: :in_progress, user_id: user.id)
+      Task.create!(title: 'test11', description: 'desc3', due_date: '2024-02-01', updated_at: '2024-01-01',status: :in_progress, user_id: user.id)
     end
 
     it 'search title, result is not empty' do

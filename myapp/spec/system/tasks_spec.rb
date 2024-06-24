@@ -17,7 +17,7 @@ RSpec.describe 'Tasks', type: :system do
 
     context 'When a task exists' do
       before do
-        task1 = Task.create!(title: 'test1', description: 'desc1', due_date: '2024-01-01')
+        Task.create!(title: 'test1', description: 'desc1', due_date: '2024-01-01', user_id: user.id)
         visit tasks_path
       end
       it 'Check the message and the content of the task' do
@@ -26,12 +26,12 @@ RSpec.describe 'Tasks', type: :system do
       end
     end
 
+    TD_IDX_TITLE = 0
     context 'Check the order of tasks' do
-      TD_IDX_TITLE = 0
       before do
-        Task.create!(title: 'test1', description: 'desc1', due_date: '2024-01-01', updated_at: '2024-03-01')
-        Task.create!(title: 'test2', description: 'desc2', due_date: '2024-03-01', updated_at: '2024-02-01')
-        Task.create!(title: 'test3', description: 'desc3', due_date: '2024-02-01', updated_at: '2024-01-01')
+        Task.create!(title: 'test1', description: 'desc1', due_date: '2024-01-01', updated_at: '2024-03-01', user_id: user.id)
+        Task.create!(title: 'test2', description: 'desc2', due_date: '2024-03-01', updated_at: '2024-02-01', user_id: user.id)
+        Task.create!(title: 'test3', description: 'desc3', due_date: '2024-02-01', updated_at: '2024-01-01', user_id: user.id)
       end
 
       it 'Default order (created_at desc)' do
@@ -87,11 +87,10 @@ RSpec.describe 'Tasks', type: :system do
     end
 
     context 'Search function' do
-      TD_IDX_TITLE = 0
       before do
-        Task.create!(title: 'title1', description: 'desc1', due_date: '2024-01-01', status: :open)
-        Task.create!(title: 'title12', description: 'desc2', due_date: '2024-03-01', status: :in_progress)
-        Task.create!(title: 'title3', description: 'desc3', due_date: '2024-02-01', status: :open)
+        Task.create!(title: 'title1', description: 'desc1', due_date: '2024-01-01', status: :open, user_id: user.id)
+        Task.create!(title: 'title12', description: 'desc2', due_date: '2024-03-01', status: :in_progress, user_id: user.id)
+        Task.create!(title: 'title3', description: 'desc3', due_date: '2024-02-01', status: :open, user_id: user.id)
       end
 
       it 'When searching by title, if results are found' do
@@ -152,9 +151,9 @@ RSpec.describe 'Tasks', type: :system do
 
     context 'Display the updating screen' do
       before do
-        task = Task.create!(title: 'test1', description: 'desc1', due_date: '2024-01-01')
+        task = Task.create!(title: 'test1', description: 'desc1', due_date: '2024-01-01', user_id: user.id)
         visit tasks_path
-        click_link 'Edit'
+        click_button 'Update'
       end
       it 'Check the type of screen' do
         expect(page).to have_content('Edit Task')
@@ -164,11 +163,12 @@ RSpec.describe 'Tasks', type: :system do
 
   describe 'Create a new task' do
     before do
+      User.create(name: 'test', password: 'test')
       visit new_task_path
       fill_in 'task_title', with: 'title-new'
       fill_in 'task_description', with: 'desc-new'
       fill_in 'task_due_date', with: '2025-03-01'
-      click_button 'Create'
+      click_button 'Proceed'
     end
     it 'Check the type of screen and the content of the task' do
       expect(page).to have_content('Details')
@@ -179,11 +179,11 @@ RSpec.describe 'Tasks', type: :system do
 
   describe 'Update a task' do
     before do
-      task = Task.create!(title: 'title', description: 'desc', due_date: '2024-01-01')
+      task = Task.create!(title: 'title', description: 'desc', due_date: '2024-01-01', user_id: user.id)
       visit edit_task_path(task)
       fill_in 'task_title', with: 'title-modified'
       fill_in 'task_description', with: 'desc-modified'
-      click_button 'Update'
+      click_button 'Proceed'
     end
 
     it 'Check the type of screen and the content of the task' do
@@ -195,7 +195,7 @@ RSpec.describe 'Tasks', type: :system do
 
   describe 'Delete a task' do
     before do
-      task = Task.create!(title: 'test1', description: 'desc1', due_date: '2024-01-01')
+      task = Task.create!(title: 'test1', description: 'desc1', due_date: '2024-01-01', user_id: user.id)
       visit tasks_path
     end
 
