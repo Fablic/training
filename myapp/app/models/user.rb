@@ -2,7 +2,7 @@
 
 class User < ApplicationRecord
   require 'bcrypt'
-  attr_accessor :password
+  attr_accessor :password, :password_confirmation
 
   has_many :tasks, dependent: :nullify
 
@@ -11,7 +11,7 @@ class User < ApplicationRecord
   validates :name, presence: true
   validates :email, presence: true, uniqueness: { case_sensitive: false }, format: { with: VALID_EMAIL_REGEX }
   validates :password, presence: true, length: { minimum: 6 }, confirmation: true, if: :password_required?
-
+  
   before_save :encrypt_password
   before_save { email.downcase! }
 
@@ -23,5 +23,9 @@ class User < ApplicationRecord
 
   def authenticate(submitted_password)
     BCrypt::Password.new(password_digest) == submitted_password
+  end
+
+  def password_required?
+    password_digest.blank? || password.present?
   end
 end
