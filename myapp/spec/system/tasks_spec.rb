@@ -154,7 +154,7 @@ RSpec.describe 'Tasks', type: :system do
       before do
         Task.create!(title: 'test1', description: 'desc1', due_date: '2024-01-01')
         visit tasks_path
-        click_link 'Edit'
+        click_button 'Update'
       end
       it 'Check the type of screen' do
         expect(page).to have_content('Edit Task')
@@ -168,7 +168,7 @@ RSpec.describe 'Tasks', type: :system do
       fill_in 'task_title', with: 'title-new'
       fill_in 'task_description', with: 'desc-new'
       fill_in 'task_due_date', with: '2025-03-01'
-      click_button 'Create'
+      click_button 'Proceed'
     end
     it 'Check the type of screen and the content of the task' do
       expect(page).to have_content('Details')
@@ -183,7 +183,7 @@ RSpec.describe 'Tasks', type: :system do
       visit edit_task_path(task)
       fill_in 'task_title', with: 'title-modified'
       fill_in 'task_description', with: 'desc-modified'
-      click_button 'Update'
+      click_button 'Proceed'
     end
 
     it 'Check the type of screen and the content of the task' do
