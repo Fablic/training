@@ -10,7 +10,7 @@ RSpec.describe Task, type: :model do
   end
 
   describe 'Validation' do
-    let(:task) {Task.create(title: 'title', due_date: Date.today)}
+    let(:task) { Task.create(title: 'title', due_date: Time.zone.today) }
 
     it 'All attributes are OK' do
       expect(task.valid?).to eq(true)
@@ -50,15 +50,14 @@ RSpec.describe Task, type: :model do
       task.priority = nil
       expect(task.valid?).to eq(false)
     end
-
   end
 
   describe 'Search' do
     before do
-      Task.create!(title: 'test1', description: 'desc1', due_date: '2024-01-01', updated_at: '2024-03-01', status: :open)
-      Task.create!(title: 'test2', description: 'desc2', due_date: '2024-03-01', updated_at: '2024-02-01', status: :in_progress)
-      Task.create!(title: 'test3', description: 'desc3', due_date: '2024-02-01', updated_at: '2024-01-01', status: :in_progress)
-      Task.create!(title: 'test11', description: 'desc3', due_date: '2024-02-01', updated_at: '2024-01-01',status: :in_progress)
+      Task.create!(title: 'test1', due_date: '2024-01-01', updated_at: '2024-03-01', status: :open)
+      Task.create!(title: 'test2', due_date: '2024-03-01', updated_at: '2024-02-01', status: :in_progress)
+      Task.create!(title: 'test3', due_date: '2024-02-01', updated_at: '2024-01-01', status: :in_progress)
+      Task.create!(title: 'test11', due_date: '2024-02-01', updated_at: '2024-01-01', status: :in_progress)
     end
 
     it 'search title, result is not empty' do
