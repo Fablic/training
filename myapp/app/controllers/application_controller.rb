@@ -10,16 +10,12 @@ class ApplicationController < ActionController::Base
     return if controller_name == 'sessions' && %w[new create].include?(action_name)
     return if controller_name == 'users' && %w[new create].include?(action_name)
 
-    return if logged_in?
+    return if current_user
 
     redirect_to login_url, alert: t('alerts.login_required')
   end
 
-  def logged_in?
-    session[:user_id].present?
-  end
-
   def current_user
-    @current_user ||= User.find(session[:user_id]) if session[:user_id]
+    @current_user ||= User.find_by(id: session[:user_id]) if session[:user_id]
   end
 end
