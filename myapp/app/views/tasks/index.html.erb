@@ -1,23 +1,18 @@
-<!-- Not implemented
+
 <h1>Search</h1>
-<form action="/search" method="get" accept-charset="UTF-8" >
-<%= form_with do |form| %>
-    <div><%= form.label :Title, "Title" %></div>
-    <div><%= form.text_field :title %></div>
-    <div><%= form.label :description, "Description" %></div>
-    <div><%= form.text_field :description %></div>
-    <div><%= form.label :status, "Status" %></div>
-
-
-    <div>
-    <%= form.check_box :status %>
-    <%= form.label :status, "open" %>
-    <%= form.check_box :status %>
-    <%= form.label :status, "closed" %>
-    </div>
-    <div><%= form.submit "Search" %></div>
+<%= form_with(url: tasks_path, method: :get, local: true) do %>
+  <div class="field">
+    <%= label_tag :title, "Title" %>
+    <%= text_field_tag :title, params[:title] %>
+  </div>
+  <div class="field">
+    <%= label_tag :status, "Status" %>
+    <%= select_tag :status, options_for_select([['All', '']] + Task.statuses.keys.map { |k| [k.humanize, k] }, params[:status]) %>
+  </div>
+  <div class="actions">
+    <%= submit_tag "Search" %>
+  </div>
 <% end %>
--->
 
 
 
@@ -37,10 +32,10 @@
     <th>Description</th>
     <th>Priority</th>
     <th>Labels</th>
-    <th>DueDate</th>
+    <th><%= sortable "due_date", "DueDate" %></th></th>
     <th>Status</th>
-    <th>Created</th>
-    <th>Updated</th>
+    <th><%= sortable "created_at", "Created" %></th>
+    <th><%= sortable "updated_at", "Updated" %></th>
     <th>-</th>
     <th>-</th>
   </tr>
