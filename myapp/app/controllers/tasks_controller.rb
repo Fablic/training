@@ -11,13 +11,13 @@ class TasksController < ApplicationController
   def index
     sort_by = VALID_SORT_COLUMNS.include?(params[:sort_by]) ? params[:sort_by] : 'created_at'
     sort_direction = VALID_SORT_DIRECTIONS.include?(params[:sort_direction]) ? params[:sort_direction] : 'asc'
-    
+
     @tasks = current_user.tasks.order("#{sort_by} #{sort_direction}")
-  
+
     @tasks = @tasks.where('title LIKE ?', "%#{params[:title]}%") if params[:title].present?
-  
+
     @tasks = @tasks.where(status: params[:status]) if params[:status].present?
-  
+
     @tasks = @tasks.page(params[:page]).per(12)
   end  
 
