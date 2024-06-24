@@ -4,11 +4,14 @@ RSpec.describe 'Tasks', type: :system do # rubocop:disable Metrics/BlockLength
   before do
     @user1 = create(:user, username: 'User1', password: 'password1')
     @user2 = create(:user, username: 'User2', password: 'password1')
+    @label1 = create(:label, name: 'Label1')
+    @label2 = create(:label, name: 'Label2')
     visit login_path
     fill_in I18n.t('helpers.label.user.username'), with: 'User1'
     fill_in I18n.t('helpers.label.user.password'), with: 'password1'
     click_button I18n.t('views.common.login')
   end
+
   describe 'Tasklist' do
     shared_examples 'Checking component' do
       it 'displays common components' do
@@ -23,6 +26,11 @@ RSpec.describe 'Tasks', type: :system do # rubocop:disable Metrics/BlockLength
                                       I18n.t('activerecord.attributes.task.status.not_started'),
                                       I18n.t('activerecord.attributes.task.status.in_progress'),
                                       I18n.t('activerecord.attributes.task.status.completed')
+                                    ])
+        expect(page).to have_select('label_id', options: [
+                                      I18n.t('views.common.all_labels'),
+                                      @label1.name,
+                                      @label2.name
                                     ])
       end
     end
@@ -40,10 +48,10 @@ RSpec.describe 'Tasks', type: :system do # rubocop:disable Metrics/BlockLength
 
     context 'When any tasks exist' do
       before do
-        @task1 = create(:task, title: 'ryu title1', details: 'ryu details1', created_at: 1.day.ago, user: @user1)
-        @task2 = create(:task, title: 'ryu title2', details: 'ryu details2', created_at: 2.days.ago, user: @user1)
-        @task3 = create(:task, title: 'ryu title3', details: 'ryu details3', created_at: Time.now, user: @user1)
-        @task4 = create(:task, title: 'ryu title3', details: 'ryu details3', created_at: Time.now, user: @user2)
+        @task1 = create(:task, title: 'ryu title1', details: 'ryu details1', created_at: 1.day.ago, user: @user1, labels: [@label1])
+        @task2 = create(:task, title: 'ryu title2', details: 'ryu details2', created_at: 2.days.ago, user: @user1, labels: [@label2])
+        @task3 = create(:task, title: 'ryu title3', details: 'ryu details3', created_at: Time.now, user: @user1, labels: [@label1, @label2])
+        @task4 = create(:task, title: 'ryu title4', details: 'ryu details4', created_at: Time.now, user: @user2)
         visit tasks_path
       end
 
@@ -60,6 +68,10 @@ RSpec.describe 'Tasks', type: :system do # rubocop:disable Metrics/BlockLength
         expect(page).to have_selector('tbody tr:nth-child(2)', text: @user1.username)
         expect(page).to have_selector('tbody tr:nth-child(3)', text: @user1.username)
         expect(page).not_to have_content('User2 Task')
+        expect(find('tbody tr:nth-child(1) label')['data-bs-title']).to include(@label1.name)
+        expect(find('tbody tr:nth-child(1) label')['data-bs-title']).to include(@label2.name)
+        expect(find('tbody tr:nth-child(2) label')['data-bs-title']).to include(@label1.name)
+        expect(find('tbody tr:nth-child(3) label')['data-bs-title']).to include(@label2.name)
       end
     end
   end
@@ -98,6 +110,8 @@ RSpec.describe 'Tasks', type: :system do # rubocop:disable Metrics/BlockLength
         visit new_task_path
         fill_in I18n.t('helpers.label.task.title'), with: valid_params[:title]
         fill_in I18n.t('helpers.label.task.details'), with: valid_params[:details]
+        check @label1.name
+        check @label2.name
         click_button I18n.t('helpers.submit.create')
       end
 
@@ -105,6 +119,7 @@ RSpec.describe 'Tasks', type: :system do # rubocop:disable Metrics/BlockLength
         expect(Task.count).to eq(1)
         expect(Task.last.title).to eq(valid_params[:title])
         expect(Task.last.details).to eq(valid_params[:details])
+        expect(Task.last.labels).to include(@label1, @label2)
         expect(page).to have_selector('h1', text: I18n.t('views.tasks.index.title'))
         expect(page).to have_content(I18n.t('flash.common.success', model: I18n.t('actions.create')))
       end
@@ -128,7 +143,7 @@ RSpec.describe 'Tasks', type: :system do # rubocop:disable Metrics/BlockLength
   end
 
   describe 'Show task' do
-    let!(:task) { create(:task, title: 'ryu title3', details: 'ryu details3', user: @user1) }
+    let!(:task) { create(:task, title: 'ryu title3', details: 'ryu details3', user: @user1, labels: [@label1, @label2]) }
 
     context 'Initial display' do
       before do
@@ -141,6 +156,8 @@ RSpec.describe 'Tasks', type: :system do # rubocop:disable Metrics/BlockLength
         expect(page).to have_field(I18n.t('helpers.label.task.details'), with: task.details, readonly: true)
         expect(page).to have_link(I18n.t('views.common.cancel'))
         expect(page).to have_link(I18n.t('views.common.edit'))
+        expect(page).to have_selector('label', text: @label1.name)
+        expect(page).to have_selector('label', text: @label2.name)
       end
     end
 
@@ -170,7 +187,7 @@ RSpec.describe 'Tasks', type: :system do # rubocop:disable Metrics/BlockLength
   end
 
   describe 'Edit task' do
-    let!(:task) { create(:task, title: 'ryu title3', details: 'ryu details3', user: @user1) }
+    let!(:task) { create(:task, title: 'ryu title3', details: 'ryu details3', user: @user1, labels: [@label1]) }
 
     context 'Initial display' do
       before do
@@ -183,6 +200,8 @@ RSpec.describe 'Tasks', type: :system do # rubocop:disable Metrics/BlockLength
         expect(page).to have_field(I18n.t('helpers.label.task.details'), with: task.details, readonly: false)
         expect(page).to have_link(I18n.t('views.common.cancel'))
         expect(page).to have_button(I18n.t('helpers.submit.update'))
+        expect(page).to have_checked_field(@label1.name)
+        expect(page).to have_unchecked_field(@label2.name)
       end
     end
 
@@ -216,6 +235,7 @@ RSpec.describe 'Tasks', type: :system do # rubocop:disable Metrics/BlockLength
         visit edit_task_path(task)
         fill_in I18n.t('helpers.label.task.title'), with: valid_params[:title]
         fill_in I18n.t('helpers.label.task.details'), with: valid_params[:details]
+        check @label2.name
         click_button I18n.t('helpers.submit.update')
       end
 
@@ -223,6 +243,7 @@ RSpec.describe 'Tasks', type: :system do # rubocop:disable Metrics/BlockLength
         expect(Task.count).to eq(1)
         expect(Task.last.title).to eq(valid_params[:title])
         expect(Task.last.details).to eq(valid_params[:details])
+        expect(Task.last.labels).to include(@label1, @label2)
         expect(page).to have_selector('h1', text: I18n.t('views.tasks.index.title'))
         expect(page).to have_content(I18n.t('flash.common.success', model: I18n.t('actions.update')))
       end
@@ -246,12 +267,12 @@ RSpec.describe 'Tasks', type: :system do # rubocop:disable Metrics/BlockLength
   end
 
   describe 'Test for Search' do
-    let!(:task1) { create(:task, title: 'Task@1', status: :not_started, user: @user1) }
-    let!(:task2) { create(:task, title: 'Task%2', status: :in_progress, user: @user1) }
-    let!(:task3) { create(:task, title: 'Task-3', status: :completed, user: @user1) }
+    let!(:task1) { create(:task, title: 'Task@1', status: :not_started, user: @user1, labels: [@label1]) }
+    let!(:task2) { create(:task, title: 'Task%2', status: :in_progress, user: @user1, labels: [@label2]) }
+    let!(:task3) { create(:task, title: 'Task-3', status: :completed, user: @user1, labels: [@label1, @label2]) }
 
     context 'Case Search button' do
-      it 'has the hitted tasks witg no condition ' do
+      it 'has the hitted tasks with no condition' do
         visit tasks_path
         click_button I18n.t('views.common.search')
 
@@ -260,7 +281,7 @@ RSpec.describe 'Tasks', type: :system do # rubocop:disable Metrics/BlockLength
         expect(page).to have_content(task3.title)
       end
 
-      it 'has the hitted tasks only with Status condition ' do
+      it 'has the hitted tasks only with Status condition' do
         visit tasks_path
         select I18n.t('activerecord.attributes.task.status.in_progress'), from: 'status'
         click_button I18n.t('views.common.search')
@@ -280,7 +301,7 @@ RSpec.describe 'Tasks', type: :system do # rubocop:disable Metrics/BlockLength
         expect(page).not_to have_content(task2.title)
       end
 
-      it 'has the hitted tasks with both' do
+      it 'has the hitted tasks with Title + Status' do
         visit tasks_path
         fill_in 'title', with: 'Task'
         select I18n.t('activerecord.attributes.task.status.not_started'), from: 'status'
@@ -291,10 +312,22 @@ RSpec.describe 'Tasks', type: :system do # rubocop:disable Metrics/BlockLength
         expect(page).not_to have_content(task3.title)
       end
 
-      it 'has the hitted tasks with both' do
+      it 'has the hitted tasks with both Title + Label' do
+        visit tasks_path
+        fill_in 'title', with: 'Task@'
+        select @label1.name, from: 'label_id'
+        click_button I18n.t('views.common.search')
+
+        expect(page).to have_content(task1.title)
+        expect(page).not_to have_content(task2.title)
+        expect(page).not_to have_content(task3.title)
+      end
+
+      it 'has the hitted tasks with both Title + Label + status' do
         visit tasks_path
         fill_in 'title', with: 'Task@'
         select I18n.t('activerecord.attributes.task.status.not_started'), from: 'status'
+        select @label1.name, from: 'label_id'
         click_button I18n.t('views.common.search')
 
         expect(page).to have_content(task1.title)

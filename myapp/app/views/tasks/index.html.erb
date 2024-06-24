@@ -13,6 +13,9 @@
           <%= select_tag :status, options_for_select(Task.statuses.keys.map { |status| [t(%(activerecord.attributes.task.status.#{status})), status] }, params[:status]), prompt: t('views.common.all_status'), class: "form-select" %>
         </div>
         <div class="col">
+          <%= select_tag :label_id, options_from_collection_for_select(Label.all, :id, :name, params[:label_id]), prompt: t('views.common.all_labels'), class: "form-select"  %>
+        </div>
+        <div class="col">
           <%= submit_tag t('views.common.search'), class: "btn btn-outline-primary" %>
           <%= link_to t('views.common.reset'), tasks_path, class: "btn btn-outline-secondary" %>
         </div>
@@ -38,7 +41,14 @@
               <td class="<%= task.user ? 'text-success' : 'text-warning' %>">
                 <%= task.user&.username || 'No assigned' %>
               </td>
-              <td></td>
+              <td>
+                <% if task.labels.present? %>
+                  <label class="badge text-bg-info" data-bs-toggle="tooltip" data-bs-html="true" data-bs-placement="right"
+                  data-bs-title="<%= task.labels.map { |label| %(<span class='badge bg-secondary'>#{label.name}</span>) }.join(' ') %>">
+                    ^
+                  </label>
+                <% end %>
+              </td>
               <td><%= task.due_date&.strftime('%Y/%m/%d')  %></td>
               <td><%= t(%(activerecord.attributes.task.status.#{task.status})) %></td>
               <td><%= t(%(activerecord.attributes.task.priority.#{task.priority})) %></td>

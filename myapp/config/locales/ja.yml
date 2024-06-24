@@ -90,6 +90,7 @@ ja:
       confirm: "本当ですか？"
       reset: "初期化"
       all_status: "全てのステータス"
+      all_labels: "全てのラベル"
       welcome: "ようこそ %{username}さん"
     pagination:
       first:      "&laquo;"

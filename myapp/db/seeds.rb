@@ -6,9 +6,20 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
-user1 = User.create!(username: 'User1', password_digest: 'password1', role: :admin)
-user2 = User.create!(username: 'User2', password_digest: 'password2', role: :member)
+labels = Label.create!([
+                         { name: 'bug' },
+                         { name: 'duplicate' },
+                         { name: 'enhancement' },
+                         { name: 'good first issue' },
+                         { name: 'help wanted' },
+                         { name: 'invalid' },
+                         { name: 'question' },
+                         { name: 'wontfix' }
+                       ])
 
-Task.create!(title: 'Title1', user_id: user1.id, details: 'Details1')
-Task.create!(title: 'Title2', user_id: user2.id, details: 'Details2')
-Task.create!(title: 'Title3', user_id: nil, details: 'Details3')
+user1 = User.create!(username: 'User1', password: 'password1', role: :admin)
+user2 = User.create!(username: 'User2', password: 'password2', role: :member)
+
+Task.create!(title: 'Title1', user: user1, details: 'Details1', labels: labels[1, 2])
+Task.create!(title: 'Title2', user: user2, details: 'Details2')
+Task.create!(title: 'Title3', user: nil, details: 'Details3', labels:)
