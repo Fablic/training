@@ -19,7 +19,7 @@ class TasksController < ApplicationController
     @tasks = @tasks.where(status: params[:status]) if params[:status].present?
 
     @tasks = @tasks.page(params[:page]).per(12)
-  end  
+  end
 
   def show
     # @task is set by the before_action :set_task
@@ -51,7 +51,7 @@ class TasksController < ApplicationController
     else
       render :edit
     end
-  end  
+  end
 
   def destroy
     @task.destroy

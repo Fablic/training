@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
-  before_action :require_login, except: [:login_actions, :signup_actions]
+  before_action :require_login, except: %i[login_actions signup_actions]
   helper_method :current_user
 
   private

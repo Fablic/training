@@ -40,11 +40,16 @@ RSpec.configure do |config|
   end
 
   config.before(:each) do
-    Bullet.start_request if defined?(Bullet)
+    if defined?(Bullet)
+      Bullet.start_request
+      Bullet.enable = true
+      Bullet.bullet_logger = true
+      Bullet.raise = true # raise an error if n+1 query occurs
+      Bullet.perform_out_of_channel_notifications = true
+    end
   end
 
   config.after(:each) do
-    Bullet.perform_out_of_channel_notifications if Bullet.notification?
     Bullet.end_request if defined?(Bullet)
   end
 
