@@ -143,7 +143,7 @@ RSpec.describe 'Tasks', type: :system do
     context 'Display the new creation screen' do
       before do
         visit tasks_path
-        click_link 'Create task'
+        click_button 'Create'
       end
       it 'Check the type of screen' do
         expect(page).to have_content('Create Task')

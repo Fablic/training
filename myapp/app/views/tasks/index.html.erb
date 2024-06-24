@@ -10,7 +10,7 @@
     <%= label_tag :status, "Status", class:'col-sm-2 col-form-label' %>
     <div class="col"><%= select_tag :status, options_for_select([['All', '']] + Task.statuses.keys.map { |k| [k.humanize, k] }, params[:status]), class:'form-control' %></div>
   </div>
-  <%= submit_tag "Search", class:'btn btn-primary' %>
+  <%= submit_tag "Search", class:'btn btn-sm btn-success' %>
 <% end %>
 
 
@@ -50,7 +50,7 @@
       <td><%= task.updated_at %></td>
       <td>
         <div class="d-grid gap-2 d-md-flex">
-        <%= button_to "Update", edit_task_path(task), method: :get, class:'btn btn-sm btn-dark'%>
+        <%= button_to "Update", edit_task_path(task), method: :get, class:'btn btn-sm btn-primary'%>
         <%= button_to "Delete", task_path(task), method: :delete, form: { data: { turbo_confirm: "Really delete?" }}, class:'btn btn-sm btn-danger'%>
         </div>
       </td>
@@ -60,4 +60,4 @@
 </table>
 
 <%= paginate @tasks, params: { search:params[:search], status: params[:status] }, theme: 'bootstrap-5' %>
-<%= link_to "Create task", "/tasks/new" %>
+<%= button_to "Create", "/tasks/new" , method: :get, class:'btn btn-sm btn-primary'%>
