@@ -23,4 +23,3 @@ class Task < ApplicationRecord # rubocop:disable Style/Documentation
   end
 
 end
-
