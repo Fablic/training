@@ -2,8 +2,6 @@
 
 module Admin
   class AdminController < ApplicationController
-    # 在这里添加所有Admin命名空间下的控制器共通的逻辑
-    # 例如，权限检查：
     before_action :check_admin
 
     private
