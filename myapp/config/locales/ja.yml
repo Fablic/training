@@ -12,4 +12,11 @@ ja:
             deadline:
               past_deadline: "は過去の日付に設定できません。"
               out_of_range: "日付が範囲外です。"
-
+  alerts:
+    login_required: "ログインしてください。"
+    login_success: "ログイン成功！"
+    login_failure: "ログイン失败。"
+    logout_success: "ログアウトしました。"
+    task_created: "タスクが正常に作成されました。"
+    task_updated: "タスクが正常に更新されました。"
+    task_deleted: "タスクが正常に削除されました。"

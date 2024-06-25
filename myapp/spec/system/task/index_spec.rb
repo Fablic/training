@@ -71,13 +71,13 @@ RSpec.describe 'Task management', type: :system do
     end
 
     visit tasks_path(page: 1)
-    expect(page).to have_content("Task 30")
-    expect(page).to have_content("Task 19")
-    expect(page).not_to have_content("Task 18")
+    expect(page).to have_content('Task 30')
+    expect(page).to have_content('Task 19')
+    expect(page).not_to have_content('Task 18')
 
     visit tasks_path(page: 2)
-    expect(page).to have_content("Task 18")
-    expect(page).to have_content("Task 7")
-    expect(page).not_to have_content("Task 6")
+    expect(page).to have_content('Task 18')
+    expect(page).to have_content('Task 7')
+    expect(page).not_to have_content('Task 6')
   end
 end

@@ -10,7 +10,8 @@ class TasksController < ApplicationController
   def index
     sort_by = VALID_SORT_COLUMNS.include?(params[:sort_by]) ? params[:sort_by] : 'created_at'
     sort_direction = VALID_SORT_DIRECTIONS.include?(params[:sort_direction]) ? params[:sort_direction] : 'asc'
-    @tasks = Task.order("#{sort_by} #{sort_direction}")
+
+    @tasks = current_user.tasks.order("#{sort_by} #{sort_direction}")
 
     @tasks = @tasks.where('title LIKE ?', "%#{params[:title]}%") if params[:title].present?
 
@@ -28,9 +29,9 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.new(task_params)
+    @task = current_user.tasks.build(task_params)
     if @task.save
-      flash[:notice] = 'Task was successfully created.'
+      flash[:notice] = t('alerts.task_created')
       redirect_to @task
     else
       render :new
@@ -42,8 +43,9 @@ class TasksController < ApplicationController
   end
 
   def update
+    @task = current_user.tasks.find(params[:id])
     if @task.update(task_params)
-      flash[:notice] = 'Task was successfully updated.'
+      flash[:notice] = t('alerts.task_updated')
       redirect_to @task
     else
       render :edit
@@ -52,7 +54,7 @@ class TasksController < ApplicationController
 
   def destroy
     @task.destroy
-    flash[:notice] = 'Task was successfully deleted.'
+    flash[:notice] = t('alerts.task_deleted')
     redirect_to tasks_path
   end
 
