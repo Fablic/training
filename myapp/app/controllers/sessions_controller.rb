@@ -2,7 +2,6 @@
 
 # app/controllers/sessions_controller.rb
 class SessionsController < ApplicationController
-  # skip_before_action :require_admin, only: [:new, :create]
   def new; end
 
   def create
