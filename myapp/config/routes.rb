@@ -9,6 +9,8 @@ Rails.application.routes.draw do
 
   namespace :admin do
     root 'dashboard#index'
-    resources :users
+    resources :users do
+      resources :tasks, only: %i[index exit update destory]
+    end
   end
 end
