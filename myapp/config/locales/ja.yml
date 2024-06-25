@@ -21,3 +21,9 @@ ja:
     task_updated: "タスクが正常に更新されました。"
     task_deleted: "タスクが正常に削除されました。"
     admin_required: '管理者権限が必要です。'
+    user_not_deleted: 'ユーザを削除できませんでした。'
+    user_update_failed: 'ユーザ情報の更新に失敗しました。'
+    last_admin_cannot_be_deleted: '最後の管理者は削除できません。'
+  notices:
+    user_deleted: 'ユーザが削除されました。'
+    user_updated: 'ユーザ情報が更新されました。'
