@@ -38,51 +38,27 @@ RSpec.describe 'Tasks', type: :system do
       it 'Default order (created_at desc)' do
         visit tasks_path
         within('table#result') do
-          first_row = all('tr')[1]
-          first_title = first_row.all('td')[TD_IDX_TITLE]
-          expect(first_title.text).to eq('test3')
-
-          second_row = all('tr')[2]
-          second_title = second_row.all('td')[TD_IDX_TITLE]
-          expect(second_title.text).to eq('test2')
-
-          third_row = all('tr')[3]
-          third_title = third_row.all('td')[TD_IDX_TITLE]
-          expect(third_title.text).to eq('test1')
+          expect_title(1, 'test3')
+          expect_title(2, 'test2')
+          expect_title(3, 'test1')
         end
       end
 
       it 'due_date asc' do
         visit tasks_path(sort: 'due_date', direction: 'asc')
         within('table#result') do
-          first_row = all('tr')[1]
-          first_title = first_row.all('td')[TD_IDX_TITLE]
-          expect(first_title.text).to eq('test1')
-
-          second_row = all('tr')[2]
-          second_title = second_row.all('td')[TD_IDX_TITLE]
-          expect(second_title.text).to eq('test3')
-
-          third_row = all('tr')[3]
-          third_title = third_row.all('td')[TD_IDX_TITLE]
-          expect(third_title.text).to eq('test2')
+          expect_title(1, 'test1')
+          expect_title(2, 'test3')
+          expect_title(3, 'test2')
         end
       end
 
       it 'update_date asc' do
         visit tasks_path(sort: 'updated_at', direction: 'asc')
         within('table#result') do
-          first_row = all('tr')[1]
-          first_title = first_row.all('td')[TD_IDX_TITLE]
-          expect(first_title.text).to eq('test3')
-
-          second_row = all('tr')[2]
-          second_title = second_row.all('td')[TD_IDX_TITLE]
-          expect(second_title.text).to eq('test2')
-
-          third_row = all('tr')[3]
-          third_title = third_row.all('td')[TD_IDX_TITLE]
-          expect(third_title.text).to eq('test1')
+          expect_title(1, 'test3')
+          expect_title(2, 'test2')
+          expect_title(3, 'test1')
         end
       end
     end
@@ -97,9 +73,7 @@ RSpec.describe 'Tasks', type: :system do
       it 'When searching by title, if results are found' do
         visit tasks_path(title: 'title3')
         within('table#result') do
-          row = all('tr')[1]
-          title = row.all('td')[TD_IDX_TITLE]
-          expect(title.text).to eq('title3')
+          expect_title(1, 'title3')
         end
       end
 
@@ -114,9 +88,7 @@ RSpec.describe 'Tasks', type: :system do
       it 'When searching by status, if results are found' do
         visit tasks_path(status: :in_progress)
         within('table#result') do
-          row = all('tr')[1]
-          title = row.all('td')[TD_IDX_TITLE]
-          expect(title.text).to eq('title12')
+          expect_title(1, 'title12')
         end
       end
 
@@ -130,10 +102,151 @@ RSpec.describe 'Tasks', type: :system do
 
       it 'When searching by title and status, if results are not found' do
         visit tasks_path(title: 'title1', status: :open)
-        within('table#result') do
-          row = all('tr')[1]
-          title = row.all('td')[TD_IDX_TITLE]
-          expect(title.text).to eq('title1')
+        within 'table#result' do
+          expect_title(1, 'title1')
+        end
+      end
+    end
+
+    context 'Pagination' do
+      before do
+        Task.create!(title: 'title1', description: 'desc1', due_date: '2024-01-01', status: :open)
+        Task.create!(title: 'title2', description: 'desc2', due_date: '2024-02-01', status: :in_progress)
+        Task.create!(title: 'title3', description: 'desc3', due_date: '2024-03-01', status: :closed)
+        Task.create!(title: 'title4', description: 'desc4', due_date: '2024-04-01', status: :open)
+        Task.create!(title: 'title5', description: 'desc5', due_date: '2024-05-01', status: :in_progress)
+        Task.create!(title: 'title6', description: 'desc6', due_date: '2024-06-01', status: :closed)
+        Task.create!(title: 'title7', description: 'desc7', due_date: '2024-07-01', status: :open)
+        Task.create!(title: 'title8', description: 'desc8', due_date: '2024-08-01', status: :in_progress)
+        Task.create!(title: 'title9', description: 'desc9', due_date: '2024-09-01', status: :closed)
+        Task.create!(title: 'title10', description: 'desc10', due_date: '2024-10-01', status: :open)
+        Task.create!(title: 'title11', description: 'desc11', due_date: '2024-11-01', status: :in_progress)
+        Task.create!(title: 'title12', description: 'desc12', due_date: '2024-12-01', status: :closed)
+        visit tasks_path
+      end
+
+      it 'first page ' do
+        within 'table#result' do
+          expect_title(1, 'title12')
+          expect_title(5, 'title8')
+        end
+
+        within 'nav' do
+          expect(page).to have_selector('ul.pagination')
+          #  first is link
+          expect(page).to have_no_selector('li.page-item a.page-link', text: 'First')
+          #  previous is link
+          expect(page).to have_no_selector('li.page-item a.page-link', text: 'Previous')
+          # page 1 is active
+          expect(page).to have_selector('li.page-item.active a.page-link', text: '1')
+          # page 2 is link
+          expect(page).to have_selector('li.page-item a.page-link', text: '2')
+          # page 3 is link
+          expect(page).to have_selector('li.page-item a.page-link', text: '3')
+          #  next is link
+          expect(page).to have_selector('li.page-item a.page-link', text: 'Next')
+          #  last is link
+          expect(page).to have_selector('li.page-item a.page-link', text: 'Last')
+        end
+      end
+
+      it 'second page ' do
+        within 'nav' do
+          click_link '2'
+        end
+
+        within 'table#result' do
+          expect_title(1, 'title7')
+          expect_title(5, 'title3')
+        end
+
+        within 'nav' do
+          expect(page).to have_selector('ul.pagination')
+          #  first is link
+          expect(page).to have_selector('li.page-item a.page-link', text: 'First')
+          #  previous is link
+          expect(page).to have_selector('li.page-item a.page-link', text: 'Previous')
+          # page 1 is active
+          expect(page).to have_selector('li.page-item a.page-link', text: '1')
+          # page 2 is link
+          expect(page).to have_selector('li.page-item.active a.page-link', text: '2')
+          # page 3 is link
+          expect(page).to have_selector('li.page-item a.page-link', text: '3')
+          #  next is link
+          expect(page).to have_selector('li.page-item a.page-link', text: 'Next')
+          #  last is link
+          expect(page).to have_selector('li.page-item a.page-link', text: 'Last')
+        end
+      end
+
+      it 'third page ' do
+        within 'nav' do
+          click_link '3'
+        end
+        within 'table#result' do
+          expect_title(1, 'title2')
+          expect_title(2, 'title1')
+        end
+        within 'nav' do
+          expect(page).to have_selector('ul.pagination')
+          #  first is link
+          expect(page).to have_selector('li.page-item a.page-link', text: 'First')
+          #  previous is link
+          expect(page).to have_selector('li.page-item a.page-link', text: 'Previous')
+          # page 1 is active
+          expect(page).to have_selector('li.page-item a.page-link', text: '1')
+          # page 2 is link
+          expect(page).to have_selector('li.page-item a.page-link', text: '2')
+          # page 3 is link
+          expect(page).to have_selector('li.page-item.active a.page-link', text: '3')
+          #  next is link
+          expect(page).to have_no_selector('li.page-item a.page-link', text: 'Next')
+          #  last is link
+          expect(page).to have_no_selector('li.page-item a.page-link', text: 'Last')
+        end
+      end
+
+      it 'Click First' do
+        within 'nav' do
+          click_link '2'
+          click_link 'First'
+        end
+        within 'table#result' do
+          expect_title(1, 'title12')
+          expect_title(5, 'title8')
+        end
+      end
+
+      it 'Click Previous' do
+        within 'nav' do
+          click_link '2'
+          click_link 'Previous'
+        end
+        within 'table#result' do
+          expect_title(1, 'title12')
+          expect_title(5, 'title8')
+        end
+      end
+
+      it 'Click Next' do
+        within 'nav' do
+          click_link '2'
+          click_link 'Next'
+        end
+        within 'table#result' do
+          expect_title(1, 'title2')
+          expect_title(2, 'title1')
+        end
+      end
+
+      it 'Click Last' do
+        within 'nav' do
+          click_link '2'
+          click_link 'Last'
+        end
+        within 'table#result' do
+          expect_title(1, 'title2')
+          expect_title(2, 'title1')
         end
       end
     end
@@ -208,5 +321,11 @@ RSpec.describe 'Tasks', type: :system do
       expect(page).not_to have_content('test1')
       expect(page).to have_content(I18n.t('tasks.no_tasks'))
     end
+  end
+
+  def expect_title(index, title)
+    row = all('tr')[index]
+    value = row.all('td')[TD_IDX_TITLE]
+    expect(value.text).to eq(title)
   end
 end
