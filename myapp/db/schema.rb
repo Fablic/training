@@ -10,21 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_06_14_051629) do
+ActiveRecord::Schema.define(version: 2024_05_29_071947) do
 
   create_table "labels", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "task_label_relations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci", force: :cascade do |t|
-    t.bigint "task_id", null: false
-    t.bigint "label_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["label_id"], name: "index_task_label_relations_on_label_id"
-    t.index ["task_id"], name: "index_task_label_relations_on_task_id"
   end
 
   create_table "tasks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci", force: :cascade do |t|
@@ -38,15 +29,6 @@ ActiveRecord::Schema.define(version: 2024_06_14_051629) do
     t.index ["status"], name: "index_tasks_on_status"
   end
 
-  create_table "user_task_relations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "task_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["task_id"], name: "index_user_task_relations_on_task_id"
-    t.index ["user_id"], name: "index_user_task_relations_on_user_id"
-  end
-
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "password_digest", null: false
@@ -57,8 +39,4 @@ ActiveRecord::Schema.define(version: 2024_06_14_051629) do
     t.index ["name"], name: "index_users_on_name"
   end
 
-  add_foreign_key "task_label_relations", "labels"
-  add_foreign_key "task_label_relations", "tasks"
-  add_foreign_key "user_task_relations", "tasks"
-  add_foreign_key "user_task_relations", "users"
 end
