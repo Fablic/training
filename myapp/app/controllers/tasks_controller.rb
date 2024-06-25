@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class TasksController < ApplicationController
-  before_action :require_login
   before_action :set_task, only: %i[show edit update destroy]
   before_action :require_admin, except: %i[index show]
 
@@ -33,7 +32,7 @@ class TasksController < ApplicationController
   def create
     @task = current_user.tasks.build(task_params)
     if @task.save
-      flash[:notice] = 'Task was successfully created.'
+      flash[:notice] = t('alerts.task_created')
       redirect_to @task
     else
       render :new
@@ -47,7 +46,7 @@ class TasksController < ApplicationController
   def update
     @task = current_user.tasks.find(params[:id])
     if @task.update(task_params)
-      flash[:notice] = 'Task was successfully updated.'
+      flash[:notice] = t('alerts.task_updated')
       redirect_to @task
     else
       render :edit
@@ -56,7 +55,7 @@ class TasksController < ApplicationController
 
   def destroy
     @task.destroy
-    flash[:notice] = 'Task was successfully deleted.'
+    flash[:notice] = t('alerts.task_deleted')
     redirect_to tasks_path
   end
 

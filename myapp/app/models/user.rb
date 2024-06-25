@@ -4,11 +4,13 @@ class User < ApplicationRecord
   require 'bcrypt'
   attr_accessor :password, :password_confirmation
 
-  has_many :tasks, dependent: :nullify
+  has_many :tasks
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i.freeze
 
-  validates :name, presence: true, length: { minimum: 1 }
+  VALID_NAME_REGEX = /\A[a-zA-Z0-9]+\z/.freeze
+
+  validates :name, presence: true, length: { minimum: 1 }, format: { with: VALID_NAME_REGEX }
   validates :email, presence: true, uniqueness: { case_sensitive: false }, format: { with: VALID_EMAIL_REGEX }
   validates :password, presence: true, length: { minimum: 6 }, confirmation: true, if: :password_required?
 
