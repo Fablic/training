@@ -41,6 +41,9 @@ gem 'sassc-rails'
 gem 'bootstrap5-kaminari-views'
 gem 'kaminari'
 
+# N+1
+gem 'bullet'
+
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 

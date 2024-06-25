@@ -22,8 +22,8 @@ class TasksController < ApplicationController # rubocop:disable Style/Documentat
   end
 
   def create
-    @task = Task.new(task_params)
     user = User.take
+    @task = Task.new(task_params)
     @task.user_id = user.id
     if @task.save
       flash[:info] = I18n.t('tasks.create_success')

@@ -197,11 +197,7 @@ RSpec.describe 'Tasks', type: :system do
 
   describe 'Delete a task' do
     before do
-<<<<<<< HEAD
-      task = Task.create!(title: 'test1', description: 'desc1', due_date: '2024-01-01', user_id: user.id)
-=======
-      Task.create!(title: 'test1', description: 'desc1', due_date: '2024-01-01')
->>>>>>> shinya-uchiamki-step15
+      Task.create!(title: 'test1', description: 'desc1', due_date: '2024-01-01', user_id: user.id)
       visit tasks_path
     end
 
