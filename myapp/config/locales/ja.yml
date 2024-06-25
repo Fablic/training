@@ -20,3 +20,4 @@ ja:
     task_created: "タスクが正常に作成されました。"
     task_updated: "タスクが正常に更新されました。"
     task_deleted: "タスクが正常に削除されました。"
+    admin_required: '管理者権限が必要です。'

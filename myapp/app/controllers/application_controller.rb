@@ -21,7 +21,7 @@ class ApplicationController < ActionController::Base
   def require_admin
     return if current_user&.admin?
 
-    flash[:alert] = '管理者権限が必要です。'
+    flash[:alert] = t('alerts.admin_required')
     redirect_to root_path
   end
 end
