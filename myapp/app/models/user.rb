@@ -28,4 +28,8 @@ class User < ApplicationRecord
   def password_required?
     password_digest.blank? || password.present?
   end
+
+  def admin?
+    admin
+  end
 end

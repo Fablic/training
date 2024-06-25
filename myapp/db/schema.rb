@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_240_617_094_636) do
+ActiveRecord::Schema.define(version: 20_240_624_094_454) do
   create_table 'tasks', options: 'ENGINE=InnoDB DEFAULT CHARSET=utf8mb4', force: :cascade do |t|
     t.string 'title', limit: 50, null: false
     t.string 'description', limit: 500
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 20_240_617_094_636) do
     t.string 'password_digest'
     t.datetime 'created_at', precision: 6, null: false
     t.datetime 'updated_at', precision: 6, null: false
+    t.boolean 'admin', default: false
   end
 
   add_foreign_key 'tasks', 'users'

@@ -12,19 +12,39 @@
   </head>
 
   <body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">YourAppName</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="/">Home</a>
+          </li>
+          <% if current_user&.admin? %>
+            <li class="nav-item">
+              <a class="nav-link" href="/admin/users">ユーザ管理</a>
+            </li>
+            <!-- 其他管理员专用链接也可以这样添加 -->
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
     <% if flash[:notice] %>
-      <div class="notice"><%= flash[:notice] %></div>
+      <div class="alert alert-success" role="alert"><%= flash[:notice] %></div>
     <% end %>
     <% if flash[:alert] %>
-      <div class="alert"><%= flash[:alert] %></div>
+      <div class="alert alert-danger" role="alert"><%= flash[:alert] %></div>
     <% end %>
 
-    <% if session[:user_id] %>
-      <%= link_to 'ログアウト', logout_path, method: :delete %>
-    <% else %>
-      <%= link_to 'ログイン', login_path %>
-    <% end %>
-
-    <%= yield %>
+    <div class="container mt-3">
+      <%= yield %>
+    </div>
+    <!-- Bootstrap JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-aS3MGqWpZ0MaFKLtOw3lJvJ32nWMTZ7EBx0u8F3FQKwwj6lzzd25BRxOzVX1R0Rb" crossorigin="anonymous"></script>
   </body>
 </html>

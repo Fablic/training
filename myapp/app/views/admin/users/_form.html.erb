@@ -1,0 +1,34 @@
+<%= form_with(model: [:admin, user], local: true) do |form| %>
+    <% if user.errors.any? %>
+      <div class="alert alert-danger">
+        <h4>エラーが発生しました。</h4>
+        <ul>
+          <% user.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+  
+    <div class="form-group">
+      <%= form.label :name, '名前' %>
+      <%= form.text_field :name, class: 'form-control' %>
+    </div>
+  
+    <div class="form-group">
+      <%= form.label :email, 'メールアドレス' %>
+      <%= form.email_field :email, class: 'form-control' %>
+    </div>
+  
+    <div class="form-group">
+      <%= form.label :password, 'パスワード（変更する場合のみ入力）' %>
+      <%= form.password_field :password, class: 'form-control' %>
+    </div>
+  
+    <div class="form-group">
+      <%= form.label :password_confirmation, 'パスワード確認' %>
+      <%= form.password_field :password_confirmation, class: 'form-control' %>
+    </div>
+  
+    <%= form.submit user.new_record? ? '作成' : '更新', class: 'btn btn-primary' %>
+  <% end %>
