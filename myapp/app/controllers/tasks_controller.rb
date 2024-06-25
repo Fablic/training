@@ -2,7 +2,6 @@
 
 class TasksController < ApplicationController
   before_action :set_task, only: %i[show edit update destroy]
-  before_action :require_admin, except: %i[index show]
 
   VALID_SORT_COLUMNS = %w[created_at deadline].freeze
   VALID_SORT_DIRECTIONS = %w[asc desc].freeze
