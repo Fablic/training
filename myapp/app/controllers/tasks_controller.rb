@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class TasksController < ApplicationController
-  before_action :require_login
   before_action :set_task, only: %i[show edit update destroy]
 
   VALID_SORT_COLUMNS = %w[created_at deadline].freeze
