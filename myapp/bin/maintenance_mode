@@ -1,0 +1,10 @@
+#!/bin/bash
+MAINTENANCE_FILE="tmp/maintenance_mode_on"
+echo "$1"
+if [ "$1" == "1" ]; then
+  touch $MAINTENANCE_FILE
+elif [ "$1" == "0" ]; then
+  rm -f $MAINTENANCE_FILE
+else
+  echo "オgプション：1（メンテオン）、０（メンテオフ）"
+fi
