@@ -4,11 +4,19 @@ module TasksHelper # rubocop:disable Style/Documentation
   def sortable(column, title = nil)
     title ||= column.titleize
     direction = column == sort_column && sort_direction == 'asc' ? 'desc' : 'asc'
-    arrow = column == sort_column ? (sort_direction == 'asc' ? '↑' : '↓') : ''
-    link_to "#{title} #{arrow}".html_safe, { sort: column, direction: direction, title: params[:title], status: params[:status] }
+    arrow = arrow(column)
+    link_to "#{title} #{arrow}", { sort: column, direction: direction, title: params[:title], status: params[:status] }
   end
 
   private
+
+  def arrow(column)
+    if column == sort_column
+      sort_direction == 'asc' ? '↑' : '↓'
+    else
+      ''
+    end
+  end
 
   def sort_column
     Task.column_names.include?(params[:sort]) ? params[:sort] : 'unknown'
