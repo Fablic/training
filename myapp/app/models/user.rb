@@ -4,7 +4,7 @@ class User < ApplicationRecord
   require 'bcrypt'
   attr_accessor :password, :password_confirmation
 
-  has_many :tasks, dependent: :nullify
+  has_many :tasks
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i.freeze
 
