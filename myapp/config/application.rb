@@ -1,5 +1,5 @@
 require_relative 'boot'
-
+require_relative '../app/middlewares/maintenance_mode_filter'
 require 'rails/all'
 
 # Require the gems listed in Gemfile, including any gems
@@ -23,5 +23,6 @@ module Myapp
     config.active_record.default_timezone = :local
     config.i18n.default_locale = :ja
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}').to_s]
+    config.middleware.use MaintenanceModeFilter
   end
 end
