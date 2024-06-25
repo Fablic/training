@@ -2,8 +2,10 @@
 
 require 'rails_helper'
 
+TD_IDX_TITLE = 0
+
 RSpec.describe 'Tasks', type: :system do
-  let(:user) {User.create(name: 'test', password: 'test')}
+  let(:user) { User.create(name: 'test', password: 'test') }
 
   describe 'Task list' do
     context 'When a task dose not exist' do
@@ -52,7 +54,7 @@ RSpec.describe 'Tasks', type: :system do
       end
 
       it 'due_date asc' do
-        visit tasks_path(sort: "due_date", direction: "asc")
+        visit tasks_path(sort: 'due_date', direction: 'asc')
         within('table#result') do
           first_row = all('tr')[1]
           first_title = first_row.all('td')[TD_IDX_TITLE]
@@ -69,7 +71,7 @@ RSpec.describe 'Tasks', type: :system do
       end
 
       it 'update_date asc' do
-        visit tasks_path(sort: "updated_at", direction: "asc")
+        visit tasks_path(sort: 'updated_at', direction: 'asc')
         within('table#result') do
           first_row = all('tr')[1]
           first_title = first_row.all('td')[TD_IDX_TITLE]
@@ -142,7 +144,7 @@ RSpec.describe 'Tasks', type: :system do
     context 'Display the new creation screen' do
       before do
         visit tasks_path
-        click_link 'Create task'
+        click_button 'Create'
       end
       it 'Check the type of screen' do
         expect(page).to have_content('Create Task')
@@ -195,7 +197,11 @@ RSpec.describe 'Tasks', type: :system do
 
   describe 'Delete a task' do
     before do
+<<<<<<< HEAD
       task = Task.create!(title: 'test1', description: 'desc1', due_date: '2024-01-01', user_id: user.id)
+=======
+      Task.create!(title: 'test1', description: 'desc1', due_date: '2024-01-01')
+>>>>>>> shinya-uchiamki-step15
       visit tasks_path
     end
 
