@@ -34,6 +34,17 @@
     </div>
 
     <div class="form-group">
+      <%= form.label :labels %>
+      <%= form.collection_check_boxes :label_ids, @labels, :id, :name do |b| %>
+        <div class="checkbox">
+          <label>
+            <%= b.check_box %> <%= b.text %>
+          </label>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="form-group">
       <%= form.submit action_name == 'new' ? 'Create Task' : 'Update Task', class: 'btn btn-primary' %>
       <%= link_to 'Back', tasks_path, class: 'btn btn-secondary ml-2' %>
     </div>
