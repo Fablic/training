@@ -1,0 +1,19 @@
+<div class="container mt-5">
+  <h1 class="mb-3">Tasks for <%= @user.name %></h1>
+  <table class="table table-striped">
+    <thead class="table-dark">
+      <tr>
+        <th>Title</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @tasks.each do |task| %>
+        <tr>
+          <td><%= task.title %></td>
+          <td><%= task.description %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

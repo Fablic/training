@@ -6,4 +6,11 @@ Rails.application.routes.draw do
   get 'logout', to: 'sessions#destroy', as: :logout
   root 'tasks#index'
   resources :tasks
+
+  namespace :admin do
+    root 'dashboard#index'
+    resources :users do
+      resources :tasks, only: %i[index exit update destory]
+    end
+  end
 end
