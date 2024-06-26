@@ -38,27 +38,27 @@ RSpec.describe 'Tasks', type: :system do
       it 'Default order (created_at desc)' do
         visit tasks_path
         within('table#result') do
-          expect_title(1, 'test3')
-          expect_title(2, 'test2')
-          expect_title(3, 'test1')
+          expect(find('tr:nth-child(1) td:nth-child(1)').text).to eq('test3')
+          expect(find('tr:nth-child(2) td:nth-child(1)').text).to eq('test2')
+          expect(find('tr:nth-child(3) td:nth-child(1)').text).to eq('test1')
         end
       end
 
       it 'due_date asc' do
         visit tasks_path(sort: 'due_date', direction: 'asc')
         within('table#result') do
-          expect_title(1, 'test1')
-          expect_title(2, 'test3')
-          expect_title(3, 'test2')
+          expect(find('tr:nth-child(1) td:nth-child(1)').text).to eq('test1')
+          expect(find('tr:nth-child(2) td:nth-child(1)').text).to eq('test3')
+          expect(find('tr:nth-child(3) td:nth-child(1)').text).to eq('test2')
         end
       end
 
       it 'update_date asc' do
         visit tasks_path(sort: 'updated_at', direction: 'asc')
         within('table#result') do
-          expect_title(1, 'test3')
-          expect_title(2, 'test2')
-          expect_title(3, 'test1')
+          expect(find('tr:nth-child(1) td:nth-child(1)').text).to eq('test3')
+          expect(find('tr:nth-child(2) td:nth-child(1)').text).to eq('test2')
+          expect(find('tr:nth-child(3) td:nth-child(1)').text).to eq('test1')
         end
       end
     end
@@ -73,7 +73,7 @@ RSpec.describe 'Tasks', type: :system do
       it 'When searching by title, if results are found' do
         visit tasks_path(title: 'title3')
         within('table#result') do
-          expect_title(1, 'title3')
+          expect(find('tr:nth-child(1) td:nth-child(1)').text).to eq('title3')
         end
       end
 
@@ -88,7 +88,7 @@ RSpec.describe 'Tasks', type: :system do
       it 'When searching by status, if results are found' do
         visit tasks_path(status: :in_progress)
         within('table#result') do
-          expect_title(1, 'title12')
+          expect(find('tr:nth-child(1) td:nth-child(1)').text).to eq('title12')
         end
       end
 
@@ -103,7 +103,7 @@ RSpec.describe 'Tasks', type: :system do
       it 'When searching by title and status, if results are not found' do
         visit tasks_path(title: 'title1', status: :open)
         within 'table#result' do
-          expect_title(1, 'title1')
+          expect(find('tr:nth-child(1) td:nth-child(1)').text).to eq('title1')
         end
       end
     end
@@ -127,8 +127,8 @@ RSpec.describe 'Tasks', type: :system do
 
       it 'first page ' do
         within 'table#result' do
-          expect_title(1, 'title12')
-          expect_title(5, 'title8')
+          expect(find('tr:nth-child(1) td:nth-child(1)').text).to eq('title12')
+          expect(find('tr:nth-child(5) td:nth-child(1)').text).to eq('title8')
         end
 
         within 'nav' do
@@ -156,8 +156,8 @@ RSpec.describe 'Tasks', type: :system do
         end
 
         within 'table#result' do
-          expect_title(1, 'title7')
-          expect_title(5, 'title3')
+          expect(find('tr:nth-child(1) td:nth-child(1)').text).to eq('title7')
+          expect(find('tr:nth-child(5) td:nth-child(1)').text).to eq('title3')
         end
 
         within 'nav' do
@@ -184,8 +184,8 @@ RSpec.describe 'Tasks', type: :system do
           click_link '3'
         end
         within 'table#result' do
-          expect_title(1, 'title2')
-          expect_title(2, 'title1')
+          expect(find('tr:nth-child(1) td:nth-child(1)').text).to eq('title2')
+          expect(find('tr:nth-child(2) td:nth-child(1)').text).to eq('title1')
         end
         within 'nav' do
           expect(page).to have_selector('ul.pagination')
@@ -212,8 +212,8 @@ RSpec.describe 'Tasks', type: :system do
           click_link 'First'
         end
         within 'table#result' do
-          expect_title(1, 'title12')
-          expect_title(5, 'title8')
+          expect(find('tr:nth-child(1) td:nth-child(1)').text).to eq('title12')
+          expect(find('tr:nth-child(5) td:nth-child(1)').text).to eq('title8')
         end
       end
 
@@ -223,8 +223,8 @@ RSpec.describe 'Tasks', type: :system do
           click_link 'Previous'
         end
         within 'table#result' do
-          expect_title(1, 'title12')
-          expect_title(5, 'title8')
+          expect(find('tr:nth-child(1) td:nth-child(1)').text).to eq('title12')
+          expect(find('tr:nth-child(5) td:nth-child(1)').text).to eq('title8')
         end
       end
 
@@ -234,8 +234,8 @@ RSpec.describe 'Tasks', type: :system do
           click_link 'Next'
         end
         within 'table#result' do
-          expect_title(1, 'title2')
-          expect_title(2, 'title1')
+          expect(find('tr:nth-child(1) td:nth-child(1)').text).to eq('title2')
+          expect(find('tr:nth-child(2) td:nth-child(1)').text).to eq('title1')
         end
       end
 
@@ -245,8 +245,8 @@ RSpec.describe 'Tasks', type: :system do
           click_link 'Last'
         end
         within 'table#result' do
-          expect_title(1, 'title2')
-          expect_title(2, 'title1')
+          expect(find('tr:nth-child(1) td:nth-child(1)').text).to eq('title2')
+          expect(find('tr:nth-child(2) td:nth-child(1)').text).to eq('title1')
         end
       end
     end
@@ -321,11 +321,5 @@ RSpec.describe 'Tasks', type: :system do
       expect(page).not_to have_content('test1')
       expect(page).to have_content(I18n.t('tasks.no_tasks'))
     end
-  end
-
-  def expect_title(index, title)
-    row = all('tr')[index]
-    value = row.all('td')[TD_IDX_TITLE]
-    expect(value.text).to eq(title)
   end
 end
