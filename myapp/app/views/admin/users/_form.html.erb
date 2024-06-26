@@ -29,6 +29,11 @@
       <%= form.label :password_confirmation, 'パスワード確認' %>
       <%= form.password_field :password_confirmation, class: 'form-control' %>
     </div>
+
+    <div class="field">
+      <%= form.label :admin, '管理者権限' %>
+      <%= form.check_box :admin %>
+    </div>
   
     <%= form.submit user.new_record? ? '作成' : '更新', class: 'btn btn-primary' %>
   <% end %>
