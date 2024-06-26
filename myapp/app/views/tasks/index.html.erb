@@ -26,6 +26,7 @@
   <tr>
     <th>Title</th>
     <th>Description</th>
+    <th>Reporter</th>
     <th>Priority</th>
     <th>Labels</th>
     <th><%= sortable "due_date", "DueDate" %></th>
@@ -40,6 +41,7 @@
     <tr>
       <td><%= link_to task.title, task %></td>
       <td><%= task.description %></td>
+      <td><%= task.user.name %></td>
       <td><%= task.priority %></td>
       <td>N/A</td>
       <td><%= task.due_date %></td>

@@ -41,9 +41,6 @@ gem 'sassc-rails'
 gem 'bootstrap5-kaminari-views'
 gem 'kaminari'
 
-# N+1
-gem 'bullet'
-
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
@@ -54,6 +51,9 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'rspec-rails'
+
+  # N+1
+  gem 'bullet'
 end
 
 group :development do
