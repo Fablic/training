@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get 'logout', to: 'sessions#destroy', as: :logout
   root 'tasks#index'
   resources :tasks
+  resources :labels, only: %i[index new create edit update destroy]
 
   namespace :admin do
     root 'dashboard#index'
