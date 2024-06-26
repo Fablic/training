@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class LabelsController < ApplicationController
+  before_action :require_admin
+  
   def index
     @labels = Label.all
   end
