@@ -12,7 +12,7 @@ class Task < ApplicationRecord # rubocop:disable Style/Documentation
   enum priority: { low: 0, medium: 1, high: 2 }
 
   def self.search(query, status)
-    tasks = all
+    tasks = all.includes(:user)
     tasks = tasks.where('title LIKE ?', "%#{query}%") if query.present?
     tasks = tasks.where(status: status) if status.present?
     tasks

@@ -17,7 +17,7 @@
   <div class="flash <%= key %>"><%= message %></div>
 <% end %>
 
-<% if @tasks.empty? %>
+<% if @total_tasks_count == 0 %>
   <p><%= t('tasks.no_tasks') %></p>
 <% end %>
 

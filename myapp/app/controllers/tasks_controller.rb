@@ -5,8 +5,9 @@ class TasksController < ApplicationController # rubocop:disable Style/Documentat
 
   def index
     @tasks = Task.search(params[:title], params[:status])
-                 .order("#{sort_column}  #{sort_direction}")
-                 .page(params[:page]).per(5)
+    @total_tasks_count = @tasks.count
+    @tasks = @tasks.order("#{sort_column}  #{sort_direction}")
+                   .page(params[:page]).per(5)
   end
 
   def new
@@ -64,7 +65,7 @@ class TasksController < ApplicationController # rubocop:disable Style/Documentat
   end
 
   def sort_column
-    Task.column_names.include?(params[:sort]) ? params[:sort] : 'created_at'
+    Task.column_names.include?(params[:sort]) ? "tasks.#{params[:sort]}" : 'tasks.created_at'
   end
 
   def sort_direction
