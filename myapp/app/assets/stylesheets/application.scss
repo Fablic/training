@@ -13,4 +13,14 @@
  *= require_tree .
  *= require_self
  */
+
+@import "bootstrap";
 @import 'errors';
+
+.field_with_errors {
+  display: contents;
+}
+
+.pagination {
+  justify-content: center;
+}

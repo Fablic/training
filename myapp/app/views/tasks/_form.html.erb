@@ -1,34 +1,40 @@
   <% if @task.errors.any? %>
-    <div id="error_explanation">
-      <ul>
+    <div class="alert alert-warning" role="alert">
         <% @task.errors.full_messages.each do |message| %>
-          <li><%= t(message) %></li>
+          <p><%= message %></p>
         <% end %>
-      </ul>
     </div>
   <% end %>
 
-  <div class="form-group">
-    <%= form.label :title, "Title" %><%= form.text_field :title %>
+  <div class="row mb-3">
+    <%= form.label :title, "Title", class:'col-sm-2 col-form-label'%>
+    <div class="col-sm-10"><%= form.text_field :title %></div>
     <% if @task.errors[:title].any? %>
-      <div class="error-message"><%= t(@task.errors[:title].join(", ")) %></div>
+      <div class="error-message"><%= @task.errors[:title].join(", ") %></div>
     <% end %>
   </div>
-  <div class="form-group">
-    <%= form.label :description, "Description" %><%= form.text_field :description %>
+  <div class="row mb-3">
+    <%= form.label :description, "Description", class:'col-sm-2 col-form-label' %>
+    <div class="col-sm-10"><%= form.text_field :description %></div>
   </div>
-  <div class="form-group">
-    <%= form.label :status, "Status" %><%= form.select :status, Task.statuses.keys.to_a, {} %>
+  <div class="row mb-3">
+    <%= form.label :status, "Status", class:'col-sm-2 col-form-label' %>
+    <div class="col-sm-10"><%= form.select :status, Task.statuses.keys.to_a, {} %></div>
   </div>
-  <div class="form-group">
-    <%= form.label :priority, "Priority" %><%= form.select :priority, Task.priorities.keys.to_a, {} %>
+  <div class="row mb-3">
+    <%= form.label :priority, "Priority", class:'col-sm-2 col-form-label' %>
+    <div class="col-sm-10"><%= form.select :priority, Task.priorities.keys.to_a, {} %></div>
   </div>
-  <div class="form-group">
-    <%= form.label :due_date, "Due date" %><%= form.text_field :due_date, placeholder: "2025-01-01" %>
+  <div class="row mb-3">
+    <%= form.label :due_date, "Due date", class:'col-sm-2 col-form-label' %>
+    <div class="col-sm-10"><%= form.text_field :due_date, placeholder: "2025-01-01" %></div>
     <% if @task.errors[:due_date].any? %>
-      <div class="error-message"><%= t(@task.errors[:due_date].join(", ")) %></div>
+      <div class="error-message"><%= @task.errors[:due_date].join(", ") %></div>
     <% end %>
   </div>
-  <div class="form-actions">
-    <%= form.submit %>
+  <div class="row mb-3">
+    <div class="d-grid gap-2 d-md-flex">
+      <%= form.submit 'Proceed', class:'btn btn-sm btn-primary' %>
+      <%= link_to 'Cancel', tasks_path, class:'btn btn-sm btn-secondary'%>
+    </div>
   </div>

@@ -1,10 +1,14 @@
 <h2>Details</h2>
 
-<% flash.each do |key, message| %>
-  <div class="flash <%= key %>"><%= message %></div>
+<% if flash.present? %>
+  <div class="alert alert-primary" role="alert">
+  <% flash.each do |key, message| %>
+  <p><%= key %><%= message %></p>
+  <% end %>
+  </div>
 <% end %>
 
-<table>
+<table class="table table-bordered border-dark">
   <tbody>
   <tr><th>Title</th><td><%= @task.title %></td></tr>
   <tr><th>Description</th><td><%= @task.description %></td></tr>
@@ -16,4 +20,4 @@
   <tr><th>Updated</th><td><%= @task.updated_at %></td></tr>
   </tbody>
 </table>
-<%= link_to 'Back to top', tasks_path %>
+<%= link_to 'Top', tasks_path, class:'btn btn-sm btn-primary'%>
