@@ -1,11 +1,15 @@
 # frozen_string_literal: true
 
 class LabelsController < ApplicationController
-  before_action :require_admin
-  
+  before_action :set_label, only: %i[show edit update destroy]
+  before_action :require_admin, only: %i[edit update destroy]
+
   def index
     @labels = Label.all
   end
+
+  # GET /labels/1
+  def show; end
 
   def new
     @label = Label.new
@@ -20,12 +24,9 @@ class LabelsController < ApplicationController
     end
   end
 
-  def edit
-    @label = Label.find(params[:id])
-  end
+  def edit; end
 
   def update
-    @label = Label.find(params[:id])
     if @label.update(label_params)
       redirect_to labels_path, notice: 'ラベルが更新されました。'
     else
@@ -34,12 +35,15 @@ class LabelsController < ApplicationController
   end
 
   def destroy
-    @label = Label.find(params[:id])
     @label.destroy
     redirect_to labels_path, notice: 'ラベルが削除されました。'
   end
 
   private
+
+  def set_label
+    @label = Label.find(params[:id])
+  end
 
   def label_params
     params.require(:label).permit(:name)
