@@ -18,7 +18,7 @@ class LabelsController < ApplicationController
   def create
     @label = Label.new(label_params)
     if @label.save
-      redirect_to labels_path, notice: 'ラベルが作成されました。'
+      redirect_to labels_path, notice: t('notices.label_created')
     else
       render :new
     end
@@ -28,7 +28,7 @@ class LabelsController < ApplicationController
 
   def update
     if @label.update(label_params)
-      redirect_to labels_path, notice: 'ラベルが更新されました。'
+      redirect_to labels_path, notice: t('notices.label_updated')
     else
       render :edit
     end
@@ -36,7 +36,7 @@ class LabelsController < ApplicationController
 
   def destroy
     @label.destroy
-    redirect_to labels_path, notice: 'ラベルが削除されました。'
+    redirect_to labels_path, notice: t('notices.label_deleted')
   end
 
   private

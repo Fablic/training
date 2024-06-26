@@ -27,3 +27,6 @@ ja:
   notices:
     user_deleted: 'ユーザが削除されました。'
     user_updated: 'ユーザ情報が更新されました。'
+    label_created: 'ラベルが作成されました。'
+    label_updated: 'ラベルが更新されました。'
+    label_deleted: 'ラベルが削除されました。'
