@@ -5,6 +5,7 @@ class User < ApplicationRecord # rubocop:disable Style/Documentation
   validates :status, presence: true, inclusion: { in: %w[active inactive] }
 
   has_secure_password
+
   has_many :tasks, dependent: :destroy
 
   enum role: { standard: 0, admin: 1 }
