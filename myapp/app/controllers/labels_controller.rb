@@ -2,7 +2,7 @@
 
 class LabelsController < ApplicationController
   before_action :set_label, only: %i[show edit update destroy]
-  before_action :require_admin, only: %i[edit update destroy]
+  before_action :require_admin
 
   def index
     @labels = Label.all
