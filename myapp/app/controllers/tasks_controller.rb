@@ -14,8 +14,8 @@ class TasksController < ApplicationController
     @tasks = current_user.admin? ? Task.all.order(sort_by => sort_direction) : current_user.tasks.order(sort_by => sort_direction)
 
     @tasks = @tasks.where('title LIKE ?', "%#{params[:title]}%") if params[:title].present?
-
     @tasks = @tasks.where(status: params[:status]) if params[:status].present?
+    @tasks = @tasks.joins(:labels).where(labels: { id: params[:label_id] }) if params[:label_id].present?
 
     @tasks = @tasks.page(params[:page]).per(12)
   end
@@ -26,6 +26,7 @@ class TasksController < ApplicationController
 
   def new
     @task = Task.new
+    @labels = Label.all
   end
 
   def create
@@ -34,12 +35,13 @@ class TasksController < ApplicationController
       flash[:notice] = t('alerts.task_created')
       redirect_to @task
     else
+      @labels = Label.all
       render :new
     end
   end
 
   def edit
-    # @task is set by the before_action :set_task
+    @labels = Label.all
   end
 
   def update
@@ -48,6 +50,7 @@ class TasksController < ApplicationController
       flash[:notice] = t('alerts.task_updated')
       redirect_to @task
     else
+      @labels = Label.all
       render :edit
     end
   end
@@ -61,7 +64,7 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:title, :description, :deadline, :status)
+    params.require(:task).permit(:title, :description, :deadline, :status, label_ids: [])
   end
 
   def set_task
