@@ -2,12 +2,18 @@
 
 require 'rails_helper'
 
-TD_IDX_TITLE = 0
-
 RSpec.describe 'Tasks', type: :system do
   let(:user) { User.create(name: 'test', password: 'test') }
 
-  describe 'Task list' do
+  before do
+    visit session_path
+    # pp page.html
+    fill_in 'name', with: user.name
+    fill_in 'password', with: user.password
+    click_button 'commit'
+  end
+
+  describe 'list' do
     context 'When a task dose not exist' do
       before do
         visit tasks_path
@@ -28,7 +34,6 @@ RSpec.describe 'Tasks', type: :system do
       end
     end
 
-    TD_IDX_TITLE = 0
     context 'Check the order of tasks' do
       before do
         Task.create!(title: 'test1', description: 'desc1', due_date: '2024-01-01', updated_at: '2024-03-01', user_id: user.id)
@@ -111,18 +116,18 @@ RSpec.describe 'Tasks', type: :system do
 
     context 'Pagination' do
       before do
-        Task.create!(title: 'title1', description: 'desc1', due_date: '2024-01-01', status: :open)
-        Task.create!(title: 'title2', description: 'desc2', due_date: '2024-02-01', status: :in_progress)
-        Task.create!(title: 'title3', description: 'desc3', due_date: '2024-03-01', status: :closed)
-        Task.create!(title: 'title4', description: 'desc4', due_date: '2024-04-01', status: :open)
-        Task.create!(title: 'title5', description: 'desc5', due_date: '2024-05-01', status: :in_progress)
-        Task.create!(title: 'title6', description: 'desc6', due_date: '2024-06-01', status: :closed)
-        Task.create!(title: 'title7', description: 'desc7', due_date: '2024-07-01', status: :open)
-        Task.create!(title: 'title8', description: 'desc8', due_date: '2024-08-01', status: :in_progress)
-        Task.create!(title: 'title9', description: 'desc9', due_date: '2024-09-01', status: :closed)
-        Task.create!(title: 'title10', description: 'desc10', due_date: '2024-10-01', status: :open)
-        Task.create!(title: 'title11', description: 'desc11', due_date: '2024-11-01', status: :in_progress)
-        Task.create!(title: 'title12', description: 'desc12', due_date: '2024-12-01', status: :closed)
+        Task.create!(title: 'title1', description: 'desc1', due_date: '2024-01-01', status: :open, user_id: user.id)
+        Task.create!(title: 'title2', description: 'desc2', due_date: '2024-02-01', status: :in_progress, user_id: user.id)
+        Task.create!(title: 'title3', description: 'desc3', due_date: '2024-03-01', status: :closed, user_id: user.id)
+        Task.create!(title: 'title4', description: 'desc4', due_date: '2024-04-01', status: :open, user_id: user.id)
+        Task.create!(title: 'title5', description: 'desc5', due_date: '2024-05-01', status: :in_progress, user_id: user.id)
+        Task.create!(title: 'title6', description: 'desc6', due_date: '2024-06-01', status: :closed, user_id: user.id)
+        Task.create!(title: 'title7', description: 'desc7', due_date: '2024-07-01', status: :open, user_id: user.id)
+        Task.create!(title: 'title8', description: 'desc8', due_date: '2024-08-01', status: :in_progress, user_id: user.id)
+        Task.create!(title: 'title9', description: 'desc9', due_date: '2024-09-01', status: :closed, user_id: user.id)
+        Task.create!(title: 'title10', description: 'desc10', due_date: '2024-10-01', status: :open, user_id: user.id)
+        Task.create!(title: 'title11', description: 'desc11', due_date: '2024-11-01', status: :in_progress, user_id: user.id)
+        Task.create!(title: 'title12', description: 'desc12', due_date: '2024-12-01', status: :closed, user_id: user.id)
         visit tasks_path
       end
 
@@ -319,7 +324,7 @@ RSpec.describe 'Tasks', type: :system do
     end
 
     it 'Confirm that the task has been deleted' do
-      click_button 'Delete'
+      click_link 'Delete'
       expect(page).not_to have_content('test1')
       expect(page).to have_content(I18n.t('tasks.no_tasks'))
     end

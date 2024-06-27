@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(version: 2024_06_24_022610) do
     t.integer "status", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["name"], name: "index_users_on_name"
+    t.index ["name"], name: "index_users_on_name", unique: true
   end
 
   add_foreign_key "tasks", "users"

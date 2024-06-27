@@ -12,6 +12,9 @@
   },
   "version": "0.1.0",
   "devDependencies": {
+    "@babel/plugin-proposal-private-methods": "^7.18.6",
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@babel/plugin-transform-private-methods": "^7.24.7",
     "webpack-dev-server": "^3"
   }
 }

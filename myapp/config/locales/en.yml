@@ -30,6 +30,10 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
+  session:
+    invalid_message: "Invalid name or password"
+    sign_out_success: "Sign out successful"
+    sign_in_success: "Sign in successful"
   tasks:
     no_tasks: "There are no tasks"
     create_success: "Task was successfully created."

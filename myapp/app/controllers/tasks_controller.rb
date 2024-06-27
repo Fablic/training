@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
 class TasksController < ApplicationController # rubocop:disable Style/Documentation
+  before_action :require_sign_in
   before_action :set_task, only: %i[show edit update destroy]
 
   def index
-    @tasks = Task.search(params[:title], params[:status])
+    @tasks = search_tasks
     @total_tasks_count = @tasks.count
     @tasks = @tasks.order("#{sort_column}  #{sort_direction}")
                    .page(params[:page]).per(5)
@@ -23,9 +24,8 @@ class TasksController < ApplicationController # rubocop:disable Style/Documentat
   end
 
   def create
-    user = User.take
     @task = Task.new(task_params)
-    @task.user_id = user.id
+    @task.user_id = current_user.id
     if @task.save
       flash[:info] = I18n.t('tasks.create_success')
       redirect_to @task
@@ -70,5 +70,13 @@ class TasksController < ApplicationController # rubocop:disable Style/Documentat
 
   def sort_direction
     %w[asc desc].include?(params[:direction]) ? params[:direction] : 'desc'
+  end
+
+  def search_tasks
+    if current_user.admin?
+      Task.search(params[:title], params[:status], nil)
+    else
+      Task.search(params[:title], params[:status], current_user.id)
+    end
   end
 end

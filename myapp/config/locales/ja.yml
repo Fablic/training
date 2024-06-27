@@ -30,6 +30,10 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 ja:
+  session:
+    invalid_message: "NameかPasswordが不正です。"
+    sign_out_success: "Sign out successful"
+    sign_in_success: "Sign in successful"
   tasks:
     no_tasks: "タスクがありません。"
     create_success: "タスクの作成に成功しました。"

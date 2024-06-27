@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/BlockLength
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -71,3 +73,5 @@ Rails.application.configure do
     Bullet.add_footer = true # ページの左下に結果を表示
   end
 end
+
+# rubocop:enable Metrics/BlockLength

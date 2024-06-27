@@ -65,7 +65,7 @@ RSpec.describe Task, type: :model do
     end
 
     it 'search title, result is not empty' do
-      task_list = Task.search('test1', nil)
+      task_list = Task.search('test1', nil, user.id)
       ## order by created_at desc
       expect(task_list.count).to eq 2
       expect(task_list[0].title).to include('test1')
@@ -73,19 +73,19 @@ RSpec.describe Task, type: :model do
     end
 
     it 'search title, result is empty' do
-      task_list = Task.search('test100', nil)
+      task_list = Task.search('test100', nil, user.id)
       expect(task_list.count).to eq 0
     end
 
     it 'search status, result is not empty' do
-      task_list = Task.search(nil, :open)
+      task_list = Task.search(nil, :open, user.id)
       ## order by created_at desc
       expect(task_list.count).to eq 1
       expect(task_list[0]).to have_attributes(status: 'open')
     end
 
     it 'search status, result is empty' do
-      task_list = Task.search(nil, :closed)
+      task_list = Task.search(nil, :closed, user.id)
       expect(task_list.count).to eq 0
     end
   end
