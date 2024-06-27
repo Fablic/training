@@ -17,11 +17,8 @@ pickle-email-*.html
 # Ignore all logfiles and tempfiles.
 /log/*
 /tmp/*
-<<<<<<< HEAD
-=======
 /tmp/*/*
 /tmp/*/*/*
->>>>>>> shinya-uchiamki-step15
 !/log/.keep
 !/tmp/.keep
 
@@ -61,11 +58,7 @@ bower.json
 # Ignore node_modules
 node_modules/
 
-<<<<<<< HEAD
-# Ignore precompiled javascript packs
-=======
 # Ignore precompiled javascripts packs
->>>>>>> shinya-uchiamki-step15
 /public/packs
 /public/packs-test
 /public/assets
