@@ -1,5 +1,4 @@
 #!/bin/bash
-# 文件: bin/toggle_maintenance
 
 MAINTENANCE_FILE="/myapp/maintenance.flag"
 
