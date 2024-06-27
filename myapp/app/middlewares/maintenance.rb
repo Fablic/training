@@ -7,8 +7,8 @@ class Maintenance
   end
 
   def call(env)
-    if File.exist?('/myapp/maintenance.flag')
-      [302, { 'Location' => '/maintenance' }, ['Maintenance mode activated']]
+    if File.exist?(Rails.root.join('tmp', 'maintenance_mode'))
+      [302, { 'Location' => '/maintenance.html' }, []]
     else
       @app.call(env)
     end
