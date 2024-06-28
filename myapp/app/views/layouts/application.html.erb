@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Myapp</title>
+    <title>Tasks</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -11,6 +11,11 @@
 
   <body>
   <div class="container">
+    <% if signed_in? %>
+      <p>Welcome, <%= current_user.name %> | <%= link_to 'Sign out', session_path, method: :delete, data: { confirm: 'Are you sure?' } %></p>
+    <% else %>
+      <%= link_to 'Sign in', session_path %>
+    <% end %>
     <%= yield %>
   </div>
   </body>

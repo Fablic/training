@@ -1,0 +1,22 @@
+<% if flash.present? %>
+  <div class="alert alert-primary" role="alert">
+    <% flash.each do |key, message| %>
+      <p><%= message %></p>
+    <% end %>
+  </div>
+<% end %>
+
+<h1>Sign in to Tasks</h1>
+<%= form_with url: session_path, local: true do |form| %>
+  <div class="row mb-3">
+    <%= form.label :name, class:'col-sm-2 col-form-label' %>
+    <div class="col-sm-10"><%= form.text_field :name %></div>
+  </div>
+  <div class="row mb-3">
+    <%= form.label :password, class:'col-sm-2 col-form-label' %>
+    <div class="col-sm-10"><%= form.password_field :password %></div>
+  </div>
+  <div>
+    <%= form.submit 'Sign in' %>
+  </div>
+<% end %>

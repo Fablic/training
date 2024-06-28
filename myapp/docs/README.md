@@ -72,4 +72,4 @@ first_name, last_nameは削除しました。
 
 
 ## Validaton
-title 空はきんし
+title emptyは禁止

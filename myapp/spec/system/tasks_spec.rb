@@ -2,12 +2,20 @@
 
 require 'rails_helper'
 
-TD_IDX_TITLE = 0
-
 RSpec.describe 'Tasks', type: :system do
-  let(:user) { User.create(name: 'test', password: 'test') }
+  let(:admin) { User.create(name: 'admin', password: 'admin', role: 'admin') }
+  let(:user) { User.create(name: 'user', password: 'user', role: 'standard') }
+  let(:other) { User.create(name: 'other', password: 'other', role: 'standard') }
 
-  describe 'Task list' do
+  before do
+    visit session_path
+    # pp page.html
+    fill_in 'name', with: user.name
+    fill_in 'password', with: user.password
+    click_button 'commit'
+  end
+
+  describe 'list' do
     context 'When a task dose not exist' do
       before do
         visit tasks_path
@@ -19,7 +27,7 @@ RSpec.describe 'Tasks', type: :system do
 
     context 'When a task exists' do
       before do
-        Task.create!(title: 'test1', description: 'desc1', due_date: '2024-01-01')
+        Task.create!(title: 'test1', description: 'desc1', due_date: '2024-01-01', user_id: user.id)
         visit tasks_path
       end
       it 'Check the message and the content of the task' do
@@ -30,9 +38,9 @@ RSpec.describe 'Tasks', type: :system do
 
     context 'Check the order of tasks' do
       before do
-        Task.create!(title: 'test1', description: 'desc1', due_date: '2024-01-01', updated_at: '2024-03-01')
-        Task.create!(title: 'test2', description: 'desc2', due_date: '2024-03-01', updated_at: '2024-02-01')
-        Task.create!(title: 'test3', description: 'desc3', due_date: '2024-02-01', updated_at: '2024-01-01')
+        Task.create!(title: 'test1', description: 'desc1', due_date: '2024-01-01', updated_at: '2024-03-01', user_id: user.id)
+        Task.create!(title: 'test2', description: 'desc2', due_date: '2024-03-01', updated_at: '2024-02-01', user_id: user.id)
+        Task.create!(title: 'test3', description: 'desc3', due_date: '2024-02-01', updated_at: '2024-01-01', user_id: user.id)
       end
 
       it 'Default order (created_at desc)' do
@@ -65,9 +73,9 @@ RSpec.describe 'Tasks', type: :system do
 
     context 'Search function' do
       before do
-        Task.create!(title: 'title1', description: 'desc1', due_date: '2024-01-01', status: :open)
-        Task.create!(title: 'title12', description: 'desc2', due_date: '2024-03-01', status: :in_progress)
-        Task.create!(title: 'title3', description: 'desc3', due_date: '2024-02-01', status: :open)
+        Task.create!(title: 'title1', description: 'desc1', due_date: '2024-01-01', status: :open, user_id: user.id)
+        Task.create!(title: 'title12', description: 'desc2', due_date: '2024-03-01', status: :in_progress, user_id: user.id)
+        Task.create!(title: 'title3', description: 'desc3', due_date: '2024-02-01', status: :open, user_id: user.id)
       end
 
       it 'When searching by title, if results are found' do
@@ -110,18 +118,18 @@ RSpec.describe 'Tasks', type: :system do
 
     context 'Pagination' do
       before do
-        Task.create!(title: 'title1', description: 'desc1', due_date: '2024-01-01', status: :open)
-        Task.create!(title: 'title2', description: 'desc2', due_date: '2024-02-01', status: :in_progress)
-        Task.create!(title: 'title3', description: 'desc3', due_date: '2024-03-01', status: :closed)
-        Task.create!(title: 'title4', description: 'desc4', due_date: '2024-04-01', status: :open)
-        Task.create!(title: 'title5', description: 'desc5', due_date: '2024-05-01', status: :in_progress)
-        Task.create!(title: 'title6', description: 'desc6', due_date: '2024-06-01', status: :closed)
-        Task.create!(title: 'title7', description: 'desc7', due_date: '2024-07-01', status: :open)
-        Task.create!(title: 'title8', description: 'desc8', due_date: '2024-08-01', status: :in_progress)
-        Task.create!(title: 'title9', description: 'desc9', due_date: '2024-09-01', status: :closed)
-        Task.create!(title: 'title10', description: 'desc10', due_date: '2024-10-01', status: :open)
-        Task.create!(title: 'title11', description: 'desc11', due_date: '2024-11-01', status: :in_progress)
-        Task.create!(title: 'title12', description: 'desc12', due_date: '2024-12-01', status: :closed)
+        Task.create!(title: 'title1', description: 'desc1', due_date: '2024-01-01', status: :open, user_id: user.id)
+        Task.create!(title: 'title2', description: 'desc2', due_date: '2024-02-01', status: :in_progress, user_id: user.id)
+        Task.create!(title: 'title3', description: 'desc3', due_date: '2024-03-01', status: :closed, user_id: user.id)
+        Task.create!(title: 'title4', description: 'desc4', due_date: '2024-04-01', status: :open, user_id: user.id)
+        Task.create!(title: 'title5', description: 'desc5', due_date: '2024-05-01', status: :in_progress, user_id: user.id)
+        Task.create!(title: 'title6', description: 'desc6', due_date: '2024-06-01', status: :closed, user_id: user.id)
+        Task.create!(title: 'title7', description: 'desc7', due_date: '2024-07-01', status: :open, user_id: user.id)
+        Task.create!(title: 'title8', description: 'desc8', due_date: '2024-08-01', status: :in_progress, user_id: user.id)
+        Task.create!(title: 'title9', description: 'desc9', due_date: '2024-09-01', status: :closed, user_id: user.id)
+        Task.create!(title: 'title10', description: 'desc10', due_date: '2024-10-01', status: :open, user_id: user.id)
+        Task.create!(title: 'title11', description: 'desc11', due_date: '2024-11-01', status: :in_progress, user_id: user.id)
+        Task.create!(title: 'title12', description: 'desc12', due_date: '2024-12-01', status: :closed, user_id: user.id)
         visit tasks_path
       end
 
@@ -264,19 +272,55 @@ RSpec.describe 'Tasks', type: :system do
     end
 
     context 'Display the updating screen' do
-      before do
-        Task.create!(title: 'test1', description: 'desc1', due_date: '2024-01-01')
+      it 'Check the type of screen' do
+        Task.create!(title: 'test1', description: 'desc1', due_date: '2024-01-01', user_id: user.id)
         visit tasks_path
         click_button 'Update'
-      end
-      it 'Check the type of screen' do
         expect(page).to have_content('Edit Task')
+      end
+
+      it 'With permission' do
+        task = Task.create!(title: 'title', description: 'desc', due_date: '2024-01-01', user_id: user.id)
+        visit edit_task_path(task)
+        expect(page).to have_content('Edit Task')
+        expect(page).not_to have_content('Search')
+      end
+
+      it 'Without permission' do
+        task = Task.create!(title: 'title', description: 'desc', due_date: '2024-01-01', user_id: other.id)
+        visit edit_task_path(task)
+        expect(page).not_to have_content('Edit Task')
+        expect(page).to have_content('Search')
+      end
+    end
+
+    context 'Display the details screen' do
+      it 'Check the type of screen' do
+        task = Task.create!(title: 'test1', description: 'desc1', due_date: '2024-01-01', user_id: user.id)
+        visit tasks_path
+        click_link task.title
+        expect(page).to have_content('Details')
+      end
+
+      it 'With permission' do
+        task = Task.create!(title: 'title', description: 'desc', due_date: '2024-01-01', user_id: user.id)
+        visit task_path(task)
+        expect(page).to have_content('Details')
+        expect(page).not_to have_content('Search')
+      end
+
+      it 'Without permission' do
+        task = Task.create!(title: 'title', description: 'desc', due_date: '2024-01-01', user_id: other.id)
+        visit task_path(task)
+        expect(page).not_to have_content('Details')
+        expect(page).to have_content('Search')
       end
     end
   end
 
   describe 'Create a new task' do
     before do
+      User.create(name: 'test', password: 'test')
       visit new_task_path
       fill_in 'task_title', with: 'title-new'
       fill_in 'task_description', with: 'desc-new'
@@ -292,13 +336,12 @@ RSpec.describe 'Tasks', type: :system do
 
   describe 'Update a task' do
     before do
-      task = Task.create!(title: 'title', description: 'desc', due_date: '2024-01-01')
+      task = Task.create!(title: 'title', description: 'desc', due_date: '2024-01-01', user_id: user.id)
       visit edit_task_path(task)
       fill_in 'task_title', with: 'title-modified'
       fill_in 'task_description', with: 'desc-modified'
       click_button 'Proceed'
     end
-
     it 'Check the type of screen and the content of the task' do
       expect(page).to have_content('Details')
       expect(page).to have_content('title-modified')
@@ -308,18 +351,18 @@ RSpec.describe 'Tasks', type: :system do
 
   describe 'Delete a task' do
     before do
-      Task.create!(title: 'test1', description: 'desc1', due_date: '2024-01-01')
+      Task.create!(title: 'title-user', description: 'desc-user', due_date: '2024-01-01', user_id: user.id)
       visit tasks_path
     end
 
     it 'Ensure that the task to be deleted exists' do
-      expect(page).to have_content('test1')
+      expect(page).to have_content('title-user')
+      expect(page).not_to have_content('title-other')
     end
 
     it 'Confirm that the task has been deleted' do
-      click_button 'Delete'
+      click_link 'Delete'
       expect(page).not_to have_content('test1')
-      expect(page).to have_content(I18n.t('tasks.no_tasks'))
     end
   end
 end

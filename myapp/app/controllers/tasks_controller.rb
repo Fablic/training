@@ -1,12 +1,14 @@
 # frozen_string_literal: true
 
 class TasksController < ApplicationController # rubocop:disable Style/Documentation
-  before_action :set_task, only: %i[show edit update destroy]
+  before_action :require_sign_in
+  before_action :set_task_and_check_permissions, only: %i[show edit update destroy]
 
   def index
-    @tasks = Task.search(params[:title], params[:status])
-                 .order("#{sort_column}  #{sort_direction}")
-                 .page(params[:page]).per(5)
+    @tasks = search_tasks
+    @total_tasks_count = @tasks.count
+    @tasks = @tasks.order("#{sort_column}  #{sort_direction}")
+                   .page(params[:page]).per(5)
   end
 
   def new
@@ -23,6 +25,7 @@ class TasksController < ApplicationController # rubocop:disable Style/Documentat
 
   def create
     @task = Task.new(task_params)
+    @task.user_id = current_user.id
     if @task.save
       flash[:info] = I18n.t('tasks.create_success')
       redirect_to @task
@@ -53,8 +56,13 @@ class TasksController < ApplicationController # rubocop:disable Style/Documentat
 
   private
 
-  def set_task
+  def set_task_and_check_permissions
     @task = Task.find(params[:id])
+    return if current_user.admin? || current_user.id == @task.user_id
+
+    @task = nil
+    flash[:warn] = "You don't have permission to access this task"
+    redirect_to tasks_path
   end
 
   def task_params
@@ -62,10 +70,18 @@ class TasksController < ApplicationController # rubocop:disable Style/Documentat
   end
 
   def sort_column
-    Task.column_names.include?(params[:sort]) ? params[:sort] : 'created_at'
+    Task.column_names.include?(params[:sort]) ? "tasks.#{params[:sort]}" : 'tasks.created_at'
   end
 
   def sort_direction
     %w[asc desc].include?(params[:direction]) ? params[:direction] : 'desc'
+  end
+
+  def search_tasks
+    if current_user.admin?
+      Task.search(params[:title], params[:status], nil)
+    else
+      Task.search(params[:title], params[:status], current_user.id)
+    end
   end
 end
