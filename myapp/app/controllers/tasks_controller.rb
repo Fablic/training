@@ -58,15 +58,11 @@ class TasksController < ApplicationController # rubocop:disable Style/Documentat
 
   def set_task_and_check_permissions
     @task = Task.find(params[:id])
-    if @task&.nil?
-      flash[:warn] = 'There is no task with that id'
-      redirect_to task_path
-    end
-    unless current_user.admin? || current_user.id == @task.user_id
-      @task = nil
-      flash[:warn] = "You don't have permission to access this task"
-      redirect_to tasks_path
-    end
+    return if current_user.admin? || current_user.id == @task.user_id
+
+    @task = nil
+    flash[:warn] = "You don't have permission to access this task"
+    redirect_to tasks_path
   end
 
   def task_params
