@@ -2,6 +2,7 @@
 
 class TasksController < ApplicationController
   before_action :set_task, only: %i[show edit update destroy]
+  before_action :set_labels, only: %i[new create edit update]
 
   VALID_SORT_COLUMNS = %w[created_at deadline].freeze
   VALID_SORT_DIRECTIONS = %w[asc desc].freeze
@@ -27,7 +28,6 @@ class TasksController < ApplicationController
 
   def new
     @task = Task.new
-    @labels = Label.all
   end
 
   def create
@@ -36,13 +36,11 @@ class TasksController < ApplicationController
       flash[:notice] = t('alerts.task_created')
       redirect_to @task
     else
-      @labels = Label.all
       render :new
     end
   end
 
   def edit
-    @labels = Label.all
   end
 
   def update
@@ -51,7 +49,6 @@ class TasksController < ApplicationController
       flash[:notice] = t('alerts.task_updated')
       redirect_to @task
     else
-      @labels = Label.all
       render :edit
     end
   end
@@ -70,5 +67,9 @@ class TasksController < ApplicationController
 
   def set_task
     @task = Task.find(params[:id])
+  end
+
+  def set_labels
+    @labels = Label.all
   end
 end
