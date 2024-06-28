@@ -335,17 +335,14 @@ RSpec.describe 'Tasks', type: :system do
   end
 
   describe 'Update a task' do
-    context 'Whether the update input form is displayed correctly.' do
-
-    end
-
-    it 'Check the type of screen and the content of the task' do
+    before do
       task = Task.create!(title: 'title', description: 'desc', due_date: '2024-01-01', user_id: user.id)
       visit edit_task_path(task)
       fill_in 'task_title', with: 'title-modified'
       fill_in 'task_description', with: 'desc-modified'
       click_button 'Proceed'
-
+    end
+    it 'Check the type of screen and the content of the task' do
       expect(page).to have_content('Details')
       expect(page).to have_content('title-modified')
       expect(page).to have_content('desc-modified')
@@ -355,7 +352,6 @@ RSpec.describe 'Tasks', type: :system do
   describe 'Delete a task' do
     before do
       Task.create!(title: 'title-user', description: 'desc-user', due_date: '2024-01-01', user_id: user.id)
-      Task.create!(title: 'title-other', description: 'desc-other', due_date: '2024-01-01', user_id: other.id)
       visit tasks_path
     end
 
