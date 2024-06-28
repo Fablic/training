@@ -1,0 +1,24 @@
+<h1>ラベル一覧</h1>
+
+<%= link_to '新しいラベル', new_label_path, class: 'btn btn-primary' %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>名前</th>
+      <th>アクション</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @labels.each do |label| %>
+      <tr>
+        <td><%= link_to label.name, label_path(label) %></td> <!-- Add link to show page -->
+        <td>
+          <%= link_to '編集', edit_label_path(label), class: 'btn btn-warning btn-sm' %>
+          <%= button_to '削除', label, method: :delete, class: 'btn btn-danger btn-sm' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+

@@ -1,0 +1,24 @@
+<div class="container mt-5">
+  <h1 class="mb-4">Label Details</h1>
+
+  <div class="card">
+    <div class="card-header">
+      <h5 class="card-title mb-0">Name: <%= @label.name %></h5>
+    </div>
+    <div class="card-body">
+      <p class="card-text"><strong>Created at:</strong> <%= @label.created_at.strftime("%Y-%m-%d %H:%M:%S") %></p>
+      <p class="card-text"><strong>Updated at:</strong> <%= @label.updated_at.strftime("%Y-%m-%d %H:%M:%S") %></p>
+    </div>
+    <div class="card-footer text-end">
+      <div class="d-inline-block me-2">
+        <%= link_to 'Edit', edit_label_path(@label), class: 'btn btn-warning' %>
+      </div>
+      <div class="d-inline-block me-2">
+        <%= link_to 'Back', labels_path, class: 'btn btn-secondary' %>
+      </div>
+      <div class="d-inline-block">
+        <%= button_to 'Delete', @label, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+      </div>
+    </div>
+  </div>
+</div>
