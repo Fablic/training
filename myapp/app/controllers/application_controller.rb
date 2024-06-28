@@ -2,8 +2,8 @@
 
 class ApplicationController < ActionController::Base # rubocop:disable Style/Documentation
   # Added `rescue_from` here for the assignment, but it is planned to be removed
-  rescue_from StandardError, with: :render_internal_server_error
-  rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
+  # rescue_from StandardError, with: :render_internal_server_error
+  # rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
 
   helper_method :current_user, :signed_in?
 
@@ -32,5 +32,16 @@ class ApplicationController < ActionController::Base # rubocop:disable Style/Doc
     logger.error(exception.backtrace.join("\n"))
 
     render file: Rails.root.join('public/500.html'), status: :internal_server_error
+  end
+
+  private
+
+  def after_sign_in_path_for(user)
+    case user.role
+    when 'admin'
+      admin_dashboard_index_path
+    else
+      root_path
+    end
   end
 end

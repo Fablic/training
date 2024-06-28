@@ -8,7 +8,7 @@ class SessionController < ApplicationController # rubocop:disable Style/Document
   def create
     user = User.find_by(name: params[:name])
     if sign_in(user)
-      redirect_to root_path, notice: I18n.t('session.sign_in_success')
+      redirect_to after_sign_in_path_for(user), notice: I18n.t('session.sign_in_success')
     else
       flash.now[:warn] = I18n.t('session.invalid_message')
       render :new
