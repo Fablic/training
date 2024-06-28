@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'boot'
-
+require_relative '../app/middlewares/maintenance'
 require 'rails/all'
 
 # Require the gems listed in Gemfile, including any gems
@@ -17,6 +17,7 @@ module Myapp
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
     config.time_zone = 'Tokyo'
 
+    config.middleware.use Maintenance
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
