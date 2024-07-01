@@ -2,7 +2,7 @@
 
 class TasksController < ApplicationController # rubocop:disable Style/Documentation
   before_action :require_sign_in
-  before_action :set_task, only: %i[show edit update destroy]
+  before_action :set_task_and_check_permissions, only: %i[show edit update destroy]
 
   def index
     @tasks = search_tasks
@@ -56,8 +56,13 @@ class TasksController < ApplicationController # rubocop:disable Style/Documentat
 
   private
 
-  def set_task
+  def set_task_and_check_permissions
     @task = Task.find(params[:id])
+    return if current_user.admin? || current_user.id == @task.user_id
+
+    @task = nil
+    flash[:warn] = "You don't have permission to access this task"
+    redirect_to tasks_path
   end
 
   def task_params

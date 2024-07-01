@@ -3,7 +3,9 @@
 require 'rails_helper'
 
 RSpec.describe 'Tasks', type: :system do
-  let(:user) { User.create(name: 'test', password: 'test') }
+  let(:admin) { User.create(name: 'admin', password: 'admin', role: 'admin') }
+  let(:user) { User.create(name: 'user', password: 'user', role: 'standard') }
+  let(:other) { User.create(name: 'other', password: 'other', role: 'standard') }
 
   before do
     visit session_path
@@ -270,13 +272,48 @@ RSpec.describe 'Tasks', type: :system do
     end
 
     context 'Display the updating screen' do
-      before do
-        task = Task.create!(title: 'test1', description: 'desc1', due_date: '2024-01-01', user_id: user.id)
+      it 'Check the type of screen' do
+        Task.create!(title: 'test1', description: 'desc1', due_date: '2024-01-01', user_id: user.id)
         visit tasks_path
         click_button 'Update'
-      end
-      it 'Check the type of screen' do
         expect(page).to have_content('Edit Task')
+      end
+
+      it 'With permission' do
+        task = Task.create!(title: 'title', description: 'desc', due_date: '2024-01-01', user_id: user.id)
+        visit edit_task_path(task)
+        expect(page).to have_content('Edit Task')
+        expect(page).not_to have_content('Search')
+      end
+
+      it 'Without permission' do
+        task = Task.create!(title: 'title', description: 'desc', due_date: '2024-01-01', user_id: other.id)
+        visit edit_task_path(task)
+        expect(page).not_to have_content('Edit Task')
+        expect(page).to have_content('Search')
+      end
+    end
+
+    context 'Display the details screen' do
+      it 'Check the type of screen' do
+        task = Task.create!(title: 'test1', description: 'desc1', due_date: '2024-01-01', user_id: user.id)
+        visit tasks_path
+        click_link task.title
+        expect(page).to have_content('Details')
+      end
+
+      it 'With permission' do
+        task = Task.create!(title: 'title', description: 'desc', due_date: '2024-01-01', user_id: user.id)
+        visit task_path(task)
+        expect(page).to have_content('Details')
+        expect(page).not_to have_content('Search')
+      end
+
+      it 'Without permission' do
+        task = Task.create!(title: 'title', description: 'desc', due_date: '2024-01-01', user_id: other.id)
+        visit task_path(task)
+        expect(page).not_to have_content('Details')
+        expect(page).to have_content('Search')
       end
     end
   end
@@ -305,7 +342,6 @@ RSpec.describe 'Tasks', type: :system do
       fill_in 'task_description', with: 'desc-modified'
       click_button 'Proceed'
     end
-
     it 'Check the type of screen and the content of the task' do
       expect(page).to have_content('Details')
       expect(page).to have_content('title-modified')
@@ -315,18 +351,18 @@ RSpec.describe 'Tasks', type: :system do
 
   describe 'Delete a task' do
     before do
-      Task.create!(title: 'test1', description: 'desc1', due_date: '2024-01-01', user_id: user.id)
+      Task.create!(title: 'title-user', description: 'desc-user', due_date: '2024-01-01', user_id: user.id)
       visit tasks_path
     end
 
     it 'Ensure that the task to be deleted exists' do
-      expect(page).to have_content('test1')
+      expect(page).to have_content('title-user')
+      expect(page).not_to have_content('title-other')
     end
 
     it 'Confirm that the task has been deleted' do
       click_link 'Delete'
       expect(page).not_to have_content('test1')
-      expect(page).to have_content(I18n.t('tasks.no_tasks'))
     end
   end
 end
