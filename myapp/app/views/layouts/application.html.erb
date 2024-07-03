@@ -1,22 +1,55 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Tasks</title>
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<head>
+  <title>Tasks</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+</head>
 
-  <body>
-  <div class="container">
-    <% if signed_in? %>
-      <p>Welcome, <%= current_user.name %> | <%= link_to 'Sign out', session_path, method: :delete, data: { confirm: 'Are you sure?' } %></p>
-    <% else %>
-      <%= link_to 'Sign in', session_path %>
+<body>
+<div class="container">
+  <nav class="navbar navbar-expand-lg" style="background-color: #e3f2fd;">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-card-checklist" viewBox="0 0 32 32">
+          <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
+          <path d="M7 5.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0zM7 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0z"/>
+        </svg>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto"></ul>
+        <div class="raw-sm-3">
+          <% if signed_in? %>
+          <span class="navbar-text"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+  <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+</svg><%= current_user.name %></span>
+            <%= link_to t('common.sign_out'), session_path, class:"btn btn-dark", method: :delete, data: { confirm: 'Are you sure?' }, id: 'sign_out' %>
+          <% else %>
+            <%= link_to t('common.sign_in'), session_path, class:"btn btn-btn-dark", id: 'sign_in' %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <% if flash.present? %>
+    <% flash.each do |key, message| %>
+      <% if key == 'notice' %>
+        <div class="alert alert-secondary" role="alert"><%= message %></div>
+      <% else %>
+        <div class="alert alert-warning" role="alert"><%= message %></div>
+      <% end %>
     <% end %>
-    <%= yield %>
-  </div>
-  </body>
+  <% end %>
+
+  <%= yield %>
+</div>
+</body>
 </html>

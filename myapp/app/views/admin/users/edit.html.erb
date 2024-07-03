@@ -1,2 +1,4 @@
-<h1>Admin::Users#edit</h1>
-<p>Find me in app/views/admin/users/edit.html.erb</p>
+<h2>Edit User</h2>
+<%= form_with(model: [:admin, @user], local: true) do |form| %>
+  <%= render "form", form: form, form_mode: :edit%>
+<% end %>

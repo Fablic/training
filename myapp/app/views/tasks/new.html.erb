@@ -1,14 +1,4 @@
 <h2>Create Task</h2>
-
-<% if flash.present? %>
-  <div class="alert alert-primary" role="alert">
-    <% flash.each do |key, message| %>
-      <p><%= key %><%= message %></p>
-    <% end %>
-  </div>
-<% end %>
-
 <%= form_with(model: @task, local: true) do |form| %>
   <%= render "form", form: form %>
 <% end %>
-

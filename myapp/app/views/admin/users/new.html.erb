@@ -1,2 +1,4 @@
-<h1>Admin::Users#new</h1>
-<p>Find me in app/views/admin/users/new.html.erb</p>
+<h2>Create User</h2>
+<%= form_with(model: [:admin, @user], local: true) do |form| %>
+  <%= render "form", form: form, form_mode: :new%>
+<% end %>

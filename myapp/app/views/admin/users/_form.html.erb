@@ -1,0 +1,36 @@
+<% if @user.errors.any? %>
+  <div class="alert alert-warning" role="alert">
+    <% @user.errors.full_messages.each do |message| %>
+      <p><%= message %></p>
+    <% end %>
+  </div>
+<% end %>
+
+<div class="row mb-3">
+  <%= form.label :name, "Name", class:'col-sm-2 col-form-label'%>
+  <div class="col-sm-10">
+    <% if form_mode == :edit %>
+      <%= form.text_field :name, class: 'form-control', disabled: true%>
+    <% else %>
+      <%= form.text_field :name, class: 'form-control'%>
+    <% end %>
+  </div>
+</div>
+<div class="row mb-3">
+  <%= form.label :password, "Password", class:'col-sm-2 col-form-label' %>
+  <div class="col-sm-10"><%= form.password_field :password, class:'form-control'%></div>
+</div>
+<div class="row mb-3">
+  <%= form.label :password_confirmation, "Password(confirmation)", class:'col-sm-2 col-form-label' %>
+  <div class="col-sm-10"><%= form.password_field :password_confirmation, class:'form-control'%></div>
+</div>
+<div class="row mb-3">
+  <%= form.label :role, "Role", class:'col-sm-2 col-form-label' %>
+  <div class="col-sm-10"><%= form.select :role, User.roles.keys.to_a, {}, class:'form-control'%></div>
+</div>
+<div class="row mb-3">
+  <div class="d-grid gap-2 d-md-flex">
+    <%= form.submit t('common.proceed'), class:'btn btn-sm btn-primary', id: 'proceed' %>
+    <%= link_to t('common.cancel'), admin_users_path, class:'btn btn-sm btn-secondary',  id: 'cancel'%>
+  </div>
+</div>

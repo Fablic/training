@@ -30,12 +30,26 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 ja:
+  common:
+    sign_out: "サインアウト"
+    sign_in: "サインイン"
+    search: "検索"
+    create: "新規作成"
+    update: "更新"
+    delete: "削除"
+    home: "ホーム"
+    cancel: "キャンセル"
+    proceed: "進む"
+    back: "戻る"
+  admin:
+    tasks:
+      no_tasks: "条件に該当するタスクがありません。"
   session:
     invalid_message: "NameかPasswordが不正です。"
-    sign_out_success: "Sign out successful"
-    sign_in_success: "Sign in successful"
+    sign_out_success: "サインアウトに成功しました。"
+    sign_in_success: "サインインに成功しました。"
   tasks:
-    no_tasks: "タスクがありません。"
+    no_tasks: "条件に該当するタスクがありません。"
     create_success: "タスクの作成に成功しました。"
     create_failure: "タスクの作成に失敗しました。"
     update_success: "タスクの更新に成功しました。"

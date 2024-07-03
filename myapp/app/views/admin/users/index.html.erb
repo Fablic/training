@@ -1,2 +1,39 @@
-<h1>Admin::Users#index</h1>
-<p>Find me in app/views/admin/users/index.html.erb</p>
+<h2>Users</h2>
+<table class="table table-striped table-bordered border-dark" id="users">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Role</th>
+      <th>Status</th>
+      <th>Tasks</th>
+      <th>Created</th>
+      <th>Updated</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @users.each_with_index do |user, index| %>
+    <tr>
+      <td><%= link_to user.name, [:admin, user] %></td>
+      <td><%= user.role %></td>
+      <td><%= user.status %></td>
+      <% if user.tasks.size > 0 %>
+      <td>
+        <%= link_to user.tasks.size, admin_tasks_path(user_id: user.id), method: :get%>
+      </td>
+      <% else %>
+        <td><%= user.tasks.size %></td>
+      <% end %>
+      <td><%= user.created_at %></td>
+      <td><%= user.updated_at %></td>
+      <td>
+        <div class="d-grid gap-2 d-md-flex">
+          <%= button_to t('common.update'), edit_admin_user_path(user), method: :get, class:'btn btn-sm btn-primary', id:"update-#{index}" %>
+          <%= link_to t('common.delete'), admin_user_path(user), method: :delete, data: { confirm: 'Really delete?' }, class:'btn btn-sm btn-danger', id:"delete-#{index}"%>
+        </div>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+<%= button_to t('common.create'), "/admin/users/new" , method: :get, class:'btn btn-sm btn-primary', id: 'create'%>
