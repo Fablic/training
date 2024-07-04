@@ -5,8 +5,8 @@ Rails.application.routes.draw do
   resources :tasks
 
   get 'session', to: 'session#new'
-  delete 'session', to: 'session#destroy'
   post 'session', to: 'session#create'
+  delete 'session', to: 'session#destroy'
   patch 'session/switch_role', to: 'session#switch_role'
 
   namespace :admin do
