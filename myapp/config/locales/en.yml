@@ -44,6 +44,19 @@ en:
   admin:
     tasks:
       no_tasks: "There are no tasks"
+      create_success: "Task was successfully created."
+      create_failure: "Failed to create the task."
+      update_success: "Task was successfully updated."
+      update_failure: "Failed to update the task."
+      delete_success: "Task was successfully deleted."
+      delete_failure: "Failed to delete the task."
+    users:
+      create_success: "User was successfully created."
+      update_success: "User was successfully updated."
+      delete_success: "User was successfully deleted."
+      delete_failure: "Failed to delete the User."
+      only_one_admin: "There is only one admin account."
+      cannot_delete_own_account: "cannot_delete_own_account"
   session:
     invalid_message: "Invalid name or password"
     sign_out_success: "Sign out successful"

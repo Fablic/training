@@ -19,7 +19,7 @@ module Admin
     def create
       @user = User.new(create_user_params)
       if @user.save
-        redirect_to admin_user_path(@user), notice: 'User was successfully created.'
+        redirect_to admin_user_path(@user), notice: I18n.t('admin.users.create_success')
       else
         render :new
       end
@@ -33,7 +33,7 @@ module Admin
       return unless can_update_role?
 
       if @user.update(update_user_params)
-        redirect_to admin_user_path(@user), notice: 'User was successfully updated.'
+        redirect_to admin_user_path(@user), I18n.t('admin.users.update_success')
       else
         render :edit
       end
@@ -65,7 +65,7 @@ module Admin
       target_role = update_user_params[:role]
       admin_users = User.where(role: 'admin')
       if target_role == 'standard' && admin_users.count == 1 && admin_users[0].id == @user.id
-        flash[:alert] = 'There is only one admin account.'
+        flash[:alert] = I18n.t('admin.users.only_one_admin')
         redirect_to admin_users_path
         return false
       end
@@ -74,8 +74,7 @@ module Admin
 
     def can_delete_user?
       return true if @user.id != current_user.id
-
-      flash[:alert] = 'cannot delete your own account.'
+      flash[:alert] = I18n.t('admin.users.cannot_delete_own_account')
       redirect_to admin_users_path
       false
     end
@@ -83,7 +82,7 @@ module Admin
     def can_delete_admin?
       users = User.where(role: 'admin')
       if users.count < 2
-        flash[:alert] = 'There is only one admin account.'
+        flash[:alert] = I18n.t('admin.users.only_one_admin')
         redirect_to admin_users_path
         return false
       end
@@ -92,9 +91,9 @@ module Admin
 
     def delete_user
       if @user.destroy
-        flash[:notice] = 'User was successfully deleted.'
+        flash[:notice] = I18n.t('admin.users.delete_success')
       else
-        flash[:alert] = 'Failed to delete User.'
+        flash[:alert] = I18n.t('admin.users.delete_success')
       end
       redirect_to admin_users_path
     end
