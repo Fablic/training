@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 
 class TasksController < ApplicationController # rubocop:disable Style/Documentation
-  before_action :require_sign_in!
   before_action :set_task_and_check_permissions, only: %i[show edit update destroy]
 
   def index
-    @tasks = search_tasks
+    @tasks = search_tasks(search_params, current_user.id)
     @total_tasks_count = @tasks.count
     @tasks = @tasks.order("#{sort_column}  #{sort_direction}")
                    .page(params[:page]).per(5)
@@ -77,11 +76,11 @@ class TasksController < ApplicationController # rubocop:disable Style/Documentat
     %w[asc desc].include?(params[:direction]) ? params[:direction] : 'desc'
   end
 
-  def search_tasks
-    if current_user.admin?
-      Task.search(params[:title], params[:status], nil)
-    else
-      Task.search(params[:title], params[:status], current_user.id)
-    end
+  def search_params
+    params.permit(:title, :status)
+  end
+
+  def search_tasks(params, user_id)
+    Task.search(params[:title], params[:status], user_id)
   end
 end

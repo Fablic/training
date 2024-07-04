@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base # rubocop:disable Style/Doc
   include Authentication
   include Authorization
 
-  before_action :require_sign_in!, :authorize_standard!
+  before_action :require_sign_in!, :authorize_standard_operation!
 
   private
 
@@ -14,6 +14,16 @@ class ApplicationController < ActionController::Base # rubocop:disable Style/Doc
       admin_users_path
     else
       root_path
+    end
+  end
+
+  def after_change_role_path_for(user)
+    if user.admin? && session[:operation_role] == 'admin'
+      admin_users_path
+    elsif user.standard? || session[:operation_role] == 'standard'
+      root_path
+    else
+      session_path
     end
   end
 end

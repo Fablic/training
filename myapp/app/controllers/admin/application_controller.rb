@@ -6,6 +6,6 @@ module Admin
     include Authorization
 
     layout 'admin'
-    before_action :require_sign_in!, :authorize_admin!
+    before_action :require_sign_in!, :authorize_admin_operation!
   end
 end

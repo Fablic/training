@@ -6,11 +6,9 @@ module Admin
 
     def index
       user_id = params[:user_id]
-      unless user_id.nil?
-        @user = User.find(user_id)
-      end
-      @tasks = Task.search(nil, nil, params[:user_id]).order(created_at: :desc)
+      @tasks = Task.search(nil, nil, user_id).order(created_at: :desc)
       @total_tasks_count = @tasks.count
+      @user = User.find(user_id) if user_id
     end
 
     def show
