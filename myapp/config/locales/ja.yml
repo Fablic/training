@@ -48,6 +48,9 @@ ja:
     invalid_message: "NameかPasswordが不正です。"
     sign_out_success: "サインアウトに成功しました。"
     sign_in_success: "サインインに成功しました。"
+    switch_admin_role_success: "ロール切替(admin)に成功しました。"
+    switch_standard_role_success: "ロール切替(standard)に成功しました。"
+    switch_rol_failure: "ロール切替に成失敗しました。"
   tasks:
     no_tasks: "条件に該当するタスクがありません。"
     create_success: "タスクの作成に成功しました。"

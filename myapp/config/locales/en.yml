@@ -48,6 +48,9 @@ en:
     invalid_message: "Invalid name or password"
     sign_out_success: "Sign out successful"
     sign_in_success: "Sign in successful"
+    switch_admin_role_success: "Successfully switched to admin role."
+    switch_standard_role_success: "Successfully switched to standard role."
+    switch_role_failure: "Failed to switch roles."
   tasks:
     no_tasks: "There are no tasks"
     create_success: "Task was successfully created."

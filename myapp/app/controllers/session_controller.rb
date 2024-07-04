@@ -25,7 +25,7 @@ class SessionController < ApplicationController # rubocop:disable Style/Document
     redirect_to session_path, notice: I18n.t('session.sign_out_success')
   end
 
-  def change_role
+  def switch_role
     return if current_user.standard?
 
     update_opearatoin_role(role_params[:operation_role])
@@ -37,11 +37,13 @@ class SessionController < ApplicationController # rubocop:disable Style/Document
   def update_opearatoin_role(operation_role)
     session[:operation_role] = nil
     if operation_role == 'standard'
-      session[:operation_role] = 'standard'
-      flash[:notice] = 'standardユーザへ切り替えました。'
+      session[:operation_role] = operation_role
+      flash[:notice] = I18n.t('session.switch_admin_role_success')
     elsif operation_role == 'admin' && current_user.admin?
-      session[:operation_role] = 'admin'
-      flash[:notice] = 'adminユーザへ切り替えました。'
+      session[:operation_role] = operation_role
+      flash[:notice] = I18n.t('session.switch_standard_role_success')
+    else
+      flash[:notice] = I18n.t('session.switch_role_failure')
     end
   end
 

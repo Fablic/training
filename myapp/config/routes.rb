@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   get 'session', to: 'session#new'
   delete 'session', to: 'session#destroy'
   post 'session', to: 'session#create'
-  patch 'session/change_role', to: 'session#change_role'
+  patch 'session/switch_role', to: 'session#switch_role'
 
   namespace :admin do
     resources :users
