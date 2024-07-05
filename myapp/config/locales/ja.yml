@@ -57,6 +57,9 @@ ja:
       delete_failure: "ユーザーの削除に失敗しました。"
       only_one_admin: "アドミンユーザが１人しかいません。"
       cannot_delete_own_account: "自分自身は削除できません。"
+    labels:
+      delete_success: "ラベルの削除に成功しました。"
+      delete_failure: "ラベルの削除に失敗しました。"
   session:
     invalid_message: "NameかPasswordが不正です。"
     sign_out_success: "サインアウトに成功しました。"

@@ -57,6 +57,9 @@ en:
       delete_failure: "Failed to delete the User."
       only_one_admin: "There is only one admin account."
       cannot_delete_own_account: "cannot_delete_own_account"
+    labels:
+      delete_success: "Label was successfully deleted."
+      delete_failure: "Failed to delete the label."
   session:
     invalid_message: "Invalid name or password"
     sign_out_success: "Sign out successful"

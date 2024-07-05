@@ -8,7 +8,11 @@
     <%= label_tag :status, "Status", class: 'col-sm-2 col-form-label' %>
     <div class="col"><%= select_tag :status, options_for_select([['All', '']] + Task.statuses.keys.map { |k| [k.humanize, k] }, params[:status]), class: 'form-control' %></div>
   </div>
-  <%= submit_tag t('common.search'), class: 'btn btn-sm btn-success', id: 'Search' %>
+  <div class="row mb-3">
+    <%= label_tag :status, "label", class: 'col-sm-2 col-form-label' %>
+    <div class="col-sm-10"><%= text_field_tag :label_name, params[:label_name], class: 'form-control' %></div>
+  </div>
+  <%= submit_tag t('common.search'), class: 'btn btn-sm btn-success', id: 'search' %>
 <% end %>
 
 
@@ -23,12 +27,12 @@
       <th>Description</th>
       <th>Reporter</th>
       <th>Priority</th>
-      <th>Labels</th>
-      <th><%= sortable "due_date", "DueDate" %></th>
-      <th>Status</th>
       <th><%= sortable "created_at", "Created" %></th>
       <th><%= sortable "updated_at", "Updated" %></th>
-      <th></th>
+      <th><%= sortable "due_date", "DueDate" %></th>
+      <th>Status</th>
+      <th>Labels</th>
+      <th>Operation</th>
     </tr>
     </thead>
     <tbody>
@@ -38,15 +42,19 @@
         <td><%= task.description %></td>
         <td><%= task.user.name %></td>
         <td><%= task.priority %></td>
-        <td>N/A</td>
+        <td><span title="<%= task.created_at.strftime('%Y-%m-%d %H:%M:%S') %>"><%= task.created_at.strftime('%Y-%m-%d') %></span></td>
+        <td><span title="<%= task.created_at.strftime('%Y-%m-%d %H:%M:%S') %>"><%= task.updated_at.strftime('%Y-%m-%d') %></span></td>
         <td><%= task.due_date %></td>
         <td><%= task.status %></td>
-        <td><%= task.created_at %></td>
-        <td><%= task.updated_at %></td>
+        <td>
+          <% task.labels.each do |label| %>
+            <span class="badge rounded-pill text-bg-secondary"><%=label.name%></span>
+          <% end %>
+        </td>
         <td>
           <div class="d-grid gap-2 d-md-flex">
             <%= button_to t('common.update'), edit_task_path(task), method: :get, class: 'btn btn-sm btn-primary' , id: "update-#{index}"%>
-            <%= link_to t('common.delete'), task_path(task), method: :delete, data: { confirm: 'Really delete?' }, class: 'btn btn-sm btn-danger', id: "delete-#{index}" %>
+            <%= button_to t('common.delete'), task_path(task), method: :delete, data: { confirm: 'Really delete?' }, class: 'btn btn-sm btn-danger', id: "delete-#{index}" %>
           </div>
         </td>
       </tr>

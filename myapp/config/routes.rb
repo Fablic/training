@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :users
     resources :tasks, only: %i[index show edit update destroy]
+    resources :labels, only: %i[index destroy]
     get 'role', to: 'role#index'
   end
 end

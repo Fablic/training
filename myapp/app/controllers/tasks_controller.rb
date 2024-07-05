@@ -3,6 +3,8 @@
 class TasksController < ApplicationController # rubocop:disable Style/Documentation
   before_action :set_task_and_check_permissions, only: %i[show edit update destroy]
 
+  MAX_LABEL_LENGTH = 3
+
   def index
     @tasks = search_tasks(search_params, current_user.id)
     @total_tasks_count = @tasks.count
@@ -12,6 +14,7 @@ class TasksController < ApplicationController # rubocop:disable Style/Documentat
 
   def new
     @task = Task.new
+    build_labels(@task)
   end
 
   def show
@@ -19,7 +22,7 @@ class TasksController < ApplicationController # rubocop:disable Style/Documentat
   end
 
   def edit
-    ## edit
+    build_labels(@task)
   end
 
   def create
@@ -29,6 +32,7 @@ class TasksController < ApplicationController # rubocop:disable Style/Documentat
       flash[:notice] = I18n.t('tasks.create_success')
       redirect_to @task
     else
+      build_labels(@task)
       flash.now[:alert] = I18n.t('tasks.create_failure')
       render :new
     end
@@ -39,13 +43,14 @@ class TasksController < ApplicationController # rubocop:disable Style/Documentat
       flash[:notice] = I18n.t('tasks.update_success')
       redirect_to @task
     else
+      build_labels(@task)
       flash.now[:alert] = I18n.t('tasks.update_failure')
       render :edit
     end
   end
 
   def destroy
-    if @task.delete
+    if @task.destroy
       flash[:notice] = I18n.t('tasks.delete_success')
     else
       flash[:alert] = I18n.t('tasks.delete_failure')
@@ -65,7 +70,8 @@ class TasksController < ApplicationController # rubocop:disable Style/Documentat
   end
 
   def task_params
-    params.require(:task).permit(:title, :description, :status, :priority, :due_date)
+    params.require(:task).permit(:title, :description, :status, :priority, :due_date, labels_attributes: [:id, :name, :_destroy])
+    #params.require(:task).permit(:title, :description, :status, :priority, :due_date)
   end
 
   def sort_column
@@ -77,10 +83,14 @@ class TasksController < ApplicationController # rubocop:disable Style/Documentat
   end
 
   def search_params
-    params.permit(:title, :status)
+    params.permit(:title, :status, :label_name)
   end
 
   def search_tasks(params, user_id)
-    Task.search(params[:title], params[:status], user_id)
+    Task.search(params[:title], params[:status], user_id, params[:label_name])
+  end
+
+  def build_labels(task)
+    (MAX_LABEL_LENGTH - task.labels.size).times { task.labels.build }
   end
 end

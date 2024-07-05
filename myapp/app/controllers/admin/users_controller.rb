@@ -6,6 +6,7 @@ module Admin
 
     def index
       @users = User.eager_load(:tasks).order(created_at: :asc)
+      #@users = User.includes(:tasks).order(created_at: :asc)
     end
 
     def show
@@ -33,7 +34,7 @@ module Admin
       return unless can_update_role?
 
       if @user.update(update_user_params)
-        redirect_to admin_user_path(@user), I18n.t('admin.users.update_success')
+        redirect_to admin_user_path(@user), notice: I18n.t('admin.users.update_success')
       else
         render :edit
       end

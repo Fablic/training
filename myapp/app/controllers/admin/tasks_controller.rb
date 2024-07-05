@@ -6,7 +6,7 @@ module Admin
 
     def index
       user_id = params[:user_id]
-      @tasks = Task.search(nil, nil, user_id).order(created_at: :desc)
+      @tasks = Task.search(nil, nil, user_id, nil).order(created_at: :desc)
       @total_tasks_count = @tasks.count
       @user = User.find(user_id) if user_id
     end
@@ -21,19 +21,19 @@ module Admin
 
     def update
       if @task.update(task_params)
-        flash[:notice] = I18n.t('tasks.update_success')
+        flash[:notice] = I18n.t('admin.tasks.update_success')
         redirect_to admin_task_path @task
       else
-        flash.now[:alert] = I18n.t('tasks.update_failure')
+        flash.now[:alert] = I18n.t('admin.tasks.update_failure')
         render :edit
       end
     end
 
     def destroy
-      if @task.delete
-        flash[:notice] = I18n.t('tasks.delete_success')
+      if @task.destroy
+        flash[:notice] = I18n.t('admin.tasks.delete_success')
       else
-        flash[:alert] = I18n.t('tasks.delete_failure')
+        flash[:alert] = I18n.t('admin.tasks.delete_failure')
       end
       redirect_to admin_tasks_path
     end
