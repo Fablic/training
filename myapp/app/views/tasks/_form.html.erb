@@ -17,10 +17,7 @@
     <%= form.label :description, "Description", class:'col-sm-2 col-form-label' %>
     <div class="col-sm-10"><%= form.text_field :description %></div>
   </div>
-  <div class="row mb-3">
-    <%= form.label :status, "Status", class:'col-sm-2 col-form-label' %>
-    <div class="col-sm-10"><%= form.select :status, Task.statuses.keys.to_a, {} %></div>
-  </div>
+
   <div class="row mb-3">
     <%= form.label :priority, "Priority", class:'col-sm-2 col-form-label' %>
     <div class="col-sm-10"><%= form.select :priority, Task.priorities.keys.to_a, {} %></div>
@@ -32,6 +29,16 @@
       <div class="error-message"><%= @task.errors[:due_date].join(", ") %></div>
     <% end %>
   </div>
+  <div class="row mb-3">
+    <%= form.label :status, "Status", class:'col-sm-2 col-form-label' %>
+    <div class="col-sm-10"><%= form.select :status, Task.statuses.keys.to_a, {} %></div>
+  </div>
+  <%= form.fields_for :labels do |label_form_relation| %>
+    <div class="row mb-3">
+      <%= label_form_relation.label :label, "Label-#{label_form_relation.index+1}", class:'col-sm-2 col-form-label'%>
+      <div class="col-sm-10"><%= label_form_relation.text_field :name %></div>
+    </div>
+  <% end %>
   <div class="row mb-3">
     <div class="d-grid gap-2 d-md-flex">
       <%= form.submit t('common.proceed'), class:'btn btn-sm btn-primary', id: 'proceed' %>

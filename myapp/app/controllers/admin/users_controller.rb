@@ -6,6 +6,7 @@ module Admin
 
     def index
       @users = User.eager_load(:tasks).order(created_at: :asc)
+      #@users = User.includes(:tasks).order(created_at: :asc)
     end
 
     def show
