@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 class Task < ApplicationRecord # rubocop:disable Style/Documentation
+<<<<<<< HEAD
+=======
+
+>>>>>>> a1ff7a1905962c0df6670545f94d8adc938db0dd
   attr_accessor :labels_attributes
 
   validates :title, presence: true

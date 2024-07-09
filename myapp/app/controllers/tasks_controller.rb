@@ -27,8 +27,10 @@ class TasksController < ApplicationController # rubocop:disable Style/Documentat
 
   def create
     @task = Task.new(task_params)
+    @task.labels_attributes = task_params[:labels_attributes]
     @task.user_id = current_user.id
     if @task.save
+      # process_labels(@task, params[:task][:labels_attributes])
       flash[:notice] = I18n.t('tasks.create_success')
       redirect_to @task
     else
@@ -39,6 +41,7 @@ class TasksController < ApplicationController # rubocop:disable Style/Documentat
   end
 
   def update
+    @task.labels_attributes = task_params[:labels_attributes]
     if @task.update(task_params)
       flash[:notice] = I18n.t('tasks.update_success')
       redirect_to @task
@@ -89,6 +92,10 @@ class TasksController < ApplicationController # rubocop:disable Style/Documentat
 
   def search_tasks(params, user_id)
     Task.search(params[:title], params[:status], user_id, params[:label_name])
+  end
+
+  def build_labels(task)
+    (MAX_LABEL_LENGTH - task.labels.size).times { task.labels.build }
   end
 
   def build_labels(task)

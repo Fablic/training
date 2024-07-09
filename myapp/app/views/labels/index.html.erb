@@ -1,0 +1,23 @@
+ <h2>Labels</h2>
+  <table class="table table-striped table-bordered border-dark" id="result">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Tasks</th>
+      <th>Created</th>
+      <th>Updated</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @labels.each_with_index do |label, index| %>
+      <tr>
+        <td><%= label.name %></td>
+        <td><%= label.tasks.size%></td>
+        <td><%= label.created_at %></td>
+        <td><%= label.updated_at %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+<%= button_to t('common.home'), "/", method: :get, class: 'btn btn-sm btn-primary', id: 'home' %>

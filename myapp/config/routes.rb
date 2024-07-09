@@ -3,6 +3,7 @@
 Rails.application.routes.draw do
   root to: 'tasks#index'
   resources :tasks
+  resources :labels, only: %i[index]
 
   get 'session', to: 'session#new'
   post 'session', to: 'session#create'
