@@ -27,9 +27,8 @@ class SessionController < ApplicationController # rubocop:disable Style/Document
 
   def switch_role
     return if current_user.standard?
-    session[:operation_role] = nil
 
-    operation_role = role_params[:operation_role]
+    operation_role = reset_and_get_operation_role
     if operation_role == 'standard'
       switch_to_standard_role
     elsif operation_role == 'admin' && current_user.admin?
@@ -41,6 +40,11 @@ class SessionController < ApplicationController # rubocop:disable Style/Document
   end
 
   private
+
+  def reset_and_get_operation_role
+    session[:operation_role] = nil
+    role_params[:operation_role]
+  end
 
   def switch_to_standard_role
     session[:operation_role] = 'standard'

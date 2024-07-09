@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
 class Task < ApplicationRecord # rubocop:disable Style/Documentation
-<<<<<<< HEAD
-=======
-
->>>>>>> a1ff7a1905962c0df6670545f94d8adc938db0dd
   attr_accessor :labels_attributes
 
   validates :title, presence: true
@@ -23,7 +19,7 @@ class Task < ApplicationRecord # rubocop:disable Style/Documentation
 
   before_save :process_labels
 
-  def self.search(query = nil, status = nil, user_id = nil, label_name = nil)
+  def self.search(query, status, user_id = nil, label_name = nil)
     tasks = all.includes(%i[user labels])
     tasks = tasks.where(user_id: user_id) unless user_id.nil?
     tasks = tasks.where('title LIKE ?', "%#{query}%") if query.present?

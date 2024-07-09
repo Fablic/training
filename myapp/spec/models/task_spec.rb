@@ -65,7 +65,7 @@ RSpec.describe Task, type: :model do
     end
 
     it 'search title, result is not empty' do
-      task_list = Task.search('test1', nil, user.id)
+      task_list = Task.search('test1', nil)
       ## order by created_at desc
       expect(task_list.count).to eq 2
       expect(task_list[0].title).to include('test1')

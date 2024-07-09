@@ -30,13 +30,9 @@ class TasksController < ApplicationController # rubocop:disable Style/Documentat
     @task.labels_attributes = task_params[:labels_attributes]
     @task.user_id = current_user.id
     if @task.save
-      # process_labels(@task, params[:task][:labels_attributes])
-      flash[:notice] = I18n.t('tasks.create_success')
-      redirect_to @task
+      handle_save_success(@task)
     else
-      build_labels(@task)
-      flash.now[:alert] = I18n.t('tasks.create_failure')
-      render :new
+      handle_save_failure(@task)
     end
   end
 
@@ -98,7 +94,14 @@ class TasksController < ApplicationController # rubocop:disable Style/Documentat
     (MAX_LABEL_LENGTH - task.labels.size).times { task.labels.build }
   end
 
-  def build_labels(task)
-    (MAX_LABEL_LENGTH - task.labels.size).times { task.labels.build }
+  def handle_save_success(task)
+    flash[:notice] = I18n.t('tasks.create_success')
+    redirect_to task
+  end
+
+  def handle_save_failure(task)
+    build_labels(task)
+    flash.now[:alert] = I18n.t('tasks.create_failure')
+    render :new
   end
 end
