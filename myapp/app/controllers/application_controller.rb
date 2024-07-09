@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base # rubocop:disable Style/Doc
   include Authentication
   include Authorization
 
-  before_action :require_sign_in!, :authorize_standard_operation!
+  before_action :check_maintenance_mode, :require_sign_in!, :authorize_standard_operation!
 
   private
 
@@ -24,6 +24,12 @@ class ApplicationController < ActionController::Base # rubocop:disable Style/Doc
       root_path
     else
       session_path
+    end
+  end
+
+  def check_maintenance_mode
+    if File.exist?(Rails.root.join('tmp', 'maintenance.txt'))
+      render file: Rails.root.join('public', 'maintenance.html'), layout:false, status: 503
     end
   end
 end
