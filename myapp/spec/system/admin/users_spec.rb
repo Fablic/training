@@ -46,7 +46,7 @@ RSpec.describe 'Users', type: :system do
 
     context 'Display the updating screen' do
       it 'Check the type of screen' do
-        click_button 'update-0'
+        click_button 'update-1'
         expect(page).to have_content('Edit User')
       end
     end
@@ -148,7 +148,7 @@ RSpec.describe 'Users', type: :system do
         select 'standard', from: 'user_role'
         click_button 'proceed'
 
-        expect(page).to have_content('Search')
+        expect(page).to have_content('Tasks')
       end
     end
   end
@@ -158,20 +158,20 @@ RSpec.describe 'Users', type: :system do
       user = User.create(name: 'user01', password: 'user01', role: 'standard')
       visit admin_users_path
       expect(page).to have_content('user01')
-      click_link 'delete-1'
+      click_link 'delete-2'
       expect(page).not_to have_content('user01')
     end
     it 'admin user with two admin users' do
       user = User.create(name: 'admin02', password: 'admin02', role: 'admin')
       visit admin_users_path
       expect(page).to have_content('admin02')
-      click_link 'delete-1'
+      click_link 'delete-2'
       expect(page).not_to have_content('admin02')
     end
     it 'admin user with one admin users' do
       visit admin_users_path
       expect(page).to have_content('admin01')
-      click_link 'delete-0'
+      click_link 'delete-1'
       expect(page).to have_content('admin01')
     end
   end

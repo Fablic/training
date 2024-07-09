@@ -43,7 +43,7 @@ en:
     back: "戻る"
   admin:
     tasks:
-      no_tasks: "There are no tasks"
+      no_tasks: "There are no tasks."
       create_success: "Task was successfully created."
       create_failure: "Failed to create the task."
       update_success: "Task was successfully updated."
@@ -58,6 +58,7 @@ en:
       only_one_admin: "There is only one admin account."
       cannot_delete_own_account: "cannot_delete_own_account"
     labels:
+      no_tasks: "There are no labels."
       delete_success: "Label was successfully deleted."
       delete_failure: "Failed to delete the label."
   session:
@@ -68,7 +69,7 @@ en:
     switch_standard_role_success: "Successfully switched to standard role."
     switch_role_failure: "Failed to switch roles."
   tasks:
-    no_tasks: "There are no tasks"
+    no_tasks: "There are no tasks."
     create_success: "Task was successfully created."
     create_failure: "Failed to create the task."
     update_success: "Task was successfully updated."

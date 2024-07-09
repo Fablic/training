@@ -27,24 +27,33 @@ class SessionController < ApplicationController # rubocop:disable Style/Document
 
   def switch_role
     return if current_user.standard?
+    session[:operation_role] = nil
 
-    update_opearatoin_role(role_params[:operation_role])
+    operation_role = role_params[:operation_role]
+    if operation_role == 'standard'
+      switch_to_standard_role
+    elsif operation_role == 'admin' && current_user.admin?
+      switch_to_admin_role
+    else
+      handle_role_switch_failure
+    end
     redirect_to after_change_role_path_for(current_user)
   end
 
   private
 
-  def update_opearatoin_role(operation_role)
-    session[:operation_role] = nil
-    if operation_role == 'standard'
-      session[:operation_role] = operation_role
-      flash[:notice] = I18n.t('session.switch_admin_role_success')
-    elsif operation_role == 'admin' && current_user.admin?
-      session[:operation_role] = operation_role
-      flash[:notice] = I18n.t('session.switch_standard_role_success')
-    else
-      flash[:notice] = I18n.t('session.switch_role_failure')
-    end
+  def switch_to_standard_role
+    session[:operation_role] = 'standard'
+    flash[:notice] = I18n.t('session.switch_admin_role_success')
+  end
+
+  def switch_to_admin_role
+    session[:operation_role] = 'admin'
+    flash[:notice] = I18n.t('session.switch_standard_role_success')
+  end
+
+  def handle_role_switch_failure
+    flash[:notice] = I18n.t('session.switch_role_failure')
   end
 
   def sign_in(session_params)

@@ -32,8 +32,8 @@
       </td>
       <td>
         <div class="d-grid gap-2 d-md-flex">
-          <%= button_to t('common.update'), edit_admin_user_path(user), method: :get, class:'btn btn-sm btn-primary', id:"update-#{index}" %>
-          <%= link_to t('common.delete'), admin_user_path(user), method: :delete, data: { confirm: 'Really delete?' }, class:'btn btn-sm btn-danger', id:"delete-#{index}"%>
+          <%= button_to t('common.update'), edit_admin_user_path(user), method: :get, class:'btn btn-sm btn-primary', id:"update-#{index+1}" %>
+          <%= link_to t('common.delete'), admin_user_path(user), method: :delete, data: { confirm: 'Really delete?' }, class:'btn btn-sm btn-danger', id:"delete-#{index+1}"%>
         </div>
       </td>
     </tr>

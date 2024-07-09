@@ -1,50 +1,56 @@
 <h2>Tasks</h2>
+<% if @total_tasks_count == 0 %>
+  <div class="alert alert-warning" role="alert"><%= t('admin.tasks.no_tasks') %></div>
+<% end %>
 <% unless @user.nil? %>
   Reporter = <%= @user.name %>
 <% end %>
-<table class="table table-striped table-bordered border-dark" id="result">
-  <thead>
-  <tr>
-    <th>Title</th>
-    <th>Description</th>
-    <th>Reporter</th>
-    <th>Priority</th>
-    <th>Created</th>
-    <th>Updated</th>
-    <th>DueDate</th>
-    <th>Status</th>
-    <th>Labels</th>
-    <th>Operation</th>
-  </tr>
-  </thead>
-  <tbody>
-  <% @tasks.each_with_index do |task, index| %>
-    <tr>
-      <td><%= link_to task.title, admin_task_path(task) %></td>
-      <td><%= task.description %></td>
-      <td><%= task.user.name %></td>
-      <td><%= task.priority %></td>
-      <td>
-        <span title="<%= task.created_at.strftime('%Y-%m-%d %H:%M:%S') %>"><%= task.created_at.strftime('%Y-%m-%d') %></span>
-      </td>
-      <td>
-        <span title="<%= task.created_at.strftime('%Y-%m-%d %H:%M:%S') %>"><%= task.updated_at.strftime('%Y-%m-%d') %></span>
-      </td>
-      <td><%= task.due_date %></td>
-      <td><%= task.status %></td>
-      <td>
-        <% task.labels.each do |label| %>
-          <span class="badge rounded-pill text-bg-secondary"><%= label.name %></span>
-        <% end %>
-      </td>
 
-      <td>
-        <div class="d-grid gap-2 d-md-flex">
-          <%= button_to t('common.update'), edit_admin_task_path(task), method: :get, class: 'btn btn-sm btn-primary', id: "update-#{index}" %>
-          <%= button_to t('common.delete'), admin_task_path(task), method: :delete, data: { confirm: 'Really delete?' }, class: 'btn btn-sm btn-danger', id: "delete-#{index}" %>
-        </div>
-      </td>
+<% if @total_tasks_count != 0 %>
+  <table class="table table-striped table-bordered border-dark" id="result">
+    <thead>
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Reporter</th>
+      <th>Priority</th>
+      <th>Created</th>
+      <th>Updated</th>
+      <th>DueDate</th>
+      <th>Status</th>
+      <th>Labels</th>
+      <th>Operation</th>
     </tr>
-  <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+    <% @tasks.each_with_index do |task, index| %>
+      <tr>
+        <td><%= link_to task.title, admin_task_path(task) %></td>
+        <td><%= task.description %></td>
+        <td><%= task.user.name %></td>
+        <td><%= task.priority %></td>
+        <td>
+          <span title="<%= task.created_at.strftime('%Y-%m-%d %H:%M:%S') %>"><%= task.created_at.strftime('%Y-%m-%d') %></span>
+        </td>
+        <td>
+          <span title="<%= task.created_at.strftime('%Y-%m-%d %H:%M:%S') %>"><%= task.updated_at.strftime('%Y-%m-%d') %></span>
+        </td>
+        <td><%= task.due_date %></td>
+        <td><%= task.status %></td>
+        <td>
+          <% task.labels.each do |label| %>
+            <span class="badge rounded-pill text-bg-secondary"><%= label.name %></span>
+          <% end %>
+        </td>
+
+        <td>
+          <div class="d-grid gap-2 d-md-flex">
+            <%= button_to t('common.update'), edit_admin_task_path(task), method: :get, class: 'btn btn-sm btn-primary', id: "update-#{index+1}" %>
+            <%= button_to t('common.delete'), admin_task_path(task), method: :delete, data: { confirm: 'Really delete?' }, class: 'btn btn-sm btn-danger', id: "delete-#{index+1}" %>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% end %>

@@ -70,8 +70,9 @@ class TasksController < ApplicationController # rubocop:disable Style/Documentat
   end
 
   def task_params
-    params.require(:task).permit(:title, :description, :status, :priority, :due_date, labels_attributes: [:id, :name, :_destroy])
-    #params.require(:task).permit(:title, :description, :status, :priority, :due_date)
+    params
+      .require(:task)
+      .permit(:title, :description, :status, :priority, :due_date, labels_attributes: %i[id name _destroy])
   end
 
   def sort_column

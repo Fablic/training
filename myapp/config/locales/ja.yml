@@ -43,7 +43,7 @@ ja:
     back: "戻る"
   admin:
     tasks:
-      no_tasks: "条件に該当するタスクがありません。"
+      no_tasks: "該当するタスクが見つかりませんでした。"
       create_success: "タスクの作成に成功しました。"
       create_failure: "タスクの作成に失敗しました。"
       update_success: "タスクの更新に成功しました。"
@@ -58,6 +58,7 @@ ja:
       only_one_admin: "アドミンユーザが１人しかいません。"
       cannot_delete_own_account: "自分自身は削除できません。"
     labels:
+      no_labels: "該当するラベルが見つかりませんでした。"
       delete_success: "ラベルの削除に成功しました。"
       delete_failure: "ラベルの削除に失敗しました。"
   session:
@@ -68,7 +69,7 @@ ja:
     switch_standard_role_success: "ロール切替(standard)に成功しました。"
     switch_rol_failure: "ロール切替に成失敗しました。"
   tasks:
-    no_tasks: "条件に該当するタスクがありません。"
+    no_tasks: "該当するタスクが見つかりませんでした。"
     create_success: "タスクの作成に成功しました。"
     create_failure: "タスクの作成に失敗しました。"
     update_success: "タスクの更新に成功しました。"

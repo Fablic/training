@@ -6,7 +6,7 @@ module Admin
 
     def index
       @users = User.eager_load(:tasks).order(created_at: :asc)
-      #@users = User.includes(:tasks).order(created_at: :asc)
+      # @users = User.includes(:tasks).order(created_at: :asc)
     end
 
     def show
@@ -75,6 +75,7 @@ module Admin
 
     def can_delete_user?
       return true if @user.id != current_user.id
+
       flash[:alert] = I18n.t('admin.users.cannot_delete_own_account')
       redirect_to admin_users_path
       false

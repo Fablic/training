@@ -266,7 +266,7 @@ RSpec.describe 'Tasks', type: :system do
       it 'Check the type of screen' do
         Task.create!(title: 'test1', description: 'desc1', due_date: '2024-01-01', user_id: user.id)
         visit tasks_path
-        click_button 'update-0'
+        click_button 'update-1'
         expect(page).to have_content('Edit Task')
       end
 
@@ -274,14 +274,14 @@ RSpec.describe 'Tasks', type: :system do
         task = Task.create!(title: 'title', description: 'desc', due_date: '2024-01-01', user_id: user.id)
         visit edit_task_path(task)
         expect(page).to have_content('Edit Task')
-        expect(page).not_to have_content('Search')
+        expect(page).not_to have_content('Tasks')
       end
 
       it 'Without permission' do
         task = Task.create!(title: 'title', description: 'desc', due_date: '2024-01-01', user_id: other.id)
         visit edit_task_path(task)
         expect(page).not_to have_content('Edit Task')
-        expect(page).to have_content('Search')
+        expect(page).to have_content('Tasks')
       end
     end
 
@@ -297,14 +297,14 @@ RSpec.describe 'Tasks', type: :system do
         task = Task.create!(title: 'title', description: 'desc', due_date: '2024-01-01', user_id: user.id)
         visit task_path(task)
         expect(page).to have_content('Details')
-        expect(page).not_to have_content('Search')
+        expect(page).not_to have_content('Tasks')
       end
 
       it 'Without permission' do
         task = Task.create!(title: 'title', description: 'desc', due_date: '2024-01-01', user_id: other.id)
         visit task_path(task)
         expect(page).not_to have_content('Details')
-        expect(page).to have_content('Search')
+        expect(page).to have_content('Tasks')
       end
     end
   end
@@ -352,8 +352,8 @@ RSpec.describe 'Tasks', type: :system do
     end
 
     it 'Confirm that the task has been deleted' do
-      click_link 'delete-0'
-      expect(page).not_to have_content('test1')
+      click_button 'delete-1'
+      expect(page).not_to have_content('title-user')
     end
   end
 end
