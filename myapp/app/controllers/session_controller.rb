@@ -20,7 +20,7 @@ class SessionController < ApplicationController # rubocop:disable Style/Document
   end
 
   def destroy
-    session[:id] = nil
+    session[:user_id] = nil
     session[:opertion_role] = nil
     redirect_to session_path, notice: I18n.t('session.sign_out_success')
   end
