@@ -27,7 +27,6 @@ class TasksController < ApplicationController # rubocop:disable Style/Documentat
 
   def create
     @task = Task.new(task_params)
-    @task.labels_attributes = task_params[:labels_attributes]
     @task.user_id = current_user.id
     if @task.save
       handle_save_success(@task)
@@ -37,7 +36,6 @@ class TasksController < ApplicationController # rubocop:disable Style/Documentat
   end
 
   def update
-    @task.labels_attributes = task_params[:labels_attributes]
     if @task.update(task_params)
       flash[:notice] = I18n.t('tasks.update_success')
       redirect_to @task
