@@ -74,6 +74,7 @@ module Admin
 
     def can_delete_user?
       return true if @user.id != current_user.id
+
       flash[:alert] = I18n.t('admin.users.cannot_delete_own_account')
       redirect_to admin_users_path
       false
