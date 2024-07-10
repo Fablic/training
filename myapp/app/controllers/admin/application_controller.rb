@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 
 module Admin
-  class ApplicationController < ActionController::Base # rubocop:disable Style/Documentation
-    include Authentication
-    include Authorization
-
+  class ApplicationController < ::ApplicationController # rubocop:disable Style/Documentation
     layout 'admin'
-    before_action :require_sign_in!, :authorize_admin_operation!
+
+    skip_before_action :authorize_standard_operation!
+    before_action :authorize_admin_operation!
   end
 end
