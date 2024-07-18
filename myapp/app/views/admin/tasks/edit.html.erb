@@ -1,4 +1,4 @@
 <h2>Edit Task</h2>
-<%= form_with(model: @task, local: true) do |form| %>
+<%= form_with(model: [:admin, @task], local: true) do |form| %>
   <%= render "form", form: form %>
 <% end %>

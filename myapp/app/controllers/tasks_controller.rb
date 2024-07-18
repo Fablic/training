@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 
 class TasksController < ApplicationController # rubocop:disable Style/Documentation
-  before_action :require_sign_in
   before_action :set_task_and_check_permissions, only: %i[show edit update destroy]
 
   def index
-    @tasks = search_tasks
+    @tasks = search_tasks(search_params, current_user.id)
     @total_tasks_count = @tasks.count
     @tasks = @tasks.order("#{sort_column}  #{sort_direction}")
                    .page(params[:page]).per(5)
@@ -27,29 +26,29 @@ class TasksController < ApplicationController # rubocop:disable Style/Documentat
     @task = Task.new(task_params)
     @task.user_id = current_user.id
     if @task.save
-      flash[:info] = I18n.t('tasks.create_success')
+      flash[:notice] = I18n.t('tasks.create_success')
       redirect_to @task
     else
-      flash.now[:warn] = I18n.t('tasks.create_failure')
+      flash.now[:alert] = I18n.t('tasks.create_failure')
       render :new
     end
   end
 
   def update
     if @task.update(task_params)
-      flash[:info] = I18n.t('tasks.update_success')
+      flash[:notice] = I18n.t('tasks.update_success')
       redirect_to @task
     else
-      flash.now[:warn] = I18n.t('tasks.update_failure')
+      flash.now[:alert] = I18n.t('tasks.update_failure')
       render :edit
     end
   end
 
   def destroy
     if @task.delete
-      flash[:info] = I18n.t('tasks.delete_success')
+      flash[:notice] = I18n.t('tasks.delete_success')
     else
-      flash[:warn] = I18n.t('tasks.delete_failure')
+      flash[:alert] = I18n.t('tasks.delete_failure')
     end
     redirect_to tasks_path
   end
@@ -61,7 +60,7 @@ class TasksController < ApplicationController # rubocop:disable Style/Documentat
     return if current_user.admin? || current_user.id == @task.user_id
 
     @task = nil
-    flash[:warn] = "You don't have permission to access this task"
+    flash[:alert] = "You don't have permission to access this task"
     redirect_to tasks_path
   end
 
@@ -77,11 +76,11 @@ class TasksController < ApplicationController # rubocop:disable Style/Documentat
     %w[asc desc].include?(params[:direction]) ? params[:direction] : 'desc'
   end
 
-  def search_tasks
-    if current_user.admin?
-      Task.search(params[:title], params[:status], nil)
-    else
-      Task.search(params[:title], params[:status], current_user.id)
-    end
+  def search_params
+    params.permit(:title, :status)
+  end
+
+  def search_tasks(params, user_id)
+    Task.search(params[:title], params[:status], user_id)
   end
 end

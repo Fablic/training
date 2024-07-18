@@ -30,12 +30,42 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 ja:
+  common:
+    sign_out: "サインアウト"
+    sign_in: "サインイン"
+    search: "検索"
+    create: "新規作成"
+    update: "更新"
+    delete: "削除"
+    home: "ホーム"
+    cancel: "キャンセル"
+    proceed: "進む"
+    back: "戻る"
+  admin:
+    tasks:
+      no_tasks: "条件に該当するタスクがありません。"
+      create_success: "タスクの作成に成功しました。"
+      create_failure: "タスクの作成に失敗しました。"
+      update_success: "タスクの更新に成功しました。"
+      update_failure: "タスクの更新に失敗しました。"
+      delete_success: "タスクの削除に成功しました。"
+      delete_failure: "タスクの削除に失敗しました。"
+    users:
+      create_success: "ユーザーの作成に成功しました。"
+      update_success: "ユーザーの更新に成功しました。"
+      delete_success: "ユーザーの削除に成功しました。"
+      delete_failure: "ユーザーの削除に失敗しました。"
+      only_one_admin: "アドミンユーザが１人しかいません。"
+      cannot_delete_own_account: "自分自身は削除できません。"
   session:
     invalid_message: "NameかPasswordが不正です。"
-    sign_out_success: "Sign out successful"
-    sign_in_success: "Sign in successful"
+    sign_out_success: "サインアウトに成功しました。"
+    sign_in_success: "サインインに成功しました。"
+    switch_admin_role_success: "ロール切替(admin)に成功しました。"
+    switch_standard_role_success: "ロール切替(standard)に成功しました。"
+    switch_rol_failure: "ロール切替に成失敗しました。"
   tasks:
-    no_tasks: "タスクがありません。"
+    no_tasks: "条件に該当するタスクがありません。"
     create_success: "タスクの作成に成功しました。"
     create_failure: "タスクの作成に失敗しました。"
     update_success: "タスクの更新に成功しました。"

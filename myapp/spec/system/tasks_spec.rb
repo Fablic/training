@@ -87,10 +87,7 @@ RSpec.describe 'Tasks', type: :system do
 
       it 'When searching by title, if results are not found' do
         visit tasks_path(title: 'title4')
-        within('table#result') do
-          row = all('tr')[1]
-          expect(row).to be_nil
-        end
+        expect(page).to have_content(I18n.t('tasks.no_tasks'))
       end
 
       it 'When searching by status, if results are found' do
@@ -102,13 +99,10 @@ RSpec.describe 'Tasks', type: :system do
 
       it 'When searching by status, if results are not found' do
         visit tasks_path(status: :closed)
-        within('table#result') do
-          row = all('tr')[1]
-          expect(row).to be_nil
-        end
+        expect(page).to have_content(I18n.t('tasks.no_tasks'))
       end
 
-      it 'When searching by title and status, if results are not found' do
+      it 'When searching by title and status, if results are found' do
         visit tasks_path(title: 'title1', status: :open)
         within 'table#result' do
           expect(find('tr:nth-child(1) td:nth-child(1)').text).to eq('title1')
@@ -139,8 +133,7 @@ RSpec.describe 'Tasks', type: :system do
           expect(find('tr:nth-child(5) td:nth-child(1)').text).to eq('title8')
         end
 
-        within 'nav' do
-          expect(page).to have_selector('ul.pagination')
+        within 'ul.pagination' do
           #  first is link
           expect(page).to have_no_selector('li.page-item a.page-link', text: 'First')
           #  previous is link
@@ -159,7 +152,7 @@ RSpec.describe 'Tasks', type: :system do
       end
 
       it 'second page ' do
-        within 'nav' do
+        within 'ul.pagination' do
           click_link '2'
         end
 
@@ -168,8 +161,7 @@ RSpec.describe 'Tasks', type: :system do
           expect(find('tr:nth-child(5) td:nth-child(1)').text).to eq('title3')
         end
 
-        within 'nav' do
-          expect(page).to have_selector('ul.pagination')
+        within 'ul.pagination' do
           #  first is link
           expect(page).to have_selector('li.page-item a.page-link', text: 'First')
           #  previous is link
@@ -188,15 +180,14 @@ RSpec.describe 'Tasks', type: :system do
       end
 
       it 'third page ' do
-        within 'nav' do
+        within 'ul.pagination' do
           click_link '3'
         end
         within 'table#result' do
           expect(find('tr:nth-child(1) td:nth-child(1)').text).to eq('title2')
           expect(find('tr:nth-child(2) td:nth-child(1)').text).to eq('title1')
         end
-        within 'nav' do
-          expect(page).to have_selector('ul.pagination')
+        within 'ul.pagination' do
           #  first is link
           expect(page).to have_selector('li.page-item a.page-link', text: 'First')
           #  previous is link
@@ -215,7 +206,7 @@ RSpec.describe 'Tasks', type: :system do
       end
 
       it 'Click First' do
-        within 'nav' do
+        within 'ul.pagination' do
           click_link '2'
           click_link 'First'
         end
@@ -226,7 +217,7 @@ RSpec.describe 'Tasks', type: :system do
       end
 
       it 'Click Previous' do
-        within 'nav' do
+        within 'ul.pagination' do
           click_link '2'
           click_link 'Previous'
         end
@@ -237,7 +228,7 @@ RSpec.describe 'Tasks', type: :system do
       end
 
       it 'Click Next' do
-        within 'nav' do
+        within 'ul.pagination' do
           click_link '2'
           click_link 'Next'
         end
@@ -248,7 +239,7 @@ RSpec.describe 'Tasks', type: :system do
       end
 
       it 'Click Last' do
-        within 'nav' do
+        within 'ul.pagination' do
           click_link '2'
           click_link 'Last'
         end
@@ -264,7 +255,7 @@ RSpec.describe 'Tasks', type: :system do
     context 'Display the new creation screen' do
       before do
         visit tasks_path
-        click_button 'Create'
+        click_button 'create'
       end
       it 'Check the type of screen' do
         expect(page).to have_content('Create Task')
@@ -275,7 +266,7 @@ RSpec.describe 'Tasks', type: :system do
       it 'Check the type of screen' do
         Task.create!(title: 'test1', description: 'desc1', due_date: '2024-01-01', user_id: user.id)
         visit tasks_path
-        click_button 'Update'
+        click_button 'update-0'
         expect(page).to have_content('Edit Task')
       end
 
@@ -325,7 +316,7 @@ RSpec.describe 'Tasks', type: :system do
       fill_in 'task_title', with: 'title-new'
       fill_in 'task_description', with: 'desc-new'
       fill_in 'task_due_date', with: '2025-03-01'
-      click_button 'Proceed'
+      click_button 'proceed'
     end
     it 'Check the type of screen and the content of the task' do
       expect(page).to have_content('Details')
@@ -340,7 +331,7 @@ RSpec.describe 'Tasks', type: :system do
       visit edit_task_path(task)
       fill_in 'task_title', with: 'title-modified'
       fill_in 'task_description', with: 'desc-modified'
-      click_button 'Proceed'
+      click_button 'proceed'
     end
     it 'Check the type of screen and the content of the task' do
       expect(page).to have_content('Details')
@@ -361,7 +352,7 @@ RSpec.describe 'Tasks', type: :system do
     end
 
     it 'Confirm that the task has been deleted' do
-      click_link 'Delete'
+      click_link 'delete-0'
       expect(page).not_to have_content('test1')
     end
   end

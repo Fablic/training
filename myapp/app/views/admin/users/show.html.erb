@@ -1,0 +1,10 @@
+<h2>Details</h2>
+<table class="table table-bordered border-dark">
+  <tbody>
+  <tr><th>Name</th><td><%= @user.name %></td></tr>
+  <tr><th>Role</th><td><%= @user.role %></td></tr>
+  <tr><th>Created</th><td><%= @user.created_at %></td></tr>
+  <tr><th>Updated</th><td><%= @user.updated_at %></td></tr>
+  </tbody>
+</table>
+<%= link_to t('common.back'), admin_users_path, class:'btn btn-sm btn-primary', id: 'home'%>

@@ -1,0 +1,4 @@
+<h2>Create User</h2>
+<%= form_with(model: [:admin, @user], local: true) do |form| %>
+  <%= render "form", form: form, form_mode: :new%>
+<% end %>

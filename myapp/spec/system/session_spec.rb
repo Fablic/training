@@ -35,7 +35,7 @@ RSpec.describe 'Session', type: :system do
     fill_in 'password', with: user.password
     click_button 'commit'
 
-    click_link 'Sign out'
+    click_link 'sign_out'
     expect(page).to have_content('Sign in to Tasks')
   end
 end

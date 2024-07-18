@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sign in</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+</head>
+<body>
+<div class="container">
+  <% if flash.present? %>
+    <% flash.each do |key, message| %>
+      <% if key == 'notice' %>
+        <div class="alert alert-secondary" role="alert"><%= message %></div>
+      <% else %>
+        <div class="alert alert-warning" role="alert"><%= message %></div>
+      <% end %>
+    <% end %>
+  <% end %>
+  <%= yield %>
+</div>
+</body>
+</html>

@@ -30,10 +30,40 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
+  common:
+    search: "Search"
+    create: "Create"
+    update: "Update"
+    delete: "Delete"
+    home: "Home"
+    cancel: "Cancel"
+    proceed: "Proceed"
+    signout: "Sign Out"
+    signin: "Sign In"
+    back: "戻る"
+  admin:
+    tasks:
+      no_tasks: "There are no tasks"
+      create_success: "Task was successfully created."
+      create_failure: "Failed to create the task."
+      update_success: "Task was successfully updated."
+      update_failure: "Failed to update the task."
+      delete_success: "Task was successfully deleted."
+      delete_failure: "Failed to delete the task."
+    users:
+      create_success: "User was successfully created."
+      update_success: "User was successfully updated."
+      delete_success: "User was successfully deleted."
+      delete_failure: "Failed to delete the User."
+      only_one_admin: "There is only one admin account."
+      cannot_delete_own_account: "cannot_delete_own_account"
   session:
     invalid_message: "Invalid name or password"
     sign_out_success: "Sign out successful"
     sign_in_success: "Sign in successful"
+    switch_admin_role_success: "Successfully switched to admin role."
+    switch_standard_role_success: "Successfully switched to standard role."
+    switch_role_failure: "Failed to switch roles."
   tasks:
     no_tasks: "There are no tasks"
     create_success: "Task was successfully created."
