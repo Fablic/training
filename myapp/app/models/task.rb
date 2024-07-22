@@ -33,12 +33,40 @@ class Task < ApplicationRecord # rubocop:disable Style/Documentation
   def process_labels
     return if labels_attributes.nil?
 
-    labels.clear
-    labels_attributes.each_value do |label_attributes|
-      next if label_attributes['name'].blank?
+    current_labels = labels.to_a
+    new_labels = find_or_create_labels
 
-      label = Label.find_or_create_by(name: label_attributes[:name])
-      labels << label unless labels.include?(label)
+    labels_to_remove = current_labels - new_labels
+    remove_labels(labels_to_remove)
+
+    labels_to_add = new_labels - current_labels
+    add_labels(labels_to_add)
+  end
+
+  def find_or_create_labels
+    new_label_names = labels_attributes.values.map { |attr| attr['name'] }.compact.reject(&:blank?)
+    existing_labels = Label.where(name: new_label_names).to_a
+    create_missing_labels(new_label_names, existing_labels)
+  end
+
+  def create_missing_labels(new_label_names, existing_labels)
+    new_label_names.map do |name|
+      existing_label = existing_labels.find { |label| label.name == name }
+      if existing_label
+        existing_label
+      else
+        Label.create(name: name)
+      end
     end
+  end
+
+  def remove_labels(labels_to_remove)
+    return if labels_to_remove.empty?
+
+    task_label_relations.where(label_id: labels_to_remove.map(&:id)).delete_all
+  end
+
+  def add_labels(labels_to_add)
+    labels_to_add.each { |label| labels << label }
   end
 end
