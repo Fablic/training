@@ -310,50 +310,137 @@ RSpec.describe 'Tasks', type: :system do
   end
 
   describe 'Create a new task' do
-    before do
-      User.create(name: 'test', password: 'test')
-      visit new_task_path
-      fill_in 'task_title', with: 'title-new'
-      fill_in 'task_description', with: 'desc-new'
-      fill_in 'task_due_date', with: '2025-03-01'
-      click_button 'proceed'
+    context 'Without labels' do
+      before do
+        User.create(name: 'test', password: 'test')
+        visit new_task_path
+        fill_in 'task_title', with: 'title-new'
+        fill_in 'task_description', with: 'desc-new'
+        fill_in 'task_due_date', with: '2025-03-01'
+        click_button 'proceed'
+      end
+      it 'Check the type of screen and the content of the task' do
+        expect(page).to have_content('Details')
+        expect(page).to have_content('title-new')
+        expect(page).to have_content('desc-new')
+      end
     end
-    it 'Check the type of screen and the content of the task' do
-      expect(page).to have_content('Details')
-      expect(page).to have_content('title-new')
-      expect(page).to have_content('desc-new')
+
+    context 'With labels' do
+      before do
+        User.create(name: 'test', password: 'test')
+        visit new_task_path
+        fill_in 'task_title', with: 'title-new'
+        fill_in 'task_description', with: 'desc-new'
+        fill_in 'task_due_date', with: '2025-03-01'
+        fill_in 'task_labels_attributes_0_name', with: 'label1'
+        fill_in 'task_labels_attributes_1_name', with: 'label2'
+        fill_in 'task_labels_attributes_2_name', with: 'label3'
+        click_button 'proceed'
+      end
+      it 'Check the type of screen and the content of the task' do
+        expect(page).to have_content('Details')
+        expect(page).to have_content('title-new')
+        expect(page).to have_content('desc-new')
+        expect(page).to have_content('label1')
+        expect(page).to have_content('label2')
+        expect(page).to have_content('label3')
+      end
     end
   end
 
   describe 'Update a task' do
-    before do
-      task = Task.create!(title: 'title', description: 'desc', due_date: '2024-01-01', user_id: user.id)
-      visit edit_task_path(task)
-      fill_in 'task_title', with: 'title-modified'
-      fill_in 'task_description', with: 'desc-modified'
-      click_button 'proceed'
+    context 'Without labels' do
+      before do
+        task = Task.create!(title: 'title', description: 'desc', due_date: '2024-01-01', user_id: user.id)
+        visit edit_task_path(task)
+        fill_in 'task_title', with: 'title-modified'
+        fill_in 'task_description', with: 'desc-modified'
+        click_button 'proceed'
+      end
+      it 'Check the type of screen and the content of the task' do
+        expect(page).to have_content('Details')
+        expect(page).to have_content('title-modified')
+        expect(page).to have_content('desc-modified')
+      end
     end
-    it 'Check the type of screen and the content of the task' do
-      expect(page).to have_content('Details')
-      expect(page).to have_content('title-modified')
-      expect(page).to have_content('desc-modified')
+    context 'With labels' do
+      before do
+        task = Task.create!(title: 'title', description: 'desc', due_date: '2024-01-01', user_id: user.id)
+        labels = %w[label1 label2 label3]
+        labels.each do |label_name|
+          task.labels.create!(name: label_name)
+        end
+        visit edit_task_path(task)
+
+        fill_in 'task_title', with: 'title-modified'
+        fill_in 'task_description', with: 'desc-modified'
+        fill_in 'task_labels_attributes_2_name', with: 'label4'
+
+        click_button 'proceed'
+      end
+      it 'Check the type of screen and the content of the task' do
+        expect(page).to have_content('Details')
+        expect(page).to have_content('title-modified')
+        expect(page).to have_content('desc-modified')
+        expect(page).to have_content('label1')
+        expect(page).to have_content('label2')
+        expect(page).to have_content('label4')
+      end
     end
   end
 
   describe 'Delete a task' do
-    before do
-      Task.create!(title: 'title-user', description: 'desc-user', due_date: '2024-01-01', user_id: user.id)
-      visit tasks_path
+    context 'Without labels' do
+      before do
+        Task.create!(title: 'title-user', description: 'desc-user', due_date: '2024-01-01', user_id: user.id)
+        visit tasks_path
+      end
+
+      it 'Ensure that the task to be deleted exists' do
+        expect(page).to have_content('title-user')
+        expect(page).not_to have_content('title-other')
+      end
+
+      it 'Confirm that the task has been deleted' do
+        click_button 'delete-1'
+        expect(page).not_to have_content('title-user')
+      end
     end
 
-    it 'Ensure that the task to be deleted exists' do
-      expect(page).to have_content('title-user')
-      expect(page).not_to have_content('title-other')
-    end
+    context 'With labels' do
+      let(:task) do
+        task = Task.create!(title: 'title-user', description: 'desc-user', due_date: '2024-01-01', user_id: user.id)
+        labels = %w[LabelA LabelB LabelC]
 
-    it 'Confirm that the task has been deleted' do
-      click_button 'delete-1'
-      expect(page).not_to have_content('title-user')
+        labels.each do |label_name|
+          label = Label.create!(name: label_name)
+          task.labels << label
+        end
+        task
+      end
+
+      it 'Verify that labels remain and task_label_relations are deleted.' do
+        task_id = task.id
+        task_label_relations = TaskLabelRelation.where(task_id: task_id)
+        label_ids = task_label_relations.pluck(:label_id)
+
+        labels = Label.where(id: label_ids)
+        expect(task_label_relations.size).to eq(3)
+        expect(labels.size).to eq(3)
+
+        visit tasks_path
+        expect(page).to have_content('title-user')
+
+        click_button 'delete-1'
+        expect(page).not_to have_content('title-user')
+
+        after_task_label_relations = TaskLabelRelation.where(task_id: task_id)
+        after_labels = Label.where(id: label_ids)
+
+        expect(after_task_label_relations.size).to eq(0)
+        expect(after_labels.size).to eq(3)
+      end
     end
   end
 end
