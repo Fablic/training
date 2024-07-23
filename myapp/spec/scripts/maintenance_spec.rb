@@ -21,7 +21,6 @@ RSpec.describe 'Maintenance', type: :system do
   end
 
   after do
-    # 後処理: メンテナンスモードファイルを削除
     FileUtils.rm_f(Rails.root.join('tmp', 'maintenance.txt'))
   end
 end
