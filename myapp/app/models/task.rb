@@ -17,7 +17,7 @@ class Task < ApplicationRecord # rubocop:disable Style/Documentation
   enum status: { open: 0, in_progress: 1, closed: 2 }
   enum priority: { low: 0, medium: 1, high: 2 }
 
-  before_save :process_labels
+  before_save :update_labels_and_relations
 
   def self.search(query, status, user_id = nil, label_name = nil)
     tasks = all.includes(%i[user labels])
@@ -30,14 +30,14 @@ class Task < ApplicationRecord # rubocop:disable Style/Documentation
 
   private
 
-  def process_labels
+  def update_labels_and_relations
     return if labels_attributes.nil?
 
     current_labels = labels.to_a
     new_labels = find_or_create_labels
 
     labels_to_remove = current_labels - new_labels
-    remove_labels(labels_to_remove)
+    remove_task_label_relations(labels_to_remove)
 
     labels_to_add = new_labels - current_labels
     add_labels(labels_to_add)
@@ -52,15 +52,11 @@ class Task < ApplicationRecord # rubocop:disable Style/Documentation
   def create_missing_labels(new_label_names, existing_labels)
     new_label_names.map do |name|
       existing_label = existing_labels.find { |label| label.name == name }
-      if existing_label
-        existing_label
-      else
-        Label.create(name: name)
-      end
+      existing_label || Label.create(name: name)
     end
   end
 
-  def remove_labels(labels_to_remove)
+  def remove_task_label_relations(labels_to_remove)
     return if labels_to_remove.empty?
 
     task_label_relations.where(label_id: labels_to_remove.map(&:id)).delete_all
