@@ -3,12 +3,18 @@
   <tbody>
   <tr><th>Title</th><td><%= @task.title %></td></tr>
   <tr><th>Description</th><td><%= @task.description %></td></tr>
-  <tr><th>Status</th><td><%= @task.status %></td></tr>
   <tr><th>Priority</th><td><%= @task.priority %></td></tr>
-  <tr><th>Labels</th><td>dummy</td></tr>
   <tr><th>DueDate</th><td><%= @task.due_date %></td></tr>
-  <tr><th>Created</th><td><%= @task.created_at %></td></tr>
-  <tr><th>Updated</th><td><%= @task.updated_at %></td></tr>
+  <tr><th>Status</th><td><%= @task.status %></td></tr>
+  <tr><th>Labels</th>
+    <td>
+      <% @task.labels.each do |label| %>
+        <span class="badge rounded-pill text-bg-secondary"><%=label.name%></span>
+      <% end %>
+    </td>
+  </tr>
+  <tr><th>Created</th><td><%= @task.created_at.strftime('%Y-%m-%d %H:%M:%S') %></td></tr>
+  <tr><th>Updated</th><td><%= @task.updated_at.strftime('%Y-%m-%d %H:%M:%S') %></td></tr>
   </tbody>
 </table>
 <%= link_to t('common.home'), tasks_path, class:'btn btn-sm btn-primary', id: 'home'%>

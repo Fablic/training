@@ -3,6 +3,7 @@
 Rails.application.routes.draw do
   root to: 'tasks#index'
   resources :tasks
+  resources :labels, only: %i[index]
 
   get 'session', to: 'session#new'
   post 'session', to: 'session#create'
@@ -12,6 +13,7 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :users
     resources :tasks, only: %i[index show edit update destroy]
+    resources :labels, only: %i[index destroy]
     get 'role', to: 'role#index'
   end
 end

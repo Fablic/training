@@ -10,12 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_06_24_022610) do
+ActiveRecord::Schema.define(version: 2024_07_04_081635) do
 
   create_table "labels", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_labels_on_name", unique: true
   end
 
   create_table "task_label_relations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci", force: :cascade do |t|
@@ -50,5 +51,7 @@ ActiveRecord::Schema.define(version: 2024_06_24_022610) do
     t.index ["name"], name: "index_users_on_name", unique: true
   end
 
+  add_foreign_key "task_label_relations", "labels"
+  add_foreign_key "task_label_relations", "tasks"
   add_foreign_key "tasks", "users"
 end

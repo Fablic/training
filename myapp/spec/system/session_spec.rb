@@ -13,7 +13,7 @@ RSpec.describe 'Session', type: :system do
     fill_in 'name', with: user.name
     fill_in 'password', with: user.password
     click_button 'commit'
-    expect(page).to have_content('Search')
+    expect(page).to have_content('Tasks')
   end
 
   it 'Sign in failed with invalid session' do

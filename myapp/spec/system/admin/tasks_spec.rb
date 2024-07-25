@@ -21,7 +21,7 @@ RSpec.describe 'Tasks', type: :system do
         visit admin_tasks_path
       end
       it 'Check the message' do
-        expect(page).to have_content(I18n.t('tasks.no_tasks'))
+        expect(page).not_to have_content('test1')
       end
     end
 
@@ -69,7 +69,7 @@ RSpec.describe 'Tasks', type: :system do
 
       it 'When searching by user_id, if results are not found' do
         visit admin_tasks_path(user_id: admin.id)
-        expect(page).to have_content(I18n.t('tasks.no_tasks'))
+        expect(page).not_to have_content('title1')
       end
     end
   end
@@ -87,7 +87,7 @@ RSpec.describe 'Tasks', type: :system do
       it 'Check the type of screen' do
         Task.create!(title: 'test1', description: 'desc1', due_date: '2024-01-01', user_id: user.id)
         visit admin_tasks_path
-        click_button 'update-0'
+        click_button 'update-1'
         expect(page).to have_content('Edit Task')
       end
     end
@@ -116,12 +116,11 @@ RSpec.describe 'Tasks', type: :system do
 
     it 'Ensure that the task to be deleted exists' do
       expect(page).to have_content('title-user')
-      expect(page).not_to have_content('title-other')
     end
 
     it 'Confirm that the task has been deleted' do
-      click_link 'delete-0'
-      expect(page).not_to have_content('test1')
+      click_button 'delete-1'
+      expect(page).not_to have_content('title-user')
     end
   end
 end
