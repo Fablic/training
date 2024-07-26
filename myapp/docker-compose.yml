@@ -1,6 +1,7 @@
-version: '3'
+version: '3.8'
 services:
   db:
+    platform: linux/amd64
     image: mysql:5.7
     environment:
       MYSQL_ROOT_PASSWORD: password
@@ -13,6 +14,7 @@ services:
 
   api:
     build: .
+    platform: linux/amd64
     command: >
       bash -c "bundle install &&
       yarn install &&
@@ -38,7 +40,7 @@ services:
       DB_HOST: db
 
   chrome:
-    image: selenium/standalone-chrome:latest
+    image: seleniarm/standalone-chromium
     ports:
       - 4444:4444
 
