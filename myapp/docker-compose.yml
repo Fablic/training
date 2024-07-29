@@ -17,8 +17,6 @@ services:
     platform: linux/amd64
     command: >
       bash -c "bundle install &&
-      yarn install &&
-      bundle exec rails webpacker:install &&
       bundle exec rails db:create &&
       bundle exec rails db:migrate &&
       rm -f tmp/pids/server.pid &&
@@ -38,6 +36,7 @@ services:
       DB_NAME: myapp
       DB_PASSWORD: password
       DB_HOST: db
+      RAILS_MASTER_KEY: bf6df6237bb45168fba5321808dd0d94
 
   chrome:
     image: seleniarm/standalone-chromium
