@@ -5,6 +5,12 @@ ruby "3.3.4"
 
 gem 'webpacker', '~> 5.0'
 
+gem 'bootstrap-sass'
+gem 'sassc-rails'
+
+#jquery
+gem 'jquery-rails'
+
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.0.4", ">= 7.0.4.3"
 
