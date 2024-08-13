@@ -174,11 +174,6 @@ chrome://extensions/ を開いて右上のDeveloper modeをオンにして、RKG
   ```yml
   ENV RAILS_ENV="development"
   ```
-- Dockerfileの作業ディレクトリを変更します.
-  ```yml
-  #Rails app lives here
-  WORKDIR /rails
-  ```
 - `config/database.yml`を以下のように書き換えて、アプリから接続できるようにしましょう
     ```yml
     default: &default
@@ -380,7 +375,7 @@ chrome://extensions/ を開いて右上のDeveloper modeをオンにして、RKG
 
 - ステータス（未着手・着手中・完了）を追加してみよう
   - 【オプション要件】初学者ではない場合はstateを管理するGemを導入しても構いません
-- 一覧画面でタイトルとステータスで検索ができるようにしよう
+- 一覧画面でタイトル、説明文とステータスで検索ができるようにしよう
   - 【オプション要件】初学者ではない場合はransackなどの検索の実装を便利にするGemを導入しても構いません
 - 絞り込んだ際、ログを見て発行されるSQLの変化を確認してみましょう
   - 以降のステップでも必要に応じて確認する癖をつけましょう
