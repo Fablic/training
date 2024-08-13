@@ -134,9 +134,9 @@ chrome://extensions/ を開いて右上のDeveloper modeをオンにして、RKG
     ```
 - 下記コマンドでアプリケーションに最低限必要なディレクトリやファイルを作成しましょう
     ```sh
-    docker-compose run api rails new . --force --database=mysql -G
+    docker compose run api bundle exec rails new . --force --database=mysql -G
     ```
-    - Mac M1チップの場合
+    - Mac M1,M2,M3チップの場合
       - dockerコマンド実行したときチップによるエラーが幾つかあります。
         ```sh
         no matching manifest for linux/arm64/v8 in the manifest list entries
@@ -145,6 +145,10 @@ chrome://extensions/ を開いて右上のDeveloper modeをオンにして、RKG
         `docker-compose.yml`の`api:`と`db:`配下に
         ```yml
         platform: linux/amd64
+        ```
+        `chrome:`配下に
+        ```yml
+        image: seleniarm/standalone-chromium
         ```
         を指定して再実行してください。
         参考：[M1 MacによるDocker開発環境構築エラー](https://qiita.com/a-kym/items/10ecb57e0387a673b3a2)
@@ -166,6 +170,15 @@ chrome://extensions/ を開いて右上のDeveloper modeをオンにして、RKG
 
 - `rails new` してできたプロジェクトのディレクトリ（アプリ名のディレクトリ）の直下に `docs` というディレクトリを作り、この文書ファイルをコミットしましょう
   - このアプリの仕様を管理下に置き、いつでも見られるようにするためです
+-  rails 7.1では、自動生成されるdockerfileのデフォルトは本番環境なので、開発環境に変更します。
+  ```yml
+  ENV RAILS_ENV="development"
+  ```
+- Dockerfileの作業ディレクトリを変更します.
+  ```yml
+  #Rails app lives here
+  WORKDIR /rails
+  ```
 - `config/database.yml`を以下のように書き換えて、アプリから接続できるようにしましょう
     ```yml
     default: &default
@@ -182,29 +195,8 @@ chrome://extensions/ を開いて右上のDeveloper modeをオンにして、RKG
     - 他の部分はそのままで大丈夫です
 - 以下のコマンドでDockerをビルドしてアプリを立ち上げましょう
     ```sh
-    docker-compose up --build
+    docker compose up --build
     ```
-    - Mac M1チップの場合：
-      ```sh
-      Webpacker::Manifest::MissingEntryError
-      ```
-      こういうエラーが出る場合、
-      `Gemfile`ファイル内のwebpackerを最新のものにする。
-      ```yml
-      gem 'webpacker', '~> 5.0'
-      ```
-      を指定して再実行してみてください。
-      参考：[【Rails6】Webpacker::Manifest::MissingEntryErrorを解決する](https://qiita.com/ginger-yell/items/8584e9149496940ea144)
-
-      ```sh
-      Function not implemented - Failed to initialize inotify (Errno::ENOSYS)
-      ```
-      の場合：
-      `config/environments/development.rb`を編集してください。
-      ```
-      - config.file_watcher = ActiveSupport::EventedFileUpdateChecker
-      + config.file_watcher = ActiveSupport::FileUpdateChecker
-      ```
     - `sassc 2.4.0`の場合`bundle install`ですごく時間かかる場合があります（1000s以上）基本的は待つと大丈夫です、気になったらこの記事を読んでください。
       - [Rails: Why is bundle install frozen up by sassc 2.4.0](https://stackoverflow.com/questions/62720043/rails-why-is-bundle-install-frozen-up-by-sassc-2-4-0)
     - 以下のように表示されれば正常にアプリが立ち上がっています
