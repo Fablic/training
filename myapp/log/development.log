@@ -1,0 +1,287 @@
+  [1m[35m (1.6ms)[0m  [1m[35mCREATE DATABASE `myapp_development` DEFAULT COLLATE `utf8mb4_general_ci`[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE DATABASE `myapp_test` DEFAULT COLLATE `utf8mb4_general_ci`[0m
+  [1m[35m (15.4ms)[0m  [1m[35mCREATE TABLE `schema_migrations` (`version` varchar(255) NOT NULL PRIMARY KEY)[0m
+  [1m[35m (2.9ms)[0m  [1m[35mCREATE TABLE `ar_internal_metadata` (`key` varchar(255) NOT NULL PRIMARY KEY, `value` varchar(255), `created_at` datetime(6) NOT NULL, `updated_at` datetime(6) NOT NULL)[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT GET_LOCK('7864839756650184315', 0)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (3.5ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.9ms)[0m  [1m[34mSELECT * FROM `ar_internal_metadata` WHERE `ar_internal_metadata`.`key` = 'environment' ORDER BY `ar_internal_metadata`.`key` ASC LIMIT 1[0m
+  [1m[36mActiveRecord::InternalMetadata Create (3.6ms)[0m  [1m[32mINSERT INTO `ar_internal_metadata` (`key`, `value`, `created_at`, `updated_at`) VALUES ('environment', 'development', '2024-07-31 08:13:38.039387', '2024-07-31 08:13:38.039392')[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT RELEASE_LOCK('7864839756650184315')[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+Started GET "/" for 192.168.65.1 at 2024-07-31 08:14:03 +0000
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb
+  Rendered /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb (Duration: 1.3ms | Allocations: 365)
+Completed 200 OK in 56ms (Views: 14.1ms | ActiveRecord: 0.0ms | Allocations: 7658)
+
+
+Started GET "/" for 192.168.65.1 at 2024-07-31 08:16:28 +0000
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb
+  Rendered /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb (Duration: 0.2ms | Allocations: 13)
+Completed 200 OK in 7ms (Views: 1.9ms | ActiveRecord: 0.0ms | Allocations: 214)
+
+
+Started GET "/" for 192.168.65.1 at 2024-07-31 08:18:40 +0000
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb
+  Rendered /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb (Duration: 0.1ms | Allocations: 13)
+Completed 200 OK in 5ms (Views: 1.2ms | ActiveRecord: 0.0ms | Allocations: 213)
+
+
+Started GET "/" for 192.168.65.1 at 2024-07-31 08:18:52 +0000
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb
+  Rendered /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb (Duration: 0.1ms | Allocations: 13)
+Completed 200 OK in 5ms (Views: 1.5ms | ActiveRecord: 0.0ms | Allocations: 213)
+
+
+Started GET "/" for 192.168.65.1 at 2024-07-31 08:18:54 +0000
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb
+  Rendered /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb (Duration: 0.2ms | Allocations: 13)
+Completed 200 OK in 7ms (Views: 2.7ms | ActiveRecord: 0.0ms | Allocations: 213)
+
+
+Started GET "/" for 192.168.65.1 at 2024-07-31 08:18:55 +0000
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb
+  Rendered /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb (Duration: 0.1ms | Allocations: 13)
+Completed 200 OK in 5ms (Views: 1.4ms | ActiveRecord: 0.0ms | Allocations: 211)
+
+
+Started GET "/" for 192.168.65.1 at 2024-07-31 08:18:55 +0000
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb
+  Rendered /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb (Duration: 0.1ms | Allocations: 13)
+Completed 200 OK in 5ms (Views: 1.7ms | ActiveRecord: 0.0ms | Allocations: 209)
+
+
+Started GET "/" for 192.168.65.1 at 2024-07-31 08:18:56 +0000
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb
+  Rendered /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb (Duration: 0.2ms | Allocations: 13)
+Completed 200 OK in 7ms (Views: 2.2ms | ActiveRecord: 0.0ms | Allocations: 209)
+
+
+Started GET "/" for 192.168.65.1 at 2024-07-31 08:18:56 +0000
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb
+  Rendered /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb (Duration: 0.7ms | Allocations: 13)
+Completed 200 OK in 7ms (Views: 2.6ms | ActiveRecord: 0.0ms | Allocations: 209)
+
+
+Started GET "/" for 192.168.65.1 at 2024-07-31 08:20:08 +0000
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb
+  Rendered /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb (Duration: 0.1ms | Allocations: 13)
+Completed 200 OK in 7ms (Views: 1.9ms | ActiveRecord: 0.0ms | Allocations: 209)
+
+
+  [1m[35m (2.6ms)[0m  [1m[35mCREATE DATABASE `myapp_development` DEFAULT COLLATE `utf8mb4_general_ci`[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE DATABASE `myapp_test` DEFAULT COLLATE `utf8mb4_general_ci`[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT GET_LOCK('7864839756650184315', 0)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (2.7ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (2.4ms)[0m  [1m[34mSELECT * FROM `ar_internal_metadata` WHERE `ar_internal_metadata`.`key` = 'environment' ORDER BY `ar_internal_metadata`.`key` ASC LIMIT 1[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT RELEASE_LOCK('7864839756650184315')[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+  [1m[35m (2.5ms)[0m  [1m[35mCREATE DATABASE `myapp_development` DEFAULT COLLATE `utf8mb4_general_ci`[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE DATABASE `myapp_test` DEFAULT COLLATE `utf8mb4_general_ci`[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT GET_LOCK('7864839756650184315', 0)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (3.2ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (2.4ms)[0m  [1m[34mSELECT * FROM `ar_internal_metadata` WHERE `ar_internal_metadata`.`key` = 'environment' ORDER BY `ar_internal_metadata`.`key` ASC LIMIT 1[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT RELEASE_LOCK('7864839756650184315')[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+Started GET "/" for 192.168.65.1 at 2024-07-31 08:36:54 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb
+  Rendered /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb (Duration: 1.3ms | Allocations: 364)
+Completed 200 OK in 21ms (Views: 5.6ms | ActiveRecord: 0.0ms | Allocations: 4388)
+
+
+Started GET "/" for 192.168.65.1 at 2024-07-31 08:38:25 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb
+  Rendered /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb (Duration: 0.2ms | Allocations: 13)
+Completed 200 OK in 8ms (Views: 2.6ms | ActiveRecord: 0.0ms | Allocations: 213)
+
+
+Started GET "/" for 192.168.65.1 at 2024-07-31 08:38:44 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb
+  Rendered /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb (Duration: 0.1ms | Allocations: 13)
+Completed 200 OK in 7ms (Views: 1.9ms | ActiveRecord: 0.0ms | Allocations: 212)
+
+
+Started GET "/" for 192.168.65.1 at 2024-07-31 08:40:25 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb
+  Rendered /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb (Duration: 0.1ms | Allocations: 13)
+Completed 200 OK in 5ms (Views: 1.7ms | ActiveRecord: 0.0ms | Allocations: 208)
+
+
+Started GET "/" for 192.168.65.1 at 2024-07-31 08:40:33 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb
+  Rendered /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb (Duration: 0.1ms | Allocations: 13)
+Completed 200 OK in 6ms (Views: 1.6ms | ActiveRecord: 0.0ms | Allocations: 208)
+
+
+Started GET "/" for 192.168.65.1 at 2024-07-31 08:40:33 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb
+  Rendered /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb (Duration: 0.1ms | Allocations: 13)
+Completed 200 OK in 6ms (Views: 1.8ms | ActiveRecord: 0.0ms | Allocations: 212)
+
+
+Started GET "/" for 192.168.65.1 at 2024-07-31 08:40:33 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb
+  Rendered /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb (Duration: 0.1ms | Allocations: 13)
+Completed 200 OK in 6ms (Views: 1.8ms | ActiveRecord: 0.0ms | Allocations: 208)
+
+
+Started GET "/" for 192.168.65.1 at 2024-07-31 08:40:33 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb
+  Rendered /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb (Duration: 0.2ms | Allocations: 13)
+Completed 200 OK in 6ms (Views: 1.9ms | ActiveRecord: 0.0ms | Allocations: 208)
+
+
+Started GET "/" for 192.168.65.1 at 2024-07-31 08:40:34 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb
+  Rendered /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb (Duration: 0.2ms | Allocations: 13)
+Completed 200 OK in 6ms (Views: 2.5ms | ActiveRecord: 0.0ms | Allocations: 208)
+
+
+Started GET "/" for 192.168.65.1 at 2024-07-31 08:40:34 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb
+  Rendered /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb (Duration: 0.1ms | Allocations: 13)
+Completed 200 OK in 6ms (Views: 2.1ms | ActiveRecord: 0.0ms | Allocations: 208)
+
+
+Started GET "/" for 192.168.65.1 at 2024-07-31 08:40:34 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb
+  Rendered /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb (Duration: 0.4ms | Allocations: 13)
+Completed 200 OK in 5ms (Views: 1.5ms | ActiveRecord: 0.0ms | Allocations: 211)
+
+
+Started GET "/" for 192.168.65.1 at 2024-07-31 08:40:34 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb
+  Rendered /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb (Duration: 0.2ms | Allocations: 13)
+Completed 200 OK in 6ms (Views: 1.9ms | ActiveRecord: 0.0ms | Allocations: 209)
+
+
+Started GET "/" for 192.168.65.1 at 2024-07-31 08:40:38 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb
+  Rendered /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb (Duration: 0.1ms | Allocations: 13)
+Completed 200 OK in 6ms (Views: 1.6ms | ActiveRecord: 0.0ms | Allocations: 209)
+
+
+Started GET "/" for 192.168.65.1 at 2024-07-31 08:40:38 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb
+  Rendered /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb (Duration: 0.2ms | Allocations: 13)
+Completed 200 OK in 6ms (Views: 2.6ms | ActiveRecord: 0.0ms | Allocations: 213)
+
+
+Started GET "/" for 192.168.65.1 at 2024-07-31 08:40:39 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb
+  Rendered /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb (Duration: 0.5ms | Allocations: 13)
+Completed 200 OK in 8ms (Views: 2.1ms | ActiveRecord: 0.0ms | Allocations: 210)
+
+
+Started GET "/" for 192.168.65.1 at 2024-07-31 08:40:39 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb
+  Rendered /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb (Duration: 0.2ms | Allocations: 13)
+Completed 200 OK in 5ms (Views: 1.4ms | ActiveRecord: 0.0ms | Allocations: 209)
+
+
+Started GET "/" for 192.168.65.1 at 2024-07-31 08:40:39 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb
+  Rendered /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb (Duration: 0.1ms | Allocations: 13)
+Completed 200 OK in 6ms (Views: 2.3ms | ActiveRecord: 0.0ms | Allocations: 209)
+
+
+Started GET "/" for 192.168.65.1 at 2024-07-31 08:40:39 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb
+  Rendered /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb (Duration: 0.5ms | Allocations: 13)
+Completed 200 OK in 6ms (Views: 2.1ms | ActiveRecord: 0.0ms | Allocations: 209)
+
+
+  [1m[35m (2.5ms)[0m  [1m[35mCREATE DATABASE `myapp_development` DEFAULT COLLATE `utf8mb4_general_ci`[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE DATABASE `myapp_test` DEFAULT COLLATE `utf8mb4_general_ci`[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT GET_LOCK('7864839756650184315', 0)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (3.5ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (2.6ms)[0m  [1m[34mSELECT * FROM `ar_internal_metadata` WHERE `ar_internal_metadata`.`key` = 'environment' ORDER BY `ar_internal_metadata`.`key` ASC LIMIT 1[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT RELEASE_LOCK('7864839756650184315')[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+  [1m[35m (2.5ms)[0m  [1m[35mCREATE DATABASE `myapp_development` DEFAULT COLLATE `utf8mb4_general_ci`[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE DATABASE `myapp_test` DEFAULT COLLATE `utf8mb4_general_ci`[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT GET_LOCK('7864839756650184315', 0)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (2.9ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (2.4ms)[0m  [1m[34mSELECT * FROM `ar_internal_metadata` WHERE `ar_internal_metadata`.`key` = 'environment' ORDER BY `ar_internal_metadata`.`key` ASC LIMIT 1[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT RELEASE_LOCK('7864839756650184315')[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+Started GET "/" for 192.168.65.1 at 2024-07-31 08:44:43 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT `schema_migrations`.`version` FROM `schema_migrations` ORDER BY `schema_migrations`.`version` ASC[0m
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb
+  Rendered /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb (Duration: 1.0ms | Allocations: 364)
+Completed 200 OK in 17ms (Views: 5.1ms | ActiveRecord: 0.0ms | Allocations: 4303)
+
+
+Started GET "/" for 192.168.65.1 at 2024-07-31 08:44:59 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb
+  Rendered /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb (Duration: 0.2ms | Allocations: 13)
+Completed 200 OK in 6ms (Views: 1.9ms | ActiveRecord: 0.0ms | Allocations: 213)
+
+
+Started GET "/" for 192.168.65.1 at 2024-07-31 08:45:05 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb
+  Rendered /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb (Duration: 0.2ms | Allocations: 13)
+Completed 200 OK in 7ms (Views: 2.2ms | ActiveRecord: 0.0ms | Allocations: 212)
+
+
+Started GET "/" for 192.168.65.1 at 2024-08-13 03:55:22 +0000
+Cannot render console from 192.168.65.1! Allowed networks: 127.0.0.0/127.255.255.255, ::1
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb
+  Rendered /usr/local/bundle/ruby/3.3.0/gems/railties-7.1.3.4/libtemplates/rails/welcome/index.html.erb (Duration: 2.0ms | Allocations: 13)
+Completed 200 OK in 25ms (Views: 14.1ms | ActiveRecord: 0.0ms | Allocations: 215)
+
+

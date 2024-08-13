@@ -1,6 +1,7 @@
-version: '3'
+version: '3.8'
 services:
   db:
+    platform: linux/amd64
     image: mysql:5.7
     environment:
       MYSQL_ROOT_PASSWORD: password
@@ -13,16 +14,15 @@ services:
 
   api:
     build: .
+    platform: linux/amd64
     command: >
       bash -c "bundle install &&
-      yarn install &&
-      bundle exec rails webpacker:install &&
       bundle exec rails db:create &&
       bundle exec rails db:migrate &&
       rm -f tmp/pids/server.pid &&
       bundle exec rails s -p 3000 -b '0.0.0.0'"
     volumes:
-      - .:/myapp
+      - .:/rails
       - bundle-install:/usr/local/bundle:delegated
       - node_modules:/myapp/node_modules:delegated
     ports:
@@ -38,7 +38,7 @@ services:
       DB_HOST: db
 
   chrome:
-    image: selenium/standalone-chrome:latest
+    image: seleniarm/standalone-chromium
     ports:
       - 4444:4444
 
