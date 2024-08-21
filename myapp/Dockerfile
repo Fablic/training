@@ -15,7 +15,6 @@ RUN apt-get update -qq && \
       python3 \
       less
 
-
 # node install
 RUN curl -SL https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash - \
     && apt-get -y remove nodejs-doc \

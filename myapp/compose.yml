@@ -1,7 +1,6 @@
 version: '3'
 services:
   db:
-    platform: linux/amd64
     image: mysql:5.7
     environment:
       MYSQL_ROOT_PASSWORD: password
@@ -14,7 +13,6 @@ services:
 
   api:
     build: .
-    platform: linux/amd64
     command: >
       bash -c "bundle install &&
       bundle exec rails db:create &&
@@ -38,7 +36,7 @@ services:
       DB_HOST: db
 
   chrome:
-    image: seleniarm/standalone-chromium
+    image: selenium/standalone-chrome:latest
     ports:
       - 4444:4444
 
