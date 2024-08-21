@@ -248,7 +248,7 @@ Create CRUD to manage the tasks. First of all, let's make it with a simple struc
 
 - Let's add status (not started / started / completed)
   - [Optional requirements] If you are not a beginner, you may install a Gem that manages the state.
-- Let's make it possible to search by title and status on the list screen
+- Let's make it possible to search by title, description and status on the list screen
   - [Optional requirements] If you are not a beginner, you may install a gem that makes it convenient to implement search such as ransack.
 - When narrowing down on searching, let's check the changes in the issued SQL by looking into the log
   - Get in the habit of checking up logs as needed in the following steps
