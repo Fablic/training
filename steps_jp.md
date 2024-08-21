@@ -192,6 +192,16 @@ chrome://extensions/ を開いて右上のDeveloper modeをオンにして、RKG
     ```sh
     docker compose up --build
     ```
+    - Mac M1チップの場合：
+      ```sh
+      Function not implemented - Failed to initialize inotify (Errno::ENOSYS)
+      ```
+      の場合：
+      `config/environments/development.rb`を編集してください。
+      ```
+      - config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+      + config.file_watcher = ActiveSupport::FileUpdateChecker
+      ```
     - `sassc 2.4.0`の場合`bundle install`ですごく時間かかる場合があります（1000s以上）基本的は待つと大丈夫です、気になったらこの記事を読んでください。
       - [Rails: Why is bundle install frozen up by sassc 2.4.0](https://stackoverflow.com/questions/62720043/rails-why-is-bundle-install-frozen-up-by-sassc-2-4-0)
     - 以下のように表示されれば正常にアプリが立ち上がっています
