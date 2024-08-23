@@ -125,11 +125,6 @@ chrome://extensions/ を開いて右上のDeveloper modeをオンにして、RKG
     docker compose run api bundle exec rails new . --force --database=mysql -G
     ```
     - Mac M1,M2,M3チップの場合
-      - dockerコマンド実行したときチップによるエラーが幾つかあります。
-        ```sh
-        no matching manifest for linux/arm64/v8 in the manifest list entries
-        ```
-        こういうエラーが出る場合、
         `compose.yml`の`api:`と`db:`配下に
         ```yml
         platform: linux/amd64
@@ -138,12 +133,11 @@ chrome://extensions/ を開いて右上のDeveloper modeをオンにして、RKG
         ```yml
         image: seleniarm/standalone-chromium
         ```
-        を指定して再実行してください。
-        参考：[M1 MacによるDocker開発環境構築エラー](https://qiita.com/a-kym/items/10ecb57e0387a673b3a2)
+        を指定して実行してください。
       - ```sh
         executor failed running [/bin/sh -c apt-get install -y google-chrome-stable]: exit code: 100
         ```
-        こういうエラの場合、Dockerfileを弄って
+        dockerコマンド実行したときこういうエラーの場合、Dockerfileを弄って
         ```yml
         ENV DOCKER_DEFAULT_PLATFORM=linux/amd64
         ```
