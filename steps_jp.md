@@ -140,7 +140,11 @@ chrome://extensions/ を開いて右上のDeveloper modeをオンにして、RKG
 -  rails 7.1では、自動生成されるdockerfileのデフォルトは本番環境なので、開発環境に変更します。
   ```yml
   ENV RAILS_ENV="development"
-  BUNDLE_WITHOUT="production"
+  ```
+
+  次の行を削除します。
+  ```yml
+  BUNDLE_WITHOUT="development" #delete
   ```
 - `config/database.yml`を以下のように書き換えて、アプリから接続できるようにしましょう
     ```yml
