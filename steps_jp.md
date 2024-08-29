@@ -134,21 +134,6 @@ chrome://extensions/ を開いて右上のDeveloper modeをオンにして、RKG
         image: seleniarm/standalone-chromium
         ```
         を指定して実行してください。
-      - ```sh
-        executor failed running [/bin/sh -c apt-get install -y google-chrome-stable]: exit code: 100
-        ```
-        dockerコマンド実行したときこういうエラーの場合、Dockerfileを弄って
-        ```yml
-        ENV DOCKER_DEFAULT_PLATFORM=linux/amd64
-        ```
-        を指定してください。
-        参考：[Unable to locate package google-chrome-stable](https://github.com/joyzoursky/docker-python-chromedriver/issues/30)
-        `compose.yml`の`chrome:`配下に
-        ```yml
-        platform: linux/amd64
-        ```
-        指定してもよい気がします。
-      ここで出なくても今後のStepでこれが出る可能性がありますので、出たら上記の解決策を試しましょう。
 
 - `rails new` してできたプロジェクトのディレクトリ（アプリ名のディレクトリ）の直下に `docs` というディレクトリを作り、この文書ファイルをコミットしましょう
   - このアプリの仕様を管理下に置き、いつでも見られるようにするためです
