@@ -1,7 +1,10 @@
-tmp/
+tmp/*
 .DS_Store
-log/
+log/*
 
 /public/packs
 /public/packs-test
 /node_modules
+
+!tmp/.keep
+!log/.keep
