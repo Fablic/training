@@ -31,7 +31,6 @@ the requirement should be like this.
 
 You can skip implementing some features in consultation with your mentor.
 
-
 ## Supported browser
 
 - Supported browser is suppose to be the latest version of macOS / Chrome
@@ -43,6 +42,7 @@ I would like you to build using the following languages and middleware (both are
 - Ruby
 - Ruby on Rails
 - MySQL
+- Docker Compose
 
 **Performance requirements and security requirements are not specified, but please make with general quality. If the site you made is too slow, we would ask you to fix it.**
 
