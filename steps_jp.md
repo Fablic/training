@@ -93,18 +93,6 @@ chrome://extensions/ を開いて右上のDeveloper modeをオンにして、RKG
 
 - 公式サイトからDockerのアカウントを作ってログインし、DockerHubからダウンロードしてインストールしましょう
     - https://hub.docker.com/editions/community/docker-ce-desktop-mac
-- `docker-compose -v` コマンドでバージョンが表示されることを確認してください
-  - Mac M1チップの場合
-      ```sh
-      docker-compose docker: 'compose' is not a docker command
-      ```
-      が出る可能性があります。
-      解決策：
-      ```sh
-      mkdir -p /usr/local/lib/docker
-      ln -s /Applications/Docker.app/Contents/Resources/cli-plugins /usr/local/lib/docker/cli-plugins
-      ```
-      参考：https://github.com/docker/for-mac/issues/6569#issuecomment-1312244210
 
 
 #### 1-2. Gitのインストール
@@ -134,38 +122,28 @@ chrome://extensions/ を開いて右上のDeveloper modeをオンにして、RKG
     ```
 - 下記コマンドでアプリケーションに最低限必要なディレクトリやファイルを作成しましょう
     ```sh
-    docker-compose run api rails new . --force --database=mysql -G
+    docker compose run api bundle exec rails new . --force --database=mysql -G
     ```
-    - Mac M1チップの場合
-      - dockerコマンド実行したときチップによるエラーが幾つかあります。
-        ```sh
-        no matching manifest for linux/arm64/v8 in the manifest list entries
-        ```
-        こういうエラーが出る場合、
-        `docker-compose.yml`の`api:`と`db:`配下に
+    - Mac M1,M2,M3チップの場合
+        `compose.yml`の`api:`と`db:`配下に
         ```yml
         platform: linux/amd64
         ```
-        を指定して再実行してください。
-        参考：[M1 MacによるDocker開発環境構築エラー](https://qiita.com/a-kym/items/10ecb57e0387a673b3a2)
-      - ```sh
-        executor failed running [/bin/sh -c apt-get install -y google-chrome-stable]: exit code: 100
-        ```
-        こういうエラの場合、Dockerfileを弄って
+        `chrome:`配下に
         ```yml
-        ENV DOCKER_DEFAULT_PLATFORM=linux/amd64
+        image: seleniarm/standalone-chromium
         ```
-        を指定してください。
-        参考：[Unable to locate package google-chrome-stable](https://github.com/joyzoursky/docker-python-chromedriver/issues/30)
-        `docker-compose.yml`の`chrome:`配下に
-        ```yml
-        platform: linux/amd64
-        ```
-        指定してもよい気がします。
-      ここで出なくても今後のStepでこれが出る可能性がありますので、出たら上記の解決策を試しましょう。
+        を指定して実行してください。
 
 - `rails new` してできたプロジェクトのディレクトリ（アプリ名のディレクトリ）の直下に `docs` というディレクトリを作り、この文書ファイルをコミットしましょう
   - このアプリの仕様を管理下に置き、いつでも見られるようにするためです
+-  rails 7.1では、自動生成されるdockerfileのデフォルトは本番環境なので、開発環境に変更します。
+  ```yml
+  ENV RAILS_ENV="development" \
+      BUNDLE_DEPLOYMENT="1" \
+      BUNDLE_PATH="/usr/local/bundle"
+  ```
+
 - `config/database.yml`を以下のように書き換えて、アプリから接続できるようにしましょう
     ```yml
     default: &default
@@ -174,28 +152,17 @@ chrome://extensions/ を開いて右上のDeveloper modeをオンにして、RKG
       charset: utf8mb4 # ここを追加
       collation: utf8mb4_general_ci # ここを追加
       pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-      database: <%= ENV['DB_NAME'] %> # from docker-compose.yml
-      username: <%= ENV['DB_USER'] %> # from docker-compose.yml
-      password: <%= ENV['DB_PASSWORD'] %> # from docker-compose.yml
-      host: <%= ENV['DB_HOST'] %> # from docker-compose.yml
+      database: <%= ENV['DB_NAME'] %> # from compose.yml
+      username: <%= ENV['DB_USER'] %> # from compose.yml
+      password: <%= ENV['DB_PASSWORD'] %> # from compose.yml
+      host: <%= ENV['DB_HOST'] %> # from compose.yml
     ```
     - 他の部分はそのままで大丈夫です
 - 以下のコマンドでDockerをビルドしてアプリを立ち上げましょう
     ```sh
-    docker-compose up --build
+    docker compose up --build
     ```
     - Mac M1チップの場合：
-      ```sh
-      Webpacker::Manifest::MissingEntryError
-      ```
-      こういうエラーが出る場合、
-      `Gemfile`ファイル内のwebpackerを最新のものにする。
-      ```yml
-      gem 'webpacker', '~> 5.0'
-      ```
-      を指定して再実行してみてください。
-      参考：[【Rails6】Webpacker::Manifest::MissingEntryErrorを解決する](https://qiita.com/ginger-yell/items/8584e9149496940ea144)
-
       ```sh
       Function not implemented - Failed to initialize inotify (Errno::ENOSYS)
       ```
@@ -228,26 +195,26 @@ chrome://extensions/ を開いて右上のDeveloper modeをオンにして、RKG
 開発中に使うDocker Composeのコマンドは以下の通りです。実際に実行してみて慣れていきましょう。
 
 - アプリを起動する
-    - `docker-compose up`
+    - `docker compose up`
         - MySQLとRailsが起動し、ブラウザからアクセスできるようになります
-        - SequelPro等を使ってDBに接続することも可能です。ポートやユーザー情報は`docker-compose.yml`を確認しましょう
-    - `docker-compose up -d`
+        - SequelPro等を使ってDBに接続することも可能です。ポートやユーザー情報は`compose.yml`を確認しましょう
+    - `docker compose up -d`
         - デーモンで動かす方法です。常に立ち上げた状態にしたければこちらを利用してください。
-        - `docker-compose down`で停止します
+        - `docker compose down`で停止します
 - Railsのコマンドを実行する
-    - `docker-compose exec api xxx`
-        - `docker-compose exec`は立ち上がっているコンテナに命令を実行します
-        - `api`は`docker-compose.yml`の`services`の名前を記載して、コンテナを指定します
+    - `docker compose exec api xxx`
+        - `docker compose exec`は立ち上がっているコンテナに命令を実行します
+        - `api`は`compose.yml`の`services`の名前を記載して、コンテナを指定します
         - `xxx`の部分には`rails c` や `rails db:migrate:status`、 `rails generate xxx` など自由にrailsのコマンドを指定して実行できます
-    - 以後のドキュメントではコマンド実行に`docker-compose exec api`を省略しますので、適宜読み替えてください
+    - 以後のドキュメントではコマンド実行に`docker compose exec api`を省略しますので、適宜読み替えてください
 - その他のTips
-    - `docker-compose exec api /bin/bash`
+    - `docker compose exec api /bin/bash`
         - dockerの中に入ります
-    - `docker-compose exec api tail -f log/development.log`
+    - `docker compose exec api tail -f log/development.log`
         - dockerの中には入らずにlogをtailします
 - Dockerでやっていることを理解しましょう
     - Dockerfile : Dockerを立ち上げて必要なファイルをコピーし、Railsをインストールしたりする処理を定義しています
-    - docker-compose.yml : MySQLとRailsのアプリを連携して起動する処理を定義しています
+    - compose.yml : MySQLとRailsのアプリを連携して起動する処理を定義しています
         - このファイルに`rails db:create`などの一連の処理が書いてあるので、dockerを立ち上げるだけでRailsが起動してくれます
     - mysqlにはローカルから次のコマンドで接続できます `mysql -h 127.0.0.1 -u root -p -P 3316`
         - sequel proなどのツールも上記の設定で接続可能です
@@ -334,16 +301,6 @@ chrome://extensions/ を開いて右上のDeveloper modeをオンにして、RKG
   - dockerを利用して研修を行う場合、以下の設定が必要です。
     1. [Dockerfile](https://qiita.com/ngron/items/f61b8635b4d67f666d75#failed-to-read-the-sessionstorage-property-from-window-storage-is-disabled-inside-data-urls)
     2. [spec/rails_helper.rb](https://commis.hatenablog.com/entry/2018/11/16/171608)
-    3. （Mac M1チップの方のみ）selenium/standalone-chromeはm1 macで動かないので、
-        `docker-compose.yml`ファイルの`chrome:`部分をこう書き換えてください。
-        ```yml
-        chrome:
-          image: seleniarm/standalone-chromium
-          ports:
-            - 4444:4444
-          environment:
-            TZ: Asia/Tokyo
-        ```
 
   - feature specですと `database_cleaner` という gemは必要でしたが、 system specに変更することで `database_cleaner` の導入が要らなくなった
 - Circle CIなどのCIツールを導入して、Slackに通知するようにしましょう
@@ -388,7 +345,7 @@ chrome://extensions/ を開いて右上のDeveloper modeをオンにして、RKG
 
 - ステータス（未着手・着手中・完了）を追加してみよう
   - 【オプション要件】初学者ではない場合はstateを管理するGemを導入しても構いません
-- 一覧画面でタイトルとステータスで検索ができるようにしよう
+- 一覧画面でタイトル、説明文とステータスで検索ができるようにしよう
   - 【オプション要件】初学者ではない場合はransackなどの検索の実装を便利にするGemを導入しても構いません
 - 絞り込んだ際、ログを見て発行されるSQLの変化を確認してみましょう
   - 以降のステップでも必要に応じて確認する癖をつけましょう

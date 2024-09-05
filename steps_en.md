@@ -31,7 +31,6 @@ the requirement should be like this.
 
 You can skip implementing some features in consultation with your mentor.
 
-
 ## Supported browser
 
 - Supported browser is suppose to be the latest version of macOS / Chrome
@@ -43,6 +42,7 @@ I would like you to build using the following languages and middleware (both are
 - Ruby
 - Ruby on Rails
 - MySQL
+- Docker Compose
 
 **Performance requirements and security requirements are not specified, but please make with general quality. If the site you made is too slow, we would ask you to fix it.**
 
@@ -63,108 +63,194 @@ At the end of this curriculum, you'll be able to reach following levels.
 
 ## Assignment steps
 
-### Step 0: Let's install chrome-extension
+### Step 0: Install the Chrome Extension
 
-Actually, this training was based on the one made by Manyo Co., Ltd., and there were several cases where past trainee mistakenly made a PR to the original repository. To avoid repeating this tragedy, install a chrome-extension that automatically redirects pages
+The training is based on materials created by Manyo Corporation, and there have been instances where pull requests were mistakenly directed to the original repository. To prevent this, please install a Chrome extension that automatically redirects pages.
 
-#### 1-1: Clone chrome-extension
+#### 0-1: Clone the Chrome Extension
 
 `git clone git@github.com:Fablic/fablic-chrome-extension.git`
 
-#### 1-2: Install chrome-extension
+#### 0-2: Install the Chrome Extension
 
-Open chrome: // extensions /, turn on Developer mode in the upper right, and install RKGithubSupportTool by dragging and dropping.
+Open chrome://extensions/, enable Developer mode at the top right, and install the extension by dragging and dropping the RKGithubSupportTool.
 
-#### 1-3: Start training while thanking Manyo Co., Ltd.
+#### 0-3: Start the Training, Appreciating Manyo Corporation
 
 [Original repository](https://github.com/everyleaf/el-training)
 
-### Step 1: Build a Rails development environment
+### Step 1: Set Up the Development Environment
 
-#### 1-1: Ruby installation
+#### 1-1. Install Docker
 
-- Please use [rbenv](https://github.com/rbenv/rbenv) to install the latest version of Ruby
-  - `gem install bundler`を実行して下記のようなエラーが出るときは、System Prefernces → network
-  　 `ERROR:  Could not find a valid gem 'bundler' (>= 0), here is why:Unable to download data from https://rubygems.org/ - timed out (https://api.rubygems.org/specs.4.8.gz)`
-  - If you get the following error after executing `gem install bundler` , change the ipv6 setting of System Prefernces -> network -> Advanced -> TCP / IP to link-local only.
-  　 `ERROR:  Could not find a valid gem 'bundler' (>= 0), here is why:Unable to download data from https://rubygems.org/ - timed out (https://api.rubygems.org/specs.4.8.gz)`
-- Make sure the command `ruby -v` shows the Ruby version
+- Create an account on Docker's official site, log in, and download and install from DockerHub.
+    - https://hub.docker.com/editions/community/docker-ce-desktop-mac
 
-#### 1-2: Rails installation
 
-- Install Rails with Gem command
-- Please install the latest version of Rails
-- Make sure the command `rails -v` shows the Rails version
+#### 1-2.  Install Git
 
-#### 1-3: Database (MySQL) installation
+- Install Git locally.
+  - For macOS, you can install it using brew.
+    - Although macOS comes with Git pre-installed, it is recommended to install the latest version.
+  - Register your username and email address using `gitconfig`.
 
-- Install MySQL on your OS
-  -For macOS, use `brew` for installation
+### Step 2: Initialize the Repository
 
-### Step 2: Create a repository on GitHub
-
-- Install git on your local env
-  - If your PC is macOS, use `brew` or something
-  - Submit your username and mailaddress by using `gitconfig`
-- Let's think about your app name
-- Let's create new branch
-  - Create new branch with same branch name as your account name based on master branch
+- Create a new branch.
+  - Create a branch with your account name based on the master branch.
     - `git checkout -b github_account_name origin/master`
-  - Let's push your branch to remote
+  - After creating the branch, push it.
 
-### Step 3: Let's create a Rails project
+### Step 3: Create a Rails Project
 
-- Create files and directories by using `rails new`
-- Create docs` directory on your current application and make this document on that directory
-  - This is to keep the specifications of this app under control so that they can be viewed at any time.
-- Push your app to the branch you created on GitHub
-- In order to specify the version, let's describe on Gemfile the version of Ruby to use in (Make sure that Rails already has the version)
+- Move to the working directory.
+    ```sh
+    cd myapp
+    ```
+- Add your name to `myapp/.env`
+    ```yml
+    COMPOSE_PROJECT_NAME=〇〇-training # Replace '〇〇' with your name
+    # ex) COMPOSE_PROJECT_NAME=Taro-training
+    ```
+- 下Use the following command to create the minimum required directories and files for the application.
+    ```sh
+    docker compose run api bundle exec rails new . --force --database=mysql -G
+    ```
+    - For Mac M1, M2, M3 chips:
+        Specify the following under `api:` and `db:` in `compose.yml`
+        ```yml
+        platform: linux/amd64
+        ```
+        under `chrome:`
+        ```yml
+        image: seleniarm/standalone-chromium
+        ```
 
-### Step 4: Think about the image of the application you want to create
+- Create a `docs` directory directly under the project directory (app directory created with `rails new`) and commit this document file.
+  - This is to keep the application specifications under control and accessible at any time.
+-  In Rails 7.1, the default auto-generated Dockerfile is for the production environment, so change it to the development environment.
+  ```yml
+  ENV RAILS_ENV="development" \
+      BUNDLE_DEPLOYMENT="1" \
+      BUNDLE_PATH="/usr/local/bundle"
+  ```
 
-- Before proceeding with the design, let's think about the completed image (with the mentor) of what the app will look like. Screen design by paper prototyping is recommended
-- Read the system requirements and think about the data structure you need
-  - What kind of model (table) seems to be needed
-  - What kind of information is needed in the table
-- After considering the data structure, let's write it by hand on the model diagram.
-  -	Take a picture when you're done and put it in the repository
-  - Describe the table schema in `README.md` (model name, column name, data type)
-* At this moment, it is not necessary to create the correct model diagram. Let's make it as a brief concept at the moment (You'll be able to make some amendment it if you think it is wrong in the future steps)
+- Modify `config/database.yml` as follows to allow the application to connect:
+    ```yml
+    default: &default
+      adapter: mysql2
+      encoding: utf8mb4
+      charset: utf8mb4 
+      collation: utf8mb4_general_ci 
+      pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+      database: <%= ENV['DB_NAME'] %> # from compose.yml
+      username: <%= ENV['DB_USER'] %> # from compose.yml
+      password: <%= ENV['DB_PASSWORD'] %> # from compose.yml
+      host: <%= ENV['DB_HOST'] %> # from compose.yml
+    ```
+    - Other parts can remain unchanged.
+- Use the following command to build Docker and launch the application:
+    ```sh
+    docker compose up --build
+    ```
+    - For Mac M1 chip:
+      if
+      ```sh
+      Function not implemented - Failed to initialize inotify (Errno::ENOSYS)
+      ```
+      Edit `config/environments/development.rb`as follows:
+      ```
+      - config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+      + config.file_watcher = ActiveSupport::FileUpdateChecker
+      ```
+    - If using sassc 2.4.0 and bundle install takes too long (more than 1000s), it is usually safe to wait. For more information, see:
+      - [Rails: Why is bundle install frozen up by sassc 2.4.0](https://stackoverflow.com/questions/62720043/rails-why-is-bundle-install-frozen-up-by-sassc-2-4-0)
+    - If the application starts up normally, the following will be displayed:
+      ```sh
+      api_1  | => Booting Puma
+      api_1  | => Rails 6.0.0 application starting in development
+      api_1  | => Run `rails server --help` for more startup options
+      api_1  | Puma starting in single mode...
+      api_1  | * Version 3.12.1 (ruby 2.6.4-p104), codename: Llamas in Pajamas
+      api_1  | * Min threads: 5, max threads: 5
+      api_1  | * Environment: development
+      api_1  | * Listening on tcp://0.0.0.0:3000
+      api_1  | Use Ctrl-C to stop
+      ```
+    - Try accessing `localhost:3001`
+- Push the created app to the branch created on GitHub.
+  - It is recommended to set up gitignore before pushing: [【Rails】.gitignoreの設定について](https://qiita.com/nozonozo/items/011308bf8f903977ac1a)
 
-### Step 5: Let's set the database connection settings (peripheral settings)
+### step4: Get Familiar with Docker
 
-- First, let's make a new topic branch with Git
-  - After that, you will work on the topic branch and commit
-- Install Bundler
-- Let's add `mysql2` in your `Gemfile` (MySQL database driver)
-- Configure `database.yml`
-- Create database with `rails db:create`
-- Check a database connection with `rails db`
-- Create PR (Pull Request) on GitHub and let them review your source program
-  - If you get some review comment on your PR, let's deal with it. You'll need 2 LGTM (Looks Good To Me) before you merge onto master
+The Docker Compose commands you'll use during development are as follows. Try executing them to get familiar.
 
-### Step 6: Let's create a task model
+- Start the application
+    - `docker compose up`
+        - This starts MySQL and Rails, making it accessible from the browser.
+        - You can also connect to the DB using tools like SequelPro. Check `compose.yml` for port and user info.
+    - `docker compose up -d`
+        - This starts the application as a daemon. Use this if you want it always running.
+        - stop with `docker compose down`
+- Execute Rails commands:
+    - `docker compose exec api xxx`
+        - `docker compose exec`allows you to execute commands inside a running container.
+        - Use `api` to specify the container, referring to the service name defined in `compose.yml`.
+        - Replace `xxx` with any Rails command, such as `rails c`, `rails db:migrate:status`, or `rails generate xxx`.
+    - For the rest of the documentation, the prefix `docker compose exec api` may be omitted from commands, so adapt as necessary.
+- Additional Tips:
+    - `docker compose exec api /bin/bash`
+        - This command opens a shell inside the container.
+    - `docker compose exec api tail -f log/development.log`
+        - This command allows you to tail the development log without entering the container.
+- Understanding what Docker does:
+    - Dockerfile: Defines the processes for setting up Docker, copying necessary files, and installing Rails.
+    - compose.yml: Defines the processes for starting MySQL and the Rails application together.
+        - This file includes steps like `rails db:create`, so Rails starts automatically when Docker is launched.
+    - You can connect to MySQL locally using the command: `mysql -h 127.0.0.1 -u root -p -P 3316`
+        - Tools like Sequel Pro can also connect using the above settings.
+- Regarding development:
+    - Changes made to local files are automatically reflected in the files on the Docker side, so you can use any editor to develop.
+    - Plugins are available for editors like vim and RubyMine that support Docker. If you want to run tests within the IDE, install the necessary plugins.
 
-Create CRUD to manage the tasks. First of all, let's make it with a simple structure where only the name and details can be registered.
 
-- Create task model for CRUD with `rails generate`
-- Use migration and create tables
-  - It is important to ensure that the migration can be returned to the previous state! Let's get into the habit of checking by using `redo`
-- Make sure you can connect to the database via the model with the command `rails c`
-  - Try creating a record with ActiveRecord
-- Create a PR on GitHub for review
+### Step 5: Conceptualize the Application You Want to Build
 
-### Step 7: Let's do register / update / delete tasks
+- Before advancing with design, think about what the final application might look like (together with your mentor). Paper prototyping for screen design is recommended.
+- Read the system requirements and consider the necessary data structures.
+  - What models (tables) might be necessary?
+  - What information should be included in these tables?
+- Once you have thought about the data structure, create a model diagram by hand.
+  - After completing the diagram, take a picture and include it in the repository.
+  -Include the table schema in the `README.md`  (model names, column names, data types). 
 
-- Let's create a task list feature, creation feature, detail feature, edit feature
-  - Create controller and view with command `rails generate`
-  - Let's add the required implementation to the controller and view
-  - Let's display a flash message on the screen after creating, updating, and deleting
-- Let's edit `routes.rb` to display the task list with `http://localhost:3000/`
-- Create a PR on GitHub for review
-  - In the future, if the PR is likely to grow, consider dividing the PR into two or more times.
+* Note: At this stage, you do not need to create a perfect model diagram. Consider it as your current understanding and expect to refine it in later steps.
 
-### Step 8: Write a test (system spec)
+### Step 6: Create the Task Model
+
+Create CRUD (Create, Read, Update, Delete) functionality for managing tasks.
+Start with a simple configuration where only the task name and details can be registered.
+
+- Use the`rails generate` command to create the model class required for task CRUD.
+- Create migrations and use them to create tables.
+  - It is important to ensure that migrations can be rolled back to a previous state! Make a habit of checking using redo.
+- Confirm that you can connect to the database via the model using the rails c command.
+  - At this time, try creating a record using ActiveRecord.
+- Create a pull request on GitHub and have it reviewed.
+  - Respond to any comments. Once you get two LGTMs (Looks Good To Me), merge into the main branch.
+
+### Step 7: Implement Task Registration, Update, and Deletion
+
+- Create the task list, create, detail, and edit views.
+  - Use the `rails generate` command to create the necessary controllers and views.
+  - Add the necessary implementation to the controllers and views.
+  - Display flash messages on the screen after creating, updating, or deleting a task.
+- Edit `routes.rb` so that the task list view is displayed at `http://localhost:3000/`.
+- Install RuboCop (a Ruby static code analysis tool) or fablicop via the Gemfile. Check the README for settings and command execution methods.
+- Create a pull request on GitHub and have it reviewed.
+  - If it seems that the pull request will be large, consider splitting it into two or more pull requests.
+
+## step 8: Write Tests (System Specs)
 - First make sure that these gems are exist in Gemfile
   ```
   group :test do
@@ -199,214 +285,213 @@ Create CRUD to manage the tasks. First of all, let's make it with a simple struc
     Capybara.app_host = "https://#{Capybara.server_host}:#{Capybara.server_port}"
   end
   ```
-- Get ready to write a spec
-  - Let's prepare  `spec/spec_helper.rb`, `spec/rails_helper.rb`
-- Let's write a system spec for the task function
-  - Rails 5.1 以降、新たにsystem testの機能を追加しました
-  - After Rails 5.1, we have added a new system test function
-    - [日本語](https://qiita.com/jnchito/items/c7e6e7abf83598a6516d), [English](https://rossta.net/blog/why-rails-system-tests-matter.html)
-  - After changing system spec, you don't need `database_cleaner` for feature spec.
-- Introducing CI(Continuous Integration) like Circle CI, let's ping Slack
-  - Introducing CI is optional when PRing in Fablic/training. There's no execution permission because of no admin permission.
-- ref. https://leanpub.com/everydayrailsrspec/
+- Prepare for writing specs.
+  - Set up`spec/spec_helper.rb` 、 `spec/rails_helper.rb`
+- Write system specs for the task functionality.
+  - Since Rails 5.1, system tests have been introduced.
+    - [英語](https://rossta.net/blog/why-rails-system-tests-matter.html)
+  - When conducting training using Docker, the following settings are necessary:
+    1. [Dockerfile](https://qiita.com/ngron/items/f61b8635b4d67f666d75#failed-to-read-the-sessionstorage-property-from-window-storage-is-disabled-inside-data-urls)
+    2. [spec/rails_helper.rb](https://commis.hatenablog.com/entry/2018/11/16/171608)
 
-### Step 9: Make various settings for the app
+  - feature specですと `database_cleaner` という gemは必要でしたが、 system specに変更することで `database_cleaner` の導入が要らなくなった
+- Introduce CI tools such as CircleCI and set them up to notify Slack.
+  - If conducting PR exchanges within Fablic/training, introducing CI tools is optional. CircleCI cannot be executed as admin privileges are unavailable, even if .circleci/config.yml is set up.
+- Reference book：https://leanpub.com/everydayrailsrspec-jp
 
-- Commonalize Japanese part(message and labels etc...)
-  - Use Rails i18n for doing the task
-  - After configure these tasks, you'll get more benefit from messaging
+### Step 9: Configure Various Application Settings
+
+- Centralize Japanese text
+  - Use Rails' i18n feature to centralize Japanese resources.
+  - Note: Centralizing with i18n will make displaying messages easier in later steps.
 - Set the time zone
-  - Fix your time zone to Tokyo/Japan on Rails
-- Configure error page
-  - Replace your customized error page from default
-  - Set the error page appropriately according to the situation
-  - Two types of status code settings, page 404 and page 500, are required at least
+  - Set the Rails time zone to Japan (Tokyo).
+- Set up error pages
+  - Replace Rails' default error pages with custom-made pages.
+  - Set up appropriate error pages as needed.
+  - At a minimum, you must set up 404 and 500 status code pages.
 
-### Step 10: Sort the task list in order of creation date and time (Optional)
+### Step 10: Sort the Task List by Creation Date ★ Optional
 
-- Currently, they are sorted in order of ID, but let's sort them in descending order of creation date and time.
-- Let's write in the system spec that the sorting is working well
+- Currently, tasks are sorted by ID. Change this to sort by the creation date in descending order.
+- Write system specs to confirm that sorting is working correctly.
 
-### Step 11: Let's set the validation
+### step 11: Set Up Validations
 
-- Let's set the validation
-  - Think about which validation to add to which column
-  - Let's create a migration that also sets DB constraints
-  - Create with a `rails generate` command to create only the migration file
-- Let's display a validation error message on the screen
-- Let's write a model test for validation
-- Create a PR on GitHub for review
+- Set up validations.
+  - Consider which columns require which validations.
+  - Create a migration to set up corresponding database constraints.
+  - Use the rails generate command to create only the migration files.
+- Display validation error messages on the screen.
+- Write model tests for validations.
+- Create a pull request on GitHub and have it reviewed.
 
-### Step 12: Add due date of the task (Optional)
+### Step 12: Add a Due Date to Tasks ★ Optional
 
-- Make it possible to register a due date for the task
-- Implement a functionality to sort the task by due date on the list screen
-- write a test function for this functionality
-- After finishing PR, let's release it
+- Enable tasks to have a due date.
+- Allow sorting by the due date on the task list view.
+- Expand the specs.
+- After creating a pull request and having it reviewed, release it.
 
-### Step 13: Add status to make it searchable
+### Step 13: Add Status and Enable Search by Status
 
-- Let's add status (not started / started / completed)
-  - [Optional requirements] If you are not a beginner, you may install a Gem that manages the state.
-- Let's make it possible to search by title and status on the list screen
-  - [Optional requirements] If you are not a beginner, you may install a gem that makes it convenient to implement search such as ransack.
-- When narrowing down on searching, let's check the changes in the issued SQL by looking into the log
-  - Get in the habit of checking up logs as needed in the following steps
-- Let's add on the search index on the table
-- Let's add a model spec to the search (let's expand the system spec as well)
+- Add status (Not Started, In Progress, Completed).
+  - *Optional requirement: If you are not a beginner, consider using a gem for managing state.
+- Enable searching by title, description, and status on the task list view.
+  - *Optional requirement: If you are not a beginner, consider using a gem like ransack to simplify search implementation.
+- When filtering, review the log to see the changes in the executed SQL.
+  - Make a habit of checking this when necessary in subsequent steps.
+- Add search indexes.
+- Add model specs for search functionality (also expand system specs).
 
-### Step 14: Let's add pagination
+### Step 14: Add Pagination
 
-- Let's add pagination to the list view using a gem called Kaminari
+- Use the Kaminari gem to add pagination to the task list view.
 
-### Step 15: Apply your design(Optional)
+### Step 15: Apply Design ★ Optional
+- Introduce Bootstrap and apply design to the application created so far.
+  - *Optional requirement: Write custom CSS for the design.
 
-- Introduce Bootstrap and apply your design to the apps you've created so far
-  - [Optional requirements] Write and design your own CSS
+### Step 16: Enable Multi-user Support (User Implementation)
 
-### Step 16: Make it available to multiple people (introduction of user feature)
+- Create a user model.
+- Use seed data to create the first user.
+- Associate users with tasks.
+  - Add indexes for relationships.
+  - Introduce measures to avoid N+1 problems.
+    - Introduce bullet to automatically detect N+1 queries (Reference Article).（(https://fablic.qiita.com/craftcat/items/b181b67ddae0c7d0702a)）
 
-- Let's create a user model
-- Let's create the first user with seed
-- Let's connect users and tasks
-  - Index for associations
-  - Incorporate a mechanism to avoid the N + 1 problem
+### Step 17: Implement Login/Logout Functionality
 
+- Implement without using additional gems.
+  - Avoid using Devise or similar gems to deepen understanding of HTTP Cookies, Rails Sessions, and general authentication concepts (like handling passwords).
+- Implement a login view.
+- Ensure users cannot access the task management page without logging in.
+- Display only tasks created by the logged-in user.
+- Implement logout functionality.
 
-### Step 17: Let's implement login / logout function
+### Step 18: Implement User Management Screen ★ Optional
+- Add an admin menu on the screen.
+- Ensure that the management screen always starts with /admin in the URL.
+  - Before adding to routes.rb, design and consider URLs and routing names (which will become *_path).
+- Implement user list, creation, update, and deletion functionalities.
+- When a user is deleted, delete the tasks associated with that user.
+- On the user list view, display the number of tasks each user has.
+- Enable viewing of a list of tasks created by each user.
 
-- Let's implement it ourselves without using additional gems
-  - By not using Gem such as Devise, the purpose is to deepen the understanding of the mechanism such as HTTP cookies and Session in Rails.
-  - It also aims to deepen your understanding of general authentication (such as password handling).
-- Let's implement a login screen
-- If you are not logged in, let's prevent you from transitioning to the task management page
-- Display the tasks only you created
-- Let's implement the logout function
+### Step 19: Add Roles to Users ★ Optional
 
-### Step 18: Let's implement the user management screen(Optional)
+- Differentiate between admin users and regular users.
+- Ensure that only admin users can accessAllow roles to be selectable on the user management page.
+- Allow users to select roles in the user management page.
+- Prevent deletion of the last admin user.
+- *Note: Using or not using a gem is up to you.
 
-- Let's add a management menu on the screen
-  - Make sure to put the URL `/admin` at the beginning of the admin tool .
-- Before adding the url to `routes.rb`, let's design by assuming the URL and routing name (name to be `*_path`) in advance
-- Let's implement user list / create / update / delete
-- After deleting a user, try deleting the tasks that the user has.
-- Let's display the number of tasks that the user has on the user list view
-- Let's see the list of user-created tasks
+### Step 20: Enable Task Labeling
 
-### Step 19: Add a role to the user(Optional)
+- Allow multiple labels to be assigned to tasks.
+- Enable searching by labels.
 
-- Let's make users distinguish between administrative users and general users
-- Let's make only the admin user access the user admin tool
-- Let's make it possible to select a role on the user management tool
-- Let's control the deletion so that no administrative user is gone
-- * You can use Gem freely.
+### Step 21: Implement Maintenance Functionality
 
-### Step 20: Let's be able to put labels on tasks
+- Create a batch to start and end maintenance.
+- Redirect users accessing the site during maintenance to a maintenance page.
+- Implement this without using additional gems.
 
-- Let's allow tasks to have multiple labels
-- Let's make it possible to search by the attached label
+## Closing Remarks
 
-### Step 21: Let's create a maintenance function
+Congratulations on completing the training curriculum!
 
-- Let's create a batch to start / end maintenance
-- Redirect users who access during maintenance to the maintenance page
-- Let's implement it ourselves without using additional gems
+Since you've successfully built an application, consider presenting it at a company-wide LT event like Makitani Night. It could be a great opportunity to share your work.
 
-## Afterword
+While this curriculum may not cover everything, the following topics will likely become important in the future. Continue to learn about these areas, often through working on projects:
 
-Thank you for your hard work. You have completed the educational curriculum !!
+- Deepen your understanding of basic web applications
+  - Understand HTTP and HTTPS
+- Learn more advanced uses of Rails
+  - Logging
+  - Explicit transactions
+  - Asynchronous processing
+  - Asset pipeline (more related to release topics)
+- Gain a more advanced understanding of frontend technologies like JavaScript and CSS
+- Deepen your understanding of databases
+  - SQL
+  - Construct queries with a focus on performance
+  - Deepen understanding of indexes
+- Gain more knowledge about server environments
+  - Linux OS
+  - Web server settings (e.g., Nginx)
+  - Application server settings (e.g., Unicorn)
+  - Understanding of MySQL configuration
+- Understand release-related tools
+  - Capistrano
+  - Ansible
 
-Now that we have created one application, let's announce it at mikitani night (in-house LT meeting). I think it will be a good opportunity to make a presentation.
+## Optional Requirements
 
-I couldn't cover it in this curriculum, but I think that the following topics will be needed in the future, so I think it's a good idea to proceed with learning (I think that you will often learn through projects).
+In addition to the mandatory requirements, optional requirements for the task management system are listed below. Consider implementing them as needed, in consultation with your mentor.
 
-- Deepen your basic understanding of web applications
-   - Understanding HTTP and HTTPS
-- Learn a little more advanced use of Rails
-   - Logging
-   - Explicit transaction
-   - Asynchronous processing
-   - Asset pipeline
-- A more advanced understanding of frontends such as JavaScript and CSS
-- Deepen your understanding of the database
-   - SQL
-   - Build more performance-focused queries
-   - Deepen your understanding of the index
-- A better understanding of the server environment
-   - Linux OS
-   - Web server (Nginx) settings
-   - Application server (Unicorn) settings
-   - Understanding the settings for MySQL
-- Understanding tools for releases
-   - Capistrano
-   - Ansible
+### Optional Requirement 1: Alert for Near-Deadline or Overdue Tasks
 
-## (Extra edition) Optional requirements
+- When logging in, display tasks that are near their deadline or overdue somewhere.
+- Consider marking tasks as read or similar for better visibility.
 
-Apart from the required requirements, the optional requirements for the task management system are listed below. Please consult with your mentor and carry out as necessary.
+### Optional Requirement 2: Enable Task Sharing Among Users
 
-### Optional Requirement 1: Want to be alerted if there is a task that is nearing completion or overdue
+- Allow multiple users to refer to and edit the same task.
+  - Example: Sharing tasks between a mentor and mentee.
+- Display the task creator.
 
-- When you log in, let's display tasks that are nearing completion or have expired somewhere.
-- It is better if you can display the read/unread tasks
+### Optional Requirement 3: Allow Group Settings
 
-### Option Requirement 2: Want to be able to share tasks among users
+- Continuation of Optional Requirement 2
+- Enable setting up groups, allowing task reference only within the group.
 
-- Want to allow multiple people to view and edit the same task
-  - Example: Being able to share tasks with mentors and mentees
-- Show task creator
+### Optional Requirement 4: Allow Attachment of Files to Tasks
 
-### Option Requirement 3: Want to be able to set groups
+- Enable file attachments to tasks.
+- If using Heroku, manage uploaded attachments using an S3 bucket.
+- Choose and use appropriate gems.
 
-- Continuation of option requirement 2
-- Want to be able to set a group so that tasks can be referenced only within the group
+### Optional Requirement 5: Allow Users to Set Profile Pictures
 
+- Allow users to set a profile picture.
+- Since the uploaded image will be used as an icon, create a thumbnail to prevent slowdowns.
+- Choose and use appropriate gems or libraries.
 
-### Option Requirement 4: Want to be able to attach attachments to tasks
+### Optional Requirement 6: Implement a Task Calendar
 
-- Let's make it possible to attach attachments to tasks
-- For Heroku, manage attachments uploaded to your S3 bucket
-- Let's use Gem appropriately
+- Visualize deadlines by displaying tasks in a calendar based on their due dates.
+- Use or avoid libraries as desired.
 
-### Optional Requirement 5: Let's allow users to set a profile picture
+### Optional Requirement 7: Enable Drag-and-Drop Sorting of Tasks
 
-- Let users be able to set their profile picture
-- The uploaded image will be used as an icon, so you make a thumbnail image so that it will not be delayed.
-- Select gems and libraries appropriately
+- Implement drag-and-drop sorting on the task list view.
 
-### Optional Requirement 6: Want task calendar functionality
+### Optional Requirement 8: Visualize Label Usage Frequency with Graphs
 
-- Let's try to display tasks by expiration date in the calendar to visualize the expiration date
-- You are free to use or not use the library
+- Introduce graphs to visualize statistical information.
+- Propose the most readable types of graphs.
 
-### Option Requirement 7: Want to be able to sort tasks by drag and drop
+### Optional Requirement 9: Send Email Notifications for Near-Deadline Tasks
 
-- Let's drag and drop tasks in the task list so that they can be sorted
+- Send email notifications for tasks that are near their deadline, running in the background.
+- Use cloud services for email delivery.
+  - Use SendGrid for Heroku
+  - Use Amazon SES for AWS
+- Set it to send once daily via a batch job.
+  - Use Heroku Scheduler (add-on) for Heroku
+  - Set up cron jobs for AWS
 
-### Optional Requirement 8: Let's depict a graph how often labels are used
+### Optional Requirement 10: Set Up an Environment on AWS and Deploy
 
-- Let's introduce a graph to visualize statistical information
-- Let's propose a graph type that is easy to see
+- Set up and deploy the environment on AWS.
+- Recommend Nginx+Unicorn as the middleware configuration.
+- Refer to server requirements for EC2 instance settings.
 
-### Optional Requirement 9: Create a task that is about to finish and email the user
+### Optional Requirement 11: Use JavaScript for Asynchronous Label Retrieval
 
-- If you have a task that is about to finish, let's notify you by email in the background
-- Use cloud service to send emails
-  - SendGrid for Heroku
-  - For AWS, Amazon SES etc.
-- Let's send emails in batch once a day
-  - Heroku is Heroku Scheduler (add-on)
-  - If it is AWS, try setting cron
-
-### Option Requirement 10: Launch an instance on AWS and build an environment
-
-- Let's build the environment on AWS and deploy it
-- Nginx + Unicorn is recommended for middleware
-- Please refer to the server requirements for EC2 instances etc.
-
-### Option Requirement 11: Let's get labels by Ajax
-
-- Continuation of step 20
-- Let's make it hidden (label data not acquired) when the label is initially displayed when registering a task.
-- Instead, prepare a button for adding a label, etc., and try to acquire and display the label data by pressing that button.
-- Let's write a test code
+- Continuation of Step 20
+- When registering a task, initially hide the labels (do not fetch label data).
+- Instead, provide a button to add labels, and retrieve and display label data upon clicking the button.
+- Write tests as well.

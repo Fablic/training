@@ -1,5 +1,5 @@
-FROM ruby:2.6
-ENV NODE_VERSION 12
+FROM ruby:3.3
+ENV NODE_VERSION 20
 
 ENV LANG C.UTF-8
 
@@ -19,11 +19,6 @@ RUN apt-get update -qq && \
 RUN curl -SL https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash - \
     && apt-get -y remove nodejs-doc \
     && apt-get install -y nodejs
-
-# yarn install
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
-    echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
-    apt-get update && apt-get install -y yarn
 
 ENV APP_ROOT /myapp
 RUN mkdir /$APP_ROOT
