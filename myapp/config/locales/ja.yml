@@ -82,6 +82,7 @@ ja:
       too_short: は%{count}文字以上で入力してください
       wrong_length: は%{count}文字で入力してください
       record_invalid: "バリデーションに失敗しました: %{errors}"
+      invalid_password: "は半角%{min}~%{max}文字英大文字・小文字・数字、シンボルをそれぞれ１文字以上含めてください"
 
   views:
     pagination:
