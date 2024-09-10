@@ -1,0 +1,18 @@
+<%= form_with scope: :session, url: login_path do |f| %>
+  <div class="mb-3">
+    <div class="col-3">
+    <%= f.text_field :name, class: "form-control", placeholder: (t 'user.name'), value: @name %>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <div class="col-3">
+    <%= f.password_field :password, class: "form-control", placeholder: (t 'user.password') %>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <%= f.submit 'Login', class: "btn btn-primary", id: "btn-login" %>
+    <%= link_to "or Sign Up", users_path, class: "ms-2 align-bottom" %>
+  </div>
+<% end %>

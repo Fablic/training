@@ -14,9 +14,14 @@
   <body class="bg-light">
     <div class="container">
     <header class="navbar navbar-expand-lg bd-navbar">
-      <%= link_to(root_path) do %>
-      <i class="bi bi-house" style="font-size: 2rem;" ></i>
-      <% end %>
+      <div class="container-fluid">
+        <%= link_to(root_path) do %>
+        <i class="bi bi-house" style="font-size: 2rem;" ></i>
+        <% end %>
+        <% if logged_in? %>
+        <%= button_to "Logout", logout_path, method: :delete, class: "btn btn-link" %>
+        <% end %>
+      </div>
     </header>
       <% flash.each do |message_type, message| %>
       <div class="flash-message alert alert-<%= message_type %>"><%= message %></div>

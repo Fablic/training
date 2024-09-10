@@ -8,7 +8,10 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
-Task.create(title: 'title 1', description: 'desc 1')
-Task.create(title: 'title 2', description: 'desc 2')
-Task.create(title: 'title 3', description: 'desc 3')
-Task.find(3).update(title: 'title 3.1', description: 'desc 3.1')
+User.create(name: "admin", password: "dummyPasswordForNow")
+
+Task.create(title: "title 1", description: "desc 1", user_id: 1)
+Task.create(title: "title 2", description: "desc 2", user_id: 1)
+Task.create(title: "title 3", description: "desc 3", due_date_at: '2024-12-31', user_id: 1)
+
+Task.find(3).update(title: "title 3.1", description: "desc 3.1")

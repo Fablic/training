@@ -8,10 +8,19 @@ Rails.application.routes.draw do
 
   resources :tasks
 
+  # resources :users
+
+  get   '/users', '/users/new', to: 'users#new'
+  post  '/users', to: 'users#create'
+  patch '/users/:id', to: 'users#update'
+
+  get    '/login', to: 'sessions#new'
+  post   '/login', to: 'sessions#create'
+  delete '/logout', to: 'sessions#destroy'
+
   # overrirde default error pages
   get '/404', to: 'errors#not_found', as: :not_found, via: :all
   get '/500', to: 'errors#internal_server_error', as: :internal_server_error, via: :all
-
   get '/errors/:status', to: 'errors#show', as: :error
 
   match '*path', to: 'errors#not_found', via: :all

@@ -2,38 +2,63 @@
 
 require 'rails_helper'
 
-RSpec.describe Task, type: :system do
+RSpec.describe TasksController, type: :system do
   describe '#index' do
-    context "when task doesn't exist" do
-      before { visit root_path }
+    include LoginHelper
+    context 'when user is not logged in' do
+      before do
+        user_1 = create(:user)
+        visit root_path
+      end
 
-      it "doesn't show any task" do
-        expect(page).to have_no_button 'Delete'
+      it 'user should be redirected to login path' do
+        expect(current_path).to eq login_path
       end
     end
 
-    context 'when one task exists' do
-      let!(:task_1) { create(:task) }
-
-      before { visit root_path }
-
-      it 'shows one task' do
-        expect(page).to have_content task_1.title
-        expect(page).to have_link task_1.title, href: task_path(task_1)
-        expect(page).to have_button 'Delete'
+    context 'when user is logged in' do
+      before do
+        @user_1 = create(:user)
+        log_in(@user_1)
       end
-    end
 
-    context 'when multiple tasks exist' do
-      let!(:tasks) { create_list(:task, 3) }
+      context "when task doesn't exist" do
+        before do
+          visit root_path
+        end
 
-      before { visit root_path }
+        it "doesn't show any task" do
+          expect(page).to have_no_button 'Delete'
+        end
+      end
 
-      it 'shows task list in created_at descending order' do
-        expect(page).to have_selector('tbody tr', count: 3)
-        expect(page.all('tbody tr')[0]).to have_content(tasks[2].title)
-        expect(page.all('tbody tr')[1]).to have_content(tasks[1].title)
-        expect(page.all('tbody tr')[2]).to have_content(tasks[0].title)
+      context 'when one task exists' do
+        before do
+          @task_1 = create(:task, user: @user_1)
+          visit root_path
+        end
+
+        it 'shows one task' do
+          expect(current_path).to eq root_path
+          expect(page).to have_content @task_1.title
+          expect(page).to have_content @task_1.description
+          expect(page).to have_link @task_1.title, href: task_path(@task_1)
+          expect(page).to have_button 'Delete'
+        end
+      end
+
+      context 'when multiple tasks exist' do
+        before do
+          @tasks = create_list(:task, 3, user: @user_1)
+          visit root_path
+        end
+
+        it 'shows task list in created_at descending order' do
+          expect(page).to have_selector('tbody tr', count: 3)
+          expect(page.all('tbody tr')[0]).to have_content(@tasks[2].title)
+          expect(page.all('tbody tr')[1]).to have_content(@tasks[1].title)
+          expect(page.all('tbody tr')[2]).to have_content(@tasks[0].title)
+        end
       end
     end
 
@@ -322,3 +347,4 @@ RSpec.describe Task, type: :system do
     end
   end
 end
+
