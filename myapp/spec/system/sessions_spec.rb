@@ -13,6 +13,18 @@ RSpec.describe SessionsController, type: :system do
         expect(page).to have_button 'Login'
       end
     end
+    context 'when user is logged-in' do
+      before do
+        user_1 = create(:user)
+        log_in(user_1)
+        visit login_path
+      end
+
+      it 'user should be redirected to root path' do
+        expect(current_path).to eq root_path
+        expect(page).not_to have_button 'Login'
+      end
+    end
   end
 
   describe '#create' do
@@ -72,6 +84,5 @@ RSpec.describe SessionsController, type: :system do
         expect(current_path).to eq login_path
       end
     end
-
   end
 end

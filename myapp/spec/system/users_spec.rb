@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :system do
+  include LoginHelper
+
   describe '#new' do
     context 'when user is anonymous' do
       before { visit users_path }
@@ -9,6 +11,18 @@ RSpec.describe User, type: :system do
         expect(page).to have_field 'ユーザーネーム'
         expect(page).to have_field 'パスワード'
         expect(page).to have_button 'Sign Up'
+      end
+    end
+    context 'when user is logged-in' do
+      before do
+        user_1 = create(:user)
+        log_in(user_1)
+        visit users_path
+      end
+
+      it 'user should be redirected to root path' do
+        expect(current_path).to eq root_path
+        expect(page).not_to have_button 'Sign Up'
       end
     end
   end

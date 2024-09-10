@@ -29,10 +29,10 @@ RSpec.describe User, type: :model do
       end
 
       it 'failed when it is already taken' do
-        create(:user)
+        create(:user, name: 'Nanashi')
 
         t = User.new(
-          name: 'JohnDoe',
+          name: 'Nanashi',
           password: 'dummyPassword123!?'
         )
         t.valid?

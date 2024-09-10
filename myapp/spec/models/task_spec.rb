@@ -4,10 +4,15 @@ require 'rails_helper'
 
 RSpec.describe Task, type: :model do
   describe 'validation test' do
+    before do
+      @user_1 = create(:user)
+    end
+
     context 'title column' do
       it 'success' do
         t = Task.new(
-          title: 'ThisIsTitle'
+          title: 'ThisIsTitle',
+          user_id: @user_1.id,
         )
         expect(t).to be_valid
       end
@@ -33,7 +38,8 @@ RSpec.describe Task, type: :model do
       it 'success. blank is allowed' do
         t = Task.new(
           title: 'ThisIsTitle',
-          description: ''
+          description: '',
+          user_id: @user_1.id,
         )
         expect(t).to be_valid
       end
@@ -52,7 +58,8 @@ RSpec.describe Task, type: :model do
       it 'success.' do
         t = Task.new(
           title: 'ThisIsTitle',
-          due_date_at: '2024/08/31'
+          due_date_at: '2024/08/31',
+          user_id: @user_1.id,
         )
         expect(t).to be_valid
       end
@@ -82,7 +89,8 @@ RSpec.describe Task, type: :model do
       it 'success.' do
         t = Task.new(
           title: 'ThisIsTitle',
-          status: 2
+          status: 2,
+          user_id: @user_1.id,
         )
         expect(t).to be_valid
       end

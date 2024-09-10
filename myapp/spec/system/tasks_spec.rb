@@ -3,11 +3,11 @@
 require 'rails_helper'
 
 RSpec.describe TasksController, type: :system do
+  include LoginHelper
+
   describe '#index' do
-    include LoginHelper
     context 'when user is not logged in' do
       before do
-        user_1 = create(:user)
         visit root_path
       end
 
@@ -28,7 +28,7 @@ RSpec.describe TasksController, type: :system do
         end
 
         it "doesn't show any task" do
-          expect(page).to have_no_button 'Delete'
+          expect(page).to have_selector('tbody tr', count: 0)
         end
       end
 
@@ -41,7 +41,6 @@ RSpec.describe TasksController, type: :system do
         it 'shows one task' do
           expect(current_path).to eq root_path
           expect(page).to have_content @task_1.title
-          expect(page).to have_content @task_1.description
           expect(page).to have_link @task_1.title, href: task_path(@task_1)
           expect(page).to have_button 'Delete'
         end
@@ -60,51 +59,56 @@ RSpec.describe TasksController, type: :system do
           expect(page.all('tbody tr')[2]).to have_content(@tasks[0].title)
         end
       end
-    end
 
-    context 'when task is filtered' do
-      let!(:tasks) { create_list(:task, 5) }
+      context 'when task is filtered' do
+        before do
+          @tasks = create_list(:task, 5, user: @user_1)
+          visit root_path
+        end
 
-      before { visit root_path }
+        it 'search by title' do
+          fill_in 'query', with: 'ThisIsTitle3'
+          click_on 'btn-search'
 
-      it 'search by title' do
-        fill_in 'query', with: 'ThisIsTitle3'
-        click_on 'btn-search'
+          expect(current_path).to eq root_path
+          expect(page).to have_selector('tbody tr', count: 1)
+        end
 
-        expect(current_path).to eq root_path
-        expect(page).to have_selector('tbody tr', count: 1)
-      end
+        it 'search by status' do
+          # add extra items with various status
+          create(:task, :status => Task.statuses[:status_not_started], user: @user_1)
+          create_list(:task, 3, status: Task.statuses[:status_in_progress], user: @user_1)
+          create_list(:task, 2, status: Task.statuses[:status_completed], user: @user_1)
+          select I18n.t(:status_completed), from: 'search-status'
+          click_on 'btn-search'
 
-      it 'search by status' do
-        # add extra items with various status
-        create(:task, status: Task.statuses[:status_not_started])
-        create_list(:task, 3, status: Task.statuses[:status_in_progress])
-        create_list(:task, 2, status: Task.statuses[:status_completed])
-        select I18n.t(:status_completed), from: 'search-status'
-        click_on 'btn-search'
+          expect(current_path).to eq root_path
+          expect(page).to have_selector('tbody tr', count: 2)
+        end
 
-        expect(current_path).to eq root_path
-        expect(page).to have_selector('tbody tr', count: 2)
-      end
+        it 'search by title and status' do
+          # add extra items with various status
+          create(:task, status: Task.statuses[:status_in_progress], user: @user_1)
+          create(:task, status: Task.statuses[:status_completed], user: @user_1)
+          create(:task, title: 'some random title', status: Task.statuses[:status_completed], user: @user_1)
+          fill_in 'query', with: 'rand'
+          select I18n.t(:status_completed), from: 'search-status'
+          click_on 'btn-search'
 
-      it 'search by title and status' do
-        # add extra items with various status
-        create(:task, status: Task.statuses[:status_in_progress])
-        create(:task, status: Task.statuses[:status_completed])
-        create(:task, title: 'some random title', status: Task.statuses[:status_completed])
-        fill_in 'query', with: 'rand'
-        select I18n.t(:status_completed), from: 'search-status'
-        click_on 'btn-search'
-
-        expect(current_path).to eq root_path
-        expect(page).to have_selector('tbody tr', count: 1)
+          expect(current_path).to eq root_path
+          expect(page).to have_selector('tbody tr', count: 1)
+        end
       end
     end
   end
 
   describe '#create' do
     context 'when submit a new task' do
-      before { visit root_path }
+      before do
+        @user_1 = create(:user)
+        log_in(@user_1)
+        visit root_path
+      end
 
       it 'creates a task successfully' do
         new_title = 'test title 1'
@@ -189,14 +193,19 @@ RSpec.describe TasksController, type: :system do
   end
 
   describe '#show' do
+    before do
+      @user_1 = create(:user)
+      log_in(@user_1)
+    end
+
     context 'when there is a valid task' do
-      let!(:task_1) { create(:task) }
+      let!(:task_1) { create(:task, user: @user_1) }
 
       it 'shows details and edit link' do
         visit task_path(task_1)
         expect(page).to have_content task_1.title
         expect(page).to have_content task_1.description
-        # expect(page).to have_content sm[task_1.status]
+        expect(page).to have_content Task.statuses[task_1.status]
         expect(page).to have_link 'Edit', href: edit_task_path(task_1)
         expect(current_path).to eq task_path(task_1)
         click_link 'Edit'
@@ -218,8 +227,13 @@ RSpec.describe TasksController, type: :system do
   end
 
   describe '#edit' do
+    before do
+      @user_1 = create(:user)
+      log_in(@user_1)
+    end
+
     context 'when there is a valid task' do
-      let!(:task_1) { create(:task) }
+      let!(:task_1) { create(:task, user: @user_1) }
 
       it 'shows edit form' do
         visit edit_task_path(task_1)
@@ -247,8 +261,13 @@ RSpec.describe TasksController, type: :system do
   end
 
   describe '#update' do
+    before do
+      @user_1 = create(:user)
+      log_in(@user_1)
+    end
+
     context 'when update a task' do
-      let!(:task_1) { create(:task) }
+      let!(:task_1) { create(:task, user: @user_1) }
 
       # success case
       it 'updated a task successfully' do
@@ -328,12 +347,16 @@ RSpec.describe TasksController, type: :system do
   end
 
   describe '#destroy' do
-    let!(:task_1) { create(:task) }
-    before { visit root_path }
+    before do
+      @user_1 = create(:user)
+      @task_1 = create(:task, user: @user_1)
+      log_in(@user_1)
+      visit root_path
+    end
 
     context 'when delete a task' do
       it 'deletes a task successfully' do
-        expect(page).to have_content task_1.title
+        expect(page).to have_content @task_1.title
         click_on 'Delete'
 
         # redirected to root
@@ -341,7 +364,7 @@ RSpec.describe TasksController, type: :system do
         expect(page).to have_content '削除に成功しました'
 
         # make sure the task was deleted
-        expect(page).to have_no_content task_1.title
+        expect(page).to have_no_content @task_1.title
         expect(page).to have_no_button 'Delete'
       end
     end
