@@ -35,13 +35,11 @@ class TasksController < ApplicationController
   def show
     @task = Task.find_by(id: params[:id])
     return redirect_to error_path(404) if @task.nil?
-    return redirect_to error_path(401) if @task["user_id"] != current_user.id
+    return redirect_to error_path(401) if @task.user_id != current_user.id
   end
 
   def create
-    data = task_data(params)
-    data["user_id"] = current_user.id
-    @task = Task.new(data)
+    @task = Task.new(create_params)
     if @task.save
       flash[:success] = I18n.t 'msg_create_success'
       redirect_to root_path
@@ -57,17 +55,15 @@ class TasksController < ApplicationController
   def edit
     @task = Task.find_by(id: params[:id])
     return redirect_to error_path(404) if @task.nil?
-    return redirect_to error_path(401) if @task["user_id"] != current_user.id
+    return redirect_to error_path(401) if @task.user_id != current_user.id
   end
 
   def update
     @task = Task.find_by(id: params[:id])
     return redirect_to error_path(404) if @task.nil?
-    return redirect_to error_path(401) if @task["user_id"] != current_user.id
+    return redirect_to error_path(401) if @task.user_id != current_user.id
 
-    data = task_data(params)
-    data["user_id"] = current_user.id
-    if @task.update(data)
+    if @task.update(update_params)
       flash[:success] = I18n.t 'msg_update_success'
       redirect_to root_path
     else
@@ -82,21 +78,25 @@ class TasksController < ApplicationController
       flash[:danger] = I18n.t 'msg_delete_failure'
       return redirect_to root_path
     end
-    return redirect_to error_path(401) if @task["user_id"] != current_user.id
+    return redirect_to error_path(401) if @task.user_id != current_user.id
 
     @task.destroy
-    flash[:notice] = I18n.t 'msg_delete_success'
+    flash[:success] = I18n.t 'msg_delete_success'
     redirect_to root_path
   end
 
   private
 
-  def task_data(form_params)
-    {
-      title: form_params[:task][:title],
-      description: form_params[:task][:description],
-      due_date_at: form_params[:task][:due_date_at],
-      status: form_params[:task][:status].to_i
-    }
+  def create_params
+    # value coming from select field is string, convert it to int explcitly here
+    params[:task][:status] = params[:task][:status].to_i
+    params[:task][:user_id] = current_user.id
+    params.require(:task).permit(:title, :description, :due_date_at, :status, :user_id)
+  end
+
+  def update_params
+    # value coming from select field is string, convert it to int explcitly here
+    params[:task][:status] = params[:task][:status].to_i
+    params.require(:task).permit(:title, :description, :due_date_at, :status)
   end
 end

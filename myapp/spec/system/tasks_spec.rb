@@ -214,14 +214,26 @@ RSpec.describe TasksController, type: :system do
     end
 
     context 'when record not found' do
-      it 'redirected to root path due to not existing id' do
-        visit task_path(99_999)
+      it 'redirected to 404 error page due to not existing id' do
+        visit task_path(99999)
         expect(current_path).to eq error_path(404)
       end
 
-      it 'redirected to root path due to invalid id format' do
+      it 'redirected to 404 error page due to invalid id format' do
         visit task_path('invalid_path')
         expect(current_path).to eq error_path(404)
+      end
+    end
+
+    context "when the task is other users'" do
+      before do
+        @user_2 = create(:user)
+        @task_2 = create(:task, user_id: @user_2.id)
+        visit task_path(@task_2)
+      end
+
+      it 'redirected to 401 error page' do
+        expect(current_path).to eq error_path(401)
       end
     end
   end
@@ -256,6 +268,18 @@ RSpec.describe TasksController, type: :system do
       it 'redirected to root path due to invalid id format' do
         visit edit_task_path('invalid_path')
         expect(current_path).to eq error_path(404)
+      end
+    end
+
+    context "when the task is other users'" do
+      before do
+        @user_2 = create(:user)
+        @task_2 = create(:task, user_id: @user_2.id)
+        visit edit_task_path(@task_2)
+      end
+
+      it 'redirected to 401 error page' do
+        expect(current_path).to eq error_path(401)
       end
     end
   end
