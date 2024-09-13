@@ -54,7 +54,7 @@ class Admin::UsersController < ApplicationController
       return redirect_to admin_users_path
     end
 
-    if is_admin?(@user)
+    if @user.role_admin?
       flash[:danger] = I18n.t 'msg_delete_admin_failure'
       return redirect_to admin_users_path
     end

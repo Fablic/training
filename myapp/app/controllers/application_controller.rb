@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
   end
 
   def redirect_to_root_path_if_normal_role
-    if is_normal?(current_user)
+    if current_user.role_normal?
       redirect_to root_path
     end
   end
