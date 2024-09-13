@@ -8,8 +8,6 @@ Rails.application.routes.draw do
 
   resources :tasks
 
-  # resources :users
-
   get   '/users', '/users/new', to: 'users#new'
   post  '/users', to: 'users#create'
   patch '/users/:id', to: 'users#update'
@@ -17,6 +15,15 @@ Rails.application.routes.draw do
   get    '/login', to: 'sessions#new'
   post   '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
+
+  namespace :admin do
+    get '/', to: 'users#index'
+
+    resources :users
+
+    get '/users/:id/tasks', to: 'tasks#index', as: 'user_tasks'
+    delete '/tasks/:id', to: 'tasks#destroy', as: 'task'
+  end
 
   # overrirde default error pages
   get '/404', to: 'errors#not_found', as: :not_found, via: :all

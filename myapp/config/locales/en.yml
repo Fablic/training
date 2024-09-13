@@ -34,6 +34,7 @@ en:
   description: 'description'
   created_at: 'created'
   updated_at: 'updated'
+  deleted_at: 'deleted'
   due_date_at: 'due date'
   status: 'status'
   msg_create_success: 'Created a task successfully.'
@@ -42,15 +43,22 @@ en:
   msg_update_failure: 'Failed to update a task.'
   msg_delete_success: 'Deleted a task successfully.'
   msg_delete_failure: 'Failed to delete a task.'
+  msg_delete_admin_failure: 'cannot delete admin'
+  msg_delete_self_failure: 'cannot delete myself'
   status_all: 'Status All'
   status_not_started: 'Not Started'
   status_in_progress: 'In Progress'
   status_completed: 'Completed'
   search_by_title: 'Search by title'
+  role_normal: 'normal'
+  role_admin: 'admin'
+  role_moderator: 'moderator'
 
   user:
     name: 'username'
     password: 'password'
+    password_confirmation: 'password confirmation'
+    role: 'role'
   session:
     login_failed: 'The username or password is wrong'
   errors:
@@ -88,7 +96,7 @@ en:
         one: is the wrong length (should be %{count} character)
         other: is the wrong length (should be %{count} characters)
       record_invalid: 'Validation failed: %{errors}'
-      invalid_password: "must contain at lest one lowercase, uppercase, digit and symbol. length must be %{min} to %{max}"
+      invalid_password: "must contain at lest one lowercase, uppercase, digit and symbol"
 
   views:
     pagination:

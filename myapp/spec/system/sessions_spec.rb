@@ -79,7 +79,7 @@ RSpec.describe SessionsController, type: :system do
         visit root_path
 
         expect(current_path).to eq root_path
-        click_on 'Logout'
+        click_on 'logout'
 
         expect(current_path).to eq login_path
       end

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
-  include SessionsHelper
+  include SessionsHelper, UsersHelper
 
   private
 
@@ -13,6 +13,12 @@ class ApplicationController < ActionController::Base
 
   def redirect_to_root_path_if_logged_in
     if logged_in?
+      redirect_to root_path
+    end
+  end
+
+  def redirect_to_root_path_if_normal_role
+    if is_normal?(current_user)
       redirect_to root_path
     end
   end

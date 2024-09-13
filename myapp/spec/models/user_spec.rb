@@ -64,7 +64,7 @@ RSpec.describe User, type: :model do
           password: 'Abc123!'
         )
         t.valid?
-        expect(t.errors[:password]).to include('は半角8~20文字英大文字・小文字・数字、シンボルをそれぞれ１文字以上含めてください')
+        expect(t.errors[:password]).to include('は半角英大文字・小文字・数字、シンボルをそれぞれ１文字以上含めてください')
       end
 
       it 'failed when it is too long' do
@@ -73,16 +73,15 @@ RSpec.describe User, type: :model do
           password: 'Abcdefg1234567!?%tltr'
         )
         t.valid?
-        expect(t.errors[:password]).to include('は半角8~20文字英大文字・小文字・数字、シンボルをそれぞれ１文字以上含めてください')
+        expect(t.errors[:password]).to include('は半角英大文字・小文字・数字、シンボルをそれぞれ１文字以上含めてください')
       end
-
       it 'failed when not containing lowercase' do
         t = User.new(
           name: 'JohnDoe',
           password: 'DUMMYPASSWORD123!?'
         )
         t.valid?
-        expect(t.errors[:password]).to include('は半角8~20文字英大文字・小文字・数字、シンボルをそれぞれ１文字以上含めてください')
+        expect(t.errors[:password]).to include('は半角英大文字・小文字・数字、シンボルをそれぞれ１文字以上含めてください')
       end
       it 'failed when not containing uppercase' do
         t = User.new(
@@ -90,7 +89,7 @@ RSpec.describe User, type: :model do
           password: 'dummypassword123!?'
         )
         t.valid?
-        expect(t.errors[:password]).to include('は半角8~20文字英大文字・小文字・数字、シンボルをそれぞれ１文字以上含めてください')
+        expect(t.errors[:password]).to include('は半角英大文字・小文字・数字、シンボルをそれぞれ１文字以上含めてください')
       end
       it 'failed when not containing digit' do
         t = User.new(
@@ -98,7 +97,7 @@ RSpec.describe User, type: :model do
           password: 'dummyPassword!?'
         )
         t.valid?
-        expect(t.errors[:password]).to include('は半角8~20文字英大文字・小文字・数字、シンボルをそれぞれ１文字以上含めてください')
+        expect(t.errors[:password]).to include('は半角英大文字・小文字・数字、シンボルをそれぞれ１文字以上含めてください')
       end
       it 'failed when not containing symbol' do
         t = User.new(
@@ -106,9 +105,8 @@ RSpec.describe User, type: :model do
           password: 'dummyPassword123'
         )
         t.valid?
-        expect(t.errors[:password]).to include('は半角8~20文字英大文字・小文字・数字、シンボルをそれぞれ１文字以上含めてください')
+        expect(t.errors[:password]).to include('は半角英大文字・小文字・数字、シンボルをそれぞれ１文字以上含めてください')
       end
-
     end
   end
 end

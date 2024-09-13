@@ -7,19 +7,12 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
-  # TODO:
-  # - add password confirmation
-  # - implement password rule like minimum:8, mix alphabet, digit and special chars
   def create
-    data = {
-      name: params[:user][:name],
-      password: params[:user][:password],
-    }
-    @user = User.new(data)
+    @user = User.new(create_params)
     if @user.save
       flash[:success] = I18n.t 'msg_create_success'
 
-      user = User.find_by(name: data[:name])
+      user = User.find_by(id: @user.id)
       log_in(user)
 
       redirect_to root_path
@@ -31,7 +24,13 @@ class UsersController < ApplicationController
     end
   end
 
-  # update password
+  # TODO: update password
   def update
+  end
+
+  private
+
+  def create_params
+    params.require(:user).permit(:name, :password, :password_confirmation)
   end
 end

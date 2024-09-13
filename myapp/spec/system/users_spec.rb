@@ -10,6 +10,7 @@ RSpec.describe User, type: :system do
       it 'shows user creation form' do
         expect(page).to have_field 'ユーザーネーム'
         expect(page).to have_field 'パスワード'
+        expect(page).to have_field 'パスワード確認'
         expect(page).to have_button 'Sign Up'
       end
     end
@@ -36,6 +37,7 @@ RSpec.describe User, type: :system do
         new_user_password = 'dummyPassword123!?'
         fill_in 'user[name]', with: new_user_name
         fill_in 'user[password]', with: new_user_password
+        fill_in 'user[password_confirmation]', with: new_user_password
         click_on 'btn-signup'
 
         expect(page).to have_content '作成に成功しました'
@@ -47,6 +49,7 @@ RSpec.describe User, type: :system do
         new_user_password = 'dummyPassword123!?'
         fill_in 'user[name]', with: new_user_name
         fill_in 'user[password]', with: new_user_password
+        fill_in 'user[password_confirmation]', with: new_user_password
         click_on 'btn-signup'
 
         expect(page).to have_content '作成に失敗しました'
@@ -58,6 +61,7 @@ RSpec.describe User, type: :system do
         new_user_password = 'dummyPassword123!?'
         fill_in 'user[name]', with: new_user_name
         fill_in 'user[password]', with: new_user_password
+        fill_in 'user[password_confirmation]', with: new_user_password
         click_on 'btn-signup'
 
         expect(page).to have_content '作成に失敗しました'
@@ -69,10 +73,23 @@ RSpec.describe User, type: :system do
         new_user_password = ''
         fill_in 'user[name]', with: new_user_name
         fill_in 'user[password]', with: new_user_password
+        fill_in 'user[password_confirmation]', with: new_user_password
         click_on 'btn-signup'
 
         expect(page).to have_content '作成に失敗しました'
         expect(page).to have_content 'を入力してください'
+        expect(current_path).to eq users_path
+      end
+      it 'failed to create a user due to password/password confirmation mismatched' do
+        new_user_name = 'JohnDoe'
+        new_user_password = 'dummyPassword123!?'
+        fill_in 'user[name]', with: new_user_name
+        fill_in 'user[password]', with: new_user_password
+        fill_in 'user[password_confirmation]', with: 'randomPass123!?'
+        click_on 'btn-signup'
+
+        expect(page).to have_content '作成に失敗しました'
+        expect(page).to have_content 'Password confirmationとPasswordの入力が一致しません'
         expect(current_path).to eq users_path
       end
     end

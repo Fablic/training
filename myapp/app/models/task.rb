@@ -17,6 +17,8 @@ end
 class Task < ApplicationRecord
   belongs_to :user
 
+  acts_as_paranoid
+
   enum :status, { status_not_started: 0, status_in_progress: 1, status_completed: 2 }, validate: true
 
   validates :title, presence: true, length: { maximum: 50 }
