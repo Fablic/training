@@ -18,17 +18,20 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_05_031406) do
     t.datetime "updated_at", null: false
     t.datetime "due_date_at"
     t.integer "status", limit: 1, default: 0, null: false, unsigned: true
+    t.bigint "user_id", default: 0, null: false, unsigned: true
     t.index ["due_date_at"], name: "index_tasks_on_due_date_at"
     t.index ["status"], name: "index_tasks_on_status"
     t.index ["title"], name: "index_tasks_on_title"
+    t.index ["user_id"], name: "fk_rails_4d2a9e4d7e"
   end
 
   create_table "users", id: { type: :bigint, unsigned: true }, charset: "utf8mb4", force: :cascade do |t|
     t.string "name", limit: 20, null: false
-    t.string "password", limit: 72, null: false
+    t.string "password_digest", limit: 72, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_users_on_name", unique: true
   end
 
+  add_foreign_key "tasks", "users"
 end

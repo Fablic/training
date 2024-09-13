@@ -48,6 +48,11 @@ en:
   status_completed: 'Completed'
   search_by_title: 'Search by title'
 
+  user:
+    name: 'username'
+    password: 'password'
+  session:
+    login_failed: 'The username or password is wrong'
   errors:
     format: "%{attribute} %{message}"
     messages:
@@ -82,6 +87,8 @@ en:
       wrong_length:
         one: is the wrong length (should be %{count} character)
         other: is the wrong length (should be %{count} characters)
+      record_invalid: 'Validation failed: %{errors}'
+      invalid_password: "must contain at lest one lowercase, uppercase, digit and symbol. length must be %{min} to %{max}"
 
   views:
     pagination:

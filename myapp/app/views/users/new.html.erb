@@ -1,0 +1,31 @@
+<% if @user.errors.full_messages.any? %>
+<ul>
+    <% @user.errors.full_messages.each do |message| %>
+    <li class="text-danger small"><%= message %></li>
+    <% end %>
+</ul>
+<% end %>
+
+<div class="user-form">
+<%= form_with model: @user do |f| %>
+
+  <div class="mb-3">
+    <div class="col-3">
+    <%= f.text_field :name, class: "form-control", placeholder: (t 'user.name') %>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <div class="col-3">
+    <%= f.password_field :password, class: "form-control", placeholder: (t 'user.password') %>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <%= f.submit 'Sign Up', class: "btn btn-primary", id: "btn-signup" %>
+    <%= link_to "or Login", login_path, class: "ms-2 align-bottom" %>
+  </div>
+
+<% end %>
+</div>
+<script>
