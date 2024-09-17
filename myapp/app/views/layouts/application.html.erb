@@ -12,17 +12,34 @@
     <%= javascript_importmap_tags %>
   </head>
   <body class="bg-light">
-    <div class="container">
     <header class="navbar navbar-expand-lg bd-navbar">
-      <div class="container-fluid">
-        <%= link_to(root_path) do %>
-        <i class="bi bi-house" style="font-size: 2rem;" ></i>
-        <% end %>
+    <div class="container">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+        <%= link_to "Home", root_path, class: "btn btn-link" %>
+        </li>
+      </ul>
+      <ul class="navbar-nav">
         <% if logged_in? %>
-        <%= button_to "Logout", logout_path, method: :delete, class: "btn btn-link" %>
+        <li class="nav-item">
+        <div class="btn">
+        <%= current_user.name %>
+        </div>
+        </li>
+        <% if !current_user.role_normal? %>
+        <li class="nav-item">
+        <%= link_to "admin", admin_users_path, class: "btn btn-link" %>
+        </li>
         <% end %>
-      </div>
+        <li class="nav-item">
+        <%= button_to "logout", logout_path, method: :delete, class: "btn btn-link" %>
+        </li>
+        <% end %>
+        </li>
+      </ul>
+    </div>
     </header>
+    <div class="container">
       <% flash.each do |message_type, message| %>
       <div class="flash-message alert alert-<%= message_type %>"><%= message %></div>
       <% end %>

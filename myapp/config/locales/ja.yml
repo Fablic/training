@@ -34,6 +34,7 @@ ja:
   description: '詳細'
   created_at: '作成日時'
   updated_at: '更新日時'
+  deleted_at: '削除日時'
   due_date_at: '期限'
   status: 'ステータス'
   msg_create_success: '作成に成功しました'
@@ -42,15 +43,22 @@ ja:
   msg_update_failure: '更新に失敗しました'
   msg_delete_success: '削除に成功しました'
   msg_delete_failure: '削除に失敗しました'
+  msg_delete_admin_failure: 'adminは削除できません'
+  msg_delete_self_failure: '自分は削除できません'
   status_all: 'ステータス全て'
   status_not_started: '未着手'
   status_in_progress: '着手中'
   status_completed: '完了'
   search_by_title: 'タイトルで検索'
+  role_normal: '通常'
+  role_admin: 'admin'
+  role_moderator: 'moderator'
 
   user:
     name: 'ユーザーネーム'
     password: 'パスワード'
+    password_confirmation: 'パスワード確認'
+    role: 'ロール'
   session:
     login_failed: 'usernameまたはpasswordが正しくありません'
   errors:
@@ -82,7 +90,7 @@ ja:
       too_short: は%{count}文字以上で入力してください
       wrong_length: は%{count}文字で入力してください
       record_invalid: "バリデーションに失敗しました: %{errors}"
-      invalid_password: "は半角%{min}~%{max}文字英大文字・小文字・数字、シンボルをそれぞれ１文字以上含めてください"
+      invalid_password: "は半角英大文字・小文字・数字、シンボルをそれぞれ１文字以上含めてください"
 
   views:
     pagination:

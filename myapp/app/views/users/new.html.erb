@@ -22,6 +22,12 @@
   </div>
 
   <div class="mb-3">
+    <div class="col-3">
+    <%= f.password_field :password_confirmation, class: "form-control", placeholder: (t 'user.password_confirmation') %>
+    </div>
+  </div>
+
+  <div class="mb-3">
     <%= f.submit 'Sign Up', class: "btn btn-primary", id: "btn-signup" %>
     <%= link_to "or Login", login_path, class: "ms-2 align-bottom" %>
   </div>

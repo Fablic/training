@@ -165,6 +165,8 @@ GEM
     nokogiri (1.16.7-x86_64-linux)
       racc (~> 1.4)
     parallel (1.26.3)
+    paranoia (3.0.0)
+      activerecord (>= 6, < 8.1)
     parser (3.3.4.2)
       ast (~> 2.4.1)
       racc
@@ -322,6 +324,7 @@ DEPENDENCIES
   jbuilder
   kaminari
   mysql2 (~> 0.5)
+  paranoia
   puma (~> 5.0)
   rails (~> 7.0.4, >= 7.0.4.3)
   rspec-rails

@@ -13,7 +13,7 @@
  *= require_tree .
  *= require_self
  */
-a {
+a, .btn-link {
     text-decoration: none !important;
 }
 

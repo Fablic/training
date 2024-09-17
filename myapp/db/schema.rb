@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_09_05_031406) do
+ActiveRecord::Schema[7.0].define(version: 2024_09_11_073508) do
   create_table "tasks", id: { type: :bigint, unsigned: true }, charset: "utf8mb4", force: :cascade do |t|
     t.string "title", limit: 50, null: false
     t.string "description", limit: 500
@@ -19,6 +19,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_05_031406) do
     t.datetime "due_date_at"
     t.integer "status", limit: 1, default: 0, null: false, unsigned: true
     t.bigint "user_id", default: 0, null: false, unsigned: true
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_tasks_on_deleted_at"
     t.index ["due_date_at"], name: "index_tasks_on_due_date_at"
     t.index ["status"], name: "index_tasks_on_status"
     t.index ["title"], name: "index_tasks_on_title"
@@ -30,6 +32,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_05_031406) do
     t.string "password_digest", limit: 72, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "role", limit: 1, default: 0, null: false, unsigned: true
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_users_on_deleted_at"
     t.index ["name"], name: "index_users_on_name", unique: true
   end
 

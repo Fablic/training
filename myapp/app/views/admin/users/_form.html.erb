@@ -1,0 +1,42 @@
+<div class="bg-white rounded p-3 mb-3">
+  <% if user.errors.full_messages.any? %>
+  <ul>
+      <% user.errors.full_messages.each do |message| %>
+      <li class="text-danger small"><%= message %></li>
+      <% end %>
+  </ul>
+  <% end %>
+
+  <div class="user-form row">
+  <%= form_with model: user, url: {:action => action} do |f| %>
+    <div class="mb-3">
+      <div class="col-3">
+      <%= f.text_field :name, class: "form-control", disabled: action == :update, placeholder: (t 'user.name') %>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <div class="col-3">
+      <%= f.password_field :password, class: "form-control", placeholder: (t 'user.password') %>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <div class="col-3">
+      <%= f.password_field :password_confirmation, class: "form-control", placeholder: (t 'user.password_confirmation') %>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <div class="col-3">
+    <%= f.select :role, options_for_select(User.roles.invert.map{ |k, v| [ I18n.t(v), k ] }, User.roles[user[:role]]), { }, { class: "form-select" } %>
+      </div>
+    </div>
+
+    <div class="">
+      <%= f.submit btn_label, class: "btn btn-primary", id: 'btn-submit' %>
+    </div>
+  <% end %>
+  </div>
+
+</div>
