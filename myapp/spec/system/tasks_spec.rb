@@ -63,6 +63,7 @@ RSpec.describe TasksController, type: :system do
       context 'when task is filtered' do
         before do
           @tasks = create_list(:task, 5, user: @user_1)
+          @label = create(:label, id: 1, name: 'work')
           visit root_path
         end
 
@@ -97,6 +98,20 @@ RSpec.describe TasksController, type: :system do
 
           expect(current_path).to eq root_path
           expect(page).to have_selector('tbody tr', count: 1)
+        end
+
+        it 'search by label' do
+          # add extra items with various status
+          create(:task, title: 'working', user: @user_1)
+          create(:task, user: @user_1)
+          task_3 = create(:task, user: @user_1)
+          create(:tasks_label, task_id: task_3.id, label_id: @label.id)
+
+          fill_in 'query', with: @label.name
+          click_on 'btn-search'
+
+          expect(current_path).to eq root_path
+          expect(page).to have_selector('tbody tr', count: 2)
         end
       end
     end

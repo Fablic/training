@@ -131,7 +131,8 @@ class TasksController < ApplicationController
   def add_labels(task, labels)
     return if labels.empty? || labels.nil?
 
-    labels = labels.split(/[\s|,]/)
+    labels = labels.split(/[\s|,]/).reject { |s| s.empty? }
+
     # too many labels, limit to 50, or should return error?
     # TODO, the val is hard-coded here for now, but make it configurable
     max_labels = 50
