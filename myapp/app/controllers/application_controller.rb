@@ -22,4 +22,16 @@ class ApplicationController < ActionController::Base
       redirect_to root_path
     end
   end
+
+  def redirect_to_maintenance
+    @maintenance = Maintenance.last
+    return if @maintenance.nil?
+
+    if @maintenance.on?
+      cur = DateTime.now
+      if @maintenance.started_at <= cur && cur <= @maintenance.ended_at
+        redirect_to maintenance_path
+      end
+    end
+  end
 end

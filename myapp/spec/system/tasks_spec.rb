@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require 'active_support/time'
 
 RSpec.describe TasksController, type: :system do
   include LoginHelper
@@ -112,6 +113,17 @@ RSpec.describe TasksController, type: :system do
 
           expect(current_path).to eq root_path
           expect(page).to have_selector('tbody tr', count: 2)
+        end
+      end
+
+      context 'when it is under maintenance' do
+        before do
+          create(:maintenance, is_maintenance: 1, started_at: Time.now.ago(5.minutes).to_s, ended_at: Time.now.since(5.minutes).to_s)
+          visit root_path
+        end
+
+        it 'should be redirected to maintenance page' do
+          expect(current_path).to eq maintenance_path
         end
       end
     end

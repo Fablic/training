@@ -4,7 +4,7 @@ require 'uri'
 
 # TaskController is a controller to handle basic CRUD operations for "task"
 class TasksController < ApplicationController
-  before_action :redirect_to_login_path_if_not_logged_in
+  before_action :redirect_to_login_path_if_not_logged_in, :redirect_to_maintenance
 
   def index
     q = Task

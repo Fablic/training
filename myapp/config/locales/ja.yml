@@ -54,6 +54,7 @@ ja:
   role_normal: '通常'
   role_admin: 'admin'
   role_moderator: 'moderator'
+  msg_maintenance: 'メンテナンス中です'
 
   user:
     name: 'ユーザーネーム'

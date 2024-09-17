@@ -54,6 +54,7 @@ en:
   role_normal: 'normal'
   role_admin: 'admin'
   role_moderator: 'moderator'
+  msg_maintenance: 'under maintenance...'
 
   user:
     name: 'username'

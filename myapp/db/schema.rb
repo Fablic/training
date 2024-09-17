@@ -10,12 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_09_13_064431) do
+ActiveRecord::Schema[7.0].define(version: 2024_09_17_035539) do
   create_table "labels", id: { type: :bigint, unsigned: true }, charset: "utf8mb4", force: :cascade do |t|
     t.string "name", limit: 20
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_labels_on_name"
+  end
+
+  create_table "maintenances", charset: "utf8mb4", force: :cascade do |t|
+    t.integer "is_maintenance", limit: 1, default: 0, null: false, unsigned: true
+    t.datetime "started_at"
+    t.datetime "ended_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "tasks", id: { type: :bigint, unsigned: true }, charset: "utf8mb4", force: :cascade do |t|

@@ -12,6 +12,10 @@ class ErrorsController < ApplicationController
     redirect_to '/errors/500'
   end
 
+  def maintenance
+    render template: 'errors/maintenance', layout: 'error'
+  end
+
   def show
     @status_code = params[:status]
     status_codes = Rack::Utils::HTTP_STATUS_CODES
