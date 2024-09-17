@@ -26,6 +26,10 @@
       </div>
     </div>
 
+    <div class="mb-3">
+    <%= f.text_area :labels, class: "form-control", placeholder: (t 'labels'), value: @labels_value %>
+    </div>
+
     <div class="">
       <%= f.submit btn_label, class: "btn btn-primary" %>
     </div>

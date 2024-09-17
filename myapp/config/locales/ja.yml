@@ -37,6 +37,7 @@ ja:
   deleted_at: '削除日時'
   due_date_at: '期限'
   status: 'ステータス'
+  labels: 'ラベル'
   msg_create_success: '作成に成功しました'
   msg_create_failure: '作成に失敗しました'
   msg_update_success: '更新に成功しました'

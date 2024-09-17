@@ -4,7 +4,6 @@
     <tr>
       <th scope="col"><%= t "title" %></th>
       <th scope="col"><%= t "status" %></th>
-      <th scope="col"><%= t "detail" %></th>
       <th scope="col"><%= t 'due_date_at' %></th>
       <th scope="col"><%= t 'created_at' %></th>
       <th scope="col"><%= t 'updated_at' %></th>
@@ -15,9 +14,8 @@
   <tbody>
 <% @tasks.each do |task| %>
     <tr class="<%= 'table-danger' unless task.deleted_at.nil? %>" id="task-<%= task.id %>">
-      <td><%= task.title %></td>
+      <td><%= link_to task.title, task_path(task) %></td>
       <td><%= t task.status %></td>
-      <td><%= task.description %></td>
       <td><%= task.due_date_at %></td>
       <td><%= task.created_at %></td>
       <td><%= task.updated_at %></td>

@@ -393,5 +393,34 @@ RSpec.describe TasksController, type: :system do
       end
     end
   end
-end
 
+  describe '#add_labels' do
+    before do
+      @user_1 = create(:user)
+      create(:label, id: 1, name: 'work')
+      create(:label, id: 2, name: 'hobby')
+      create(:label, id: 3, name: 'baseball')
+
+      log_in(@user_1)
+      visit root_path
+    end
+
+    context 'when creating a task with existing label' do
+      it 'create a task with labels successfully' do
+        new_title = 'test title 1'
+        Task.statuses[:status_in_progress]
+        fill_in 'task[title]', with: new_title
+        fill_in 'task[labels]', with: 'work hobby game food ramen'
+        click_on 'Create'
+
+        # redirected back to root page
+        expect(current_path).to eq root_path
+        expect(page).to have_content '作成に成功しました'
+
+        # make sure new task is there
+        expect(page).to have_content new_title
+      end
+    end
+  end
+
+end

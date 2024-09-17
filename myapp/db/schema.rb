@@ -10,7 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_09_11_073508) do
+ActiveRecord::Schema[7.0].define(version: 2024_09_13_064431) do
+  create_table "labels", id: { type: :bigint, unsigned: true }, charset: "utf8mb4", force: :cascade do |t|
+    t.string "name", limit: 20
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_labels_on_name"
+  end
+
   create_table "tasks", id: { type: :bigint, unsigned: true }, charset: "utf8mb4", force: :cascade do |t|
     t.string "title", limit: 50, null: false
     t.string "description", limit: 500
@@ -27,6 +34,15 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_11_073508) do
     t.index ["user_id"], name: "fk_rails_4d2a9e4d7e"
   end
 
+  create_table "tasks_labels", id: { type: :bigint, unsigned: true }, charset: "utf8mb4", force: :cascade do |t|
+    t.bigint "task_id", default: 0, null: false, unsigned: true
+    t.bigint "label_id", default: 0, null: false, unsigned: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["label_id"], name: "fk_rails_ec4ff48c18"
+    t.index ["task_id"], name: "fk_rails_30e46383d5"
+  end
+
   create_table "users", id: { type: :bigint, unsigned: true }, charset: "utf8mb4", force: :cascade do |t|
     t.string "name", limit: 20, null: false
     t.string "password_digest", limit: 72, null: false
@@ -39,4 +55,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_11_073508) do
   end
 
   add_foreign_key "tasks", "users"
+  add_foreign_key "tasks_labels", "labels"
+  add_foreign_key "tasks_labels", "tasks"
 end
