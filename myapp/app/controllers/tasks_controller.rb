@@ -72,12 +72,7 @@ class TasksController < ApplicationController
 
     @labels_value = ''
     labels = Label.joins(:tasks_labels).where('tasks_labels.task_id': params[:id])
-    if labels.any?
-      labels.each do |label|
-        @labels_value += ' ' unless @labels_value.empty?
-        @labels_value += label.name
-      end
-    end
+        @labels_value = labels.map(&:name).join(' ') if labels.any?
   end
 
   def update
