@@ -105,8 +105,8 @@ chrome://extensions/ を開いて右上のDeveloper modeをオンにして、RKG
 ### ステップ2: リポジトリの初期設定をしよう
 
 - ブランチを作成しましょう
-  - masterブランチを元に自分のアカウント名と同じ名前で作成してください
-    - `git checkout -b github_account_name origin/master`
+  - developブランチを元に自分のアカウント名と同じ名前で作成してください
+    - `git checkout -b github_account_name origin/develop`
   - 作成したらpushしましょう
 
 ### ステップ3: Railsプロジェクトを作成しよう
