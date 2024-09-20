@@ -97,8 +97,8 @@ Open chrome://extensions/, enable Developer mode at the top right, and install t
 ### Step 2: Initialize the Repository
 
 - Create a new branch.
-  - Create a branch with your account name based on the master branch.
-    - `git checkout -b github_account_name origin/master`
+  - Create a branch with your account name based on the develop branch.
+    - `git checkout -b github_account_name origin/develop`
   - After creating the branch, push it.
 
 ### Step 3: Create a Rails Project
@@ -294,7 +294,6 @@ Start with a simple configuration where only the task name and details can be re
     1. [Dockerfile](https://qiita.com/ngron/items/f61b8635b4d67f666d75#failed-to-read-the-sessionstorage-property-from-window-storage-is-disabled-inside-data-urls)
     2. [spec/rails_helper.rb](https://commis.hatenablog.com/entry/2018/11/16/171608)
 
-  - feature specですと `database_cleaner` という gemは必要でしたが、 system specに変更することで `database_cleaner` の導入が要らなくなった
 - Introduce CI tools such as CircleCI and set them up to notify Slack.
   - If conducting PR exchanges within Fablic/training, introducing CI tools is optional. CircleCI cannot be executed as admin privileges are unavailable, even if .circleci/config.yml is set up.
 - Reference book：https://leanpub.com/everydayrailsrspec-jp
