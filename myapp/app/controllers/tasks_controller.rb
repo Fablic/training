@@ -12,7 +12,7 @@ class TasksController < ApplicationController
     unless params[:query].to_s.empty?
       # TODO: fix this. this fuzzy search might cause performance degradation.
       q = q.where('title LIKE ?', "%#{ActiveRecord::Base.sanitize_sql_like(params[:query].to_s)}%")
-
+tasks = Task.where('title LIKE ?', "%#{ActiveRecord::Base.sanitize_sql_like(params[:query].to_s)}%")
       # find if there is matched label
       labels = TasksLabel.joins(:label).where('labels.name': params[:query].to_s).pluck('task_id')
       if labels.any?
