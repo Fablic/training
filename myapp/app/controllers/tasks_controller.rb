@@ -15,9 +15,7 @@ class TasksController < ApplicationController
 tasks = Task.where('title LIKE ?', "%#{ActiveRecord::Base.sanitize_sql_like(params[:query].to_s)}%")
       # find if there is matched label
       labels = TasksLabel.joins(:label).where('labels.name': params[:query].to_s).pluck('task_id')
-      if labels.any?
-        q = q.or(Task.where(id: labels))
-      end
+      q = q.or(Task.where(id: labels)) if labels.any?
     end
 
     q = q.where(status: params[:status]) unless params[:status].to_s.empty?
@@ -72,7 +70,7 @@ tasks = Task.where('title LIKE ?', "%#{ActiveRecord::Base.sanitize_sql_like(para
 
     @labels_value = ''
     labels = Label.joins(:tasks_labels).where('tasks_labels.task_id': params[:id])
-        @labels_value = labels.map(&:name).join(' ') if labels.any?
+    @labels_value = labels.map(&:name).join(' ') if labels.any?
   end
 
   def update
@@ -81,11 +79,8 @@ tasks = Task.where('title LIKE ?', "%#{ActiveRecord::Base.sanitize_sql_like(para
     return redirect_to error_path(401) if @task.user_id != current_user.id
 
     if @task.update(update_params)
-
       # delete them all first and re-create, should be better performance than select and update for each
-      if delete_labels?(@task)
-        add_labels(@task, params[:task][:labels])
-      end
+      add_labels(@task, params[:task][:labels]) if delete_labels?(@task)
 
       flash[:success] = I18n.t 'msg_update_success'
       redirect_to root_path
@@ -131,9 +126,7 @@ tasks = Task.where('title LIKE ?', "%#{ActiveRecord::Base.sanitize_sql_like(para
     # too many labels, limit to 50, or should return error?
     # TODO, the val is hard-coded here for now, but make it configurable
     max_labels = 50
-    if labels.length >= max_labels
-      labels = labels[0..(max_labels - 1)]
-    end
+    labels = labels[0..(max_labels - 1)] if labels.length >= max_labels
 
     labels_map = {}
     labels.each do |v|
@@ -154,7 +147,7 @@ tasks = Task.where('title LIKE ?', "%#{ActiveRecord::Base.sanitize_sql_like(para
       # for new labels
       # insert them one by one in order to get the id, mysql w/ AR doesn't support returning object for bulk insert
       if labels_map.length > 0
-        labels_map.each do |item, v|
+        labels_map.each do |item, _v|
           l = Label.new({ name: item })
           res = l.save
           data.push({ "label_id": l.id, "task_id": task.id }) if res
@@ -165,14 +158,13 @@ tasks = Task.where('title LIKE ?', "%#{ActiveRecord::Base.sanitize_sql_like(para
       TasksLabel.insert_all data
     end
 
-    unless result
-      # should return error?
-      Rails.logger.error("failed to insert lables, error: #{result}")
-    end
+    return if result
+
+    # should return error?
+    Rails.logger.error("failed to insert lables, error: #{result}")
   end
 
   def delete_labels?(task)
     TasksLabel.where(task_id: task.id).destroy_all
   end
-
 end
