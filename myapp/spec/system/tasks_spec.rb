@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require 'active_support/time'
 
 RSpec.describe TasksController, type: :system do
   include LoginHelper
@@ -63,6 +64,7 @@ RSpec.describe TasksController, type: :system do
       context 'when task is filtered' do
         before do
           @tasks = create_list(:task, 5, user: @user_1)
+          @label = create(:label, id: 1, name: 'work')
           visit root_path
         end
 
@@ -97,6 +99,31 @@ RSpec.describe TasksController, type: :system do
 
           expect(current_path).to eq root_path
           expect(page).to have_selector('tbody tr', count: 1)
+        end
+
+        it 'search by label' do
+          # add extra items with various status
+          create(:task, title: 'working', user: @user_1)
+          create(:task, user: @user_1)
+          task_3 = create(:task, user: @user_1)
+          create(:tasks_label, task_id: task_3.id, label_id: @label.id)
+
+          fill_in 'query', with: @label.name
+          click_on 'btn-search'
+
+          expect(current_path).to eq root_path
+          expect(page).to have_selector('tbody tr', count: 2)
+        end
+      end
+
+      context 'when it is under maintenance' do
+        before do
+          create(:maintenance, is_maintenance: 1, started_at: Time.now.ago(5.minutes).to_s, ended_at: Time.now.since(5.minutes).to_s)
+          visit root_path
+        end
+
+        it 'should be redirected to maintenance page' do
+          expect(current_path).to eq maintenance_path
         end
       end
     end
@@ -393,5 +420,34 @@ RSpec.describe TasksController, type: :system do
       end
     end
   end
-end
 
+  describe '#add_labels' do
+    before do
+      @user_1 = create(:user)
+      create(:label, id: 1, name: 'work')
+      create(:label, id: 2, name: 'hobby')
+      create(:label, id: 3, name: 'baseball')
+
+      log_in(@user_1)
+      visit root_path
+    end
+
+    context 'when creating a task with existing label' do
+      it 'create a task with labels successfully' do
+        new_title = 'test title 1'
+        Task.statuses[:status_in_progress]
+        fill_in 'task[title]', with: new_title
+        fill_in 'task[labels]', with: 'work hobby game food ramen'
+        click_on 'Create'
+
+        # redirected back to root page
+        expect(current_path).to eq root_path
+        expect(page).to have_content '作成に成功しました'
+
+        # make sure new task is there
+        expect(page).to have_content new_title
+      end
+    end
+  end
+
+end

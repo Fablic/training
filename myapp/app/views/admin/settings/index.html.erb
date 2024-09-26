@@ -1,0 +1,35 @@
+<div class="h5"><%= t 'Settings' %></div>
+
+<div class="bg-white rounded p-3 mb-3">
+  <div class="h6"><%= t 'Maintenance' %></div>
+  <% if @maintenance.errors.full_messages.any? %>
+  <ul>
+      <% @maintenance.errors.full_messages.each do |message| %>
+      <li class="text-danger small"><%= message %></li>
+      <% end %>
+  </ul>
+  <% end %>
+  <%= form_with model: @maintenance, url: admin_settings_path, method: "POST" do |f| %>
+    <div class="mb-3">
+      <div class="col-3">
+      <%= f.radio_button :is_maintenance, Maintenance.is_maintenances.key(0) %>
+      <%= f.label :is_maintenance, "off", value: Maintenance.is_maintenances.key(0) %>
+      <%= f.radio_button :is_maintenance, Maintenance.is_maintenances.key(1) %>
+      <%= f.label :is_maintenance, "on", value: Maintenance.is_maintenances.key(1) %>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <div class="col-3">
+      <%= f.label :started_at, "Start" %>
+      <%= f.datetime_field :started_at, class: "form-control" %>
+      <%= f.label :ended_at, "End" %>
+      <%= f.datetime_field :ended_at, class: "form-control" %>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <%= f.submit 'Submit', class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>

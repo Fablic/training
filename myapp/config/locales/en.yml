@@ -37,6 +37,7 @@ en:
   deleted_at: 'deleted'
   due_date_at: 'due date'
   status: 'status'
+  labels: 'labels'
   msg_create_success: 'Created a task successfully.'
   msg_create_failure: 'Failed to create a task.'
   msg_update_success: 'Updated a task successfully.'
@@ -53,6 +54,7 @@ en:
   role_normal: 'normal'
   role_admin: 'admin'
   role_moderator: 'moderator'
+  msg_maintenance: 'under maintenance...'
 
   user:
     name: 'username'

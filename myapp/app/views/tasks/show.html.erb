@@ -25,6 +25,18 @@
             <th><%= t 'updated_at' %></th>
             <td><%= @task.updated_at %></td>
         </tr>
+        <tr>
+            <th><%= t 'labels' %></th>
+            <td>
+                <% if @labels.any? %>
+                <% @labels.each do |label| %>
+                <span>#<%= label.name %></span>
+                <% end %>
+                <% end %>
+            </td>
+        </tr>
     </tbody>
 </table>
+<% if @task.user_id == current_user.id %>
 <%= link_to 'Edit', edit_task_path(@task) %>
+<% end %>

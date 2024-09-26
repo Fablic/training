@@ -23,11 +23,15 @@ Rails.application.routes.draw do
 
     get '/users/:id/tasks', to: 'tasks#index', as: 'user_tasks'
     delete '/tasks/:id', to: 'tasks#destroy', as: 'task'
+
+    get '/settings', to: 'settings#index'
+    post '/settings', to: 'settings#create'
   end
 
   # overrirde default error pages
   get '/404', to: 'errors#not_found', as: :not_found, via: :all
   get '/500', to: 'errors#internal_server_error', as: :internal_server_error, via: :all
+  get '/maintenance', to: 'errors#maintenance', as: :maintenance
   get '/errors/:status', to: 'errors#show', as: :error
 
   match '*path', to: 'errors#not_found', via: :all
