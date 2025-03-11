@@ -14,9 +14,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_11_025714) do
   create_table "tasks", charset: "utf8mb4", force: :cascade do |t|
     t.string "name", null: false
     t.text "description"
-    t.bigint "created_user_id", null: false
-    t.integer "priority", null: false
-    t.integer "status", null: false
+    t.bigint "user_id", null: false
+    t.integer "priority", limit: 1, null: false
+    t.integer "status", limit: 1, null: false
     t.timestamp "deadline"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
