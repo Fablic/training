@@ -22,7 +22,7 @@ class TasksController < ApplicationController
       redirect_to @task
     else
       flash.now[:alert] = "There was an error creating the task."
-      render :new
+      render :new, status: 422
     end
   end
 
@@ -32,7 +32,7 @@ class TasksController < ApplicationController
       redirect_to @task
     else
       flash.now[:alert] = "There was an error updating the task."
-      render :edit
+      render :edit, status: 422
     end
   end
 
