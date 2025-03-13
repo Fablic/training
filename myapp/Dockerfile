@@ -18,7 +18,8 @@ FROM base as build
 
 # Install packages needed to build gems
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential default-libmysqlclient-dev git libvips pkg-config libyaml-dev
+    apt-get install --no-install-recommends -y build-essential ruby-dev default-libmysqlclient-dev git libvips pkg-config libyaml-dev
+RUN bundle config set frozen false
 
 # Install application gems
 COPY Gemfile Gemfile.lock ./
@@ -30,6 +31,7 @@ RUN bundle install && \
 COPY . .
 
 # Precompile bootsnap code for faster boot times
+RUN bundle config set frozen false
 RUN bundle exec bootsnap precompile app/ lib/
 
 # Precompiling assets for production without requiring secret RAILS_MASTER_KEY
@@ -47,11 +49,12 @@ RUN apt-get update -qq && \
 # Copy built artifacts: gems, application
 COPY --from=build /usr/local/bundle /usr/local/bundle
 COPY --from=build /rails /rails
+RUN bundle config set frozen false
 
 # Run and own only the runtime files as a non-root user for security
-RUN useradd rails --create-home --shell /bin/bash && \
-    chown -R rails:rails db log storage tmp
-USER rails:rails
+# RUN useradd rails --create-home --shell /bin/bash && \
+#     chown -R rails:rails db log storage tmp
+# USER rails:rails
 
 # Entrypoint prepares the database.
 ENTRYPOINT ["/rails/bin/docker-entrypoint"]

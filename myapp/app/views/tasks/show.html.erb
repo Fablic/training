@@ -1,0 +1,31 @@
+<h1>Tasks Detail</h1>
+
+<p>
+  <strong>Name:</strong>
+  <%= @task.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @task.description %>
+</p>
+
+<p>
+  <strong>Priority:</strong>
+  <%= @task.priority %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @task.status %>
+</p>
+
+<p>
+  <strong>Deadline:</strong>
+  <%= @task.deadline ? @task.deadline.strftime("%Y-%m-%d %H:%M") : "None" %>
+</p>
+
+<p>
+  <%= link_to 'Edit Task', edit_task_path(@task) %> |
+  <%= link_to 'Back to Task List', tasks_path %>
+</p>
