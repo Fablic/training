@@ -7,6 +7,10 @@
   <div class="flash alert"><%= flash[:alert] %></div>
 <% end %>
 
+<% if @tasks.empty? %>
+  <p>No Task</p>
+<% else %>
+<div class="container">
 <table class="table">
   <thead>
     <tr>
@@ -33,7 +37,9 @@
     <% end %>
   </tbody>
 </table>
+</div>
+<% end %>
 
-<p>
+<button type="button" class="btn">
   <%= link_to 'New Task', new_task_path %>
-</p>
+</button>

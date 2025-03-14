@@ -103,6 +103,7 @@ GEM
     debug (1.10.0)
       irb (~> 1.10)
       reline (>= 0.3.8)
+    diff-lcs (1.6.0)
     drb (2.2.1)
     erubi (1.13.1)
     globalid (1.2.1)
@@ -203,6 +204,23 @@ GEM
     reline (0.6.0)
       io-console (~> 0.5)
     rexml (3.4.1)
+    rspec-core (3.13.3)
+      rspec-support (~> 3.13.0)
+    rspec-expectations (3.13.3)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.13.0)
+    rspec-mocks (3.13.2)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.13.0)
+    rspec-rails (7.0.2)
+      actionpack (>= 7.0)
+      activesupport (>= 7.0)
+      railties (>= 7.0)
+      rspec-core (~> 3.13)
+      rspec-expectations (~> 3.13)
+      rspec-mocks (~> 3.13)
+      rspec-support (~> 3.13)
+    rspec-support (3.13.2)
     rubyzip (2.4.1)
     securerandom (0.4.1)
     selenium-webdriver (4.29.1)
@@ -247,13 +265,14 @@ PLATFORMS
 
 DEPENDENCIES
   bootsnap
-  capybara
+  capybara (>= 2.15)
   debug
   importmap-rails
   jbuilder
   mysql2 (~> 0.5)
   puma (>= 5.0)
   rails (~> 7.1.5, >= 7.1.5.1)
+  rspec-rails (~> 7.0.0)
   selenium-webdriver
   sprockets-rails
   stimulus-rails
