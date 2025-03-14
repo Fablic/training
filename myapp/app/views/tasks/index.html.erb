@@ -1,0 +1,39 @@
+<h1>Tasks</h1>
+
+<% if flash[:notice] %>
+  <div class="flash notice"><%= flash[:notice] %></div>
+<% end %>
+<% if flash[:alert] %>
+  <div class="flash alert"><%= flash[:alert] %></div>
+<% end %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Deadline</th>
+      <th>Priority</th>
+      <th>Status</th>
+      <th>Label</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tasks.each do |task| %>
+      <tr>
+        <td><%= link_to task.name, task %></td>
+        <td><%= task.deadline %></td>
+        <td><%= task.priority %></td>
+        <td><%= task.status %></td>
+        <td>Label</td>
+        <td>
+          <%= link_to 'Edit', edit_task_path(task) %> |
+          <%= link_to 'Delete', task, method: :delete, data: { turbo_method: :delete , turbo_confirm: "Are you sure?" } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<p>
+  <%= link_to 'New Task', new_task_path %>
+</p>
