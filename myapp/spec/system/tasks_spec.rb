@@ -16,6 +16,8 @@ RSpec.describe "Tasks", type: :system do
           name: "Task One",
           description: "First task description",
           user_id: 1,
+          created_at: 1.days.ago,
+          deadline: 1.day.from_now,
           priority: "low",
           status: "to do"
         )
@@ -23,6 +25,8 @@ RSpec.describe "Tasks", type: :system do
           name: "Task Two",
           description: "Second task description",
           user_id: 1,
+          created_at: 1.days.ago,
+          deadline: 1.day.from_now,
           priority: "medium",
           status: "in progress"
         )
@@ -41,30 +45,57 @@ RSpec.describe "Tasks", type: :system do
       it "creates a new task" do
         visit new_task_path
 
-        fill_in "Name", with: "New Task"
-        fill_in "Description", with: "This is a new task"
-        select "Low", from: "Priority"
-        select "To do", from: "Status"
+        fill_in I18n.t("name"), with: "New Task"
+        fill_in I18n.t("description"), with: "This is a new task"
+        select "Low", from: I18n.t("priority")
+        select "To do", from: I18n.t("status")
+        deadline = 7.days.from_now
+        select deadline.year.to_s, from: "task_deadline_1i"
+        select I18n.t("date.month_names")[deadline.month], from: "task_deadline_2i"
+        select deadline.day.to_s, from: "task_deadline_3i"
+        select deadline.strftime("%H"), from: "task_deadline_4i"
+        select deadline.strftime("%M"), from: "task_deadline_5i"
 
         click_button "Create Task"
 
-        expect(page).to have_content("Task was successfully created")
+        expect(page).to have_content(I18n.t 'msg_create_success')
         expect(page).to have_content("New Task")
       end
     end
 
     context "without a name" do
-      it "shows a validation error" do
+      it "shows a name validation error" do
         visit new_task_path
 
-        fill_in "Name", with: ""
-        fill_in "Description", with: "Task without a name."
-        select "Low", from: "Priority"
-        select "To do", from: "Status"
+        fill_in I18n.t("name"), with: ""
+        fill_in I18n.t("description"), with: "Task without a name."
+        select "Low", from: I18n.t("priority")
+        select "To do", from: I18n.t("status")
+        deadline = 7.days.from_now
+        select deadline.year.to_s, from: "task_deadline_1i"
+        select I18n.t("date.month_names")[deadline.month], from: "task_deadline_2i"
+        select deadline.day.to_s, from: "task_deadline_3i"
+        select deadline.strftime("%H"), from: "task_deadline_4i"
+        select deadline.strftime("%M"), from: "task_deadline_5i"
 
         click_button "Create Task"
 
-        expect(page).to have_content("Name can't be blank")
+        expect(page).to have_content(I18n.t("activerecord.attributes.task.name") + " " + I18n.t("errors.messages.blank"))
+      end
+    end
+
+    context "without a deadline" do
+      it "shows a deadline validation error" do
+        visit new_task_path
+
+        fill_in I18n.t("name"), with: "New Task"
+        fill_in I18n.t("description"), with: "Task without a deadline."
+        select "Low", from: I18n.t("priority")
+        select "To do", from: I18n.t("status")
+
+        click_button "Create Task"
+
+        expect(page).to have_content(I18n.t("activerecord.attributes.task.deadline") + " " + I18n.t("errors.messages.blank"))
       end
     end
   end
@@ -75,18 +106,19 @@ RSpec.describe "Tasks", type: :system do
         name: "Original Task",
         description: "Task to be edited",
         user_id: 1,
+        deadline: 1.day.from_now,
         priority: "low",
         status: "to do"
       )
     end
 
     it "allows editing and displays success message" do
-      visit edit_task_path(task)
+      visit edit_task_path(locale: I18n.locale, id: task.id)
 
-      fill_in "Name", with: "Edited Task"
+      fill_in I18n.t("name"), with: "Edited Task"
       click_button "Update Task"
 
-      expect(page).to have_content("Task was successfully updated")
+      expect(page).to have_content(I18n.t 'msg_update_success')
       expect(page).to have_content("Edited Task")
     end
   end
@@ -97,6 +129,8 @@ RSpec.describe "Tasks", type: :system do
         name: "Delete Me",
         description: "Task to be deleted",
         user_id: 1,
+        created_at: 1.days.ago,
+        deadline: 1.day.from_now,
         priority: "medium",
         status: "to do"
       )
@@ -105,9 +139,9 @@ RSpec.describe "Tasks", type: :system do
     it "deletes the task and shows success message" do
       visit tasks_path
 
-      click_link "Delete", href: task_path(task)
+      click_link "Delete", href: task_path(locale: I18n.locale, id: task.id)
 
-      expect(page).to have_content("Task was successfully deleted")
+      expect(page).to have_content(I18n.t 'msg_delete_success')
     end
   end
 end

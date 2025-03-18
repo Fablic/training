@@ -1,4 +1,4 @@
-<h1>Tasks</h1>
+<h1>Task</h1>
 
 <% if flash[:notice] %>
   <div class="flash notice"><%= flash[:notice] %></div>
@@ -14,18 +14,44 @@
 <table class="table">
   <thead>
     <tr>
-      <th>Name</th>
-      <th>Deadline</th>
-      <th>Priority</th>
-      <th>Status</th>
-      <th>Label</th>
+      <th><%= t('name') %></th>
+      <th>
+      <%= t('deadline') %>
+      <%= link_to tasks_path(sort_by: 'deadline', direction: 'asc') do %>
+          <span class="arrow <%= 'active' if params[:sort_by] == 'deadline' && params[:direction] == 'asc' %>">
+            &uarr;
+          </span>
+        <% end %>
+      <%= link_to tasks_path(sort_by: 'deadline', direction: 'desc') do %>
+          <span class="arrow <%= 'active' if params[:sort_by] == 'deadline' && params[:direction] == 'desc' %>">
+            &darr;
+          </span>
+        <% end %>
+      </th>
+      <th>
+      <%= t('created_at') %>
+      <%= link_to tasks_path(sort_by: 'created_at', direction: 'asc') do %>
+          <span class="arrow <%= 'active' if params[:sort_by] == 'created_at' && params[:direction] == 'asc' %>">
+            &uarr;
+          </span>
+        <% end %>
+      <%= link_to tasks_path(sort_by: 'created_at', direction: 'desc') do %>
+          <span class="arrow <%= 'active' if params[:sort_by] == 'created_at' && params[:direction] == 'desc' %>">
+            &darr;
+          </span>
+        <% end %>
+      </th>
+      <th><%= t('priority') %></th>
+      <th><%= t('status') %></th>
+      <th><%= t('labels') %></th>
     </tr>
   </thead>
   <tbody>
     <% @tasks.each do |task| %>
       <tr>
         <td><%= link_to task.name, task %></td>
-        <td><%= task.deadline %></td>
+        <td><%= task.deadline.strftime("%Y-%m-%d %H:%M") %></td>
+        <td><%= task.created_at.strftime("%Y-%m-%d %H:%M") %></td>
         <td><%= task.priority %></td>
         <td><%= task.status %></td>
         <td>Label</td>

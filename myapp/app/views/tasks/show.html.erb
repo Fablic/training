@@ -8,27 +8,27 @@
 <% end %>
 
 <p>
-  <strong>Name:</strong>
+  <strong><%= t('name') %>:</strong>
   <%= @task.name %>
 </p>
 
 <p>
-  <strong>Description:</strong>
+  <strong><%= t('description') %>:</strong>
   <%= @task.description %>
 </p>
 
 <p>
-  <strong>Priority:</strong>
+  <strong><%= t('priority') %>:</strong>
   <%= @task.priority %>
 </p>
 
 <p>
-  <strong>Status:</strong>
+  <strong><%= t('status') %>:</strong>
   <%= @task.status %>
 </p>
 
 <p>
-  <strong>Deadline:</strong>
+  <strong><%= t('deadline') %>:</strong>
   <%= @task.deadline ? @task.deadline.strftime("%Y-%m-%d %H:%M") : "None" %>
 </p>
 

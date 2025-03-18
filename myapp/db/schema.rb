@@ -10,14 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_03_11_025714) do
+ActiveRecord::Schema[7.1].define(version: 2025_03_18_040512) do
   create_table "tasks", charset: "utf8mb4", force: :cascade do |t|
     t.string "name", null: false
     t.text "description"
     t.bigint "user_id", null: false
     t.integer "priority", limit: 1, null: false
     t.integer "status", limit: 1, null: false
-    t.timestamp "deadline"
+    t.timestamp "deadline", default: -> { "CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP" }, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

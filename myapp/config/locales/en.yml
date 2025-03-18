@@ -28,4 +28,30 @@
 #       enabled: "ON"
 
 en:
-  hello: "Hello world"
+  name: 'Name'
+  description: 'Description'
+  deadline: 'Deadline'
+  created_at: 'Created'
+  priority: 'Priority'
+  status: 'Status'
+  labels: 'Labels'
+  msg_create_success: 'Task was successfully created.'
+  msg_create_failure: 'Failed to create a task.'
+  msg_update_success: 'Task was successfully updated.'
+  msg_update_failure: 'Failed to update a task.'
+  msg_delete_success: 'Task was successfully deleted.'
+  msg_delete_failure: 'Failed to delete a task.'
+  activerecord:
+    attributes:
+      task:
+        name: 'Name'
+        description: 'Description'
+        deadline: 'Deadline'
+        created_at: 'Created'
+        priority: 'Priority'
+        status: 'Status'
+        labels: 'Labels'
+  errors:
+    format: "%{attribute} %{message}"
+    messages:
+      blank: "can't be blank"

@@ -1,0 +1,20 @@
+<div class="container">
+<h1><%= response.code %></h1>
+<p>
+  <% case response.code.to_i %>
+  <% when 400 %>
+    Bad Request.
+  <% when 404 %>
+    Not Found.
+  <% when 406 %>
+    Not Acceptable.
+  <% when 422 %>
+    Unprocessable Entity.
+  <% when 500 %>
+    Internal Server Error.
+  <% else %>
+    An unexpected error occurred.
+  <% end %>
+</p>
+<%= link_to "Go back home", root_path %>
+</div>

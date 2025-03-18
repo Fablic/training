@@ -13,6 +13,18 @@
   </head>
 
   <body>
+  <header>
+  <div class="locale-switcher">
+    <span>
+      <%= link_to "en", url_for(locale: 'en'), class: "locale-button #{'active' if I18n.locale == :en}" %>
+    </span>
+    <span>|</span>
+    <span>
+      <%= link_to "ja", url_for(locale: 'ja'), class: "locale-button #{'active' if I18n.locale == :ja}" %>
+    </span>
+  </div>
+  </header>
+
     <%= yield %>
   </body>
 </html>
