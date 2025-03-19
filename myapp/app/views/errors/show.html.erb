@@ -3,18 +3,18 @@
 <p>
   <% case response.code.to_i %>
   <% when 400 %>
-    Bad Request.
+    <%= t("page.error_page.bad_request") %>
   <% when 404 %>
-    Not Found.
+    <%= t("page.error_page.not_found") %>
   <% when 406 %>
-    Not Acceptable.
+    <%= t("page.error_page.not_acceptable") %>
   <% when 422 %>
-    Unprocessable Entity.
+    <%= t("page.error_page.unprocessable_entity") %>
   <% when 500 %>
-    Internal Server Error.
+    <%= t("page.error_page.internal_server_error") %>
   <% else %>
-    An unexpected error occurred.
+    <%= t("page.error_page.else") %>
   <% end %>
 </p>
-<%= link_to "Go back home", root_path %>
+<%= link_to t("button.back"), root_path, class: "btn btn-secondary" %>
 </div>

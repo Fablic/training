@@ -75,3 +75,10 @@ en:
     task_detail: "Task Detail"
     edit_task: "Edit Task"
     create_new_task: "Create New Task"
+    error_page:
+      bad_request: "Bad Request."
+      not_found: "Not Found."
+      not_acceptable: "Not Acceptable."
+      unprocessable_entity: "Unprocessable Entity."
+      internal_server_error: "Internal Server Error."
+      else: "An unexpected error occurred."

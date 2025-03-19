@@ -52,3 +52,10 @@ ja:
     task_detail: "タスク詳細"
     edit_task: "タスク編集"
     create_new_task: "新規タスク作成"
+    error_page:
+      bad_request: "不正なリクエストです"
+      not_found: "ページが見つかりません"
+      not_acceptable: "リクエストが受理できません"
+      unprocessable_entity: "リクエストが不正です"
+      internal_server_error: "サーバーエラーが発生しました"
+      else: "予期しないエラーが発生しました"
