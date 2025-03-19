@@ -49,9 +49,29 @@ en:
         deadline: 'Deadline'
         created_at: 'Created'
         priority: 'Priority'
+        priorities:
+          low: "Low"
+          medium: "Medium"
+          high: "High"
         status: 'Status'
+        statuses:
+          to_do: "To Do"
+          in_progress: "In Progress"
+          done: "Done"
         labels: 'Labels'
   errors:
     format: "%{attribute} %{message}"
     messages:
       blank: "can't be blank"
+      deadline_in_past: "can't be in the past"
+      too_long: "is too long (maximum is 256 characters)"
+  button:
+    new_task: "New Task"
+    update_task: "Update Task"
+    back: "Back"
+    save: "Save"
+  page:
+    task: "Task"
+    task_detail: "Task Detail"
+    edit_task: "Edit Task"
+    create_new_task: "Create New Task"

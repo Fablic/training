@@ -9,7 +9,7 @@ RSpec.describe "TaskSorts", type: :system do
       created_at: 3.days.ago,
       deadline: 5.day.from_now,
       priority: "low",
-      status: "to do"
+      status: "to_do"
     )
     @task2 = Task.create!(
       name: "Task 2", 
@@ -18,7 +18,7 @@ RSpec.describe "TaskSorts", type: :system do
       created_at: 2.days.ago,
       deadline: 3.day.from_now,
       priority: "medium",
-      status: "in progress"
+      status: "in_progress"
     )
     @task3 = Task.create!(
       name: "Task 3", 

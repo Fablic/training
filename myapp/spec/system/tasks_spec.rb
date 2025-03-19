@@ -19,7 +19,7 @@ RSpec.describe "Tasks", type: :system do
           created_at: 1.days.ago,
           deadline: 1.day.from_now,
           priority: "low",
-          status: "to do"
+          status: "to_do"
         )
         Task.create!(
           name: "Task Two",
@@ -28,7 +28,7 @@ RSpec.describe "Tasks", type: :system do
           created_at: 1.days.ago,
           deadline: 1.day.from_now,
           priority: "medium",
-          status: "in progress"
+          status: "in_progress"
         )
       end
 
@@ -47,8 +47,8 @@ RSpec.describe "Tasks", type: :system do
 
         fill_in I18n.t("name"), with: "New Task"
         fill_in I18n.t("description"), with: "This is a new task"
-        select "Low", from: I18n.t("priority")
-        select "To do", from: I18n.t("status")
+        select I18n.t("activerecord.attributes.task.priorities.low"), from: I18n.t("priority")
+        select I18n.t("activerecord.attributes.task.statuses.to_do"), from: I18n.t("status")
         deadline = 7.days.from_now
         select deadline.year.to_s, from: "task_deadline_1i"
         select I18n.t("date.month_names")[deadline.month], from: "task_deadline_2i"
@@ -56,7 +56,7 @@ RSpec.describe "Tasks", type: :system do
         select deadline.strftime("%H"), from: "task_deadline_4i"
         select deadline.strftime("%M"), from: "task_deadline_5i"
 
-        click_button "Create Task"
+        click_button I18n.t("button.save")
 
         expect(page).to have_content(I18n.t 'msg_create_success')
         expect(page).to have_content("New Task")
@@ -69,8 +69,8 @@ RSpec.describe "Tasks", type: :system do
 
         fill_in I18n.t("name"), with: ""
         fill_in I18n.t("description"), with: "Task without a name."
-        select "Low", from: I18n.t("priority")
-        select "To do", from: I18n.t("status")
+        select I18n.t("activerecord.attributes.task.priorities.low"), from: I18n.t("priority")
+        select I18n.t("activerecord.attributes.task.statuses.to_do"), from: I18n.t("status")
         deadline = 7.days.from_now
         select deadline.year.to_s, from: "task_deadline_1i"
         select I18n.t("date.month_names")[deadline.month], from: "task_deadline_2i"
@@ -78,7 +78,7 @@ RSpec.describe "Tasks", type: :system do
         select deadline.strftime("%H"), from: "task_deadline_4i"
         select deadline.strftime("%M"), from: "task_deadline_5i"
 
-        click_button "Create Task"
+        click_button I18n.t("button.save")
 
         expect(page).to have_content(I18n.t("activerecord.attributes.task.name") + " " + I18n.t("errors.messages.blank"))
       end
@@ -90,10 +90,10 @@ RSpec.describe "Tasks", type: :system do
 
         fill_in I18n.t("name"), with: "New Task"
         fill_in I18n.t("description"), with: "Task without a deadline."
-        select "Low", from: I18n.t("priority")
-        select "To do", from: I18n.t("status")
+        select I18n.t("activerecord.attributes.task.priorities.low"), from: I18n.t("priority")
+        select I18n.t("activerecord.attributes.task.statuses.to_do"), from: I18n.t("status")
 
-        click_button "Create Task"
+        click_button I18n.t("button.save")
 
         expect(page).to have_content(I18n.t("activerecord.attributes.task.deadline") + " " + I18n.t("errors.messages.blank"))
       end
@@ -108,7 +108,7 @@ RSpec.describe "Tasks", type: :system do
         user_id: 1,
         deadline: 1.day.from_now,
         priority: "low",
-        status: "to do"
+        status: "to_do"
       )
     end
 
@@ -116,7 +116,7 @@ RSpec.describe "Tasks", type: :system do
       visit edit_task_path(locale: I18n.locale, id: task.id)
 
       fill_in I18n.t("name"), with: "Edited Task"
-      click_button "Update Task"
+      click_button I18n.t("button.save")
 
       expect(page).to have_content(I18n.t 'msg_update_success')
       expect(page).to have_content("Edited Task")
@@ -132,7 +132,7 @@ RSpec.describe "Tasks", type: :system do
         created_at: 1.days.ago,
         deadline: 1.day.from_now,
         priority: "medium",
-        status: "to do"
+        status: "to_do"
       )
     end
 

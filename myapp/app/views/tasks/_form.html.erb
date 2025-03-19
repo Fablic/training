@@ -1,7 +1,6 @@
 <%= form_with(model: task, local: true) do |form| %>
     <% if task.errors.any? %>
       <div class="alert alert-danger">
-        <h2><%= pluralize(task.errors.count, "error") %> prohibited this task from being saved:</h2>
         <ul>
           <% task.errors.full_messages.each do |msg| %>
             <li><%= msg %></li>
@@ -22,12 +21,12 @@
   
     <div>
       <%= form.label :priority %>
-      <%= form.select :priority, options_for_select(Task.priorities.keys.map { |key| [key.humanize, key] }, task.priority) %>
+      <%= form.select :priority, options_for_select(Task.priorities.keys.map { |key| [t("activerecord.attributes.task.priorities.#{key}"), key] }, task.priority) %>
     </div>
   
     <div>
       <%= form.label :status %>
-      <%= form.select :status, options_for_select(Task.statuses.keys.map { |key| [key.humanize, key] }, task.status) %>
+      <%= form.select :status, options_for_select(Task.statuses.keys.map { |key| [t("activerecord.attributes.task.statuses.#{key}"), key] }, task.status) %>
     </div>
   
     <div>
@@ -38,8 +37,8 @@
     <!-- If you want to set the user_id automatically, you might consider a hidden field or set it on the controller -->
     <%= form.hidden_field :user_id, value: 1 %>
   
-    <div>
-      <%= form.submit %>
-    </div>
+    <button type="submit" class="btn btn-primary">
+      <%= t("button.save") %>
+    </button>
   <% end %>
   

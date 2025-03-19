@@ -1,10 +1,10 @@
-<h1>Tasks Detail</h1>
+<h1><%= t("page.task_detail") %></h1>
 
 <% if flash[:notice] %>
-  <div class="flash notice"><%= flash[:notice] %></div>
+  <div class="alert alert-success"><%= flash[:notice] %></div>
 <% end %>
 <% if flash[:alert] %>
-  <div class="flash alert"><%= flash[:alert] %></div>
+  <div class="alert alert-danger"><%= flash[:alert] %></div>
 <% end %>
 
 <p>
@@ -19,12 +19,12 @@
 
 <p>
   <strong><%= t('priority') %>:</strong>
-  <%= @task.priority %>
+  <%= t("activerecord.attributes.task.priorities.#{@task.priority}") %>
 </p>
 
 <p>
   <strong><%= t('status') %>:</strong>
-  <%= @task.status %>
+  <%= t("activerecord.attributes.task.statuses.#{@task.status}") %>
 </p>
 
 <p>
@@ -32,7 +32,10 @@
   <%= @task.deadline ? @task.deadline.strftime("%Y-%m-%d %H:%M") : "None" %>
 </p>
 
-<p>
-  <%= link_to 'Edit Task', edit_task_path(@task) %> |
-  <%= link_to 'Back to Task List', tasks_path %>
-</p>
+<span>
+  <%= link_to t("button.update_task"), edit_task_path(@task), class:"btn btn-secondary" %>
+</span>
+<span>|</span>
+<span>
+  <%= link_to t("button.back"), tasks_path, class:"btn btn-secondary" %>
+</span>

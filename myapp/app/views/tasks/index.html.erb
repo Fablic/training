@@ -1,10 +1,10 @@
-<h1>Task</h1>
+<h1><h1><%= t("page.task") %></h1></h1>
 
 <% if flash[:notice] %>
-  <div class="flash notice"><%= flash[:notice] %></div>
+  <div class="alert alert-success"><%= flash[:notice] %></div>
 <% end %>
 <% if flash[:alert] %>
-  <div class="flash alert"><%= flash[:alert] %></div>
+  <div class="alert alert-danger"><%= flash[:alert] %></div>
 <% end %>
 
 <% if @tasks.empty? %>
@@ -52,12 +52,18 @@
         <td><%= link_to task.name, task %></td>
         <td><%= task.deadline.strftime("%Y-%m-%d %H:%M") %></td>
         <td><%= task.created_at.strftime("%Y-%m-%d %H:%M") %></td>
-        <td><%= task.priority %></td>
-        <td><%= task.status %></td>
+        <td><%= t("activerecord.attributes.task.priorities.#{task.priority}") %></td>
+        <td><%= t("activerecord.attributes.task.statuses.#{task.status}") %></td>
         <td>Label</td>
         <td>
-          <%= link_to 'Edit', edit_task_path(task) %> |
-          <%= link_to 'Delete', task, method: :delete, data: { turbo_method: :delete , turbo_confirm: "Are you sure?" } %>
+          <%= link_to edit_task_path(task), class: "text-decoration-none" do %>
+            <i class="bi bi-pencil-square"></i>
+            <span class="visually-hidden">Edit</span>
+          <% end %> |
+          <%= link_to task, method: :delete, data: { turbo_method: :delete , turbo_confirm: "Are you sure?" }, class: "text-decoration-none" do %>
+            <i class="bi bi-trash"></i>
+            <span class="visually-hidden">Delete</span>
+          <% end %>
         </td>
       </tr>
     <% end %>
@@ -66,6 +72,8 @@
 </div>
 <% end %>
 
-<button type="button" class="btn">
-  <%= link_to 'New Task', new_task_path %>
-</button>
+<%= link_to new_task_path, class: "btn btn-primary text-decoration-none" do  %>
+  <i class="bi bi-plus-circle"></i>
+  <span><%= t('button.new_task') %></span>
+<% end %>
+

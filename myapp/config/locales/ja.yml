@@ -21,14 +21,34 @@ ja:
   activerecord:
     attributes:
       task:
-          name: '名前'
-          description: '詳細'
-          deadline: '期限'
-          created_at: '作成日時'
-          priority: '優先度'
-          status: 'ステータス'
-          labels: 'ラベル'
+        name: '名前'
+        description: '詳細'
+        deadline: '期限'
+        created_at: '作成日時'
+        priority: '優先度'
+        priorities:
+          low: "低"
+          medium: "中"
+          high: "高"
+        status: 'ステータス'
+        statuses:
+          to_do: "未着手"
+          in_progress: "進行中"
+          done: "完了"
+        labels: 'ラベル'
   errors:
     format: "%{attribute} %{message}"
     messages:
       blank: "が入力されていません"
+      deadline_in_past: "は過去の日付は指定できません"
+      too_long: "は256文字以内で入力してください"
+  button:
+    new_task: "新規タスク"
+    update_task: "タスクを更新"
+    back: "戻る"
+    save: "保存"
+  page:
+    task: "タスク"
+    task_detail: "タスク詳細"
+    edit_task: "タスク編集"
+    create_new_task: "新規タスク作成"
