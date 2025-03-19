@@ -1,38 +1,41 @@
-<h1>Tasks Detail</h1>
+<h1><%= t("page.task_detail") %></h1>
 
 <% if flash[:notice] %>
-  <div class="flash notice"><%= flash[:notice] %></div>
+  <div class="alert alert-success"><%= flash[:notice] %></div>
 <% end %>
 <% if flash[:alert] %>
-  <div class="flash alert"><%= flash[:alert] %></div>
+  <div class="alert alert-danger"><%= flash[:alert] %></div>
 <% end %>
 
 <p>
-  <strong>Name:</strong>
+  <strong><%= t('name') %>:</strong>
   <%= @task.name %>
 </p>
 
 <p>
-  <strong>Description:</strong>
+  <strong><%= t('description') %>:</strong>
   <%= @task.description %>
 </p>
 
 <p>
-  <strong>Priority:</strong>
-  <%= @task.priority %>
+  <strong><%= t('priority') %>:</strong>
+  <%= t("activerecord.attributes.task.priorities.#{@task.priority}") %>
 </p>
 
 <p>
-  <strong>Status:</strong>
-  <%= @task.status %>
+  <strong><%= t('status') %>:</strong>
+  <%= t("activerecord.attributes.task.statuses.#{@task.status}") %>
 </p>
 
 <p>
-  <strong>Deadline:</strong>
+  <strong><%= t('deadline') %>:</strong>
   <%= @task.deadline ? @task.deadline.strftime("%Y-%m-%d %H:%M") : "None" %>
 </p>
 
-<p>
-  <%= link_to 'Edit Task', edit_task_path(@task) %> |
-  <%= link_to 'Back to Task List', tasks_path %>
-</p>
+<span>
+  <%= link_to t("button.update_task"), edit_task_path(@task), class:"btn btn-secondary" %>
+</span>
+<span>|</span>
+<span>
+  <%= link_to t("button.back"), tasks_path, class:"btn btn-secondary" %>
+</span>

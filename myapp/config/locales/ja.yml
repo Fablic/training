@@ -1,0 +1,61 @@
+ja:
+  name: '名前'
+  description: '詳細'
+  deadline: '期限'
+  created_at: '作成日時'
+  priority: '優先度'
+  status: 'ステータス'
+  labels: 'ラベル'
+  msg_create_success: '作成に成功しました'
+  msg_create_failure: '作成に失敗しました'
+  msg_update_success: '更新に成功しました'
+  msg_update_failure: '更新に失敗しました'
+  msg_delete_success: '削除に成功しました'
+  msg_delete_failure: '削除に失敗しました'
+  date:
+    month_names: [~, "1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"]
+    order:
+      - :year
+      - :month
+      - :day
+  activerecord:
+    attributes:
+      task:
+        name: '名前'
+        description: '詳細'
+        deadline: '期限'
+        created_at: '作成日時'
+        priority: '優先度'
+        priorities:
+          low: "低"
+          medium: "中"
+          high: "高"
+        status: 'ステータス'
+        statuses:
+          to_do: "未着手"
+          in_progress: "進行中"
+          done: "完了"
+        labels: 'ラベル'
+  errors:
+    format: "%{attribute} %{message}"
+    messages:
+      blank: "が入力されていません"
+      deadline_in_past: "は過去の日付は指定できません"
+      too_long: "は256文字以内で入力してください"
+  button:
+    new_task: "新規タスク"
+    update_task: "タスクを更新"
+    back: "戻る"
+    save: "保存"
+  page:
+    task: "タスク"
+    task_detail: "タスク詳細"
+    edit_task: "タスク編集"
+    create_new_task: "新規タスク作成"
+    error_page:
+      bad_request: "不正なリクエストです"
+      not_found: "ページが見つかりません"
+      not_acceptable: "リクエストが受理できません"
+      unprocessable_entity: "リクエストが不正です"
+      internal_server_error: "サーバーエラーが発生しました"
+      else: "予期しないエラーが発生しました"

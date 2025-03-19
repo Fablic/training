@@ -2,7 +2,12 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
   
   def index
-    @tasks = Task.all
+    if %w[created_at deadline].include?(params[:sort_by])
+      direction = %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
+      @tasks = Task.order(params[:sort_by] => direction)
+    else
+      @tasks = Task.order(:id)
+    end
   end
 
   def show
@@ -18,28 +23,32 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(task_params)
     if @task.save
-      flash[:notice] = "Task was successfully created."
+      flash[:notice] = I18n.t 'msg_create_success'
       redirect_to @task
     else
-      flash.now[:alert] = "There was an error creating the task."
+      flash.now[:alert] = I18n.t 'msg_create_failure'
       render :new, status: 422
     end
   end
 
   def update
     if @task.update(task_params)
-      flash[:notice] = "Task was successfully updated."
+      flash[:notice] = I18n.t 'msg_update_success'
       redirect_to @task
     else
-      flash.now[:alert] = "There was an error updating the task."
+      flash.now[:alert] = I18n.t 'msg_update_failure'
       render :edit, status: 422
     end
   end
 
   def destroy
-    @task.destroy
-    flash[:notice] = "Task was successfully deleted."
-    redirect_to tasks_url
+    if @task.destroy
+      flash[:notice] = I18n.t 'msg_delete_success'
+      redirect_to tasks_url
+    else
+      flash[:alert] = I18n.t 'msg_delete_failure'
+      redirect_to @task
+    end
   end
 
   private

@@ -1,0 +1,20 @@
+<div class="container">
+<h1><%= response.code %></h1>
+<p>
+  <% case response.code.to_i %>
+  <% when 400 %>
+    <%= t("page.error_page.bad_request") %>
+  <% when 404 %>
+    <%= t("page.error_page.not_found") %>
+  <% when 406 %>
+    <%= t("page.error_page.not_acceptable") %>
+  <% when 422 %>
+    <%= t("page.error_page.unprocessable_entity") %>
+  <% when 500 %>
+    <%= t("page.error_page.internal_server_error") %>
+  <% else %>
+    <%= t("page.error_page.else") %>
+  <% end %>
+</p>
+<%= link_to t("button.back"), root_path, class: "btn btn-secondary" %>
+</div>
