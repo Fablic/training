@@ -2,10 +2,8 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
   
   def index
-    allowed_sort_columns = %w[created_at deadline]
-    allowed_directions = %w[asc desc]
-    direction = allowed_directions.include?(params[:direction]) ? params[:direction] : 'asc'
-    if allowed_sort_columns.include?(params[:sort_by])
+    if %w[created_at deadline].include?(params[:sort_by])
+      direction = %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
       @tasks = Task.order(params[:sort_by] => direction)
     else
       @tasks = Task.order(:id)

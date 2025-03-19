@@ -18,28 +18,28 @@
       <th>
       <%= t('deadline') %>
       <%= link_to tasks_path(sort_by: 'deadline', direction: 'asc') do %>
-          <span class="arrow <%= 'active' if params[:sort_by] == 'deadline' && params[:direction] == 'asc' %>">
-            &uarr;
-          </span>
-        <% end %>
+        <span class="arrow <%= 'active' if params[:sort_by] == 'deadline' && params[:direction] == 'asc' %>">
+          &uarr;
+        </span>
+      <% end %>
       <%= link_to tasks_path(sort_by: 'deadline', direction: 'desc') do %>
-          <span class="arrow <%= 'active' if params[:sort_by] == 'deadline' && params[:direction] == 'desc' %>">
-            &darr;
-          </span>
-        <% end %>
+        <span class="arrow <%= 'active' if params[:sort_by] == 'deadline' && params[:direction] == 'desc' %>">
+          &darr;
+        </span>
+      <% end %>
       </th>
       <th>
       <%= t('created_at') %>
       <%= link_to tasks_path(sort_by: 'created_at', direction: 'asc') do %>
-          <span class="arrow <%= 'active' if params[:sort_by] == 'created_at' && params[:direction] == 'asc' %>">
-            &uarr;
-          </span>
-        <% end %>
+        <span class="arrow <%= 'active' if params[:sort_by] == 'created_at' && params[:direction] == 'asc' %>">
+          &uarr;
+        </span>
+      <% end %>
       <%= link_to tasks_path(sort_by: 'created_at', direction: 'desc') do %>
-          <span class="arrow <%= 'active' if params[:sort_by] == 'created_at' && params[:direction] == 'desc' %>">
-            &darr;
-          </span>
-        <% end %>
+        <span class="arrow <%= 'active' if params[:sort_by] == 'created_at' && params[:direction] == 'desc' %>">
+          &darr;
+        </span>
+      <% end %>
       </th>
       <th><%= t('priority') %></th>
       <th><%= t('status') %></th>
