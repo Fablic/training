@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "TaskSorts", type: :system do
   before do
-    @task1 = Task.create!(
+    Task.create!(
       name: "Task 1", 
       description: "First task description",
       user_id: 1,
@@ -11,7 +11,7 @@ RSpec.describe "TaskSorts", type: :system do
       priority: "low",
       status: "to_do"
     )
-    @task2 = Task.create!(
+    Task.create!(
       name: "Task 2", 
       description: "Second task description",
       user_id: 1,
@@ -20,7 +20,7 @@ RSpec.describe "TaskSorts", type: :system do
       priority: "medium",
       status: "in_progress"
     )
-    @task3 = Task.create!(
+    Task.create!(
       name: "Task 3", 
       description: "Third task description",
       user_id: 1,
