@@ -6,7 +6,7 @@ class TasksController < ApplicationController
   def index
     @q = Task.ransack(params[:q])
     @q.sorts = 'created_at asc' if @q.sorts.empty?
-    @tasks = @q.result(distinct: true).page(params[:page]).per(PER_PAGE)
+    @tasks = @q.result.page(params[:page]).per(PER_PAGE)
   end
 
   def show

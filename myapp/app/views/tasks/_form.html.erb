@@ -34,7 +34,7 @@
     <%= form.datetime_select :deadline, include_blank: true, start_year: Date.today.year, end_year: Date.today.year + 10 %>
   </div>
 
-  <!-- user_id is 1 for now since there is no user -->
+  <%# user_id is 1 for now since there is no user %>
   <%= form.hidden_field :user_id, value: 1 %>
 
   <button type="submit" class="btn btn-primary">
