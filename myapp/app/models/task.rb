@@ -8,6 +8,14 @@ class Task < ApplicationRecord
   validates :deadline, presence: true
   validate :deadline_not_in_past
 
+  def self.ransackable_associations(auth_object = nil)
+    []
+  end
+  
+  def self.ransackable_attributes(auth_object = nil)
+    ["name", "description", "status", "priority", "deadline", "created_at"]
+  end
+
   private
 
   def deadline_not_in_past

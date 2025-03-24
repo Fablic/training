@@ -9,15 +9,15 @@ RSpec.describe "Errors", type: :request do
         
         case code.to_i
         when 400
-          expect(response.body).to include("Bad Request")
+          expect(response.body).to include(I18n.t 'page.error_page.bad_request')
         when 404
-          expect(response.body).to include("Not Found")
+          expect(response.body).to include(I18n.t 'page.error_page.not_found')
         when 406
-          expect(response.body).to include("Not Acceptable")
+          expect(response.body).to include(I18n.t 'page.error_page.not_acceptable')
         when 422
-          expect(response.body).to include("Unprocessable Entity")
+          expect(response.body).to include(I18n.t 'page.error_page.unprocessable_entity')
         when 500
-          expect(response.body).to include("Internal Server Error")
+          expect(response.body).to include(I18n.t 'page.error_page.internal_server_error')
         end
       end
     end

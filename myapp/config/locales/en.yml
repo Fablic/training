@@ -70,11 +70,13 @@ en:
     update_task: "Update Task"
     back: "Back"
     save: "Save"
+    search: "Search"
   page:
     task: "Task"
     task_detail: "Task Detail"
     edit_task: "Edit Task"
     create_new_task: "Create New Task"
+    no_task: "No tasks found."
     error_page:
       bad_request: "Bad Request."
       not_found: "Not Found."
@@ -82,3 +84,9 @@ en:
       unprocessable_entity: "Unprocessable Entity."
       internal_server_error: "Internal Server Error."
       else: "An unexpected error occurred."
+  views:
+    pagination:
+      previous: "Previous"
+      next: "Next"
+      first: "First"
+      last: "Last"

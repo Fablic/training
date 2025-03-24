@@ -1,44 +1,43 @@
 <%= form_with(model: task, local: true) do |form| %>
-    <% if task.errors.any? %>
-      <div class="alert alert-danger">
-        <ul>
-          <% task.errors.full_messages.each do |msg| %>
-            <li><%= msg %></li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
-  
-    <div>
-      <%= form.label :name %>
-      <%= form.text_field :name %>
+  <% if task.errors.any? %>
+    <div class="alert alert-danger">
+      <ul>
+        <% task.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
     </div>
-  
-    <div>
-      <%= form.label :description %>
-      <%= form.text_area :description %>
-    </div>
-  
-    <div>
-      <%= form.label :priority %>
-      <%= form.select :priority, options_for_select(Task.priorities.keys.map { |key| [t("activerecord.attributes.task.priorities.#{key}"), key] }, task.priority) %>
-    </div>
-  
-    <div>
-      <%= form.label :status %>
-      <%= form.select :status, options_for_select(Task.statuses.keys.map { |key| [t("activerecord.attributes.task.statuses.#{key}"), key] }, task.status) %>
-    </div>
-  
-    <div>
-      <%= form.label :deadline %>
-      <%= form.datetime_select :deadline, include_blank: true %>
-    </div>
-  
-    <!-- If you want to set the user_id automatically, you might consider a hidden field or set it on the controller -->
-    <%= form.hidden_field :user_id, value: 1 %>
-  
-    <button type="submit" class="btn btn-primary">
-      <%= t("button.save") %>
-    </button>
   <% end %>
-  
+
+  <div class="mb-2 row">
+    <%= form.label :name, class: "col-auto form-label" %>
+    <%= form.text_field :name, class: "col-auto" %>
+  </div>
+
+  <div class="mb-2 row">
+    <%= form.label :description, class: "col-auto form-label" %>
+    <%= form.text_area :description, class: "col-auto" %>
+  </div>
+
+  <div class="mb-2">
+    <%= form.label :priority, class: "col-auto form-label" %>
+    <%= form.select :priority, options_for_select(Task.priorities.keys.map { |key| [t("activerecord.attributes.task.priorities.#{key}"), key] }, task.priority) %>
+  </div>
+
+  <div class="mb-2">
+    <%= form.label :status, class: "col-auto form-label" %>
+    <%= form.select :status, options_for_select(Task.statuses.keys.map { |key| [t("activerecord.attributes.task.statuses.#{key}"), key] }, task.status) %>
+  </div>
+
+  <div class="mb-2">
+    <%= form.label :deadline %>
+    <%= form.datetime_select :deadline, include_blank: true, start_year: Date.today.year, end_year: Date.today.year + 10 %>
+  </div>
+
+  <%# user_id is 1 for now since there is no user %>
+  <%= form.hidden_field :user_id, value: 1 %>
+
+  <button type="submit" class="btn btn-primary">
+    <%= t("button.save") %>
+  </button>
+<% end %>

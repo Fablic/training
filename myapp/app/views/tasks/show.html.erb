@@ -7,6 +7,7 @@
   <div class="alert alert-danger"><%= flash[:alert] %></div>
 <% end %>
 
+<div class="container">
 <p>
   <strong><%= t('name') %>:</strong>
   <%= @task.name %>
@@ -35,7 +36,7 @@
 <span>
   <%= link_to t("button.update_task"), edit_task_path(@task), class:"btn btn-secondary" %>
 </span>
-<span>|</span>
 <span>
   <%= link_to t("button.back"), tasks_path, class:"btn btn-secondary" %>
 </span>
+</div>

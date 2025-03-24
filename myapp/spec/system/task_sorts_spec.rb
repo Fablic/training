@@ -27,27 +27,21 @@ RSpec.describe "TaskSorts", type: :system do
       created_at: 1.days.ago,
       deadline: 1.day.from_now,
       priority: "high",
-      status: "done"
+      status: "in_progress"
     )
   end
 
-  it "sorts tasks descending created_at when the down arrow is clicked" do
+  it "sorts tasks created_at" do
     visit tasks_path
-    within("th", text: I18n.t('created_at')) do
-      click_link "↓"
-    end
+    # default asc
+    click_on I18n.t('created_at') # desc
 
     rows = all("table tbody tr")
     expect(rows[0]).to have_content("Task 3")
     expect(rows[1]).to have_content("Task 2")
     expect(rows[2]).to have_content("Task 1")
-  end
 
-  it "sorts tasks ascending created_at when the up arrow is clicked" do
-    visit tasks_path
-    within("th", text: I18n.t('created_at')) do
-      click_link "↑"
-    end
+    click_on I18n.t('created_at') # asc
 
     rows = all("table tbody tr")
     expect(rows[0]).to have_content("Task 1")
@@ -55,11 +49,16 @@ RSpec.describe "TaskSorts", type: :system do
     expect(rows[2]).to have_content("Task 3")
   end
 
-  it "sorts tasks descending deadline when the down arrow is clicked" do
+  it "sorts tasks deadline" do
     visit tasks_path
-    within("th", text: I18n.t('deadline')) do
-      click_link "↓"
-    end
+    click_on I18n.t('deadline') # asc
+
+    rows = all("table tbody tr")
+    expect(rows[0]).to have_content("Task 3")
+    expect(rows[1]).to have_content("Task 2")
+    expect(rows[2]).to have_content("Task 1")
+
+    click_on I18n.t('deadline') # desc
 
     rows = all("table tbody tr")
     expect(rows[0]).to have_content("Task 1")
@@ -67,11 +66,16 @@ RSpec.describe "TaskSorts", type: :system do
     expect(rows[2]).to have_content("Task 3")
   end
 
-  it "sorts tasks ascending deadline when the up arrow is clicked" do
+  it "sorts tasks priority" do
     visit tasks_path
-    within("th", text: I18n.t('deadline')) do
-      click_link "↑"
-    end
+    click_on I18n.t('priority') # asc
+
+    rows = all("table tbody tr")
+    expect(rows[0]).to have_content("Task 1")
+    expect(rows[1]).to have_content("Task 2")
+    expect(rows[2]).to have_content("Task 3")
+
+    click_on I18n.t('priority') # desc
 
     rows = all("table tbody tr")
     expect(rows[0]).to have_content("Task 3")
