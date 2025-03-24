@@ -1,4 +1,4 @@
-<h1><h1><%= t("page.task") %></h1></h1>
+<h1><%= t("page.task") %></h1>
 
 <% if flash[:notice] %>
   <div class="alert alert-success"><%= flash[:notice] %></div>
@@ -6,6 +6,25 @@
 <% if flash[:alert] %>
   <div class="alert alert-danger"><%= flash[:alert] %></div>
 <% end %>
+
+<div class="d-flex justify-content-center">
+  <%= search_form_for @q, html: { class: 'form-inline' } do |f| %>
+    <div class="input-group">
+      <span class="input-group-text">
+        <i class="bi bi-search"></i>
+      </span>
+      <%= f.search_field :name_or_description_cont, class: "form-control" %>
+      <%= f.hidden_field :s, value: params.dig(:q, :s) %>
+      <%= f.submit t("button.search") %>
+    </div>
+    <div>
+      <% Task.statuses.each do |status_key, status_value| %>
+        <%= f.check_box :status_in, { multiple: true, class: "form-check-input" }, status_value, nil %>
+        <%= f.label :status_in, t("activerecord.attributes.task.statuses.#{status_key}"), class: "form-check-label" %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
 
 <% if @tasks.empty? %>
   <p>No Task</p>
@@ -15,33 +34,9 @@
   <thead>
     <tr>
       <th><%= t('name') %></th>
-      <th>
-      <%= t('deadline') %>
-      <%= link_to tasks_path(sort_by: 'deadline', direction: 'asc') do %>
-        <span class="arrow <%= 'active' if params[:sort_by] == 'deadline' && params[:direction] == 'asc' %>">
-          &uarr;
-        </span>
-      <% end %>
-      <%= link_to tasks_path(sort_by: 'deadline', direction: 'desc') do %>
-        <span class="arrow <%= 'active' if params[:sort_by] == 'deadline' && params[:direction] == 'desc' %>">
-          &darr;
-        </span>
-      <% end %>
-      </th>
-      <th>
-      <%= t('created_at') %>
-      <%= link_to tasks_path(sort_by: 'created_at', direction: 'asc') do %>
-        <span class="arrow <%= 'active' if params[:sort_by] == 'created_at' && params[:direction] == 'asc' %>">
-          &uarr;
-        </span>
-      <% end %>
-      <%= link_to tasks_path(sort_by: 'created_at', direction: 'desc') do %>
-        <span class="arrow <%= 'active' if params[:sort_by] == 'created_at' && params[:direction] == 'desc' %>">
-          &darr;
-        </span>
-      <% end %>
-      </th>
-      <th><%= t('priority') %></th>
+      <th><%= sort_link(@q, :deadline, t('deadline'), default_order: :asc) %></th>
+      <th><%= sort_link(@q, :created_at, t('created_at'), default_order: :asc) %></th>
+      <th><%= sort_link(@q, :priority, t('priority'), default_order: :asc) %></th>
       <th><%= t('status') %></th>
       <th><%= t('labels') %></th>
     </tr>
@@ -77,3 +72,4 @@
   <span><%= t('button.new_task') %></span>
 <% end %>
 
+<%= paginate @tasks %>

@@ -13,17 +13,6 @@
  *= require_tree .
  *= require_self
  */
-.arrow {
-  color: #aaa;  /* Lighter color when not active */
-  text-decoration: none;
-  padding: 0 5px;
-  cursor: pointer;
-}
-
-.arrow.active {
-  color: #333;  /* Darker color signifies active state */
-  font-weight: bold;
-}
 
 .locale-switcher {
   position: absolute;

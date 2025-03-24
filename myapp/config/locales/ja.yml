@@ -47,6 +47,7 @@ ja:
     update_task: "タスクを更新"
     back: "戻る"
     save: "保存"
+    search: "検索"
   page:
     task: "タスク"
     task_detail: "タスク詳細"
@@ -59,3 +60,9 @@ ja:
       unprocessable_entity: "リクエストが不正です"
       internal_server_error: "サーバーエラーが発生しました"
       else: "予期しないエラーが発生しました"
+  views:
+    pagination:
+      first: "最初"
+      last: "最後"
+      previous: "前"
+      next: "次"

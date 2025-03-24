@@ -68,3 +68,5 @@ group :test do
 end
 
 # gem "fablicop", require: false
+gem 'ransack'
+gem 'kaminari'

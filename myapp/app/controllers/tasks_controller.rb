@@ -2,12 +2,9 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
   
   def index
-    if %w[created_at deadline].include?(params[:sort_by])
-      direction = %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
-      @tasks = Task.order(params[:sort_by] => direction)
-    else
-      @tasks = Task.order(:id)
-    end
+    @q = Task.ransack(params[:q])
+    @q.sorts = 'created_at asc' if @q.sorts.empty?
+    @tasks = @q.result(distinct: true).page(params[:page]).per(10)
   end
 
   def show
