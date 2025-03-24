@@ -76,6 +76,7 @@ en:
     task_detail: "Task Detail"
     edit_task: "Edit Task"
     create_new_task: "Create New Task"
+    no_task: "No tasks found."
     error_page:
       bad_request: "Bad Request."
       not_found: "Not Found."

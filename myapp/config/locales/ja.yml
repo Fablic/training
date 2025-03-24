@@ -53,6 +53,7 @@ ja:
     task_detail: "タスク詳細"
     edit_task: "タスク編集"
     create_new_task: "新規タスク作成"
+    no_task: "タスクが見つかりません"
     error_page:
       bad_request: "不正なリクエストです"
       not_found: "ページが見つかりません"

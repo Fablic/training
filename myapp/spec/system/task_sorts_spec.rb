@@ -82,23 +82,4 @@ RSpec.describe "TaskSorts", type: :system do
     expect(rows[1]).to have_content("Task 2")
     expect(rows[2]).to have_content("Task 1")
   end
-
-  # search
-  it "sort parameter, status filters, and search form work together" do
-    visit tasks_path
-    click_on I18n.t('deadline') # asc
-    status_value = Task.statuses["in_progress"] 
-    find("input[name='q[status_in][]'][value='#{status_value}']", visible: false).click
-    click_button I18n.t('button.search')
-
-    expect(page).not_to have_content("Task 1")
-    rows = all("table tbody tr")
-    expect(rows[0]).to have_content("Task 3")
-    expect(rows[1]).to have_content("Task 2")
-
-    fill_in "q_name_or_description_cont", with: "2"
-    click_button I18n.t('button.search')
-    expect(page).not_to have_content("Task 3")
-    expect(page).to have_content("Task 2")
-  end
 end

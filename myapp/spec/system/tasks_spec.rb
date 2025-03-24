@@ -6,7 +6,7 @@ RSpec.describe "Tasks", type: :system do
     context "when no tasks exist" do
       it "shows no task message" do
         visit tasks_path
-        expect(page).to have_content("No Task") 
+        expect(page).to have_content(I18n.t 'page.no_task') 
       end
     end
 

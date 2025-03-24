@@ -1,10 +1,12 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
   
+  PER_PAGE = 10
+  
   def index
     @q = Task.ransack(params[:q])
     @q.sorts = 'created_at asc' if @q.sorts.empty?
-    @tasks = @q.result(distinct: true).page(params[:page]).per(10)
+    @tasks = @q.result(distinct: true).page(params[:page]).per(PER_PAGE)
   end
 
   def show
