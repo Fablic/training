@@ -1,0 +1,32 @@
+<h1><%= t("page.login") %></h1>
+
+<div class="container">
+
+<% if flash[:notice] %>
+  <div class="alert alert-success"><%= flash[:notice] %></div>
+<% end %>
+<% if flash[:alert] %>
+  <div class="alert alert-danger"><%= flash[:alert] %></div>
+<% end %>
+
+<%= form_with url: login_path, method: :post, local: true do |f| %>
+  <div>
+    <%= f.label :username, t("username") %>
+    <%= f.text_field :username, required: true %>
+  </div>
+
+  <div>
+    <%= f.label :password, t("password") %>
+    <%= f.password_field :password, required: true %>
+  </div>
+
+  <div>
+    <%= f.submit t("button.login") %>
+  </div>
+<% end %>
+
+<p>
+<%= t("page.dont_have_an_account") %> <%= link_to t("page.sign_up"), signup_path %>
+</p>
+
+</div>

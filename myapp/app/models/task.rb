@@ -1,4 +1,7 @@
 class Task < ApplicationRecord
+  belongs_to :user, counter_cache: true
+  scope :active, -> { where(deleted_at: nil) }
+
   enum priority: { low: 0, medium: 1, high: 2 }
   enum status:   { to_do: 0, in_progress: 1, done: 2 }
 
@@ -14,6 +17,10 @@ class Task < ApplicationRecord
   
   def self.ransackable_attributes(auth_object = nil)
     ["name", "description", "status", "priority", "deadline", "created_at"]
+  end
+
+  def soft_delete
+    update!(deleted_at: Time.current)
   end
 
   private

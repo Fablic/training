@@ -14,17 +14,33 @@
   </head>
 
   <body>
-  <header>
-  <div class="locale-switcher">
-    <span>
-      <%= link_to "en", url_for(locale: 'en'), class: "locale-button #{'active' if I18n.locale == :en}" %>
-    </span>
-    <span>|</span>
-    <span>
-      <%= link_to "ja", url_for(locale: 'ja'), class: "locale-button #{'active' if I18n.locale == :ja}" %>
-    </span>
-  </div>
-  </header>
+    <header>
+      <div class="locale-switcher">
+        <span>
+          <%= link_to "en", url_for(locale: 'en'), class: "locale-button #{'active' if I18n.locale == :en}" %>
+        </span>
+        <span>|</span>
+        <span>
+          <%= link_to "ja", url_for(locale: 'ja'), class: "locale-button #{'active' if I18n.locale == :ja}" %>
+        </span>
+      </div>
+    </header>
+
+    <% if logged_in? %>
+      <p>
+        <%= t("page.welcome") %>, <%= current_user.name %>
+        <%= link_to t("button.logout"), logout_path, data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to log out?" } %>
+      </p>
+    <% end %>
+
+    <% if current_user && current_user.is_admin? %>
+      <nav class="navbar bg-body-tertiary">
+        <ul>
+          <li><%= link_to t("page.all_users"), admin_users_path %></li>
+          <li><%= link_to t("page.all_tasks"), admin_tasks_path %></li>
+        </ul>
+      </nav>
+    <% end %>
 
     <%= yield %>
   </body>

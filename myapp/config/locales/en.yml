@@ -35,12 +35,25 @@ en:
   priority: 'Priority'
   status: 'Status'
   labels: 'Labels'
+  username: 'Username'
+  password: 'Password'
+  is_admin: 'Admin'
+  task_count: 'Task Count'
+  assignee: 'Assignee'
   msg_create_success: 'Task was successfully created.'
   msg_create_failure: 'Failed to create a task.'
   msg_update_success: 'Task was successfully updated.'
   msg_update_failure: 'Failed to update a task.'
   msg_delete_success: 'Task was successfully deleted.'
   msg_delete_failure: 'Failed to delete a task.'
+  must_login: 'Please log in.'
+  msg_account_create_success: 'Account was successfully created.'
+  msg_account_create_failure: 'Failed to create an account.'
+  msg_login_success: 'Logged in successfully.'
+  msg_invalid_username_or_password: 'Invalid username or password.'
+  msg_logout: 'You have been logged out.'
+  msg_unauthorized: 'You are not authorized to access this page.'
+  msg_user_update_success: 'User was successfully updated.'
   activerecord:
     attributes:
       task:
@@ -59,18 +72,29 @@ en:
           in_progress: "In Progress"
           done: "Done"
         labels: 'Labels'
+      user:
+        username: 'Username'
+        password: 'Password'
   errors:
     format: "%{attribute} %{message}"
     messages:
       blank: "can't be blank"
       deadline_in_past: "can't be in the past"
       too_long: "is too long (maximum is 256 characters)"
+      taken: "has already been taken"
+      too_short: "is too short (minimum is 8 characters)"
   button:
     new_task: "New Task"
     update_task: "Update Task"
     back: "Back"
     save: "Save"
     search: "Search"
+    new_user: "New User"
+    show_task: "Show Task"
+    edit_user: "Edit User"
+    deactivate_user: "Deactivate User"
+    login: "Log in"
+    logout: "Log out"
   page:
     task: "Task"
     task_detail: "Task Detail"
@@ -84,6 +108,15 @@ en:
       unprocessable_entity: "Unprocessable Entity."
       internal_server_error: "Internal Server Error."
       else: "An unexpected error occurred."
+    sign_up: "Sign up"
+    login: "Log in"
+    dont_have_an_account: "Don't have an account?"
+    all_tasks: "All Tasks"
+    all_users: "All Users"
+    user_detail: "User Detail"
+    edit_user: "Edit User"
+    create_new_user: "Create New User"
+    welcome: "Welcome"
   views:
     pagination:
       previous: "Previous"

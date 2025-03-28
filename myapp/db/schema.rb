@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_03_19_083312) do
+ActiveRecord::Schema[7.1].define(version: 2025_03_27_064209) do
   create_table "tasks", charset: "utf8mb4", force: :cascade do |t|
     t.string "name", null: false
     t.text "description"
@@ -20,8 +20,23 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_19_083312) do
     t.timestamp "deadline", default: -> { "CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP" }, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
     t.index ["name"], name: "index_tasks_on_name"
     t.index ["status"], name: "index_tasks_on_status"
+    t.index ["user_id"], name: "index_tasks_on_user_id"
   end
 
+  create_table "users", charset: "utf8mb4", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "username", null: false
+    t.string "password_digest", null: false
+    t.boolean "is_admin", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "tasks_count", default: 0, null: false
+    t.datetime "deleted_at"
+    t.index ["username"], name: "index_users_on_username", unique: true
+  end
+
+  add_foreign_key "tasks", "users"
 end

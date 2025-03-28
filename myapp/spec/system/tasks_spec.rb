@@ -1,6 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe "Tasks", type: :system do
+  let(:user) { User.create(name: "Test User", username: "testuser", password: "password123") }
+  def log_in(user)
+    visit login_path(locale: I18n.locale)
+    fill_in I18n.t("username"), with: user.username
+    fill_in I18n.t("password"), with: "password123"
+    click_button I18n.t("button.login")
+  end
+  before { log_in(user) }
 
   describe "Listing tasks" do
     context "when no tasks exist" do
@@ -15,7 +23,7 @@ RSpec.describe "Tasks", type: :system do
         Task.create!(
           name: "Task One",
           description: "First task description",
-          user_id: 1,
+          user: user,
           created_at: 1.days.ago,
           deadline: 1.day.from_now,
           priority: "low",
@@ -24,7 +32,7 @@ RSpec.describe "Tasks", type: :system do
         Task.create!(
           name: "Task Two",
           description: "Second task description",
-          user_id: 1,
+          user: user,
           created_at: 1.days.ago,
           deadline: 1.day.from_now,
           priority: "medium",
@@ -105,7 +113,7 @@ RSpec.describe "Tasks", type: :system do
       Task.create!(
         name: "Original Task",
         description: "Task to be edited",
-        user_id: 1,
+        user: user,
         deadline: 1.day.from_now,
         priority: "low",
         status: "to_do"
@@ -128,7 +136,7 @@ RSpec.describe "Tasks", type: :system do
       Task.create!(
         name: "Delete Me",
         description: "Task to be deleted",
-        user_id: 1,
+        user: user,
         created_at: 1.days.ago,
         deadline: 1.day.from_now,
         priority: "medium",

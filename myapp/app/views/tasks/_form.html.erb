@@ -34,8 +34,15 @@
     <%= form.datetime_select :deadline, include_blank: true, start_year: Date.today.year, end_year: Date.today.year + 10 %>
   </div>
 
-  <%# user_id is 1 for now since there is no user %>
-  <%= form.hidden_field :user_id, value: 1 %>
+  <% if current_user.is_admin %>
+    <div class="mb-2">
+      <%= form.label :assignee, t("assignee"), class: "col-auto form-label" %>
+      <%= form.collection_select :user_id, User.active.order(:name), :id, :name, { selected: form.object.user_id } %>
+    </div>
+  <% else %>
+    <%# user_id is the automatically set to the current_user %>
+    <%= form.hidden_field :user_id, value: current_user.id %>
+  <% end %>
 
   <button type="submit" class="btn btn-primary">
     <%= t("button.save") %>

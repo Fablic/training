@@ -1,14 +1,21 @@
-class TasksController < ApplicationController
+class Admin::TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
   before_action :require_login
-  before_action :authorize_user, only: [:show, :edit, :update, :destroy]
-  
+  before_action :require_admin
+
   PER_PAGE = 10
   
   def index
-    @q = current_user.tasks.active.ransack(params[:q])
-    @q.sorts = 'created_at asc' if @q.sorts.empty?
-    @tasks = @q.result.page(params[:page]).per(PER_PAGE)
+    if params[:user_id]
+        tasks_scope = User.active.find(params[:user_id]).tasks.active
+        @q = tasks_scope.ransack(params[:q])
+        @q.sorts = 'created_at asc' if @q.sorts.empty?
+        @tasks = @q.result.page(params[:page]).per(PER_PAGE)
+    else
+        @q = Task.active.ransack(params[:q])
+        @q.sorts = 'created_at asc' if @q.sorts.empty?
+        @tasks = @q.result.includes(:user).page(params[:page]).per(PER_PAGE)
+    end
   end
 
   def show
@@ -51,24 +58,18 @@ class TasksController < ApplicationController
       redirect_to @task
     end
   end
-
+  
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_task
     @task = Task.active.find(params[:id])
   end
 
-  # Only allow a list of trusted parameters.
   def task_params
     params.require(:task).permit(:name, :description, :user_id, :priority, :status, :deadline)
   end
 
-  # Prevent action if current_user is not admin and not the owner of the task
-  def authorize_user
-    unless current_user.is_admin || @task.user == current_user
-      flash[:alert] = I18n.t 'msg_unauthorized'
-      redirect_to tasks_path
-    end
+  def require_admin
+    redirect_to root_path, alert: "Access Denied" unless current_user&.is_admin
   end
 end

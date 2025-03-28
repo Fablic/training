@@ -1,4 +1,4 @@
-<h1><%= t("page.task") %></h1>
+<h1><%= t('page.all_tasks') %></h1>
 
 <% if flash[:notice] %>
   <div class="alert alert-success"><%= flash[:notice] %></div>
@@ -8,7 +8,10 @@
 <% end %>
 
 <div class="d-flex justify-content-center">
-  <%= search_form_for @q, url: tasks_path, html: { class: 'form-inline' } do |f| %>
+  <%= search_form_for @q, url: admin_tasks_path, html: { class: 'form-inline' } do |f| %>
+    <% if params[:user_id].present? %>
+      <%= hidden_field_tag :user_id, params[:user_id] %>
+    <% end %>
     <div class="input-group">
       <span class="input-group-text">
         <i class="bi bi-search"></i>
@@ -34,6 +37,7 @@
   <thead>
     <tr>
       <th><%= t('name') %></th>
+      <th><%= t('assignee') %></th>
       <th><%= sort_link(@q, :deadline, t('deadline'), default_order: :asc) %></th>
       <th><%= sort_link(@q, :created_at, t('created_at'), default_order: :asc) %></th>
       <th><%= sort_link(@q, :priority, t('priority'), default_order: :asc) %></th>
@@ -45,6 +49,7 @@
     <% @tasks.each do |task| %>
       <tr>
         <td><%= link_to task.name, task %></td>
+        <td><%= link_to task.user.name, admin_user_path(task.user) %></td>
         <td><%= task.deadline.strftime("%Y-%m-%d %H:%M") %></td>
         <td><%= task.created_at.strftime("%Y-%m-%d %H:%M") %></td>
         <td><%= t("activerecord.attributes.task.priorities.#{task.priority}") %></td>
@@ -71,5 +76,9 @@
   <i class="bi bi-plus-circle"></i>
   <span><%= t('button.new_task') %></span>
 <% end %>
+
+<span>
+  <%= link_to t("button.back"), tasks_path, class:"btn btn-secondary" %>
+</span>
 
 <%= paginate @tasks %>
