@@ -70,6 +70,6 @@ class Admin::UsersController < ApplicationController
   end
 
   def require_admin
-    redirect_to root_path, alert: "Access Denied" unless current_user&.is_admin?
+    raise ActionController::RoutingError, "404" unless current_user&.is_admin?
   end
 end

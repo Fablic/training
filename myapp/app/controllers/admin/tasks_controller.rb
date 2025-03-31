@@ -1,6 +1,5 @@
 class Admin::TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
-  before_action :require_login
   before_action :require_admin
 
   PER_PAGE = 10
@@ -70,6 +69,6 @@ class Admin::TasksController < ApplicationController
   end
 
   def require_admin
-    redirect_to root_path, alert: "Access Denied" unless current_user&.is_admin
+    raise ActionController::RoutingError, "404" unless current_user&.is_admin
   end
 end
