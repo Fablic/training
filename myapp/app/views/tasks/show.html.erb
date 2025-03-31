@@ -13,6 +13,13 @@
   <%= @task.name %>
 </p>
 
+<% if current_user.is_admin %> 
+  <p>
+    <strong><%= t('assignee') %>:</strong>
+    <%= @task.user.name %>
+  </p>
+<% end %>
+
 <p>
   <strong><%= t('description') %>:</strong>
   <%= @task.description %>

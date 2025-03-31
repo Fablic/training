@@ -1,0 +1,5 @@
+<h1><%= t("page.sign_up") %></h1>
+<div class="container">
+<%= render 'form', user: @user %>
+<%= link_to t("button.back"), login_path, class: "btn btn-secondary" %>
+</div>

@@ -6,12 +6,30 @@ ja:
   priority: '優先度'
   status: 'ステータス'
   labels: 'ラベル'
+  username: 'ユーザー名'
+  password: 'パスワード'
+  is_admin: '管理者'
+  task_count: 'タスク数'
+  assignee: '担当者'
   msg_create_success: '作成に成功しました'
   msg_create_failure: '作成に失敗しました'
   msg_update_success: '更新に成功しました'
   msg_update_failure: '更新に失敗しました'
   msg_delete_success: '削除に成功しました'
   msg_delete_failure: '削除に失敗しました'
+  must_login: 'ログインしてください'
+  msg_account_create_success: 'アカウントの作成に成功しました'
+  msg_account_create_failure: 'アカウントの作成に失敗しました'
+  msg_login_success: 'ログインに成功しました'
+  msg_invalid_username_or_password: 'ユーザー名またはパスワードが間違っています'
+  msg_logout: 'ログアウトしました'
+  msg_unauthorized: 'アクセス権限がありません'
+  msg_user_update_success: 'ユーザー情報の更新に成功しました'
+  msg_cant_update_your_account: '自分のアカウントは更新できません'
+  msg_cant_delete_your_account: '自分のアカウントは削除できません'
+  msg_cant_delete_last_admin: '最後の管理者は削除できません'
+  msg_user_deactivated: 'ユーザーを無効化しました'
+  msg_user_deactivated_failure: 'ユーザーの無効化に失敗しました'
   date:
     month_names: [~, "1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"]
     order:
@@ -36,18 +54,29 @@ ja:
           in_progress: "進行中"
           done: "完了"
         labels: 'ラベル'
+      user:
+        username: 'ユーザー名'
+        password: 'パスワード'
   errors:
     format: "%{attribute} %{message}"
     messages:
       blank: "が入力されていません"
       deadline_in_past: "は過去の日付は指定できません"
       too_long: "は256文字以内で入力してください"
+      taken: "は既に使用されています"
+      too_short: "は8文字以上で入力してください"
   button:
     new_task: "新規タスク"
     update_task: "タスクを更新"
     back: "戻る"
     save: "保存"
     search: "検索"
+    new_user: "新規ユーザー"
+    show_task: "タスクを表示"
+    edit_user: "ユーザーを編集"
+    deactivate_user: "ユーザーを無効化"
+    login: "ログイン"
+    logout: "ログアウト"
   page:
     task: "タスク"
     task_detail: "タスク詳細"
@@ -61,6 +90,15 @@ ja:
       unprocessable_entity: "リクエストが不正です"
       internal_server_error: "サーバーエラーが発生しました"
       else: "予期しないエラーが発生しました"
+    sign_up: "新規登録"
+    login: "ログイン"
+    dont_have_an_account: "アカウントをお持ちでない方はこちら"
+    all_tasks: "全てのタスク"
+    all_users: "全てのユーザー"
+    user_detail: "ユーザー詳細"
+    edit_user: "ユーザー編集"
+    create_new_user: "新規ユーザー作成"
+    welcome: "ようこそ"
   views:
     pagination:
       first: "最初"

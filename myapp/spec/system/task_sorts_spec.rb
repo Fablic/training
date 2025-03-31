@@ -1,11 +1,19 @@
 require 'rails_helper'
 
 RSpec.describe "TaskSorts", type: :system do
+  let(:user) { User.create(name: "Test User", username: "testuser", password: "password123") }
+  def log_in(user)
+    visit login_path(locale: I18n.locale)
+    fill_in I18n.t("username"), with: user.username
+    fill_in I18n.t("password"), with: "password123"
+    click_button I18n.t("button.login")
+  end
+  before { log_in(user) }
   before do
     Task.create!(
       name: "Task 1", 
       description: "First task description",
-      user_id: 1,
+      user: user,
       created_at: 3.days.ago,
       deadline: 5.day.from_now,
       priority: "low",
@@ -14,7 +22,7 @@ RSpec.describe "TaskSorts", type: :system do
     Task.create!(
       name: "Task 2", 
       description: "Second task description",
-      user_id: 1,
+      user: user,
       created_at: 2.days.ago,
       deadline: 3.day.from_now,
       priority: "medium",
@@ -23,7 +31,7 @@ RSpec.describe "TaskSorts", type: :system do
     Task.create!(
       name: "Task 3", 
       description: "Third task description",
-      user_id: 1,
+      user: user,
       created_at: 1.days.ago,
       deadline: 1.day.from_now,
       priority: "high",

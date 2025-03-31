@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Task, type: :model do
-  subject { Task.new(name: "Task 1", deadline: 1.day.from_now, priority: "low", status: "to_do") }
+  let(:user) { User.create(name: "Test User", username: "testuser", password: "password123") }
+  subject { Task.new(name: "Task 1", deadline: 1.day.from_now, priority: "low", status: "to_do", user: user) }
       
     it "is valid with valid attributes" do
       expect(subject).to be_valid

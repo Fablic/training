@@ -1,0 +1,31 @@
+<h1><%= t('page.all_users') %></h1>
+
+<% if flash[:notice] %>
+  <div class="alert alert-success"><%= flash[:notice] %></div>
+<% end %>
+<% if flash[:alert] %>
+  <div class="alert alert-danger"><%= flash[:alert] %></div>
+<% end %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th><%= t('name') %></th>
+      <th><%= t('username') %></th>
+      <th><%= t('task_count') %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= link_to user.name, admin_user_path(user) %></td>
+        <td><%= user.username %></td>
+        <td><%= link_to user.tasks_count, admin_user_tasks_path(user) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to t("button.new_user"), new_admin_user_path, class:"btn btn-primary" %>
+
+<%= link_to t("button.back"), tasks_path, class:"btn btn-secondary" %>

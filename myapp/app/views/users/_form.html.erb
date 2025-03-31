@@ -1,0 +1,30 @@
+<%= form_with(model: user, local: true) do |f| %>
+<% if user.errors.any? %>
+<div class="alert alert-danger">
+    <ul>
+    <% user.errors.full_messages.each do |msg| %>
+    <li><%= msg %></li>
+    <% end %>
+    </ul>
+</div>
+<% end %>
+
+<div>
+    <%= f.label :name, t("name") %>
+    <%= f.text_field :name, required: true %>
+</div>
+
+<div>
+    <%= f.label :username, t("username") %>
+    <%= f.text_field :username, required: true %>
+</div>
+
+<div>
+    <%= f.label :password, t("password") %>
+    <%= f.password_field :password, required: true %>
+</div>
+
+<button type="submit" class="btn btn-primary">
+    <%= t("button.save") %>
+</button>
+<% end %>
