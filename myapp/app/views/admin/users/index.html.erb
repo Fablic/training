@@ -20,7 +20,7 @@
       <tr>
         <td><%= link_to user.name, admin_user_path(user) %></td>
         <td><%= user.username %></td>
-        <td><%= user.tasks_count %></td>
+        <td><%= link_to user.tasks_count, admin_user_tasks_path(user) %></td>
       </tr>
     <% end %>
   </tbody>
