@@ -28,6 +28,11 @@ class Admin::UsersController < ApplicationController
   end
 
   def update
+    if @user == current_user
+      flash[:alert] = I18n.t 'msg_cant_update_your_account'
+      return redirect_to admin_users_path
+    end
+
     if @user.update(user_params)
       flash[:notice] = I18n.t 'msg_user_update_success'
       redirect_to admin_user_path(@user)
@@ -38,22 +43,22 @@ class Admin::UsersController < ApplicationController
 
   def destroy
     if @user == current_user
-      flash[:alert] = "You cannot delete your own account."
+      flash[:alert] = I18n.t 'msg_cant_delete_your_account'
       return redirect_to admin_users_path
     end
 
     if @user.is_admin?
       active_admin_count = User.active.where(is_admin: true).count
       if active_admin_count <= 1
-        flash[:alert] = "Cannot delete the last active admin user."
+        flash[:alert] = I18n.t 'msg_cant_delete_last_admin'
         return redirect_to admin_users_path
       end
     end
 
     if @user.soft_delete
-      flash[:notice] = "User was successfully soft-deleted."
+      flash[:notice] = I18n.t 'msg_user_deactivated'
     else
-      flash[:alert] = "User deletion failed."
+      flash[:alert] = I18n.t 'msg_user_deactivate_failure'
     end
 
     redirect_to admin_users_path

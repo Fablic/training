@@ -54,6 +54,11 @@ en:
   msg_logout: 'You have been logged out.'
   msg_unauthorized: 'You are not authorized to access this page.'
   msg_user_update_success: 'User was successfully updated.'
+  msg_cant_update_your_account: 'You cannot update your account.'
+  msg_cant_delete_your_account: 'You cannot delete your account.'
+  msg_cant_delete_last_admin: 'You cannot delete the last admin.'
+  msg_user_deactivated: 'User was successfully deactivated.'
+  msg_user_deactivated_failure: 'Failed to deactivate a user.'
   activerecord:
     attributes:
       task:

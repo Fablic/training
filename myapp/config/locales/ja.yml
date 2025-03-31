@@ -25,6 +25,11 @@ ja:
   msg_logout: 'ログアウトしました'
   msg_unauthorized: 'アクセス権限がありません'
   msg_user_update_success: 'ユーザー情報の更新に成功しました'
+  msg_cant_update_your_account: '自分のアカウントは更新できません'
+  msg_cant_delete_your_account: '自分のアカウントは削除できません'
+  msg_cant_delete_last_admin: '最後の管理者は削除できません'
+  msg_user_deactivated: 'ユーザーを無効化しました'
+  msg_user_deactivated_failure: 'ユーザーの無効化に失敗しました'
   date:
     month_names: [~, "1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"]
     order:

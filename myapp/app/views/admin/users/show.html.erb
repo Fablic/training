@@ -19,6 +19,11 @@
 </p>
 
 <p>
+  <strong><%= t('is_admin') %>:</strong>
+  <%= @user.is_admin %>
+</p>
+
+<p>
   <strong><%= t('tasks_count') %>:</strong>
   <%= @user.tasks_count %>
 </p>
@@ -26,14 +31,17 @@
 <span>
   <%= link_to t("button.show_task"), admin_user_tasks_path(@user), class:"btn btn-secondary" %>
 </span>
+<% if @user != current_user %>
 <span>
   <%= link_to t("button.edit_user"), edit_admin_user_path(@user), class:"btn btn-secondary" %>
 </span>
+<% end %>
 <span>
   <%= link_to t("button.back"), admin_users_path, class:"btn btn-secondary" %>
 </span>
-
+<% if @user != current_user %>
 <span>
   <%= link_to t("button.deactivate_user"), admin_user_path(@user), method: :delete, data: { turbo_method: :delete , turbo_confirm: "Are you sure you want to delete this user?" }, class: "btn btn-danger" %>
 </span>
+<% end %>
 </div>

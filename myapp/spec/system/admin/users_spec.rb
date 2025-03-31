@@ -45,4 +45,11 @@ RSpec.describe "Admin Users", type: :system do
     click_link I18n.t("page.all_tasks")
     expect(page).to_not have_content(task1.name)
   end
+
+  it "not allow admin to edit and soft delete themselves" do
+    click_link I18n.t("page.all_users")
+    click_link "Admin"
+    expect(page).to_not have_link(I18n.t("button.deactivate_user"))
+    expect(page).to_not have_link(I18n.t("button.edit_user"))
+  end
 end
