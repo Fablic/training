@@ -36,6 +36,11 @@
 </p>
 
 <p>
+  <strong><%= t('labels') %>:</strong>
+  <%= @task.labels.map(&:name).join(', ') %>
+</p>
+
+<p>
   <strong><%= t('deadline') %>:</strong>
   <%= @task.deadline ? @task.deadline.strftime("%Y-%m-%d %H:%M") : "None" %>
 </p>
