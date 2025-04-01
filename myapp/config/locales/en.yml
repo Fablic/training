@@ -86,6 +86,8 @@ en:
       user:
         username: 'Username'
         password: 'Password'
+      label:
+        name: 'Name'
   errors:
     format: "%{attribute} %{message}"
     messages:

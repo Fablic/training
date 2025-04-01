@@ -63,6 +63,8 @@ ja:
       user:
         username: 'ユーザー名'
         password: 'パスワード'
+      label:
+        name: '名前'
   errors:
     format: "%{attribute} %{message}"
     messages:
