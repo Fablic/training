@@ -59,6 +59,12 @@ en:
   msg_cant_delete_last_admin: 'You cannot delete the last admin.'
   msg_user_deactivated: 'User was successfully deactivated.'
   msg_user_deactivated_failure: 'Failed to deactivate a user.'
+  msg_create_label_success: 'Label was successfully created.'
+  msg_create_label_failure: 'Failed to create a label.'
+  msg_update_label_success: 'Label was successfully updated.'
+  msg_update_label_failure: 'Failed to update a label.'
+  msg_delete_label_success: 'Label was successfully deleted.'
+  msg_delete_label_failure: 'Failed to delete a label.'
   activerecord:
     attributes:
       task:
@@ -100,6 +106,9 @@ en:
     deactivate_user: "Deactivate User"
     login: "Log in"
     logout: "Log out"
+    manage_labels: "Manage Labels"
+    new_label: "New Label"
+    update_label: "Update Label"
   page:
     task: "Task"
     task_detail: "Task Detail"
@@ -122,6 +131,11 @@ en:
     edit_user: "Edit User"
     create_new_user: "Create New User"
     welcome: "Welcome"
+    label: "Label"
+    no_label: "No labels found."
+    label_detail: "Label Detail"
+    edit_label: "Edit Label"
+    create_new_label: "Create New Label"
   views:
     pagination:
       previous: "Previous"

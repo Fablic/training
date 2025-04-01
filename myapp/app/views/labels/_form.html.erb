@@ -1,0 +1,20 @@
+<%= form_with(model: label, local: true) do |form| %>
+  <% if label.errors.any? %>
+    <div class="alert alert-danger">
+      <ul>
+        <% label.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-2 row">
+    <%= form.label :name, t("name"), class: "col-auto form-label" %>
+    <%= form.text_field :name, class: "col-auto" %>
+  </div>
+
+  <button type="submit" class="btn btn-primary">
+    <%= t("button.save") %>
+  </button>
+<% end %>

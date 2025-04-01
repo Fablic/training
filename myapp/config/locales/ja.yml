@@ -30,6 +30,12 @@ ja:
   msg_cant_delete_last_admin: '最後の管理者は削除できません'
   msg_user_deactivated: 'ユーザーを無効化しました'
   msg_user_deactivated_failure: 'ユーザーの無効化に失敗しました'
+  msg_create_label_success: 'ラベルの作成に成功しました'
+  msg_create_label_failure: 'ラベルの作成に失敗しました'
+  msg_update_label_success: 'ラベルの更新に成功しました'
+  msg_update_label_failure: 'ラベルの更新に失敗しました'
+  msg_delete_label_success: 'ラベルの削除に成功しました'
+  msg_delete_label_failure: 'ラベルの削除に失敗しました'
   date:
     month_names: [~, "1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"]
     order:
@@ -77,6 +83,9 @@ ja:
     deactivate_user: "ユーザーを無効化"
     login: "ログイン"
     logout: "ログアウト"
+    manage_labels: "ラベル管理"
+    new_label: "新規ラベル"
+    update_label: "ラベルを更新"
   page:
     task: "タスク"
     task_detail: "タスク詳細"
@@ -99,6 +108,11 @@ ja:
     edit_user: "ユーザー編集"
     create_new_user: "新規ユーザー作成"
     welcome: "ようこそ"
+    label: "ラベル"
+    no_label: "ラベルが見つかりません"
+    label_detail: "ラベル詳細"
+    edit_label: "ラベル編集"
+    create_new_label: "新規ラベル作成"
   views:
     pagination:
       first: "最初"

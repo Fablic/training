@@ -1,0 +1,50 @@
+<h1><%= t("page.label") %></h1>
+
+<% if flash[:notice] %>
+  <div class="alert alert-success"><%= flash[:notice] %></div>
+<% end %>
+<% if flash[:alert] %>
+  <div class="alert alert-danger"><%= flash[:alert] %></div>
+<% end %>
+
+<% if @labels.empty? %>
+  <p><%= t("page.no_label") %></p>
+<% else %>
+<div class="container">
+<table class="table">
+  <thead>
+    <tr>
+      <th><%= t('name') %></th>
+      <th><%= t('created_at') %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @labels.each do |label| %>
+      <tr>
+        <td><%= link_to label.name, label %></td>
+        <td><%= label.created_at.strftime("%Y-%m-%d %H:%M") %></td>
+        <td>
+          <%= link_to edit_label_path(label), class: "text-decoration-none" do %>
+            <i class="bi bi-pencil-square"></i>
+            <span class="visually-hidden">Edit</span>
+          <% end %> |
+          <%= link_to label, method: :delete, data: { turbo_method: :delete , turbo_confirm: "Are you sure?" }, class: "text-decoration-none" do %>
+            <i class="bi bi-trash"></i>
+            <span class="visually-hidden">Delete</span>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+<% end %>
+
+<%= link_to new_label_path, class: "btn btn-primary text-decoration-none" do  %>
+  <i class="bi bi-plus-circle"></i>
+  <span><%= t('button.new_label') %></span>
+<% end %>
+
+<span>
+  <%= link_to t("button.back"), tasks_path, class:"btn btn-secondary" %>
+</span>

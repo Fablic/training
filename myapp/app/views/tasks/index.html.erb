@@ -72,4 +72,9 @@
   <span><%= t('button.new_task') %></span>
 <% end %>
 
+<%= link_to labels_path, class: "btn btn-primary text-decoration-none" do  %>
+  <i class="bi bi-tools"></i>
+  <span><%= t('button.manage_labels') %></span>
+<% end %>
+
 <%= paginate @tasks %>
