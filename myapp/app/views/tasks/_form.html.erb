@@ -40,10 +40,10 @@
   </div>
 
   <% if current_user.is_admin %>
-    <div class="mb-2">
-      <%= form.label :assignee, t("assignee"), class: "col-auto form-label" %>
-      <%= form.collection_select :user_id, User.active.order(:name), :id, :name, { selected: form.object.user_id } %>
-    </div>
+    <!-- <div class="mb-2">
+      <%# form.label :assignee, t("assignee"), class: "col-auto form-label" %>
+      <%# form.collection_select :user_id, User.active.order(:name), :id, :name, { selected: form.object.user_id } %>
+    </div> -->
   <% else %>
     <%# user_id is the automatically set to the current_user %>
     <%= form.hidden_field :user_id, value: current_user.id %>

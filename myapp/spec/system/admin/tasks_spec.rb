@@ -66,14 +66,14 @@ RSpec.describe "Admin Tasks", type: :system do
       expect(page).to have_content(I18n.t 'msg_update_success')
       expect(page).to have_content("Edited Task")
     end
-    it "allows admin to reassign task" do
-      visit edit_task_path(locale: I18n.locale, id: task.id)
+    # it "allows admin to reassign task" do
+    #   visit edit_task_path(locale: I18n.locale, id: task.id)
 
-      select user1.name, from: "task_user_id"
-      click_button I18n.t("button.save")
+    #   select user1.name, from: "task_user_id"
+    #   click_button I18n.t("button.save")
 
-      expect(page).to have_content(I18n.t 'msg_update_success')
-      expect(page).to have_content(user1.name)
-    end
+    #   expect(page).to have_content(I18n.t 'msg_update_success')
+    #   expect(page).to have_content(user1.name)
+    # end
   end
 end
