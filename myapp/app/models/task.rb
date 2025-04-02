@@ -11,6 +11,9 @@ class Task < ApplicationRecord
   validates :deadline, presence: true
   validate :deadline_not_in_past
 
+  has_many :task_labels, dependent: :destroy
+  has_many :labels, through: :task_labels
+
   def self.ransackable_associations(auth_object = nil)
     []
   end

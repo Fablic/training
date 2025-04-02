@@ -9,6 +9,8 @@ Rails.application.routes.draw do
 
     resources :tasks
 
+    resources :labels
+
     namespace :admin do
       resources :users do
         resources :tasks

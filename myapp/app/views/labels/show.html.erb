@@ -1,0 +1,29 @@
+<h1><%= t("page.label_detail") %></h1>
+
+<% if flash[:notice] %>
+  <div class="alert alert-success"><%= flash[:notice] %></div>
+<% end %>
+<% if flash[:alert] %>
+  <div class="alert alert-danger"><%= flash[:alert] %></div>
+<% end %>
+
+<div class="container">
+<p>
+  <strong><%= t('name') %>:</strong>
+  <%= @label.name %>
+</p>
+
+<% if current_user.is_admin %> 
+  <p>
+    <strong><%= t('assignee') %>:</strong>
+    <%= @label.user.name %>
+  </p>
+<% end %>
+
+<span>
+  <%= link_to t("button.update_label"), edit_label_path(@label), class:"btn btn-secondary" %>
+</span>
+<span>
+  <%= link_to t("button.back"), labels_path, class:"btn btn-secondary" %>
+</span>
+</div>

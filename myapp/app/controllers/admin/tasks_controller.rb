@@ -9,11 +9,11 @@ class Admin::TasksController < ApplicationController
         tasks_scope = User.active.find(params[:user_id]).tasks.active
         @q = tasks_scope.ransack(params[:q])
         @q.sorts = 'created_at asc' if @q.sorts.empty?
-        @tasks = @q.result.page(params[:page]).per(PER_PAGE)
+        @tasks = @q.result.includes(:labels).page(params[:page]).per(PER_PAGE)
     else
         @q = Task.active.ransack(params[:q])
         @q.sorts = 'created_at asc' if @q.sorts.empty?
-        @tasks = @q.result.includes(:user).page(params[:page]).per(PER_PAGE)
+        @tasks = @q.result.includes(:user, :labels).page(params[:page]).per(PER_PAGE)
     end
   end
 

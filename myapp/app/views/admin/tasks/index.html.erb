@@ -54,7 +54,7 @@
         <td><%= task.created_at.strftime("%Y-%m-%d %H:%M") %></td>
         <td><%= t("activerecord.attributes.task.priorities.#{task.priority}") %></td>
         <td><%= t("activerecord.attributes.task.statuses.#{task.status}") %></td>
-        <td>Label</td>
+        <td><%= task.labels.map(&:name).join(", ") %></td>
         <td>
           <%= link_to edit_task_path(task), class: "text-decoration-none" do %>
             <i class="bi bi-pencil-square"></i>

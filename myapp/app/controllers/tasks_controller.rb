@@ -8,7 +8,7 @@ class TasksController < ApplicationController
   def index
     @q = current_user.tasks.active.ransack(params[:q])
     @q.sorts = 'created_at asc' if @q.sorts.empty?
-    @tasks = @q.result.page(params[:page]).per(PER_PAGE)
+    @tasks = @q.result.includes(:labels).page(params[:page]).per(PER_PAGE)
   end
 
   def show
@@ -61,7 +61,7 @@ class TasksController < ApplicationController
 
   # Only allow a list of trusted parameters.
   def task_params
-    params.require(:task).permit(:name, :description, :user_id, :priority, :status, :deadline)
+    params.require(:task).permit(:name, :description, :user_id, :priority, :status, :deadline, label_ids: [])
   end
 
   # Prevent action if current_user is not admin and not the owner of the task
