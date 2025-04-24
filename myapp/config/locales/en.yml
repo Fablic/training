@@ -138,6 +138,8 @@ en:
     label_detail: "Label Detail"
     edit_label: "Edit Label"
     create_new_label: "Create New Label"
+    maintenance: "Maintenance Mode"
+    msg_maintenance: "The application is currently in maintenance mode. Please check back later."
   views:
     pagination:
       previous: "Previous"

@@ -115,6 +115,8 @@ ja:
     label_detail: "ラベル詳細"
     edit_label: "ラベル編集"
     create_new_label: "新規ラベル作成"
+    maintenance: "メンテナンスモード"
+    msg_maintenance: "メンテナンスモード中です"
   views:
     pagination:
       first: "最初"
