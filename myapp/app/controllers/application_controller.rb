@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   before_action :set_locale
+  before_action :redirect_to_maintenance, except: [:maintenance]
   helper_method :current_user, :logged_in?
   
   private
@@ -26,6 +27,12 @@ class ApplicationController < ActionController::Base
     unless logged_in?
       flash[:alert] = I18n.t 'must_login'
       redirect_to login_path
+    end
+  end
+
+  def redirect_to_maintenance
+    if File.exist?(Rails.root.join('tmp', 'maintenance.txt'))
+      redirect_to maintenance_path
     end
   end
 end

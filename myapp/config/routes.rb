@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
   scope "(:locale)", locale: /en|ja/ do
+    get '/maintenance', to: 'application#maintenance', constraints: lambda { |req|
+      File.exist?(Rails.root.join('tmp', 'maintenance.txt'))
+    }
+
     get    '/login',  to: 'sessions#new'
     post   '/login',  to: 'sessions#create'
     delete '/logout', to: 'sessions#destroy'
