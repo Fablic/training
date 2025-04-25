@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   before_action :set_locale
-  before_action :redirect_to_maintenance
+  before_action :redirect_to_maintenance, except: [:maintenance]
   helper_method :current_user, :logged_in?
   
   private
@@ -32,13 +32,8 @@ class ApplicationController < ActionController::Base
 
   def redirect_to_maintenance
     if File.exist?(Rails.root.join('tmp', 'maintenance.txt'))
-      return if request.path == maintenance_path
       redirect_to maintenance_path
     end
-  end
-
-  def maintenance
-    render 'maintenance'
   end
 end
   
